@@ -1401,6 +1401,30 @@
 #keen-explorer textarea.json-view:focus {
   outline: 0;
 }
+#keen-explorer .run-query {
+  margin-right: 8px;
+}
+#keen-explorer .code-sample-toggle {
+  color: #333333;
+  font-weight: 700;
+}
+#keen-explorer .code-sample-toggle.open {
+  background-color: #333333;
+  color: #e6e6e6;
+}
+#keen-explorer table.data-table {
+  max-height: 500px;
+  overflow-y: scroll;
+  display: block;
+  font-family: "Gotham Rounded A", "Gotham Rounded B", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  word-wrap: break-word;
+}
+#keen-explorer table.data-table tbody tr.even {
+  background: #F2F2F2;
+}
+#keen-explorer table.data-table tbody tr td {
+  max-width: 300px;
+}
 #keen-explorer .code-sample-panel {
   background-color: rgba(0, 0, 0, 0.25);
   border-bottom: 1px solid #a7a7a7;

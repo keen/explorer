@@ -361,6 +361,10 @@ module.exports = {
     return explorer.visualization.chart_type && explorer.visualization.chart_type.toLowerCase() === 'json';
   },
 
+  isTableViz: function(explorer) {
+    return explorer.visualization.chart_type && explorer.visualization.chart_type.toLowerCase() === 'table';
+  },
+
   getSdkExample: function(explorer, client) {
     var valid = ValidationUtils.runValidations(ExplorerValidations.explorer, explorer.query);
     if (!valid.isValid) {
