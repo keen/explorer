@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Keen IO Arduino SDK</title>
+  <title>Keen IO Data Explorer</title>
   <meta charset="utf-8">
   <link rel='stylesheet' type='text/css' href='http://fonts.googleapis.com/css?family=Raleway' />
   <link rel="stylesheet" type='text/css' href="assets/lib/bootstrap/dist/css/bootstrap.min.css" />
@@ -22,7 +22,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a href="https://keen.io?s=gh-keen-arduino" class="navbar-brand" target="_blank">
+          <a href="https://keen.io?s=gh-data-tools" class="navbar-brand" target="_blank">
             <svg class="keen-logo" xmlns="http://www.w3.org/2000/svg" version="1.1" x="0px" y="0px" viewBox="0 0 594 128" enable-background="new 0 0 594 128" xml:space="preserve">
               <g class="icon">
                 <polygon class="red" fill="#FFFFFF" points="59.811,73.135 66.859,85.34 49.275,115.863 140.807,115.863 147.814,128 28.045,128"></polygon>
@@ -35,13 +35,13 @@
         </div>
         <nav class="navbar-collapse collapse keen-navbar-collapse" role="navigation">
           <ul class="nav navbar-nav main-nav">
-            <li><a href="https://keen.io/blog/121840400161/introducing-analytics-tracking-for-arduino?s=gh-keen-arduino" target="_blank">About</a></li>
-            <li><a href="https://keen.io/team?s=gh-keen-arduino" target="_blank">Team</a></li>
+            <li><a href="https://keen.io/blog/121840400161/introducing-analytics-tracking-for-arduino?s=gh-data-tools" target="_blank">About</a></li>
+            <li><a href="https://keen.io/team?s=gh-data-tools" target="_blank">Team</a></li>
             <li><a href="http://slack.keen.io/" target="_blank">Community</a></li>
             <li><a href="https://github.com/keen/keen-arduino/issues" target="_blank">Support</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="https://keen.io/signup?s=gh-keen-arduino" class="btn navbar-btn" target="_blank">Create a Free Keen Project</a></li>
+            <li><a href="https://keen.io/signup?s=gh-data-tools" class="btn navbar-btn" target="_blank">Create a Free Keen Project</a></li>
           </ul>
         </nav>
       </header>
@@ -61,68 +61,20 @@
   <div class="content">
     <div class="container">
       <div class="row" style="position: relative;">
-
-        <div class="col-sm-6">
-          <pre class="language-clike line-numbers"><code>
-#include &lt;ApiClient.h&gt;
-#include &lt;KeenClient.h&gt;
-
-KeenClient keen;
-
-void setup() {
-  Bridge.begin();
-  Console.begin();
-  while (!Console);
-
-  keen.setApiVersion(F("3.0"));
-  keen.setProjectId(F("PROJECT_KEY_HERE"));
-  keen.setWriteKey(F("WRITE_KEY_HERE"));
-}
-
-void loop() {
-  keen.addEvent("test_collection", "{\"motion_state\": \"start\"}");
-  keen.printRequest();
-
-  while (keen.available()) {
-    char c = keen.read();
-    Console.print(c);
-  }
-
-  Console.println();
-  Console.flush();
-
-  delay(10000);
-}
-          </code></pre>
-        </div>
-
-        <div class="col-sm-6 example-message">
-          <div>
-            <center>
-              <img src="./assets/img/activity-tracker-hardware.JPG" />
-            </center>
-          </div>
-          <i class="glyphicon glyphicon-arrow-down"></i>
-          <div>
-            <center>
-              <img src="./assets/img/activity-tracker-screen-shot.png" />
-            </center>
-          </div>
-        </div>
-
+      <a href="demo.html">Click to Demo</a>
       </div>
     </div>
     <div class="ctas">
       <a class="btn cta-btn" href="https://github.com/keen/keen-arduino">Get Started with the Arduino SDK</a>
       <br />
-      <a class="btn cta-secondary-btn" href="https://keen.io?s=gh-keen-arduino">Keen</a>
+      <a class="btn cta-secondary-btn" href="https://keen.io?s=gh-data-tools">Keen</a>
     </div>
   </div>
 
   <div class="footer">
     <div class="container">
       <div class="love">
-        <p>Made with &#9825; by <a href="https://keen.io?s=gh-keen-arduino">Keen IO</a></p>
+        <p>Made with &#9825; by <a href="https://keen.io?s=gh-data-tools">Keen IO</a></p>
         <p>&copy; 2012&ndash;2015</p>
       </div>
     </div>
