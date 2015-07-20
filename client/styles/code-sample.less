@@ -1,28 +1,31 @@
 .code-sample-panel {
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  width: 100%;
-  box-sizing: border-box;
-  background: #333;
-  height: 100%;
+  background-color: rgba(0,0,0,.25);
+  border-bottom: 1px solid #a7a7a7;
+  border-radius: 2px 2px 0 0;
+  left: 0;
   overflow-y: scroll;
+  position: absolute;
+  top: 0;
+  width: 100%;
   z-index: 100;
-  border-radius: 3px;
 
   .sample {
-    color: #F1F1F1;
-    font-size: 14px;  
-    padding: 15px;
+    padding: 10px;
   }
+
   pre {
-    min-height: 50px;
+    background-color: #fff;
+    border: medium none;
+    font-size: 11px;
+    margin: 0;
+    min-height: 400px;
+    padding: 15px 10px;
   }
   .close-btn {
+    color: #808080;
     font-size: 24px;
-    color: #555;
     position: absolute;
-    top: 20px;
-    right: 25px;
+    right: 20px;
+    top: 15px;
   }
 }

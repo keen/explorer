@@ -3,85 +3,45 @@
  */
 
 // Vendor
-@import "vendor/pickadate/classic";
-@import "vendor/pickadate/classic-date";
-@import "vendor/pickadate/classic-time";
+@import 'vendor/pickadate/classic';
+@import 'vendor/pickadate/classic-date';
+@import 'vendor/pickadate/classic-time';
 
-body.keen-explorer {
-  background: #FBFBFB;
-}
-
-// Scope all styles under "#keen-explorer" to reduce conflicts.
+// Scope all styles under '#keen-explorer' to reduce conflicts.
 #keen-explorer {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+  color: #333;
+  font-family: 'Gotham Rounded A', 'Gotham Rounded B', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-size: 14px;
-  line-height: 1.42857143;
-  color: #333333;
+  line-height: 1.5;
+  padding: 0 0 24px;
   position: relative;
 
   // Base CSS
-  @import "bootstrap-extend";
-  @import "typography";
-  @import "colors";
-  @import "forms";
-  @import "helpers";
+  @import 'bootstrap-extend';
+  @import 'typography';
+  @import 'colors';
+  @import 'forms';
 
   // Common Components
-  @import "loader";
-  @import "favorites";
-  @import "event-browser";
-  @import "fields-toggle";
-  @import "react-select";
-  @import "interactive-list";
+  @import 'loader';
+  @import 'favorites';
+  @import 'event-browser';
+  @import 'fields-toggle';
+  @import 'react-select';
+  @import 'interactive-list';
 
   // Components
-  @import "dashboard";
-  @import "explorer";
-  @import "visualization";
-  @import "code-sample";
-  @import "filters";
-  @import "timeframe";
+  @import 'dashboard';
+  @import 'explorer';
+  @import 'visualization';
+  @import 'code-sample';
+  @import 'filters';
+  @import 'timeframe';
 
-  margin: 20px auto 0px auto;
-  width: 90%;
 
-  #nav {
-    border-bottom: 1px solid #DDD;
-    padding-bottom: 20px;
-    overflow: hidden;
-  }
-
-  .no-padding {
-    padding: 0;
-  }
-
-  .no-padding-left {
-    padding-left: 0;
-  }
-
-  .no-padding-right {
-    padding-right: 0;
-  }
-
-  #content {
-    padding: 0;
-
-    header {
-      height: 55px;
-      padding: 10px 0;
-      background: #FBFBFB;
-
-      h2 {
-        font-size: 24px;
-        line-height: 35px;
-        margin: 0;
-      }
-    }
-
-    section {
-      padding: 20px 0;
-    }
-
+  a {
+    color: #00bbde;
   }
 
   .btn .icon,
@@ -89,9 +49,8 @@ body.keen-explorer {
   h2 .icon,
   h3 .icon,
   h4 .icon,
-  .nav-tabs li a .icon,
   .alert .icon {
-    margin-right: 8px;
+    margin-right: 10px;
   }
 
   .icon.no-margin {
@@ -117,4 +76,5 @@ body.keen-explorer {
   .tooltip {
     z-index: 1040;
   }
+
 }

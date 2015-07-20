@@ -63,63 +63,71 @@ var Visualization = React.createClass({
   },
 
   render: function() {
-    var csvExtractionBtn,
+    var csvExtractionBanner,
+        chartOptionsBar,
         favoriteBar,
         favoriteBtn;
 
-    if (this.props.model.query.analysis_type === 'extraction') {
-      csvExtractionBtn = <button type="button" className="margin-right-tiny btn btn-default pull-left" onClick={this.props.onOpenCSVExtraction}>
-                          Email extraction
-                        </button>;
-    }
-    if (this.props.persistence) {
-      favoriteBtn = <button type="button" ref="add-fav" className="btn btn-default add-favorite" onClick={this.props.addFavoriteClick}>
-                      <span className="icon glyphicon glyphicon-heart margin-right-tiny fav-icon"></span> Add
-                    </button>;
-    }
-
     var codeSampleBtnClasses = classNames({
-      'code-sample-toggle btn btn-default pull-left margin-right-tiny': true,
+      'code-sample-toggle btn btn-default pull-left': true,
       'open': !this.state.codeSampleHidden
     });
 
+    if (this.props.model.query.analysis_type === 'extraction') {
+      csvExtractionBanner = <div className="extraction-message-component">
+                              <div className="alert">
+                                <span className="icon glyphicon glyphicon-info-sign"></span>
+                                Previews are limited to the latest {ExplorerUtils.EXRACTION_EVENT_LIMIT} events. Larger extractions are available by email.
+                              </div>
+                              <button type="button" className="btn btn-default pull-right" onClick={this.props.onOpenCSVExtraction}>
+                                Email extraction
+                              </button>
+                            </div>;
+    }
+
+    if (null !== this.props.model.result && !this.props.model.loading) {
+      chartOptionsBar = <div className="chart-options clearfix">
+                          <div className="pull-left">
+                            <Select label={false}
+                                    name="chart_type"
+                                    classes="chart-type"
+                                    options={this.formatChartTypes()}
+                                    handleSelection={this.changeChartType}
+                                    selectedOption={this.props.model.visualization.chart_type}
+                                    emptyOption={false}
+                                    disabled={this.props.model.loading} />
+                          </div>
+                          <div className="pull-right">
+                            <button className={codeSampleBtnClasses} onClick={this.toggleCodeSample}>
+                              <span>&lt;/&gt; Embed</span>
+                            </button>
+                          </div>
+                        </div>;
+    }
+
+    if (this.props.persistence
+      && null !== this.props.model.result
+        && !this.props.model.loading) {
+          favoriteBtn = <button type="button" ref="add-fav" className="btn btn-default add-favorite" onClick={this.props.addFavoriteClick}>
+                          <span className="icon glyphicon glyphicon-heart fav-icon"></span> Add
+                        </button>;
+    }
+
     return (
       <div className="visualization">
-        <div className="row">
-          <div className="col-md-12">
-            <Notice notice={this.props.notice} closeCallback={this.noticeClosed} />
+        <Notice notice={this.props.notice} closeCallback={this.noticeClosed} />
+        <div className="visualization-wrapper">
+          {csvExtractionBanner}
+          <div className="chart-component">
+            <Chart model={this.props.model} dataviz={this.dataviz} />
           </div>
-        </div>
-        <div className="content-wrap padding-small">
-          <div className="row">
-            <div className="col-md-9 btn-bar">
-              <button className={codeSampleBtnClasses} onClick={this.toggleCodeSample}>
-                <span>&lt;/&gt;</span>
-              </button>
-              {favoriteBtn}
-              {csvExtractionBtn}
-            </div>
-            <div className="col-md-3">
-              <Select label={false}
-                      name="chart_type"
-                      classes="chart-type"
-                      options={this.formatChartTypes()}
-                      handleSelection={this.changeChartType}
-                      selectedOption={this.props.model.visualization.chart_type}
-                      emptyOption={false}
-                      disabled={this.props.model.loading} />
-            </div>
-          </div>
-          <div className="row margin-top-tiny">
-            <div className="col-md-12">
-              <Chart model={this.props.model} dataviz={this.dataviz} />
-            </div>
-          </div>
+          {chartOptionsBar}
           <CodeSample ref="codesample"
                       codeSample={ExplorerUtils.getSdkExample(this.props.model, this.props.client)}
                       hidden={this.state.codeSampleHidden}
                       onCloseClick={this.toggleCodeSample} />
         </div>
+        {favoriteBtn}
       </div>
     );
   }

@@ -32,16 +32,10 @@ var App = React.createClass({
     return (
     	<div id="keen-explorer">
     		<Loader visible={this.state.project.loading} additionalClasses="app-loader" />
-	      <div className="container-fluid">
-	      	<div className="row">
-	      		<div className="col-md-12">
-	      			<RouteHandler project={this.state.project}
-                            config={this.props.config}
-                            client={this.props.config.client}
-                            persistence={this.props.config.persistence} />
-	      		</div>
-	      	</div>
-	      </div>
+        <RouteHandler project={this.state.project}
+                      config={this.props.config}
+                      client={this.props.config.client}
+                      persistence={this.props.config.persistence} />
       </div>
     );
   },

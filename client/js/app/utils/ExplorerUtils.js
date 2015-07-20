@@ -41,7 +41,7 @@ function mapSkip(collection, fn) {
 }
 
 function echoIf(valueMaybe, append) {
-  if (valueMaybe) { 
+  if (valueMaybe) {
     return append;
   }
   return '';
@@ -90,7 +90,7 @@ module.exports = {
         delete params.filters;
       }
     }
-    
+
     return params;
   },
 
@@ -122,7 +122,7 @@ module.exports = {
   },
 
   /**
-   * Execures a Keen.js query with the provided client and query params, calling the 
+   * Execures a Keen.js query with the provided client and query params, calling the
    * callbacks after execution.
    * @param {Object} config The runQuery configuration
    * Expected structure:
@@ -180,7 +180,7 @@ module.exports = {
   },
 
   convertDateToUTC: function(date) {
-    return new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds()); 
+    return new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds());
   },
 
   /**
@@ -201,10 +201,10 @@ module.exports = {
 
     if (typeof timeframe === 'object') {
       var offset = timeframe.start.substring(timeframe.start.length, timeframe.start.length-6);
-      
+
       timeframe.start = timeframe.start.substring(0, timeframe.start.length-6);
       timeframe.end = timeframe.end.substring(0, timeframe.end.length-6);
-      
+
       var timezone;
       var zone = _.find(ProjectUtils.getConstant('TIMEZONES'), { offset: offset });
       if (zone) {
@@ -243,7 +243,7 @@ module.exports = {
    */
   formatQueryParams: function(params) {
     if (!params.query) return;
-    
+
     if (params.query && params.query.timeframe) {
       var unpackedTime = module.exports.unpackTimeframeParam(params.query);
       params.query.time = unpackedTime.time;
@@ -256,7 +256,7 @@ module.exports = {
           filter = _.assign({}, filter, FilterUtils.initDatetime(filter));
         }
         if (filter.coercion_type === 'List') {
-          filter = _.assign({}, filter, FilterUtils.initList(filter)); 
+          filter = _.assign({}, filter, FilterUtils.initList(filter));
         }
         filter.property_value = FilterUtils.getCoercedValue(filter);
         return filter;
@@ -300,7 +300,7 @@ module.exports = {
 
   getApiQueryUrl: function(client, explorer) {
     var valid = ValidationUtils.runValidations(ValidationUtils.explorer, explorer)
-    
+
     if (valid.isValid) {
       var endpoint = client.config.protocol + "://" + client.config.host;
       var projectId = client.config.projectId;
@@ -312,7 +312,7 @@ module.exports = {
       delete attrs['analysis_type'];
 
       var timeframe = _.cloneDeep(attrs['timeframe']);
-      
+
       var filters = _.map(attrs['filters'], function(filter) {
         return _.omit(_.cloneDeep(filter), 'coercion_type');
       });
@@ -406,14 +406,18 @@ module.exports = {
       '  readKey: ' + s(client.config.readKey) + echoIf(dynamicContructorValues, ','),
       dynamicContructorValues,
       '});',
+      '',
       'Keen.ready(function(){',
+      '  ',
       '  var query = new Keen.Query(' + s(params.analysis_type) + ', {',
       '    eventCollection: ' + s(params.event_collection) + echoIf(dynamicCriteria, ','),
       dynamicCriteria,
       '  });',
+      '  ',
       '  client.draw(query, document.getElementById("my_chart"), {',
       '    // Custom configuration here',
       '  });',
+      '  ',
       '});'
     ]
 

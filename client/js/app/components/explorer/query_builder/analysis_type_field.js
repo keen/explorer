@@ -14,16 +14,14 @@ var AnalysisTypeField = React.createClass({
 
   render: function() {
     return (
-      <div className="row margin-bottom-small">
-        <div className="col-md-12">
-          <label>Analysis Type</label>
-          <ReactSelect ref="select"
-                       name="analysis_type"
-                       inputClasses="analysis-type form-control"
-                       items={this.props.options}
-                       handleChange={this.props.handleChange}
-                       value={this.props.value} />
-        </div>
+      <div className="field-component">
+        <label>Analysis Type</label>
+        <ReactSelect ref="select"
+                     name="analysis_type"
+                     inputClasses="analysis-type form-control"
+                     items={this.props.options}
+                     handleChange={this.props.handleChange}
+                     value={this.props.value} />
       </div>
     );
   }

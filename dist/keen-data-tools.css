@@ -530,36 +530,56 @@
   padding: 0;
   position: relative;
 }
-body.keen-explorer {
-  background: #FBFBFB;
-}
 #keen-explorer {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #333;
+  font-family: 'Gotham Rounded A', 'Gotham Rounded B', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-size: 14px;
-  line-height: 1.42857143;
-  color: #333333;
+  line-height: 1.5;
+  padding: 0 0 24px;
   position: relative;
-  margin: 20px auto 0px auto;
-  width: 90%;
 }
-#keen-explorer .nav.nav-tabs li a,
-#keen-explorer .nav.nav-tabs li a .icon {
-  color: #999;
+#keen-explorer .nav-tabs {
+  border-bottom: medium none;
 }
-#keen-explorer .nav.nav-tabs li:not(.active) a {
-  background: 0;
+#keen-explorer .nav-tabs li a {
+  background-color: rgba(0, 0, 0, 0.05);
+  border-bottom-color: transparent;
+  border-radius: 0;
+  color: #4d4d4d;
+  cursor: pointer;
+  margin: 0;
+}
+#keen-explorer .nav-tabs li a .icon {
+  color: #808080;
+  font-size: 10px;
+  margin-right: 5px;
+  vertical-align: middle;
+}
+#keen-explorer .nav-tabs li.active > a,
+#keen-explorer .nav-tabs li.active > a:focus,
+#keen-explorer .nav-tabs li.active > a:hover {
+  background-color: #fff;
+  border-left-color: rgba(0, 0, 0, 0.07);
+  border-right-color: rgba(0, 0, 0, 0.07);
+  border-top-color: rgba(0, 0, 0, 0.07);
+  color: #4d4d4d;
+  z-index: 3;
+}
+#keen-explorer .nav-tabs li.active > a .icon,
+#keen-explorer .nav-tabs li.active > a:focus .icon,
+#keen-explorer .nav-tabs li.active > a:hover .icon {
+  color: #808080;
+}
+#keen-explorer .nav-pills > li > a {
+  background-color: #f2f2f2;
+  margin-right: 5px;
+}
+#keen-explorer .nav-pills > li.active > a,
+#keen-explorer .nav-pills > li.active > a:focus,
+#keen-explorer .nav-pills > li.active > a:hover {
+  background-color: #00bbde;
   border-color: transparent;
-}
-#keen-explorer .nav.nav-tabs li a:hover,
-#keen-explorer .nav.nav-tabs li.active a {
-  color: #444;
-}
-#keen-explorer .nav.nav-tabs li a:hover .icon,
-#keen-explorer .nav.nav-tabs li.active a .icon {
-  color: #666;
-}
-#keen-explorer .nav.nav-tabs li.active a {
-  border-top: 3px solid #2980b9;
+  color: #fff;
 }
 #keen-explorer h1,
 #keen-explorer h2,
@@ -605,6 +625,9 @@ body.keen-explorer {
 #keen-explorer .subdued {
   color: #999;
 }
+#keen-explorer .field-component {
+  margin: 0 0 15px;
+}
 #keen-explorer .form-collapse-right {
   padding-right: 0;
 }
@@ -627,6 +650,24 @@ body.keen-explorer {
   margin: 0;
   top: 2px;
 }
+#keen-explorer .btn {
+  border-radius: 2px;
+}
+#keen-explorer .btn-default {
+  border-color: #d7d7d7;
+}
+#keen-explorer .btn-primary {
+  background-color: #00bbde;
+  border-color: transparent;
+  color: #fff;
+}
+#keen-explorer .btn-primary:focus,
+#keen-explorer .btn-primary:hover {
+  background-color: #0099b6;
+}
+#keen-explorer .run-query {
+  margin-left: 10px;
+}
 #keen-explorer .datepicker-wrapper,
 #keen-explorer .timepicker-wrapper {
   position: relative;
@@ -646,76 +687,43 @@ body.keen-explorer {
 #keen-explorer button.field-secondary-control {
   color: #808080;
   font-size: 12px;
-  padding: 5px;
+  padding: 8px 8px 8px 0;
 }
 #keen-explorer button.field-secondary-control span.icon {
   margin-right: 2px;
+}
+#keen-explorer .explorer-api-url button,
+#keen-explorer .explorer-api-url input {
+  margin: 0 0 10px;
 }
 #keen-explorer hr.fieldset-divider {
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   border-top: 1px solid #fff;
 }
 #keen-explorer .search-box {
-  height: 40px;
+  border: 1px solid #d7d7d7;
+  border-radius: 2px;
+  height: 32px;
+  margin: 0 0 10px;
   position: relative;
 }
 #keen-explorer .search-box input {
-  width: 100%;
-  height: 40px;
-  line-height: 40px;
+  background-color: transparent;
   border: none;
-  padding: 0 10px;
-  padding-right: 20px;
-  border-bottom: 1px solid #DDD;
+  height: 32px;
+  line-height: 32px;
+  padding: 0 10px 0 35px;
+  width: 100%;
 }
 #keen-explorer .search-box input:focus {
   outline: none;
 }
 #keen-explorer .search-box .icon {
-  position: absolute;
-  right: 5px;
-  top: 50%;
-  margin-top: -7px;
+  color: #a7a7a7;
   font-size: 16px;
-  color: #999;
-}
-#keen-explorer .margin-top-tiny {
+  left: 10px;
   margin-top: 8px;
-}
-#keen-explorer .margin-bottom-tiny {
-  margin-bottom: 8px;
-}
-#keen-explorer .margin-right-tiny {
-  margin-right: 8px;
-}
-#keen-explorer .margin-left-tiny {
-  margin-left: 8px;
-}
-#keen-explorer .margin-top-small {
-  margin-top: 15px;
-}
-#keen-explorer .margin-top-medium {
-  margin-top: 25px;
-}
-#keen-explorer .margin-bottom-medium {
-  margin-bottom: 25px;
-}
-#keen-explorer .margin-bottom-small {
-  margin-bottom: 15px;
-}
-#keen-explorer .no-margin {
-  margin: 0;
-}
-#keen-explorer .padding-small {
-  padding: 8px;
-}
-#keen-explorer .no-radius-left {
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
-}
-#keen-explorer .no-radius-right {
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
+  position: absolute;
 }
 #keen-explorer .loader {
   position: absolute;
@@ -832,24 +840,27 @@ body.keen-explorer {
   max-height: 400px;
   overflow-y: scroll;
 }
-#keen-explorer .browse-favorites .search-box {
-  border: 1px solid #DDD;
-}
 #keen-explorer .browse-favorites .metadata {
-  width: 100%;
+  padding: 10px 0 0;
 }
 #keen-explorer .browse-favorites .metadata p {
+  color: #a7a7a7;
   margin: 0;
   font-size: 12px;
 }
-#keen-explorer .browse-favorites .metadata .author .icon {
-  font-size: 16px;
+#keen-explorer .browse-favorites .metadata .icon {
+  color: #d7d7d7;
+  font-size: 14px;
+  margin-right: 5px;
 }
 #keen-explorer .browse-favorites .metadata .date {
   text-align: right;
 }
 #keen-explorer .event-browser {
   overflow: hidden;
+}
+#keen-explorer .event-browser .search-box {
+  margin: 4px;
 }
 #keen-explorer .event-browser .event-names,
 #keen-explorer .event-browser .event-browser-content {
@@ -924,7 +935,7 @@ body.keen-explorer {
 #keen-explorer .fields-toggle {
   background: #F2F2F2;
   border: 1px solid transparent;
-  border-radius: 3px;
+  border-radius: 2px;
 }
 #keen-explorer .fields-toggle .toggle-label {
   display: block;
@@ -956,6 +967,8 @@ body.keen-explorer {
   width: 24px;
 }
 #keen-explorer .fields-toggle .toggle-label .toggle-button .icon {
+  font-size: 20px;
+  left: .5px;
   position: relative;
   top: -3px;
 }
@@ -978,7 +991,7 @@ body.keen-explorer {
 }
 #keen-explorer .fields-toggle.open {
   background: #FFF;
-  border: 1px solid #e2e2e2;
+  border: 1px solid rgba(0, 0, 0, 0.07);
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
 }
 #keen-explorer .fields-toggle.open .toggle-label {
@@ -993,6 +1006,9 @@ body.keen-explorer {
   border-color: #d7d7d7;
   color: #CCC;
   right: 10px;
+}
+#keen-explorer .fields-toggle.open .toggle-button .icon {
+  top: -3px;
 }
 #keen-explorer .fields-toggle.open .toggle-button .icon::before {
   content: "\00D7";
@@ -1155,59 +1171,65 @@ body.keen-explorer {
   font-size: 16px;
   font-weight: 300;
   cursor: pointer;
-  padding: 8px 15px;
+  padding: 8px 10px;
   word-wrap: break-word;
-  border: 1px solid #DDD;
-  border-bottom-width: 0;
-  background: #FFF;
+  border-top: 1px solid #d7d7d7;
 }
 #keen-explorer .interactive-list li .name {
   margin: 0;
   padding: 0;
-  min-height: 40px;
-  padding-right: 25px;
+  line-height: 28px;
+  padding-right: 28px;
   text-transform: none;
 }
 #keen-explorer .interactive-list li.active,
 #keen-explorer .interactive-list li.active:hover {
-  background: #2980b9;
-  color: #FFF;
+  background: #f2f2f2;
 }
 #keen-explorer .interactive-list li.active .name,
 #keen-explorer .interactive-list li.active:hover .name {
-  color: #FFF;
+  color: #282828;
+}
+#keen-explorer .interactive-list li.active .metadata p,
+#keen-explorer .interactive-list li.active:hover .metadata p,
+#keen-explorer .interactive-list li.active .metadata .icon,
+#keen-explorer .interactive-list li.active:hover .metadata .icon {
+  color: #808080;
+}
+#keen-explorer .interactive-list li.active a.remove-btn,
+#keen-explorer .interactive-list li.active:hover a.remove-btn {
+  border-color: #a7a7a7;
 }
 #keen-explorer .interactive-list li.active a.remove-btn .icon,
 #keen-explorer .interactive-list li.active:hover a.remove-btn .icon {
-  color: #F1F1F1;
-}
-#keen-explorer .interactive-list li.active a.remove-btn:hover .icon,
-#keen-explorer .interactive-list li.active:hover a.remove-btn:hover .icon {
-  color: #FFF;
-}
-#keen-explorer .interactive-list li:last-child {
-  border-bottom-width: 1px;
+  color: #a7a7a7;
 }
 #keen-explorer .interactive-list li:hover {
-  background: #EEE;
-}
-#keen-explorer .interactive-list li:hover a.remove-btn {
-  display: block;
+  background: #e7e7e7;
 }
 #keen-explorer .interactive-list a.remove-btn {
-  display: none;
-  padding: 0px;
   background: none;
+  border: 1px solid #d7d7d7;
+  border-radius: 50%;
+  height: 24px;
+  line-height: 24px;
+  padding: 0px;
   position: absolute;
   right: 10px;
   top: 10px;
+  width: 24px;
+}
+#keen-explorer .interactive-list a.remove-btn .icon::before {
+  content: "\00D7";
 }
 #keen-explorer .interactive-list a.remove-btn:hover {
   background: none;
 }
 #keen-explorer .interactive-list a.remove-btn .icon {
+  color: #d7d7d7;
+  display: block;
   font-size: 20px;
-  color: #666;
+  text-align: center;
 }
 #keen-explorer .interactive-list a.remove-btn .icon:hover {
   color: #444;
@@ -1245,6 +1267,10 @@ body.keen-explorer {
 #keen-explorer .explorer {
   position: relative;
 }
+#keen-explorer .explorer-query-builder,
+#keen-explorer .explorer-visualization {
+  margin: 0 0 24px;
+}
 #keen-explorer .modular-section {
   border: 1px solid #DDD;
   border-radius: 4px;
@@ -1255,11 +1281,8 @@ body.keen-explorer {
 #keen-explorer .modular-section-body {
   padding: 5px;
 }
-#keen-explorer .content-wrap {
-  position: relative;
-  border: 1px solid #DDD;
-  border-radius: 3px;
-  background: #FFFFFF;
+#keen-explorer .notice-component {
+  margin: 0 0 15px;
 }
 #keen-explorer .notice {
   padding: 5em 0em;
@@ -1273,22 +1296,61 @@ body.keen-explorer {
   top: 3px;
   margin-right: 15px;
 }
-#keen-explorer .query-pane-tabs {
-  margin-bottom: 15px;
-}
 #keen-explorer .query-pane-tabs li {
   width: 50%;
   text-align: center;
 }
-#keen-explorer .viz-area {
+#keen-explorer .query-pane-section {
+  background-color: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.07);
+  padding: 18px 15px 5px;
   position: relative;
-  padding-top: 10px;
+}
+#keen-explorer .explorer-visualization {
+  position: relative;
 }
 #keen-explorer .chart-area {
   position: relative;
 }
 #keen-explorer .chart-area .loader {
   border-radius: 3px;
+}
+#keen-explorer .visualization-wrapper {
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.07);
+  margin: 0 0 10px;
+  padding: 10px;
+  position: relative;
+}
+#keen-explorer .visualization-wrapper .btn,
+#keen-explorer .visualization-wrapper select {
+  color: #4d4d4d;
+  font-size: 12px;
+  padding: 8px 14px;
+}
+#keen-explorer .visualization-wrapper .alert {
+  font-size: 12px;
+}
+#keen-explorer .extraction-message-component {
+  position: relative;
+}
+#keen-explorer .extraction-message-component .alert {
+  border-bottom: 1px solid #d7d7d7;
+  border-radius: 0;
+  margin: 0 0 10px 0;
+  min-height: 46px;
+  padding: 0 164px 8px 0;
+}
+#keen-explorer .extraction-message-component .alert span.icon {
+  float: left;
+  font-size: 24px;
+  margin: 5px 10px 0 5px;
+}
+#keen-explorer .extraction-message-component .btn {
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 1;
 }
 #keen-explorer .chart {
   position: relative;
@@ -1299,6 +1361,17 @@ body.keen-explorer {
 #keen-explorer .chart .google-visualization-table {
   padding: 0;
   width: 100%;
+}
+#keen-explorer .chart-options {
+  border-top: 1px solid #d7d7d7;
+  margin: 10px 0 0;
+  padding: 10px 0 0;
+}
+#keen-explorer .chart-options select {
+  margin-top: 1px;
+}
+#keen-explorer .chart-options .code-sample-toggle.open {
+  background-color: #d7d7d7;
 }
 #keen-explorer .big-notice {
   padding: 5em 2em;
@@ -1311,60 +1384,51 @@ body.keen-explorer {
   padding: 5px 10px;
 }
 #keen-explorer textarea.json-view {
-  border-radius: 4px;
-  padding: 30px;
-  height: 350px;
+  background-color: #f5f5f5;
   border: none;
+  border-radius: 2px;
+  color: #4d4d4d;
   display: block;
-  font-size: 14px;
-  line-height: 1.42857143;
-  color: #333;
+  font-size: 12px;
+  line-height: 1.5;
+  min-height: 400px;
+  padding: 15px;
+  resize: none;
   word-break: break-all;
   word-wrap: break-word;
-  background-color: #f5f5f5;
   width: 100%;
-  resize: none;
 }
 #keen-explorer textarea.json-view:focus {
   outline: 0;
 }
-#keen-explorer .run-query {
-  margin-right: 8px;
-}
-#keen-explorer .code-sample-toggle {
-  color: #333333;
-  font-weight: 700;
-}
-#keen-explorer .code-sample-toggle.open {
-  background-color: #333333;
-  color: #e6e6e6;
-}
 #keen-explorer .code-sample-panel {
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  width: 100%;
-  box-sizing: border-box;
-  background: #333;
-  height: 100%;
+  background-color: rgba(0, 0, 0, 0.25);
+  border-bottom: 1px solid #a7a7a7;
+  border-radius: 2px 2px 0 0;
+  left: 0;
   overflow-y: scroll;
+  position: absolute;
+  top: 0;
+  width: 100%;
   z-index: 100;
-  border-radius: 3px;
 }
 #keen-explorer .code-sample-panel .sample {
-  color: #F1F1F1;
-  font-size: 14px;
-  padding: 15px;
+  padding: 10px;
 }
 #keen-explorer .code-sample-panel pre {
-  min-height: 50px;
+  background-color: #fff;
+  border: medium none;
+  font-size: 11px;
+  margin: 0;
+  min-height: 400px;
+  padding: 15px 10px;
 }
 #keen-explorer .code-sample-panel .close-btn {
+  color: #808080;
   font-size: 24px;
-  color: #555;
   position: absolute;
-  top: 20px;
-  right: 25px;
+  right: 20px;
+  top: 15px;
 }
 #keen-explorer .filters .filter-property-col {
   padding-right: 0;
@@ -1459,44 +1523,16 @@ body.keen-explorer {
 #keen-explorer .timezone-toggle.active .toggle-options {
   display: block;
 }
-#keen-explorer #nav {
-  border-bottom: 1px solid #DDD;
-  padding-bottom: 20px;
-  overflow: hidden;
-}
-#keen-explorer .no-padding {
-  padding: 0;
-}
-#keen-explorer .no-padding-left {
-  padding-left: 0;
-}
-#keen-explorer .no-padding-right {
-  padding-right: 0;
-}
-#keen-explorer #content {
-  padding: 0;
-}
-#keen-explorer #content header {
-  height: 55px;
-  padding: 10px 0;
-  background: #FBFBFB;
-}
-#keen-explorer #content header h2 {
-  font-size: 24px;
-  line-height: 35px;
-  margin: 0;
-}
-#keen-explorer #content section {
-  padding: 20px 0;
+#keen-explorer a {
+  color: #00bbde;
 }
 #keen-explorer .btn .icon,
 #keen-explorer h1 .icon,
 #keen-explorer h2 .icon,
 #keen-explorer h3 .icon,
 #keen-explorer h4 .icon,
-#keen-explorer .nav-tabs li a .icon,
 #keen-explorer .alert .icon {
-  margin-right: 8px;
+  margin-right: 10px;
 }
 #keen-explorer .icon.no-margin {
   margin: 0;

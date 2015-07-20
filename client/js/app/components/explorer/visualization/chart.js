@@ -72,30 +72,17 @@ var Chart = React.createClass({
     );
 	},
 
-	buildVizMessage: function(){
-		if (this.props.model.query.analysis_type === 'extraction') {
-			return (
-				<div className="alert alert-info alert-small text-center margin-bottom-tiny">
-					<span className="icon glyphicon glyphicon-info-sign"></span>
-					Preview is limited to {ExplorerUtils.EXRACTION_EVENT_LIMIT} events. Complete extractions are available by email.
-				</div>
-			);
-		}
-	},
-
 	// ***********************
 	// Lifecycle hooks
 	// ***********************
 
   render: function() {
-  	var vizMessage = this.buildVizMessage();
   	var vizContent = this.buildVizContent();
 
     return (
 			<div className="chart-area">
 				<Loader visible={this.props.model.loading} />
 	      {vizContent}
-	      {vizMessage}
 			</div>
     );
   }

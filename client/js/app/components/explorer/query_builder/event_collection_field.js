@@ -14,22 +14,20 @@ var EventCollectionField = React.createClass({
 
   render: function() {
     return (
-      <div className="row margin-bottom-small">
-        <div className="col-md-12">
-          <label htmlFor="event_collection">Event Collection</label>
-          <ReactSelect ref="select"
-                       name="event_collection"
-                       inputClasses="event-collection form-control"
-                       id="event_collection"
-                       items={this.props.options}
-                       handleChange={this.props.handleChange}
-                       value={this.props.value}
-                       title="Event Collection"
-                       sort={true} />
-          <button className="btn btn-link field-secondary-control" title="Browse event collections" type="button" onClick={this.props.onBrowseEvents}>
-            <span className="icon glyphicon glyphicon-search"></span> Preview collections
-          </button>
-        </div>
+      <div className="field-component">
+        <label htmlFor="event_collection">Event Collection</label>
+        <ReactSelect ref="select"
+                     name="event_collection"
+                     inputClasses="event-collection form-control"
+                     id="event_collection"
+                     items={this.props.options}
+                     handleChange={this.props.handleChange}
+                     value={this.props.value}
+                     title="Event Collection"
+                     sort={true} />
+        <button className="btn btn-link field-secondary-control" title="Browse event collections" type="button" onClick={this.props.onBrowseEvents}>
+          <span className="icon glyphicon glyphicon-search"></span> Preview collections
+        </button>
       </div>
     );
   }

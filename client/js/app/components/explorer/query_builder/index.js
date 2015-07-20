@@ -86,7 +86,7 @@ var QueryBuilder = React.createClass({
     if (analysisType && analysisType !== 'count' && analysisType !== 'extraction') {
       targetPropertyField = <TargetPropertyField ref="target-property-field"
                                                  value={this.props.model.query.target_property}
-                                                 options={this.getEventPropertyNames()} 
+                                                 options={this.getEventPropertyNames()}
                                                  handleChange={this.handleChange} />;
     }
     if (analysisType === 'percentile') {
@@ -97,13 +97,13 @@ var QueryBuilder = React.createClass({
 
 
     return (
-      <section className="query-builder">
+      <section className="query-pane-section query-builder">
         <form className="form query-builder-form" onSubmit={this.handleQuerySubmit}>
 
           <EventCollectionField ref="event-collection-field"
                                 value={this.props.model.query.event_collection}
                                 options={this.props.project.eventCollections}
-                                handleChange={this.handleChange} 
+                                handleChange={this.handleChange}
                                 onBrowseEvents={this.props.onBrowseEvents} />
           <AnalysisTypeField ref="analysis-type-field"
                              value={this.props.model.query.analysis_type}
@@ -115,30 +115,22 @@ var QueryBuilder = React.createClass({
           <hr className="fieldset-divider" />
           {groupByField}
 
-          <div className="row margin-bottom-small">
-            <div className="col-md-12">
-              <FieldsToggle ref="filters-fields-toggle"
-                            name="Filters"
-                            model={this.props.model}
-                            toggleCallback={this.props.handleFiltersToggle}
-                            fieldsCount={validFilters(this.props.model.query.filters).length} />
-            </div>
+          <div className="field-component">
+            <FieldsToggle ref="filters-fields-toggle"
+                          name="Filters"
+                          model={this.props.model}
+                          toggleCallback={this.props.handleFiltersToggle}
+                          fieldsCount={validFilters(this.props.model.query.filters).length} />
           </div>
 
           <Timeframe ref="timeframe"
                      model={this.props.model}
                      project={this.props.project} />
 
-          <div className="row">
-            <div className="col-md-12">
-              <RunQuery classes="pull-right"
-                        clearQuery={this.clearQuery}
-                        model={this.props.model}
-                        handleQuerySubmit={this.handleQuerySubmit} />
-            </div>
-          </div>
-
-          <hr className="fieldset-divider" />
+          <RunQuery classes="pull-right"
+                    clearQuery={this.clearQuery}
+                    model={this.props.model}
+                    handleQuerySubmit={this.handleQuerySubmit} />
 
           <ApiUrl url={ExplorerUtils.getApiQueryUrl(this.props.client, this.props.model)} />
 

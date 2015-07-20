@@ -57,8 +57,8 @@ var BrowseFavorites = React.createClass({
       var datetime = dateForItem(listItem);
       if (datetime) {
         createdAt = (
-          <p className="date">
-            <span className="icon glyphicon glyphicon-time margin-right-tiny"></span>
+          <p className="date pull-right">
+            <span className="icon glyphicon glyphicon-time"></span>
             {datetime}
           </p>
         );
@@ -68,18 +68,12 @@ var BrowseFavorites = React.createClass({
         <li className={classes} key={index} data-id={listItem.id} onClick={this.clickCallback}>
           {removeBtn}
           <h5 className="name">{listItem.name}</h5>
-          <div className="metadata">
-            <div className="row">
-              <div className="col-md-4">
-                <p className="author">
-                  <span className="icon glyphicon glyphicon-user margin-right-tiny"></span>
-                  {nameForUser(listItem.user)}
-                </p>
-              </div>
-              <div className="col-md-8">
-                {createdAt}
-              </div>
-            </div>
+          <div className="metadata clearfix">
+            <p className="author pull-left">
+              <span className="icon glyphicon glyphicon-user"></span>
+              {nameForUser(listItem.user)}
+            </p>
+            {createdAt}
           </div>
         </li>
       );
@@ -120,24 +114,24 @@ var BrowseFavorites = React.createClass({
     var listItems = this.buildFavList();
 
     return (
-      <section className="browse-favorites">
+      <section className="query-pane-section browse-favorites">
         {this.props.notice}
         <div className="fav-group-options">
           <div className="radio-inline">
             <label>
               <input type="radio" name="favgroup" value="all" ref="all-filter" checked={this.state.favgroup === 'all' ? true : false} onChange={this.fieldChanged} />
-              {"My whole team's"}
+              {"Team"}
             </label>
           </div>
           <div className="radio-inline">
             <label>
               <input type="radio" name="favgroup" value="user" ref="user-filter" checked={this.state.favgroup === 'user' ? true : false} onChange={this.fieldChanged} />
-              Only mine
+              {"Mine"}
             </label>
           </div>
         </div>
         <div className="search-box">
-          <input type="text" name="searchterm" ref="searchbox" placeholder="Search fav names..." onChange={this.fieldChanged} />
+          <input type="text" name="searchterm" ref="searchbox" placeholder="Search" onChange={this.fieldChanged} />
           <span className="glyphicon glyphicon-search icon"></span>
         </div>
         {listItems}

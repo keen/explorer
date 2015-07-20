@@ -453,16 +453,10 @@ var App = React.createClass({displayName: "App",
     return (
     	React.createElement("div", {id: "keen-explorer"}, 
     		React.createElement(Loader, {visible: this.state.project.loading, additionalClasses: "app-loader"}), 
-	      React.createElement("div", {className: "container-fluid"}, 
-	      	React.createElement("div", {className: "row"}, 
-	      		React.createElement("div", {className: "col-md-12"}, 
-	      			React.createElement(RouteHandler, {project: this.state.project, 
-                            config: this.props.config, 
-                            client: this.props.config.client, 
-                            persistence: this.props.config.persistence})
-	      		)
-	      	)
-	      )
+        React.createElement(RouteHandler, {project: this.state.project, 
+                      config: this.props.config, 
+                      client: this.props.config.client, 
+                      persistence: this.props.config.persistence})
       )
     );
   },
@@ -474,6 +468,7 @@ var App = React.createClass({displayName: "App",
 });
 
 module.exports = App;
+
 },{"../stores/ProjectStore":54,"../utils/ProjectUtils":59,"./common/loader.js":17,"react":300,"react-router":113}],8:[function(require,module,exports){
 /**
  * @jsx React.DOM
@@ -526,10 +521,10 @@ var AbsolutePicker = React.createClass({displayName: "AbsolutePicker",
     return (
       React.createElement("div", {className: "absolute-timeframe-picker"}, 
         React.createElement("div", {className: "row"}, 
-          React.createElement("div", {className: "col-md-2"}, 
+          React.createElement("div", {className: "col-xs-2"}, 
             React.createElement("label", null, "Start")
           ), 
-          React.createElement("div", {className: "col-md-5 form-collapse-right"}, 
+          React.createElement("div", {className: "col-xs-5 form-collapse-right"}, 
             React.createElement(Datepicker, {ref: "start-date", 
                         value: moment(time.start).format(dateFormat), 
                         name: "start", 
@@ -537,7 +532,7 @@ var AbsolutePicker = React.createClass({displayName: "AbsolutePicker",
                         onBlur: this.handleDateBlur, 
                         onSet: this.setDate})
           ), 
-          React.createElement("div", {className: "col-md-5 form-collapse-left"}, 
+          React.createElement("div", {className: "col-xs-5 form-collapse-left"}, 
             React.createElement(Timepicker, {ref: "start-time", 
                         value: moment(time.start).format(timeFormat), 
                         name: "start", 
@@ -547,10 +542,10 @@ var AbsolutePicker = React.createClass({displayName: "AbsolutePicker",
           )
         ), 
         React.createElement("div", {className: "row"}, 
-          React.createElement("div", {className: "col-md-2"}, 
+          React.createElement("div", {className: "col-xs-2"}, 
             React.createElement("label", null, "End")
           ), 
-          React.createElement("div", {className: "col-md-5 form-collapse-right"}, 
+          React.createElement("div", {className: "col-xs-5 form-collapse-right"}, 
             React.createElement(Datepicker, {ref: "end-date", 
                         value: moment(time.end).format(dateFormat), 
                         minimum: moment(time.start).format(dateFormat), 
@@ -559,7 +554,7 @@ var AbsolutePicker = React.createClass({displayName: "AbsolutePicker",
                         onBlur: this.handleDateBlur, 
                         onSet: this.setDate})
           ), 
-          React.createElement("div", {className: "col-md-5 form-collapse-left"}, 
+          React.createElement("div", {className: "col-xs-5 form-collapse-left"}, 
             React.createElement(Timepicker, {ref: "end-time", 
                         value: moment(time.end).format(timeFormat), 
                         name: "end", 
@@ -1785,7 +1780,7 @@ var Modal = React.createClass({displayName: "Modal",
                 React.createElement("span", {"aria-hidden": "true"}, "×"), 
                 React.createElement("span", {className: "sr-only"}, "Close")
               ), 
-              React.createElement("h3", {className: "modal-title text-center"}, 
+              React.createElement("h3", {className: "modal-title"}, 
                 titleIcon, 
                 this.props.title
               )
@@ -1842,7 +1837,7 @@ var NoticeComponent = React.createClass({displayName: "NoticeComponent",
   },
 
   render: function() {
-    var classes = 'alert';
+    var classes = 'notice-component alert';
     if (!this.state.open) {
       classes += ' hide';
     }
@@ -2234,7 +2229,7 @@ var RelativePicker = React.createClass({displayName: "RelativePicker",
   setRelativeTime: function(event) {
     var name = event.target.name;
     var value = event.target.value;
-    
+
     var updates = _.cloneDeep(this.props.model);
     updates.query.time[name] = value;
     ExplorerActions.update(this.props.model.id, updates);
@@ -2260,7 +2255,7 @@ var RelativePicker = React.createClass({displayName: "RelativePicker",
     return (
       React.createElement("div", {className: "relative-timeframe-picker"}, 
         React.createElement("div", {className: "row"}, 
-          React.createElement("div", {className: "col-md-4 form-collapse-right", id: "relative-type"}, 
+          React.createElement("div", {className: "col-xs-4 form-collapse-right", id: "relative-type"}, 
             React.createElement("div", {clasName: "btn-group"}, 
               React.createElement(Select, {label: false, 
                       name: "relativity", 
@@ -2271,7 +2266,7 @@ var RelativePicker = React.createClass({displayName: "RelativePicker",
                       selectedOption: this.props.model.query.time.relativity})
             )
           ), 
-          React.createElement("div", {className: "col-md-3 form-collapse-left form-collapse-right", id: "interval-amount"}, 
+          React.createElement("div", {className: "col-xs-3 form-collapse-left form-collapse-right", id: "interval-amount"}, 
             React.createElement(Input, {label: false, 
                    name: "amount", 
                    classes: "amount", 
@@ -2279,7 +2274,7 @@ var RelativePicker = React.createClass({displayName: "RelativePicker",
                    placeholder: "e.g. 1", 
                    value: this.props.model.query.time.amount || ""})
           ), 
-          React.createElement("div", {className: "col-md-5 form-collapse-left", id: "sub-interval-type"}, 
+          React.createElement("div", {className: "col-xs-5 form-collapse-left", id: "sub-interval-type"}, 
             React.createElement(Select, {label: false, 
                     name: "sub_timeframe", 
                     classes: "sub-timeframe", 
@@ -2342,17 +2337,17 @@ var RunQuery = React.createClass({displayName: "RunQuery",
   render: function() {
     var queryButtonClasses = classNames({
       'disabled': this.props.model.loading,
-      'btn btn-primary run-query pull-left': true
+      'btn btn-primary run-query': true
     });
 
     return (
       React.createElement("div", {className: this.props.classes}, 
+        React.createElement("button", {type: "reset", className: "btn btn-default pull-left", onClick: this.props.clearQuery, id: "clear-explorer-query"}, 
+          "Clear"
+        ), 
         React.createElement("button", {type: "submit", className: queryButtonClasses, onClick: this.props.handleQuerySubmit, ref: "runquery", id: "run-query"}, 
           React.createElement("span", {className: "icon glyphicon glyphicon-check"}), 
           this.queryButtonText()
-        ), 
-        React.createElement("button", {type: "reset", className: "btn btn-default pull-left", onClick: this.props.clearQuery, id: "clear-explorer-query"}, 
-          "Clear"
         )
       )
     );
@@ -2361,6 +2356,7 @@ var RunQuery = React.createClass({displayName: "RunQuery",
 });
 
 module.exports = RunQuery;
+
 },{"classnames":73,"react":300}],23:[function(require,module,exports){
 /**
  * @jsx React.DOM
@@ -2533,7 +2529,7 @@ var Timeframe = React.createClass({displayName: "Timeframe",
       } else {
         updates.query.time = absoluteDefaults();
       }
-      ExplorerActions.update(this.props.model.id, updates);  
+      ExplorerActions.update(this.props.model.id, updates);
     }
   },
 
@@ -2565,25 +2561,23 @@ var Timeframe = React.createClass({displayName: "Timeframe",
       var warningMessage = React.createElement("div", {className: "alert alert-warning"}, "Intervals require a timeframe property.");
 
       return (
-        React.createElement("div", {className: "row margin-bottom-small"}, 
-          React.createElement("div", {className: "col-md-12 form-group"}, 
-            React.createElement(FieldsToggle, {ref: "interval-toggle", 
-                          name: "Interval", 
-                          initialOpenState: this.props.model.query.interval, 
-                          attrsToStore: 'interval', 
-                          getFn: this.timeframeGetFn, 
-                          updateFn: this.timeframeUpdateFn, 
-                          toggleCallback: this.intervalFieldsToggled}, 
-              hasTimeframe ? null : warningMessage, 
-              React.createElement(Select, {label: false, 
-                      name: "interval", 
-                      classes: "interval-type", 
-                      options: ProjectUtils.getConstant('ABSOLUTE_INTERVAL_TYPES'), 
-                      emptyOption: false, 
-                      handleSelection: this.setInterval, 
-                      selectedOption: this.props.model.query.interval, 
-                      sort: false})
-            )
+        React.createElement("div", {className: "field-component"}, 
+          React.createElement(FieldsToggle, {ref: "interval-toggle", 
+                        name: "Interval", 
+                        initialOpenState: this.props.model.query.interval, 
+                        attrsToStore: 'interval', 
+                        getFn: this.timeframeGetFn, 
+                        updateFn: this.timeframeUpdateFn, 
+                        toggleCallback: this.intervalFieldsToggled}, 
+            hasTimeframe ? null : warningMessage, 
+            React.createElement(Select, {label: false, 
+                    name: "interval", 
+                    classes: "interval-type", 
+                    options: ProjectUtils.getConstant('ABSOLUTE_INTERVAL_TYPES'), 
+                    emptyOption: false, 
+                    handleSelection: this.setInterval, 
+                    selectedOption: this.props.model.query.interval, 
+                    sort: false})
           )
         )
       );
@@ -2591,7 +2585,7 @@ var Timeframe = React.createClass({displayName: "Timeframe",
   },
 
   timeframeUpdateFn: function(updates) {
-    ExplorerActions.update(this.props.model.id, { 
+    ExplorerActions.update(this.props.model.id, {
       query: _.assign({}, this.props.model.query, updates)
     });
   },
@@ -2615,32 +2609,30 @@ var Timeframe = React.createClass({displayName: "Timeframe",
 
     return (
       React.createElement("div", {className: "timeframe"}, 
-        React.createElement("div", {className: "row margin-bottom-small"}, 
-          React.createElement("div", {className: "col-md-12"}, 
-            React.createElement(FieldsToggle, {name: "Timeframe", 
-                          ref: "toggle", 
-                          updateFn: this.timeframeUpdateFn, 
-                          getFn: this.timeframeGetFn, 
-                          initialOpenState: ExplorerUtils.getTimeframe(this.props.model), 
-                          attrsToStore: ['time', 'timezone'], 
-                          resetValues: 
-                            {
-                              time: {},
-                              timezone: ProjectUtils.getConstant('DEFAULT_TIMEZONE')
-                            }, 
-                          
-                          toggleCallback: this.timeframeFieldsToggled}, 
-              React.createElement("ul", {className: "nav nav-pills", role: "tablist"}, 
-                React.createElement("li", {className: this.isRelative() ? 'active' : ''}, 
-                  React.createElement("a", {href: "#", className: "relative-tab", "data-type": "relative", onClick: this.toggleTimeframeType}, "Relative")
-                ), 
-                React.createElement("li", {className: this.isAbsolute() ? 'active' : ''}, 
-                  React.createElement("a", {href: "#", className: "absolute-tab", "data-type": "absolute", onClick: this.toggleTimeframeType}, "Absolute")
-                )
+        React.createElement("div", {className: "field-component"}, 
+          React.createElement(FieldsToggle, {name: "Timeframe", 
+                        ref: "toggle", 
+                        updateFn: this.timeframeUpdateFn, 
+                        getFn: this.timeframeGetFn, 
+                        initialOpenState: ExplorerUtils.getTimeframe(this.props.model), 
+                        attrsToStore: ['time', 'timezone'], 
+                        resetValues: 
+                          {
+                            time: {},
+                            timezone: ProjectUtils.getConstant('DEFAULT_TIMEZONE')
+                          }, 
+                        
+                        toggleCallback: this.timeframeFieldsToggled}, 
+            React.createElement("ul", {className: "nav nav-pills", role: "tablist"}, 
+              React.createElement("li", {className: this.isRelative() ? 'active' : ''}, 
+                React.createElement("a", {href: "#", className: "relative-tab", "data-type": "relative", onClick: this.toggleTimeframeType}, "Relative")
               ), 
-              timeframePicker, 
-              React.createElement(Timezone, {model: this.props.model})
-            )
+              React.createElement("li", {className: this.isAbsolute() ? 'active' : ''}, 
+                React.createElement("a", {href: "#", className: "absolute-tab", "data-type": "absolute", onClick: this.toggleTimeframeType}, "Absolute")
+              )
+            ), 
+            timeframePicker, 
+            React.createElement(Timezone, {model: this.props.model})
           )
         ), 
         intervalToggle
@@ -3212,8 +3204,8 @@ var BrowseFavorites = React.createClass({displayName: "BrowseFavorites",
       var datetime = dateForItem(listItem);
       if (datetime) {
         createdAt = (
-          React.createElement("p", {className: "date"}, 
-            React.createElement("span", {className: "icon glyphicon glyphicon-time margin-right-tiny"}), 
+          React.createElement("p", {className: "date pull-right"}, 
+            React.createElement("span", {className: "icon glyphicon glyphicon-time"}), 
             datetime
           )
         );
@@ -3223,18 +3215,12 @@ var BrowseFavorites = React.createClass({displayName: "BrowseFavorites",
         React.createElement("li", {className: classes, key: index, "data-id": listItem.id, onClick: this.clickCallback}, 
           removeBtn, 
           React.createElement("h5", {className: "name"}, listItem.name), 
-          React.createElement("div", {className: "metadata"}, 
-            React.createElement("div", {className: "row"}, 
-              React.createElement("div", {className: "col-md-4"}, 
-                React.createElement("p", {className: "author"}, 
-                  React.createElement("span", {className: "icon glyphicon glyphicon-user margin-right-tiny"}), 
-                  nameForUser(listItem.user)
-                )
-              ), 
-              React.createElement("div", {className: "col-md-8"}, 
-                createdAt
-              )
-            )
+          React.createElement("div", {className: "metadata clearfix"}, 
+            React.createElement("p", {className: "author pull-left"}, 
+              React.createElement("span", {className: "icon glyphicon glyphicon-user"}), 
+              nameForUser(listItem.user)
+            ), 
+            createdAt
           )
         )
       );
@@ -3275,24 +3261,24 @@ var BrowseFavorites = React.createClass({displayName: "BrowseFavorites",
     var listItems = this.buildFavList();
 
     return (
-      React.createElement("section", {className: "browse-favorites"}, 
+      React.createElement("section", {className: "query-pane-section browse-favorites"}, 
         this.props.notice, 
         React.createElement("div", {className: "fav-group-options"}, 
           React.createElement("div", {className: "radio-inline"}, 
             React.createElement("label", null, 
               React.createElement("input", {type: "radio", name: "favgroup", value: "all", ref: "all-filter", checked: this.state.favgroup === 'all' ? true : false, onChange: this.fieldChanged}), 
-              "My whole team's"
+              "Team"
             )
           ), 
           React.createElement("div", {className: "radio-inline"}, 
             React.createElement("label", null, 
               React.createElement("input", {type: "radio", name: "favgroup", value: "user", ref: "user-filter", checked: this.state.favgroup === 'user' ? true : false, onChange: this.fieldChanged}), 
-              "Only mine"
+              "Mine"
             )
           )
         ), 
         React.createElement("div", {className: "search-box"}, 
-          React.createElement("input", {type: "text", name: "searchterm", ref: "searchbox", placeholder: "Search fav names...", onChange: this.fieldChanged}), 
+          React.createElement("input", {type: "text", name: "searchterm", ref: "searchbox", placeholder: "Search", onChange: this.fieldChanged}), 
           React.createElement("span", {className: "glyphicon glyphicon-search icon"})
         ), 
         listItems, 
@@ -3357,7 +3343,7 @@ var Explorer = React.createClass({displayName: "Explorer",
   // ********************************
   // Callbacks for child components
   // ********************************
-  
+
   favoriteClicked: function(event) {
     event.preventDefault();
     if (this.state.activeExplorer.loading) {
@@ -3369,7 +3355,7 @@ var Explorer = React.createClass({displayName: "Explorer",
     } else {
       var modelId = event.currentTarget.dataset.id;
       ExplorerActions.setActive(modelId);
-      ExplorerActions.exec(this.props.client, modelId);  
+      ExplorerActions.exec(this.props.client, modelId);
     }
   },
 
@@ -3430,7 +3416,7 @@ var Explorer = React.createClass({displayName: "Explorer",
   onOpenCSVExtraction: function() {
     this.refs['csv-extraction'].refs.modal.open();
   },
-  
+
   // ********************************
   // Convenience functions
   // ********************************
@@ -3447,6 +3433,12 @@ var Explorer = React.createClass({displayName: "Explorer",
     var explorerBottom = explorerTop + $explorerNode.outerHeight();
 
     var vizAreaHeight = $(this.refs['viz-area'].getDOMNode()).outerHeight();
+
+    // Disable for mobile screens
+    if (window.innerHeight > window.innerWidth) {
+      this.setVizWrapTop(0);
+      return;
+    }
 
     if (adjustedScrollOffset > explorerTop && (adjustedScrollOffset + vizAreaHeight) < explorerBottom) {
       var offset = (adjustedScrollOffset - explorerTop);
@@ -3545,11 +3537,11 @@ var Explorer = React.createClass({displayName: "Explorer",
     return (
       React.createElement("div", {ref: "root"}, 
         React.createElement("div", {className: "row"}, 
-          React.createElement("div", {className: "col-md-5"}, 
+          React.createElement("div", {className: "col-sm-5 explorer-query-builder"}, 
             queryPaneTabs, 
             queryPane
           ), 
-          React.createElement("div", {ref: "viz-area", className: "col-md-7 viz-area"}, 
+          React.createElement("div", {ref: "viz-area", className: "col-sm-7 explorer-visualization"}, 
             React.createElement(Visualization, {notice: this.state.notice, 
                            model: this.state.activeExplorer, 
                            client: this.props.client, 
@@ -3601,16 +3593,14 @@ var AnalysisTypeField = React.createClass({displayName: "AnalysisTypeField",
 
   render: function() {
     return (
-      React.createElement("div", {className: "row margin-bottom-small"}, 
-        React.createElement("div", {className: "col-md-12"}, 
-          React.createElement("label", null, "Analysis Type"), 
-          React.createElement(ReactSelect, {ref: "select", 
-                       name: "analysis_type", 
-                       inputClasses: "analysis-type form-control", 
-                       items: this.props.options, 
-                       handleChange: this.props.handleChange, 
-                       value: this.props.value})
-        )
+      React.createElement("div", {className: "field-component"}, 
+        React.createElement("label", null, "Analysis Type"), 
+        React.createElement(ReactSelect, {ref: "select", 
+                     name: "analysis_type", 
+                     inputClasses: "analysis-type form-control", 
+                     items: this.props.options, 
+                     handleChange: this.props.handleChange, 
+                     value: this.props.value})
       )
     );
   }
@@ -3656,7 +3646,7 @@ var ApiUrl = React.createClass({displayName: "ApiUrl",
     return (
       React.createElement("div", {className: "explorer-api-url"}, 
         React.createElement("button", {className: "btn btn-link field-secondary-control", title: "API URL", type: "button", onClick: this.handleClick}, 
-          React.createElement("span", {className: "icon glyphicon glyphicon-chevron-" + (this.state.active ? "down" : "right")}), " API Query URL"
+          React.createElement("span", {className: "icon glyphicon glyphicon-chevron-" + (this.state.active ? "down" : "right") + " icon-chevron-" + (this.state.active ? "down" : "right")}), " API Query URL"
         ), 
         React.createElement("div", {className: this.state.active ? "show" : "hide"}, 
           React.createElement("input", {
@@ -3694,21 +3684,19 @@ var EventCollectionField = React.createClass({displayName: "EventCollectionField
 
   render: function() {
     return (
-      React.createElement("div", {className: "row margin-bottom-small"}, 
-        React.createElement("div", {className: "col-md-12"}, 
-          React.createElement("label", {htmlFor: "event_collection"}, "Event Collection"), 
-          React.createElement(ReactSelect, {ref: "select", 
-                       name: "event_collection", 
-                       inputClasses: "event-collection form-control", 
-                       id: "event_collection", 
-                       items: this.props.options, 
-                       handleChange: this.props.handleChange, 
-                       value: this.props.value, 
-                       title: "Event Collection", 
-                       sort: true}), 
-          React.createElement("button", {className: "btn btn-link field-secondary-control", title: "Browse event collections", type: "button", onClick: this.props.onBrowseEvents}, 
-            React.createElement("span", {className: "icon glyphicon glyphicon-search"}), " Preview collections"
-          )
+      React.createElement("div", {className: "field-component"}, 
+        React.createElement("label", {htmlFor: "event_collection"}, "Event Collection"), 
+        React.createElement(ReactSelect, {ref: "select", 
+                     name: "event_collection", 
+                     inputClasses: "event-collection form-control", 
+                     id: "event_collection", 
+                     items: this.props.options, 
+                     handleChange: this.props.handleChange, 
+                     value: this.props.value, 
+                     title: "Event Collection", 
+                     sort: true}), 
+        React.createElement("button", {className: "btn btn-link field-secondary-control", title: "Browse event collections", type: "button", onClick: this.props.onBrowseEvents}, 
+          React.createElement("span", {className: "icon glyphicon glyphicon-search"}), " Preview collections"
         )
       )
     );
@@ -3749,23 +3737,21 @@ var GroupByField = React.createClass({displayName: "GroupByField",
 
   render: function() {
     return (
-      React.createElement("div", {className: "row margin-bottom-small"}, 
-        React.createElement("div", {className: "col-md-12"}, 
-          React.createElement(FieldsToggle, {ref: "toggle", 
-                        name: "Group By", 
-                        initialOpenState: this.props.value, 
-                        updateFn: this.props.updateGroupBy, 
-                        getFn: this.getGroupBy, 
-                        attrsToStore: "group_by", 
-                        toggleCallback: this.focusOnReactSelect}, 
-            React.createElement(ReactSelect, {ref: "select", 
-                         inputClasses: "group-by form-control", 
-                         name: "group_by", 
-                         items: this.props.options, 
-                         handleChange: this.props.handleChange, 
-                         value: this.props.value || '', 
-                         sort: true})
-          )
+      React.createElement("div", {className: "field-component"}, 
+        React.createElement(FieldsToggle, {ref: "toggle", 
+                      name: "Group By", 
+                      initialOpenState: this.props.value, 
+                      updateFn: this.props.updateGroupBy, 
+                      getFn: this.getGroupBy, 
+                      attrsToStore: "group_by", 
+                      toggleCallback: this.focusOnReactSelect}, 
+          React.createElement(ReactSelect, {ref: "select", 
+                       inputClasses: "group-by form-control", 
+                       name: "group_by", 
+                       items: this.props.options, 
+                       handleChange: this.props.handleChange, 
+                       value: this.props.value || '', 
+                       sort: true})
         )
       )
     );
@@ -3875,7 +3861,7 @@ var QueryBuilder = React.createClass({displayName: "QueryBuilder",
 
 
     return (
-      React.createElement("section", {className: "query-builder"}, 
+      React.createElement("section", {className: "query-pane-section query-builder"}, 
         React.createElement("form", {className: "form query-builder-form", onSubmit: this.handleQuerySubmit}, 
 
           React.createElement(EventCollectionField, {ref: "event-collection-field", 
@@ -3893,30 +3879,22 @@ var QueryBuilder = React.createClass({displayName: "QueryBuilder",
           React.createElement("hr", {className: "fieldset-divider"}), 
           groupByField, 
 
-          React.createElement("div", {className: "row margin-bottom-small"}, 
-            React.createElement("div", {className: "col-md-12"}, 
-              React.createElement(FieldsToggle, {ref: "filters-fields-toggle", 
-                            name: "Filters", 
-                            model: this.props.model, 
-                            toggleCallback: this.props.handleFiltersToggle, 
-                            fieldsCount: validFilters(this.props.model.query.filters).length})
-            )
+          React.createElement("div", {className: "field-component"}, 
+            React.createElement(FieldsToggle, {ref: "filters-fields-toggle", 
+                          name: "Filters", 
+                          model: this.props.model, 
+                          toggleCallback: this.props.handleFiltersToggle, 
+                          fieldsCount: validFilters(this.props.model.query.filters).length})
           ), 
 
           React.createElement(Timeframe, {ref: "timeframe", 
                      model: this.props.model, 
                      project: this.props.project}), 
 
-          React.createElement("div", {className: "row"}, 
-            React.createElement("div", {className: "col-md-12"}, 
-              React.createElement(RunQuery, {classes: "pull-right", 
-                        clearQuery: this.clearQuery, 
-                        model: this.props.model, 
-                        handleQuerySubmit: this.handleQuerySubmit})
-            )
-          ), 
-
-          React.createElement("hr", {className: "fieldset-divider"}), 
+          React.createElement(RunQuery, {classes: "pull-right", 
+                    clearQuery: this.clearQuery, 
+                    model: this.props.model, 
+                    handleQuerySubmit: this.handleQuerySubmit}), 
 
           React.createElement(ApiUrl, {url: ExplorerUtils.getApiQueryUrl(this.props.client, this.props.model)})
 
@@ -3945,17 +3923,15 @@ var PercentileField = React.createClass({displayName: "PercentileField",
 
   render: function() {
     return (
-      React.createElement("div", {className: "row"}, 
-        React.createElement("div", {className: "col-md-12"}, 
-          React.createElement(Input, {ref: "input", 
-                 label: "Percentile Value", 
-                 classes: "percentile", 
-                 name: "percentile", 
-                 required: "true", 
-                 placeholder: "Ex: 50", 
-                 onChange: this.props.onChange, 
-                 value: this.props.value || ""})
-        )
+      React.createElement("div", {className: "field-component"}, 
+        React.createElement(Input, {ref: "input", 
+               label: "Percentile Value", 
+               classes: "percentile", 
+               name: "percentile", 
+               required: "true", 
+               placeholder: "Ex: 50", 
+               onChange: this.props.onChange, 
+               value: this.props.value || ""})
       )
     );
   }
@@ -3981,17 +3957,15 @@ var TargetPropertyField = React.createClass({displayName: "TargetPropertyField",
 
   render: function() {
     return (
-      React.createElement("div", {className: "row margin-bottom-small"}, 
-        React.createElement("div", {className: "col-md-12"}, 
-          React.createElement("label", null, "Target Property ", React.createElement("small", null, "(required)")), 
-          React.createElement(ReactSelect, {ref: "select", 
-                       inputClasses: "target-property form-control", 
-                       name: "target_property", 
-                       items: this.props.options, 
-                       handleChange: this.props.handleChange, 
-                       value: this.props.value, 
-                       sort: true})
-        )
+      React.createElement("div", {className: "field-component"}, 
+        React.createElement("label", null, "Target Property ", React.createElement("small", null, "(required)")), 
+        React.createElement(ReactSelect, {ref: "select", 
+                     inputClasses: "target-property form-control", 
+                     name: "target_property", 
+                     items: this.props.options, 
+                     handleChange: this.props.handleChange, 
+                     value: this.props.value, 
+                     sort: true})
       )
     );
   }
@@ -4018,14 +3992,13 @@ var QueryPaneTabs = React.createClass({displayName: "QueryPaneTabs",
       React.createElement("ul", {className: "query-pane-tabs nav nav-tabs"}, 
         React.createElement("li", {role: "presentation", className: this.props.activePane === 'build' ? 'active' : ''}, 
           React.createElement("a", {ref: "build-tab", href: "#", onClick: this.toggled.bind(this, 'build')}, 
-            React.createElement("span", {className: "icon glyphicon glyphicon-tasks margin-right-tiny"}), 
-            "Build Query"
+            "Create a new query"
           )
         ), 
         React.createElement("li", {role: "presentation", className: this.props.activePane === 'browse' ? 'active' : ''}, 
           React.createElement("a", {ref: "browse-tab", href: "#", onClick: this.toggled.bind(this, 'browse')}, 
             React.createElement("span", {className: "icon glyphicon glyphicon-heart margin-right-tiny fav-icon"}), 
-            "Browse Favorites"
+            "Favorites"
           )
         )
       )
@@ -4111,30 +4084,17 @@ var Chart = React.createClass({displayName: "Chart",
     );
 	},
 
-	buildVizMessage: function(){
-		if (this.props.model.query.analysis_type === 'extraction') {
-			return (
-				React.createElement("div", {className: "alert alert-info alert-small text-center margin-bottom-tiny"}, 
-					React.createElement("span", {className: "icon glyphicon glyphicon-info-sign"}), 
-					"Preview is limited to ", ExplorerUtils.EXRACTION_EVENT_LIMIT, " events. Complete extractions are available by email."
-				)
-			);
-		}
-	},
-
 	// ***********************
 	// Lifecycle hooks
 	// ***********************
 
   render: function() {
-  	var vizMessage = this.buildVizMessage();
   	var vizContent = this.buildVizContent();
 
     return (
 			React.createElement("div", {className: "chart-area"}, 
 				React.createElement(Loader, {visible: this.props.model.loading}), 
-	      vizContent, 
-	      vizMessage
+	      vizContent
 			)
     );
   }
@@ -4237,63 +4197,71 @@ var Visualization = React.createClass({displayName: "Visualization",
   },
 
   render: function() {
-    var csvExtractionBtn,
+    var csvExtractionBanner,
+        chartOptionsBar,
         favoriteBar,
         favoriteBtn;
 
-    if (this.props.model.query.analysis_type === 'extraction') {
-      csvExtractionBtn = React.createElement("button", {type: "button", className: "margin-right-tiny btn btn-default pull-left", onClick: this.props.onOpenCSVExtraction}, 
-                          "Email extraction"
-                        );
-    }
-    if (this.props.persistence) {
-      favoriteBtn = React.createElement("button", {type: "button", ref: "add-fav", className: "btn btn-default add-favorite", onClick: this.props.addFavoriteClick}, 
-                      React.createElement("span", {className: "icon glyphicon glyphicon-heart margin-right-tiny fav-icon"}), " Add"
-                    );
-    }
-
     var codeSampleBtnClasses = classNames({
-      'code-sample-toggle btn btn-default pull-left margin-right-tiny': true,
+      'code-sample-toggle btn btn-default pull-left': true,
       'open': !this.state.codeSampleHidden
     });
 
+    if (this.props.model.query.analysis_type === 'extraction') {
+      csvExtractionBanner = React.createElement("div", {className: "extraction-message-component"}, 
+                              React.createElement("div", {className: "alert"}, 
+                                React.createElement("span", {className: "icon glyphicon glyphicon-info-sign"}), 
+                                "Previews are limited to the latest ", ExplorerUtils.EXRACTION_EVENT_LIMIT, " events. Larger extractions are available by email."
+                              ), 
+                              React.createElement("button", {type: "button", className: "btn btn-default pull-right", onClick: this.props.onOpenCSVExtraction}, 
+                                "Email extraction"
+                              )
+                            );
+    }
+
+    if (null !== this.props.model.result && !this.props.model.loading) {
+      chartOptionsBar = React.createElement("div", {className: "chart-options clearfix"}, 
+                          React.createElement("div", {className: "pull-left"}, 
+                            React.createElement(Select, {label: false, 
+                                    name: "chart_type", 
+                                    classes: "chart-type", 
+                                    options: this.formatChartTypes(), 
+                                    handleSelection: this.changeChartType, 
+                                    selectedOption: this.props.model.visualization.chart_type, 
+                                    emptyOption: false, 
+                                    disabled: this.props.model.loading})
+                          ), 
+                          React.createElement("div", {className: "pull-right"}, 
+                            React.createElement("button", {className: codeSampleBtnClasses, onClick: this.toggleCodeSample}, 
+                              React.createElement("span", null, "</> Embed")
+                            )
+                          )
+                        );
+    }
+
+    if (this.props.persistence
+      && null !== this.props.model.result
+        && !this.props.model.loading) {
+          favoriteBtn = React.createElement("button", {type: "button", ref: "add-fav", className: "btn btn-default add-favorite", onClick: this.props.addFavoriteClick}, 
+                          React.createElement("span", {className: "icon glyphicon glyphicon-heart fav-icon"}), " Add"
+                        );
+    }
+
     return (
       React.createElement("div", {className: "visualization"}, 
-        React.createElement("div", {className: "row"}, 
-          React.createElement("div", {className: "col-md-12"}, 
-            React.createElement(Notice, {notice: this.props.notice, closeCallback: this.noticeClosed})
-          )
-        ), 
-        React.createElement("div", {className: "content-wrap padding-small"}, 
-          React.createElement("div", {className: "row"}, 
-            React.createElement("div", {className: "col-md-9 btn-bar"}, 
-              React.createElement("button", {className: codeSampleBtnClasses, onClick: this.toggleCodeSample}, 
-                React.createElement("span", null, "</>")
-              ), 
-              favoriteBtn, 
-              csvExtractionBtn
-            ), 
-            React.createElement("div", {className: "col-md-3"}, 
-              React.createElement(Select, {label: false, 
-                      name: "chart_type", 
-                      classes: "chart-type", 
-                      options: this.formatChartTypes(), 
-                      handleSelection: this.changeChartType, 
-                      selectedOption: this.props.model.visualization.chart_type, 
-                      emptyOption: false, 
-                      disabled: this.props.model.loading})
-            )
+        React.createElement(Notice, {notice: this.props.notice, closeCallback: this.noticeClosed}), 
+        React.createElement("div", {className: "visualization-wrapper"}, 
+          csvExtractionBanner, 
+          React.createElement("div", {className: "chart-component"}, 
+            React.createElement(Chart, {model: this.props.model, dataviz: this.dataviz})
           ), 
-          React.createElement("div", {className: "row margin-top-tiny"}, 
-            React.createElement("div", {className: "col-md-12"}, 
-              React.createElement(Chart, {model: this.props.model, dataviz: this.dataviz})
-            )
-          ), 
+          chartOptionsBar, 
           React.createElement(CodeSample, {ref: "codesample", 
                       codeSample: ExplorerUtils.getSdkExample(this.props.model, this.props.client), 
                       hidden: this.state.codeSampleHidden, 
                       onCloseClick: this.toggleCodeSample})
-        )
+        ), 
+        favoriteBtn
       )
     );
   }
@@ -4341,9 +4309,7 @@ var KeenViz = React.createClass({displayName: "KeenViz",
 
   render: function() {
     return (
-			React.createElement("div", null, 
-				React.createElement("div", {ref: "keen-viz"})
-			)
+			React.createElement("div", {ref: "keen-viz"})
     );
   }
 });
@@ -5189,7 +5155,7 @@ function mapSkip(collection, fn) {
 }
 
 function echoIf(valueMaybe, append) {
-  if (valueMaybe) { 
+  if (valueMaybe) {
     return append;
   }
   return '';
@@ -5238,7 +5204,7 @@ module.exports = {
         delete params.filters;
       }
     }
-    
+
     return params;
   },
 
@@ -5270,7 +5236,7 @@ module.exports = {
   },
 
   /**
-   * Execures a Keen.js query with the provided client and query params, calling the 
+   * Execures a Keen.js query with the provided client and query params, calling the
    * callbacks after execution.
    * @param {Object} config The runQuery configuration
    * Expected structure:
@@ -5328,7 +5294,7 @@ module.exports = {
   },
 
   convertDateToUTC: function(date) {
-    return new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds()); 
+    return new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds());
   },
 
   /**
@@ -5349,10 +5315,10 @@ module.exports = {
 
     if (typeof timeframe === 'object') {
       var offset = timeframe.start.substring(timeframe.start.length, timeframe.start.length-6);
-      
+
       timeframe.start = timeframe.start.substring(0, timeframe.start.length-6);
       timeframe.end = timeframe.end.substring(0, timeframe.end.length-6);
-      
+
       var timezone;
       var zone = _.find(ProjectUtils.getConstant('TIMEZONES'), { offset: offset });
       if (zone) {
@@ -5391,7 +5357,7 @@ module.exports = {
    */
   formatQueryParams: function(params) {
     if (!params.query) return;
-    
+
     if (params.query && params.query.timeframe) {
       var unpackedTime = module.exports.unpackTimeframeParam(params.query);
       params.query.time = unpackedTime.time;
@@ -5404,7 +5370,7 @@ module.exports = {
           filter = _.assign({}, filter, FilterUtils.initDatetime(filter));
         }
         if (filter.coercion_type === 'List') {
-          filter = _.assign({}, filter, FilterUtils.initList(filter)); 
+          filter = _.assign({}, filter, FilterUtils.initList(filter));
         }
         filter.property_value = FilterUtils.getCoercedValue(filter);
         return filter;
@@ -5448,7 +5414,7 @@ module.exports = {
 
   getApiQueryUrl: function(client, explorer) {
     var valid = ValidationUtils.runValidations(ValidationUtils.explorer, explorer)
-    
+
     if (valid.isValid) {
       var endpoint = client.config.protocol + "://" + client.config.host;
       var projectId = client.config.projectId;
@@ -5460,7 +5426,7 @@ module.exports = {
       delete attrs['analysis_type'];
 
       var timeframe = _.cloneDeep(attrs['timeframe']);
-      
+
       var filters = _.map(attrs['filters'], function(filter) {
         return _.omit(_.cloneDeep(filter), 'coercion_type');
       });
@@ -5554,14 +5520,18 @@ module.exports = {
       '  readKey: ' + s(client.config.readKey) + echoIf(dynamicContructorValues, ','),
       dynamicContructorValues,
       '});',
+      '',
       'Keen.ready(function(){',
+      '  ',
       '  var query = new Keen.Query(' + s(params.analysis_type) + ', {',
       '    eventCollection: ' + s(params.event_collection) + echoIf(dynamicCriteria, ','),
       dynamicCriteria,
       '  });',
+      '  ',
       '  client.draw(query, document.getElementById("my_chart"), {',
       '    // Custom configuration here',
       '  });',
+      '  ',
       '});'
     ]
 
@@ -5569,6 +5539,7 @@ module.exports = {
   }
 
 };
+
 },{"../validations/ExplorerValidations":62,"./FilterUtils":57,"./FormatUtils":58,"./ProjectUtils":59,"./ValidationUtils":61,"json-stable-stringify":77,"lodash":82,"moment":83,"qs":84}],57:[function(require,module,exports){
 var _ = require('lodash');
 var moment = require('moment');

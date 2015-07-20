@@ -34,7 +34,7 @@ var ApiUrl = React.createClass({
     return (
       <div className="explorer-api-url">
         <button className="btn btn-link field-secondary-control" title="API URL" type="button" onClick={this.handleClick}>
-          <span className={"icon glyphicon glyphicon-chevron-" + (this.state.active ? "down" : "right")}></span> API Query URL
+          <span className={"icon glyphicon glyphicon-chevron-" + (this.state.active ? "down" : "right") + " icon-chevron-" + (this.state.active ? "down" : "right")}></span> API Query URL
         </button>
         <div className={this.state.active ? "show" : "hide"}>
           <input
