@@ -7,11 +7,34 @@
   <link href="https://d1kk3lo5kv9rxi.cloudfront.net/css/font/gotham/woff/b.css?v=1175" rel="stylesheet" type="text/css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://d26b395fwzu5fz.cloudfront.net/keen-data-tools/0.1.10/keen-data-tools.css">
+  <link rel="stylesheet" href="/assets/css/explorer-demo.css" type="text/css" />
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
   <script src="https://d26b395fwzu5fz.cloudfront.net/3.2.4/keen.min.js" type="text/javascript"></script>
   <script src="https://d26b395fwzu5fz.cloudfront.net/keen-data-tools/0.1.10/keen-data-tools.js"></script>
 </head>
 <body>
+  <div class="container-fluid preset-wrapper">
+    <div id="explorer-presets row">
+      <div class="col-xs-4">
+        <a class="explorer-preset" href="explorer?query%5Bevent_collection%5D=page_load&query%5Banalysis_type%5D=count&query%5Btimezone%5D=UTC&query%5Btimeframe%5D=this_1_weeks&visualization%5Bchart_type%5D=metric">
+          <h3>Pageviews this week</h3>
+          <span class="preset-description">How many people went to my website this week?</span>
+        </a>
+      </div>
+      <div class="col-xs-4">
+        <a class="explorer-preset" href="explorer?query%5Bevent_collection%5D=leave&query%5Banalysis_type%5D=average&query%5Btarget_property%5D=sinceLoad&query%5Bgroup_by%5D=page.path&query%5Btimezone%5D=UTC&query%5Bfilters%5D%5B0%5D%5Bproperty_name%5D=page.path&query%5Bfilters%5D%5B0%5D%5Boperator%5D=contains&query%5Bfilters%5D%5B0%5D%5Bproperty_value%5D=%2Fblog&query%5Bfilters%5D%5B0%5D%5Bcoercion_type%5D=String&query%5Btimeframe%5D=this_1_weeks&visualization%5Bchart_type%5D=piechart">
+          <h3>Time on Page</h3>
+          <span class="preset-description">How long are people spending on my website?</span>
+        </a>
+      </div>
+      <div class="col-xs-4">
+        <a class="explorer-preset" href="explorer?query%5Bevent_collection%5D=page_load&query%5Banalysis_type%5D=count_unique&query%5Btarget_property%5D=guid&query%5Bgroup_by%5D=referrer&query%5Binterval%5D=daily&query%5Btimezone%5D=UTC&query%5Btimeframe%5D=previous_1_weeks&visualization%5Bchart_type%5D=linechart">
+          <h3>Referrers</h3>
+          <span class="preset-description">How are people finding my website?</span>
+        </a>
+      </div>
+    </div>
+  </div>
   <div id="explorer"></div>
   <script type="text/javascript">
     $(document).ready(function(){
