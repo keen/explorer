@@ -1,8 +1,6 @@
 # Keen IO Insights Dashboard
 
-The Keen IO insights dashboard is a collection of modular components built with the developer in mind.
-
-Our collection of sample ReactJS UI components sit atop our JS libraries allowing you to easily build out your own custom dashboards. Get insights into your data in a way that suits you.
+The Keen IO explorer is a workbench to easily query your event data.
 
 ## Quick Setup
 
@@ -175,12 +173,15 @@ To contribute to this project:
 * Submit a Pull Request **with** test coverage.
 * Follow our PR template, which includes the following sections:
 
-        - What's this PR do?
-        - Where should the reviewer start?
-        - How should this be manually tested?
-        - Screenshots (if appropriate)
+``` markdown
+# What's this PR do?
 
-Here is an [example](https://github.com/keenlabs/data-tools/pull/25) of our PR format.
+# Where should the reviewer start?
+
+# How should this be manually tested?
+
+# Screenshots (if appropriate)
+```
 
 Would an animated GIF be more informative than a screenshot? Then we recommend [Recordit](http://recordit.co/).
 
