@@ -15,14 +15,14 @@ npm install http-server -g # may require sudo
 jekyll build -w
 ```
 
-4. Run http server in the _site/ directory
+4. Run http server
 
 ``` bash
 cd _site
 http-server
 ```
 
-5. Open it! [http://localhost:8080](http://localhost:8080)
+5. Open it! [http://localhost/_site:8080](http://localhost/_site:8080)
 
 
 Changes made to files will be automatically built (it takes a few seconds), and http-server will pick them up without a restart. Magic!
