@@ -41,17 +41,17 @@ var RunQuery = React.createClass({
   render: function() {
     var queryButtonClasses = classNames({
       'disabled': this.props.model.loading,
-      'btn btn-primary run-query pull-left': true
+      'btn btn-primary run-query': true
     });
 
     return (
       <div className={this.props.classes}>
+        <button type="reset" className="btn btn-default pull-left" onClick={this.props.clearQuery} id="clear-explorer-query">
+          Clear
+        </button>
         <button type="submit" className={queryButtonClasses} onClick={this.props.handleQuerySubmit} ref="runquery" id="run-query">
           <span className="icon glyphicon glyphicon-check"></span>
           {this.queryButtonText()}
-        </button>
-        <button type="reset" className="btn btn-default pull-left" onClick={this.props.clearQuery} id="clear-explorer-query">
-          Clear
         </button>
       </div>
     );

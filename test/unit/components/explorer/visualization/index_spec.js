@@ -57,6 +57,7 @@ describe('components/explorer/visualization/index', function() {
 
     describe('with persistence', function () {
       it('should show the AddFav button', function () {
+        this.model.result = 50;
         this.component.setProps({ persistence: {} });
         assert.isDefined(this.component.refs['add-fav']);
       });
@@ -66,6 +67,7 @@ describe('components/explorer/visualization/index', function() {
   describe('interactions', function () {
     it('should call props.addClick when the add fav button is clicked', function () {
       var stub = sinon.stub();
+      this.model.result = 50;
       this.component.setProps({ persistence: {}, addFavoriteClick: stub });
       TestUtils.Simulate.click(this.component.refs['add-fav'].getDOMNode());
       assert.isTrue(stub.calledOnce);
@@ -88,18 +90,69 @@ describe('components/explorer/visualization/index', function() {
 
     });
 
-    it('it is not disabled when the model is not loading', function(){
+    it('is not disabled when the model is not loading', function(){
+      this.model.result = 50;
       this.model.loading = false;
       this.component.forceUpdate();
       var select = TestUtils.findRenderedDOMComponentWithClass(this.component, 'chart-type').getDOMNode().childNodes[0];
       assert.isFalse(select.disabled);
     });
 
-    it('it is disabled when the model is actively loading', function(){
+    it('is not rendered when the model is actively loading', function(){
       this.model.loading = true;
       this.component.forceUpdate();
-      var select = TestUtils.findRenderedDOMComponentWithClass(this.component, 'chart-type').getDOMNode().childNodes[0];
-      assert.isTrue(select.disabled);
+      assert.lengthOf(TestUtils.scryRenderedDOMComponentsWithClass(this.component, 'chart-type'), 0);
+    });
+
+  });
+
+
+  describe('custom limit message', function(){
+
+    beforeEach(function(){
+      this.model.result = 50;
+      sinon.stub(ExplorerUtils, 'resultCanBeVisualized').returns(true);
+    });
+
+    afterEach(function(){
+      ExplorerUtils.resultCanBeVisualized.restore();
+    });
+
+    describe('shows when the analysis type is extraction', function(){
+      beforeEach(function(){
+        this.model.query.analysis_type = 'extraction';
+      });
+
+      it('for JSON chart type', function(){
+        this.model.visualization.chart_type = 'json';
+        this.component.forceUpdate();
+        assert.lengthOf(TestUtils.scryRenderedDOMComponentsWithClass(this.component, 'extraction-message-component'), 1);
+      });
+
+      it('for Table chart type', function(){
+        this.model.visualization.chart_type = 'table';
+        this.component.forceUpdate();
+        assert.lengthOf(TestUtils.scryRenderedDOMComponentsWithClass(this.component, 'extraction-message-component'), 1);
+      });
+    });
+
+    describe('does not show when the analysis type is not extraction', function(){
+
+      beforeEach(function(){
+        this.model.query.analysis_type = 'count';
+      });
+
+      it('for JSON chart type', function(){
+        this.model.visualization.chart_type = 'json';
+        this.component.forceUpdate();
+        assert.lengthOf(TestUtils.scryRenderedDOMComponentsWithClass(this.component, 'viz-notice'), 0);
+      });
+
+      it('for metric chart type', function(){
+        this.model.visualization.chart_type = 'metric';
+        this.component.forceUpdate();
+        assert.lengthOf(TestUtils.scryRenderedDOMComponentsWithClass(this.component, 'viz-notice'), 0);
+      });
     });
 
   });

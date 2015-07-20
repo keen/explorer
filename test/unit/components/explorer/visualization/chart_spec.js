@@ -27,54 +27,5 @@ describe('components/explorer/visualization/chart', function() {
       assert.equal(this.component.refs.notice.getDOMNode().textContent, message);
     });
 
-    describe('custom limit message', function(){
-
-      beforeEach(function(){
-        this.model.result = 50;
-        sinon.stub(ExplorerUtils, 'resultCanBeVisualized').returns(true);
-      });
-
-      afterEach(function(){
-        ExplorerUtils.resultCanBeVisualized.restore();
-      });
-
-      describe('shows when the analysis type is extraction', function(){
-        beforeEach(function(){
-          this.model.query.analysis_type = 'extraction';
-        });
-
-        it('for JSON chart type', function(){
-          this.model.visualization.chart_type = 'json';
-          this.component.forceUpdate();
-          assert.lengthOf(TestUtils.scryRenderedDOMComponentsWithClass(this.component, 'alert-small'), 1);
-        });
-
-        it('for Table chart type', function(){
-          this.model.visualization.chart_type = 'table';
-          this.component.forceUpdate();
-          assert.lengthOf(TestUtils.scryRenderedDOMComponentsWithClass(this.component, 'alert-small'), 1);
-        });
-      });
-
-      describe('does not show when the analysis type is not extraction', function(){
-
-        beforeEach(function(){
-          this.model.query.analysis_type = 'count';
-        });
-
-        it('for JSON chart type', function(){
-          this.model.visualization.chart_type = 'json';
-          this.component.forceUpdate();
-          assert.lengthOf(TestUtils.scryRenderedDOMComponentsWithClass(this.component, 'viz-notice'), 0);
-        });
-
-        it('for metric chart type', function(){
-          this.model.visualization.chart_type = 'metric';
-          this.component.forceUpdate();
-          assert.lengthOf(TestUtils.scryRenderedDOMComponentsWithClass(this.component, 'viz-notice'), 0);
-        });
-      });
-
-    });
   });
 });

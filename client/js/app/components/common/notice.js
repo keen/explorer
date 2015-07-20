@@ -36,7 +36,7 @@ var NoticeComponent = React.createClass({
   },
 
   render: function() {
-    var classes = 'alert';
+    var classes = 'notice-component alert';
     if (!this.state.open) {
       classes += ' hide';
     }

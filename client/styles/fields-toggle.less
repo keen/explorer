@@ -1,7 +1,7 @@
 .fields-toggle {
 	background: #F2F2F2;
 	border: 1px solid transparent;
-	border-radius: 3px;
+	border-radius: 2px;
 
 	.toggle-label {
 		display: block;
@@ -34,8 +34,11 @@
 			width: 24px;
 
 			.icon {
+				font-size: 20px;
+				left: .5px;
 				position: relative;
 				top: -3px;
+
 				&::before {
 					content: "\002B";
 				}
@@ -67,7 +70,7 @@
 .fields-toggle.open {
 	background: #FFF;
 
-	border: 1px solid #e2e2e2;
+	border: 1px solid rgba(0,0,0,.07);
 	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
 
 	.toggle-label {
@@ -84,6 +87,9 @@
 		color: #CCC;
 		right: 10px;
 
+		.icon {
+			top: -3px;
+		}
 		.icon::before {
 			content: "\00D7";
 		}

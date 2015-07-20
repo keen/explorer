@@ -149,7 +149,7 @@ var Modal = React.createClass({
                 <span aria-hidden="true">&times;</span>
                 <span className="sr-only">Close</span>
               </button>
-              <h3 className="modal-title text-center">
+              <h3 className="modal-title">
                 {titleIcon}
                 {this.props.title}
               </h3>

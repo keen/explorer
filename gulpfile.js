@@ -243,6 +243,30 @@ gulp.task('production', ['scripts', 'images', 'fonts', 'styles', 'test:unit']);
 
 
 // ********************
+// Terrarium Dev
+// ********************
+
+gulp.task('keen-web-scripts', ['build-scripts'], function(){
+  return gulp.src('./dist/keen-data-tools.js')
+    .pipe(gulp.dest('../terrarium/src/Keen-Web/app/static/js'));
+});
+
+gulp.task('keen-web-styles', ['build-styles'], function(){
+  return gulp.src('./dist/keen-data-tools.css')
+    .pipe(gulp.dest('../terrarium/src/Keen-Web/app/static/css'));
+});
+
+gulp.task('keen-web', ['keen-web-scripts', 'keen-web-styles'], function(){
+  gulp.watch(['client/**/*.js'], ['keen-web-scripts']);
+  gulp.watch('client/**/*.less', ['keen-web-styles']);
+});
+
+gulp.task('terrarium', ['development', 'keen-web']);
+
+gulp.task('terrarium-with-tests', ['development-with-tests', 'keen-web']);
+
+
+// ********************
 // Watching
 // ********************
 

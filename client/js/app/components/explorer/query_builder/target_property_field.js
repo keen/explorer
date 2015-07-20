@@ -14,17 +14,15 @@ var TargetPropertyField = React.createClass({
 
   render: function() {
     return (
-      <div className="row margin-bottom-small">
-        <div className='col-md-12'>
-          <label>Target Property <small>(required)</small></label>
-          <ReactSelect ref="select"
-                       inputClasses="target-property form-control"
-                       name="target_property"
-                       items={this.props.options}
-                       handleChange={this.props.handleChange}
-                       value={this.props.value}
-                       sort={true} />
-        </div>
+      <div className="field-component">
+        <label>Target Property <small>(required)</small></label>
+        <ReactSelect ref="select"
+                     inputClasses="target-property form-control"
+                     name="target_property"
+                     items={this.props.options}
+                     handleChange={this.props.handleChange}
+                     value={this.props.value}
+                     sort={true} />
       </div>
     );
   }

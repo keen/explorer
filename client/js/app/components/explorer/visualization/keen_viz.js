@@ -37,9 +37,7 @@ var KeenViz = React.createClass({
 
   render: function() {
     return (
-			<div>
-				<div ref="keen-viz"></div>
-			</div>
+			<div ref="keen-viz"></div>
     );
   }
 });

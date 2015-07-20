@@ -49,10 +49,10 @@ var AbsolutePicker = React.createClass({
     return (
       <div className="absolute-timeframe-picker">
         <div className="row">
-          <div className="col-md-2">
+          <div className="col-xs-2">
             <label>Start</label>
           </div>
-          <div className="col-md-5 form-collapse-right">
+          <div className="col-xs-5 form-collapse-right">
             <Datepicker ref="start-date"
                         value={moment(time.start).format(dateFormat)}
                         name="start"
@@ -60,7 +60,7 @@ var AbsolutePicker = React.createClass({
                         onBlur={this.handleDateBlur}
                         onSet={this.setDate} />
           </div>
-          <div className="col-md-5 form-collapse-left">
+          <div className="col-xs-5 form-collapse-left">
             <Timepicker ref="start-time"
                         value={moment(time.start).format(timeFormat)}
                         name="start"
@@ -70,10 +70,10 @@ var AbsolutePicker = React.createClass({
           </div>
         </div>
         <div className="row">
-          <div className="col-md-2">
+          <div className="col-xs-2">
             <label>End</label>
           </div>
-          <div className="col-md-5 form-collapse-right">
+          <div className="col-xs-5 form-collapse-right">
             <Datepicker ref="end-date"
                         value={moment(time.end).format(dateFormat)}
                         minimum={moment(time.start).format(dateFormat)}
@@ -82,7 +82,7 @@ var AbsolutePicker = React.createClass({
                         onBlur={this.handleDateBlur}
                         onSet={this.setDate} />
           </div>
-          <div className="col-md-5 form-collapse-left">
+          <div className="col-xs-5 form-collapse-left">
             <Timepicker ref="end-time"
                         value={moment(time.end).format(timeFormat)}
                         name="end"

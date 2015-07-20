@@ -8,58 +8,62 @@
     font-size: 16px;
     font-weight: 300;
     cursor: pointer;
-    padding: 8px 15px;
+    padding: 8px 10px;
     word-wrap: break-word;
-    border: 1px solid #DDD;
-    border-bottom-width: 0;
-    background: #FFF;
+    border-top: 1px solid #d7d7d7;
 
     .name {
       margin: 0;
       padding: 0;
-      min-height: 40px;
-      padding-right: 25px;
+      line-height: 28px;
+      padding-right: 28px;
       text-transform: none;
     }
   }
   li.active, li.active:hover {
-    background: #2980b9;
-    color: #FFF;
-  
+    background: #f2f2f2;
     .name {
-      color: #FFF;
+      color: #282828;
     }
-    a.remove-btn .icon {
-      color: #F1F1F1;
+    .metadata {
+      p, .icon {
+        color: #808080;
+      }
     }
-    a.remove-btn:hover .icon {
-      color: #FFF;
+    a.remove-btn {
+      border-color: #a7a7a7;
+      .icon {
+        color: #a7a7a7;
+      }
     }
-  }
-  li:last-child {
-    border-bottom-width: 1px;
   }
   li:hover {
-    background: #EEE;
-
-    a.remove-btn {
-      display: block;
-    }
+    background: #e7e7e7;
   }
   a.remove-btn {
-    display: none;
-    padding: 0px;
     background: none;
+    border: 1px solid #d7d7d7;
+    border-radius: 50%;
+    height: 24px;
+    line-height: 24px;
+    padding: 0px;
     position: absolute;
     right: 10px;
     top: 10px;
+    width: 24px;
+
+    .icon::before {
+			content: "\00D7";
+		}
 
     &:hover {
       background: none;
     }
     .icon {
+      color: #d7d7d7;
+      display: block;
       font-size: 20px;
-      color: #666;
+      text-align: center;
 
       &:hover {
         color: #444;
@@ -67,7 +71,7 @@
     }
   }
   h6 {
-    background: #1B65A3; 
+    background: #1B65A3;
     border-radius: 3px;
     margin-top: 3px;
     padding: 2px 6px;

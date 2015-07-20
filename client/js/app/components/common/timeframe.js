@@ -50,7 +50,7 @@ var Timeframe = React.createClass({
       } else {
         updates.query.time = absoluteDefaults();
       }
-      ExplorerActions.update(this.props.model.id, updates);  
+      ExplorerActions.update(this.props.model.id, updates);
     }
   },
 
@@ -82,33 +82,31 @@ var Timeframe = React.createClass({
       var warningMessage = <div className="alert alert-warning">Intervals require a timeframe property.</div>;
 
       return (
-        <div className="row margin-bottom-small">
-          <div className="col-md-12 form-group">
-            <FieldsToggle ref="interval-toggle"
-                          name="Interval"
-                          initialOpenState={this.props.model.query.interval}
-                          attrsToStore={'interval'}
-                          getFn={this.timeframeGetFn}
-                          updateFn={this.timeframeUpdateFn}
-                          toggleCallback={this.intervalFieldsToggled}>
-              {hasTimeframe ? null : warningMessage}
-              <Select label={false}
-                      name="interval"
-                      classes="interval-type"
-                      options={ProjectUtils.getConstant('ABSOLUTE_INTERVAL_TYPES')}
-                      emptyOption={false}
-                      handleSelection={this.setInterval}
-                      selectedOption={this.props.model.query.interval}
-                      sort={false} />
-            </FieldsToggle>
-          </div>
+        <div className="field-component">
+          <FieldsToggle ref="interval-toggle"
+                        name="Interval"
+                        initialOpenState={this.props.model.query.interval}
+                        attrsToStore={'interval'}
+                        getFn={this.timeframeGetFn}
+                        updateFn={this.timeframeUpdateFn}
+                        toggleCallback={this.intervalFieldsToggled}>
+            {hasTimeframe ? null : warningMessage}
+            <Select label={false}
+                    name="interval"
+                    classes="interval-type"
+                    options={ProjectUtils.getConstant('ABSOLUTE_INTERVAL_TYPES')}
+                    emptyOption={false}
+                    handleSelection={this.setInterval}
+                    selectedOption={this.props.model.query.interval}
+                    sort={false} />
+          </FieldsToggle>
         </div>
       );
     }
   },
 
   timeframeUpdateFn: function(updates) {
-    ExplorerActions.update(this.props.model.id, { 
+    ExplorerActions.update(this.props.model.id, {
       query: _.assign({}, this.props.model.query, updates)
     });
   },
@@ -132,33 +130,31 @@ var Timeframe = React.createClass({
 
     return (
       <div className="timeframe">
-        <div className="row margin-bottom-small">
-          <div className="col-md-12">
-            <FieldsToggle name="Timeframe"
-                          ref="toggle"
-                          updateFn={this.timeframeUpdateFn}
-                          getFn={this.timeframeGetFn}
-                          initialOpenState={ExplorerUtils.getTimeframe(this.props.model)}
-                          attrsToStore={['time', 'timezone']}
-                          resetValues={
-                            {
-                              time: {},
-                              timezone: ProjectUtils.getConstant('DEFAULT_TIMEZONE')
-                            }
+        <div className="field-component">
+          <FieldsToggle name="Timeframe"
+                        ref="toggle"
+                        updateFn={this.timeframeUpdateFn}
+                        getFn={this.timeframeGetFn}
+                        initialOpenState={ExplorerUtils.getTimeframe(this.props.model)}
+                        attrsToStore={['time', 'timezone']}
+                        resetValues={
+                          {
+                            time: {},
+                            timezone: ProjectUtils.getConstant('DEFAULT_TIMEZONE')
                           }
-                          toggleCallback={this.timeframeFieldsToggled}>
-              <ul className="nav nav-pills" role="tablist">
-                <li className={this.isRelative() ? 'active' : ''}>
-                  <a href="#" className="relative-tab" data-type="relative" onClick={this.toggleTimeframeType}>Relative</a>
-                </li>
-                <li className={this.isAbsolute() ? 'active' : ''}>
-                  <a href="#" className="absolute-tab" data-type="absolute" onClick={this.toggleTimeframeType}>Absolute</a>
-                </li>
-              </ul>
-              {timeframePicker}
-              <Timezone model={this.props.model} />
-            </FieldsToggle>
-          </div>
+                        }
+                        toggleCallback={this.timeframeFieldsToggled}>
+            <ul className="nav nav-pills" role="tablist">
+              <li className={this.isRelative() ? 'active' : ''}>
+                <a href="#" className="relative-tab" data-type="relative" onClick={this.toggleTimeframeType}>Relative</a>
+              </li>
+              <li className={this.isAbsolute() ? 'active' : ''}>
+                <a href="#" className="absolute-tab" data-type="absolute" onClick={this.toggleTimeframeType}>Absolute</a>
+              </li>
+            </ul>
+            {timeframePicker}
+            <Timezone model={this.props.model} />
+          </FieldsToggle>
         </div>
         {intervalToggle}
       </div>

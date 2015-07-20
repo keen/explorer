@@ -1,19 +1,47 @@
-.nav.nav-tabs {
-  li a, li a .icon {
-    color: #999;
-  }
-  li:not(.active) a {
-    background: 0;
-    border-color: transparent;
-  }
-  li a:hover, li.active a {
-    color: #444;
+.nav-tabs {
+  border-bottom: medium none;
+
+  li a {
+    background-color: rgba(0,0,0,.05);
+    border-bottom-color: transparent;
+    border-radius: 0;
+    color: #4d4d4d;
+    cursor: pointer;
+    margin: 0;
 
     .icon {
-      color: #666;
+      color: #808080;
+      font-size: 10px;
+      margin-right: 5px;
+      vertical-align: middle;
     }
   }
-  li.active a {
-    border-top: 3px solid #2980b9;
+
+  li.active > a,
+  li.active > a:focus,
+  li.active > a:hover {
+    background-color: #fff;
+    border-left-color: rgba(0,0,0,.07);
+    border-right-color: rgba(0,0,0,.07);
+    border-top-color: rgba(0,0,0,.07);
+    color: #4d4d4d;
+    z-index: 3;
+
+    .icon {
+      color: #808080;
+    }
   }
+}
+
+.nav-pills > li > a {
+  background-color: #f2f2f2;
+  margin-right: 5px;
+}
+
+.nav-pills>li.active>a,
+.nav-pills>li.active>a:focus,
+.nav-pills>li.active>a:hover {
+  background-color: #00bbde;
+  border-color: transparent;
+  color: #fff;
 }

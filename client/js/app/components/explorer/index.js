@@ -49,7 +49,7 @@ var Explorer = React.createClass({
   // ********************************
   // Callbacks for child components
   // ********************************
-  
+
   favoriteClicked: function(event) {
     event.preventDefault();
     if (this.state.activeExplorer.loading) {
@@ -61,7 +61,7 @@ var Explorer = React.createClass({
     } else {
       var modelId = event.currentTarget.dataset.id;
       ExplorerActions.setActive(modelId);
-      ExplorerActions.exec(this.props.client, modelId);  
+      ExplorerActions.exec(this.props.client, modelId);
     }
   },
 
@@ -122,7 +122,7 @@ var Explorer = React.createClass({
   onOpenCSVExtraction: function() {
     this.refs['csv-extraction'].refs.modal.open();
   },
-  
+
   // ********************************
   // Convenience functions
   // ********************************
@@ -139,6 +139,12 @@ var Explorer = React.createClass({
     var explorerBottom = explorerTop + $explorerNode.outerHeight();
 
     var vizAreaHeight = $(this.refs['viz-area'].getDOMNode()).outerHeight();
+
+    // Disable for mobile screens
+    if (window.innerHeight > window.innerWidth) {
+      this.setVizWrapTop(0);
+      return;
+    }
 
     if (adjustedScrollOffset > explorerTop && (adjustedScrollOffset + vizAreaHeight) < explorerBottom) {
       var offset = (adjustedScrollOffset - explorerTop);
@@ -237,11 +243,11 @@ var Explorer = React.createClass({
     return (
       <div ref="root">
         <div className="row">
-          <div className="col-md-5">
+          <div className="col-sm-5 explorer-query-builder">
             {queryPaneTabs}
             {queryPane}
           </div>
-          <div ref="viz-area" className="col-md-7 viz-area">
+          <div ref="viz-area" className="col-sm-7 explorer-visualization">
             <Visualization notice={this.state.notice}
                            model={this.state.activeExplorer}
                            client={this.props.client}
