@@ -5,6 +5,7 @@ var DefaultRoute = Router.DefaultRoute;
 var Route = Router.Route;
 var RouteHandler = Router.RouteHandler;
 var Persistence = require('./modules/persistence/persistence.js');
+var AppDispatcher = require('./dispatcher/AppDispatcher');
 var AppComponent = require('./components/app.js');
 var Explorer = require('./components/explorer/index.js');
 var ProjectActions = require('./actions/ProjectActions');
@@ -23,6 +24,7 @@ function App(config) {
     throw new Error("If you initialize Explorer with a persistence layer you must provide a user object as well.");
   }
 
+  this.appDispatcher = AppDispatcher;
   this.targetNode = document.getElementById(config.targetId);
   this.persistence = config.persistence || null;
   this.client = config.client;
