@@ -1,0 +1,49 @@
+// Timeframe
+// *********
+
+.timeframe {
+  .nav {
+    margin-bottom: 10px;
+
+    li a {
+      padding: 5px 12px;
+    }
+  }
+  .form-group {
+    margin-bottom: 0;
+  }
+}
+
+.absolute-timeframe-picker {
+  label {
+    font-size: 14px;
+    line-height: 34px;
+    text-align: right;
+    width: 100%;
+  }
+}
+
+.timezone-toggle {
+  padding: 5px 0 0;
+  .toggle-display {
+    padding: 2px 0 0;
+    button {
+      color: #00afd7;
+      padding: 0 5px;
+      .icon {
+        color: #808080;
+      }
+    }
+  }
+  .toggle-options {
+    display: none;
+  }
+  &.active {
+    .toggle-display {
+      display: none;
+    }
+    .toggle-options {
+      display: block;
+    }
+  }
+}

@@ -1,0 +1,132 @@
+.fields-toggle {
+	background: #F2F2F2;
+	border: 1px solid transparent;
+	border-radius: 3px;
+
+	.toggle-label {
+		display: block;
+		cursor: pointer;
+		padding: 10px 10px 8px;
+		position: relative;
+
+		h5 {
+			font-size: 16px;
+			color: #b7b7b7;
+			line-height: 20px;
+			margin: 0;
+			padding-left: 40px;
+		}
+
+		.toggle-button {
+			background: none;
+			border: 1px solid #c5c5c5;
+			border-radius: 50%;
+			color: #c5c5c5;
+			font-size: 22px;
+			height: 24px;
+			line-height: 24px;
+			margin: 0;
+			outline: none;
+			padding: 0;
+			position: absolute;
+			text-align: center;
+			top: 7px;
+			width: 24px;
+
+			.icon {
+				position: relative;
+				top: -3px;
+				&::before {
+					content: "\002B";
+				}
+			}
+		}
+
+		&:hover {
+			background: #E7E7E7;
+
+			h5 {
+				color: #999;
+			}
+
+			.toggle-button {
+				border-color: #999;
+				color: #999;
+			}
+		}
+
+	}
+
+	.toggle-body {
+		display: none;
+		padding: 5px 10px 10px;
+	}
+
+}
+
+.fields-toggle.open {
+	background: #FFF;
+
+	border: 1px solid #e2e2e2;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+
+	.toggle-label {
+		background: none;
+
+		h5,
+		&:hover h5 {
+			color: #414141;
+			padding-left: 0;
+		}
+	}
+	.toggle-button {
+		border-color: #d7d7d7;
+		color: #CCC;
+		right: 10px;
+
+		.icon::before {
+			content: "\00D7";
+		}
+	}
+	.toggle-body {
+		display: block;
+	}
+}
+
+@hasFieldsCountBgColor: #627181;
+
+.fields-toggle.has-fields-count, .fields-toggle.open.has-fields-count {
+	background: @hasFieldsCountBgColor;
+	border-color: @hasFieldsCountBgColor;
+
+	h5, &:hover h5, &:focus h5 {
+		color: #FFF;
+		padding-left: 0;
+	}
+
+	.toggle-label:hover {
+		background: @hasFieldsCountBgColor;
+
+		.toggle-button {
+			border-color: #FFF;
+			color: @hasFieldsCountBgColor;
+		}
+	}
+
+	.toggle-button {
+		font-size: 14px;
+		line-height: 28px;
+		color: @hasFieldsCountBgColor;
+		border-color: #FFF;
+		background: #FFF;
+		width: 30px;
+		border-radius: 10px;
+		text-align: center;
+		margin: 0;
+		right: 10px;
+
+		.icon::before {
+			content: none;
+		}
+	}
+}

@@ -1,0 +1,103 @@
+.form-collapse-right {
+  padding-right: 0;
+}
+
+.form-collapse-left {
+  padding-left: 0;
+  margin-left: -1px;
+}
+
+label {
+  font-size: 16px;
+  color: #536779;
+}
+
+label.valign {
+  line-height: 30px;
+}
+
+.input-group-btn .btn {
+  &:focus, &:active {
+    outline: none;
+  }
+  i {
+    margin: 0;
+    top: 2px;
+  }
+}
+
+// *************************
+// Pickadate custom styling.
+// *************************
+
+.datepicker-wrapper, .timepicker-wrapper {
+  position: relative;
+}
+
+.picker {
+  min-width: 350px;
+}
+
+// Time picker specific styling
+
+.picker.picker--time {
+  .picker__holder {
+    width: 80px;
+  }
+  .picker__list {
+    height: 120px;
+  }
+}
+
+.picker__list-item {
+  padding: 4px 6px;
+}
+
+
+button.field-secondary-control {
+  color: #808080;
+  font-size: 12px;
+  padding: 5px;
+
+  span.icon {
+    margin-right: 2px;
+  }
+}
+
+
+// *************************
+// Custom fieldset divider
+// *************************
+
+hr.fieldset-divider {
+  border-bottom: 1px solid rgba(0,0,0,.1);
+  border-top: 1px solid #fff;
+}
+
+.search-box {
+  height: 40px;
+  position: relative;
+
+  input {
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+    border: none;
+    padding: 0 10px;
+    padding-right: 20px;
+    border-bottom: 1px solid #DDD;
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  .icon {
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    margin-top: -7px;
+    font-size: 16px;
+    color: #999;
+  }
+}

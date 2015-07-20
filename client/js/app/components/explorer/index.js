@@ -1,0 +1,277 @@
+/**
+ * @jsx React.DOM
+ */
+
+var React = require('react');
+var _ = require('lodash');
+var AddFavoriteModal = require('./favorites/add_favorite_modal.js');
+var EventBrowser = require('../common/event_browser.js');
+var CSVExtraction = require('./csv_extraction.js');
+var Visualization = require('./visualization/index.js')
+var QueryPaneTabs = require('./query_pane_tabs.js');;
+var QueryBuilder = require('./query_builder/index.js');
+var BrowseFavorites = require('./favorites/browse_favorites.js');
+var Notice = require('../common/notice.js');
+var FilterManager = require('../common/filter_manager.js');
+var ExplorerStore = require('../../stores/ExplorerStore');
+var UserStore = require('../../stores/UserStore');
+var ExplorerActions = require('../../actions/ExplorerActions');
+var NoticeActions = require('../../actions/NoticeActions');
+var NoticeStore = require('../../stores/NoticeStore');
+var AppStateStore = require('../../stores/AppStateStore');
+var ExplorerUtils = require('../../utils/ExplorerUtils');
+var ExplorerActions = require('../../actions/ExplorerActions');
+var ValidationUtils = require('../../utils/ValidationUtils');
+var ExplorerValidations = require('../../validations/ExplorerValidations');
+var QueryStringUtils = require('../../utils/QueryStringUtils');
+
+function getStoresState() {
+  return {
+    allPersistedExplorers: ExplorerStore.getAllPersisted(),
+    activeExplorer: ExplorerStore.getActive(),
+    notice: NoticeStore.getNotice(),
+    appState: AppStateStore.getState(),
+    user: UserStore.getUser()
+  };
+}
+
+var Explorer = React.createClass({
+
+  toggleFields: function() {
+    _.each(this.getFieldsToggleComponents(), function(toggleObj) {
+      if (toggleObj.component) {
+        var hasValue = (!_.isUndefined(toggleObj.value) && !_.isNull(toggleObj.value)) ? true : false;
+        toggleObj.component.setState({ open: hasValue });
+      }
+    });
+  },
+
+  // ********************************
+  // Callbacks for child components
+  // ********************************
+  
+  favoriteClicked: function(event) {
+    event.preventDefault();
+    if (this.state.activeExplorer.loading) {
+      NoticeActions.create({
+        icon: 'info-sign',
+        type: 'warning',
+        text: "There is already a query in progress. Wait for it to finish loading before selecting a favorite."
+      });
+    } else {
+      var modelId = event.currentTarget.dataset.id;
+      ExplorerActions.setActive(modelId);
+      ExplorerActions.exec(this.props.client, modelId);  
+    }
+  },
+
+  removeFavoriteClicked: function(favIndex) {
+    if (confirm("Are you sure you want to unfavorite this query?")) {
+      var model = this.state.allPersistedExplorers[favIndex];
+      ExplorerActions.destroy(this.props.persistence, model.id);
+    }
+  },
+
+  saveNewFavorite: function() {
+    this.refs['add-favorite-modal'].refs['modal'].close();
+    var name = this.refs['add-favorite-modal'].refs.name.refs.input.getDOMNode().value;
+    if (!name.trim().length) {
+      NoticeActions.create({
+        icon: 'remove-circle',
+        type: 'error',
+        text: 'You must provide a non-blank favorite name.'
+      });
+      return;
+    }
+    ExplorerActions.saveNew(this.props.persistence, this.state.activeExplorer.id, name);
+  },
+
+  destroyFavorite: function(event) {
+    event.preventDefault();
+    if (confirm("Are you sure you want to unfavorite this query?")) {
+      ExplorerActions.destroy(this.props.persistence, this.state.activeExplorer.id);
+    }
+  },
+
+  openFavoritesClick: function(event) {
+    this.refs['favorites-list'].refs['modal'].open();
+  },
+
+  addFavoriteClick: function(event) {
+    var validity = ValidationUtils.runValidations(ExplorerValidations.explorer, this.state.activeExplorer.query);
+    if (!validity.isValid) {
+      NoticeActions.create({
+        icon: 'remove-circle',
+        type: 'error',
+        text: "Can't favorite: " + validity.lastError
+      });
+      return;
+    }
+    this.refs['add-favorite-modal'].refs['modal'].open();
+  },
+
+  onBrowseEvents: function(event) {
+    event.preventDefault();
+    this.refs['event-browser'].refs.modal.open();
+  },
+
+  handleFiltersToggle: function() {
+    this.refs['filter-manager'].refs.modal.open();
+  },
+
+  onOpenCSVExtraction: function() {
+    this.refs['csv-extraction'].refs.modal.open();
+  },
+  
+  // ********************************
+  // Convenience functions
+  // ********************************
+
+  updateVizPosition: function(event) {
+    var options = this.props.config.options || {};
+    var scrollOffset = $(document).scrollTop();
+    var adjustedScrollOffset = scrollOffset + (options.fixedOffset || 0);
+
+    var $explorerNode = $(this.refs['root'].getDOMNode());
+    var explorerPosition = $explorerNode.offset();
+
+    var explorerTop = explorerPosition.top;
+    var explorerBottom = explorerTop + $explorerNode.outerHeight();
+
+    var vizAreaHeight = $(this.refs['viz-area'].getDOMNode()).outerHeight();
+
+    if (adjustedScrollOffset > explorerTop && (adjustedScrollOffset + vizAreaHeight) < explorerBottom) {
+      var offset = (adjustedScrollOffset - explorerTop);
+      this.setVizWrapTop(offset);
+    } else if (adjustedScrollOffset <= explorerTop) {
+      this.setVizWrapTop(0);
+    }
+  },
+
+  setVizWrapTop: function(top) {
+    this.refs['viz-area'].getDOMNode().style.top = top + 'px';
+  },
+
+  getSelectedIndex: function() {
+    if (!this.state.activeExplorer || !ExplorerUtils.isPersisted(this.state.activeExplorer)) {
+      return null;
+    }
+    return _.findIndex(this.state.allPersistedExplorers, { id: this.state.activeExplorer.id });
+  },
+
+  toggleQueryPane: function(pane) {
+    this.setState({ activeQueryPane: pane });
+  },
+
+  getSelectedIndex: function() {
+    var index;
+    for (i=0; i<this.state.allPersistedExplorers.length; i++) {
+      if (this.state.allPersistedExplorers[i].active) {
+        index = i;
+        break;
+      }
+    }
+    return index;
+  },
+
+  // Lifecycle hooks
+
+  componentDidMount: function() {
+    ExplorerStore.addChangeListener(this._onChange);
+    NoticeStore.addChangeListener(this._onChange);
+    AppStateStore.addChangeListener(this._onChange);
+    window.addEventListener('scroll', _.bind(this.updateVizPosition, this), false);
+  },
+
+  componentWillUnmount: function() {
+    ExplorerStore.removeChangeListener(this._onChange);
+    NoticeStore.removeChangeListener(this._onChange);
+    AppStateStore.removeChangeListener(this._onChange);
+    window.removeEventListener('scroll', _.bind(this.updateVizPosition, this), false);
+  },
+
+  getInitialState: function() {
+    return _.assign(getStoresState(), {
+      activeQueryPane: 'build'
+    });
+  },
+
+  render: function() {
+    var favoritesList,
+        addFavoriteModal,
+        queryPaneTabs,
+        favListNotice,
+        favEmptyContent;
+
+    if (this.props.persistence) {
+      queryPaneTabs = <QueryPaneTabs ref="query-pane-tabs"
+                                     activePane={this.state.activeQueryPane}
+                                     toggleCallback={this.toggleQueryPane} />;
+      if (this.state.appState.fetchingPersistedExplorers) {
+        favListNotice = <Notice notice={{ icon: 'info-sign', text: 'Loading favorites...', type: 'info' }} closable={false} />
+      } else {
+        favEmptyContent = <h4 className="text-center">You don&#39;t have any favorites yet.</h4>;
+      }
+      addFavoriteModal = <AddFavoriteModal ref="add-favorite-modal"
+                                           saveCallback={this.saveNewFavorite} />;
+    }
+
+    var activeQueryPane;
+    if (!this.props.persistence || this.state.activeQueryPane === 'build') {
+      queryPane = <QueryBuilder ref="query-builder"
+                                model={this.state.activeExplorer}
+                                client={this.props.client}
+                                project={this.props.project}
+                                onBrowseEvents={this.onBrowseEvents}
+                                handleFiltersToggle={this.handleFiltersToggle} />;
+    } else {
+      queryPane = <BrowseFavorites listItems={this.state.allPersistedExplorers}
+                                   emptyContent={favEmptyContent}
+                                   notice={favListNotice}
+                                   clickCallback={this.favoriteClicked}
+                                   removeCallback={this.removeFavoriteClicked}
+                                   selectedIndex={this.getSelectedIndex()}
+                                   user={this.state.user} />;
+    }
+
+    return (
+      <div ref="root">
+        <div className="row">
+          <div className="col-md-5">
+            {queryPaneTabs}
+            {queryPane}
+          </div>
+          <div ref="viz-area" className="col-md-7 viz-area">
+            <Visualization notice={this.state.notice}
+                           model={this.state.activeExplorer}
+                           client={this.props.client}
+                           project={this.props.project}
+                           persistence={this.props.persistence}
+                           addFavoriteClick={this.addFavoriteClick}
+                           openFavoritesClick={this.openFavoritesClick}
+                           onOpenCSVExtraction={this.onOpenCSVExtraction} />
+          </div>
+        </div>
+        {addFavoriteModal}
+        <EventBrowser ref="event-browser"
+                      client={this.props.client}
+                      project={this.props.project}
+                      model={this.state.activeExplorer} />
+        <CSVExtraction ref="csv-extraction"
+                       client={this.props.client}
+                       model={this.state.activeExplorer} />
+        <FilterManager ref="filter-manager"
+                      model={this.state.activeExplorer}
+                      project={this.props.project}
+                      client={this.props.client} />
+      </div>
+    );
+  },
+
+  _onChange: function() {
+    this.setState(getStoresState());
+    QueryStringUtils.updateSearchString(ExplorerUtils.paramsForURL(ExplorerStore.getActive()));
+  }
+});
+
+module.exports = Explorer;

@@ -1,0 +1,86 @@
+.interactive-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  li {
+    position: relative;
+    font-size: 16px;
+    font-weight: 300;
+    cursor: pointer;
+    padding: 8px 15px;
+    word-wrap: break-word;
+    border: 1px solid #DDD;
+    border-bottom-width: 0;
+    background: #FFF;
+
+    .name {
+      margin: 0;
+      padding: 0;
+      min-height: 40px;
+      padding-right: 25px;
+      text-transform: none;
+    }
+  }
+  li.active, li.active:hover {
+    background: #2980b9;
+    color: #FFF;
+  
+    .name {
+      color: #FFF;
+    }
+    a.remove-btn .icon {
+      color: #F1F1F1;
+    }
+    a.remove-btn:hover .icon {
+      color: #FFF;
+    }
+  }
+  li:last-child {
+    border-bottom-width: 1px;
+  }
+  li:hover {
+    background: #EEE;
+
+    a.remove-btn {
+      display: block;
+    }
+  }
+  a.remove-btn {
+    display: none;
+    padding: 0px;
+    background: none;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+
+    &:hover {
+      background: none;
+    }
+    .icon {
+      font-size: 20px;
+      color: #666;
+
+      &:hover {
+        color: #444;
+      }
+    }
+  }
+  h6 {
+    background: #1B65A3; 
+    border-radius: 3px;
+    margin-top: 3px;
+    padding: 2px 6px;
+  }
+  .icon {
+    font-size: 11px;
+  }
+}
+.modal-title {
+  .icon {
+    font-size: 18px;
+  }
+  .icon.big {
+    font-size: 24px;
+  }
+}

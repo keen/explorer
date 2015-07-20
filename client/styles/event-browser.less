@@ -1,0 +1,87 @@
+.event-browser {
+	overflow: hidden;
+
+	.event-names, .event-browser-content {
+		float: left;
+	}
+
+	.event-names {
+		width: 25%;
+	}
+
+	.event-browser-content {
+		width: 75%;
+	}
+
+	ul.event-names-list {
+		width: 100%;
+		height: 359px;
+		overflow-y: scroll;
+
+		li {
+			margin: 0;
+
+			a {
+				display: block;
+				padding: 10px;
+				border-radius: 0;
+			}
+		}
+		li.active {
+			a, a:hover, a:active, a:focus {
+				color: #FFF;
+			}
+		}
+	}
+
+	.select-btn {
+		position: absolute;
+		top: 10px;
+		right: 10px;
+	}
+
+	.view-options {
+		width: 100%;
+		height: 40px;
+		border-left: 1px solid #DDD;
+		border-bottom: 1px solid #DDD;
+
+		li {
+			width: 50%;
+			margin: 0;
+
+			&:first-child {
+				border-right: 1px solid #DDD;
+			}
+
+			a {
+				box-sizing: border-box;
+				height: 39px;
+				line-height: 39px;
+				padding: 0;
+				font-size: 16px;
+				text-align: center;
+				box-sizing: border-box;
+				border-radius: 0;
+			}
+		}
+	}
+
+	.event-data-wrapper {
+		position: relative;
+	}
+
+	textarea {
+		height: 359px;
+		overflow-y: scroll;
+		border: 0;
+		border-left: 1px solid #DDD;
+		resize: none;
+		border-radius: 0 0 5px 0;
+	}
+
+}
+
+.event-browser-modal .modal-body {
+	padding: 0;
+}
