@@ -92,7 +92,7 @@ var CSVExtraction = React.createClass({
               {
                 text: this.state.loading ? 'Sending...' : 'Send',
                 ref: 'modal-submit',
-                classes: 'btn-primary',
+                classes: 'send-email-extraction btn-primary',
                 iconName: 'check',
                 onClick: this.sendEmailExtraction
               }

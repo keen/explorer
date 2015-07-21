@@ -145,11 +145,20 @@ var ExplorerActions = {
   },
 
   execError: function(explorer, err) {
+    AppDispatcher.dispatch({
+      actionType: ExplorerConstants.EXPLORER_QUERY_ERROR,
+      explorer: explorer,
+      error: err.message
+    });
     ExplorerActions.update(explorer.id, { loading: false });
     NoticeActions.create({ text: err.message, type: 'error' });
   },
 
   execSuccess: function (explorer, response) {
+    AppDispatcher.dispatch({
+      actionType: ExplorerConstants.EXPLORER_QUERY_SUCCESS,
+      explorer: explorer
+    });
     NoticeActions.clearAll();
     var updates = {
       result: response.result,

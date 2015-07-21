@@ -169,11 +169,20 @@ var ExplorerActions = {
   },
 
   execError: function(explorer, err) {
+    AppDispatcher.dispatch({
+      actionType: ExplorerConstants.EXPLORER_QUERY_ERROR,
+      explorer: explorer,
+      error: err.message
+    });
     ExplorerActions.update(explorer.id, { loading: false });
     NoticeActions.create({ text: err.message, type: 'error' });
   },
 
   execSuccess: function (explorer, response) {
+    AppDispatcher.dispatch({
+      actionType: ExplorerConstants.EXPLORER_QUERY_SUCCESS,
+      explorer: explorer
+    });
     NoticeActions.clearAll();
     var updates = {
       result: response.result,
@@ -346,6 +355,7 @@ var DefaultRoute = Router.DefaultRoute;
 var Route = Router.Route;
 var RouteHandler = Router.RouteHandler;
 var Persistence = require('./modules/persistence/persistence.js');
+var AppDispatcher = require('./dispatcher/AppDispatcher');
 var AppComponent = require('./components/app.js');
 var Explorer = require('./components/explorer/index.js');
 var ProjectActions = require('./actions/ProjectActions');
@@ -364,6 +374,7 @@ function App(config) {
     throw new Error("If you initialize Explorer with a persistence layer you must provide a user object as well.");
   }
 
+  this.appDispatcher = AppDispatcher;
   this.targetNode = document.getElementById(config.targetId);
   this.persistence = config.persistence || null;
   this.client = config.client;
@@ -418,7 +429,7 @@ window.Keen = window.Keen || {};
 window.Keen.DataTools = window.Keen.DataTools || {};
 window.Keen.DataTools.Persistence = Persistence;
 window.Keen.DataTools.App = module.exports = App;
-},{"./actions/ExplorerActions":2,"./actions/ProjectActions":4,"./actions/UserActions":5,"./components/app.js":7,"./components/explorer/index.js":30,"./modules/persistence/persistence.js":49,"./stores/ExplorerStore":52,"./stores/ProjectStore":54,"./utils/ExplorerUtils":56,"./utils/FormatUtils":58,"./utils/QueryStringUtils":60,"./utils/ValidationUtils":61,"./validations/ExplorerValidations":62,"lodash":82,"react":300,"react-router":113}],7:[function(require,module,exports){
+},{"./actions/ExplorerActions":2,"./actions/ProjectActions":4,"./actions/UserActions":5,"./components/app.js":7,"./components/explorer/index.js":30,"./dispatcher/AppDispatcher":48,"./modules/persistence/persistence.js":49,"./stores/ExplorerStore":52,"./stores/ProjectStore":54,"./utils/ExplorerUtils":56,"./utils/FormatUtils":58,"./utils/QueryStringUtils":60,"./utils/ValidationUtils":61,"./validations/ExplorerValidations":62,"lodash":82,"react":300,"react-router":113}],7:[function(require,module,exports){
 var React = require('react');
 var Router = require('react-router');
 var RouteHandler = Router.RouteHandler;
@@ -3041,7 +3052,7 @@ var CSVExtraction = React.createClass({displayName: "CSVExtraction",
               {
                 text: this.state.loading ? 'Sending...' : 'Send',
                 ref: 'modal-submit',
-                classes: 'btn-primary',
+                classes: 'send-email-extraction btn-primary',
                 iconName: 'check',
                 onClick: this.sendEmailExtraction
               }
@@ -3695,7 +3706,7 @@ var EventCollectionField = React.createClass({displayName: "EventCollectionField
                      value: this.props.value, 
                      title: "Event Collection", 
                      sort: true}), 
-        React.createElement("button", {className: "btn btn-link field-secondary-control", title: "Browse event collections", type: "button", onClick: this.props.onBrowseEvents}, 
+        React.createElement("button", {className: "btn btn-link field-secondary-control", title: "Browse event collections", type: "button", onClick: this.props.onBrowseEvents, id: "browse-event-collections"}, 
           React.createElement("span", {className: "icon glyphicon glyphicon-search"}), " Preview collections"
         )
       )
@@ -3991,12 +4002,12 @@ var QueryPaneTabs = React.createClass({displayName: "QueryPaneTabs",
     return (
       React.createElement("ul", {className: "query-pane-tabs nav nav-tabs"}, 
         React.createElement("li", {role: "presentation", className: this.props.activePane === 'build' ? 'active' : ''}, 
-          React.createElement("a", {ref: "build-tab", href: "#", onClick: this.toggled.bind(this, 'build')}, 
+          React.createElement("a", {ref: "build-tab", href: "#", id: "build-query", onClick: this.toggled.bind(this, 'build')}, 
             "Create a new query"
           )
         ), 
         React.createElement("li", {role: "presentation", className: this.props.activePane === 'browse' ? 'active' : ''}, 
-          React.createElement("a", {ref: "browse-tab", href: "#", onClick: this.toggled.bind(this, 'browse')}, 
+          React.createElement("a", {ref: "browse-tab", href: "#", id: "browse-favs", onClick: this.toggled.bind(this, 'browse')}, 
             React.createElement("span", {className: "icon glyphicon glyphicon-heart margin-right-tiny fav-icon"}), 
             "Favorites"
           )
@@ -4333,6 +4344,8 @@ module.exports = keyMirror({
   EXPLORER_REMOVE: null,
   EXPLORER_SET_ACTIVE: null,
   EXPLORER_CLEAR: null,
+  EXPLOER_QUERY_SUCCESS: null,
+  EXPLOER_QUERY_ERROR: null,
   EXPLORER_ADD_FILTER: null,
   EXPLORER_REMOVE_FILTER: null,
   EXPLORER_UPDATE_FILTER: null,
