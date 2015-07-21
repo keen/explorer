@@ -276,11 +276,7 @@ var ExplorerActions = {
 
 module.exports = ExplorerActions;
 
-<<<<<<< HEAD
 },{"../constants/ExplorerConstants":45,"../dispatcher/AppDispatcher":49,"../stores/ExplorerStore":53,"../utils/ExplorerUtils":57,"../utils/ValidationUtils":62,"../validations/ExplorerValidations":63,"./AppStateActions":1,"./NoticeActions":3,"lodash":83}],3:[function(require,module,exports){
-=======
-},{"../constants/ExplorerConstants":45,"../dispatcher/AppDispatcher":49,"../stores/ExplorerStore":53,"../utils/ExplorerUtils":57,"../utils/ValidationUtils":62,"../validations/ExplorerValidations":63,"./AppStateActions":1,"./NoticeActions":3,"lodash":84}],3:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 var AppDispatcher = require('../dispatcher/AppDispatcher');
 var NoticeConstants = require('../constants/NoticeConstants');
 
@@ -433,11 +429,7 @@ window.Keen = window.Keen || {};
 window.Keen.DataTools = window.Keen.DataTools || {};
 window.Keen.DataTools.Persistence = Persistence;
 window.Keen.DataTools.App = module.exports = App;
-<<<<<<< HEAD
 },{"./actions/ExplorerActions":2,"./actions/ProjectActions":4,"./actions/UserActions":5,"./components/app.js":7,"./components/explorer/index.js":30,"./dispatcher/AppDispatcher":49,"./modules/persistence/persistence.js":50,"./stores/ExplorerStore":53,"./stores/ProjectStore":55,"./utils/ExplorerUtils":57,"./utils/FormatUtils":59,"./utils/QueryStringUtils":61,"./utils/ValidationUtils":62,"./validations/ExplorerValidations":63,"lodash":83,"react":301,"react-router":114}],7:[function(require,module,exports){
-=======
-},{"./actions/ExplorerActions":2,"./actions/ProjectActions":4,"./actions/UserActions":5,"./components/app.js":7,"./components/explorer/index.js":30,"./dispatcher/AppDispatcher":49,"./modules/persistence/persistence.js":50,"./stores/ExplorerStore":53,"./stores/ProjectStore":55,"./utils/ExplorerUtils":57,"./utils/FormatUtils":59,"./utils/QueryStringUtils":61,"./utils/ValidationUtils":62,"./validations/ExplorerValidations":63,"lodash":84,"react":302,"react-router":115}],7:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 var React = require('react');
 var Router = require('react-router');
 var RouteHandler = Router.RouteHandler;
@@ -488,11 +480,7 @@ var App = React.createClass({displayName: "App",
 
 module.exports = App;
 
-<<<<<<< HEAD
 },{"../stores/ProjectStore":55,"../utils/ProjectUtils":60,"./common/loader.js":17,"react":301,"react-router":114}],8:[function(require,module,exports){
-=======
-},{"../stores/ProjectStore":55,"../utils/ProjectUtils":60,"./common/loader.js":17,"react":302,"react-router":115}],8:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * @jsx React.DOM
  */
@@ -594,11 +582,7 @@ var AbsolutePicker = React.createClass({displayName: "AbsolutePicker",
 
 module.exports = AbsolutePicker;
 
-<<<<<<< HEAD
 },{"../../actions/ExplorerActions":2,"../../utils/ExplorerUtils":57,"./datepicker.js":9,"./timepicker.js":25,"lodash":83,"moment":84,"react":301}],9:[function(require,module,exports){
-=======
-},{"../../actions/ExplorerActions":2,"../../utils/ExplorerUtils":57,"./datepicker.js":9,"./timepicker.js":25,"lodash":84,"moment":85,"react":302}],9:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * @jsx React.DOM
  */
@@ -684,11 +668,7 @@ var Datepicker = React.createClass({displayName: "Datepicker",
 });
 
 module.exports = Datepicker;
-<<<<<<< HEAD
 },{"../../../vendor/picker.date.js":65,"../../../vendor/picker.js":66,"../../../vendor/picker.time.js":67,"lodash":83,"moment":84,"react":301}],10:[function(require,module,exports){
-=======
-},{"../../../vendor/picker.date.js":65,"../../../vendor/picker.js":66,"../../../vendor/picker.time.js":67,"lodash":84,"moment":85,"react":302}],10:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * @jsx React.DOM
  */
@@ -948,11 +928,7 @@ var EventBrowser = React.createClass({displayName: "EventBrowser",
 
 module.exports = EventBrowser;
 
-<<<<<<< HEAD
 },{"../../actions/ExplorerActions":2,"../../utils/ExplorerUtils":57,"../../utils/FormatUtils":59,"../../utils/ProjectUtils":60,"../common/loader.js":17,"./modal.js":18,"classnames":74,"lodash":83,"react":301}],11:[function(require,module,exports){
-=======
-},{"../../actions/ExplorerActions":2,"../../utils/ExplorerUtils":57,"../../utils/FormatUtils":59,"../../utils/ProjectUtils":60,"../common/loader.js":17,"./modal.js":18,"classnames":74,"lodash":84,"react":302}],11:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * @jsx React.DOM
  */
@@ -1056,11 +1032,7 @@ var FieldsToggle = React.createClass({displayName: "FieldsToggle",
 
 module.exports = FieldsToggle;
 
-<<<<<<< HEAD
 },{"classnames":74,"lodash":83,"react":301}],12:[function(require,module,exports){
-=======
-},{"classnames":74,"lodash":84,"react":302}],12:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
 * @jsx React.DOM
 */
@@ -1212,11 +1184,7 @@ var Filter = React.createClass({displayName: "Filter",
 
 module.exports = Filter;
 
-<<<<<<< HEAD
 },{"../../actions/ExplorerActions":2,"../../utils/FilterUtils":58,"../../utils/ProjectUtils":60,"../../utils/ValidationUtils":62,"../../validations/FilterValidations":64,"./filter_value_fields.js":14,"./react_select.js":20,"./select.js":23,"classnames":74,"lodash":83,"react":301}],13:[function(require,module,exports){
-=======
-},{"../../actions/ExplorerActions":2,"../../utils/FilterUtils":58,"../../utils/ProjectUtils":60,"../../utils/ValidationUtils":62,"../../validations/FilterValidations":64,"./filter_value_fields.js":14,"./react_select.js":20,"./select.js":23,"classnames":74,"lodash":84,"react":302}],13:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * @jsx React.DOM
  */
@@ -1307,11 +1275,7 @@ var FilterManager = React.createClass({displayName: "FilterManager",
 
 module.exports = FilterManager;
 
-<<<<<<< HEAD
 },{"../../actions/ExplorerActions":2,"./filter.js":12,"./modal.js":18,"lodash":83,"react":301}],14:[function(require,module,exports){
-=======
-},{"../../actions/ExplorerActions":2,"./filter.js":12,"./modal.js":18,"lodash":84,"react":302}],14:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * @jsx React.DOM
  */
@@ -1521,11 +1485,7 @@ var FilterValueFields = React.createClass({displayName: "FilterValueFields",
 
 module.exports = FilterValueFields;
 
-<<<<<<< HEAD
 },{"../../actions/ExplorerActions":2,"../../utils/FilterUtils":58,"../../utils/FormatUtils":59,"../../utils/ProjectUtils":60,"./datepicker.js":9,"./geo.js":15,"./select.js":23,"./timepicker.js":25,"lodash":83,"moment":84,"react":301}],15:[function(require,module,exports){
-=======
-},{"../../actions/ExplorerActions":2,"../../utils/FilterUtils":58,"../../utils/FormatUtils":59,"../../utils/ProjectUtils":60,"./datepicker.js":9,"./geo.js":15,"./select.js":23,"./timepicker.js":25,"lodash":84,"moment":85,"react":302}],15:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * @jsx React.DOM
  */
@@ -1568,11 +1528,7 @@ var Geo = React.createClass({displayName: "Geo",
 });
 
 module.exports = Geo;
-<<<<<<< HEAD
 },{"lodash":83,"react":301}],16:[function(require,module,exports){
-=======
-},{"lodash":84,"react":302}],16:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * @jsx React.DOM
  */
@@ -1634,11 +1590,7 @@ var InputComponent = React.createClass({displayName: "InputComponent",
 
 module.exports = InputComponent;
 
-<<<<<<< HEAD
 },{"lodash":83,"react":301}],17:[function(require,module,exports){
-=======
-},{"lodash":84,"react":302}],17:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * @jsx React.DOM
  */
@@ -1687,11 +1639,7 @@ var LoaderComponent = React.createClass({displayName: "LoaderComponent",
 
 module.exports = LoaderComponent;
 
-<<<<<<< HEAD
 },{"lodash":83,"react":301}],18:[function(require,module,exports){
-=======
-},{"lodash":84,"react":302}],18:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * @jsx React.DOM
  */
@@ -1861,11 +1809,7 @@ var Modal = React.createClass({displayName: "Modal",
 
 module.exports = Modal;
 
-<<<<<<< HEAD
 },{"classnames":74,"lodash":83,"react":301}],19:[function(require,module,exports){
-=======
-},{"classnames":74,"lodash":84,"react":302}],19:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * @jsx React.DOM
  */
@@ -1938,11 +1882,7 @@ var NoticeComponent = React.createClass({displayName: "NoticeComponent",
 
 module.exports = NoticeComponent;
 
-<<<<<<< HEAD
 },{"lodash":83,"react":301}],20:[function(require,module,exports){
-=======
-},{"lodash":84,"react":302}],20:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 var React = require('react');
 
 /* TODO:
@@ -2272,11 +2212,7 @@ var ReactSelect = React.createClass({displayName: "ReactSelect",
 
 module.exports = ReactSelect;
 
-<<<<<<< HEAD
 },{"react":301}],21:[function(require,module,exports){
-=======
-},{"react":302}],21:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * @jsx React.DOM
  */
@@ -2368,11 +2304,7 @@ var RelativePicker = React.createClass({displayName: "RelativePicker",
 
 module.exports = RelativePicker;
 
-<<<<<<< HEAD
 },{"../../actions/ExplorerActions":2,"../../utils/ExplorerUtils":57,"../../utils/FormatUtils":59,"./input.js":16,"./select.js":23,"lodash":83,"react":301}],22:[function(require,module,exports){
-=======
-},{"../../actions/ExplorerActions":2,"../../utils/ExplorerUtils":57,"../../utils/FormatUtils":59,"./input.js":16,"./select.js":23,"lodash":84,"react":302}],22:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * @jsx React.DOM
  */
@@ -2436,11 +2368,7 @@ var RunQuery = React.createClass({displayName: "RunQuery",
 
 module.exports = RunQuery;
 
-<<<<<<< HEAD
 },{"classnames":74,"react":301}],23:[function(require,module,exports){
-=======
-},{"classnames":74,"react":302}],23:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * @jsx React.DOM
  */
@@ -2559,11 +2487,7 @@ var SelectComponent = React.createClass({displayName: "SelectComponent",
 });
 
 module.exports = SelectComponent;
-<<<<<<< HEAD
 },{"lodash":83,"react":301}],24:[function(require,module,exports){
-=======
-},{"lodash":84,"react":302}],24:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
 * @jsx React.DOM
 */
@@ -2730,11 +2654,7 @@ var Timeframe = React.createClass({displayName: "Timeframe",
 
 module.exports = Timeframe;
 
-<<<<<<< HEAD
 },{"../../actions/ExplorerActions":2,"../../utils/ExplorerUtils":57,"../../utils/ProjectUtils":60,"./absolute_picker.js":8,"./fields_toggle.js":11,"./react_select.js":20,"./relative_picker.js":21,"./select.js":23,"./timezone.js":26,"lodash":83,"moment":84,"react/addons":129}],25:[function(require,module,exports){
-=======
-},{"../../actions/ExplorerActions":2,"../../utils/ExplorerUtils":57,"../../utils/ProjectUtils":60,"./absolute_picker.js":8,"./fields_toggle.js":11,"./react_select.js":20,"./relative_picker.js":21,"./select.js":23,"./timezone.js":26,"lodash":84,"moment":85,"react/addons":130}],25:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * @jsx React.DOM
  */
@@ -2946,11 +2866,7 @@ var Timepicker = React.createClass({displayName: "Timepicker",
 });
 
 module.exports = Timepicker;
-<<<<<<< HEAD
 },{"./react_select.js":20,"lodash":83,"react":301}],26:[function(require,module,exports){
-=======
-},{"./react_select.js":20,"lodash":84,"react":302}],26:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * @jsx React.DOM
  */
@@ -3041,11 +2957,7 @@ var Timezone = React.createClass({displayName: "Timezone",
 
 module.exports = Timezone;
 
-<<<<<<< HEAD
 },{"../../actions/ExplorerActions":2,"../../utils/ProjectUtils":60,"./react_select.js":20,"lodash":83,"react":301}],27:[function(require,module,exports){
-=======
-},{"../../actions/ExplorerActions":2,"../../utils/ProjectUtils":60,"./react_select.js":20,"lodash":84,"react":302}],27:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * @jsx React.DOM
  */
@@ -3173,11 +3085,7 @@ var CSVExtraction = React.createClass({displayName: "CSVExtraction",
 
 module.exports = CSVExtraction;
 
-<<<<<<< HEAD
 },{"../../actions/ExplorerActions":2,"../common/input.js":16,"../common/modal.js":18,"classnames":74,"lodash":83,"react":301}],28:[function(require,module,exports){
-=======
-},{"../../actions/ExplorerActions":2,"../common/input.js":16,"../common/modal.js":18,"classnames":74,"lodash":84,"react":302}],28:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * @jsx React.DOM
  */
@@ -3247,11 +3155,7 @@ var AddFavoriteModal = React.createClass({displayName: "AddFavoriteModal",
 });
 
 module.exports = AddFavoriteModal;
-<<<<<<< HEAD
 },{"../../common/input.js":16,"../../common/modal.js":18,"classnames":74,"lodash":83,"react":301}],29:[function(require,module,exports){
-=======
-},{"../../common/input.js":16,"../../common/modal.js":18,"classnames":74,"lodash":84,"react":302}],29:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * @jsx React.DOM
  */
@@ -3398,11 +3302,7 @@ var BrowseFavorites = React.createClass({displayName: "BrowseFavorites",
 
 module.exports = BrowseFavorites;
 
-<<<<<<< HEAD
 },{"lodash":83,"moment":84,"react":301}],30:[function(require,module,exports){
-=======
-},{"lodash":84,"moment":85,"react":302}],30:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * @jsx React.DOM
  */
@@ -3687,11 +3587,7 @@ var Explorer = React.createClass({displayName: "Explorer",
 
 module.exports = Explorer;
 
-<<<<<<< HEAD
 },{"../../actions/ExplorerActions":2,"../../actions/NoticeActions":3,"../../stores/AppStateStore":52,"../../stores/ExplorerStore":53,"../../stores/NoticeStore":54,"../../stores/UserStore":56,"../../utils/ExplorerUtils":57,"../../utils/QueryStringUtils":61,"../../utils/ValidationUtils":62,"../../validations/ExplorerValidations":63,"../common/event_browser.js":10,"../common/filter_manager.js":13,"../common/notice.js":19,"./csv_extraction.js":27,"./favorites/add_favorite_modal.js":28,"./favorites/browse_favorites.js":29,"./query_builder/index.js":35,"./query_pane_tabs.js":38,"./visualization/index.js":42,"lodash":83,"react":301}],31:[function(require,module,exports){
-=======
-},{"../../actions/ExplorerActions":2,"../../actions/NoticeActions":3,"../../stores/AppStateStore":52,"../../stores/ExplorerStore":53,"../../stores/NoticeStore":54,"../../stores/UserStore":56,"../../utils/ExplorerUtils":57,"../../utils/QueryStringUtils":61,"../../utils/ValidationUtils":62,"../../validations/ExplorerValidations":63,"../common/event_browser.js":10,"../common/filter_manager.js":13,"../common/notice.js":19,"./csv_extraction.js":27,"./favorites/add_favorite_modal.js":28,"./favorites/browse_favorites.js":29,"./query_builder/index.js":35,"./query_pane_tabs.js":38,"./visualization/index.js":42,"lodash":84,"react":302}],31:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * @jsx React.DOM
  */
@@ -3724,11 +3620,7 @@ var AnalysisTypeField = React.createClass({displayName: "AnalysisTypeField",
 
 module.exports = AnalysisTypeField;
 
-<<<<<<< HEAD
 },{"../../common/react_select.js":20,"lodash":83,"react":301}],32:[function(require,module,exports){
-=======
-},{"../../common/react_select.js":20,"lodash":84,"react":302}],32:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * @jsx React.DOM
  */
@@ -3786,11 +3678,7 @@ var ApiUrl = React.createClass({displayName: "ApiUrl",
 
 module.exports = ApiUrl;
 
-<<<<<<< HEAD
 },{"react":301}],33:[function(require,module,exports){
-=======
-},{"react":302}],33:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * @jsx React.DOM
  */
@@ -3829,11 +3717,7 @@ var EventCollectionField = React.createClass({displayName: "EventCollectionField
 
 module.exports = EventCollectionField;
 
-<<<<<<< HEAD
 },{"../../common/react_select.js":20,"lodash":83,"react":301}],34:[function(require,module,exports){
-=======
-},{"../../common/react_select.js":20,"lodash":84,"react":302}],34:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * @jsx React.DOM
  */
@@ -3888,11 +3772,7 @@ var GroupByField = React.createClass({displayName: "GroupByField",
 
 module.exports = GroupByField;
 
-<<<<<<< HEAD
 },{"../../common/fields_toggle.js":11,"../../common/react_select.js":20,"lodash":83,"react":301}],35:[function(require,module,exports){
-=======
-},{"../../common/fields_toggle.js":11,"../../common/react_select.js":20,"lodash":84,"react":302}],35:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * @jsx React.DOM
  */
@@ -4037,11 +3917,7 @@ var QueryBuilder = React.createClass({displayName: "QueryBuilder",
 
 module.exports = QueryBuilder;
 
-<<<<<<< HEAD
 },{"../../../actions/ExplorerActions":2,"../../../utils/ExplorerUtils":57,"../../../utils/ProjectUtils":60,"../../../utils/ValidationUtils":62,"../../../validations/FilterValidations":64,"../../common/fields_toggle.js":11,"../../common/run_query.js":22,"../../common/timeframe.js":24,"./analysis_type_field.js":31,"./api_url.js":32,"./event_collection_field.js":33,"./group_by_field.js":34,"./percentile_field.js":36,"./target_property_field.js":37,"lodash":83,"react/addons":129}],36:[function(require,module,exports){
-=======
-},{"../../../actions/ExplorerActions":2,"../../../utils/ExplorerUtils":57,"../../../utils/ProjectUtils":60,"../../../utils/ValidationUtils":62,"../../../validations/FilterValidations":64,"../../common/fields_toggle.js":11,"../../common/run_query.js":22,"../../common/timeframe.js":24,"./analysis_type_field.js":31,"./api_url.js":32,"./event_collection_field.js":33,"./group_by_field.js":34,"./percentile_field.js":36,"./target_property_field.js":37,"lodash":84,"react/addons":130}],36:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * @jsx React.DOM
  */
@@ -4075,11 +3951,7 @@ var PercentileField = React.createClass({displayName: "PercentileField",
 
 module.exports = PercentileField;
 
-<<<<<<< HEAD
 },{"../../common/input.js":16,"lodash":83,"react":301}],37:[function(require,module,exports){
-=======
-},{"../../common/input.js":16,"lodash":84,"react":302}],37:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * @jsx React.DOM
  */
@@ -4113,11 +3985,7 @@ var TargetPropertyField = React.createClass({displayName: "TargetPropertyField",
 
 module.exports = TargetPropertyField;
 
-<<<<<<< HEAD
 },{"../../common/react_select.js":20,"lodash":83,"react":301}],38:[function(require,module,exports){
-=======
-},{"../../common/react_select.js":20,"lodash":84,"react":302}],38:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * @jsx React.DOM
  */
@@ -4152,11 +4020,7 @@ var QueryPaneTabs = React.createClass({displayName: "QueryPaneTabs",
 
 module.exports = QueryPaneTabs;
 
-<<<<<<< HEAD
 },{"react":301}],39:[function(require,module,exports){
-=======
-},{"react":302}],39:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * @jsx React.DOM
  */
@@ -4254,11 +4118,7 @@ var Chart = React.createClass({displayName: "Chart",
 
 module.exports = Chart;
 
-<<<<<<< HEAD
 },{"../../../utils/ExplorerUtils":57,"../../../utils/FormatUtils":59,"../../common/loader.js":17,"./data_table.js":41,"./keen_viz.js":43,"lodash":83,"react/addons":129}],40:[function(require,module,exports){
-=======
-},{"../../../utils/ExplorerUtils":57,"../../../utils/FormatUtils":59,"../../common/loader.js":17,"./data_table.js":41,"./keen_viz.js":43,"lodash":84,"react/addons":130}],40:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * @jsx React.DOM
  */
@@ -4287,21 +4147,13 @@ var CodeSample = React.createClass({displayName: "CodeSample",
 
 module.exports = CodeSample;
 
-<<<<<<< HEAD
 },{"classnames":74,"lodash":83,"react":301}],41:[function(require,module,exports){
-=======
-},{"classnames":74,"lodash":84,"react":302}],41:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * @jsx React.DOM
  */
 var _ = require('lodash');
 var moment = require('moment');
 var React = require('react/addons');
-<<<<<<< HEAD
-=======
-require('floatthead/jquery.floatthead._');
->>>>>>> Replace Google charts table with custom table
 
 var DataTable = React.createClass({displayName: "DataTable",
 
@@ -4354,11 +4206,7 @@ var DataTable = React.createClass({displayName: "DataTable",
 
 module.exports = DataTable;
 
-<<<<<<< HEAD
 },{"lodash":83,"moment":84,"react/addons":129}],42:[function(require,module,exports){
-=======
-},{"floatthead/jquery.floatthead._":75,"lodash":84,"moment":85,"react/addons":130}],42:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * @jsx React.DOM
  */
@@ -4496,11 +4344,7 @@ var Visualization = React.createClass({displayName: "Visualization",
 
 module.exports = Visualization;
 
-<<<<<<< HEAD
 },{"../../../actions/ExplorerActions":2,"../../../actions/NoticeActions":3,"../../../constants/ExplorerConstants":45,"../../../dispatcher/AppDispatcher":49,"../../../stores/ExplorerStore":53,"../../../utils/ExplorerUtils":57,"../../../utils/FormatUtils":59,"../../common/notice.js":19,"../../common/select.js":23,"./chart.js":39,"./code_sample.js":40,"classnames":74,"lodash":83,"react/addons":129}],43:[function(require,module,exports){
-=======
-},{"../../../actions/ExplorerActions":2,"../../../actions/NoticeActions":3,"../../../constants/ExplorerConstants":45,"../../../dispatcher/AppDispatcher":49,"../../../stores/ExplorerStore":53,"../../../utils/ExplorerUtils":57,"../../../utils/FormatUtils":59,"../../common/notice.js":19,"../../common/select.js":23,"./chart.js":39,"./code_sample.js":40,"classnames":74,"lodash":84,"react/addons":130}],43:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * @jsx React.DOM
  */
@@ -4547,22 +4391,14 @@ var KeenViz = React.createClass({displayName: "KeenViz",
 
 module.exports = KeenViz;
 
-<<<<<<< HEAD
 },{"../../../utils/ExplorerUtils":57,"lodash":83,"react/addons":129}],44:[function(require,module,exports){
-=======
-},{"../../../utils/ExplorerUtils":57,"lodash":84,"react/addons":130}],44:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 var keyMirror = require('keymirror');
 
 module.exports = keyMirror({
   APP_STATE_UPDATE: null,
   APP_STATE_RESET: null
 });
-<<<<<<< HEAD
 },{"keymirror":82}],45:[function(require,module,exports){
-=======
-},{"keymirror":83}],45:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 var keyMirror = require('keymirror');
 
 module.exports = keyMirror({
@@ -4588,22 +4424,14 @@ module.exports = keyMirror({
   EXPLORER_DESTROY_FAIL: null
 });
 
-<<<<<<< HEAD
 },{"keymirror":82}],46:[function(require,module,exports){
-=======
-},{"keymirror":83}],46:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 var keyMirror = require('keymirror');
 
 module.exports = keyMirror({
   NOTICE_CREATE: null,
   NOTICE_CLEAR_ALL: null
 });
-<<<<<<< HEAD
 },{"keymirror":82}],47:[function(require,module,exports){
-=======
-},{"keymirror":83}],47:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 var keyMirror = require('keymirror');
 
 module.exports = keyMirror({
@@ -4611,30 +4439,18 @@ module.exports = keyMirror({
   PROJECT_UPDATE: null
 });
 
-<<<<<<< HEAD
 },{"keymirror":82}],48:[function(require,module,exports){
-=======
-},{"keymirror":83}],48:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 var keyMirror = require('keymirror');
 
 module.exports = keyMirror({
   USER_UPDATE: null,
   USER_RESET: null
 });
-<<<<<<< HEAD
 },{"keymirror":82}],49:[function(require,module,exports){
 var Dispatcher = require('flux').Dispatcher;
 
 module.exports = new Dispatcher();
 },{"flux":75}],50:[function(require,module,exports){
-=======
-},{"keymirror":83}],49:[function(require,module,exports){
-var Dispatcher = require('flux').Dispatcher;
-
-module.exports = new Dispatcher();
-},{"flux":76}],50:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 module.exports = {
 
   REST: require('./rest.js')
@@ -4700,11 +4516,7 @@ RESTPersistence.prototype.get = function(modelId, callback) {
 
 module.exports = RESTPersistence;
 
-<<<<<<< HEAD
 },{"lodash":83,"superagent":303}],52:[function(require,module,exports){
-=======
-},{"lodash":84,"superagent":304}],52:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 var _ = require('lodash');
 var AppDispatcher = require('../dispatcher/AppDispatcher');
 var EventEmitter = require('events').EventEmitter;
@@ -4776,11 +4588,7 @@ AppStateStore.dispatchToken = AppDispatcher.register(function(action) {
 
 module.exports = AppStateStore;
 
-<<<<<<< HEAD
 },{"../constants/AppStateConstants":44,"../dispatcher/AppDispatcher":49,"events":72,"lodash":83}],53:[function(require,module,exports){
-=======
-},{"../constants/AppStateConstants":44,"../dispatcher/AppDispatcher":49,"events":72,"lodash":84}],53:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /* ExplorerStore */
 
 var AppDispatcher = require('../dispatcher/AppDispatcher');
@@ -5077,11 +4885,7 @@ ExplorerStore.dispatchToken = AppDispatcher.register(function(action) {
 
 module.exports = ExplorerStore;
 
-<<<<<<< HEAD
 },{"../constants/ExplorerConstants":45,"../dispatcher/AppDispatcher":49,"../utils/ExplorerUtils":57,"../utils/FilterUtils":58,"../utils/FormatUtils":59,"../utils/ProjectUtils":60,"./ProjectStore":55,"events":72,"lodash":83}],54:[function(require,module,exports){
-=======
-},{"../constants/ExplorerConstants":45,"../dispatcher/AppDispatcher":49,"../utils/ExplorerUtils":57,"../utils/FilterUtils":58,"../utils/FormatUtils":59,"../utils/ProjectUtils":60,"./ProjectStore":55,"events":72,"lodash":84}],54:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 var _ = require('lodash');
 var AppDispatcher = require('../dispatcher/AppDispatcher');
 var EventEmitter = require('events').EventEmitter;
@@ -5221,11 +5025,7 @@ NoticeStore.dispatchToken = AppDispatcher.register(function(action) {
 
 module.exports = NoticeStore;
 
-<<<<<<< HEAD
 },{"../constants/ExplorerConstants":45,"../constants/NoticeConstants":46,"../dispatcher/AppDispatcher":49,"../stores/ExplorerStore":53,"events":72,"lodash":83}],55:[function(require,module,exports){
-=======
-},{"../constants/ExplorerConstants":45,"../constants/NoticeConstants":46,"../dispatcher/AppDispatcher":49,"../stores/ExplorerStore":53,"events":72,"lodash":84}],55:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /* ExplorerStore */
 
 var AppDispatcher = require('../dispatcher/AppDispatcher');
@@ -5314,11 +5114,7 @@ var _dispatcherToken = AppDispatcher.register(function(action) {
 
 module.exports = ProjectStore;
 
-<<<<<<< HEAD
 },{"../constants/ProjectConstants":47,"../dispatcher/AppDispatcher":49,"../utils/ProjectUtils":60,"events":72,"lodash":83}],56:[function(require,module,exports){
-=======
-},{"../constants/ProjectConstants":47,"../dispatcher/AppDispatcher":49,"../utils/ProjectUtils":60,"events":72,"lodash":84}],56:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 var _ = require('lodash');
 var AppDispatcher = require('../dispatcher/AppDispatcher');
 var EventEmitter = require('events').EventEmitter;
@@ -5392,11 +5188,7 @@ UserStore.dispatchToken = AppDispatcher.register(function(action) {
 
 module.exports = UserStore;
 
-<<<<<<< HEAD
 },{"../constants/UserConstants":48,"../dispatcher/AppDispatcher":49,"events":72,"lodash":83}],57:[function(require,module,exports){
-=======
-},{"../constants/UserConstants":48,"../dispatcher/AppDispatcher":49,"events":72,"lodash":84}],57:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 var _ = require('lodash');
 var Qs = require('qs');
 var stringify = require('json-stable-stringify');
@@ -5829,11 +5621,7 @@ module.exports = {
 
 };
 
-<<<<<<< HEAD
 },{"../validations/ExplorerValidations":63,"./FilterUtils":58,"./FormatUtils":59,"./ProjectUtils":60,"./ValidationUtils":62,"json-stable-stringify":78,"lodash":83,"moment":84,"qs":85}],58:[function(require,module,exports){
-=======
-},{"../validations/ExplorerValidations":63,"./FilterUtils":58,"./FormatUtils":59,"./ProjectUtils":60,"./ValidationUtils":62,"json-stable-stringify":79,"lodash":84,"moment":85,"qs":86}],58:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 var _ = require('lodash');
 var moment = require('moment');
 var S = require('string');
@@ -5956,11 +5744,7 @@ module.exports = {
   }
 
 };
-<<<<<<< HEAD
 },{"../validations/FilterValidations":64,"./FormatUtils":59,"./ValidationUtils":62,"lodash":83,"moment":84,"string":302}],59:[function(require,module,exports){
-=======
-},{"../validations/FilterValidations":64,"./FormatUtils":59,"./ValidationUtils":62,"lodash":84,"moment":85,"string":303}],59:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 var _ = require('lodash');
 var S = require('string');
 var moment = require('moment');
@@ -6069,11 +5853,7 @@ module.exports = {
   }
 
 };
-<<<<<<< HEAD
 },{"lodash":83,"moment":84,"string":302}],60:[function(require,module,exports){
-=======
-},{"lodash":84,"moment":85,"string":303}],60:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 var _ = require('lodash');
 var request = require('superagent');
 var FormatUtils = require('./FormatUtils.js');
@@ -6240,11 +6020,7 @@ module.exports = {
   }
 
 };
-<<<<<<< HEAD
 },{"../actions/ProjectActions":4,"./FormatUtils.js":59,"lodash":83,"superagent":303}],61:[function(require,module,exports){
-=======
-},{"../actions/ProjectActions":4,"./FormatUtils.js":59,"lodash":84,"superagent":304}],61:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 var Qs = require('qs');
 var _ = require('lodash');
 
@@ -6269,11 +6045,7 @@ module.exports = {
   }
 
 };
-<<<<<<< HEAD
 },{"lodash":83,"qs":85}],62:[function(require,module,exports){
-=======
-},{"lodash":84,"qs":86}],62:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 var _ = require('lodash');
 
 module.exports = {
@@ -6296,11 +6068,7 @@ module.exports = {
   }
   
 };
-<<<<<<< HEAD
 },{"lodash":83}],63:[function(require,module,exports){
-=======
-},{"lodash":84}],63:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 var _ = require('lodash');
 var filterValidations = require('../validations/FilterValidations').filter;
 var runValidations = require('../utils/ValidationUtils').runValidations;
@@ -6380,11 +6148,7 @@ module.exports = {
   }
   
 };
-<<<<<<< HEAD
 },{"../utils/FilterUtils":58,"../utils/ValidationUtils":62,"../validations/FilterValidations":64,"lodash":83}],64:[function(require,module,exports){
-=======
-},{"../utils/FilterUtils":58,"../utils/ValidationUtils":62,"../validations/FilterValidations":64,"lodash":84}],64:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 var ValidationUtils = require('../utils/ValidationUtils');
 var FormatUtils = require('../utils/FormatUtils');
 var _ = require('lodash');
@@ -6463,11 +6227,7 @@ module.exports = {
   }
 
 };
-<<<<<<< HEAD
 },{"../utils/FormatUtils":59,"../utils/ValidationUtils":62,"lodash":83}],65:[function(require,module,exports){
-=======
-},{"../utils/FormatUtils":59,"../utils/ValidationUtils":62,"lodash":84}],65:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 (function (global){
 
 /*!
@@ -11641,75 +11401,6 @@ process.chdir = function (dir) {
 }());
 
 },{}],75:[function(require,module,exports){
-<<<<<<< HEAD
-=======
-/* jQuery.floatThead.utils - http://mkoryak.github.io/floatThead/ - Copyright (c) 2012 - 2014 Misha Koryak
- * License: MIT
- *
- * This file is required if you do not use underscore in your project and you want to use floatThead.
- * It contains functions from underscore that the plugin uses.
- *
- * YOU DON'T NEED TO INCLUDE THIS IF YOU ALREADY INCLUDE UNDERSCORE!
- *
- */
-
-(function($){
-
-  $.floatThead = $.floatThead || {};
-
-  $.floatThead._  = window._ || (function(){
-    var that = {};
-    var hasOwnProperty = Object.prototype.hasOwnProperty, isThings = ['Arguments', 'Function', 'String', 'Number', 'Date', 'RegExp'];
-    that.has = function(obj, key) {
-      return hasOwnProperty.call(obj, key);
-    };
-    that.keys = function(obj) {
-      if (obj !== Object(obj)) throw new TypeError('Invalid object');
-      var keys = [];
-      for (var key in obj) if (that.has(obj, key)) keys.push(key);
-      return keys;
-    };
-    var idCounter = 0;
-    that.uniqueId = function(prefix) {
-      var id = ++idCounter + '';
-      return prefix ? prefix + id : id;
-    };
-    $.each(isThings, function(){
-      var name = this;
-      that['is' + name] = function(obj) {
-        return Object.prototype.toString.call(obj) == '[object ' + name + ']';
-      };
-    });
-    that.debounce = function(func, wait, immediate) {
-      var timeout, args, context, timestamp, result;
-      return function() {
-        context = this;
-        args = arguments;
-        timestamp = new Date();
-        var later = function() {
-          var last = (new Date()) - timestamp;
-          if (last < wait) {
-            timeout = setTimeout(later, wait - last);
-          } else {
-            timeout = null;
-            if (!immediate) result = func.apply(context, args);
-          }
-        };
-        var callNow = immediate && !timeout;
-        if (!timeout) {
-          timeout = setTimeout(later, wait);
-        }
-        if (callNow) result = func.apply(context, args);
-        return result;
-      };
-    };
-    return that;
-  })();
-})(jQuery);
-
-
-},{}],76:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright (c) 2014-2015, Facebook, Inc.
  * All rights reserved.
@@ -11721,11 +11412,7 @@ process.chdir = function (dir) {
 
 module.exports.Dispatcher = require('./lib/Dispatcher')
 
-<<<<<<< HEAD
 },{"./lib/Dispatcher":76}],76:[function(require,module,exports){
-=======
-},{"./lib/Dispatcher":77}],77:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /*
  * Copyright (c) 2014, Facebook, Inc.
  * All rights reserved.
@@ -11977,11 +11664,7 @@ var _prefix = 'ID_';
 
 module.exports = Dispatcher;
 
-<<<<<<< HEAD
 },{"./invariant":77}],77:[function(require,module,exports){
-=======
-},{"./invariant":78}],78:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright (c) 2014, Facebook, Inc.
  * All rights reserved.
@@ -12036,11 +11719,7 @@ var invariant = function(condition, format, a, b, c, d, e, f) {
 
 module.exports = invariant;
 
-<<<<<<< HEAD
 },{}],78:[function(require,module,exports){
-=======
-},{}],79:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 var json = typeof JSON !== 'undefined' ? JSON : require('jsonify');
 
 module.exports = function (obj, opts) {
@@ -12125,19 +11804,11 @@ var objectKeys = Object.keys || function (obj) {
     return keys;
 };
 
-<<<<<<< HEAD
 },{"jsonify":79}],79:[function(require,module,exports){
 exports.parse = require('./lib/parse');
 exports.stringify = require('./lib/stringify');
 
 },{"./lib/parse":80,"./lib/stringify":81}],80:[function(require,module,exports){
-=======
-},{"jsonify":80}],80:[function(require,module,exports){
-exports.parse = require('./lib/parse');
-exports.stringify = require('./lib/stringify');
-
-},{"./lib/parse":81,"./lib/stringify":82}],81:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 var at, // The index of the current character
     ch, // The current character
     escapee = {
@@ -12412,11 +12083,7 @@ module.exports = function (source, reviver) {
     }({'': result}, '')) : result;
 };
 
-<<<<<<< HEAD
 },{}],81:[function(require,module,exports){
-=======
-},{}],82:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 var cx = /[\u0000\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g,
     escapable = /[\\\"\x00-\x1f\x7f-\x9f\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g,
     gap,
@@ -12572,11 +12239,7 @@ module.exports = function (value, replacer, space) {
     return str('', {'': value});
 };
 
-<<<<<<< HEAD
 },{}],82:[function(require,module,exports){
-=======
-},{}],83:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2014 Facebook, Inc.
  *
@@ -12631,11 +12294,7 @@ var keyMirror = function(obj) {
 
 module.exports = keyMirror;
 
-<<<<<<< HEAD
 },{}],83:[function(require,module,exports){
-=======
-},{}],84:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 (function (global){
 /**
  * @license
@@ -23881,11 +23540,7 @@ module.exports = keyMirror;
 }.call(this));
 
 }).call(this,typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-<<<<<<< HEAD
 },{}],84:[function(require,module,exports){
-=======
-},{}],85:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 //! moment.js
 //! version : 2.10.3
 //! authors : Tim Wood, Iskren Chernev, Moment.js contributors
@@ -26997,17 +26652,10 @@ module.exports = keyMirror;
     return _moment;
 
 }));
-<<<<<<< HEAD
 },{}],85:[function(require,module,exports){
 module.exports = require('./lib');
 
 },{"./lib":86}],86:[function(require,module,exports){
-=======
-},{}],86:[function(require,module,exports){
-module.exports = require('./lib');
-
-},{"./lib":87}],87:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 // Load modules
 
 var Stringify = require('./stringify');
@@ -27024,11 +26672,7 @@ module.exports = {
     parse: Parse
 };
 
-<<<<<<< HEAD
 },{"./parse":87,"./stringify":88}],87:[function(require,module,exports){
-=======
-},{"./parse":88,"./stringify":89}],88:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 // Load modules
 
 var Utils = require('./utils');
@@ -27184,11 +26828,7 @@ module.exports = function (str, options) {
     return Utils.compact(obj);
 };
 
-<<<<<<< HEAD
 },{"./utils":89}],88:[function(require,module,exports){
-=======
-},{"./utils":90}],89:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 // Load modules
 
 var Utils = require('./utils');
@@ -27248,11 +26888,7 @@ module.exports = function (obj, options) {
     return keys.join(delimiter);
 };
 
-<<<<<<< HEAD
 },{"./utils":89}],89:[function(require,module,exports){
-=======
-},{"./utils":90}],90:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 (function (Buffer){
 // Load modules
 
@@ -27395,11 +27031,7 @@ exports.isBuffer = function (obj) {
 };
 
 }).call(this,require("buffer").Buffer)
-<<<<<<< HEAD
 },{"buffer":68}],90:[function(require,module,exports){
-=======
-},{"buffer":68}],91:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Represents a cancellation caused by navigating away
  * before the previous transition has fully resolved.
@@ -27409,11 +27041,7 @@ exports.isBuffer = function (obj) {
 function Cancellation() {}
 
 module.exports = Cancellation;
-<<<<<<< HEAD
 },{}],91:[function(require,module,exports){
-=======
-},{}],92:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 'use strict';
 
 var invariant = require('react/lib/invariant');
@@ -27444,11 +27072,7 @@ var History = {
 };
 
 module.exports = History;
-<<<<<<< HEAD
 },{"react/lib/ExecutionEnvironment":150,"react/lib/invariant":279}],92:[function(require,module,exports){
-=======
-},{"react/lib/ExecutionEnvironment":151,"react/lib/invariant":280}],93:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 'use strict';
 
 var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } };
@@ -27524,11 +27148,7 @@ var Match = (function () {
 })();
 
 module.exports = Match;
-<<<<<<< HEAD
 },{"./PathUtils":94}],93:[function(require,module,exports){
-=======
-},{"./PathUtils":95}],94:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 'use strict';
 
 var PropTypes = require('./PropTypes');
@@ -27599,11 +27219,7 @@ var Navigation = {
 };
 
 module.exports = Navigation;
-<<<<<<< HEAD
 },{"./PropTypes":95}],94:[function(require,module,exports){
-=======
-},{"./PropTypes":96}],95:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 'use strict';
 
 var invariant = require('react/lib/invariant');
@@ -27757,11 +27373,7 @@ var PathUtils = {
 };
 
 module.exports = PathUtils;
-<<<<<<< HEAD
 },{"object-assign":123,"qs":124,"react/lib/invariant":279}],95:[function(require,module,exports){
-=======
-},{"object-assign":124,"qs":125,"react/lib/invariant":280}],96:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 'use strict';
 
 var assign = require('react/lib/Object.assign');
@@ -27793,11 +27405,7 @@ var PropTypes = assign({}, ReactPropTypes, {
 });
 
 module.exports = PropTypes;
-<<<<<<< HEAD
 },{"./Route":97,"react":301,"react/lib/Object.assign":157}],96:[function(require,module,exports){
-=======
-},{"./Route":98,"react":302,"react/lib/Object.assign":158}],97:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Encapsulates a redirect to the given route.
  */
@@ -27810,11 +27418,7 @@ function Redirect(to, params, query) {
 }
 
 module.exports = Redirect;
-<<<<<<< HEAD
 },{}],97:[function(require,module,exports){
-=======
-},{}],98:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 'use strict';
 
 var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } };
@@ -28015,11 +27619,7 @@ var Route = (function () {
 })();
 
 module.exports = Route;
-<<<<<<< HEAD
 },{"./PathUtils":94,"react/lib/Object.assign":157,"react/lib/invariant":279,"react/lib/warning":300}],98:[function(require,module,exports){
-=======
-},{"./PathUtils":95,"react/lib/Object.assign":158,"react/lib/invariant":280,"react/lib/warning":301}],99:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 'use strict';
 
 var invariant = require('react/lib/invariant');
@@ -28095,11 +27695,7 @@ var ScrollHistory = {
 };
 
 module.exports = ScrollHistory;
-<<<<<<< HEAD
 },{"./getWindowScrollPosition":113,"react/lib/ExecutionEnvironment":150,"react/lib/invariant":279}],99:[function(require,module,exports){
-=======
-},{"./getWindowScrollPosition":114,"react/lib/ExecutionEnvironment":151,"react/lib/invariant":280}],100:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 'use strict';
 
 var PropTypes = require('./PropTypes');
@@ -28174,11 +27770,7 @@ var State = {
 };
 
 module.exports = State;
-<<<<<<< HEAD
 },{"./PropTypes":95}],100:[function(require,module,exports){
-=======
-},{"./PropTypes":96}],101:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /* jshint -W058 */
 
 'use strict';
@@ -28254,11 +27846,7 @@ Transition.to = function (transition, routes, params, query, callback) {
 };
 
 module.exports = Transition;
-<<<<<<< HEAD
 },{"./Cancellation":90,"./Redirect":96}],101:[function(require,module,exports){
-=======
-},{"./Cancellation":91,"./Redirect":97}],102:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Actions that modify the URL.
  */
@@ -28284,11 +27872,7 @@ var LocationActions = {
 };
 
 module.exports = LocationActions;
-<<<<<<< HEAD
 },{}],102:[function(require,module,exports){
-=======
-},{}],103:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 'use strict';
 
 var LocationActions = require('../actions/LocationActions');
@@ -28318,11 +27902,7 @@ var ImitateBrowserBehavior = {
 };
 
 module.exports = ImitateBrowserBehavior;
-<<<<<<< HEAD
 },{"../actions/LocationActions":101}],103:[function(require,module,exports){
-=======
-},{"../actions/LocationActions":102}],104:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * A scroll behavior that always scrolls to the top of the page
  * after a transition.
@@ -28338,11 +27918,7 @@ var ScrollToTopBehavior = {
 };
 
 module.exports = ScrollToTopBehavior;
-<<<<<<< HEAD
 },{}],104:[function(require,module,exports){
-=======
-},{}],105:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 'use strict';
 
 var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } };
@@ -28381,11 +27957,7 @@ var ContextWrapper = (function (_React$Component) {
 })(React.Component);
 
 module.exports = ContextWrapper;
-<<<<<<< HEAD
 },{"react":301}],105:[function(require,module,exports){
-=======
-},{"react":302}],106:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 'use strict';
 
 var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } };
@@ -28433,11 +28005,7 @@ DefaultRoute.defaultProps = {
 };
 
 module.exports = DefaultRoute;
-<<<<<<< HEAD
 },{"../PropTypes":95,"./Route":109,"./RouteHandler":110}],106:[function(require,module,exports){
-=======
-},{"../PropTypes":96,"./Route":110,"./RouteHandler":111}],107:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 'use strict';
 
 var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } };
@@ -28573,11 +28141,7 @@ Link.defaultProps = {
 };
 
 module.exports = Link;
-<<<<<<< HEAD
 },{"../PropTypes":95,"react":301,"react/lib/Object.assign":157}],107:[function(require,module,exports){
-=======
-},{"../PropTypes":96,"react":302,"react/lib/Object.assign":158}],108:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 'use strict';
 
 var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } };
@@ -28626,11 +28190,7 @@ NotFoundRoute.defaultProps = {
 };
 
 module.exports = NotFoundRoute;
-<<<<<<< HEAD
 },{"../PropTypes":95,"./Route":109,"./RouteHandler":110}],108:[function(require,module,exports){
-=======
-},{"../PropTypes":96,"./Route":110,"./RouteHandler":111}],109:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 'use strict';
 
 var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } };
@@ -28674,11 +28234,7 @@ Redirect.propTypes = {
 Redirect.defaultProps = {};
 
 module.exports = Redirect;
-<<<<<<< HEAD
 },{"../PropTypes":95,"./Route":109}],109:[function(require,module,exports){
-=======
-},{"../PropTypes":96,"./Route":110}],110:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 'use strict';
 
 var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } };
@@ -28770,11 +28326,7 @@ Route.defaultProps = {
 };
 
 module.exports = Route;
-<<<<<<< HEAD
 },{"../PropTypes":95,"./RouteHandler":110,"react":301,"react/lib/invariant":279}],110:[function(require,module,exports){
-=======
-},{"../PropTypes":96,"./RouteHandler":111,"react":302,"react/lib/invariant":280}],111:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 'use strict';
 
 var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } };
@@ -28883,11 +28435,7 @@ RouteHandler.childContextTypes = {
 };
 
 module.exports = RouteHandler;
-<<<<<<< HEAD
 },{"../PropTypes":95,"./ContextWrapper":104,"react":301,"react/lib/Object.assign":157}],111:[function(require,module,exports){
-=======
-},{"../PropTypes":96,"./ContextWrapper":105,"react":302,"react/lib/Object.assign":158}],112:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 (function (process){
 /* jshint -W058 */
 'use strict';
@@ -29404,11 +28952,7 @@ function createRouter(options) {
 
 module.exports = createRouter;
 }).call(this,require("FWaASH"))
-<<<<<<< HEAD
 },{"./Cancellation":90,"./History":91,"./Match":92,"./PathUtils":94,"./PropTypes":95,"./Redirect":96,"./Route":97,"./ScrollHistory":98,"./Transition":100,"./actions/LocationActions":101,"./behaviors/ImitateBrowserBehavior":102,"./createRoutesFromReactChildren":112,"./isReactChildren":115,"./locations/HashLocation":116,"./locations/HistoryLocation":117,"./locations/RefreshLocation":118,"./locations/StaticLocation":119,"./supportsHistory":122,"FWaASH":73,"react":301,"react/lib/ExecutionEnvironment":150,"react/lib/invariant":279,"react/lib/warning":300}],112:[function(require,module,exports){
-=======
-},{"./Cancellation":91,"./History":92,"./Match":93,"./PathUtils":95,"./PropTypes":96,"./Redirect":97,"./Route":98,"./ScrollHistory":99,"./Transition":101,"./actions/LocationActions":102,"./behaviors/ImitateBrowserBehavior":103,"./createRoutesFromReactChildren":113,"./isReactChildren":116,"./locations/HashLocation":117,"./locations/HistoryLocation":118,"./locations/RefreshLocation":119,"./locations/StaticLocation":120,"./supportsHistory":123,"FWaASH":73,"react":302,"react/lib/ExecutionEnvironment":151,"react/lib/invariant":280,"react/lib/warning":301}],113:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /* jshint -W084 */
 'use strict';
 
@@ -29490,11 +29034,7 @@ function createRoutesFromReactChildren(children) {
 }
 
 module.exports = createRoutesFromReactChildren;
-<<<<<<< HEAD
 },{"./Route":97,"./components/DefaultRoute":105,"./components/NotFoundRoute":107,"./components/Redirect":108,"react":301,"react/lib/Object.assign":157,"react/lib/warning":300}],113:[function(require,module,exports){
-=======
-},{"./Route":98,"./components/DefaultRoute":106,"./components/NotFoundRoute":108,"./components/Redirect":109,"react":302,"react/lib/Object.assign":158,"react/lib/warning":301}],114:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 'use strict';
 
 var invariant = require('react/lib/invariant');
@@ -29513,11 +29053,7 @@ function getWindowScrollPosition() {
 }
 
 module.exports = getWindowScrollPosition;
-<<<<<<< HEAD
 },{"react/lib/ExecutionEnvironment":150,"react/lib/invariant":279}],114:[function(require,module,exports){
-=======
-},{"react/lib/ExecutionEnvironment":151,"react/lib/invariant":280}],115:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 'use strict';
 
 exports.DefaultRoute = require('./components/DefaultRoute');
@@ -29549,11 +29085,7 @@ exports.createRoutesFromReactChildren = require('./createRoutesFromReactChildren
 
 exports.create = require('./createRouter');
 exports.run = require('./runRouter');
-<<<<<<< HEAD
 },{"./History":91,"./Navigation":93,"./Route":97,"./State":99,"./behaviors/ImitateBrowserBehavior":102,"./behaviors/ScrollToTopBehavior":103,"./components/DefaultRoute":105,"./components/Link":106,"./components/NotFoundRoute":107,"./components/Redirect":108,"./components/Route":109,"./components/RouteHandler":110,"./createRouter":111,"./createRoutesFromReactChildren":112,"./locations/HashLocation":116,"./locations/HistoryLocation":117,"./locations/RefreshLocation":118,"./locations/StaticLocation":119,"./locations/TestLocation":120,"./runRouter":121}],115:[function(require,module,exports){
-=======
-},{"./History":92,"./Navigation":94,"./Route":98,"./State":100,"./behaviors/ImitateBrowserBehavior":103,"./behaviors/ScrollToTopBehavior":104,"./components/DefaultRoute":106,"./components/Link":107,"./components/NotFoundRoute":108,"./components/Redirect":109,"./components/Route":110,"./components/RouteHandler":111,"./createRouter":112,"./createRoutesFromReactChildren":113,"./locations/HashLocation":117,"./locations/HistoryLocation":118,"./locations/RefreshLocation":119,"./locations/StaticLocation":120,"./locations/TestLocation":121,"./runRouter":122}],116:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 'use strict';
 
 var React = require('react');
@@ -29567,11 +29099,7 @@ function isReactChildren(object) {
 }
 
 module.exports = isReactChildren;
-<<<<<<< HEAD
 },{"react":301}],116:[function(require,module,exports){
-=======
-},{"react":302}],117:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 'use strict';
 
 var LocationActions = require('../actions/LocationActions');
@@ -29683,11 +29211,7 @@ var HashLocation = {
 };
 
 module.exports = HashLocation;
-<<<<<<< HEAD
 },{"../History":91,"../actions/LocationActions":101}],117:[function(require,module,exports){
-=======
-},{"../History":92,"../actions/LocationActions":102}],118:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 'use strict';
 
 var LocationActions = require('../actions/LocationActions');
@@ -29774,11 +29298,7 @@ var HistoryLocation = {
 };
 
 module.exports = HistoryLocation;
-<<<<<<< HEAD
 },{"../History":91,"../actions/LocationActions":101}],118:[function(require,module,exports){
-=======
-},{"../History":92,"../actions/LocationActions":102}],119:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 'use strict';
 
 var HistoryLocation = require('./HistoryLocation');
@@ -29810,11 +29330,7 @@ var RefreshLocation = {
 };
 
 module.exports = RefreshLocation;
-<<<<<<< HEAD
 },{"../History":91,"./HistoryLocation":117}],119:[function(require,module,exports){
-=======
-},{"../History":92,"./HistoryLocation":118}],120:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 'use strict';
 
 var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } };
@@ -29864,11 +29380,7 @@ StaticLocation.prototype.replace = throwCannotModify;
 StaticLocation.prototype.pop = throwCannotModify;
 
 module.exports = StaticLocation;
-<<<<<<< HEAD
 },{"react/lib/invariant":279}],120:[function(require,module,exports){
-=======
-},{"react/lib/invariant":280}],121:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 'use strict';
 
 var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } };
@@ -29963,11 +29475,7 @@ var TestLocation = (function () {
 })();
 
 module.exports = TestLocation;
-<<<<<<< HEAD
 },{"../History":91,"../actions/LocationActions":101,"react/lib/invariant":279}],121:[function(require,module,exports){
-=======
-},{"../History":92,"../actions/LocationActions":102,"react/lib/invariant":280}],122:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 'use strict';
 
 var createRouter = require('./createRouter');
@@ -30018,11 +29526,7 @@ function runRouter(routes, location, callback) {
 }
 
 module.exports = runRouter;
-<<<<<<< HEAD
 },{"./createRouter":111}],122:[function(require,module,exports){
-=======
-},{"./createRouter":112}],123:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 'use strict';
 
 function supportsHistory() {
@@ -30039,11 +29543,7 @@ function supportsHistory() {
 }
 
 module.exports = supportsHistory;
-<<<<<<< HEAD
 },{}],123:[function(require,module,exports){
-=======
-},{}],124:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 'use strict';
 
 function ToObject(val) {
@@ -30071,21 +29571,12 @@ module.exports = Object.assign || function (target, source) {
 	return to;
 };
 
-<<<<<<< HEAD
 },{}],124:[function(require,module,exports){
 module.exports = require('./lib/');
 
 },{"./lib/":125}],125:[function(require,module,exports){
 arguments[4][86][0].apply(exports,arguments)
 },{"./parse":126,"./stringify":127}],126:[function(require,module,exports){
-=======
-},{}],125:[function(require,module,exports){
-module.exports = require('./lib/');
-
-},{"./lib/":126}],126:[function(require,module,exports){
-arguments[4][87][0].apply(exports,arguments)
-},{"./parse":127,"./stringify":128}],127:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 // Load modules
 
 var Utils = require('./utils');
@@ -30248,11 +29739,7 @@ module.exports = function (str, options) {
     return Utils.compact(obj);
 };
 
-<<<<<<< HEAD
 },{"./utils":128}],127:[function(require,module,exports){
-=======
-},{"./utils":129}],128:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 // Load modules
 
 var Utils = require('./utils');
@@ -30351,11 +29838,7 @@ module.exports = function (obj, options) {
     return keys.join(delimiter);
 };
 
-<<<<<<< HEAD
 },{"./utils":128}],128:[function(require,module,exports){
-=======
-},{"./utils":129}],129:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 // Load modules
 
 
@@ -30489,17 +29972,10 @@ exports.isBuffer = function (obj) {
         obj.constructor.isBuffer(obj));
 };
 
-<<<<<<< HEAD
 },{}],129:[function(require,module,exports){
 module.exports = require('./lib/ReactWithAddons');
 
 },{"./lib/ReactWithAddons":229}],130:[function(require,module,exports){
-=======
-},{}],130:[function(require,module,exports){
-module.exports = require('./lib/ReactWithAddons');
-
-},{"./lib/ReactWithAddons":230}],131:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -30526,11 +30002,7 @@ var AutoFocusMixin = {
 
 module.exports = AutoFocusMixin;
 
-<<<<<<< HEAD
 },{"./focusNode":263}],131:[function(require,module,exports){
-=======
-},{"./focusNode":264}],132:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2015 Facebook, Inc.
  * All rights reserved.
@@ -31025,11 +30497,7 @@ var BeforeInputEventPlugin = {
 
 module.exports = BeforeInputEventPlugin;
 
-<<<<<<< HEAD
 },{"./EventConstants":144,"./EventPropagators":149,"./ExecutionEnvironment":150,"./FallbackCompositionState":151,"./SyntheticCompositionEvent":235,"./SyntheticInputEvent":239,"./keyOf":286}],132:[function(require,module,exports){
-=======
-},{"./EventConstants":145,"./EventPropagators":150,"./ExecutionEnvironment":151,"./FallbackCompositionState":152,"./SyntheticCompositionEvent":236,"./SyntheticInputEvent":240,"./keyOf":287}],133:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -31141,11 +30609,7 @@ var CSSCore = {
 module.exports = CSSCore;
 
 }).call(this,require("FWaASH"))
-<<<<<<< HEAD
 },{"./invariant":279,"FWaASH":73}],133:[function(require,module,exports){
-=======
-},{"./invariant":280,"FWaASH":73}],134:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -31270,11 +30734,7 @@ var CSSProperty = {
 
 module.exports = CSSProperty;
 
-<<<<<<< HEAD
 },{}],134:[function(require,module,exports){
-=======
-},{}],135:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -31456,11 +30916,7 @@ var CSSPropertyOperations = {
 module.exports = CSSPropertyOperations;
 
 }).call(this,require("FWaASH"))
-<<<<<<< HEAD
 },{"./CSSProperty":133,"./ExecutionEnvironment":150,"./camelizeStyleName":250,"./dangerousStyleValue":257,"./hyphenateStyleName":277,"./memoizeStringOnly":288,"./warning":300,"FWaASH":73}],135:[function(require,module,exports){
-=======
-},{"./CSSProperty":134,"./ExecutionEnvironment":151,"./camelizeStyleName":251,"./dangerousStyleValue":258,"./hyphenateStyleName":278,"./memoizeStringOnly":289,"./warning":301,"FWaASH":73}],136:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -31560,11 +31016,7 @@ PooledClass.addPoolingTo(CallbackQueue);
 module.exports = CallbackQueue;
 
 }).call(this,require("FWaASH"))
-<<<<<<< HEAD
 },{"./Object.assign":157,"./PooledClass":158,"./invariant":279,"FWaASH":73}],136:[function(require,module,exports){
-=======
-},{"./Object.assign":158,"./PooledClass":159,"./invariant":280,"FWaASH":73}],137:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -31946,11 +31398,7 @@ var ChangeEventPlugin = {
 
 module.exports = ChangeEventPlugin;
 
-<<<<<<< HEAD
 },{"./EventConstants":144,"./EventPluginHub":146,"./EventPropagators":149,"./ExecutionEnvironment":150,"./ReactUpdates":228,"./SyntheticEvent":237,"./isEventSupported":280,"./isTextInputElement":282,"./keyOf":286}],137:[function(require,module,exports){
-=======
-},{"./EventConstants":145,"./EventPluginHub":147,"./EventPropagators":150,"./ExecutionEnvironment":151,"./ReactUpdates":229,"./SyntheticEvent":238,"./isEventSupported":281,"./isTextInputElement":283,"./keyOf":287}],138:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -31975,11 +31423,7 @@ var ClientReactRootIndex = {
 
 module.exports = ClientReactRootIndex;
 
-<<<<<<< HEAD
 },{}],138:[function(require,module,exports){
-=======
-},{}],139:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -32117,11 +31561,7 @@ var DOMChildrenOperations = {
 module.exports = DOMChildrenOperations;
 
 }).call(this,require("FWaASH"))
-<<<<<<< HEAD
 },{"./Danger":141,"./ReactMultiChildUpdateTypes":207,"./invariant":279,"./setTextContent":294,"FWaASH":73}],139:[function(require,module,exports){
-=======
-},{"./Danger":142,"./ReactMultiChildUpdateTypes":208,"./invariant":280,"./setTextContent":295,"FWaASH":73}],140:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -32420,11 +31860,7 @@ var DOMProperty = {
 module.exports = DOMProperty;
 
 }).call(this,require("FWaASH"))
-<<<<<<< HEAD
 },{"./invariant":279,"FWaASH":73}],140:[function(require,module,exports){
-=======
-},{"./invariant":280,"FWaASH":73}],141:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -32616,11 +32052,7 @@ var DOMPropertyOperations = {
 module.exports = DOMPropertyOperations;
 
 }).call(this,require("FWaASH"))
-<<<<<<< HEAD
 },{"./DOMProperty":139,"./quoteAttributeValueForBrowser":292,"./warning":300,"FWaASH":73}],141:[function(require,module,exports){
-=======
-},{"./DOMProperty":140,"./quoteAttributeValueForBrowser":293,"./warning":301,"FWaASH":73}],142:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -32807,11 +32239,7 @@ var Danger = {
 module.exports = Danger;
 
 }).call(this,require("FWaASH"))
-<<<<<<< HEAD
 },{"./ExecutionEnvironment":150,"./createNodesFromMarkup":255,"./emptyFunction":258,"./getMarkupWrap":271,"./invariant":279,"FWaASH":73}],142:[function(require,module,exports){
-=======
-},{"./ExecutionEnvironment":151,"./createNodesFromMarkup":256,"./emptyFunction":259,"./getMarkupWrap":272,"./invariant":280,"FWaASH":73}],143:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -32850,11 +32278,7 @@ var DefaultEventPluginOrder = [
 
 module.exports = DefaultEventPluginOrder;
 
-<<<<<<< HEAD
 },{"./keyOf":286}],143:[function(require,module,exports){
-=======
-},{"./keyOf":287}],144:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -32994,11 +32418,7 @@ var EnterLeaveEventPlugin = {
 
 module.exports = EnterLeaveEventPlugin;
 
-<<<<<<< HEAD
 },{"./EventConstants":144,"./EventPropagators":149,"./ReactMount":205,"./SyntheticMouseEvent":241,"./keyOf":286}],144:[function(require,module,exports){
-=======
-},{"./EventConstants":145,"./EventPropagators":150,"./ReactMount":206,"./SyntheticMouseEvent":242,"./keyOf":287}],145:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -33070,11 +32490,7 @@ var EventConstants = {
 
 module.exports = EventConstants;
 
-<<<<<<< HEAD
 },{"./keyMirror":285}],145:[function(require,module,exports){
-=======
-},{"./keyMirror":286}],146:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -33164,11 +32580,7 @@ var EventListener = {
 module.exports = EventListener;
 
 }).call(this,require("FWaASH"))
-<<<<<<< HEAD
 },{"./emptyFunction":258,"FWaASH":73}],146:[function(require,module,exports){
-=======
-},{"./emptyFunction":259,"FWaASH":73}],147:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -33446,11 +32858,7 @@ var EventPluginHub = {
 module.exports = EventPluginHub;
 
 }).call(this,require("FWaASH"))
-<<<<<<< HEAD
 },{"./EventPluginRegistry":147,"./EventPluginUtils":148,"./accumulateInto":247,"./forEachAccumulated":264,"./invariant":279,"FWaASH":73}],147:[function(require,module,exports){
-=======
-},{"./EventPluginRegistry":148,"./EventPluginUtils":149,"./accumulateInto":248,"./forEachAccumulated":265,"./invariant":280,"FWaASH":73}],148:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -33730,11 +33138,7 @@ var EventPluginRegistry = {
 module.exports = EventPluginRegistry;
 
 }).call(this,require("FWaASH"))
-<<<<<<< HEAD
 },{"./invariant":279,"FWaASH":73}],148:[function(require,module,exports){
-=======
-},{"./invariant":280,"FWaASH":73}],149:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -33955,11 +33359,7 @@ var EventPluginUtils = {
 module.exports = EventPluginUtils;
 
 }).call(this,require("FWaASH"))
-<<<<<<< HEAD
 },{"./EventConstants":144,"./invariant":279,"FWaASH":73}],149:[function(require,module,exports){
-=======
-},{"./EventConstants":145,"./invariant":280,"FWaASH":73}],150:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -34101,11 +33501,7 @@ var EventPropagators = {
 module.exports = EventPropagators;
 
 }).call(this,require("FWaASH"))
-<<<<<<< HEAD
 },{"./EventConstants":144,"./EventPluginHub":146,"./accumulateInto":247,"./forEachAccumulated":264,"FWaASH":73}],150:[function(require,module,exports){
-=======
-},{"./EventConstants":145,"./EventPluginHub":147,"./accumulateInto":248,"./forEachAccumulated":265,"FWaASH":73}],151:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -34149,11 +33545,7 @@ var ExecutionEnvironment = {
 
 module.exports = ExecutionEnvironment;
 
-<<<<<<< HEAD
 },{}],151:[function(require,module,exports){
-=======
-},{}],152:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -34244,11 +33636,7 @@ PooledClass.addPoolingTo(FallbackCompositionState);
 
 module.exports = FallbackCompositionState;
 
-<<<<<<< HEAD
 },{"./Object.assign":157,"./PooledClass":158,"./getTextContentAccessor":274}],152:[function(require,module,exports){
-=======
-},{"./Object.assign":158,"./PooledClass":159,"./getTextContentAccessor":275}],153:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -34459,11 +33847,7 @@ var HTMLDOMPropertyConfig = {
 
 module.exports = HTMLDOMPropertyConfig;
 
-<<<<<<< HEAD
 },{"./DOMProperty":139,"./ExecutionEnvironment":150}],153:[function(require,module,exports){
-=======
-},{"./DOMProperty":140,"./ExecutionEnvironment":151}],154:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -34504,11 +33888,7 @@ var LinkedStateMixin = {
 
 module.exports = LinkedStateMixin;
 
-<<<<<<< HEAD
 },{"./ReactLink":203,"./ReactStateSetters":222}],154:[function(require,module,exports){
-=======
-},{"./ReactLink":204,"./ReactStateSetters":223}],155:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -34664,11 +34044,7 @@ var LinkedValueUtils = {
 module.exports = LinkedValueUtils;
 
 }).call(this,require("FWaASH"))
-<<<<<<< HEAD
 },{"./ReactPropTypes":214,"./invariant":279,"FWaASH":73}],155:[function(require,module,exports){
-=======
-},{"./ReactPropTypes":215,"./invariant":280,"FWaASH":73}],156:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 (function (process){
 /**
  * Copyright 2014-2015, Facebook, Inc.
@@ -34725,11 +34101,7 @@ var LocalEventTrapMixin = {
 module.exports = LocalEventTrapMixin;
 
 }).call(this,require("FWaASH"))
-<<<<<<< HEAD
 },{"./ReactBrowserEventEmitter":161,"./accumulateInto":247,"./forEachAccumulated":264,"./invariant":279,"FWaASH":73}],156:[function(require,module,exports){
-=======
-},{"./ReactBrowserEventEmitter":162,"./accumulateInto":248,"./forEachAccumulated":265,"./invariant":280,"FWaASH":73}],157:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -34787,11 +34159,7 @@ var MobileSafariClickEventPlugin = {
 
 module.exports = MobileSafariClickEventPlugin;
 
-<<<<<<< HEAD
 },{"./EventConstants":144,"./emptyFunction":258}],157:[function(require,module,exports){
-=======
-},{"./EventConstants":145,"./emptyFunction":259}],158:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2014-2015, Facebook, Inc.
  * All rights reserved.
@@ -34840,11 +34208,7 @@ function assign(target, sources) {
 
 module.exports = assign;
 
-<<<<<<< HEAD
 },{}],158:[function(require,module,exports){
-=======
-},{}],159:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -34960,11 +34324,7 @@ var PooledClass = {
 module.exports = PooledClass;
 
 }).call(this,require("FWaASH"))
-<<<<<<< HEAD
 },{"./invariant":279,"FWaASH":73}],159:[function(require,module,exports){
-=======
-},{"./invariant":280,"FWaASH":73}],160:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -35116,11 +34476,7 @@ React.version = '0.13.3';
 module.exports = React;
 
 }).call(this,require("FWaASH"))
-<<<<<<< HEAD
 },{"./EventPluginUtils":148,"./ExecutionEnvironment":150,"./Object.assign":157,"./ReactChildren":165,"./ReactClass":166,"./ReactComponent":167,"./ReactContext":172,"./ReactCurrentOwner":173,"./ReactDOM":174,"./ReactDOMTextComponent":185,"./ReactDefaultInjection":188,"./ReactElement":191,"./ReactElementValidator":192,"./ReactInstanceHandles":200,"./ReactMount":205,"./ReactPerf":210,"./ReactPropTypes":214,"./ReactReconciler":217,"./ReactServerRendering":220,"./findDOMNode":261,"./onlyChild":289,"FWaASH":73}],160:[function(require,module,exports){
-=======
-},{"./EventPluginUtils":149,"./ExecutionEnvironment":151,"./Object.assign":158,"./ReactChildren":166,"./ReactClass":167,"./ReactComponent":168,"./ReactContext":173,"./ReactCurrentOwner":174,"./ReactDOM":175,"./ReactDOMTextComponent":186,"./ReactDefaultInjection":189,"./ReactElement":192,"./ReactElementValidator":193,"./ReactInstanceHandles":201,"./ReactMount":206,"./ReactPerf":211,"./ReactPropTypes":215,"./ReactReconciler":218,"./ReactServerRendering":221,"./findDOMNode":262,"./onlyChild":290,"FWaASH":73}],161:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -35151,11 +34507,7 @@ var ReactBrowserComponentMixin = {
 
 module.exports = ReactBrowserComponentMixin;
 
-<<<<<<< HEAD
 },{"./findDOMNode":261}],161:[function(require,module,exports){
-=======
-},{"./findDOMNode":262}],162:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -35508,11 +34860,7 @@ var ReactBrowserEventEmitter = assign({}, ReactEventEmitterMixin, {
 
 module.exports = ReactBrowserEventEmitter;
 
-<<<<<<< HEAD
 },{"./EventConstants":144,"./EventPluginHub":146,"./EventPluginRegistry":147,"./Object.assign":157,"./ReactEventEmitterMixin":195,"./ViewportMetrics":246,"./isEventSupported":280}],162:[function(require,module,exports){
-=======
-},{"./EventConstants":145,"./EventPluginHub":147,"./EventPluginRegistry":148,"./Object.assign":158,"./ReactEventEmitterMixin":196,"./ViewportMetrics":247,"./isEventSupported":281}],163:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -35582,11 +34930,7 @@ var ReactCSSTransitionGroup = React.createClass({
 
 module.exports = ReactCSSTransitionGroup;
 
-<<<<<<< HEAD
 },{"./Object.assign":157,"./React":159,"./ReactCSSTransitionGroupChild":163,"./ReactTransitionGroup":226}],163:[function(require,module,exports){
-=======
-},{"./Object.assign":158,"./React":160,"./ReactCSSTransitionGroupChild":164,"./ReactTransitionGroup":227}],164:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -35734,11 +35078,7 @@ var ReactCSSTransitionGroupChild = React.createClass({
 module.exports = ReactCSSTransitionGroupChild;
 
 }).call(this,require("FWaASH"))
-<<<<<<< HEAD
 },{"./CSSCore":132,"./React":159,"./ReactTransitionEvents":225,"./onlyChild":289,"./warning":300,"FWaASH":73}],164:[function(require,module,exports){
-=======
-},{"./CSSCore":133,"./React":160,"./ReactTransitionEvents":226,"./onlyChild":290,"./warning":301,"FWaASH":73}],165:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2014-2015, Facebook, Inc.
  * All rights reserved.
@@ -35865,11 +35205,7 @@ var ReactChildReconciler = {
 
 module.exports = ReactChildReconciler;
 
-<<<<<<< HEAD
 },{"./ReactReconciler":217,"./flattenChildren":262,"./instantiateReactComponent":278,"./shouldUpdateReactComponent":296}],165:[function(require,module,exports){
-=======
-},{"./ReactReconciler":218,"./flattenChildren":263,"./instantiateReactComponent":279,"./shouldUpdateReactComponent":297}],166:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -36022,11 +35358,7 @@ var ReactChildren = {
 module.exports = ReactChildren;
 
 }).call(this,require("FWaASH"))
-<<<<<<< HEAD
 },{"./PooledClass":158,"./ReactFragment":197,"./traverseAllChildren":298,"./warning":300,"FWaASH":73}],166:[function(require,module,exports){
-=======
-},{"./PooledClass":159,"./ReactFragment":198,"./traverseAllChildren":299,"./warning":301,"FWaASH":73}],167:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -36972,11 +36304,7 @@ var ReactClass = {
 module.exports = ReactClass;
 
 }).call(this,require("FWaASH"))
-<<<<<<< HEAD
 },{"./Object.assign":157,"./ReactComponent":167,"./ReactCurrentOwner":173,"./ReactElement":191,"./ReactErrorUtils":194,"./ReactInstanceMap":201,"./ReactLifeCycle":202,"./ReactPropTypeLocationNames":212,"./ReactPropTypeLocations":213,"./ReactUpdateQueue":227,"./invariant":279,"./keyMirror":285,"./keyOf":286,"./warning":300,"FWaASH":73}],167:[function(require,module,exports){
-=======
-},{"./Object.assign":158,"./ReactComponent":168,"./ReactCurrentOwner":174,"./ReactElement":192,"./ReactErrorUtils":195,"./ReactInstanceMap":202,"./ReactLifeCycle":203,"./ReactPropTypeLocationNames":213,"./ReactPropTypeLocations":214,"./ReactUpdateQueue":228,"./invariant":280,"./keyMirror":286,"./keyOf":287,"./warning":301,"FWaASH":73}],168:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -37130,11 +36458,7 @@ if ("production" !== process.env.NODE_ENV) {
 module.exports = ReactComponent;
 
 }).call(this,require("FWaASH"))
-<<<<<<< HEAD
 },{"./ReactUpdateQueue":227,"./invariant":279,"./warning":300,"FWaASH":73}],168:[function(require,module,exports){
-=======
-},{"./ReactUpdateQueue":228,"./invariant":280,"./warning":301,"FWaASH":73}],169:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -37181,11 +36505,7 @@ var ReactComponentBrowserEnvironment = {
 
 module.exports = ReactComponentBrowserEnvironment;
 
-<<<<<<< HEAD
 },{"./ReactDOMIDOperations":178,"./ReactMount":205}],169:[function(require,module,exports){
-=======
-},{"./ReactDOMIDOperations":179,"./ReactMount":206}],170:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 (function (process){
 /**
  * Copyright 2014-2015, Facebook, Inc.
@@ -37246,11 +36566,7 @@ var ReactComponentEnvironment = {
 module.exports = ReactComponentEnvironment;
 
 }).call(this,require("FWaASH"))
-<<<<<<< HEAD
 },{"./invariant":279,"FWaASH":73}],170:[function(require,module,exports){
-=======
-},{"./invariant":280,"FWaASH":73}],171:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -37299,11 +36615,7 @@ var ReactComponentWithPureRenderMixin = {
 
 module.exports = ReactComponentWithPureRenderMixin;
 
-<<<<<<< HEAD
 },{"./shallowEqual":295}],171:[function(require,module,exports){
-=======
-},{"./shallowEqual":296}],172:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -38216,11 +37528,7 @@ var ReactCompositeComponent = {
 module.exports = ReactCompositeComponent;
 
 }).call(this,require("FWaASH"))
-<<<<<<< HEAD
 },{"./Object.assign":157,"./ReactComponentEnvironment":169,"./ReactContext":172,"./ReactCurrentOwner":173,"./ReactElement":191,"./ReactElementValidator":192,"./ReactInstanceMap":201,"./ReactLifeCycle":202,"./ReactNativeComponent":208,"./ReactPerf":210,"./ReactPropTypeLocationNames":212,"./ReactPropTypeLocations":213,"./ReactReconciler":217,"./ReactUpdates":228,"./emptyObject":259,"./invariant":279,"./shouldUpdateReactComponent":296,"./warning":300,"FWaASH":73}],172:[function(require,module,exports){
-=======
-},{"./Object.assign":158,"./ReactComponentEnvironment":170,"./ReactContext":173,"./ReactCurrentOwner":174,"./ReactElement":192,"./ReactElementValidator":193,"./ReactInstanceMap":202,"./ReactLifeCycle":203,"./ReactNativeComponent":209,"./ReactPerf":211,"./ReactPropTypeLocationNames":213,"./ReactPropTypeLocations":214,"./ReactReconciler":218,"./ReactUpdates":229,"./emptyObject":260,"./invariant":280,"./shouldUpdateReactComponent":297,"./warning":301,"FWaASH":73}],173:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -38298,11 +37606,7 @@ var ReactContext = {
 module.exports = ReactContext;
 
 }).call(this,require("FWaASH"))
-<<<<<<< HEAD
 },{"./Object.assign":157,"./emptyObject":259,"./warning":300,"FWaASH":73}],173:[function(require,module,exports){
-=======
-},{"./Object.assign":158,"./emptyObject":260,"./warning":301,"FWaASH":73}],174:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -38336,11 +37640,7 @@ var ReactCurrentOwner = {
 
 module.exports = ReactCurrentOwner;
 
-<<<<<<< HEAD
 },{}],174:[function(require,module,exports){
-=======
-},{}],175:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -38519,11 +37819,7 @@ var ReactDOM = mapObject({
 module.exports = ReactDOM;
 
 }).call(this,require("FWaASH"))
-<<<<<<< HEAD
 },{"./ReactElement":191,"./ReactElementValidator":192,"./mapObject":287,"FWaASH":73}],175:[function(require,module,exports){
-=======
-},{"./ReactElement":192,"./ReactElementValidator":193,"./mapObject":288,"FWaASH":73}],176:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -38587,11 +37883,7 @@ var ReactDOMButton = ReactClass.createClass({
 
 module.exports = ReactDOMButton;
 
-<<<<<<< HEAD
 },{"./AutoFocusMixin":130,"./ReactBrowserComponentMixin":160,"./ReactClass":166,"./ReactElement":191,"./keyMirror":285}],176:[function(require,module,exports){
-=======
-},{"./AutoFocusMixin":131,"./ReactBrowserComponentMixin":161,"./ReactClass":167,"./ReactElement":192,"./keyMirror":286}],177:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -39101,11 +38393,7 @@ ReactDOMComponent.injection = {
 module.exports = ReactDOMComponent;
 
 }).call(this,require("FWaASH"))
-<<<<<<< HEAD
 },{"./CSSPropertyOperations":134,"./DOMProperty":139,"./DOMPropertyOperations":140,"./Object.assign":157,"./ReactBrowserEventEmitter":161,"./ReactComponentBrowserEnvironment":168,"./ReactMount":205,"./ReactMultiChild":206,"./ReactPerf":210,"./escapeTextContentForBrowser":260,"./invariant":279,"./isEventSupported":280,"./keyOf":286,"./warning":300,"FWaASH":73}],177:[function(require,module,exports){
-=======
-},{"./CSSPropertyOperations":135,"./DOMProperty":140,"./DOMPropertyOperations":141,"./Object.assign":158,"./ReactBrowserEventEmitter":162,"./ReactComponentBrowserEnvironment":169,"./ReactMount":206,"./ReactMultiChild":207,"./ReactPerf":211,"./escapeTextContentForBrowser":261,"./invariant":280,"./isEventSupported":281,"./keyOf":287,"./warning":301,"FWaASH":73}],178:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -39154,11 +38442,7 @@ var ReactDOMForm = ReactClass.createClass({
 
 module.exports = ReactDOMForm;
 
-<<<<<<< HEAD
 },{"./EventConstants":144,"./LocalEventTrapMixin":155,"./ReactBrowserComponentMixin":160,"./ReactClass":166,"./ReactElement":191}],178:[function(require,module,exports){
-=======
-},{"./EventConstants":145,"./LocalEventTrapMixin":156,"./ReactBrowserComponentMixin":161,"./ReactClass":167,"./ReactElement":192}],179:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -39326,11 +38610,7 @@ ReactPerf.measureMethods(ReactDOMIDOperations, 'ReactDOMIDOperations', {
 module.exports = ReactDOMIDOperations;
 
 }).call(this,require("FWaASH"))
-<<<<<<< HEAD
 },{"./CSSPropertyOperations":134,"./DOMChildrenOperations":138,"./DOMPropertyOperations":140,"./ReactMount":205,"./ReactPerf":210,"./invariant":279,"./setInnerHTML":293,"FWaASH":73}],179:[function(require,module,exports){
-=======
-},{"./CSSPropertyOperations":135,"./DOMChildrenOperations":139,"./DOMPropertyOperations":141,"./ReactMount":206,"./ReactPerf":211,"./invariant":280,"./setInnerHTML":294,"FWaASH":73}],180:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -39375,11 +38655,7 @@ var ReactDOMIframe = ReactClass.createClass({
 
 module.exports = ReactDOMIframe;
 
-<<<<<<< HEAD
 },{"./EventConstants":144,"./LocalEventTrapMixin":155,"./ReactBrowserComponentMixin":160,"./ReactClass":166,"./ReactElement":191}],180:[function(require,module,exports){
-=======
-},{"./EventConstants":145,"./LocalEventTrapMixin":156,"./ReactBrowserComponentMixin":161,"./ReactClass":167,"./ReactElement":192}],181:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -39425,11 +38701,7 @@ var ReactDOMImg = ReactClass.createClass({
 
 module.exports = ReactDOMImg;
 
-<<<<<<< HEAD
 },{"./EventConstants":144,"./LocalEventTrapMixin":155,"./ReactBrowserComponentMixin":160,"./ReactClass":166,"./ReactElement":191}],181:[function(require,module,exports){
-=======
-},{"./EventConstants":145,"./LocalEventTrapMixin":156,"./ReactBrowserComponentMixin":161,"./ReactClass":167,"./ReactElement":192}],182:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -39606,11 +38878,7 @@ var ReactDOMInput = ReactClass.createClass({
 module.exports = ReactDOMInput;
 
 }).call(this,require("FWaASH"))
-<<<<<<< HEAD
 },{"./AutoFocusMixin":130,"./DOMPropertyOperations":140,"./LinkedValueUtils":154,"./Object.assign":157,"./ReactBrowserComponentMixin":160,"./ReactClass":166,"./ReactElement":191,"./ReactMount":205,"./ReactUpdates":228,"./invariant":279,"FWaASH":73}],182:[function(require,module,exports){
-=======
-},{"./AutoFocusMixin":131,"./DOMPropertyOperations":141,"./LinkedValueUtils":155,"./Object.assign":158,"./ReactBrowserComponentMixin":161,"./ReactClass":167,"./ReactElement":192,"./ReactMount":206,"./ReactUpdates":229,"./invariant":280,"FWaASH":73}],183:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -39662,11 +38930,7 @@ var ReactDOMOption = ReactClass.createClass({
 module.exports = ReactDOMOption;
 
 }).call(this,require("FWaASH"))
-<<<<<<< HEAD
 },{"./ReactBrowserComponentMixin":160,"./ReactClass":166,"./ReactElement":191,"./warning":300,"FWaASH":73}],183:[function(require,module,exports){
-=======
-},{"./ReactBrowserComponentMixin":161,"./ReactClass":167,"./ReactElement":192,"./warning":301,"FWaASH":73}],184:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -39844,11 +39108,7 @@ var ReactDOMSelect = ReactClass.createClass({
 
 module.exports = ReactDOMSelect;
 
-<<<<<<< HEAD
 },{"./AutoFocusMixin":130,"./LinkedValueUtils":154,"./Object.assign":157,"./ReactBrowserComponentMixin":160,"./ReactClass":166,"./ReactElement":191,"./ReactUpdates":228}],184:[function(require,module,exports){
-=======
-},{"./AutoFocusMixin":131,"./LinkedValueUtils":155,"./Object.assign":158,"./ReactBrowserComponentMixin":161,"./ReactClass":167,"./ReactElement":192,"./ReactUpdates":229}],185:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -40061,11 +39321,7 @@ var ReactDOMSelection = {
 
 module.exports = ReactDOMSelection;
 
-<<<<<<< HEAD
 },{"./ExecutionEnvironment":150,"./getNodeForCharacterOffset":272,"./getTextContentAccessor":274}],185:[function(require,module,exports){
-=======
-},{"./ExecutionEnvironment":151,"./getNodeForCharacterOffset":273,"./getTextContentAccessor":275}],186:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -40182,11 +39438,7 @@ assign(ReactDOMTextComponent.prototype, {
 
 module.exports = ReactDOMTextComponent;
 
-<<<<<<< HEAD
 },{"./DOMPropertyOperations":140,"./Object.assign":157,"./ReactComponentBrowserEnvironment":168,"./ReactDOMComponent":176,"./escapeTextContentForBrowser":260}],186:[function(require,module,exports){
-=======
-},{"./DOMPropertyOperations":141,"./Object.assign":158,"./ReactComponentBrowserEnvironment":169,"./ReactDOMComponent":177,"./escapeTextContentForBrowser":261}],187:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -40326,11 +39578,7 @@ var ReactDOMTextarea = ReactClass.createClass({
 module.exports = ReactDOMTextarea;
 
 }).call(this,require("FWaASH"))
-<<<<<<< HEAD
 },{"./AutoFocusMixin":130,"./DOMPropertyOperations":140,"./LinkedValueUtils":154,"./Object.assign":157,"./ReactBrowserComponentMixin":160,"./ReactClass":166,"./ReactElement":191,"./ReactUpdates":228,"./invariant":279,"./warning":300,"FWaASH":73}],187:[function(require,module,exports){
-=======
-},{"./AutoFocusMixin":131,"./DOMPropertyOperations":141,"./LinkedValueUtils":155,"./Object.assign":158,"./ReactBrowserComponentMixin":161,"./ReactClass":167,"./ReactElement":192,"./ReactUpdates":229,"./invariant":280,"./warning":301,"FWaASH":73}],188:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -40403,11 +39651,7 @@ var ReactDefaultBatchingStrategy = {
 
 module.exports = ReactDefaultBatchingStrategy;
 
-<<<<<<< HEAD
 },{"./Object.assign":157,"./ReactUpdates":228,"./Transaction":245,"./emptyFunction":258}],188:[function(require,module,exports){
-=======
-},{"./Object.assign":158,"./ReactUpdates":229,"./Transaction":246,"./emptyFunction":259}],189:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -40566,11 +39810,7 @@ module.exports = {
 };
 
 }).call(this,require("FWaASH"))
-<<<<<<< HEAD
 },{"./BeforeInputEventPlugin":131,"./ChangeEventPlugin":136,"./ClientReactRootIndex":137,"./DefaultEventPluginOrder":142,"./EnterLeaveEventPlugin":143,"./ExecutionEnvironment":150,"./HTMLDOMPropertyConfig":152,"./MobileSafariClickEventPlugin":156,"./ReactBrowserComponentMixin":160,"./ReactClass":166,"./ReactComponentBrowserEnvironment":168,"./ReactDOMButton":175,"./ReactDOMComponent":176,"./ReactDOMForm":177,"./ReactDOMIDOperations":178,"./ReactDOMIframe":179,"./ReactDOMImg":180,"./ReactDOMInput":181,"./ReactDOMOption":182,"./ReactDOMSelect":183,"./ReactDOMTextComponent":185,"./ReactDOMTextarea":186,"./ReactDefaultBatchingStrategy":187,"./ReactDefaultPerf":189,"./ReactElement":191,"./ReactEventListener":196,"./ReactInjection":198,"./ReactInstanceHandles":200,"./ReactMount":205,"./ReactReconcileTransaction":216,"./SVGDOMPropertyConfig":230,"./SelectEventPlugin":231,"./ServerReactRootIndex":232,"./SimpleEventPlugin":233,"./createFullPageComponent":254,"FWaASH":73}],189:[function(require,module,exports){
-=======
-},{"./BeforeInputEventPlugin":132,"./ChangeEventPlugin":137,"./ClientReactRootIndex":138,"./DefaultEventPluginOrder":143,"./EnterLeaveEventPlugin":144,"./ExecutionEnvironment":151,"./HTMLDOMPropertyConfig":153,"./MobileSafariClickEventPlugin":157,"./ReactBrowserComponentMixin":161,"./ReactClass":167,"./ReactComponentBrowserEnvironment":169,"./ReactDOMButton":176,"./ReactDOMComponent":177,"./ReactDOMForm":178,"./ReactDOMIDOperations":179,"./ReactDOMIframe":180,"./ReactDOMImg":181,"./ReactDOMInput":182,"./ReactDOMOption":183,"./ReactDOMSelect":184,"./ReactDOMTextComponent":186,"./ReactDOMTextarea":187,"./ReactDefaultBatchingStrategy":188,"./ReactDefaultPerf":190,"./ReactElement":192,"./ReactEventListener":197,"./ReactInjection":199,"./ReactInstanceHandles":201,"./ReactMount":206,"./ReactReconcileTransaction":217,"./SVGDOMPropertyConfig":231,"./SelectEventPlugin":232,"./ServerReactRootIndex":233,"./SimpleEventPlugin":234,"./createFullPageComponent":255,"FWaASH":73}],190:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -40836,11 +40076,7 @@ var ReactDefaultPerf = {
 
 module.exports = ReactDefaultPerf;
 
-<<<<<<< HEAD
 },{"./DOMProperty":139,"./ReactDefaultPerfAnalysis":190,"./ReactMount":205,"./ReactPerf":210,"./performanceNow":291}],190:[function(require,module,exports){
-=======
-},{"./DOMProperty":140,"./ReactDefaultPerfAnalysis":191,"./ReactMount":206,"./ReactPerf":211,"./performanceNow":292}],191:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -41046,11 +40282,7 @@ var ReactDefaultPerfAnalysis = {
 
 module.exports = ReactDefaultPerfAnalysis;
 
-<<<<<<< HEAD
 },{"./Object.assign":157}],191:[function(require,module,exports){
-=======
-},{"./Object.assign":158}],192:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 (function (process){
 /**
  * Copyright 2014-2015, Facebook, Inc.
@@ -41358,11 +40590,7 @@ ReactElement.isValidElement = function(object) {
 module.exports = ReactElement;
 
 }).call(this,require("FWaASH"))
-<<<<<<< HEAD
 },{"./Object.assign":157,"./ReactContext":172,"./ReactCurrentOwner":173,"./warning":300,"FWaASH":73}],192:[function(require,module,exports){
-=======
-},{"./Object.assign":158,"./ReactContext":173,"./ReactCurrentOwner":174,"./warning":301,"FWaASH":73}],193:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 (function (process){
 /**
  * Copyright 2014-2015, Facebook, Inc.
@@ -41827,11 +41055,7 @@ var ReactElementValidator = {
 module.exports = ReactElementValidator;
 
 }).call(this,require("FWaASH"))
-<<<<<<< HEAD
 },{"./ReactCurrentOwner":173,"./ReactElement":191,"./ReactFragment":197,"./ReactNativeComponent":208,"./ReactPropTypeLocationNames":212,"./ReactPropTypeLocations":213,"./getIteratorFn":270,"./invariant":279,"./warning":300,"FWaASH":73}],193:[function(require,module,exports){
-=======
-},{"./ReactCurrentOwner":174,"./ReactElement":192,"./ReactFragment":198,"./ReactNativeComponent":209,"./ReactPropTypeLocationNames":213,"./ReactPropTypeLocations":214,"./getIteratorFn":271,"./invariant":280,"./warning":301,"FWaASH":73}],194:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 (function (process){
 /**
  * Copyright 2014-2015, Facebook, Inc.
@@ -41926,11 +41150,7 @@ var ReactEmptyComponent = {
 module.exports = ReactEmptyComponent;
 
 }).call(this,require("FWaASH"))
-<<<<<<< HEAD
 },{"./ReactElement":191,"./ReactInstanceMap":201,"./invariant":279,"FWaASH":73}],194:[function(require,module,exports){
-=======
-},{"./ReactElement":192,"./ReactInstanceMap":202,"./invariant":280,"FWaASH":73}],195:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -41962,11 +41182,7 @@ var ReactErrorUtils = {
 
 module.exports = ReactErrorUtils;
 
-<<<<<<< HEAD
 },{}],195:[function(require,module,exports){
-=======
-},{}],196:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -42016,11 +41232,7 @@ var ReactEventEmitterMixin = {
 
 module.exports = ReactEventEmitterMixin;
 
-<<<<<<< HEAD
 },{"./EventPluginHub":146}],196:[function(require,module,exports){
-=======
-},{"./EventPluginHub":147}],197:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -42203,11 +41415,7 @@ var ReactEventListener = {
 
 module.exports = ReactEventListener;
 
-<<<<<<< HEAD
 },{"./EventListener":145,"./ExecutionEnvironment":150,"./Object.assign":157,"./PooledClass":158,"./ReactInstanceHandles":200,"./ReactMount":205,"./ReactUpdates":228,"./getEventTarget":269,"./getUnboundedScrollPosition":275}],197:[function(require,module,exports){
-=======
-},{"./EventListener":146,"./ExecutionEnvironment":151,"./Object.assign":158,"./PooledClass":159,"./ReactInstanceHandles":201,"./ReactMount":206,"./ReactUpdates":229,"./getEventTarget":270,"./getUnboundedScrollPosition":276}],198:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 (function (process){
 /**
  * Copyright 2015, Facebook, Inc.
@@ -42392,11 +41600,7 @@ var ReactFragment = {
 module.exports = ReactFragment;
 
 }).call(this,require("FWaASH"))
-<<<<<<< HEAD
 },{"./ReactElement":191,"./warning":300,"FWaASH":73}],198:[function(require,module,exports){
-=======
-},{"./ReactElement":192,"./warning":301,"FWaASH":73}],199:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -42438,11 +41642,7 @@ var ReactInjection = {
 
 module.exports = ReactInjection;
 
-<<<<<<< HEAD
 },{"./DOMProperty":139,"./EventPluginHub":146,"./ReactBrowserEventEmitter":161,"./ReactClass":166,"./ReactComponentEnvironment":169,"./ReactDOMComponent":176,"./ReactEmptyComponent":193,"./ReactNativeComponent":208,"./ReactPerf":210,"./ReactRootIndex":219,"./ReactUpdates":228}],199:[function(require,module,exports){
-=======
-},{"./DOMProperty":140,"./EventPluginHub":147,"./ReactBrowserEventEmitter":162,"./ReactClass":167,"./ReactComponentEnvironment":170,"./ReactDOMComponent":177,"./ReactEmptyComponent":194,"./ReactNativeComponent":209,"./ReactPerf":211,"./ReactRootIndex":220,"./ReactUpdates":229}],200:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -42577,11 +41777,7 @@ var ReactInputSelection = {
 
 module.exports = ReactInputSelection;
 
-<<<<<<< HEAD
 },{"./ReactDOMSelection":184,"./containsNode":252,"./focusNode":263,"./getActiveElement":265}],200:[function(require,module,exports){
-=======
-},{"./ReactDOMSelection":185,"./containsNode":253,"./focusNode":264,"./getActiveElement":266}],201:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -42917,11 +42113,7 @@ var ReactInstanceHandles = {
 module.exports = ReactInstanceHandles;
 
 }).call(this,require("FWaASH"))
-<<<<<<< HEAD
 },{"./ReactRootIndex":219,"./invariant":279,"FWaASH":73}],201:[function(require,module,exports){
-=======
-},{"./ReactRootIndex":220,"./invariant":280,"FWaASH":73}],202:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -42970,11 +42162,7 @@ var ReactInstanceMap = {
 
 module.exports = ReactInstanceMap;
 
-<<<<<<< HEAD
 },{}],202:[function(require,module,exports){
-=======
-},{}],203:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2015, Facebook, Inc.
  * All rights reserved.
@@ -43011,11 +42199,7 @@ var ReactLifeCycle = {
 
 module.exports = ReactLifeCycle;
 
-<<<<<<< HEAD
 },{}],203:[function(require,module,exports){
-=======
-},{}],204:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -43088,11 +42272,7 @@ ReactLink.PropTypes = {
 
 module.exports = ReactLink;
 
-<<<<<<< HEAD
 },{"./React":159}],204:[function(require,module,exports){
-=======
-},{"./React":160}],205:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -43140,11 +42320,7 @@ var ReactMarkupChecksum = {
 
 module.exports = ReactMarkupChecksum;
 
-<<<<<<< HEAD
 },{"./adler32":248}],205:[function(require,module,exports){
-=======
-},{"./adler32":249}],206:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -44035,11 +43211,7 @@ ReactPerf.measureMethods(ReactMount, 'ReactMount', {
 module.exports = ReactMount;
 
 }).call(this,require("FWaASH"))
-<<<<<<< HEAD
 },{"./DOMProperty":139,"./ReactBrowserEventEmitter":161,"./ReactCurrentOwner":173,"./ReactElement":191,"./ReactElementValidator":192,"./ReactEmptyComponent":193,"./ReactInstanceHandles":200,"./ReactInstanceMap":201,"./ReactMarkupChecksum":204,"./ReactPerf":210,"./ReactReconciler":217,"./ReactUpdateQueue":227,"./ReactUpdates":228,"./containsNode":252,"./emptyObject":259,"./getReactRootElementInContainer":273,"./instantiateReactComponent":278,"./invariant":279,"./setInnerHTML":293,"./shouldUpdateReactComponent":296,"./warning":300,"FWaASH":73}],206:[function(require,module,exports){
-=======
-},{"./DOMProperty":140,"./ReactBrowserEventEmitter":162,"./ReactCurrentOwner":174,"./ReactElement":192,"./ReactElementValidator":193,"./ReactEmptyComponent":194,"./ReactInstanceHandles":201,"./ReactInstanceMap":202,"./ReactMarkupChecksum":205,"./ReactPerf":211,"./ReactReconciler":218,"./ReactUpdateQueue":228,"./ReactUpdates":229,"./containsNode":253,"./emptyObject":260,"./getReactRootElementInContainer":274,"./instantiateReactComponent":279,"./invariant":280,"./setInnerHTML":294,"./shouldUpdateReactComponent":297,"./warning":301,"FWaASH":73}],207:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -44469,11 +43641,7 @@ var ReactMultiChild = {
 
 module.exports = ReactMultiChild;
 
-<<<<<<< HEAD
 },{"./ReactChildReconciler":164,"./ReactComponentEnvironment":169,"./ReactMultiChildUpdateTypes":207,"./ReactReconciler":217}],207:[function(require,module,exports){
-=======
-},{"./ReactChildReconciler":165,"./ReactComponentEnvironment":170,"./ReactMultiChildUpdateTypes":208,"./ReactReconciler":218}],208:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -44506,11 +43674,7 @@ var ReactMultiChildUpdateTypes = keyMirror({
 
 module.exports = ReactMultiChildUpdateTypes;
 
-<<<<<<< HEAD
 },{"./keyMirror":285}],208:[function(require,module,exports){
-=======
-},{"./keyMirror":286}],209:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 (function (process){
 /**
  * Copyright 2014-2015, Facebook, Inc.
@@ -44617,11 +43781,7 @@ var ReactNativeComponent = {
 module.exports = ReactNativeComponent;
 
 }).call(this,require("FWaASH"))
-<<<<<<< HEAD
 },{"./Object.assign":157,"./invariant":279,"FWaASH":73}],209:[function(require,module,exports){
-=======
-},{"./Object.assign":158,"./invariant":280,"FWaASH":73}],210:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -44733,11 +43893,7 @@ var ReactOwner = {
 module.exports = ReactOwner;
 
 }).call(this,require("FWaASH"))
-<<<<<<< HEAD
 },{"./invariant":279,"FWaASH":73}],210:[function(require,module,exports){
-=======
-},{"./invariant":280,"FWaASH":73}],211:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -44841,11 +43997,7 @@ function _noMeasure(objName, fnName, func) {
 module.exports = ReactPerf;
 
 }).call(this,require("FWaASH"))
-<<<<<<< HEAD
 },{"FWaASH":73}],211:[function(require,module,exports){
-=======
-},{"FWaASH":73}],212:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -44955,11 +44107,7 @@ var ReactPropTransferer = {
 
 module.exports = ReactPropTransferer;
 
-<<<<<<< HEAD
 },{"./Object.assign":157,"./emptyFunction":258,"./joinClasses":284}],212:[function(require,module,exports){
-=======
-},{"./Object.assign":158,"./emptyFunction":259,"./joinClasses":285}],213:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -44987,11 +44135,7 @@ if ("production" !== process.env.NODE_ENV) {
 module.exports = ReactPropTypeLocationNames;
 
 }).call(this,require("FWaASH"))
-<<<<<<< HEAD
 },{"FWaASH":73}],213:[function(require,module,exports){
-=======
-},{"FWaASH":73}],214:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -45015,11 +44159,7 @@ var ReactPropTypeLocations = keyMirror({
 
 module.exports = ReactPropTypeLocations;
 
-<<<<<<< HEAD
 },{"./keyMirror":285}],214:[function(require,module,exports){
-=======
-},{"./keyMirror":286}],215:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -45368,11 +44508,7 @@ function getPreciseType(propValue) {
 
 module.exports = ReactPropTypes;
 
-<<<<<<< HEAD
 },{"./ReactElement":191,"./ReactFragment":197,"./ReactPropTypeLocationNames":212,"./emptyFunction":258}],215:[function(require,module,exports){
-=======
-},{"./ReactElement":192,"./ReactFragment":198,"./ReactPropTypeLocationNames":213,"./emptyFunction":259}],216:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -45428,11 +44564,7 @@ PooledClass.addPoolingTo(ReactPutListenerQueue);
 
 module.exports = ReactPutListenerQueue;
 
-<<<<<<< HEAD
 },{"./Object.assign":157,"./PooledClass":158,"./ReactBrowserEventEmitter":161}],216:[function(require,module,exports){
-=======
-},{"./Object.assign":158,"./PooledClass":159,"./ReactBrowserEventEmitter":162}],217:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -45608,11 +44740,7 @@ PooledClass.addPoolingTo(ReactReconcileTransaction);
 
 module.exports = ReactReconcileTransaction;
 
-<<<<<<< HEAD
 },{"./CallbackQueue":135,"./Object.assign":157,"./PooledClass":158,"./ReactBrowserEventEmitter":161,"./ReactInputSelection":199,"./ReactPutListenerQueue":215,"./Transaction":245}],217:[function(require,module,exports){
-=======
-},{"./CallbackQueue":136,"./Object.assign":158,"./PooledClass":159,"./ReactBrowserEventEmitter":162,"./ReactInputSelection":200,"./ReactPutListenerQueue":216,"./Transaction":246}],218:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -45736,11 +44864,7 @@ var ReactReconciler = {
 module.exports = ReactReconciler;
 
 }).call(this,require("FWaASH"))
-<<<<<<< HEAD
 },{"./ReactElementValidator":192,"./ReactRef":218,"FWaASH":73}],218:[function(require,module,exports){
-=======
-},{"./ReactElementValidator":193,"./ReactRef":219,"FWaASH":73}],219:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -45811,11 +44935,7 @@ ReactRef.detachRefs = function(instance, element) {
 
 module.exports = ReactRef;
 
-<<<<<<< HEAD
 },{"./ReactOwner":209}],219:[function(require,module,exports){
-=======
-},{"./ReactOwner":210}],220:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -45846,11 +44966,7 @@ var ReactRootIndex = {
 
 module.exports = ReactRootIndex;
 
-<<<<<<< HEAD
 },{}],220:[function(require,module,exports){
-=======
-},{}],221:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -45932,11 +45048,7 @@ module.exports = {
 };
 
 }).call(this,require("FWaASH"))
-<<<<<<< HEAD
 },{"./ReactElement":191,"./ReactInstanceHandles":200,"./ReactMarkupChecksum":204,"./ReactServerRenderingTransaction":221,"./emptyObject":259,"./instantiateReactComponent":278,"./invariant":279,"FWaASH":73}],221:[function(require,module,exports){
-=======
-},{"./ReactElement":192,"./ReactInstanceHandles":201,"./ReactMarkupChecksum":205,"./ReactServerRenderingTransaction":222,"./emptyObject":260,"./instantiateReactComponent":279,"./invariant":280,"FWaASH":73}],222:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2014-2015, Facebook, Inc.
  * All rights reserved.
@@ -46049,11 +45161,7 @@ PooledClass.addPoolingTo(ReactServerRenderingTransaction);
 
 module.exports = ReactServerRenderingTransaction;
 
-<<<<<<< HEAD
 },{"./CallbackQueue":135,"./Object.assign":157,"./PooledClass":158,"./ReactPutListenerQueue":215,"./Transaction":245,"./emptyFunction":258}],222:[function(require,module,exports){
-=======
-},{"./CallbackQueue":136,"./Object.assign":158,"./PooledClass":159,"./ReactPutListenerQueue":216,"./Transaction":246,"./emptyFunction":259}],223:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -46159,11 +45267,7 @@ ReactStateSetters.Mixin = {
 
 module.exports = ReactStateSetters;
 
-<<<<<<< HEAD
 },{}],223:[function(require,module,exports){
-=======
-},{}],224:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -46677,11 +45781,7 @@ for (eventType in topLevelTypes) {
 
 module.exports = ReactTestUtils;
 
-<<<<<<< HEAD
 },{"./EventConstants":144,"./EventPluginHub":146,"./EventPropagators":149,"./Object.assign":157,"./React":159,"./ReactBrowserEventEmitter":161,"./ReactCompositeComponent":171,"./ReactElement":191,"./ReactEmptyComponent":193,"./ReactInstanceHandles":200,"./ReactInstanceMap":201,"./ReactMount":205,"./ReactUpdates":228,"./SyntheticEvent":237,"./emptyObject":259}],224:[function(require,module,exports){
-=======
-},{"./EventConstants":145,"./EventPluginHub":147,"./EventPropagators":150,"./Object.assign":158,"./React":160,"./ReactBrowserEventEmitter":162,"./ReactCompositeComponent":172,"./ReactElement":192,"./ReactEmptyComponent":194,"./ReactInstanceHandles":201,"./ReactInstanceMap":202,"./ReactMount":206,"./ReactUpdates":229,"./SyntheticEvent":238,"./emptyObject":260}],225:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -46786,11 +45886,7 @@ var ReactTransitionChildMapping = {
 
 module.exports = ReactTransitionChildMapping;
 
-<<<<<<< HEAD
 },{"./ReactChildren":165,"./ReactFragment":197}],225:[function(require,module,exports){
-=======
-},{"./ReactChildren":166,"./ReactFragment":198}],226:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -46901,11 +45997,7 @@ var ReactTransitionEvents = {
 
 module.exports = ReactTransitionEvents;
 
-<<<<<<< HEAD
 },{"./ExecutionEnvironment":150}],226:[function(require,module,exports){
-=======
-},{"./ExecutionEnvironment":151}],227:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -47135,11 +46227,7 @@ var ReactTransitionGroup = React.createClass({
 
 module.exports = ReactTransitionGroup;
 
-<<<<<<< HEAD
 },{"./Object.assign":157,"./React":159,"./ReactTransitionChildMapping":224,"./cloneWithProps":251,"./emptyFunction":258}],227:[function(require,module,exports){
-=======
-},{"./Object.assign":158,"./React":160,"./ReactTransitionChildMapping":225,"./cloneWithProps":252,"./emptyFunction":259}],228:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 (function (process){
 /**
  * Copyright 2015, Facebook, Inc.
@@ -47438,11 +46526,7 @@ var ReactUpdateQueue = {
 module.exports = ReactUpdateQueue;
 
 }).call(this,require("FWaASH"))
-<<<<<<< HEAD
 },{"./Object.assign":157,"./ReactCurrentOwner":173,"./ReactElement":191,"./ReactInstanceMap":201,"./ReactLifeCycle":202,"./ReactUpdates":228,"./invariant":279,"./warning":300,"FWaASH":73}],228:[function(require,module,exports){
-=======
-},{"./Object.assign":158,"./ReactCurrentOwner":174,"./ReactElement":192,"./ReactInstanceMap":202,"./ReactLifeCycle":203,"./ReactUpdates":229,"./invariant":280,"./warning":301,"FWaASH":73}],229:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -47724,11 +46808,7 @@ var ReactUpdates = {
 module.exports = ReactUpdates;
 
 }).call(this,require("FWaASH"))
-<<<<<<< HEAD
 },{"./CallbackQueue":135,"./Object.assign":157,"./PooledClass":158,"./ReactCurrentOwner":173,"./ReactPerf":210,"./ReactReconciler":217,"./Transaction":245,"./invariant":279,"./warning":300,"FWaASH":73}],229:[function(require,module,exports){
-=======
-},{"./CallbackQueue":136,"./Object.assign":158,"./PooledClass":159,"./ReactCurrentOwner":174,"./ReactPerf":211,"./ReactReconciler":218,"./Transaction":246,"./invariant":280,"./warning":301,"FWaASH":73}],230:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -47784,11 +46864,7 @@ if ("production" !== process.env.NODE_ENV) {
 module.exports = React;
 
 }).call(this,require("FWaASH"))
-<<<<<<< HEAD
 },{"./LinkedStateMixin":153,"./React":159,"./ReactCSSTransitionGroup":162,"./ReactComponentWithPureRenderMixin":170,"./ReactDefaultPerf":189,"./ReactFragment":197,"./ReactTestUtils":223,"./ReactTransitionGroup":226,"./ReactUpdates":228,"./cloneWithProps":251,"./cx":256,"./update":299,"FWaASH":73}],230:[function(require,module,exports){
-=======
-},{"./LinkedStateMixin":154,"./React":160,"./ReactCSSTransitionGroup":163,"./ReactComponentWithPureRenderMixin":171,"./ReactDefaultPerf":190,"./ReactFragment":198,"./ReactTestUtils":224,"./ReactTransitionGroup":227,"./ReactUpdates":229,"./cloneWithProps":252,"./cx":257,"./update":300,"FWaASH":73}],231:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -47882,11 +46958,7 @@ var SVGDOMPropertyConfig = {
 
 module.exports = SVGDOMPropertyConfig;
 
-<<<<<<< HEAD
 },{"./DOMProperty":139}],231:[function(require,module,exports){
-=======
-},{"./DOMProperty":140}],232:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -48081,11 +47153,7 @@ var SelectEventPlugin = {
 
 module.exports = SelectEventPlugin;
 
-<<<<<<< HEAD
 },{"./EventConstants":144,"./EventPropagators":149,"./ReactInputSelection":199,"./SyntheticEvent":237,"./getActiveElement":265,"./isTextInputElement":282,"./keyOf":286,"./shallowEqual":295}],232:[function(require,module,exports){
-=======
-},{"./EventConstants":145,"./EventPropagators":150,"./ReactInputSelection":200,"./SyntheticEvent":238,"./getActiveElement":266,"./isTextInputElement":283,"./keyOf":287,"./shallowEqual":296}],233:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -48116,11 +47184,7 @@ var ServerReactRootIndex = {
 
 module.exports = ServerReactRootIndex;
 
-<<<<<<< HEAD
 },{}],233:[function(require,module,exports){
-=======
-},{}],234:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -48548,11 +47612,7 @@ var SimpleEventPlugin = {
 module.exports = SimpleEventPlugin;
 
 }).call(this,require("FWaASH"))
-<<<<<<< HEAD
 },{"./EventConstants":144,"./EventPluginUtils":148,"./EventPropagators":149,"./SyntheticClipboardEvent":234,"./SyntheticDragEvent":236,"./SyntheticEvent":237,"./SyntheticFocusEvent":238,"./SyntheticKeyboardEvent":240,"./SyntheticMouseEvent":241,"./SyntheticTouchEvent":242,"./SyntheticUIEvent":243,"./SyntheticWheelEvent":244,"./getEventCharCode":266,"./invariant":279,"./keyOf":286,"./warning":300,"FWaASH":73}],234:[function(require,module,exports){
-=======
-},{"./EventConstants":145,"./EventPluginUtils":149,"./EventPropagators":150,"./SyntheticClipboardEvent":235,"./SyntheticDragEvent":237,"./SyntheticEvent":238,"./SyntheticFocusEvent":239,"./SyntheticKeyboardEvent":241,"./SyntheticMouseEvent":242,"./SyntheticTouchEvent":243,"./SyntheticUIEvent":244,"./SyntheticWheelEvent":245,"./getEventCharCode":267,"./invariant":280,"./keyOf":287,"./warning":301,"FWaASH":73}],235:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -48597,11 +47657,7 @@ SyntheticEvent.augmentClass(SyntheticClipboardEvent, ClipboardEventInterface);
 
 module.exports = SyntheticClipboardEvent;
 
-<<<<<<< HEAD
 },{"./SyntheticEvent":237}],235:[function(require,module,exports){
-=======
-},{"./SyntheticEvent":238}],236:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -48646,11 +47702,7 @@ SyntheticEvent.augmentClass(
 
 module.exports = SyntheticCompositionEvent;
 
-<<<<<<< HEAD
 },{"./SyntheticEvent":237}],236:[function(require,module,exports){
-=======
-},{"./SyntheticEvent":238}],237:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -48689,11 +47741,7 @@ SyntheticMouseEvent.augmentClass(SyntheticDragEvent, DragEventInterface);
 
 module.exports = SyntheticDragEvent;
 
-<<<<<<< HEAD
 },{"./SyntheticMouseEvent":241}],237:[function(require,module,exports){
-=======
-},{"./SyntheticMouseEvent":242}],238:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -48859,11 +47907,7 @@ PooledClass.addPoolingTo(SyntheticEvent, PooledClass.threeArgumentPooler);
 
 module.exports = SyntheticEvent;
 
-<<<<<<< HEAD
 },{"./Object.assign":157,"./PooledClass":158,"./emptyFunction":258,"./getEventTarget":269}],238:[function(require,module,exports){
-=======
-},{"./Object.assign":158,"./PooledClass":159,"./emptyFunction":259,"./getEventTarget":270}],239:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -48902,11 +47946,7 @@ SyntheticUIEvent.augmentClass(SyntheticFocusEvent, FocusEventInterface);
 
 module.exports = SyntheticFocusEvent;
 
-<<<<<<< HEAD
 },{"./SyntheticUIEvent":243}],239:[function(require,module,exports){
-=======
-},{"./SyntheticUIEvent":244}],240:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -48952,11 +47992,7 @@ SyntheticEvent.augmentClass(
 
 module.exports = SyntheticInputEvent;
 
-<<<<<<< HEAD
 },{"./SyntheticEvent":237}],240:[function(require,module,exports){
-=======
-},{"./SyntheticEvent":238}],241:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -49043,11 +48079,7 @@ SyntheticUIEvent.augmentClass(SyntheticKeyboardEvent, KeyboardEventInterface);
 
 module.exports = SyntheticKeyboardEvent;
 
-<<<<<<< HEAD
 },{"./SyntheticUIEvent":243,"./getEventCharCode":266,"./getEventKey":267,"./getEventModifierState":268}],241:[function(require,module,exports){
-=======
-},{"./SyntheticUIEvent":244,"./getEventCharCode":267,"./getEventKey":268,"./getEventModifierState":269}],242:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -49128,11 +48160,7 @@ SyntheticUIEvent.augmentClass(SyntheticMouseEvent, MouseEventInterface);
 
 module.exports = SyntheticMouseEvent;
 
-<<<<<<< HEAD
 },{"./SyntheticUIEvent":243,"./ViewportMetrics":246,"./getEventModifierState":268}],242:[function(require,module,exports){
-=======
-},{"./SyntheticUIEvent":244,"./ViewportMetrics":247,"./getEventModifierState":269}],243:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -49180,11 +48208,7 @@ SyntheticUIEvent.augmentClass(SyntheticTouchEvent, TouchEventInterface);
 
 module.exports = SyntheticTouchEvent;
 
-<<<<<<< HEAD
 },{"./SyntheticUIEvent":243,"./getEventModifierState":268}],243:[function(require,module,exports){
-=======
-},{"./SyntheticUIEvent":244,"./getEventModifierState":269}],244:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -49246,11 +48270,7 @@ SyntheticEvent.augmentClass(SyntheticUIEvent, UIEventInterface);
 
 module.exports = SyntheticUIEvent;
 
-<<<<<<< HEAD
 },{"./SyntheticEvent":237,"./getEventTarget":269}],244:[function(require,module,exports){
-=======
-},{"./SyntheticEvent":238,"./getEventTarget":270}],245:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -49311,11 +48331,7 @@ SyntheticMouseEvent.augmentClass(SyntheticWheelEvent, WheelEventInterface);
 
 module.exports = SyntheticWheelEvent;
 
-<<<<<<< HEAD
 },{"./SyntheticMouseEvent":241}],245:[function(require,module,exports){
-=======
-},{"./SyntheticMouseEvent":242}],246:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -49556,11 +48572,7 @@ var Transaction = {
 module.exports = Transaction;
 
 }).call(this,require("FWaASH"))
-<<<<<<< HEAD
 },{"./invariant":279,"FWaASH":73}],246:[function(require,module,exports){
-=======
-},{"./invariant":280,"FWaASH":73}],247:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -49589,11 +48601,7 @@ var ViewportMetrics = {
 
 module.exports = ViewportMetrics;
 
-<<<<<<< HEAD
 },{}],247:[function(require,module,exports){
-=======
-},{}],248:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 (function (process){
 /**
  * Copyright 2014-2015, Facebook, Inc.
@@ -49659,11 +48667,7 @@ function accumulateInto(current, next) {
 module.exports = accumulateInto;
 
 }).call(this,require("FWaASH"))
-<<<<<<< HEAD
 },{"./invariant":279,"FWaASH":73}],248:[function(require,module,exports){
-=======
-},{"./invariant":280,"FWaASH":73}],249:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -49697,11 +48701,7 @@ function adler32(data) {
 
 module.exports = adler32;
 
-<<<<<<< HEAD
 },{}],249:[function(require,module,exports){
-=======
-},{}],250:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -49733,11 +48733,7 @@ function camelize(string) {
 
 module.exports = camelize;
 
-<<<<<<< HEAD
 },{}],250:[function(require,module,exports){
-=======
-},{}],251:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2014-2015, Facebook, Inc.
  * All rights reserved.
@@ -49779,11 +48775,7 @@ function camelizeStyleName(string) {
 
 module.exports = camelizeStyleName;
 
-<<<<<<< HEAD
 },{"./camelize":249}],251:[function(require,module,exports){
-=======
-},{"./camelize":250}],252:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -49842,11 +48834,7 @@ function cloneWithProps(child, props) {
 module.exports = cloneWithProps;
 
 }).call(this,require("FWaASH"))
-<<<<<<< HEAD
 },{"./ReactElement":191,"./ReactPropTransferer":211,"./keyOf":286,"./warning":300,"FWaASH":73}],252:[function(require,module,exports){
-=======
-},{"./ReactElement":192,"./ReactPropTransferer":212,"./keyOf":287,"./warning":301,"FWaASH":73}],253:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -49890,11 +48878,7 @@ function containsNode(outerNode, innerNode) {
 
 module.exports = containsNode;
 
-<<<<<<< HEAD
 },{"./isTextNode":283}],253:[function(require,module,exports){
-=======
-},{"./isTextNode":284}],254:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -49980,11 +48964,7 @@ function createArrayFromMixed(obj) {
 
 module.exports = createArrayFromMixed;
 
-<<<<<<< HEAD
 },{"./toArray":297}],254:[function(require,module,exports){
-=======
-},{"./toArray":298}],255:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -50046,11 +49026,7 @@ function createFullPageComponent(tag) {
 module.exports = createFullPageComponent;
 
 }).call(this,require("FWaASH"))
-<<<<<<< HEAD
 },{"./ReactClass":166,"./ReactElement":191,"./invariant":279,"FWaASH":73}],255:[function(require,module,exports){
-=======
-},{"./ReactClass":167,"./ReactElement":192,"./invariant":280,"FWaASH":73}],256:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -50140,11 +49116,7 @@ function createNodesFromMarkup(markup, handleScript) {
 module.exports = createNodesFromMarkup;
 
 }).call(this,require("FWaASH"))
-<<<<<<< HEAD
 },{"./ExecutionEnvironment":150,"./createArrayFromMixed":253,"./getMarkupWrap":271,"./invariant":279,"FWaASH":73}],256:[function(require,module,exports){
-=======
-},{"./ExecutionEnvironment":151,"./createArrayFromMixed":254,"./getMarkupWrap":272,"./invariant":280,"FWaASH":73}],257:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -50200,11 +49172,7 @@ function cx(classNames) {
 module.exports = cx;
 
 }).call(this,require("FWaASH"))
-<<<<<<< HEAD
 },{"./warning":300,"FWaASH":73}],257:[function(require,module,exports){
-=======
-},{"./warning":301,"FWaASH":73}],258:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -50262,11 +49230,7 @@ function dangerousStyleValue(name, value) {
 
 module.exports = dangerousStyleValue;
 
-<<<<<<< HEAD
 },{"./CSSProperty":133}],258:[function(require,module,exports){
-=======
-},{"./CSSProperty":134}],259:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -50300,11 +49264,7 @@ emptyFunction.thatReturnsArgument = function(arg) { return arg; };
 
 module.exports = emptyFunction;
 
-<<<<<<< HEAD
 },{}],259:[function(require,module,exports){
-=======
-},{}],260:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -50328,11 +49288,7 @@ if ("production" !== process.env.NODE_ENV) {
 module.exports = emptyObject;
 
 }).call(this,require("FWaASH"))
-<<<<<<< HEAD
 },{"FWaASH":73}],260:[function(require,module,exports){
-=======
-},{"FWaASH":73}],261:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -50372,11 +49328,7 @@ function escapeTextContentForBrowser(text) {
 
 module.exports = escapeTextContentForBrowser;
 
-<<<<<<< HEAD
 },{}],261:[function(require,module,exports){
-=======
-},{}],262:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -50449,11 +49401,7 @@ function findDOMNode(componentOrElement) {
 module.exports = findDOMNode;
 
 }).call(this,require("FWaASH"))
-<<<<<<< HEAD
 },{"./ReactCurrentOwner":173,"./ReactInstanceMap":201,"./ReactMount":205,"./invariant":279,"./isNode":281,"./warning":300,"FWaASH":73}],262:[function(require,module,exports){
-=======
-},{"./ReactCurrentOwner":174,"./ReactInstanceMap":202,"./ReactMount":206,"./invariant":280,"./isNode":282,"./warning":301,"FWaASH":73}],263:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -50511,11 +49459,7 @@ function flattenChildren(children) {
 module.exports = flattenChildren;
 
 }).call(this,require("FWaASH"))
-<<<<<<< HEAD
 },{"./traverseAllChildren":298,"./warning":300,"FWaASH":73}],263:[function(require,module,exports){
-=======
-},{"./traverseAllChildren":299,"./warning":301,"FWaASH":73}],264:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2014-2015, Facebook, Inc.
  * All rights reserved.
@@ -50544,11 +49488,7 @@ function focusNode(node) {
 
 module.exports = focusNode;
 
-<<<<<<< HEAD
 },{}],264:[function(require,module,exports){
-=======
-},{}],265:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -50579,11 +49519,7 @@ var forEachAccumulated = function(arr, cb, scope) {
 
 module.exports = forEachAccumulated;
 
-<<<<<<< HEAD
 },{}],265:[function(require,module,exports){
-=======
-},{}],266:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -50612,11 +49548,7 @@ function getActiveElement() /*?DOMElement*/ {
 
 module.exports = getActiveElement;
 
-<<<<<<< HEAD
 },{}],266:[function(require,module,exports){
-=======
-},{}],267:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -50668,11 +49600,7 @@ function getEventCharCode(nativeEvent) {
 
 module.exports = getEventCharCode;
 
-<<<<<<< HEAD
 },{}],267:[function(require,module,exports){
-=======
-},{}],268:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -50777,11 +49705,7 @@ function getEventKey(nativeEvent) {
 
 module.exports = getEventKey;
 
-<<<<<<< HEAD
 },{"./getEventCharCode":266}],268:[function(require,module,exports){
-=======
-},{"./getEventCharCode":267}],269:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -50828,11 +49752,7 @@ function getEventModifierState(nativeEvent) {
 
 module.exports = getEventModifierState;
 
-<<<<<<< HEAD
 },{}],269:[function(require,module,exports){
-=======
-},{}],270:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -50863,11 +49783,7 @@ function getEventTarget(nativeEvent) {
 
 module.exports = getEventTarget;
 
-<<<<<<< HEAD
 },{}],270:[function(require,module,exports){
-=======
-},{}],271:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -50911,11 +49827,7 @@ function getIteratorFn(maybeIterable) {
 
 module.exports = getIteratorFn;
 
-<<<<<<< HEAD
 },{}],271:[function(require,module,exports){
-=======
-},{}],272:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -51034,11 +49946,7 @@ function getMarkupWrap(nodeName) {
 module.exports = getMarkupWrap;
 
 }).call(this,require("FWaASH"))
-<<<<<<< HEAD
 },{"./ExecutionEnvironment":150,"./invariant":279,"FWaASH":73}],272:[function(require,module,exports){
-=======
-},{"./ExecutionEnvironment":151,"./invariant":280,"FWaASH":73}],273:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -51113,11 +50021,7 @@ function getNodeForCharacterOffset(root, offset) {
 
 module.exports = getNodeForCharacterOffset;
 
-<<<<<<< HEAD
 },{}],273:[function(require,module,exports){
-=======
-},{}],274:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -51152,11 +50056,7 @@ function getReactRootElementInContainer(container) {
 
 module.exports = getReactRootElementInContainer;
 
-<<<<<<< HEAD
 },{}],274:[function(require,module,exports){
-=======
-},{}],275:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -51193,11 +50093,7 @@ function getTextContentAccessor() {
 
 module.exports = getTextContentAccessor;
 
-<<<<<<< HEAD
 },{"./ExecutionEnvironment":150}],275:[function(require,module,exports){
-=======
-},{"./ExecutionEnvironment":151}],276:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -51237,11 +50133,7 @@ function getUnboundedScrollPosition(scrollable) {
 
 module.exports = getUnboundedScrollPosition;
 
-<<<<<<< HEAD
 },{}],276:[function(require,module,exports){
-=======
-},{}],277:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -51274,11 +50166,7 @@ function hyphenate(string) {
 
 module.exports = hyphenate;
 
-<<<<<<< HEAD
 },{}],277:[function(require,module,exports){
-=======
-},{}],278:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -51319,11 +50207,7 @@ function hyphenateStyleName(string) {
 
 module.exports = hyphenateStyleName;
 
-<<<<<<< HEAD
 },{"./hyphenate":276}],278:[function(require,module,exports){
-=======
-},{"./hyphenate":277}],279:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -51461,11 +50345,7 @@ function instantiateReactComponent(node, parentCompositeType) {
 module.exports = instantiateReactComponent;
 
 }).call(this,require("FWaASH"))
-<<<<<<< HEAD
 },{"./Object.assign":157,"./ReactCompositeComponent":171,"./ReactEmptyComponent":193,"./ReactNativeComponent":208,"./invariant":279,"./warning":300,"FWaASH":73}],279:[function(require,module,exports){
-=======
-},{"./Object.assign":158,"./ReactCompositeComponent":172,"./ReactEmptyComponent":194,"./ReactNativeComponent":209,"./invariant":280,"./warning":301,"FWaASH":73}],280:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -51522,11 +50402,7 @@ var invariant = function(condition, format, a, b, c, d, e, f) {
 module.exports = invariant;
 
 }).call(this,require("FWaASH"))
-<<<<<<< HEAD
 },{"FWaASH":73}],280:[function(require,module,exports){
-=======
-},{"FWaASH":73}],281:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -51591,11 +50467,7 @@ function isEventSupported(eventNameSuffix, capture) {
 
 module.exports = isEventSupported;
 
-<<<<<<< HEAD
 },{"./ExecutionEnvironment":150}],281:[function(require,module,exports){
-=======
-},{"./ExecutionEnvironment":151}],282:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -51622,11 +50494,7 @@ function isNode(object) {
 
 module.exports = isNode;
 
-<<<<<<< HEAD
 },{}],282:[function(require,module,exports){
-=======
-},{}],283:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -51669,11 +50537,7 @@ function isTextInputElement(elem) {
 
 module.exports = isTextInputElement;
 
-<<<<<<< HEAD
 },{}],283:[function(require,module,exports){
-=======
-},{}],284:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -51698,11 +50562,7 @@ function isTextNode(object) {
 
 module.exports = isTextNode;
 
-<<<<<<< HEAD
 },{"./isNode":281}],284:[function(require,module,exports){
-=======
-},{"./isNode":282}],285:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -51743,11 +50603,7 @@ function joinClasses(className/*, ... */) {
 
 module.exports = joinClasses;
 
-<<<<<<< HEAD
 },{}],285:[function(require,module,exports){
-=======
-},{}],286:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -51802,11 +50658,7 @@ var keyMirror = function(obj) {
 module.exports = keyMirror;
 
 }).call(this,require("FWaASH"))
-<<<<<<< HEAD
 },{"./invariant":279,"FWaASH":73}],286:[function(require,module,exports){
-=======
-},{"./invariant":280,"FWaASH":73}],287:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -51842,11 +50694,7 @@ var keyOf = function(oneKeyObj) {
 
 module.exports = keyOf;
 
-<<<<<<< HEAD
 },{}],287:[function(require,module,exports){
-=======
-},{}],288:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -51899,11 +50747,7 @@ function mapObject(object, callback, context) {
 
 module.exports = mapObject;
 
-<<<<<<< HEAD
 },{}],288:[function(require,module,exports){
-=======
-},{}],289:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -51936,11 +50780,7 @@ function memoizeStringOnly(callback) {
 
 module.exports = memoizeStringOnly;
 
-<<<<<<< HEAD
 },{}],289:[function(require,module,exports){
-=======
-},{}],290:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -51980,11 +50820,7 @@ function onlyChild(children) {
 module.exports = onlyChild;
 
 }).call(this,require("FWaASH"))
-<<<<<<< HEAD
 },{"./ReactElement":191,"./invariant":279,"FWaASH":73}],290:[function(require,module,exports){
-=======
-},{"./ReactElement":192,"./invariant":280,"FWaASH":73}],291:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -52012,11 +50848,7 @@ if (ExecutionEnvironment.canUseDOM) {
 
 module.exports = performance || {};
 
-<<<<<<< HEAD
 },{"./ExecutionEnvironment":150}],291:[function(require,module,exports){
-=======
-},{"./ExecutionEnvironment":151}],292:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -52044,11 +50876,7 @@ var performanceNow = performance.now.bind(performance);
 
 module.exports = performanceNow;
 
-<<<<<<< HEAD
 },{"./performance":290}],292:[function(require,module,exports){
-=======
-},{"./performance":291}],293:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -52076,11 +50904,7 @@ function quoteAttributeValueForBrowser(value) {
 
 module.exports = quoteAttributeValueForBrowser;
 
-<<<<<<< HEAD
 },{"./escapeTextContentForBrowser":260}],293:[function(require,module,exports){
-=======
-},{"./escapeTextContentForBrowser":261}],294:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -52169,11 +50993,7 @@ if (ExecutionEnvironment.canUseDOM) {
 
 module.exports = setInnerHTML;
 
-<<<<<<< HEAD
 },{"./ExecutionEnvironment":150}],294:[function(require,module,exports){
-=======
-},{"./ExecutionEnvironment":151}],295:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -52215,11 +51035,7 @@ if (ExecutionEnvironment.canUseDOM) {
 
 module.exports = setTextContent;
 
-<<<<<<< HEAD
 },{"./ExecutionEnvironment":150,"./escapeTextContentForBrowser":260,"./setInnerHTML":293}],295:[function(require,module,exports){
-=======
-},{"./ExecutionEnvironment":151,"./escapeTextContentForBrowser":261,"./setInnerHTML":294}],296:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -52263,11 +51079,7 @@ function shallowEqual(objA, objB) {
 
 module.exports = shallowEqual;
 
-<<<<<<< HEAD
 },{}],296:[function(require,module,exports){
-=======
-},{}],297:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -52371,11 +51183,7 @@ function shouldUpdateReactComponent(prevElement, nextElement) {
 module.exports = shouldUpdateReactComponent;
 
 }).call(this,require("FWaASH"))
-<<<<<<< HEAD
 },{"./warning":300,"FWaASH":73}],297:[function(require,module,exports){
-=======
-},{"./warning":301,"FWaASH":73}],298:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 (function (process){
 /**
  * Copyright 2014-2015, Facebook, Inc.
@@ -52447,11 +51255,7 @@ function toArray(obj) {
 module.exports = toArray;
 
 }).call(this,require("FWaASH"))
-<<<<<<< HEAD
 },{"./invariant":279,"FWaASH":73}],298:[function(require,module,exports){
-=======
-},{"./invariant":280,"FWaASH":73}],299:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -52704,11 +51508,7 @@ function traverseAllChildren(children, callback, traverseContext) {
 module.exports = traverseAllChildren;
 
 }).call(this,require("FWaASH"))
-<<<<<<< HEAD
 },{"./ReactElement":191,"./ReactFragment":197,"./ReactInstanceHandles":200,"./getIteratorFn":270,"./invariant":279,"./warning":300,"FWaASH":73}],299:[function(require,module,exports){
-=======
-},{"./ReactElement":192,"./ReactFragment":198,"./ReactInstanceHandles":201,"./getIteratorFn":271,"./invariant":280,"./warning":301,"FWaASH":73}],300:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -52879,11 +51679,7 @@ function update(value, spec) {
 module.exports = update;
 
 }).call(this,require("FWaASH"))
-<<<<<<< HEAD
 },{"./Object.assign":157,"./invariant":279,"./keyOf":286,"FWaASH":73}],300:[function(require,module,exports){
-=======
-},{"./Object.assign":158,"./invariant":280,"./keyOf":287,"FWaASH":73}],301:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 (function (process){
 /**
  * Copyright 2014-2015, Facebook, Inc.
@@ -52946,17 +51742,10 @@ if ("production" !== process.env.NODE_ENV) {
 module.exports = warning;
 
 }).call(this,require("FWaASH"))
-<<<<<<< HEAD
 },{"./emptyFunction":258,"FWaASH":73}],301:[function(require,module,exports){
 module.exports = require('./lib/React');
 
 },{"./lib/React":159}],302:[function(require,module,exports){
-=======
-},{"./emptyFunction":259,"FWaASH":73}],302:[function(require,module,exports){
-module.exports = require('./lib/React');
-
-},{"./lib/React":160}],303:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /*
 string.js - Copyright (C) 2012-2014, JP Richardson <jprichardson@gmail.com>
 */
@@ -53990,11 +52779,7 @@ string.js - Copyright (C) 2012-2014, JP Richardson <jprichardson@gmail.com>
 
 }).call(this);
 
-<<<<<<< HEAD
 },{}],303:[function(require,module,exports){
-=======
-},{}],304:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 /**
  * Module dependencies.
  */
@@ -55119,11 +53904,7 @@ request.put = function(url, data, fn){
 
 module.exports = request;
 
-<<<<<<< HEAD
 },{"emitter":304,"reduce":305}],304:[function(require,module,exports){
-=======
-},{"emitter":305,"reduce":306}],305:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 
 /**
  * Expose `Emitter`.
@@ -55289,11 +54070,7 @@ Emitter.prototype.hasListeners = function(event){
   return !! this.listeners(event).length;
 };
 
-<<<<<<< HEAD
 },{}],305:[function(require,module,exports){
-=======
-},{}],306:[function(require,module,exports){
->>>>>>> Replace Google charts table with custom table
 
 /**
  * Reduce `arr` with `fn`.
