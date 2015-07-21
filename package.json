@@ -1,6 +1,6 @@
 {
   "name": "keen-data-tools",
-  "version": "0.1.9",
+  "version": "0.1.11",
   "private": true,
   "bucket-name": "keen-js",
   "dependencies": {
