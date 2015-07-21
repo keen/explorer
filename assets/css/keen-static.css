@@ -26,7 +26,7 @@ h3 {
   line-height: 29.39px;
 }
 
-.btn {
+.btn:not(.btn-primary) {
   background: transparent;
   border: 1px solid white;
 }
@@ -73,19 +73,27 @@ h3 {
   box-shadow: none;
 }
 
+.masthead-chart {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: -1;
+}
+
 .masthead {
-  background-color: #3e313c;
-  background-image: url("../img/bg-arduino.jpg");
   background-position: 0 -290px;
   background-repeat: repeat-x;
+  background-color: #00bbde;
   color: #fff;
   margin: 0 0 24px;
-  opacity: 0.85;
   padding: 20px 0;
-  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+  position: relative;
 }
 .masthead h1 {
   margin: 0;
+  font-weight: 600;
 }
 .masthead small,
 .masthead a,
@@ -104,33 +112,44 @@ h3 {
 
 .hero {
   background-position: 50% 100%;
-  min-height: 450px;
   text-align: center;
+  z-index: -1;
 }
 .hero h1 {
   font-size: 48px;
-  margin: 120px 0 6px;
+  margin: 20px 0 6px;
 }
 .hero .lead {
   margin-bottom: 32px;
+  color: #FFFFFF;
 }
-.hero a.hero-btn {
-  border: 2px solid #fff;
-  display: block;
-  font-family: "Raleway", "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+.hero a.cta-btn {
+  width: 320px;
   font-size: 24px;
+}
+
+a.cta-btn {
+  border: 2px solid #fff;
+  color: #fff;
+  display: inline-block;
+  font-family: "Raleway", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 200;
   margin: 0 auto 12px;
-  padding: 12px 0 6px;
-  width: 320px;
+  padding: 12px 12px 10px 12px;
 }
-.hero a.hero-btn:focus,
-.hero a.hero-btn:hover {
+
+a.cta-btn:focus,
+a.cta-btn:hover {
   border-color: transparent;
   background-color: #fff;
   color: #00afd7;
 }
 
+.description-item p {
+  color: #FFFFFF;
+  margin-bottom: 24px;
+}
 
 .sample-item {
   margin-bottom: 24px;
@@ -144,14 +163,26 @@ h3 {
   margin-right: 10px;
 }
 
+.footer {
+  background-color: #00bbde;
+}
+
+.footer .container {
+  border-top: 1px solid #ffffff;
+}
+
 .love {
-  color: #546678;
+  color: #fff;
   padding: 15px 0;
   text-align: center;
 }
 
 .love p {
   margin-bottom: 0;
+}
+
+.love a {
+  color: #3d4a57;
 }
 
 pre {
@@ -209,23 +240,16 @@ pre code {
           transform: translateX(-50%);
 }
 
+.demo-gif {
+  width: 1277px;
+  max-width: 100%;
+}
+
 .ctas {
-  background-color: #3d4a57;
+  background-color: #00bbde;
   margin-top: 12px;
   padding: 48px 0;
   text-align: center;
-}
-
-.cta-btn {
-  background: #00bbde;
-  border: 2px solid #00bbde;
-  color: #fff;
-  display: inline-block;
-  font-family: "Raleway", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 18px;
-  font-weight: 700;
-  padding: 21px 0;
-  width: 320px;
 }
 
 .cta-secondary-btn {
@@ -242,7 +266,6 @@ pre code {
   width: 144px;
 }
 
-.cta-btn:hover,
 .cta-secondary-btn:hover {
   background: #0099b6;
   border-color: #0099b6;
@@ -273,7 +296,6 @@ pre code {
     padding: 24px 0;
   }
 
-  .cta-btn,
   .cta-secondary-btn {
     width: 100%;
     margin: 12px 16px;

@@ -10,8 +10,8 @@
   <link rel="stylesheet" type="text/css" href="assets/css/prism.css" />
 </head>
 <body>
-
   <div class="masthead hero">
+    <div class="masthead-chart"></div>
     <div class="container">
 
       <header class="navbar navbar-static">
@@ -22,7 +22,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a href="https://keen.io?s=gh-data-tools" class="navbar-brand" target="_blank">
+          <a href="https://keen.io?s=gh-explorer" class="navbar-brand" target="_blank">
             <svg class="keen-logo" xmlns="http://www.w3.org/2000/svg" version="1.1" x="0px" y="0px" viewBox="0 0 594 128" enable-background="new 0 0 594 128" xml:space="preserve">
               <g class="icon">
                 <polygon class="red" fill="#FFFFFF" points="59.811,73.135 66.859,85.34 49.275,115.863 140.807,115.863 147.814,128 28.045,128"></polygon>
@@ -35,46 +35,58 @@
         </div>
         <nav class="navbar-collapse collapse keen-navbar-collapse" role="navigation">
           <ul class="nav navbar-nav main-nav">
-            <li><a href="https://keen.io/blog/121840400161/introducing-analytics-tracking-for-arduino?s=gh-data-tools" target="_blank">About</a></li>
-            <li><a href="https://keen.io/team?s=gh-data-tools" target="_blank">Team</a></li>
+            <li><a href="https://keen.io/blog/114588771746/introducing-data-explorer" target="_blank">About</a></li>
+            <li><a href="https://keen.io/team?s=gh-explorer" target="_blank">Team</a></li>
             <li><a href="http://slack.keen.io/" target="_blank">Community</a></li>
-            <li><a href="https://github.com/keen/keen-arduino/issues" target="_blank">Support</a></li>
+            <li><a href="https://github.com/keen/explorer/issues" target="_blank">Support</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="https://keen.io/signup?s=gh-data-tools" class="btn navbar-btn" target="_blank">Create a Free Keen Project</a></li>
+            <li><a href="https://keen.io/signup?s=gh-explorer" class="btn navbar-btn" target="_blank">Create a Free Keen Project</a></li>
           </ul>
         </nav>
       </header>
 
-      <h1>Keen IO + Explorer</h1>
-      <p class="lead">Send events to Keen IO from your Arduino Y&uacute;n!</p>
-      <a class="btn hero-btn" href="https://github.com/keen/keen-arduino" target="_blank">Source Code on Github</a>
-
-      <iframe src="http://ghbtns.com/github-btn.html?user=keen&amp;repo=keen-arduino&type=watch&amp;count=true"
-        allowtransparency="true" frameborder="0" scrolling="0" width="95" height="20"></iframe>
-      <iframe src="http://ghbtns.com/github-btn.html?user=keen&amp;repo=keen-arduino&amp;type=fork&amp;count=true"
-        allowtransparency="true" frameborder="0" scrolling="0" width="95" height="20"></iframe>
-
+      <h1>Data Explorer</h1>
+      <p class="lead">Explore and Visualize Your Data with Keen IO's Open Source Data Explorer</p>
+      <a class="btn cta-btn" id="try-it-now" href="explorer" target="_blank">Try It Now</a>
+      <a class="btn cta-btn" href="https://github.com/keen/explorer" target="_blank">Source Code on Github</a>
     </div>
   </div>
 
   <div class="content">
-    <div class="container">
-      <div class="row" style="position: relative;">
-      <a href="explorer">Click to Demo</a>
-      </div>
+    <div>
+    <img class="demo-gif" src="http://i.imgur.com/I8vgIRU.gif">
+    </div>
     </div>
     <div class="ctas">
-      <a class="btn cta-btn" href="https://github.com/keen/keen-arduino">Get Started with the Arduino SDK</a>
-      <br />
-      <a class="btn cta-secondary-btn" href="https://keen.io?s=gh-data-tools">Keen</a>
+         <div class="container">
+      <div class="row" style="position: relative;">
+        <div class="col-xs-12 col-md-4 text-center description-item">
+          <img src="http://img3.wikia.nocookie.net/__cb20090502214932/uncyclopedia/images/5/5c/Nuclear_Explosion_Seal.PNG" style="max-width: 100%;" />
+          <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+          </p>
+          <a class="btn cta-btn" href="https://keen.io?s=gh-explorer">Sign Up </a>
+        </div>
+        <div class="col-xs-12 col-md-4 text-center description-item">
+          <img src="http://img3.wikia.nocookie.net/__cb20090502214932/uncyclopedia/images/5/5c/Nuclear_Explosion_Seal.PNG" style="max-width: 100%;" />
+          <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+          </p>
+          <a class="btn cta-btn" href="https://keen.io?s=gh-explorer">Try It Now </a>
+        </div>
+        <div class="col-xs-12 col-md-4 text-center description-item">
+          <img src="http://img3.wikia.nocookie.net/__cb20090502214932/uncyclopedia/images/5/5c/Nuclear_Explosion_Seal.PNG" style="max-width: 100%;" />
+          <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+          </p>
+          <a class="btn cta-btn" href="https://keen.io?s=gh-explorer">Demo </a>
+        </div>
+      </div>
     </div>
   </div>
 
   <div class="footer">
     <div class="container">
       <div class="love">
-        <p>Made with &#9825; by <a href="https://keen.io?s=gh-data-tools">Keen IO</a></p>
+        <p>Made with &#9825; by <a href="https://keen.io?s=gh-explorer">Keen IO</a></p>
         <p>&copy; 2012&ndash;2015</p>
       </div>
     </div>
@@ -101,5 +113,6 @@
     CommonWeb.trackPageview();
     CommonWeb.trackClicks();
   </script>
+  <script type="text/javascript" src="assets/js/main.js"></script>
 </body>
 </html>

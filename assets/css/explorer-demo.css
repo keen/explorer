@@ -1,3 +1,11 @@
+.navbar-static {
+  background-color: #00bbde;
+}
+
+.navbar-static a {
+  color: #ffffff;
+}
+
 .preset-wrapper {
   width: 90%;
   padding: 0;  
