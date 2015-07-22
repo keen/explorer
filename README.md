@@ -1,20 +1,22 @@
-# Keen IO Insights Dashboard
+# Data Explorer
 
-The Keen IO explorer is a workbench to easily query your event data.
+The data explorer is an open source point-and-click query interface to easily query your event data.
+
+![](https://s3.amazonaws.com/keen-event-images/Screen+Shot+2015-07-22+at+3.25.48+PM.png)
 
 ## Quick Setup
 
 ### TL;DR
 
   1. `cp demo/example_index.html demo/index.html`
-  2. Add your keys to demo/index.html
+  2. Add your Keen IO keys to demo/index.html
   3. `npm install`
   4. `npm -g install gulp` (if needed)
   5. `gulp`
   6. Browse to [the demo](http://localhost:8081/explorer).
 
 ### 1. Get your project ID & API keys
-If you haven’t done so already, [login to Keen IO to create a project](https://keen.io/add-project) for your app. The Project ID and API Keys are available on the Project Overview page. You will need these for the next steps.
+If you haven’t done so already, [login to Keen IO to create a project](https://keen.io/add-project) for your app. You'll need a [Keen IO account](keen.io/signup?s=explorer) to create a project. The Project ID and API Keys are available on the Project Overview page. You will need these for the next steps.
 
 ### 2. Drop in the JavaScript, CSS and images
 
