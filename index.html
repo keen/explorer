@@ -26,7 +26,7 @@
   <![endif]-->
 
   <!-- Explorer Assets -->
-  <link rel="stylesheet" type="text/css" href="https://d26b395fwzu5fz.cloudfront.net/keen-data-tools/0.1.12/keen-data-tools.css">
+  <link rel="stylesheet" type="text/css" href="assets/explorer-build/keen-data-tools.css">
 </head>
 <body class="demo-ready">
   <div class="masthead hero">
@@ -64,17 +64,39 @@
 
       <h1>Data Explorer</h1>
       <p class="lead">Explore and visualize your event data</p>
-      <a class="btn cta-btn" id="try-it-now" href="explorer" target="_blank">Take it for a test drive!</a>
+      <a class="btn cta-btn" id="try-it-now" href="#demo" target="_blank">Take it for a test drive!</a>
+
+      <div id="explorer-presets" class="row pull-right">
+        <div class="col-sm-4">
+          <a class="explorer-preset" href="?query%5Bevent_collection%5D=page_load&query%5Banalysis_type%5D=count&query%5Btimezone%5D=UTC&query%5Btimeframe%5D=this_1_weeks&visualization%5Bchart_type%5D=metric#demo">
+            <h3>Pageviews</h3>
+            <span class="preset-description">How many web pages have been viewed so far this week?</span>
+          </a>
+        </div>
+        <div class="col-sm-4">
+          <a class="explorer-preset" href="?query%5Bevent_collection%5D=leave&query%5Banalysis_type%5D=average&query%5Btarget_property%5D=sinceLoad&query%5Bgroup_by%5D=page.path&query%5Btimezone%5D=UTC&query%5Bfilters%5D%5B0%5D%5Bproperty_name%5D=page.path&query%5Bfilters%5D%5B0%5D%5Boperator%5D=contains&query%5Bfilters%5D%5B0%5D%5Bproperty_value%5D=%2Fblog&query%5Bfilters%5D%5B0%5D%5Bcoercion_type%5D=String&query%5Btimeframe%5D=this_1_weeks&visualization%5Bchart_type%5D=barchart#demo">
+            <h3>Visit duration</h3>
+            <span class="preset-description">How much time on average do visitors spend on my website?</span>
+          </a>
+        </div>
+        <div class="col-sm-4">
+          <a class="explorer-preset" href="?query%5Bevent_collection%5D=page_load&query%5Banalysis_type%5D=count_unique&query%5Btarget_property%5D=guid&query%5Bgroup_by%5D=referrer&query%5Binterval%5D=daily&query%5Btimezone%5D=UTC&query%5Btimeframe%5D=previous_1_weeks&visualization%5Bchart_type%5D=linechart#demo">
+            <h3>Site referrers</h3>
+            <span class="preset-description">Where do visitors come from when they visit my site?</span>
+          </a>
+        </div>
+      </div>
+
     </div>
   </div>
 
   <section class="explorer-demo">
-    <div id="keen-data-explorer-tutorial">
+    <!-- <div id="keen-data-explorer-tutorial">
       <h2>Pageviews</h2>
       <p>asdf</p>
-    </div>
-    <div id="keen-data-explorer-wrapper" class="container text-center">
-      <img src="assets/img/preview.png" style="max-width: 100%">
+    </div> -->
+    <div id="keen-data-explorer-wrapper" class="container">
+      <!-- <img src="assets/img/preview.png" style="max-width: 100%"> -->
     </div>
   </section>
 
@@ -113,27 +135,42 @@
 
   <!-- Explorer Dependencies -->
   <script type="text/javascript" src="assets/vendor/keen-js/dist/keen.min.js"></script>
-  <script type="text/javascript" src="https://d26b395fwzu5fz.cloudfront.net/keen-data-tools/0.1.12/keen-data-tools.js"></script>
+  <script type="text/javascript" src="assets/explorer-build/keen-data-tools.js"></script>
   <script type="text/javascript">
   $(document).ready(function(){
 
     var btn = $('.cta-btn');
     var body = $('body.demo-ready');
 
-    btn
-      .on('mouseover', toggleOver)
-      .on('mouseout', toggleOver);
+    // var params = Keen.utils.parseParams(document.location.search);
+    if (document.location.hash === '#demo'){
+      activateDemo();
+    }
+    else {
+      activateLanding();
+    }
 
-    btn.on('click', function(e){
+    function activateLanding(){
       btn
-        .off('mouseover', toggleOver)
-        .off('mouseout', toggleOver);
+        .on('mouseover', toggleOver)
+        .on('mouseout', toggleOver);
+
+      btn.on('click', function(e){
+        btn
+          .off('mouseover', toggleOver)
+          .off('mouseout', toggleOver);
+        activateDemo();
+        document.location.hash = '#demo';
+        return false;
+      });
+    }
+
+    function activateDemo(){
       body
         .removeClass('demo-ready')
         .removeClass('demo-mouseover')
         .addClass('demo-active');
-      return false;
-    });
+    }
 
     function toggleOver(){
       body.toggleClass('demo-mouseover');

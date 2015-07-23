@@ -78,6 +78,11 @@ body.demo-ready #keen-data-explorer-wrapper {
   -o-transform: scale(.98);
   -ms-transform: scale(.98);
   transform: scale(.98);
+
+  background-color: #f2f2f2;
+  border-radius: 3px 3px 0 0;
+  border-top: 21px solid #d7d7d7;
+  padding: 8px;
 }
 body.demo-ready .hero {
   text-align: center;
@@ -89,6 +94,32 @@ body.demo-ready .hero h1 {
 body.demo-ready .hero p.lead {
   font-size: 24px;
 }
+body.demo-ready #explorer-presets {
+  display: none;
+}
+
+#explorer-presets {
+  padding: 18px 0 0;
+}
+
+#explorer-presets a.explorer-preset {
+  background-color: rgba(255,255,255,.2);
+  border-radius: 4px;
+  display: block;
+  padding: 10px;
+  margin: 0 0 10px;
+}
+#explorer-presets a.explorer-preset:focus,
+#explorer-presets a.explorer-preset:hover {
+  text-decoration: none;
+}
+
+#explorer-presets h3 {
+  color: #fff;
+  font-size: 16px;
+  margin: 0;
+}
+
 
 /*
   Mouseover effect
