@@ -27,7 +27,14 @@ KeenTracker.ready(function(){
     },
     'click a.explorer-preset': function(e){
       tracker.recordEvent('activate_preset', {
-        selected_preset: e.target.name
+        selected_preset: e.target.name,
+        el: KeenTracker.helpers.getDomNodePath(e.target)
+      });
+    },
+    'click a.keen-track': function(e){
+      tracker.recordEvent('click_link', {
+        el: KeenTracker.helpers.getDomNodePath(e.target),
+        link_href: e.target.href
       });
     }
   });

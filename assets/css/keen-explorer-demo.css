@@ -57,6 +57,24 @@ body.explorer-transitions #keen-data-explorer-wrapper {
   padding: 24px 0;
 }
 
+.explorer-ctas {
+  display: none;
+  padding: 24px 0;
+}
+.explorer-ctas hr {
+  border-color: #d7d7d7;
+}
+.explorer-ctas .btn {
+  background-color: rgba(0,0,0,0.35);
+  border: medium none;
+  border-radius: 2px;
+  color: #fff;
+  padding: 15px 0 10px;
+}
+.explorer-ctas .btn:focus,
+.explorer-ctas .btn:hover {
+  background-color: rgba(0,0,0,0.5);
+}
 
 /*
   Click effect
@@ -160,4 +178,7 @@ body.demo-active .hero a.cta-btn {
 body.demo-active .explorer-features,
 body.demo-active .footer {
   display: none;
+}
+body.demo-active .explorer-ctas {
+  display: block;
 }
