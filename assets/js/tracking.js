@@ -1,6 +1,6 @@
 !function(name,path,ctx){
   var latest,prev=name!=='Keen'&&window.Keen?window.Keen:false;ctx[name]=ctx[name]||{ready:function(fn){var h=document.getElementsByTagName('head')[0],s=document.createElement('script'),w=window,loaded;s.onload=s.onerror=s.onreadystatechange=function(){if((s.readyState&&!(/^c|loade/.test(s.readyState)))||loaded){return}s.onload=s.onreadystatechange=null;loaded=1;latest=w.Keen;if(prev){w.Keen=prev}else{try{delete w.Keen}catch(e){w.Keen=void 0}}ctx[name]=latest;ctx[name].ready(fn)};s.async=1;s.src=path;h.parentNode.insertBefore(s,h)}}
-}('KeenTracker','/assets/vendor/keen-tracking/dist/keen-tracking.min.js',this);
+}('KeenTracker','assets/vendor/keen-tracking/dist/keen-tracking.min.js',this);
 
 // Executes when the library is loaded and ready
 KeenTracker.ready(function(){
