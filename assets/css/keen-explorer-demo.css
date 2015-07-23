@@ -50,21 +50,6 @@ body.explorer-transitions #keen-data-explorer-wrapper {
 #keen-data-explorer-wrapper {
   opacity: 1;
 }
-/*#keen-data-explorer-tutorial {
-  /*display: none;*
-
-  background: #fff;
-  box-shadow: 0 0 5px rgba(0,0,0,.25);
-  height: 100%;
-  padding: 30px;
-  position: absolute;
-  right: -40%;
-  top: 0px;
-  width: 40%;
-  z-index: 999;
-  -webkit-transition: all .5s; /* Safari *
-          transition: all .5s;
-}*/
 
 .explorer-features {
   background: #fff;
