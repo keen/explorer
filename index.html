@@ -1,19 +1,36 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Keen IO Data Explorer</title>
+  <title>Data Explorer | Keen IO</title>
   <meta charset="utf-8">
-  <link rel='stylesheet' type='text/css' href='http://fonts.googleapis.com/css?family=Raleway' />
-  <link rel="stylesheet" type='text/css' href="assets/lib/bootstrap/dist/css/bootstrap.min.css" />
-  <link rel="stylesheet" type='text/css' href="assets/css/keen-static.css" />
-  <link rel="stylesheet" type='text/css' href="assets/css/keen-dashboards.css" />
-  <link rel="stylesheet" type="text/css" href="assets/css/prism.css" />
-</head>
-<body>
-  <div class="masthead hero">
-    <div class="masthead-chart"></div>
-    <div class="container">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
 
+  <meta name='language' content='en'>
+  <meta name="author" content="Keen Labs, Inc.">
+  <meta name="keywords" content="analytics, infrastructure, keen, mobile, metrics, charts, graphs, analysis, mixpanel, kissmetrics">
+  <meta name="description" content="Keen IO is a set of powerful APIs that allow you to collect, analyze, and visualize events from anything connected to the internet.">
+
+  <!-- Demo Site Assets -->
+  <link rel="stylesheet" type="text/css" href="//cloud.typography.com/737368/747986/css/fonts.css" />
+  <link rel="stylesheet" type="text/css" href="assets/vendor/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="assets/css/keen-static.css">
+  <link rel="stylesheet" type="text/css" href="assets/css/keen-explorer-demo.css">
+
+  <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+  <!-- Explorer Assets -->
+  <link rel="stylesheet" type="text/css" href="https://d26b395fwzu5fz.cloudfront.net/keen-data-tools/0.1.12/keen-data-tools.css">
+</head>
+<body class="demo-ready">
+  <div class="masthead hero">
+    <div class="container">
       <header class="navbar navbar-static">
         <div class="navbar-header">
           <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target=".keen-navbar-collapse">
@@ -33,86 +50,115 @@
             </svg>
           </a>
         </div>
-        <nav class="navbar-collapse collapse keen-navbar-collapse" role="navigation">
+        <div class="navbar-collapse collapse keen-navbar-collapse" role="navigation">
           <ul class="nav navbar-nav main-nav">
-            <li><a href="https://keen.io/blog/114588771746/introducing-data-explorer" target="_blank">About</a></li>
-            <li><a href="https://keen.io/team?s=gh-explorer" target="_blank">Team</a></li>
-            <li><a href="http://slack.keen.io/" target="_blank">Community</a></li>
-            <li><a href="https://github.com/keen/explorer/issues" target="_blank">Support</a></li>
+            <li><a href="https://keen.io/blog/114588771746/introducing-data-explorer" target="_blank">About this project</a></li>
+            <li><a href="https://keen.io/team?s=gh-explorer" target="_blank">Source code</a></li>
+            <li><a href="https://keen.io/support" target="_blank">Support</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="https://keen.io/signup?s=gh-explorer" class="btn navbar-btn" target="_blank">Create a Free Keen Project</a></li>
+            <li><a href="https://keen.io/signup?s=gh-explorer" class="btn navbar-btn" target="_blank">Create a Free Keen IO Project</a></li>
           </ul>
-        </nav>
+        </div>
       </header>
 
       <h1>Data Explorer</h1>
-      <p class="lead">Explore and Visualize Your Data with Keen IO's Open Source Data Explorer</p>
-      <a class="btn cta-btn" id="try-it-now" href="explorer" target="_blank">Try It Now</a>
-      <a class="btn cta-btn" href="https://github.com/keen/explorer" target="_blank">Source Code on Github</a>
+      <p class="lead">Explore and visualize your event data</p>
+      <a class="btn cta-btn" id="try-it-now" href="explorer" target="_blank">Take it for a test drive!</a>
     </div>
   </div>
 
-  <div class="content">
-    <div>
-    <img class="demo-gif" src="http://i.imgur.com/I8vgIRU.gif">
+  <section class="explorer-demo">
+    <div id="keen-data-explorer-tutorial">
+      <h2>Pageviews</h2>
+      <p>asdf</p>
     </div>
+    <div id="keen-data-explorer-wrapper" class="container text-center">
+      <img src="assets/img/preview.png" style="max-width: 100%">
     </div>
-    <div class="ctas">
-         <div class="container">
-      <div class="row" style="position: relative;">
-        <div class="col-xs-12 col-md-4 text-center description-item">
-          <img src="http://img3.wikia.nocookie.net/__cb20090502214932/uncyclopedia/images/5/5c/Nuclear_Explosion_Seal.PNG" style="max-width: 100%;" />
-          <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-          </p>
-          <a class="btn cta-btn" href="https://keen.io/signup?source=gh-explorer">Sign Up </a>
+  </section>
+
+  <section class="explorer-features">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-4">
+          <h3>Find what matters</h3>
+          <p>Answer the questions that matter to you with an intuitive interface with built in analysis functions.</p>
         </div>
-        <div class="col-xs-12 col-md-4 text-center description-item">
-          <img src="http://img3.wikia.nocookie.net/__cb20090502214932/uncyclopedia/images/5/5c/Nuclear_Explosion_Seal.PNG" style="max-width: 100%;" />
-          <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-          </p>
-          <a class="btn cta-btn" href="explorer">Try It Now </a>
+        <div class="col-sm-4">
+          <h3>Headline 2</h3>
+          <p>Copy 2</p>
         </div>
-        <div class="col-xs-12 col-md-4 text-center description-item">
-          <img src="http://img3.wikia.nocookie.net/__cb20090502214932/uncyclopedia/images/5/5c/Nuclear_Explosion_Seal.PNG" style="max-width: 100%;" />
-          <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-          </p>
-          <a class="btn cta-btn" href="mailto:team@keen.io?subject=Schedule a Demo">Schedule a Demo </a>
+        <div class="col-sm-4">
+          <h3>Plug-and-play exploration</h3>
+          <p>Install or embed as part of your own customer-facing products or internal dashboards.</p>
         </div>
       </div>
     </div>
-  </div>
+  </section>
 
   <div class="footer">
     <div class="container">
       <div class="love">
         <p>Made with &#9825; by <a href="https://keen.io?s=gh-explorer">Keen IO</a></p>
-        <p>&copy; 2012&ndash;2015</p>
+        <hr>
+        <p>&copy; 2012&ndash;2015 Keen IO. All Rights Reserved.</p>
       </div>
     </div>
   </div>
 
-  <script type="text/javascript" src="assets/lib/jquery/dist/jquery.min.js"></script>
-  <script type="text/javascript" src="assets/lib/bootstrap/dist/js/bootstrap.min.js"></script>
-  <script type="text/javascript" src="assets/lib/keen-js/dist/keen.min.js"></script>
-  <script type="text/javascript" src="assets/js/prism.js"></script>
-  <script type="text/javascript" src="assets/js/common-web.min.js"></script>
-  <script type='text/javascript'>
-    CommonWeb.Keen.Client = new Keen({
-      projectId: '557a0832c2266c48aa9977fd',
-      writeKey: '16e4effde55c09ce3541a5b323e4e5e032b5bd278f43f57d57be720c6c500afb7a81fa7c99d1f9886ad9da08da7956d1e25853305e8dd79da3e0ecb0a8160ca9904c25b892b92b53b999b7ea35f531ea04fee5634a43e2b673711814cded8691135824d11f7ff80be4d8cd0eb421c7cb'
+  <!-- Demo Site Assets -->
+  <script type="text/javascript" src="assets/vendor/jquery/dist/jquery.min.js"></script>
+  <script type="text/javascript" src="assets/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+
+  <!-- Explorer Dependencies -->
+  <script type="text/javascript" src="assets/vendor/keen-js/dist/keen.min.js"></script>
+  <script type="text/javascript" src="https://d26b395fwzu5fz.cloudfront.net/keen-data-tools/0.1.12/keen-data-tools.js"></script>
+  <script type="text/javascript">
+  $(document).ready(function(){
+
+    var btn = $('.cta-btn');
+    var body = $('body.demo-ready');
+
+    btn
+      .on('mouseover', toggleOver)
+      .on('mouseout', toggleOver);
+
+    btn.on('click', function(e){
+      btn
+        .off('mouseover', toggleOver)
+        .off('mouseout', toggleOver);
+      body
+        .removeClass('demo-ready')
+        .removeClass('demo-mouseover')
+        .addClass('demo-active');
+      return false;
     });
 
-    CommonWeb.addGlobalProperties(CommonWeb.Keen.globalProperties);
-    CommonWeb.addGlobalProperties({
-      project_name: "Keen Arduino SDK gh-page"
-    });
-    CommonWeb.Callback = CommonWeb.Keen.Callback;
+    function toggleOver(){
+      body.toggleClass('demo-mouseover');
+    }
 
-    CommonWeb.trackSession();
-    CommonWeb.trackPageview();
-    CommonWeb.trackClicks();
+
+
+    var app = window.explorerDemo = new Keen.DataTools.App({
+      appRoot: location.pathname,
+      client: client = new Keen({
+        projectId: '51cee1b7897a2c5a74000001',
+        readKey: 'd26495906529de8ee6f9ad9cdee37505b3eaf4d6f5b5c8c072eef9fc61db01011e7bff3a0ea98055239921986b15118480463aa1b2b6f89ef6328fa8ee84a43cb4927886657cdaab402dd36f0eca7a4a23761d5df3e50ac787803bd607272a719936261fa61b43458ec51de250fd8cf5',
+        masterKey: '9E1FFDC560020A7C0538AE64D96D34ED'
+      }),
+      targetId: 'keen-data-explorer-wrapper'
+    });
+
+    app.render();
+  });
   </script>
+
+  <!-- Load after keen-js (exposes window.tracker) -->
+  <script type="text/javascript" src="assets/js/tracking.js"></script>
+
+  <!-- Demo Site Interactions -->
   <script type="text/javascript" src="assets/js/main.js"></script>
 </body>
 </html>

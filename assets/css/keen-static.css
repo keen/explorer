@@ -1,9 +1,15 @@
+body {
+  font-family: "Gotham Rounded", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 15px;
+  font-weight: 200;
+}
+
 a, a:focus, a:hover, a:active {
   color: #00afd7;
 }
 
 h1, h2, h3 {
-  font-family: "Raleway", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Gotham Rounded", "Helvetica Neue", Helvetica, Arial, sans-serif;
   margin: 12px 0;
 }
 h1 {
@@ -51,9 +57,9 @@ h3 {
 .navbar-nav > li > a {
   font-size: 15px;
   font-weight: 200;
-  letter-spacing: 0.03em;
-  padding-top: 19px;
-  text-shadow: 0 0 2px rgba(0,0,0,.1);
+  /*letter-spacing: 0.03em;*/
+  padding-top: 20px;
+  /*text-shadow: 0 0 2px rgba(0,0,0,.1);*/
 }
 .navbar-nav > li > a:focus,
 .navbar-nav > li > a:hover {
@@ -63,7 +69,7 @@ h3 {
 .navbar-nav > li > a.navbar-btn {
   background-color: rgba(255,255,255,.25);
   border: medium none;
-  padding: 10px 15px;
+  padding: 12px 15px 10px;
 }
 .navbar-nav > li > a.navbar-btn:focus,
 .navbar-nav > li > a.navbar-btn:hover {
@@ -71,15 +77,6 @@ h3 {
 }
 .navbar-collapse {
   box-shadow: none;
-}
-
-.masthead-chart {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  z-index: -1;
 }
 
 .masthead {
@@ -93,7 +90,6 @@ h3 {
 }
 .masthead h1 {
   margin: 0;
-  font-weight: 600;
 }
 .masthead small,
 .masthead a,
@@ -113,7 +109,6 @@ h3 {
 .hero {
   background-position: 50% 100%;
   text-align: center;
-  z-index: -1;
 }
 .hero h1 {
   font-size: 48px;
@@ -133,10 +128,10 @@ a.cta-btn {
   border: 2px solid #fff;
   color: #fff;
   display: inline-block;
-  font-family: "Raleway", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Gotham Rounded", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 200;
   margin: 0 auto 12px;
-  padding: 12px 12px 10px 12px;
+  padding: 12px 12px 10px;
 }
 
 a.cta-btn:focus,
@@ -163,27 +158,29 @@ a.cta-btn:hover {
   margin-right: 10px;
 }
 
-.footer {
-  background-color: #00bbde;
-}
-
-.footer .container {
-  border-top: 1px solid #ffffff;
-}
-
 .love {
-  color: #fff;
-  padding: 15px 0;
+  margin: 48px auto 24px;
+  max-width: 400px;
+  position: relative;
   text-align: center;
 }
 
 .love p {
-  margin-bottom: 0;
+  color: #8b99a7;
+  font-size: 12px;
+  margin: 0 auto;
+  padding: 0 5px;
+  position: relative;
+  text-transform: uppercase;
 }
 
-.love a {
-  color: #3d4a57;
+.love hr {
+  margin: 4px 0;
 }
+
+/*.love a {
+  color: #3d4a57;
+}*/
 
 pre {
   overflow: auto;
@@ -195,23 +192,13 @@ pre code {
   white-space: pre;
 }
 
-.example-message {
-}
-
-.example-message .glyphicon {
-  display: block;
-  color: #00bbde;
-  font-size: 84px;
-  padding: 42px 0;
-  text-align: center;
-}
 
 .keen-metrics {
   background-color: #49c5b1;
   width: auto;
   border-radius: 4px;
   color: #fff;
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: "Gotham Rounded", "Helvetica Neue", Helvetica, Arial, sans-serif;
   padding: 10px 0;
   text-align: center;
   width: 100%;
@@ -257,7 +244,7 @@ pre code {
   border: 2px solid #00bbde;
   color: #fff;
   display: inline-block;
-  font-family: "Raleway", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Gotham Rounded", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 18px;
   font-weight: 700;
   margin: 24px 12px 0 12px;
@@ -278,13 +265,12 @@ pre code {
     transform: none;
     padding-bottom: 24px;
     padding-top: 24px;
-  }  
-
-  .navbar-collapse {
-    background: #3e313c;
-    <!-- Hacky box shadow to overcome bootstraps horizontal padding -->
-    box-shadow: #3e313c 0px 0px 0px 16px;
   }
+
+  /*.navbar-collapse {
+    background: #3e313c;
+    box-shadow: #3e313c 0px 0px 0px 16px;
+  }*/
 }
 
 @media(max-width: 410px) {

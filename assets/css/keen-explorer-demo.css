@@ -1,0 +1,136 @@
+body {
+  background: #f2f2f2;
+}
+.navbar {
+  margin: 0;
+}
+.navbar-brand {
+  padding-left: 0;
+}
+.navbar-toggle {
+  margin: 15px 0 0;
+}
+
+.hero {
+  margin: 0;
+  padding: 0 0 15px;
+  position: relative;
+  z-index: 999;
+}
+.hero, .hero h1 {
+  -webkit-transition: all .5s; /* Safari */
+          transition: all .5s;
+}
+.hero p.lead {
+  color: rgba(255,255,255,.75);
+  font-size: 18px;
+}
+
+.explorer-demo {
+  height: auto;
+  opacity: 1;
+  padding: 24px 0;
+  position: relative;
+  -webkit-transition: all .5s; /* Safari */
+          transition: all .5s;
+}
+#keen-data-explorer-wrapper {
+  opacity: 1;
+  -webkit-transition: all .5s; /* Safari */
+          transition: all .5s;
+}
+#keen-data-explorer-tutorial {
+  /*display: none;*/
+
+  background: #fff;
+  box-shadow: 0 0 5px rgba(0,0,0,.25);
+  height: 100%;
+  padding: 30px;
+  position: absolute;
+  right: -40%;
+  top: 0px;
+  width: 40%;
+  z-index: 999;
+  -webkit-transition: all .5s; /* Safari */
+          transition: all .5s;
+}
+
+.explorer-features {
+  background: #fff;
+  box-shadow: 0 0 2px rgba(0,0,0,.1);
+  padding: 24px 0;
+}
+
+
+/*
+  Click effect
+*/
+body.demo-ready .explorer-demo {
+  background-color: #00bbde;
+  height: 180px;
+  overflow-y: hidden;
+  /*zoom: .9;*/
+}
+body.demo-ready #keen-data-explorer-wrapper {
+  opacity: .35;
+  -moz-transform: scale(.98);
+  -webkit-transform: scale(.98);
+  -o-transform: scale(.98);
+  -ms-transform: scale(.98);
+  transform: scale(.98);
+}
+body.demo-ready .hero {
+  text-align: center;
+}
+body.demo-ready .hero h1 {
+  font-size: 64px;
+  margin: 120px 0 18px;
+}
+body.demo-ready .hero p.lead {
+  font-size: 24px;
+}
+
+/*
+  Mouseover effect
+*/
+body.demo-mouseover .explorer-demo {
+  height: 190px;
+  padding: 18px 0 24px;
+}
+body.demo-mouseover #keen-data-explorer-wrapper {
+  opacity: .5;
+  -moz-transform: scale(1);
+  -webkit-transform: scale(1);
+  -o-transform: scale(1);
+  -ms-transform: scale(1);
+  transform: scale(1);
+}
+
+/*
+  Activated style
+*/
+body.demo-active {
+
+}
+body.demo-active .explorer-demo {}
+body.demo-active #keen-data-explorer-tutorial {
+  /*display: block;*/
+  right: 0px;
+}
+body.demo-active .hero {
+  box-shadow: 0 0 5px rgba(0,0,0,.25);
+  text-align: left;
+}
+body.demo-active .hero h1 {
+  margin: 10px 0 4px;
+}
+body.demo-active .hero p.lead {
+  margin: 0 0 0 3px;
+}
+body.demo-active .hero a.cta-btn {
+  display: none;
+}
+
+body.demo-active .footer {
+  display: none;
+}
