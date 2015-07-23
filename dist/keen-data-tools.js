@@ -398,8 +398,8 @@ function App(config) {
   }
 
   this.routes = (
-    React.createElement(Route, {name: "app", path: config.appRoot || "/", handler: AppComponent}, 
-      React.createElement(Route, {name: "explorer", handler: Explorer})
+    React.createElement(Route, {name: "app", handler: AppComponent}, 
+      React.createElement(Route, {name: "explorer", path: config.appRoot || '/', handler: Explorer})
     )
   );
 }
@@ -418,6 +418,7 @@ window.Keen = window.Keen || {};
 window.Keen.DataTools = window.Keen.DataTools || {};
 window.Keen.DataTools.Persistence = Persistence;
 window.Keen.DataTools.App = module.exports = App;
+
 },{"./actions/ExplorerActions":2,"./actions/ProjectActions":4,"./actions/UserActions":5,"./components/app.js":7,"./components/explorer/index.js":30,"./modules/persistence/persistence.js":49,"./stores/ExplorerStore":52,"./stores/ProjectStore":54,"./utils/ExplorerUtils":56,"./utils/FormatUtils":58,"./utils/QueryStringUtils":60,"./utils/ValidationUtils":61,"./validations/ExplorerValidations":62,"lodash":82,"react":300,"react-router":113}],7:[function(require,module,exports){
 var React = require('react');
 var Router = require('react-router');
