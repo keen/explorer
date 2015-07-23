@@ -72,7 +72,7 @@ body.demo-ready .explorer-demo {
   /*zoom: .9;*/
 }
 body.demo-ready #keen-data-explorer-wrapper {
-  opacity: .35;
+  opacity: .85;
   -moz-transform: scale(.98);
   -webkit-transform: scale(.98);
   -o-transform: scale(.98);
@@ -129,7 +129,7 @@ body.demo-mouseover .explorer-demo {
   padding: 18px 0 24px;
 }
 body.demo-mouseover #keen-data-explorer-wrapper {
-  opacity: .5;
+  opacity: .9;
   -moz-transform: scale(1);
   -webkit-transform: scale(1);
   -o-transform: scale(1);
