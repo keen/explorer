@@ -3,6 +3,16 @@
 # Unreleased
 -->
 
+<a name="0.0.3"></a>
+# 0.0.3
+
+**FIXED:**
+* Each `Keen.utils.cookie` instance now returns `null` for single undefined properties (#30)
+
+**NEW:**
+* Each `Keen.utils.cookie` instance now has an `.enabled()` method that returns `true` or `false`
+
+
 <a name="0.0.2"></a>
 # 0.0.2
 

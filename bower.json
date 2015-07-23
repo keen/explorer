@@ -15,7 +15,7 @@
   ],
   "dependencies": {
     "keen-js": "~3.2.6",
-    "keen-tracking": "~0.0.2",
+    "keen-tracking": "~0.0.3",
     "jquery": "~2.1.1",
     "bootstrap": "~3.2.0"
   }

@@ -5,22 +5,32 @@
 // Executes when the library is loaded and ready
 KeenTracker.ready(function(){
 
+  // KeenTracker.debug = true;
+
   // Create a new client instance
   var tracker = window.tracker = new KeenTracker({
     projectId: '557a0832c2266c48aa9977fd',
     writeKey: '16e4effde55c09ce3541a5b323e4e5e032b5bd278f43f57d57be720c6c500afb7a81fa7c99d1f9886ad9da08da7956d1e25853305e8dd79da3e0ecb0a8160ca9904c25b892b92b53b999b7ea35f531ea04fee5634a43e2b673711814cded8691135824d11f7ff80be4d8cd0eb421c7cb'
   });
 
-  // var sessionCookie = window.sessionCookie = KeenTracker.utils.cookie('keen-data-explorer-demo');
-  // sessionCookie.set('test', 123);
-  // if ('string' !== typeof sessionCookie.get('guest_id')) {
-  //   console.log('setting cookie');
-  //   sessionCookie.set('guest_id', KeenTracker.helpers.getUniqueId());
-  // }
-  // console.log('guest_id', sessionCookie.get('guest_id'));
+  var sessionCookie = window.sessionCookie = KeenTracker.utils.cookie('keen-data-explorer-demo');
+  if (!sessionCookie.get('guest_id')) {
+    sessionCookie.set('guest_id', KeenTracker.helpers.getUniqueId());
+  }
 
   var sessionTimer = KeenTracker.utils.timer();
   sessionTimer.start();
+
+  KeenTracker.listenTo({
+    'mouseup a.cta-btn': function(){
+      tracker.recordEvent('activate_demo');
+    },
+    'click a.explorer-preset': function(e){
+      tracker.recordEvent('activate_preset', {
+        selected_preset: e.target.name
+      });
+    }
+  });
 
   // Dynamic data model for every event
   tracker.extendEvents(function(){
@@ -42,7 +52,7 @@ KeenTracker.ready(function(){
       },
       time: KeenTracker.helpers.getDatetimeIndex(),
       visitor: {
-        // id: sessionCookie.get('guest_id'),
+        id: sessionCookie.get('guest_id'),
         time_on_page: sessionTimer.value()
       },
       // geo: {} (add-on)

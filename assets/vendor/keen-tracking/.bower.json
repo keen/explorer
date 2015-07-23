@@ -20,14 +20,14 @@
     "node_modules",
     "test"
   ],
-  "version": "0.0.2",
-  "_release": "0.0.2",
+  "version": "0.0.3",
+  "_release": "0.0.3",
   "_resolution": {
     "type": "version",
-    "tag": "v0.0.2",
-    "commit": "d668b3b0463c0f895faa69a32206de3527601f33"
+    "tag": "v0.0.3",
+    "commit": "c43801ecf7fa2203422e6482290f2c8490f3bd66"
   },
   "_source": "git://github.com/keen/keen-tracking.js.git",
-  "_target": "~0.0.2",
+  "_target": "~0.0.3",
   "_originalSource": "keen-tracking"
 }
