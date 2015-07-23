@@ -54,7 +54,7 @@
           <ul class="nav navbar-nav main-nav">
             <li><a href="https://keen.io/blog/114588771746/introducing-data-explorer" target="_blank">About this project</a></li>
             <li><a href="https://keen.io/team?s=gh-explorer" target="_blank">Source code</a></li>
-            <li><a href="https://keen.io/support" target="_blank">Support</a></li>
+            <li><a href="mailto:team@keen.io?subject=I%20want%20to%20demo%20Explorer!">Schedule a demo</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li><a href="https://keen.io/signup?s=gh-explorer" class="btn navbar-btn" target="_blank">Create a Free Keen IO Project</a></li>
@@ -104,16 +104,16 @@
     <div class="container">
       <div class="row">
         <div class="col-sm-4">
-          <h3>Find what matters</h3>
-          <p>Answer the questions that matter to you with an intuitive interface with built in analysis functions.</p>
+          <h3>Explore your data</h3>
+          <p>Analyze data recorded in Keen IO with a robust interface powered by our API.</p>
         </div>
         <div class="col-sm-4">
-          <h3>Headline 2</h3>
-          <p>Copy 2</p>
+          <h3>Track what matters</h3>
+          <p>Return to your favorite analyses to easily follow the metrics that matter.</p>
         </div>
         <div class="col-sm-4">
-          <h3>Plug-and-play exploration</h3>
-          <p>Install or embed as part of your own customer-facing products or internal dashboards.</p>
+          <h3>Make it your own</h3>
+          <p>Install as a customer-facing product, or as an internal app for your teammates.</p>
         </div>
       </div>
     </div>
@@ -151,14 +151,15 @@
     }
 
     function activateLanding(){
+      body.addClass('explorer-transitions');
       btn
         .on('mouseover', toggleOver)
         .on('mouseout', toggleOver);
-
       btn.on('click', function(e){
         btn
           .off('mouseover', toggleOver)
           .off('mouseout', toggleOver);
+
         activateDemo();
         document.location.hash = '#demo';
         return false;
