@@ -247,12 +247,18 @@ gulp.task('production', ['scripts', 'images', 'fonts', 'styles', 'test:unit']);
 // ********************
 
 gulp.task('keen-web-scripts', ['build-scripts'], function(){
-  return gulp.src('./dist/keen-data-tools.js')
+  return gulp.src([
+      './dist/keen-data-tools.js',
+      './dist/keen-data-tools.min.js',
+    ])
     .pipe(gulp.dest('../terrarium/src/Keen-Web/app/static/js'));
 });
 
 gulp.task('keen-web-styles', ['build-styles'], function(){
-  return gulp.src('./dist/keen-data-tools.css')
+  return gulp.src([
+      './dist/keen-data-tools.css',
+      './dist/keen-data-tools.min.css'
+    ])
     .pipe(gulp.dest('../terrarium/src/Keen-Web/app/static/css'));
 });
 
@@ -261,7 +267,7 @@ gulp.task('keen-web', ['keen-web-scripts', 'keen-web-styles'], function(){
   gulp.watch('client/**/*.less', ['keen-web-styles']);
 });
 
-gulp.task('terrarium', ['development', 'keen-web']);
+gulp.task('terrarium', ['development', 'production', 'keen-web']);
 
 gulp.task('terrarium-with-tests', ['development-with-tests', 'keen-web']);
 
