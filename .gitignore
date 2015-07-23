@@ -1,4 +1,3 @@
 _site
 node_modules
-assets/vendor
 *.log
