@@ -57,8 +57,8 @@ function App(config) {
   }
 
   this.routes = (
-    <Route name="app" path={config.appRoot || "/"} handler={AppComponent}>
-      <Route name="explorer" handler={Explorer}/>
+    <Route name="app" handler={AppComponent}>
+      <Route name="explorer" path={config.appRoot || '/'} handler={Explorer}/>
     </Route>
   );
 }
