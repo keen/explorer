@@ -25,19 +25,15 @@ body {
   font-size: 18px;
 }
 
-body.explorer-transitions {}
 body.explorer-transitions .hero,
-body.explorer-transitions h1 {
-  -webkit-transition: all .5s; /* Safari */
-          transition: all .5s;
-}
-body.explorer-transitions .explorer-demo {
-  -webkit-transition: all .5s; /* Safari */
-          transition: all .5s;
-}
+body.explorer-transitions h1,
+body.explorer-transitions .explorer-demo,
 body.explorer-transitions #keen-data-explorer-wrapper {
-  -webkit-transition: all .5s; /* Safari */
-          transition: all .5s;
+  -webkit-transition: all 500ms;
+  -moz-transition: all 500ms;
+  -ms-transition: all 500ms;
+  -o-transition: all 500ms;
+  transition: all 500ms;
 }
 
 
@@ -125,12 +121,13 @@ body.demo-ready #explorer-presets {
 }
 #explorer-presets a.explorer-preset:focus,
 #explorer-presets a.explorer-preset:hover {
+  background-color: rgba(255, 255, 255, 0.31);
   text-decoration: none;
 }
 
 #explorer-presets h3 {
   color: #fff;
-  font-size: 16px;
+  font-size: 18px;
   margin: 0;
 }
 

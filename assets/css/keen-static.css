@@ -75,6 +75,16 @@ h3 {
 .navbar-nav > li > a.navbar-btn:hover {
   background-color: rgba(255,255,255,.35);
 }
+
+.main-nav > li > a:hover {
+  border-bottom: 2px solid white;
+  -webkit-transition: border 300ms ease;
+  -moz-transition: border 300ms ease;
+  -ms-transition: border 300ms ease;
+  -o-transition: border 300ms ease;
+  transition: border 300ms ease;
+}
+
 .navbar-collapse {
   box-shadow: none;
 }
@@ -139,6 +149,12 @@ a.cta-btn:hover {
   border-color: transparent;
   background-color: #fff;
   color: #00afd7;
+
+  -webkit-transition: all 500ms ease;
+  -moz-transition: all 500ms ease;
+  -ms-transition: all 500ms ease;
+  -o-transition: all 500ms ease;
+  transition: all 500ms ease;
 }
 
 .description-item p {
