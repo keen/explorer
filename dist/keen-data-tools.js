@@ -429,7 +429,7 @@ window.Keen = window.Keen || {};
 window.Keen.DataTools = window.Keen.DataTools || {};
 window.Keen.DataTools.Persistence = Persistence;
 window.Keen.DataTools.App = module.exports = App;
-},{"./actions/ExplorerActions":2,"./actions/ProjectActions":4,"./actions/UserActions":5,"./components/app.js":7,"./components/explorer/index.js":30,"./dispatcher/AppDispatcher":49,"./modules/persistence/persistence.js":50,"./stores/ExplorerStore":53,"./stores/ProjectStore":55,"./utils/ExplorerUtils":57,"./utils/FormatUtils":59,"./utils/QueryStringUtils":61,"./utils/ValidationUtils":62,"./validations/ExplorerValidations":63,"lodash":83,"react":301,"react-router":114}],7:[function(require,module,exports){
+},{"./actions/ExplorerActions":2,"./actions/ProjectActions":4,"./actions/UserActions":5,"./components/app.js":7,"./components/explorer/index.js":30,"./dispatcher/AppDispatcher":49,"./modules/persistence/persistence.js":51,"./stores/ExplorerStore":53,"./stores/ProjectStore":55,"./utils/ExplorerUtils":57,"./utils/FormatUtils":59,"./utils/QueryStringUtils":61,"./utils/ValidationUtils":62,"./validations/ExplorerValidations":63,"lodash":83,"react":301,"react-router":114}],7:[function(require,module,exports){
 var React = require('react');
 var Router = require('react-router');
 var RouteHandler = Router.RouteHandler;
@@ -4451,13 +4451,6 @@ var Dispatcher = require('flux').Dispatcher;
 
 module.exports = new Dispatcher();
 },{"flux":75}],50:[function(require,module,exports){
-module.exports = {
-
-  REST: require('./rest.js')
-
-};
-
-},{"./rest.js":51}],51:[function(require,module,exports){
 var _ = require('lodash');
 var request = require('superagent');
 
@@ -4516,7 +4509,14 @@ RESTPersistence.prototype.get = function(modelId, callback) {
 
 module.exports = RESTPersistence;
 
-},{"lodash":83,"superagent":303}],52:[function(require,module,exports){
+},{"lodash":83,"superagent":303}],51:[function(require,module,exports){
+module.exports = {
+
+  REST: require('./REST.js')
+
+};
+
+},{"./REST.js":50}],52:[function(require,module,exports){
 var _ = require('lodash');
 var AppDispatcher = require('../dispatcher/AppDispatcher');
 var EventEmitter = require('events').EventEmitter;
