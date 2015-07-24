@@ -6,7 +6,7 @@ var TestUtils = React.addons.TestUtils;
 var _ = require('lodash');
 var sinon = require('sinon');
 var Persistence = require('../../../../client/js/app/modules/persistence/persistence.js');
-var RESTPersistence = require('../../../../client/js/app/modules/persistence/rest.js');
+var RESTPersistence = require('../../../../client/js/app/modules/persistence/REST.js');
 
 describe('modules/persistence/persistence', function(){
 
