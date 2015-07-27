@@ -3548,11 +3548,11 @@ var Explorer = React.createClass({displayName: "Explorer",
     return (
       React.createElement("div", {ref: "root"}, 
         React.createElement("div", {className: "row"}, 
-          React.createElement("div", {className: "col-sm-5 explorer-query-builder"}, 
+          React.createElement("div", {className: "col-sm-5 col-md-4 explorer-query-builder"}, 
             queryPaneTabs, 
             queryPane
           ), 
-          React.createElement("div", {ref: "viz-area", className: "col-sm-7 explorer-visualization"}, 
+          React.createElement("div", {ref: "viz-area", className: "col-sm-7 col-md-8 explorer-visualization"}, 
             React.createElement(Visualization, {notice: this.state.notice, 
                            model: this.state.activeExplorer, 
                            client: this.props.client, 

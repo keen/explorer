@@ -243,11 +243,11 @@ var Explorer = React.createClass({
     return (
       <div ref="root">
         <div className="row">
-          <div className="col-sm-5 explorer-query-builder">
+          <div className="col-sm-5 col-md-4 explorer-query-builder">
             {queryPaneTabs}
             {queryPane}
           </div>
-          <div ref="viz-area" className="col-sm-7 explorer-visualization">
+          <div ref="viz-area" className="col-sm-7 col-md-8 explorer-visualization">
             <Visualization notice={this.state.notice}
                            model={this.state.activeExplorer}
                            client={this.props.client}
