@@ -1513,8 +1513,15 @@
 #keen-explorer .timeframe .nav {
   margin-bottom: 10px;
 }
+#keen-explorer .timeframe .nav li {
+  width: 50%;
+}
 #keen-explorer .timeframe .nav li a {
   padding: 5px 12px;
+  text-align: center;
+}
+#keen-explorer .timeframe .nav li + li {
+  margin-left: 0;
 }
 #keen-explorer .timeframe .form-group {
   margin-bottom: 0;
