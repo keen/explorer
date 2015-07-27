@@ -2563,7 +2563,6 @@ var RelativePicker = require('./relative_picker.js');
 var FieldsToggle = require('./fields_toggle.js');
 var ReactSelect = require('./react_select.js');
 var Timezone = require('./timezone.js');
-var Interval = require('./interval.js');
 var ExplorerActions = require('../../actions/ExplorerActions');
 var ExplorerUtils = require('../../utils/ExplorerUtils');
 var ProjectUtils = require('../../utils/ProjectUtils');
@@ -2627,7 +2626,6 @@ var Timeframe = React.createClass({displayName: "Timeframe",
   // React Methods
 
   render: function() {
-    var interval;
     var timezone = this.props.model.query.timezone || ProjectUtils.getConstant('DEFAULT_TIMEZONE');
 
     if (this.isAbsolute()) {
@@ -2636,13 +2634,11 @@ var Timeframe = React.createClass({displayName: "Timeframe",
       var timeframePicker = React.createElement(RelativePicker, {relativeIntervalTypes: ProjectUtils.getConstant('RELATIVE_INTERVAL_TYPES'), 
                                             model: this.props.model});
     }
-    if (this.props.model.query.analysis_type !== 'extraction') {
-      interval = React.createElement(Interval, {model: this.props.model});
-    }
 
     return (
       React.createElement("div", {className: "timeframe"}, 
         React.createElement("div", {className: "field-component"}, 
+          React.createElement("label", null, "Timeframe"), 
           React.createElement("ul", {className: "nav nav-pills", role: "tablist"}, 
             React.createElement("li", {className: this.isRelative() ? 'active' : ''}, 
               React.createElement("a", {href: "#", className: "relative-tab", "data-type": "relative", onClick: this.toggleTimeframeType}, "Relative")
@@ -2653,8 +2649,7 @@ var Timeframe = React.createClass({displayName: "Timeframe",
           ), 
           timeframePicker, 
           React.createElement(Timezone, {model: this.props.model})
-        ), 
-        interval
+        )
       )
     );
   }
@@ -2662,7 +2657,7 @@ var Timeframe = React.createClass({displayName: "Timeframe",
 
 module.exports = Timeframe;
 
-},{"../../actions/ExplorerActions":2,"../../utils/ExplorerUtils":58,"../../utils/ProjectUtils":61,"./absolute_picker.js":8,"./fields_toggle.js":11,"./interval.js":17,"./react_select.js":21,"./relative_picker.js":22,"./timezone.js":27,"lodash":84,"moment":85,"react/addons":130}],26:[function(require,module,exports){
+},{"../../actions/ExplorerActions":2,"../../utils/ExplorerUtils":58,"../../utils/ProjectUtils":61,"./absolute_picker.js":8,"./fields_toggle.js":11,"./react_select.js":21,"./relative_picker.js":22,"./timezone.js":27,"lodash":84,"moment":85,"react/addons":130}],26:[function(require,module,exports){
 /**
  * @jsx React.DOM
  */
@@ -3796,6 +3791,7 @@ var TargetPropertyField = require('./target_property_field.js');
 var PercentileField = require('./percentile_field.js');
 var GroupByField = require('./group_by_field.js');
 var Timeframe = require('../../common/timeframe.js');
+var Interval = require('../../common/interval.js');
 var ApiUrl = require('./api_url.js');
 var RunQuery = require('../../common/run_query.js');
 var ExplorerUtils = require('../../../utils/ExplorerUtils');
@@ -3856,6 +3852,7 @@ var QueryBuilder = React.createClass({displayName: "QueryBuilder",
     var groupByField;
     var targetPropertyField;
     var percentileField;
+    var intervalField;
     var analysisType = this.props.model.query.analysis_type;
     var apiQueryUrl = ExplorerUtils.getApiQueryUrl(this.props.client, this.props.model);
 
@@ -3865,6 +3862,7 @@ var QueryBuilder = React.createClass({displayName: "QueryBuilder",
                                    updateGroupBy: this.updateGroupBy, 
                                    options: this.getEventPropertyNames(), 
                                    handleChange: this.handleChange})
+      intervalField = React.createElement(Interval, {model: this.props.model});
     }
     if (analysisType && analysisType !== 'count' && analysisType !== 'extraction') {
       targetPropertyField = React.createElement(TargetPropertyField, {ref: "target-property-field", 
@@ -3878,11 +3876,9 @@ var QueryBuilder = React.createClass({displayName: "QueryBuilder",
                                          onChange: this.handleSelectionWithEvent});
     }
 
-
     return (
       React.createElement("section", {className: "query-pane-section query-builder"}, 
         React.createElement("form", {className: "form query-builder-form", onSubmit: this.handleQuerySubmit}, 
-
           React.createElement(EventCollectionField, {ref: "event-collection-field", 
                                 value: this.props.model.query.event_collection, 
                                 options: this.props.project.eventCollections, 
@@ -3892,12 +3888,13 @@ var QueryBuilder = React.createClass({displayName: "QueryBuilder",
                              value: this.props.model.query.analysis_type, 
                              options: ProjectUtils.getConstant('ANALYSIS_TYPES'), 
                              handleChange: this.handleChange}), 
-
           targetPropertyField, 
           percentileField, 
+          React.createElement(Timeframe, {ref: "timeframe", 
+                     model: this.props.model, 
+                     project: this.props.project}), 
           React.createElement("hr", {className: "fieldset-divider"}), 
           groupByField, 
-
           React.createElement("div", {className: "field-component"}, 
             React.createElement(FieldsToggle, {ref: "filters-fields-toggle", 
                           name: "Filters", 
@@ -3905,18 +3902,12 @@ var QueryBuilder = React.createClass({displayName: "QueryBuilder",
                           toggleCallback: this.props.handleFiltersToggle, 
                           fieldsCount: validFilters(this.props.model.query.filters).length})
           ), 
-
-          React.createElement(Timeframe, {ref: "timeframe", 
-                     model: this.props.model, 
-                     project: this.props.project}), 
-
+          intervalField, 
           React.createElement(RunQuery, {classes: "pull-right", 
                     clearQuery: this.clearQuery, 
                     model: this.props.model, 
                     handleQuerySubmit: this.handleQuerySubmit}), 
-
           React.createElement(ApiUrl, {url: ExplorerUtils.getApiQueryUrl(this.props.client, this.props.model)})
-
         )
       )
     );
@@ -3925,7 +3916,7 @@ var QueryBuilder = React.createClass({displayName: "QueryBuilder",
 
 module.exports = QueryBuilder;
 
-},{"../../../actions/ExplorerActions":2,"../../../utils/ExplorerUtils":58,"../../../utils/ProjectUtils":61,"../../../utils/ValidationUtils":63,"../../../validations/FilterValidations":65,"../../common/fields_toggle.js":11,"../../common/run_query.js":23,"../../common/timeframe.js":25,"./analysis_type_field.js":32,"./api_url.js":33,"./event_collection_field.js":34,"./group_by_field.js":35,"./percentile_field.js":37,"./target_property_field.js":38,"lodash":84,"react/addons":130}],37:[function(require,module,exports){
+},{"../../../actions/ExplorerActions":2,"../../../utils/ExplorerUtils":58,"../../../utils/ProjectUtils":61,"../../../utils/ValidationUtils":63,"../../../validations/FilterValidations":65,"../../common/fields_toggle.js":11,"../../common/interval.js":17,"../../common/run_query.js":23,"../../common/timeframe.js":25,"./analysis_type_field.js":32,"./api_url.js":33,"./event_collection_field.js":34,"./group_by_field.js":35,"./percentile_field.js":37,"./target_property_field.js":38,"lodash":84,"react/addons":130}],37:[function(require,module,exports){
 /**
  * @jsx React.DOM
  */

@@ -5,6 +5,7 @@ var sinon = require('sinon');
 var QueryBuilder = require('../../../../../client/js/app/components/explorer/query_builder/index.js');
 var RunQuery = require('../../../../../client/js/app/components/common/run_query.js');
 var Timeframe = require('../../../../../client/js/app/components/common/timeframe.js')
+var Interval = require('../../../../../client/js/app/components/common/interval.js')
 var ProjectUtils = require('../../../../../client/js/app/utils/ProjectUtils');;
 var ExplorerActions = require('../../../../../client/js/app/actions/ExplorerActions');
 var Input = require('../../../../../client/js/app/components/common/select.js');
@@ -31,6 +32,18 @@ describe('components/explorer/query_builder/index', function() {
     it('has a single Timeframe child component', function(){
       assert.isNotNull(TestUtils.findRenderedComponentWithType(this.component, Timeframe));
     });
+
+    it('has one Interval component', function(){
+      assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, Interval), 1);
+    });
+
+    it('has zero Interval components if the analysis_type is extraction', function(){
+      this.model.query.analysis_type = 'extraction';
+      this.component.setProps({
+        model: this.model
+      });
+      assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, Interval), 0);
+    });    
 
     it('has a single RunQuery child component', function(){
       assert.isNotNull(TestUtils.findRenderedComponentWithType(this.component, RunQuery));

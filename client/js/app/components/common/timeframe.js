@@ -10,7 +10,6 @@ var RelativePicker = require('./relative_picker.js');
 var FieldsToggle = require('./fields_toggle.js');
 var ReactSelect = require('./react_select.js');
 var Timezone = require('./timezone.js');
-var Interval = require('./interval.js');
 var ExplorerActions = require('../../actions/ExplorerActions');
 var ExplorerUtils = require('../../utils/ExplorerUtils');
 var ProjectUtils = require('../../utils/ProjectUtils');
@@ -74,7 +73,6 @@ var Timeframe = React.createClass({
   // React Methods
 
   render: function() {
-    var interval;
     var timezone = this.props.model.query.timezone || ProjectUtils.getConstant('DEFAULT_TIMEZONE');
 
     if (this.isAbsolute()) {
@@ -83,13 +81,11 @@ var Timeframe = React.createClass({
       var timeframePicker = <RelativePicker relativeIntervalTypes={ProjectUtils.getConstant('RELATIVE_INTERVAL_TYPES')}
                                             model={this.props.model}/>;
     }
-    if (this.props.model.query.analysis_type !== 'extraction') {
-      interval = <Interval model={this.props.model} />;
-    }
 
     return (
       <div className="timeframe">
         <div className="field-component">
+          <label>Timeframe</label>
           <ul className="nav nav-pills" role="tablist">
             <li className={this.isRelative() ? 'active' : ''}>
               <a href="#" className="relative-tab" data-type="relative" onClick={this.toggleTimeframeType}>Relative</a>
@@ -101,7 +97,6 @@ var Timeframe = React.createClass({
           {timeframePicker}
           <Timezone model={this.props.model} />
         </div>
-        {interval}
       </div>
     );
   }
