@@ -1303,7 +1303,7 @@
 #keen-explorer .query-pane-section {
   background-color: #fff;
   border: 1px solid rgba(0, 0, 0, 0.07);
-  padding: 18px 15px 5px;
+  padding: 18px 10px 0;
   position: relative;
 }
 #keen-explorer .explorer-visualization {
@@ -1401,12 +1401,8 @@
 #keen-explorer textarea.json-view:focus {
   outline: 0;
 }
-#keen-explorer .run-query {
-  margin-right: 8px;
-}
 #keen-explorer .code-sample-toggle {
-  color: #333333;
-  font-weight: 700;
+  color: #333;
 }
 #keen-explorer .code-sample-toggle.open {
   background-color: #333333;
