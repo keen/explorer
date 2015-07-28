@@ -225,6 +225,38 @@ var ExplorerActions = {
     });
   },
 
+  save: function(persistence, sourceId) {
+    AppDispatcher.dispatch({
+      actionType: ExplorerConstants.EXPLORER_SAVING,
+      id: sourceId,
+      saveType: 'update'
+    });
+
+    var attrs = _.assign({}, ExplorerUtils.toJSON(ExplorerStore.get(sourceId)));
+
+    persistence.update(attrs, function(err, res) {
+      if (err) {
+        AppDispatcher.dispatch({
+          actionType: ExplorerConstants.EXPLORER_SAVE_FAIL,
+          saveType: 'update',
+          id: sourceId,
+          errorMsg: err
+        });
+      } else {
+        AppDispatcher.dispatch({
+          actionType: ExplorerConstants.EXPLORER_UPDATE,
+          id: sourceId,
+          updates: _.assign({}, ExplorerUtils.formatQueryParams(res))
+        });
+        AppDispatcher.dispatch({
+          actionType: ExplorerConstants.EXPLORER_SAVE_SUCCESS,
+          id: sourceId,
+          saveType: 'update'
+        });
+      }
+    });
+  },
+
   destroy: function(persistence, id) {
     AppDispatcher.dispatch({
       actionType: ExplorerConstants.EXPLORER_DESTROYING
