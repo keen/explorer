@@ -4176,13 +4176,21 @@ var DataTable = React.createClass({displayName: "DataTable",
     });
     return React.createElement("tr", null, cells);
   },
+
   _generateRows: function(data, headers) {
     var _this = this;
+    var cells;
     return _.map(data, function(row, index) {
       var className = index % 2 == 0 ? 'even' : 'odd';
-      var cells = _.map(headers, function(header) {
-        return React.createElement("td", null, _this._formatCell(row, header));
-      });
+
+      if (_.isArray(row) || _.isObject(row)) {
+        cells = _.map(headers, function(header) {
+          return React.createElement("td", null, _this._formatCell(row, header));
+        });
+      } else {
+        cells = React.createElement("td", null, row);
+      }
+
       return React.createElement("tr", {className: className}, cells);
     });
   },
