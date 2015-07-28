@@ -3450,6 +3450,20 @@ var Explorer = React.createClass({displayName: "Explorer",
     this.refs['add-favorite-modal'].refs['modal'].open();
   },
 
+  updateFavoriteClick: function(event) {
+    var validity = ValidationUtils.runValidations(ExplorerValidations.explorer, this.state.activeExplorer.query);
+    if (!validity.isValid) {
+      NoticeActions.create({
+        icon: 'remove-circle',
+        type: 'error',
+        text: "Can't update favorite: " + validity.lastError
+      });
+      return;
+    } else {
+      ExplorerActions.save(this.props.persistence, this.state.activeExplorer.id);
+    }
+  },
+
   onBrowseEvents: function(event) {
     event.preventDefault();
     this.refs['event-browser'].refs.modal.open();
@@ -3461,6 +3475,10 @@ var Explorer = React.createClass({displayName: "Explorer",
 
   onOpenCSVExtraction: function() {
     this.refs['csv-extraction'].refs.modal.open();
+  },
+
+  onNameChange: function(event) {
+    ExplorerActions.update(this.state.activeExplorer.id, { name: event.target.value });
   },
 
   // ********************************
@@ -3595,7 +3613,8 @@ var Explorer = React.createClass({displayName: "Explorer",
                            persistence: this.props.persistence, 
                            addFavoriteClick: this.addFavoriteClick, 
                            openFavoritesClick: this.openFavoritesClick, 
-                           onOpenCSVExtraction: this.onOpenCSVExtraction})
+                           onOpenCSVExtraction: this.onOpenCSVExtraction, 
+                           omnNameChange: this.onNameChange})
           )
         ), 
         addFavoriteModal, 
@@ -4660,7 +4679,11 @@ function _defaultAttrs(){
       email: null,
       latest: null,
       filters: [],
-      time: {}
+      time: {
+        relativity: 'this',
+        amount: 1,
+        sub_timeframe: 'weeks'
+      }
     },
     visualization: {
       chart_type: null
