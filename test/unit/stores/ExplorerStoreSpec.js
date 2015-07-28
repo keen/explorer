@@ -44,7 +44,11 @@ describe('stores/ExplorerStore', function() {
           email: null,
           latest: null,
           filters: [],
-          time: {}
+          time: {
+            relativity: 'this',
+            amount: 1,
+            sub_timeframe: 'weeks'
+          }
         },
         visualization: {
           chart_type: null
@@ -505,7 +509,11 @@ describe('stores/ExplorerStore', function() {
             email: null,
             latest: null,
             filters: [],
-            time: {}
+            time: {
+              relativity: 'this',
+              amount: 1,
+              sub_timeframe: 'weeks'
+            }
           },
           visualization: {
             chart_type: null
