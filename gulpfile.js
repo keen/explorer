@@ -267,7 +267,8 @@ gulp.task('keen-web', ['keen-web-scripts', 'keen-web-styles'], function(){
   gulp.watch('client/**/*.less', ['keen-web-styles']);
 });
 
-gulp.task('terrarium', ['development', 'production', 'keen-web']);
+gulp.task('terrarium', ['development', 'keen-web']);
+gulp.task('terrarium-production', ['production', 'keen-web']);
 
 gulp.task('terrarium-with-tests', ['development-with-tests', 'keen-web']);
 
