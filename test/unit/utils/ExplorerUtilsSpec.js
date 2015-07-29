@@ -142,6 +142,87 @@ describe('utils/ExplorerUtils', function() {
     });
   });
 
+  describe('mergeResponseWithExplorer', function () {
+    it('should keep all explorer attributes', function () {
+      var explorer = {
+        id: 'TEMP-ABC',
+        name: 'SOME NAME',
+        active: false,
+        saving: false,
+        error: null,
+        result: null,
+        loading: false,
+        isValid: true,
+        timeframe_type: 'relative',
+        query: {
+          event_collection: null,
+          analysis_type: null,
+          target_property: null,
+          percentile: null,
+          group_by: null,
+          interval: null,
+          timezone: 'UTC',
+          filters: null,
+          email: null,
+          latest: null,
+          filters: [],
+          time: {
+            relativity: 'this',
+            amount: 1,
+            sub_timeframe: 'weeks'
+          }
+        },
+        visualization: {
+          chart_type: null
+        }
+      };
+      var response = {
+        id: 'ACTUAL-ID',
+        project_id: '10',
+        query: {
+          event_collection: 'clicks',
+          analysis_type: 'count',
+        },
+        visualization: {
+          chart_type: 'metric'
+        }
+      };
+      assert.deepEqual(ExplorerUtils.mergeResponseWithExplorer(explorer, response), {
+        id: 'ACTUAL-ID',
+        project_id: '10',
+        name: 'SOME NAME',
+        active: false,
+        saving: false,
+        error: null,
+        result: null,
+        loading: false,
+        isValid: true,
+        timeframe_type: 'relative',
+        query: {
+          event_collection: 'clicks',
+          analysis_type: 'count',
+          target_property: null,
+          percentile: null,
+          group_by: null,
+          interval: null,
+          timezone: 'UTC',
+          filters: null,
+          email: null,
+          latest: null,
+          filters: [],
+          time: {
+            relativity: 'this',
+            amount: 1,
+            sub_timeframe: 'weeks'
+          }
+        },
+        visualization: {
+          chart_type: 'metric'
+        }
+      });
+    });
+  });
+
   describe('getTimeframe', function () {
     it('should call the right timeframe builder for absolute timeframes', function () {
       var explorer = {

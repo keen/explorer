@@ -166,64 +166,68 @@ describe('components/explorer/index', function() {
                                                               persistence={this.persistence} />);
     });
 
-    describe('saveNewFavorite', function () {
+    describe('saveQueryClick', function () {
       before(function () {
         this.saveNewStub = sinon.stub(ExplorerActions, 'saveNew');
+        this.saveExistingStub = sinon.stub(ExplorerActions, 'saveExisting');
       });
       after(function() {
         ExplorerActions.saveNew.restore();
+        ExplorerActions.saveExisting.restore();
       });
       beforeEach(function() {
-        this.component.refs['add-favorite-modal'].refs.name.refs.input.getDOMNode().value = 'a name';
         this.saveNewStub.reset();
+        this.saveExistingStub.reset();
       });
 
-      describe('ExplorerActions.saveNew function call', function () {
-        it('should call it with persistence', function () {
-          this.component.saveNewFavorite(TestHelpers.fakeEvent());
-          assert.equal(this.saveNewStub.getCall(0).args[0], this.persistence);
+      describe('yet to be persisted explorers', function () {
+        beforeEach(function(){
+          this.explorer.id = 'TEMP-ABC';
+          this.component.forceUpdate();
         });
-        it('should call it with the model id', function () {
-          this.component.saveNewFavorite(TestHelpers.fakeEvent());
-          assert.equal(this.saveNewStub.getCall(0).args[1], 1);  
+
+        it('should run validations on the model', function () {
+          var stub = sinon.stub(ValidationUtils, 'runValidations').returns({ isValid: false });
+          this.component.saveQueryClick({ preventDefault: function(){} });
+          assert.isTrue(stub.calledWith(ExplorerValidations.explorer, this.explorer.query));
+          ValidationUtils.runValidations.restore();
         });
-        it('should call it with the expected attrs including the favorite name', function () {
-          this.component.refs['add-favorite-modal'].refs.name.refs.input.getDOMNode().value = 'name from favorite bar';
-          this.component.saveNewFavorite(TestHelpers.fakeEvent());
-          assert.isTrue(this.saveNewStub.calledWith(this.persistence, this.component.state.activeExplorer.id, 'name from favorite bar'));
+        it('should call ExplorerActions.saveNew if validations pass', function () {
+          sinon.stub(ValidationUtils, 'runValidations').returns({ isValid: true });
+          this.component.saveQueryClick({ preventDefault: function(){} });
+          assert.isTrue(this.saveNewStub.calledOnce);
+          ValidationUtils.runValidations.restore();
         });
       });
 
-      describe('name validations', function () {
-        it('should not call saveNew if the name is empty', function () {
-          this.component.refs['add-favorite-modal'].refs.name.refs.input.getDOMNode().value = '';
-          this.component.saveNewFavorite();
-          assert.isFalse(this.saveNewStub.called);
+      describe('already persisted explorers', function () {
+        beforeEach(function(){
+          this.explorer.id = 'ABC';
+          this.component.forceUpdate();
         });
-        it('should not call saveNew if the name is blank spaces', function () {
-          this.component.refs['add-favorite-modal'].refs.name.refs.input.getDOMNode().value = '    ';
-          this.component.saveNewFavorite();
-          assert.isFalse(this.saveNewStub.called);
+
+        it('should run validations on the model', function () {
+          var stub = sinon.stub(ValidationUtils, 'runValidations').returns({ isValid: false });
+          this.component.saveQueryClick({ preventDefault: function(){} });
+          assert.isTrue(stub.calledWith(ExplorerValidations.explorer, this.explorer.query));
+          ValidationUtils.runValidations.restore();
         });
-        it('should create a notice with an error message if the new does not pass validation', function () {
-          var noticeCreateStub = sinon.stub(NoticeActions, 'create');
-          this.component.refs['add-favorite-modal'].refs.name.refs.input.getDOMNode().value = '    ';
-          this.component.saveNewFavorite();
-          
-          assert.strictEqual(noticeCreateStub.getCall(0).args[0].type, 'error');
-          assert.strictEqual(noticeCreateStub.getCall(0).args[0].text, 'You must provide a non-blank favorite name.');
-          
-          NoticeActions.create.restore();
+        it('should call ExplorerActions.saveExisting if validations pass', function () {
+          sinon.stub(ValidationUtils, 'runValidations').returns({ isValid: true });
+          this.component.saveQueryClick({ preventDefault: function(){} });
+          assert.isTrue(this.saveExistingStub.calledOnce);
+          ValidationUtils.runValidations.restore();
         });
       });
     });
 
     describe('destroyFavorite', function () {
       it('should call the destroy ExplorerAction with the right arguments', function () {
+        this.explorer.id = 'ABC-DESTROY'
         var destroyStub = sinon.stub(ExplorerActions, 'destroy');
         sinon.stub(window, 'confirm').returns(true);
         this.component.destroyFavorite(TestHelpers.fakeEvent());
-        assert.isTrue(destroyStub.calledWith(this.persistence, '1'));
+        assert.isTrue(destroyStub.calledWith(this.persistence, 'ABC-DESTROY'));
         ExplorerActions.destroy.restore();
         window.confirm.restore();
       });
@@ -271,48 +275,6 @@ describe('components/explorer/index', function() {
           ExplorerActions.setActive.restore();
           ExplorerActions.exec.restore();
           NoticeActions.create.restore();
-        });
-      });
-
-      describe('opening the favorites modal', function () {
-        beforeEach(function () {
-          this.runValidationsStub = sinon.stub(ValidationUtils, 'runValidations').returns({
-            isValid: false,
-            lastError: 'Something is wrong.'
-          });
-        });
-
-        afterEach(function(){
-          ValidationUtils.runValidations.restore();
-        });
-
-        it("should validate the currently active explorer's query", function () {
-          this.component.addFavoriteClick(TestHelpers.fakeEvent());
-          assert.isTrue(this.runValidationsStub.calledWith(ExplorerValidations.explorer, this.component.state.activeExplorer.query));
-        });
-
-        it('should show a notice if validation fails', function () {
-          var noticeCreateStub = sinon.stub(NoticeActions, 'create');
-          this.component.addFavoriteClick(TestHelpers.fakeEvent());
-          assert.strictEqual(noticeCreateStub.getCall(0).args[0].text, "Can't favorite: Something is wrong.");
-          NoticeActions.create.restore();
-        });
-
-        it('should not open the modal if validation fails', function () {
-          this.component.addFavoriteClick(TestHelpers.fakeEvent());
-          var openSpy = sinon.spy(this.component.refs['add-favorite-modal'].refs['modal'], 'open');
-          assert.isFalse(openSpy.called);
-          this.component.refs['add-favorite-modal'].refs['modal'].open.restore();
-        });
-
-        it('should open the modal if validation passes', function () {
-          this.runValidationsStub.returns({
-            isValid: true
-          });
-          var openSpy = sinon.spy(this.component.refs['add-favorite-modal'].refs['modal'], 'open');
-          this.component.addFavoriteClick(TestHelpers.fakeEvent());
-          assert.isTrue(openSpy.called);
-          this.component.refs['add-favorite-modal'].refs['modal'].open.restore();
         });
       });
 

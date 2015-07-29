@@ -190,19 +190,13 @@ var ExplorerActions = {
     });
   },
 
-  saveNew: function(persistence, sourceId, name) {
+  saveNew: function(persistence, sourceId) {
     AppDispatcher.dispatch({
       actionType: ExplorerConstants.EXPLORER_SAVING,
       id: sourceId,
       saveType: 'save'
     });
-
-    var attrs = _.assign(
-      {},
-      ExplorerUtils.toJSON(ExplorerStore.get(sourceId)),
-      { id: null, name: name }
-    );
-
+    var attrs = _.assign({}, ExplorerUtils.toJSON(ExplorerStore.get(sourceId)));
     persistence.create(attrs, function(err, res) {
       if (err) {
         AppDispatcher.dispatch({
@@ -212,28 +206,28 @@ var ExplorerActions = {
           errorMsg: err
         });
       } else {
+        var formattedParams = ExplorerUtils.formatQueryParams(res);
         AppDispatcher.dispatch({
-          actionType: ExplorerConstants.EXPLORER_CREATE,
-          attrs: _.assign({}, ExplorerUtils.formatQueryParams(res), { id: res.id, name: name })
+          actionType: ExplorerConstants.EXPLORER_UPDATE,
+          id: sourceId,
+          updates: ExplorerUtils.mergeResponseWithExplorer(ExplorerStore.get(sourceId), res)
         });
         AppDispatcher.dispatch({
           actionType: ExplorerConstants.EXPLORER_SAVE_SUCCESS,
           id: sourceId,
-          saveType: 'save'
+          saveType: 'save',
         });
       }
     });
   },
 
-  save: function(persistence, sourceId) {
+  saveExisting: function(persistence, sourceId) {
     AppDispatcher.dispatch({
       actionType: ExplorerConstants.EXPLORER_SAVING,
       id: sourceId,
       saveType: 'update'
     });
-
     var attrs = _.assign({}, ExplorerUtils.toJSON(ExplorerStore.get(sourceId)));
-
     persistence.update(attrs, function(err, res) {
       if (err) {
         AppDispatcher.dispatch({
@@ -246,12 +240,12 @@ var ExplorerActions = {
         AppDispatcher.dispatch({
           actionType: ExplorerConstants.EXPLORER_UPDATE,
           id: sourceId,
-          updates: _.assign({}, ExplorerUtils.formatQueryParams(res))
+          updates: ExplorerUtils.mergeResponseWithExplorer(ExplorerStore.get(sourceId), res)
         });
         AppDispatcher.dispatch({
           actionType: ExplorerConstants.EXPLORER_SAVE_SUCCESS,
           id: sourceId,
-          saveType: 'update'
+          saveType: 'update',
         });
       }
     });

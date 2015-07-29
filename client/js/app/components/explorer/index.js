@@ -72,20 +72,6 @@ var Explorer = React.createClass({
     }
   },
 
-  saveNewFavorite: function() {
-    this.refs['add-favorite-modal'].refs['modal'].close();
-    var name = this.refs['add-favorite-modal'].refs.name.refs.input.getDOMNode().value;
-    if (!name.trim().length) {
-      NoticeActions.create({
-        icon: 'remove-circle',
-        type: 'error',
-        text: 'You must provide a non-blank favorite name.'
-      });
-      return;
-    }
-    ExplorerActions.saveNew(this.props.persistence, this.state.activeExplorer.id, name);
-  },
-
   destroyFavorite: function(event) {
     event.preventDefault();
     if (confirm("Are you sure you want to unfavorite this query?")) {
@@ -93,34 +79,22 @@ var Explorer = React.createClass({
     }
   },
 
-  openFavoritesClick: function(event) {
-    this.refs['favorites-list'].refs['modal'].open();
-  },
-
-  addFavoriteClick: function(event) {
+  saveQueryClick: function(event) {
+    event.preventDefault();
     var validity = ValidationUtils.runValidations(ExplorerValidations.explorer, this.state.activeExplorer.query);
     if (!validity.isValid) {
       NoticeActions.create({
         icon: 'remove-circle',
         type: 'error',
-        text: "Can't favorite: " + validity.lastError
-      });
-      return;
-    }
-    this.refs['add-favorite-modal'].refs['modal'].open();
-  },
-
-  updateFavoriteClick: function(event) {
-    var validity = ValidationUtils.runValidations(ExplorerValidations.explorer, this.state.activeExplorer.query);
-    if (!validity.isValid) {
-      NoticeActions.create({
-        icon: 'remove-circle',
-        type: 'error',
-        text: "Can't update favorite: " + validity.lastError
+        text: "Can't save: " + validity.lastError
       });
       return;
     } else {
-      ExplorerActions.save(this.props.persistence, this.state.activeExplorer.id);
+      if (ExplorerUtils.isPersisted(this.state.activeExplorer)) {
+        ExplorerActions.saveExisting(this.props.persistence, this.state.activeExplorer.id);
+      } else {
+        ExplorerActions.saveNew(this.props.persistence, this.state.activeExplorer.id);
+      }
     }
   },
 
@@ -230,14 +204,13 @@ var Explorer = React.createClass({
     if (this.props.persistence) {
       queryPaneTabs = <QueryPaneTabs ref="query-pane-tabs"
                                      activePane={this.state.activeQueryPane}
-                                     toggleCallback={this.toggleQueryPane} />;
+                                     toggleCallback={this.toggleQueryPane}
+                                     persisted={ExplorerUtils.isPersisted(this.state.activeExplorer)} />;
       if (this.state.appState.fetchingPersistedExplorers) {
         favListNotice = <Notice notice={{ icon: 'info-sign', text: 'Loading favorites...', type: 'info' }} closable={false} />
       } else {
         favEmptyContent = <h4 className="text-center">You don&#39;t have any favorites yet.</h4>;
       }
-      addFavoriteModal = <AddFavoriteModal ref="add-favorite-modal"
-                                           saveCallback={this.saveNewFavorite} />;
     }
 
     var activeQueryPane;
@@ -271,13 +244,11 @@ var Explorer = React.createClass({
                            client={this.props.client}
                            project={this.props.project}
                            persistence={this.props.persistence}
-                           addFavoriteClick={this.addFavoriteClick}
-                           openFavoritesClick={this.openFavoritesClick}
+                           saveQueryClick={this.saveQueryClick}
                            onOpenCSVExtraction={this.onOpenCSVExtraction}
-                           omnNameChange={this.onNameChange} />
+                           onNameChange={this.onNameChange} />
           </div>
         </div>
-        {addFavoriteModal}
         <EventBrowser ref="event-browser"
                       client={this.props.client}
                       project={this.props.project}

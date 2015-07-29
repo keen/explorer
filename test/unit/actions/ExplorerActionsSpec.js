@@ -324,73 +324,92 @@ describe('actions/ExplorerActions', function() {
     describe('saveNew', function () {
       beforeEach(function () {
         this.persistence = {
-          create: function(json, callback) {
-            callback(null, { id: 'NEW_ID_123', name: 'some name' });
+          create: function(model, callback) {
+            callback(null, _.assign({}, ExplorerUtils.formatQueryParams(ExplorerUtils.toJSON(model)), { id: 'abc123', project_id: 'def456' }));
           }
         };
         this.explorer = TestHelpers.createExplorerModel();
-        this.explorer.id = 'ABC-PREV-ID';
+        this.explorer.id = 'TEMP-ABC';
         this.getStub.returns(this.explorer);
+        sinon.stub(ExplorerUtils, 'mergeResponseWithExplorer').returns({ testKey: 'some updates' });
       });
 
-      it('should dispatch to create a new model if successful', function () {
-        ExplorerActions.saveNew(this.persistence, 'ABC-PREV-ID', 'some name');
-        assert.strictEqual(this.dispatchStub.getCall(1).args[0].actionType, 'EXPLORER_CREATE');
-      });
-      it('should create a new model with the new ID set if successful', function () {
-        ExplorerActions.saveNew(this.persistence, 'ABC-PREV-ID', 'some name');
-        assert.deepPropertyVal(this.dispatchStub.getCall(1).args[0].attrs, 'id', 'NEW_ID_123');
-      });
-      it('should create a new model with the right name if successful', function () {
-        ExplorerActions.saveNew(this.persistence, 'ABC-PREV-ID', 'some name');
-        assert.deepPropertyVal(this.dispatchStub.getCall(1).args[0].attrs, 'name', 'some name');
-      });
-      it('should not change the active model', function () {
-        ExplorerActions.saveNew(this.persistence, 'ABC-PREV-ID', 'some name');
-        assert.lengthOf(this.dispatchStub.getCalls(), 3);
-        assert.notStrictEqual(this.dispatchStub.getCall(0).args[0].actionType, 'EXPLORER_SET_ACTIVE');
-        assert.notStrictEqual(this.dispatchStub.getCall(1).args[0].actionType, 'EXPLORER_SET_ACTIVE');
-        assert.notStrictEqual(this.dispatchStub.getCall(2).args[0].actionType, 'EXPLORER_SET_ACTIVE');
-      });
-    });
-
-    describe('save', function () {
-      beforeEach(function () {
-        this.persistence = {
-          update: function(model, callback) {
-            callback(null, _.assign({}, model, { someVal: 'test' }));
-          }
-        };
-        this.explorer = TestHelpers.createExplorerModel();
-        this.explorer.id = 'ABC-ID';
-        this.getStub.returns(this.explorer);
+      afterEach(function(){
+        ExplorerUtils.mergeResponseWithExplorer.restore();
       });
 
       it('should dispatch an EXPLORER_SAVING event', function () {
-        ExplorerActions.save(this.persistence, 'ABC-ID');
+        ExplorerActions.saveNew(this.persistence, 'TEMP-ABC');
         assert.isTrue(this.dispatchStub.calledWith({
           actionType: 'EXPLORER_SAVING',
-          id: 'ABC-ID',
+          id: 'TEMP-ABC',
+          saveType: 'save'
+        }));
+      });
+      it('should dispatch to update the right model with params from mergeResponseWithExplorer if successful', function () {
+        ExplorerActions.saveNew(this.persistence, 'TEMP-ABC');
+        assert.isTrue(this.dispatchStub.calledWith({
+          actionType: 'EXPLORER_UPDATE',
+          id: 'TEMP-ABC',
+          updates: { testKey: 'some updates' }
+        }));
+      });
+      it('should dispatch a fail event if there is a failure', function () {
+        this.persistence.create = function(model, callback) {
+          callback('ERROR');
+        };
+        ExplorerActions.saveNew(this.persistence, 'TEMP-ABC');
+        assert.isTrue(this.dispatchStub.calledWith({
+          actionType: 'EXPLORER_SAVE_FAIL',
+          saveType: 'save',
+          id: 'TEMP-ABC',
+          errorMsg: 'ERROR'
+        }));
+      });
+    });
+
+    describe('saveExisting', function () {
+      beforeEach(function () {
+        this.persistence = {
+          update: function(model, callback) {
+            callback(null, _.assign({}, ExplorerUtils.formatQueryParams(ExplorerUtils.toJSON(model)), { id: 'abc123', project_id: 'def456' }));
+          }
+        };
+        this.explorer = TestHelpers.createExplorerModel();
+        this.explorer.id = 'ABC';
+        this.getStub.returns(this.explorer);
+        sinon.stub(ExplorerUtils, 'mergeResponseWithExplorer').returns({ testKey: 'some updates' });
+      });
+
+      afterEach(function(){
+        ExplorerUtils.mergeResponseWithExplorer.restore();
+      });
+
+      it('should dispatch an EXPLORER_SAVING event', function () {
+        ExplorerActions.saveExisting(this.persistence, 'ABC');
+        assert.isTrue(this.dispatchStub.calledWith({
+          actionType: 'EXPLORER_SAVING',
+          id: 'ABC',
           saveType: 'update'
         }));
       });
-      it('should dispatch to update the right model with the right params if successful', function () {
-        ExplorerActions.save(this.persistence, 'ABC-ID');
+      it('should dispatch to update the right model with params from mergeResponseWithExplorer if successful', function () {
+        ExplorerActions.saveExisting(this.persistence, 'ABC');
         assert.isTrue(this.dispatchStub.calledWith({
           actionType: 'EXPLORER_UPDATE',
-          id: 'ABC-ID',
-          updates: _.assign({}, ExplorerUtils.toJSON(this.explorer), { someVal: 'test' })
+          id: 'ABC',
+          updates: { testKey: 'some updates' }
         }));
       });
       it('should dispatch a fail event if there is a failure', function () {
         this.persistence.update = function(model, callback) {
           callback('ERROR');
         };
-        ExplorerActions.save(this.persistence, 'ABC-ID');
+        ExplorerActions.saveExisting(this.persistence, 'ABC');
         assert.isTrue(this.dispatchStub.calledWith({
           actionType: 'EXPLORER_SAVE_FAIL',
           saveType: 'update',
-          id: 'ABC-ID',
+          id: 'ABC',
           errorMsg: 'ERROR'
         }));
       });

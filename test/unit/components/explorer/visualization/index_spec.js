@@ -50,26 +50,26 @@ describe('components/explorer/visualization/index', function() {
     });
 
     describe('without persistence', function () {
-      it('should not show the AddFav button', function () {
-        assert.isUndefined(this.component.refs['add-fav']);
+      it('should not show the Save/Update button', function () {
+        assert.isUndefined(this.component.refs['save-query']);
       });
     });
 
     describe('with persistence', function () {
-      it('should show the AddFav button', function () {
+      it('should show the Save/Update button', function () {
         this.model.result = 50;
         this.component.setProps({ persistence: {} });
-        assert.isDefined(this.component.refs['add-fav']);
+        assert.isDefined(this.component.refs['save-query']);
       });
     });
   });
 
   describe('interactions', function () {
-    it('should call props.addClick when the add fav button is clicked', function () {
+    it('should call props.saveQueryClick when the save button is clicked', function () {
       var stub = sinon.stub();
       this.model.result = 50;
-      this.component.setProps({ persistence: {}, addFavoriteClick: stub });
-      TestUtils.Simulate.click(this.component.refs['add-fav'].getDOMNode());
+      this.component.setProps({ persistence: {}, saveQueryClick: stub });
+      TestUtils.Simulate.click(this.component.refs['save-query'].getDOMNode());
       assert.isTrue(stub.calledOnce);
     });
   });

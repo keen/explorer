@@ -65,8 +65,7 @@ var Visualization = React.createClass({
   render: function() {
     var csvExtractionBanner,
         chartOptionsBar,
-        favoriteBar,
-        favoriteBtn;
+        saveBtn;
 
     var codeSampleBtnClasses = classNames({
       'code-sample-toggle btn btn-default pull-left': true,
@@ -105,18 +104,20 @@ var Visualization = React.createClass({
                         </div>;
     }
 
-    if (this.props.persistence
-      && null !== this.props.model.result
-        && !this.props.model.loading) {
-          favoriteBtn = <button type="button" ref="add-fav" className="btn btn-default add-favorite" onClick={this.props.addFavoriteClick}>
-                          <span className="icon glyphicon glyphicon-heart fav-icon"></span> Add
-                        </button>;
+    if (this.props.persistence) {
+      saveBtn = (
+        <button type="button" disabled={this.props.model.loading} ref="save-query" className="btn btn-primary save-query" onClick={this.props.saveQueryClick}>
+          {ExplorerUtils.isPersisted(this.props.model) ? 'Update' : 'Save'}
+        </button>
+      );
     }
+
 
     return (
       <div className="visualization">
         <Notice notice={this.props.notice} closeCallback={this.noticeClosed} />
         <div className="visualization-wrapper">
+          <input type="text" name="name" onChange={this.props.onNameChange} className="input-block" placeholder="Query name..." />
           {csvExtractionBanner}
           <div className="chart-component">
             <Chart model={this.props.model} dataviz={this.dataviz} />
@@ -127,7 +128,7 @@ var Visualization = React.createClass({
                       hidden={this.state.codeSampleHidden}
                       onCloseClick={this.toggleCodeSample} />
         </div>
-        {favoriteBtn}
+        {saveBtn}
       </div>
     );
   }

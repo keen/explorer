@@ -55,6 +55,15 @@ module.exports = {
     return explorer.id && !explorer.id.toString().match('TEMP');
   },
 
+  mergeResponseWithExplorer: function(explorer, response) {
+    var formattedParams = module.exports.formatQueryParams(response);
+    return _.assign({},
+      explorer,
+      formattedParams,
+      { query: _.assign({}, explorer.query, formattedParams.query) },
+      { visualization: _.assign({}, explorer.visualization, formattedParams.visualization) });
+  },
+
   queryJSON: function(explorer) {
     if (!explorer || !explorer.query) {
       return;

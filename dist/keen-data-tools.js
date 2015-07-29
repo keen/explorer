@@ -214,50 +214,47 @@ var ExplorerActions = {
     });
   },
 
-  saveNew: function(persistence, sourceId, name) {
+  save: function(persistence, sourceId) {
     AppDispatcher.dispatch({
       actionType: ExplorerConstants.EXPLORER_SAVING,
       id: sourceId,
       saveType: 'save'
     });
-
-    var attrs = _.assign(
-      {},
-      ExplorerUtils.toJSON(ExplorerStore.get(sourceId)),
-      { id: null, name: name }
-    );
-
+    var attrs = _.assign({}, ExplorerUtils.toJSON(ExplorerStore.get(sourceId)));
     persistence.create(attrs, function(err, res) {
       if (err) {
         AppDispatcher.dispatch({
           actionType: ExplorerConstants.EXPLORER_SAVE_FAIL,
-          saveType: 'save',
+          saveType: isPersisted ? 'update' : 'save',
           id: sourceId,
           errorMsg: err
         });
       } else {
+        var formattedParams = ExplorerUtils.formatQueryParams(res);
         AppDispatcher.dispatch({
-          actionType: ExplorerConstants.EXPLORER_CREATE,
-          attrs: _.assign({}, ExplorerUtils.formatQueryParams(res), { id: res.id, name: name })
+          actionType: ExplorerConstants.EXPLORER_UPDATE,
+          id: sourceId,
+          updates: _.assign({},
+            formattedParams,
+            { query: _.assign({}, ExplorerStore.get(sourceId).query, formattedParams.query) },
+            { visualization: _.assign({}, ExplorerStore.get(sourceId).visualization, formattedParams.visualization) }),
         });
         AppDispatcher.dispatch({
           actionType: ExplorerConstants.EXPLORER_SAVE_SUCCESS,
           id: sourceId,
-          saveType: 'save'
+          saveType: isPersisted ? 'update' : 'save',
         });
       }
     });
   },
 
-  save: function(persistence, sourceId) {
+  update: function(persistence, sourceId) {
     AppDispatcher.dispatch({
       actionType: ExplorerConstants.EXPLORER_SAVING,
       id: sourceId,
       saveType: 'update'
     });
-
     var attrs = _.assign({}, ExplorerUtils.toJSON(ExplorerStore.get(sourceId)));
-
     persistence.update(attrs, function(err, res) {
       if (err) {
         AppDispatcher.dispatch({
@@ -267,15 +264,19 @@ var ExplorerActions = {
           errorMsg: err
         });
       } else {
+        var formattedParams = ExplorerUtils.formatQueryParams(res);
         AppDispatcher.dispatch({
           actionType: ExplorerConstants.EXPLORER_UPDATE,
           id: sourceId,
-          updates: _.assign({}, ExplorerUtils.formatQueryParams(res))
+          updates: _.assign({},
+            formattedParams,
+            { query: _.assign({}, ExplorerStore.get(sourceId).query, formattedParams.query) },
+            { visualization: _.assign({}, ExplorerStore.get(sourceId).visualization, formattedParams.visualization) }),
         });
         AppDispatcher.dispatch({
           actionType: ExplorerConstants.EXPLORER_SAVE_SUCCESS,
           id: sourceId,
-          saveType: 'update'
+          saveType: 'update',
         });
       }
     });
@@ -3412,20 +3413,6 @@ var Explorer = React.createClass({displayName: "Explorer",
     }
   },
 
-  saveNewFavorite: function() {
-    this.refs['add-favorite-modal'].refs['modal'].close();
-    var name = this.refs['add-favorite-modal'].refs.name.refs.input.getDOMNode().value;
-    if (!name.trim().length) {
-      NoticeActions.create({
-        icon: 'remove-circle',
-        type: 'error',
-        text: 'You must provide a non-blank favorite name.'
-      });
-      return;
-    }
-    ExplorerActions.saveNew(this.props.persistence, this.state.activeExplorer.id, name);
-  },
-
   destroyFavorite: function(event) {
     event.preventDefault();
     if (confirm("Are you sure you want to unfavorite this query?")) {
@@ -3433,30 +3420,13 @@ var Explorer = React.createClass({displayName: "Explorer",
     }
   },
 
-  openFavoritesClick: function(event) {
-    this.refs['favorites-list'].refs['modal'].open();
-  },
-
-  addFavoriteClick: function(event) {
+  saveQueryClick: function(event) {
     var validity = ValidationUtils.runValidations(ExplorerValidations.explorer, this.state.activeExplorer.query);
     if (!validity.isValid) {
       NoticeActions.create({
         icon: 'remove-circle',
         type: 'error',
-        text: "Can't favorite: " + validity.lastError
-      });
-      return;
-    }
-    this.refs['add-favorite-modal'].refs['modal'].open();
-  },
-
-  updateFavoriteClick: function(event) {
-    var validity = ValidationUtils.runValidations(ExplorerValidations.explorer, this.state.activeExplorer.query);
-    if (!validity.isValid) {
-      NoticeActions.create({
-        icon: 'remove-circle',
-        type: 'error',
-        text: "Can't update favorite: " + validity.lastError
+        text: "Can't save: " + validity.lastError
       });
       return;
     } else {
@@ -3570,7 +3540,8 @@ var Explorer = React.createClass({displayName: "Explorer",
     if (this.props.persistence) {
       queryPaneTabs = React.createElement(QueryPaneTabs, {ref: "query-pane-tabs", 
                                      activePane: this.state.activeQueryPane, 
-                                     toggleCallback: this.toggleQueryPane});
+                                     toggleCallback: this.toggleQueryPane, 
+                                     persisted: ExplorerUtils.isPersisted(this.state.activeExplorer)});
       if (this.state.appState.fetchingPersistedExplorers) {
         favListNotice = React.createElement(Notice, {notice: { icon: 'info-sign', text: 'Loading favorites...', type: 'info'}, closable: false})
       } else {
@@ -3611,10 +3582,9 @@ var Explorer = React.createClass({displayName: "Explorer",
                            client: this.props.client, 
                            project: this.props.project, 
                            persistence: this.props.persistence, 
-                           addFavoriteClick: this.addFavoriteClick, 
-                           openFavoritesClick: this.openFavoritesClick, 
+                           saveQueryClick: this.saveQueryClick, 
                            onOpenCSVExtraction: this.onOpenCSVExtraction, 
-                           omnNameChange: this.onNameChange})
+                           onNameChange: this.onNameChange})
           )
         ), 
         addFavoriteModal, 
@@ -4053,13 +4023,12 @@ var QueryPaneTabs = React.createClass({displayName: "QueryPaneTabs",
       React.createElement("ul", {className: "query-pane-tabs nav nav-tabs"}, 
         React.createElement("li", {role: "presentation", className: this.props.activePane === 'build' ? 'active' : ''}, 
           React.createElement("a", {ref: "build-tab", href: "#", id: "build-query", onClick: this.toggled.bind(this, 'build')}, 
-            "Create a new query"
+            this.props.persisted ? "Edit Query" : "Create a new query"
           )
         ), 
         React.createElement("li", {role: "presentation", className: this.props.activePane === 'browse' ? 'active' : ''}, 
           React.createElement("a", {ref: "browse-tab", href: "#", id: "browse-favs", onClick: this.toggled.bind(this, 'browse')}, 
-            React.createElement("span", {className: "icon glyphicon glyphicon-heart margin-right-tiny fav-icon"}), 
-            "Favorites"
+            "Browse"
           )
         )
       )
@@ -4324,8 +4293,7 @@ var Visualization = React.createClass({displayName: "Visualization",
   render: function() {
     var csvExtractionBanner,
         chartOptionsBar,
-        favoriteBar,
-        favoriteBtn;
+        saveBtn;
 
     var codeSampleBtnClasses = classNames({
       'code-sample-toggle btn btn-default pull-left': true,
@@ -4364,18 +4332,20 @@ var Visualization = React.createClass({displayName: "Visualization",
                         );
     }
 
-    if (this.props.persistence
-      && null !== this.props.model.result
-        && !this.props.model.loading) {
-          favoriteBtn = React.createElement("button", {type: "button", ref: "add-fav", className: "btn btn-default add-favorite", onClick: this.props.addFavoriteClick}, 
-                          React.createElement("span", {className: "icon glyphicon glyphicon-heart fav-icon"}), " Add"
-                        );
+    if (this.props.persistence) {
+      saveBtn = (
+        React.createElement("button", {type: "button", disabled: this.props.model.loading, ref: "update-fav", className: "btn btn-primary save-query", onClick: this.props.saveQueryClick}, 
+          ExplorerUtils.isPersisted(this.props.model) ? 'Update' : 'Save'
+        )
+      );
     }
+
 
     return (
       React.createElement("div", {className: "visualization"}, 
         React.createElement(Notice, {notice: this.props.notice, closeCallback: this.noticeClosed}), 
         React.createElement("div", {className: "visualization-wrapper"}, 
+          React.createElement("input", {type: "text", name: "name", onChange: this.props.onNameChange, className: "input-block", placeholder: "Query name..."}), 
           csvExtractionBanner, 
           React.createElement("div", {className: "chart-component"}, 
             React.createElement(Chart, {model: this.props.model, dataviz: this.dataviz})
@@ -4386,7 +4356,7 @@ var Visualization = React.createClass({displayName: "Visualization",
                       hidden: this.state.codeSampleHidden, 
                       onCloseClick: this.toggleCodeSample})
         ), 
-        favoriteBtn
+        saveBtn
       )
     );
   }
@@ -4529,11 +4499,13 @@ RESTPersistence.prototype.makeRequest = function(action, id, body, callback) {
     r.send(body);
   }
   r.end(function(err, res){
+    if (err) {
+      callback(err);
+      return;
+    }
     var body = res ? res.body : null;
     if (body.result) body = body.result;
-    if (callback) {
-      callback(err, body);
-    }
+    callback(null, body);
   });
 };
 
