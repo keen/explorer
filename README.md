@@ -25,35 +25,42 @@ You can see a complete code example of all these resources being included [in ou
 #### CSS
 
 Include a copy of Bootstrap 3, which you can do from the CDN:
-- `<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">`
 
-Include a copy of the Keen.DataTools styling from this project, found under:
-- `dist/keen-data-tools.css`.
+```html
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+```
+
+Include a copy of the Keen.DataTools styling from this project, found under: `dist/keen-data-tools.css`.
 
 #### HTML
 
 Have a div with an id that you'll use as the target to render out the app. A simple:
 
-`<div id="content"></div>`
+```html
+<div id="content"></div>
+```
 
 will work just fine. All of the interface components will live under this div.
 
 #### JavaScript
 
 Include a copy of jQuery, which you can do from the Google CDN:
-- `<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>`
+```html
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+```
 
 Include a copy of Keen.js, the easiest way is to use our CDN version:
-- `<script src="https://d26b395fwzu5fz.cloudfront.net/3.1.0-beta/keen.min.js" type="text/javascript"></script>`
+```html
+<script src="https://d26b395fwzu5fz.cloudfront.net/3.1.0-beta/keen.min.js" type="text/javascript"></script>
+```
 
-Include a copy of Keen.DataTools from this project, found under:
-- `dist/keen-data-tools.js`.
+Include a copy of Keen.DataTools from this project, found under: `dist/keen-data-tools.js`.
 
 ### 3. Configure a Keen.js client and initialize the Keen.DataTools app
 
 Initialize a new Keen.js client and then pass that into the initialization of a new Keen.DataTools.App.
 
-```
+```html
 <script type="text/javascript">
     $(document).ready(function(){
       client = new Keen({
@@ -85,7 +92,7 @@ Persistence is entirely optional. If you include it, a "favorites" feature will 
 
 To include persistence, create a new persistence object (this must be a compliant REST server, which we will document), and then pass that persistence object to the `Keen.DataTools.App` initialization. So, instead of what you see above, you would have:
 
-```
+```html
 <script type="text/javascript">
   $(document).ready(function(){
     client = new Keen({
@@ -122,7 +129,7 @@ If you want to customize this project or contribute, here is how to get started:
 * run `npm install` to install project dependencies
 * update the `index.html` with your Project ID and API Keys
 
-```
+```html
 <script type="text/javascript">
     $(document).ready(function(){
       client = new Keen({
