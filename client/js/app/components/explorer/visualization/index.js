@@ -100,7 +100,7 @@ var Visualization = React.createClass({
         <div className="chart-title-component">
           <input ref="input"
                  type="text"
-                 onChange={this.onNameChange}
+                 onChange={this.props.onNameChange}
                  spellCheck="false"
                  value={this.props.model.name} />
         </div>

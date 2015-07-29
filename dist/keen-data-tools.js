@@ -4216,8 +4216,8 @@ var Visualization = React.createClass({displayName: "Visualization",
   render: function() {
     var csvExtractionBanner,
         chartOptionsBar,
+        chartTitle,
         saveBtn;
-        chartDetailBar;
 
     var codeSampleBtnClasses = classNames({
       'btn btn-default code-sample-toggle': true,
@@ -4236,19 +4236,8 @@ var Visualization = React.createClass({displayName: "Visualization",
                             );
     }
 
-    if (this.props.persistence
-      && null !== this.props.model.result
-        && !this.props.model.loading) {
-          favoriteBtn = React.createElement("button", {type: "button", ref: "add-fav", className: "btn btn-primary add-favorite", onClick: this.props.addFavoriteClick}, 
-                          "Save"
-                        );
-    }
-
-    if (null !== this.props.model.result && !this.props.model.loading) {
+    if (this.props.model.result !== null && !this.props.model.loading) {
       chartOptionsBar = React.createElement("div", {className: "chart-options clearfix"}, 
-                          React.createElement("div", {className: "pull-left"}, 
-                            favoriteBtn
-                          ), 
                           React.createElement("div", {className: "pull-right"}, 
                             React.createElement("button", {className: codeSampleBtnClasses, onClick: this.toggleCodeSample}, 
                               React.createElement("span", null, "</> Embed")
@@ -4258,26 +4247,14 @@ var Visualization = React.createClass({displayName: "Visualization",
     }
 
     if (this.props.persistence) {
-      chartDetailBar = (
-        React.createElement("div", {className: "chart-detail-bar"}, 
-            React.createElement("div", {className: "chart-title-component"}, 
-              React.createElement("input", {ref: "input", 
-                     type: "text", 
-                     onChange: this.onNameChange, 
-                     spellCheck: "false", 
-                     value: this.props.model.name})
-            ), 
-            React.createElement("div", {className: "chart-type-component"}, 
-              React.createElement(Select, {label: false, 
-                      name: "chart_type", 
-                      classes: "chart-type", 
-                      options: this.formatChartTypes(), 
-                      handleSelection: this.changeChartType, 
-                      selectedOption: this.props.model.visualization.chart_type, 
-                      emptyOption: false, 
-                      disabled: this.props.model.loading})
-            )
-          )
+      chartTitle = (
+        React.createElement("div", {className: "chart-title-component"}, 
+          React.createElement("input", {ref: "input", 
+                 type: "text", 
+                 onChange: this.props.onNameChange, 
+                 spellCheck: "false", 
+                 value: this.props.model.name})
+        )
       );
       saveBtn = (
         React.createElement("button", {type: "button", disabled: this.props.model.loading, ref: "save-query", className: "btn btn-primary save-query", onClick: this.props.saveQueryClick}, 
@@ -4291,7 +4268,20 @@ var Visualization = React.createClass({displayName: "Visualization",
       React.createElement("div", {className: "visualization"}, 
         React.createElement(Notice, {notice: this.props.notice, closeCallback: this.noticeClosed}), 
         React.createElement("div", {className: "visualization-wrapper"}, 
-          chartDetailBar, 
+          React.createElement("div", {className: "chart-detail-bar"}, 
+            chartTitle, 
+            React.createElement("div", {className: "chart-type-component"}, 
+              React.createElement(Select, {label: false, 
+                      ref: "chart-type", 
+                      name: "chart_type", 
+                      classes: "chart-type", 
+                      options: this.formatChartTypes(), 
+                      handleSelection: this.changeChartType, 
+                      selectedOption: this.props.model.visualization.chart_type, 
+                      emptyOption: false, 
+                      disabled: this.props.model.loading})
+            )
+          ), 
           csvExtractionBanner, 
           React.createElement("div", {className: "chart-component"}, 
             React.createElement(Chart, {model: this.props.model, dataviz: this.dataviz})
