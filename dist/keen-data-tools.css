@@ -1322,12 +1322,6 @@
   padding: 10px;
   position: relative;
 }
-#keen-explorer .visualization-wrapper .btn,
-#keen-explorer .visualization-wrapper select {
-  color: #4d4d4d;
-  font-size: 12px;
-  padding: 8px 14px;
-}
 #keen-explorer .visualization-wrapper .alert {
   font-size: 12px;
 }
@@ -1362,6 +1356,54 @@
   padding: 0;
   width: 100%;
 }
+#keen-explorer .chart-detail-bar {
+  margin-bottom: 10px;
+  position: relative;
+  z-index: 1;
+}
+#keen-explorer .chart-detail-bar .chart-title-component {
+  margin-right: 110px;
+}
+#keen-explorer .chart-detail-bar .chart-title-component input {
+  border: 1px solid transparent;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.07);
+  color: #536779;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 8px 0 3px;
+  width: 100%;
+  -webkit-transition: padding .25s;
+  /* Safari */
+  transition: padding .25s;
+}
+#keen-explorer .chart-detail-bar .chart-title-component input:hover {
+  background-color: #fbfbfb;
+  padding-left: 3px;
+}
+#keen-explorer .chart-detail-bar .chart-title-component input:focus,
+#keen-explorer .chart-detail-bar .chart-title-component input.active {
+  border: 1px solid rgba(0, 187, 222, 0.67);
+  border-radius: 2px;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.07), 0 0 8px rgba(0, 187, 222, 0.35);
+  cursor: default;
+  outline: 0;
+  padding-left: 9px;
+}
+#keen-explorer .chart-detail-bar .chart-type-component {
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  width: 100px;
+}
+#keen-explorer .chart-detail-bar .chart-type-component select {
+  cursor: pointer;
+}
+#keen-explorer .chart-detail-bar .chart-type-component select:focus,
+#keen-explorer .chart-detail-bar .chart-type-component select.active {
+  border: 1px solid rgba(0, 187, 222, 0.67);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.07), 0 0 8px rgba(0, 187, 222, 0.35);
+  outline: 0;
+}
 #keen-explorer .chart-options {
   border-top: 1px solid #d7d7d7;
   margin: 10px 0 0;
@@ -1369,6 +1411,11 @@
 }
 #keen-explorer .chart-options select {
   margin-top: 1px;
+}
+#keen-explorer .chart-options .code-sample-toggle {
+  color: #4d4d4d;
+  font-size: 12px;
+  padding: 8px 14px 7px;
 }
 #keen-explorer .chart-options .code-sample-toggle.open {
   background-color: #d7d7d7;
@@ -1400,13 +1447,6 @@
 }
 #keen-explorer textarea.json-view:focus {
   outline: 0;
-}
-#keen-explorer .code-sample-toggle {
-  color: #333;
-}
-#keen-explorer .code-sample-toggle.open {
-  background-color: #333333;
-  color: #e6e6e6;
 }
 #keen-explorer table.data-table {
   max-height: 500px;

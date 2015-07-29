@@ -5,7 +5,6 @@ var Explorer = require('../../../../client/js/app/components/explorer/index.js')
 var Visualization = require('../../../../client/js/app/components/explorer/visualization/index.js');
 var QueryBuilder = require('../../../../client/js/app/components/explorer/query_builder/index.js');
 var QueryPaneTabs = require('../../../../client/js/app/components/explorer/query_pane_tabs.js');
-var AddFavoriteModal = require('../../../../client/js/app/components/explorer/favorites/add_favorite_modal.js');
 var BrowseFavorites = require('../../../../client/js/app/components/explorer/favorites/browse_favorites.js');
 var Notice = require('../../../../client/js/app/components/common/notice.js');
 var EventBrowser = require('../../../../client/js/app/components/common/event_browser.js');
@@ -81,17 +80,13 @@ describe('components/explorer/index', function() {
           assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, QueryBuilder), 1);
         });
 
-        it('has the AddFavoriteModal if persistence has been passed in', function(){
-          assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, AddFavoriteModal), 1);
-        });
-
         it('can show BrowseFavorites if persistence has been passed in', function(){
           TestUtils.Simulate.click(this.component.refs['query-pane-tabs'].refs['browse-tab'].getDOMNode());
           assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, BrowseFavorites), 1);
         });
 
         it('has the right number of Modal child components', function(){
-          assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, Modal), 4);
+          assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, Modal), 3);
         });
       });
 
@@ -102,10 +97,6 @@ describe('components/explorer/index', function() {
 
         it('does not have the QueryPaneTabs if persistence has not been passed in', function(){
           assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, QueryPaneTabs), 0);
-        });
-
-        it('does not have the AddFavoriteModal if persistence has not been passed in', function(){
-          assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, AddFavoriteModal), 0);
         });
 
         it('does not have the BrowseFavorites if persistence has not been passed in', function(){

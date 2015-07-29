@@ -65,10 +65,11 @@ var Visualization = React.createClass({
   render: function() {
     var csvExtractionBanner,
         chartOptionsBar,
+        chartTitle,
         saveBtn;
 
     var codeSampleBtnClasses = classNames({
-      'code-sample-toggle btn btn-default pull-left': true,
+      'btn btn-default code-sample-toggle': true,
       'open': !this.state.codeSampleHidden
     });
 
@@ -84,18 +85,8 @@ var Visualization = React.createClass({
                             </div>;
     }
 
-    if (null !== this.props.model.result && !this.props.model.loading) {
+    if (this.props.model.result !== null && !this.props.model.loading) {
       chartOptionsBar = <div className="chart-options clearfix">
-                          <div className="pull-left">
-                            <Select label={false}
-                                    name="chart_type"
-                                    classes="chart-type"
-                                    options={this.formatChartTypes()}
-                                    handleSelection={this.changeChartType}
-                                    selectedOption={this.props.model.visualization.chart_type}
-                                    emptyOption={false}
-                                    disabled={this.props.model.loading} />
-                          </div>
                           <div className="pull-right">
                             <button className={codeSampleBtnClasses} onClick={this.toggleCodeSample}>
                               <span>&lt;/&gt; Embed</span>
@@ -105,6 +96,15 @@ var Visualization = React.createClass({
     }
 
     if (this.props.persistence) {
+      chartTitle = (
+        <div className="chart-title-component">
+          <input ref="input"
+                 type="text"
+                 onChange={this.onNameChange}
+                 spellCheck="false"
+                 value={this.props.model.name} />
+        </div>
+      );
       saveBtn = (
         <button type="button" disabled={this.props.model.loading} ref="save-query" className="btn btn-primary save-query" onClick={this.props.saveQueryClick}>
           {ExplorerUtils.isPersisted(this.props.model) ? 'Update' : 'Save'}
@@ -117,7 +117,20 @@ var Visualization = React.createClass({
       <div className="visualization">
         <Notice notice={this.props.notice} closeCallback={this.noticeClosed} />
         <div className="visualization-wrapper">
-          <input type="text" name="name" onChange={this.props.onNameChange} className="input-block" placeholder="Query name..." />
+          <div className="chart-detail-bar">
+            {chartTitle}
+            <div className="chart-type-component">
+              <Select label={false}
+                      ref="chart-type"
+                      name="chart_type"
+                      classes="chart-type"
+                      options={this.formatChartTypes()}
+                      handleSelection={this.changeChartType}
+                      selectedOption={this.props.model.visualization.chart_type}
+                      emptyOption={false}
+                      disabled={this.props.model.loading} />
+            </div>
+          </div>
           {csvExtractionBanner}
           <div className="chart-component">
             <Chart model={this.props.model} dataviz={this.dataviz} />

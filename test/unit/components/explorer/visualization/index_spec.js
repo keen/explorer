@@ -75,7 +75,6 @@ describe('components/explorer/visualization/index', function() {
   });
 
   describe('chart types select', function() {
-
     describe('populates with the right chart types based on the dataviz capabilities', function() {
       it('basic options', function(){
         this.model.result = 50;
@@ -98,10 +97,10 @@ describe('components/explorer/visualization/index', function() {
       assert.isFalse(select.disabled);
     });
 
-    it('is not rendered when the model is actively loading', function(){
+    it('is disabled when the model is actively loading', function(){
       this.model.loading = true;
       this.component.forceUpdate();
-      assert.lengthOf(TestUtils.scryRenderedDOMComponentsWithClass(this.component, 'chart-type'), 0);
+      assert.isTrue(this.component.refs['chart-type'].refs.select.getDOMNode().disabled);
     });
 
   });

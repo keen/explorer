@@ -4,7 +4,6 @@
 
 var React = require('react');
 var _ = require('lodash');
-var AddFavoriteModal = require('./favorites/add_favorite_modal.js');
 var EventBrowser = require('../common/event_browser.js');
 var CSVExtraction = require('./csv_extraction.js');
 var Visualization = require('./visualization/index.js')
@@ -196,7 +195,6 @@ var Explorer = React.createClass({
 
   render: function() {
     var favoritesList,
-        addFavoriteModal,
         queryPaneTabs,
         favListNotice,
         favEmptyContent;
