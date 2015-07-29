@@ -54,7 +54,7 @@
           <ul class="nav navbar-nav main-nav">
             <li><a class="keen-track" href="https://keen.io/blog/114588771746/introducing-data-explorer" target="_blank">About this project</a></li>
             <li><a class="keen-track" href="https://github.com/keen/explorer" target="_blank">Source code</a></li>
-            <li><a class="keen-track" href="mailto:team@keen.io?subject=I%20want%20to%20demo%20Explorer!">Schedule a demo</a></li>
+            <li><a class="keen-track" href="mailto:team@keen.io?subject=I%20want%20to%20schedule%20a%20chat!">Schedule a chat</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li><a href="https://keen.io/signup?s=gh-explorer" class="btn navbar-btn keen-track" target="_blank">Create a Free Keen IO Project</a></li>
@@ -91,6 +91,12 @@
   </div>
 
   <section class="explorer-demo">
+    <div style="text-align: right" class="container">
+      <a href ="" id="close-demo" style="display: none">
+        close <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+      </a>
+    </div>
+
     <div id="keen-data-explorer-wrapper" class="container"></div>
   </section>
 
@@ -118,10 +124,10 @@
       <hr>
       <div class="row">
         <div class="col-sm-4 col-sm-offset-2">
-          <a class="btn btn-block btn-lg btn-secondary keen-track" href="https://github.com/keen/explorer" target="_blank">Grab the source code</a>
+          <a class="btn btn-block btn-lg btn-secondary keen-track" href="https://github.com/keen/explorer" target="_blank">Source code on GitHub</a>
         </div>
         <div class="col-sm-4">
-          <a class="btn btn-block btn-lg btn-secondary keen-track" href="mailto:team@keen.io?subject=I%20want%20to%20demo%20Explorer!">Schedule a demo</a>
+          <a class="btn btn-block btn-lg btn-secondary keen-track" href="mailto:team@keen.io?subject=I%20want%20to%20demo%20Explorer!">Schedule a chat</a>
         </div>
 
       </div>
@@ -146,6 +152,7 @@
   <script type="text/javascript" src="assets/vendor/keen-js/dist/keen.min.js"></script>
   <script type="text/javascript" src="assets/explorer-build/keen-data-tools.js"></script>
   <script type="text/javascript">
+ 
   $(document).ready(function(){
 
     var btn = $('.cta-btn');
@@ -158,6 +165,12 @@
     else {
       activateLanding();
     }
+
+    $('#close-demo').click(function(event){
+      deactivateDemo();
+      activateLanding();
+      return false;
+    });
 
     function activateLanding(){
       body.addClass('explorer-transitions');
@@ -180,6 +193,17 @@
         .removeClass('demo-ready')
         .removeClass('demo-mouseover')
         .addClass('demo-active');
+      $('#close-demo').css('display', '');
+    }
+
+    function deactivateDemo(){
+      body
+        .removeClass('demo-active')
+        .addClass('demo-mouseover')
+        .addClass('demo-ready');
+      document.location.hash = '';
+      $('#close-demo').css('display', 'none');
+
     }
 
     function toggleOver(){
