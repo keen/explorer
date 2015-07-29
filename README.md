@@ -13,7 +13,7 @@ The data explorer is an open source point-and-click interface for querying and v
   3. `npm install`
   4. `npm -g install gulp` (if needed)
   5. `gulp`
-  6. Browse to [the demo](http://localhost:8081/explorer).
+  6. You can now view the demo locally at `http://localhost:8081/explorer`.
 
 ### 1. Get your project ID & API keys
 If you haven’t done so already, [login to Keen IO to create a project](https://keen.io/add-project) for your app. You'll need a [Keen IO account](https://keen.io/signup?s=explorer) to create a project. The Project ID and API Keys are available on the Project Overview page. You will need these for the next steps.
