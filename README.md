@@ -173,6 +173,8 @@ In order to move quickly and provide a good experience for its customers, Keen r
 
 Those migrations will happen frequently (it is likely that the two versions will usually be in sync), but there may be periods of lag after new larger features come out that this open source repo will behind what Keen shows on its website.
 
+If you have any questions about using the open source Data Explorer feel free to contact us anytime at [team@keen.io](mailto:team@keen.io). 
+
 
 ### Contributing:
 To contribute to this project:
