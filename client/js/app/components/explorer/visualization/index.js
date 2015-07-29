@@ -30,6 +30,10 @@ var Visualization = React.createClass({
     NoticeActions.clearAll();
   },
 
+  changeChartTitle: function(event){
+    // update props + model
+  },
+
   changeChartType: function(event) {
     var chartType = _.find(this.formatChartTypes(), function(type){
       return type.value === event.target.value;
@@ -65,11 +69,12 @@ var Visualization = React.createClass({
   render: function() {
     var csvExtractionBanner,
         chartOptionsBar,
+        chartDetailBar,
         favoriteBar,
         favoriteBtn;
 
     var codeSampleBtnClasses = classNames({
-      'code-sample-toggle btn btn-default pull-left': true,
+      'btn btn-default code-sample-toggle': true,
       'open': !this.state.codeSampleHidden
     });
 
@@ -85,17 +90,18 @@ var Visualization = React.createClass({
                             </div>;
     }
 
+    if (this.props.persistence
+      && null !== this.props.model.result
+        && !this.props.model.loading) {
+          favoriteBtn = <button type="button" ref="add-fav" className="btn btn-primary add-favorite" onClick={this.props.addFavoriteClick}>
+                          Save
+                        </button>;
+    }
+
     if (null !== this.props.model.result && !this.props.model.loading) {
       chartOptionsBar = <div className="chart-options clearfix">
                           <div className="pull-left">
-                            <Select label={false}
-                                    name="chart_type"
-                                    classes="chart-type"
-                                    options={this.formatChartTypes()}
-                                    handleSelection={this.changeChartType}
-                                    selectedOption={this.props.model.visualization.chart_type}
-                                    emptyOption={false}
-                                    disabled={this.props.model.loading} />
+                            {favoriteBtn}
                           </div>
                           <div className="pull-right">
                             <button className={codeSampleBtnClasses} onClick={this.toggleCodeSample}>
@@ -108,15 +114,32 @@ var Visualization = React.createClass({
     if (this.props.persistence
       && null !== this.props.model.result
         && !this.props.model.loading) {
-          favoriteBtn = <button type="button" ref="add-fav" className="btn btn-default add-favorite" onClick={this.props.addFavoriteClick}>
-                          <span className="icon glyphicon glyphicon-heart fav-icon"></span> Add
-                        </button>;
+          console.log(ExplorerUtils.isPersisted(this.props.model));
+          chartDetailBar = <div className="chart-detail-bar">
+              <div className="chart-title-component">
+                <input ref="input" type="text"
+                       onChange={this.changeChartTitle}
+                       spellCheck="false"
+                       value={this.props.model.name} />
+              </div>
+              <div className="chart-type-component">
+                <Select label={false}
+                        name="chart_type"
+                        classes="chart-type"
+                        options={this.formatChartTypes()}
+                        handleSelection={this.changeChartType}
+                        selectedOption={this.props.model.visualization.chart_type}
+                        emptyOption={false}
+                        disabled={this.props.model.loading} />
+              </div>
+            </div>;
     }
 
     return (
       <div className="visualization">
         <Notice notice={this.props.notice} closeCallback={this.noticeClosed} />
         <div className="visualization-wrapper">
+          {chartDetailBar}
           {csvExtractionBanner}
           <div className="chart-component">
             <Chart model={this.props.model} dataviz={this.dataviz} />
@@ -127,7 +150,6 @@ var Visualization = React.createClass({
                       hidden={this.state.codeSampleHidden}
                       onCloseClick={this.toggleCodeSample} />
         </div>
-        {favoriteBtn}
       </div>
     );
   }
