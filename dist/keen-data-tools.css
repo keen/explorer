@@ -1358,10 +1358,6 @@
 #keen-explorer .chart .keen-metric {
   margin: 15px;
 }
-#keen-explorer .chart .google-visualization-table {
-  padding: 0;
-  width: 100%;
-}
 #keen-explorer .chart-options {
   border-top: 1px solid #d7d7d7;
   margin: 10px 0 0;
@@ -1413,7 +1409,7 @@
   color: #e6e6e6;
 }
 #keen-explorer table.data-table {
-  max-height: 500px;
+  max-height: 450px;
   overflow-y: scroll;
   display: block;
   font-family: "Gotham Rounded A", "Gotham Rounded B", "Helvetica Neue", Helvetica, Arial, sans-serif;

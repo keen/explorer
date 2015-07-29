@@ -59,11 +59,6 @@
   .keen-metric {
     margin: 15px;
   }
-
-  .google-visualization-table {
-    padding: 0;
-    width: 100%;
-  }
 }
 
 .chart-options {
@@ -130,15 +125,29 @@ textarea.json-view {
   color: #e6e6e6;
 }
 
-table.data-table {
-  //width: 90%;
-  max-height: 500px;
-  overflow-y: scroll;
+.data-table {
   display: block;
   font-family: "Gotham Rounded A", "Gotham Rounded B", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  max-height: 450px;
+  overflow-y: auto;
   word-wrap: break-word;
 
+  thead {
+    background: #fff;
+    border-bottom: 2px solid #ddd;
+    height: 36px;
+    position: fixed;
+    top: 0px;
+    width: 100%;
+
+    th {
+      border: none;
+    }
+  }
+
   tbody {
+    border-top: 25px solid transparent;
+
     tr {
       &.even {
         background: #F2F2F2;
