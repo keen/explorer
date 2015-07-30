@@ -1296,7 +1296,14 @@
   top: 3px;
   margin-right: 15px;
 }
-#keen-explorer .query-pane-tabs li {
+#keen-explorer .query-pane-tabs .new-query {
+  width: 20%;
+  margin-right: 5%;
+}
+#keen-explorer .query-pane-tabs .nav {
+  width: 75%;
+}
+#keen-explorer .query-pane-tabs .nav li {
   width: 50%;
   text-align: center;
 }

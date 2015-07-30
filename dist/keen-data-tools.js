@@ -3943,15 +3943,20 @@ var QueryPaneTabs = React.createClass({displayName: "QueryPaneTabs",
 
   render: function() {
     return (
-      React.createElement("ul", {className: "query-pane-tabs nav nav-tabs"}, 
-        React.createElement("li", {role: "presentation", className: this.props.activePane === 'build' ? 'active' : ''}, 
-          React.createElement("a", {ref: "build-tab", href: "#", id: "build-query", onClick: this.toggled.bind(this, 'build')}, 
-            this.props.persisted ? "Edit Query" : "Create a new query"
-          )
+      React.createElement("div", {className: "query-pane-tabs clearfix"}, 
+        React.createElement("a", {ref: "new-query", className: "new-query btn btn-primary pull-left", href: "#", onClick: this.props.createNewQuery}, 
+          "+ New"
         ), 
-        React.createElement("li", {role: "presentation", className: this.props.activePane === 'browse' ? 'active' : ''}, 
-          React.createElement("a", {ref: "browse-tab", href: "#", id: "browse-favs", onClick: this.toggled.bind(this, 'browse')}, 
-            "Browse"
+        React.createElement("ul", {className: "nav nav-tabs pull-left"}, 
+          React.createElement("li", {role: "presentation", className: this.props.activePane === 'build' ? 'active' : ''}, 
+            React.createElement("a", {ref: "build-tab", href: "#", id: "build-query", onClick: this.toggled.bind(this, 'build')}, 
+              this.props.persisted ? "Edit Query" : "Build query"
+            )
+          ), 
+          React.createElement("li", {role: "presentation", className: this.props.activePane === 'browse' ? 'active' : ''}, 
+            React.createElement("a", {ref: "browse-tab", href: "#", id: "browse-favs", onClick: this.toggled.bind(this, 'browse')}, 
+              "Browse"
+            )
           )
         )
       )
