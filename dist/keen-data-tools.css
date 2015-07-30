@@ -771,6 +771,7 @@
   background-color: transparent;
   border: medium none;
   box-shadow: none;
+  padding-right: 25px;
   position: relative;
   text-indent: 0.01px;
   text-overflow: '';
@@ -1564,10 +1565,6 @@
   padding-left: 0;
   padding-right: 0;
 }
-#keen-explorer .filters .operator select {
-  padding: 6px;
-  width: 45px;
-}
 #keen-explorer .filters .coercion_type select {
   padding: 6px 9px;
 }
@@ -1754,4 +1751,15 @@
 }
 #keen-explorer .tooltip {
   z-index: 1040;
+}
+#keen-explorer .modal-content {
+  border: medium none;
+  border-radius: 2px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.35);
+}
+.modal-backdrop {
+  background-color: rgba(41, 52, 62, 0.85);
+}
+.modal-backdrop.in {
+  opacity: 1;
 }

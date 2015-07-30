@@ -1186,10 +1186,10 @@ var Filter = React.createClass({displayName: "Filter",
     return (
       React.createElement("div", {className: filterClasses}, 
         React.createElement("div", {className: "row"}, 
-          React.createElement("div", {className: "col-md-5 filter-property-col"}, 
+          React.createElement("div", {className: "col-md-4 filter-property-col"}, 
             propertyNameSelect
           ), 
-          React.createElement("div", {className: "col-md-1 filter-operator-col"}, 
+          React.createElement("div", {className: "col-md-2 filter-operator-col"}, 
             operatorSelect
           ), 
           React.createElement("div", {className: "col-md-5 filter-value-col"}, 
