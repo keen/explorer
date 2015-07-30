@@ -3361,6 +3361,13 @@ var Explorer = React.createClass({displayName: "Explorer",
     }
   },
 
+  createNewQuery: function(event) {
+    event.preventDefault();
+    ExplorerActions.create();
+    // Get the id?
+    ExplorerActions.setActive(id);
+  },
+
   onBrowseEvents: function(event) {
     event.preventDefault();
     this.refs['event-browser'].refs.modal.open();
@@ -3467,6 +3474,7 @@ var Explorer = React.createClass({displayName: "Explorer",
       queryPaneTabs = React.createElement(QueryPaneTabs, {ref: "query-pane-tabs", 
                                      activePane: this.state.activeQueryPane, 
                                      toggleCallback: this.toggleQueryPane, 
+                                     createNewQuery: this.createNewQuery, 
                                      persisted: ExplorerUtils.isPersisted(this.state.activeExplorer)});
       if (this.state.appState.fetchingPersistedExplorers) {
         favListNotice = React.createElement(Notice, {notice: { icon: 'info-sign', text: 'Loading favorites...', type: 'info'}, closable: false})
