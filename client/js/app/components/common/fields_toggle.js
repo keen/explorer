@@ -46,7 +46,7 @@ var FieldsToggle = React.createClass({
   },
 
   // React Methods
-  
+
   componentWillMount: function() {
     this._storedAttrs = {};
   },
