@@ -3945,6 +3945,7 @@ module.exports = TargetPropertyField;
  */
 
 var React = require('react');
+var classNames = require('classnames');
 
 var QueryPaneTabs = React.createClass({displayName: "QueryPaneTabs",
 
@@ -3953,19 +3954,33 @@ var QueryPaneTabs = React.createClass({displayName: "QueryPaneTabs",
   },
 
   render: function() {
+    var btnNewQuery;
+    var queryPaneClasses = classNames({
+      'query-pane-tabs clearfix': true,
+      'query-pane-persisted': this.props.persisted,
+      'query-pane-new': !this.props.persisted
+    });
+
+    if (this.props.persisted) {
+      btnNewQuery = React.createElement("li", {role: "presentation", className: "tab-new-query"}, 
+        React.createElement("a", {ref: "new-query", href: "#", onClick: this.props.createNewQuery}, 
+          React.createElement("span", {className: "icon glyphicon icon-plus glyphicon-plus"})
+        )
+      );
+    }
+
     return (
-      React.createElement("div", {className: "query-pane-tabs clearfix"}, 
-        React.createElement("a", {ref: "new-query", className: "new-query btn btn-primary pull-left", href: "#", onClick: this.props.createNewQuery}, 
-          "+ New"
-        ), 
-        React.createElement("ul", {className: "nav nav-tabs pull-left"}, 
-          React.createElement("li", {role: "presentation", className: this.props.activePane === 'build' ? 'active' : ''}, 
+      React.createElement("div", {className: queryPaneClasses}, 
+        React.createElement("ul", {className: "nav nav-tabs"}, 
+          btnNewQuery, 
+          React.createElement("li", {role: "presentation", className: this.props.activePane === 'build' ? 'tab-build-query active' : 'tab-build-query'}, 
             React.createElement("a", {ref: "build-tab", href: "#", id: "build-query", onClick: this.toggled.bind(this, 'build')}, 
-              this.props.persisted ? "Edit Query" : "Build query"
+              this.props.persisted ? "Edit query" : "Create a new query"
             )
           ), 
-          React.createElement("li", {role: "presentation", className: this.props.activePane === 'browse' ? 'active' : ''}, 
+          React.createElement("li", {role: "presentation", className: this.props.activePane === 'browse' ? 'tab-browse-queries active' : 'tab-browse-queries'}, 
             React.createElement("a", {ref: "browse-tab", href: "#", id: "browse-favs", onClick: this.toggled.bind(this, 'browse')}, 
+              React.createElement("span", {className: "icon glyphicon icon-th-list glyphicon-th-list"}), 
               "Browse"
             )
           )
@@ -3978,7 +3993,7 @@ var QueryPaneTabs = React.createClass({displayName: "QueryPaneTabs",
 
 module.exports = QueryPaneTabs;
 
-},{"react":301}],39:[function(require,module,exports){
+},{"classnames":74,"react":301}],39:[function(require,module,exports){
 /**
  * @jsx React.DOM
  */

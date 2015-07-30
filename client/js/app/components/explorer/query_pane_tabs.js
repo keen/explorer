@@ -3,6 +3,7 @@
  */
 
 var React = require('react');
+var classNames = require('classnames');
 
 var QueryPaneTabs = React.createClass({
 
@@ -11,19 +12,33 @@ var QueryPaneTabs = React.createClass({
   },
 
   render: function() {
-    return (
-      <div className="query-pane-tabs clearfix">
-        <a ref="new-query" className="new-query btn btn-primary pull-left" href="#" onClick={this.props.createNewQuery}>
-          &#43; New
+    var btnNewQuery;
+    var queryPaneClasses = classNames({
+      'query-pane-tabs clearfix': true,
+      'query-pane-persisted': this.props.persisted,
+      'query-pane-new': !this.props.persisted
+    });
+
+    if (this.props.persisted) {
+      btnNewQuery = <li role="presentation" className="tab-new-query">
+        <a ref="new-query" href="#" onClick={this.props.createNewQuery}>
+          <span className="icon glyphicon icon-plus glyphicon-plus"></span>
         </a>
-        <ul className="nav nav-tabs pull-left">
-          <li role="presentation" className={this.props.activePane === 'build' ? 'active' : ''}>
+      </li>;
+    }
+
+    return (
+      <div className={queryPaneClasses}>
+        <ul className="nav nav-tabs">
+          {btnNewQuery}
+          <li role="presentation" className={this.props.activePane === 'build' ? 'tab-build-query active' : 'tab-build-query'}>
             <a ref="build-tab" href="#" id="build-query" onClick={this.toggled.bind(this, 'build')}>
-              {this.props.persisted ? "Edit Query" : "Build query"}
+              {this.props.persisted ? "Edit query" : "Create a new query"}
             </a>
           </li>
-          <li role="presentation" className={this.props.activePane === 'browse' ? 'active' : ''}>
+          <li role="presentation" className={this.props.activePane === 'browse' ? 'tab-browse-queries active' : 'tab-browse-queries'}>
             <a ref="browse-tab" href="#" id="browse-favs" onClick={this.toggled.bind(this, 'browse')}>
+              <span className="icon glyphicon icon-th-list glyphicon-th-list"></span>
               Browse
             </a>
           </li>
