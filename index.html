@@ -2,7 +2,7 @@
 <html>
 <head>
   <title>Data Explorer | Keen IO</title>
-  <meta charset="UTF-8">
+  <meta charset="utf-8">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -39,7 +39,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a href="https://keen.github.io/explorer" class="navbar-brand keen-track" target="_blank">
+          <a href="https://keen.io?s=gh-explorer" class="navbar-brand keen-track" target="_blank">
             <svg class="keen-logo" xmlns="http://www.w3.org/2000/svg" version="1.1" x="0px" y="0px" viewBox="0 0 594 128" enable-background="new 0 0 594 128" xml:space="preserve">
               <g class="icon">
                 <polygon class="red" fill="#FFFFFF" points="59.811,73.135 66.859,85.34 49.275,115.863 140.807,115.863 147.814,128 28.045,128"></polygon>
@@ -147,6 +147,7 @@
   <script type="text/javascript" src="assets/explorer-build/keen-data-tools.js"></script>
   <script type="text/javascript">
   $(document).ready(function(){
+
     var btn = $('.cta-btn');
     var body = $('body.demo-ready');
 
@@ -184,6 +185,8 @@
     function toggleOver(){
       body.toggleClass('demo-mouseover');
     }
+
+
 
     var app = window.explorerDemo = new Keen.DataTools.App({
       appRoot: location.pathname,
