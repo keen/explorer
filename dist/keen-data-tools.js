@@ -4275,8 +4275,19 @@ var Visualization = React.createClass({displayName: "Visualization",
                             );
     }
 
+    if (this.props.persistence) {
+      saveBtn = (
+        React.createElement("button", {type: "button", disabled: this.props.model.loading, ref: "save-query", className: "btn btn-primary save-query", onClick: this.props.saveQueryClick}, 
+          ExplorerUtils.isPersisted(this.props.model) ? 'Update' : 'Save'
+        )
+      );
+    }
+
     if (this.props.model.result !== null && !this.props.model.loading) {
       chartOptionsBar = React.createElement("div", {className: "chart-options clearfix"}, 
+                          React.createElement("div", {className: "pull-left"}, 
+                            saveBtn
+                          ), 
                           React.createElement("div", {className: "pull-right"}, 
                             React.createElement("button", {className: codeSampleBtnClasses, onClick: this.toggleCodeSample}, 
                               React.createElement("span", null, "</> Embed")
@@ -4293,11 +4304,6 @@ var Visualization = React.createClass({displayName: "Visualization",
                  onChange: this.props.onNameChange, 
                  spellCheck: "false", 
                  value: this.props.model.name})
-        )
-      );
-      saveBtn = (
-        React.createElement("button", {type: "button", disabled: this.props.model.loading, ref: "save-query", className: "btn btn-primary save-query", onClick: this.props.saveQueryClick}, 
-          ExplorerUtils.isPersisted(this.props.model) ? 'Update' : 'Save'
         )
       );
     }
@@ -4330,8 +4336,7 @@ var Visualization = React.createClass({displayName: "Visualization",
                       codeSample: ExplorerUtils.getSdkExample(this.props.model, this.props.client), 
                       hidden: this.state.codeSampleHidden, 
                       onCloseClick: this.toggleCodeSample})
-        ), 
-        saveBtn
+        )
       )
     );
   }

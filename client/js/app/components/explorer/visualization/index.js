@@ -85,8 +85,19 @@ var Visualization = React.createClass({
                             </div>;
     }
 
+    if (this.props.persistence) {
+      saveBtn = (
+        <button type="button" disabled={this.props.model.loading} ref="save-query" className="btn btn-primary save-query" onClick={this.props.saveQueryClick}>
+          {ExplorerUtils.isPersisted(this.props.model) ? 'Update' : 'Save'}
+        </button>
+      );
+    }
+
     if (this.props.model.result !== null && !this.props.model.loading) {
       chartOptionsBar = <div className="chart-options clearfix">
+                          <div className="pull-left">
+                            {saveBtn}
+                          </div>
                           <div className="pull-right">
                             <button className={codeSampleBtnClasses} onClick={this.toggleCodeSample}>
                               <span>&lt;/&gt; Embed</span>
@@ -104,11 +115,6 @@ var Visualization = React.createClass({
                  spellCheck="false"
                  value={this.props.model.name} />
         </div>
-      );
-      saveBtn = (
-        <button type="button" disabled={this.props.model.loading} ref="save-query" className="btn btn-primary save-query" onClick={this.props.saveQueryClick}>
-          {ExplorerUtils.isPersisted(this.props.model) ? 'Update' : 'Save'}
-        </button>
       );
     }
 
@@ -141,7 +147,6 @@ var Visualization = React.createClass({
                       hidden={this.state.codeSampleHidden}
                       onCloseClick={this.toggleCodeSample} />
         </div>
-        {saveBtn}
       </div>
     );
   }
