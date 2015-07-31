@@ -3963,7 +3963,9 @@ var QueryPaneTabs = React.createClass({displayName: "QueryPaneTabs",
 
     if (this.props.persisted) {
       btnNewQuery = React.createElement("li", {role: "presentation", className: "tab-new-query"}, 
-        React.createElement("a", {ref: "new-query", href: "#", onClick: this.props.createNewQuery}, 
+        React.createElement("a", {ref: "new-query", href: "#", 
+           title: "Create a new query", 
+           onClick: this.props.createNewQuery}, 
           React.createElement("span", {className: "icon glyphicon icon-plus glyphicon-plus"})
         )
       );
@@ -3974,12 +3976,18 @@ var QueryPaneTabs = React.createClass({displayName: "QueryPaneTabs",
         React.createElement("ul", {className: "nav nav-tabs"}, 
           btnNewQuery, 
           React.createElement("li", {role: "presentation", className: this.props.activePane === 'build' ? 'tab-build-query active' : 'tab-build-query'}, 
-            React.createElement("a", {ref: "build-tab", href: "#", id: "build-query", onClick: this.toggled.bind(this, 'build')}, 
+            React.createElement("a", {ref: "build-tab", href: "#", 
+               id: "build-query", 
+               title: this.props.persisted ? "Edit query" : "Create a new query", 
+               onClick: this.toggled.bind(this, 'build')}, 
               this.props.persisted ? "Edit query" : "Create a new query"
             )
           ), 
           React.createElement("li", {role: "presentation", className: this.props.activePane === 'browse' ? 'tab-browse-queries active' : 'tab-browse-queries'}, 
-            React.createElement("a", {ref: "browse-tab", href: "#", id: "browse-favs", onClick: this.toggled.bind(this, 'browse')}, 
+            React.createElement("a", {ref: "browse-tab", href: "#", 
+               id: "browse-favs", 
+               title: "Browse saved queries", 
+               onClick: this.toggled.bind(this, 'browse')}, 
               React.createElement("span", {className: "icon glyphicon icon-th-list glyphicon-th-list"}), 
               "Browse"
             )

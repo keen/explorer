@@ -21,7 +21,9 @@ var QueryPaneTabs = React.createClass({
 
     if (this.props.persisted) {
       btnNewQuery = <li role="presentation" className="tab-new-query">
-        <a ref="new-query" href="#" onClick={this.props.createNewQuery}>
+        <a ref="new-query" href="#"
+           title="Create a new query"
+           onClick={this.props.createNewQuery}>
           <span className="icon glyphicon icon-plus glyphicon-plus"></span>
         </a>
       </li>;
@@ -32,12 +34,18 @@ var QueryPaneTabs = React.createClass({
         <ul className="nav nav-tabs">
           {btnNewQuery}
           <li role="presentation" className={this.props.activePane === 'build' ? 'tab-build-query active' : 'tab-build-query'}>
-            <a ref="build-tab" href="#" id="build-query" onClick={this.toggled.bind(this, 'build')}>
+            <a ref="build-tab" href="#"
+               id="build-query"
+               title={this.props.persisted ? "Edit query" : "Create a new query"}
+               onClick={this.toggled.bind(this, 'build')}>
               {this.props.persisted ? "Edit query" : "Create a new query"}
             </a>
           </li>
           <li role="presentation" className={this.props.activePane === 'browse' ? 'tab-browse-queries active' : 'tab-browse-queries'}>
-            <a ref="browse-tab" href="#" id="browse-favs" onClick={this.toggled.bind(this, 'browse')}>
+            <a ref="browse-tab" href="#"
+               id="browse-favs"
+               title="Browse saved queries"
+               onClick={this.toggled.bind(this, 'browse')}>
               <span className="icon glyphicon icon-th-list glyphicon-th-list"></span>
               Browse
             </a>
