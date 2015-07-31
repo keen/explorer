@@ -43,22 +43,25 @@
   li {
     position: absolute;
     a {
-      padding: 10px 0;
+      margin: 1px 1px 0 1px;
+      padding: 9px 9px 10px;
       .icon {
         color: #4d4d4d;
         font-size: 12px;
       }
     }
+    &.active > a {
+      margin: 0px;
+      padding: 10px;
+    }
     &.tab-build-query {
       // width: 60%;
       left: 0px;
-      right: 120px;
-      a {
-        padding-left: 10px;
-        padding-right: 10px;
-      }
+      right: 121px;
     }
     &.tab-browse-queries {
+      padding-left: 0px;
+      padding-right: 0px;
       right: 0px;
       text-align: center;
       width: 120px;
@@ -75,6 +78,8 @@
 .query-pane-persisted {
   li {
     &.tab-new-query {
+      padding-left: 0px;
+      padding-right: 0px;
       text-align: center;
       width: 42px;
       a {
@@ -82,8 +87,8 @@
       }
     }
     &.tab-build-query {
-      // width: 45%;
-      left: 44px;
+      left: 42px;
+      // text-align: center;
     }
   }
 }
