@@ -35,6 +35,7 @@ module.exports = {
 			error: null,
 			result: null,
 			loading: false,
+			saving: false,
 			isValid: true,
 			timeframe_type: 'relative',
 			name: '',

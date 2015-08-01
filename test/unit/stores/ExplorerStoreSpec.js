@@ -151,28 +151,6 @@ describe('stores/ExplorerStore', function() {
       assert.deepPropertyVal(explorer, 'query.analysis_type', 'not_count');
       assert.deepPropertyVal(explorer, 'visualization.chart_type', 'not_metric');
     });
-    it('should set the default name if the updates contain a blank name', function () {
-      ExplorerActions.create({
-        id: 'SOME_ID',
-        name: 'A saved query',
-        query: {
-          event_collection: 'clicks',
-          analysis_type: 'count'
-        },
-        visualization: {
-          chart_type: 'metric'
-        }
-      });
-      ExplorerActions.update('SOME_ID', {
-        name: '',
-        query: {
-          event_collection: 'not_clicks',
-        }
-      });
-      var explorer = ExplorerStore.getAll()['SOME_ID'];
-      assert.deepPropertyVal(explorer, 'query.event_collection', 'not_clicks');
-      assert.deepPropertyVal(explorer, 'name', 'Untitled');
-    });
     it('should replace the store object key with the new ID if one is passed in via updates', function () {
       ExplorerActions.create({
         id: 'SOME_ID',

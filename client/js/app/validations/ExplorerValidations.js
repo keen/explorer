@@ -47,7 +47,7 @@ module.exports = {
 
     time: {
       validator: function(explorer) {
-        var time = explorer.query.time;
+        var time = explorer.query.time || {};
         if (explorer.timeframe_type === 'relative') {
           if (time.relativity && time.amount && time.sub_timeframe) {
             return true;

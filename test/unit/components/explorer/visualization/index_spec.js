@@ -16,7 +16,6 @@ var TestUtils = React.addons.TestUtils;
 var TestHelpers = require('../../../../support/TestHelpers');
 
 describe('components/explorer/visualization/index', function() {
-
   beforeEach(function() {
     this.client = TestHelpers.createClient();
     this.model = TestHelpers.createExplorerModel();
@@ -28,8 +27,8 @@ describe('components/explorer/visualization/index', function() {
     this.component = TestUtils.renderIntoDocument(<Visualization client={this.client} model={this.model} project={this.project} persistence={null} />);
 
     this.getOptionsFromComponent = function(component) {
-      var chartTypeSelect = TestUtils.findRenderedDOMComponentWithClass(component, 'chart-type').getDOMNode();
-      var optionNodes = chartTypeSelect.childNodes[0].childNodes;
+      var chartTypeSelect = this.component.refs['chart-type'].refs.select.getDOMNode();
+      var optionNodes = chartTypeSelect.childNodes;
       return _.map(optionNodes, function(optionNode) {
         return optionNode.textContent;
       });
@@ -86,15 +85,13 @@ describe('components/explorer/visualization/index', function() {
         var options = this.getOptionsFromComponent(this.component);
         assert.sameMembers(options, ['JSON', 'Metric']);
       });
-
     });
 
     it('is not disabled when the model is not loading', function(){
       this.model.result = 50;
       this.model.loading = false;
       this.component.forceUpdate();
-      var select = TestUtils.findRenderedDOMComponentWithClass(this.component, 'chart-type').getDOMNode().childNodes[0];
-      assert.isFalse(select.disabled);
+      assert.isFalse(this.component.refs['chart-type'].refs.select.getDOMNode().disabled);
     });
 
     it('is disabled when the model is actively loading', function(){

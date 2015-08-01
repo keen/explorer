@@ -384,8 +384,8 @@ describe('utils/ExplorerUtils', function() {
   });
 
   describe('getApiQueryUrl', function(){
-    before(function(){
-      this.explorer = {
+    beforeEach(function(){
+      this.explorer = _.assign({}, TestHelpers.createExplorerModel(), {
         timeframe_type: 'relative',
         query: {
           analysis_type: 'count',
@@ -413,7 +413,7 @@ describe('utils/ExplorerUtils', function() {
         visualization: {
           chart_type: 'metric'
         }
-      };
+      });
       this.client = TestHelpers.createClient();
     });
 

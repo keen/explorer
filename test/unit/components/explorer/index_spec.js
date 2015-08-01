@@ -180,7 +180,7 @@ describe('components/explorer/index', function() {
         it('should run validations on the model', function () {
           var stub = sinon.stub(ValidationUtils, 'runValidations').returns({ isValid: false });
           this.component.saveQueryClick({ preventDefault: function(){} });
-          assert.isTrue(stub.calledWith(ExplorerValidations.explorer, this.explorer.query));
+          assert.isTrue(stub.calledWith(ExplorerValidations.explorer, this.explorer));
           ValidationUtils.runValidations.restore();
         });
         it('should call ExplorerActions.saveNew if validations pass', function () {
@@ -200,7 +200,7 @@ describe('components/explorer/index', function() {
         it('should run validations on the model', function () {
           var stub = sinon.stub(ValidationUtils, 'runValidations').returns({ isValid: false });
           this.component.saveQueryClick({ preventDefault: function(){} });
-          assert.isTrue(stub.calledWith(ExplorerValidations.explorer, this.explorer.query));
+          assert.isTrue(stub.calledWith(ExplorerValidations.explorer, this.explorer));
           ValidationUtils.runValidations.restore();
         });
         it('should call ExplorerActions.saveExisting if validations pass', function () {

@@ -48,13 +48,13 @@ describe('actions/ExplorerActions', function() {
       expect(ExplorerActions.exec.bind(null, this.client, explorer.id)).to.throw("Warning: calling exec when model loading is true. Explorer id: 5");
     });
     it('should call runValidations with the right arguments', function () {
-      var explorer = { id: 1, loading: false, query: {} };
+      var explorer = TestHelpers.createExplorerModel();
       this.getStub.returns(explorer);
       var stub = sinon.stub(ValidationUtils, 'runValidations').returns({
         isValid: true
       });
       ExplorerActions.exec(this.client, explorer.id);
-      assert.isTrue(stub.calledWith(ExplorerValidations.explorer, explorer.query));
+      assert.isTrue(stub.calledWith(ExplorerValidations.explorer, explorer));
       ValidationUtils.runValidations.restore();
     });
     it('should call the dispatcher to update the store and set loading to true', function () {
@@ -131,17 +131,17 @@ describe('actions/ExplorerActions', function() {
 
     it('should run the standard explorer validation set', function () {
       ExplorerActions.runEmailExtraction(this.client, this.explorer, this.callback);
-      assert.isTrue(this.runValidationsStub.calledWith(ExplorerValidations.explorer, this.explorer.query));
+      assert.isTrue(this.runValidationsStub.calledWith(ExplorerValidations.explorer, this.explorer));
     });
     it('should run the emailExtractionExplorer validation set if the standard validations pass', function () {
       this.runValidationsStub.returns({ isValid: true });
       ExplorerActions.runEmailExtraction(this.client, this.explorer, this.callback);
-      assert.isTrue(this.runValidationsStub.calledWith(ExplorerValidations.emailExtractionExplorer, this.explorer.query));
+      assert.isTrue(this.runValidationsStub.calledWith(ExplorerValidations.emailExtractionExplorer, this.explorer));
     });
     it('should NOT run the emailExtractionExplorer validation set if the standard validations fail', function () {
       this.explorer.query.analysis_type = null;
       ExplorerActions.runEmailExtraction(this.client, this.explorer, this.callback);
-      assert.isFalse(this.runValidationsStub.calledWith(ExplorerValidations.emailExtractionExplorer, this.explorer.query));
+      assert.isFalse(this.runValidationsStub.calledWith(ExplorerValidations.emailExtractionExplorer, this.explorer));
     });
     it('should NOT run the query if standard validaton fails', function () {
       this.explorer.query.analysis_type = null;
