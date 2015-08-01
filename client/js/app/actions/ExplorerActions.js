@@ -85,7 +85,7 @@ var ExplorerActions = {
       throw new Error("Warning: calling exec when model loading is true. Explorer id: " + explorer.id);
     }
 
-    var valid = ValidationUtils.runValidations(ExplorerValidations.explorer, explorer.query);
+    var valid = ValidationUtils.runValidations(ExplorerValidations.explorer, explorer);
     if (!valid.isValid) {
       NoticeActions.create({ text: valid.lastError, type: 'error', icon: 'remove-sign' });
       return;
@@ -119,13 +119,13 @@ var ExplorerActions = {
   runEmailExtraction: function(client, id, callback) {
     var explorer = ExplorerStore.get(id);
 
-    var valid = ValidationUtils.runValidations(ExplorerValidations.explorer, explorer.query);
+    var valid = ValidationUtils.runValidations(ExplorerValidations.explorer, explorer);
     if (!valid.isValid) {
       callback({ success: false, error: valid.lastError });
       return;
     }
 
-    var valid = ValidationUtils.runValidations(ExplorerValidations.emailExtractionExplorer, explorer.query);
+    var valid = ValidationUtils.runValidations(ExplorerValidations.emailExtractionExplorer, explorer);
     if (!valid.isValid) {
       callback({ success: false, error: valid.lastError });
       return;
@@ -179,7 +179,7 @@ var ExplorerActions = {
       var models = [];
       _.each(resp, function(model) {
         var formattedModel = ExplorerUtils.formatQueryParams(model);
-        if (ValidationUtils.runValidations(ExplorerValidations.explorer, formattedModel.query).isValid) {
+        if (ValidationUtils.runValidations(ExplorerValidations.explorer, formattedModel).isValid) {
           models.push(formattedModel);
         } else {
           console.warn('A persisted explorer model is invalid: ', formattedModel);

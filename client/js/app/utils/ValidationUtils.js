@@ -7,7 +7,7 @@ module.exports = {
     var lastError = null;
 
     _.each(validationSet, function(validator, key) {
-     if (!validator.validator(model, model[key])) {
+     if (!validator.validator(model)) {
        isValid = false;
        lastError = validator.msg;
      }

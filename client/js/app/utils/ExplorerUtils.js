@@ -375,7 +375,7 @@ module.exports = {
   },
 
   getSdkExample: function(explorer, client) {
-    var valid = ValidationUtils.runValidations(ExplorerValidations.explorer, explorer.query);
+    var valid = ValidationUtils.runValidations(ExplorerValidations.explorer, explorer);
     if (!valid.isValid) {
       return "Your query is not valid right now, so we can't show you a code sample.";
     }

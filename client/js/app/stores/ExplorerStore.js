@@ -125,9 +125,6 @@ function _create(attrs) {
 }
 
 function _update(id, updates) {
-  if ('name' in updates && (typeof updates.name !== 'string' || updates.name.length < 1)) {
-    updates.name = DEFAULT_NAME;
-  }
   var newModel = _.assign({}, _explorers[id], updates);
   if (updates.id && updates.id !== id) {
     _explorers[updates.id] = newModel;

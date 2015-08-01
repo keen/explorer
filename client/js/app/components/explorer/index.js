@@ -80,7 +80,7 @@ var Explorer = React.createClass({
 
   saveQueryClick: function(event) {
     event.preventDefault();
-    var validity = ValidationUtils.runValidations(ExplorerValidations.explorer, this.state.activeExplorer.query);
+    var validity = ValidationUtils.runValidations(ExplorerValidations.explorer, this.state.activeExplorer);
     if (!validity.isValid) {
       NoticeActions.create({
         icon: 'remove-circle',
@@ -100,6 +100,7 @@ var Explorer = React.createClass({
   createNewQuery: function(event) {
     event.preventDefault();
     ExplorerActions.create();
+    // ExplorerStore.get();
     // Get the id?
     ExplorerActions.setActive(id);
   },
