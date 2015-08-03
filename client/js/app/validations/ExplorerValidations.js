@@ -11,7 +11,7 @@ module.exports = {
       msg: 'You must give your saved query a name.',
       validator: function(explorer) {
         if (!explorer.saving) return true;
-        return (explorer.name.length < 1 || typeof explorer.name !== "string");
+        return (explorer.name !== null && explorer.name !== undefined && typeof explorer.name === "string" && explorer.name.length > 0);
       }
     },
 
@@ -54,12 +54,14 @@ module.exports = {
           } else {
             return "You must choose all 3 options for relative timeframes.";
           }
-        } else {
+        } else if (explorer.timeframe_type === 'absolute') {
           if (time.start && time.end) {
             return true;
           } else {
             return "You must provide a start and end time for absolute timeframes.";
           }
+        } else {
+          return "You must provide a timeframe.";
         }
         return true;
       }

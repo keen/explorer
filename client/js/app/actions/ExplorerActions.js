@@ -179,11 +179,10 @@ var ExplorerActions = {
       var models = [];
       _.each(resp, function(model) {
         var formattedModel = ExplorerUtils.formatQueryParams(model);
-        if (ValidationUtils.runValidations(ExplorerValidations.explorer, formattedModel).isValid) {
-          models.push(formattedModel);
-        } else {
+        if (!ValidationUtils.runValidations(ExplorerValidations.explorer, formattedModel).isValid) {
           console.warn('A persisted explorer model is invalid: ', formattedModel);
         }
+        models.push(formattedModel);
       });
       ExplorerActions.createBatch(models);
       AppStateActions.update({ fetchingPersistedExplorers: false });

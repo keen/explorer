@@ -177,9 +177,15 @@ describe('actions/ExplorerActions', function() {
         {
           id: '1',
           name: 'favorite 1',
+          timeframe_type: 'relative',
           query: {
             event_collection: 'clicks',
-            analysis_type: 'count'
+            analysis_type: 'count',
+            time: {
+              relativity: 'this',
+              amount: 1,
+              sub_timeframe: 'weeks'
+            }
           },
           visualization: {
             chart_type: 'metric'
@@ -188,10 +194,16 @@ describe('actions/ExplorerActions', function() {
         {
           id: '2',
           name: 'favorite 2',
+          timeframe_type: 'relative',
           query: {
             event_collection: 'clicks',
             analysis_type: 'sum',
-            target_property: 'size'
+            target_property: 'size',
+            time: {
+              relativity: 'this',
+              amount: 1,
+              sub_timeframe: 'weeks'
+            }
           },
           visualization: {
             chart_type: 'metric'
@@ -200,10 +212,16 @@ describe('actions/ExplorerActions', function() {
         {
           id: '3',
           name: 'favorite 3',
+          timeframe_type: 'relative',
           query: {
             event_collection: 'clicks',
             analysis_type: 'max',
-            target_property: 'amount'
+            target_property: 'amount',
+            time: {
+              relativity: 'this',
+              amount: 1,
+              sub_timeframe: 'weeks'
+            }
           },
           visualization: {
             chart_type: 'metric'
@@ -230,11 +248,11 @@ describe('actions/ExplorerActions', function() {
       assert.strictEqual(spy.getCalls().length, 3);
       ValidationUtils.runValidations.restore();  
     });
-    it('should not include invalid models', function () {
+    it('should include invalid models', function () {
       this.models[2].query = {};
       var stub = sinon.stub(ExplorerActions, 'createBatch');
       ExplorerActions.getPersisted(this.persistence);
-      assert.strictEqual(stub.getCall(0).args[0].length, 2);
+      assert.strictEqual(stub.getCall(0).args[0].length, 3);
       ExplorerActions.createBatch.restore();  
     });
     it('should log a warning for invalid models', function () {
@@ -243,7 +261,7 @@ describe('actions/ExplorerActions', function() {
       ExplorerActions.getPersisted(this.persistence);
       assert.strictEqual(stub.getCall(0).args[0], 'A persisted explorer model is invalid: ');
       assert.deepPropertyVal(stub.getCall(0).args[1], 'id', '3');
-      window.console.warn.restore();  
+      window.console.warn.restore();
     });
     it('should call update app state when done and set fetchingPersistedExplorers to false', function () {
       var stub = sinon.stub(AppStateActions, 'update');

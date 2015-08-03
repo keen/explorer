@@ -22,6 +22,37 @@ describe('validations/ExplorerValidations', function() {
       });
     });
 
+    describe('name', function () {
+      it('has an error message', function () {
+        var errorMessage = ExplorerValidations.explorer.name.msg;
+        assert.equal(errorMessage, 'You must give your saved query a name.');
+      });
+      it('returns true even when the value is not valid when saving is false', function () {
+        var explorer = TestHelpers.createExplorerModel();
+        explorer.saving = false;
+        explorer.name = '';
+        assert.isTrue(ExplorerValidations.explorer.name.validator(explorer));
+      });
+      it('returns false when the value is not valid when saving is true', function () {
+        var explorer = TestHelpers.createExplorerModel();
+        explorer.saving = true;
+        explorer.name = '';
+        assert.isFalse(ExplorerValidations.explorer.name.validator(explorer));
+      });
+      it('returns true when name is present', function () {
+        assert.isTrue(ExplorerValidations.explorer.name.validator({ saving: true, name: 'a satisfactory value' }));
+      });
+      it('returns false when name is an empty string', function () {
+        assert.isFalse(ExplorerValidations.explorer.name.validator({ saving: true, name: '' }));
+      });
+      it('returns false when name is a null', function () {
+        assert.isFalse(ExplorerValidations.explorer.name.validator({ saving: true, name: null }));
+      });
+      it('returns false when name is a undefined', function () {
+        assert.isFalse(ExplorerValidations.explorer.name.validator({ saving: true, name: undefined }));
+      });
+    });
+
     describe('analysis_type', function () {
       it('has an error message', function () {
         var errorMessage = ExplorerValidations.explorer.analysis_type.msg;

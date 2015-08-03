@@ -14,8 +14,6 @@ var ExplorerActions = require('../../actions/ExplorerActions');
 var FormatUtils = require('../../utils/FormatUtils');
 
 function hasRelativeTimeframe(explorer) {
-  // Sometimes the computed properties are too slow to get updated, so we need to check directly
-  // if a relative_timeframe can be constructed.
   var time = explorer.query.time || {};
   return time.relativity && time.amount && time.sub_timeframe;
 }
