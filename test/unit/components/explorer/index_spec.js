@@ -5,7 +5,7 @@ var Explorer = require('../../../../client/js/app/components/explorer/index.js')
 var Visualization = require('../../../../client/js/app/components/explorer/visualization/index.js');
 var QueryBuilder = require('../../../../client/js/app/components/explorer/query_builder/index.js');
 var QueryPaneTabs = require('../../../../client/js/app/components/explorer/query_pane_tabs.js');
-var BrowseFavorites = require('../../../../client/js/app/components/explorer/favorites/browse_favorites.js');
+var BrowseQueries = require('../../../../client/js/app/components/explorer/saved_queries/browse_queries.js');
 var Notice = require('../../../../client/js/app/components/common/notice.js');
 var EventBrowser = require('../../../../client/js/app/components/common/event_browser.js');
 var Persistence = require('../../../../client/js/app/modules/persistence/persistence.js');
@@ -80,9 +80,9 @@ describe('components/explorer/index', function() {
           assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, QueryBuilder), 1);
         });
 
-        it('can show BrowseFavorites if persistence has been passed in', function(){
+        it('can show BrowseQueries if persistence has been passed in', function(){
           TestUtils.Simulate.click(this.component.refs['query-pane-tabs'].refs['browse-tab'].getDOMNode());
-          assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, BrowseFavorites), 1);
+          assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, BrowseQueries), 1);
         });
 
         it('has the right number of Modal child components', function(){
@@ -99,8 +99,8 @@ describe('components/explorer/index', function() {
           assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, QueryPaneTabs), 0);
         });
 
-        it('does not have the BrowseFavorites if persistence has not been passed in', function(){
-          assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, BrowseFavorites), 0);
+        it('does not have the BrowseQueries if persistence has not been passed in', function(){
+          assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, BrowseQueries), 0);
         });
       });
 
@@ -113,7 +113,7 @@ describe('components/explorer/index', function() {
       it('properly tabs from the query builder to browsing favorites', function () {
         this.component.setProps({ persistence: {} });
         TestUtils.Simulate.click(this.component.refs['query-pane-tabs'].refs['browse-tab'].getDOMNode());
-        assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, BrowseFavorites), 1);
+        assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, BrowseQueries), 1);
         assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, QueryBuilder), 0);
       });
       it('properly tabs from the query builder to browsing favorites', function () {
@@ -122,7 +122,7 @@ describe('components/explorer/index', function() {
         TestUtils.Simulate.click(this.component.refs['query-pane-tabs'].refs['build-tab'].getDOMNode());
 
         assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, QueryBuilder), 1);
-        assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, BrowseFavorites), 0);
+        assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, BrowseQueries), 0);
       });
     });
 
@@ -212,12 +212,12 @@ describe('components/explorer/index', function() {
       });
     });
 
-    describe('destroyFavorite', function () {
+    describe('removeSavedQueryClicked', function () {
       it('should call the destroy ExplorerAction with the right arguments', function () {
-        this.explorer.id = 'ABC-DESTROY'
+        ExplorerActions.create(_.assign({}, TestHelpers.createExplorerModel(), { id: 'ABC-DESTROY' }));
         var destroyStub = sinon.stub(ExplorerActions, 'destroy');
         sinon.stub(window, 'confirm').returns(true);
-        this.component.destroyFavorite(TestHelpers.fakeEvent());
+        this.component.removeSavedQueryClicked(_.keys(ExplorerStore.getAll()).length-1);
         assert.isTrue(destroyStub.calledWith(this.persistence, 'ABC-DESTROY'));
         ExplorerActions.destroy.restore();
         window.confirm.restore();
@@ -228,7 +228,7 @@ describe('components/explorer/index', function() {
 
   describe('component functions', function () {
 
-    describe('favorites', function () {
+    describe('saved queries', function () {
 
       before(function(){
         this.explorer.query.analysis_type = 'count';
@@ -240,8 +240,8 @@ describe('components/explorer/index', function() {
         this.component = TestUtils.renderIntoDocument(<Explorer persistence={this.persistence} client={this.client} project={this.project} config={this.config} />);
       });
       
-      describe('clicking a favorite', function () {
-        it('should not load the favorite and show a notice if there is already a query in-flight', function () {
+      describe('clicking a saved query', function () {
+        it('should not load the saved query and show a notice if there is already a query in-flight', function () {
           var setActiveStub = sinon.stub(ExplorerActions, 'setActive');
           var execStub = sinon.stub(ExplorerActions, 'exec');
           var noticeCreateStub = sinon.stub(NoticeActions, 'create');
@@ -253,7 +253,7 @@ describe('components/explorer/index', function() {
             activeExplorer: newExplorer
           });
           var fakeEvent = TestHelpers.fakeEvent();
-          this.component.favoriteClicked(fakeEvent);
+          this.component.savedQueryClicked(fakeEvent);
           
           assert.isFalse(setActiveStub.called);
           assert.isFalse(execStub.called);

@@ -9,7 +9,7 @@ var CSVExtraction = require('./csv_extraction.js');
 var Visualization = require('./visualization/index.js')
 var QueryPaneTabs = require('./query_pane_tabs.js');;
 var QueryBuilder = require('./query_builder/index.js');
-var BrowseFavorites = require('./favorites/browse_favorites.js');
+var BrowseQueries = require('./saved_queries/browse_queries.js');
 var Notice = require('../common/notice.js');
 var FilterManager = require('../common/filter_manager.js');
 var ExplorerStore = require('../../stores/ExplorerStore');
@@ -49,7 +49,7 @@ var Explorer = React.createClass({
   // Callbacks for child components
   // ********************************
 
-  favoriteClicked: function(event) {
+  savedQueryClicked: function(event) {
     event.preventDefault();
     if (this.state.activeExplorer.loading) {
       NoticeActions.create({
@@ -64,17 +64,10 @@ var Explorer = React.createClass({
     }
   },
 
-  removeFavoriteClicked: function(favIndex) {
-    if (confirm("Are you sure you want to unfavorite this query?")) {
-      var model = this.state.allPersistedExplorers[favIndex];
+  removeSavedQueryClicked: function(modelIndex) {
+    if (confirm("Are you sure you want to delete this query?")) {
+      var model = this.state.allPersistedExplorers[modelIndex];
       ExplorerActions.destroy(this.props.persistence, model.id);
-    }
-  },
-
-  destroyFavorite: function(event) {
-    event.preventDefault();
-    if (confirm("Are you sure you want to unfavorite this query?")) {
-      ExplorerActions.destroy(this.props.persistence, this.state.activeExplorer.id);
     }
   },
 
@@ -203,8 +196,8 @@ var Explorer = React.createClass({
   render: function() {
     var favoritesList,
         queryPaneTabs,
-        favListNotice,
-        favEmptyContent;
+        browseListNotice,
+        browseEmptyContent;
 
     if (this.props.persistence) {
       queryPaneTabs = <QueryPaneTabs ref="query-pane-tabs"
@@ -213,9 +206,9 @@ var Explorer = React.createClass({
                                      createNewQuery={this.createNewQuery}
                                      persisted={ExplorerUtils.isPersisted(this.state.activeExplorer)} />;
       if (this.state.appState.fetchingPersistedExplorers) {
-        favListNotice = <Notice notice={{ icon: 'info-sign', text: 'Loading favorites...', type: 'info' }} closable={false} />
+        browseListNotice = <Notice notice={{ icon: 'info-sign', text: 'Loading saved queries...', type: 'info' }} closable={false} />
       } else {
-        favEmptyContent = <h4 className="text-center">You don&#39;t have any favorites yet.</h4>;
+        browseEmptyContent = <h4 className="text-center">You don&#39;t have any saved queries yet.</h4>;
       }
     }
 
@@ -228,13 +221,13 @@ var Explorer = React.createClass({
                                 onBrowseEvents={this.onBrowseEvents}
                                 handleFiltersToggle={this.handleFiltersToggle} />;
     } else {
-      queryPane = <BrowseFavorites listItems={this.state.allPersistedExplorers}
-                                   emptyContent={favEmptyContent}
-                                   notice={favListNotice}
-                                   clickCallback={this.favoriteClicked}
-                                   removeCallback={this.removeFavoriteClicked}
-                                   selectedIndex={this.getSelectedIndex()}
-                                   user={this.state.user} />;
+      queryPane = <BrowseQueries listItems={this.state.allPersistedExplorers}
+                                 emptyContent={browseEmptyContent}
+                                 notice={browseListNotice}
+                                 clickCallback={this.savedQueryClicked}
+                                 removeCallback={this.removeSavedQueryClicked}
+                                 selectedIndex={this.getSelectedIndex()}
+                                 user={this.state.user} />;
     }
 
     return (
