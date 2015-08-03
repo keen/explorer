@@ -489,8 +489,11 @@ describe('stores/ExplorerStore', function() {
     });
 
     describe('clear', function () {
-      it('should reset the given explorer to defaults but with active set to true', function () {
-        ExplorerActions.create({
+      it('should reset the given explorer to defaults but keeps the same active and name attributes', function () {
+        ExplorerStore.clearAll();
+        ExplorerActions.create(_.assign({}, TestHelpers.createExplorerModel(), {
+          id: 'ABC-SOME-ID',
+          active: true,
           query: {
             event_collection: 'clicks',
             analysis_type: 'count'
@@ -498,11 +501,10 @@ describe('stores/ExplorerStore', function() {
           visualization: {
             chart_type: 'metric'
           }
-        });
-        var keys = Object.keys(ExplorerStore.getAll());
-        ExplorerActions.clear(keys[0]);
-        assert.deepEqual(ExplorerStore.getAll()[keys[0]], {
-          id: keys[0],
+        }));
+        ExplorerActions.clear('ABC-SOME-ID');
+        assert.deepEqual(ExplorerStore.get('ABC-SOME-ID'), {
+          id: 'ABC-SOME-ID',
           active: true,
           error: null,
           result: null,
