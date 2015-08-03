@@ -168,7 +168,8 @@ function _updateFilter(id, index, updates) {
 }
 
 function _clear(id) {
-  _explorers[id] = _.assign(_defaultAttrs(), { id: id, active: true });
+  var model = _explorers[id];
+  _explorers[id] = _.assign({}, _defaultAttrs(), { id: model.id, active: model.active });
 }
 
 var ExplorerStore = _.assign({}, EventEmitter.prototype, {
