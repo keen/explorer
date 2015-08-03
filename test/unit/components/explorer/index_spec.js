@@ -23,12 +23,10 @@ var sinon = require('sinon');
 
 describe('components/explorer/index', function() {
 
-  before(function () {
+  beforeEach(function() {
     ExplorerStore.clearAll();
     ExplorerActions.create({ id: '1', active: true });
-  });
 
-  beforeEach(function(){
     this.client = TestHelpers.createClient();
     this.project = TestHelpers.createProject();
     this.config = { persistence: null };
@@ -230,12 +228,9 @@ describe('components/explorer/index', function() {
 
     describe('saved queries', function () {
 
-      before(function(){
+      beforeEach(function () {
         this.explorer.query.analysis_type = 'count';
         ExplorerStore.emit('CHANGE');
-      });
-
-      beforeEach(function () {
         this.persistence = {};
         this.component = TestUtils.renderIntoDocument(<Explorer persistence={this.persistence} client={this.client} project={this.project} config={this.config} />);
       });
@@ -246,9 +241,8 @@ describe('components/explorer/index', function() {
           var execStub = sinon.stub(ExplorerActions, 'exec');
           var noticeCreateStub = sinon.stub(NoticeActions, 'create');
 
-          var newExplorer = this.component.state.activeExplorer;
+          var newExplorer = _.cloneDeep(this.component.state.activeExplorer);
           newExplorer.loading = true;
-
           this.component.setState({
             activeExplorer: newExplorer
           });
@@ -260,7 +254,7 @@ describe('components/explorer/index', function() {
           assert.isTrue(noticeCreateStub.calledWith({
             icon: 'info-sign',
             type: 'warning',
-            text: "There is already a query in progress. Wait for it to finish loading before selecting a favorite."
+            text: "There is already a query in progress. Wait for it to finish loading before selecting a query."
           }));
 
           ExplorerActions.setActive.restore();

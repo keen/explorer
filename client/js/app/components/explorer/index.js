@@ -55,7 +55,7 @@ var Explorer = React.createClass({
       NoticeActions.create({
         icon: 'info-sign',
         type: 'warning',
-        text: "There is already a query in progress. Wait for it to finish loading before selecting a saved query."
+        text: "There is already a query in progress. Wait for it to finish loading before selecting a query."
       });
     } else {
       var modelId = event.currentTarget.dataset.id;
