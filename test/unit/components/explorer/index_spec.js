@@ -271,6 +271,7 @@ describe('components/explorer/index', function() {
         ExplorerActions.create(_.assign({}, TestHelpers.createExplorerModel(), { id: 'abc', active: true }));
         ExplorerActions.create(_.assign({}, TestHelpers.createExplorerModel(), { id: 'def', active: false }));
         ExplorerActions.create(_.assign({}, TestHelpers.createExplorerModel(), { id: 'ghi', active: false }));
+        this.component.setProps({ persistence: {} });
         this.component.forceUpdate();
       });
       it('should add a new explorer in the store', function () {
@@ -284,6 +285,11 @@ describe('components/explorer/index', function() {
         var lastExplorer = ExplorerStore.getAll()[keys[keys.length-1]];
         assert.isTrue(stub.calledWith(lastExplorer.id));
         ExplorerActions.setActive.restore();
+      });
+      it('should change the text on the query builder tab to "Create a new query"', function () {
+        assert.strictEqual(this.component.refs['query-pane-tabs'].refs['build-tab'].getDOMNode().textContent, 'Edit query');
+        this.component.createNewQuery(TestHelpers.fakeEvent());
+        assert.strictEqual(this.component.refs['query-pane-tabs'].refs['build-tab'].getDOMNode().textContent, 'Create a new query');
       });
     });
   
