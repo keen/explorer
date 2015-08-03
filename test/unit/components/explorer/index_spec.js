@@ -107,6 +107,12 @@ describe('components/explorer/index', function() {
 
   describe('basic interaction', function() {
 
+    describe('clearing a query', function () {
+      xit('should clear the fields but NOT alter the data for a persisted explorer in the ExplorerStore', function () {
+        // TODO: This will need a second copy of the currently active model to track changes against.
+      });
+    });
+
     describe('tabbing between panes', function () {
       it('properly tabs from the query builder to browsing favorites', function () {
         this.component.setProps({ persistence: {} });
