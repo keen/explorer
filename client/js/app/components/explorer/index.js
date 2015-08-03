@@ -100,9 +100,8 @@ var Explorer = React.createClass({
   createNewQuery: function(event) {
     event.preventDefault();
     ExplorerActions.create();
-    // ExplorerStore.get();
-    // Get the id?
-    ExplorerActions.setActive(id);
+    var newExplorer = ExplorerStore.getLast();
+    ExplorerActions.setActive(newExplorer.id);
   },
 
   onBrowseEvents: function(event) {
