@@ -86,6 +86,20 @@ describe('components/explorer/index', function() {
         it('has the right number of Modal child components', function(){
           assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, Modal), 3);
         });
+
+        describe('New query button', function () {
+          it('has the "create new query" button if the currently active explorer is persisted', function(){
+            this.explorer.id = 'abc-123';
+            this.component.forceUpdate();
+            assert.isDefined(this.component.refs['query-pane-tabs'].refs['new-query']);
+          });
+
+          it('does not have the "create new query" button if the currently active explorer is persisted', function(){
+            this.explorer.id = 'TEMP-';
+            this.component.forceUpdate();
+            assert.isUndefined(this.component.refs['query-pane-tabs'].refs['new-query']);
+          });
+        });
       });
 
       describe('without persistence', function(){
