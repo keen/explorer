@@ -270,6 +270,28 @@ describe('components/explorer/index', function() {
       });
 
     });
+
+    describe('createNewQuery', function () {
+      beforeEach(function() {
+        ExplorerStore.clearAll();
+        ExplorerActions.create(_.assign({}, TestHelpers.createExplorerModel(), { id: 'abc', active: true }));
+        ExplorerActions.create(_.assign({}, TestHelpers.createExplorerModel(), { id: 'def', active: false }));
+        ExplorerActions.create(_.assign({}, TestHelpers.createExplorerModel(), { id: 'ghi', active: false }));
+        this.component.forceUpdate();
+      });
+      it('should add a new explorer in the store', function () {
+        this.component.createNewQuery(TestHelpers.fakeEvent());
+        assert.strictEqual(_.keys(ExplorerStore.getAll()).length, 4);
+      });
+      it('should set the newly created explorer as active', function () {
+        var stub = sinon.stub(ExplorerActions, 'setActive');
+        this.component.createNewQuery(TestHelpers.fakeEvent());
+        var keys = _.keys(ExplorerStore.getAll());
+        var lastExplorer = ExplorerStore.getAll()[keys[keys.length-1]];
+        assert.isTrue(stub.calledWith(lastExplorer.id));
+        ExplorerActions.setActive.restore();
+      });
+    });
   
   });
 
