@@ -43,7 +43,7 @@ var QueryPaneTabs = React.createClass({
           </li>
           <li role="presentation" className={this.props.activePane === 'browse' ? 'tab-browse-queries active' : 'tab-browse-queries'}>
             <a ref="browse-tab" href="#"
-               id="browse-favs"
+               id="browse"
                title="Browse saved queries"
                onClick={this.toggled.bind(this, 'browse')}>
               <span className="icon glyphicon icon-th-list glyphicon-th-list"></span>

@@ -72,7 +72,7 @@ NoticeStore.dispatchToken = AppDispatcher.register(function(action) {
       break;
 
     case ExplorerConstants.EXPLORER_SAVING:
-      var text = action.saveType === 'save' ? 'Favoriting query...' : 'Updating favorite...';
+      var text = action.saveType === 'save' ? 'Saving query...' : 'Updating query...';
       _create({
         type: 'info',
         text: text,
@@ -82,7 +82,7 @@ NoticeStore.dispatchToken = AppDispatcher.register(function(action) {
       break;
 
     case ExplorerConstants.EXPLORER_SAVE_SUCCESS:
-      var text = action.saveType === 'save' ? 'Query favorited' : 'Favorite updated';
+      var text = action.saveType === 'save' ? 'Query saved' : 'Query updated';
       _create({
         type: 'success',
         text: text + '.',
@@ -92,7 +92,7 @@ NoticeStore.dispatchToken = AppDispatcher.register(function(action) {
       break;
 
     case ExplorerConstants.EXPLORER_SAVE_FAIL:
-    var text = action.saveType === 'save' ? 'favoriting your query' : 'updating your favorite';
+    var text = action.saveType === 'save' ? 'saving your query' : 'updating your query';
       _create({
         type: 'error',
         text: 'There was a problem ' + text + ': ' + action.errorMsg,
@@ -104,7 +104,7 @@ NoticeStore.dispatchToken = AppDispatcher.register(function(action) {
     case ExplorerConstants.EXPLORER_DESTROYING:
       _create({
         type: 'info',
-        text: 'Unfavoriting query...',
+        text: 'Deleting query...',
         icon: 'info-sign'
       });
       NoticeStore.emitChange();
@@ -113,7 +113,7 @@ NoticeStore.dispatchToken = AppDispatcher.register(function(action) {
     case ExplorerConstants.EXPLORER_DESTROY_SUCCESS:
       _create({
         type: 'success',
-        text: 'Query unfavorited.',
+        text: 'Query deleted.',
         icon: 'ok'
       });
       NoticeStore.emitChange();
@@ -122,7 +122,7 @@ NoticeStore.dispatchToken = AppDispatcher.register(function(action) {
     case ExplorerConstants.EXPLORER_DESTROY_FAIL:
       _create({
         type: 'error',
-        text: 'There was a problem unfavoriting your query: ' + action.errorMsg,
+        text: 'There was a problem deleting your query: ' + action.errorMsg,
         icon: 'remove-sign'
       });
       NoticeStore.emitChange();

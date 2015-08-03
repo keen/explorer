@@ -870,46 +870,36 @@
 #keen-explorer .nav.nav-tabs li a:hover .fav-icon {
   color: #F22613;
 }
-#keen-explorer .fav-form {
-  overflow: hidden;
-  padding: 20px 0;
-}
-#keen-explorer .fav-form input {
-  width: 70%;
-}
-#keen-explorer .fav-form .btn {
-  width: 30%;
-}
-#keen-explorer .browse-favorites {
+#keen-explorer .browse-queries {
   margin-top: -1px;
 }
-#keen-explorer .browse-favorites .fav-group-options {
+#keen-explorer .browse-queries .queries-group-options {
   padding-bottom: 10px;
 }
-#keen-explorer .browse-favorites .fav-group-options .radio-inline {
+#keen-explorer .browse-queries .queries-group-options .radio-inline {
   width: 49%;
   text-align: center;
   margin: 0;
   padding: 0;
 }
-#keen-explorer .browse-favorites ul.interactive-list {
+#keen-explorer .browse-queries ul.interactive-list {
   max-height: 400px;
   overflow-y: scroll;
 }
-#keen-explorer .browse-favorites .metadata {
+#keen-explorer .browse-queries .metadata {
   padding: 5px 0 0;
 }
-#keen-explorer .browse-favorites .metadata p {
+#keen-explorer .browse-queries .metadata p {
   color: #a7a7a7;
   margin: 0;
   font-size: 12px;
 }
-#keen-explorer .browse-favorites .metadata .icon {
+#keen-explorer .browse-queries .metadata .icon {
   color: #d7d7d7;
   font-size: 14px;
   margin-right: 5px;
 }
-#keen-explorer .browse-favorites .metadata .date {
+#keen-explorer .browse-queries .metadata .date {
   text-align: right;
 }
 #keen-explorer .event-browser {

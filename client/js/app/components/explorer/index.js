@@ -55,7 +55,7 @@ var Explorer = React.createClass({
       NoticeActions.create({
         icon: 'info-sign',
         type: 'warning',
-        text: "There is already a query in progress. Wait for it to finish loading before selecting a favorite."
+        text: "There is already a query in progress. Wait for it to finish loading before selecting a saved query."
       });
     } else {
       var modelId = event.currentTarget.dataset.id;
@@ -194,8 +194,7 @@ var Explorer = React.createClass({
   },
 
   render: function() {
-    var favoritesList,
-        queryPaneTabs,
+    var queryPaneTabs,
         browseListNotice,
         browseEmptyContent;
 

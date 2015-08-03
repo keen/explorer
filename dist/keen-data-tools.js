@@ -454,7 +454,7 @@ window.Keen = window.Keen || {};
 window.Keen.DataTools = window.Keen.DataTools || {};
 window.Keen.DataTools.Persistence = Persistence;
 window.Keen.DataTools.App = module.exports = App;
-},{"./actions/ExplorerActions":2,"./actions/ProjectActions":4,"./actions/UserActions":5,"./components/app.js":7,"./components/explorer/index.js":30,"./dispatcher/AppDispatcher":49,"./modules/persistence/persistence.js":51,"./stores/ExplorerStore":53,"./stores/ProjectStore":55,"./utils/ExplorerUtils":57,"./utils/FormatUtils":59,"./utils/QueryStringUtils":61,"./utils/ValidationUtils":62,"./validations/ExplorerValidations":63,"lodash":83,"react":301,"react-router":114}],7:[function(require,module,exports){
+},{"./actions/ExplorerActions":2,"./actions/ProjectActions":4,"./actions/UserActions":5,"./components/app.js":7,"./components/explorer/index.js":29,"./dispatcher/AppDispatcher":49,"./modules/persistence/persistence.js":51,"./stores/ExplorerStore":53,"./stores/ProjectStore":55,"./utils/ExplorerUtils":57,"./utils/FormatUtils":59,"./utils/QueryStringUtils":61,"./utils/ValidationUtils":62,"./validations/ExplorerValidations":63,"lodash":83,"react":301,"react-router":114}],7:[function(require,module,exports){
 var React = require('react');
 var Router = require('react-router');
 var RouteHandler = Router.RouteHandler;
@@ -3121,159 +3121,12 @@ module.exports = CSVExtraction;
 
 var React = require('react');
 var _ = require('lodash');
-var moment = require('moment');
-
-function nameForUser(user) {
-  if (user.first_name && user.last_name) {
-    return user.first_name + " " + user.last_name;
-  } else {
-    return user.email;
-  }
-}
-
-function dateForItem(item) {
-  if (item.created_at) {
-    var datetime = moment(new Date(item.created_at.replace(' ', 'T')));
-    return datetime.isValid() ? datetime.format('ll h:mm A') : null;
-  }
-}
-
-var BrowseFavorites = React.createClass({displayName: "BrowseFavorites",
-
-  removeClick: function(event) {
-    event.preventDefault();
-    this.props.removeCallback(event.currentTarget.dataset.itemIndex);
-  },
-
-  clickCallback: function(event) {
-    if (event.target.getAttribute('role') !== 'remove' && event.target.parentNode.getAttribute('role') !== 'remove') {
-      this.props.clickCallback(event);
-    }
-  },
-
-  buildFavList: function() {
-    var listElements = this.props.listItems.map(_.bind(function(listItem, index) {
-      listItem.user = listItem.user || {};
-      if (String(listItem.name.toLowerCase()).search(this.state.searchterm.toLowerCase()) < 0) return;
-
-      if (this.state.favgroup === 'user') {
-        if (!listItem.user.id || listItem.user.id !== this.props.user.id) return;
-      }
-
-      var isSelected = (this.props.selectedIndex === index) ? true : false;
-      var classes,
-          removeBtn;
-      if (isSelected) classes = 'active';
-      if (this.props.removeCallback && listItem.user.id === this.props.user.id) {
-        removeBtn = (React.createElement("a", {href: "#", className: "remove-btn", "data-item-index": index, role: "remove", onClick: this.removeClick}, 
-                      React.createElement("span", {className: "icon"})
-                     ));
-      }
-
-      var createdAt;
-      var datetime = dateForItem(listItem);
-      if (datetime) {
-        createdAt = (
-          React.createElement("p", {className: "date pull-right"}, 
-            React.createElement("span", {className: "icon glyphicon glyphicon-time"}), 
-            datetime
-          )
-        );
-      }
-
-      return (
-        React.createElement("li", {className: classes, key: index, "data-id": listItem.id, onClick: this.clickCallback}, 
-          removeBtn, 
-          React.createElement("h5", {className: "name"}, listItem.name), 
-          React.createElement("div", {className: "metadata clearfix"}, 
-            React.createElement("p", {className: "author pull-left"}, 
-              React.createElement("span", {className: "icon glyphicon glyphicon-user"}), 
-              nameForUser(listItem.user)
-            ), 
-            createdAt
-          )
-        )
-      );
-    }, this));
-    return (
-      React.createElement("ul", {ref: "list", className: "interactive-list"}, 
-        listElements
-      )
-    );
-  },
-
-  fieldChanged: function(event) {
-    var newState = {};
-    newState[event.target.name] = event.target.value;
-    this.setState(newState);
-  },
-
-  getDefaultProps: function() {
-    return {
-      listItems: [],
-      removeCallback: null,
-      clickCallback: null,
-      selectedIndex: null,
-      favListNotice: null,
-      emptyContent: null
-    };
-  },
-
-  getInitialState: function() {
-    return {
-      searchterm: '',
-      favgroup: 'all'
-    };
-  },
-
-  render: function() {
-    var emptyContent = this.props.listItems.length ? null: this.props.emptyContent;
-    var listItems = this.buildFavList();
-
-    return (
-      React.createElement("section", {className: "query-pane-section browse-favorites"}, 
-        this.props.notice, 
-        React.createElement("div", {className: "fav-group-options"}, 
-          React.createElement("div", {className: "radio-inline"}, 
-            React.createElement("label", null, 
-              React.createElement("input", {type: "radio", name: "favgroup", value: "all", ref: "all-filter", checked: this.state.favgroup === 'all' ? true : false, onChange: this.fieldChanged}), 
-              "Team"
-            )
-          ), 
-          React.createElement("div", {className: "radio-inline"}, 
-            React.createElement("label", null, 
-              React.createElement("input", {type: "radio", name: "favgroup", value: "user", ref: "user-filter", checked: this.state.favgroup === 'user' ? true : false, onChange: this.fieldChanged}), 
-              "Mine"
-            )
-          )
-        ), 
-        React.createElement("div", {className: "search-box"}, 
-          React.createElement("input", {type: "text", name: "searchterm", ref: "searchbox", placeholder: "Search", onChange: this.fieldChanged}), 
-          React.createElement("span", {className: "glyphicon glyphicon-search icon"})
-        ), 
-        listItems, 
-        emptyContent
-      )
-    );
-  }
-
-});
-
-module.exports = BrowseFavorites;
-
-},{"lodash":83,"moment":84,"react":301}],30:[function(require,module,exports){
-/**
- * @jsx React.DOM
- */
-
-var React = require('react');
-var _ = require('lodash');
 var EventBrowser = require('../common/event_browser.js');
 var CSVExtraction = require('./csv_extraction.js');
 var Visualization = require('./visualization/index.js')
 var QueryPaneTabs = require('./query_pane_tabs.js');;
 var QueryBuilder = require('./query_builder/index.js');
-var BrowseFavorites = require('./favorites/browse_favorites.js');
+var BrowseQueries = require('./saved_queries/browse_queries.js');
 var Notice = require('../common/notice.js');
 var FilterManager = require('../common/filter_manager.js');
 var ExplorerStore = require('../../stores/ExplorerStore');
@@ -3313,13 +3166,13 @@ var Explorer = React.createClass({displayName: "Explorer",
   // Callbacks for child components
   // ********************************
 
-  favoriteClicked: function(event) {
+  savedQueryClicked: function(event) {
     event.preventDefault();
     if (this.state.activeExplorer.loading) {
       NoticeActions.create({
         icon: 'info-sign',
         type: 'warning',
-        text: "There is already a query in progress. Wait for it to finish loading before selecting a favorite."
+        text: "There is already a query in progress. Wait for it to finish loading before selecting a saved query."
       });
     } else {
       var modelId = event.currentTarget.dataset.id;
@@ -3328,17 +3181,10 @@ var Explorer = React.createClass({displayName: "Explorer",
     }
   },
 
-  removeFavoriteClicked: function(favIndex) {
-    if (confirm("Are you sure you want to unfavorite this query?")) {
-      var model = this.state.allPersistedExplorers[favIndex];
+  removeSavedQueryClicked: function(modelIndex) {
+    if (confirm("Are you sure you want to delete this query?")) {
+      var model = this.state.allPersistedExplorers[modelIndex];
       ExplorerActions.destroy(this.props.persistence, model.id);
-    }
-  },
-
-  destroyFavorite: function(event) {
-    event.preventDefault();
-    if (confirm("Are you sure you want to unfavorite this query?")) {
-      ExplorerActions.destroy(this.props.persistence, this.state.activeExplorer.id);
     }
   },
 
@@ -3465,10 +3311,9 @@ var Explorer = React.createClass({displayName: "Explorer",
   },
 
   render: function() {
-    var favoritesList,
-        queryPaneTabs,
-        favListNotice,
-        favEmptyContent;
+    var queryPaneTabs,
+        browseListNotice,
+        browseEmptyContent;
 
     if (this.props.persistence) {
       queryPaneTabs = React.createElement(QueryPaneTabs, {ref: "query-pane-tabs", 
@@ -3477,9 +3322,9 @@ var Explorer = React.createClass({displayName: "Explorer",
                                      createNewQuery: this.createNewQuery, 
                                      persisted: ExplorerUtils.isPersisted(this.state.activeExplorer)});
       if (this.state.appState.fetchingPersistedExplorers) {
-        favListNotice = React.createElement(Notice, {notice: { icon: 'info-sign', text: 'Loading favorites...', type: 'info'}, closable: false})
+        browseListNotice = React.createElement(Notice, {notice: { icon: 'info-sign', text: 'Loading saved queries...', type: 'info'}, closable: false})
       } else {
-        favEmptyContent = React.createElement("h4", {className: "text-center"}, "You don't have any favorites yet.");
+        browseEmptyContent = React.createElement("h4", {className: "text-center"}, "You don't have any saved queries yet.");
       }
     }
 
@@ -3492,13 +3337,13 @@ var Explorer = React.createClass({displayName: "Explorer",
                                 onBrowseEvents: this.onBrowseEvents, 
                                 handleFiltersToggle: this.handleFiltersToggle});
     } else {
-      queryPane = React.createElement(BrowseFavorites, {listItems: this.state.allPersistedExplorers, 
-                                   emptyContent: favEmptyContent, 
-                                   notice: favListNotice, 
-                                   clickCallback: this.favoriteClicked, 
-                                   removeCallback: this.removeFavoriteClicked, 
-                                   selectedIndex: this.getSelectedIndex(), 
-                                   user: this.state.user});
+      queryPane = React.createElement(BrowseQueries, {listItems: this.state.allPersistedExplorers, 
+                                 emptyContent: browseEmptyContent, 
+                                 notice: browseListNotice, 
+                                 clickCallback: this.savedQueryClicked, 
+                                 removeCallback: this.removeSavedQueryClicked, 
+                                 selectedIndex: this.getSelectedIndex(), 
+                                 user: this.state.user});
     }
 
     return (
@@ -3542,7 +3387,7 @@ var Explorer = React.createClass({displayName: "Explorer",
 
 module.exports = Explorer;
 
-},{"../../actions/ExplorerActions":2,"../../actions/NoticeActions":3,"../../stores/AppStateStore":52,"../../stores/ExplorerStore":53,"../../stores/NoticeStore":54,"../../stores/UserStore":56,"../../utils/ExplorerUtils":57,"../../utils/QueryStringUtils":61,"../../utils/ValidationUtils":62,"../../validations/ExplorerValidations":63,"../common/event_browser.js":10,"../common/filter_manager.js":13,"../common/notice.js":20,"./csv_extraction.js":28,"./favorites/browse_favorites.js":29,"./query_builder/index.js":35,"./query_pane_tabs.js":38,"./visualization/index.js":42,"lodash":83,"react":301}],31:[function(require,module,exports){
+},{"../../actions/ExplorerActions":2,"../../actions/NoticeActions":3,"../../stores/AppStateStore":52,"../../stores/ExplorerStore":53,"../../stores/NoticeStore":54,"../../stores/UserStore":56,"../../utils/ExplorerUtils":57,"../../utils/QueryStringUtils":61,"../../utils/ValidationUtils":62,"../../validations/ExplorerValidations":63,"../common/event_browser.js":10,"../common/filter_manager.js":13,"../common/notice.js":20,"./csv_extraction.js":28,"./query_builder/index.js":34,"./query_pane_tabs.js":37,"./saved_queries/browse_queries.js":38,"./visualization/index.js":42,"lodash":83,"react":301}],30:[function(require,module,exports){
 /**
  * @jsx React.DOM
  */
@@ -3575,7 +3420,7 @@ var AnalysisTypeField = React.createClass({displayName: "AnalysisTypeField",
 
 module.exports = AnalysisTypeField;
 
-},{"../../common/react_select.js":21,"lodash":83,"react":301}],32:[function(require,module,exports){
+},{"../../common/react_select.js":21,"lodash":83,"react":301}],31:[function(require,module,exports){
 /**
  * @jsx React.DOM
  */
@@ -3633,7 +3478,7 @@ var ApiUrl = React.createClass({displayName: "ApiUrl",
 
 module.exports = ApiUrl;
 
-},{"react":301}],33:[function(require,module,exports){
+},{"react":301}],32:[function(require,module,exports){
 /**
  * @jsx React.DOM
  */
@@ -3672,7 +3517,7 @@ var EventCollectionField = React.createClass({displayName: "EventCollectionField
 
 module.exports = EventCollectionField;
 
-},{"../../common/react_select.js":21,"lodash":83,"react":301}],34:[function(require,module,exports){
+},{"../../common/react_select.js":21,"lodash":83,"react":301}],33:[function(require,module,exports){
 /**
  * @jsx React.DOM
  */
@@ -3727,7 +3572,7 @@ var GroupByField = React.createClass({displayName: "GroupByField",
 
 module.exports = GroupByField;
 
-},{"../../common/fields_toggle.js":11,"../../common/react_select.js":21,"lodash":83,"react":301}],35:[function(require,module,exports){
+},{"../../common/fields_toggle.js":11,"../../common/react_select.js":21,"lodash":83,"react":301}],34:[function(require,module,exports){
 /**
  * @jsx React.DOM
  */
@@ -3868,7 +3713,7 @@ var QueryBuilder = React.createClass({displayName: "QueryBuilder",
 
 module.exports = QueryBuilder;
 
-},{"../../../actions/ExplorerActions":2,"../../../utils/ExplorerUtils":57,"../../../utils/ProjectUtils":60,"../../../utils/ValidationUtils":62,"../../../validations/FilterValidations":64,"../../common/fields_toggle.js":11,"../../common/interval.js":17,"../../common/run_query.js":23,"../../common/timeframe.js":25,"./analysis_type_field.js":31,"./api_url.js":32,"./event_collection_field.js":33,"./group_by_field.js":34,"./percentile_field.js":36,"./target_property_field.js":37,"lodash":83,"react/addons":129}],36:[function(require,module,exports){
+},{"../../../actions/ExplorerActions":2,"../../../utils/ExplorerUtils":57,"../../../utils/ProjectUtils":60,"../../../utils/ValidationUtils":62,"../../../validations/FilterValidations":64,"../../common/fields_toggle.js":11,"../../common/interval.js":17,"../../common/run_query.js":23,"../../common/timeframe.js":25,"./analysis_type_field.js":30,"./api_url.js":31,"./event_collection_field.js":32,"./group_by_field.js":33,"./percentile_field.js":35,"./target_property_field.js":36,"lodash":83,"react/addons":129}],35:[function(require,module,exports){
 /**
  * @jsx React.DOM
  */
@@ -3902,7 +3747,7 @@ var PercentileField = React.createClass({displayName: "PercentileField",
 
 module.exports = PercentileField;
 
-},{"../../common/input.js":16,"lodash":83,"react":301}],37:[function(require,module,exports){
+},{"../../common/input.js":16,"lodash":83,"react":301}],36:[function(require,module,exports){
 /**
  * @jsx React.DOM
  */
@@ -3936,7 +3781,7 @@ var TargetPropertyField = React.createClass({displayName: "TargetPropertyField",
 
 module.exports = TargetPropertyField;
 
-},{"../../common/react_select.js":21,"lodash":83,"react":301}],38:[function(require,module,exports){
+},{"../../common/react_select.js":21,"lodash":83,"react":301}],37:[function(require,module,exports){
 /**
  * @jsx React.DOM
  */
@@ -3982,7 +3827,7 @@ var QueryPaneTabs = React.createClass({displayName: "QueryPaneTabs",
           ), 
           React.createElement("li", {role: "presentation", className: this.props.activePane === 'browse' ? 'tab-browse-queries active' : 'tab-browse-queries'}, 
             React.createElement("a", {ref: "browse-tab", href: "#", 
-               id: "browse-favs", 
+               id: "browse", 
                title: "Browse saved queries", 
                onClick: this.toggled.bind(this, 'browse')}, 
               React.createElement("span", {className: "icon glyphicon icon-th-list glyphicon-th-list"}), 
@@ -3998,7 +3843,154 @@ var QueryPaneTabs = React.createClass({displayName: "QueryPaneTabs",
 
 module.exports = QueryPaneTabs;
 
-},{"classnames":74,"react":301}],39:[function(require,module,exports){
+},{"classnames":74,"react":301}],38:[function(require,module,exports){
+/**
+ * @jsx React.DOM
+ */
+
+var React = require('react');
+var _ = require('lodash');
+var moment = require('moment');
+
+function nameForUser(user) {
+  if (user.first_name && user.last_name) {
+    return user.first_name + " " + user.last_name;
+  } else {
+    return user.email;
+  }
+}
+
+function dateForItem(item) {
+  if (item.created_at) {
+    var datetime = moment(new Date(item.created_at.replace(' ', 'T')));
+    return datetime.isValid() ? datetime.format('ll h:mm A') : null;
+  }
+}
+
+var BrowseQueries = React.createClass({displayName: "BrowseQueries",
+
+  removeClick: function(event) {
+    event.preventDefault();
+    this.props.removeCallback(event.currentTarget.dataset.itemIndex);
+  },
+
+  clickCallback: function(event) {
+    if (event.target.getAttribute('role') !== 'remove' && event.target.parentNode.getAttribute('role') !== 'remove') {
+      this.props.clickCallback(event);
+    }
+  },
+
+  buildList: function() {
+    var listElements = this.props.listItems.map(_.bind(function(listItem, index) {
+      listItem.user = listItem.user || {};
+      if (String(listItem.name.toLowerCase()).search(this.state.searchterm.toLowerCase()) < 0) return;
+
+      if (this.state.filterType === 'user') {
+        if (!listItem.user.id || listItem.user.id !== this.props.user.id) return;
+      }
+
+      var isSelected = (this.props.selectedIndex === index) ? true : false;
+      var classes,
+          removeBtn;
+      if (isSelected) classes = 'active';
+      if (this.props.removeCallback && listItem.user.id === this.props.user.id) {
+        removeBtn = (React.createElement("a", {href: "#", className: "remove-btn", "data-item-index": index, role: "remove", onClick: this.removeClick}, 
+                      React.createElement("span", {className: "icon"})
+                     ));
+      }
+
+      var createdAt;
+      var datetime = dateForItem(listItem);
+      if (datetime) {
+        createdAt = (
+          React.createElement("p", {className: "date pull-right"}, 
+            React.createElement("span", {className: "icon glyphicon glyphicon-time"}), 
+            datetime
+          )
+        );
+      }
+
+      return (
+        React.createElement("li", {className: classes, key: index, "data-id": listItem.id, onClick: this.clickCallback}, 
+          removeBtn, 
+          React.createElement("h5", {className: "name"}, listItem.name), 
+          React.createElement("div", {className: "metadata clearfix"}, 
+            React.createElement("p", {className: "author pull-left"}, 
+              React.createElement("span", {className: "icon glyphicon glyphicon-user"}), 
+              nameForUser(listItem.user)
+            ), 
+            createdAt
+          )
+        )
+      );
+    }, this));
+    return (
+      React.createElement("ul", {ref: "list", className: "interactive-list"}, 
+        listElements
+      )
+    );
+  },
+
+  fieldChanged: function(event) {
+    var newState = {};
+    newState[event.target.name] = event.target.value;
+    this.setState(newState);
+  },
+
+  getDefaultProps: function() {
+    return {
+      listItems: [],
+      removeCallback: null,
+      clickCallback: null,
+      selectedIndex: null,
+      notice: null,
+      emptyContent: null
+    };
+  },
+
+  getInitialState: function() {
+    return {
+      searchterm: '',
+      filterType: 'all'
+    };
+  },
+
+  render: function() {
+    var emptyContent = this.props.listItems.length ? null: this.props.emptyContent;
+    var listItems = this.buildList();
+
+    return (
+      React.createElement("section", {className: "query-pane-section browse-queries"}, 
+        this.props.notice, 
+        React.createElement("div", {className: "queries-group-options"}, 
+          React.createElement("div", {className: "radio-inline"}, 
+            React.createElement("label", null, 
+              React.createElement("input", {type: "radio", name: "filterType", value: "all", ref: "all-filter", checked: this.state.filterType === 'all' ? true : false, onChange: this.fieldChanged}), 
+              "Team"
+            )
+          ), 
+          React.createElement("div", {className: "radio-inline"}, 
+            React.createElement("label", null, 
+              React.createElement("input", {type: "radio", name: "filterType", value: "user", ref: "user-filter", checked: this.state.filterType === 'user' ? true : false, onChange: this.fieldChanged}), 
+              "Mine"
+            )
+          )
+        ), 
+        React.createElement("div", {className: "search-box"}, 
+          React.createElement("input", {type: "text", name: "searchterm", ref: "searchbox", placeholder: "Search", onChange: this.fieldChanged}), 
+          React.createElement("span", {className: "glyphicon glyphicon-search icon"})
+        ), 
+        listItems, 
+        emptyContent
+      )
+    );
+  }
+
+});
+
+module.exports = BrowseQueries;
+
+},{"lodash":83,"moment":84,"react":301}],39:[function(require,module,exports){
 /**
  * @jsx React.DOM
  */
@@ -4965,7 +4957,7 @@ NoticeStore.dispatchToken = AppDispatcher.register(function(action) {
       break;
 
     case ExplorerConstants.EXPLORER_SAVING:
-      var text = action.saveType === 'save' ? 'Favoriting query...' : 'Updating favorite...';
+      var text = action.saveType === 'save' ? 'Saving query...' : 'Updating query...';
       _create({
         type: 'info',
         text: text,
@@ -4975,7 +4967,7 @@ NoticeStore.dispatchToken = AppDispatcher.register(function(action) {
       break;
 
     case ExplorerConstants.EXPLORER_SAVE_SUCCESS:
-      var text = action.saveType === 'save' ? 'Query favorited' : 'Favorite updated';
+      var text = action.saveType === 'save' ? 'Query saved' : 'Query updated';
       _create({
         type: 'success',
         text: text + '.',
@@ -4985,7 +4977,7 @@ NoticeStore.dispatchToken = AppDispatcher.register(function(action) {
       break;
 
     case ExplorerConstants.EXPLORER_SAVE_FAIL:
-    var text = action.saveType === 'save' ? 'favoriting your query' : 'updating your favorite';
+    var text = action.saveType === 'save' ? 'saving your query' : 'updating your query';
       _create({
         type: 'error',
         text: 'There was a problem ' + text + ': ' + action.errorMsg,
@@ -4997,7 +4989,7 @@ NoticeStore.dispatchToken = AppDispatcher.register(function(action) {
     case ExplorerConstants.EXPLORER_DESTROYING:
       _create({
         type: 'info',
-        text: 'Unfavoriting query...',
+        text: 'Deleting query...',
         icon: 'info-sign'
       });
       NoticeStore.emitChange();
@@ -5006,7 +4998,7 @@ NoticeStore.dispatchToken = AppDispatcher.register(function(action) {
     case ExplorerConstants.EXPLORER_DESTROY_SUCCESS:
       _create({
         type: 'success',
-        text: 'Query unfavorited.',
+        text: 'Query deleted.',
         icon: 'ok'
       });
       NoticeStore.emitChange();
@@ -5015,7 +5007,7 @@ NoticeStore.dispatchToken = AppDispatcher.register(function(action) {
     case ExplorerConstants.EXPLORER_DESTROY_FAIL:
       _create({
         type: 'error',
-        text: 'There was a problem unfavoriting your query: ' + action.errorMsg,
+        text: 'There was a problem deleting your query: ' + action.errorMsg,
         icon: 'remove-sign'
       });
       NoticeStore.emitChange();
