@@ -122,6 +122,42 @@ describe('stores/ExplorerStore', function() {
       assert.strictEqual(keys[2], 'also_with_an_id');
     });
   });
+
+  describe('getLast', function () {
+    it('should get the last explorer in the store', function () {
+      ExplorerActions.create({
+        id: 'ONE',
+        query: {
+          event_collection: 'clicks',
+          analysis_type: 'count'
+        },
+        visualization: {
+          chart_type: 'metric'
+        }
+      });
+      ExplorerActions.create({
+        id: 'TWO',
+        query: {
+          event_collection: 'clicks',
+          analysis_type: 'count'
+        },
+        visualization: {
+          chart_type: 'metric'
+        }
+      });
+      ExplorerActions.create({
+        id: 'THREE',
+        query: {
+          event_collection: 'clicks',
+          analysis_type: 'count'
+        },
+        visualization: {
+          chart_type: 'metric'
+        }
+      });
+      assert.strictEqual(ExplorerStore.getLast().id, 'THREE');
+    });
+  });
   
   describe('update', function () {
     it('should properly upadte the correct explorer', function () {

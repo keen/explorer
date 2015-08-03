@@ -203,11 +203,10 @@ var ExplorerActions = {
       var models = [];
       _.each(resp, function(model) {
         var formattedModel = ExplorerUtils.formatQueryParams(model);
-        if (ValidationUtils.runValidations(ExplorerValidations.explorer, formattedModel).isValid) {
-          models.push(formattedModel);
-        } else {
+        if (!ValidationUtils.runValidations(ExplorerValidations.explorer, formattedModel).isValid) {
           console.warn('A persisted explorer model is invalid: ', formattedModel);
         }
+        models.push(formattedModel);
       });
       ExplorerActions.createBatch(models);
       AppStateActions.update({ fetchingPersistedExplorers: false });
@@ -2318,8 +2317,6 @@ var ExplorerActions = require('../../actions/ExplorerActions');
 var FormatUtils = require('../../utils/FormatUtils');
 
 function hasRelativeTimeframe(explorer) {
-  // Sometimes the computed properties are too slow to get updated, so we need to check directly
-  // if a relative_timeframe can be constructed.
   var time = explorer.query.time || {};
   return time.relativity && time.amount && time.sub_timeframe;
 }
@@ -3367,9 +3364,8 @@ var Explorer = React.createClass({displayName: "Explorer",
   createNewQuery: function(event) {
     event.preventDefault();
     ExplorerActions.create();
-    // ExplorerStore.get();
-    // Get the id?
-    ExplorerActions.setActive(id);
+    var newExplorer = ExplorerStore.getLast();
+    ExplorerActions.setActive(newExplorer.id);
   },
 
   onBrowseEvents: function(event) {
@@ -4786,6 +4782,11 @@ var ExplorerStore = _.assign({}, EventEmitter.prototype, {
     return _explorers;
   },
 
+  getLast: function() {
+    var keys = _.keys(_explorers);
+    return _explorers[keys[keys.length-1]];
+  },
+
   getAllPersisted: function() {
     return _.filter(_explorers, function(explorer){
       return ExplorerUtils.isPersisted(explorer);
@@ -6068,9 +6069,14 @@ module.exports = {
     var lastError = null;
 
     _.each(validationSet, function(validator, key) {
-     if (!validator.validator(model)) {
+      var validity = validator.validator(model);
+     if (validity !== true) {
        isValid = false;
-       lastError = validator.msg;
+       if (typeof validity === 'string') {
+        lastError = validity;
+       } else {
+        lastError = validator.msg;
+       }
      }
     });
 
@@ -6095,7 +6101,7 @@ module.exports = {
       msg: 'You must give your saved query a name.',
       validator: function(explorer) {
         if (!explorer.saving) return true;
-        return (explorer.name.length < 1 || typeof explorer.name !== "string");
+        return (explorer.name !== null && explorer.name !== undefined && typeof explorer.name === "string" && explorer.name.length > 0);
       }
     },
 
@@ -6138,12 +6144,14 @@ module.exports = {
           } else {
             return "You must choose all 3 options for relative timeframes.";
           }
-        } else {
+        } else if (explorer.timeframe_type === 'absolute') {
           if (time.start && time.end) {
             return true;
           } else {
             return "You must provide a start and end time for absolute timeframes.";
           }
+        } else {
+          return "You must provide a timeframe.";
         }
         return true;
       }

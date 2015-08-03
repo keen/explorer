@@ -192,6 +192,11 @@ var ExplorerStore = _.assign({}, EventEmitter.prototype, {
     return _explorers;
   },
 
+  getLast: function() {
+    var keys = _.keys(_explorers);
+    return _explorers[keys[keys.length-1]];
+  },
+
   getAllPersisted: function() {
     return _.filter(_explorers, function(explorer){
       return ExplorerUtils.isPersisted(explorer);
