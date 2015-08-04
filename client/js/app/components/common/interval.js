@@ -27,6 +27,16 @@ var Interval = React.createClass({
     }
   },
 
+  intervalUpdateFn: function(updates) {
+    ExplorerActions.update(this.props.model.id, {
+      query: _.assign({}, this.props.model.query, updates)
+    });
+  },
+
+  intervalGetFn: function(attr) {
+    return this.props.model.query[attr];
+  },
+
   // React Methods
 
   render: function() {
@@ -40,8 +50,8 @@ var Interval = React.createClass({
                       name="Interval"
                       initialOpenState={this.props.model.query.interval}
                       attrsToStore={'interval'}
-                      getFn={this.timeframeGetFn}
-                      updateFn={this.timeframeUpdateFn}
+                      getFn={this.intervalGetFn}
+                      updateFn={this.intervalUpdateFn}
                       toggleCallback={this.intervalFieldsToggled}>
           {hasTimeframe ? null : warningMessage}
           <Select label={false}
