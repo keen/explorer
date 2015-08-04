@@ -63,8 +63,13 @@
 
 .chart-detail-bar {
   margin-bottom: 10px;
+  opacity: .35;
   position: relative;
   z-index: 1;
+
+  &.chart-detail-active {
+    opacity: 1;
+  }
 
   .chart-title-component {
     margin-right: 110px;

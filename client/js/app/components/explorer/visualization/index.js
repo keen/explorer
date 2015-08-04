@@ -68,6 +68,11 @@ var Visualization = React.createClass({
         chartTitle,
         saveBtn;
 
+    var chartDetailBarClasses = classNames({
+      'chart-detail-bar': true,
+      'chart-detail-active': this.props.model.result !== null && !this.props.model.loading
+    });
+
     var codeSampleBtnClasses = classNames({
       'btn btn-default code-sample-toggle': true,
       'open': !this.state.codeSampleHidden
@@ -123,7 +128,7 @@ var Visualization = React.createClass({
       <div className="visualization">
         <Notice notice={this.props.notice} closeCallback={this.noticeClosed} />
         <div className="visualization-wrapper">
-          <div className="chart-detail-bar">
+          <div className={chartDetailBarClasses}>
             {chartTitle}
             <div className="chart-type-component">
               <Select label={false}

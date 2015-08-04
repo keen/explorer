@@ -1481,8 +1481,12 @@
 }
 #keen-explorer .chart-detail-bar {
   margin-bottom: 10px;
+  opacity: .35;
   position: relative;
   z-index: 1;
+}
+#keen-explorer .chart-detail-bar.chart-detail-active {
+  opacity: 1;
 }
 #keen-explorer .chart-detail-bar .chart-title-component {
   margin-right: 110px;

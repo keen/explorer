@@ -4248,6 +4248,11 @@ var Visualization = React.createClass({displayName: "Visualization",
         chartTitle,
         saveBtn;
 
+    var chartDetailBarClasses = classNames({
+      'chart-detail-bar': true,
+      'chart-detail-active': this.props.model.result !== null && !this.props.model.loading
+    });
+
     var codeSampleBtnClasses = classNames({
       'btn btn-default code-sample-toggle': true,
       'open': !this.state.codeSampleHidden
@@ -4303,7 +4308,7 @@ var Visualization = React.createClass({displayName: "Visualization",
       React.createElement("div", {className: "visualization"}, 
         React.createElement(Notice, {notice: this.props.notice, closeCallback: this.noticeClosed}), 
         React.createElement("div", {className: "visualization-wrapper"}, 
-          React.createElement("div", {className: "chart-detail-bar"}, 
+          React.createElement("div", {className: chartDetailBarClasses}, 
             chartTitle, 
             React.createElement("div", {className: "chart-type-component"}, 
               React.createElement(Select, {label: false, 
