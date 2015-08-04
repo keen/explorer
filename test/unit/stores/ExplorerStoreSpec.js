@@ -11,7 +11,6 @@ var ExplorerStore = require('../../../client/js/app/stores/ExplorerStore');
 var ExplorerActions = require('../../../client/js/app/actions/ExplorerActions');
 
 describe('stores/ExplorerStore', function() {
-
   beforeEach(function () {
     ExplorerStore.clearAll();
   });
@@ -46,8 +45,8 @@ describe('stores/ExplorerStore', function() {
           filters: [],
           time: {
             relativity: 'this',
-            amount: 1,
-            sub_timeframe: 'weeks'
+            amount: 14,
+            sub_timeframe: 'days'
           }
         },
         visualization: {
@@ -527,8 +526,8 @@ describe('stores/ExplorerStore', function() {
             filters: [],
             time: {
               relativity: 'this',
-              amount: 1,
-              sub_timeframe: 'weeks'
+              amount: 14,
+              sub_timeframe: 'days'
             }
           },
           visualization: {
