@@ -575,6 +575,9 @@
   border-color: transparent;
   color: #fff;
 }
+#keen-explorer .btn-default {
+  background-color: #fff;
+}
 #keen-explorer h1,
 #keen-explorer h2,
 #keen-explorer h3,
@@ -765,6 +768,8 @@
   background-color: transparent;
   border: medium none;
   box-shadow: none;
+  height: 35px;
+  line-height: 24px;
   padding-right: 25px;
   position: relative;
   text-indent: 0.01px;
@@ -995,6 +1000,7 @@
   line-height: 20px;
   margin: 0;
   padding-left: 40px;
+  text-transform: none;
 }
 #keen-explorer .fields-toggle .toggle-label .toggle-button {
   background: none;
@@ -1013,9 +1019,13 @@
 }
 #keen-explorer .fields-toggle .toggle-label .toggle-button .icon {
   display: block;
+  font-family: 'Gotham Rounded A', 'Gotham Rounded B', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-size: 22px;
+  height: 24px;
+  line-height: 24px;
   position: relative;
   top: -1px;
+  -webkit-font-smoothing: none;
 }
 #keen-explorer .fields-toggle .toggle-label .toggle-button .icon::before {
   content: "\002B";
@@ -1356,6 +1366,7 @@
   position: absolute;
 }
 #keen-explorer .query-pane-tabs li a {
+  line-height: 21px;
   margin: 1px 1px 0 1px;
   padding: 9px 9px 10px;
 }
@@ -1502,9 +1513,13 @@
 #keen-explorer .chart-options select {
   margin-top: 1px;
 }
+#keen-explorer .chart-options .btn-primary {
+  min-width: 124px;
+}
 #keen-explorer .chart-options .code-sample-toggle {
   color: #4d4d4d;
   font-size: 12px;
+  min-width: 100px;
   padding: 8px 14px 7px;
 }
 #keen-explorer .chart-options .code-sample-toggle.open {
@@ -1737,17 +1752,6 @@
 }
 #keen-explorer hr {
   margin: 10px 0;
-}
-#keen-explorer .pseudo-select-arrow {
-  content: "";
-  position: absolute;
-  right: 8px;
-  border-color: #4D4D4D transparent;
-  border-style: solid;
-  height: 0px;
-  width: 0px;
-  border-left-width: 4px;
-  border-right-width: 4px;
 }
 #keen-explorer .btn .icon,
 #keen-explorer h1 .icon,
