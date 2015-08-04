@@ -3172,7 +3172,7 @@ var Explorer = React.createClass({displayName: "Explorer",
       NoticeActions.create({
         icon: 'info-sign',
         type: 'warning',
-        text: "There is already a query in progress. Wait for it to finish loading before selecting a saved query."
+        text: "There is already a query in progress. Wait for it to finish loading before selecting a query."
       });
     } else {
       var modelId = event.currentTarget.dataset.id;
@@ -3212,6 +3212,7 @@ var Explorer = React.createClass({displayName: "Explorer",
     ExplorerActions.create();
     var newExplorer = ExplorerStore.getLast();
     ExplorerActions.setActive(newExplorer.id);
+    this.setState({ activeQueryPane: 'build' });
   },
 
   onBrowseEvents: function(event) {
@@ -4750,7 +4751,8 @@ function _updateFilter(id, index, updates) {
 }
 
 function _clear(id) {
-  _explorers[id] = _.assign(_defaultAttrs(), { id: id, active: true });
+  var model = _explorers[id];
+  _explorers[id] = _.assign({}, _defaultAttrs(), { id: model.id, active: model.active });
 }
 
 var ExplorerStore = _.assign({}, EventEmitter.prototype, {

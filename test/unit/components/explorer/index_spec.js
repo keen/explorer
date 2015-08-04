@@ -311,6 +311,11 @@ describe('components/explorer/index', function() {
         this.component.createNewQuery(TestHelpers.fakeEvent());
         assert.strictEqual(this.component.refs['query-pane-tabs'].refs['build-tab'].getDOMNode().textContent, 'Create a new query');
       });
+      it('should update component state to show the build tab', function () {
+        this.component.setState({ activeQueryPane: 'browse' });
+        this.component.createNewQuery(TestHelpers.fakeEvent());
+        assert.strictEqual(this.component.state.activeQueryPane, 'build');
+      });
     });
   
   });

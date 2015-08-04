@@ -95,6 +95,7 @@ var Explorer = React.createClass({
     ExplorerActions.create();
     var newExplorer = ExplorerStore.getLast();
     ExplorerActions.setActive(newExplorer.id);
+    this.setState({ activeQueryPane: 'build' });
   },
 
   onBrowseEvents: function(event) {
