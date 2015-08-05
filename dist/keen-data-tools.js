@@ -624,7 +624,7 @@ var Datepicker = React.createClass({displayName: "Datepicker",
 
   destroyPicker: function() {
     var picker = $(this.refs[this.props.refValue].getDOMNode()).pickadate('picker');
-    picker.stop();
+    if (picker) picker.stop();
   },
 
   // React methods
@@ -1345,6 +1345,10 @@ var FilterValueFields = React.createClass({displayName: "FilterValueFields",
   handleDateBlur: function (event) {
     var name = event.target.name;
     var value = event.target.value;
+    
+    console.log('name is: ' + name);
+    console.log('value is: ' + value);
+
     this.setDate(name, value);
   },
 
@@ -1375,9 +1379,7 @@ var FilterValueFields = React.createClass({displayName: "FilterValueFields",
   },
 
   componentWillReceiveProps: function(newProps) {
-    this.setState({
-      property_value: newProps.filter.property_value
-    });
+    this.setState({ property_value: newProps.filter.property_value });
   },
 
   render: function() {
@@ -5622,7 +5624,6 @@ module.exports = {
   coercionFunctions: {
 
     'Datetime': function(filter) {
-      if (!exists(filter.property_value)) return null;
       return module.exports.formatDatetimePropertyValue(filter);
     },
 
@@ -5667,6 +5668,9 @@ module.exports = {
   formatDatetimePropertyValue: function(filter) {
     if (moment(filter.property_value).isValid()) {
       return FormatUtils.formatISOTimeNoTimezone(filter.property_value);
+    } else {
+      var datetime = new Date(moment().subtract(1, 'days').startOf('day').format());
+      return FormatUtils.formatISOTimeNoTimezone(datetime);
     }
   },
 
