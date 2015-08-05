@@ -253,24 +253,6 @@ describe('utils/ExplorerUtils', function() {
       assert.isTrue(stub.calledOnce);
       ExplorerUtils.unpackTimeframeParam.restore();
     });
-    it('should call FilterUtils.initDatetime for datetime filters', function () {
-      var stub = sinon.stub(FilterUtils, 'initDatetime');
-      var params = {
-        query: {
-          filters: [
-            {
-              coercion_type: 'Datetime',
-              property_name: 'date',
-              operator: 'eq',
-              property_value: '2015-01-01T00:00:00'
-            }
-          ]
-        }
-      };
-      ExplorerUtils.formatQueryParams(params);
-      assert.isTrue(stub.calledOnce);
-      FilterUtils.initDatetime.restore();
-    });
     it('should call FilterUtils.initList for list filters', function () {
       var stub = sinon.stub(FilterUtils, 'initList');
       var params = {

@@ -252,9 +252,6 @@ module.exports = {
     }
     if (params.query.filters) {
       params.query.filters = _.map(params.query.filters, function(filter) {
-        if (filter.coercion_type === 'Datetime') {
-          filter = _.assign({}, filter, FilterUtils.initDatetime(filter));
-        }
         if (filter.coercion_type === 'List') {
           filter = _.assign({}, filter, FilterUtils.initList(filter));
         }

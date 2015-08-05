@@ -32,8 +32,7 @@ describe('utils/FilterUtils', function() {
           property_value: "",
           operator: "eq",
           coercion_type: "Datetime",
-          property_value_date: "May 3, 2015",
-          property_value_time: "10:00 AM"
+          property_value: "May 3, 2015 10:00 AM",
         };
         assert.strictEqual(FilterUtils.getCoercedValue(filter), "2015-05-03T10:00:00.000");
       });
@@ -155,20 +154,6 @@ describe('utils/FilterUtils', function() {
     });
   });
 
-  describe('initDatetime', function () {
-    it('properly formats datetime values', function () {
-      var filter = {
-        property_name: 'created_at',
-        operator: 'eq',
-        coercion_type: 'Datetime',
-        property_value: '2015-02-04T13:00:00.000'
-      };
-      filter = FilterUtils.initDatetime(filter);
-      assert.strictEqual(filter.property_value_date, 'Feb 4, 2015');
-      assert.strictEqual(filter.property_value_time, '1:00 PM');
-    });
-  });
-
   describe('queryJSON', function () {
     it('should return an empty object if the filter is not valid', function () {
        var filter = {
@@ -201,9 +186,9 @@ describe('utils/FilterUtils', function() {
         property_value: 'date',
         coercion_type: 'Datetime'
       }; 
-      var stub = sinon.stub(FormatUtils, 'formatISOTimeNoTimezone');
+      var spy = sinon.spy(FormatUtils, 'formatISOTimeNoTimezone');
       FilterUtils.queryJSON(filter);
-      assert.isTrue(stub.calledOnce);
+      assert.lengthOf(spy.getCalls(), 2);
       FormatUtils.formatISOTimeNoTimezone.restore();
     });
     it('should parse the list if the coercion type is List', function () {
