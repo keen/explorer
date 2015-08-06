@@ -1304,10 +1304,9 @@
 }
 #keen-explorer .interactive-list .remove-btn .icon {
   display: block;
-  font-size: 22px;
+  font-size: 20px;
   position: relative;
   text-align: center;
-  top: -3px;
 }
 #keen-explorer .interactive-list .remove-btn .icon:hover {
   color: #444;
