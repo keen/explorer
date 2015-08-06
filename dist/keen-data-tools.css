@@ -638,6 +638,9 @@
 #keen-explorer label.valign {
   line-height: 30px;
 }
+#keen-explorer .form-control {
+  height: 35px;
+}
 #keen-explorer .input-group-btn .btn:focus,
 #keen-explorer .input-group-btn .btn:active {
   outline: none;
@@ -692,7 +695,7 @@
   margin: 10px 0 0;
 }
 #keen-explorer hr.fieldset-divider {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.07);
   border-top: 1px solid #fff;
 }
 #keen-explorer .search-box {
@@ -1451,7 +1454,7 @@
   position: relative;
 }
 #keen-explorer .extraction-message-component .alert {
-  border-bottom: 1px solid #d7d7d7;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.07);
   border-radius: 0;
   margin: 0 0 10px 0;
   min-height: 46px;
@@ -1525,7 +1528,7 @@
   outline: 0;
 }
 #keen-explorer .chart-options {
-  border-top: 1px solid #d7d7d7;
+  border-top: 1px solid rgba(0, 0, 0, 0.07);
   margin: 10px 0 0;
   padding: 10px 0 0;
 }
