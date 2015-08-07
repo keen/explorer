@@ -26,13 +26,21 @@ var DataTable = React.createClass({
     });
     return <tr>{cells}</tr>;
   },
+
   _generateRows: function(data, headers) {
     var _this = this;
+    var cells;
     return _.map(data, function(row, index) {
       var className = index % 2 == 0 ? 'even' : 'odd';
-      var cells = _.map(headers, function(header) {
-        return <td>{_this._formatCell(row, header)}</td>;
-      });
+
+      if (_.isArray(row) || _.isObject(row)) {
+        cells = _.map(headers, function(header) {
+          return <td>{_this._formatCell(row, header)}</td>;
+        });
+      } else {
+        cells = <td>{row}</td>;
+      }
+
       return <tr className={className}>{cells}</tr>;
     });
   },

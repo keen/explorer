@@ -649,7 +649,7 @@ var Datepicker = React.createClass({displayName: "Datepicker",
 
   destroyPicker: function() {
     var picker = $(this.refs[this.props.refValue].getDOMNode()).pickadate('picker');
-    picker.stop();
+    if (picker) picker.stop();
   },
 
   // React methods
@@ -666,7 +666,8 @@ var Datepicker = React.createClass({displayName: "Datepicker",
       label: false,
       onChange: function(){},
       placeholder: '',
-      classes: 'datepicker-wrapper form-group'
+      classes: 'datepicker-wrapper form-group',
+      onSet: function(){}
     };
   },
 
@@ -1319,9 +1320,11 @@ var ExplorerActions = require('../../actions/ExplorerActions');
 var FormatUtils = require('../../utils/FormatUtils');
 var FilterUtils = require('../../utils/FilterUtils');
 
+var dateFormat = 'll';
+var timeFormat = 'h:mm A';
+
 function coerceGeoValue(value) {
   var trailingDecimals = value.match(/\.+$/);
-
   if (value === '-' || (trailingDecimals && trailingDecimals.length)) {
     return value;
   } else {
@@ -1334,7 +1337,7 @@ var FilterValueFields = React.createClass({displayName: "FilterValueFields",
   handleGeoSelection: function(event) {
     var name = event.target.name;
     var value = event.target.value;
-    
+
     var updates = _.cloneDeep(this.props.filter);
     if (!_.isNull(name.match('coordinates'))) {
       updates.property_value.coordinates[parseInt(name.substr(name.length - 1))] = coerceGeoValue(value);
@@ -1352,140 +1355,116 @@ var FilterValueFields = React.createClass({displayName: "FilterValueFields",
     this.setState(updates);
   },
 
-  updateFilter: function(event) {
-    var name = event.target.name;
-    var value = event.target.value;
-
-    if (name === 'property_value_date') {
-      value = moment(new Date(value)).format('ll');
-    }
-    if (name === 'property_value_time') {
-      var formattedDateAndTime = moment(new Date(moment().format('ll') + ' ' + value));
-      value = formattedDateAndTime.format('h:mm A');
-    }
-    
-    var updates = {};
-    updates[name] = value;
-    attrs = _.assign({}, this.props.model.query.filters[this.props.index], updates);
+  setDate: function(name, value) {
+    var updates = _.cloneDeep(this.props.filter);
+    updates.property_value = new Date(moment(new Date(value)).format(dateFormat) + " " + moment(this.props.filter.property_value).format(timeFormat));
     ExplorerActions.updateFilter(this.props.model.id, this.props.index, updates);
   },
 
-  buildValueInput: function() {
-    var filter = this.props.filter;
-    
-    var propertyType = getPropertyType(
-      this.props.project,
-      this.props.model.query.event_collection,
-      filter.property_name
-    );
-
-    if (propertyType === 'geo' || filter.operator === 'within') {
-      return this.geoInput();
-    } else if (filter.operator === 'exists' || filter.coercion_type === 'Boolean') {
-      return this.booleanInput();
-    } else if (filter.coercion_type === 'Datetime') {
-      return this.datetimeInput();
-    } else {
-      return null;
-    }
+  setTime: function(name, value) {
+    var updates = _.cloneDeep(this.props.filter);
+    updates.property_value = new Date(moment(this.props.filter.property_value).format(dateFormat) + " " + moment(new Date(value)).format(timeFormat));
+    ExplorerActions.updateFilter(this.props.model.id, this.props.index, updates);
   },
 
-  geoInput: function() {
-    return React.createElement(Geo, {handleGeoSelection: this.handleGeoSelection, filter: this.props.filter})
+  handleDateBlur: function (event) {
+    var name = event.target.name;
+    var value = event.target.value;
+    // console.log('name is: ' + name);
+    // console.log('value is: ' + value);
+    this.setDate(name, value);
+  },
+
+  updateFilter: function(event) {
+    var name = event.target.name;
+    var value = event.target.value;
+    var updates = _.cloneDeep(this.props.filter);
+    updates[name] = value;
+    ExplorerActions.updateFilter(this.props.model.id, this.props.index, updates);
   },
 
   getCoercionOptions: function() {
-    if (this.props.filter.operator) {
-      return _.find(FILTER_OPERATORS, { value: this.props.filter.operator }).canBeCoeredTo;
-    } else {
-      return [];
-    }
-  },
-
-  defaultInput: function() {
-    var isReadonly = (this.props.filter.coercion_type === 'Null');
-
-    return (
-      React.createElement("input", {type: "text", 
-             ref: "value-input", 
-             name: "property_value", 
-             className: "form-control property-value", 
-             value: this.state.property_value, 
-             onChange: this.onChange, 
-             onBlur: this.updateFilter, 
-             placeholder: this.getInputPlaceholder(), 
-             readOnly: isReadonly})
-    )
-  },
-
-  datetimeInput: function() {
-    return (
-      React.createElement("div", {className: "row property-value"}, 
-        React.createElement("div", {className: "col-md-6 form-collapse-right"}, 
-          React.createElement(Datepicker, {ref: "value-input", 
-                      value: this.state.property_value_date, 
-                      label: false, 
-                      name: "property_value_date", 
-                      placeholder: "Date", 
-                      classes: "datepicker-wrapper", 
-                      onChange: this.onChange, 
-                      onBlur: this.updateFilter})
-        ), 
-        React.createElement("div", {className: "col-md-6 form-collapse-left"}, 
-          React.createElement(Timepicker, {value: this.state.property_value_time, 
-                      label: false, 
-                      name: "property_value_time", 
-                      placeholder: "Time", 
-                      classes: "timepicker-wrapper", 
-                      onChange: this.onChange, 
-                      onBlur: this.updateFilter})
-        )
-      )
-    );
-  },
-
-  booleanInput: function() {
-    var selectedOption = FormatUtils.booleanMap(this.state.property_value);
-
-    return  (
-      React.createElement(Select, {name: "property_value", 
-              classes: "property-value", 
-              ref: "boolean-value-set", 
-              options: ['true', 'false'], 
-              handleBlur: this.updateFilter, 
-              handleSelection: this.onChange, 
-              selectedOption: selectedOption || 'true', 
-              emptyOption: false}));
+    var operator = this.props.filter.operator;
+    return operator ? _.find(FILTER_OPERATORS, { value: operator }).canBeCoeredTo : [];
   },
 
   getInputPlaceholder: function() {
     var type = this.props.filter.coercion_type;
-
-    if (type === 'List') {
-      return 'Comma sep list';
-    } else {
-      return type;
-    }
+    return type === 'List' ? 'Comma sep list' : type;
   },
 
   // React methods
 
   getInitialState: function() {
     return {
-      property_value:      this.props.filter.property_value,
-      property_value_date: this.props.filter.property_value_date,
-      property_value_time: this.props.filter.property_value_time
+      property_value: this.props.filter.property_value
     };
   },
 
   componentWillReceiveProps: function(newProps) {
-    this.setState({
-      property_value: newProps.filter.property_value
-    });
+    this.setState({ property_value: newProps.filter.property_value });
   },
 
   render: function() {
-    var valueInput = this.buildValueInput() || this.defaultInput();
+    var valueInput;
+
+    var propertyType = getPropertyType(
+      this.props.project,
+      this.props.model.query.event_collection,
+      this.props.filter.property_name
+    );
+
+    if (propertyType === 'geo' || this.props.filter.operator === 'within') {
+      valueInput = React.createElement(Geo, {handleGeoSelection: this.handleGeoSelection, filter: this.props.filter});
+    } else if (this.props.filter.operator === 'exists' || this.props.filter.coercion_type === 'Boolean') {
+      valueInput = (
+        React.createElement(Select, {name: "property_value", 
+                classes: "property-value", 
+                ref: "boolean-value-set", 
+                options: ['true', 'false'], 
+                handleBlur: this.updateFilter, 
+                handleSelection: this.onChange, 
+                selectedOption: FormatUtils.booleanMap(this.state.property_value) || 'true', 
+                emptyOption: false})
+      );
+    } else if (this.props.filter.coercion_type === 'Datetime') {
+      valueInput = (
+        React.createElement("div", {className: "row property-value"}, 
+          React.createElement("div", {className: "col-md-6 form-collapse-right"}, 
+            React.createElement(Datepicker, {ref: "date-value-input", 
+                        value: moment(this.state.property_value).format(dateFormat), 
+                        label: false, 
+                        name: "property_value", 
+                        placeholder: "Date", 
+                        classes: "datepicker-wrapper", 
+                        onSet: this.setDate, 
+                        onBlur: this.handleDateBlur})
+          ), 
+          React.createElement("div", {className: "col-md-6 form-collapse-left"}, 
+            React.createElement(Timepicker, {ref: "time-value-input", 
+                        value: moment(this.state.property_value).format(timeFormat), 
+                        label: false, 
+                        name: "property_value", 
+                        placeholder: "Time", 
+                        classes: "timepicker-wrapper", 
+                        handleSelection: this.setTime, 
+                        handleBlur: this.setTime})
+          )
+        )
+      );
+    } else {
+      valueInput = (
+        React.createElement("input", {type: "text", 
+               ref: "value-input", 
+               name: "property_value", 
+               className: "form-control property-value", 
+               value: this.state.property_value, 
+               onChange: this.onChange, 
+               onBlur: this.updateFilter, 
+               placeholder: this.getInputPlaceholder(), 
+               readOnly: this.props.filter.coercion_type === 'Null'})
+      );
+    }
 
     return (
       React.createElement("div", {className: "row"}, 
@@ -5409,9 +5388,6 @@ module.exports = {
     }
     if (params.query.filters) {
       params.query.filters = _.map(params.query.filters, function(filter) {
-        if (filter.coercion_type === 'Datetime') {
-          filter = _.assign({}, filter, FilterUtils.initDatetime(filter));
-        }
         if (filter.coercion_type === 'List') {
           filter = _.assign({}, filter, FilterUtils.initList(filter));
         }
@@ -5604,9 +5580,6 @@ module.exports = {
   coercionFunctions: {
 
     'Datetime': function(filter) {
-      if (!exists(filter.property_value_date) || !exists(filter.property_value_time)) {
-        return '';
-      }
       return module.exports.formatDatetimePropertyValue(filter);
     },
 
@@ -5649,9 +5622,11 @@ module.exports = {
   },
 
   formatDatetimePropertyValue: function(filter) {
-    var formattedDatetime = moment(filter.property_value_date + ' ' + filter.property_value_time);
-    if (formattedDatetime.isValid()) {
-      return FormatUtils.formatISOTimeNoTimezone(formattedDatetime);
+    if (moment(filter.property_value).isValid()) {
+      return FormatUtils.formatISOTimeNoTimezone(filter.property_value);
+    } else {
+      var datetime = new Date(moment().subtract(1, 'days').startOf('day').format());
+      return FormatUtils.formatISOTimeNoTimezone(datetime);
     }
   },
 
@@ -5689,13 +5664,6 @@ module.exports = {
     }
 
     return _.pick(attrs, ['property_name', 'operator', 'property_value', 'coercion_type']);
-  },
-
-  initDatetime: function(filter) {
-    var inputFormat = "YYYY-MM-DDTh:mm:ss";
-    filter.property_value_date = moment(filter.property_value).format('MMM D, YYYY', inputFormat);
-    filter.property_value_time = moment(filter.property_value).format('h:mm A', inputFormat);
-    return filter;
   },
 
   initList: function(filter) {
