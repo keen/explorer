@@ -33,7 +33,7 @@ var FilterValueFields = React.createClass({
   handleGeoSelection: function(event) {
     var name = event.target.name;
     var value = event.target.value;
-    
+
     var updates = _.cloneDeep(this.props.filter);
     if (!_.isNull(name.match('coordinates'))) {
       updates.property_value.coordinates[parseInt(name.substr(name.length - 1))] = coerceGeoValue(value);
@@ -66,10 +66,8 @@ var FilterValueFields = React.createClass({
   handleDateBlur: function (event) {
     var name = event.target.name;
     var value = event.target.value;
-    
-    console.log('name is: ' + name);
-    console.log('value is: ' + value);
-
+    // console.log('name is: ' + name);
+    // console.log('value is: ' + value);
     this.setDate(name, value);
   },
 
@@ -105,7 +103,7 @@ var FilterValueFields = React.createClass({
 
   render: function() {
     var valueInput;
-    
+
     var propertyType = getPropertyType(
       this.props.project,
       this.props.model.query.event_collection,
