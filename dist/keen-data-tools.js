@@ -4046,7 +4046,7 @@ var Chart = React.createClass({displayName: "Chart",
 		}
 		else if (ExplorerUtils.isTableViz(this.props.model)) {
       chartContent = (
-				React.createElement(DataTable, {model: this.props.model, dataviz: this.props.dataviz, data: this.props.model.result})
+				React.createElement(DataTable, {model: this.props.model, dataviz: this.props.dataviz})
 			);
 	  }
 		else {
@@ -4114,7 +4114,6 @@ module.exports = CodeSample;
  * @jsx React.DOM
  */
 var _ = require('lodash');
-// var moment = require('moment');
 var React = require('react/addons');
 var Loader = require('../../common/loader.js');
 
@@ -4143,16 +4142,19 @@ var DataTable = React.createClass({displayName: "DataTable",
   // ***********************
   render: function() {
     var dataset, headerRows, tableRows;
+
     this.props.dataviz.data({ result: this.props.model.result });
-
     dataset = this.props.dataviz.dataset;
-    dataset.insertColumn(0, '#', function(row, i){
-      return i;
-    });
-    dataset.sortColumns('asc');
 
-    headerRows = this._generateHeader(dataset);
-    tableRows = this._generateRows(dataset);
+    // TODO: Fix unit tests to handle proper instantiation
+    if ('undefined' !== typeof dataset) {
+      dataset.insertColumn(0, '#', function(row, i){
+        return i;
+      });
+      dataset.sortColumns('asc');
+      headerRows = this._generateHeader(dataset);
+      tableRows = this._generateRows(dataset);
+    }
 
     return (
       React.createElement("table", {className: "data-table table"}, 
