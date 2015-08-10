@@ -5,7 +5,7 @@
 var _ = require('lodash');
 var React = require('react/addons');
 var Loader = require('../../common/loader.js');
-// var DataTable = require('./data_table.js');
+var DataTable = require('./data_table.js');
 var KeenViz = require('./keen_viz.js');
 var ExplorerUtils = require('../../../utils/ExplorerUtils');
 var FormatUtils = require('../../../utils/FormatUtils');
@@ -61,11 +61,11 @@ var Chart = React.createClass({
 	  		<textarea ref='jsonViz' className="json-view" value={content} readOnly />
 	  	);
 		}
-		// else if (ExplorerUtils.isTableViz(this.props.model)) {
-    //   chartContent = (
-		// 		<DataTable data={this.props.model.result}/>
-		// 	);
-	  // }
+		else if (ExplorerUtils.isTableViz(this.props.model)) {
+      chartContent = (
+				<DataTable model={this.props.model} dataviz={this.props.dataviz} data={this.props.model.result} />
+			);
+	  }
 		else {
 	  	chartContent = (
 	  		<KeenViz model={this.props.model} dataviz={this.props.dataviz} />
