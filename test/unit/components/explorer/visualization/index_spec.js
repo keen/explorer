@@ -126,6 +126,11 @@ describe('components/explorer/visualization/index', function() {
       });
 
       it('for Table chart type', function(){
+        this.model.result = [
+          { keen: { created_at: '2015-08-01' }, key: 'a', flag: true },
+          { keen: { created_at: '2015-08-20' }, key: 'b', flag: false }
+        ];
+        this.model.loading = false;
         this.model.visualization.chart_type = 'table';
         this.component.forceUpdate();
         assert.lengthOf(TestUtils.scryRenderedDOMComponentsWithClass(this.component, 'extraction-alert'), 1);

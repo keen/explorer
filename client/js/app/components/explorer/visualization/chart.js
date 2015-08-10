@@ -63,7 +63,7 @@ var Chart = React.createClass({
 		}
 		else if (ExplorerUtils.isTableViz(this.props.model)) {
       chartContent = (
-				<DataTable model={this.props.model} dataviz={this.props.dataviz} data={this.props.model.result} />
+				<DataTable model={this.props.model} dataviz={this.props.dataviz} />
 			);
 	  }
 		else {
