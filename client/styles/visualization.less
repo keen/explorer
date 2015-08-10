@@ -50,11 +50,6 @@
   .keen-metric {
     margin: 15px;
   }
-
-  .google-visualization-table {
-    padding: 0;
-    width: 100%;
-  }
 }
 
 .chart-component {
@@ -171,14 +166,28 @@ textarea.json-view {
 }
 
 table.data-table {
-  //width: 90%;
-  max-height: 500px;
-  overflow-y: scroll;
   display: block;
   font-family: "Gotham Rounded A", "Gotham Rounded B", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  max-height: 500px;
+  overflow-y: scroll;
   word-wrap: break-word;
 
+  thead {
+    background: #fff;
+    border-bottom: 2px solid #ddd;
+    height: 36px;
+    position: fixed;
+    top: 0px;
+    width: 100%;
+
+    th {
+      border: none;
+    }
+  }
+
   tbody {
+    border-top: 25px solid transparent;
+
     tr {
       &.even {
         background: #F2F2F2;
@@ -189,3 +198,25 @@ table.data-table {
     }
   }
 }
+
+
+/*
+=======
+.run-query {
+  margin-right: 8px;
+}
+
+.code-sample-toggle {
+  color: #333333;
+  font-weight: 700;
+}
+
+.code-sample-toggle.open {
+  background-color: #333333;
+  color: #e6e6e6;
+}
+
+.data-table {
+>>>>>>> master
+
+*/

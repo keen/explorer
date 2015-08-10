@@ -537,6 +537,26 @@
   line-height: 1.5;
   padding: 0 0 24px;
   position: relative;
+  /*
+=======
+.run-query {
+  margin-right: 8px;
+}
+
+.code-sample-toggle {
+  color: #333333;
+  font-weight: 700;
+}
+
+.code-sample-toggle.open {
+  background-color: #333333;
+  color: #e6e6e6;
+}
+
+.data-table {
+>>>>>>> master
+
+*/
 }
 #keen-explorer .nav-tabs {
   border-bottom: medium none;
@@ -1477,10 +1497,6 @@
 #keen-explorer .chart .keen-metric {
   margin: 15px;
 }
-#keen-explorer .chart .google-visualization-table {
-  padding: 0;
-  width: 100%;
-}
 #keen-explorer .chart-detail-bar {
   margin-bottom: 10px;
   opacity: .35;
@@ -1576,11 +1592,25 @@
   outline: 0;
 }
 #keen-explorer table.data-table {
-  max-height: 500px;
-  overflow-y: scroll;
   display: block;
   font-family: "Gotham Rounded A", "Gotham Rounded B", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  max-height: 500px;
+  overflow-y: scroll;
   word-wrap: break-word;
+}
+#keen-explorer table.data-table thead {
+  background: #fff;
+  border-bottom: 2px solid #ddd;
+  height: 36px;
+  position: fixed;
+  top: 0px;
+  width: 100%;
+}
+#keen-explorer table.data-table thead th {
+  border: none;
+}
+#keen-explorer table.data-table tbody {
+  border-top: 25px solid transparent;
 }
 #keen-explorer table.data-table tbody tr.even {
   background: #F2F2F2;
