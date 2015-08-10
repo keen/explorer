@@ -25,6 +25,7 @@ describe('actions/ExplorerActions', function() {
 
   beforeEach(function () {
     this.dispatchStub.reset();
+
   });
 
   describe('exec', function () {
@@ -47,13 +48,13 @@ describe('actions/ExplorerActions', function() {
       expect(ExplorerActions.exec.bind(null, this.client, explorer.id)).to.throw("Warning: calling exec when model loading is true. Explorer id: 5");
     });
     it('should call runValidations with the right arguments', function () {
-      var explorer = { id: 1, loading: false, query: {} };
+      var explorer = TestHelpers.createExplorerModel();
       this.getStub.returns(explorer);
       var stub = sinon.stub(ValidationUtils, 'runValidations').returns({
         isValid: true
       });
       ExplorerActions.exec(this.client, explorer.id);
-      assert.isTrue(stub.calledWith(ExplorerValidations.explorer, explorer.query));
+      assert.isTrue(stub.calledWith(ExplorerValidations.explorer, explorer));
       ValidationUtils.runValidations.restore();
     });
     it('should call the dispatcher to update the store and set loading to true', function () {
@@ -130,17 +131,17 @@ describe('actions/ExplorerActions', function() {
 
     it('should run the standard explorer validation set', function () {
       ExplorerActions.runEmailExtraction(this.client, this.explorer, this.callback);
-      assert.isTrue(this.runValidationsStub.calledWith(ExplorerValidations.explorer, this.explorer.query));
+      assert.isTrue(this.runValidationsStub.calledWith(ExplorerValidations.explorer, this.explorer));
     });
     it('should run the emailExtractionExplorer validation set if the standard validations pass', function () {
       this.runValidationsStub.returns({ isValid: true });
       ExplorerActions.runEmailExtraction(this.client, this.explorer, this.callback);
-      assert.isTrue(this.runValidationsStub.calledWith(ExplorerValidations.emailExtractionExplorer, this.explorer.query));
+      assert.isTrue(this.runValidationsStub.calledWith(ExplorerValidations.emailExtractionExplorer, this.explorer));
     });
     it('should NOT run the emailExtractionExplorer validation set if the standard validations fail', function () {
       this.explorer.query.analysis_type = null;
       ExplorerActions.runEmailExtraction(this.client, this.explorer, this.callback);
-      assert.isFalse(this.runValidationsStub.calledWith(ExplorerValidations.emailExtractionExplorer, this.explorer.query));
+      assert.isFalse(this.runValidationsStub.calledWith(ExplorerValidations.emailExtractionExplorer, this.explorer));
     });
     it('should NOT run the query if standard validaton fails', function () {
       this.explorer.query.analysis_type = null;
@@ -176,9 +177,15 @@ describe('actions/ExplorerActions', function() {
         {
           id: '1',
           name: 'favorite 1',
+          timeframe_type: 'relative',
           query: {
             event_collection: 'clicks',
-            analysis_type: 'count'
+            analysis_type: 'count',
+            time: {
+              relativity: 'this',
+              amount: 1,
+              sub_timeframe: 'weeks'
+            }
           },
           visualization: {
             chart_type: 'metric'
@@ -187,10 +194,16 @@ describe('actions/ExplorerActions', function() {
         {
           id: '2',
           name: 'favorite 2',
+          timeframe_type: 'relative',
           query: {
             event_collection: 'clicks',
             analysis_type: 'sum',
-            target_property: 'size'
+            target_property: 'size',
+            time: {
+              relativity: 'this',
+              amount: 1,
+              sub_timeframe: 'weeks'
+            }
           },
           visualization: {
             chart_type: 'metric'
@@ -199,10 +212,16 @@ describe('actions/ExplorerActions', function() {
         {
           id: '3',
           name: 'favorite 3',
+          timeframe_type: 'relative',
           query: {
             event_collection: 'clicks',
             analysis_type: 'max',
-            target_property: 'amount'
+            target_property: 'amount',
+            time: {
+              relativity: 'this',
+              amount: 1,
+              sub_timeframe: 'weeks'
+            }
           },
           visualization: {
             chart_type: 'metric'
@@ -229,11 +248,11 @@ describe('actions/ExplorerActions', function() {
       assert.strictEqual(spy.getCalls().length, 3);
       ValidationUtils.runValidations.restore();  
     });
-    it('should not include invalid models', function () {
+    it('should include invalid models', function () {
       this.models[2].query = {};
       var stub = sinon.stub(ExplorerActions, 'createBatch');
       ExplorerActions.getPersisted(this.persistence);
-      assert.strictEqual(stub.getCall(0).args[0].length, 2);
+      assert.strictEqual(stub.getCall(0).args[0].length, 3);
       ExplorerActions.createBatch.restore();  
     });
     it('should log a warning for invalid models', function () {
@@ -242,7 +261,7 @@ describe('actions/ExplorerActions', function() {
       ExplorerActions.getPersisted(this.persistence);
       assert.strictEqual(stub.getCall(0).args[0], 'A persisted explorer model is invalid: ');
       assert.deepPropertyVal(stub.getCall(0).args[1], 'id', '3');
-      window.console.warn.restore();  
+      window.console.warn.restore();
     });
     it('should call update app state when done and set fetchingPersistedExplorers to false', function () {
       var stub = sinon.stub(AppStateActions, 'update');
@@ -321,35 +340,96 @@ describe('actions/ExplorerActions', function() {
     });
 
     describe('saveNew', function () {
-      before(function () {
+      beforeEach(function () {
         this.persistence = {
-          create: function(json, callback) {
-            callback(null, { id: 'NEW_ID_123', name: 'some name' });
+          create: function(model, callback) {
+            callback(null, _.assign({}, ExplorerUtils.formatQueryParams(ExplorerUtils.toJSON(model)), { id: 'abc123', project_id: 'def456' }));
           }
         };
         this.explorer = TestHelpers.createExplorerModel();
-        this.explorer.id = 'ABC-PREV-ID';
+        this.explorer.id = 'TEMP-ABC';
         this.getStub.returns(this.explorer);
+        sinon.stub(ExplorerUtils, 'mergeResponseWithExplorer').returns({ testKey: 'some updates' });
       });
 
-      it('should dispatch to create a new model if successful', function () {
-        ExplorerActions.saveNew(this.persistence, 'ABC-PREV-ID', 'some name');
-        assert.strictEqual(this.dispatchStub.getCall(1).args[0].actionType, 'EXPLORER_CREATE');
+      afterEach(function(){
+        ExplorerUtils.mergeResponseWithExplorer.restore();
       });
-      it('should create a new model with the new ID set if successful', function () {
-        ExplorerActions.saveNew(this.persistence, 'ABC-PREV-ID', 'some name');
-        assert.deepPropertyVal(this.dispatchStub.getCall(1).args[0].attrs, 'id', 'NEW_ID_123');
+
+      it('should dispatch an EXPLORER_SAVING event', function () {
+        ExplorerActions.saveNew(this.persistence, 'TEMP-ABC');
+        assert.isTrue(this.dispatchStub.calledWith({
+          actionType: 'EXPLORER_SAVING',
+          id: 'TEMP-ABC',
+          saveType: 'save'
+        }));
       });
-      it('should create a new model with the right name if successful', function () {
-        ExplorerActions.saveNew(this.persistence, 'ABC-PREV-ID', 'some name');
-        assert.deepPropertyVal(this.dispatchStub.getCall(1).args[0].attrs, 'name', 'some name');
+      it('should dispatch to update the right model with params from mergeResponseWithExplorer if successful', function () {
+        ExplorerActions.saveNew(this.persistence, 'TEMP-ABC');
+        assert.isTrue(this.dispatchStub.calledWith({
+          actionType: 'EXPLORER_UPDATE',
+          id: 'TEMP-ABC',
+          updates: { testKey: 'some updates' }
+        }));
       });
-      it('should not change the active model', function () {
-        ExplorerActions.saveNew(this.persistence, 'ABC-PREV-ID', 'some name');
-        assert.lengthOf(this.dispatchStub.getCalls(), 3);
-        assert.notStrictEqual(this.dispatchStub.getCall(0).args[0].actionType, 'EXPLORER_SET_ACTIVE');
-        assert.notStrictEqual(this.dispatchStub.getCall(1).args[0].actionType, 'EXPLORER_SET_ACTIVE');
-        assert.notStrictEqual(this.dispatchStub.getCall(2).args[0].actionType, 'EXPLORER_SET_ACTIVE');
+      it('should dispatch a fail event if there is a failure', function () {
+        this.persistence.create = function(model, callback) {
+          callback('ERROR');
+        };
+        ExplorerActions.saveNew(this.persistence, 'TEMP-ABC');
+        assert.isTrue(this.dispatchStub.calledWith({
+          actionType: 'EXPLORER_SAVE_FAIL',
+          saveType: 'save',
+          id: 'TEMP-ABC',
+          errorMsg: 'ERROR'
+        }));
+      });
+    });
+
+    describe('saveExisting', function () {
+      beforeEach(function () {
+        this.persistence = {
+          update: function(model, callback) {
+            callback(null, _.assign({}, ExplorerUtils.formatQueryParams(ExplorerUtils.toJSON(model)), { id: 'abc123', project_id: 'def456' }));
+          }
+        };
+        this.explorer = TestHelpers.createExplorerModel();
+        this.explorer.id = 'ABC';
+        this.getStub.returns(this.explorer);
+        sinon.stub(ExplorerUtils, 'mergeResponseWithExplorer').returns({ testKey: 'some updates' });
+      });
+
+      afterEach(function(){
+        ExplorerUtils.mergeResponseWithExplorer.restore();
+      });
+
+      it('should dispatch an EXPLORER_SAVING event', function () {
+        ExplorerActions.saveExisting(this.persistence, 'ABC');
+        assert.isTrue(this.dispatchStub.calledWith({
+          actionType: 'EXPLORER_SAVING',
+          id: 'ABC',
+          saveType: 'update'
+        }));
+      });
+      it('should dispatch to update the right model with params from mergeResponseWithExplorer if successful', function () {
+        ExplorerActions.saveExisting(this.persistence, 'ABC');
+        assert.isTrue(this.dispatchStub.calledWith({
+          actionType: 'EXPLORER_UPDATE',
+          id: 'ABC',
+          updates: { testKey: 'some updates' }
+        }));
+      });
+      it('should dispatch a fail event if there is a failure', function () {
+        this.persistence.update = function(model, callback) {
+          callback('ERROR');
+        };
+        ExplorerActions.saveExisting(this.persistence, 'ABC');
+        assert.isTrue(this.dispatchStub.calledWith({
+          actionType: 'EXPLORER_SAVE_FAIL',
+          saveType: 'update',
+          id: 'ABC',
+          errorMsg: 'ERROR'
+        }));
       });
     });
 

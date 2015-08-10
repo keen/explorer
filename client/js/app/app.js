@@ -43,7 +43,7 @@ function App(config) {
   ExplorerActions.setActive(explorerAttrs.id);
 
   // Run the query for this explorer if it's valid
-  if (runValidations(explorerValidations, ExplorerStore.getActive().query).isValid) {
+  if (runValidations(explorerValidations, ExplorerStore.getActive()).isValid) {
     ExplorerActions.exec(this.client, ExplorerStore.getActive().id);
   }
 

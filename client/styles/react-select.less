@@ -28,13 +28,13 @@
     .arrow;
     top: 10px;
     border-top-width: 0px;
-    border-bottom-width: 6px;
+    border-bottom-width: 5px;
   }
 
   &::after {
     .arrow;
     bottom: 10px;
-    border-top-width: 6px;
+    border-top-width: 5px;
     border-bottom-width: 0px;
   }
 }
@@ -47,9 +47,15 @@
 
 .react-select > input:active,
 .react-select > input:focus {
-  box-shadow: inset 0 1px 2px rgba(0,0,0,.25), 0 -1px 1px #fff, 0 1px 0 #fff;
+  // box-shadow: inset 0 1px 2px rgba(0,0,0,.25), 0 -1px 1px #fff, 0 1px 0 #fff;
+  // cursor: text;
+  // outline: 0;
+  border: 1px solid rgba(0, 187, 222, .67);
+  border-radius: 2px;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.07), 0 0 8px rgba(0, 187, 222, .35);
   cursor: text;
   outline: 0;
+  z-index: 1;
 }
 
 .react-select .react-select-scrollpane {
@@ -90,8 +96,7 @@
 .react-select li.active,
 .react-select-item:focus,
 .react-select-item:hover {
-  background-color: #f2f2f2;
-  /*outline: none;*/
+  background-color: #e7e7e7;
 }
 
 

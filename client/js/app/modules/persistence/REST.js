@@ -26,11 +26,13 @@ RESTPersistence.prototype.makeRequest = function(action, id, body, callback) {
     r.send(body);
   }
   r.end(function(err, res){
+    if (err) {
+      callback(err);
+      return;
+    }
     var body = res ? res.body : null;
     if (body.result) body = body.result;
-    if (callback) {
-      callback(err, body);
-    }
+    callback(null, body);
   });
 };
 

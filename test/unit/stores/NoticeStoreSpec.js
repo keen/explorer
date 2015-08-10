@@ -24,7 +24,7 @@ describe('stores/NoticeStore', function() {
         assert.deepEqual(NoticeStore.getNotice(), {
           type: 'info',
           icon: 'info-sign',
-          text: 'Favoriting query...'
+          text: 'Saving query...'
         });
       });
       it('should create the right notice with the "update" saveType', function () {
@@ -35,7 +35,7 @@ describe('stores/NoticeStore', function() {
         assert.deepEqual(NoticeStore.getNotice(), {
           type: 'info',
           icon: 'info-sign',
-          text: 'Updating favorite...'
+          text: 'Updating query...'
         });
       });
     });
@@ -49,7 +49,7 @@ describe('stores/NoticeStore', function() {
         assert.deepEqual(NoticeStore.getNotice(), {
           type: 'success',
           icon: 'ok',
-          text: 'Query favorited.'
+          text: 'Query saved.'
         });
       });
       it('should create the right notice with the "update" saveType', function () {
@@ -60,7 +60,7 @@ describe('stores/NoticeStore', function() {
         assert.deepEqual(NoticeStore.getNotice(), {
           type: 'success',
           icon: 'ok',
-          text: 'Favorite updated.'
+          text: 'Query updated.'
         });
       });
     });
@@ -76,7 +76,7 @@ describe('stores/NoticeStore', function() {
         assert.deepEqual(NoticeStore.getNotice(), {
           type: 'error',
           icon: 'remove-sign',
-          text: 'There was a problem favoriting your query: ' + errorMessage
+          text: 'There was a problem saving your query: ' + errorMessage
         });
       });
       it('should create the right notice with the "update" saveType', function () {
@@ -89,7 +89,7 @@ describe('stores/NoticeStore', function() {
         assert.deepEqual(NoticeStore.getNotice(), {
           type: 'error',
           icon: 'remove-sign',
-          text: 'There was a problem updating your favorite: ' + errorMessage
+          text: 'There was a problem updating your query: ' + errorMessage
         });
       });
     });
@@ -101,7 +101,7 @@ describe('stores/NoticeStore', function() {
         });
         assert.deepEqual(NoticeStore.getNotice(), {
           type: 'info',
-          text: 'Unfavoriting query...',
+          text: 'Deleting query...',
           icon: 'info-sign'
         });
       });
@@ -114,7 +114,7 @@ describe('stores/NoticeStore', function() {
         });
         assert.deepEqual(NoticeStore.getNotice(), {
           type: 'success',
-          text: 'Query unfavorited.',
+          text: 'Query deleted.',
           icon: 'ok'
         });
       });
@@ -129,7 +129,7 @@ describe('stores/NoticeStore', function() {
         });
         assert.deepEqual(NoticeStore.getNotice(), {
           type: 'error',
-          text: 'There was a problem unfavoriting your query: ' + errorMsg,
+          text: 'There was a problem deleting your query: ' + errorMsg,
           icon: 'remove-sign'
         });
       });

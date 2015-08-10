@@ -7,9 +7,14 @@ module.exports = {
     var lastError = null;
 
     _.each(validationSet, function(validator, key) {
-     if (!validator.validator(model, model[key])) {
+      var validity = validator.validator(model);
+     if (validity !== true) {
        isValid = false;
-       lastError = validator.msg;
+       if (typeof validity === 'string') {
+        lastError = validity;
+       } else {
+        lastError = validator.msg;
+       }
      }
     });
 

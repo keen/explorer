@@ -1,49 +1,50 @@
 .loader {
+  background: rgba(255, 255, 255, 0.67);
+  height: 100%;
+  left: 0;
   position: absolute;
   top: 0;
-  left: 0;
   width: 100%;
-  height: 100%;
   z-index: 1000;
-  background: rgba(105, 105, 105, 0.8);
+
 
   .msg {
+    color: #4D4D4D;
     font-family: "Gotham Rounded A", "Gotham Rounded B", "Helvetica Neue", Helvetica, Arial, sans-serif;
-    color: #FFF;
     font-size: 32px;
-    text-align: center;
+    font-weight: lighter;
+
     height: 30px;
-    line-height: 30px;
-    width: 200px;
-    position: absolute;
-    top: 50%;
     left: 50%;
+    line-height: 30px;
     margin-top: -15px;
     margin-left: -75px;
-    font-weight: 300;
+    position: absolute;
+    text-align: center;
+    top: 50%;
+    width: 200px;
   }
 }
 
 // CSS3 spinner
 .spinner {
   position: absolute;
-  left: -20px;
-  top: -10px;
+  left: -30px;
+  top: -4px;
   width: 50px;
-  height: 50px;
+  height: 40px;
   text-align: center;
   font-size: 10px;
-}
+  > div {
+    background-color: #00BBDE;
+    height: 100%;
+    width: 4px;
+    margin-right: 2px;
+    display: inline-block;
 
-.spinner > div {
-  background-color: #F1F1F1;
-  height: 100%;
-  width: 4px;
-  margin-right: 2px;
-  display: inline-block;
-  
-  -webkit-animation: stretchdelay 1.2s infinite ease-in-out;
-  animation: stretchdelay 1.2s infinite ease-in-out;
+    -webkit-animation: stretchdelay 1.2s infinite ease-in-out;
+    animation: stretchdelay 1.2s infinite ease-in-out;
+  }
 }
 
 .spinner .rect2 {
@@ -67,15 +68,15 @@
 }
 
 @-webkit-keyframes stretchdelay {
-  0%, 40%, 100% { -webkit-transform: scaleY(0.4) }  
+  0%, 40%, 100% { -webkit-transform: scaleY(0.4) }
   20% { -webkit-transform: scaleY(1.0) }
 }
 
 @keyframes stretchdelay {
-  0%, 40%, 100% { 
+  0%, 40%, 100% {
     transform: scaleY(0.4);
     -webkit-transform: scaleY(0.4);
-  }  20% { 
+  }  20% {
     transform: scaleY(1.0);
     -webkit-transform: scaleY(1.0);
   }
@@ -83,4 +84,23 @@
 
 .app-loader {
   z-index: 2000;
+}
+
+.chart-component {
+  .loader {
+    background: #F2F2F2;
+    .msg {
+      color: #808080;
+      font-size: 24px;
+      margin-left: -60px;
+      width: 150px;
+    }
+    .spinner {
+      height: 20px;
+      top: 6px;
+      > div {
+        background-color: #808080;
+      }
+    }
+  }
 }

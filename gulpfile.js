@@ -266,11 +266,21 @@ gulp.task('keen-web', ['keen-web-scripts', 'keen-web-styles'], function(){
   gulp.watch(['client/**/*.js'], ['keen-web-scripts']);
   gulp.watch('client/**/*.less', ['keen-web-styles']);
 });
-
-gulp.task('terrarium', ['development', 'production', 'keen-web']);
-
-gulp.task('terrarium-with-tests', ['development-with-tests', 'keen-web']);
-
+gulp.task('terrarium', function(callback) {
+  runSequence('development',
+              'keen-web',
+              callback);
+});
+gulp.task('terrarium-production', function(callback) {
+  runSequence('production',
+              'keen-web',
+              callback);
+});
+gulp.task('terrarium-with-tests', function(callback) {
+  runSequence('development-with-tests',
+              'keen-web',
+              callback);
+});
 
 // ********************
 // Watching

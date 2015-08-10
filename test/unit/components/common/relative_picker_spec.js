@@ -42,7 +42,7 @@ describe('components/common/relative_picker', function() {
   describe('field change reactions', function(){
     describe('relativity', function () {
       it('sets the chosen relativity on the query', function () {
-        selectNode = TestUtils.findRenderedDOMComponentWithClass(this.component, 'relativity').getDOMNode().childNodes[0];
+        selectNode = TestUtils.findRenderedDOMComponentWithClass(this.component, 'relativity').getDOMNode().childNodes[0].childNodes[0];
         TestUtils.Simulate.change(selectNode, {
           target: {
             name: 'relativity',
@@ -66,7 +66,7 @@ describe('components/common/relative_picker', function() {
     });
     describe('sub_timeframe', function () {
       it('sets the chosen sub-timeframe on the query', function () {
-        selectNode = TestUtils.findRenderedDOMComponentWithClass(this.component, 'sub-timeframe').getDOMNode().childNodes[0];
+        selectNode = TestUtils.findRenderedDOMComponentWithClass(this.component, 'sub-timeframe').getDOMNode().childNodes[0].childNodes[0];
         TestUtils.Simulate.change(selectNode, {
           target: {
             name: 'sub_timeframe',
@@ -78,6 +78,8 @@ describe('components/common/relative_picker', function() {
     });
     describe('relativity description', function () {
       it('is empty when no relative query params are set', function () {
+        var newModel = _.assign({}, this.component.props.model, { query: { time: { relativity: '', amount: '', sub_timeframe: '' } } });
+        this.component.setProps({ model: newModel });
         assert.lengthOf(TestUtils.scryRenderedDOMComponentsWithClass(this.component, 'help-block'), 0);
       });
       describe('when relativity is "this"', function () {

@@ -125,10 +125,10 @@ var Filter = React.createClass({
     return (
       <div className={filterClasses}>
         <div className="row">
-          <div className="col-md-5 filter-property-col">
+          <div className="col-md-4 filter-property-col">
             {propertyNameSelect}
           </div>
-          <div className="col-md-1 filter-operator-col">
+          <div className="col-md-2 filter-operator-col">
             {operatorSelect}
           </div>
           <div className="col-md-5 filter-value-col">

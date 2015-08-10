@@ -180,7 +180,7 @@ describe('components/common/filter_value_fields', function() {
       it('is true or false', function () {
         this.component.props.filter = { operator: 'exists', coercion_type: 'Boolean' };
         this.component.forceUpdate()
-        var boolPropValueSelect = this.component.refs['boolean-value-set'].getDOMNode().lastChild
+        var boolPropValueSelect = this.component.refs['boolean-value-set'].getDOMNode().childNodes[0].childNodes[0];
 
         var boolPropValueSelectOptions = _.map(boolPropValueSelect.childNodes, function(node){
           return node.value;

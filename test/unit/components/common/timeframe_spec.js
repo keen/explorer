@@ -5,6 +5,7 @@ var _ = require('lodash');
 var moment = require('moment');
 var sinon = require('sinon');
 var Timeframe = require('../../../../client/js/app/components/common/timeframe.js');
+var Timezone = require('../../../../client/js/app/components/common/timezone.js');
 var RelativePicker = require('../../../../client/js/app/components/common/relative_picker.js');
 var AbsolutePicker = require('../../../../client/js/app/components/common/absolute_picker.js');
 var ReactSelect = require('../../../../client/js/app/components/common/react_select.js');
@@ -40,8 +41,8 @@ describe('components/common/timeframe', function() {
       assert.lengthOf(TestUtils.scryRenderedDOMComponentsWithClass(this.component, 'absolute-timeframe-picker'), 0);
     });
 
-    it('has the right number of FieldsToggle components', function(){
-      assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, FieldsToggle), 2);
+    it('has one Timezone component', function(){
+      assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, Timezone), 1);
     });
   });
 
