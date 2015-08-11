@@ -28,7 +28,7 @@
   <!-- Explorer Assets -->
   <link rel="stylesheet" type="text/css" href="assets/explorer-build/keen-data-tools.css">
 </head>
-<body class="demo-active">
+<body class="demo-ready">
   <div class="masthead hero">
     <div class="container">
       <header class="navbar navbar-static">
@@ -86,7 +86,7 @@
         </div>
         <div class="col-sm-4">
           <a name="preset-visit-duration" class="explorer-preset" href="?query%5Bevent_collection%5D=leave&query%5Banalysis_type%5D=average&query%5Btarget_property%5D=sinceLoad&query%5Bgroup_by%5D=page.path&query%5Btimezone%5D=UTC&query%5Bfilters%5D%5B0%5D%5Bproperty_name%5D=page.path&query%5Bfilters%5D%5B0%5D%5Boperator%5D=contains&query%5Bfilters%5D%5B0%5D%5Bproperty_value%5D=%2Fblog&query%5Bfilters%5D%5B0%5D%5Bcoercion_type%5D=String&query%5Btimeframe%5D=this_1_weeks&visualization%5Bchart_type%5D=barchart#demo">
-            <h3>Visit Duration</h3>
+            <h3>Visit duration</h3>
             <span class="preset-description">Discover the average time visitors spend on the website.</span>
           </a>
         </div>
@@ -162,7 +162,7 @@
   $(document).ready(function(){
 
     var btn = $('.cta-btn');
-    var body = $('body');
+    var body = $('body.demo-ready');
 
     // var params = Keen.utils.parseParams(document.location.search);
     if (document.location.search.length || document.location.hash === '#demo'){
@@ -172,17 +172,14 @@
       activateLanding();
     }
 
-    // $('#close-demo').click(function(event){
-    //   // deactivateDemo();
-    //   activateLanding();
-    //   return false;
-    // });
+    $('#close-demo').click(function(event){
+      deactivateDemo();
+      activateLanding();
+      return false;
+    });
 
     function activateLanding(){
-      body
-        .removeClass('demo-active')
-        .addClass('explorer-transitions')
-        .addClass('demo-ready')
+      body.addClass('explorer-transitions');
       btn
         .on('mouseover', toggleOver)
         .on('mouseout', toggleOver);
@@ -193,7 +190,7 @@
 
         activateDemo();
         document.location.hash ='#demo';
-        document.location.search = '?query%5Bevent_collection%5D=page_load&query%5Banalysis_type%5D=count&query%5Btimezone%5D=UTC&query%5Btimeframe%5D=this_1_weeks&visualization%5Bchart_type%5D=metric#demo';
+        //document.location.search = '?query%5Bevent_collection%5D=page_load&query%5Banalysis_type%5D=count&query%5Btimezone%5D=UTC&query%5Btimeframe%5D=this_1_weeks&visualization%5Bchart_type%5D=metric#demo';
 
         return false;
       });
@@ -203,20 +200,20 @@
       body
         .removeClass('demo-ready')
         .removeClass('demo-mouseover')
-        .addClass('demo-active')
-      // $('#close-demo').css('display', '');
+        .addClass('demo-active');
+      $('#close-demo').css('display', '');
 
     }
 
-    // function deactivateDemo(){
-    //   body
-    //     .removeClass('demo-active')
-    //     .addClass('demo-mouseover')
-    //     .addClass('demo-ready');
-    //   document.location.hash = '';
-    //   $('#close-demo').css('display', 'none');
+    function deactivateDemo(){
+      body
+        .removeClass('demo-active')
+        .addClass('demo-mouseover')
+        .addClass('demo-ready');
+      document.location.hash = '';
+      $('#close-demo').css('display', 'none');
 
-    // }
+    }
 
     function toggleOver(){
       body.toggleClass('demo-mouseover');
