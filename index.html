@@ -96,11 +96,6 @@
         </div>
       </div>
     </div>
-    <div style="text-align: right" class="container">
-          <a href ="" id="close-demo" style="display: none">
-            close <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-          </a>
-    </div>
     <div id="keen-data-explorer-wrapper" class="container"></div>
   </section>
 
@@ -170,12 +165,6 @@
       activateLanding();
     }
 
-    $('#close-demo').click(function(event){
-      deactivateDemo();
-      activateLanding();
-      return false;
-    });
-
     function activateLanding(){
       body.addClass('explorer-transitions');
       btn
@@ -199,18 +188,6 @@
         .removeClass('demo-ready')
         .removeClass('demo-mouseover')
         .addClass('demo-active');
-      $('#close-demo').css('display', '');
-
-    }
-
-    function deactivateDemo(){
-      body
-        .removeClass('demo-active')
-        .addClass('demo-mouseover')
-        .addClass('demo-ready');
-      document.location.hash = '';
-      $('#close-demo').css('display', 'none');
-
     }
 
     function toggleOver(){
