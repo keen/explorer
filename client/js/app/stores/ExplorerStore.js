@@ -11,14 +11,13 @@ var ProjectUtils = require('../utils/ProjectUtils');
 var ProjectStore = require('./ProjectStore');
 
 var CHANGE_EVENT = 'change';
-var DEFAULT_NAME = 'Untitled';
 
 var _explorers = {};
 
 function _defaultAttrs(){
   return {
     id: FormatUtils.generateRandomId("TEMP-"),
-    name: DEFAULT_NAME,
+    name: null,
     active: false,
     saving: false,
     error: null,
