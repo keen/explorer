@@ -34,10 +34,11 @@ var RelativePicker = React.createClass({
 
     if (hasRelativeTimeframe(this.props.model)) {
       var subIntervalCopy = FormatUtils.singularize(time.sub_timeframe, time.amount);
+      var timeAmountPluralSuffix = time.amount > 1 ? 's' : '';
       var relativityCopy = time.relativity == 'this' ? 'including' : 'excluding';
       var singularCurrentInterval = FormatUtils.singularize(subIntervalCopy);
 
-      return (<p className="help-block">The last {time.amount} {subIntervalCopy} <b>{relativityCopy}</b> the current {singularCurrentInterval}.</p>);
+      return (<p className="help-block">The last {time.amount} {subIntervalCopy}{timeAmountPluralSuffix} <b>{relativityCopy}</b> the current {singularCurrentInterval}.</p>);
     }
   },
 
