@@ -16,7 +16,7 @@ module.exports = {
 		    projectId: 'projectId',
 		    protocol: 'https',
 		    host: 'api.keen.io/3.0',
-		    masterKey: 'masterKey'
+		    readKey: 'readKey'
 		  },
 		  run: function(){}
 		}

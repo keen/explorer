@@ -63,7 +63,7 @@ describe('utils/ProjectUtils', function() {
                         '/projects/' +
                         this.client.config.projectId +
                         '/events?api_key=' +
-                        this.client.config.masterKey;
+                        this.client.config.readKey;
       ProjectUtils.fetchProjectSchema(this.project);
       this.xhrOpenStub.calledWith('GET', expectedURL, true);
     });

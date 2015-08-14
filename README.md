@@ -66,7 +66,6 @@ Initialize a new Keen.js client and then pass that into the initialization of a 
       client = new Keen({
         projectId: "your_project_id",
         readKey: "your_read_key",
-        masterKey: "your_master_key"
         protocol: "https",
         host: "api.keen.io/3.0",
         requestType: "jsonp"
@@ -98,7 +97,6 @@ To include persistence, create a new persistence object (this must be a complian
     client = new Keen({
       projectId: "your_project_id",
       readKey: "your_read_key",
-      masterKey: "your_master_key",
       protocol: "https",
       host: "api.keen.io/3.0",
       requestType: "xhr"
@@ -135,7 +133,6 @@ If you want to customize this project or contribute, here is how to get started:
       client = new Keen({
         projectId: "your_project_id",
         readKey: "your_read_key",
-        masterKey: "your_master_key"
         protocol: "https",
         host: "api.keen.io/3.0",
         requestType: "jsonp"

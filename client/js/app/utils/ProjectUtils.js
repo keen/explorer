@@ -125,8 +125,8 @@ module.exports = {
   eventsUrl: function(client) {
     var endpoint = client.config.protocol + "://" + client.config.host;
     var projectId = client.config.projectId;
-    var masterKey = client.config.masterKey;
-    return endpoint+'/projects/'+projectId+'/events?api_key='+masterKey;
+    var readKey = client.config.readKey;
+    return endpoint+'/projects/'+projectId+'/events?api_key='+readKey;
   },
 
   unpackProjectSchema: function(project, projectSchema) {

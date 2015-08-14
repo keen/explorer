@@ -310,7 +310,6 @@ module.exports = {
     if (valid.isValid) {
       var endpoint = client.config.protocol + "://" + client.config.host;
       var projectId = client.config.projectId;
-      var masterKey = client.config.masterKey;
 
       var attrs = module.exports.queryJSON(explorer);
 
