@@ -13,7 +13,6 @@ var TestUtils = React.addons.TestUtils;
 var TestHelpers = require('../../../support/TestHelpers');
 
 describe('components/common/filter', function() {
-
   before(function () {
     this.updateFilterStub = sinon.stub(ExplorerActions, 'updateFilter');
   });
@@ -45,7 +44,7 @@ describe('components/common/filter', function() {
 
     this.getSelectOptions = function(selectClass, activeOnly) {
       activeOnly = activeOnly || false;
-      var operatorSelect = TestUtils.findRenderedDOMComponentWithClass(this.component, selectClass).getDOMNode();
+      var operatorSelect = TestUtils.findRenderedDOMComponentWithClass(this.component, selectClass).getDOMNode().childNodes[0];
       var operators = _.map(operatorSelect.childNodes[0].childNodes, function(node){
         if (!activeOnly) {
           return node.value;
@@ -178,7 +177,7 @@ describe('components/common/filter', function() {
         this.filter.coercion_type = 'String';
         this.component.forceUpdate();
 
-        var operatorSelect = TestUtils.findRenderedDOMComponentWithClass(this.component, 'operator').getDOMNode().childNodes[0];
+        var operatorSelect = TestUtils.findRenderedDOMComponentWithClass(this.component, 'operator').getDOMNode().childNodes[0].childNodes[0];
         operatorSelect.value = 'eq';
         TestUtils.Simulate.change(operatorSelect);
 

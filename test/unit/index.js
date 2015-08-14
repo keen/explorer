@@ -48,8 +48,7 @@ require('./components/explorer/csv_extraction_spec.js');
 require('./components/explorer/query_builder/index_spec.js');
 require('./components/explorer/visualization/index_spec.js');
 require('./components/explorer/visualization/chart_spec.js');
-require('./components/explorer/favorites/browse_favorites_spec.js');
-require('./components/explorer/favorites/add_favorite_modal_spec.js');
+require('./components/explorer/saved_queries/browse_queries_spec.js');
 
 // Common
 require('./components/common/react_select_spec.js')

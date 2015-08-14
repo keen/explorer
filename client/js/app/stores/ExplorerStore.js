@@ -38,7 +38,11 @@ function _defaultAttrs(){
       email: null,
       latest: null,
       filters: [],
-      time: {}
+      time: {
+        relativity: 'this',
+        amount: 14,
+        sub_timeframe: 'days'
+      }
     },
     visualization: {
       chart_type: null
@@ -121,9 +125,6 @@ function _create(attrs) {
 }
 
 function _update(id, updates) {
-  if ('name' in updates && (typeof updates.name !== 'string' || updates.name.length < 1)) {
-    updates.name = DEFAULT_NAME;
-  }
   var newModel = _.assign({}, _explorers[id], updates);
   if (updates.id && updates.id !== id) {
     _explorers[updates.id] = newModel;
@@ -167,7 +168,8 @@ function _updateFilter(id, index, updates) {
 }
 
 function _clear(id) {
-  _explorers[id] = _.assign(_defaultAttrs(), { id: id, active: true });
+  var model = _explorers[id];
+  _explorers[id] = _.assign({}, _defaultAttrs(), { id: model.id, active: model.active });
 }
 
 var ExplorerStore = _.assign({}, EventEmitter.prototype, {
@@ -189,6 +191,11 @@ var ExplorerStore = _.assign({}, EventEmitter.prototype, {
 
   getAll: function() {
     return _explorers;
+  },
+
+  getLast: function() {
+    var keys = _.keys(_explorers);
+    return _explorers[keys[keys.length-1]];
   },
 
   getAllPersisted: function() {

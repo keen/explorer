@@ -16,7 +16,6 @@ var TestUtils = React.addons.TestUtils;
 var TestHelpers = require('../../../../support/TestHelpers');
 
 describe('components/explorer/visualization/index', function() {
-
   beforeEach(function() {
     this.client = TestHelpers.createClient();
     this.model = TestHelpers.createExplorerModel();
@@ -28,8 +27,8 @@ describe('components/explorer/visualization/index', function() {
     this.component = TestUtils.renderIntoDocument(<Visualization client={this.client} model={this.model} project={this.project} persistence={null} />);
 
     this.getOptionsFromComponent = function(component) {
-      var chartTypeSelect = TestUtils.findRenderedDOMComponentWithClass(component, 'chart-type').getDOMNode();
-      var optionNodes = chartTypeSelect.childNodes[0].childNodes;
+      var chartTypeSelect = this.component.refs['chart-type'].refs.select.getDOMNode();
+      var optionNodes = chartTypeSelect.childNodes;
       return _.map(optionNodes, function(optionNode) {
         return optionNode.textContent;
       });
@@ -50,32 +49,31 @@ describe('components/explorer/visualization/index', function() {
     });
 
     describe('without persistence', function () {
-      it('should not show the AddFav button', function () {
-        assert.isUndefined(this.component.refs['add-fav']);
+      it('should not show the Save/Update button', function () {
+        assert.isUndefined(this.component.refs['save-query']);
       });
     });
 
     describe('with persistence', function () {
-      it('should show the AddFav button', function () {
+      it('should show the Save/Update button', function () {
         this.model.result = 50;
         this.component.setProps({ persistence: {} });
-        assert.isDefined(this.component.refs['add-fav']);
+        assert.isDefined(this.component.refs['save-query']);
       });
     });
   });
 
   describe('interactions', function () {
-    it('should call props.addClick when the add fav button is clicked', function () {
+    it('should call props.saveQueryClick when the save button is clicked', function () {
       var stub = sinon.stub();
       this.model.result = 50;
-      this.component.setProps({ persistence: {}, addFavoriteClick: stub });
-      TestUtils.Simulate.click(this.component.refs['add-fav'].getDOMNode());
+      this.component.setProps({ persistence: {}, saveQueryClick: stub });
+      TestUtils.Simulate.click(this.component.refs['save-query'].getDOMNode());
       assert.isTrue(stub.calledOnce);
     });
   });
 
   describe('chart types select', function() {
-
     describe('populates with the right chart types based on the dataviz capabilities', function() {
       it('basic options', function(){
         this.model.result = 50;
@@ -87,21 +85,19 @@ describe('components/explorer/visualization/index', function() {
         var options = this.getOptionsFromComponent(this.component);
         assert.sameMembers(options, ['JSON', 'Metric']);
       });
-
     });
 
     it('is not disabled when the model is not loading', function(){
       this.model.result = 50;
       this.model.loading = false;
       this.component.forceUpdate();
-      var select = TestUtils.findRenderedDOMComponentWithClass(this.component, 'chart-type').getDOMNode().childNodes[0];
-      assert.isFalse(select.disabled);
+      assert.isFalse(this.component.refs['chart-type'].refs.select.getDOMNode().disabled);
     });
 
-    it('is not rendered when the model is actively loading', function(){
+    it('is disabled when the model is actively loading', function(){
       this.model.loading = true;
       this.component.forceUpdate();
-      assert.lengthOf(TestUtils.scryRenderedDOMComponentsWithClass(this.component, 'chart-type'), 0);
+      assert.isTrue(this.component.refs['chart-type'].refs.select.getDOMNode().disabled);
     });
 
   });

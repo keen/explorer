@@ -14,9 +14,6 @@ module.exports = {
   coercionFunctions: {
 
     'Datetime': function(filter) {
-      if (!exists(filter.property_value_date) || !exists(filter.property_value_time)) {
-        return '';
-      }
       return module.exports.formatDatetimePropertyValue(filter);
     },
 
@@ -59,9 +56,11 @@ module.exports = {
   },
 
   formatDatetimePropertyValue: function(filter) {
-    var formattedDatetime = moment(filter.property_value_date + ' ' + filter.property_value_time);
-    if (formattedDatetime.isValid()) {
-      return FormatUtils.formatISOTimeNoTimezone(formattedDatetime);
+    if (moment(filter.property_value).isValid()) {
+      return FormatUtils.formatISOTimeNoTimezone(filter.property_value);
+    } else {
+      var datetime = new Date(moment().subtract(1, 'days').startOf('day').format());
+      return FormatUtils.formatISOTimeNoTimezone(datetime);
     }
   },
 
@@ -99,13 +98,6 @@ module.exports = {
     }
 
     return _.pick(attrs, ['property_name', 'operator', 'property_value', 'coercion_type']);
-  },
-
-  initDatetime: function(filter) {
-    var inputFormat = "YYYY-MM-DDTh:mm:ss";
-    filter.property_value_date = moment(filter.property_value).format('MMM D, YYYY', inputFormat);
-    filter.property_value_time = moment(filter.property_value).format('h:mm A', inputFormat);
-    return filter;
   },
 
   initList: function(filter) {

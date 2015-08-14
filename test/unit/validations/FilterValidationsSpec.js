@@ -16,10 +16,10 @@ describe('validations/FilterValidations', function() {
         assert.strictEqual(FilterValidations.filter.property_name.msg, 'Choose a property name');
       });
       it('should return true if the value is present', function () {
-        assert.isTrue(FilterValidations.filter.property_name.validator({}, 'value is here'));
+        assert.isTrue(FilterValidations.filter.property_name.validator({ property_name: 'value is here' }));
       });
       it('should return false if the value is not present', function () {
-        assert.isFalse(FilterValidations.filter.property_name.validator({}, null));
+        assert.isFalse(FilterValidations.filter.property_name.validator({ property_name: null }));
       });
     });
     describe('property_value', function () {
@@ -29,7 +29,7 @@ describe('validations/FilterValidations', function() {
           property_value: ['a list']
         };
         var stub = sinon.stub(FormatUtils, 'parseList');
-        FilterValidations.filter.property_value.validator(filter, filter.property_value);
+        FilterValidations.filter.property_value.validator(filter);
         assert.isTrue(stub.calledWith(filter.property_value));
         FormatUtils.parseList.restore();
       });
@@ -45,8 +45,8 @@ describe('validations/FilterValidations', function() {
           isValid: false,
           lastError: 'error'
         });
-        FilterValidations.filter.property_value.validator(filter, filter.property_value);
-        assert.isTrue(stub.calledWith(FilterValidations.geo, filter.property_value));
+        FilterValidations.filter.property_value.validator(filter);
+        assert.isTrue(stub.calledWith(FilterValidations.geo));
         ValidationUtils.runValidations.restore();
       });
     });
@@ -55,7 +55,7 @@ describe('validations/FilterValidations', function() {
         assert.strictEqual(FilterValidations.filter.operator.msg, 'Choose an operator');
       });
       it('should return false if the value is not present', function () {
-        assert.isFalse(FilterValidations.filter.operator.validator({}, null));
+        assert.isFalse(FilterValidations.filter.operator.validator({ operator: null }));
       });
     });
     describe('coercion_type', function () {
@@ -63,7 +63,7 @@ describe('validations/FilterValidations', function() {
         assert.strictEqual(FilterValidations.filter.coercion_type.msg, 'Choose a coercion type');
       });
       it('should return false if the value is not present', function () {
-        assert.isFalse(FilterValidations.filter.coercion_type.validator({}, null));
+        assert.isFalse(FilterValidations.filter.coercion_type.validator({ coercion_type: null }));
       });
     });
   });

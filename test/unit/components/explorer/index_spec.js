@@ -5,8 +5,7 @@ var Explorer = require('../../../../client/js/app/components/explorer/index.js')
 var Visualization = require('../../../../client/js/app/components/explorer/visualization/index.js');
 var QueryBuilder = require('../../../../client/js/app/components/explorer/query_builder/index.js');
 var QueryPaneTabs = require('../../../../client/js/app/components/explorer/query_pane_tabs.js');
-var AddFavoriteModal = require('../../../../client/js/app/components/explorer/favorites/add_favorite_modal.js');
-var BrowseFavorites = require('../../../../client/js/app/components/explorer/favorites/browse_favorites.js');
+var BrowseQueries = require('../../../../client/js/app/components/explorer/saved_queries/browse_queries.js');
 var Notice = require('../../../../client/js/app/components/common/notice.js');
 var EventBrowser = require('../../../../client/js/app/components/common/event_browser.js');
 var Persistence = require('../../../../client/js/app/modules/persistence/persistence.js');
@@ -24,12 +23,10 @@ var sinon = require('sinon');
 
 describe('components/explorer/index', function() {
 
-  before(function () {
+  beforeEach(function() {
     ExplorerStore.clearAll();
     ExplorerActions.create({ id: '1', active: true });
-  });
 
-  beforeEach(function(){
     this.client = TestHelpers.createClient();
     this.project = TestHelpers.createProject();
     this.config = { persistence: null };
@@ -81,17 +78,27 @@ describe('components/explorer/index', function() {
           assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, QueryBuilder), 1);
         });
 
-        it('has the AddFavoriteModal if persistence has been passed in', function(){
-          assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, AddFavoriteModal), 1);
-        });
-
-        it('can show BrowseFavorites if persistence has been passed in', function(){
+        it('can show BrowseQueries if persistence has been passed in', function(){
           TestUtils.Simulate.click(this.component.refs['query-pane-tabs'].refs['browse-tab'].getDOMNode());
-          assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, BrowseFavorites), 1);
+          assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, BrowseQueries), 1);
         });
 
         it('has the right number of Modal child components', function(){
-          assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, Modal), 4);
+          assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, Modal), 3);
+        });
+
+        describe('New query button', function () {
+          it('has the "create new query" button if the currently active explorer is persisted', function(){
+            this.explorer.id = 'abc-123';
+            this.component.forceUpdate();
+            assert.isDefined(this.component.refs['query-pane-tabs'].refs['new-query']);
+          });
+
+          it('does not have the "create new query" button if the currently active explorer is persisted', function(){
+            this.explorer.id = 'TEMP-';
+            this.component.forceUpdate();
+            assert.isUndefined(this.component.refs['query-pane-tabs'].refs['new-query']);
+          });
         });
       });
 
@@ -104,12 +111,8 @@ describe('components/explorer/index', function() {
           assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, QueryPaneTabs), 0);
         });
 
-        it('does not have the AddFavoriteModal if persistence has not been passed in', function(){
-          assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, AddFavoriteModal), 0);
-        });
-
-        it('does not have the BrowseFavorites if persistence has not been passed in', function(){
-          assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, BrowseFavorites), 0);
+        it('does not have the BrowseQueries if persistence has not been passed in', function(){
+          assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, BrowseQueries), 0);
         });
       });
 
@@ -118,11 +121,17 @@ describe('components/explorer/index', function() {
 
   describe('basic interaction', function() {
 
+    describe('clearing a query', function () {
+      xit('should clear the fields but NOT alter the data for a persisted explorer in the ExplorerStore', function () {
+        // TODO: This will need a second copy of the currently active model to track changes against.
+      });
+    });
+
     describe('tabbing between panes', function () {
       it('properly tabs from the query builder to browsing favorites', function () {
         this.component.setProps({ persistence: {} });
         TestUtils.Simulate.click(this.component.refs['query-pane-tabs'].refs['browse-tab'].getDOMNode());
-        assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, BrowseFavorites), 1);
+        assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, BrowseQueries), 1);
         assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, QueryBuilder), 0);
       });
       it('properly tabs from the query builder to browsing favorites', function () {
@@ -131,7 +140,7 @@ describe('components/explorer/index', function() {
         TestUtils.Simulate.click(this.component.refs['query-pane-tabs'].refs['build-tab'].getDOMNode());
 
         assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, QueryBuilder), 1);
-        assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, BrowseFavorites), 0);
+        assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, BrowseQueries), 0);
       });
     });
 
@@ -166,64 +175,68 @@ describe('components/explorer/index', function() {
                                                               persistence={this.persistence} />);
     });
 
-    describe('saveNewFavorite', function () {
+    describe('saveQueryClick', function () {
       before(function () {
         this.saveNewStub = sinon.stub(ExplorerActions, 'saveNew');
+        this.saveExistingStub = sinon.stub(ExplorerActions, 'saveExisting');
       });
       after(function() {
         ExplorerActions.saveNew.restore();
+        ExplorerActions.saveExisting.restore();
       });
       beforeEach(function() {
-        this.component.refs['add-favorite-modal'].refs.name.refs.input.getDOMNode().value = 'a name';
         this.saveNewStub.reset();
+        this.saveExistingStub.reset();
       });
 
-      describe('ExplorerActions.saveNew function call', function () {
-        it('should call it with persistence', function () {
-          this.component.saveNewFavorite(TestHelpers.fakeEvent());
-          assert.equal(this.saveNewStub.getCall(0).args[0], this.persistence);
+      describe('yet to be persisted explorers', function () {
+        beforeEach(function(){
+          this.explorer.id = 'TEMP-ABC';
+          this.component.forceUpdate();
         });
-        it('should call it with the model id', function () {
-          this.component.saveNewFavorite(TestHelpers.fakeEvent());
-          assert.equal(this.saveNewStub.getCall(0).args[1], 1);  
+
+        it('should run validations on the model', function () {
+          var stub = sinon.stub(ValidationUtils, 'runValidations').returns({ isValid: false });
+          this.component.saveQueryClick({ preventDefault: function(){} });
+          assert.isTrue(stub.calledWith(ExplorerValidations.explorer, this.explorer));
+          ValidationUtils.runValidations.restore();
         });
-        it('should call it with the expected attrs including the favorite name', function () {
-          this.component.refs['add-favorite-modal'].refs.name.refs.input.getDOMNode().value = 'name from favorite bar';
-          this.component.saveNewFavorite(TestHelpers.fakeEvent());
-          assert.isTrue(this.saveNewStub.calledWith(this.persistence, this.component.state.activeExplorer.id, 'name from favorite bar'));
+        it('should call ExplorerActions.saveNew if validations pass', function () {
+          sinon.stub(ValidationUtils, 'runValidations').returns({ isValid: true });
+          this.component.saveQueryClick({ preventDefault: function(){} });
+          assert.isTrue(this.saveNewStub.calledOnce);
+          ValidationUtils.runValidations.restore();
         });
       });
 
-      describe('name validations', function () {
-        it('should not call saveNew if the name is empty', function () {
-          this.component.refs['add-favorite-modal'].refs.name.refs.input.getDOMNode().value = '';
-          this.component.saveNewFavorite();
-          assert.isFalse(this.saveNewStub.called);
+      describe('already persisted explorers', function () {
+        beforeEach(function(){
+          this.explorer.id = 'ABC';
+          this.component.forceUpdate();
         });
-        it('should not call saveNew if the name is blank spaces', function () {
-          this.component.refs['add-favorite-modal'].refs.name.refs.input.getDOMNode().value = '    ';
-          this.component.saveNewFavorite();
-          assert.isFalse(this.saveNewStub.called);
+
+        it('should run validations on the model', function () {
+          var stub = sinon.stub(ValidationUtils, 'runValidations').returns({ isValid: false });
+          this.component.saveQueryClick({ preventDefault: function(){} });
+          assert.isTrue(stub.calledWith(ExplorerValidations.explorer, this.explorer));
+          ValidationUtils.runValidations.restore();
         });
-        it('should create a notice with an error message if the new does not pass validation', function () {
-          var noticeCreateStub = sinon.stub(NoticeActions, 'create');
-          this.component.refs['add-favorite-modal'].refs.name.refs.input.getDOMNode().value = '    ';
-          this.component.saveNewFavorite();
-          
-          assert.strictEqual(noticeCreateStub.getCall(0).args[0].type, 'error');
-          assert.strictEqual(noticeCreateStub.getCall(0).args[0].text, 'You must provide a non-blank favorite name.');
-          
-          NoticeActions.create.restore();
+        it('should call ExplorerActions.saveExisting if validations pass', function () {
+          sinon.stub(ValidationUtils, 'runValidations').returns({ isValid: true });
+          this.component.saveQueryClick({ preventDefault: function(){} });
+          assert.isTrue(this.saveExistingStub.calledOnce);
+          ValidationUtils.runValidations.restore();
         });
       });
     });
 
-    describe('destroyFavorite', function () {
+    describe('removeSavedQueryClicked', function () {
       it('should call the destroy ExplorerAction with the right arguments', function () {
+        ExplorerActions.create(_.assign({}, TestHelpers.createExplorerModel(), { id: 'ABC-DESTROY' }));
         var destroyStub = sinon.stub(ExplorerActions, 'destroy');
         sinon.stub(window, 'confirm').returns(true);
-        this.component.destroyFavorite(TestHelpers.fakeEvent());
-        assert.isTrue(destroyStub.calledWith(this.persistence, '1'));
+        this.component.removeSavedQueryClicked(_.keys(ExplorerStore.getAll()).length-1);
+        assert.isTrue(destroyStub.calledWith(this.persistence, 'ABC-DESTROY'));
         ExplorerActions.destroy.restore();
         window.confirm.restore();
       });
@@ -233,39 +246,35 @@ describe('components/explorer/index', function() {
 
   describe('component functions', function () {
 
-    describe('favorites', function () {
-
-      before(function(){
-        this.explorer.query.analysis_type = 'count';
-        ExplorerStore.emit('CHANGE');
-      });
+    describe('saved queries', function () {
 
       beforeEach(function () {
+        this.explorer.query.analysis_type = 'count';
+        ExplorerStore.emit('CHANGE');
         this.persistence = {};
         this.component = TestUtils.renderIntoDocument(<Explorer persistence={this.persistence} client={this.client} project={this.project} config={this.config} />);
       });
       
-      describe('clicking a favorite', function () {
-        it('should not load the favorite and show a notice if there is already a query in-flight', function () {
+      describe('clicking a saved query', function () {
+        it('should not load the saved query and show a notice if there is already a query in-flight', function () {
           var setActiveStub = sinon.stub(ExplorerActions, 'setActive');
           var execStub = sinon.stub(ExplorerActions, 'exec');
           var noticeCreateStub = sinon.stub(NoticeActions, 'create');
 
-          var newExplorer = this.component.state.activeExplorer;
+          var newExplorer = _.cloneDeep(this.component.state.activeExplorer);
           newExplorer.loading = true;
-
           this.component.setState({
             activeExplorer: newExplorer
           });
           var fakeEvent = TestHelpers.fakeEvent();
-          this.component.favoriteClicked(fakeEvent);
+          this.component.savedQueryClicked(fakeEvent);
           
           assert.isFalse(setActiveStub.called);
           assert.isFalse(execStub.called);
           assert.isTrue(noticeCreateStub.calledWith({
             icon: 'info-sign',
             type: 'warning',
-            text: "There is already a query in progress. Wait for it to finish loading before selecting a favorite."
+            text: "There is already a query in progress. Wait for it to finish loading before selecting a query."
           }));
 
           ExplorerActions.setActive.restore();
@@ -274,48 +283,39 @@ describe('components/explorer/index', function() {
         });
       });
 
-      describe('opening the favorites modal', function () {
-        beforeEach(function () {
-          this.runValidationsStub = sinon.stub(ValidationUtils, 'runValidations').returns({
-            isValid: false,
-            lastError: 'Something is wrong.'
-          });
-        });
+    });
 
-        afterEach(function(){
-          ValidationUtils.runValidations.restore();
-        });
-
-        it("should validate the currently active explorer's query", function () {
-          this.component.addFavoriteClick(TestHelpers.fakeEvent());
-          assert.isTrue(this.runValidationsStub.calledWith(ExplorerValidations.explorer, this.component.state.activeExplorer.query));
-        });
-
-        it('should show a notice if validation fails', function () {
-          var noticeCreateStub = sinon.stub(NoticeActions, 'create');
-          this.component.addFavoriteClick(TestHelpers.fakeEvent());
-          assert.strictEqual(noticeCreateStub.getCall(0).args[0].text, "Can't favorite: Something is wrong.");
-          NoticeActions.create.restore();
-        });
-
-        it('should not open the modal if validation fails', function () {
-          this.component.addFavoriteClick(TestHelpers.fakeEvent());
-          var openSpy = sinon.spy(this.component.refs['add-favorite-modal'].refs['modal'], 'open');
-          assert.isFalse(openSpy.called);
-          this.component.refs['add-favorite-modal'].refs['modal'].open.restore();
-        });
-
-        it('should open the modal if validation passes', function () {
-          this.runValidationsStub.returns({
-            isValid: true
-          });
-          var openSpy = sinon.spy(this.component.refs['add-favorite-modal'].refs['modal'], 'open');
-          this.component.addFavoriteClick(TestHelpers.fakeEvent());
-          assert.isTrue(openSpy.called);
-          this.component.refs['add-favorite-modal'].refs['modal'].open.restore();
-        });
+    describe('createNewQuery', function () {
+      beforeEach(function() {
+        ExplorerStore.clearAll();
+        ExplorerActions.create(_.assign({}, TestHelpers.createExplorerModel(), { id: 'abc', active: true }));
+        ExplorerActions.create(_.assign({}, TestHelpers.createExplorerModel(), { id: 'def', active: false }));
+        ExplorerActions.create(_.assign({}, TestHelpers.createExplorerModel(), { id: 'ghi', active: false }));
+        this.component.setProps({ persistence: {} });
+        this.component.forceUpdate();
       });
-
+      it('should add a new explorer in the store', function () {
+        this.component.createNewQuery(TestHelpers.fakeEvent());
+        assert.strictEqual(_.keys(ExplorerStore.getAll()).length, 4);
+      });
+      it('should set the newly created explorer as active', function () {
+        var stub = sinon.stub(ExplorerActions, 'setActive');
+        this.component.createNewQuery(TestHelpers.fakeEvent());
+        var keys = _.keys(ExplorerStore.getAll());
+        var lastExplorer = ExplorerStore.getAll()[keys[keys.length-1]];
+        assert.isTrue(stub.calledWith(lastExplorer.id));
+        ExplorerActions.setActive.restore();
+      });
+      it('should change the text on the query builder tab to "Create a new query"', function () {
+        assert.strictEqual(this.component.refs['query-pane-tabs'].refs['build-tab'].getDOMNode().textContent, 'Edit query');
+        this.component.createNewQuery(TestHelpers.fakeEvent());
+        assert.strictEqual(this.component.refs['query-pane-tabs'].refs['build-tab'].getDOMNode().textContent, 'Create a new query');
+      });
+      it('should update component state to show the build tab', function () {
+        this.component.setState({ activeQueryPane: 'browse' });
+        this.component.createNewQuery(TestHelpers.fakeEvent());
+        assert.strictEqual(this.component.state.activeQueryPane, 'build');
+      });
     });
   
   });

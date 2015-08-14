@@ -13,6 +13,7 @@ var TargetPropertyField = require('./target_property_field.js');
 var PercentileField = require('./percentile_field.js');
 var GroupByField = require('./group_by_field.js');
 var Timeframe = require('../../common/timeframe.js');
+var Interval = require('../../common/interval.js');
 var ApiUrl = require('./api_url.js');
 var RunQuery = require('../../common/run_query.js');
 var ExplorerUtils = require('../../../utils/ExplorerUtils');
@@ -73,6 +74,7 @@ var QueryBuilder = React.createClass({
     var groupByField;
     var targetPropertyField;
     var percentileField;
+    var intervalField;
     var analysisType = this.props.model.query.analysis_type;
     var apiQueryUrl = ExplorerUtils.getApiQueryUrl(this.props.client, this.props.model);
 
@@ -82,6 +84,7 @@ var QueryBuilder = React.createClass({
                                    updateGroupBy={this.updateGroupBy}
                                    options={this.getEventPropertyNames()}
                                    handleChange={this.handleChange} />
+      intervalField = <Interval model={this.props.model} />;
     }
     if (analysisType && analysisType !== 'count' && analysisType !== 'extraction') {
       targetPropertyField = <TargetPropertyField ref="target-property-field"
@@ -95,11 +98,9 @@ var QueryBuilder = React.createClass({
                                          onChange={this.handleSelectionWithEvent} />;
     }
 
-
     return (
       <section className="query-pane-section query-builder">
         <form className="form query-builder-form" onSubmit={this.handleQuerySubmit}>
-
           <EventCollectionField ref="event-collection-field"
                                 value={this.props.model.query.event_collection}
                                 options={this.props.project.eventCollections}
@@ -109,12 +110,13 @@ var QueryBuilder = React.createClass({
                              value={this.props.model.query.analysis_type}
                              options={ProjectUtils.getConstant('ANALYSIS_TYPES')}
                              handleChange={this.handleChange} />
-
           {targetPropertyField}
           {percentileField}
+          <Timeframe ref="timeframe"
+                     model={this.props.model}
+                     project={this.props.project} />
           <hr className="fieldset-divider" />
           {groupByField}
-
           <div className="field-component">
             <FieldsToggle ref="filters-fields-toggle"
                           name="Filters"
@@ -122,18 +124,12 @@ var QueryBuilder = React.createClass({
                           toggleCallback={this.props.handleFiltersToggle}
                           fieldsCount={validFilters(this.props.model.query.filters).length} />
           </div>
-
-          <Timeframe ref="timeframe"
-                     model={this.props.model}
-                     project={this.props.project} />
-
+          {intervalField}
           <RunQuery classes="pull-right"
                     clearQuery={this.clearQuery}
                     model={this.props.model}
                     handleQuerySubmit={this.handleQuerySubmit} />
-
           <ApiUrl url={ExplorerUtils.getApiQueryUrl(this.props.client, this.props.model)} />
-
         </form>
       </section>
     );

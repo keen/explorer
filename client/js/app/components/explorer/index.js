@@ -4,13 +4,12 @@
 
 var React = require('react');
 var _ = require('lodash');
-var AddFavoriteModal = require('./favorites/add_favorite_modal.js');
 var EventBrowser = require('../common/event_browser.js');
 var CSVExtraction = require('./csv_extraction.js');
 var Visualization = require('./visualization/index.js')
 var QueryPaneTabs = require('./query_pane_tabs.js');;
 var QueryBuilder = require('./query_builder/index.js');
-var BrowseFavorites = require('./favorites/browse_favorites.js');
+var BrowseQueries = require('./saved_queries/browse_queries.js');
 var Notice = require('../common/notice.js');
 var FilterManager = require('../common/filter_manager.js');
 var ExplorerStore = require('../../stores/ExplorerStore');
@@ -50,13 +49,13 @@ var Explorer = React.createClass({
   // Callbacks for child components
   // ********************************
 
-  favoriteClicked: function(event) {
+  savedQueryClicked: function(event) {
     event.preventDefault();
     if (this.state.activeExplorer.loading) {
       NoticeActions.create({
         icon: 'info-sign',
         type: 'warning',
-        text: "There is already a query in progress. Wait for it to finish loading before selecting a favorite."
+        text: "There is already a query in progress. Wait for it to finish loading before selecting a query."
       });
     } else {
       var modelId = event.currentTarget.dataset.id;
@@ -65,49 +64,38 @@ var Explorer = React.createClass({
     }
   },
 
-  removeFavoriteClicked: function(favIndex) {
-    if (confirm("Are you sure you want to unfavorite this query?")) {
-      var model = this.state.allPersistedExplorers[favIndex];
+  removeSavedQueryClicked: function(modelIndex) {
+    if (confirm("Are you sure you want to delete this query?")) {
+      var model = this.state.allPersistedExplorers[modelIndex];
       ExplorerActions.destroy(this.props.persistence, model.id);
     }
   },
 
-  saveNewFavorite: function() {
-    this.refs['add-favorite-modal'].refs['modal'].close();
-    var name = this.refs['add-favorite-modal'].refs.name.refs.input.getDOMNode().value;
-    if (!name.trim().length) {
-      NoticeActions.create({
-        icon: 'remove-circle',
-        type: 'error',
-        text: 'You must provide a non-blank favorite name.'
-      });
-      return;
-    }
-    ExplorerActions.saveNew(this.props.persistence, this.state.activeExplorer.id, name);
-  },
-
-  destroyFavorite: function(event) {
+  saveQueryClick: function(event) {
     event.preventDefault();
-    if (confirm("Are you sure you want to unfavorite this query?")) {
-      ExplorerActions.destroy(this.props.persistence, this.state.activeExplorer.id);
-    }
-  },
-
-  openFavoritesClick: function(event) {
-    this.refs['favorites-list'].refs['modal'].open();
-  },
-
-  addFavoriteClick: function(event) {
-    var validity = ValidationUtils.runValidations(ExplorerValidations.explorer, this.state.activeExplorer.query);
+    var validity = ValidationUtils.runValidations(ExplorerValidations.explorer, this.state.activeExplorer);
     if (!validity.isValid) {
       NoticeActions.create({
         icon: 'remove-circle',
         type: 'error',
-        text: "Can't favorite: " + validity.lastError
+        text: "Can't save: " + validity.lastError
       });
       return;
+    } else {
+      if (ExplorerUtils.isPersisted(this.state.activeExplorer)) {
+        ExplorerActions.saveExisting(this.props.persistence, this.state.activeExplorer.id);
+      } else {
+        ExplorerActions.saveNew(this.props.persistence, this.state.activeExplorer.id);
+      }
     }
-    this.refs['add-favorite-modal'].refs['modal'].open();
+  },
+
+  createNewQuery: function(event) {
+    event.preventDefault();
+    ExplorerActions.create();
+    var newExplorer = ExplorerStore.getLast();
+    ExplorerActions.setActive(newExplorer.id);
+    this.setState({ activeQueryPane: 'build' });
   },
 
   onBrowseEvents: function(event) {
@@ -121,6 +109,10 @@ var Explorer = React.createClass({
 
   onOpenCSVExtraction: function() {
     this.refs['csv-extraction'].refs.modal.open();
+  },
+
+  onNameChange: function(event) {
+    ExplorerActions.update(this.state.activeExplorer.id, { name: event.target.value });
   },
 
   // ********************************
@@ -203,23 +195,21 @@ var Explorer = React.createClass({
   },
 
   render: function() {
-    var favoritesList,
-        addFavoriteModal,
-        queryPaneTabs,
-        favListNotice,
-        favEmptyContent;
+    var queryPaneTabs,
+        browseListNotice,
+        browseEmptyContent;
 
     if (this.props.persistence) {
       queryPaneTabs = <QueryPaneTabs ref="query-pane-tabs"
                                      activePane={this.state.activeQueryPane}
-                                     toggleCallback={this.toggleQueryPane} />;
+                                     toggleCallback={this.toggleQueryPane}
+                                     createNewQuery={this.createNewQuery}
+                                     persisted={ExplorerUtils.isPersisted(this.state.activeExplorer)} />;
       if (this.state.appState.fetchingPersistedExplorers) {
-        favListNotice = <Notice notice={{ icon: 'info-sign', text: 'Loading favorites...', type: 'info' }} closable={false} />
+        browseListNotice = <Notice notice={{ icon: 'info-sign', text: 'Loading saved queries...', type: 'info' }} closable={false} />
       } else {
-        favEmptyContent = <h4 className="text-center">You don&#39;t have any favorites yet.</h4>;
+        browseEmptyContent = <h4 className="text-center">You don&#39;t have any saved queries yet.</h4>;
       }
-      addFavoriteModal = <AddFavoriteModal ref="add-favorite-modal"
-                                           saveCallback={this.saveNewFavorite} />;
     }
 
     var activeQueryPane;
@@ -231,34 +221,33 @@ var Explorer = React.createClass({
                                 onBrowseEvents={this.onBrowseEvents}
                                 handleFiltersToggle={this.handleFiltersToggle} />;
     } else {
-      queryPane = <BrowseFavorites listItems={this.state.allPersistedExplorers}
-                                   emptyContent={favEmptyContent}
-                                   notice={favListNotice}
-                                   clickCallback={this.favoriteClicked}
-                                   removeCallback={this.removeFavoriteClicked}
-                                   selectedIndex={this.getSelectedIndex()}
-                                   user={this.state.user} />;
+      queryPane = <BrowseQueries listItems={this.state.allPersistedExplorers}
+                                 emptyContent={browseEmptyContent}
+                                 notice={browseListNotice}
+                                 clickCallback={this.savedQueryClicked}
+                                 removeCallback={this.removeSavedQueryClicked}
+                                 selectedIndex={this.getSelectedIndex()}
+                                 user={this.state.user} />;
     }
 
     return (
       <div ref="root">
         <div className="row">
-          <div className="col-sm-5 explorer-query-builder">
+          <div className="col-sm-5 col-md-4 explorer-query-builder">
             {queryPaneTabs}
             {queryPane}
           </div>
-          <div ref="viz-area" className="col-sm-7 explorer-visualization">
+          <div ref="viz-area" className="col-sm-7 col-md-8 explorer-visualization">
             <Visualization notice={this.state.notice}
                            model={this.state.activeExplorer}
                            client={this.props.client}
                            project={this.props.project}
                            persistence={this.props.persistence}
-                           addFavoriteClick={this.addFavoriteClick}
-                           openFavoritesClick={this.openFavoritesClick}
-                           onOpenCSVExtraction={this.onOpenCSVExtraction} />
+                           saveQueryClick={this.saveQueryClick}
+                           onOpenCSVExtraction={this.onOpenCSVExtraction}
+                           onNameChange={this.onNameChange} />
           </div>
         </div>
-        {addFavoriteModal}
         <EventBrowser ref="event-browser"
                       client={this.props.client}
                       project={this.props.project}

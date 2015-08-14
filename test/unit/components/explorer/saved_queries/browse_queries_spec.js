@@ -4,12 +4,12 @@ var assert = require('chai').assert;
 var _ = require('lodash');
 var React = require('react/addons');
 var TestUtils = React.addons.TestUtils;
-var BrowseFavorites = require('../../../../../client/js/app/components/explorer/favorites/browse_favorites.js');
+var BrowseQueries = require('../../../../../client/js/app/components/explorer/saved_queries/browse_queries.js');
 var ExplorerUtils = require('../../../../../client/js/app/utils/ExplorerUtils');
 var ExplorerActions = require('../../../../../client/js/app/actions/ExplorerActions');
 var TestHelpers = require('../../../../support/TestHelpers')
 
-describe('components/explorer/favorites/browse_favorites', function() {
+describe('components/explorer/saved_queries/browse_queries', function() {
   beforeEach(function() {
     var props = {
       listItems: [
@@ -45,15 +45,15 @@ describe('components/explorer/favorites/browse_favorites', function() {
       removeCallback: null,
       clickCallback: null,
       selectedIndex: null,
-      favListNotice: null,
+      notice: null,
       emptyContent: null
     };
-    this.component = TestUtils.renderIntoDocument(<BrowseFavorites {...props} />);
+    this.component = TestUtils.renderIntoDocument(<BrowseQueries {...props} />);
   });
 
   describe('setup', function() {
     it('is of the right type', function() {
-      assert.isTrue(TestUtils.isCompositeComponentWithType(this.component, BrowseFavorites));
+      assert.isTrue(TestUtils.isCompositeComponentWithType(this.component, BrowseQueries));
     });
 
     it("creates a list item for each listItem prop", function() {
@@ -132,10 +132,10 @@ describe('components/explorer/favorites/browse_favorites', function() {
           removeCallback: sinon.stub()
         });
       });
-      it('should show if the favorite if your own', function () {
+      it('should show if the saved query is your own', function () {
         assert.lengthOf($(this.component.refs.list.getDOMNode().childNodes[0]).find('.remove-btn'), 1);
       });
-      it('should NOT show if the favorite is NOT yours', function () {
+      it('should NOT show if the saved query is NOT yours', function () {
         assert.lengthOf($(this.component.refs.list.getDOMNode().childNodes[1]).find('.remove-btn'), 0);
       });
     });
@@ -166,14 +166,14 @@ describe('components/explorer/favorites/browse_favorites', function() {
           removeCallback: sinon.stub()
         });
       });
-      it('should only show yours favs if "mine" is selected', function () {
+      it('should only show yours queries if "mine" is selected', function () {
         TestUtils.Simulate.change(this.component.refs['user-filter'].getDOMNode());
         var itemsText = _.map(this.component.refs.list.getDOMNode().childNodes, function(listItem) {
           return $(listItem).find('h5').text();
         }, this);
         assert.sameMembers(itemsText, ['First']);
       });
-      it('should show all favs if "all" is selected', function () {
+      it('should show all queries if "all" is selected', function () {
         TestUtils.Simulate.change(this.component.refs['all-filter'].getDOMNode());
         var itemsText = _.map(this.component.refs.list.getDOMNode().childNodes, function(listItem) {
           return $(listItem).find('h5').text();

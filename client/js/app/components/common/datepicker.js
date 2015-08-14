@@ -39,7 +39,7 @@ var Datepicker = React.createClass({
 
   destroyPicker: function() {
     var picker = $(this.refs[this.props.refValue].getDOMNode()).pickadate('picker');
-    picker.stop();
+    if (picker) picker.stop();
   },
 
   // React methods
@@ -56,7 +56,8 @@ var Datepicker = React.createClass({
       label: false,
       onChange: function(){},
       placeholder: '',
-      classes: 'datepicker-wrapper form-group'
+      classes: 'datepicker-wrapper form-group',
+      onSet: function(){}
     };
   },
 

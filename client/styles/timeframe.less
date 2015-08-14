@@ -2,15 +2,76 @@
 // *********
 
 .timeframe {
+  margin: 20px 0 10px;
+
   .nav {
     margin-bottom: 10px;
 
-    li a {
-      padding: 5px 12px;
+    li {
+      width: 50%;
+      a {
+        border-radius: 2px 0 0 2px;
+        color: #4d4d4d;
+        font-size: 13px;
+        margin: 0;
+        padding: 8px 12px 7px;
+        text-align: center;
+      }
+      &.active a {
+        background-color: #808080;
+        color: #fff;
+      }
+    }
+    li + li {
+      margin-left: 0;
+      a {
+        border-radius: 0 2px 2px 0;
+      }
     }
   }
   .form-group {
     margin-bottom: 0;
+  }
+}
+
+.relative-timeframe-picker {
+  border: 1px solid #e7e7e7;
+  border-radius: 2px;
+  .select-element {
+    border: medium none;
+  }
+  input, select {
+    border: medium none;
+    box-shadow: none;
+    position: relative;
+
+    // /* Hackety! */
+    // -webkit-border-radius: 0px;
+    // -webkit-appearance: none;
+    // -moz-appearance: none;
+    // text-indent: 0.01px;
+    // text-overflow: '';
+
+    &:focus {
+      border: 1px solid rgba(0, 187, 222, .67);
+      border-radius: 2px;
+      box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.07), 0 0 8px rgba(0, 187, 222, .35);
+      cursor: default;
+      outline: 0;
+      z-index: 1;
+    }
+  }
+  .amount, .sub-timeframe {
+    border-left: 1px solid #e7e7e7;
+  }
+  .help-block {
+    background-color: rgba(0, 0, 0, 0.05);
+    border-top: 1px solid #e7e7e7;
+    color: #808080;
+    font-size: 11px;
+    font-style: normal;
+    margin: 0;
+    padding: 5px 10px 4px;
   }
 }
 

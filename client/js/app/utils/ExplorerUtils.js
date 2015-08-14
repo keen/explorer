@@ -55,6 +55,15 @@ module.exports = {
     return explorer.id && !explorer.id.toString().match('TEMP');
   },
 
+  mergeResponseWithExplorer: function(explorer, response) {
+    var formattedParams = module.exports.formatQueryParams(response);
+    return _.assign({},
+      explorer,
+      formattedParams,
+      { query: _.assign({}, explorer.query, formattedParams.query) },
+      { visualization: _.assign({}, explorer.visualization, formattedParams.visualization) });
+  },
+
   queryJSON: function(explorer) {
     if (!explorer || !explorer.query) {
       return;
@@ -252,9 +261,6 @@ module.exports = {
     }
     if (params.query.filters) {
       params.query.filters = _.map(params.query.filters, function(filter) {
-        if (filter.coercion_type === 'Datetime') {
-          filter = _.assign({}, filter, FilterUtils.initDatetime(filter));
-        }
         if (filter.coercion_type === 'List') {
           filter = _.assign({}, filter, FilterUtils.initList(filter));
         }
@@ -366,7 +372,7 @@ module.exports = {
   },
 
   getSdkExample: function(explorer, client) {
-    var valid = ValidationUtils.runValidations(ExplorerValidations.explorer, explorer.query);
+    var valid = ValidationUtils.runValidations(ExplorerValidations.explorer, explorer);
     if (!valid.isValid) {
       return "Your query is not valid right now, so we can't show you a code sample.";
     }

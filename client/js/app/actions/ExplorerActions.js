@@ -85,7 +85,7 @@ var ExplorerActions = {
       throw new Error("Warning: calling exec when model loading is true. Explorer id: " + explorer.id);
     }
 
-    var valid = ValidationUtils.runValidations(ExplorerValidations.explorer, explorer.query);
+    var valid = ValidationUtils.runValidations(ExplorerValidations.explorer, explorer);
     if (!valid.isValid) {
       NoticeActions.create({ text: valid.lastError, type: 'error', icon: 'remove-sign' });
       return;
@@ -119,13 +119,13 @@ var ExplorerActions = {
   runEmailExtraction: function(client, id, callback) {
     var explorer = ExplorerStore.get(id);
 
-    var valid = ValidationUtils.runValidations(ExplorerValidations.explorer, explorer.query);
+    var valid = ValidationUtils.runValidations(ExplorerValidations.explorer, explorer);
     if (!valid.isValid) {
       callback({ success: false, error: valid.lastError });
       return;
     }
 
-    var valid = ValidationUtils.runValidations(ExplorerValidations.emailExtractionExplorer, explorer.query);
+    var valid = ValidationUtils.runValidations(ExplorerValidations.emailExtractionExplorer, explorer);
     if (!valid.isValid) {
       callback({ success: false, error: valid.lastError });
       return;
@@ -179,30 +179,23 @@ var ExplorerActions = {
       var models = [];
       _.each(resp, function(model) {
         var formattedModel = ExplorerUtils.formatQueryParams(model);
-        if (ValidationUtils.runValidations(ExplorerValidations.explorer, formattedModel.query).isValid) {
-          models.push(formattedModel);
-        } else {
+        if (!ValidationUtils.runValidations(ExplorerValidations.explorer, formattedModel).isValid) {
           console.warn('A persisted explorer model is invalid: ', formattedModel);
         }
+        models.push(formattedModel);
       });
       ExplorerActions.createBatch(models);
       AppStateActions.update({ fetchingPersistedExplorers: false });
     });
   },
 
-  saveNew: function(persistence, sourceId, name) {
+  saveNew: function(persistence, sourceId) {
     AppDispatcher.dispatch({
       actionType: ExplorerConstants.EXPLORER_SAVING,
       id: sourceId,
       saveType: 'save'
     });
-
-    var attrs = _.assign(
-      {},
-      ExplorerUtils.toJSON(ExplorerStore.get(sourceId)),
-      { id: null, name: name }
-    );
-
+    var attrs = _.assign({}, ExplorerUtils.toJSON(ExplorerStore.get(sourceId)));
     persistence.create(attrs, function(err, res) {
       if (err) {
         AppDispatcher.dispatch({
@@ -212,14 +205,46 @@ var ExplorerActions = {
           errorMsg: err
         });
       } else {
+        var formattedParams = ExplorerUtils.formatQueryParams(res);
         AppDispatcher.dispatch({
-          actionType: ExplorerConstants.EXPLORER_CREATE,
-          attrs: _.assign({}, ExplorerUtils.formatQueryParams(res), { id: res.id, name: name })
+          actionType: ExplorerConstants.EXPLORER_UPDATE,
+          id: sourceId,
+          updates: ExplorerUtils.mergeResponseWithExplorer(ExplorerStore.get(sourceId), res)
         });
         AppDispatcher.dispatch({
           actionType: ExplorerConstants.EXPLORER_SAVE_SUCCESS,
           id: sourceId,
-          saveType: 'save'
+          saveType: 'save',
+        });
+      }
+    });
+  },
+
+  saveExisting: function(persistence, sourceId) {
+    AppDispatcher.dispatch({
+      actionType: ExplorerConstants.EXPLORER_SAVING,
+      id: sourceId,
+      saveType: 'update'
+    });
+    var attrs = _.assign({}, ExplorerUtils.toJSON(ExplorerStore.get(sourceId)));
+    persistence.update(attrs, function(err, res) {
+      if (err) {
+        AppDispatcher.dispatch({
+          actionType: ExplorerConstants.EXPLORER_SAVE_FAIL,
+          saveType: 'update',
+          id: sourceId,
+          errorMsg: err
+        });
+      } else {
+        AppDispatcher.dispatch({
+          actionType: ExplorerConstants.EXPLORER_UPDATE,
+          id: sourceId,
+          updates: ExplorerUtils.mergeResponseWithExplorer(ExplorerStore.get(sourceId), res)
+        });
+        AppDispatcher.dispatch({
+          actionType: ExplorerConstants.EXPLORER_SAVE_SUCCESS,
+          id: sourceId,
+          saveType: 'update',
         });
       }
     });

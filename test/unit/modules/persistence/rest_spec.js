@@ -3,7 +3,7 @@ var expect = require('chai').expect;
 var request = require('superagent');
 var _ = require('lodash');
 var sinon = require('sinon');
-var RESTPersistence = require('../../../../client/js/app/modules/persistence/rest.js');
+var RESTPersistence = require('../../../../client/js/app/modules/persistence/REST.js');
 
 describe('modules/persistence/rest', function(){
 

@@ -23,13 +23,10 @@ describe('utils/ValidationUtils', function() {
           validator: spyTwo
         }
       };
-      var model = {
-        one: 'value one',
-        two: 'value two'
-      };
+      var model = TestHelpers.createExplorerModel();
       ValidationUtils.runValidations(validations, model);
-      assert.isTrue(spyOne.calledWith(model, 'value one'));
-      assert.isTrue(spyTwo.calledWith(model, 'value two'));
+      assert.isTrue(spyOne.calledWith(model));
+      assert.isTrue(spyTwo.calledWith(model));
     });
   });
   describe('return value', function () {

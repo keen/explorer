@@ -11,7 +11,6 @@ var ExplorerStore = require('../../../client/js/app/stores/ExplorerStore');
 var ExplorerActions = require('../../../client/js/app/actions/ExplorerActions');
 
 describe('stores/ExplorerStore', function() {
-
   beforeEach(function () {
     ExplorerStore.clearAll();
   });
@@ -44,7 +43,11 @@ describe('stores/ExplorerStore', function() {
           email: null,
           latest: null,
           filters: [],
-          time: {}
+          time: {
+            relativity: 'this',
+            amount: 14,
+            sub_timeframe: 'days'
+          }
         },
         visualization: {
           chart_type: null
@@ -118,6 +121,42 @@ describe('stores/ExplorerStore', function() {
       assert.strictEqual(keys[2], 'also_with_an_id');
     });
   });
+
+  describe('getLast', function () {
+    it('should get the last explorer in the store', function () {
+      ExplorerActions.create({
+        id: 'ONE',
+        query: {
+          event_collection: 'clicks',
+          analysis_type: 'count'
+        },
+        visualization: {
+          chart_type: 'metric'
+        }
+      });
+      ExplorerActions.create({
+        id: 'TWO',
+        query: {
+          event_collection: 'clicks',
+          analysis_type: 'count'
+        },
+        visualization: {
+          chart_type: 'metric'
+        }
+      });
+      ExplorerActions.create({
+        id: 'THREE',
+        query: {
+          event_collection: 'clicks',
+          analysis_type: 'count'
+        },
+        visualization: {
+          chart_type: 'metric'
+        }
+      });
+      assert.strictEqual(ExplorerStore.getLast().id, 'THREE');
+    });
+  });
   
   describe('update', function () {
     it('should properly upadte the correct explorer', function () {
@@ -146,28 +185,6 @@ describe('stores/ExplorerStore', function() {
       assert.deepPropertyVal(explorer, 'query.event_collection', 'not_clicks');
       assert.deepPropertyVal(explorer, 'query.analysis_type', 'not_count');
       assert.deepPropertyVal(explorer, 'visualization.chart_type', 'not_metric');
-    });
-    it('should set the default name if the updates contain a blank name', function () {
-      ExplorerActions.create({
-        id: 'SOME_ID',
-        name: 'A saved query',
-        query: {
-          event_collection: 'clicks',
-          analysis_type: 'count'
-        },
-        visualization: {
-          chart_type: 'metric'
-        }
-      });
-      ExplorerActions.update('SOME_ID', {
-        name: '',
-        query: {
-          event_collection: 'not_clicks',
-        }
-      });
-      var explorer = ExplorerStore.getAll()['SOME_ID'];
-      assert.deepPropertyVal(explorer, 'query.event_collection', 'not_clicks');
-      assert.deepPropertyVal(explorer, 'name', 'Untitled');
     });
     it('should replace the store object key with the new ID if one is passed in via updates', function () {
       ExplorerActions.create({
@@ -471,8 +488,11 @@ describe('stores/ExplorerStore', function() {
     });
 
     describe('clear', function () {
-      it('should reset the given explorer to defaults but with active set to true', function () {
-        ExplorerActions.create({
+      it('should reset the given explorer to defaults but keeps the same active and name attributes', function () {
+        ExplorerStore.clearAll();
+        ExplorerActions.create(_.assign({}, TestHelpers.createExplorerModel(), {
+          id: 'ABC-SOME-ID',
+          active: true,
           query: {
             event_collection: 'clicks',
             analysis_type: 'count'
@@ -480,11 +500,10 @@ describe('stores/ExplorerStore', function() {
           visualization: {
             chart_type: 'metric'
           }
-        });
-        var keys = Object.keys(ExplorerStore.getAll());
-        ExplorerActions.clear(keys[0]);
-        assert.deepEqual(ExplorerStore.getAll()[keys[0]], {
-          id: keys[0],
+        }));
+        ExplorerActions.clear('ABC-SOME-ID');
+        assert.deepEqual(ExplorerStore.get('ABC-SOME-ID'), {
+          id: 'ABC-SOME-ID',
           active: true,
           error: null,
           result: null,
@@ -505,7 +524,11 @@ describe('stores/ExplorerStore', function() {
             email: null,
             latest: null,
             filters: [],
-            time: {}
+            time: {
+              relativity: 'this',
+              amount: 14,
+              sub_timeframe: 'days'
+            }
           },
           visualization: {
             chart_type: null

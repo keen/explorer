@@ -1,5 +1,5 @@
 .field-component {
-  margin: 0 0 15px;
+  margin: 0 0 10px;
 }
 
 .form-collapse-right {
@@ -8,7 +8,7 @@
 
 .form-collapse-left {
   padding-left: 0;
-  margin-left: -1px;
+  // margin-left: -1px;
 }
 
 label {
@@ -18,6 +18,10 @@ label {
 
 label.valign {
   line-height: 30px;
+}
+
+.form-control {
+  height: 35px;
 }
 
 .input-group-btn .btn {
@@ -89,8 +93,8 @@ button.field-secondary-control {
 }
 
 .explorer-api-url {
-  button, input {
-    margin: 0 0 10px;
+  input {
+    margin: 10px 0 0;
   }
 }
 
@@ -100,7 +104,7 @@ button.field-secondary-control {
 // *************************
 
 hr.fieldset-divider {
-  border-bottom: 1px solid rgba(0,0,0,.1);
+  border-bottom: 1px solid rgba(0,0,0,.07);
   border-top: 1px solid #fff;
 }
 
@@ -130,5 +134,64 @@ hr.fieldset-divider {
     left: 10px;
     margin-top: 8px;
     position: absolute;
+  }
+}
+
+
+
+.select-element {
+  border: 1px solid #d7d7d7;
+  border-radius: 2px;
+  position: relative;
+
+  .pseudo-select-arrow {
+    content: '';
+    position: absolute;
+    right: 8px;
+    border-color: #4d4d4d transparent;
+    border-style: solid;
+    height: 0px;
+    width: 0px;
+    border-left-width: 4px;
+    border-right-width: 4px;
+  }
+
+  &::before {
+    .pseudo-select-arrow;
+    top: 10px;
+    border-top-width: 0px;
+    border-bottom-width: 5px;
+  }
+
+  &::after {
+    .pseudo-select-arrow;
+    bottom: 10px;
+    border-top-width: 5px;
+    border-bottom-width: 0px;
+  }
+
+  select {
+    background-color: transparent;
+    border: medium none;
+    box-shadow: none;
+    height: 35px;
+    line-height: 24px;
+    padding-right: 25px;
+    position: relative;
+    text-indent: 0.01px;
+    text-overflow: '';
+
+    -webkit-border-radius: 0px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    &:focus {
+      border: 1px solid rgba(0, 187, 222, .67);
+      border-radius: 2px;
+      box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.07), 0 0 8px rgba(0, 187, 222, .35);
+      cursor: default;
+      outline: 0;
+      z-index: 1;
+    }
   }
 }
