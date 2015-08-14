@@ -118,7 +118,8 @@ var Visualization = React.createClass({
                  type="text"
                  onChange={this.props.onNameChange}
                  spellCheck="false"
-                 value={this.props.model.name} />
+                 value={this.props.model.name}
+                 placeholder="Give your query a name..." />
         </div>
       );
     }
