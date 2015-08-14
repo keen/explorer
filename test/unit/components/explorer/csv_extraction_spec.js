@@ -24,13 +24,12 @@ describe('components/explorer/query_builder/csv_extraction', function() {
   beforeEach(function() {
     this.dispatchStub.reset();
     this.client = TestHelpers.createClient();
-    this.explorer = {
-      id: 'some_id',
-      query: {
-        event_collection: 'clicks',
-        analysis_type: 'extraction'
-      }
-    };
+    
+    this.explorer = TestHelpers.createExplorerModel();
+    this.explorer.id = 'some_id';
+    this.explorer.query.event_collection = 'clicks';
+    this.explorer.query.analysis_type = 'extraction';
+
     this.component = TestUtils.renderIntoDocument(<CSVExtractionInput client={this.client} model={this.explorer} />);
     this.component.refs['modal'].setState({ open: true });
   });

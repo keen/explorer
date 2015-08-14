@@ -1,0 +1,3 @@
+test:
+  override:
+    - gulp test:unit

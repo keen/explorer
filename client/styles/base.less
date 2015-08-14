@@ -25,7 +25,7 @@
 
   // Common Components
   @import 'loader';
-  @import 'favorites';
+  @import 'saved-queries';
   @import 'event-browser';
   @import 'fields-toggle';
   @import 'react-select';
@@ -43,6 +43,30 @@
   a {
     color: #00bbde;
   }
+
+  a, button, input, select {
+    &:focus {
+      box-shadow: 0 0 8px rgba(0, 187, 222, .35);
+      outline: 1px solid rgba(0, 187, 222, .35);
+    }
+  }
+
+  hr {
+    margin: 10px 0;
+  }
+
+  // .pseudo-select-arrow {
+  //   content: "";
+  //   position: absolute;
+  //   right: 8px;
+  //   border-color: #4D4D4D transparent;
+  //   border-style: solid;
+  //   height: 0px;
+  //   width: 0px;
+  //   border-left-width: 4px;
+  //   border-right-width: 4px;
+  // }
+  
 
   .btn .icon,
   h1 .icon,
@@ -77,4 +101,17 @@
     z-index: 1040;
   }
 
+  .modal-content {
+    border: medium none;
+    border-radius: 2px;
+    box-shadow: 0 0 10px rgba(0,0,0,.35);
+  }
+
+}
+
+.modal-backdrop {
+  background-color: rgba(41,52,62,.85);
+  &.in {
+    opacity: 1;
+  }
 }

@@ -88,7 +88,7 @@ You can read more about Keen.js here: [The Keen.js client library](https://githu
 
 ### 3. Optionally include persistence
 
-Persistence is entirely optional. If you include it, a "favorites" feature will be shown and you can persist the state of the query you're working with to be looked up at a later time. If you do not want to use persistence, just do not include it in the Keen.DataTools.App initialization, like above.
+Persistence is entirely optional. If you include it, a "saved queries" feature will be shown and you can persist the state of the query you're working with to be looked up at a later time. If you do not want to use persistence, just do not include it in the Keen.DataTools.App initialization, like above.
 
 To include persistence, create a new persistence object (this must be a compliant REST server, which we will document), and then pass that persistence object to the `Keen.DataTools.App` initialization. So, instead of what you see above, you would have:
 

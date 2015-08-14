@@ -98,17 +98,19 @@ var SelectComponent = React.createClass({
     return (
       <div className={this.props.classes}>
         {label}
-        <select ref={this.props.reference}
-                name={this.props.name}
-                value={selectedValue}
-                className="form-control"
-                multiple={this.props.multiple}
-                onChange={this.props.handleSelection}
-                onBlur={this.props.handleBlur}
-                disabled={this.props.disabled}>
-          {emptyOption}
-          {optionNodes}
-        </select>
+        <div className="select-element">
+          <select ref={this.props.reference}
+                  name={this.props.name}
+                  value={selectedValue}
+                  className="form-control"
+                  multiple={this.props.multiple}
+                  onChange={this.props.handleSelection}
+                  onBlur={this.props.handleBlur}
+                  disabled={this.props.disabled}>
+            {emptyOption}
+            {optionNodes}
+          </select>
+        </div>
       </div>
     );
   }

@@ -21,7 +21,7 @@ function dateForItem(item) {
   }
 }
 
-var BrowseFavorites = React.createClass({
+var BrowseQueries = React.createClass({
 
   removeClick: function(event) {
     event.preventDefault();
@@ -34,12 +34,12 @@ var BrowseFavorites = React.createClass({
     }
   },
 
-  buildFavList: function() {
+  buildList: function() {
     var listElements = this.props.listItems.map(_.bind(function(listItem, index) {
       listItem.user = listItem.user || {};
       if (String(listItem.name.toLowerCase()).search(this.state.searchterm.toLowerCase()) < 0) return;
 
-      if (this.state.favgroup === 'user') {
+      if (this.state.filterType === 'user') {
         if (!listItem.user.id || listItem.user.id !== this.props.user.id) return;
       }
 
@@ -49,7 +49,7 @@ var BrowseFavorites = React.createClass({
       if (isSelected) classes = 'active';
       if (this.props.removeCallback && listItem.user.id === this.props.user.id) {
         removeBtn = (<a href="#" className="remove-btn" data-item-index={index} role="remove" onClick={this.removeClick}>
-                      <span className="icon glyphicon glyphicon-remove-circle"></span>
+                      <span className="icon"></span>
                      </a>);
       }
 
@@ -97,7 +97,7 @@ var BrowseFavorites = React.createClass({
       removeCallback: null,
       clickCallback: null,
       selectedIndex: null,
-      favListNotice: null,
+      notice: null,
       emptyContent: null
     };
   },
@@ -105,27 +105,27 @@ var BrowseFavorites = React.createClass({
   getInitialState: function() {
     return {
       searchterm: '',
-      favgroup: 'all'
+      filterType: 'all'
     };
   },
 
   render: function() {
     var emptyContent = this.props.listItems.length ? null: this.props.emptyContent;
-    var listItems = this.buildFavList();
+    var listItems = this.buildList();
 
     return (
-      <section className="query-pane-section browse-favorites">
+      <section className="query-pane-section browse-queries">
         {this.props.notice}
-        <div className="fav-group-options">
+        <div className="queries-group-options">
           <div className="radio-inline">
             <label>
-              <input type="radio" name="favgroup" value="all" ref="all-filter" checked={this.state.favgroup === 'all' ? true : false} onChange={this.fieldChanged} />
+              <input type="radio" name="filterType" value="all" ref="all-filter" checked={this.state.filterType === 'all' ? true : false} onChange={this.fieldChanged} />
               {"Team"}
             </label>
           </div>
           <div className="radio-inline">
             <label>
-              <input type="radio" name="favgroup" value="user" ref="user-filter" checked={this.state.favgroup === 'user' ? true : false} onChange={this.fieldChanged} />
+              <input type="radio" name="filterType" value="user" ref="user-filter" checked={this.state.filterType === 'user' ? true : false} onChange={this.fieldChanged} />
               {"Mine"}
             </label>
           </div>
@@ -142,4 +142,4 @@ var BrowseFavorites = React.createClass({
 
 });
 
-module.exports = BrowseFavorites;
+module.exports = BrowseQueries;

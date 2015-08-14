@@ -38,15 +38,65 @@
 }
 
 .query-pane-tabs {
+  height: 41px;
+  position: relative;
   li {
-    width: 50%;
-    text-align: center;
+    position: absolute;
+    a {
+      line-height: 21px;
+      margin: 1px 1px 0 1px;
+      padding: 9px 9px 10px;
+      .icon {
+        color: #4d4d4d;
+        font-size: 12px;
+      }
+    }
+    &.active > a {
+      margin: 0px;
+      padding: 10px;
+    }
+    &.tab-build-query {
+      // width: 60%;
+      left: 0px;
+      right: 121px;
+    }
+    &.tab-browse-queries {
+      padding-left: 0px;
+      padding-right: 0px;
+      right: 0px;
+      text-align: center;
+      width: 120px;
+      a {
+        border-radius: 0 2px 0 0;
+      }
+      .icon {
+        margin-right: 5px;
+      }
+    }
+  }
+}
+
+.query-pane-persisted {
+  li {
+    &.tab-new-query {
+      padding-left: 0px;
+      padding-right: 0px;
+      text-align: center;
+      width: 42px;
+      a {
+        border-radius: 2px 0 0 0;
+      }
+    }
+    &.tab-build-query {
+      left: 42px;
+      // text-align: center;
+    }
   }
 }
 
 .query-pane-section {
   background-color: #fff;
   border: 1px solid rgba(0,0,0,.07);
-  padding: 18px 15px 5px;
+  padding: 18px 10px 10px;
   position: relative;
 }

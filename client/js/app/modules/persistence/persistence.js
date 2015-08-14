@@ -1,5 +1,5 @@
 module.exports = {
 
-  REST: require('./rest.js')
+  REST: require('./REST.js')
 
 };

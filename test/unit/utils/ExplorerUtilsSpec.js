@@ -142,6 +142,87 @@ describe('utils/ExplorerUtils', function() {
     });
   });
 
+  describe('mergeResponseWithExplorer', function () {
+    it('should keep all explorer attributes', function () {
+      var explorer = {
+        id: 'TEMP-ABC',
+        name: 'SOME NAME',
+        active: false,
+        saving: false,
+        error: null,
+        result: null,
+        loading: false,
+        isValid: true,
+        timeframe_type: 'relative',
+        query: {
+          event_collection: null,
+          analysis_type: null,
+          target_property: null,
+          percentile: null,
+          group_by: null,
+          interval: null,
+          timezone: 'UTC',
+          filters: null,
+          email: null,
+          latest: null,
+          filters: [],
+          time: {
+            relativity: 'this',
+            amount: 1,
+            sub_timeframe: 'weeks'
+          }
+        },
+        visualization: {
+          chart_type: null
+        }
+      };
+      var response = {
+        id: 'ACTUAL-ID',
+        project_id: '10',
+        query: {
+          event_collection: 'clicks',
+          analysis_type: 'count',
+        },
+        visualization: {
+          chart_type: 'metric'
+        }
+      };
+      assert.deepEqual(ExplorerUtils.mergeResponseWithExplorer(explorer, response), {
+        id: 'ACTUAL-ID',
+        project_id: '10',
+        name: 'SOME NAME',
+        active: false,
+        saving: false,
+        error: null,
+        result: null,
+        loading: false,
+        isValid: true,
+        timeframe_type: 'relative',
+        query: {
+          event_collection: 'clicks',
+          analysis_type: 'count',
+          target_property: null,
+          percentile: null,
+          group_by: null,
+          interval: null,
+          timezone: 'UTC',
+          filters: null,
+          email: null,
+          latest: null,
+          filters: [],
+          time: {
+            relativity: 'this',
+            amount: 1,
+            sub_timeframe: 'weeks'
+          }
+        },
+        visualization: {
+          chart_type: 'metric'
+        }
+      });
+    });
+  });
+
   describe('getTimeframe', function () {
     it('should call the right timeframe builder for absolute timeframes', function () {
       var explorer = {
@@ -253,24 +334,6 @@ describe('utils/ExplorerUtils', function() {
       assert.isTrue(stub.calledOnce);
       ExplorerUtils.unpackTimeframeParam.restore();
     });
-    it('should call FilterUtils.initDatetime for datetime filters', function () {
-      var stub = sinon.stub(FilterUtils, 'initDatetime');
-      var params = {
-        query: {
-          filters: [
-            {
-              coercion_type: 'Datetime',
-              property_name: 'date',
-              operator: 'eq',
-              property_value: '2015-01-01T00:00:00'
-            }
-          ]
-        }
-      };
-      ExplorerUtils.formatQueryParams(params);
-      assert.isTrue(stub.calledOnce);
-      FilterUtils.initDatetime.restore();
-    });
     it('should call FilterUtils.initList for list filters', function () {
       var stub = sinon.stub(FilterUtils, 'initList');
       var params = {
@@ -303,8 +366,8 @@ describe('utils/ExplorerUtils', function() {
   });
 
   describe('getApiQueryUrl', function(){
-    before(function(){
-      this.explorer = {
+    beforeEach(function(){
+      this.explorer = _.assign({}, TestHelpers.createExplorerModel(), {
         timeframe_type: 'relative',
         query: {
           analysis_type: 'count',
@@ -332,7 +395,7 @@ describe('utils/ExplorerUtils', function() {
         visualization: {
           chart_type: 'metric'
         }
-      };
+      });
       this.client = TestHelpers.createClient();
     });
 

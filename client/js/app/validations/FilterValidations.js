@@ -8,21 +8,22 @@ module.exports = {
 
     property_name: {
       msg: 'Choose a property name',
-      validator: function(filter, value) {
-        return value ? true : false;
+      validator: function(filter) {
+        return filter.property_name ? true : false;
       }
     },
 
     operator: {
       msg: 'Choose an operator',
-      validator: function(filter, value) {
-        return value ? true : false;
+      validator: function(filter) {
+        return filter.operator ? true : false;
       }
     },
 
     property_value: {
       msg: 'Choose a property value.',
-      validator: function(filter, value) {
+      validator: function(filter) {
+        var value = filter.property_value;
         var coercionType = filter.coercion_type;
 
         if (coercionType == 'List') {
@@ -43,8 +44,8 @@ module.exports = {
 
     coercion_type: {
       msg: 'Choose a coercion type',
-      validator: function(filter, value) {
-        return value ? true : false;
+      validator: function(filter) {
+        return filter.coercion_type ? true : false;
       }
     }
 
@@ -54,7 +55,8 @@ module.exports = {
 
     coordinates: {
       msg: 'Provide all coordinates.',
-      validator: function(geoObj, value) {
+      validator: function(geoObj) {
+        var value = geoObj.coordinates;
         var valid = _.isArray(value) && value.length === 2;
         if (!valid) return valid;
 
@@ -68,7 +70,8 @@ module.exports = {
 
     max_distance_miles: {
       msg: 'Provide a max distance in miles.',
-      validator: function(geoObj, value) {
+      validator: function(geoObj) {
+        var value = geoObj.max_distance_miles;
         return value && _.isNumber(value);
       }
     }

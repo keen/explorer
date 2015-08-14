@@ -1,15 +1,19 @@
 /** @jsx React.DOM */
 var assert = require('chai').assert;
 var _ = require('lodash');
+var moment = require('moment');
 var sinon = require('sinon');
 var FilterValueFields = require('../../../../client/js/app/components/common/filter_value_fields.js');
 var Geo = require('../../../../client/js/app/components/common/geo.js');
 var Datepicker = require('../../../../client/js/app/components/common/datepicker.js');
 var Select = require('../../../../client/js/app/components/common/select.js');
 var ProjectUtils = require('../../../../client/js/app/utils/ProjectUtils');
+var ExplorerActions = require('../../../../client/js/app/actions/ExplorerActions');
 var React = require('react/addons');
 var TestUtils = React.addons.TestUtils;
 var TestHelpers = require('../../../support/TestHelpers');
+
+var datetimeFormat = 'll h:mm A';
 
 describe('components/common/filter_value_fields', function() {
 
@@ -25,7 +29,15 @@ describe('components/common/filter_value_fields', function() {
     };
     this.index = 0;
 
-    this.component = TestUtils.renderIntoDocument(<FilterValueFields model={this.model} filter={this.filter} project={this.project} index={this.index} />);
+    this.component = TestUtils.renderIntoDocument(<FilterValueFields model={this.model}
+                                                                     filter={this.filter}
+                                                                     project={this.project}
+                                                                     index={this.index} />);
+    this.updateFilterStub = sinon.stub(ExplorerActions, 'updateFilter');
+  });
+
+  afterEach(function(){
+    ExplorerActions.updateFilter.restore();
   });
 
   describe('setup', function() {
@@ -35,12 +47,34 @@ describe('components/common/filter_value_fields', function() {
 
     describe('Datetime', function() {
       beforeEach(function(){
-        this.component.props.filter.coercion_type = 'Datetime';
-        this.component.forceUpdate();
+        this.filter.coercion_type = 'Datetime';
+        this.filter.property_value = 'May 15, 2015 10:00 AM';
+        this.component.setProps({ filter: this.filter });
       });
 
       it('has a Datetime component', function(){
         assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, Datepicker), 1);
+      });
+
+      describe('Setting values datetime values', function () {
+        it('properly sets the property_value from the date picker', function () {
+          this.component.refs['date-value-input'].refs.datepicker.getDOMNode().value = 'Jan 1, 2015';
+          TestUtils.Simulate.blur(this.component.refs['date-value-input'].refs.datepicker.getDOMNode());
+          assert.strictEqual(
+            moment(this.updateFilterStub.getCall(0).args[2].property_value).format(datetimeFormat),
+            "Jan 1, 2015 10:00 AM"
+          );
+        });
+        it('properly sets the properly_value from the time picker', function () {
+          var inputNode = this.component.refs['time-value-input'].refs.timepicker.refs.input.getDOMNode();
+          TestUtils.Simulate.focus(inputNode);
+          inputNode.value = '03:47 PM';
+          TestUtils.Simulate.blur(inputNode);
+          assert.strictEqual(
+            moment(this.updateFilterStub.getCall(0).args[2].property_value).format(datetimeFormat),
+            "May 15, 2015 3:47 PM"
+          );  
+        });
       });
     });
 
@@ -146,7 +180,7 @@ describe('components/common/filter_value_fields', function() {
       it('is true or false', function () {
         this.component.props.filter = { operator: 'exists', coercion_type: 'Boolean' };
         this.component.forceUpdate()
-        var boolPropValueSelect = this.component.refs['boolean-value-set'].getDOMNode().lastChild
+        var boolPropValueSelect = this.component.refs['boolean-value-set'].getDOMNode().childNodes[0].childNodes[0];
 
         var boolPropValueSelectOptions = _.map(boolPropValueSelect.childNodes, function(node){
           return node.value;

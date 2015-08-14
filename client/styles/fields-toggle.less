@@ -15,6 +15,7 @@
 			line-height: 20px;
 			margin: 0;
 			padding-left: 40px;
+			text-transform: none;
 		}
 
 		.toggle-button {
@@ -22,11 +23,10 @@
 			border: 1px solid #c5c5c5;
 			border-radius: 50%;
 			color: #c5c5c5;
-			font-size: 22px;
 			height: 24px;
 			line-height: 24px;
 			margin: 0;
-			outline: none;
+			outline: 0;
 			padding: 0;
 			position: absolute;
 			text-align: center;
@@ -34,17 +34,27 @@
 			width: 24px;
 
 			.icon {
-				font-size: 20px;
-				left: .5px;
+				display: block;
+				font-family: 'Gotham Rounded A', 'Gotham Rounded B', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+				font-size: 22px;
+				height: 24px;
+				line-height: 24px;
 				position: relative;
-				top: -3px;
+				top: -1px;
+				-webkit-font-smoothing: none;
 
 				&::before {
 					content: "\002B";
 				}
 			}
+
+			&:focus,
+			&:hover {
+
+			}
 		}
 
+		&:focus,
 		&:hover {
 			background: #E7E7E7;
 
