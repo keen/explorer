@@ -38,8 +38,13 @@
       // you can pass in the "root" configuration option, eg: root: '/your/custom/root/path'
       var app = new Keen.DataTools.App({
         client: client,
+
         // Optionally add in persistance
         // persistence: persistence,
+
+        // Optionally set a max_age for all queries
+        // max_age: 60 * 60 * 24, // 1 day
+
         targetId: 'explorer'
       });
       app.render();

@@ -411,7 +411,7 @@ function App(config) {
 
   // Create the main active explorer
   var explorerAttrs = _.assign(
-    { id: FormatUtils.generateRandomId("TEMP-") },
+    { id: FormatUtils.generateRandomId("TEMP-"), max_age: config.max_age },
     ExplorerUtils.formatQueryParams(QueryStringUtils.getQueryAttributes()) // Grab params form URL and load into new explorer
   );
   ExplorerActions.create(explorerAttrs);
@@ -2326,10 +2326,11 @@ var RelativePicker = React.createClass({displayName: "RelativePicker",
 
     if (hasRelativeTimeframe(this.props.model)) {
       var subIntervalCopy = FormatUtils.singularize(time.sub_timeframe, time.amount);
+      var timeAmountPluralSuffix = time.amount > 1 ? 's' : '';
       var relativityCopy = time.relativity == 'this' ? 'including' : 'excluding';
       var singularCurrentInterval = FormatUtils.singularize(subIntervalCopy);
 
-      return (React.createElement("p", {className: "help-block"}, "The last ", time.amount, " ", subIntervalCopy, " ", React.createElement("b", null, relativityCopy), " the current ", singularCurrentInterval, "."));
+      return (React.createElement("p", {className: "help-block"}, "The last ", time.amount, " ", subIntervalCopy, timeAmountPluralSuffix, " ", React.createElement("b", null, relativityCopy), " the current ", singularCurrentInterval, "."));
     }
   },
 
@@ -5225,6 +5226,10 @@ module.exports = {
       if (!params.filters.length) {
         delete params.filters;
       }
+    }
+
+    if(explorer.max_age) {
+      params.max_age = explorer.max_age;
     }
 
     return params;

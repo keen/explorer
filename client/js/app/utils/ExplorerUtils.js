@@ -100,6 +100,10 @@ module.exports = {
       }
     }
 
+    if(explorer.max_age) {
+      params.max_age = explorer.max_age;
+    }
+
     return params;
   },
 

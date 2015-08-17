@@ -118,6 +118,17 @@ describe('utils/ExplorerUtils', function() {
         timeframe: 'this_1_days'
       });
     });
+    it("should add a max_age to all queries if there is one", function() {
+      var explorer = {
+        query: {
+          event_collection: 'click',
+          analysis_type: 'count'
+        },
+        max_age: 100
+      };
+      var json = ExplorerUtils.queryJSON(explorer);
+      assert.equal(json.max_age, 100);
+    });
   });
 
   describe('runQuery', function () {
