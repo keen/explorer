@@ -434,8 +434,8 @@ function App(config) {
   }
 
   this.routes = (
-    React.createElement(Route, {name: "app", path: config.appRoot || "/", handler: AppComponent}, 
-      React.createElement(Route, {name: "explorer/", handler: Explorer})
+    React.createElement(Route, {name: "app", handler: AppComponent}, 
+      React.createElement(Route, {name: "explorer", path: config.appRoot || "/", handler: Explorer})
     )
   );
 }
