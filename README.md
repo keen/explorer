@@ -1,6 +1,6 @@
 # Data Explorer
 
-The data explorer is an open source point-and-click query interface to easily query your event data.
+The data explorer is an open source point-and-click interface for querying and visualizing your event data.
 
 ![](https://s3.amazonaws.com/keen-event-images/Screen+Shot+2015-07-22+at+3.25.48+PM.png)
 
@@ -12,11 +12,11 @@ The data explorer is an open source point-and-click query interface to easily qu
   2. Add your Keen IO keys to demo/index.html
   3. `npm install`
   4. `npm -g install gulp` (if needed)
-  5. `gulp`
-  6. Browse to [the demo](http://localhost:8081/explorer).
+  5. `gulp` or `export PORT=8082; gulp`
+  6. You can now view the demo locally at `http://localhost:8081/explorer` or your specified port.
 
 ### 1. Get your project ID & API keys
-If you haven’t done so already, [login to Keen IO to create a project](https://keen.io/add-project) for your app. You'll need a [Keen IO account](keen.io/signup?s=explorer) to create a project. The Project ID and API Keys are available on the Project Overview page. You will need these for the next steps.
+If you haven’t done so already, [login to Keen IO to create a project](https://keen.io/add-project) for your app. You'll need a [Keen IO account](https://keen.io/signup?s=explorer) to create a project. The Project ID and API Keys are available on the Project Overview page. You will need these for the next steps.
 
 ### 2. Drop in the JavaScript, CSS and images
 
@@ -25,35 +25,42 @@ You can see a complete code example of all these resources being included [in ou
 #### CSS
 
 Include a copy of Bootstrap 3, which you can do from the CDN:
-- `<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">`
 
-Include a copy of the Keen.DataTools styling from this project, found under:
-- `dist/keen-data-tools.css`.
+```html
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+```
+
+Include a copy of the Keen.DataTools styling from this project, found under: `dist/keen-data-tools.css`.
 
 #### HTML
 
 Have a div with an id that you'll use as the target to render out the app. A simple:
 
-`<div id="content"></div>`
+```html
+<div id="content"></div>
+```
 
 will work just fine. All of the interface components will live under this div.
 
 #### JavaScript
 
 Include a copy of jQuery, which you can do from the Google CDN:
-- `<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>`
+```html
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+```
 
 Include a copy of Keen.js, the easiest way is to use our CDN version:
-- `<script src="https://d26b395fwzu5fz.cloudfront.net/3.1.0-beta/keen.min.js" type="text/javascript"></script>`
+```html
+<script src="https://d26b395fwzu5fz.cloudfront.net/3.1.0-beta/keen.min.js" type="text/javascript"></script>
+```
 
-Include a copy of Keen.DataTools from this project, found under:
-- `dist/keen-data-tools.js`.
+Include a copy of Keen.DataTools from this project, found under: `dist/keen-data-tools.js`.
 
 ### 3. Configure a Keen.js client and initialize the Keen.DataTools app
 
 Initialize a new Keen.js client and then pass that into the initialization of a new Keen.DataTools.App.
 
-```
+```html
 <script type="text/javascript">
     $(document).ready(function(){
       client = new Keen({
@@ -85,7 +92,7 @@ Persistence is entirely optional. If you include it, a "saved queries" feature w
 
 To include persistence, create a new persistence object (this must be a compliant REST server, which we will document), and then pass that persistence object to the `Keen.DataTools.App` initialization. So, instead of what you see above, you would have:
 
-```
+```html
 <script type="text/javascript">
   $(document).ready(function(){
     client = new Keen({
@@ -122,7 +129,7 @@ If you want to customize this project or contribute, here is how to get started:
 * run `npm install` to install project dependencies
 * update the `index.html` with your Project ID and API Keys
 
-```
+```html
 <script type="text/javascript">
     $(document).ready(function(){
       client = new Keen({
@@ -172,6 +179,8 @@ This isn't normally requried, but if you need to, you can run the tests in the b
 In order to move quickly and provide a good experience for its customers, Keen runs a private fork of Explorer for internal bug fixes, new features, and design changes. Some of those changes may rely on specific items in Keen's infrastructure, and need to go through a migration phase to work properly in the open source version.
 
 Those migrations will happen frequently (it is likely that the two versions will usually be in sync), but there may be periods of lag after new larger features come out that this open source repo will behind what Keen shows on its website.
+
+If you have any questions about using the open source Data Explorer feel free to contact us anytime at [team@keen.io](mailto:team@keen.io). 
 
 
 ### Contributing:

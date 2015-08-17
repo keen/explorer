@@ -47,7 +47,9 @@
     "run-sequence": "~1.0.1",
     "browserify": "4.2.3",
     "vinyl-source-stream": "1.0.0",
-    "gulp-mocha-phantomjs": "0.8.0",
+    "gulp-mocha": "^1.0.0",
+    "gulp-mocha-phantomjs": "0.8.1",
+    "phantomjs": "1.9.7-15",
     "sinon": "1.14.1"
   }
 }
