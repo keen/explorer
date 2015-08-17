@@ -109,7 +109,7 @@ var ExplorerActions = {
       throw new Error("Warning: calling exec when model loading is true. Explorer id: " + explorer.id);
     }
 
-    var valid = ValidationUtils.runValidations(ExplorerValidations.explorer, explorer.query);
+    var valid = ValidationUtils.runValidations(ExplorerValidations.explorer, explorer);
     if (!valid.isValid) {
       NoticeActions.create({ text: valid.lastError, type: 'error', icon: 'remove-sign' });
       return;
@@ -143,13 +143,13 @@ var ExplorerActions = {
   runEmailExtraction: function(client, id, callback) {
     var explorer = ExplorerStore.get(id);
 
-    var valid = ValidationUtils.runValidations(ExplorerValidations.explorer, explorer.query);
+    var valid = ValidationUtils.runValidations(ExplorerValidations.explorer, explorer);
     if (!valid.isValid) {
       callback({ success: false, error: valid.lastError });
       return;
     }
 
-    var valid = ValidationUtils.runValidations(ExplorerValidations.emailExtractionExplorer, explorer.query);
+    var valid = ValidationUtils.runValidations(ExplorerValidations.emailExtractionExplorer, explorer);
     if (!valid.isValid) {
       callback({ success: false, error: valid.lastError });
       return;
@@ -169,11 +169,20 @@ var ExplorerActions = {
   },
 
   execError: function(explorer, err) {
+    AppDispatcher.dispatch({
+      actionType: ExplorerConstants.EXPLORER_QUERY_ERROR,
+      explorer: explorer,
+      error: err.message
+    });
     ExplorerActions.update(explorer.id, { loading: false });
     NoticeActions.create({ text: err.message, type: 'error' });
   },
 
   execSuccess: function (explorer, response) {
+    AppDispatcher.dispatch({
+      actionType: ExplorerConstants.EXPLORER_QUERY_SUCCESS,
+      explorer: explorer
+    });
     NoticeActions.clearAll();
     var updates = {
       result: response.result,
@@ -194,30 +203,23 @@ var ExplorerActions = {
       var models = [];
       _.each(resp, function(model) {
         var formattedModel = ExplorerUtils.formatQueryParams(model);
-        if (ValidationUtils.runValidations(ExplorerValidations.explorer, formattedModel.query).isValid) {
-          models.push(formattedModel);
-        } else {
+        if (!ValidationUtils.runValidations(ExplorerValidations.explorer, formattedModel).isValid) {
           console.warn('A persisted explorer model is invalid: ', formattedModel);
         }
+        models.push(formattedModel);
       });
       ExplorerActions.createBatch(models);
       AppStateActions.update({ fetchingPersistedExplorers: false });
     });
   },
 
-  saveNew: function(persistence, sourceId, name) {
+  saveNew: function(persistence, sourceId) {
     AppDispatcher.dispatch({
       actionType: ExplorerConstants.EXPLORER_SAVING,
       id: sourceId,
       saveType: 'save'
     });
-
-    var attrs = _.assign(
-      {},
-      ExplorerUtils.toJSON(ExplorerStore.get(sourceId)),
-      { id: null, name: name }
-    );
-
+    var attrs = _.assign({}, ExplorerUtils.toJSON(ExplorerStore.get(sourceId)));
     persistence.create(attrs, function(err, res) {
       if (err) {
         AppDispatcher.dispatch({
@@ -227,14 +229,46 @@ var ExplorerActions = {
           errorMsg: err
         });
       } else {
+        var formattedParams = ExplorerUtils.formatQueryParams(res);
         AppDispatcher.dispatch({
-          actionType: ExplorerConstants.EXPLORER_CREATE,
-          attrs: _.assign({}, ExplorerUtils.formatQueryParams(res), { id: res.id, name: name })
+          actionType: ExplorerConstants.EXPLORER_UPDATE,
+          id: sourceId,
+          updates: ExplorerUtils.mergeResponseWithExplorer(ExplorerStore.get(sourceId), res)
         });
         AppDispatcher.dispatch({
           actionType: ExplorerConstants.EXPLORER_SAVE_SUCCESS,
           id: sourceId,
-          saveType: 'save'
+          saveType: 'save',
+        });
+      }
+    });
+  },
+
+  saveExisting: function(persistence, sourceId) {
+    AppDispatcher.dispatch({
+      actionType: ExplorerConstants.EXPLORER_SAVING,
+      id: sourceId,
+      saveType: 'update'
+    });
+    var attrs = _.assign({}, ExplorerUtils.toJSON(ExplorerStore.get(sourceId)));
+    persistence.update(attrs, function(err, res) {
+      if (err) {
+        AppDispatcher.dispatch({
+          actionType: ExplorerConstants.EXPLORER_SAVE_FAIL,
+          saveType: 'update',
+          id: sourceId,
+          errorMsg: err
+        });
+      } else {
+        AppDispatcher.dispatch({
+          actionType: ExplorerConstants.EXPLORER_UPDATE,
+          id: sourceId,
+          updates: ExplorerUtils.mergeResponseWithExplorer(ExplorerStore.get(sourceId), res)
+        });
+        AppDispatcher.dispatch({
+          actionType: ExplorerConstants.EXPLORER_SAVE_SUCCESS,
+          id: sourceId,
+          saveType: 'update',
         });
       }
     });
@@ -346,6 +380,7 @@ var DefaultRoute = Router.DefaultRoute;
 var Route = Router.Route;
 var RouteHandler = Router.RouteHandler;
 var Persistence = require('./modules/persistence/persistence.js');
+var AppDispatcher = require('./dispatcher/AppDispatcher');
 var AppComponent = require('./components/app.js');
 var Explorer = require('./components/explorer/index.js');
 var ProjectActions = require('./actions/ProjectActions');
@@ -364,6 +399,7 @@ function App(config) {
     throw new Error("If you initialize Explorer with a persistence layer you must provide a user object as well.");
   }
 
+  this.appDispatcher = AppDispatcher;
   this.targetNode = document.getElementById(config.targetId);
   this.persistence = config.persistence || null;
   this.client = config.client;
@@ -382,7 +418,7 @@ function App(config) {
   ExplorerActions.setActive(explorerAttrs.id);
 
   // Run the query for this explorer if it's valid
-  if (runValidations(explorerValidations, ExplorerStore.getActive().query).isValid) {
+  if (runValidations(explorerValidations, ExplorerStore.getActive()).isValid) {
     ExplorerActions.exec(this.client, ExplorerStore.getActive().id);
   }
 
@@ -398,8 +434,8 @@ function App(config) {
   }
 
   this.routes = (
-    React.createElement(Route, {name: "app", handler: AppComponent}, 
-      React.createElement(Route, {name: "explorer", path: config.appRoot || '/', handler: Explorer})
+    React.createElement(Route, {name: "app", path: config.appRoot || "/", handler: AppComponent}, 
+      React.createElement(Route, {name: "/", handler: Explorer})
     )
   );
 }
@@ -418,8 +454,7 @@ window.Keen = window.Keen || {};
 window.Keen.DataTools = window.Keen.DataTools || {};
 window.Keen.DataTools.Persistence = Persistence;
 window.Keen.DataTools.App = module.exports = App;
-
-},{"./actions/ExplorerActions":2,"./actions/ProjectActions":4,"./actions/UserActions":5,"./components/app.js":7,"./components/explorer/index.js":30,"./modules/persistence/persistence.js":49,"./stores/ExplorerStore":52,"./stores/ProjectStore":54,"./utils/ExplorerUtils":56,"./utils/FormatUtils":58,"./utils/QueryStringUtils":60,"./utils/ValidationUtils":61,"./validations/ExplorerValidations":62,"lodash":82,"react":300,"react-router":113}],7:[function(require,module,exports){
+},{"./actions/ExplorerActions":2,"./actions/ProjectActions":4,"./actions/UserActions":5,"./components/app.js":7,"./components/explorer/index.js":29,"./dispatcher/AppDispatcher":48,"./modules/persistence/persistence.js":50,"./stores/ExplorerStore":52,"./stores/ProjectStore":54,"./utils/ExplorerUtils":56,"./utils/FormatUtils":58,"./utils/QueryStringUtils":60,"./utils/ValidationUtils":61,"./validations/ExplorerValidations":62,"lodash":82,"react":300,"react-router":113}],7:[function(require,module,exports){
 var React = require('react');
 var Router = require('react-router');
 var RouteHandler = Router.RouteHandler;
@@ -470,7 +505,7 @@ var App = React.createClass({displayName: "App",
 
 module.exports = App;
 
-},{"../stores/ProjectStore":54,"../utils/ProjectUtils":59,"./common/loader.js":17,"react":300,"react-router":113}],8:[function(require,module,exports){
+},{"../stores/ProjectStore":54,"../utils/ProjectUtils":59,"./common/loader.js":18,"react":300,"react-router":113}],8:[function(require,module,exports){
 /**
  * @jsx React.DOM
  */
@@ -572,7 +607,7 @@ var AbsolutePicker = React.createClass({displayName: "AbsolutePicker",
 
 module.exports = AbsolutePicker;
 
-},{"../../actions/ExplorerActions":2,"../../utils/ExplorerUtils":56,"./datepicker.js":9,"./timepicker.js":25,"lodash":82,"moment":83,"react":300}],9:[function(require,module,exports){
+},{"../../actions/ExplorerActions":2,"../../utils/ExplorerUtils":56,"./datepicker.js":9,"./timepicker.js":26,"lodash":82,"moment":83,"react":300}],9:[function(require,module,exports){
 /**
  * @jsx React.DOM
  */
@@ -614,7 +649,7 @@ var Datepicker = React.createClass({displayName: "Datepicker",
 
   destroyPicker: function() {
     var picker = $(this.refs[this.props.refValue].getDOMNode()).pickadate('picker');
-    picker.stop();
+    if (picker) picker.stop();
   },
 
   // React methods
@@ -631,7 +666,8 @@ var Datepicker = React.createClass({displayName: "Datepicker",
       label: false,
       onChange: function(){},
       placeholder: '',
-      classes: 'datepicker-wrapper form-group'
+      classes: 'datepicker-wrapper form-group',
+      onSet: function(){}
     };
   },
 
@@ -918,7 +954,7 @@ var EventBrowser = React.createClass({displayName: "EventBrowser",
 
 module.exports = EventBrowser;
 
-},{"../../actions/ExplorerActions":2,"../../utils/ExplorerUtils":56,"../../utils/FormatUtils":58,"../../utils/ProjectUtils":59,"../common/loader.js":17,"./modal.js":18,"classnames":73,"lodash":82,"react":300}],11:[function(require,module,exports){
+},{"../../actions/ExplorerActions":2,"../../utils/ExplorerUtils":56,"../../utils/FormatUtils":58,"../../utils/ProjectUtils":59,"../common/loader.js":18,"./modal.js":19,"classnames":73,"lodash":82,"react":300}],11:[function(require,module,exports){
 /**
  * @jsx React.DOM
  */
@@ -967,7 +1003,7 @@ var FieldsToggle = React.createClass({displayName: "FieldsToggle",
   },
 
   // React Methods
-  
+
   componentWillMount: function() {
     this._storedAttrs = {};
   },
@@ -1150,10 +1186,10 @@ var Filter = React.createClass({displayName: "Filter",
     return (
       React.createElement("div", {className: filterClasses}, 
         React.createElement("div", {className: "row"}, 
-          React.createElement("div", {className: "col-md-5 filter-property-col"}, 
+          React.createElement("div", {className: "col-md-4 filter-property-col"}, 
             propertyNameSelect
           ), 
-          React.createElement("div", {className: "col-md-1 filter-operator-col"}, 
+          React.createElement("div", {className: "col-md-2 filter-operator-col"}, 
             operatorSelect
           ), 
           React.createElement("div", {className: "col-md-5 filter-value-col"}, 
@@ -1174,7 +1210,7 @@ var Filter = React.createClass({displayName: "Filter",
 
 module.exports = Filter;
 
-},{"../../actions/ExplorerActions":2,"../../utils/FilterUtils":57,"../../utils/ProjectUtils":59,"../../utils/ValidationUtils":61,"../../validations/FilterValidations":63,"./filter_value_fields.js":14,"./react_select.js":20,"./select.js":23,"classnames":73,"lodash":82,"react":300}],13:[function(require,module,exports){
+},{"../../actions/ExplorerActions":2,"../../utils/FilterUtils":57,"../../utils/ProjectUtils":59,"../../utils/ValidationUtils":61,"../../validations/FilterValidations":63,"./filter_value_fields.js":14,"./react_select.js":21,"./select.js":24,"classnames":73,"lodash":82,"react":300}],13:[function(require,module,exports){
 /**
  * @jsx React.DOM
  */
@@ -1265,7 +1301,7 @@ var FilterManager = React.createClass({displayName: "FilterManager",
 
 module.exports = FilterManager;
 
-},{"../../actions/ExplorerActions":2,"./filter.js":12,"./modal.js":18,"lodash":82,"react":300}],14:[function(require,module,exports){
+},{"../../actions/ExplorerActions":2,"./filter.js":12,"./modal.js":19,"lodash":82,"react":300}],14:[function(require,module,exports){
 /**
  * @jsx React.DOM
  */
@@ -1284,9 +1320,11 @@ var ExplorerActions = require('../../actions/ExplorerActions');
 var FormatUtils = require('../../utils/FormatUtils');
 var FilterUtils = require('../../utils/FilterUtils');
 
+var dateFormat = 'll';
+var timeFormat = 'h:mm A';
+
 function coerceGeoValue(value) {
   var trailingDecimals = value.match(/\.+$/);
-
   if (value === '-' || (trailingDecimals && trailingDecimals.length)) {
     return value;
   } else {
@@ -1299,7 +1337,7 @@ var FilterValueFields = React.createClass({displayName: "FilterValueFields",
   handleGeoSelection: function(event) {
     var name = event.target.name;
     var value = event.target.value;
-    
+
     var updates = _.cloneDeep(this.props.filter);
     if (!_.isNull(name.match('coordinates'))) {
       updates.property_value.coordinates[parseInt(name.substr(name.length - 1))] = coerceGeoValue(value);
@@ -1317,140 +1355,116 @@ var FilterValueFields = React.createClass({displayName: "FilterValueFields",
     this.setState(updates);
   },
 
-  updateFilter: function(event) {
-    var name = event.target.name;
-    var value = event.target.value;
-
-    if (name === 'property_value_date') {
-      value = moment(new Date(value)).format('ll');
-    }
-    if (name === 'property_value_time') {
-      var formattedDateAndTime = moment(new Date(moment().format('ll') + ' ' + value));
-      value = formattedDateAndTime.format('h:mm A');
-    }
-    
-    var updates = {};
-    updates[name] = value;
-    attrs = _.assign({}, this.props.model.query.filters[this.props.index], updates);
+  setDate: function(name, value) {
+    var updates = _.cloneDeep(this.props.filter);
+    updates.property_value = new Date(moment(new Date(value)).format(dateFormat) + " " + moment(this.props.filter.property_value).format(timeFormat));
     ExplorerActions.updateFilter(this.props.model.id, this.props.index, updates);
   },
 
-  buildValueInput: function() {
-    var filter = this.props.filter;
-    
-    var propertyType = getPropertyType(
-      this.props.project,
-      this.props.model.query.event_collection,
-      filter.property_name
-    );
-
-    if (propertyType === 'geo' || filter.operator === 'within') {
-      return this.geoInput();
-    } else if (filter.operator === 'exists' || filter.coercion_type === 'Boolean') {
-      return this.booleanInput();
-    } else if (filter.coercion_type === 'Datetime') {
-      return this.datetimeInput();
-    } else {
-      return null;
-    }
+  setTime: function(name, value) {
+    var updates = _.cloneDeep(this.props.filter);
+    updates.property_value = new Date(moment(this.props.filter.property_value).format(dateFormat) + " " + moment(new Date(value)).format(timeFormat));
+    ExplorerActions.updateFilter(this.props.model.id, this.props.index, updates);
   },
 
-  geoInput: function() {
-    return React.createElement(Geo, {handleGeoSelection: this.handleGeoSelection, filter: this.props.filter})
+  handleDateBlur: function (event) {
+    var name = event.target.name;
+    var value = event.target.value;
+    // console.log('name is: ' + name);
+    // console.log('value is: ' + value);
+    this.setDate(name, value);
+  },
+
+  updateFilter: function(event) {
+    var name = event.target.name;
+    var value = event.target.value;
+    var updates = _.cloneDeep(this.props.filter);
+    updates[name] = value;
+    ExplorerActions.updateFilter(this.props.model.id, this.props.index, updates);
   },
 
   getCoercionOptions: function() {
-    if (this.props.filter.operator) {
-      return _.find(FILTER_OPERATORS, { value: this.props.filter.operator }).canBeCoeredTo;
-    } else {
-      return [];
-    }
-  },
-
-  defaultInput: function() {
-    var isReadonly = (this.props.filter.coercion_type === 'Null');
-
-    return (
-      React.createElement("input", {type: "text", 
-             ref: "value-input", 
-             name: "property_value", 
-             className: "form-control property-value", 
-             value: this.state.property_value, 
-             onChange: this.onChange, 
-             onBlur: this.updateFilter, 
-             placeholder: this.getInputPlaceholder(), 
-             readOnly: isReadonly})
-    )
-  },
-
-  datetimeInput: function() {
-    return (
-      React.createElement("div", {className: "row property-value"}, 
-        React.createElement("div", {className: "col-md-6 form-collapse-right"}, 
-          React.createElement(Datepicker, {ref: "value-input", 
-                      value: this.state.property_value_date, 
-                      label: false, 
-                      name: "property_value_date", 
-                      placeholder: "Date", 
-                      classes: "datepicker-wrapper", 
-                      onChange: this.onChange, 
-                      onBlur: this.updateFilter})
-        ), 
-        React.createElement("div", {className: "col-md-6 form-collapse-left"}, 
-          React.createElement(Timepicker, {value: this.state.property_value_time, 
-                      label: false, 
-                      name: "property_value_time", 
-                      placeholder: "Time", 
-                      classes: "timepicker-wrapper", 
-                      onChange: this.onChange, 
-                      onBlur: this.updateFilter})
-        )
-      )
-    );
-  },
-
-  booleanInput: function() {
-    var selectedOption = FormatUtils.booleanMap(this.state.property_value);
-
-    return  (
-      React.createElement(Select, {name: "property_value", 
-              classes: "property-value", 
-              ref: "boolean-value-set", 
-              options: ['true', 'false'], 
-              handleBlur: this.updateFilter, 
-              handleSelection: this.onChange, 
-              selectedOption: selectedOption || 'true', 
-              emptyOption: false}));
+    var operator = this.props.filter.operator;
+    return operator ? _.find(FILTER_OPERATORS, { value: operator }).canBeCoeredTo : [];
   },
 
   getInputPlaceholder: function() {
     var type = this.props.filter.coercion_type;
-
-    if (type === 'List') {
-      return 'Comma sep list';
-    } else {
-      return type;
-    }
+    return type === 'List' ? 'Comma sep list' : type;
   },
 
   // React methods
 
   getInitialState: function() {
     return {
-      property_value:      this.props.filter.property_value,
-      property_value_date: this.props.filter.property_value_date,
-      property_value_time: this.props.filter.property_value_time
+      property_value: this.props.filter.property_value
     };
   },
 
   componentWillReceiveProps: function(newProps) {
-    this.setState({
-      property_value: newProps.filter.property_value
-    });
+    this.setState({ property_value: newProps.filter.property_value });
   },
 
   render: function() {
-    var valueInput = this.buildValueInput() || this.defaultInput();
+    var valueInput;
+
+    var propertyType = getPropertyType(
+      this.props.project,
+      this.props.model.query.event_collection,
+      this.props.filter.property_name
+    );
+
+    if (propertyType === 'geo' || this.props.filter.operator === 'within') {
+      valueInput = React.createElement(Geo, {handleGeoSelection: this.handleGeoSelection, filter: this.props.filter});
+    } else if (this.props.filter.operator === 'exists' || this.props.filter.coercion_type === 'Boolean') {
+      valueInput = (
+        React.createElement(Select, {name: "property_value", 
+                classes: "property-value", 
+                ref: "boolean-value-set", 
+                options: ['true', 'false'], 
+                handleBlur: this.updateFilter, 
+                handleSelection: this.onChange, 
+                selectedOption: FormatUtils.booleanMap(this.state.property_value) || 'true', 
+                emptyOption: false})
+      );
+    } else if (this.props.filter.coercion_type === 'Datetime') {
+      valueInput = (
+        React.createElement("div", {className: "row property-value"}, 
+          React.createElement("div", {className: "col-md-6 form-collapse-right"}, 
+            React.createElement(Datepicker, {ref: "date-value-input", 
+                        value: moment(this.state.property_value).format(dateFormat), 
+                        label: false, 
+                        name: "property_value", 
+                        placeholder: "Date", 
+                        classes: "datepicker-wrapper", 
+                        onSet: this.setDate, 
+                        onBlur: this.handleDateBlur})
+          ), 
+          React.createElement("div", {className: "col-md-6 form-collapse-left"}, 
+            React.createElement(Timepicker, {ref: "time-value-input", 
+                        value: moment(this.state.property_value).format(timeFormat), 
+                        label: false, 
+                        name: "property_value", 
+                        placeholder: "Time", 
+                        classes: "timepicker-wrapper", 
+                        handleSelection: this.setTime, 
+                        handleBlur: this.setTime})
+          )
+        )
+      );
+    } else {
+      valueInput = (
+        React.createElement("input", {type: "text", 
+               ref: "value-input", 
+               name: "property_value", 
+               className: "form-control property-value", 
+               value: this.state.property_value, 
+               onChange: this.onChange, 
+               onBlur: this.updateFilter, 
+               placeholder: this.getInputPlaceholder(), 
+               readOnly: this.props.filter.coercion_type === 'Null'})
+      );
+    }
 
     return (
       React.createElement("div", {className: "row"}, 
@@ -1475,7 +1489,7 @@ var FilterValueFields = React.createClass({displayName: "FilterValueFields",
 
 module.exports = FilterValueFields;
 
-},{"../../actions/ExplorerActions":2,"../../utils/FilterUtils":57,"../../utils/FormatUtils":58,"../../utils/ProjectUtils":59,"./datepicker.js":9,"./geo.js":15,"./select.js":23,"./timepicker.js":25,"lodash":82,"moment":83,"react":300}],15:[function(require,module,exports){
+},{"../../actions/ExplorerActions":2,"../../utils/FilterUtils":57,"../../utils/FormatUtils":58,"../../utils/ProjectUtils":59,"./datepicker.js":9,"./geo.js":15,"./select.js":24,"./timepicker.js":26,"lodash":82,"moment":83,"react":300}],15:[function(require,module,exports){
 /**
  * @jsx React.DOM
  */
@@ -1582,6 +1596,79 @@ module.exports = InputComponent;
 
 },{"lodash":82,"react":300}],17:[function(require,module,exports){
 /**
+* @jsx React.DOM
+*/
+
+var _ = require('lodash');
+var moment = require('moment');
+var React = require('react/addons');
+var Select = require('./select.js');
+var FieldsToggle = require('./fields_toggle.js');
+var ExplorerActions = require('../../actions/ExplorerActions');
+var ExplorerUtils = require('../../utils/ExplorerUtils');
+var ProjectUtils = require('../../utils/ProjectUtils');
+
+var Interval = React.createClass({displayName: "Interval",
+
+  setInterval: function(event) {
+    var updates = _.cloneDeep(this.props.model.query);
+    updates.interval = event.target.value;
+    ExplorerActions.update(this.props.model.id, { query: updates });
+  },
+
+  intervalFieldsToggled: function(toggleState){
+    if (toggleState && !this.props.model.query.interval) {
+      var updates = _.cloneDeep(this.props.model.query);
+      updates.interval = 'daily';
+      ExplorerActions.update(this.props.model.id, { query: updates });
+    }
+  },
+
+  intervalUpdateFn: function(updates) {
+    ExplorerActions.update(this.props.model.id, {
+      query: _.assign({}, this.props.model.query, updates)
+    });
+  },
+
+  intervalGetFn: function(attr) {
+    return this.props.model.query[attr];
+  },
+
+  // React Methods
+
+  render: function() {
+    var hasTimeframe = ExplorerUtils.getTimeframe(this.props.model) ? true : false;
+    var warningMessage = (
+      React.createElement("div", {className: "alert alert-warning"}, "Intervals require a timeframe property.")
+    );
+    return (
+      React.createElement("div", {className: "field-component"}, 
+        React.createElement(FieldsToggle, {ref: "interval-toggle", 
+                      name: "Interval", 
+                      initialOpenState: this.props.model.query.interval, 
+                      attrsToStore: 'interval', 
+                      getFn: this.intervalGetFn, 
+                      updateFn: this.intervalUpdateFn, 
+                      toggleCallback: this.intervalFieldsToggled}, 
+          hasTimeframe ? null : warningMessage, 
+          React.createElement(Select, {label: false, 
+                  name: "interval", 
+                  classes: "interval-type", 
+                  options: ProjectUtils.getConstant('ABSOLUTE_INTERVAL_TYPES'), 
+                  emptyOption: false, 
+                  handleSelection: this.setInterval, 
+                  selectedOption: this.props.model.query.interval, 
+                  sort: false})
+        )
+      )
+    );
+  }
+});
+
+module.exports = Interval;
+
+},{"../../actions/ExplorerActions":2,"../../utils/ExplorerUtils":56,"../../utils/ProjectUtils":59,"./fields_toggle.js":11,"./select.js":24,"lodash":82,"moment":83,"react/addons":128}],18:[function(require,module,exports){
+/**
  * @jsx React.DOM
  */
 
@@ -1629,7 +1716,7 @@ var LoaderComponent = React.createClass({displayName: "LoaderComponent",
 
 module.exports = LoaderComponent;
 
-},{"lodash":82,"react":300}],18:[function(require,module,exports){
+},{"lodash":82,"react":300}],19:[function(require,module,exports){
 /**
  * @jsx React.DOM
  */
@@ -1799,7 +1886,7 @@ var Modal = React.createClass({displayName: "Modal",
 
 module.exports = Modal;
 
-},{"classnames":73,"lodash":82,"react":300}],19:[function(require,module,exports){
+},{"classnames":73,"lodash":82,"react":300}],20:[function(require,module,exports){
 /**
  * @jsx React.DOM
  */
@@ -1872,7 +1959,7 @@ var NoticeComponent = React.createClass({displayName: "NoticeComponent",
 
 module.exports = NoticeComponent;
 
-},{"lodash":82,"react":300}],20:[function(require,module,exports){
+},{"lodash":82,"react":300}],21:[function(require,module,exports){
 var React = require('react');
 
 /* TODO:
@@ -2202,7 +2289,7 @@ var ReactSelect = React.createClass({displayName: "ReactSelect",
 
 module.exports = ReactSelect;
 
-},{"react":300}],21:[function(require,module,exports){
+},{"react":300}],22:[function(require,module,exports){
 /**
  * @jsx React.DOM
  */
@@ -2219,8 +2306,6 @@ var ExplorerActions = require('../../actions/ExplorerActions');
 var FormatUtils = require('../../utils/FormatUtils');
 
 function hasRelativeTimeframe(explorer) {
-  // Sometimes the computed properties are too slow to get updated, so we need to check directly
-  // if a relative_timeframe can be constructed.
   var time = explorer.query.time || {};
   return time.relativity && time.amount && time.sub_timeframe;
 }
@@ -2241,10 +2326,11 @@ var RelativePicker = React.createClass({displayName: "RelativePicker",
 
     if (hasRelativeTimeframe(this.props.model)) {
       var subIntervalCopy = FormatUtils.singularize(time.sub_timeframe, time.amount);
+      var timeAmountPluralSuffix = time.amount > 1 ? 's' : '';
       var relativityCopy = time.relativity == 'this' ? 'including' : 'excluding';
       var singularCurrentInterval = FormatUtils.singularize(subIntervalCopy);
 
-      return (React.createElement("p", {className: "help-block"}, "The last ", time.amount, " ", subIntervalCopy, " ", React.createElement("b", null, relativityCopy), " the current ", singularCurrentInterval, "."));
+      return (React.createElement("p", {className: "help-block"}, "The last ", time.amount, " ", subIntervalCopy, timeAmountPluralSuffix, " ", React.createElement("b", null, relativityCopy), " the current ", singularCurrentInterval, "."));
     }
   },
 
@@ -2294,7 +2380,7 @@ var RelativePicker = React.createClass({displayName: "RelativePicker",
 
 module.exports = RelativePicker;
 
-},{"../../actions/ExplorerActions":2,"../../utils/ExplorerUtils":56,"../../utils/FormatUtils":58,"./input.js":16,"./select.js":23,"lodash":82,"react":300}],22:[function(require,module,exports){
+},{"../../actions/ExplorerActions":2,"../../utils/ExplorerUtils":56,"../../utils/FormatUtils":58,"./input.js":16,"./select.js":24,"lodash":82,"react":300}],23:[function(require,module,exports){
 /**
  * @jsx React.DOM
  */
@@ -2358,7 +2444,7 @@ var RunQuery = React.createClass({displayName: "RunQuery",
 
 module.exports = RunQuery;
 
-},{"classnames":73,"react":300}],23:[function(require,module,exports){
+},{"classnames":73,"react":300}],24:[function(require,module,exports){
 /**
  * @jsx React.DOM
  */
@@ -2459,16 +2545,18 @@ var SelectComponent = React.createClass({displayName: "SelectComponent",
     return (
       React.createElement("div", {className: this.props.classes}, 
         label, 
-        React.createElement("select", {ref: this.props.reference, 
-                name: this.props.name, 
-                value: selectedValue, 
-                className: "form-control", 
-                multiple: this.props.multiple, 
-                onChange: this.props.handleSelection, 
-                onBlur: this.props.handleBlur, 
-                disabled: this.props.disabled}, 
-          emptyOption, 
-          optionNodes
+        React.createElement("div", {className: "select-element"}, 
+          React.createElement("select", {ref: this.props.reference, 
+                  name: this.props.name, 
+                  value: selectedValue, 
+                  className: "form-control", 
+                  multiple: this.props.multiple, 
+                  onChange: this.props.handleSelection, 
+                  onBlur: this.props.handleBlur, 
+                  disabled: this.props.disabled}, 
+            emptyOption, 
+            optionNodes
+          )
         )
       )
     );
@@ -2477,7 +2565,8 @@ var SelectComponent = React.createClass({displayName: "SelectComponent",
 });
 
 module.exports = SelectComponent;
-},{"lodash":82,"react":300}],24:[function(require,module,exports){
+
+},{"lodash":82,"react":300}],25:[function(require,module,exports){
 /**
 * @jsx React.DOM
 */
@@ -2487,11 +2576,9 @@ var moment = require('moment');
 var React = require('react/addons');
 var AbsolutePicker = require('./absolute_picker.js');
 var RelativePicker = require('./relative_picker.js');
-var Select = require('./select.js');
 var FieldsToggle = require('./fields_toggle.js');
 var ReactSelect = require('./react_select.js');
 var Timezone = require('./timezone.js');
-
 var ExplorerActions = require('../../actions/ExplorerActions');
 var ExplorerUtils = require('../../utils/ExplorerUtils');
 var ProjectUtils = require('../../utils/ProjectUtils');
@@ -2534,55 +2621,12 @@ var Timeframe = React.createClass({displayName: "Timeframe",
     }
   },
 
-  setInterval: function(event) {
-    var updates = _.cloneDeep(this.props.model.query);
-    updates.interval = event.target.value;
-    ExplorerActions.update(this.props.model.id, { query: updates });
-  },
-
   isAbsolute: function() {
     return this.props.model.timeframe_type === 'absolute';
   },
 
   isRelative: function() {
     return this.props.model.timeframe_type === 'relative';
-  },
-
-  intervalFieldsToggled: function(toggleState){
-    if (toggleState && !this.props.model.query.interval) {
-      var updates = _.cloneDeep(this.props.model.query);
-      updates.interval = 'daily';
-      ExplorerActions.update(this.props.model.id, { query: updates });
-    }
-  },
-
-  buildIntervalInput: function(){
-    if (this.props.model.query.analysis_type !== 'extraction') {
-      var hasTimeframe = ExplorerUtils.getTimeframe(this.props.model) ? true : false;
-      var warningMessage = React.createElement("div", {className: "alert alert-warning"}, "Intervals require a timeframe property.");
-
-      return (
-        React.createElement("div", {className: "field-component"}, 
-          React.createElement(FieldsToggle, {ref: "interval-toggle", 
-                        name: "Interval", 
-                        initialOpenState: this.props.model.query.interval, 
-                        attrsToStore: 'interval', 
-                        getFn: this.timeframeGetFn, 
-                        updateFn: this.timeframeUpdateFn, 
-                        toggleCallback: this.intervalFieldsToggled}, 
-            hasTimeframe ? null : warningMessage, 
-            React.createElement(Select, {label: false, 
-                    name: "interval", 
-                    classes: "interval-type", 
-                    options: ProjectUtils.getConstant('ABSOLUTE_INTERVAL_TYPES'), 
-                    emptyOption: false, 
-                    handleSelection: this.setInterval, 
-                    selectedOption: this.props.model.query.interval, 
-                    sort: false})
-          )
-        )
-      );
-    }
   },
 
   timeframeUpdateFn: function(updates) {
@@ -2599,7 +2643,6 @@ var Timeframe = React.createClass({displayName: "Timeframe",
 
   render: function() {
     var timezone = this.props.model.query.timezone || ProjectUtils.getConstant('DEFAULT_TIMEZONE');
-    var intervalToggle = this.buildIntervalInput();
 
     if (this.isAbsolute()) {
       var timeframePicker = React.createElement(AbsolutePicker, {model: this.props.model});
@@ -2611,32 +2654,18 @@ var Timeframe = React.createClass({displayName: "Timeframe",
     return (
       React.createElement("div", {className: "timeframe"}, 
         React.createElement("div", {className: "field-component"}, 
-          React.createElement(FieldsToggle, {name: "Timeframe", 
-                        ref: "toggle", 
-                        updateFn: this.timeframeUpdateFn, 
-                        getFn: this.timeframeGetFn, 
-                        initialOpenState: ExplorerUtils.getTimeframe(this.props.model), 
-                        attrsToStore: ['time', 'timezone'], 
-                        resetValues: 
-                          {
-                            time: {},
-                            timezone: ProjectUtils.getConstant('DEFAULT_TIMEZONE')
-                          }, 
-                        
-                        toggleCallback: this.timeframeFieldsToggled}, 
-            React.createElement("ul", {className: "nav nav-pills", role: "tablist"}, 
-              React.createElement("li", {className: this.isRelative() ? 'active' : ''}, 
-                React.createElement("a", {href: "#", className: "relative-tab", "data-type": "relative", onClick: this.toggleTimeframeType}, "Relative")
-              ), 
-              React.createElement("li", {className: this.isAbsolute() ? 'active' : ''}, 
-                React.createElement("a", {href: "#", className: "absolute-tab", "data-type": "absolute", onClick: this.toggleTimeframeType}, "Absolute")
-              )
+          React.createElement("label", null, "Timeframe"), 
+          React.createElement("ul", {className: "nav nav-pills", role: "tablist"}, 
+            React.createElement("li", {className: this.isRelative() ? 'active' : ''}, 
+              React.createElement("a", {href: "#", className: "relative-tab", "data-type": "relative", onClick: this.toggleTimeframeType}, "Relative")
             ), 
-            timeframePicker, 
-            React.createElement(Timezone, {model: this.props.model})
-          )
-        ), 
-        intervalToggle
+            React.createElement("li", {className: this.isAbsolute() ? 'active' : ''}, 
+              React.createElement("a", {href: "#", className: "absolute-tab", "data-type": "absolute", onClick: this.toggleTimeframeType}, "Absolute")
+            )
+          ), 
+          timeframePicker, 
+          React.createElement(Timezone, {model: this.props.model})
+        )
       )
     );
   }
@@ -2644,7 +2673,7 @@ var Timeframe = React.createClass({displayName: "Timeframe",
 
 module.exports = Timeframe;
 
-},{"../../actions/ExplorerActions":2,"../../utils/ExplorerUtils":56,"../../utils/ProjectUtils":59,"./absolute_picker.js":8,"./fields_toggle.js":11,"./react_select.js":20,"./relative_picker.js":21,"./select.js":23,"./timezone.js":26,"lodash":82,"moment":83,"react/addons":128}],25:[function(require,module,exports){
+},{"../../actions/ExplorerActions":2,"../../utils/ExplorerUtils":56,"../../utils/ProjectUtils":59,"./absolute_picker.js":8,"./fields_toggle.js":11,"./react_select.js":21,"./relative_picker.js":22,"./timezone.js":27,"lodash":82,"moment":83,"react/addons":128}],26:[function(require,module,exports){
 /**
  * @jsx React.DOM
  */
@@ -2856,7 +2885,7 @@ var Timepicker = React.createClass({displayName: "Timepicker",
 });
 
 module.exports = Timepicker;
-},{"./react_select.js":20,"lodash":82,"react":300}],26:[function(require,module,exports){
+},{"./react_select.js":21,"lodash":82,"react":300}],27:[function(require,module,exports){
 /**
  * @jsx React.DOM
  */
@@ -2947,7 +2976,7 @@ var Timezone = React.createClass({displayName: "Timezone",
 
 module.exports = Timezone;
 
-},{"../../actions/ExplorerActions":2,"../../utils/ProjectUtils":59,"./react_select.js":20,"lodash":82,"react":300}],27:[function(require,module,exports){
+},{"../../actions/ExplorerActions":2,"../../utils/ProjectUtils":59,"./react_select.js":21,"lodash":82,"react":300}],28:[function(require,module,exports){
 /**
  * @jsx React.DOM
  */
@@ -3042,7 +3071,7 @@ var CSVExtraction = React.createClass({displayName: "CSVExtraction",
               {
                 text: this.state.loading ? 'Sending...' : 'Send',
                 ref: 'modal-submit',
-                classes: 'btn-primary',
+                classes: 'send-email-extraction btn-primary',
                 iconName: 'check',
                 onClick: this.sendEmailExtraction
               }
@@ -3075,237 +3104,19 @@ var CSVExtraction = React.createClass({displayName: "CSVExtraction",
 
 module.exports = CSVExtraction;
 
-},{"../../actions/ExplorerActions":2,"../common/input.js":16,"../common/modal.js":18,"classnames":73,"lodash":82,"react":300}],28:[function(require,module,exports){
+},{"../../actions/ExplorerActions":2,"../common/input.js":16,"../common/modal.js":19,"classnames":73,"lodash":82,"react":300}],29:[function(require,module,exports){
 /**
  * @jsx React.DOM
  */
 
 var React = require('react');
 var _ = require('lodash');
-var classNames = require('classnames');
-var Input = require('../../common/input.js');
-var Modal = require('../../common/modal.js');
-
-var AddFavoriteModal = React.createClass({displayName: "AddFavoriteModal",
-
-  onSave: function(event) {
-    event.preventDefault();
-    if (this.canSave()) {
-      this.setState({ name: '' });
-      this.props.saveCallback();
-    }
-  },
-
-  canSave: function() {
-    if (this.state.name) {
-      return true;
-    }
-    return false;
-  },
-
-  nameChange: function(event) {
-    this.setState({ name: event.target.value });
-  },
-
-  getInitialState: function() {
-    return { name: '' };
-  },
-
-  render: function() {
-    var btnClasses = classNames({
-      'btn btn-primary pull-left no-radius-left': true,
-      'disabled': !this.canSave()
-    });
-
-    return (
-      React.createElement("div", null, 
-        React.createElement(Modal, {ref: "modal", 
-               title: "New Favorite", 
-               titleIcon: "heart", 
-               iconClasses: "fav-icon"}, 
-          React.createElement("div", {className: "fav-form"}, 
-            React.createElement("form", {onSubmit: this.onSave}, 
-              React.createElement(Input, {classes: "", 
-                     inputClasses: "pull-left no-radius-right", 
-                     name: "name", 
-                     ref: "name", 
-                     placeholder: "Favorite name...", 
-                     value: this.state.name, 
-                     onChange: this.nameChange})
-            ), 
-            React.createElement("button", {className: btnClasses, onClick: this.onSave}, 
-              React.createElement("span", {className: "icon glyphicon glyphicon-plus margin-right-tiny"}), 
-              "Add"
-            )
-          )
-        )
-      )
-    );
-  }
-});
-
-module.exports = AddFavoriteModal;
-},{"../../common/input.js":16,"../../common/modal.js":18,"classnames":73,"lodash":82,"react":300}],29:[function(require,module,exports){
-/**
- * @jsx React.DOM
- */
-
-var React = require('react');
-var _ = require('lodash');
-var moment = require('moment');
-
-function nameForUser(user) {
-  if (user.first_name && user.last_name) {
-    return user.first_name + " " + user.last_name;
-  } else {
-    return user.email;
-  }
-}
-
-function dateForItem(item) {
-  if (item.created_at) {
-    var datetime = moment(new Date(item.created_at.replace(' ', 'T')));
-    return datetime.isValid() ? datetime.format('ll h:mm A') : null;
-  }
-}
-
-var BrowseFavorites = React.createClass({displayName: "BrowseFavorites",
-
-  removeClick: function(event) {
-    event.preventDefault();
-    this.props.removeCallback(event.currentTarget.dataset.itemIndex);
-  },
-
-  clickCallback: function(event) {
-    if (event.target.getAttribute('role') !== 'remove' && event.target.parentNode.getAttribute('role') !== 'remove') {
-      this.props.clickCallback(event);
-    }
-  },
-
-  buildFavList: function() {
-    var listElements = this.props.listItems.map(_.bind(function(listItem, index) {
-      listItem.user = listItem.user || {};
-      if (String(listItem.name.toLowerCase()).search(this.state.searchterm.toLowerCase()) < 0) return;
-
-      if (this.state.favgroup === 'user') {
-        if (!listItem.user.id || listItem.user.id !== this.props.user.id) return;
-      }
-
-      var isSelected = (this.props.selectedIndex === index) ? true : false;
-      var classes,
-          removeBtn;
-      if (isSelected) classes = 'active';
-      if (this.props.removeCallback && listItem.user.id === this.props.user.id) {
-        removeBtn = (React.createElement("a", {href: "#", className: "remove-btn", "data-item-index": index, role: "remove", onClick: this.removeClick}, 
-                      React.createElement("span", {className: "icon glyphicon glyphicon-remove-circle"})
-                     ));
-      }
-
-      var createdAt;
-      var datetime = dateForItem(listItem);
-      if (datetime) {
-        createdAt = (
-          React.createElement("p", {className: "date pull-right"}, 
-            React.createElement("span", {className: "icon glyphicon glyphicon-time"}), 
-            datetime
-          )
-        );
-      }
-
-      return (
-        React.createElement("li", {className: classes, key: index, "data-id": listItem.id, onClick: this.clickCallback}, 
-          removeBtn, 
-          React.createElement("h5", {className: "name"}, listItem.name), 
-          React.createElement("div", {className: "metadata clearfix"}, 
-            React.createElement("p", {className: "author pull-left"}, 
-              React.createElement("span", {className: "icon glyphicon glyphicon-user"}), 
-              nameForUser(listItem.user)
-            ), 
-            createdAt
-          )
-        )
-      );
-    }, this));
-    return (
-      React.createElement("ul", {ref: "list", className: "interactive-list"}, 
-        listElements
-      )
-    );
-  },
-
-  fieldChanged: function(event) {
-    var newState = {};
-    newState[event.target.name] = event.target.value;
-    this.setState(newState);
-  },
-
-  getDefaultProps: function() {
-    return {
-      listItems: [],
-      removeCallback: null,
-      clickCallback: null,
-      selectedIndex: null,
-      favListNotice: null,
-      emptyContent: null
-    };
-  },
-
-  getInitialState: function() {
-    return {
-      searchterm: '',
-      favgroup: 'all'
-    };
-  },
-
-  render: function() {
-    var emptyContent = this.props.listItems.length ? null: this.props.emptyContent;
-    var listItems = this.buildFavList();
-
-    return (
-      React.createElement("section", {className: "query-pane-section browse-favorites"}, 
-        this.props.notice, 
-        React.createElement("div", {className: "fav-group-options"}, 
-          React.createElement("div", {className: "radio-inline"}, 
-            React.createElement("label", null, 
-              React.createElement("input", {type: "radio", name: "favgroup", value: "all", ref: "all-filter", checked: this.state.favgroup === 'all' ? true : false, onChange: this.fieldChanged}), 
-              "Team"
-            )
-          ), 
-          React.createElement("div", {className: "radio-inline"}, 
-            React.createElement("label", null, 
-              React.createElement("input", {type: "radio", name: "favgroup", value: "user", ref: "user-filter", checked: this.state.favgroup === 'user' ? true : false, onChange: this.fieldChanged}), 
-              "Mine"
-            )
-          )
-        ), 
-        React.createElement("div", {className: "search-box"}, 
-          React.createElement("input", {type: "text", name: "searchterm", ref: "searchbox", placeholder: "Search", onChange: this.fieldChanged}), 
-          React.createElement("span", {className: "glyphicon glyphicon-search icon"})
-        ), 
-        listItems, 
-        emptyContent
-      )
-    );
-  }
-
-});
-
-module.exports = BrowseFavorites;
-
-},{"lodash":82,"moment":83,"react":300}],30:[function(require,module,exports){
-/**
- * @jsx React.DOM
- */
-
-var React = require('react');
-var _ = require('lodash');
-var AddFavoriteModal = require('./favorites/add_favorite_modal.js');
 var EventBrowser = require('../common/event_browser.js');
 var CSVExtraction = require('./csv_extraction.js');
 var Visualization = require('./visualization/index.js')
 var QueryPaneTabs = require('./query_pane_tabs.js');;
 var QueryBuilder = require('./query_builder/index.js');
-var BrowseFavorites = require('./favorites/browse_favorites.js');
+var BrowseQueries = require('./saved_queries/browse_queries.js');
 var Notice = require('../common/notice.js');
 var FilterManager = require('../common/filter_manager.js');
 var ExplorerStore = require('../../stores/ExplorerStore');
@@ -3345,13 +3156,13 @@ var Explorer = React.createClass({displayName: "Explorer",
   // Callbacks for child components
   // ********************************
 
-  favoriteClicked: function(event) {
+  savedQueryClicked: function(event) {
     event.preventDefault();
     if (this.state.activeExplorer.loading) {
       NoticeActions.create({
         icon: 'info-sign',
         type: 'warning',
-        text: "There is already a query in progress. Wait for it to finish loading before selecting a favorite."
+        text: "There is already a query in progress. Wait for it to finish loading before selecting a query."
       });
     } else {
       var modelId = event.currentTarget.dataset.id;
@@ -3360,49 +3171,38 @@ var Explorer = React.createClass({displayName: "Explorer",
     }
   },
 
-  removeFavoriteClicked: function(favIndex) {
-    if (confirm("Are you sure you want to unfavorite this query?")) {
-      var model = this.state.allPersistedExplorers[favIndex];
+  removeSavedQueryClicked: function(modelIndex) {
+    if (confirm("Are you sure you want to delete this query?")) {
+      var model = this.state.allPersistedExplorers[modelIndex];
       ExplorerActions.destroy(this.props.persistence, model.id);
     }
   },
 
-  saveNewFavorite: function() {
-    this.refs['add-favorite-modal'].refs['modal'].close();
-    var name = this.refs['add-favorite-modal'].refs.name.refs.input.getDOMNode().value;
-    if (!name.trim().length) {
-      NoticeActions.create({
-        icon: 'remove-circle',
-        type: 'error',
-        text: 'You must provide a non-blank favorite name.'
-      });
-      return;
-    }
-    ExplorerActions.saveNew(this.props.persistence, this.state.activeExplorer.id, name);
-  },
-
-  destroyFavorite: function(event) {
+  saveQueryClick: function(event) {
     event.preventDefault();
-    if (confirm("Are you sure you want to unfavorite this query?")) {
-      ExplorerActions.destroy(this.props.persistence, this.state.activeExplorer.id);
-    }
-  },
-
-  openFavoritesClick: function(event) {
-    this.refs['favorites-list'].refs['modal'].open();
-  },
-
-  addFavoriteClick: function(event) {
-    var validity = ValidationUtils.runValidations(ExplorerValidations.explorer, this.state.activeExplorer.query);
+    var validity = ValidationUtils.runValidations(ExplorerValidations.explorer, this.state.activeExplorer);
     if (!validity.isValid) {
       NoticeActions.create({
         icon: 'remove-circle',
         type: 'error',
-        text: "Can't favorite: " + validity.lastError
+        text: "Can't save: " + validity.lastError
       });
       return;
+    } else {
+      if (ExplorerUtils.isPersisted(this.state.activeExplorer)) {
+        ExplorerActions.saveExisting(this.props.persistence, this.state.activeExplorer.id);
+      } else {
+        ExplorerActions.saveNew(this.props.persistence, this.state.activeExplorer.id);
+      }
     }
-    this.refs['add-favorite-modal'].refs['modal'].open();
+  },
+
+  createNewQuery: function(event) {
+    event.preventDefault();
+    ExplorerActions.create();
+    var newExplorer = ExplorerStore.getLast();
+    ExplorerActions.setActive(newExplorer.id);
+    this.setState({ activeQueryPane: 'build' });
   },
 
   onBrowseEvents: function(event) {
@@ -3416,6 +3216,10 @@ var Explorer = React.createClass({displayName: "Explorer",
 
   onOpenCSVExtraction: function() {
     this.refs['csv-extraction'].refs.modal.open();
+  },
+
+  onNameChange: function(event) {
+    ExplorerActions.update(this.state.activeExplorer.id, { name: event.target.value });
   },
 
   // ********************************
@@ -3498,23 +3302,21 @@ var Explorer = React.createClass({displayName: "Explorer",
   },
 
   render: function() {
-    var favoritesList,
-        addFavoriteModal,
-        queryPaneTabs,
-        favListNotice,
-        favEmptyContent;
+    var queryPaneTabs,
+        browseListNotice,
+        browseEmptyContent;
 
     if (this.props.persistence) {
       queryPaneTabs = React.createElement(QueryPaneTabs, {ref: "query-pane-tabs", 
                                      activePane: this.state.activeQueryPane, 
-                                     toggleCallback: this.toggleQueryPane});
+                                     toggleCallback: this.toggleQueryPane, 
+                                     createNewQuery: this.createNewQuery, 
+                                     persisted: ExplorerUtils.isPersisted(this.state.activeExplorer)});
       if (this.state.appState.fetchingPersistedExplorers) {
-        favListNotice = React.createElement(Notice, {notice: { icon: 'info-sign', text: 'Loading favorites...', type: 'info'}, closable: false})
+        browseListNotice = React.createElement(Notice, {notice: { icon: 'info-sign', text: 'Loading saved queries...', type: 'info'}, closable: false})
       } else {
-        favEmptyContent = React.createElement("h4", {className: "text-center"}, "You don't have any favorites yet.");
+        browseEmptyContent = React.createElement("h4", {className: "text-center"}, "You don't have any saved queries yet.");
       }
-      addFavoriteModal = React.createElement(AddFavoriteModal, {ref: "add-favorite-modal", 
-                                           saveCallback: this.saveNewFavorite});
     }
 
     var activeQueryPane;
@@ -3526,34 +3328,33 @@ var Explorer = React.createClass({displayName: "Explorer",
                                 onBrowseEvents: this.onBrowseEvents, 
                                 handleFiltersToggle: this.handleFiltersToggle});
     } else {
-      queryPane = React.createElement(BrowseFavorites, {listItems: this.state.allPersistedExplorers, 
-                                   emptyContent: favEmptyContent, 
-                                   notice: favListNotice, 
-                                   clickCallback: this.favoriteClicked, 
-                                   removeCallback: this.removeFavoriteClicked, 
-                                   selectedIndex: this.getSelectedIndex(), 
-                                   user: this.state.user});
+      queryPane = React.createElement(BrowseQueries, {listItems: this.state.allPersistedExplorers, 
+                                 emptyContent: browseEmptyContent, 
+                                 notice: browseListNotice, 
+                                 clickCallback: this.savedQueryClicked, 
+                                 removeCallback: this.removeSavedQueryClicked, 
+                                 selectedIndex: this.getSelectedIndex(), 
+                                 user: this.state.user});
     }
 
     return (
       React.createElement("div", {ref: "root"}, 
         React.createElement("div", {className: "row"}, 
-          React.createElement("div", {className: "col-sm-5 explorer-query-builder"}, 
+          React.createElement("div", {className: "col-sm-5 col-md-4 explorer-query-builder"}, 
             queryPaneTabs, 
             queryPane
           ), 
-          React.createElement("div", {ref: "viz-area", className: "col-sm-7 explorer-visualization"}, 
+          React.createElement("div", {ref: "viz-area", className: "col-sm-7 col-md-8 explorer-visualization"}, 
             React.createElement(Visualization, {notice: this.state.notice, 
                            model: this.state.activeExplorer, 
                            client: this.props.client, 
                            project: this.props.project, 
                            persistence: this.props.persistence, 
-                           addFavoriteClick: this.addFavoriteClick, 
-                           openFavoritesClick: this.openFavoritesClick, 
-                           onOpenCSVExtraction: this.onOpenCSVExtraction})
+                           saveQueryClick: this.saveQueryClick, 
+                           onOpenCSVExtraction: this.onOpenCSVExtraction, 
+                           onNameChange: this.onNameChange})
           )
         ), 
-        addFavoriteModal, 
         React.createElement(EventBrowser, {ref: "event-browser", 
                       client: this.props.client, 
                       project: this.props.project, 
@@ -3577,7 +3378,7 @@ var Explorer = React.createClass({displayName: "Explorer",
 
 module.exports = Explorer;
 
-},{"../../actions/ExplorerActions":2,"../../actions/NoticeActions":3,"../../stores/AppStateStore":51,"../../stores/ExplorerStore":52,"../../stores/NoticeStore":53,"../../stores/UserStore":55,"../../utils/ExplorerUtils":56,"../../utils/QueryStringUtils":60,"../../utils/ValidationUtils":61,"../../validations/ExplorerValidations":62,"../common/event_browser.js":10,"../common/filter_manager.js":13,"../common/notice.js":19,"./csv_extraction.js":27,"./favorites/add_favorite_modal.js":28,"./favorites/browse_favorites.js":29,"./query_builder/index.js":35,"./query_pane_tabs.js":38,"./visualization/index.js":41,"lodash":82,"react":300}],31:[function(require,module,exports){
+},{"../../actions/ExplorerActions":2,"../../actions/NoticeActions":3,"../../stores/AppStateStore":51,"../../stores/ExplorerStore":52,"../../stores/NoticeStore":53,"../../stores/UserStore":55,"../../utils/ExplorerUtils":56,"../../utils/QueryStringUtils":60,"../../utils/ValidationUtils":61,"../../validations/ExplorerValidations":62,"../common/event_browser.js":10,"../common/filter_manager.js":13,"../common/notice.js":20,"./csv_extraction.js":28,"./query_builder/index.js":34,"./query_pane_tabs.js":37,"./saved_queries/browse_queries.js":38,"./visualization/index.js":41,"lodash":82,"react":300}],30:[function(require,module,exports){
 /**
  * @jsx React.DOM
  */
@@ -3610,7 +3411,7 @@ var AnalysisTypeField = React.createClass({displayName: "AnalysisTypeField",
 
 module.exports = AnalysisTypeField;
 
-},{"../../common/react_select.js":20,"lodash":82,"react":300}],32:[function(require,module,exports){
+},{"../../common/react_select.js":21,"lodash":82,"react":300}],31:[function(require,module,exports){
 /**
  * @jsx React.DOM
  */
@@ -3668,7 +3469,7 @@ var ApiUrl = React.createClass({displayName: "ApiUrl",
 
 module.exports = ApiUrl;
 
-},{"react":300}],33:[function(require,module,exports){
+},{"react":300}],32:[function(require,module,exports){
 /**
  * @jsx React.DOM
  */
@@ -3696,7 +3497,7 @@ var EventCollectionField = React.createClass({displayName: "EventCollectionField
                      value: this.props.value, 
                      title: "Event Collection", 
                      sort: true}), 
-        React.createElement("button", {className: "btn btn-link field-secondary-control", title: "Browse event collections", type: "button", onClick: this.props.onBrowseEvents}, 
+        React.createElement("button", {className: "btn btn-link field-secondary-control", title: "Browse event collections", type: "button", onClick: this.props.onBrowseEvents, id: "browse-event-collections"}, 
           React.createElement("span", {className: "icon glyphicon glyphicon-search"}), " Preview collections"
         )
       )
@@ -3707,7 +3508,7 @@ var EventCollectionField = React.createClass({displayName: "EventCollectionField
 
 module.exports = EventCollectionField;
 
-},{"../../common/react_select.js":20,"lodash":82,"react":300}],34:[function(require,module,exports){
+},{"../../common/react_select.js":21,"lodash":82,"react":300}],33:[function(require,module,exports){
 /**
  * @jsx React.DOM
  */
@@ -3762,7 +3563,7 @@ var GroupByField = React.createClass({displayName: "GroupByField",
 
 module.exports = GroupByField;
 
-},{"../../common/fields_toggle.js":11,"../../common/react_select.js":20,"lodash":82,"react":300}],35:[function(require,module,exports){
+},{"../../common/fields_toggle.js":11,"../../common/react_select.js":21,"lodash":82,"react":300}],34:[function(require,module,exports){
 /**
  * @jsx React.DOM
  */
@@ -3778,6 +3579,7 @@ var TargetPropertyField = require('./target_property_field.js');
 var PercentileField = require('./percentile_field.js');
 var GroupByField = require('./group_by_field.js');
 var Timeframe = require('../../common/timeframe.js');
+var Interval = require('../../common/interval.js');
 var ApiUrl = require('./api_url.js');
 var RunQuery = require('../../common/run_query.js');
 var ExplorerUtils = require('../../../utils/ExplorerUtils');
@@ -3838,6 +3640,7 @@ var QueryBuilder = React.createClass({displayName: "QueryBuilder",
     var groupByField;
     var targetPropertyField;
     var percentileField;
+    var intervalField;
     var analysisType = this.props.model.query.analysis_type;
     var apiQueryUrl = ExplorerUtils.getApiQueryUrl(this.props.client, this.props.model);
 
@@ -3847,6 +3650,7 @@ var QueryBuilder = React.createClass({displayName: "QueryBuilder",
                                    updateGroupBy: this.updateGroupBy, 
                                    options: this.getEventPropertyNames(), 
                                    handleChange: this.handleChange})
+      intervalField = React.createElement(Interval, {model: this.props.model});
     }
     if (analysisType && analysisType !== 'count' && analysisType !== 'extraction') {
       targetPropertyField = React.createElement(TargetPropertyField, {ref: "target-property-field", 
@@ -3860,11 +3664,9 @@ var QueryBuilder = React.createClass({displayName: "QueryBuilder",
                                          onChange: this.handleSelectionWithEvent});
     }
 
-
     return (
       React.createElement("section", {className: "query-pane-section query-builder"}, 
         React.createElement("form", {className: "form query-builder-form", onSubmit: this.handleQuerySubmit}, 
-
           React.createElement(EventCollectionField, {ref: "event-collection-field", 
                                 value: this.props.model.query.event_collection, 
                                 options: this.props.project.eventCollections, 
@@ -3874,12 +3676,13 @@ var QueryBuilder = React.createClass({displayName: "QueryBuilder",
                              value: this.props.model.query.analysis_type, 
                              options: ProjectUtils.getConstant('ANALYSIS_TYPES'), 
                              handleChange: this.handleChange}), 
-
           targetPropertyField, 
           percentileField, 
+          React.createElement(Timeframe, {ref: "timeframe", 
+                     model: this.props.model, 
+                     project: this.props.project}), 
           React.createElement("hr", {className: "fieldset-divider"}), 
           groupByField, 
-
           React.createElement("div", {className: "field-component"}, 
             React.createElement(FieldsToggle, {ref: "filters-fields-toggle", 
                           name: "Filters", 
@@ -3887,18 +3690,12 @@ var QueryBuilder = React.createClass({displayName: "QueryBuilder",
                           toggleCallback: this.props.handleFiltersToggle, 
                           fieldsCount: validFilters(this.props.model.query.filters).length})
           ), 
-
-          React.createElement(Timeframe, {ref: "timeframe", 
-                     model: this.props.model, 
-                     project: this.props.project}), 
-
+          intervalField, 
           React.createElement(RunQuery, {classes: "pull-right", 
                     clearQuery: this.clearQuery, 
                     model: this.props.model, 
                     handleQuerySubmit: this.handleQuerySubmit}), 
-
           React.createElement(ApiUrl, {url: ExplorerUtils.getApiQueryUrl(this.props.client, this.props.model)})
-
         )
       )
     );
@@ -3907,7 +3704,7 @@ var QueryBuilder = React.createClass({displayName: "QueryBuilder",
 
 module.exports = QueryBuilder;
 
-},{"../../../actions/ExplorerActions":2,"../../../utils/ExplorerUtils":56,"../../../utils/ProjectUtils":59,"../../../utils/ValidationUtils":61,"../../../validations/FilterValidations":63,"../../common/fields_toggle.js":11,"../../common/run_query.js":22,"../../common/timeframe.js":24,"./analysis_type_field.js":31,"./api_url.js":32,"./event_collection_field.js":33,"./group_by_field.js":34,"./percentile_field.js":36,"./target_property_field.js":37,"lodash":82,"react/addons":128}],36:[function(require,module,exports){
+},{"../../../actions/ExplorerActions":2,"../../../utils/ExplorerUtils":56,"../../../utils/ProjectUtils":59,"../../../utils/ValidationUtils":61,"../../../validations/FilterValidations":63,"../../common/fields_toggle.js":11,"../../common/interval.js":17,"../../common/run_query.js":23,"../../common/timeframe.js":25,"./analysis_type_field.js":30,"./api_url.js":31,"./event_collection_field.js":32,"./group_by_field.js":33,"./percentile_field.js":35,"./target_property_field.js":36,"lodash":82,"react/addons":128}],35:[function(require,module,exports){
 /**
  * @jsx React.DOM
  */
@@ -3941,7 +3738,7 @@ var PercentileField = React.createClass({displayName: "PercentileField",
 
 module.exports = PercentileField;
 
-},{"../../common/input.js":16,"lodash":82,"react":300}],37:[function(require,module,exports){
+},{"../../common/input.js":16,"lodash":82,"react":300}],36:[function(require,module,exports){
 /**
  * @jsx React.DOM
  */
@@ -3975,12 +3772,13 @@ var TargetPropertyField = React.createClass({displayName: "TargetPropertyField",
 
 module.exports = TargetPropertyField;
 
-},{"../../common/react_select.js":20,"lodash":82,"react":300}],38:[function(require,module,exports){
+},{"../../common/react_select.js":21,"lodash":82,"react":300}],37:[function(require,module,exports){
 /**
  * @jsx React.DOM
  */
 
 var React = require('react');
+var classNames = require('classnames');
 
 var QueryPaneTabs = React.createClass({displayName: "QueryPaneTabs",
 
@@ -3989,17 +3787,43 @@ var QueryPaneTabs = React.createClass({displayName: "QueryPaneTabs",
   },
 
   render: function() {
+    var btnNewQuery;
+    var queryPaneClasses = classNames({
+      'query-pane-tabs clearfix': true,
+      'query-pane-persisted': this.props.persisted,
+      'query-pane-new': !this.props.persisted
+    });
+
+    if (this.props.persisted) {
+      btnNewQuery = React.createElement("li", {role: "presentation", className: "tab-new-query"}, 
+        React.createElement("a", {ref: "new-query", href: "#", 
+           title: "Create a new query", 
+           onClick: this.props.createNewQuery}, 
+          React.createElement("span", {className: "icon glyphicon icon-plus glyphicon-plus"})
+        )
+      );
+    }
+
     return (
-      React.createElement("ul", {className: "query-pane-tabs nav nav-tabs"}, 
-        React.createElement("li", {role: "presentation", className: this.props.activePane === 'build' ? 'active' : ''}, 
-          React.createElement("a", {ref: "build-tab", href: "#", onClick: this.toggled.bind(this, 'build')}, 
-            "Create a new query"
-          )
-        ), 
-        React.createElement("li", {role: "presentation", className: this.props.activePane === 'browse' ? 'active' : ''}, 
-          React.createElement("a", {ref: "browse-tab", href: "#", onClick: this.toggled.bind(this, 'browse')}, 
-            React.createElement("span", {className: "icon glyphicon glyphicon-heart margin-right-tiny fav-icon"}), 
-            "Favorites"
+      React.createElement("div", {className: queryPaneClasses}, 
+        React.createElement("ul", {className: "nav nav-tabs"}, 
+          btnNewQuery, 
+          React.createElement("li", {role: "presentation", className: this.props.activePane === 'build' ? 'tab-build-query active' : 'tab-build-query'}, 
+            React.createElement("a", {ref: "build-tab", href: "#", 
+               id: "build-query", 
+               title: this.props.persisted ? "Edit query" : "Create a new query", 
+               onClick: this.toggled.bind(this, 'build')}, 
+              this.props.persisted ? "Edit query" : "Create a new query"
+            )
+          ), 
+          React.createElement("li", {role: "presentation", className: this.props.activePane === 'browse' ? 'tab-browse-queries active' : 'tab-browse-queries'}, 
+            React.createElement("a", {ref: "browse-tab", href: "#", 
+               id: "browse", 
+               title: "Browse saved queries", 
+               onClick: this.toggled.bind(this, 'browse')}, 
+              React.createElement("span", {className: "icon glyphicon icon-th-list glyphicon-th-list"}), 
+              "Browse"
+            )
           )
         )
       )
@@ -4010,7 +3834,154 @@ var QueryPaneTabs = React.createClass({displayName: "QueryPaneTabs",
 
 module.exports = QueryPaneTabs;
 
-},{"react":300}],39:[function(require,module,exports){
+},{"classnames":73,"react":300}],38:[function(require,module,exports){
+/**
+ * @jsx React.DOM
+ */
+
+var React = require('react');
+var _ = require('lodash');
+var moment = require('moment');
+
+function nameForUser(user) {
+  if (user.first_name && user.last_name) {
+    return user.first_name + " " + user.last_name;
+  } else {
+    return user.email;
+  }
+}
+
+function dateForItem(item) {
+  if (item.created_at) {
+    var datetime = moment(new Date(item.created_at.replace(' ', 'T')));
+    return datetime.isValid() ? datetime.format('ll h:mm A') : null;
+  }
+}
+
+var BrowseQueries = React.createClass({displayName: "BrowseQueries",
+
+  removeClick: function(event) {
+    event.preventDefault();
+    this.props.removeCallback(event.currentTarget.dataset.itemIndex);
+  },
+
+  clickCallback: function(event) {
+    if (event.target.getAttribute('role') !== 'remove' && event.target.parentNode.getAttribute('role') !== 'remove') {
+      this.props.clickCallback(event);
+    }
+  },
+
+  buildList: function() {
+    var listElements = this.props.listItems.map(_.bind(function(listItem, index) {
+      listItem.user = listItem.user || {};
+      if (String(listItem.name.toLowerCase()).search(this.state.searchterm.toLowerCase()) < 0) return;
+
+      if (this.state.filterType === 'user') {
+        if (!listItem.user.id || listItem.user.id !== this.props.user.id) return;
+      }
+
+      var isSelected = (this.props.selectedIndex === index) ? true : false;
+      var classes,
+          removeBtn;
+      if (isSelected) classes = 'active';
+      if (this.props.removeCallback && listItem.user.id === this.props.user.id) {
+        removeBtn = (React.createElement("a", {href: "#", className: "remove-btn", "data-item-index": index, role: "remove", onClick: this.removeClick}, 
+                      React.createElement("span", {className: "icon"})
+                     ));
+      }
+
+      var createdAt;
+      var datetime = dateForItem(listItem);
+      if (datetime) {
+        createdAt = (
+          React.createElement("p", {className: "date pull-right"}, 
+            React.createElement("span", {className: "icon glyphicon glyphicon-time"}), 
+            datetime
+          )
+        );
+      }
+
+      return (
+        React.createElement("li", {className: classes, key: index, "data-id": listItem.id, onClick: this.clickCallback}, 
+          removeBtn, 
+          React.createElement("h5", {className: "name"}, listItem.name), 
+          React.createElement("div", {className: "metadata clearfix"}, 
+            React.createElement("p", {className: "author pull-left"}, 
+              React.createElement("span", {className: "icon glyphicon glyphicon-user"}), 
+              nameForUser(listItem.user)
+            ), 
+            createdAt
+          )
+        )
+      );
+    }, this));
+    return (
+      React.createElement("ul", {ref: "list", className: "interactive-list"}, 
+        listElements
+      )
+    );
+  },
+
+  fieldChanged: function(event) {
+    var newState = {};
+    newState[event.target.name] = event.target.value;
+    this.setState(newState);
+  },
+
+  getDefaultProps: function() {
+    return {
+      listItems: [],
+      removeCallback: null,
+      clickCallback: null,
+      selectedIndex: null,
+      notice: null,
+      emptyContent: null
+    };
+  },
+
+  getInitialState: function() {
+    return {
+      searchterm: '',
+      filterType: 'all'
+    };
+  },
+
+  render: function() {
+    var emptyContent = this.props.listItems.length ? null: this.props.emptyContent;
+    var listItems = this.buildList();
+
+    return (
+      React.createElement("section", {className: "query-pane-section browse-queries"}, 
+        this.props.notice, 
+        React.createElement("div", {className: "queries-group-options"}, 
+          React.createElement("div", {className: "radio-inline"}, 
+            React.createElement("label", null, 
+              React.createElement("input", {type: "radio", name: "filterType", value: "all", ref: "all-filter", checked: this.state.filterType === 'all' ? true : false, onChange: this.fieldChanged}), 
+              "Team"
+            )
+          ), 
+          React.createElement("div", {className: "radio-inline"}, 
+            React.createElement("label", null, 
+              React.createElement("input", {type: "radio", name: "filterType", value: "user", ref: "user-filter", checked: this.state.filterType === 'user' ? true : false, onChange: this.fieldChanged}), 
+              "Mine"
+            )
+          )
+        ), 
+        React.createElement("div", {className: "search-box"}, 
+          React.createElement("input", {type: "text", name: "searchterm", ref: "searchbox", placeholder: "Search", onChange: this.fieldChanged}), 
+          React.createElement("span", {className: "glyphicon glyphicon-search icon"})
+        ), 
+        listItems, 
+        emptyContent
+      )
+    );
+  }
+
+});
+
+module.exports = BrowseQueries;
+
+},{"lodash":82,"moment":83,"react":300}],39:[function(require,module,exports){
 /**
  * @jsx React.DOM
  */
@@ -4018,6 +3989,7 @@ module.exports = QueryPaneTabs;
 var _ = require('lodash');
 var React = require('react/addons');
 var Loader = require('../../common/loader.js');
+// var DataTable = require('./data_table.js');
 var KeenViz = require('./keen_viz.js');
 var ExplorerUtils = require('../../../utils/ExplorerUtils');
 var FormatUtils = require('../../../utils/FormatUtils');
@@ -4072,7 +4044,13 @@ var Chart = React.createClass({displayName: "Chart",
 	  	chartContent = (
 	  		React.createElement("textarea", {ref: "jsonViz", className: "json-view", value: content, readOnly: true})
 	  	);
-	  } else {
+		}
+		// else if (ExplorerUtils.isTableViz(this.props.model)) {
+    //   chartContent = (
+		// 		<DataTable data={this.props.model.result}/>
+		// 	);
+	  // }
+		else {
 	  	chartContent = (
 	  		React.createElement(KeenViz, {model: this.props.model, dataviz: this.props.dataviz})
 	  	);
@@ -4103,7 +4081,7 @@ var Chart = React.createClass({displayName: "Chart",
 
 module.exports = Chart;
 
-},{"../../../utils/ExplorerUtils":56,"../../../utils/FormatUtils":58,"../../common/loader.js":17,"./keen_viz.js":42,"lodash":82,"react/addons":128}],40:[function(require,module,exports){
+},{"../../../utils/ExplorerUtils":56,"../../../utils/FormatUtils":58,"../../common/loader.js":18,"./keen_viz.js":42,"lodash":82,"react/addons":128}],40:[function(require,module,exports){
 /**
  * @jsx React.DOM
  */
@@ -4200,11 +4178,16 @@ var Visualization = React.createClass({displayName: "Visualization",
   render: function() {
     var csvExtractionBanner,
         chartOptionsBar,
-        favoriteBar,
-        favoriteBtn;
+        chartTitle,
+        saveBtn;
+
+    var chartDetailBarClasses = classNames({
+      'chart-detail-bar': true,
+      'chart-detail-active': this.props.model.result !== null && !this.props.model.loading
+    });
 
     var codeSampleBtnClasses = classNames({
-      'code-sample-toggle btn btn-default pull-left': true,
+      'btn btn-default code-sample-toggle': true,
       'open': !this.state.codeSampleHidden
     });
 
@@ -4220,17 +4203,18 @@ var Visualization = React.createClass({displayName: "Visualization",
                             );
     }
 
-    if (null !== this.props.model.result && !this.props.model.loading) {
+    if (this.props.persistence) {
+      saveBtn = (
+        React.createElement("button", {type: "button", disabled: this.props.model.loading, ref: "save-query", className: "btn btn-primary save-query", onClick: this.props.saveQueryClick}, 
+          ExplorerUtils.isPersisted(this.props.model) ? 'Update' : 'Save'
+        )
+      );
+    }
+
+    if (this.props.model.result !== null && !this.props.model.loading) {
       chartOptionsBar = React.createElement("div", {className: "chart-options clearfix"}, 
                           React.createElement("div", {className: "pull-left"}, 
-                            React.createElement(Select, {label: false, 
-                                    name: "chart_type", 
-                                    classes: "chart-type", 
-                                    options: this.formatChartTypes(), 
-                                    handleSelection: this.changeChartType, 
-                                    selectedOption: this.props.model.visualization.chart_type, 
-                                    emptyOption: false, 
-                                    disabled: this.props.model.loading})
+                            saveBtn
                           ), 
                           React.createElement("div", {className: "pull-right"}, 
                             React.createElement("button", {className: codeSampleBtnClasses, onClick: this.toggleCodeSample}, 
@@ -4240,18 +4224,37 @@ var Visualization = React.createClass({displayName: "Visualization",
                         );
     }
 
-    if (this.props.persistence
-      && null !== this.props.model.result
-        && !this.props.model.loading) {
-          favoriteBtn = React.createElement("button", {type: "button", ref: "add-fav", className: "btn btn-default add-favorite", onClick: this.props.addFavoriteClick}, 
-                          React.createElement("span", {className: "icon glyphicon glyphicon-heart fav-icon"}), " Add"
-                        );
+    if (this.props.persistence) {
+      chartTitle = (
+        React.createElement("div", {className: "chart-title-component"}, 
+          React.createElement("input", {ref: "input", 
+                 type: "text", 
+                 onChange: this.props.onNameChange, 
+                 spellCheck: "false", 
+                 value: this.props.model.name})
+        )
+      );
     }
+
 
     return (
       React.createElement("div", {className: "visualization"}, 
         React.createElement(Notice, {notice: this.props.notice, closeCallback: this.noticeClosed}), 
         React.createElement("div", {className: "visualization-wrapper"}, 
+          React.createElement("div", {className: chartDetailBarClasses}, 
+            chartTitle, 
+            React.createElement("div", {className: "chart-type-component"}, 
+              React.createElement(Select, {label: false, 
+                      ref: "chart-type", 
+                      name: "chart_type", 
+                      classes: "chart-type", 
+                      options: this.formatChartTypes(), 
+                      handleSelection: this.changeChartType, 
+                      selectedOption: this.props.model.visualization.chart_type, 
+                      emptyOption: false, 
+                      disabled: this.props.model.loading})
+            )
+          ), 
           csvExtractionBanner, 
           React.createElement("div", {className: "chart-component"}, 
             React.createElement(Chart, {model: this.props.model, dataviz: this.dataviz})
@@ -4261,8 +4264,7 @@ var Visualization = React.createClass({displayName: "Visualization",
                       codeSample: ExplorerUtils.getSdkExample(this.props.model, this.props.client), 
                       hidden: this.state.codeSampleHidden, 
                       onCloseClick: this.toggleCodeSample})
-        ), 
-        favoriteBtn
+        )
       )
     );
   }
@@ -4270,7 +4272,7 @@ var Visualization = React.createClass({displayName: "Visualization",
 
 module.exports = Visualization;
 
-},{"../../../actions/ExplorerActions":2,"../../../actions/NoticeActions":3,"../../../constants/ExplorerConstants":44,"../../../dispatcher/AppDispatcher":48,"../../../stores/ExplorerStore":52,"../../../utils/ExplorerUtils":56,"../../../utils/FormatUtils":58,"../../common/notice.js":19,"../../common/select.js":23,"./chart.js":39,"./code_sample.js":40,"classnames":73,"lodash":82,"react/addons":128}],42:[function(require,module,exports){
+},{"../../../actions/ExplorerActions":2,"../../../actions/NoticeActions":3,"../../../constants/ExplorerConstants":44,"../../../dispatcher/AppDispatcher":48,"../../../stores/ExplorerStore":52,"../../../utils/ExplorerUtils":56,"../../../utils/FormatUtils":58,"../../common/notice.js":20,"../../common/select.js":24,"./chart.js":39,"./code_sample.js":40,"classnames":73,"lodash":82,"react/addons":128}],42:[function(require,module,exports){
 /**
  * @jsx React.DOM
  */
@@ -4334,6 +4336,8 @@ module.exports = keyMirror({
   EXPLORER_REMOVE: null,
   EXPLORER_SET_ACTIVE: null,
   EXPLORER_CLEAR: null,
+  EXPLORER_QUERY_SUCCESS: null,
+  EXPLORER_QUERY_ERROR: null,
   EXPLORER_ADD_FILTER: null,
   EXPLORER_REMOVE_FILTER: null,
   EXPLORER_UPDATE_FILTER: null,
@@ -4375,13 +4379,6 @@ var Dispatcher = require('flux').Dispatcher;
 
 module.exports = new Dispatcher();
 },{"flux":74}],49:[function(require,module,exports){
-module.exports = {
-
-  REST: require('./rest.js')
-
-};
-
-},{"./rest.js":50}],50:[function(require,module,exports){
 var _ = require('lodash');
 var request = require('superagent');
 
@@ -4410,11 +4407,13 @@ RESTPersistence.prototype.makeRequest = function(action, id, body, callback) {
     r.send(body);
   }
   r.end(function(err, res){
+    if (err) {
+      callback(err);
+      return;
+    }
     var body = res ? res.body : null;
     if (body.result) body = body.result;
-    if (callback) {
-      callback(err, body);
-    }
+    callback(null, body);
   });
 };
 
@@ -4440,7 +4439,14 @@ RESTPersistence.prototype.get = function(modelId, callback) {
 
 module.exports = RESTPersistence;
 
-},{"lodash":82,"superagent":302}],51:[function(require,module,exports){
+},{"lodash":82,"superagent":302}],50:[function(require,module,exports){
+module.exports = {
+
+  REST: require('./REST.js')
+
+};
+
+},{"./REST.js":49}],51:[function(require,module,exports){
 var _ = require('lodash');
 var AppDispatcher = require('../dispatcher/AppDispatcher');
 var EventEmitter = require('events').EventEmitter;
@@ -4553,7 +4559,11 @@ function _defaultAttrs(){
       email: null,
       latest: null,
       filters: [],
-      time: {}
+      time: {
+        relativity: 'this',
+        amount: 14,
+        sub_timeframe: 'days'
+      }
     },
     visualization: {
       chart_type: null
@@ -4636,9 +4646,6 @@ function _create(attrs) {
 }
 
 function _update(id, updates) {
-  if ('name' in updates && (typeof updates.name !== 'string' || updates.name.length < 1)) {
-    updates.name = DEFAULT_NAME;
-  }
   var newModel = _.assign({}, _explorers[id], updates);
   if (updates.id && updates.id !== id) {
     _explorers[updates.id] = newModel;
@@ -4682,7 +4689,8 @@ function _updateFilter(id, index, updates) {
 }
 
 function _clear(id) {
-  _explorers[id] = _.assign(_defaultAttrs(), { id: id, active: true });
+  var model = _explorers[id];
+  _explorers[id] = _.assign({}, _defaultAttrs(), { id: model.id, active: model.active });
 }
 
 var ExplorerStore = _.assign({}, EventEmitter.prototype, {
@@ -4704,6 +4712,11 @@ var ExplorerStore = _.assign({}, EventEmitter.prototype, {
 
   getAll: function() {
     return _explorers;
+  },
+
+  getLast: function() {
+    var keys = _.keys(_explorers);
+    return _explorers[keys[keys.length-1]];
   },
 
   getAllPersisted: function() {
@@ -4884,7 +4897,7 @@ NoticeStore.dispatchToken = AppDispatcher.register(function(action) {
       break;
 
     case ExplorerConstants.EXPLORER_SAVING:
-      var text = action.saveType === 'save' ? 'Favoriting query...' : 'Updating favorite...';
+      var text = action.saveType === 'save' ? 'Saving query...' : 'Updating query...';
       _create({
         type: 'info',
         text: text,
@@ -4894,7 +4907,7 @@ NoticeStore.dispatchToken = AppDispatcher.register(function(action) {
       break;
 
     case ExplorerConstants.EXPLORER_SAVE_SUCCESS:
-      var text = action.saveType === 'save' ? 'Query favorited' : 'Favorite updated';
+      var text = action.saveType === 'save' ? 'Query saved' : 'Query updated';
       _create({
         type: 'success',
         text: text + '.',
@@ -4904,7 +4917,7 @@ NoticeStore.dispatchToken = AppDispatcher.register(function(action) {
       break;
 
     case ExplorerConstants.EXPLORER_SAVE_FAIL:
-    var text = action.saveType === 'save' ? 'favoriting your query' : 'updating your favorite';
+    var text = action.saveType === 'save' ? 'saving your query' : 'updating your query';
       _create({
         type: 'error',
         text: 'There was a problem ' + text + ': ' + action.errorMsg,
@@ -4916,7 +4929,7 @@ NoticeStore.dispatchToken = AppDispatcher.register(function(action) {
     case ExplorerConstants.EXPLORER_DESTROYING:
       _create({
         type: 'info',
-        text: 'Unfavoriting query...',
+        text: 'Deleting query...',
         icon: 'info-sign'
       });
       NoticeStore.emitChange();
@@ -4925,7 +4938,7 @@ NoticeStore.dispatchToken = AppDispatcher.register(function(action) {
     case ExplorerConstants.EXPLORER_DESTROY_SUCCESS:
       _create({
         type: 'success',
-        text: 'Query unfavorited.',
+        text: 'Query deleted.',
         icon: 'ok'
       });
       NoticeStore.emitChange();
@@ -4934,7 +4947,7 @@ NoticeStore.dispatchToken = AppDispatcher.register(function(action) {
     case ExplorerConstants.EXPLORER_DESTROY_FAIL:
       _create({
         type: 'error',
-        text: 'There was a problem unfavoriting your query: ' + action.errorMsg,
+        text: 'There was a problem deleting your query: ' + action.errorMsg,
         icon: 'remove-sign'
       });
       NoticeStore.emitChange();
@@ -5170,6 +5183,15 @@ module.exports = {
     return explorer.id && !explorer.id.toString().match('TEMP');
   },
 
+  mergeResponseWithExplorer: function(explorer, response) {
+    var formattedParams = module.exports.formatQueryParams(response);
+    return _.assign({},
+      explorer,
+      formattedParams,
+      { query: _.assign({}, explorer.query, formattedParams.query) },
+      { visualization: _.assign({}, explorer.visualization, formattedParams.visualization) });
+  },
+
   queryJSON: function(explorer) {
     if (!explorer || !explorer.query) {
       return;
@@ -5367,9 +5389,6 @@ module.exports = {
     }
     if (params.query.filters) {
       params.query.filters = _.map(params.query.filters, function(filter) {
-        if (filter.coercion_type === 'Datetime') {
-          filter = _.assign({}, filter, FilterUtils.initDatetime(filter));
-        }
         if (filter.coercion_type === 'List') {
           filter = _.assign({}, filter, FilterUtils.initList(filter));
         }
@@ -5419,7 +5438,6 @@ module.exports = {
     if (valid.isValid) {
       var endpoint = client.config.protocol + "://" + client.config.host;
       var projectId = client.config.projectId;
-      var masterKey = client.config.masterKey;
 
       var attrs = module.exports.queryJSON(explorer);
 
@@ -5476,8 +5494,12 @@ module.exports = {
     return explorer.visualization.chart_type && explorer.visualization.chart_type.toLowerCase() === 'json';
   },
 
+  isTableViz: function(explorer) {
+    return explorer.visualization.chart_type && explorer.visualization.chart_type.toLowerCase() === 'table';
+  },
+
   getSdkExample: function(explorer, client) {
-    var valid = ValidationUtils.runValidations(ExplorerValidations.explorer, explorer.query);
+    var valid = ValidationUtils.runValidations(ExplorerValidations.explorer, explorer);
     if (!valid.isValid) {
       return "Your query is not valid right now, so we can't show you a code sample.";
     }
@@ -5558,9 +5580,6 @@ module.exports = {
   coercionFunctions: {
 
     'Datetime': function(filter) {
-      if (!exists(filter.property_value_date) || !exists(filter.property_value_time)) {
-        return '';
-      }
       return module.exports.formatDatetimePropertyValue(filter);
     },
 
@@ -5603,9 +5622,11 @@ module.exports = {
   },
 
   formatDatetimePropertyValue: function(filter) {
-    var formattedDatetime = moment(filter.property_value_date + ' ' + filter.property_value_time);
-    if (formattedDatetime.isValid()) {
-      return FormatUtils.formatISOTimeNoTimezone(formattedDatetime);
+    if (moment(filter.property_value).isValid()) {
+      return FormatUtils.formatISOTimeNoTimezone(filter.property_value);
+    } else {
+      var datetime = new Date(moment().subtract(1, 'days').startOf('day').format());
+      return FormatUtils.formatISOTimeNoTimezone(datetime);
     }
   },
 
@@ -5643,13 +5664,6 @@ module.exports = {
     }
 
     return _.pick(attrs, ['property_name', 'operator', 'property_value', 'coercion_type']);
-  },
-
-  initDatetime: function(filter) {
-    var inputFormat = "YYYY-MM-DDTh:mm:ss";
-    filter.property_value_date = moment(filter.property_value).format('MMM D, YYYY', inputFormat);
-    filter.property_value_time = moment(filter.property_value).format('h:mm A', inputFormat);
-    return filter;
   },
 
   initList: function(filter) {
@@ -5901,8 +5915,8 @@ module.exports = {
   eventsUrl: function(client) {
     var endpoint = client.config.protocol + "://" + client.config.host;
     var projectId = client.config.projectId;
-    var masterKey = client.config.masterKey;
-    return endpoint+'/projects/'+projectId+'/events?api_key='+masterKey;
+    var readKey = client.config.readKey;
+    return endpoint+'/projects/'+projectId+'/events?api_key='+readKey;
   },
 
   unpackProjectSchema: function(project, projectSchema) {
@@ -5975,9 +5989,14 @@ module.exports = {
     var lastError = null;
 
     _.each(validationSet, function(validator, key) {
-     if (!validator.validator(model, model[key])) {
+      var validity = validator.validator(model);
+     if (validity !== true) {
        isValid = false;
-       lastError = validator.msg;
+       if (typeof validity === 'string') {
+        lastError = validity;
+       } else {
+        lastError = validator.msg;
+       }
      }
     });
 
@@ -5996,36 +6015,37 @@ var FilterUtils = require('../utils/FilterUtils');
 
 module.exports = {
 
-  shouldValidateRelativeTimeframe: function(query) {
-    if (query.time && (query.time.relativity || query.time.amount || query.time.sub_timeframe)) {
-      return true;
-    }
-    return false;
-  },
-
   explorer: {
+
+    name: {
+      msg: 'You must give your saved query a name.',
+      validator: function(explorer) {
+        if (!explorer.saving) return true;
+        return (explorer.name !== null && explorer.name !== undefined && typeof explorer.name === "string" && explorer.name.length > 0);
+      }
+    },
 
     analysis_type: {
       msg: 'Choose an Analysis Type.',
-      validator: function(query, value) {
-        return value ? true : false;
+      validator: function(explorer) {
+        return explorer.query.analysis_type ? true : false;
       }
     },
 
     event_collection: {
       msg: 'Choose an Event Collection.',
-      validator: function(query, value) {
-        return value ? true : false;
+      validator: function(explorer) {
+        return explorer.query.event_collection ? true : false;
       }
     },
 
     filters: {
 
       msg: 'One of your filters is invalid.',
-      validator: function(query, filters) {
+      validator: function(explorer) {
         var isValid = true;
 
-        _.each(filters, function(filter) {
+        _.each(explorer.query.filters, function(filter) {
           if (FilterUtils.isComplete(filter) && !runValidations(filterValidations, filter).isValid) {
             isValid = false;
           }
@@ -6036,12 +6056,24 @@ module.exports = {
     },
 
     time: {
-      msg: 'You must choose all 3 relative timeframe options.',
-      validator: function(query, value) {
-        if (!module.exports.shouldValidateRelativeTimeframe(query)) {
-          return true;
+      validator: function(explorer) {
+        var time = explorer.query.time || {};
+        if (explorer.timeframe_type === 'relative') {
+          if (time.relativity && time.amount && time.sub_timeframe) {
+            return true;
+          } else {
+            return "You must choose all 3 options for relative timeframes.";
+          }
+        } else if (explorer.timeframe_type === 'absolute') {
+          if (time.start && time.end) {
+            return true;
+          } else {
+            return "You must provide a start and end time for absolute timeframes.";
+          }
+        } else {
+          return "You must provide a timeframe.";
         }
-        return value.relativity && value.amount && value.sub_timeframe;
+        return true;
       }
     }
 
@@ -6051,14 +6083,15 @@ module.exports = {
     
     email: {
       msg: 'A valid email address is required.',
-      validator: function(query, value) {
-        return new RegExp(/.+@.+\..+/i).test(value);
+      validator: function(explorer) {
+        return new RegExp(/.+@.+\..+/i).test(explorer.query.email);
       }
     },
 
     latest: {
       msg: 'Latest must be a number.',
-      validator: function(query, value) {
+      validator: function(explorer) {
+        var value = explorer.query.latest;
         if (!value) return true;
         var n = ~~Number(value);
         return String(n) === value && n >= 0;
@@ -6079,21 +6112,22 @@ module.exports = {
 
     property_name: {
       msg: 'Choose a property name',
-      validator: function(filter, value) {
-        return value ? true : false;
+      validator: function(filter) {
+        return filter.property_name ? true : false;
       }
     },
 
     operator: {
       msg: 'Choose an operator',
-      validator: function(filter, value) {
-        return value ? true : false;
+      validator: function(filter) {
+        return filter.operator ? true : false;
       }
     },
 
     property_value: {
       msg: 'Choose a property value.',
-      validator: function(filter, value) {
+      validator: function(filter) {
+        var value = filter.property_value;
         var coercionType = filter.coercion_type;
 
         if (coercionType == 'List') {
@@ -6114,8 +6148,8 @@ module.exports = {
 
     coercion_type: {
       msg: 'Choose a coercion type',
-      validator: function(filter, value) {
-        return value ? true : false;
+      validator: function(filter) {
+        return filter.coercion_type ? true : false;
       }
     }
 
@@ -6125,7 +6159,8 @@ module.exports = {
 
     coordinates: {
       msg: 'Provide all coordinates.',
-      validator: function(geoObj, value) {
+      validator: function(geoObj) {
+        var value = geoObj.coordinates;
         var valid = _.isArray(value) && value.length === 2;
         if (!valid) return valid;
 
@@ -6139,7 +6174,8 @@ module.exports = {
 
     max_distance_miles: {
       msg: 'Provide a max distance in miles.',
-      validator: function(geoObj, value) {
+      validator: function(geoObj) {
+        var value = geoObj.max_distance_miles;
         return value && _.isNumber(value);
       }
     }
