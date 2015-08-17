@@ -454,7 +454,7 @@ window.Keen = window.Keen || {};
 window.Keen.DataTools = window.Keen.DataTools || {};
 window.Keen.DataTools.Persistence = Persistence;
 window.Keen.DataTools.App = module.exports = App;
-},{"./actions/ExplorerActions":2,"./actions/ProjectActions":4,"./actions/UserActions":5,"./components/app.js":7,"./components/explorer/index.js":29,"./dispatcher/AppDispatcher":48,"./modules/persistence/persistence.js":50,"./stores/ExplorerStore":52,"./stores/ProjectStore":54,"./utils/ExplorerUtils":56,"./utils/FormatUtils":58,"./utils/QueryStringUtils":60,"./utils/ValidationUtils":61,"./validations/ExplorerValidations":62,"lodash":82,"react":300,"react-router":113}],7:[function(require,module,exports){
+},{"./actions/ExplorerActions":2,"./actions/ProjectActions":4,"./actions/UserActions":5,"./components/app.js":7,"./components/explorer/index.js":29,"./dispatcher/AppDispatcher":48,"./modules/persistence/persistence.js":49,"./stores/ExplorerStore":52,"./stores/ProjectStore":54,"./utils/ExplorerUtils":56,"./utils/FormatUtils":58,"./utils/QueryStringUtils":60,"./utils/ValidationUtils":61,"./validations/ExplorerValidations":62,"lodash":82,"react":300,"react-router":113}],7:[function(require,module,exports){
 var React = require('react');
 var Router = require('react-router');
 var RouteHandler = Router.RouteHandler;
@@ -2326,10 +2326,11 @@ var RelativePicker = React.createClass({displayName: "RelativePicker",
 
     if (hasRelativeTimeframe(this.props.model)) {
       var subIntervalCopy = FormatUtils.singularize(time.sub_timeframe, time.amount);
+      var timeAmountPluralSuffix = time.amount > 1 ? 's' : '';
       var relativityCopy = time.relativity == 'this' ? 'including' : 'excluding';
       var singularCurrentInterval = FormatUtils.singularize(subIntervalCopy);
 
-      return (React.createElement("p", {className: "help-block"}, "The last ", time.amount, " ", subIntervalCopy, " ", React.createElement("b", null, relativityCopy), " the current ", singularCurrentInterval, "."));
+      return (React.createElement("p", {className: "help-block"}, "The last ", time.amount, " ", subIntervalCopy, timeAmountPluralSuffix, " ", React.createElement("b", null, relativityCopy), " the current ", singularCurrentInterval, "."));
     }
   },
 
@@ -4378,6 +4379,13 @@ var Dispatcher = require('flux').Dispatcher;
 
 module.exports = new Dispatcher();
 },{"flux":74}],49:[function(require,module,exports){
+module.exports = {
+
+  REST: require('./rest.js')
+
+};
+
+},{"./rest.js":50}],50:[function(require,module,exports){
 var _ = require('lodash');
 var request = require('superagent');
 
@@ -4438,14 +4446,7 @@ RESTPersistence.prototype.get = function(modelId, callback) {
 
 module.exports = RESTPersistence;
 
-},{"lodash":82,"superagent":302}],50:[function(require,module,exports){
-module.exports = {
-
-  REST: require('./REST.js')
-
-};
-
-},{"./REST.js":49}],51:[function(require,module,exports){
+},{"lodash":82,"superagent":302}],51:[function(require,module,exports){
 var _ = require('lodash');
 var AppDispatcher = require('../dispatcher/AppDispatcher');
 var EventEmitter = require('events').EventEmitter;
