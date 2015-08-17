@@ -30,7 +30,7 @@ describe('stores/ExplorerStore', function() {
         saving: false,
         isValid: true,
         timeframe_type: 'relative',
-        name: 'Untitled',
+        name: null,
         query: {
           event_collection: null,
           analysis_type: null,
@@ -511,7 +511,7 @@ describe('stores/ExplorerStore', function() {
           saving: false,
           isValid: true,
           timeframe_type: 'relative',
-          name: 'Untitled',
+          name: null,
           query: {
             event_collection: null,
             analysis_type: null,
