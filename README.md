@@ -117,7 +117,7 @@ To include persistence, create a new persistence object (this must be a complian
   });
 </script>
 ```
-You can read more about how to build your own persistence plugin here: [Keen.DataTools Persistence Docs](https://github.com/keenlabs/data-tools/docs/persistence.md/).
+You can read more about how to build your own persistence plugin here: [Keen.DataTools Persistence Docs](/docs/persistence.md).
 
 ## Forking the Project to Customizing and Contribute
 
