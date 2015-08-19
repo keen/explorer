@@ -4574,7 +4574,8 @@ function _defaultAttrs(){
     },
     visualization: {
       chart_type: null
-    }
+    },
+    user: {}
   };
 }
 
@@ -4697,7 +4698,7 @@ function _updateFilter(id, index, updates) {
 
 function _clear(id) {
   var model = _explorers[id];
-  _explorers[id] = _.assign({}, _defaultAttrs(), { id: model.id, active: model.active });
+  _explorers[id] = _.assign({}, _defaultAttrs(), _.pick(model, ['id', 'name', 'active', 'user']));
 }
 
 var ExplorerStore = _.assign({}, EventEmitter.prototype, {
