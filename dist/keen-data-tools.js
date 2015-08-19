@@ -2268,7 +2268,7 @@ var ReactSelect = React.createClass({displayName: "ReactSelect",
         React.createElement("input", {ref: "input", 
                name: this.props.name, 
                className: inputClasses, 
-               value: this.props.value, 
+               value: this.props.value || "", 
                placeholder: this.props.placeholder, 
                onClick: this.handleClick, 
                onChange: this.handleChange, 
@@ -2428,7 +2428,7 @@ var RunQuery = React.createClass({displayName: "RunQuery",
 
     return (
       React.createElement("div", {className: this.props.classes}, 
-        React.createElement("button", {type: "reset", className: "btn btn-default pull-left", onClick: this.props.clearQuery, id: "clear-explorer-query"}, 
+        React.createElement("button", {type: "reset", ref: "clearquery", className: "btn btn-default pull-left", onClick: this.props.clearQuery, id: "clear-explorer-query"}, 
           "Clear"
         ), 
         React.createElement("button", {type: "submit", className: queryButtonClasses, onClick: this.props.handleQuerySubmit, ref: "runquery", id: "run-query"}, 
@@ -3204,6 +3204,16 @@ var Explorer = React.createClass({displayName: "Explorer",
     this.setState({ activeQueryPane: 'build' });
   },
 
+  clearQuery: function() {
+    // NOTE: (Eric Anderson, Aug 19, 2015): Awful terrible hack to 
+    // ensure that the components properly display the values of the cleared
+    // model.
+    var self = this;
+    setTimeout(function(){
+      ExplorerActions.clear(self.state.activeExplorer.id);
+    }, 0);
+  },
+
   onBrowseEvents: function(event) {
     event.preventDefault();
     this.refs['event-browser'].refs.modal.open();
@@ -3318,16 +3328,18 @@ var Explorer = React.createClass({displayName: "Explorer",
       }
     }
 
-    var activeQueryPane;
+    var queryPane;
     if (!this.props.persistence || this.state.activeQueryPane === 'build') {
       queryPane = React.createElement(QueryBuilder, {ref: "query-builder", 
                                 model: this.state.activeExplorer, 
                                 client: this.props.client, 
                                 project: this.props.project, 
                                 onBrowseEvents: this.onBrowseEvents, 
+                                clearQuery: this.clearQuery, 
                                 handleFiltersToggle: this.handleFiltersToggle});
     } else {
-      queryPane = React.createElement(BrowseQueries, {listItems: this.state.allPersistedExplorers, 
+      queryPane = React.createElement(BrowseQueries, {ref: "query-browser", 
+                                 listItems: this.state.allPersistedExplorers, 
                                  emptyContent: browseEmptyContent, 
                                  notice: browseListNotice, 
                                  clickCallback: this.savedQueryClicked, 
@@ -3595,10 +3607,6 @@ function validFilters(filters) {
 
 var QueryBuilder = React.createClass({displayName: "QueryBuilder",
 
-  clearQuery: function() {
-    ExplorerActions.clear(this.props.model.id);
-  },
-
   handleQuerySubmit: function(event) {
     event.preventDefault();
     ExplorerActions.exec(this.props.client, this.props.model.id);
@@ -3691,7 +3699,7 @@ var QueryBuilder = React.createClass({displayName: "QueryBuilder",
           ), 
           intervalField, 
           React.createElement(RunQuery, {classes: "pull-right", 
-                    clearQuery: this.clearQuery, 
+                    clearQuery: this.props.clearQuery, 
                     model: this.props.model, 
                     handleQuerySubmit: this.handleQuerySubmit}), 
           React.createElement(ApiUrl, {url: ExplorerUtils.getApiQueryUrl(this.props.client, this.props.model)})
@@ -11366,11 +11374,12 @@ process.chdir = function (dir) {
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-module.exports.Dispatcher = require('./lib/Dispatcher')
+module.exports.Dispatcher = require('./lib/Dispatcher');
 
 },{"./lib/Dispatcher":75}],75:[function(require,module,exports){
-/*
- * Copyright (c) 2014, Facebook, Inc.
+(function (process){
+/**
+ * Copyright (c) 2014-2015, Facebook, Inc.
  * All rights reserved.
  *
  * This source code is licensed under the BSD-style license found in the
@@ -11378,14 +11387,18 @@ module.exports.Dispatcher = require('./lib/Dispatcher')
  * of patent rights can be found in the PATENTS file in the same directory.
  *
  * @providesModule Dispatcher
- * @typechecks
+ * 
+ * @preventMunge
  */
 
-"use strict";
+'use strict';
 
-var invariant = require('./invariant');
+exports.__esModule = true;
 
-var _lastID = 1;
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+var invariant = require('fbjs/lib/invariant');
+
 var _prefix = 'ID_';
 
 /**
@@ -11435,7 +11448,7 @@ var _prefix = 'ID_';
  *
  * This payload is digested by both stores:
  *
- *    CountryStore.dispatchToken = flightDispatcher.register(function(payload) {
+ *   CountryStore.dispatchToken = flightDispatcher.register(function(payload) {
  *     if (payload.actionType === 'country-update') {
  *       CountryStore.country = payload.selectedCountry;
  *     }
@@ -11463,14 +11476,10 @@ var _prefix = 'ID_';
  *     flightDispatcher.register(function(payload) {
  *       switch (payload.actionType) {
  *         case 'country-update':
+ *         case 'city-update':
  *           flightDispatcher.waitFor([CityStore.dispatchToken]);
  *           FlightPriceStore.price =
  *             getFlightPriceStore(CountryStore.country, CityStore.city);
- *           break;
- *
- *         case 'city-update':
- *           FlightPriceStore.price =
- *             FlightPriceStore(CountryStore.country, CityStore.city);
  *           break;
  *     }
  *   });
@@ -11480,131 +11489,109 @@ var _prefix = 'ID_';
  * `FlightPriceStore`.
  */
 
+var Dispatcher = (function () {
   function Dispatcher() {
-    this.$Dispatcher_callbacks = {};
-    this.$Dispatcher_isPending = {};
-    this.$Dispatcher_isHandled = {};
-    this.$Dispatcher_isDispatching = false;
-    this.$Dispatcher_pendingPayload = null;
+    _classCallCheck(this, Dispatcher);
+
+    this._callbacks = {};
+    this._isDispatching = false;
+    this._isHandled = {};
+    this._isPending = {};
+    this._lastID = 1;
   }
 
   /**
    * Registers a callback to be invoked with every dispatched payload. Returns
    * a token that can be used with `waitFor()`.
-   *
-   * @param {function} callback
-   * @return {string}
    */
-  Dispatcher.prototype.register=function(callback) {
-    var id = _prefix + _lastID++;
-    this.$Dispatcher_callbacks[id] = callback;
+
+  Dispatcher.prototype.register = function register(callback) {
+    var id = _prefix + this._lastID++;
+    this._callbacks[id] = callback;
     return id;
   };
 
   /**
    * Removes a callback based on its token.
-   *
-   * @param {string} id
    */
-  Dispatcher.prototype.unregister=function(id) {
-    invariant(
-      this.$Dispatcher_callbacks[id],
-      'Dispatcher.unregister(...): `%s` does not map to a registered callback.',
-      id
-    );
-    delete this.$Dispatcher_callbacks[id];
+
+  Dispatcher.prototype.unregister = function unregister(id) {
+    !this._callbacks[id] ? process.env.NODE_ENV !== 'production' ? invariant(false, 'Dispatcher.unregister(...): `%s` does not map to a registered callback.', id) : invariant(false) : undefined;
+    delete this._callbacks[id];
   };
 
   /**
    * Waits for the callbacks specified to be invoked before continuing execution
    * of the current callback. This method should only be used by a callback in
    * response to a dispatched payload.
-   *
-   * @param {array<string>} ids
    */
-  Dispatcher.prototype.waitFor=function(ids) {
-    invariant(
-      this.$Dispatcher_isDispatching,
-      'Dispatcher.waitFor(...): Must be invoked while dispatching.'
-    );
+
+  Dispatcher.prototype.waitFor = function waitFor(ids) {
+    !this._isDispatching ? process.env.NODE_ENV !== 'production' ? invariant(false, 'Dispatcher.waitFor(...): Must be invoked while dispatching.') : invariant(false) : undefined;
     for (var ii = 0; ii < ids.length; ii++) {
       var id = ids[ii];
-      if (this.$Dispatcher_isPending[id]) {
-        invariant(
-          this.$Dispatcher_isHandled[id],
-          'Dispatcher.waitFor(...): Circular dependency detected while ' +
-          'waiting for `%s`.',
-          id
-        );
+      if (this._isPending[id]) {
+        !this._isHandled[id] ? process.env.NODE_ENV !== 'production' ? invariant(false, 'Dispatcher.waitFor(...): Circular dependency detected while ' + 'waiting for `%s`.', id) : invariant(false) : undefined;
         continue;
       }
-      invariant(
-        this.$Dispatcher_callbacks[id],
-        'Dispatcher.waitFor(...): `%s` does not map to a registered callback.',
-        id
-      );
-      this.$Dispatcher_invokeCallback(id);
+      !this._callbacks[id] ? process.env.NODE_ENV !== 'production' ? invariant(false, 'Dispatcher.waitFor(...): `%s` does not map to a registered callback.', id) : invariant(false) : undefined;
+      this._invokeCallback(id);
     }
   };
 
   /**
    * Dispatches a payload to all registered callbacks.
-   *
-   * @param {object} payload
    */
-  Dispatcher.prototype.dispatch=function(payload) {
-    invariant(
-      !this.$Dispatcher_isDispatching,
-      'Dispatch.dispatch(...): Cannot dispatch in the middle of a dispatch.'
-    );
-    this.$Dispatcher_startDispatching(payload);
+
+  Dispatcher.prototype.dispatch = function dispatch(payload) {
+    !!this._isDispatching ? process.env.NODE_ENV !== 'production' ? invariant(false, 'Dispatch.dispatch(...): Cannot dispatch in the middle of a dispatch.') : invariant(false) : undefined;
+    this._startDispatching(payload);
     try {
-      for (var id in this.$Dispatcher_callbacks) {
-        if (this.$Dispatcher_isPending[id]) {
+      for (var id in this._callbacks) {
+        if (this._isPending[id]) {
           continue;
         }
-        this.$Dispatcher_invokeCallback(id);
+        this._invokeCallback(id);
       }
     } finally {
-      this.$Dispatcher_stopDispatching();
+      this._stopDispatching();
     }
   };
 
   /**
    * Is this Dispatcher currently dispatching.
-   *
-   * @return {boolean}
    */
-  Dispatcher.prototype.isDispatching=function() {
-    return this.$Dispatcher_isDispatching;
+
+  Dispatcher.prototype.isDispatching = function isDispatching() {
+    return this._isDispatching;
   };
 
   /**
    * Call the callback stored with the given id. Also do some internal
    * bookkeeping.
    *
-   * @param {string} id
    * @internal
    */
-  Dispatcher.prototype.$Dispatcher_invokeCallback=function(id) {
-    this.$Dispatcher_isPending[id] = true;
-    this.$Dispatcher_callbacks[id](this.$Dispatcher_pendingPayload);
-    this.$Dispatcher_isHandled[id] = true;
+
+  Dispatcher.prototype._invokeCallback = function _invokeCallback(id) {
+    this._isPending[id] = true;
+    this._callbacks[id](this._pendingPayload);
+    this._isHandled[id] = true;
   };
 
   /**
    * Set up bookkeeping needed when dispatching.
    *
-   * @param {object} payload
    * @internal
    */
-  Dispatcher.prototype.$Dispatcher_startDispatching=function(payload) {
-    for (var id in this.$Dispatcher_callbacks) {
-      this.$Dispatcher_isPending[id] = false;
-      this.$Dispatcher_isHandled[id] = false;
+
+  Dispatcher.prototype._startDispatching = function _startDispatching(payload) {
+    for (var id in this._callbacks) {
+      this._isPending[id] = false;
+      this._isHandled[id] = false;
     }
-    this.$Dispatcher_pendingPayload = payload;
-    this.$Dispatcher_isDispatching = true;
+    this._pendingPayload = payload;
+    this._isDispatching = true;
   };
 
   /**
@@ -11612,17 +11599,21 @@ var _prefix = 'ID_';
    *
    * @internal
    */
-  Dispatcher.prototype.$Dispatcher_stopDispatching=function() {
-    this.$Dispatcher_pendingPayload = null;
-    this.$Dispatcher_isDispatching = false;
+
+  Dispatcher.prototype._stopDispatching = function _stopDispatching() {
+    delete this._pendingPayload;
+    this._isDispatching = false;
   };
 
+  return Dispatcher;
+})();
 
 module.exports = Dispatcher;
-
-},{"./invariant":76}],76:[function(require,module,exports){
+}).call(this,require("FWaASH"))
+},{"FWaASH":72,"fbjs/lib/invariant":76}],76:[function(require,module,exports){
+(function (process){
 /**
- * Copyright (c) 2014, Facebook, Inc.
+ * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
  *
  * This source code is licensed under the BSD-style license found in the
@@ -11645,8 +11636,8 @@ module.exports = Dispatcher;
  * will remain to ensure logic does not differ in production.
  */
 
-var invariant = function(condition, format, a, b, c, d, e, f) {
-  if (false) {
+var invariant = function (condition, format, a, b, c, d, e, f) {
+  if (process.env.NODE_ENV !== 'production') {
     if (format === undefined) {
       throw new Error('invariant requires an error message argument');
     }
@@ -11655,17 +11646,13 @@ var invariant = function(condition, format, a, b, c, d, e, f) {
   if (!condition) {
     var error;
     if (format === undefined) {
-      error = new Error(
-        'Minified exception occurred; use the non-minified dev environment ' +
-        'for the full error message and additional helpful warnings.'
-      );
+      error = new Error('Minified exception occurred; use the non-minified dev environment ' + 'for the full error message and additional helpful warnings.');
     } else {
       var args = [a, b, c, d, e, f];
       var argIndex = 0;
-      error = new Error(
-        'Invariant Violation: ' +
-        format.replace(/%s/g, function() { return args[argIndex++]; })
-      );
+      error = new Error('Invariant Violation: ' + format.replace(/%s/g, function () {
+        return args[argIndex++];
+      }));
     }
 
     error.framesToPop = 1; // we don't care about invariant's own frame
@@ -11674,8 +11661,8 @@ var invariant = function(condition, format, a, b, c, d, e, f) {
 };
 
 module.exports = invariant;
-
-},{}],77:[function(require,module,exports){
+}).call(this,require("FWaASH"))
+},{"FWaASH":72}],77:[function(require,module,exports){
 var json = typeof JSON !== 'undefined' ? JSON : require('jsonify');
 
 module.exports = function (obj, opts) {
@@ -23498,7 +23485,7 @@ module.exports = keyMirror;
 }).call(this,typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{}],83:[function(require,module,exports){
 //! moment.js
-//! version : 2.10.5
+//! version : 2.10.6
 //! authors : Tim Wood, Iskren Chernev, Moment.js contributors
 //! license : MIT
 //! momentjs.com
@@ -23674,7 +23661,7 @@ module.exports = keyMirror;
     // Moment prototype object
     function Moment(config) {
         copyConfig(this, config);
-        this._d = new Date(config._d.getTime());
+        this._d = new Date(config._d != null ? config._d.getTime() : NaN);
         // Prevent infinite loop in case updateOffset creates new moment
         // objects.
         if (updateInProgress === false) {
@@ -26661,7 +26648,7 @@ module.exports = keyMirror;
     // Side effect imports
 
 
-    utils_hooks__hooks.version = '2.10.5';
+    utils_hooks__hooks.version = '2.10.6';
 
     setHookCallback(local__createLocal);
 
