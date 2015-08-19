@@ -98,6 +98,16 @@ var Explorer = React.createClass({
     this.setState({ activeQueryPane: 'build' });
   },
 
+  clearQuery: function() {
+    // NOTE: (Eric Anderson, Aug 19, 2015): Awful terrible hack to 
+    // ensure that the components properly display the values of the cleared
+    // model.
+    var self = this;
+    setTimeout(function(){
+      ExplorerActions.clear(self.state.activeExplorer.id);
+    }, 0);
+  },
+
   onBrowseEvents: function(event) {
     event.preventDefault();
     this.refs['event-browser'].refs.modal.open();
@@ -183,16 +193,18 @@ var Explorer = React.createClass({
       }
     }
 
-    var activeQueryPane;
+    var queryPane;
     if (!this.props.persistence || this.state.activeQueryPane === 'build') {
       queryPane = <QueryBuilder ref="query-builder"
                                 model={this.state.activeExplorer}
                                 client={this.props.client}
                                 project={this.props.project}
                                 onBrowseEvents={this.onBrowseEvents}
+                                clearQuery={this.clearQuery}
                                 handleFiltersToggle={this.handleFiltersToggle} />;
     } else {
-      queryPane = <BrowseQueries listItems={this.state.allPersistedExplorers}
+      queryPane = <BrowseQueries ref="query-browser"
+                                 listItems={this.state.allPersistedExplorers}
                                  emptyContent={browseEmptyContent}
                                  notice={browseListNotice}
                                  clickCallback={this.savedQueryClicked}
