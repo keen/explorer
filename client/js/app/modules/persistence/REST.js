@@ -27,7 +27,7 @@ RESTPersistence.prototype.makeRequest = function(action, id, body, callback) {
   }
   r.end(function(err, res){
     if (err) {
-      callback(err);
+      callback(JSON.parse(err.response.text).error);
       return;
     }
     var body = res ? res.body : null;

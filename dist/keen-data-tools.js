@@ -4238,7 +4238,8 @@ var Visualization = React.createClass({displayName: "Visualization",
                  type: "text", 
                  onChange: this.props.onNameChange, 
                  spellCheck: "false", 
-                 value: this.props.model.name})
+                 value: this.props.model.name, 
+                 placeholder: "Give your query a name..."})
         )
       );
     }
@@ -4415,7 +4416,7 @@ RESTPersistence.prototype.makeRequest = function(action, id, body, callback) {
   }
   r.end(function(err, res){
     if (err) {
-      callback(err);
+      callback(JSON.parse(err.response.text).error);
       return;
     }
     var body = res ? res.body : null;
@@ -4539,14 +4540,13 @@ var ProjectUtils = require('../utils/ProjectUtils');
 var ProjectStore = require('./ProjectStore');
 
 var CHANGE_EVENT = 'change';
-var DEFAULT_NAME = 'Untitled';
 
 var _explorers = {};
 
 function _defaultAttrs(){
   return {
     id: FormatUtils.generateRandomId("TEMP-"),
-    name: DEFAULT_NAME,
+    name: null,
     active: false,
     saving: false,
     error: null,
