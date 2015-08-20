@@ -30,10 +30,6 @@ function validFilters(filters) {
 
 var QueryBuilder = React.createClass({
 
-  clearQuery: function() {
-    ExplorerActions.clear(this.props.model.id);
-  },
-
   handleQuerySubmit: function(event) {
     event.preventDefault();
     ExplorerActions.exec(this.props.client, this.props.model.id);
@@ -126,7 +122,7 @@ var QueryBuilder = React.createClass({
           </div>
           {intervalField}
           <RunQuery classes="pull-right"
-                    clearQuery={this.clearQuery}
+                    clearQuery={this.props.clearQuery}
                     model={this.props.model}
                     handleQuerySubmit={this.handleQuerySubmit} />
           <ApiUrl url={ExplorerUtils.getApiQueryUrl(this.props.client, this.props.model)} />

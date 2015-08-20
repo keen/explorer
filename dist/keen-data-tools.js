@@ -2268,7 +2268,7 @@ var ReactSelect = React.createClass({displayName: "ReactSelect",
         React.createElement("input", {ref: "input", 
                name: this.props.name, 
                className: inputClasses, 
-               value: this.props.value, 
+               value: this.props.value || "", 
                placeholder: this.props.placeholder, 
                onClick: this.handleClick, 
                onChange: this.handleChange, 
@@ -2428,7 +2428,7 @@ var RunQuery = React.createClass({displayName: "RunQuery",
 
     return (
       React.createElement("div", {className: this.props.classes}, 
-        React.createElement("button", {type: "reset", className: "btn btn-default pull-left", onClick: this.props.clearQuery, id: "clear-explorer-query"}, 
+        React.createElement("button", {type: "reset", ref: "clearquery", className: "btn btn-default pull-left", onClick: this.props.clearQuery, id: "clear-explorer-query"}, 
           "Clear"
         ), 
         React.createElement("button", {type: "submit", className: queryButtonClasses, onClick: this.props.handleQuerySubmit, ref: "runquery", id: "run-query"}, 
@@ -3204,6 +3204,16 @@ var Explorer = React.createClass({displayName: "Explorer",
     this.setState({ activeQueryPane: 'build' });
   },
 
+  clearQuery: function() {
+    // NOTE: (Eric Anderson, Aug 19, 2015): Awful terrible hack to 
+    // ensure that the components properly display the values of the cleared
+    // model.
+    var self = this;
+    setTimeout(function(){
+      ExplorerActions.clear(self.state.activeExplorer.id);
+    }, 0);
+  },
+
   onBrowseEvents: function(event) {
     event.preventDefault();
     this.refs['event-browser'].refs.modal.open();
@@ -3318,16 +3328,18 @@ var Explorer = React.createClass({displayName: "Explorer",
       }
     }
 
-    var activeQueryPane;
+    var queryPane;
     if (!this.props.persistence || this.state.activeQueryPane === 'build') {
       queryPane = React.createElement(QueryBuilder, {ref: "query-builder", 
                                 model: this.state.activeExplorer, 
                                 client: this.props.client, 
                                 project: this.props.project, 
                                 onBrowseEvents: this.onBrowseEvents, 
+                                clearQuery: this.clearQuery, 
                                 handleFiltersToggle: this.handleFiltersToggle});
     } else {
-      queryPane = React.createElement(BrowseQueries, {listItems: this.state.allPersistedExplorers, 
+      queryPane = React.createElement(BrowseQueries, {ref: "query-browser", 
+                                 listItems: this.state.allPersistedExplorers, 
                                  emptyContent: browseEmptyContent, 
                                  notice: browseListNotice, 
                                  clickCallback: this.savedQueryClicked, 
@@ -3595,10 +3607,6 @@ function validFilters(filters) {
 
 var QueryBuilder = React.createClass({displayName: "QueryBuilder",
 
-  clearQuery: function() {
-    ExplorerActions.clear(this.props.model.id);
-  },
-
   handleQuerySubmit: function(event) {
     event.preventDefault();
     ExplorerActions.exec(this.props.client, this.props.model.id);
@@ -3691,7 +3699,7 @@ var QueryBuilder = React.createClass({displayName: "QueryBuilder",
           ), 
           intervalField, 
           React.createElement(RunQuery, {classes: "pull-right", 
-                    clearQuery: this.clearQuery, 
+                    clearQuery: this.props.clearQuery, 
                     model: this.props.model, 
                     handleQuerySubmit: this.handleQuerySubmit}), 
           React.createElement(ApiUrl, {url: ExplorerUtils.getApiQueryUrl(this.props.client, this.props.model)})
@@ -4624,7 +4632,8 @@ function _defaultAttrs(){
     },
     visualization: {
       chart_type: null
-    }
+    },
+    user: {}
   };
 }
 
@@ -4747,7 +4756,7 @@ function _updateFilter(id, index, updates) {
 
 function _clear(id) {
   var model = _explorers[id];
-  _explorers[id] = _.assign({}, _defaultAttrs(), { id: model.id, active: model.active });
+  _explorers[id] = _.assign({}, _defaultAttrs(), _.pick(model, ['id', 'name', 'active', 'user']));
 }
 
 var ExplorerStore = _.assign({}, EventEmitter.prototype, {
