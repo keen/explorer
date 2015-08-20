@@ -348,6 +348,9 @@ describe('actions/ExplorerActions', function() {
         };
         this.explorer = TestHelpers.createExplorerModel();
         this.explorer.id = 'TEMP-ABC';
+        this.explorer.name = 'some name';
+        this.explorer.query.event_collection = 'clicks';
+        this.explorer.query.analysis_type = 'count';
         this.getStub.returns(this.explorer);
         sinon.stub(ExplorerUtils, 'mergeResponseWithExplorer').returns({ testKey: 'some updates' });
       });
@@ -395,6 +398,9 @@ describe('actions/ExplorerActions', function() {
         };
         this.explorer = TestHelpers.createExplorerModel();
         this.explorer.id = 'ABC';
+        this.explorer.name = 'some name';
+        this.explorer.query.event_collection = 'clicks';
+        this.explorer.query.analysis_type = 'count';
         this.getStub.returns(this.explorer);
         sinon.stub(ExplorerUtils, 'mergeResponseWithExplorer').returns({ testKey: 'some updates' });
       });
