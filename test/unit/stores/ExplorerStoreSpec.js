@@ -493,6 +493,7 @@ describe('stores/ExplorerStore', function() {
         ExplorerStore.clearAll();
         ExplorerActions.create(_.assign({}, TestHelpers.createExplorerModel(), {
           id: 'ABC-SOME-ID',
+          name: 'some name',
           active: true,
           query: {
             event_collection: 'clicks',
@@ -512,7 +513,7 @@ describe('stores/ExplorerStore', function() {
           saving: false,
           isValid: true,
           timeframe_type: 'relative',
-          name: '',
+          name: 'some name',
           query: {
             event_collection: null,
             analysis_type: null,
