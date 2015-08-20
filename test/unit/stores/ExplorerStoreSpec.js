@@ -51,7 +51,8 @@ describe('stores/ExplorerStore', function() {
         },
         visualization: {
           chart_type: null
-        }
+        },
+        user: {}
       };
 
       var keys = Object.keys(ExplorerStore.getAll());
@@ -532,7 +533,8 @@ describe('stores/ExplorerStore', function() {
           },
           visualization: {
             chart_type: null
-          }
+          },
+          user: {}
         });
       });
     });
