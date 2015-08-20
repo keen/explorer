@@ -51,7 +51,8 @@ describe('stores/ExplorerStore', function() {
         },
         visualization: {
           chart_type: null
-        }
+        },
+        user: {}
       };
 
       var keys = Object.keys(ExplorerStore.getAll());
@@ -511,7 +512,7 @@ describe('stores/ExplorerStore', function() {
           saving: false,
           isValid: true,
           timeframe_type: 'relative',
-          name: null,
+          name: '',
           query: {
             event_collection: null,
             analysis_type: null,
@@ -532,7 +533,8 @@ describe('stores/ExplorerStore', function() {
           },
           visualization: {
             chart_type: null
-          }
+          },
+          user: {}
         });
       });
     });
