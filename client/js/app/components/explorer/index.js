@@ -58,6 +58,7 @@ var Explorer = React.createClass({
         text: "There is already a query in progress. Wait for it to finish loading before selecting a query."
       });
     } else {
+      ExplorerActions.revertActiveChanges();
       var modelId = event.currentTarget.dataset.id;
       ExplorerActions.setActive(modelId);
       ExplorerActions.exec(this.props.client, modelId);
@@ -123,6 +124,11 @@ var Explorer = React.createClass({
 
   onNameChange: function(event) {
     ExplorerActions.update(this.state.activeExplorer.id, { name: event.target.value });
+  },
+
+  handleRevertChanges: function(event) {
+    event.preventDefault();
+    ExplorerActions.revertActiveChanges();
   },
 
   // ********************************
@@ -197,11 +203,13 @@ var Explorer = React.createClass({
     if (!this.props.persistence || this.state.activeQueryPane === 'build') {
       queryPane = <QueryBuilder ref="query-builder"
                                 model={this.state.activeExplorer}
+                                originalModel={this.state.activeExplorerOriginal}
                                 client={this.props.client}
                                 project={this.props.project}
                                 onBrowseEvents={this.onBrowseEvents}
                                 clearQuery={this.clearQuery}
-                                handleFiltersToggle={this.handleFiltersToggle} />;
+                                handleFiltersToggle={this.handleFiltersToggle}
+                                handleRevertChanges={this.handleRevertChanges} />;
     } else {
       queryPane = <BrowseQueries ref="query-browser"
                                  listItems={this.state.allPersistedExplorers}

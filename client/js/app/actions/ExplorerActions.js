@@ -46,6 +46,12 @@ var ExplorerActions = {
     });
   },
 
+  revertActiveChanges: function() {
+    AppDispatcher.dispatch({
+      actionType: ExplorerConstants.EXPLORER_REVERT_ACTIVE_CHANGES,
+    });
+  },
+
   clear: function(id) {
     AppDispatcher.dispatch({
       actionType: ExplorerConstants.EXPLORER_CLEAR,
