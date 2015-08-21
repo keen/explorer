@@ -71,6 +71,7 @@ var QueryBuilder = React.createClass({
     var targetPropertyField;
     var percentileField;
     var intervalField;
+    var revertBtn;
     var analysisType = this.props.model.query.analysis_type;
     var apiQueryUrl = ExplorerUtils.getApiQueryUrl(this.props.client, this.props.model);
 
@@ -92,6 +93,14 @@ var QueryBuilder = React.createClass({
       percentileField = <PercentileField ref="percentile-field"
                                          value={this.props.model.query.percentile}
                                          onChange={this.handleSelectionWithEvent} />;
+    }
+
+    if (!_.isEqual(this.props.model, this.props.model.originalModel)) {
+      revertBtn = (
+        <div className="clearfix margin-top-small">
+          <a href="#" className="pull-right" onClick={this.props.handleRevertChanges}>Revert to original</a>
+        </div>
+      );
     }
 
     return (
@@ -126,6 +135,7 @@ var QueryBuilder = React.createClass({
                     model={this.props.model}
                     handleQuerySubmit={this.handleQuerySubmit} />
           <ApiUrl url={ExplorerUtils.getApiQueryUrl(this.props.client, this.props.model)} />
+          {revertBtn}
         </form>
       </section>
     );

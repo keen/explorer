@@ -70,6 +70,12 @@ var ExplorerActions = {
     });
   },
 
+  revertActiveChanges: function() {
+    AppDispatcher.dispatch({
+      actionType: ExplorerConstants.EXPLORER_REVERT_ACTIVE_CHANGES,
+    });
+  },
+
   clear: function(id) {
     AppDispatcher.dispatch({
       actionType: ExplorerConstants.EXPLORER_CLEAR,
@@ -2447,13 +2453,15 @@ var RunQuery = React.createClass({displayName: "RunQuery",
     });
 
     return (
-      React.createElement("div", {className: this.props.classes}, 
-        React.createElement("button", {type: "reset", ref: "clearquery", className: "btn btn-default pull-left", onClick: this.props.clearQuery, id: "clear-explorer-query"}, 
-          "Clear"
-        ), 
-        React.createElement("button", {type: "submit", className: queryButtonClasses, onClick: this.props.handleQuerySubmit, ref: "runquery", id: "run-query"}, 
-          React.createElement("span", {className: "icon glyphicon glyphicon-check"}), 
-          this.queryButtonText()
+      React.createElement("div", null, 
+        React.createElement("div", {className: this.props.classes}, 
+          React.createElement("button", {type: "reset", ref: "clearquery", className: "btn btn-default pull-left", onClick: this.props.clearQuery, id: "clear-explorer-query"}, 
+            "Clear"
+          ), 
+          React.createElement("button", {type: "submit", className: queryButtonClasses, onClick: this.props.handleQuerySubmit, ref: "runquery", id: "run-query"}, 
+            React.createElement("span", {className: "icon glyphicon glyphicon-check"}), 
+            this.queryButtonText()
+          )
         )
       )
     );
@@ -3184,6 +3192,7 @@ var Explorer = React.createClass({displayName: "Explorer",
         text: "There is already a query in progress. Wait for it to finish loading before selecting a query."
       });
     } else {
+      ExplorerActions.revertActiveChanges();
       var modelId = event.currentTarget.dataset.id;
       ExplorerActions.setActive(modelId);
       ExplorerActions.exec(this.props.client, modelId);
@@ -3249,6 +3258,11 @@ var Explorer = React.createClass({displayName: "Explorer",
 
   onNameChange: function(event) {
     ExplorerActions.update(this.state.activeExplorer.id, { name: event.target.value });
+  },
+
+  handleRevertChanges: function(event) {
+    event.preventDefault();
+    ExplorerActions.revertActiveChanges();
   },
 
   // ********************************
@@ -3352,11 +3366,13 @@ var Explorer = React.createClass({displayName: "Explorer",
     if (!this.props.persistence || this.state.activeQueryPane === 'build') {
       queryPane = React.createElement(QueryBuilder, {ref: "query-builder", 
                                 model: this.state.activeExplorer, 
+                                originalModel: this.state.activeExplorerOriginal, 
                                 client: this.props.client, 
                                 project: this.props.project, 
                                 onBrowseEvents: this.onBrowseEvents, 
                                 clearQuery: this.clearQuery, 
-                                handleFiltersToggle: this.handleFiltersToggle});
+                                handleFiltersToggle: this.handleFiltersToggle, 
+                                handleRevertChanges: this.handleRevertChanges});
     } else {
       queryPane = React.createElement(BrowseQueries, {ref: "query-browser", 
                                  listItems: this.state.allPersistedExplorers, 
@@ -3668,6 +3684,7 @@ var QueryBuilder = React.createClass({displayName: "QueryBuilder",
     var targetPropertyField;
     var percentileField;
     var intervalField;
+    var revertBtn;
     var analysisType = this.props.model.query.analysis_type;
     var apiQueryUrl = ExplorerUtils.getApiQueryUrl(this.props.client, this.props.model);
 
@@ -3689,6 +3706,14 @@ var QueryBuilder = React.createClass({displayName: "QueryBuilder",
       percentileField = React.createElement(PercentileField, {ref: "percentile-field", 
                                          value: this.props.model.query.percentile, 
                                          onChange: this.handleSelectionWithEvent});
+    }
+
+    if (!_.isEqual(this.props.model, this.props.model.originalModel)) {
+      revertBtn = (
+        React.createElement("div", {className: "clearfix margin-top-small"}, 
+          React.createElement("a", {href: "#", className: "pull-right", onClick: this.props.handleRevertChanges}, "Revert to original")
+        )
+      );
     }
 
     return (
@@ -3722,7 +3747,8 @@ var QueryBuilder = React.createClass({displayName: "QueryBuilder",
                     clearQuery: this.props.clearQuery, 
                     model: this.props.model, 
                     handleQuerySubmit: this.handleQuerySubmit}), 
-          React.createElement(ApiUrl, {url: ExplorerUtils.getApiQueryUrl(this.props.client, this.props.model)})
+          React.createElement(ApiUrl, {url: ExplorerUtils.getApiQueryUrl(this.props.client, this.props.model)}), 
+          revertBtn
         )
       )
     );
@@ -3900,6 +3926,8 @@ var BrowseQueries = React.createClass({displayName: "BrowseQueries",
 
   buildList: function() {
     var listElements = this.props.listItems.map(_.bind(function(listItem, index) {
+      if (listItem.originalModel) listItem = listItem.originalModel;
+      
       listItem.user = listItem.user || {};
       if (String(listItem.name.toLowerCase()).search(this.state.searchterm.toLowerCase()) < 0) return;
 
@@ -4363,6 +4391,7 @@ module.exports = keyMirror({
   EXPLORER_UPDATE: null,
   EXPLORER_REMOVE: null,
   EXPLORER_SET_ACTIVE: null,
+  EXPLORER_REVERT_ACTIVE_CHANGES: null,
   EXPLORER_CLEAR: null,
   EXPLORER_QUERY_SUCCESS: null,
   EXPLORER_QUERY_ERROR: null,
@@ -4691,8 +4720,16 @@ function _setActive(id) {
   var keys = Object.keys(_explorers);
   for(var i=0; i<keys.length; i++) {
     _explorers[keys[i]].active = false;
+    delete _explorers[keys[i]].originalModel;
   }
   _explorers[id].active = true;
+  _explorers[id].originalModel = _.cloneDeep(_explorers[id]);
+}
+
+function _revertActiveChanges() {
+  var active = _.find(_explorers, { active: true });
+  var original = _explorers[active.id].originalModel;
+  _explorers[active.id] = _.assign({}, _.cloneDeep(original), { originalModel: original, result: active.result });
 }
 
 function _addFilter(id, attrs) {
@@ -4803,6 +4840,11 @@ ExplorerStore.dispatchToken = AppDispatcher.register(function(action) {
 
     case ExplorerConstants.EXPLORER_SET_ACTIVE:
       _setActive(action.id);
+      ExplorerStore.emitChange();
+      break;
+
+    case ExplorerConstants.EXPLORER_REVERT_ACTIVE_CHANGES:
+      _revertActiveChanges();
       ExplorerStore.emitChange();
       break;
 

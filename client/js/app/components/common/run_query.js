@@ -45,14 +45,16 @@ var RunQuery = React.createClass({
     });
 
     return (
-      <div className={this.props.classes}>
-        <button type="reset" ref="clearquery" className="btn btn-default pull-left" onClick={this.props.clearQuery} id="clear-explorer-query">
-          Clear
-        </button>
-        <button type="submit" className={queryButtonClasses} onClick={this.props.handleQuerySubmit} ref="runquery" id="run-query">
-          <span className="icon glyphicon glyphicon-check"></span>
-          {this.queryButtonText()}
-        </button>
+      <div>
+        <div className={this.props.classes}>
+          <button type="reset" ref="clearquery" className="btn btn-default pull-left" onClick={this.props.clearQuery} id="clear-explorer-query">
+            Clear
+          </button>
+          <button type="submit" className={queryButtonClasses} onClick={this.props.handleQuerySubmit} ref="runquery" id="run-query">
+            <span className="icon glyphicon glyphicon-check"></span>
+            {this.queryButtonText()}
+          </button>
+        </div>
       </div>
     );
   }
