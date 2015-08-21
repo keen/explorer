@@ -187,7 +187,7 @@ describe('utils/ExplorerUtils', function() {
           chart_type: 'metric'
         }
       };
-      assert.deepEqual(ExplorerUtils.mergeResponseWithExplorer(explorer, response), {
+      var expectedExplorer = {
         id: 'ACTUAL-ID',
         project_id: '10',
         name: 'SOME NAME',
@@ -219,7 +219,9 @@ describe('utils/ExplorerUtils', function() {
         visualization: {
           chart_type: 'metric'
         }
-      });
+      };
+      expectedExplorer.originalModel = _.cloneDeep(expectedExplorer);
+      assert.deepEqual(ExplorerUtils.mergeResponseWithExplorer(explorer, response), expectedExplorer);
     });
   });
 
