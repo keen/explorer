@@ -15,7 +15,7 @@ var GroupByField = require('./group_by_field.js');
 var Timeframe = require('../../common/timeframe.js');
 var Interval = require('../../common/interval.js');
 var ApiUrl = require('./api_url.js');
-var RunQuery = require('../../common/run_query.js');
+var BuilderButtons = require('./builder_buttons.js');
 var ExplorerUtils = require('../../../utils/ExplorerUtils');
 var ProjectUtils = require('../../../utils/ProjectUtils');
 var ExplorerActions = require('../../../actions/ExplorerActions');
@@ -71,7 +71,6 @@ var QueryBuilder = React.createClass({
     var targetPropertyField;
     var percentileField;
     var intervalField;
-    var revertBtn;
     var analysisType = this.props.model.query.analysis_type;
     var apiQueryUrl = ExplorerUtils.getApiQueryUrl(this.props.client, this.props.model);
 
@@ -93,14 +92,6 @@ var QueryBuilder = React.createClass({
       percentileField = <PercentileField ref="percentile-field"
                                          value={this.props.model.query.percentile}
                                          onChange={this.handleSelectionWithEvent} />;
-    }
-
-    if (!_.isEqual(this.props.model, this.props.model.originalModel)) {
-      revertBtn = (
-        <div className="clearfix margin-top-small">
-          <a href="#" className="pull-right" onClick={this.props.handleRevertChanges}>Revert to original</a>
-        </div>
-      );
     }
 
     return (
@@ -130,12 +121,11 @@ var QueryBuilder = React.createClass({
                           fieldsCount={validFilters(this.props.model.query.filters).length} />
           </div>
           {intervalField}
-          <RunQuery classes="pull-right"
-                    clearQuery={this.props.clearQuery}
-                    model={this.props.model}
-                    handleQuerySubmit={this.handleQuerySubmit} />
           <ApiUrl url={ExplorerUtils.getApiQueryUrl(this.props.client, this.props.model)} />
-          {revertBtn}
+          <BuilderButtons clearQuery={this.props.clearQuery}
+                          model={this.props.model}
+                          handleQuerySubmit={this.handleQuerySubmit}
+                          handleRevertChanges={this.props.handleRevertChanges} />
         </form>
       </section>
     );
