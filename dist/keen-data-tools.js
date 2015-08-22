@@ -3458,6 +3458,7 @@ module.exports = ApiUrl;
 var React = require('react');
 var classNames = require('classnames');
 var _ = require('lodash');
+var ExplorerUtils = require('../../../utils/ExplorerUtils');
 
 var BuilderButtons = React.createClass({displayName: "BuilderButtons",
 
@@ -3498,21 +3499,23 @@ var BuilderButtons = React.createClass({displayName: "BuilderButtons",
       'disabled': this.props.model.loading,
       'btn btn-primary run-query': true
     });
-    if (!_.isEqual(_.omit(this.props.model, 'originalModel'), this.props.model.originalModel)) {
+    if (ExplorerUtils.isPersisted(this.props.model) && !_.isEqual(this.props.model.query, this.props.model.originalModel.query)) {
       revertBtn = (
-          React.createElement("button", {className: "pull-left btn btn-default", onClick: this.props.handleRevertChanges}, "Revert to original")
+        React.createElement("button", {className: "pull-left btn btn-default margin-right-tiny", onClick: this.props.handleRevertChanges}, "Revert to original")
       );
     }
     return (
-      React.createElement("div", {className: "query-builder-buttons row"}, 
-        React.createElement("div", {className: "col-md-4"}, 
-          revertBtn
-        ), 
+      React.createElement("div", {className: "query-builder-buttons row margin-top-small"}, 
         React.createElement("div", {className: "col-md-8"}, 
-          React.createElement("div", {className: "pull-right"}, 
+          React.createElement("div", {className: "pull-left"}, 
+            revertBtn, 
             React.createElement("button", {type: "reset", ref: "clearquery", className: "btn btn-default pull-left", onClick: this.props.clearQuery, id: "clear-explorer-query"}, 
               "Clear"
-            ), 
+            )
+          )
+        ), 
+        React.createElement("div", {className: "col-md-4"}, 
+          React.createElement("div", {className: "pull-right"}, 
             React.createElement("button", {type: "submit", className: queryButtonClasses, onClick: this.props.handleQuerySubmit, ref: "runquery", id: "run-query"}, 
               React.createElement("span", {className: "icon glyphicon glyphicon-check"}), 
               this.queryButtonText()
@@ -3527,7 +3530,7 @@ var BuilderButtons = React.createClass({displayName: "BuilderButtons",
 
 module.exports = BuilderButtons;
 
-},{"classnames":73,"lodash":82,"react":300}],32:[function(require,module,exports){
+},{"../../../utils/ExplorerUtils":56,"classnames":73,"lodash":82,"react":300}],32:[function(require,module,exports){
 /**
  * @jsx React.DOM
  */
