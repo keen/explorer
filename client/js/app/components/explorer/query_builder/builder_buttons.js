@@ -20,6 +20,10 @@ var BuilderButtons = React.createClass({
     }
   },
 
+  shouldShowRevertButton: function() {
+    return ExplorerUtils.isPersisted(this.props.model) && this.props.model.originalModel && this.props.originalModel.query && !_.isEqual(this.props.model.query, this.props.model.originalModel.query);
+  },
+
   queryButtonText: function() {
     var stateType;
     var analysisType = this.props.model.query.analysis_type;
@@ -46,7 +50,7 @@ var BuilderButtons = React.createClass({
       'disabled': this.props.model.loading,
       'btn btn-primary run-query': true
     });
-    if (ExplorerUtils.isPersisted(this.props.model) && !_.isEqual(this.props.model.query, this.props.model.originalModel.query)) {
+    if (this.shouldShowRevertButton()) {
       revertBtn = (
         <button className="pull-left btn btn-default margin-right-tiny" onClick={this.props.handleRevertChanges}>Revert to original</button>
       );
