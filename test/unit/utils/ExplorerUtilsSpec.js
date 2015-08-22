@@ -303,7 +303,7 @@ describe('utils/ExplorerUtils', function() {
       });
     });
     it('properly unpacks a relative timeframe', function () {
-      var query = { timeframe: 'this_8_days' };
+      var query = { timeframe: 'this_8_days', timezone: 'Europe/London' };
       var unpacked = ExplorerUtils.unpackTimeframeParam(query);
       assert.deepEqual(unpacked, {
         timeframe_type: 'relative',
@@ -311,7 +311,8 @@ describe('utils/ExplorerUtils', function() {
           relativity: 'this',
           amount: '8',
           sub_timeframe: 'days'
-        }
+        },
+        timezone: 'Europe/London'
       });
     });
   });
