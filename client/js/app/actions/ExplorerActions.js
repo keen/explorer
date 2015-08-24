@@ -48,7 +48,7 @@ var ExplorerActions = {
 
   revertActiveChanges: function() {
     AppDispatcher.dispatch({
-      actionType: ExplorerConstants.EXPLORER_REVERT_ACTIVE_CHANGES,
+      actionType: ExplorerConstants.EXPLORER_REVERT_ACTIVE_CHANGES
     });
   },
 
