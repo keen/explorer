@@ -241,7 +241,8 @@ module.exports = {
           amount: split[1],
           sub_timeframe: split[2]
         },
-        timeframe_type: 'relative'
+        timeframe_type: 'relative',
+        timezone: query.timezone
       };
     }
   },
