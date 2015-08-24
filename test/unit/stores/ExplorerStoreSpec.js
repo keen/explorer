@@ -501,8 +501,17 @@ describe('stores/ExplorerStore', function() {
           },
           visualization: {
             chart_type: 'metric'
+          },
+          user: {
+            id: 'SOMEUSERID5',
+            first_name: 'Don',
+            last_name: 'Draper',
+            email: 'don@keen.io'
           }
         }));
+        var model = _.cloneDeep(ExplorerStore.get('ABC-SOME-ID'));
+        model.originalModel = _.cloneDeep(model);
+        ExplorerActions.update('ABC-SOME-ID', model);
         ExplorerActions.clear('ABC-SOME-ID');
         assert.deepEqual(ExplorerStore.get('ABC-SOME-ID'), {
           id: 'ABC-SOME-ID',
@@ -535,7 +544,13 @@ describe('stores/ExplorerStore', function() {
           visualization: {
             chart_type: null
           },
-          user: {}
+          user: {
+            id: 'SOMEUSERID5',
+            first_name: 'Don',
+            last_name: 'Draper',
+            email: 'don@keen.io'
+          },
+          originalModel: model.originalModel
         });
       });
     });
