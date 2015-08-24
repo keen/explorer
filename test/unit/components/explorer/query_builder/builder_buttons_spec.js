@@ -69,4 +69,28 @@ describe('components/common/run_model', function() {
     });
   });
 
+  describe('helper functions', function () {
+    describe('shouldShowRevertButton', function () {
+      it('should return true if the model and its original are different', function () {
+        var model = TestHelpers.createExplorerModel();
+        model.id = 'abc-123';
+        model.query.event_collection = 'clicks';
+        model.query.analysis_type = 'count';
+        model.originalModel = _.cloneDeep(model);
+        model.query.event_collection = 'not clicks';
+        this.component.setProps({ model: model });
+        assert.isTrue(this.component.shouldShowRevertButton());
+      });
+      it('should return false if the model and its original are the same', function () {
+        var model = TestHelpers.createExplorerModel();
+        model.id = 'abc-123';
+        model.query.event_collection = 'clicks';
+        model.query.analysis_type = 'count';
+        model.originalModel = _.cloneDeep(model);
+        this.component.setProps({ model: model });
+        assert.isFalse(this.component.shouldShowRevertButton());
+      });
+    });
+  });
+
 });
