@@ -21,7 +21,7 @@ var BuilderButtons = React.createClass({
   },
 
   shouldShowRevertButton: function() {
-    return ExplorerUtils.isPersisted(this.props.model) && this.props.model.originalModel && this.props.originalModel.query && !_.isEqual(this.props.model.query, this.props.model.originalModel.query);
+    return ExplorerUtils.isPersisted(this.props.model) && this.props.model.originalModel && this.props.model.originalModel.query && !_.isEqual(this.props.model.query, this.props.model.originalModel.query);
   },
 
   queryButtonText: function() {
