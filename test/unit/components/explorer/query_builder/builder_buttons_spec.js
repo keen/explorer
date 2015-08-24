@@ -5,8 +5,8 @@ var sinon = require('sinon');
 var _ = require('lodash');
 var React = require('react/addons');
 var TestUtils = React.addons.TestUtils;
-var RunQuery = require('../../../../client/js/app/components/common/run_query.js');
-var TestHelpers = require('../../../support/TestHelpers');
+var BuilderButtons = require('../../../../../client/js/app/components/explorer/query_builder/builder_buttons.js');
+var TestHelpers = require('../../../../support/TestHelpers');
 
 
 describe('components/common/run_model', function() {
@@ -15,14 +15,12 @@ describe('components/common/run_model', function() {
     this.model = TestHelpers.createExplorerModel();
     this.clearStub = sinon.stub();
     this.handleSubmitStub = sinon.stub();
-    this.component = TestUtils.renderIntoDocument(<RunQuery clearmodel={this.clearStub}
-                                                            model={this.model}
-                                                            handleQuerySubmit={this.handleSubmitStub} />);
+    this.component = TestUtils.renderIntoDocument(<BuilderButtons clearmodel={this.clearStub} model={this.model} handleQuerySubmit={this.handleSubmitStub} />);
   });
 
   describe('setup', function() {
     it('is of the right type', function() {
-      assert.isTrue(TestUtils.isCompositeComponentWithType(this.component, RunQuery));
+      assert.isTrue(TestUtils.isCompositeComponentWithType(this.component, BuilderButtons));
     });
 
     it('has two buttons', function(){

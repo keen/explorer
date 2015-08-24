@@ -6,6 +6,7 @@ module.exports = keyMirror({
   EXPLORER_UPDATE: null,
   EXPLORER_REMOVE: null,
   EXPLORER_SET_ACTIVE: null,
+  EXPLORER_REVERT_ACTIVE_CHANGES: null,
   EXPLORER_CLEAR: null,
   EXPLORER_QUERY_SUCCESS: null,
   EXPLORER_QUERY_ERROR: null,

@@ -70,6 +70,12 @@ var ExplorerActions = {
     });
   },
 
+  revertActiveChanges: function() {
+    AppDispatcher.dispatch({
+      actionType: ExplorerConstants.EXPLORER_REVERT_ACTIVE_CHANGES
+    });
+  },
+
   clear: function(id) {
     AppDispatcher.dispatch({
       actionType: ExplorerConstants.EXPLORER_CLEAR,
@@ -474,7 +480,7 @@ window.Keen = window.Keen || {};
 window.Keen.DataTools = window.Keen.DataTools || {};
 window.Keen.DataTools.Persistence = Persistence;
 window.Keen.DataTools.App = module.exports = App;
-},{"./actions/ExplorerActions":2,"./actions/ProjectActions":4,"./actions/UserActions":5,"./components/app.js":7,"./components/explorer/index.js":29,"./dispatcher/AppDispatcher":48,"./modules/persistence/persistence.js":50,"./stores/ExplorerStore":52,"./stores/ProjectStore":54,"./utils/ExplorerUtils":56,"./utils/FormatUtils":58,"./utils/QueryStringUtils":60,"./utils/ValidationUtils":61,"./validations/ExplorerValidations":62,"lodash":82,"react":300,"react-router":113}],7:[function(require,module,exports){
+},{"./actions/ExplorerActions":2,"./actions/ProjectActions":4,"./actions/UserActions":5,"./components/app.js":7,"./components/explorer/index.js":28,"./dispatcher/AppDispatcher":48,"./modules/persistence/persistence.js":50,"./stores/ExplorerStore":52,"./stores/ProjectStore":54,"./utils/ExplorerUtils":56,"./utils/FormatUtils":58,"./utils/QueryStringUtils":60,"./utils/ValidationUtils":61,"./validations/ExplorerValidations":62,"lodash":82,"react":300,"react-router":113}],7:[function(require,module,exports){
 var React = require('react');
 var Router = require('react-router');
 var RouteHandler = Router.RouteHandler;
@@ -627,7 +633,7 @@ var AbsolutePicker = React.createClass({displayName: "AbsolutePicker",
 
 module.exports = AbsolutePicker;
 
-},{"../../actions/ExplorerActions":2,"../../utils/ExplorerUtils":56,"./datepicker.js":9,"./timepicker.js":26,"lodash":82,"moment":83,"react":300}],9:[function(require,module,exports){
+},{"../../actions/ExplorerActions":2,"../../utils/ExplorerUtils":56,"./datepicker.js":9,"./timepicker.js":25,"lodash":82,"moment":83,"react":300}],9:[function(require,module,exports){
 /**
  * @jsx React.DOM
  */
@@ -1230,7 +1236,7 @@ var Filter = React.createClass({displayName: "Filter",
 
 module.exports = Filter;
 
-},{"../../actions/ExplorerActions":2,"../../utils/FilterUtils":57,"../../utils/ProjectUtils":59,"../../utils/ValidationUtils":61,"../../validations/FilterValidations":63,"./filter_value_fields.js":14,"./react_select.js":21,"./select.js":24,"classnames":73,"lodash":82,"react":300}],13:[function(require,module,exports){
+},{"../../actions/ExplorerActions":2,"../../utils/FilterUtils":57,"../../utils/ProjectUtils":59,"../../utils/ValidationUtils":61,"../../validations/FilterValidations":63,"./filter_value_fields.js":14,"./react_select.js":21,"./select.js":23,"classnames":73,"lodash":82,"react":300}],13:[function(require,module,exports){
 /**
  * @jsx React.DOM
  */
@@ -1509,7 +1515,7 @@ var FilterValueFields = React.createClass({displayName: "FilterValueFields",
 
 module.exports = FilterValueFields;
 
-},{"../../actions/ExplorerActions":2,"../../utils/FilterUtils":57,"../../utils/FormatUtils":58,"../../utils/ProjectUtils":59,"./datepicker.js":9,"./geo.js":15,"./select.js":24,"./timepicker.js":26,"lodash":82,"moment":83,"react":300}],15:[function(require,module,exports){
+},{"../../actions/ExplorerActions":2,"../../utils/FilterUtils":57,"../../utils/FormatUtils":58,"../../utils/ProjectUtils":59,"./datepicker.js":9,"./geo.js":15,"./select.js":23,"./timepicker.js":25,"lodash":82,"moment":83,"react":300}],15:[function(require,module,exports){
 /**
  * @jsx React.DOM
  */
@@ -1687,7 +1693,7 @@ var Interval = React.createClass({displayName: "Interval",
 
 module.exports = Interval;
 
-},{"../../actions/ExplorerActions":2,"../../utils/ExplorerUtils":56,"../../utils/ProjectUtils":59,"./fields_toggle.js":11,"./select.js":24,"lodash":82,"moment":83,"react/addons":128}],18:[function(require,module,exports){
+},{"../../actions/ExplorerActions":2,"../../utils/ExplorerUtils":56,"../../utils/ProjectUtils":59,"./fields_toggle.js":11,"./select.js":23,"lodash":82,"moment":83,"react/addons":128}],18:[function(require,module,exports){
 /**
  * @jsx React.DOM
  */
@@ -2399,71 +2405,7 @@ var RelativePicker = React.createClass({displayName: "RelativePicker",
 
 module.exports = RelativePicker;
 
-},{"../../actions/ExplorerActions":2,"../../utils/ExplorerUtils":56,"../../utils/FormatUtils":58,"./input.js":16,"./select.js":24,"lodash":82,"react":300}],23:[function(require,module,exports){
-/**
- * @jsx React.DOM
- */
-
-var React = require('react');
-var classNames = require('classnames');
-
-var RunQuery = React.createClass({displayName: "RunQuery",
-
-  states: {
-    default: {
-      inactive: 'Run Query',
-      active: 'Running...'
-    },
-    immediateExtraction: {
-      inactive: 'Run Extraction',
-      active: 'Running...'
-    }
-  },
-
-  queryButtonText: function() {
-    var stateType;
-    var analysisType = this.props.model.query.analysis_type;
-
-    if (analysisType === 'extraction') {
-      var stateType = 'immediateExtraction';
-    } else {
-      var stateType = 'default';
-    }
-    var states = this.states[stateType];
-
-    return this.props.model.loading ? states.active : states.inactive;
-  },
-
-  getDefaultProps: function() {
-    return {
-      classes: ''
-    };
-  },
-
-  render: function() {
-    var queryButtonClasses = classNames({
-      'disabled': this.props.model.loading,
-      'btn btn-primary run-query': true
-    });
-
-    return (
-      React.createElement("div", {className: this.props.classes}, 
-        React.createElement("button", {type: "reset", ref: "clearquery", className: "btn btn-default pull-left", onClick: this.props.clearQuery, id: "clear-explorer-query"}, 
-          "Clear"
-        ), 
-        React.createElement("button", {type: "submit", className: queryButtonClasses, onClick: this.props.handleQuerySubmit, ref: "runquery", id: "run-query"}, 
-          React.createElement("span", {className: "icon glyphicon glyphicon-check"}), 
-          this.queryButtonText()
-        )
-      )
-    );
-  }
-
-});
-
-module.exports = RunQuery;
-
-},{"classnames":73,"react":300}],24:[function(require,module,exports){
+},{"../../actions/ExplorerActions":2,"../../utils/ExplorerUtils":56,"../../utils/FormatUtils":58,"./input.js":16,"./select.js":23,"lodash":82,"react":300}],23:[function(require,module,exports){
 /**
  * @jsx React.DOM
  */
@@ -2585,7 +2527,7 @@ var SelectComponent = React.createClass({displayName: "SelectComponent",
 
 module.exports = SelectComponent;
 
-},{"lodash":82,"react":300}],25:[function(require,module,exports){
+},{"lodash":82,"react":300}],24:[function(require,module,exports){
 /**
 * @jsx React.DOM
 */
@@ -2692,7 +2634,7 @@ var Timeframe = React.createClass({displayName: "Timeframe",
 
 module.exports = Timeframe;
 
-},{"../../actions/ExplorerActions":2,"../../utils/ExplorerUtils":56,"../../utils/ProjectUtils":59,"./absolute_picker.js":8,"./fields_toggle.js":11,"./react_select.js":21,"./relative_picker.js":22,"./timezone.js":27,"lodash":82,"moment":83,"react/addons":128}],26:[function(require,module,exports){
+},{"../../actions/ExplorerActions":2,"../../utils/ExplorerUtils":56,"../../utils/ProjectUtils":59,"./absolute_picker.js":8,"./fields_toggle.js":11,"./react_select.js":21,"./relative_picker.js":22,"./timezone.js":26,"lodash":82,"moment":83,"react/addons":128}],25:[function(require,module,exports){
 /**
  * @jsx React.DOM
  */
@@ -2904,7 +2846,7 @@ var Timepicker = React.createClass({displayName: "Timepicker",
 });
 
 module.exports = Timepicker;
-},{"./react_select.js":21,"lodash":82,"react":300}],27:[function(require,module,exports){
+},{"./react_select.js":21,"lodash":82,"react":300}],26:[function(require,module,exports){
 /**
  * @jsx React.DOM
  */
@@ -2995,7 +2937,7 @@ var Timezone = React.createClass({displayName: "Timezone",
 
 module.exports = Timezone;
 
-},{"../../actions/ExplorerActions":2,"../../utils/ProjectUtils":59,"./react_select.js":21,"lodash":82,"react":300}],28:[function(require,module,exports){
+},{"../../actions/ExplorerActions":2,"../../utils/ProjectUtils":59,"./react_select.js":21,"lodash":82,"react":300}],27:[function(require,module,exports){
 /**
  * @jsx React.DOM
  */
@@ -3123,7 +3065,7 @@ var CSVExtraction = React.createClass({displayName: "CSVExtraction",
 
 module.exports = CSVExtraction;
 
-},{"../../actions/ExplorerActions":2,"../common/input.js":16,"../common/modal.js":19,"classnames":73,"lodash":82,"react":300}],29:[function(require,module,exports){
+},{"../../actions/ExplorerActions":2,"../common/input.js":16,"../common/modal.js":19,"classnames":73,"lodash":82,"react":300}],28:[function(require,module,exports){
 /**
  * @jsx React.DOM
  */
@@ -3184,6 +3126,7 @@ var Explorer = React.createClass({displayName: "Explorer",
         text: "There is already a query in progress. Wait for it to finish loading before selecting a query."
       });
     } else {
+      ExplorerActions.revertActiveChanges();
       var modelId = event.currentTarget.dataset.id;
       ExplorerActions.setActive(modelId);
       ExplorerActions.exec(this.props.client, modelId);
@@ -3249,6 +3192,11 @@ var Explorer = React.createClass({displayName: "Explorer",
 
   onNameChange: function(event) {
     ExplorerActions.update(this.state.activeExplorer.id, { name: event.target.value });
+  },
+
+  handleRevertChanges: function(event) {
+    event.preventDefault();
+    ExplorerActions.revertActiveChanges();
   },
 
   // ********************************
@@ -3352,11 +3300,13 @@ var Explorer = React.createClass({displayName: "Explorer",
     if (!this.props.persistence || this.state.activeQueryPane === 'build') {
       queryPane = React.createElement(QueryBuilder, {ref: "query-builder", 
                                 model: this.state.activeExplorer, 
+                                originalModel: this.state.activeExplorerOriginal, 
                                 client: this.props.client, 
                                 project: this.props.project, 
                                 onBrowseEvents: this.onBrowseEvents, 
                                 clearQuery: this.clearQuery, 
-                                handleFiltersToggle: this.handleFiltersToggle});
+                                handleFiltersToggle: this.handleFiltersToggle, 
+                                handleRevertChanges: this.handleRevertChanges});
     } else {
       queryPane = React.createElement(BrowseQueries, {ref: "query-browser", 
                                  listItems: this.state.allPersistedExplorers, 
@@ -3409,7 +3359,7 @@ var Explorer = React.createClass({displayName: "Explorer",
 
 module.exports = Explorer;
 
-},{"../../actions/ExplorerActions":2,"../../actions/NoticeActions":3,"../../stores/AppStateStore":51,"../../stores/ExplorerStore":52,"../../stores/NoticeStore":53,"../../stores/UserStore":55,"../../utils/ExplorerUtils":56,"../../utils/QueryStringUtils":60,"../../utils/ValidationUtils":61,"../../validations/ExplorerValidations":62,"../common/event_browser.js":10,"../common/filter_manager.js":13,"../common/notice.js":20,"./csv_extraction.js":28,"./query_builder/index.js":34,"./query_pane_tabs.js":37,"./saved_queries/browse_queries.js":38,"./visualization/index.js":41,"lodash":82,"react":300}],30:[function(require,module,exports){
+},{"../../actions/ExplorerActions":2,"../../actions/NoticeActions":3,"../../stores/AppStateStore":51,"../../stores/ExplorerStore":52,"../../stores/NoticeStore":53,"../../stores/UserStore":55,"../../utils/ExplorerUtils":56,"../../utils/QueryStringUtils":60,"../../utils/ValidationUtils":61,"../../validations/ExplorerValidations":62,"../common/event_browser.js":10,"../common/filter_manager.js":13,"../common/notice.js":20,"./csv_extraction.js":27,"./query_builder/index.js":34,"./query_pane_tabs.js":37,"./saved_queries/browse_queries.js":38,"./visualization/index.js":41,"lodash":82,"react":300}],29:[function(require,module,exports){
 /**
  * @jsx React.DOM
  */
@@ -3442,7 +3392,7 @@ var AnalysisTypeField = React.createClass({displayName: "AnalysisTypeField",
 
 module.exports = AnalysisTypeField;
 
-},{"../../common/react_select.js":21,"lodash":82,"react":300}],31:[function(require,module,exports){
+},{"../../common/react_select.js":21,"lodash":82,"react":300}],30:[function(require,module,exports){
 /**
  * @jsx React.DOM
  */
@@ -3500,7 +3450,91 @@ var ApiUrl = React.createClass({displayName: "ApiUrl",
 
 module.exports = ApiUrl;
 
-},{"react":300}],32:[function(require,module,exports){
+},{"react":300}],31:[function(require,module,exports){
+/**
+ * @jsx React.DOM
+ */
+
+var React = require('react');
+var classNames = require('classnames');
+var _ = require('lodash');
+var ExplorerUtils = require('../../../utils/ExplorerUtils');
+
+var BuilderButtons = React.createClass({displayName: "BuilderButtons",
+
+  states: {
+    default: {
+      inactive: 'Run Query',
+      active: 'Running...'
+    },
+    immediateExtraction: {
+      inactive: 'Run Extraction',
+      active: 'Running...'
+    }
+  },
+
+  shouldShowRevertButton: function() {
+    return ExplorerUtils.isPersisted(this.props.model) && this.props.model.originalModel && this.props.originalModel.query && !_.isEqual(this.props.model.query, this.props.model.originalModel.query);
+  },
+
+  queryButtonText: function() {
+    var stateType;
+    var analysisType = this.props.model.query.analysis_type;
+
+    if (analysisType === 'extraction') {
+      var stateType = 'immediateExtraction';
+    } else {
+      var stateType = 'default';
+    }
+    var states = this.states[stateType];
+
+    return this.props.model.loading ? states.active : states.inactive;
+  },
+
+  getDefaultProps: function() {
+    return {
+      classes: ''
+    };
+  },
+
+  render: function() {
+    var revertBtn;
+    var queryButtonClasses = classNames({
+      'disabled': this.props.model.loading,
+      'btn btn-primary run-query': true
+    });
+    if (this.shouldShowRevertButton()) {
+      revertBtn = (
+        React.createElement("button", {className: "pull-left btn btn-default margin-right-tiny", onClick: this.props.handleRevertChanges}, "Revert to original")
+      );
+    }
+    return (
+      React.createElement("div", {className: "query-builder-buttons row margin-top-small"}, 
+        React.createElement("div", {className: "col-md-8"}, 
+          React.createElement("div", {className: "pull-left"}, 
+            revertBtn, 
+            React.createElement("button", {type: "reset", ref: "clearquery", className: "btn btn-default pull-left", onClick: this.props.clearQuery, id: "clear-explorer-query"}, 
+              "Clear"
+            )
+          )
+        ), 
+        React.createElement("div", {className: "col-md-4"}, 
+          React.createElement("div", {className: "pull-right"}, 
+            React.createElement("button", {type: "submit", className: queryButtonClasses, onClick: this.props.handleQuerySubmit, ref: "runquery", id: "run-query"}, 
+              React.createElement("span", {className: "icon glyphicon glyphicon-check"}), 
+              this.queryButtonText()
+            )
+          )
+        )
+      )
+    );
+  }
+
+});
+
+module.exports = BuilderButtons;
+
+},{"../../../utils/ExplorerUtils":56,"classnames":73,"lodash":82,"react":300}],32:[function(require,module,exports){
 /**
  * @jsx React.DOM
  */
@@ -3612,7 +3646,7 @@ var GroupByField = require('./group_by_field.js');
 var Timeframe = require('../../common/timeframe.js');
 var Interval = require('../../common/interval.js');
 var ApiUrl = require('./api_url.js');
-var RunQuery = require('../../common/run_query.js');
+var BuilderButtons = require('./builder_buttons.js');
 var ExplorerUtils = require('../../../utils/ExplorerUtils');
 var ProjectUtils = require('../../../utils/ProjectUtils');
 var ExplorerActions = require('../../../actions/ExplorerActions');
@@ -3718,11 +3752,11 @@ var QueryBuilder = React.createClass({displayName: "QueryBuilder",
                           fieldsCount: validFilters(this.props.model.query.filters).length})
           ), 
           intervalField, 
-          React.createElement(RunQuery, {classes: "pull-right", 
-                    clearQuery: this.props.clearQuery, 
-                    model: this.props.model, 
-                    handleQuerySubmit: this.handleQuerySubmit}), 
-          React.createElement(ApiUrl, {url: ExplorerUtils.getApiQueryUrl(this.props.client, this.props.model)})
+          React.createElement(ApiUrl, {url: ExplorerUtils.getApiQueryUrl(this.props.client, this.props.model)}), 
+          React.createElement(BuilderButtons, {clearQuery: this.props.clearQuery, 
+                          model: this.props.model, 
+                          handleQuerySubmit: this.handleQuerySubmit, 
+                          handleRevertChanges: this.props.handleRevertChanges})
         )
       )
     );
@@ -3731,7 +3765,7 @@ var QueryBuilder = React.createClass({displayName: "QueryBuilder",
 
 module.exports = QueryBuilder;
 
-},{"../../../actions/ExplorerActions":2,"../../../utils/ExplorerUtils":56,"../../../utils/ProjectUtils":59,"../../../utils/ValidationUtils":61,"../../../validations/FilterValidations":63,"../../common/fields_toggle.js":11,"../../common/interval.js":17,"../../common/run_query.js":23,"../../common/timeframe.js":25,"./analysis_type_field.js":30,"./api_url.js":31,"./event_collection_field.js":32,"./group_by_field.js":33,"./percentile_field.js":35,"./target_property_field.js":36,"lodash":82,"react/addons":128}],35:[function(require,module,exports){
+},{"../../../actions/ExplorerActions":2,"../../../utils/ExplorerUtils":56,"../../../utils/ProjectUtils":59,"../../../utils/ValidationUtils":61,"../../../validations/FilterValidations":63,"../../common/fields_toggle.js":11,"../../common/interval.js":17,"../../common/timeframe.js":24,"./analysis_type_field.js":29,"./api_url.js":30,"./builder_buttons.js":31,"./event_collection_field.js":32,"./group_by_field.js":33,"./percentile_field.js":35,"./target_property_field.js":36,"lodash":82,"react/addons":128}],35:[function(require,module,exports){
 /**
  * @jsx React.DOM
  */
@@ -3900,6 +3934,8 @@ var BrowseQueries = React.createClass({displayName: "BrowseQueries",
 
   buildList: function() {
     var listElements = this.props.listItems.map(_.bind(function(listItem, index) {
+      if (listItem.originalModel) listItem = listItem.originalModel;
+      
       listItem.user = listItem.user || {};
       if (String(listItem.name.toLowerCase()).search(this.state.searchterm.toLowerCase()) < 0) return;
 
@@ -4300,7 +4336,7 @@ var Visualization = React.createClass({displayName: "Visualization",
 
 module.exports = Visualization;
 
-},{"../../../actions/ExplorerActions":2,"../../../actions/NoticeActions":3,"../../../constants/ExplorerConstants":44,"../../../dispatcher/AppDispatcher":48,"../../../stores/ExplorerStore":52,"../../../utils/ExplorerUtils":56,"../../../utils/FormatUtils":58,"../../common/notice.js":20,"../../common/select.js":24,"./chart.js":39,"./code_sample.js":40,"classnames":73,"lodash":82,"react/addons":128}],42:[function(require,module,exports){
+},{"../../../actions/ExplorerActions":2,"../../../actions/NoticeActions":3,"../../../constants/ExplorerConstants":44,"../../../dispatcher/AppDispatcher":48,"../../../stores/ExplorerStore":52,"../../../utils/ExplorerUtils":56,"../../../utils/FormatUtils":58,"../../common/notice.js":20,"../../common/select.js":23,"./chart.js":39,"./code_sample.js":40,"classnames":73,"lodash":82,"react/addons":128}],42:[function(require,module,exports){
 /**
  * @jsx React.DOM
  */
@@ -4363,6 +4399,7 @@ module.exports = keyMirror({
   EXPLORER_UPDATE: null,
   EXPLORER_REMOVE: null,
   EXPLORER_SET_ACTIVE: null,
+  EXPLORER_REVERT_ACTIVE_CHANGES: null,
   EXPLORER_CLEAR: null,
   EXPLORER_QUERY_SUCCESS: null,
   EXPLORER_QUERY_ERROR: null,
@@ -4691,8 +4728,16 @@ function _setActive(id) {
   var keys = Object.keys(_explorers);
   for(var i=0; i<keys.length; i++) {
     _explorers[keys[i]].active = false;
+    delete _explorers[keys[i]].originalModel;
   }
   _explorers[id].active = true;
+  _explorers[id].originalModel = _.cloneDeep(_explorers[id]);
+}
+
+function _revertActiveChanges() {
+  var active = _.find(_explorers, { active: true });
+  var original = _explorers[active.id].originalModel;
+  _explorers[active.id] = _.assign({}, _.cloneDeep(original), { originalModel: original, result: active.result });
 }
 
 function _addFilter(id, attrs) {
@@ -4803,6 +4848,11 @@ ExplorerStore.dispatchToken = AppDispatcher.register(function(action) {
 
     case ExplorerConstants.EXPLORER_SET_ACTIVE:
       _setActive(action.id);
+      ExplorerStore.emitChange();
+      break;
+
+    case ExplorerConstants.EXPLORER_REVERT_ACTIVE_CHANGES:
+      _revertActiveChanges();
       ExplorerStore.emitChange();
       break;
 
@@ -5213,11 +5263,13 @@ module.exports = {
 
   mergeResponseWithExplorer: function(explorer, response) {
     var formattedParams = module.exports.formatQueryParams(response);
-    return _.assign({},
-      explorer,
-      formattedParams,
-      { query: _.assign({}, explorer.query, formattedParams.query) },
-      { visualization: _.assign({}, explorer.visualization, formattedParams.visualization) });
+    var newModel = _.assign({},
+                    explorer,
+                    formattedParams,
+                    { query: _.assign({}, explorer.query, formattedParams.query) },
+                    { visualization: _.assign({}, explorer.visualization, formattedParams.visualization) });
+    newModel.originalModel = _.cloneDeep(newModel);
+    return newModel;
   },
 
   queryJSON: function(explorer) {
