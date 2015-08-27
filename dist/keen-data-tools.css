@@ -1514,7 +1514,7 @@
   cursor: default;
   outline: 0;
 }
-#keen-explorer .chart-detail-bar .chart-title-component input.chart-query-slug {
+#keen-explorer .chart-detail-bar .chart-title-component input.chart-query-name {
   background-color: rgba(0, 0, 0, 0.05);
   border-radius: 0 0 2px 2px;
   border-top-color: transparent;
