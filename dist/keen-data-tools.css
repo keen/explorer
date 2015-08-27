@@ -1514,6 +1514,13 @@
   cursor: default;
   outline: 0;
 }
+#keen-explorer .chart-detail-bar .chart-title-component input.chart-query-slug {
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: 0 0 2px 2px;
+  border-top-color: transparent;
+  color: #808080;
+  font-size: 13px;
+}
 #keen-explorer .chart-detail-bar .chart-type-component {
   position: absolute;
   right: 0px;

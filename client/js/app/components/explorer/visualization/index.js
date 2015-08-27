@@ -115,11 +115,18 @@ var Visualization = React.createClass({
       chartTitle = (
         <div className="chart-title-component">
           <input ref="input"
+                 className="chart-display-name"
                  type="text"
                  onChange={this.props.onNameChange}
                  spellCheck="false"
                  value={this.props.model.name}
                  placeholder="Give your query a name..." />
+          <input ref="slug"
+                 className="chart-query-slug"
+                 type="text"
+                 onChange={this.props.onSlugChange}
+                 spellCheck="false"
+                 value="this-is-your-query-slug" />
         </div>
       );
     }
