@@ -36,7 +36,7 @@ require('./stores/NoticeStoreSpec.js');
 // Persistence
 // ***********************
 require('./modules/persistence/persistence_spec.js');
-require('./modules/persistence/rest_spec.js');
+require('./modules/persistence/KeenSavedQueriesSpec.js');
 
 // ***********************
 // Components

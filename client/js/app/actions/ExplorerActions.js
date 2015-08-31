@@ -281,7 +281,8 @@ var ExplorerActions = {
       actionType: ExplorerConstants.EXPLORER_DESTROYING
     });
 
-    persistence.destroy(id, function(err, res) {
+    var attrs = _.clone({}, ExplorerUtils.toJSON(ExplorerStore.get(sourceId)));
+    persistence.destroy(attrs, function(err, res) {
       if (err) {
         AppDispatcher.dispatch({
           actionType: ExplorerConstants.EXPLORER_DESTROY_FAIL,

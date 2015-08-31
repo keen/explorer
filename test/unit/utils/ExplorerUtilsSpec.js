@@ -487,4 +487,12 @@ describe('utils/ExplorerUtils', function() {
     })
 
   });
+
+  describe('slugify', function() {
+    it('it creates a slug using query name', function() {
+      var newName = ExplorerUtils.slugify('Saved Query name!*');
+
+      assert.equal(newName, 'saved-query-name');
+    });
+  });
 });
