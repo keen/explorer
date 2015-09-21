@@ -243,7 +243,7 @@ gulp.task('production', ['scripts', 'images', 'fonts', 'styles', 'test:unit']);
 
 
 // ********************
-// Terrarium Dev
+// Keen-Web Dev
 // ********************
 
 gulp.task('keen-web-scripts', ['build-scripts'], function(){
@@ -251,7 +251,7 @@ gulp.task('keen-web-scripts', ['build-scripts'], function(){
       './dist/keen-data-tools.js',
       './dist/keen-data-tools.min.js',
     ])
-    .pipe(gulp.dest('../terrarium/src/Keen-Web/app/static/js'));
+    .pipe(gulp.dest('../Keen-Web/app/static/js'));
 });
 
 gulp.task('keen-web-styles', ['build-styles'], function(){
@@ -259,24 +259,24 @@ gulp.task('keen-web-styles', ['build-styles'], function(){
       './dist/keen-data-tools.css',
       './dist/keen-data-tools.min.css'
     ])
-    .pipe(gulp.dest('../terrarium/src/Keen-Web/app/static/css'));
+    .pipe(gulp.dest('../Keen-Web/app/static/css'));
 });
 
 gulp.task('keen-web', ['keen-web-scripts', 'keen-web-styles'], function(){
   gulp.watch(['client/**/*.js'], ['keen-web-scripts']);
   gulp.watch('client/**/*.less', ['keen-web-styles']);
 });
-gulp.task('terrarium', function(callback) {
+gulp.task('keen-web', function(callback) {
   runSequence('development',
               'keen-web',
               callback);
 });
-gulp.task('terrarium-production', function(callback) {
+gulp.task('keen-web-production', function(callback) {
   runSequence('production',
               'keen-web',
               callback);
 });
-gulp.task('terrarium-with-tests', function(callback) {
+gulp.task('keen-web-with-tests', function(callback) {
   runSequence('development-with-tests',
               'keen-web',
               callback);
