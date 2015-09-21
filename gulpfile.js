@@ -246,7 +246,7 @@ gulp.task('production', ['scripts', 'images', 'fonts', 'styles', 'test:unit']);
 // Keen-Web Dev
 // ********************
 
-gulp.task('keen-web-scripts', ['build-scripts'], function(){
+gulp.task('keen-web-scripts', function(){
   return gulp.src([
       './dist/keen-data-tools.js',
       './dist/keen-data-tools.min.js',
@@ -254,7 +254,7 @@ gulp.task('keen-web-scripts', ['build-scripts'], function(){
     .pipe(gulp.dest('../Keen-Web/app/static/js'));
 });
 
-gulp.task('keen-web-styles', ['build-styles'], function(){
+gulp.task('keen-web-styles', function(){
   return gulp.src([
       './dist/keen-data-tools.css',
       './dist/keen-data-tools.min.css'
@@ -262,23 +262,29 @@ gulp.task('keen-web-styles', ['build-styles'], function(){
     .pipe(gulp.dest('../Keen-Web/app/static/css'));
 });
 
-gulp.task('keen-web', ['keen-web-scripts', 'keen-web-styles'], function(){
+gulp.task('watch-web', function(){
   gulp.watch(['client/**/*.js'], ['keen-web-scripts']);
   gulp.watch('client/**/*.less', ['keen-web-styles']);
 });
+
 gulp.task('keen-web', function(callback) {
   runSequence('development',
-              'keen-web',
+              ['keen-web-scripts', 'keen-web-styles'],
+              'watch-web',
               callback);
 });
+
 gulp.task('keen-web-production', function(callback) {
   runSequence('production',
-              'keen-web',
+              ['keen-web-scripts', 'keen-web-styles'],
+              'watch-web',
               callback);
 });
+
 gulp.task('keen-web-with-tests', function(callback) {
   runSequence('development-with-tests',
-              'keen-web',
+              ['keen-web-scripts', 'keen-web-styles'],
+              'watch-web',
               callback);
 });
 
