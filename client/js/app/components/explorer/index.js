@@ -223,8 +223,7 @@ var Explorer = React.createClass({
                                  emptyContent={browseEmptyContent}
                                  notice={browseListNotice}
                                  clickCallback={this.savedQueryClicked}
-                                 selectedIndex={this.getSelectedIndex()}
-                                 user={this.state.user} />;
+                                 selectedIndex={this.getSelectedIndex()} />;
     }
 
     return (
@@ -248,7 +247,8 @@ var Explorer = React.createClass({
                           handleRevertChanges={this.handleRevertChanges}
                           handleQuerySubmit={this.handleQuerySubmit}
                           clearQuery={this.clearQuery}
-                          removeClick={this.removeSavedQueryClicked} />
+                          removeClick={this.removeSavedQueryClicked}
+                          user={this.state.user} />
           </div>
         </div>
         <EventBrowser ref="event-browser"

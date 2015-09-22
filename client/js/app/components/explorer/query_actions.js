@@ -61,8 +61,8 @@ var QueryActions = React.createClass({
       <div className="query-actions clearfix">
         <div className="row">
           <div className="col-md-10 clearfix">
-            <div className="run-group margin-right-tiny pull-left">
-              <button type="submit" ref="runquery" className={queryButtonClasses} id="run-query" onClick={this.props.handleQuerySubmit}>
+            <div className="run-group pull-left">
+              <button type="submit" ref="runquery" className={runButtonClasses} id="run-query" onClick={this.props.handleQuerySubmit}>
                 {this.runButtonText()}
               </button>
               <button type="reset" ref="clearquery" className="btn btn-default margin-right-tiny" id="clear-explorer-query" onClick={this.props.clearQuery}>

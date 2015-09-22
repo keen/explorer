@@ -3373,8 +3373,7 @@ var Explorer = React.createClass({displayName: "Explorer",
                                  emptyContent: browseEmptyContent, 
                                  notice: browseListNotice, 
                                  clickCallback: this.savedQueryClicked, 
-                                 selectedIndex: this.getSelectedIndex(), 
-                                 user: this.state.user});
+                                 selectedIndex: this.getSelectedIndex()});
     }
 
     return (
@@ -3398,7 +3397,8 @@ var Explorer = React.createClass({displayName: "Explorer",
                           handleRevertChanges: this.handleRevertChanges, 
                           handleQuerySubmit: this.handleQuerySubmit, 
                           clearQuery: this.clearQuery, 
-                          removeClick: this.removeSavedQueryClicked})
+                          removeClick: this.removeSavedQueryClicked, 
+                          user: this.state.user})
           )
         ), 
         React.createElement(EventBrowser, {ref: "event-browser", 
@@ -3488,8 +3488,8 @@ var QueryActions = React.createClass({displayName: "QueryActions",
       React.createElement("div", {className: "query-actions clearfix"}, 
         React.createElement("div", {className: "row"}, 
           React.createElement("div", {className: "col-md-10 clearfix"}, 
-            React.createElement("div", {className: "run-group margin-right-tiny pull-left"}, 
-              React.createElement("button", {type: "submit", ref: "runquery", className: queryButtonClasses, id: "run-query", onClick: this.props.handleQuerySubmit}, 
+            React.createElement("div", {className: "run-group pull-left"}, 
+              React.createElement("button", {type: "submit", ref: "runquery", className: runButtonClasses, id: "run-query", onClick: this.props.handleQuerySubmit}, 
                 this.runButtonText()
               ), 
               React.createElement("button", {type: "reset", ref: "clearquery", className: "btn btn-default margin-right-tiny", id: "clear-explorer-query", onClick: this.props.clearQuery}, 
