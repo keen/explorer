@@ -23,15 +23,8 @@ function dateForItem(item) {
 
 var BrowseQueries = React.createClass({
 
-  removeClick: function(event) {
-    event.preventDefault();
-    this.props.removeCallback(event.currentTarget.dataset.itemIndex);
-  },
-
   clickCallback: function(event) {
-    if (event.target.getAttribute('role') !== 'remove' && event.target.parentNode.getAttribute('role') !== 'remove') {
-      this.props.clickCallback(event);
-    }
+    this.props.clickCallback(event);
   },
 
   buildList: function() {
@@ -46,14 +39,8 @@ var BrowseQueries = React.createClass({
       }
 
       var isSelected = (this.props.selectedIndex === index) ? true : false;
-      var classes,
-          removeBtn;
+      var classes;
       if (isSelected) classes = 'active';
-      if (this.props.removeCallback && listItem.user.id === this.props.user.id) {
-        removeBtn = (<a href="#" className="remove-btn" data-item-index={index} role="remove" onClick={this.removeClick}>
-                      <span className="icon"></span>
-                     </a>);
-      }
 
       var createdAt;
       var datetime = dateForItem(listItem);
@@ -68,7 +55,6 @@ var BrowseQueries = React.createClass({
 
       return (
         <li className={classes} key={index} data-id={listItem.id} onClick={this.clickCallback}>
-          {removeBtn}
           <h5 className="name">{listItem.name}</h5>
           <div className="metadata clearfix">
             <p className="author pull-left">
@@ -96,7 +82,6 @@ var BrowseQueries = React.createClass({
   getDefaultProps: function() {
     return {
       listItems: [],
-      removeCallback: null,
       clickCallback: null,
       selectedIndex: null,
       notice: null,

@@ -69,8 +69,7 @@ var Explorer = React.createClass({
 
   removeSavedQueryClicked: function(modelIndex) {
     if (confirm("Are you sure you want to delete this query?")) {
-      var model = this.state.allPersistedExplorers[modelIndex];
-      ExplorerActions.destroy(this.props.persistence, model.id);
+      ExplorerActions.destroy(this.props.persistence, this.state.activeExplorer.id);
     }
   },
 
@@ -224,7 +223,6 @@ var Explorer = React.createClass({
                                  emptyContent={browseEmptyContent}
                                  notice={browseListNotice}
                                  clickCallback={this.savedQueryClicked}
-                                 removeCallback={this.removeSavedQueryClicked}
                                  selectedIndex={this.getSelectedIndex()}
                                  user={this.state.user} />;
     }
@@ -249,7 +247,8 @@ var Explorer = React.createClass({
             <QueryActions model={this.state.activeExplorer}
                           handleRevertChanges={this.handleRevertChanges}
                           handleQuerySubmit={this.handleQuerySubmit}
-                          clearQuery={this.clearQuery} />
+                          clearQuery={this.clearQuery}
+                          removeClick={this.removeSavedQueryClicked} />
           </div>
         </div>
         <EventBrowser ref="event-browser"
