@@ -24,6 +24,8 @@ var ValidationUtils = require('../../utils/ValidationUtils');
 var ExplorerValidations = require('../../validations/ExplorerValidations');
 var QueryStringUtils = require('../../utils/QueryStringUtils');
 
+var QueryActions = require('./query_actions.js');
+
 function getStoresState() {
   return {
     allPersistedExplorers: ExplorerStore.getAllPersisted(),
@@ -266,6 +268,7 @@ var Explorer = React.createClass({
                            saveQueryClick={this.saveQueryClick}
                            onOpenCSVExtraction={this.onOpenCSVExtraction}
                            onNameChange={this.onNameChange} />
+            <QueryActions />
           </div>
         </div>
         <EventBrowser ref="event-browser"

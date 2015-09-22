@@ -121,11 +121,7 @@ var QueryBuilder = React.createClass({
                           fieldsCount={validFilters(this.props.model.query.filters).length} />
           </div>
           {intervalField}
-          <ApiUrl url={ExplorerUtils.getApiQueryUrl(this.props.client, this.props.model)} />
-          <BuilderButtons clearQuery={this.props.clearQuery}
-                          model={this.props.model}
-                          handleQuerySubmit={this.handleQuerySubmit}
-                          handleRevertChanges={this.props.handleRevertChanges} />
+          <ApiUrl url={ExplorerUtils.getApiQueryUrl(this.props.client, this.props.model)} />  
         </form>
       </section>
     );
