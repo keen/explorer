@@ -24,6 +24,7 @@ var ValidationUtils = require('../../utils/ValidationUtils');
 var ExplorerValidations = require('../../validations/ExplorerValidations');
 var QueryStringUtils = require('../../utils/QueryStringUtils');
 
+var CacheToggle = require('./visualization/cache_toggle.js');
 var QueryActions = require('./query_actions.js');
 
 function getStoresState() {
@@ -196,14 +197,14 @@ var Explorer = React.createClass({
     ExplorerStore.addChangeListener(this._onChange);
     NoticeStore.addChangeListener(this._onChange);
     AppStateStore.addChangeListener(this._onChange);
-    window.addEventListener('scroll', _.bind(this.updateVizPosition, this), false);
+    // window.addEventListener('scroll', _.bind(this.updateVizPosition, this), false);
   },
 
   componentWillUnmount: function() {
     ExplorerStore.removeChangeListener(this._onChange);
     NoticeStore.removeChangeListener(this._onChange);
     AppStateStore.removeChangeListener(this._onChange);
-    window.removeEventListener('scroll', _.bind(this.updateVizPosition, this), false);
+    // window.removeEventListener('scroll', _.bind(this.updateVizPosition, this), false);
   },
 
   getInitialState: function() {
@@ -268,6 +269,7 @@ var Explorer = React.createClass({
                            saveQueryClick={this.saveQueryClick}
                            onOpenCSVExtraction={this.onOpenCSVExtraction}
                            onNameChange={this.onNameChange} />
+            <CacheToggle />
             <QueryActions />
           </div>
         </div>

@@ -9,7 +9,6 @@ var Select = require('../../common/select.js');
 var Notice = require('../../common/notice.js');
 var Chart = require('./chart.js');
 var CodeSample = require('./code_sample.js');
-var CacheToggle = require('./cache_toggle.js');
 var AppDispatcher = require('../../../dispatcher/AppDispatcher');
 var ExplorerConstants = require('../../../constants/ExplorerConstants');
 var ExplorerActions = require('../../../actions/ExplorerActions');
@@ -148,7 +147,6 @@ var Visualization = React.createClass({
           <div className="chart-component">
             <Chart model={this.props.model} dataviz={this.dataviz} />
           </div>
-          <CacheToggle />
           <CodeSample ref="codesample"
                       codeSample={ExplorerUtils.getSdkExample(this.props.model, this.props.client)}
                       hidden={this.state.codeSampleHidden}

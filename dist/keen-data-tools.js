@@ -3092,6 +3092,7 @@ var ValidationUtils = require('../../utils/ValidationUtils');
 var ExplorerValidations = require('../../validations/ExplorerValidations');
 var QueryStringUtils = require('../../utils/QueryStringUtils');
 
+var CacheToggle = require('./visualization/cache_toggle.js');
 var QueryActions = require('./query_actions.js');
 
 function getStoresState() {
@@ -3264,14 +3265,14 @@ var Explorer = React.createClass({displayName: "Explorer",
     ExplorerStore.addChangeListener(this._onChange);
     NoticeStore.addChangeListener(this._onChange);
     AppStateStore.addChangeListener(this._onChange);
-    window.addEventListener('scroll', _.bind(this.updateVizPosition, this), false);
+    // window.addEventListener('scroll', _.bind(this.updateVizPosition, this), false);
   },
 
   componentWillUnmount: function() {
     ExplorerStore.removeChangeListener(this._onChange);
     NoticeStore.removeChangeListener(this._onChange);
     AppStateStore.removeChangeListener(this._onChange);
-    window.removeEventListener('scroll', _.bind(this.updateVizPosition, this), false);
+    // window.removeEventListener('scroll', _.bind(this.updateVizPosition, this), false);
   },
 
   getInitialState: function() {
@@ -3336,6 +3337,7 @@ var Explorer = React.createClass({displayName: "Explorer",
                            saveQueryClick: this.saveQueryClick, 
                            onOpenCSVExtraction: this.onOpenCSVExtraction, 
                            onNameChange: this.onNameChange}), 
+            React.createElement(CacheToggle, null), 
             React.createElement(QueryActions, null)
           )
         ), 
@@ -3362,7 +3364,7 @@ var Explorer = React.createClass({displayName: "Explorer",
 
 module.exports = Explorer;
 
-},{"../../actions/ExplorerActions":2,"../../actions/NoticeActions":3,"../../stores/AppStateStore":53,"../../stores/ExplorerStore":54,"../../stores/NoticeStore":55,"../../stores/UserStore":57,"../../utils/ExplorerUtils":58,"../../utils/QueryStringUtils":62,"../../utils/ValidationUtils":63,"../../validations/ExplorerValidations":64,"../common/event_browser.js":10,"../common/filter_manager.js":13,"../common/notice.js":20,"./csv_extraction.js":27,"./query_actions.js":29,"./query_builder/index.js":35,"./query_pane_tabs.js":38,"./saved_queries/browse_queries.js":39,"./visualization/index.js":43,"lodash":84,"react":302}],29:[function(require,module,exports){
+},{"../../actions/ExplorerActions":2,"../../actions/NoticeActions":3,"../../stores/AppStateStore":53,"../../stores/ExplorerStore":54,"../../stores/NoticeStore":55,"../../stores/UserStore":57,"../../utils/ExplorerUtils":58,"../../utils/QueryStringUtils":62,"../../utils/ValidationUtils":63,"../../validations/ExplorerValidations":64,"../common/event_browser.js":10,"../common/filter_manager.js":13,"../common/notice.js":20,"./csv_extraction.js":27,"./query_actions.js":29,"./query_builder/index.js":35,"./query_pane_tabs.js":38,"./saved_queries/browse_queries.js":39,"./visualization/cache_toggle.js":40,"./visualization/index.js":43,"lodash":84,"react":302}],29:[function(require,module,exports){
 /**
  * @jsx React.DOM
  */
@@ -4100,7 +4102,10 @@ var classNames = require('classnames');
 var CacheToggle = React.createClass({displayName: "CacheToggle",
 
   setCached: function(event) {
-    this.setState({ cached: !this.state.cached });
+    this.setState({
+      cached: !this.state.cached,
+      settingsOpen: this.state.cached ? false : this.state.settingsOpen
+    });
   },
 
   setSettingsOpen: function(event) {
@@ -4121,28 +4126,44 @@ var CacheToggle = React.createClass({displayName: "CacheToggle",
   },
 
   render: function() {
+    var parentClasses = classNames({
+      'cache-toggle': true,
+      'inactive': !this.state.cached
+    });
     var cacheDetailsClasses = classNames({
-      "cache-details pull-left margin-right-small": true,
+      "cache-details": true,
       "hide": !this.state.cached
     });
     var cacheSettingsClasses = classNames({
-      "cache-settings pull-left": true,
+      "cache-settings": true,
       "hide": !this.state.settingsOpen
     });
 
     return (
-      React.createElement("div", {className: "cache-toggle clearfix"}, 
-        React.createElement("label", {htmlFor: "cache", className: "pull-left margin-right-small"}, 
-          "Caching enabled", 
-          React.createElement("input", {type: "checkbox", name: "cache", onChange: this.setCached})
-        ), 
-        React.createElement("div", {className: cacheDetailsClasses}, 
-          React.createElement("p", null, "Last updated 43 mins ago"), 
-          React.createElement("a", {href: "#", onClick: this.setSettingsOpen}, 
-            React.createElement("span", {className: "icon icon-cog glyphicon-cog glyphicon"})
+      React.createElement("div", {className: parentClasses}, 
+        React.createElement("div", {className: "row"}, 
+          React.createElement("div", {className: "col-md-3"}, 
+            React.createElement("label", {htmlFor: "cache", className: "margin-right-small"}, 
+              "Caching enabled", 
+              React.createElement("input", {type: "checkbox", name: "cache", onChange: this.setCached})
+            )
           ), 
-          React.createElement("div", {className: cacheSettingsClasses}, 
-            "Refresh every ", React.createElement("input", {type: "text", name: "refresh_rate", value: this.state.refresh_rate, onChange: this.setRefreshRate}), " minutes"
+          React.createElement("div", {className: "col-md-3"}, 
+            React.createElement("div", {className: cacheDetailsClasses}, 
+              React.createElement("p", null, 
+                "Last updated 43 mins ago", 
+                React.createElement("a", {href: "#", onClick: this.setSettingsOpen, className: "margin-left-tiny"}, 
+                  React.createElement("span", {className: "icon icon-cog glyphicon-cog glyphicon"})
+                )
+              )
+            )
+          ), 
+          React.createElement("div", {className: "col-md-5"}, 
+            React.createElement("div", {className: cacheSettingsClasses}, 
+              React.createElement("p", null, 
+                "Refresh every ", React.createElement("input", {type: "text", name: "refresh_rate", value: this.state.refresh_rate, className: "form-control", onChange: this.setRefreshRate}), " minutes"
+              )
+            )
           )
         )
       )
@@ -4293,7 +4314,6 @@ var Select = require('../../common/select.js');
 var Notice = require('../../common/notice.js');
 var Chart = require('./chart.js');
 var CodeSample = require('./code_sample.js');
-var CacheToggle = require('./cache_toggle.js');
 var AppDispatcher = require('../../../dispatcher/AppDispatcher');
 var ExplorerConstants = require('../../../constants/ExplorerConstants');
 var ExplorerActions = require('../../../actions/ExplorerActions');
@@ -4432,7 +4452,6 @@ var Visualization = React.createClass({displayName: "Visualization",
           React.createElement("div", {className: "chart-component"}, 
             React.createElement(Chart, {model: this.props.model, dataviz: this.dataviz})
           ), 
-          React.createElement(CacheToggle, null), 
           React.createElement(CodeSample, {ref: "codesample", 
                       codeSample: ExplorerUtils.getSdkExample(this.props.model, this.props.client), 
                       hidden: this.state.codeSampleHidden, 
@@ -4445,7 +4464,7 @@ var Visualization = React.createClass({displayName: "Visualization",
 
 module.exports = Visualization;
 
-},{"../../../actions/ExplorerActions":2,"../../../actions/NoticeActions":3,"../../../constants/ExplorerConstants":46,"../../../dispatcher/AppDispatcher":50,"../../../stores/ExplorerStore":54,"../../../utils/ExplorerUtils":58,"../../../utils/FormatUtils":60,"../../common/notice.js":20,"../../common/select.js":23,"./cache_toggle.js":40,"./chart.js":41,"./code_sample.js":42,"classnames":75,"lodash":84,"react/addons":130}],44:[function(require,module,exports){
+},{"../../../actions/ExplorerActions":2,"../../../actions/NoticeActions":3,"../../../constants/ExplorerConstants":46,"../../../dispatcher/AppDispatcher":50,"../../../stores/ExplorerStore":54,"../../../utils/ExplorerUtils":58,"../../../utils/FormatUtils":60,"../../common/notice.js":20,"../../common/select.js":23,"./chart.js":41,"./code_sample.js":42,"classnames":75,"lodash":84,"react/addons":130}],44:[function(require,module,exports){
 /**
  * @jsx React.DOM
  */

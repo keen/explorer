@@ -8,7 +8,10 @@ var classNames = require('classnames');
 var CacheToggle = React.createClass({
 
   setCached: function(event) {
-    this.setState({ cached: !this.state.cached });
+    this.setState({
+      cached: !this.state.cached,
+      settingsOpen: this.state.cached ? false : this.state.settingsOpen
+    });
   },
 
   setSettingsOpen: function(event) {
@@ -29,28 +32,44 @@ var CacheToggle = React.createClass({
   },
 
   render: function() {
+    var parentClasses = classNames({
+      'cache-toggle': true,
+      'inactive': !this.state.cached
+    });
     var cacheDetailsClasses = classNames({
-      "cache-details pull-left margin-right-small": true,
+      "cache-details": true,
       "hide": !this.state.cached
     });
     var cacheSettingsClasses = classNames({
-      "cache-settings pull-left": true,
+      "cache-settings": true,
       "hide": !this.state.settingsOpen
     });
 
     return (
-      <div className="cache-toggle clearfix">
-        <label htmlFor="cache" className="pull-left margin-right-small">
-          Caching enabled
-          <input type="checkbox" name="cache" onChange={this.setCached} />
-        </label>
-        <div className={cacheDetailsClasses}>
-          <p>Last updated 43 mins ago</p>
-          <a href="#" onClick={this.setSettingsOpen}>
-            <span className="icon icon-cog glyphicon-cog glyphicon"></span>
-          </a>
-          <div className={cacheSettingsClasses}>
-            Refresh every <input type="text" name="refresh_rate" value={this.state.refresh_rate} onChange={this.setRefreshRate} /> minutes
+      <div className={parentClasses}>
+        <div className="row">
+          <div className="col-md-3">
+            <label htmlFor="cache" className="margin-right-small">
+              Caching enabled
+              <input type="checkbox" name="cache" onChange={this.setCached} />
+            </label>    
+          </div>
+          <div className="col-md-3">
+            <div className={cacheDetailsClasses}>
+              <p>
+                Last updated 43 mins ago
+                <a href="#" onClick={this.setSettingsOpen} className="margin-left-tiny">
+                  <span className="icon icon-cog glyphicon-cog glyphicon"></span>
+                </a>
+              </p>
+            </div>
+          </div>
+          <div className="col-md-5">
+            <div className={cacheSettingsClasses}>
+              <p>
+                Refresh every <input type="text" name="refresh_rate" value={this.state.refresh_rate} className="form-control" onChange={this.setRefreshRate} /> minutes
+              </p>
+            </div>
           </div>
         </div>
       </div>

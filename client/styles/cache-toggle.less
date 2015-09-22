@@ -1,12 +1,27 @@
 .cache-toggle {
+  border: 1px solid #EEE;
+  border-top: 0;
+  border-bottom: 0;
+  padding: 5px 10px;
+
+  label, p {
+    line-height: 25px;
+    font-size: 14px;
+    margin: 0;
+  }
   input[name="cache"] {
     margin-left: 8px;
   }
 }
-.cache-details {
-  margin-left: 10px;
-  
-  p {
-    margin: 0;
+.cache-toggle.inactive {
+  label {
+    color: #A2A2A2;
+  }
+}
+.cache-settings {
+  input[name="refresh_rate"] {
+    width: 50px;
+    height: 24px;
+    display: inline-block;
   }
 }

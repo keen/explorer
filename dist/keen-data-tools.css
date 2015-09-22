@@ -1784,14 +1784,28 @@
 #keen-explorer .query-actions .run-group {
   border-right: 1px solid #D4D4D4;
 }
+#keen-explorer .cache-toggle {
+  border: 1px solid #EEE;
+  border-top: 0;
+  border-bottom: 0;
+  padding: 5px 10px;
+}
+#keen-explorer .cache-toggle label,
+#keen-explorer .cache-toggle p {
+  line-height: 25px;
+  font-size: 14px;
+  margin: 0;
+}
 #keen-explorer .cache-toggle input[name="cache"] {
   margin-left: 8px;
 }
-#keen-explorer .cache-details {
-  margin-left: 10px;
+#keen-explorer .cache-toggle.inactive label {
+  color: #A2A2A2;
 }
-#keen-explorer .cache-details p {
-  margin: 0;
+#keen-explorer .cache-settings input[name="refresh_rate"] {
+  width: 50px;
+  height: 24px;
+  display: inline-block;
 }
 #keen-explorer a {
   color: #00bbde;

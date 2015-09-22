@@ -267,9 +267,8 @@ gulp.task('watch-web', function(){
   gulp.watch('client/**/*.less', ['keen-web-styles']);
 });
 
-gulp.task('keen-web', function(callback) {
-  runSequence('development',
-              ['keen-web-scripts', 'keen-web-styles'],
+gulp.task('keen-web', ['development'], function(callback) {
+  runSequence(['keen-web-scripts', 'keen-web-styles'],
               'watch-web',
               callback);
 });
