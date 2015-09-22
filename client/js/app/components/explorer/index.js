@@ -10,6 +10,8 @@ var Visualization = require('./visualization/index.js')
 var QueryPaneTabs = require('./query_pane_tabs.js');;
 var QueryBuilder = require('./query_builder/index.js');
 var BrowseQueries = require('./saved_queries/browse_queries.js');
+var CacheToggle = require('./cache_toggle.js');
+var QueryActions = require('./query_actions.js');
 var Notice = require('../common/notice.js');
 var FilterManager = require('../common/filter_manager.js');
 var ExplorerStore = require('../../stores/ExplorerStore');
@@ -23,9 +25,6 @@ var ExplorerActions = require('../../actions/ExplorerActions');
 var ValidationUtils = require('../../utils/ValidationUtils');
 var ExplorerValidations = require('../../validations/ExplorerValidations');
 var QueryStringUtils = require('../../utils/QueryStringUtils');
-
-var CacheToggle = require('./visualization/cache_toggle.js');
-var QueryActions = require('./query_actions.js');
 
 function getStoresState() {
   return {
@@ -134,6 +133,11 @@ var Explorer = React.createClass({
     ExplorerActions.revertActiveChanges();
   },
 
+  handleQuerySubmit: function(event) {
+    event.preventDefault();
+    ExplorerActions.exec(this.props.client, this.state.activeExplorer.id);
+  },
+
   // ********************************
   // Convenience functions
   // ********************************
@@ -212,7 +216,8 @@ var Explorer = React.createClass({
                                 onBrowseEvents={this.onBrowseEvents}
                                 clearQuery={this.clearQuery}
                                 handleFiltersToggle={this.handleFiltersToggle}
-                                handleRevertChanges={this.handleRevertChanges} />;
+                                handleRevertChanges={this.handleRevertChanges}
+                                handleQuerySubmit={this.handleQuerySubmit} />;
     } else {
       queryPane = <BrowseQueries ref="query-browser"
                                  listItems={this.state.allPersistedExplorers}
@@ -241,7 +246,10 @@ var Explorer = React.createClass({
                            onOpenCSVExtraction={this.onOpenCSVExtraction}
                            onNameChange={this.onNameChange} />
             <CacheToggle />
-            <QueryActions />
+            <QueryActions model={this.state.activeExplorer}
+                          handleRevertChanges={this.handleRevertChanges}
+                          handleQuerySubmit={this.handleQuerySubmit}
+                          clearQuery={this.clearQuery} />
           </div>
         </div>
         <EventBrowser ref="event-browser"

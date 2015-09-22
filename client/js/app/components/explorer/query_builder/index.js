@@ -15,7 +15,6 @@ var GroupByField = require('./group_by_field.js');
 var Timeframe = require('../../common/timeframe.js');
 var Interval = require('../../common/interval.js');
 var ApiUrl = require('./api_url.js');
-var BuilderButtons = require('./builder_buttons.js');
 var ExplorerUtils = require('../../../utils/ExplorerUtils');
 var ProjectUtils = require('../../../utils/ProjectUtils');
 var ExplorerActions = require('../../../actions/ExplorerActions');
@@ -29,12 +28,6 @@ function validFilters(filters) {
 }
 
 var QueryBuilder = React.createClass({
-
-  handleQuerySubmit: function(event) {
-    event.preventDefault();
-    ExplorerActions.exec(this.props.client, this.props.model.id);
-    $('html,body').animate({ scrollTop: 0}, 300);
-  },
 
   // Event callbacks
 
@@ -96,7 +89,7 @@ var QueryBuilder = React.createClass({
 
     return (
       <section className="query-pane-section query-builder">
-        <form className="form query-builder-form" onSubmit={this.handleQuerySubmit}>
+        <form className="form query-builder-form" onSubmit={this.props.handleQuerySubmit}>
           <EventCollectionField ref="event-collection-field"
                                 value={this.props.model.query.event_collection}
                                 options={this.props.project.eventCollections}
