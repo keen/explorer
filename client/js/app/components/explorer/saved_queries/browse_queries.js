@@ -37,9 +37,9 @@ var BrowseQueries = React.createClass({
   buildList: function() {
     var listElements = this.props.listItems.map(_.bind(function(listItem, index) {
       if (listItem.originalModel) listItem = listItem.originalModel;
-      
+
       listItem.user = listItem.user || {};
-      if (String(listItem.name.toLowerCase()).search(this.state.searchterm.toLowerCase()) < 0) return;
+      if (String(listItem.query_name.toLowerCase()).search(this.state.searchterm.toLowerCase()) < 0) return;
 
       if (this.state.filterType === 'user') {
         if (!listItem.user.id || listItem.user.id !== this.props.user.id) return;
@@ -69,7 +69,7 @@ var BrowseQueries = React.createClass({
       return (
         <li className={classes} key={index} data-id={listItem.id} onClick={this.clickCallback}>
           {removeBtn}
-          <h5 className="name">{listItem.name}</h5>
+          <h5 className="name">{listItem.query_name}</h5>
           <div className="metadata clearfix">
             <p className="author pull-left">
               <span className="icon glyphicon glyphicon-user"></span>

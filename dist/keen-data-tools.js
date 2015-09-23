@@ -3936,9 +3936,9 @@ var BrowseQueries = React.createClass({displayName: "BrowseQueries",
   buildList: function() {
     var listElements = this.props.listItems.map(_.bind(function(listItem, index) {
       if (listItem.originalModel) listItem = listItem.originalModel;
-      
+
       listItem.user = listItem.user || {};
-      if (String(listItem.name.toLowerCase()).search(this.state.searchterm.toLowerCase()) < 0) return;
+      if (String(listItem.query_name.toLowerCase()).search(this.state.searchterm.toLowerCase()) < 0) return;
 
       if (this.state.filterType === 'user') {
         if (!listItem.user.id || listItem.user.id !== this.props.user.id) return;
@@ -3968,7 +3968,7 @@ var BrowseQueries = React.createClass({displayName: "BrowseQueries",
       return (
         React.createElement("li", {className: classes, key: index, "data-id": listItem.id, onClick: this.clickCallback}, 
           removeBtn, 
-          React.createElement("h5", {className: "name"}, listItem.name), 
+          React.createElement("h5", {className: "name"}, listItem.query_name), 
           React.createElement("div", {className: "metadata clearfix"}, 
             React.createElement("p", {className: "author pull-left"}, 
               React.createElement("span", {className: "icon glyphicon glyphicon-user"}), 
@@ -4296,7 +4296,7 @@ var Visualization = React.createClass({displayName: "Visualization",
                  type: "text", 
                  onChange: this.props.onNameChange, 
                  spellCheck: "false", 
-                 value: this.props.model.name, 
+                 value: this.props.model.query_name, 
                  placeholder: "Give your query a name..."}), 
           React.createElement("input", {ref: "slug", 
                  className: "chart-query-name", 
@@ -5487,6 +5487,9 @@ module.exports = {
         return filter;
       });
       params.query.filters = _.compact(params.query.filters);
+    }
+    if (!params.id && params.query_name) {
+      params.id = params.query_name;
     }
     return params;
   },
@@ -23598,7 +23601,7 @@ module.exports = keyMirror;
 }).call(this,typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{}],83:[function(require,module,exports){
 //! moment.js
-//! version : 2.10.5
+//! version : 2.10.6
 //! authors : Tim Wood, Iskren Chernev, Moment.js contributors
 //! license : MIT
 //! momentjs.com
@@ -23774,7 +23777,7 @@ module.exports = keyMirror;
     // Moment prototype object
     function Moment(config) {
         copyConfig(this, config);
-        this._d = new Date(config._d.getTime());
+        this._d = new Date(config._d != null ? config._d.getTime() : NaN);
         // Prevent infinite loop in case updateOffset creates new moment
         // objects.
         if (updateInProgress === false) {
@@ -26761,7 +26764,7 @@ module.exports = keyMirror;
     // Side effect imports
 
 
-    utils_hooks__hooks.version = '2.10.5';
+    utils_hooks__hooks.version = '2.10.6';
 
     setHookCallback(local__createLocal);
 

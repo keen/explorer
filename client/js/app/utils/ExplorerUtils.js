@@ -270,6 +270,9 @@ module.exports = {
       });
       params.query.filters = _.compact(params.query.filters);
     }
+    if (!params.id && params.query_name) {
+      params.id = params.query_name;
+    }
     return params;
   },
 
