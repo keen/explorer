@@ -56,7 +56,7 @@ var QueryActions = React.createClass({
       );
       if (this.props.removeClick && this.props.model.user.id === this.props.user.id) {
         deleteBtn = (
-          <button type="button" className="btn btn-default" onClick={this.props.removeClick}>
+          <button type="button" className="btn btn-link" onClick={this.props.removeClick}>
             Delete
           </button>
         );

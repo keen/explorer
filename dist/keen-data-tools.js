@@ -3002,31 +3002,32 @@ var CacheToggle = React.createClass({displayName: "CacheToggle",
       "hide": !this.state.settingsOpen
     });
 
+    var cacheToggleLabel = this.state.cached ? 'Caching enabled' : 'Enable caching';
+
     return (
       React.createElement("div", {className: parentClasses}, 
+
+        React.createElement("label", {htmlFor: "cache"}, 
+          React.createElement("input", {type: "checkbox", name: "cache", id: "cache", onChange: this.setCached}), 
+          cacheToggleLabel
+        ), 
+
+        React.createElement("span", {className: cacheDetailsClasses}, 
+          "Last updated 43 mins ago", 
+          React.createElement("a", {href: "#", onClick: this.setSettingsOpen, className: "margin-left-tiny"}, 
+            React.createElement("span", {className: "icon icon-cog glyphicon-cog glyphicon"})
+          )
+        ), 
+
+        React.createElement("span", {className: cacheSettingsClasses}, 
+          "Refresh every ", React.createElement("input", {type: "text", name: "refresh_rate", value: this.state.refresh_rate, className: "form-control", onChange: this.setRefreshRate}), " minutes"
+        ), 
+
+
+
         React.createElement("div", {className: "row"}, 
-          React.createElement("div", {className: "col-md-3"}, 
-            React.createElement("label", {htmlFor: "cache", className: "margin-right-small"}, 
-              "Caching enabled", 
-              React.createElement("input", {type: "checkbox", name: "cache", onChange: this.setCached})
-            )
-          ), 
-          React.createElement("div", {className: "col-md-3"}, 
-            React.createElement("div", {className: cacheDetailsClasses}, 
-              React.createElement("p", null, 
-                "Last updated 43 mins ago", 
-                React.createElement("a", {href: "#", onClick: this.setSettingsOpen, className: "margin-left-tiny"}, 
-                  React.createElement("span", {className: "icon icon-cog glyphicon-cog glyphicon"})
-                )
-              )
-            )
-          ), 
-          React.createElement("div", {className: "col-md-5"}, 
-            React.createElement("div", {className: cacheSettingsClasses}, 
-              React.createElement("p", null, 
-                "Refresh every ", React.createElement("input", {type: "text", name: "refresh_rate", value: this.state.refresh_rate, className: "form-control", onChange: this.setRefreshRate}), " minutes"
-              )
-            )
+          React.createElement("div", {className: "col-md-5"}
+
           )
         )
       )
@@ -3036,6 +3037,7 @@ var CacheToggle = React.createClass({displayName: "CacheToggle",
 });
 
 module.exports = CacheToggle;
+
 },{"classnames":75,"react":302}],28:[function(require,module,exports){
 /**
  * @jsx React.DOM
@@ -3379,7 +3381,7 @@ var QueryActions = React.createClass({displayName: "QueryActions",
       );
       if (this.props.removeClick && this.props.model.user.id === this.props.user.id) {
         deleteBtn = (
-          React.createElement("button", {type: "button", className: "btn btn-default", onClick: this.props.removeClick}, 
+          React.createElement("button", {type: "button", className: "btn btn-link", onClick: this.props.removeClick}, 
             "Delete"
           )
         );
