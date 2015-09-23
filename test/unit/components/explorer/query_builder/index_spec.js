@@ -3,7 +3,6 @@ var assert = require('chai').assert;
 var _ = require('lodash');
 var sinon = require('sinon');
 var QueryBuilder = require('../../../../../client/js/app/components/explorer/query_builder/index.js');
-// var BuilderButtons = require('../../../../../client/js/app/components/explorer/query_builder/builder_buttons.js');
 var Timeframe = require('../../../../../client/js/app/components/common/timeframe.js')
 var Interval = require('../../../../../client/js/app/components/common/interval.js')
 var ProjectUtils = require('../../../../../client/js/app/utils/ProjectUtils');;
@@ -21,7 +20,18 @@ describe('components/explorer/query_builder/index', function() {
     this.model.active = true;
     this.client = TestHelpers.createClient();
     this.project = TestHelpers.createProject();
-    this.component = TestUtils.renderIntoDocument(<QueryBuilder project={this.project} model={this.model} client={this.client} />);
+
+    this.renderComponent = function(props) {
+      var defaults = {
+        project: this.project,
+        model: this.model,
+        client: this.client
+      };
+      var props = _.assign({}, defaults, props);
+      return TestUtils.renderIntoDocument(<QueryBuilder {...props} />);
+    }
+
+    this.component = this.renderComponent();
   });
 
   describe('setup', function() {
@@ -112,12 +122,12 @@ describe('components/explorer/query_builder/index', function() {
     });
 
     describe('form submission', function () {
-      it('executes the query when the form is submitted', function () {
-        var execStub = sinon.stub(ExplorerActions, 'exec');
+      it('calls handleQuerySubmit prop function when the form is submitted', function () {
+        var submitStub = sinon.stub();
+        this.component = this.renderComponent({ handleQuerySubmit: submitStub });
         var formSubmitNode = TestUtils.findRenderedDOMComponentWithTag(this.component, 'form').getDOMNode();
         TestUtils.Simulate.submit(formSubmitNode);
-        assert.isTrue(execStub.calledWith(this.client, 10));
-        ExplorerActions.exec.restore();
+        assert.isTrue(submitStub.calledOnce);
       });
     });
   });
@@ -191,16 +201,6 @@ describe('components/explorer/query_builder/index', function() {
         assert.strictEqual(this.stub.getCall(0).args[0], this.model.id);
         assert.deepPropertyVal(this.stub.getCall(0).args[1], 'query.group_by', 'new_group_by_property');
       });
-    });
-  });
-
-  describe('run query button click', function () {
-    it('should call exec with the right arguments', function () {
-      var execStub = sinon.stub(ExplorerActions, 'exec');
-      var formSubmitNode = TestUtils.findRenderedDOMComponentWithClass(this.component, 'run-query').getDOMNode();
-      TestUtils.Simulate.click(formSubmitNode);
-      assert.isTrue(execStub.calledWith(this.client, 10));
-      ExplorerActions.exec.restore();
     });
   });
 
