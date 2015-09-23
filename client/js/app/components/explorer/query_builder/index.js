@@ -18,6 +18,7 @@ var Timeframe = require('../../common/timeframe.js');
 var Interval = require('../../common/interval.js');
 var Input = require('../../common/input.js');
 var ApiUrl = require('./api_url.js');
+var ExplorerStore = require('../../../stores/ExplorerStore');
 var ExplorerUtils = require('../../../utils/ExplorerUtils');
 var ProjectUtils = require('../../../utils/ProjectUtils');
 var ExplorerActions = require('../../../actions/ExplorerActions');
@@ -60,6 +61,23 @@ var QueryBuilder = React.createClass({
     });
   },
 
+  handleClearQuery: function() {
+    // NOTE: (Eric Anderson, Aug 19, 2015): Awful terrible hack to
+    // ensure that the components properly display the values of the cleared
+    // model.
+    var self = this;
+    setTimeout(function(){
+      ExplorerActions.clear(ExplorerStore.getActive().id);
+    }, 0);
+  },
+  handleRevertChanges: function(event) {
+    event.preventDefault();
+    ExplorerActions.revertActiveChanges();
+  },
+  shouldShowRevertButton: function() {
+    return ExplorerUtils.isPersisted(this.props.model) && this.props.model.originalModel && this.props.model.originalModel.query && !_.isEqual(this.props.model.query, this.props.model.originalModel.query);
+  },
+
   // React methods
 
   render: function() {
@@ -71,7 +89,28 @@ var QueryBuilder = React.createClass({
         emailField,
         limitField,
         analysisType = this.props.model.query.analysis_type,
+        clearButton,
         apiQueryUrl = ExplorerUtils.getApiQueryUrl(this.props.client, this.props.model);
+
+    if (!this.shouldShowRevertButton()) {
+      clearButton = (
+        <button type="reset" ref="clearquery"
+          className="btn btn-default btn-block"
+          id="clear-explorer-query"
+          onClick={this.handleClearQuery}>
+            Clear
+        </button>
+      );
+    }
+    else {
+      clearButton = (
+        <button
+          className="btn btn-default btn-block"
+          onClick={this.handleRevertChanges}>
+            Revert to original
+        </button>
+      );
+    }
 
     if (analysisType !== 'extraction') {
       groupByField = <GroupByField ref="group-by-field"
@@ -137,7 +176,10 @@ var QueryBuilder = React.createClass({
                           fieldsCount={validFilters(this.props.model.query.filters).length} />
           </div>
           {intervalField}
-          <ApiUrl url={ExplorerUtils.getApiQueryUrl(this.props.client, this.props.model)} />  
+          <div className="button-set-clear-toggle">
+            {clearButton}
+          </div>
+          <ApiUrl url={ExplorerUtils.getApiQueryUrl(this.props.client, this.props.model)} />
         </form>
       </section>
     );

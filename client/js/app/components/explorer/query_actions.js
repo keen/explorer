@@ -24,13 +24,9 @@ var QueryActions = React.createClass({
     }
   },
 
-  shouldShowRevertButton: function() {
-    return ExplorerUtils.isPersisted(this.props.model) && this.props.model.originalModel && this.props.model.originalModel.query && !_.isEqual(this.props.model.query, this.props.model.originalModel.query);
-  },
-
   runButtonText: function() {
     var btnStates = this.runBtnStates.default;
-    
+
     if (ExplorerUtils.isEmailExtraction(this.props.model)) {
       btnStates = this.runBtnStates.emailExtraction;
     } else if (ExplorerUtils.isImmediateExtraction(this.props.model)) {
@@ -41,25 +37,20 @@ var QueryActions = React.createClass({
   },
 
   render: function() {
-    var revertBtn;
+    // var revertBtn;
     var saveBtn;
     var deleteBtn;
     var runButtonClasses = classNames({
       'disabled': this.props.model.loading,
-      'btn btn-primary run-query margin-right-tiny': true
+      'btn btn-primary run-query': true
     });
     var codeSampleBtnClasses = classNames({
       'btn btn-default code-sample-toggle pull-right': true,
       'open': !this.props.codeSampleHidden
     });
-    if (this.shouldShowRevertButton()) {
-      revertBtn = (
-        <button className="btn btn-default margin-right-tiny" onClick={this.props.handleRevertChanges}>Revert to original</button>
-      );
-    }
     if (this.props.persistence && !ExplorerUtils.isEmailExtraction(this.props.model)) {
       saveBtn = (
-        <button type="button" className="btn btn-success save-query margin-right-tiny" onClick={this.props.saveQueryClick} ref="save-query" disabled={this.props.model.loading}>
+        <button type="button" className="btn btn-success save-query" onClick={this.props.saveQueryClick} ref="save-query" disabled={this.props.model.loading}>
           {ExplorerUtils.isPersisted(this.props.model) ? 'Update' : 'Save'}
         </button>
       );
@@ -69,9 +60,9 @@ var QueryActions = React.createClass({
             Delete
           </button>
         );
-      }  
+      }
     }
-    
+
     return (
       <div className="query-actions clearfix">
         <div className="row">
@@ -80,10 +71,6 @@ var QueryActions = React.createClass({
               <button type="submit" ref="runquery" className={runButtonClasses} id="run-query" onClick={this.props.handleQuerySubmit}>
                 {this.runButtonText()}
               </button>
-              <button type="reset" ref="clearquery" className="btn btn-default margin-right-tiny" id="clear-explorer-query" onClick={this.props.clearQuery}>
-                Clear
-              </button>
-              {revertBtn}
             </div>
             <div className="manage-group pull-left">
               {saveBtn}
