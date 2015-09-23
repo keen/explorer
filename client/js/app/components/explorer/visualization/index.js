@@ -63,8 +63,7 @@ var Visualization = React.createClass({
   },
 
   render: function() {
-    var csvExtractionBanner,
-        chartOptionsBar,
+    var chartOptionsBar,
         chartTitle,
         saveBtn;
 
@@ -78,29 +77,19 @@ var Visualization = React.createClass({
       'open': !this.state.codeSampleHidden
     });
 
-    if (this.props.model.query.analysis_type === 'extraction') {
-      csvExtractionBanner = <div className="extraction-message-component">
-                              <div className="alert">
-                                <span className="icon glyphicon glyphicon-info-sign"></span>
-                                Previews are limited to the latest {ExplorerUtils.EXRACTION_EVENT_LIMIT} events. Larger extractions are available by email.
-                              </div>
-                              <button type="button" className="btn btn-default pull-right" onClick={this.props.onOpenCSVExtraction}>
-                                Email extraction
-                              </button>
-                            </div>;
-    }
-
     if (this.props.model.result !== null && !this.props.model.loading) {
-      chartOptionsBar = <div className="chart-options clearfix">
-                          <div className="pull-left">
-                            {saveBtn}
-                          </div>
-                          <div className="pull-right">
-                            <button className={codeSampleBtnClasses} onClick={this.toggleCodeSample}>
-                              <span>&lt;/&gt; Embed</span>
-                            </button>
-                          </div>
-                        </div>;
+      chartOptionsBar = (
+        <div className="chart-options clearfix">
+          <div className="pull-left">
+            {saveBtn}
+          </div>
+          <div className="pull-right">
+            <button className={codeSampleBtnClasses} onClick={this.toggleCodeSample}>
+              <span>&lt;/&gt; Embed</span>
+            </button>
+          </div>
+        </div>
+      );
     }
 
     if (this.props.persistence) {
@@ -135,7 +124,6 @@ var Visualization = React.createClass({
                       disabled={this.props.model.loading} />
             </div>
           </div>
-          {csvExtractionBanner}
           <div className="chart-component">
             <Chart model={this.props.model} dataviz={this.dataviz} />
           </div>

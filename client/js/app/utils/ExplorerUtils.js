@@ -55,6 +55,14 @@ module.exports = {
     return explorer.id && !explorer.id.toString().match('TEMP');
   },
 
+  isEmailExtraction: function(explorer) {
+    return (explorer.query.analysis_type === 'extraction' && !_.isNull(explorer.query.email));
+  },
+
+  isImmediateExtraction: function(explorer) {
+    return (explorer.query.analysis_type === 'extraction' && _.isNull(explorer.query.email));
+  },
+
   mergeResponseWithExplorer: function(explorer, response) {
     var formattedParams = module.exports.formatQueryParams(response);
     var newModel = _.assign({},

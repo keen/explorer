@@ -1428,6 +1428,9 @@
   padding: 18px 10px 10px;
   position: relative;
 }
+#keen-explorer .extraction-options label {
+  font-size: 14px;
+}
 #keen-explorer .explorer-visualization {
   position: relative;
 }

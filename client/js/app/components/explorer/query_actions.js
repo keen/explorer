@@ -17,6 +17,10 @@ var QueryActions = React.createClass({
     immediateExtraction: {
       inactive: 'Run Extraction',
       active: 'Running...'
+    },
+    emailExtraction: {
+      inactive: 'Send Email Extraction',
+      active: 'Sending...'
     }
   },
 
@@ -25,17 +29,15 @@ var QueryActions = React.createClass({
   },
 
   runButtonText: function() {
-    var stateType;
-    var analysisType = this.props.model.query.analysis_type;
-
-    if (analysisType === 'extraction') {
-      var stateType = 'immediateExtraction';
-    } else {
-      var stateType = 'default';
+    var btnStates = this.states.default;
+    
+    if (ExplorerUtils.isEmailExtraction(this.props.model)) {
+      btnStates = this.states.emailExtraction;
+    } else if (ExplorerUtils.isImmediateExtraction(this.props.model)) {
+      btnStates = this.states.immediateExtraction;
     }
-    var states = this.states[stateType];
 
-    return this.props.model.loading ? states.active : states.inactive;
+    return this.props.model.loading ? btnStates.active : btnStates.inactive;
   },
 
   render: function() {
@@ -51,7 +53,7 @@ var QueryActions = React.createClass({
         <button className="btn btn-default margin-right-tiny" onClick={this.props.handleRevertChanges}>Revert to original</button>
       );
     }
-    if (this.props.persistence) {
+    if (this.props.persistence && !ExplorerUtils.isEmailExtraction(this.props.model)) {
       saveBtn = (
         <button type="button" className="btn btn-success save-query margin-right-tiny" onClick={this.props.saveQueryClick} ref="save-query" disabled={this.props.model.loading}>
           {ExplorerUtils.isPersisted(this.props.model) ? 'Update' : 'Save'}

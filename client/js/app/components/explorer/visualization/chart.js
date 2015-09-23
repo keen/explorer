@@ -61,11 +61,6 @@ var Chart = React.createClass({
 	  		<textarea ref='jsonViz' className="json-view" value={content} readOnly />
 	  	);
 		}
-		// else if (ExplorerUtils.isTableViz(this.props.model)) {
-    //   chartContent = (
-		// 		<DataTable model={this.props.model} dataviz={this.props.dataviz} />
-		// 	);
-	  // }
 		else {
 	  	chartContent = (
 	  		<KeenViz model={this.props.model} dataviz={this.props.dataviz} />

@@ -12,8 +12,11 @@ var AnalysisTypeField = require('./analysis_type_field.js');
 var TargetPropertyField = require('./target_property_field.js');
 var PercentileField = require('./percentile_field.js');
 var GroupByField = require('./group_by_field.js');
+var ExtractionOptions = require('./extraction_options.js');
+var LimitField = require('./limit_field.js');
 var Timeframe = require('../../common/timeframe.js');
 var Interval = require('../../common/interval.js');
+var Input = require('../../common/input.js');
 var ApiUrl = require('./api_url.js');
 var ExplorerUtils = require('../../../utils/ExplorerUtils');
 var ProjectUtils = require('../../../utils/ProjectUtils');
@@ -60,12 +63,15 @@ var QueryBuilder = React.createClass({
   // React methods
 
   render: function() {
-    var groupByField;
-    var targetPropertyField;
-    var percentileField;
-    var intervalField;
-    var analysisType = this.props.model.query.analysis_type;
-    var apiQueryUrl = ExplorerUtils.getApiQueryUrl(this.props.client, this.props.model);
+    var groupByField,
+        targetPropertyField,
+        percentileField,
+        intervalField,
+        extractionOptions,
+        emailField,
+        limitField,
+        analysisType = this.props.model.query.analysis_type,
+        apiQueryUrl = ExplorerUtils.getApiQueryUrl(this.props.client, this.props.model);
 
     if (analysisType !== 'extraction') {
       groupByField = <GroupByField ref="group-by-field"
@@ -86,6 +92,20 @@ var QueryBuilder = React.createClass({
                                          value={this.props.model.query.percentile}
                                          onChange={this.handleSelectionWithEvent} />;
     }
+    if (analysisType === 'extraction') {
+      extractionOptions = <ExtractionOptions model={this.props.model}
+                                             setExtractionType={this.props.setExtractionType} />;
+      if (ExplorerUtils.isEmailExtraction(this.props.model)) {
+        emailField = <Input type="text"
+                            name="email"
+                            label="Email to send extraction to"
+                            placeholder="your@email.com"
+                            value={this.props.model.query.email}
+                            onChange={this.handleChange} />;
+        limitField = <LimitField model={this.props.model}
+                                 handleChange={this.handleChange} />;
+      }
+    }
 
     return (
       <section className="query-pane-section query-builder">
@@ -99,6 +119,9 @@ var QueryBuilder = React.createClass({
                              value={this.props.model.query.analysis_type}
                              options={ProjectUtils.getConstant('ANALYSIS_TYPES')}
                              handleChange={this.handleChange} />
+          {extractionOptions}
+          {emailField}
+          {limitField}
           {targetPropertyField}
           {percentileField}
           <Timeframe ref="timeframe"

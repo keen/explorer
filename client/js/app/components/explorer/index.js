@@ -134,7 +134,17 @@ var Explorer = React.createClass({
 
   handleQuerySubmit: function(event) {
     event.preventDefault();
-    ExplorerActions.exec(this.props.client, this.state.activeExplorer.id);
+    if (ExplorerUtils.isEmailExtraction(this.state.activeExplorer)) {
+      ExplorerActions.runEmailExtraction(this.props.client, this.state.activeExplorer.id);
+    } else {
+      ExplorerActions.exec(this.props.client, this.state.activeExplorer.id);
+    }
+  },
+
+  setExtractionType: function(event) {
+    var updates = _.cloneDeep(this.state.activeExplorer);
+    updates.query.email = event.target.value === 'email' ? "" : null;
+    ExplorerActions.update(this.state.activeExplorer.id, updates);
   },
 
   // ********************************
@@ -218,7 +228,8 @@ var Explorer = React.createClass({
                                 clearQuery={this.clearQuery}
                                 handleFiltersToggle={this.handleFiltersToggle}
                                 handleRevertChanges={this.handleRevertChanges}
-                                handleQuerySubmit={this.handleQuerySubmit} />;
+                                handleQuerySubmit={this.handleQuerySubmit} 
+                                setExtractionType={this.setExtractionType} />;
     } else {
       queryPane = <BrowseQueries ref="query-browser"
                                  listItems={this.state.allPersistedExplorers}
@@ -258,9 +269,6 @@ var Explorer = React.createClass({
                       client={this.props.client}
                       project={this.props.project}
                       model={this.state.activeExplorer} />
-        <CSVExtraction ref="csv-extraction"
-                       client={this.props.client}
-                       model={this.state.activeExplorer} />
         <FilterManager ref="filter-manager"
                       model={this.state.activeExplorer}
                       project={this.props.project}
