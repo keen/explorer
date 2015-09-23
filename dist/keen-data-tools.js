@@ -461,7 +461,7 @@ function App(config) {
   ExplorerActions.setActive(explorerAttrs.id);
 
   // Run the query for this explorer if it's valid
-  if (runValidations(explorerValidations, ExplorerStore.getActive()).isValid) {
+  if (!ExplorerUtils.isEmailExtraction(ExplorerStore.getActive()) && runValidations(explorerValidations, ExplorerStore.getActive()).isValid) {
     ExplorerActions.exec(this.client, ExplorerStore.getActive().id);
   }
 
@@ -4722,8 +4722,10 @@ function _create(attrs) {
 
 function _update(id, updates) {
   var newModel = _.assign({}, _explorers[id], updates);
+  // If we're no longer doing an email extraction, remove the latest and email field.
   if (!_.isNull(newModel.query.latest) && !ExplorerUtils.isEmailExtraction(newModel)) {
     newModel.query.latest = null;
+    newModel.query.email = null;
   }
   if (updates.id && updates.id !== id) {
     _explorers[updates.id] = newModel;
