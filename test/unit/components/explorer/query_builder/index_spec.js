@@ -3,7 +3,7 @@ var assert = require('chai').assert;
 var _ = require('lodash');
 var sinon = require('sinon');
 var QueryBuilder = require('../../../../../client/js/app/components/explorer/query_builder/index.js');
-var BuilderButtons = require('../../../../../client/js/app/components/explorer/query_builder/builder_buttons.js');
+// var BuilderButtons = require('../../../../../client/js/app/components/explorer/query_builder/builder_buttons.js');
 var Timeframe = require('../../../../../client/js/app/components/common/timeframe.js')
 var Interval = require('../../../../../client/js/app/components/common/interval.js')
 var ProjectUtils = require('../../../../../client/js/app/utils/ProjectUtils');;
@@ -45,9 +45,9 @@ describe('components/explorer/query_builder/index', function() {
       assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, Interval), 0);
     });    
 
-    it('has a single BuilderButtons child component', function(){
-      assert.isNotNull(TestUtils.findRenderedComponentWithType(this.component, BuilderButtons));
-    });
+    // it('has a single BuilderButtons child component', function(){
+    //   assert.isNotNull(TestUtils.findRenderedComponentWithType(this.component, BuilderButtons));
+    // });
 
     it('has the right number of ReactSelect child components', function(){
       assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, ReactSelect), 4);

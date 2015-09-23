@@ -153,22 +153,6 @@ describe('actions/ExplorerActions', function() {
       ExplorerActions.runEmailExtraction(this.client, this.explorer, this.callback);
       assert.isFalse(this.runQueryStub.called);
     });
-
-    describe('callback', function () {
-      it('should call the callback with the expected results', function () {
-        ExplorerActions.runEmailExtraction(this.client, this.explorer, this.callback);
-        assert.deepEqual(this.callback.getCall(0).args[0], {
-          success: false,
-          error: 'The last error'
-        });
-      });
-      it('should remove empty latest attribute before making the request', function () {
-        this.runValidationsStub.returns({ isValid: true });
-        this.explorer.query.latest = "";
-        ExplorerActions.runEmailExtraction(this.client, this.explorer, this.callback);
-        assert.notDeepProperty(this.runQueryStub.getCall(0).args[0].query, 'latest');
-      });
-    });
   });
 
   describe('getPersisted', function () {
