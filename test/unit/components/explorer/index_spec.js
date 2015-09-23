@@ -25,7 +25,7 @@ describe('components/explorer/index', function() {
 
   beforeEach(function() {
     ExplorerStore.clearAll();
-    ExplorerActions.create({ id: '1', active: true, name: 'A persisted query' });
+    ExplorerActions.create({ id: '1', active: true, query_name: 'A persisted query' });
 
     this.client = TestHelpers.createClient();
     this.project = TestHelpers.createProject();

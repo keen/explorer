@@ -30,7 +30,7 @@ describe('stores/ExplorerStore', function() {
         saving: false,
         isValid: true,
         timeframe_type: 'relative',
-        name: null,
+        query_name: null,
         query: {
           event_collection: null,
           analysis_type: null,
@@ -190,7 +190,7 @@ describe('stores/ExplorerStore', function() {
     it('should replace the store object key with the new ID if one is passed in via updates', function () {
       ExplorerActions.create({
         id: 'SOME_ID',
-        name: 'A saved query',
+        query_name: 'A saved query',
         query: {
           event_collection: 'clicks',
           analysis_type: 'count'
@@ -493,7 +493,7 @@ describe('stores/ExplorerStore', function() {
         ExplorerStore.clearAll();
         ExplorerActions.create(_.assign({}, TestHelpers.createExplorerModel(), {
           id: 'ABC-SOME-ID',
-          name: 'some name',
+          query_name: 'some name',
           active: true,
           query: {
             event_collection: 'clicks',
@@ -522,7 +522,7 @@ describe('stores/ExplorerStore', function() {
           saving: false,
           isValid: true,
           timeframe_type: 'relative',
-          name: 'some name',
+          query_name: 'some name',
           query: {
             event_collection: null,
             analysis_type: null,

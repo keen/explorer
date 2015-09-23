@@ -38,7 +38,7 @@ module.exports = {
 			saving: false,
 			isValid: true,
 			timeframe_type: 'relative',
-			name: '',
+			query_name: '',
 			query: {
 			  event_collection: null,
 			  analysis_type: null,

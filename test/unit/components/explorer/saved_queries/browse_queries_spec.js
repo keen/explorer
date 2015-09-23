@@ -15,7 +15,7 @@ describe('components/explorer/saved_queries/browse_queries', function() {
       listItems: [
         {
           id: 1,
-          name: 'Logins over last 30 days',
+          query_name: 'Logins over last 30 days',
           created_at: '2015-06-07 11:15:37.000000',
           user: {
             id: 1,
@@ -24,7 +24,7 @@ describe('components/explorer/saved_queries/browse_queries', function() {
         },
         {
           id: 2,
-          name: 'Activation rate',
+          query_name: 'Activation rate',
           created_at: '2015-06-07 11:15:37.000000',
           user: {
             id: 1,
@@ -33,7 +33,7 @@ describe('components/explorer/saved_queries/browse_queries', function() {
         },
         {
           id: 2,
-          name: 'QUERY RATES THIS WEEK',
+          query_name: 'QUERY RATES THIS WEEK',
           created_at: '2015-06-07 11:15:37.000000',
           user: {
             id: 1,
@@ -111,7 +111,7 @@ describe('components/explorer/saved_queries/browse_queries', function() {
           listItems: [
             {
               id: 1,
-              name: 'Logins over last 30 days',
+              query_name: 'Logins over last 30 days',
               created_at: '2015-06-07 11:15:37.000000',
               user: {
                 id: 1,
@@ -120,7 +120,7 @@ describe('components/explorer/saved_queries/browse_queries', function() {
             },
             {
               id: 2,
-              name: 'Activation rate',
+              query_name: 'Activation rate',
               created_at: '2015-06-07 11:15:37.000000',
               user: {
                 id: 2,
@@ -145,7 +145,7 @@ describe('components/explorer/saved_queries/browse_queries', function() {
           listItems: [
             {
               id: 1,
-              name: 'First',
+              query_name: 'First',
               created_at: '2015-06-07 11:15:37.000000',
               user: {
                 id: 1,
@@ -154,7 +154,7 @@ describe('components/explorer/saved_queries/browse_queries', function() {
             },
             {
               id: 2,
-              name: 'Second',
+              query_name: 'Second',
               created_at: '2015-06-07 11:15:37.000000',
               user: {
                 id: 2,
