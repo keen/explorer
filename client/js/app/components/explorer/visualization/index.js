@@ -90,14 +90,6 @@ var Visualization = React.createClass({
                             </div>;
     }
 
-    if (this.props.persistence) {
-      saveBtn = (
-        <button type="button" disabled={this.props.model.loading} ref="save-query" className="btn btn-primary save-query" onClick={this.props.saveQueryClick}>
-          {ExplorerUtils.isPersisted(this.props.model) ? 'Update' : 'Save'}
-        </button>
-      );
-    }
-
     if (this.props.model.result !== null && !this.props.model.loading) {
       chartOptionsBar = <div className="chart-options clearfix">
                           <div className="pull-left">

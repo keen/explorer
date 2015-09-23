@@ -3338,7 +3338,9 @@ var Explorer = React.createClass({displayName: "Explorer",
   },
 
   render: function() {
-    var queryPaneTabs,
+    var cacheToggle,
+        queryPane,
+        queryPaneTabs,
         browseListNotice,
         browseEmptyContent;
 
@@ -3348,6 +3350,7 @@ var Explorer = React.createClass({displayName: "Explorer",
                                      toggleCallback: this.toggleQueryPane, 
                                      createNewQuery: this.createNewQuery, 
                                      persisted: ExplorerUtils.isPersisted(this.state.activeExplorer)});
+      cacheToggle = React.createElement(CacheToggle, null);
       if (this.state.appState.fetchingPersistedExplorers) {
         browseListNotice = React.createElement(Notice, {notice: { icon: 'info-sign', text: 'Loading saved queries...', type: 'info'}, closable: false})
       } else {
@@ -3355,7 +3358,6 @@ var Explorer = React.createClass({displayName: "Explorer",
       }
     }
 
-    var queryPane;
     if (!this.props.persistence || this.state.activeQueryPane === 'build') {
       queryPane = React.createElement(QueryBuilder, {ref: "query-builder", 
                                 model: this.state.activeExplorer, 
@@ -3392,13 +3394,14 @@ var Explorer = React.createClass({displayName: "Explorer",
                            saveQueryClick: this.saveQueryClick, 
                            onOpenCSVExtraction: this.onOpenCSVExtraction, 
                            onNameChange: this.onNameChange}), 
-            React.createElement(CacheToggle, null), 
+            cacheToggle, 
             React.createElement(QueryActions, {model: this.state.activeExplorer, 
                           handleRevertChanges: this.handleRevertChanges, 
                           handleQuerySubmit: this.handleQuerySubmit, 
                           clearQuery: this.clearQuery, 
                           removeClick: this.removeSavedQueryClicked, 
-                          user: this.state.user})
+                          user: this.state.user, 
+                          persistence: this.props.persistence})
           )
         ), 
         React.createElement(EventBrowser, {ref: "event-browser", 
@@ -3467,6 +3470,7 @@ var QueryActions = React.createClass({displayName: "QueryActions",
 
   render: function() {
     var revertBtn;
+    var saveBtn;
     var deleteBtn;
     var runButtonClasses = classNames({
       'disabled': this.props.model.loading,
@@ -3477,13 +3481,21 @@ var QueryActions = React.createClass({displayName: "QueryActions",
         React.createElement("button", {className: "btn btn-default margin-right-tiny", onClick: this.props.handleRevertChanges}, "Revert to original")
       );
     }
-    if (this.props.removeClick && this.props.model.user.id === this.props.user.id) {
-      deleteBtn = (
-        React.createElement("button", {type: "button", className: "btn btn-default", onClick: this.props.removeClick}, 
-          "Delete"
+    if (this.props.persistence) {
+      saveBtn = (
+        React.createElement("button", {type: "button", className: "btn btn-success save-query margin-right-tiny", onClick: this.props.saveQueryClick, ref: "save-query", disabled: this.props.model.loading}, 
+          ExplorerUtils.isPersisted(this.props.model) ? 'Update' : 'Save'
         )
       );
+      if (this.props.removeClick && this.props.model.user.id === this.props.user.id) {
+        deleteBtn = (
+          React.createElement("button", {type: "button", className: "btn btn-default", onClick: this.props.removeClick}, 
+            "Delete"
+          )
+        );
+      }  
     }
+    
     return (
       React.createElement("div", {className: "query-actions clearfix"}, 
         React.createElement("div", {className: "row"}, 
@@ -3498,9 +3510,7 @@ var QueryActions = React.createClass({displayName: "QueryActions",
               revertBtn
             ), 
             React.createElement("div", {className: "manage-group pull-left"}, 
-              React.createElement("button", {type: "button", className: "btn btn-success save-query margin-right-tiny", onClick: this.props.saveQueryClick, ref: "save-query", disabled: this.props.model.loading}, 
-                ExplorerUtils.isPersisted(this.props.model) ? 'Update' : 'Save'
-              ), 
+              saveBtn, 
               deleteBtn
             )
           ), 
@@ -4313,14 +4323,6 @@ var Visualization = React.createClass({displayName: "Visualization",
                                 "Email extraction"
                               )
                             );
-    }
-
-    if (this.props.persistence) {
-      saveBtn = (
-        React.createElement("button", {type: "button", disabled: this.props.model.loading, ref: "save-query", className: "btn btn-primary save-query", onClick: this.props.saveQueryClick}, 
-          ExplorerUtils.isPersisted(this.props.model) ? 'Update' : 'Save'
-        )
-      );
     }
 
     if (this.props.model.result !== null && !this.props.model.loading) {

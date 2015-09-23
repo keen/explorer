@@ -664,12 +664,6 @@
 #keen-explorer .btn-primary:hover {
   background-color: #0099b6;
 }
-#keen-explorer .query-builder-buttons {
-  margin-bottom: -10px;
-  padding: 8px 0px;
-  background-color: rgba(0, 0, 0, 0.05);
-  border-top: 1px solid #EEEEEE;
-}
 #keen-explorer .datepicker-wrapper,
 #keen-explorer .timepicker-wrapper {
   position: relative;

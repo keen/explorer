@@ -188,7 +188,9 @@ var Explorer = React.createClass({
   },
 
   render: function() {
-    var queryPaneTabs,
+    var cacheToggle,
+        queryPane,
+        queryPaneTabs,
         browseListNotice,
         browseEmptyContent;
 
@@ -198,6 +200,7 @@ var Explorer = React.createClass({
                                      toggleCallback={this.toggleQueryPane}
                                      createNewQuery={this.createNewQuery}
                                      persisted={ExplorerUtils.isPersisted(this.state.activeExplorer)} />;
+      cacheToggle = <CacheToggle />;
       if (this.state.appState.fetchingPersistedExplorers) {
         browseListNotice = <Notice notice={{ icon: 'info-sign', text: 'Loading saved queries...', type: 'info' }} closable={false} />
       } else {
@@ -205,7 +208,6 @@ var Explorer = React.createClass({
       }
     }
 
-    var queryPane;
     if (!this.props.persistence || this.state.activeQueryPane === 'build') {
       queryPane = <QueryBuilder ref="query-builder"
                                 model={this.state.activeExplorer}
@@ -242,13 +244,14 @@ var Explorer = React.createClass({
                            saveQueryClick={this.saveQueryClick}
                            onOpenCSVExtraction={this.onOpenCSVExtraction}
                            onNameChange={this.onNameChange} />
-            <CacheToggle />
+            {cacheToggle}
             <QueryActions model={this.state.activeExplorer}
                           handleRevertChanges={this.handleRevertChanges}
                           handleQuerySubmit={this.handleQuerySubmit}
                           clearQuery={this.clearQuery}
                           removeClick={this.removeSavedQueryClicked}
-                          user={this.state.user} />
+                          user={this.state.user}
+                          persistence={this.props.persistence} />
           </div>
         </div>
         <EventBrowser ref="event-browser"

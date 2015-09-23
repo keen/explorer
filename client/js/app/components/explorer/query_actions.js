@@ -40,6 +40,7 @@ var QueryActions = React.createClass({
 
   render: function() {
     var revertBtn;
+    var saveBtn;
     var deleteBtn;
     var runButtonClasses = classNames({
       'disabled': this.props.model.loading,
@@ -50,13 +51,21 @@ var QueryActions = React.createClass({
         <button className="btn btn-default margin-right-tiny" onClick={this.props.handleRevertChanges}>Revert to original</button>
       );
     }
-    if (this.props.removeClick && this.props.model.user.id === this.props.user.id) {
-      deleteBtn = (
-        <button type="button" className="btn btn-default" onClick={this.props.removeClick}>
-          Delete
+    if (this.props.persistence) {
+      saveBtn = (
+        <button type="button" className="btn btn-success save-query margin-right-tiny" onClick={this.props.saveQueryClick} ref="save-query" disabled={this.props.model.loading}>
+          {ExplorerUtils.isPersisted(this.props.model) ? 'Update' : 'Save'}
         </button>
       );
+      if (this.props.removeClick && this.props.model.user.id === this.props.user.id) {
+        deleteBtn = (
+          <button type="button" className="btn btn-default" onClick={this.props.removeClick}>
+            Delete
+          </button>
+        );
+      }  
     }
+    
     return (
       <div className="query-actions clearfix">
         <div className="row">
@@ -71,9 +80,7 @@ var QueryActions = React.createClass({
               {revertBtn}
             </div>
             <div className="manage-group pull-left">
-              <button type="button" className="btn btn-success save-query margin-right-tiny" onClick={this.props.saveQueryClick} ref="save-query" disabled={this.props.model.loading}>
-                {ExplorerUtils.isPersisted(this.props.model) ? 'Update' : 'Save'}
-              </button>
+              {saveBtn}
               {deleteBtn}
             </div>
           </div>
