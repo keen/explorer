@@ -101,9 +101,9 @@ var QueryBuilder = React.createClass({
                             label="Email to send extraction to"
                             placeholder="your@email.com"
                             value={this.props.model.query.email}
-                            onChange={this.handleChange} />;
+                            onChange={this.handleSelectionWithEvent} />;
         limitField = <LimitField model={this.props.model}
-                                 handleChange={this.handleChange} />;
+                                 handleChange={this.handleSelectionWithEvent} />;
       }
     }
 

@@ -9,7 +9,7 @@ var ExplorerUtils = require('../../utils/ExplorerUtils');
 
 var QueryActions = React.createClass({
 
-  states: {
+  runBtnStates: {
     default: {
       inactive: 'Run Query',
       active: 'Running...'
@@ -29,12 +29,12 @@ var QueryActions = React.createClass({
   },
 
   runButtonText: function() {
-    var btnStates = this.states.default;
+    var btnStates = this.runBtnStates.default;
     
     if (ExplorerUtils.isEmailExtraction(this.props.model)) {
-      btnStates = this.states.emailExtraction;
+      btnStates = this.runBtnStates.emailExtraction;
     } else if (ExplorerUtils.isImmediateExtraction(this.props.model)) {
-      btnStates = this.states.immediateExtraction;
+      btnStates = this.runBtnStates.immediateExtraction;
     }
 
     return this.props.model.loading ? btnStates.active : btnStates.inactive;
@@ -47,6 +47,10 @@ var QueryActions = React.createClass({
     var runButtonClasses = classNames({
       'disabled': this.props.model.loading,
       'btn btn-primary run-query margin-right-tiny': true
+    });
+    var codeSampleBtnClasses = classNames({
+      'btn btn-default code-sample-toggle pull-right': true,
+      'open': !this.props.codeSampleHidden
     });
     if (this.shouldShowRevertButton()) {
       revertBtn = (
@@ -87,7 +91,7 @@ var QueryActions = React.createClass({
             </div>
           </div>
           <div className="col-md-2">
-            <button className="btn btn-default code-sample-toggle pull-right">
+            <button className={codeSampleBtnClasses} onClick={this.props.toggleCodeSample}>
               <span>&lt;/&gt; Embed</span>
             </button>
           </div>

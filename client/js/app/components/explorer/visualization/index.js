@@ -19,13 +19,6 @@ var FormatUtils = require('../../../utils/FormatUtils');
 
 var Visualization = React.createClass({
 
-  toggleCodeSample: function(event) {
-    event.preventDefault();
-    this.setState({
-      'codeSampleHidden': !this.state.codeSampleHidden
-    })
-  },
-
   noticeClosed: function() {
     NoticeActions.clearAll();
   },
@@ -48,12 +41,6 @@ var Visualization = React.createClass({
     });
   },
 
-  getInitialState: function() {
-    return {
-      codeSampleHidden: true
-    };
-  },
-
   componentWillMount: function() {
     this.dataviz = new Keen.Dataviz();
   },
@@ -63,34 +50,12 @@ var Visualization = React.createClass({
   },
 
   render: function() {
-    var chartOptionsBar,
-        chartTitle,
-        saveBtn;
+    var chartTitle;
 
     var chartDetailBarClasses = classNames({
       'chart-detail-bar': true,
       'chart-detail-active': this.props.model.result !== null && !this.props.model.loading
     });
-
-    var codeSampleBtnClasses = classNames({
-      'btn btn-default code-sample-toggle': true,
-      'open': !this.state.codeSampleHidden
-    });
-
-    if (this.props.model.result !== null && !this.props.model.loading) {
-      chartOptionsBar = (
-        <div className="chart-options clearfix">
-          <div className="pull-left">
-            {saveBtn}
-          </div>
-          <div className="pull-right">
-            <button className={codeSampleBtnClasses} onClick={this.toggleCodeSample}>
-              <span>&lt;/&gt; Embed</span>
-            </button>
-          </div>
-        </div>
-      );
-    }
 
     if (this.props.persistence) {
       chartTitle = (
@@ -129,8 +94,8 @@ var Visualization = React.createClass({
           </div>
           <CodeSample ref="codesample"
                       codeSample={ExplorerUtils.getSdkExample(this.props.model, this.props.client)}
-                      hidden={this.state.codeSampleHidden}
-                      onCloseClick={this.toggleCodeSample} />
+                      hidden={this.props.appState.codeSampleHidden}
+                      onCloseClick={this.props.toggleCodeSample} />
         </div>
       </div>
     );

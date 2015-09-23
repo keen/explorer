@@ -17,9 +17,7 @@ var Chart = React.createClass({
 	// ***********************
 
 	buildVizContent: function() {
-	  var model = this.props.model;
-
-	  if (!model.result && model.result !== 0) {
+	  if (!this.props.model.result && this.props.model.result !== 0) {
 	  	return (
 	  	  <div ref="notice" className="big-notice">
 	  	    <div className="alert alert-info">
@@ -29,7 +27,17 @@ var Chart = React.createClass({
 	  	);
 	  }
 
-	  if (!ExplorerUtils.resultCanBeVisualized(model)) {
+	  if (ExplorerUtils.isEmailExtraction(this.props.model)) {
+	  	return (
+	  	  <div ref="notice" className="big-notice">
+	  	    <div className="alert alert-info">
+	  	      {'Email extractions don\'t have visualizations.'}
+	  	    </div>
+	  	  </div>
+	  	);
+	  }
+
+	  if (!ExplorerUtils.resultCanBeVisualized(this.props.model)) {
 	  	return (
 	  	  <div ref="notice" className="big-notice">
 	  	    <div className="alert alert-danger">
@@ -40,7 +48,7 @@ var Chart = React.createClass({
 	  	);
 	  }
 
-	  if (ExplorerUtils.resultCanBeVisualized(model)) {
+	  if (ExplorerUtils.resultCanBeVisualized(this.props.model)) {
 	    return this.buildViz();
 	  } else {
 	  	this.props.dataviz.destroy();

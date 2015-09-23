@@ -5,7 +5,6 @@
 var React = require('react');
 var _ = require('lodash');
 var EventBrowser = require('../common/event_browser.js');
-var CSVExtraction = require('./csv_extraction.js');
 var Visualization = require('./visualization/index.js')
 var QueryPaneTabs = require('./query_pane_tabs.js');;
 var QueryBuilder = require('./query_builder/index.js');
@@ -18,6 +17,7 @@ var ExplorerStore = require('../../stores/ExplorerStore');
 var UserStore = require('../../stores/UserStore');
 var ExplorerActions = require('../../actions/ExplorerActions');
 var NoticeActions = require('../../actions/NoticeActions');
+var AppStateActions = require('../../actions/AppStateActions');
 var NoticeStore = require('../../stores/NoticeStore');
 var AppStateStore = require('../../stores/AppStateStore');
 var ExplorerUtils = require('../../utils/ExplorerUtils');
@@ -119,10 +119,6 @@ var Explorer = React.createClass({
     this.refs['filter-manager'].refs.modal.open();
   },
 
-  onOpenCSVExtraction: function() {
-    this.refs['csv-extraction'].refs.modal.open();
-  },
-
   onNameChange: function(event) {
     ExplorerActions.update(this.state.activeExplorer.id, { name: event.target.value });
   },
@@ -177,6 +173,13 @@ var Explorer = React.createClass({
     return index;
   },
 
+  toggleCodeSample: function(event) {
+    event.preventDefault();
+    AppStateActions.update({
+      codeSampleHidden: !this.state.appState.codeSampleHidden
+    });
+  },
+
   // Lifecycle hooks
 
   componentDidMount: function() {
@@ -210,7 +213,9 @@ var Explorer = React.createClass({
                                      toggleCallback={this.toggleQueryPane}
                                      createNewQuery={this.createNewQuery}
                                      persisted={ExplorerUtils.isPersisted(this.state.activeExplorer)} />;
-      cacheToggle = <CacheToggle />;
+      if (!ExplorerUtils.isEmailExtraction(this.state.activeExplorer)) {
+        cacheToggle = <CacheToggle />;
+      }
       if (this.state.appState.fetchingPersistedExplorers) {
         browseListNotice = <Notice notice={{ icon: 'info-sign', text: 'Loading saved queries...', type: 'info' }} closable={false} />
       } else {
@@ -253,8 +258,9 @@ var Explorer = React.createClass({
                            project={this.props.project}
                            persistence={this.props.persistence}
                            saveQueryClick={this.saveQueryClick}
-                           onOpenCSVExtraction={this.onOpenCSVExtraction}
-                           onNameChange={this.onNameChange} />
+                           onNameChange={this.onNameChange}
+                           appState={this.state.appState}
+                           toggleCodeSample={this.toggleCodeSample} />
             {cacheToggle}
             <QueryActions model={this.state.activeExplorer}
                           handleRevertChanges={this.handleRevertChanges}
@@ -262,7 +268,9 @@ var Explorer = React.createClass({
                           clearQuery={this.clearQuery}
                           removeClick={this.removeSavedQueryClicked}
                           user={this.state.user}
-                          persistence={this.props.persistence} />
+                          persistence={this.props.persistence}
+                          codeSampleHidden={this.state.appState.codeSampleHidden}
+                          toggleCodeSample={this.toggleCodeSample} />
           </div>
         </div>
         <EventBrowser ref="event-browser"

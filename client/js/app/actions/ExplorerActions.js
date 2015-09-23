@@ -122,30 +122,47 @@ var ExplorerActions = {
     });
   },
 
-  runEmailExtraction: function(client, id, callback) {
+  runEmailExtraction: function(client, id) {
     var explorer = ExplorerStore.get(id);
 
     var valid = ValidationUtils.runValidations(ExplorerValidations.explorer, explorer);
     if (!valid.isValid) {
-      callback({ success: false, error: valid.lastError });
+      NoticeActions.create({ text: valid.lastError, type: 'error', icon: 'remove-sign' });
       return;
     }
 
     var valid = ValidationUtils.runValidations(ExplorerValidations.emailExtractionExplorer, explorer);
     if (!valid.isValid) {
-      callback({ success: false, error: valid.lastError });
+      NoticeActions.create({ text: valid.lastError, type: 'error', icon: 'remove-sign' });
       return;
     }
+
+    NoticeActions.clearAll();
+
+    AppDispatcher.dispatch({
+      actionType: ExplorerConstants.EXPLORER_UPDATE,
+      id: explorer.id,
+      updates: { loading: true }
+    });
 
     var attrs = ExplorerUtils.queryJSON(explorer);
     ExplorerUtils.runQuery({
       client: client,
       query: attrs,
       success: function(res) {
-        callback({ success: true });
+        AppDispatcher.dispatch({
+          actionType: ExplorerConstants.EXPLORER_QUERY_SUCCESS,
+          explorer: explorer
+        });
+        NoticeActions.clearAll();
+        NoticeActions.create({ text: "Email extraction successfully requested. Check your email ("+explorer.query.email+").", type: 'success', icon: 'check' });
+        ExplorerActions.update(explorer.id, {
+          result: res,
+          loading: false
+        });
       },
       error: function(err) {
-        callback({ success: false, err: err.message });
+        NoticeActions.create({ text: err.message, type: 'error', icon: 'remove-sign' });
       }
     });  
   },

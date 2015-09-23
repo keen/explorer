@@ -126,6 +126,9 @@ function _create(attrs) {
 
 function _update(id, updates) {
   var newModel = _.assign({}, _explorers[id], updates);
+  if (!_.isNull(newModel.query.latest) && !ExplorerUtils.isEmailExtraction(newModel)) {
+    newModel.query.latest = null;
+  }
   if (updates.id && updates.id !== id) {
     _explorers[updates.id] = newModel;
     delete _explorers[id];
