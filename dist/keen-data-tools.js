@@ -4615,7 +4615,7 @@ var _explorers = {};
 function _defaultAttrs(){
   return {
     id: FormatUtils.generateRandomId("TEMP-"),
-    name: null,
+    query_name: null,
     active: false,
     saving: false,
     error: null,
@@ -4775,7 +4775,7 @@ function _updateFilter(id, index, updates) {
 
 function _clear(id) {
   var model = _explorers[id];
-  _explorers[id] = _.assign({}, _defaultAttrs(), _.pick(model, ['id', 'name', 'active', 'user', 'originalModel']));
+  _explorers[id] = _.assign({}, _defaultAttrs(), _.pick(model, ['id', 'query_name', 'active', 'user', 'originalModel']));
 }
 
 var ExplorerStore = _.assign({}, EventEmitter.prototype, {
@@ -6120,11 +6120,11 @@ module.exports = {
 
   explorer: {
 
-    name: {
-      msg: 'You must give your saved query a name.',
+    query_name: {
+      msg: 'You must give your saved query a query name.',
       validator: function(explorer) {
         if (!explorer.saving) return true;
-        return (explorer.name !== null && explorer.name !== undefined && typeof explorer.name === "string" && explorer.name.length > 0);
+        return (explorer.query_name !== null && explorer.query_name !== undefined && typeof explorer.query_name === "string" && explorer.query_name.length > 0);
       }
     },
 
@@ -6204,6 +6204,7 @@ module.exports = {
   }
   
 };
+
 },{"../utils/FilterUtils":57,"../utils/ValidationUtils":61,"../validations/FilterValidations":63,"lodash":82}],63:[function(require,module,exports){
 var ValidationUtils = require('../utils/ValidationUtils');
 var FormatUtils = require('../utils/FormatUtils');
