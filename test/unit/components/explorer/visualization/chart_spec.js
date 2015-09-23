@@ -18,7 +18,6 @@ describe('components/explorer/visualization/chart', function() {
   });
 
   describe('setup', function() {
-
     it('is of the right type', function() {
       assert.isTrue(TestUtils.isCompositeComponentWithType(this.component, Chart));
     });
@@ -26,6 +25,13 @@ describe('components/explorer/visualization/chart', function() {
       var message = "Let's go exploring!";
       assert.equal(this.component.refs.notice.getDOMNode().textContent, message);
     });
-
+    it('shows the correct message about email extractions ', function () {
+      this.model.query.analysis_type = 'extraction';
+      this.model.query.email = 'someone@keen.io';
+      this.model.result = { success: true };
+      this.component = TestUtils.renderIntoDocument(<Chart model={this.model} dataviz={this.dataviz} />);
+      var message = "Email extractions don't have visualizations.";
+      assert.equal(this.component.refs.notice.getDOMNode().textContent, message);
+    });
   });
 });
