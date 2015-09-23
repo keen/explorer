@@ -127,7 +127,7 @@ function _create(attrs) {
 function _update(id, updates) {
   var newModel = _.assign({}, _explorers[id], updates);
   // If we're no longer doing an email extraction, remove the latest and email field.
-  if (!_.isNull(newModel.query.latest) && !ExplorerUtils.isEmailExtraction(newModel)) {
+  if (!ExplorerUtils.isEmailExtraction(newModel)) {
     newModel.query.latest = null;
     newModel.query.email = null;
   }

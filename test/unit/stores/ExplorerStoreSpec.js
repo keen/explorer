@@ -160,7 +160,7 @@ describe('stores/ExplorerStore', function() {
   });
   
   describe('update', function () {
-    it('should properly upadte the correct explorer', function () {
+    it('should properly update the correct explorer', function () {
       ExplorerActions.create({
         id: 'SOME_ID',
         query: {
@@ -212,6 +212,114 @@ describe('stores/ExplorerStore', function() {
       var explorers = ExplorerStore.getAll();
       assert.lengthOf(Object.keys(explorers), 1);
       assert.propertyVal(explorers, 'abc123');
+    });
+    describe('clearing values', function () {
+      it('should set email to null if updating analysis type to something that is not extraction', function () {
+        ExplorerActions.create({
+          id: 'SOME_ID',
+          name: 'A saved query',
+          query: {
+            email: 'someone@keen.io',
+            latest: '1000',
+            analysis_type: 'extraction',
+            event_collection: 'clicks',
+            timeframe: 'this_1_days'
+          },
+          visualization: {
+            chart_type: 'metric'
+          }
+        });
+        ExplorerActions.update('SOME_ID', {
+          query: {
+            event_collection: 'clicks',
+            analysis_type: 'count',
+            timeframe: 'this_1_days',
+            email: 'someone@keen.io',
+            latest: '1000'
+          }
+        });
+        var explorers = ExplorerStore.getAll();
+        var explorer = explorers[Object.keys(explorers)[0]];
+        assert.deepPropertyVal(explorer, 'query.email', null);
+      });
+      it('should set latest to null if updating analysis type to something that is not extraction', function () {
+        ExplorerActions.create({
+          id: 'SOME_ID',
+          name: 'A saved query',
+          query: {
+            email: 'someone@keen.io',
+            latest: '1000',
+            analysis_type: 'extraction',
+            event_collection: 'clicks',
+            timeframe: 'this_1_days'
+          },
+          visualization: {
+            chart_type: 'metric'
+          }
+        });
+        ExplorerActions.update('SOME_ID', {
+          query: {
+            event_collection: 'clicks',
+            analysis_type: 'count',
+            timeframe: 'this_1_days',
+            email: 'someone@keen.io',
+            latest: '1000'
+          }
+        });
+        var explorers = ExplorerStore.getAll();
+        var explorer = explorers[Object.keys(explorers)[0]];
+        assert.deepPropertyVal(explorer, 'query.latest', null);
+      });
+      it('does not clear the email field if the analysis type is extraction', function () {
+        ExplorerActions.create({
+          id: 'SOME_ID',
+          name: 'A saved query',
+          query: {
+            analysis_type: 'count',
+            event_collection: 'clicks',
+            timeframe: 'this_1_days'
+          },
+          visualization: {
+            chart_type: 'metric'
+          }
+        });
+        ExplorerActions.update('SOME_ID', {
+          query: {
+            event_collection: 'clicks',
+            analysis_type: 'extraction',
+            timeframe: 'this_1_days',
+            email: 'someone@keen.io'
+          }
+        });
+        var explorers = ExplorerStore.getAll();
+        var explorer = explorers[Object.keys(explorers)[0]];
+        assert.deepPropertyVal(explorer, 'query.email', 'someone@keen.io');
+      });
+      it('does not clear the latest field if the analysis type is extraction', function () {
+        ExplorerActions.create({
+          id: 'SOME_ID',
+          name: 'A saved query',
+          query: {
+            analysis_type: 'count',
+            event_collection: 'clicks',
+            timeframe: 'this_1_days'
+          },
+          visualization: {
+            chart_type: 'metric'
+          }
+        });
+        ExplorerActions.update('SOME_ID', {
+          query: {
+            event_collection: 'clicks',
+            analysis_type: 'extraction',
+            timeframe: 'this_1_days',
+            latest: '1000'
+          }
+        });
+        var explorers = ExplorerStore.getAll();
+        var explorer = explorers[Object.keys(explorers)[0]];
+        assert.deepPropertyVal(explorer, 'query.latest', '1000');
+      });
     });
   });
 
