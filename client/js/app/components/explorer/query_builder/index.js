@@ -13,11 +13,11 @@ var TargetPropertyField = require('./target_property_field.js');
 var PercentileField = require('./percentile_field.js');
 var GroupByField = require('./group_by_field.js');
 var ExtractionOptions = require('./extraction_options.js');
-var LatestField = require('./latest_field.js');
 var Timeframe = require('../../common/timeframe.js');
 var Interval = require('../../common/interval.js');
 var Input = require('../../common/input.js');
 var ApiUrl = require('./api_url.js');
+var ExplorerStore = require('../../../stores/ExplorerStore');
 var ExplorerUtils = require('../../../utils/ExplorerUtils');
 var ProjectUtils = require('../../../utils/ProjectUtils');
 var ExplorerActions = require('../../../actions/ExplorerActions');
@@ -33,7 +33,7 @@ function validFilters(filters) {
 var QueryBuilder = React.createClass({
 
   // Event callbacks
-
+  
   handleSelectionWithEvent: function(event) {
     this.handleChange(event.target.name, event.target.value);
   },
@@ -60,6 +60,15 @@ var QueryBuilder = React.createClass({
     });
   },
 
+  handleRevertChanges: function(event) {
+    event.preventDefault();
+    ExplorerActions.revertActiveChanges();
+  },
+
+  shouldShowRevertButton: function() {
+    return ExplorerUtils.isPersisted(this.props.model) && this.props.model.originalModel && this.props.model.originalModel.query && !_.isEqual(this.props.model.query, this.props.model.originalModel.query);
+  },
+
   // React methods
 
   render: function() {
@@ -68,10 +77,30 @@ var QueryBuilder = React.createClass({
         percentileField,
         intervalField,
         extractionOptions,
-        emailField,
-        latestField,
         analysisType = this.props.model.query.analysis_type,
+        clearButton,
         apiQueryUrl = ExplorerUtils.getApiQueryUrl(this.props.client, this.props.model);
+
+    if (!this.shouldShowRevertButton()) {
+      clearButton = (
+        <button type="reset" role="clear-query"
+          className="btn btn-default btn-block"
+          id="clear-explorer-query"
+          onClick={this.props.handleClearQuery}>
+            Clear
+        </button>
+      );
+    }
+    else {
+      clearButton = (
+        <button
+          className="btn btn-default btn-block"
+          onClick={this.handleRevertChanges}
+          role="revert-query">
+            Revert to original
+        </button>
+      );
+    }
 
     if (analysisType !== 'extraction') {
       groupByField = <GroupByField ref="group-by-field"
@@ -94,17 +123,8 @@ var QueryBuilder = React.createClass({
     }
     if (analysisType === 'extraction') {
       extractionOptions = <ExtractionOptions model={this.props.model}
+                                             handleChange={this.handleChange}
                                              setExtractionType={this.props.setExtractionType} />;
-      if (ExplorerUtils.isEmailExtraction(this.props.model)) {
-        emailField = <Input type="text"
-                            name="email"
-                            label="Email to send extraction to"
-                            placeholder="your@email.com"
-                            value={this.props.model.query.email}
-                            onChange={this.handleSelectionWithEvent} />;
-        latestField = <LatestField model={this.props.model}
-                                  handleChange={this.handleSelectionWithEvent} />;
-      }
     }
 
     return (
@@ -120,8 +140,6 @@ var QueryBuilder = React.createClass({
                              options={ProjectUtils.getConstant('ANALYSIS_TYPES')}
                              handleChange={this.handleChange} />
           {extractionOptions}
-          {emailField}
-          {latestField}
           {targetPropertyField}
           {percentileField}
           <Timeframe ref="timeframe"
@@ -137,7 +155,10 @@ var QueryBuilder = React.createClass({
                           fieldsCount={validFilters(this.props.model.query.filters).length} />
           </div>
           {intervalField}
-          <ApiUrl url={ExplorerUtils.getApiQueryUrl(this.props.client, this.props.model)} />  
+          <div className="button-set-clear-toggle">
+            {clearButton}
+          </div>
+          <ApiUrl url={ExplorerUtils.getApiQueryUrl(this.props.client, this.props.model)} />
         </form>
       </section>
     );

@@ -8,6 +8,7 @@ var Interval = require('../../../../../client/js/app/components/common/interval.
 var ProjectUtils = require('../../../../../client/js/app/utils/ProjectUtils');;
 var ExplorerActions = require('../../../../../client/js/app/actions/ExplorerActions');
 var Input = require('../../../../../client/js/app/components/common/select.js');
+var ExtractionOptions = require('../../../../../client/js/app/components/explorer/query_builder/extraction_options.js');
 var ReactSelect = require('../../../../../client/js/app/components/common/react_select.js');
 var React = require('react/addons');
 var TestUtils = React.addons.TestUtils;
@@ -65,6 +66,19 @@ describe('components/explorer/query_builder/index', function() {
       this.component.forceUpdate();
       assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, ReactSelect), 3);
     });
+
+    it('has the clear button button', function () {
+      assert.lengthOf($R(this.component).find('[role="clear-query"]').components, 1);
+    });
+
+    describe('button event bindings', function () {
+      it('calls clearQuery when the clear query button is clicked', function () {
+        var stub = sinon.stub();
+        this.component = this.renderComponent({ handleClearQuery: stub });
+        TestUtils.Simulate.click($R(this.component).find('[role="clear-query"]').components[0].getDOMNode());
+        assert.isTrue(stub.calledOnce);
+      });
+    });
   });
 
   describe('field change reactions', function () {
@@ -93,34 +107,20 @@ describe('components/explorer/query_builder/index', function() {
           assert.lengthOf(TestUtils.scryRenderedDOMComponentsWithClass(this.component, 'percentile'), 1);
         });
       });
-      describe('analysis type is set to extraction and email is an empty string', function () {
-        it('shows the email field', function() {
+      describe('analysis type is set to extraction', function () {
+        it('shows the extraction options component', function() {
           this.model.query.event_collection = 'click';
           this.model.query.analysis_type = 'extraction';
-          this.model.query.email = '';
           this.component.forceUpdate();
-          assert.lengthOf($R(this.component).find('input[name="email"]').components, 1);
-        });
-        it('shows the email field', function() {
-          this.model.query.event_collection = 'click';
-          this.model.query.analysis_type = 'extraction';
-          this.model.query.email = '';
-          this.component.forceUpdate();
-          assert.lengthOf($R(this.component).find('input[name="latest"]').components, 1);
+          assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, ExtractionOptions), 1);
         });
       });
       describe('analysis type is not extraction', function () {
-        it('does not shows the email field', function() {
+        it('does not show the extraction options component', function() {
           this.model.query.event_collection = 'click';
           this.model.query.analysis_type = 'count';
           this.component.forceUpdate();
-          assert.lengthOf($R(this.component).find('input[name="email"]').components, 0);
-        });
-        it('does not shows the email field', function() {
-          this.model.query.event_collection = 'click';
-          this.model.query.analysis_type = 'count';
-          this.component.forceUpdate();
-          assert.lengthOf($R(this.component).find('input[name="latest"]').components, 0);
+          assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, ExtractionOptions), 0);
         });
       });
     });
@@ -247,5 +247,28 @@ describe('components/explorer/query_builder/index', function() {
     });
   });
 
+  describe('helper functions', function () {
+    describe('shouldShowRevertButton', function () {
+      it('should return true if the model and its original are different', function () {
+        var model = TestHelpers.createExplorerModel();
+        model.id = 'abc-123';
+        model.query.event_collection = 'clicks';
+        model.query.analysis_type = 'count';
+        model.originalModel = _.cloneDeep(model);
+        model.query.event_collection = 'not clicks';
+        this.component = this.renderComponent({ model: model });
+        assert.isTrue(this.component.shouldShowRevertButton());
+      });
+      it('should return false if the model and its original are the same', function () {
+        var model = TestHelpers.createExplorerModel();
+        model.id = 'abc-123';
+        model.query.event_collection = 'clicks';
+        model.query.analysis_type = 'count';
+        model.originalModel = _.cloneDeep(model);
+        this.component = this.renderComponent({ model: model });
+        assert.isFalse(this.component.shouldShowRevertButton());
+      });
+    });
+  });
 
 });

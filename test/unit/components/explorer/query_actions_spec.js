@@ -14,13 +14,11 @@ describe('components/explorer/query_actions', function() {
   beforeEach(function() {
     this.model = TestHelpers.createExplorerModel();
     this.model.user = { id: 1 };
-    this.clearStub = sinon.stub();
     this.handleSubmitStub = sinon.stub();
     this.handleRevertStub = sinon.stub();
 
     this.defaultProps = {
       handleQuerySubmit: this.handleSubmitStub,
-      clearQuery: this.clearStub,
       model: this.model,
       handleRevertChanges: this.handleRevertStub,
       persistence: null,
@@ -44,12 +42,6 @@ describe('components/explorer/query_actions', function() {
         it('has the run-query button', function () {
           assert.lengthOf($R(this.component).find('[role="run-query"]').components, 1);
         });
-        it('has the clear button button', function () {
-          assert.lengthOf($R(this.component).find('[role="clear-query"]').components, 1);
-        });
-        it('has the clear button button', function () {
-          assert.lengthOf($R(this.component).find('[role="clear-query"]').components, 1);
-        });  
       });
       describe('dynamic buttons', function () {
         describe('without persistence', function () {
@@ -111,12 +103,6 @@ describe('components/explorer/query_actions', function() {
       TestUtils.Simulate.click($R(this.component).find('[role="save-query"]').components[0].getDOMNode());
       assert.isTrue(stub.calledOnce);
     });
-    it('calls clearQuery when the clear query button is clicked', function () {
-      var stub = sinon.stub();
-      this.component = this.renderComponent({ clearQuery: stub });
-      TestUtils.Simulate.click($R(this.component).find('[role="clear-query"]').components[0].getDOMNode());
-      assert.isTrue(stub.calledOnce);
-    });
     it('calls removeClick when the delete query button is clicked', function () {
       var stub = sinon.stub();
       this.component = this.renderComponent({ persistence: {}, removeClick: stub });
@@ -175,30 +161,6 @@ describe('components/explorer/query_actions', function() {
         this.model.loading = true;
         this.component.forceUpdate();
         assert.equal($R(this.component).find('[role="run-query"]').text(), 'Running...');
-      });
-    });
-  });
-
-  describe('helper functions', function () {
-    describe('shouldShowRevertButton', function () {
-      it('should return true if the model and its original are different', function () {
-        var model = TestHelpers.createExplorerModel();
-        model.id = 'abc-123';
-        model.query.event_collection = 'clicks';
-        model.query.analysis_type = 'count';
-        model.originalModel = _.cloneDeep(model);
-        model.query.event_collection = 'not clicks';
-        this.component = this.renderComponent({ model: model });
-        assert.isTrue(this.component.shouldShowRevertButton());
-      });
-      it('should return false if the model and its original are the same', function () {
-        var model = TestHelpers.createExplorerModel();
-        model.id = 'abc-123';
-        model.query.event_collection = 'clicks';
-        model.query.analysis_type = 'count';
-        model.originalModel = _.cloneDeep(model);
-        this.component = this.renderComponent({ model: model });
-        assert.isFalse(this.component.shouldShowRevertButton());
       });
     });
   });

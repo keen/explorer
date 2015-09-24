@@ -46,6 +46,7 @@ require('./modules/persistence/rest_spec.js');
 require('./components/explorer/index_spec.js');
 require('./components/explorer/query_actions_spec.js');
 require('./components/explorer/query_builder/index_spec.js');
+require('./components/explorer/query_builder/extraction_options_spec.js');
 require('./components/explorer/visualization/index_spec.js');
 require('./components/explorer/visualization/chart_spec.js');
 require('./components/explorer/saved_queries/browse_queries_spec.js');

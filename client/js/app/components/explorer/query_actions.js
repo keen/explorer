@@ -24,13 +24,9 @@ var QueryActions = React.createClass({
     }
   },
 
-  shouldShowRevertButton: function() {
-    return ExplorerUtils.isPersisted(this.props.model) && this.props.model.originalModel && this.props.model.originalModel.query && !_.isEqual(this.props.model.query, this.props.model.originalModel.query);
-  },
-
   runButtonText: function() {
     var btnStates = this.runBtnStates.default;
-    
+
     if (ExplorerUtils.isEmailExtraction(this.props.model)) {
       btnStates = this.runBtnStates.emailExtraction;
     } else if (ExplorerUtils.isImmediateExtraction(this.props.model)) {
@@ -41,37 +37,31 @@ var QueryActions = React.createClass({
   },
 
   render: function() {
-    var revertBtn;
-    var saveBtn;
-    var deleteBtn;
-    var runButtonClasses = classNames({
-      'disabled': this.props.model.loading,
-      'btn btn-primary run-query margin-right-tiny': true
-    });
-    var codeSampleBtnClasses = classNames({
-      'btn btn-default code-sample-toggle pull-right': true,
-      'open': !this.props.codeSampleHidden
-    });
-    if (this.shouldShowRevertButton()) {
-      revertBtn = (
-        <button className="btn btn-default margin-right-tiny" onClick={this.props.handleRevertChanges}>Revert to original</button>
-      );
-    }
-    if (this.props.persistence && !ExplorerUtils.isEmailExtraction(this.props.model) && this.props.model.user.id === this.props.user.id) {
+    var saveBtn,
+        deleteBtn,
+        runButtonClasses = classNames({
+          'disabled': this.props.model.loading,
+          'btn btn-primary run-query': true
+        }),
+        codeSampleBtnClasses = classNames({
+          'btn btn-default code-sample-toggle pull-right': true,
+          'open': !this.props.codeSampleHidden
+        });
+    if (this.props.persistence && !ExplorerUtils.isEmailExtraction(this.props.model) && this.props.user.id === this.props.model.user.id) {
       saveBtn = (
-        <button type="button" className="btn btn-success save-query margin-right-tiny" onClick={this.props.saveQueryClick} disabled={this.props.model.loading} role="save-query">
+        <button type="button" className="btn btn-success save-query" onClick={this.props.saveQueryClick} role="save-query" disabled={this.props.model.loading}>
           {ExplorerUtils.isPersisted(this.props.model) ? 'Update' : 'Save'}
         </button>
       );
       if (this.props.removeClick) {
         deleteBtn = (
-          <button type="button" className="btn btn-default" role="delete-query" onClick={this.props.removeClick}>
+          <button type="button" role="delete-query" className="btn btn-link" onClick={this.props.removeClick}>
             Delete
           </button>
         );
       }
     }
-    
+
     return (
       <div className="query-actions clearfix">
         <div className="row">
@@ -80,10 +70,6 @@ var QueryActions = React.createClass({
               <button type="submit" role="run-query" className={runButtonClasses} id="run-query" onClick={this.props.handleQuerySubmit}>
                 {this.runButtonText()}
               </button>
-              <button type="reset" role="clear-query" className="btn btn-default margin-right-tiny" id="clear-explorer-query" onClick={this.props.clearQuery}>
-                Clear
-              </button>
-              {revertBtn}
             </div>
             <div className="manage-group pull-left">
               {saveBtn}

@@ -45,31 +45,32 @@ var CacheToggle = React.createClass({
       "hide": !this.state.settingsOpen
     });
 
+    var cacheToggleLabel = this.state.cached ? 'Caching enabled' : 'Enable caching';
+
     return (
       <div className={parentClasses}>
+
+        <label htmlFor="cache">
+          <input type="checkbox" name="cache" id="cache" onChange={this.setCached} />
+          {cacheToggleLabel}
+        </label>
+
+        <span className={cacheDetailsClasses}>
+          Last updated 43 mins ago
+          <a href="#" onClick={this.setSettingsOpen} className="margin-left-tiny">
+            <span className="icon icon-cog glyphicon-cog glyphicon"></span>
+          </a>
+        </span>
+
+        <span className={cacheSettingsClasses}>
+          Refresh every <input type="text" name="refresh_rate" value={this.state.refresh_rate} className="form-control" onChange={this.setRefreshRate} /> minutes
+        </span>
+
+
+
         <div className="row">
-          <div className="col-md-3">
-            <label htmlFor="cache" className="margin-right-small">
-              Caching enabled
-              <input type="checkbox" name="cache" onChange={this.setCached} />
-            </label>    
-          </div>
-          <div className="col-md-3">
-            <div className={cacheDetailsClasses}>
-              <p>
-                Last updated 43 mins ago
-                <a href="#" onClick={this.setSettingsOpen} className="margin-left-tiny">
-                  <span className="icon icon-cog glyphicon-cog glyphicon"></span>
-                </a>
-              </p>
-            </div>
-          </div>
           <div className="col-md-5">
-            <div className={cacheSettingsClasses}>
-              <p>
-                Refresh every <input type="text" name="refresh_rate" value={this.state.refresh_rate} className="form-control" onChange={this.setRefreshRate} /> minutes
-              </p>
-            </div>
+
           </div>
         </div>
       </div>
