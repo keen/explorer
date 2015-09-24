@@ -5,7 +5,6 @@
 var React = require('react');
 var ExplorerUtils = require('../../../utils/ExplorerUtils');
 var Input = require('../../common/input.js');
-var LimitField = require('./limit_field.js');
 
 var ExtractionOptions = React.createClass({
 
@@ -28,8 +27,18 @@ var ExtractionOptions = React.createClass({
                onChange={this.handleSelectionWithEvent} />
       );
       limitField = (
-        <LimitField model={this.props.model}
-                    handleChange={this.handleSelectionWithEvent} />
+        <div className="form-group">
+          <Input type="text"
+                 name="limit"
+                 label="Limit number of events to extract"
+                 value={this.props.model.query.latest}
+                 placeholder="Eg: 1000"
+                 onChange={this.props.handleChange} />
+          <small className="text-muted">
+            <span className="icon glyphicon glyphicon-info-sign"></span>
+            <span>{'Results are limited to 10 million events'}</span>
+          </small>
+        </div>
       );
     }
 
