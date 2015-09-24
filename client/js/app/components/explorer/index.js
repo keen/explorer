@@ -68,7 +68,7 @@ var Explorer = React.createClass({
   },
 
   removeSavedQueryClicked: function() {
-    if (confirm("Are you sure you want to delete this query?")) {
+    if (confirm('Are you sure you want to delete this saved query?')) {
       ExplorerActions.destroy(this.props.persistence, this.state.activeExplorer.id);
     }
   },

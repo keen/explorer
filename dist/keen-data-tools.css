@@ -1807,12 +1807,12 @@
   border-top: medium none;
   padding: 10px;
 }
-#keen-explorer .query-actions .run-group {
-  border-right: 1px solid #D7D7D7;
-  margin-right: 10px;
+#keen-explorer .query-actions .manage-group {
+  border-left: 1px solid #D7D7D7;
+  margin-left: 10px;
 }
-#keen-explorer .query-actions .run-group .btn {
-  margin-right: 10px;
+#keen-explorer .query-actions .manage-group .btn {
+  margin-left: 10px;
 }
 #keen-explorer .query-actions .btn-link {
   color: #808080;

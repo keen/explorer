@@ -3109,7 +3109,7 @@ var Explorer = React.createClass({displayName: "Explorer",
   },
 
   removeSavedQueryClicked: function() {
-    if (confirm("Are you sure you want to delete this query?")) {
+    if (confirm('Are you sure you want to delete this saved query?')) {
       ExplorerActions.destroy(this.props.persistence, this.state.activeExplorer.id);
     }
   },
@@ -3390,22 +3390,18 @@ var QueryActions = React.createClass({displayName: "QueryActions",
 
     return (
       React.createElement("div", {className: "query-actions clearfix"}, 
-        React.createElement("div", {className: "row"}, 
-          React.createElement("div", {className: "col-md-10 clearfix"}, 
-            React.createElement("div", {className: "run-group pull-left"}, 
-              React.createElement("button", {type: "submit", ref: "runquery", className: runButtonClasses, id: "run-query", onClick: this.props.handleQuerySubmit}, 
-                this.runButtonText()
-              )
-            ), 
-            React.createElement("div", {className: "manage-group pull-left"}, 
-              saveBtn, 
-              deleteBtn
-            )
-          ), 
-          React.createElement("div", {className: "col-md-2"}, 
-            React.createElement("button", {className: codeSampleBtnClasses, onClick: this.props.toggleCodeSample}, 
-              React.createElement("span", null, "</> Embed")
-            )
+        React.createElement("div", {className: "run-group pull-left"}, 
+          React.createElement("button", {type: "submit", ref: "runquery", className: runButtonClasses, id: "run-query", onClick: this.props.handleQuerySubmit}, 
+            this.runButtonText()
+          )
+        ), 
+        React.createElement("div", {className: "manage-group pull-left"}, 
+          saveBtn, 
+          deleteBtn
+        ), 
+        React.createElement("div", {className: "pull-right"}, 
+          React.createElement("button", {className: codeSampleBtnClasses, onClick: this.props.toggleCodeSample}, 
+            React.createElement("span", null, "</> Embed")
           )
         )
       )

@@ -65,23 +65,19 @@ var QueryActions = React.createClass({
 
     return (
       <div className="query-actions clearfix">
-        <div className="row">
-          <div className="col-md-10 clearfix">
-            <div className="run-group pull-left">
-              <button type="submit" ref="runquery" className={runButtonClasses} id="run-query" onClick={this.props.handleQuerySubmit}>
-                {this.runButtonText()}
-              </button>
-            </div>
-            <div className="manage-group pull-left">
-              {saveBtn}
-              {deleteBtn}
-            </div>
-          </div>
-          <div className="col-md-2">
-            <button className={codeSampleBtnClasses} onClick={this.props.toggleCodeSample}>
-              <span>&lt;/&gt; Embed</span>
-            </button>
-          </div>
+        <div className="run-group pull-left">
+          <button type="submit" ref="runquery" className={runButtonClasses} id="run-query" onClick={this.props.handleQuerySubmit}>
+            {this.runButtonText()}
+          </button>
+        </div>
+        <div className="manage-group pull-left">
+          {saveBtn}
+          {deleteBtn}
+        </div>
+        <div className="pull-right">
+          <button className={codeSampleBtnClasses} onClick={this.props.toggleCodeSample}>
+            <span>&lt;/&gt; Embed</span>
+          </button>
         </div>
       </div>
     );
