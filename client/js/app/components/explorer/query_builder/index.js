@@ -13,7 +13,6 @@ var TargetPropertyField = require('./target_property_field.js');
 var PercentileField = require('./percentile_field.js');
 var GroupByField = require('./group_by_field.js');
 var ExtractionOptions = require('./extraction_options.js');
-var LimitField = require('./limit_field.js');
 var Timeframe = require('../../common/timeframe.js');
 var Interval = require('../../common/interval.js');
 var Input = require('../../common/input.js');
@@ -34,10 +33,6 @@ function validFilters(filters) {
 var QueryBuilder = React.createClass({
 
   // Event callbacks
-
-  handleSelectionWithEvent: function(event) {
-    this.handleChange(event.target.name, event.target.value);
-  },
 
   handleChange: function(name, value) {
     if (_.isArray(value)) {
@@ -86,8 +81,6 @@ var QueryBuilder = React.createClass({
         percentileField,
         intervalField,
         extractionOptions,
-        emailField,
-        limitField,
         analysisType = this.props.model.query.analysis_type,
         clearButton,
         apiQueryUrl = ExplorerUtils.getApiQueryUrl(this.props.client, this.props.model);
@@ -133,17 +126,8 @@ var QueryBuilder = React.createClass({
     }
     if (analysisType === 'extraction') {
       extractionOptions = <ExtractionOptions model={this.props.model}
+                                             handleChange={this.handleChange}
                                              setExtractionType={this.props.setExtractionType} />;
-      if (ExplorerUtils.isEmailExtraction(this.props.model)) {
-        emailField = <Input type="text"
-                            name="email"
-                            label="Email to send extraction to"
-                            placeholder="your@email.com"
-                            value={this.props.model.query.email}
-                            onChange={this.handleSelectionWithEvent} />;
-        limitField = <LimitField model={this.props.model}
-                                 handleChange={this.handleSelectionWithEvent} />;
-      }
     }
 
     return (
@@ -159,8 +143,6 @@ var QueryBuilder = React.createClass({
                              options={ProjectUtils.getConstant('ANALYSIS_TYPES')}
                              handleChange={this.handleChange} />
           {extractionOptions}
-          {emailField}
-          {limitField}
           {targetPropertyField}
           {percentileField}
           <Timeframe ref="timeframe"

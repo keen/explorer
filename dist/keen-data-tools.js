@@ -3553,27 +3553,47 @@ module.exports = EventCollectionField;
 
 var React = require('react');
 var ExplorerUtils = require('../../../utils/ExplorerUtils');
+var Input = require('../../common/input.js');
+var LimitField = require('./limit_field.js');
 
 var ExtractionOptions = React.createClass({displayName: "ExtractionOptions",
 
+  handleSelectionWithEvent: function(event) {
+    this.props.handleChange(event.target.name, event.target.value);
+  },
+
   render: function(){
+
+    var emailField,
+        limitField;
+
+    if (ExplorerUtils.isEmailExtraction(this.props.model)) {
+      emailField = (
+        React.createElement(Input, {type: "text", 
+               name: "email", 
+               label: "Recipient email address", 
+               placeholder: "your@email.com", 
+               required: "true", 
+               value: this.props.model.query.email, 
+               onChange: this.handleSelectionWithEvent})
+      );
+      limitField = (
+        React.createElement(LimitField, {model: this.props.model, 
+                    handleChange: this.handleSelectionWithEvent})
+      );
+    }
+
     return (
-      React.createElement("div", {className: "extraction-options"}, 
-        React.createElement("div", {className: "row"}, 
-          React.createElement("div", {className: "col-md-6"}, 
-            React.createElement("div", {className: "radio"}, 
-              React.createElement("label", null, 
-                React.createElement("input", {type: "radio", name: "extraction_type", value: "immediate", onChange: this.props.setExtractionType, checked: !ExplorerUtils.isEmailExtraction(this.props.model)}), " Preview lastest ", ExplorerUtils.EXRACTION_EVENT_LIMIT, " events now"
-              )
-            )
+      React.createElement("div", {className: "field-component"}, 
+        React.createElement("div", {className: "extraction-options"}, 
+          React.createElement("label", null, 
+            React.createElement("input", {type: "radio", name: "extraction_type", value: "immediate", onChange: this.props.setExtractionType, checked: !ExplorerUtils.isEmailExtraction(this.props.model)}), " Preview lastest ", ExplorerUtils.EXRACTION_EVENT_LIMIT, " events now"
           ), 
-          React.createElement("div", {className: "col-md-6"}, 
-            React.createElement("div", {className: "radio"}, 
-              React.createElement("label", null, 
-                React.createElement("input", {type: "radio", name: "extraction_type", value: "email", onChange: this.props.setExtractionType, checked: ExplorerUtils.isEmailExtraction(this.props.model)}), " Bulk CSV extration by email"
-              )
-            )
-          )
+          React.createElement("label", null, 
+            React.createElement("input", {type: "radio", name: "extraction_type", value: "email", onChange: this.props.setExtractionType, checked: ExplorerUtils.isEmailExtraction(this.props.model)}), " Bulk CSV extraction by email"
+          ), 
+          emailField, 
+          limitField
         )
       )
     );
@@ -3583,7 +3603,7 @@ var ExtractionOptions = React.createClass({displayName: "ExtractionOptions",
 
 module.exports = ExtractionOptions;
 
-},{"../../../utils/ExplorerUtils":58,"react":302}],34:[function(require,module,exports){
+},{"../../../utils/ExplorerUtils":58,"../../common/input.js":16,"./limit_field.js":36,"react":302}],34:[function(require,module,exports){
 /**
  * @jsx React.DOM
  */
@@ -3654,7 +3674,6 @@ var TargetPropertyField = require('./target_property_field.js');
 var PercentileField = require('./percentile_field.js');
 var GroupByField = require('./group_by_field.js');
 var ExtractionOptions = require('./extraction_options.js');
-var LimitField = require('./limit_field.js');
 var Timeframe = require('../../common/timeframe.js');
 var Interval = require('../../common/interval.js');
 var Input = require('../../common/input.js');
@@ -3675,10 +3694,6 @@ function validFilters(filters) {
 var QueryBuilder = React.createClass({displayName: "QueryBuilder",
 
   // Event callbacks
-
-  handleSelectionWithEvent: function(event) {
-    this.handleChange(event.target.name, event.target.value);
-  },
 
   handleChange: function(name, value) {
     if (_.isArray(value)) {
@@ -3727,8 +3742,6 @@ var QueryBuilder = React.createClass({displayName: "QueryBuilder",
         percentileField,
         intervalField,
         extractionOptions,
-        emailField,
-        limitField,
         analysisType = this.props.model.query.analysis_type,
         clearButton,
         apiQueryUrl = ExplorerUtils.getApiQueryUrl(this.props.client, this.props.model);
@@ -3774,17 +3787,8 @@ var QueryBuilder = React.createClass({displayName: "QueryBuilder",
     }
     if (analysisType === 'extraction') {
       extractionOptions = React.createElement(ExtractionOptions, {model: this.props.model, 
+                                             handleChange: this.handleChange, 
                                              setExtractionType: this.props.setExtractionType});
-      if (ExplorerUtils.isEmailExtraction(this.props.model)) {
-        emailField = React.createElement(Input, {type: "text", 
-                            name: "email", 
-                            label: "Email to send extraction to", 
-                            placeholder: "your@email.com", 
-                            value: this.props.model.query.email, 
-                            onChange: this.handleSelectionWithEvent});
-        limitField = React.createElement(LimitField, {model: this.props.model, 
-                                 handleChange: this.handleSelectionWithEvent});
-      }
     }
 
     return (
@@ -3800,8 +3804,6 @@ var QueryBuilder = React.createClass({displayName: "QueryBuilder",
                              options: ProjectUtils.getConstant('ANALYSIS_TYPES'), 
                              handleChange: this.handleChange}), 
           extractionOptions, 
-          emailField, 
-          limitField, 
           targetPropertyField, 
           percentileField, 
           React.createElement(Timeframe, {ref: "timeframe", 
@@ -3829,7 +3831,7 @@ var QueryBuilder = React.createClass({displayName: "QueryBuilder",
 
 module.exports = QueryBuilder;
 
-},{"../../../actions/ExplorerActions":2,"../../../stores/ExplorerStore":54,"../../../utils/ExplorerUtils":58,"../../../utils/ProjectUtils":61,"../../../utils/ValidationUtils":63,"../../../validations/FilterValidations":65,"../../common/fields_toggle.js":11,"../../common/input.js":16,"../../common/interval.js":17,"../../common/timeframe.js":24,"./analysis_type_field.js":30,"./api_url.js":31,"./event_collection_field.js":32,"./extraction_options.js":33,"./group_by_field.js":34,"./limit_field.js":36,"./percentile_field.js":37,"./target_property_field.js":38,"lodash":84,"react/addons":130}],36:[function(require,module,exports){
+},{"../../../actions/ExplorerActions":2,"../../../stores/ExplorerStore":54,"../../../utils/ExplorerUtils":58,"../../../utils/ProjectUtils":61,"../../../utils/ValidationUtils":63,"../../../validations/FilterValidations":65,"../../common/fields_toggle.js":11,"../../common/input.js":16,"../../common/interval.js":17,"../../common/timeframe.js":24,"./analysis_type_field.js":30,"./api_url.js":31,"./event_collection_field.js":32,"./extraction_options.js":33,"./group_by_field.js":34,"./percentile_field.js":37,"./target_property_field.js":38,"lodash":84,"react/addons":130}],36:[function(require,module,exports){
 /**
  * @jsx React.DOM
  */
@@ -3842,16 +3844,16 @@ var LimitField = React.createClass({displayName: "LimitField",
 
   render: function() {
     return (
-      React.createElement("div", null, 
+      React.createElement("div", {className: "form-group"}, 
         React.createElement(Input, {type: "text", 
                name: "limit", 
                label: "Limit number of events to extract", 
                value: this.props.model.query.latest, 
                placeholder: "Eg: 1000", 
                onChange: this.props.handleChange}), 
-        React.createElement("p", {className: "no-padding no-margin subdued"}, 
-          React.createElement("span", {className: "icon glyphicon glyphicon-info-sign margin-right-tiny"}), 
-          React.createElement("span", null, 'Email extractions are limited to 10 million events.')
+        React.createElement("small", {className: "text-muted"}, 
+          React.createElement("span", {className: "icon glyphicon glyphicon-info-sign"}), 
+          React.createElement("span", null, 'Results are limited to 10 million events')
         )
       )
     );

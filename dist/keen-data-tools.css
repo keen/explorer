@@ -1428,8 +1428,32 @@
   padding: 18px 10px 10px;
   position: relative;
 }
+#keen-explorer .extraction-options {
+  background: #F2F2F2;
+  padding: 10px 15px;
+}
 #keen-explorer .extraction-options label {
   font-size: 14px;
+  line-height: 28px;
+  margin: 0;
+}
+#keen-explorer .extraction-options input[type=radio] {
+  margin-right: 5px;
+}
+#keen-explorer .extraction-options .form-group {
+  margin: 15px 0 0;
+}
+#keen-explorer .extraction-options .form-group label {
+  font-size: 13px;
+  line-height: 18px;
+  margin: 0 0 5px;
+}
+#keen-explorer .extraction-options small.text-muted {
+  display: block;
+  margin: 5px 0 0;
+}
+#keen-explorer .extraction-options small.text-muted .icon {
+  margin-right: 5px;
 }
 #keen-explorer .button-set-clear-toggle btn.btn-default {
   border-color: #e7e7e7;
@@ -1780,6 +1804,7 @@
 #keen-explorer .query-actions {
   background: #F2F2F2;
   border: 1px solid rgba(0, 0, 0, 0.07);
+  border-top: medium none;
   padding: 10px;
 }
 #keen-explorer .query-actions .run-group {
@@ -1796,7 +1821,6 @@
 #keen-explorer .cache-toggle {
   border: 1px solid rgba(0, 0, 0, 0.07);
   border-top: 0;
-  border-bottom: 0;
   padding: 5px 10px;
 }
 #keen-explorer .cache-toggle label,
