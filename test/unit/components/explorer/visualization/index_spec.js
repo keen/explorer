@@ -15,6 +15,7 @@ var ExplorerActions = require('../../../../../client/js/app/actions/ExplorerActi
 var NoticeActions = require('../../../../../client/js/app/actions/NoticeActions');
 var TestUtils = React.addons.TestUtils;
 var TestHelpers = require('../../../../support/TestHelpers');
+var $R = require('rquery')(_, React);
 
 describe('components/explorer/visualization/index', function() {
   beforeEach(function() {
@@ -63,7 +64,7 @@ describe('components/explorer/visualization/index', function() {
 
     describe('without persistence', function () {
       it('should not show the Save/Update button', function () {
-        assert.isUndefined(this.component.refs['save-query']);
+        assert.lengthOf($R(this.component).find('[role="save-query"]'), 0);
       });
     });
   });

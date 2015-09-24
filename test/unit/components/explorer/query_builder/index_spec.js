@@ -12,6 +12,7 @@ var ReactSelect = require('../../../../../client/js/app/components/common/react_
 var React = require('react/addons');
 var TestUtils = React.addons.TestUtils;
 var TestHelpers = require('../../../../support/TestHelpers');
+var $R = require('rquery')(_, React);
 
 describe('components/explorer/query_builder/index', function() {
   beforeEach(function() {
@@ -53,11 +54,7 @@ describe('components/explorer/query_builder/index', function() {
         model: this.model
       });
       assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, Interval), 0);
-    });    
-
-    // it('has a single BuilderButtons child component', function(){
-    //   assert.isNotNull(TestUtils.findRenderedComponentWithType(this.component, BuilderButtons));
-    // });
+    });
 
     it('has the right number of ReactSelect child components', function(){
       assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, ReactSelect), 4);
@@ -94,6 +91,36 @@ describe('components/explorer/query_builder/index', function() {
           this.model.query.analysis_type = 'percentile';
           this.component.forceUpdate();
           assert.lengthOf(TestUtils.scryRenderedDOMComponentsWithClass(this.component, 'percentile'), 1);
+        });
+      });
+      describe('analysis type is set to extraction and email is an empty string', function () {
+        it('shows the email field', function() {
+          this.model.query.event_collection = 'click';
+          this.model.query.analysis_type = 'extraction';
+          this.model.query.email = '';
+          this.component.forceUpdate();
+          assert.lengthOf($R(this.component).find('input[name="email"]'), 1);
+        });
+        it('shows the email field', function() {
+          this.model.query.event_collection = 'click';
+          this.model.query.analysis_type = 'extraction';
+          this.model.query.email = '';
+          this.component.forceUpdate();
+          assert.lengthOf($R(this.component).find('input[name="latest"]'), 1);
+        });
+      });
+      describe('analysis type is not extraction', function () {
+        it('does not shows the email field', function() {
+          this.model.query.event_collection = 'click';
+          this.model.query.analysis_type = 'count';
+          this.component.forceUpdate();
+          assert.lengthOf($R(this.component).find('input[name="email"]'), 0);
+        });
+        it('does not shows the email field', function() {
+          this.model.query.event_collection = 'click';
+          this.model.query.analysis_type = 'count';
+          this.component.forceUpdate();
+          assert.lengthOf($R(this.component).find('input[name="latest"]'), 0);
         });
       });
     });

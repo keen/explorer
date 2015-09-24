@@ -13,7 +13,7 @@ var TargetPropertyField = require('./target_property_field.js');
 var PercentileField = require('./percentile_field.js');
 var GroupByField = require('./group_by_field.js');
 var ExtractionOptions = require('./extraction_options.js');
-var LimitField = require('./limit_field.js');
+var LatestField = require('./latest_field.js');
 var Timeframe = require('../../common/timeframe.js');
 var Interval = require('../../common/interval.js');
 var Input = require('../../common/input.js');
@@ -69,7 +69,7 @@ var QueryBuilder = React.createClass({
         intervalField,
         extractionOptions,
         emailField,
-        limitField,
+        latestField,
         analysisType = this.props.model.query.analysis_type,
         apiQueryUrl = ExplorerUtils.getApiQueryUrl(this.props.client, this.props.model);
 
@@ -102,8 +102,8 @@ var QueryBuilder = React.createClass({
                             placeholder="your@email.com"
                             value={this.props.model.query.email}
                             onChange={this.handleSelectionWithEvent} />;
-        limitField = <LimitField model={this.props.model}
-                                 handleChange={this.handleSelectionWithEvent} />;
+        latestField = <LatestField model={this.props.model}
+                                  handleChange={this.handleSelectionWithEvent} />;
       }
     }
 
@@ -121,7 +121,7 @@ var QueryBuilder = React.createClass({
                              handleChange={this.handleChange} />
           {extractionOptions}
           {emailField}
-          {limitField}
+          {latestField}
           {targetPropertyField}
           {percentileField}
           <Timeframe ref="timeframe"

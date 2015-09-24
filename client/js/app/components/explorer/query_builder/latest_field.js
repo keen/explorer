@@ -6,13 +6,13 @@ var React = require('react');
 var Input = require('../../common/input.js');
 var ExplorerUtils = require('../../../utils/ExplorerUtils');
 
-var LimitField = React.createClass({
+var LatestField = React.createClass({
 
   render: function() {
     return (
       <div>
         <Input type="text"
-               name="limit"
+               name="latest"
                label="Limit number of events to extract"
                value={this.props.model.query.latest}
                placeholder="Eg: 1000"
@@ -27,4 +27,4 @@ var LimitField = React.createClass({
 
 });
 
-module.exports = LimitField;
+module.exports = LatestField;
