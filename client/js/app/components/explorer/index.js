@@ -68,7 +68,7 @@ var Explorer = React.createClass({
   },
 
   removeSavedQueryClicked: function() {
-    if (confirm("Are you sure you want to delete this query?")) {
+    if (confirm('Are you sure you want to delete this saved query?')) {
       ExplorerActions.destroy(this.props.persistence, this.state.activeExplorer.id);
     }
   },
@@ -98,16 +98,6 @@ var Explorer = React.createClass({
     var newExplorer = ExplorerStore.getLast();
     ExplorerActions.setActive(newExplorer.id);
     this.setState({ activeQueryPane: 'build' });
-  },
-
-  clearQuery: function() {
-    // NOTE: (Eric Anderson, Aug 19, 2015): Awful terrible hack to 
-    // ensure that the components properly display the values of the cleared
-    // model.
-    var self = this;
-    setTimeout(function(){
-      ExplorerActions.clear(self.state.activeExplorer.id);
-    }, 0);
   },
 
   onBrowseEvents: function(event) {
@@ -230,10 +220,9 @@ var Explorer = React.createClass({
                                 client={this.props.client}
                                 project={this.props.project}
                                 onBrowseEvents={this.onBrowseEvents}
-                                clearQuery={this.clearQuery}
                                 handleFiltersToggle={this.handleFiltersToggle}
                                 handleRevertChanges={this.handleRevertChanges}
-                                handleQuerySubmit={this.handleQuerySubmit} 
+                                handleQuerySubmit={this.handleQuerySubmit}
                                 setExtractionType={this.setExtractionType} />;
     } else {
       queryPane = <BrowseQueries ref="query-browser"
@@ -265,7 +254,6 @@ var Explorer = React.createClass({
             <QueryActions model={this.state.activeExplorer}
                           handleRevertChanges={this.handleRevertChanges}
                           handleQuerySubmit={this.handleQuerySubmit}
-                          clearQuery={this.clearQuery}
                           removeClick={this.removeSavedQueryClicked}
                           user={this.state.user}
                           persistence={this.props.persistence}

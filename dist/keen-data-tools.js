@@ -3002,31 +3002,32 @@ var CacheToggle = React.createClass({displayName: "CacheToggle",
       "hide": !this.state.settingsOpen
     });
 
+    var cacheToggleLabel = this.state.cached ? 'Caching enabled' : 'Enable caching';
+
     return (
       React.createElement("div", {className: parentClasses}, 
+
+        React.createElement("label", {htmlFor: "cache"}, 
+          React.createElement("input", {type: "checkbox", name: "cache", id: "cache", onChange: this.setCached}), 
+          cacheToggleLabel
+        ), 
+
+        React.createElement("span", {className: cacheDetailsClasses}, 
+          "Last updated 43 mins ago", 
+          React.createElement("a", {href: "#", onClick: this.setSettingsOpen, className: "margin-left-tiny"}, 
+            React.createElement("span", {className: "icon icon-cog glyphicon-cog glyphicon"})
+          )
+        ), 
+
+        React.createElement("span", {className: cacheSettingsClasses}, 
+          "Refresh every ", React.createElement("input", {type: "text", name: "refresh_rate", value: this.state.refresh_rate, className: "form-control", onChange: this.setRefreshRate}), " minutes"
+        ), 
+
+
+
         React.createElement("div", {className: "row"}, 
-          React.createElement("div", {className: "col-md-3"}, 
-            React.createElement("label", {htmlFor: "cache", className: "margin-right-small"}, 
-              "Caching enabled", 
-              React.createElement("input", {type: "checkbox", name: "cache", onChange: this.setCached})
-            )
-          ), 
-          React.createElement("div", {className: "col-md-3"}, 
-            React.createElement("div", {className: cacheDetailsClasses}, 
-              React.createElement("p", null, 
-                "Last updated 43 mins ago", 
-                React.createElement("a", {href: "#", onClick: this.setSettingsOpen, className: "margin-left-tiny"}, 
-                  React.createElement("span", {className: "icon icon-cog glyphicon-cog glyphicon"})
-                )
-              )
-            )
-          ), 
-          React.createElement("div", {className: "col-md-5"}, 
-            React.createElement("div", {className: cacheSettingsClasses}, 
-              React.createElement("p", null, 
-                "Refresh every ", React.createElement("input", {type: "text", name: "refresh_rate", value: this.state.refresh_rate, className: "form-control", onChange: this.setRefreshRate}), " minutes"
-              )
-            )
+          React.createElement("div", {className: "col-md-5"}
+
           )
         )
       )
@@ -3036,6 +3037,7 @@ var CacheToggle = React.createClass({displayName: "CacheToggle",
 });
 
 module.exports = CacheToggle;
+
 },{"classnames":75,"react":302}],28:[function(require,module,exports){
 /**
  * @jsx React.DOM
@@ -3107,7 +3109,7 @@ var Explorer = React.createClass({displayName: "Explorer",
   },
 
   removeSavedQueryClicked: function() {
-    if (confirm("Are you sure you want to delete this query?")) {
+    if (confirm('Are you sure you want to delete this saved query?')) {
       ExplorerActions.destroy(this.props.persistence, this.state.activeExplorer.id);
     }
   },
@@ -3137,16 +3139,6 @@ var Explorer = React.createClass({displayName: "Explorer",
     var newExplorer = ExplorerStore.getLast();
     ExplorerActions.setActive(newExplorer.id);
     this.setState({ activeQueryPane: 'build' });
-  },
-
-  clearQuery: function() {
-    // NOTE: (Eric Anderson, Aug 19, 2015): Awful terrible hack to 
-    // ensure that the components properly display the values of the cleared
-    // model.
-    var self = this;
-    setTimeout(function(){
-      ExplorerActions.clear(self.state.activeExplorer.id);
-    }, 0);
   },
 
   onBrowseEvents: function(event) {
@@ -3269,7 +3261,6 @@ var Explorer = React.createClass({displayName: "Explorer",
                                 client: this.props.client, 
                                 project: this.props.project, 
                                 onBrowseEvents: this.onBrowseEvents, 
-                                clearQuery: this.clearQuery, 
                                 handleFiltersToggle: this.handleFiltersToggle, 
                                 handleRevertChanges: this.handleRevertChanges, 
                                 handleQuerySubmit: this.handleQuerySubmit, 
@@ -3304,7 +3295,6 @@ var Explorer = React.createClass({displayName: "Explorer",
             React.createElement(QueryActions, {model: this.state.activeExplorer, 
                           handleRevertChanges: this.handleRevertChanges, 
                           handleQuerySubmit: this.handleQuerySubmit, 
-                          clearQuery: this.clearQuery, 
                           removeClick: this.removeSavedQueryClicked, 
                           user: this.state.user, 
                           persistence: this.props.persistence, 
@@ -3359,13 +3349,9 @@ var QueryActions = React.createClass({displayName: "QueryActions",
     }
   },
 
-  shouldShowRevertButton: function() {
-    return ExplorerUtils.isPersisted(this.props.model) && this.props.model.originalModel && this.props.model.originalModel.query && !_.isEqual(this.props.model.query, this.props.model.originalModel.query);
-  },
-
   runButtonText: function() {
     var btnStates = this.runBtnStates.default;
-    
+
     if (ExplorerUtils.isEmailExtraction(this.props.model)) {
       btnStates = this.runBtnStates.emailExtraction;
     } else if (ExplorerUtils.isImmediateExtraction(this.props.model)) {
@@ -3376,59 +3362,46 @@ var QueryActions = React.createClass({displayName: "QueryActions",
   },
 
   render: function() {
-    var revertBtn;
+    // var revertBtn;
     var saveBtn;
     var deleteBtn;
     var runButtonClasses = classNames({
       'disabled': this.props.model.loading,
-      'btn btn-primary run-query margin-right-tiny': true
+      'btn btn-primary run-query': true
     });
     var codeSampleBtnClasses = classNames({
       'btn btn-default code-sample-toggle pull-right': true,
       'open': !this.props.codeSampleHidden
     });
-    if (this.shouldShowRevertButton()) {
-      revertBtn = (
-        React.createElement("button", {className: "btn btn-default margin-right-tiny", onClick: this.props.handleRevertChanges}, "Revert to original")
-      );
-    }
     if (this.props.persistence && !ExplorerUtils.isEmailExtraction(this.props.model)) {
       saveBtn = (
-        React.createElement("button", {type: "button", className: "btn btn-success save-query margin-right-tiny", onClick: this.props.saveQueryClick, ref: "save-query", disabled: this.props.model.loading}, 
+        React.createElement("button", {type: "button", className: "btn btn-success save-query", onClick: this.props.saveQueryClick, ref: "save-query", disabled: this.props.model.loading}, 
           ExplorerUtils.isPersisted(this.props.model) ? 'Update' : 'Save'
         )
       );
       if (this.props.removeClick && this.props.model.user.id === this.props.user.id) {
         deleteBtn = (
-          React.createElement("button", {type: "button", className: "btn btn-default", onClick: this.props.removeClick}, 
+          React.createElement("button", {type: "button", className: "btn btn-link", onClick: this.props.removeClick}, 
             "Delete"
           )
         );
-      }  
+      }
     }
-    
+
     return (
       React.createElement("div", {className: "query-actions clearfix"}, 
-        React.createElement("div", {className: "row"}, 
-          React.createElement("div", {className: "col-md-10 clearfix"}, 
-            React.createElement("div", {className: "run-group pull-left"}, 
-              React.createElement("button", {type: "submit", ref: "runquery", className: runButtonClasses, id: "run-query", onClick: this.props.handleQuerySubmit}, 
-                this.runButtonText()
-              ), 
-              React.createElement("button", {type: "reset", ref: "clearquery", className: "btn btn-default margin-right-tiny", id: "clear-explorer-query", onClick: this.props.clearQuery}, 
-                "Clear"
-              ), 
-              revertBtn
-            ), 
-            React.createElement("div", {className: "manage-group pull-left"}, 
-              saveBtn, 
-              deleteBtn
-            )
-          ), 
-          React.createElement("div", {className: "col-md-2"}, 
-            React.createElement("button", {className: codeSampleBtnClasses, onClick: this.props.toggleCodeSample}, 
-              React.createElement("span", null, "</> Embed")
-            )
+        React.createElement("div", {className: "run-group pull-left"}, 
+          React.createElement("button", {type: "submit", ref: "runquery", className: runButtonClasses, id: "run-query", onClick: this.props.handleQuerySubmit}, 
+            this.runButtonText()
+          )
+        ), 
+        React.createElement("div", {className: "manage-group pull-left"}, 
+          saveBtn, 
+          deleteBtn
+        ), 
+        React.createElement("div", {className: "pull-right"}, 
+          React.createElement("button", {className: codeSampleBtnClasses, onClick: this.props.toggleCodeSample}, 
+            React.createElement("span", null, "</> Embed")
           )
         )
       )
@@ -3576,27 +3549,47 @@ module.exports = EventCollectionField;
 
 var React = require('react');
 var ExplorerUtils = require('../../../utils/ExplorerUtils');
+var Input = require('../../common/input.js');
+var LimitField = require('./limit_field.js');
 
 var ExtractionOptions = React.createClass({displayName: "ExtractionOptions",
 
+  handleSelectionWithEvent: function(event) {
+    this.props.handleChange(event.target.name, event.target.value);
+  },
+
   render: function(){
+
+    var emailField,
+        limitField;
+
+    if (ExplorerUtils.isEmailExtraction(this.props.model)) {
+      emailField = (
+        React.createElement(Input, {type: "text", 
+               name: "email", 
+               label: "Recipient email address", 
+               placeholder: "your@email.com", 
+               required: "true", 
+               value: this.props.model.query.email, 
+               onChange: this.handleSelectionWithEvent})
+      );
+      limitField = (
+        React.createElement(LimitField, {model: this.props.model, 
+                    handleChange: this.handleSelectionWithEvent})
+      );
+    }
+
     return (
-      React.createElement("div", {className: "extraction-options"}, 
-        React.createElement("div", {className: "row"}, 
-          React.createElement("div", {className: "col-md-6"}, 
-            React.createElement("div", {className: "radio"}, 
-              React.createElement("label", null, 
-                React.createElement("input", {type: "radio", name: "extraction_type", value: "immediate", onChange: this.props.setExtractionType, checked: !ExplorerUtils.isEmailExtraction(this.props.model)}), " Preview lastest ", ExplorerUtils.EXRACTION_EVENT_LIMIT, " events now"
-              )
-            )
+      React.createElement("div", {className: "field-component"}, 
+        React.createElement("div", {className: "extraction-options"}, 
+          React.createElement("label", null, 
+            React.createElement("input", {type: "radio", name: "extraction_type", value: "immediate", onChange: this.props.setExtractionType, checked: !ExplorerUtils.isEmailExtraction(this.props.model)}), " Preview lastest ", ExplorerUtils.EXRACTION_EVENT_LIMIT, " events now"
           ), 
-          React.createElement("div", {className: "col-md-6"}, 
-            React.createElement("div", {className: "radio"}, 
-              React.createElement("label", null, 
-                React.createElement("input", {type: "radio", name: "extraction_type", value: "email", onChange: this.props.setExtractionType, checked: ExplorerUtils.isEmailExtraction(this.props.model)}), " Bulk CSV extration by email"
-              )
-            )
-          )
+          React.createElement("label", null, 
+            React.createElement("input", {type: "radio", name: "extraction_type", value: "email", onChange: this.props.setExtractionType, checked: ExplorerUtils.isEmailExtraction(this.props.model)}), " Bulk CSV extraction by email"
+          ), 
+          emailField, 
+          limitField
         )
       )
     );
@@ -3606,7 +3599,7 @@ var ExtractionOptions = React.createClass({displayName: "ExtractionOptions",
 
 module.exports = ExtractionOptions;
 
-},{"../../../utils/ExplorerUtils":58,"react":302}],34:[function(require,module,exports){
+},{"../../../utils/ExplorerUtils":58,"../../common/input.js":16,"./limit_field.js":36,"react":302}],34:[function(require,module,exports){
 /**
  * @jsx React.DOM
  */
@@ -3677,11 +3670,11 @@ var TargetPropertyField = require('./target_property_field.js');
 var PercentileField = require('./percentile_field.js');
 var GroupByField = require('./group_by_field.js');
 var ExtractionOptions = require('./extraction_options.js');
-var LimitField = require('./limit_field.js');
 var Timeframe = require('../../common/timeframe.js');
 var Interval = require('../../common/interval.js');
 var Input = require('../../common/input.js');
 var ApiUrl = require('./api_url.js');
+var ExplorerStore = require('../../../stores/ExplorerStore');
 var ExplorerUtils = require('../../../utils/ExplorerUtils');
 var ProjectUtils = require('../../../utils/ProjectUtils');
 var ExplorerActions = require('../../../actions/ExplorerActions');
@@ -3697,10 +3690,6 @@ function validFilters(filters) {
 var QueryBuilder = React.createClass({displayName: "QueryBuilder",
 
   // Event callbacks
-
-  handleSelectionWithEvent: function(event) {
-    this.handleChange(event.target.name, event.target.value);
-  },
 
   handleChange: function(name, value) {
     if (_.isArray(value)) {
@@ -3724,6 +3713,23 @@ var QueryBuilder = React.createClass({displayName: "QueryBuilder",
     });
   },
 
+  handleClearQuery: function() {
+    // NOTE: (Eric Anderson, Aug 19, 2015): Awful terrible hack to
+    // ensure that the components properly display the values of the cleared
+    // model.
+    var self = this;
+    setTimeout(function(){
+      ExplorerActions.clear(ExplorerStore.getActive().id);
+    }, 0);
+  },
+  handleRevertChanges: function(event) {
+    event.preventDefault();
+    ExplorerActions.revertActiveChanges();
+  },
+  shouldShowRevertButton: function() {
+    return ExplorerUtils.isPersisted(this.props.model) && this.props.model.originalModel && this.props.model.originalModel.query && !_.isEqual(this.props.model.query, this.props.model.originalModel.query);
+  },
+
   // React methods
 
   render: function() {
@@ -3732,10 +3738,29 @@ var QueryBuilder = React.createClass({displayName: "QueryBuilder",
         percentileField,
         intervalField,
         extractionOptions,
-        emailField,
-        limitField,
         analysisType = this.props.model.query.analysis_type,
+        clearButton,
         apiQueryUrl = ExplorerUtils.getApiQueryUrl(this.props.client, this.props.model);
+
+    if (!this.shouldShowRevertButton()) {
+      clearButton = (
+        React.createElement("button", {type: "reset", ref: "clearquery", 
+          className: "btn btn-default btn-block", 
+          id: "clear-explorer-query", 
+          onClick: this.handleClearQuery}, 
+            "Clear"
+        )
+      );
+    }
+    else {
+      clearButton = (
+        React.createElement("button", {
+          className: "btn btn-default btn-block", 
+          onClick: this.handleRevertChanges}, 
+            "Revert to original"
+        )
+      );
+    }
 
     if (analysisType !== 'extraction') {
       groupByField = React.createElement(GroupByField, {ref: "group-by-field", 
@@ -3758,17 +3783,8 @@ var QueryBuilder = React.createClass({displayName: "QueryBuilder",
     }
     if (analysisType === 'extraction') {
       extractionOptions = React.createElement(ExtractionOptions, {model: this.props.model, 
+                                             handleChange: this.handleChange, 
                                              setExtractionType: this.props.setExtractionType});
-      if (ExplorerUtils.isEmailExtraction(this.props.model)) {
-        emailField = React.createElement(Input, {type: "text", 
-                            name: "email", 
-                            label: "Email to send extraction to", 
-                            placeholder: "your@email.com", 
-                            value: this.props.model.query.email, 
-                            onChange: this.handleSelectionWithEvent});
-        limitField = React.createElement(LimitField, {model: this.props.model, 
-                                 handleChange: this.handleSelectionWithEvent});
-      }
     }
 
     return (
@@ -3784,8 +3800,6 @@ var QueryBuilder = React.createClass({displayName: "QueryBuilder",
                              options: ProjectUtils.getConstant('ANALYSIS_TYPES'), 
                              handleChange: this.handleChange}), 
           extractionOptions, 
-          emailField, 
-          limitField, 
           targetPropertyField, 
           percentileField, 
           React.createElement(Timeframe, {ref: "timeframe", 
@@ -3801,6 +3815,9 @@ var QueryBuilder = React.createClass({displayName: "QueryBuilder",
                           fieldsCount: validFilters(this.props.model.query.filters).length})
           ), 
           intervalField, 
+          React.createElement("div", {className: "button-set-clear-toggle"}, 
+            clearButton
+          ), 
           React.createElement(ApiUrl, {url: ExplorerUtils.getApiQueryUrl(this.props.client, this.props.model)})
         )
       )
@@ -3810,7 +3827,7 @@ var QueryBuilder = React.createClass({displayName: "QueryBuilder",
 
 module.exports = QueryBuilder;
 
-},{"../../../actions/ExplorerActions":2,"../../../utils/ExplorerUtils":58,"../../../utils/ProjectUtils":61,"../../../utils/ValidationUtils":63,"../../../validations/FilterValidations":65,"../../common/fields_toggle.js":11,"../../common/input.js":16,"../../common/interval.js":17,"../../common/timeframe.js":24,"./analysis_type_field.js":30,"./api_url.js":31,"./event_collection_field.js":32,"./extraction_options.js":33,"./group_by_field.js":34,"./limit_field.js":36,"./percentile_field.js":37,"./target_property_field.js":38,"lodash":84,"react/addons":130}],36:[function(require,module,exports){
+},{"../../../actions/ExplorerActions":2,"../../../stores/ExplorerStore":54,"../../../utils/ExplorerUtils":58,"../../../utils/ProjectUtils":61,"../../../utils/ValidationUtils":63,"../../../validations/FilterValidations":65,"../../common/fields_toggle.js":11,"../../common/input.js":16,"../../common/interval.js":17,"../../common/timeframe.js":24,"./analysis_type_field.js":30,"./api_url.js":31,"./event_collection_field.js":32,"./extraction_options.js":33,"./group_by_field.js":34,"./percentile_field.js":37,"./target_property_field.js":38,"lodash":84,"react/addons":130}],36:[function(require,module,exports){
 /**
  * @jsx React.DOM
  */
@@ -3823,16 +3840,16 @@ var LimitField = React.createClass({displayName: "LimitField",
 
   render: function() {
     return (
-      React.createElement("div", null, 
+      React.createElement("div", {className: "form-group"}, 
         React.createElement(Input, {type: "text", 
                name: "limit", 
                label: "Limit number of events to extract", 
                value: this.props.model.query.latest, 
                placeholder: "Eg: 1000", 
                onChange: this.props.handleChange}), 
-        React.createElement("p", {className: "no-padding no-margin subdued"}, 
-          React.createElement("span", {className: "icon glyphicon glyphicon-info-sign margin-right-tiny"}), 
-          React.createElement("span", null, 'Email extractions are limited to 10 million events.')
+        React.createElement("small", {className: "text-muted"}, 
+          React.createElement("span", {className: "icon glyphicon glyphicon-info-sign"}), 
+          React.createElement("span", null, 'Results are limited to 10 million events')
         )
       )
     );
@@ -11475,12 +11492,11 @@ process.chdir = function (dir) {
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-module.exports.Dispatcher = require('./lib/Dispatcher');
+module.exports.Dispatcher = require('./lib/Dispatcher')
 
 },{"./lib/Dispatcher":77}],77:[function(require,module,exports){
-(function (process){
-/**
- * Copyright (c) 2014-2015, Facebook, Inc.
+/*
+ * Copyright (c) 2014, Facebook, Inc.
  * All rights reserved.
  *
  * This source code is licensed under the BSD-style license found in the
@@ -11488,18 +11504,14 @@ module.exports.Dispatcher = require('./lib/Dispatcher');
  * of patent rights can be found in the PATENTS file in the same directory.
  *
  * @providesModule Dispatcher
- * 
- * @preventMunge
+ * @typechecks
  */
 
-'use strict';
+"use strict";
 
-exports.__esModule = true;
+var invariant = require('./invariant');
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-var invariant = require('fbjs/lib/invariant');
-
+var _lastID = 1;
 var _prefix = 'ID_';
 
 /**
@@ -11549,7 +11561,7 @@ var _prefix = 'ID_';
  *
  * This payload is digested by both stores:
  *
- *   CountryStore.dispatchToken = flightDispatcher.register(function(payload) {
+ *    CountryStore.dispatchToken = flightDispatcher.register(function(payload) {
  *     if (payload.actionType === 'country-update') {
  *       CountryStore.country = payload.selectedCountry;
  *     }
@@ -11577,10 +11589,14 @@ var _prefix = 'ID_';
  *     flightDispatcher.register(function(payload) {
  *       switch (payload.actionType) {
  *         case 'country-update':
- *         case 'city-update':
  *           flightDispatcher.waitFor([CityStore.dispatchToken]);
  *           FlightPriceStore.price =
  *             getFlightPriceStore(CountryStore.country, CityStore.city);
+ *           break;
+ *
+ *         case 'city-update':
+ *           FlightPriceStore.price =
+ *             FlightPriceStore(CountryStore.country, CityStore.city);
  *           break;
  *     }
  *   });
@@ -11590,109 +11606,131 @@ var _prefix = 'ID_';
  * `FlightPriceStore`.
  */
 
-var Dispatcher = (function () {
   function Dispatcher() {
-    _classCallCheck(this, Dispatcher);
-
-    this._callbacks = {};
-    this._isDispatching = false;
-    this._isHandled = {};
-    this._isPending = {};
-    this._lastID = 1;
+    this.$Dispatcher_callbacks = {};
+    this.$Dispatcher_isPending = {};
+    this.$Dispatcher_isHandled = {};
+    this.$Dispatcher_isDispatching = false;
+    this.$Dispatcher_pendingPayload = null;
   }
 
   /**
    * Registers a callback to be invoked with every dispatched payload. Returns
    * a token that can be used with `waitFor()`.
+   *
+   * @param {function} callback
+   * @return {string}
    */
-
-  Dispatcher.prototype.register = function register(callback) {
-    var id = _prefix + this._lastID++;
-    this._callbacks[id] = callback;
+  Dispatcher.prototype.register=function(callback) {
+    var id = _prefix + _lastID++;
+    this.$Dispatcher_callbacks[id] = callback;
     return id;
   };
 
   /**
    * Removes a callback based on its token.
+   *
+   * @param {string} id
    */
-
-  Dispatcher.prototype.unregister = function unregister(id) {
-    !this._callbacks[id] ? process.env.NODE_ENV !== 'production' ? invariant(false, 'Dispatcher.unregister(...): `%s` does not map to a registered callback.', id) : invariant(false) : undefined;
-    delete this._callbacks[id];
+  Dispatcher.prototype.unregister=function(id) {
+    invariant(
+      this.$Dispatcher_callbacks[id],
+      'Dispatcher.unregister(...): `%s` does not map to a registered callback.',
+      id
+    );
+    delete this.$Dispatcher_callbacks[id];
   };
 
   /**
    * Waits for the callbacks specified to be invoked before continuing execution
    * of the current callback. This method should only be used by a callback in
    * response to a dispatched payload.
+   *
+   * @param {array<string>} ids
    */
-
-  Dispatcher.prototype.waitFor = function waitFor(ids) {
-    !this._isDispatching ? process.env.NODE_ENV !== 'production' ? invariant(false, 'Dispatcher.waitFor(...): Must be invoked while dispatching.') : invariant(false) : undefined;
+  Dispatcher.prototype.waitFor=function(ids) {
+    invariant(
+      this.$Dispatcher_isDispatching,
+      'Dispatcher.waitFor(...): Must be invoked while dispatching.'
+    );
     for (var ii = 0; ii < ids.length; ii++) {
       var id = ids[ii];
-      if (this._isPending[id]) {
-        !this._isHandled[id] ? process.env.NODE_ENV !== 'production' ? invariant(false, 'Dispatcher.waitFor(...): Circular dependency detected while ' + 'waiting for `%s`.', id) : invariant(false) : undefined;
+      if (this.$Dispatcher_isPending[id]) {
+        invariant(
+          this.$Dispatcher_isHandled[id],
+          'Dispatcher.waitFor(...): Circular dependency detected while ' +
+          'waiting for `%s`.',
+          id
+        );
         continue;
       }
-      !this._callbacks[id] ? process.env.NODE_ENV !== 'production' ? invariant(false, 'Dispatcher.waitFor(...): `%s` does not map to a registered callback.', id) : invariant(false) : undefined;
-      this._invokeCallback(id);
+      invariant(
+        this.$Dispatcher_callbacks[id],
+        'Dispatcher.waitFor(...): `%s` does not map to a registered callback.',
+        id
+      );
+      this.$Dispatcher_invokeCallback(id);
     }
   };
 
   /**
    * Dispatches a payload to all registered callbacks.
+   *
+   * @param {object} payload
    */
-
-  Dispatcher.prototype.dispatch = function dispatch(payload) {
-    !!this._isDispatching ? process.env.NODE_ENV !== 'production' ? invariant(false, 'Dispatch.dispatch(...): Cannot dispatch in the middle of a dispatch.') : invariant(false) : undefined;
-    this._startDispatching(payload);
+  Dispatcher.prototype.dispatch=function(payload) {
+    invariant(
+      !this.$Dispatcher_isDispatching,
+      'Dispatch.dispatch(...): Cannot dispatch in the middle of a dispatch.'
+    );
+    this.$Dispatcher_startDispatching(payload);
     try {
-      for (var id in this._callbacks) {
-        if (this._isPending[id]) {
+      for (var id in this.$Dispatcher_callbacks) {
+        if (this.$Dispatcher_isPending[id]) {
           continue;
         }
-        this._invokeCallback(id);
+        this.$Dispatcher_invokeCallback(id);
       }
     } finally {
-      this._stopDispatching();
+      this.$Dispatcher_stopDispatching();
     }
   };
 
   /**
    * Is this Dispatcher currently dispatching.
+   *
+   * @return {boolean}
    */
-
-  Dispatcher.prototype.isDispatching = function isDispatching() {
-    return this._isDispatching;
+  Dispatcher.prototype.isDispatching=function() {
+    return this.$Dispatcher_isDispatching;
   };
 
   /**
    * Call the callback stored with the given id. Also do some internal
    * bookkeeping.
    *
+   * @param {string} id
    * @internal
    */
-
-  Dispatcher.prototype._invokeCallback = function _invokeCallback(id) {
-    this._isPending[id] = true;
-    this._callbacks[id](this._pendingPayload);
-    this._isHandled[id] = true;
+  Dispatcher.prototype.$Dispatcher_invokeCallback=function(id) {
+    this.$Dispatcher_isPending[id] = true;
+    this.$Dispatcher_callbacks[id](this.$Dispatcher_pendingPayload);
+    this.$Dispatcher_isHandled[id] = true;
   };
 
   /**
    * Set up bookkeeping needed when dispatching.
    *
+   * @param {object} payload
    * @internal
    */
-
-  Dispatcher.prototype._startDispatching = function _startDispatching(payload) {
-    for (var id in this._callbacks) {
-      this._isPending[id] = false;
-      this._isHandled[id] = false;
+  Dispatcher.prototype.$Dispatcher_startDispatching=function(payload) {
+    for (var id in this.$Dispatcher_callbacks) {
+      this.$Dispatcher_isPending[id] = false;
+      this.$Dispatcher_isHandled[id] = false;
     }
-    this._pendingPayload = payload;
-    this._isDispatching = true;
+    this.$Dispatcher_pendingPayload = payload;
+    this.$Dispatcher_isDispatching = true;
   };
 
   /**
@@ -11700,21 +11738,17 @@ var Dispatcher = (function () {
    *
    * @internal
    */
-
-  Dispatcher.prototype._stopDispatching = function _stopDispatching() {
-    delete this._pendingPayload;
-    this._isDispatching = false;
+  Dispatcher.prototype.$Dispatcher_stopDispatching=function() {
+    this.$Dispatcher_pendingPayload = null;
+    this.$Dispatcher_isDispatching = false;
   };
 
-  return Dispatcher;
-})();
 
 module.exports = Dispatcher;
-}).call(this,require("FWaASH"))
-},{"FWaASH":74,"fbjs/lib/invariant":78}],78:[function(require,module,exports){
-(function (process){
+
+},{"./invariant":78}],78:[function(require,module,exports){
 /**
- * Copyright 2013-2015, Facebook, Inc.
+ * Copyright (c) 2014, Facebook, Inc.
  * All rights reserved.
  *
  * This source code is licensed under the BSD-style license found in the
@@ -11737,8 +11771,8 @@ module.exports = Dispatcher;
  * will remain to ensure logic does not differ in production.
  */
 
-var invariant = function (condition, format, a, b, c, d, e, f) {
-  if (process.env.NODE_ENV !== 'production') {
+var invariant = function(condition, format, a, b, c, d, e, f) {
+  if (false) {
     if (format === undefined) {
       throw new Error('invariant requires an error message argument');
     }
@@ -11747,13 +11781,17 @@ var invariant = function (condition, format, a, b, c, d, e, f) {
   if (!condition) {
     var error;
     if (format === undefined) {
-      error = new Error('Minified exception occurred; use the non-minified dev environment ' + 'for the full error message and additional helpful warnings.');
+      error = new Error(
+        'Minified exception occurred; use the non-minified dev environment ' +
+        'for the full error message and additional helpful warnings.'
+      );
     } else {
       var args = [a, b, c, d, e, f];
       var argIndex = 0;
-      error = new Error('Invariant Violation: ' + format.replace(/%s/g, function () {
-        return args[argIndex++];
-      }));
+      error = new Error(
+        'Invariant Violation: ' +
+        format.replace(/%s/g, function() { return args[argIndex++]; })
+      );
     }
 
     error.framesToPop = 1; // we don't care about invariant's own frame
@@ -11762,8 +11800,8 @@ var invariant = function (condition, format, a, b, c, d, e, f) {
 };
 
 module.exports = invariant;
-}).call(this,require("FWaASH"))
-},{"FWaASH":74}],79:[function(require,module,exports){
+
+},{}],79:[function(require,module,exports){
 var json = typeof JSON !== 'undefined' ? JSON : require('jsonify');
 
 module.exports = function (obj, opts) {
@@ -23586,7 +23624,7 @@ module.exports = keyMirror;
 }).call(this,typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{}],85:[function(require,module,exports){
 //! moment.js
-//! version : 2.10.6
+//! version : 2.10.5
 //! authors : Tim Wood, Iskren Chernev, Moment.js contributors
 //! license : MIT
 //! momentjs.com
@@ -23762,7 +23800,7 @@ module.exports = keyMirror;
     // Moment prototype object
     function Moment(config) {
         copyConfig(this, config);
-        this._d = new Date(config._d != null ? config._d.getTime() : NaN);
+        this._d = new Date(config._d.getTime());
         // Prevent infinite loop in case updateOffset creates new moment
         // objects.
         if (updateInProgress === false) {
@@ -26749,7 +26787,7 @@ module.exports = keyMirror;
     // Side effect imports
 
 
-    utils_hooks__hooks.version = '2.10.6';
+    utils_hooks__hooks.version = '2.10.5';
 
     setHookCallback(local__createLocal);
 
