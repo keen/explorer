@@ -64,7 +64,7 @@ describe('components/explorer/visualization/index', function() {
 
     describe('without persistence', function () {
       it('should not show the Save/Update button', function () {
-        assert.lengthOf($R(this.component).find('[role="save-query"]'), 0);
+        assert.lengthOf($R(this.component).find('[role="save-query"]').components, 0);
       });
     });
   });

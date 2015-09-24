@@ -91,7 +91,7 @@ var QueryActions = React.createClass({
             </div>
           </div>
           <div className="col-md-2">
-            <button className={codeSampleBtnClasses} onClick={this.props.toggleCodeSample}>
+            <button className={codeSampleBtnClasses} role="toggle-code-sample" onClick={this.props.toggleCodeSample}>
               <span>&lt;/&gt; Embed</span>
             </button>
           </div>

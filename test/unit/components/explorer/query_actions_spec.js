@@ -42,43 +42,43 @@ describe('components/explorer/query_actions', function() {
     describe('buttons shown', function () {
       describe('default buttons', function () {
         it('has the run-query button', function () {
-          assert.lengthOf($R(this.component).find('[role="run-query"]'), 1);
+          assert.lengthOf($R(this.component).find('[role="run-query"]').components, 1);
         });
         it('has the clear button button', function () {
-          assert.lengthOf($R(this.component).find('[role="clear-query"]'), 1);
+          assert.lengthOf($R(this.component).find('[role="clear-query"]').components, 1);
         });
         it('has the clear button button', function () {
-          assert.lengthOf($R(this.component).find('[role="clear-query"]'), 1);
+          assert.lengthOf($R(this.component).find('[role="clear-query"]').components, 1);
         });  
       });
       describe('dynamic buttons', function () {
         describe('without persistence', function () {
           it('does not show the save button if persistence is null', function () {
-            assert.lengthOf($R(this.component).find('[role="save-query"]'), 0);
+            assert.lengthOf($R(this.component).find('[role="save-query"]').components, 0);
           });
           it('does not show the delete button if persistence is null', function () {
-            assert.lengthOf($R(this.component).find('[role="delete-query"]'), 0);
+            assert.lengthOf($R(this.component).find('[role="delete-query"]').components, 0);
           });  
         });
         describe('with persistence', function () {
           describe('if the user IS the query creator', function () {
             it('does show the save button', function () {
               this.component = this.renderComponent({ persistence: {}, user: { id: 1 } });
-              assert.lengthOf($R(this.component).find('[role="save-query"]'), 1);
+              assert.lengthOf($R(this.component).find('[role="save-query"]').components, 1);
             });
             it('does show the delete button', function () {
               this.component = this.renderComponent({ persistence: {}, user: { id: 1 } });
-              assert.lengthOf($R(this.component).find('[role="delete-query"]'), 1);
+              assert.lengthOf($R(this.component).find('[role="delete-query"]').components, 1);
             });    
           });
           describe('if the user IS NOT the query creator', function () {
             it('does not show the save button', function () {
               this.component = this.renderComponent({ persistence: {}, user: { id: 10 } });
-              assert.lengthOf($R(this.component).find('[role="save-query"]'), 0);
+              assert.lengthOf($R(this.component).find('[role="save-query"]').components, 0);
             });
             it('does not show the delete button', function () {
               this.component = this.renderComponent({ persistence: {}, user: { id: 10 } });
-              assert.lengthOf($R(this.component).find('[role="delete-query"]'), 0);
+              assert.lengthOf($R(this.component).find('[role="delete-query"]').components, 0);
             });
           });
           describe('if the query is an email extraction', function () {
@@ -90,11 +90,44 @@ describe('components/explorer/query_actions', function() {
                 model: model,
                 persistence: {}
               });
-              assert.lengthOf($R(this.component).find('[role="save-query"]'), 0);
+              assert.lengthOf($R(this.component).find('[role="save-query"]').components, 0);
             });
           });
         });
       });
+    });
+  });
+
+  describe('button callbacks', function () {
+    it('calls handleQuerySubmit when the run query button is clicked', function () {
+      var stub = sinon.stub();
+      this.component = this.renderComponent({ handleQuerySubmit: stub });
+      TestUtils.Simulate.click($R(this.component).find('[role="run-query"]').components[0].getDOMNode());
+      assert.isTrue(stub.calledOnce);
+    });
+    it('calls saveQueryClick when the save query button is clicked', function () {
+      var stub = sinon.stub();
+      this.component = this.renderComponent({ persistence: {}, saveQueryClick: stub });
+      TestUtils.Simulate.click($R(this.component).find('[role="save-query"]').components[0].getDOMNode());
+      assert.isTrue(stub.calledOnce);
+    });
+    it('calls clearQuery when the clear query button is clicked', function () {
+      var stub = sinon.stub();
+      this.component = this.renderComponent({ clearQuery: stub });
+      TestUtils.Simulate.click($R(this.component).find('[role="clear-query"]').components[0].getDOMNode());
+      assert.isTrue(stub.calledOnce);
+    });
+    it('calls removeClick when the delete query button is clicked', function () {
+      var stub = sinon.stub();
+      this.component = this.renderComponent({ persistence: {}, removeClick: stub });
+      TestUtils.Simulate.click($R(this.component).find('[role="delete-query"]').components[0].getDOMNode());
+      assert.isTrue(stub.calledOnce);
+    });
+    it('calls toggleCodeSample when the embed button is clicked', function () {
+      var stub = sinon.stub();
+      this.component = this.renderComponent({ toggleCodeSample: stub });
+      TestUtils.Simulate.click($R(this.component).find('[role="toggle-code-sample"]').components[0].getDOMNode());
+      assert.isTrue(stub.calledOnce);
     });
   });
 

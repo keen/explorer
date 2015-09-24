@@ -99,14 +99,14 @@ describe('components/explorer/query_builder/index', function() {
           this.model.query.analysis_type = 'extraction';
           this.model.query.email = '';
           this.component.forceUpdate();
-          assert.lengthOf($R(this.component).find('input[name="email"]'), 1);
+          assert.lengthOf($R(this.component).find('input[name="email"]').components, 1);
         });
         it('shows the email field', function() {
           this.model.query.event_collection = 'click';
           this.model.query.analysis_type = 'extraction';
           this.model.query.email = '';
           this.component.forceUpdate();
-          assert.lengthOf($R(this.component).find('input[name="latest"]'), 1);
+          assert.lengthOf($R(this.component).find('input[name="latest"]').components, 1);
         });
       });
       describe('analysis type is not extraction', function () {
@@ -114,13 +114,13 @@ describe('components/explorer/query_builder/index', function() {
           this.model.query.event_collection = 'click';
           this.model.query.analysis_type = 'count';
           this.component.forceUpdate();
-          assert.lengthOf($R(this.component).find('input[name="email"]'), 0);
+          assert.lengthOf($R(this.component).find('input[name="email"]').components, 0);
         });
         it('does not shows the email field', function() {
           this.model.query.event_collection = 'click';
           this.model.query.analysis_type = 'count';
           this.component.forceUpdate();
-          assert.lengthOf($R(this.component).find('input[name="latest"]'), 0);
+          assert.lengthOf($R(this.component).find('input[name="latest"]').components, 0);
         });
       });
     });
