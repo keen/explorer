@@ -5,7 +5,7 @@ var _ = require('lodash');
 var sinon = require('sinon');
 var KeenSavedQueries = require('../../../../client/js/app/modules/persistence/KeenSavedQueries.js');
 
-describe('modules/persistence/rest', function(){
+describe('modules/persistence/KeenSavedQueries', function(){
 
   beforeEach(function () {
     this.config = {
@@ -16,13 +16,14 @@ describe('modules/persistence/rest', function(){
 
     this.bookmarkObj = {
       id: '1',
-      query_name: 'some name',
+      query_name: 'some-name',
       query: {
         analysis_type: 'count',
         event_collection: 'activities',
       },
       metadata: {
-        visualization: { chart_type: 'metric' }
+        visualization: { chart_type: 'metric' },
+        display_name: 'some name',
       }
     };
   });
@@ -65,13 +66,14 @@ describe('modules/persistence/rest', function(){
         var expectedURL = this.config.baseUrl + '/some-name' + '?api_key=' +
           this.config.masterKey;
         var expectedRequestBody = {
-          query_name: 'some name',
+          query_name: 'some-name',
           query: {
             analysis_type: 'count',
             event_collection: 'activities'
           },
           metadata: {
-            visualization: { chart_type: 'metric' }
+            visualization: { chart_type: 'metric' },
+            display_name: 'some name'
           }
         };
 
@@ -88,13 +90,14 @@ describe('modules/persistence/rest', function(){
           '?api_key=' + this.config.masterKey;
 
         var expectedRequestBody = {
-          query_name: 'some name',
+          query_name: 'some-name',
           query: {
             analysis_type: 'count',
             event_collection: 'activities'
           },
           metadata: {
-            visualization: { chart_type: 'metric' }
+            visualization: { chart_type: 'metric' },
+            display_name: 'some name'
           }
         };
 

@@ -109,14 +109,18 @@ module.exports = {
     var json = { query: module.exports.queryJSON(explorer) };
     if (module.exports.isPersisted(explorer)) {
       json.id = explorer.id;
-      json.metadata = {
-        visualization: explorer.visualization
-      };
-      // Set refresh rate to 0 for now:wq
-      json.refresh_rate = 0;
+      // Set refresh rate to 0 for now
     }
-    if (explorer.name) {
-      json.query_name = explorer.name;
+    // if this is a saved/cached query
+    if (explorer.query_name) {
+      json.refresh_rate = 0;
+      json.query_name = explorer.query_name;
+      json.metadata = {
+        visualization: {
+          chart_type: explorer.visualization.chart_type
+        },
+        display_name: explorer.query_name
+      }
     }
 
     return json;
@@ -439,6 +443,6 @@ module.exports = {
   },
 
   slugify: function(name) {
-    return name.toLowerCase().replace(/[^\w\s]/g, '').replace(/ /g, '-');
+    return name.toLowerCase().replace(/[^\w\s-]/g, '').replace(/ /g, '-');
   }
 };

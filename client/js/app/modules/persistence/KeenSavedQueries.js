@@ -17,7 +17,7 @@ KeenSavedQueries.prototype.makeRequest = function(action, id, body, callback) {
   var actionComponents = this.actions[action].split(' ');
   var httpMethod = actionComponents[0];
   var url = this.config.baseUrl;
-  if (body) delete body.id
+  if (body) delete body.id;
 
   if (actionComponents[1] && id) {
     url = url + actionComponents[1].replace('{id}', id);
