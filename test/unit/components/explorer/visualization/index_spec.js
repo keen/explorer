@@ -122,13 +122,13 @@ describe('components/explorer/visualization/index', function() {
       it('for JSON chart type', function(){
         this.model.visualization.chart_type = 'json';
         this.component.forceUpdate();
-        assert.lengthOf(TestUtils.scryRenderedDOMComponentsWithClass(this.component, 'extraction-message-component'), 1);
+        assert.lengthOf(TestUtils.scryRenderedDOMComponentsWithClass(this.component, 'extraction-alert'), 1);
       });
 
       it('for Table chart type', function(){
         this.model.visualization.chart_type = 'table';
         this.component.forceUpdate();
-        assert.lengthOf(TestUtils.scryRenderedDOMComponentsWithClass(this.component, 'extraction-message-component'), 1);
+        assert.lengthOf(TestUtils.scryRenderedDOMComponentsWithClass(this.component, 'extraction-alert'), 1);
       });
     });
 
@@ -141,13 +141,13 @@ describe('components/explorer/visualization/index', function() {
       it('for JSON chart type', function(){
         this.model.visualization.chart_type = 'json';
         this.component.forceUpdate();
-        assert.lengthOf(TestUtils.scryRenderedDOMComponentsWithClass(this.component, 'viz-notice'), 0);
+        assert.lengthOf(TestUtils.scryRenderedDOMComponentsWithClass(this.component, 'extraction-alert'), 0);
       });
 
       it('for metric chart type', function(){
         this.model.visualization.chart_type = 'metric';
         this.component.forceUpdate();
-        assert.lengthOf(TestUtils.scryRenderedDOMComponentsWithClass(this.component, 'viz-notice'), 0);
+        assert.lengthOf(TestUtils.scryRenderedDOMComponentsWithClass(this.component, 'extraction-alert'), 0);
       });
     });
 

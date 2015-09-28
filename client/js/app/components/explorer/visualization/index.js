@@ -64,30 +64,34 @@ var Visualization = React.createClass({
 
   render: function() {
     var csvExtractionBanner,
+        csvEmailBtn,
         chartOptionsBar,
         chartTitle,
         saveBtn;
 
     var chartDetailBarClasses = classNames({
-      'chart-detail-bar': true,
+      'chart-detail-bar clearfix': true,
       'chart-detail-active': this.props.model.result !== null && !this.props.model.loading
     });
 
     var codeSampleBtnClasses = classNames({
-      'btn btn-default code-sample-toggle': true,
+      'btn btn-default code-sample-toggle pull-right margin-left-tiny': true,
       'open': !this.state.codeSampleHidden
     });
 
     if (this.props.model.query.analysis_type === 'extraction') {
-      csvExtractionBanner = <div className="extraction-message-component">
-                              <div className="alert">
-                                <span className="icon glyphicon glyphicon-info-sign"></span>
-                                Previews are limited to the latest {ExplorerUtils.EXRACTION_EVENT_LIMIT} events. Larger extractions are available by email.
-                              </div>
-                              <button type="button" className="btn btn-default pull-right" onClick={this.props.onOpenCSVExtraction}>
-                                Email extraction
-                              </button>
-                            </div>;
+      csvExtractionBanner = (
+        <div className="alert alert-info extraction-alert">
+          <span className="icon glyphicon glyphicon-info-sign margin-right-tiny"></span>
+          Previews are limited to the latest {ExplorerUtils.EXRACTION_EVENT_LIMIT} events. Larger extractions are available by email.
+        </div>
+      );
+                              
+      csvEmailBtn = (
+        <button type="button" className="btn btn-default pull-right" onClick={this.props.onOpenCSVExtraction}>
+          Send Email extraction
+        </button>
+      );
     }
 
     if (this.props.persistence) {
@@ -107,6 +111,7 @@ var Visualization = React.createClass({
                             <button className={codeSampleBtnClasses} onClick={this.toggleCodeSample}>
                               <span>&lt;/&gt; Embed</span>
                             </button>
+                            {csvEmailBtn}
                           </div>
                         </div>;
     }
@@ -130,7 +135,7 @@ var Visualization = React.createClass({
         <div className="visualization-wrapper">
           <div className={chartDetailBarClasses}>
             {chartTitle}
-            <div className="chart-type-component">
+            <div className="chart-type-component pull-right">
               <Select label={false}
                       ref="chart-type"
                       name="chart_type"

@@ -3226,33 +3226,6 @@ var Explorer = React.createClass({displayName: "Explorer",
   // Convenience functions
   // ********************************
 
-  updateVizPosition: function(event) {
-    var options = this.props.config.options || {};
-    var scrollOffset = $(document).scrollTop();
-    var adjustedScrollOffset = scrollOffset + (options.fixedOffset || 0);
-
-    var $explorerNode = $(this.refs['root'].getDOMNode());
-    var explorerPosition = $explorerNode.offset();
-
-    var explorerTop = explorerPosition.top;
-    var explorerBottom = explorerTop + $explorerNode.outerHeight();
-
-    var vizAreaHeight = $(this.refs['viz-area'].getDOMNode()).outerHeight();
-
-    // Disable for mobile screens
-    if (window.innerHeight > window.innerWidth) {
-      this.setVizWrapTop(0);
-      return;
-    }
-
-    if (adjustedScrollOffset > explorerTop && (adjustedScrollOffset + vizAreaHeight) < explorerBottom) {
-      var offset = (adjustedScrollOffset - explorerTop);
-      this.setVizWrapTop(offset);
-    } else if (adjustedScrollOffset <= explorerTop) {
-      this.setVizWrapTop(0);
-    }
-  },
-
   setVizWrapTop: function(top) {
     this.refs['viz-area'].getDOMNode().style.top = top + 'px';
   },
@@ -3285,14 +3258,12 @@ var Explorer = React.createClass({displayName: "Explorer",
     ExplorerStore.addChangeListener(this._onChange);
     NoticeStore.addChangeListener(this._onChange);
     AppStateStore.addChangeListener(this._onChange);
-    window.addEventListener('scroll', _.bind(this.updateVizPosition, this), false);
   },
 
   componentWillUnmount: function() {
     ExplorerStore.removeChangeListener(this._onChange);
     NoticeStore.removeChangeListener(this._onChange);
     AppStateStore.removeChangeListener(this._onChange);
-    window.removeEventListener('scroll', _.bind(this.updateVizPosition, this), false);
   },
 
   getInitialState: function() {
@@ -4177,30 +4148,34 @@ var Visualization = React.createClass({displayName: "Visualization",
 
   render: function() {
     var csvExtractionBanner,
+        csvEmailBtn,
         chartOptionsBar,
         chartTitle,
         saveBtn;
 
     var chartDetailBarClasses = classNames({
-      'chart-detail-bar': true,
+      'chart-detail-bar clearfix': true,
       'chart-detail-active': this.props.model.result !== null && !this.props.model.loading
     });
 
     var codeSampleBtnClasses = classNames({
-      'btn btn-default code-sample-toggle': true,
+      'btn btn-default code-sample-toggle pull-right margin-left-tiny': true,
       'open': !this.state.codeSampleHidden
     });
 
     if (this.props.model.query.analysis_type === 'extraction') {
-      csvExtractionBanner = React.createElement("div", {className: "extraction-message-component"}, 
-                              React.createElement("div", {className: "alert"}, 
-                                React.createElement("span", {className: "icon glyphicon glyphicon-info-sign"}), 
-                                "Previews are limited to the latest ", ExplorerUtils.EXRACTION_EVENT_LIMIT, " events. Larger extractions are available by email."
-                              ), 
-                              React.createElement("button", {type: "button", className: "btn btn-default pull-right", onClick: this.props.onOpenCSVExtraction}, 
-                                "Email extraction"
-                              )
-                            );
+      csvExtractionBanner = (
+        React.createElement("div", {className: "alert alert-info extraction-alert"}, 
+          React.createElement("span", {className: "icon glyphicon glyphicon-info-sign margin-right-tiny"}), 
+          "Previews are limited to the latest ", ExplorerUtils.EXRACTION_EVENT_LIMIT, " events. Larger extractions are available by email."
+        )
+      );
+                              
+      csvEmailBtn = (
+        React.createElement("button", {type: "button", className: "btn btn-default pull-right", onClick: this.props.onOpenCSVExtraction}, 
+          "Send Email extraction"
+        )
+      );
     }
 
     if (this.props.persistence) {
@@ -4219,7 +4194,8 @@ var Visualization = React.createClass({displayName: "Visualization",
                           React.createElement("div", {className: "pull-right"}, 
                             React.createElement("button", {className: codeSampleBtnClasses, onClick: this.toggleCodeSample}, 
                               React.createElement("span", null, "</> Embed")
-                            )
+                            ), 
+                            csvEmailBtn
                           )
                         );
     }
@@ -4243,7 +4219,7 @@ var Visualization = React.createClass({displayName: "Visualization",
         React.createElement("div", {className: "visualization-wrapper"}, 
           React.createElement("div", {className: chartDetailBarClasses}, 
             chartTitle, 
-            React.createElement("div", {className: "chart-type-component"}, 
+            React.createElement("div", {className: "chart-type-component pull-right"}, 
               React.createElement(Select, {label: false, 
                       ref: "chart-type", 
                       name: "chart_type", 
