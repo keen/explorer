@@ -17,7 +17,7 @@ KeenSavedQueries.prototype.makeRequest = function(action, id, body, callback) {
   var actionComponents = this.actions[action].split(' ');
   var httpMethod = actionComponents[0];
   var url = this.config.baseUrl;
-  if (body) delete body.id
+  if (body) delete body.id;
 
   if (actionComponents[1] && id) {
     url = url + actionComponents[1].replace('{id}', id);
@@ -34,9 +34,11 @@ KeenSavedQueries.prototype.makeRequest = function(action, id, body, callback) {
       callback(JSON.parse(err.response.text).error);
       return;
     }
-    var body = res ? res.body : null;
-    if (body.result) body = body.result;
-    callback(null, body);
+    var callbackBody = res ? res.body : null;
+    if (callbackBody.result) {
+      callbackBody = callbackBody.result;
+    }
+    callback(null, callbackBody);
   });
 };
 
