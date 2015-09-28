@@ -46,7 +46,10 @@ function _defaultAttrs(){
     visualization: {
       chart_type: null
     },
-    user: {}
+    user: {},
+    metadata: {
+      display_name: ''
+    }
   };
 }
 
