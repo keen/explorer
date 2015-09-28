@@ -123,7 +123,13 @@ var Explorer = React.createClass({
   },
 
   onNameChange: function(event) {
-    ExplorerActions.update(this.state.activeExplorer.id, { name: event.target.value });
+    ExplorerActions.update(this.state.activeExplorer.id, { query_name: event.target.value });
+  },
+
+  onDisplayNameChange: function(event) {
+    var updates = _.cloneDeep(this.state.activeExplorer);
+    updates.metadata.display_name = event.target.value;
+    ExplorerActions.update(this.state.activeExplorer.id, updates);
   },
 
   handleRevertChanges: function(event) {

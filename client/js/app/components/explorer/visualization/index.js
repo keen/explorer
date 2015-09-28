@@ -112,21 +112,21 @@ var Visualization = React.createClass({
     }
 
     if (this.props.persistence) {
+      // TODO: Make slug smaller as it's less important as the chart title.
+      // ***************************************
       chartTitle = (
         <div className="chart-title-component">
-          <input ref="input"
-                 className="chart-display-name"
+          <input className="chart-display-name"
                  type="text"
-                 onChange={this.props.onNameChange}
+                 onChange={this.props.onDisplayNameChange}
                  spellCheck="false"
-                 value={this.props.model.query_name}
+                 value={this.props.model.metadata.display_name}
                  placeholder="Give your query a name..." />
-          <input ref="slug"
-                 className="chart-query-name"
+          <input className="chart-query-name"
                  type="text"
-                 onChange={this.props.onSlugChange}
+                 onChange={this.props.onQueryNameChange}
                  spellCheck="false"
-                 value="this-is-your-query-slug" />
+                 value={this.props.model.query_name} />
         </div>
       );
     }
