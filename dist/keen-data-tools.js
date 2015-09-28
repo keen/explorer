@@ -4381,11 +4381,11 @@ module.exports = new Dispatcher();
 },{"flux":74}],49:[function(require,module,exports){
 module.exports = {
 
-  REST: require('../rest.js')
+  REST: require('./rest.js')
 
 };
 
-},{"../rest.js":50}],50:[function(require,module,exports){
+},{"./rest.js":50}],50:[function(require,module,exports){
 var _ = require('lodash');
 var request = require('superagent');
 
@@ -5915,8 +5915,8 @@ module.exports = {
   eventsUrl: function(client) {
     var endpoint = client.config.protocol + "://" + client.config.host;
     var projectId = client.config.projectId;
-    var readKey = client.config.readKey;
-    return endpoint+'/projects/'+projectId+'/events?api_key='+readKey;
+    var masterKey = client.config.masterKey;
+    return endpoint+'/projects/'+projectId+'/events?api_key='+masterKey;
   },
 
   unpackProjectSchema: function(project, projectSchema) {
