@@ -119,33 +119,6 @@ var Explorer = React.createClass({
   // Convenience functions
   // ********************************
 
-  updateVizPosition: function(event) {
-    var options = this.props.config.options || {};
-    var scrollOffset = $(document).scrollTop();
-    var adjustedScrollOffset = scrollOffset + (options.fixedOffset || 0);
-
-    var $explorerNode = $(this.refs['root'].getDOMNode());
-    var explorerPosition = $explorerNode.offset();
-
-    var explorerTop = explorerPosition.top;
-    var explorerBottom = explorerTop + $explorerNode.outerHeight();
-
-    var vizAreaHeight = $(this.refs['viz-area'].getDOMNode()).outerHeight();
-
-    // Disable for mobile screens
-    if (window.innerHeight > window.innerWidth) {
-      this.setVizWrapTop(0);
-      return;
-    }
-
-    if (adjustedScrollOffset > explorerTop && (adjustedScrollOffset + vizAreaHeight) < explorerBottom) {
-      var offset = (adjustedScrollOffset - explorerTop);
-      this.setVizWrapTop(offset);
-    } else if (adjustedScrollOffset <= explorerTop) {
-      this.setVizWrapTop(0);
-    }
-  },
-
   setVizWrapTop: function(top) {
     this.refs['viz-area'].getDOMNode().style.top = top + 'px';
   },
@@ -178,14 +151,12 @@ var Explorer = React.createClass({
     ExplorerStore.addChangeListener(this._onChange);
     NoticeStore.addChangeListener(this._onChange);
     AppStateStore.addChangeListener(this._onChange);
-    window.addEventListener('scroll', _.bind(this.updateVizPosition, this), false);
   },
 
   componentWillUnmount: function() {
     ExplorerStore.removeChangeListener(this._onChange);
     NoticeStore.removeChangeListener(this._onChange);
     AppStateStore.removeChangeListener(this._onChange);
-    window.removeEventListener('scroll', _.bind(this.updateVizPosition, this), false);
   },
 
   getInitialState: function() {
