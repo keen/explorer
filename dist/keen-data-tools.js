@@ -411,7 +411,7 @@ function App(config) {
 
   // Create the main active explorer
   var explorerAttrs = _.assign(
-    { id: FormatUtils.generateRandomId("TEMP-") },
+    { id: FormatUtils.generateRandomId("TEMP-"), max_age: config.max_age },
     ExplorerUtils.formatQueryParams(QueryStringUtils.getQueryAttributes()) // Grab params form URL and load into new explorer
   );
   ExplorerActions.create(explorerAttrs);
@@ -5202,6 +5202,10 @@ module.exports = {
       if (!params.filters.length) {
         delete params.filters;
       }
+    }
+
+    if(explorer.max_age) {
+      params.max_age = explorer.max_age;
     }
 
     return params;
