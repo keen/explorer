@@ -3192,7 +3192,13 @@ var Explorer = React.createClass({displayName: "Explorer",
   },
 
   onNameChange: function(event) {
-    ExplorerActions.update(this.state.activeExplorer.id, { name: event.target.value });
+    ExplorerActions.update(this.state.activeExplorer.id, { query_name: event.target.value });
+  },
+
+  onDisplayNameChange: function(event) {
+    var updates = _.cloneDeep(this.state.activeExplorer);
+    updates.metadata.display_name = event.target.value;
+    ExplorerActions.update(this.state.activeExplorer.id, updates);
   },
 
   handleRevertChanges: function(event) {
@@ -4289,21 +4295,21 @@ var Visualization = React.createClass({displayName: "Visualization",
     }
 
     if (this.props.persistence) {
+      // TODO: Make slug smaller as it's less important as the chart title.
+      // ***************************************
       chartTitle = (
         React.createElement("div", {className: "chart-title-component"}, 
-          React.createElement("input", {ref: "input", 
-                 className: "chart-display-name", 
+          React.createElement("input", {className: "chart-display-name", 
                  type: "text", 
-                 onChange: this.props.onNameChange, 
+                 onChange: this.props.onDisplayNameChange, 
                  spellCheck: "false", 
-                 value: this.props.model.query_name, 
+                 value: this.props.model.metadata.display_name, 
                  placeholder: "Give your query a name..."}), 
-          React.createElement("input", {ref: "slug", 
-                 className: "chart-query-name", 
+          React.createElement("input", {className: "chart-query-name", 
                  type: "text", 
-                 onChange: this.props.onSlugChange, 
+                 onChange: this.props.onQueryNameChange, 
                  spellCheck: "false", 
-                 value: "this-is-your-query-slug"})
+                 value: this.props.model.query_name})
         )
       );
     }
@@ -4644,7 +4650,10 @@ function _defaultAttrs(){
     visualization: {
       chart_type: null
     },
-    user: {}
+    user: {},
+    metadata: {
+      display_name: ''
+    }
   };
 }
 
