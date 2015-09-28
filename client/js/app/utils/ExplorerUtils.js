@@ -441,4 +441,5 @@ module.exports = {
   slugify: function(name) {
     return name.toLowerCase().replace(/[^\w\s]/g, '').replace(/ /g, '-');
   }
+  
 };
