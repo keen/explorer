@@ -34,9 +34,11 @@ KeenSavedQueries.prototype.makeRequest = function(action, id, body, callback) {
       callback(JSON.parse(err.response.text).error);
       return;
     }
-    var body = res ? res.body : null;
-    if (body.result) body = body.result;
-    callback(null, body);
+    var callbackBody = res ? res.body : null;
+    if (callbackBody.result) {
+      callbackBody = callbackBody.result;
+    }
+    callback(null, callbackBody);
   });
 };
 

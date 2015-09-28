@@ -49,7 +49,7 @@ var BrowseQueries = React.createClass({
       var classes,
           removeBtn;
       if (isSelected) classes = 'active';
-      if (this.props.removeCallback && listItem.user.id === this.props.user.id) {
+      if (this.props.removeCallback) { //&& listItem.user.id === this.props.user.id) {
         removeBtn = (<a href="#" className="remove-btn" data-item-index={index} role="remove" onClick={this.removeClick}>
                       <span className="icon"></span>
                      </a>);

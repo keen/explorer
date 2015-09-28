@@ -276,12 +276,11 @@ var ExplorerActions = {
     });
   },
 
-  destroy: function(persistence, id) {
+  destroy: function(persistence, sourceId) {
     AppDispatcher.dispatch({
       actionType: ExplorerConstants.EXPLORER_DESTROYING
     });
-
-    var attrs = _.clone({}, ExplorerUtils.toJSON(ExplorerStore.get(sourceId)));
+    var attrs = _.clone(ExplorerUtils.toJSON(ExplorerStore.get(sourceId)));
     persistence.destroy(attrs, function(err, res) {
       if (err) {
         AppDispatcher.dispatch({
@@ -291,7 +290,7 @@ var ExplorerActions = {
       } else {
         AppDispatcher.dispatch({
           actionType: ExplorerConstants.EXPLORER_REMOVE,
-          id: id
+          id: sourceId
         });
         AppDispatcher.dispatch({
           actionType: ExplorerConstants.EXPLORER_DESTROY_SUCCESS

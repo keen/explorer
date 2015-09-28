@@ -300,12 +300,11 @@ var ExplorerActions = {
     });
   },
 
-  destroy: function(persistence, id) {
+  destroy: function(persistence, sourceId) {
     AppDispatcher.dispatch({
       actionType: ExplorerConstants.EXPLORER_DESTROYING
     });
-
-    var attrs = _.clone({}, ExplorerUtils.toJSON(ExplorerStore.get(sourceId)));
+    var attrs = _.clone(ExplorerUtils.toJSON(ExplorerStore.get(sourceId)));
     persistence.destroy(attrs, function(err, res) {
       if (err) {
         AppDispatcher.dispatch({
@@ -315,7 +314,7 @@ var ExplorerActions = {
       } else {
         AppDispatcher.dispatch({
           actionType: ExplorerConstants.EXPLORER_REMOVE,
-          id: id
+          id: sourceId
         });
         AppDispatcher.dispatch({
           actionType: ExplorerConstants.EXPLORER_DESTROY_SUCCESS
@@ -3948,7 +3947,7 @@ var BrowseQueries = React.createClass({displayName: "BrowseQueries",
       var classes,
           removeBtn;
       if (isSelected) classes = 'active';
-      if (this.props.removeCallback && listItem.user.id === this.props.user.id) {
+      if (this.props.removeCallback) { //&& listItem.user.id === this.props.user.id) {
         removeBtn = (React.createElement("a", {href: "#", className: "remove-btn", "data-item-index": index, role: "remove", onClick: this.removeClick}, 
                       React.createElement("span", {className: "icon"})
                      ));
@@ -4480,7 +4479,6 @@ KeenSavedQueries.prototype.makeRequest = function(action, id, body, callback) {
     url += '?api_key=' + this.config.masterKey;
   }
   var r = request(httpMethod, url).type('application/json');
-  console.log(url);
   if (body) {
     r.send(body);
   }
@@ -4489,9 +4487,11 @@ KeenSavedQueries.prototype.makeRequest = function(action, id, body, callback) {
       callback(JSON.parse(err.response.text).error);
       return;
     }
-    var body = res ? res.body : null;
-    if (body.result) body = body.result;
-    callback(null, body);
+    var callbackBody = res ? res.body : null;
+    if (callbackBody.result) {
+      callbackBody = callbackBody.result;
+    }
+    callback(null, callbackBody);
   });
 };
 
