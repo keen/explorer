@@ -211,9 +211,9 @@ var ExplorerActions = {
       result: response.result,
       loading: false
     };
-    if (!ExplorerUtils.resultSupportsChartType(response.result, explorer.visualization.chart_type, explorer.query.analysis_type)) {
-      updates.visualization = _.cloneDeep(explorer.visualization);
-      updates.visualization.chart_type = ExplorerUtils.getChartTypeOptions(response.result, explorer.query.analysis_type)[0];
+    if (!ExplorerUtils.resultSupportsChartType(response.result, explorer.metadata.visualization.chart_type, explorer.query.analysis_type)) {
+      updates = _.cloneDeep(explorer);
+      updates.metadata.visualization.chart_type = ExplorerUtils.getChartTypeOptions(response.result, explorer.query.analysis_type)[0];
     }
     ExplorerActions.update(explorer.id, updates);
   },
@@ -3389,7 +3389,7 @@ var QueryActions = React.createClass({displayName: "QueryActions",
           'btn btn-default code-sample-toggle pull-right': true,
           'open': !this.props.codeSampleHidden
         });
-    if (this.props.persistence && !ExplorerUtils.isEmailExtraction(this.props.model) && this.props.user.id === this.props.model.user.id) {
+    if (this.props.persistence && !ExplorerUtils.isEmailExtraction(this.props.model) && this.props.user.id === this.props.model.metadata.user.id) {
       saveBtn = (
         React.createElement("button", {type: "button", className: "btn btn-success save-query", onClick: this.props.saveQueryClick, role: "save-query", disabled: this.props.model.loading}, 
           ExplorerUtils.isPersisted(this.props.model) ? 'Update' : 'Save'
@@ -4035,10 +4035,10 @@ var BrowseQueries = React.createClass({displayName: "BrowseQueries",
       if (listItem.originalModel) listItem = listItem.originalModel;
 
       listItem.user = listItem.user || {};
-      if (String(listItem.query_name.toLowerCase()).search(this.state.searchterm.toLowerCase()) < 0) return;
+      if (String(listItem.metadata.display_name.toLowerCase()).search(this.state.searchterm.toLowerCase()) < 0) return;
 
       if (this.state.filterType === 'user') {
-        if (!listItem.user.id || listItem.user.id !== this.props.user.id) return;
+        if (!listItem.metadata.user.id || listItem.metadata.user.id !== this.props.user.id) return;
       }
 
       var isSelected = (this.props.selectedIndex === index) ? true : false;
@@ -4295,9 +4295,9 @@ var Visualization = React.createClass({displayName: "Visualization",
     var chartType = _.find(this.formatChartTypes(), function(type){
       return type.value === event.target.value;
     });
-    var updates = _.cloneDeep(this.props.model.visualization);
-    updates.chart_type = chartType.value;
-    ExplorerActions.update(this.props.model.id, { visualization: updates });
+    var updates = _.cloneDeep(this.props.model);
+    updates.metadata.visualization.chart_type = chartType.value;
+    ExplorerActions.update(this.props.model.id, updates);
   },
 
   formatChartTypes: function() {
@@ -4359,7 +4359,7 @@ var Visualization = React.createClass({displayName: "Visualization",
                       classes: "chart-type", 
                       options: this.formatChartTypes(), 
                       handleSelection: this.changeChartType, 
-                      selectedOption: this.props.model.visualization.chart_type, 
+                      selectedOption: this.props.model.metadata.visualization.chart_type, 
                       emptyOption: false, 
                       disabled: this.props.model.loading})
             )
@@ -4399,7 +4399,7 @@ var KeenViz = React.createClass({displayName: "KeenViz",
 		this.props.dataviz.destroy(); // Remove the old one first.
   	this.props.dataviz.data({ result: this.props.model.result })
   		.title('') // No title - not necessary for Explorer
-	    .chartType(this.props.model.visualization.chart_type)
+	    .chartType(this.props.model.metadata.visualization.chart_type)
     	.el(this.refs['keen-viz'].getDOMNode())
     	.height(400)
     	.render();
@@ -4823,7 +4823,7 @@ function _updateFilter(id, index, updates) {
 
 function _clear(id) {
   var model = _explorers[id];
-  _explorers[id] = _.assign({}, _defaultAttrs(), _.pick(model, ['id', 'query_name', 'active', 'user', 'originalModel']));
+  _explorers[id] = _.assign({}, _defaultAttrs(), _.pick(model, ['id', 'query_name', 'active', 'metadata', 'originalModel']));
 }
 
 var ExplorerStore = _.assign({}, EventEmitter.prototype, {
@@ -5389,12 +5389,7 @@ module.exports = {
     if (explorer.query_name) {
       json.refresh_rate = 0;
       json.query_name = explorer.query_name;
-      json.metadata = {
-        visualization: {
-          chart_type: explorer.visualization.chart_type
-        },
-        display_name: explorer.query_name
-      }
+      json.metadata = explorer.metadata;
     }
 
     return json;
@@ -5646,11 +5641,11 @@ module.exports = {
   },
 
   isJSONViz: function(explorer) {
-    return explorer.visualization.chart_type && explorer.visualization.chart_type.toLowerCase() === 'json';
+    return explorer.metadata.visualization.chart_type && explorer.metadata.visualization.chart_type.toLowerCase() === 'json';
   },
 
   isTableViz: function(explorer) {
-    return explorer.visualization.chart_type && explorer.visualization.chart_type.toLowerCase() === 'table';
+    return explorer.metadata.visualization.chart_type && explorer.metadata.visualization.chart_type.toLowerCase() === 'table';
   },
 
   getSdkExample: function(explorer, client) {
