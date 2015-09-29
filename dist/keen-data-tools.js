@@ -207,12 +207,11 @@ var ExplorerActions = {
       explorer: explorer
     });
     NoticeActions.clearAll();
-    var updates = {
-      result: response.result,
-      loading: false
-    };
+    
+    var updates = _.cloneDeep(explorer);
+    updates.result = response.result;
+    updates.loading = false;
     if (!ExplorerUtils.resultSupportsChartType(response.result, explorer.metadata.visualization.chart_type, explorer.query.analysis_type)) {
-      updates = _.cloneDeep(explorer);
       updates.metadata.visualization.chart_type = ExplorerUtils.getChartTypeOptions(response.result, explorer.query.analysis_type)[0];
     }
     ExplorerActions.update(explorer.id, updates);
