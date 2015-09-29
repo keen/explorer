@@ -7,7 +7,8 @@ var CHANGE_EVENT = 'change';
 
 function defaultState() {
   return {
-    fetchingPersistedExplorers: false
+    fetchingPersistedExplorers: false,
+    codeSampleHidden: true
   };
 }
 

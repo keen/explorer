@@ -7,19 +7,24 @@ var TestHelpers = require('../../support/TestHelpers');
 var AppDispatcher = require('../../../client/js/app/dispatcher/AppDispatcher');
 var ExplorerConstants = require('../../../client/js/app/constants/ExplorerConstants');
 var NoticeStore = require('../../../client/js/app/stores/NoticeStore');
+var ExplorerStore = require('../../../client/js/app/stores/ExplorerStore');
+var ExplorerActions = require('../../../client/js/app/actions/ExplorerActions');
 
 describe('stores/NoticeStore', function() {
 
   describe('dispatcher callback', function () {
     beforeEach(function () {
       NoticeStore.clearAll();
+      ExplorerStore.clearAll();
+      ExplorerActions.create({ id: 1 });
     });
 
     describe('EXPLORER_SAVING actionType', function () {
-      it('should create the right notice with the "save" saveType', function () {
+      it('should create the right notice with the "save" saveType', function () { 
         AppDispatcher.dispatch({
           actionType: ExplorerConstants.EXPLORER_SAVING,
-          saveType: 'save'
+          saveType: 'save',
+          id: 1
         });
         assert.deepEqual(NoticeStore.getNotice(), {
           type: 'info',
@@ -30,7 +35,8 @@ describe('stores/NoticeStore', function() {
       it('should create the right notice with the "update" saveType', function () {
         AppDispatcher.dispatch({
           actionType: ExplorerConstants.EXPLORER_SAVING,
-          saveType: 'update'
+          saveType: 'update',
+          id: 1
         });
         assert.deepEqual(NoticeStore.getNotice(), {
           type: 'info',
@@ -44,7 +50,8 @@ describe('stores/NoticeStore', function() {
       it('should create the right notice with the "save" saveType', function () {
         AppDispatcher.dispatch({
           actionType: ExplorerConstants.EXPLORER_SAVE_SUCCESS,
-          saveType: 'save'
+          saveType: 'save',
+          id: 1
         });
         assert.deepEqual(NoticeStore.getNotice(), {
           type: 'success',
@@ -55,7 +62,8 @@ describe('stores/NoticeStore', function() {
       it('should create the right notice with the "update" saveType', function () {
         AppDispatcher.dispatch({
           actionType: ExplorerConstants.EXPLORER_SAVE_SUCCESS,
-          saveType: 'update'
+          saveType: 'update',
+          id: 1
         });
         assert.deepEqual(NoticeStore.getNotice(), {
           type: 'success',
@@ -71,7 +79,8 @@ describe('stores/NoticeStore', function() {
         AppDispatcher.dispatch({
           actionType: ExplorerConstants.EXPLORER_SAVE_FAIL,
           saveType: 'save',
-          errorMsg: errorMessage
+          errorMsg: errorMessage,
+          id: 1
         });
         assert.deepEqual(NoticeStore.getNotice(), {
           type: 'error',
@@ -84,7 +93,8 @@ describe('stores/NoticeStore', function() {
         AppDispatcher.dispatch({
           actionType: ExplorerConstants.EXPLORER_SAVE_FAIL,
           saveType: 'update',
-          errorMsg: errorMessage
+          errorMsg: errorMessage,
+          id: 1
         });
         assert.deepEqual(NoticeStore.getNotice(), {
           type: 'error',
@@ -97,7 +107,8 @@ describe('stores/NoticeStore', function() {
     describe('EXPLORER_DESTROYING actionType', function () {
       it('should create the right notice', function () {
         AppDispatcher.dispatch({
-          actionType: ExplorerConstants.EXPLORER_DESTROYING
+          actionType: ExplorerConstants.EXPLORER_DESTROYING,
+          id: 1
         });
         assert.deepEqual(NoticeStore.getNotice(), {
           type: 'info',
@@ -125,6 +136,7 @@ describe('stores/NoticeStore', function() {
         var errorMsg = 'there was a destroy error';
         AppDispatcher.dispatch({
           actionType: ExplorerConstants.EXPLORER_DESTROY_FAIL,
+          id: 1,
           errorMsg: errorMsg
         });
         assert.deepEqual(NoticeStore.getNotice(), {

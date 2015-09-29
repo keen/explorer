@@ -55,6 +55,14 @@ module.exports = {
     return explorer.id && !explorer.id.toString().match('TEMP');
   },
 
+  isEmailExtraction: function(explorer) {
+    return (explorer.query.analysis_type === 'extraction' && !_.isNull(explorer.query.email));
+  },
+
+  isImmediateExtraction: function(explorer) {
+    return (explorer.query.analysis_type === 'extraction' && _.isNull(explorer.query.email));
+  },
+
   mergeResponseWithExplorer: function(explorer, response) {
     var formattedParams = module.exports.formatQueryParams(response);
     var newModel = _.assign({},
@@ -115,12 +123,7 @@ module.exports = {
     if (explorer.query_name) {
       json.refresh_rate = 0;
       json.query_name = explorer.query_name;
-      json.metadata = {
-        visualization: {
-          chart_type: explorer.visualization.chart_type
-        },
-        display_name: explorer.query_name
-      }
+      json.metadata = explorer.metadata;
     }
 
     return json;
@@ -372,11 +375,11 @@ module.exports = {
   },
 
   isJSONViz: function(explorer) {
-    return explorer.visualization.chart_type && explorer.visualization.chart_type.toLowerCase() === 'json';
+    return explorer.metadata.visualization.chart_type && explorer.metadata.visualization.chart_type.toLowerCase() === 'json';
   },
 
   isTableViz: function(explorer) {
-    return explorer.visualization.chart_type && explorer.visualization.chart_type.toLowerCase() === 'table';
+    return explorer.metadata.visualization.chart_type && explorer.metadata.visualization.chart_type.toLowerCase() === 'table';
   },
 
   getSdkExample: function(explorer, client) {

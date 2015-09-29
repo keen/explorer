@@ -57,8 +57,14 @@ module.exports = {
 			  	sub_timeframe: 'weeks'
 			  }
 			},
-			visualization: {
-			  chart_type: null
+			metadata: {
+			  display_name: null,
+			  visualization: {
+			    chart_type: null
+			  },
+			  user: {
+			    id: null
+			  }
 			}
 		};
 	},

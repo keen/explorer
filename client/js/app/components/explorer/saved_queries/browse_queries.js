@@ -23,15 +23,8 @@ function dateForItem(item) {
 
 var BrowseQueries = React.createClass({
 
-  removeClick: function(event) {
-    event.preventDefault();
-    this.props.removeCallback(event.currentTarget.dataset.itemIndex);
-  },
-
   clickCallback: function(event) {
-    if (event.target.getAttribute('role') !== 'remove' && event.target.parentNode.getAttribute('role') !== 'remove') {
-      this.props.clickCallback(event);
-    }
+    this.props.clickCallback(event);
   },
 
   buildList: function() {
@@ -39,22 +32,15 @@ var BrowseQueries = React.createClass({
       if (listItem.originalModel) listItem = listItem.originalModel;
 
       listItem.user = listItem.user || {};
-      if (String(listItem.query_name.toLowerCase()).search(this.state.searchterm.toLowerCase()) < 0) return;
+      if (String(listItem.metadata.display_name.toLowerCase()).search(this.state.searchterm.toLowerCase()) < 0) return;
 
       if (this.state.filterType === 'user') {
-        if (!listItem.user.id || listItem.user.id !== this.props.user.id) return;
+        if (!listItem.metadata.user.id || listItem.metadata.user.id !== this.props.user.id) return;
       }
 
       var isSelected = (this.props.selectedIndex === index) ? true : false;
-      var classes,
-          removeBtn;
+      var classes;
       if (isSelected) classes = 'active';
-      if (this.props.removeCallback) { //&& listItem.user.id === this.props.user.id) {
-        removeBtn = (<a href="#" className="remove-btn" data-item-index={index} role="remove" onClick={this.removeClick}>
-                      <span className="icon"></span>
-                     </a>);
-      }
-
       var createdAt;
       var datetime = dateForItem(listItem);
       if (datetime) {
@@ -68,8 +54,7 @@ var BrowseQueries = React.createClass({
 
       return (
         <li className={classes} key={index} data-id={listItem.id} onClick={this.clickCallback}>
-          {removeBtn}
-          <h5 className="name">{listItem.query_name}</h5>
+          <h5 className="name">{listItem.metadata.display_name}</h5>
           <div className="metadata clearfix">
             <p className="author pull-left">
               <span className="icon glyphicon glyphicon-user"></span>
@@ -96,7 +81,6 @@ var BrowseQueries = React.createClass({
   getDefaultProps: function() {
     return {
       listItems: [],
-      removeCallback: null,
       clickCallback: null,
       selectedIndex: null,
       notice: null,

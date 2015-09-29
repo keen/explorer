@@ -17,7 +17,7 @@ var KeenViz = React.createClass({
 		this.props.dataviz.destroy(); // Remove the old one first.
   	this.props.dataviz.data({ result: this.props.model.result })
   		.title('') // No title - not necessary for Explorer
-	    .chartType(this.props.model.visualization.chart_type)
+	    .chartType(this.props.model.metadata.visualization.chart_type)
     	.el(this.refs['keen-viz'].getDOMNode())
     	.height(400)
     	.render();

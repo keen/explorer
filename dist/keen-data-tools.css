@@ -664,15 +664,6 @@
 #keen-explorer .btn-primary:hover {
   background-color: #0099b6;
 }
-#keen-explorer .run-query {
-  margin-left: 10px;
-}
-#keen-explorer .query-builder-buttons {
-  margin-bottom: -10px;
-  padding: 8px 0px;
-  background-color: rgba(0, 0, 0, 0.05);
-  border-top: 1px solid #EEEEEE;
-}
 #keen-explorer .datepicker-wrapper,
 #keen-explorer .timepicker-wrapper {
   position: relative;
@@ -1437,6 +1428,39 @@
   padding: 18px 10px 10px;
   position: relative;
 }
+#keen-explorer .extraction-options {
+  background: #F2F2F2;
+  padding: 10px 15px;
+}
+#keen-explorer .extraction-options label {
+  font-size: 14px;
+  line-height: 28px;
+  margin: 0;
+}
+#keen-explorer .extraction-options input[type=radio] {
+  margin-right: 5px;
+}
+#keen-explorer .extraction-options .form-group {
+  margin: 15px 0 0;
+}
+#keen-explorer .extraction-options .form-group label {
+  font-size: 13px;
+  line-height: 18px;
+  margin: 0 0 5px;
+}
+#keen-explorer .extraction-options small.text-muted {
+  display: block;
+  margin: 5px 0 0;
+}
+#keen-explorer .extraction-options small.text-muted .icon {
+  margin-right: 5px;
+}
+#keen-explorer .button-set-clear-toggle btn.btn-default {
+  border-color: #e7e7e7;
+  color: #808080;
+  font-size: 13px;
+  padding: 5px;
+}
 #keen-explorer .explorer-visualization {
   position: relative;
 }
@@ -1449,7 +1473,6 @@
 #keen-explorer .visualization-wrapper {
   background: #fff;
   border: 1px solid rgba(0, 0, 0, 0.07);
-  margin: 0 0 10px;
   padding: 10px;
   position: relative;
 }
@@ -1784,6 +1807,54 @@
 }
 #keen-explorer .timezone-toggle.active .toggle-options {
   display: block;
+}
+#keen-explorer .query-actions {
+  background: #F2F2F2;
+  border: 1px solid rgba(0, 0, 0, 0.07);
+  border-top: medium none;
+  padding: 10px;
+}
+#keen-explorer .query-actions .manage-group {
+  border-left: 1px solid #D7D7D7;
+  margin-left: 10px;
+}
+#keen-explorer .query-actions .manage-group .btn {
+  margin-left: 10px;
+}
+#keen-explorer .query-actions .btn-link {
+  color: #808080;
+  font-size: 12px;
+}
+#keen-explorer .cache-toggle {
+  border: 1px solid rgba(0, 0, 0, 0.07);
+  border-top: 0;
+  padding: 5px 10px;
+}
+#keen-explorer .cache-toggle label,
+#keen-explorer .cache-toggle span.cache-details,
+#keen-explorer .cache-toggle span.cache-settings {
+  color: #808080;
+  font-size: 12px;
+  margin: 0;
+  padding-right: 10px;
+}
+#keen-explorer .cache-toggle label a,
+#keen-explorer .cache-toggle span.cache-details a,
+#keen-explorer .cache-toggle span.cache-settings a {
+  padding: 0 5px;
+}
+#keen-explorer .cache-toggle input[name="cache"] {
+  margin-right: 5px;
+}
+#keen-explorer .cache-toggle.inactive label {
+  color: #A2A2A2;
+}
+#keen-explorer .cache-settings input[name="refresh_rate"] {
+  display: inline-block;
+  font-size: 12px;
+  height: 21px;
+  text-align: center;
+  width: 56px;
 }
 #keen-explorer a {
   color: #00bbde;

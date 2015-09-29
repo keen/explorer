@@ -49,10 +49,15 @@ describe('stores/ExplorerStore', function() {
             sub_timeframe: 'days'
           }
         },
-        visualization: {
-          chart_type: null
-        },
-        user: {}
+        metadata: {
+          display_name: null,
+          visualization: {
+            chart_type: null
+          },
+          user: {
+            id: null
+          }
+        }
       };
 
       var keys = Object.keys(ExplorerStore.getAll());
@@ -65,14 +70,16 @@ describe('stores/ExplorerStore', function() {
           event_collection: 'clicks',
           analysis_type: 'count'
         },
-        visualization: {
-          chart_type: 'metric'
+        metadata: {
+          visualization: {
+            chart_type: 'metric'
+          }
         }
       });
       var keys = Object.keys(ExplorerStore.getAll());
       assert.deepPropertyVal(ExplorerStore.getAll()[keys[0]], 'query.event_collection', 'clicks');
       assert.deepPropertyVal(ExplorerStore.getAll()[keys[0]], 'query.analysis_type', 'count');
-      assert.deepPropertyVal(ExplorerStore.getAll()[keys[0]], 'visualization.chart_type', 'metric');
+      assert.deepPropertyVal(ExplorerStore.getAll()[keys[0]], 'metadata.visualization.chart_type', 'metric');
     });
     it('should set the store object key to the id is one is passed in', function () {
       ExplorerActions.create({
@@ -91,8 +98,10 @@ describe('stores/ExplorerStore', function() {
             event_collection: 'clicks',
             analysis_type: 'count'
           },
-          visualization: {
-            chart_type: 'metric'
+          metadata: {
+            visualization: {
+              chart_type: 'metric'
+            }
           }
         },
         {
@@ -101,8 +110,10 @@ describe('stores/ExplorerStore', function() {
             event_collection: 'signups',
             analysis_type: 'count'
           },
-          visualization: {
-            chart_type: 'metric'
+          metadata: {
+            visualization: {
+              chart_type: 'metric'
+            }
           }
         },
         {
@@ -111,8 +122,10 @@ describe('stores/ExplorerStore', function() {
             event_collection: 'downloads',
             analysis_type: 'count'
           },
-          visualization: {
-            chart_type: 'json'
+          metadata: {
+            visualization: {
+              chart_type: 'json'
+            }
           }
         }
       ]);
@@ -160,7 +173,7 @@ describe('stores/ExplorerStore', function() {
   });
   
   describe('update', function () {
-    it('should properly upadte the correct explorer', function () {
+    it('should properly update the correct explorer', function () {
       ExplorerActions.create({
         id: 'SOME_ID',
         query: {
@@ -212,6 +225,114 @@ describe('stores/ExplorerStore', function() {
       var explorers = ExplorerStore.getAll();
       assert.lengthOf(Object.keys(explorers), 1);
       assert.propertyVal(explorers, 'abc123');
+    });
+    describe('clearing values', function () {
+      it('should set email to null if updating analysis type to something that is not extraction', function () {
+        ExplorerActions.create({
+          id: 'SOME_ID',
+          name: 'A saved query',
+          query: {
+            email: 'someone@keen.io',
+            latest: '1000',
+            analysis_type: 'extraction',
+            event_collection: 'clicks',
+            timeframe: 'this_1_days'
+          },
+          visualization: {
+            chart_type: 'metric'
+          }
+        });
+        ExplorerActions.update('SOME_ID', {
+          query: {
+            event_collection: 'clicks',
+            analysis_type: 'count',
+            timeframe: 'this_1_days',
+            email: 'someone@keen.io',
+            latest: '1000'
+          }
+        });
+        var explorers = ExplorerStore.getAll();
+        var explorer = explorers[Object.keys(explorers)[0]];
+        assert.deepPropertyVal(explorer, 'query.email', null);
+      });
+      it('should set latest to null if updating analysis type to something that is not extraction', function () {
+        ExplorerActions.create({
+          id: 'SOME_ID',
+          name: 'A saved query',
+          query: {
+            email: 'someone@keen.io',
+            latest: '1000',
+            analysis_type: 'extraction',
+            event_collection: 'clicks',
+            timeframe: 'this_1_days'
+          },
+          visualization: {
+            chart_type: 'metric'
+          }
+        });
+        ExplorerActions.update('SOME_ID', {
+          query: {
+            event_collection: 'clicks',
+            analysis_type: 'count',
+            timeframe: 'this_1_days',
+            email: 'someone@keen.io',
+            latest: '1000'
+          }
+        });
+        var explorers = ExplorerStore.getAll();
+        var explorer = explorers[Object.keys(explorers)[0]];
+        assert.deepPropertyVal(explorer, 'query.latest', null);
+      });
+      it('does not clear the email field if the analysis type is extraction', function () {
+        ExplorerActions.create({
+          id: 'SOME_ID',
+          name: 'A saved query',
+          query: {
+            analysis_type: 'count',
+            event_collection: 'clicks',
+            timeframe: 'this_1_days'
+          },
+          visualization: {
+            chart_type: 'metric'
+          }
+        });
+        ExplorerActions.update('SOME_ID', {
+          query: {
+            event_collection: 'clicks',
+            analysis_type: 'extraction',
+            timeframe: 'this_1_days',
+            email: 'someone@keen.io'
+          }
+        });
+        var explorers = ExplorerStore.getAll();
+        var explorer = explorers[Object.keys(explorers)[0]];
+        assert.deepPropertyVal(explorer, 'query.email', 'someone@keen.io');
+      });
+      it('does not clear the latest field if the analysis type is extraction', function () {
+        ExplorerActions.create({
+          id: 'SOME_ID',
+          name: 'A saved query',
+          query: {
+            analysis_type: 'count',
+            event_collection: 'clicks',
+            timeframe: 'this_1_days'
+          },
+          visualization: {
+            chart_type: 'metric'
+          }
+        });
+        ExplorerActions.update('SOME_ID', {
+          query: {
+            event_collection: 'clicks',
+            analysis_type: 'extraction',
+            timeframe: 'this_1_days',
+            latest: '1000'
+          }
+        });
+        var explorers = ExplorerStore.getAll();
+        var explorer = explorers[Object.keys(explorers)[0]];
+        assert.deepPropertyVal(explorer, 'query.latest', '1000');
+      });
     });
   });
 
@@ -489,7 +610,7 @@ describe('stores/ExplorerStore', function() {
     });
 
     describe('clear', function () {
-      it('should reset the given explorer to defaults but keeps the same active and name attributes', function () {
+      it('should reset the given explorer to defaults but keeps the same active, name and metadata attributes', function () {
         ExplorerStore.clearAll();
         ExplorerActions.create(_.assign({}, TestHelpers.createExplorerModel(), {
           id: 'ABC-SOME-ID',
@@ -499,14 +620,17 @@ describe('stores/ExplorerStore', function() {
             event_collection: 'clicks',
             analysis_type: 'count'
           },
-          visualization: {
-            chart_type: 'metric'
-          },
-          user: {
-            id: 'SOMEUSERID5',
-            first_name: 'Don',
-            last_name: 'Draper',
-            email: 'don@keen.io'
+          metadata: {
+            display_name: 'some name',
+            visualization: {
+              chart_type: 'metric'
+            },
+            user: {
+              id: 'SOMEUSERID5',
+              first_name: 'Don',
+              last_name: 'Draper',
+              email: 'don@keen.io'
+            }
           }
         }));
         var model = _.cloneDeep(ExplorerStore.get('ABC-SOME-ID'));
@@ -541,14 +665,17 @@ describe('stores/ExplorerStore', function() {
               sub_timeframe: 'days'
             }
           },
-          visualization: {
-            chart_type: null
-          },
-          user: {
-            id: 'SOMEUSERID5',
-            first_name: 'Don',
-            last_name: 'Draper',
-            email: 'don@keen.io'
+          metadata: {
+            display_name: 'some name',
+            visualization: {
+              chart_type: 'metric'
+            },
+            user: {
+              id: 'SOMEUSERID5',
+              first_name: 'Don',
+              last_name: 'Draper',
+              email: 'don@keen.io'
+            }
           },
           originalModel: model.originalModel
         });

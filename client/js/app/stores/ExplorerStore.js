@@ -43,12 +43,14 @@ function _defaultAttrs(){
         sub_timeframe: 'days'
       }
     },
-    visualization: {
-      chart_type: null
-    },
-    user: {},
     metadata: {
-      display_name: ''
+      display_name: null,
+      visualization: {
+        chart_type: null
+      },
+      user: {
+        id: null
+      }
     }
   };
 }
@@ -129,6 +131,11 @@ function _create(attrs) {
 
 function _update(id, updates) {
   var newModel = _.assign({}, _explorers[id], updates);
+  // If we're no longer doing an email extraction, remove the latest and email field.
+  if (!ExplorerUtils.isEmailExtraction(newModel)) {
+    newModel.query.latest = null;
+    newModel.query.email = null;
+  }
   if (updates.id && updates.id !== id) {
     _explorers[updates.id] = newModel;
     delete _explorers[id];
@@ -180,7 +187,7 @@ function _updateFilter(id, index, updates) {
 
 function _clear(id) {
   var model = _explorers[id];
-  _explorers[id] = _.assign({}, _defaultAttrs(), _.pick(model, ['id', 'query_name', 'active', 'user', 'originalModel']));
+  _explorers[id] = _.assign({}, _defaultAttrs(), _.pick(model, ['id', 'query_name', 'active', 'metadata', 'originalModel']));
 }
 
 var ExplorerStore = _.assign({}, EventEmitter.prototype, {

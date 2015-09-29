@@ -11,33 +11,42 @@ var TestHelpers = require('../../../../support/TestHelpers')
 
 describe('components/explorer/saved_queries/browse_queries', function() {
   beforeEach(function() {
-    var props = {
+    var defaultProps = {
       listItems: [
         {
           id: 1,
-          query_name: 'Logins over last 30 days',
+          query_name: 'logins-over-last-30-days',
           created_at: '2015-06-07 11:15:37.000000',
-          user: {
-            id: 1,
-            email: 'eric@keen.io'
+          metadata: {
+            display_name: 'Logins over last 30 days',
+            user: {
+              id: 1,
+              email: 'eric@keen.io'
+            }
           }
         },
         {
           id: 2,
-          query_name: 'Activation rate',
+          query_name: 'activation-rate',
           created_at: '2015-06-07 11:15:37.000000',
-          user: {
-            id: 1,
-            email: 'john@keen.io'
+          metadata: {
+            display_name: 'Activation rate',
+            user: {
+              id: 1,
+              email: 'john@keen.io'
+            }
           }
         },
         {
           id: 2,
-          query_name: 'QUERY RATES THIS WEEK',
+          query_name: 'QUERY-RATES-THIS-WEEK',
           created_at: '2015-06-07 11:15:37.000000',
-          user: {
-            id: 1,
-            email: 'michelle@keen.io'
+          metadata: {
+            display_name: 'QUERY RATES THIS WEEK',
+            user: {
+              id: 1,
+              email: 'michelle@keen.io'
+            }
           }
         }
       ],
@@ -48,7 +57,11 @@ describe('components/explorer/saved_queries/browse_queries', function() {
       notice: null,
       emptyContent: null
     };
-    this.component = TestUtils.renderIntoDocument(<BrowseQueries {...props} />);
+    this.renderComponent = function(props) {
+      var props = _.assign({}, defaultProps, props);
+      return TestUtils.renderIntoDocument(<BrowseQueries {...props} />);
+    };
+    this.component = this.renderComponent();
   });
 
   describe('setup', function() {
@@ -63,35 +76,12 @@ describe('components/explorer/saved_queries/browse_queries', function() {
 
   describe('Interactions', function () {
     describe('click callback', function () {
-      it('should call the callback if the element clicked does NOT have the remove role', function () {
+      it('should call the callback if a list element is clicked', function () {
         var stub = sinon.stub();
-        this.component.setProps({ clickCallback: stub });
+        this.component = this.renderComponent({ clickCallback: stub });
         var firstListItem = this.component.refs.list.getDOMNode().childNodes[0];
         TestUtils.Simulate.click(firstListItem);
         assert.isTrue(stub.calledOnce);
-      });
-      it('should NOT call the callback if the element clicked has the remove role', function () {
-        var stub = sinon.stub();
-        this.component.setProps({ removeCallback: sinon.stub(), clickCallback: stub });
-        var firstListItemRemove = this.component.refs.list.getDOMNode().childNodes[0].childNodes[0];
-        TestUtils.Simulate.click(firstListItemRemove);
-        assert.isFalse(stub.calledOnce);
-      });
-    });
-    describe('remove callback', function () {
-      it('should call the callback if the element clicked has the remove role', function () {
-        var stub = sinon.stub();
-        this.component.setProps({ removeCallback: stub });
-        var firstListItemRemove = this.component.refs.list.getDOMNode().childNodes[0].childNodes[0];
-        TestUtils.Simulate.click(firstListItemRemove);
-        assert.isTrue(stub.calledOnce);
-      });
-      it('should NOT call the callback if the element clicked does NOT have the remove role', function () {
-        var stub = sinon.stub();
-        this.component.setProps({ removeCallback: stub, clickCallback: sinon.stub()  });
-        var firstListItem = this.component.refs.list.getDOMNode().childNodes[0];
-        TestUtils.Simulate.click(firstListItem);
-        assert.isFalse(stub.calledOnce);
       });
     });
     describe('searching', function () {
@@ -105,61 +95,33 @@ describe('components/explorer/saved_queries/browse_queries', function() {
         assert.sameMembers(itemsText, ['QUERY RATES THIS WEEK', 'Activation rate']);
       });
     });
-    describe('Remove button presence', function () {
-      beforeEach(function(){
-        this.component.setProps({ 
-          listItems: [
-            {
-              id: 1,
-              query_name: 'Logins over last 30 days',
-              created_at: '2015-06-07 11:15:37.000000',
-              user: {
-                id: 1,
-                email: 'eric@keen.io'
-              }
-            },
-            {
-              id: 2,
-              query_name: 'Activation rate',
-              created_at: '2015-06-07 11:15:37.000000',
-              user: {
-                id: 2,
-                email: 'john@keen.io'
-              }
-            }
-          ], 
-          user: { id: 1 },
-          removeCallback: sinon.stub()
-        });
-      });
-      it('should show if the saved query is your own', function () {
-        assert.lengthOf($(this.component.refs.list.getDOMNode().childNodes[0]).find('.remove-btn'), 1);
-      });
-      it.skip('should NOT show if the saved query is NOT yours', function () {
-        // TODO: activate this test again when we send user metadata to with saved queries
-        assert.lengthOf($(this.component.refs.list.getDOMNode().childNodes[1]).find('.remove-btn'), 0);
-      });
-    });
+
     describe('Everyone vs Mine filter', function () {
       beforeEach(function(){
-        this.component.setProps({ 
+        this.component = this.renderComponent({ 
           listItems: [
             {
               id: 1,
               query_name: 'First',
               created_at: '2015-06-07 11:15:37.000000',
-              user: {
-                id: 1,
-                email: 'eric@keen.io'
+              metadata: {
+                display_name: 'First',
+                user: {
+                  id: 1,
+                  email: 'eric@keen.io'
+                }
               }
             },
             {
               id: 2,
               query_name: 'Second',
               created_at: '2015-06-07 11:15:37.000000',
-              user: {
-                id: 2,
-                email: 'john@keen.io'
+              metadata: {
+                display_name: 'Second',
+                user: {
+                  id: 2,
+                  email: 'john@keen.io'
+                }
               }
             }
           ], 
