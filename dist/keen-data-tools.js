@@ -3150,14 +3150,16 @@ var Explorer = React.createClass({displayName: "Explorer",
     this.refs['filter-manager'].refs.modal.open();
   },
 
-  onNameChange: function(event) {
-    ExplorerActions.update(this.state.activeExplorer.id, { query_name: event.target.value });
-  },
-
   onDisplayNameChange: function(event) {
     var updates = _.cloneDeep(this.state.activeExplorer);
     updates.metadata.display_name = event.target.value;
+    updates.query_name = ExplorerUtils.slugify(event.target.value);
     ExplorerActions.update(this.state.activeExplorer.id, updates);
+  },
+
+  onQueryNameChange: function(event) {
+    var name = event.target.value.replace(/[^\w-]/g,'');
+    ExplorerActions.update(this.state.activeExplorer.id, { query_name: name });
   },
 
   handleRevertChanges: function(event) {
@@ -3307,7 +3309,9 @@ var Explorer = React.createClass({displayName: "Explorer",
                            saveQueryClick: this.saveQueryClick, 
                            onNameChange: this.onNameChange, 
                            appState: this.state.appState, 
-                           toggleCodeSample: this.toggleCodeSample}), 
+                           toggleCodeSample: this.toggleCodeSample, 
+                           onQueryNameChange: this.onQueryNameChange, 
+                           onDisplayNameChange: this.onDisplayNameChange}), 
             cacheToggle, 
             React.createElement(QueryActions, {model: this.state.activeExplorer, 
                           handleRevertChanges: this.handleRevertChanges, 
@@ -4768,6 +4772,7 @@ function _create(attrs) {
 function _update(id, updates) {
   var newModel = _.assign({}, _explorers[id], updates);
   // If we're no longer doing an email extraction, remove the latest and email field.
+  // FIXME: Does this belong here? Maybe this should be in the onChange callback rather than hard-bound to the model.
   if (!ExplorerUtils.isEmailExtraction(newModel)) {
     newModel.query.latest = null;
     newModel.query.email = null;

@@ -109,14 +109,16 @@ var Explorer = React.createClass({
     this.refs['filter-manager'].refs.modal.open();
   },
 
-  onNameChange: function(event) {
-    ExplorerActions.update(this.state.activeExplorer.id, { query_name: event.target.value });
-  },
-
   onDisplayNameChange: function(event) {
     var updates = _.cloneDeep(this.state.activeExplorer);
     updates.metadata.display_name = event.target.value;
+    updates.query_name = ExplorerUtils.slugify(event.target.value);
     ExplorerActions.update(this.state.activeExplorer.id, updates);
+  },
+
+  onQueryNameChange: function(event) {
+    var name = event.target.value.replace(/[^\w-]/g,'');
+    ExplorerActions.update(this.state.activeExplorer.id, { query_name: name });
   },
 
   handleRevertChanges: function(event) {
@@ -266,7 +268,9 @@ var Explorer = React.createClass({
                            saveQueryClick={this.saveQueryClick}
                            onNameChange={this.onNameChange}
                            appState={this.state.appState}
-                           toggleCodeSample={this.toggleCodeSample} />
+                           toggleCodeSample={this.toggleCodeSample}
+                           onQueryNameChange={this.onQueryNameChange}
+                           onDisplayNameChange={this.onDisplayNameChange} />
             {cacheToggle}
             <QueryActions model={this.state.activeExplorer}
                           handleRevertChanges={this.handleRevertChanges}
