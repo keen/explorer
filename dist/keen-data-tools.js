@@ -4330,8 +4330,6 @@ var Visualization = React.createClass({displayName: "Visualization",
     });
 
     if (this.props.persistence) {
-      // TODO: Make slug smaller as it's less important as the chart title.
-      // ***************************************
       chartTitle = (
         React.createElement("div", {className: "chart-title-component"}, 
           React.createElement("input", {className: "chart-display-name", 
