@@ -211,6 +211,7 @@ var ExplorerActions = {
     var updates = _.cloneDeep(explorer);
     updates.result = response.result;
     updates.loading = false;
+
     if (!ExplorerUtils.resultSupportsChartType(response.result, explorer.metadata.visualization.chart_type, explorer.query.analysis_type)) {
       updates.metadata.visualization.chart_type = ExplorerUtils.getChartTypeOptions(response.result, explorer.query.analysis_type)[0];
     }

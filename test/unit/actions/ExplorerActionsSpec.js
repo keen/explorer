@@ -287,39 +287,45 @@ describe('actions/ExplorerActions', function() {
 
   describe('execSuccess', function () {
     beforeEach(function () {
-      var explorer = {
+      this.explorer = {
         id: 5,
         query: {
           analysis_type: 'count'
         },
         metadata: {
-          visualization: { 
-            chart_type: 'metric'
+          visualization: {
+            chart_type: null
           }
         }
       };
-      var response = { result: 100 };
-      sinon.stub(_, 'contains').returns(true);
-      ExplorerActions.execSuccess(explorer, response);
+      this.response = { result: 100 };
+      sinon.stub(ExplorerUtils, 'getChartTypeOptions').returns(['metric']);
+      sinon.stub(ExplorerUtils, 'resultSupportsChartType').returns(false);
     });
     afterEach(function () {
-      _.contains.restore();
+      ExplorerUtils.getChartTypeOptions.restore();
+      ExplorerUtils.resultSupportsChartType.restore();
     });
 
-    it('should call the diaptcher to update with the right arguments', function () {
+    it('should call the dispatcher to update with the right arguments', function () {
+      var expectedUpdates = _.cloneDeep(this.explorer);
+      expectedUpdates.loading = false;
+      expectedUpdates.result = 100;
+      expectedUpdates.metadata.visualization.chart_type = 'metric';
+      
+      ExplorerActions.execSuccess(this.explorer, this.response);
+
       assert.isTrue(this.dispatchStub.calledWith({
         actionType: 'EXPLORER_UPDATE',
         id: 5,
-        updates: { loading: false, result: 100 }
+        updates: expectedUpdates
       }));
     });
     it('should clear all notices', function () {
+      ExplorerActions.execSuccess(this.explorer, this.response);
       assert.isTrue(this.dispatchStub.calledWith({
         actionType: 'NOTICE_CLEAR_ALL'
       }));
-    });
-    xit('it should update the chart_type if it does not fit with the result returned', function(){
-
     });
   });
 
