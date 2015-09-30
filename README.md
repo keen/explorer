@@ -1,6 +1,6 @@
-# Data Explorer
+# Keen IO Explorer
 
-The data explorer is an open source point-and-click interface for querying and visualizing your event data.
+The Keen Explorer is an open source point-and-click interface for querying and visualizing your event data.
 
 ![](https://s3.amazonaws.com/keen-event-images/Screen+Shot+2015-07-22+at+3.25.48+PM.png)
 
