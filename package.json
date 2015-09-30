@@ -1,5 +1,5 @@
 {
-  "name": "keen-data-tools",
+  "name": "keen-explorer",
   "version": "0.1.12",
   "private": true,
   "bucket-name": "keen-js",
@@ -36,7 +36,6 @@
     "chai-as-promised": "^5.0.0",
     "gulp": "^3.8.10",
     "gulp-autoprefixer": "~2.1.0",
-    "gulp-awspublish": "0.0.23",
     "gulp-clean": "~0.3.1",
     "gulp-concat": "~2.5.2",
     "gulp-connect": "2.0.6",

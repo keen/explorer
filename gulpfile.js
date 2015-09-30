@@ -1,6 +1,5 @@
 var gulp = require('gulp');
 var pkg = require('./package.json');
-var aws = require('gulp-awspublish');
 var clean = require('gulp-clean');
 var runSequence = require('run-sequence');
 var uglify = require('gulp-uglify');
@@ -32,15 +31,15 @@ gulp.task('build-scripts', function() {
     .transform(stringify(['.html']))
     .bundle()
     //Pass desired output filename to vinyl-source-stream
-    .pipe(source('keen-data-tools.js'))
+    .pipe(source('keen-explorer.js'))
     // Start piping stream to tasks!
     .pipe(gulp.dest('./dist/'));
 });
 
 gulp.task('minify-scripts', function(){
-  return gulp.src('./dist/keen-data-tools.js')
+  return gulp.src('./dist/keen-explorer.js')
     .pipe(uglify())
-    .pipe(rename('keen-data-tools.min.js'))
+    .pipe(rename('keen-explorer.min.js'))
     .pipe(gulp.dest('./dist/'));
 });
 
@@ -50,7 +49,7 @@ gulp.task('minify-scripts', function(){
 gulp.task('build-styles', function() {
   return gulp.src('./client/styles/base.less')
     .pipe(less())
-    .pipe(concat('keen-data-tools.css'))
+    .pipe(concat('keen-explorer.css'))
     .pipe(prefix())
     .pipe(gulp.dest('./dist'));
 });
@@ -58,17 +57,17 @@ gulp.task('build-styles', function() {
 gulp.task('less', function(){
   return gulp.src(sources)
     .pipe(less())
-    .pipe(concat('keen-data-tools.css'))
+    .pipe(concat('keen-explorer.css'))
     .pipe(prefix())
     .pipe(gulp.dest('./dist'));
 });
 
 gulp.task('minify-styles', function(){
-  return gulp.src('./dist/keen-data-tools.css')
+  return gulp.src('./dist/keen-explorer.css')
     .pipe(minifycss({
       keepSpecialComments: 0
     }))
-    .pipe(rename('keen-data-tools.min.css'))
+    .pipe(rename('keen-explorer.min.css'))
     .pipe(gulp.dest('./dist'));
 });
 
@@ -140,75 +139,6 @@ gulp.task('connect', function () {
 });
 
 // ********************
-// AWS Publishing
-// ********************
-
-gulp.task('aws', ['scripts', 'styles', 'test:unit', 'aws-images'], function() {
-  if (!process.env.AWS_KEY || !process.env.AWS_SECRET) {
-    throw 'AWS credentials are required!';
-  }
-
-  var publisher = aws.create({
-    key: process.env.AWS_KEY,
-    secret: process.env.AWS_SECRET,
-    bucket: pkg['bucket-name']
-  });
-
-  var headers = {
-    // Cache policy (1000 * 60 * 60 * 1) // 1 hour
-    // 'Cache-Control': 'max-age=3600000, public',
-    // 'Expires': new Date(Date.now() + 3600000).toUTCString()
-    'Cache-Control': 'max-age=1000, public',
-    'Expires': new Date(Date.now() + 1000).toUTCString()
-  };
-
-  return gulp.src([
-      './dist/keen-data-tools.css',
-      './dist/keen-data-tools.min.css',
-      './dist/keen-data-tools.js',
-      './dist/keen-data-tools.min.js'
-    ])
-    .pipe(rename(function(path) {
-      path.dirname += '/' + pkg['name'] + '/' + pkg['version'];
-    }))
-    .pipe(aws.gzip())
-    .pipe(publisher.publish(headers))
-    .pipe(publisher.cache())
-    .pipe(aws.reporter());
-});
-
-gulp.task('aws-images', ['images'], function() {
-  if (!process.env.AWS_KEY || !process.env.AWS_SECRET) {
-    throw 'AWS credentials are required!';
-  }
-
-  var publisher = aws.create({
-    key: process.env.AWS_KEY,
-    secret: process.env.AWS_SECRET,
-    bucket: pkg['bucket-name']
-  });
-
-  var headers = {
-    // Cache policy (1000 * 60 * 60 * 1) // 1 hour
-    // 'Cache-Control': 'max-age=3600000, public',
-    // 'Expires': new Date(Date.now() + 3600000).toUTCString()
-    'Cache-Control': 'max-age=1000, public',
-    'Expires': new Date(Date.now() + 1000).toUTCString()
-  };
-
-  return gulp.src([
-      './dist/images/**/*'
-    ])
-    .pipe(rename(function(path) {
-      path.dirname += '/' + pkg['name'] + '/' + pkg['version'] + '/images/';
-    }))
-    .pipe(aws.gzip())
-    .pipe(publisher.publish(headers))
-    .pipe(publisher.cache())
-    .pipe(aws.reporter());
-});
-
-// ********************
 // Task groups
 // ********************
 
@@ -241,47 +171,6 @@ gulp.task('development', ['build-scripts', 'images', 'fonts', 'build-styles', 'c
 gulp.task('development-with-tests', ['build-scripts', 'images', 'fonts', 'build-styles', 'connect', 'watch-with-tests']);
 
 gulp.task('production', ['scripts', 'images', 'fonts', 'styles', 'test:unit']);
-
-
-// ********************
-// Terrarium Dev
-// ********************
-
-gulp.task('keen-web-scripts', ['build-scripts'], function(){
-  return gulp.src([
-      './dist/keen-data-tools.js',
-      './dist/keen-data-tools.min.js',
-    ])
-    .pipe(gulp.dest('../terrarium/src/Keen-Web/app/static/js'));
-});
-
-gulp.task('keen-web-styles', ['build-styles'], function(){
-  return gulp.src([
-      './dist/keen-data-tools.css',
-      './dist/keen-data-tools.min.css'
-    ])
-    .pipe(gulp.dest('../terrarium/src/Keen-Web/app/static/css'));
-});
-
-gulp.task('keen-web', ['keen-web-scripts', 'keen-web-styles'], function(){
-  gulp.watch(['client/**/*.js'], ['keen-web-scripts']);
-  gulp.watch('client/**/*.less', ['keen-web-styles']);
-});
-gulp.task('terrarium', function(callback) {
-  runSequence('development',
-              'keen-web',
-              callback);
-});
-gulp.task('terrarium-production', function(callback) {
-  runSequence('production',
-              'keen-web',
-              callback);
-});
-gulp.task('terrarium-with-tests', function(callback) {
-  runSequence('development-with-tests',
-              'keen-web',
-              callback);
-});
 
 // ********************
 // Watching
