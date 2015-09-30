@@ -60,7 +60,7 @@ function App(config) {
 
   this.routes = (
     <Route name="app" path={"/"} handler={AppComponent}>
-      <Route path="/" name="explorer" handler={Explorer}/>
+      <Route path="/*" name="explorer" handler={Explorer}/>
     </Route>
   );
 }
