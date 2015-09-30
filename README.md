@@ -30,7 +30,7 @@ Include a copy of Bootstrap 3, which you can do from the CDN:
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 ```
 
-Include a copy of the Keen.DataTools styling from this project, found under: `dist/keen-data-tools.css`.
+Include a copy of the Keen.Explorer styling from this project, found under: `dist/keen-explorer.css`.
 
 #### HTML
 
@@ -54,11 +54,11 @@ Include a copy of Keen.js, the easiest way is to use our CDN version:
 <script src="https://d26b395fwzu5fz.cloudfront.net/3.1.0-beta/keen.min.js" type="text/javascript"></script>
 ```
 
-Include a copy of Keen.DataTools from this project, found under: `dist/keen-data-tools.js`.
+Include a copy of Keen.Explorer from this project, found under: `dist/keen-explorer.js`.
 
-### 3. Configure a Keen.js client and initialize the Keen.DataTools app
+### 3. Configure a Keen.js client and initialize the Keen.Explorer app
 
-Initialize a new Keen.js client and then pass that into the initialization of a new Keen.DataTools.App.
+Initialize a new Keen.js client and then pass that into the initialization of a new Keen.Explorer.App.
 
 ```html
 <script type="text/javascript">
@@ -66,12 +66,13 @@ Initialize a new Keen.js client and then pass that into the initialization of a 
       client = new Keen({
         projectId: "your_project_id",
         readKey: "your_read_key",
+        masterKey: "your_master_key",
         protocol: "https",
         host: "api.keen.io/3.0",
         requestType: "jsonp"
       });
 
-      var app = new Keen.DataTools.App({
+      var app = new Keen.Explorer.App({
         client: client,
         targetId: 'content'
       });
@@ -80,8 +81,6 @@ Initialize a new Keen.js client and then pass that into the initialization of a 
     });
 </script>
 ```
-
-If you want the DataTools app to run on a path other than the root, you can pass in the `root` configuration option, eg: `root: '/your/custom/root/path'`.
 
 You can read more about Keen.js here: [The Keen.js client library](https://github.com/keenlabs/keen-js/).
 
@@ -133,6 +132,7 @@ If you want to customize this project or contribute, here is how to get started:
       client = new Keen({
         projectId: "your_project_id",
         readKey: "your_read_key",
+        masterKey: "your_master_key",
         protocol: "https",
         host: "api.keen.io/3.0",
         requestType: "jsonp"
@@ -153,7 +153,7 @@ If you want to customize this project or contribute, here is how to get started:
 The project is built with   `Gulp.js`.
 
 * Run `gulp` from the root directory of the project
-* The demo app will be running on `http://localhost:8081/explorer`.
+* The demo app will be running on `http://localhost:8081/`.
 
 ### Testing
 
