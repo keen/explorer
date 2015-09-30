@@ -76,6 +76,6 @@ App.prototype.render = function() {
 
 window.React = React;
 window.Keen = window.Keen || {};
-window.Keen.DataTools = window.Keen.DataTools || {};
-window.Keen.DataTools.Persistence = Persistence;
-window.Keen.DataTools.App = module.exports = App;
+window.Keen.Explorer = window.Keen.Explorer || {};
+window.Keen.Explorer.Persistence = Persistence;
+window.Keen.Explorer.App = module.exports = App;
