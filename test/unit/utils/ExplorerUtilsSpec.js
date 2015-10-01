@@ -146,7 +146,7 @@ describe('utils/ExplorerUtils', function() {
     it('should keep all explorer attributes', function () {
       var explorer = {
         id: 'TEMP-ABC',
-        name: 'SOME NAME',
+        query_name: 'some-query-name',
         active: false,
         saving: false,
         error: null,
@@ -172,25 +172,29 @@ describe('utils/ExplorerUtils', function() {
             sub_timeframe: 'weeks'
           }
         },
-        visualization: {
-          chart_type: null
+        metadata: {
+          visualization: {
+            chart_type: null
+          }
         }
       };
       var response = {
-        id: 'ACTUAL-ID',
+        query_name: 'some-query-name',
         project_id: '10',
         query: {
           event_collection: 'clicks',
           analysis_type: 'count',
         },
-        visualization: {
-          chart_type: 'metric'
+        metadata: {
+          visualization: {
+            chart_type: 'metric'
+          }
         }
       };
       var expectedExplorer = {
-        id: 'ACTUAL-ID',
+        id: 'some-query-name',
         project_id: '10',
-        name: 'SOME NAME',
+        query_name: 'some-query-name',
         active: false,
         saving: false,
         error: null,
@@ -216,8 +220,10 @@ describe('utils/ExplorerUtils', function() {
             sub_timeframe: 'weeks'
           }
         },
-        visualization: {
-          chart_type: 'metric'
+        metadata: {
+          visualization: {
+            chart_type: 'metric'
+          }
         }
       };
       expectedExplorer.originalModel = _.cloneDeep(expectedExplorer);

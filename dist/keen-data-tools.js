@@ -5335,9 +5335,13 @@ module.exports = {
   },
 
   mergeResponseWithExplorer: function(explorer, response) {
-    var newModel = _.assign({}, explorer, module.exports.formatQueryParams(response));
+    var newModel = _.defaultsDeep(
+      module.exports.formatQueryParams(response),
+      _.cloneDeep(explorer)
+    );
+    delete newModel.originalModel; // Remove the original model.
     newModel.id = response.query_name; // Set the ID to the query_name (it's now persisted.)
-    newModel.originalModel = _.cloneDeep(_.omit(newModel, 'originalModel'));
+    newModel.originalModel = _.cloneDeep(newModel);
     return newModel;
   },
 

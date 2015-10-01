@@ -31,6 +31,7 @@ describe('stores/ExplorerStore', function() {
         isValid: true,
         timeframe_type: 'relative',
         query_name: null,
+        refresh_rate: 0,
         query: {
           event_collection: null,
           analysis_type: null,
@@ -647,6 +648,7 @@ describe('stores/ExplorerStore', function() {
           isValid: true,
           timeframe_type: 'relative',
           query_name: 'some name',
+          refresh_rate: 0,
           query: {
             event_collection: null,
             analysis_type: null,
