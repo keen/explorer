@@ -15,7 +15,7 @@ describe('modules/persistence/KeenSavedQueries', function(){
     this.KeenSavedQueries = new KeenSavedQueries(this.config);
 
     this.bookmarkObj = {
-      id: '1',
+      id: 'some-name-original',
       query_name: 'some-name',
       query: {
         analysis_type: 'count',
@@ -86,7 +86,7 @@ describe('modules/persistence/KeenSavedQueries', function(){
 
     describe('update function', function(){
       it('makes a PUT request with the right url and body', function(){
-        var expectedURL = this.config.baseUrl + '/some-name' +
+        var expectedURL = this.config.baseUrl + '/some-name-original' +
           '?api_key=' + this.config.masterKey;
 
         var expectedRequestBody = {
@@ -110,7 +110,7 @@ describe('modules/persistence/KeenSavedQueries', function(){
 
     describe('get function', function(){
       it('for a single bookmark it makes a GET request with the right url and body', function(){
-        var expectedURL = this.config.baseUrl + '/some-name' +
+        var expectedURL = this.config.baseUrl + '/some-name-original' +
           '?api_key=' + this.config.masterKey;
 
         this.KeenSavedQueries.get(this.bookmarkObj);
@@ -131,7 +131,7 @@ describe('modules/persistence/KeenSavedQueries', function(){
 
     describe('destroy function', function(){
       it('makes a DELETE request with the right url and body', function(){
-        var expectedURL = this.config.baseUrl + '/some-name' +
+        var expectedURL = this.config.baseUrl + '/some-name-original' +
           '?api_key=' + this.config.masterKey;
         this.KeenSavedQueries.destroy(this.bookmarkObj);
 
