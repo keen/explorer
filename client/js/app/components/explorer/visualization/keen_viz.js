@@ -19,6 +19,7 @@ var KeenViz = React.createClass({
   		.title('') // No title - not necessary for Explorer
 	    .chartType(this.props.model.visualization.chart_type)
     	.el(this.refs['keen-viz'].getDOMNode())
+    	.chartOptions({width:'100%'})
     	.height(400)
     	.render();
 	},
