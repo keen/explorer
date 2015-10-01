@@ -66,7 +66,7 @@ module.exports = {
   mergeResponseWithExplorer: function(explorer, response) {
     var newModel = _.assign({}, explorer, module.exports.formatQueryParams(response));
     newModel.id = response.query_name; // Set the ID to the query_name (it's now persisted.)
-    newModel.originalModel = _.cloneDeep(newModel);
+    newModel.originalModel = _.cloneDeep(_.omit(newModel, 'originalModel'));
     return newModel;
   },
 
@@ -111,6 +111,7 @@ module.exports = {
 
   toJSON: function(explorer) {
     var json = _.pick(explorer, [
+      'id',
       'query_name',
       'refresh_rate',
       'metadata'

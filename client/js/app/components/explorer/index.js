@@ -147,7 +147,7 @@ var Explorer = React.createClass({
     // model.
     var self = this;
     setTimeout(function(){
-      ExplorerActions.clear(this.state.activeExplorer.id);
+      ExplorerActions.clear(self.state.activeExplorer.id);
     }, 0);
   },
 
