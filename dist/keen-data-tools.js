@@ -26,6 +26,7 @@ var _ = require('lodash');
 var AppDispatcher = require('../dispatcher/AppDispatcher');
 var ExplorerConstants = require('../constants/ExplorerConstants');
 var ExplorerStore = require('../stores/ExplorerStore');
+var UserStore = require('../stores/UserStore');
 var ExplorerValidations = require('../validations/ExplorerValidations');
 var ValidationUtils = require('../utils/ValidationUtils');
 var ExplorerUtils = require('../utils/ExplorerUtils');
@@ -262,15 +263,16 @@ var ExplorerActions = {
           errorMsg: err
         });
       } else {
-        var formattedParams = ExplorerUtils.formatQueryParams(res);
+        var updatedModel = ExplorerUtils.mergeResponseWithExplorer(ExplorerStore.get(sourceId), res);
         AppDispatcher.dispatch({
           actionType: ExplorerConstants.EXPLORER_UPDATE,
           id: sourceId,
-          updates: ExplorerUtils.mergeResponseWithExplorer(ExplorerStore.get(sourceId), res)
+          updates: updatedModel
         });
+        // We need to use the new model id below, not the old sourceId passed in.
         AppDispatcher.dispatch({
           actionType: ExplorerConstants.EXPLORER_SAVE_SUCCESS,
-          id: sourceId,
+          id: updatedModel.id,
           saveType: 'save',
         });
       }
@@ -344,7 +346,7 @@ var ExplorerActions = {
 
 module.exports = ExplorerActions;
 
-},{"../constants/ExplorerConstants":46,"../dispatcher/AppDispatcher":50,"../stores/ExplorerStore":54,"../utils/ExplorerUtils":58,"../utils/ValidationUtils":63,"../validations/ExplorerValidations":64,"./AppStateActions":1,"./NoticeActions":3,"lodash":84}],3:[function(require,module,exports){
+},{"../constants/ExplorerConstants":46,"../dispatcher/AppDispatcher":50,"../stores/ExplorerStore":54,"../stores/UserStore":57,"../utils/ExplorerUtils":58,"../utils/ValidationUtils":63,"../validations/ExplorerValidations":64,"./AppStateActions":1,"./NoticeActions":3,"lodash":84}],3:[function(require,module,exports){
 var AppDispatcher = require('../dispatcher/AppDispatcher');
 var NoticeConstants = require('../constants/NoticeConstants');
 
@@ -452,10 +454,11 @@ function App(config) {
   // Create the project store and kick off fetching schema for it.
   ProjectActions.create({ client: this.client });
 
-  // Create the main active explorer
+  // Create the main active explorer. Grab params form URL and load into new explorer
   var explorerAttrs = _.assign(
     { id: FormatUtils.generateRandomId("TEMP-") },
-    ExplorerUtils.formatQueryParams(QueryStringUtils.getQueryAttributes()) // Grab params form URL and load into new explorer
+    ExplorerUtils.formatQueryParams(QueryStringUtils.getQueryAttributes()),
+    { metadata: { user: config.user } }
   );
   ExplorerActions.create(explorerAttrs);
   ExplorerActions.setActive(explorerAttrs.id);
@@ -3135,7 +3138,7 @@ var Explorer = React.createClass({displayName: "Explorer",
 
   createNewQuery: function(event) {
     event.preventDefault();
-    ExplorerActions.create();
+    ExplorerActions.create({ metadata: { user: this.state.user } });
     var newExplorer = ExplorerStore.getLast();
     ExplorerActions.setActive(newExplorer.id);
     this.setState({ activeQueryPane: 'build' });
@@ -3306,7 +3309,6 @@ var Explorer = React.createClass({displayName: "Explorer",
                            client: this.props.client, 
                            project: this.props.project, 
                            persistence: this.props.persistence, 
-                           saveQueryClick: this.saveQueryClick, 
                            onNameChange: this.onNameChange, 
                            appState: this.state.appState, 
                            toggleCodeSample: this.toggleCodeSample, 
@@ -3316,6 +3318,7 @@ var Explorer = React.createClass({displayName: "Explorer",
             React.createElement(QueryActions, {model: this.state.activeExplorer, 
                           handleRevertChanges: this.handleRevertChanges, 
                           handleQuerySubmit: this.handleQuerySubmit, 
+                          saveQueryClick: this.saveQueryClick, 
                           removeClick: this.removeSavedQueryClicked, 
                           user: this.state.user, 
                           persistence: this.props.persistence, 
@@ -3393,13 +3396,18 @@ var QueryActions = React.createClass({displayName: "QueryActions",
           'btn btn-default code-sample-toggle pull-right': true,
           'open': !this.props.codeSampleHidden
         });
-    if (this.props.persistence && !ExplorerUtils.isEmailExtraction(this.props.model) && this.props.user.id === this.props.model.metadata.user.id) {
+    
+    var isEmailExtraction = ExplorerUtils.isEmailExtraction(this.props.model);
+    var userIsOwner = this.props.user.id === this.props.model.metadata.user.id;
+    var isPersisted = ExplorerUtils.isPersisted(this.props.model);
+
+    if (this.props.persistence && !isEmailExtraction && (userIsOwner || !isPersisted)) {
       saveBtn = (
         React.createElement("button", {type: "button", className: "btn btn-success save-query", onClick: this.props.saveQueryClick, role: "save-query", disabled: this.props.model.loading}, 
           ExplorerUtils.isPersisted(this.props.model) ? 'Update' : 'Save'
         )
       );
-      if (this.props.removeClick) {
+      if (isPersisted && this.props.removeClick) {
         deleteBtn = (
           React.createElement("button", {type: "button", role: "delete-query", className: "btn btn-link", onClick: this.props.removeClick}, 
             "Delete"
@@ -4663,6 +4671,7 @@ function _defaultAttrs(){
     loading: false,
     isValid: true,
     timeframe_type: 'relative',
+    refresh_rate: 0,
     query: {
       event_collection: null,
       analysis_type: null,
@@ -5333,12 +5342,8 @@ module.exports = {
   },
 
   mergeResponseWithExplorer: function(explorer, response) {
-    var formattedParams = module.exports.formatQueryParams(response);
-    var newModel = _.assign({},
-                    explorer,
-                    formattedParams,
-                    { query: _.assign({}, explorer.query, formattedParams.query) },
-                    { visualization: _.assign({}, explorer.visualization, formattedParams.visualization) });
+    var newModel = _.assign({}, explorer, module.exports.formatQueryParams(response));
+    newModel.id = response.query_name; // Set the ID to the query_name (it's now persisted.)
     newModel.originalModel = _.cloneDeep(newModel);
     return newModel;
   },
@@ -5383,18 +5388,12 @@ module.exports = {
   },
 
   toJSON: function(explorer) {
-    var json = { query: module.exports.queryJSON(explorer) };
-    if (module.exports.isPersisted(explorer)) {
-      json.id = explorer.id;
-      // Set refresh rate to 0 for now
-    }
-    // if this is a saved/cached query
-    if (explorer.query_name) {
-      json.refresh_rate = 0;
-      json.query_name = explorer.query_name;
-      json.metadata = explorer.metadata;
-    }
-
+    var json = _.pick(explorer, [
+      'query_name',
+      'refresh_rate',
+      'metadata'
+    ]);
+    json.query = module.exports.queryJSON(explorer);
     return json;
   },
 
@@ -5402,7 +5401,9 @@ module.exports = {
     var attrs = module.exports.toJSON(explorer);
     return _.omit(attrs, [
       'id',
-      'name'
+      'query_name',
+      'refresh_rate',
+      'metadata'
     ]);
   },
 

@@ -65,6 +65,13 @@ describe('components/explorer/query_actions', function() {
             });    
           });
           describe('if the user IS NOT the query creator', function () {
+            describe('the query has yet to be persisted', function () {
+              it('does show the save button', function () {
+                this.model.id = 'TEMP-abc';
+                this.component = this.renderComponent({ persistence: {}, user: { id: 10 } });
+                assert.lengthOf($R(this.component).find('[role="save-query"]').components, 1);
+              });
+            });
             it('does not show the save button', function () {
               this.component = this.renderComponent({ persistence: {}, user: { id: 10 } });
               assert.lengthOf($R(this.component).find('[role="save-query"]').components, 0);

@@ -94,7 +94,7 @@ var Explorer = React.createClass({
 
   createNewQuery: function(event) {
     event.preventDefault();
-    ExplorerActions.create();
+    ExplorerActions.create({ metadata: { user: this.state.user } });
     var newExplorer = ExplorerStore.getLast();
     ExplorerActions.setActive(newExplorer.id);
     this.setState({ activeQueryPane: 'build' });
@@ -265,7 +265,6 @@ var Explorer = React.createClass({
                            client={this.props.client}
                            project={this.props.project}
                            persistence={this.props.persistence}
-                           saveQueryClick={this.saveQueryClick}
                            onNameChange={this.onNameChange}
                            appState={this.state.appState}
                            toggleCodeSample={this.toggleCodeSample}
@@ -275,6 +274,7 @@ var Explorer = React.createClass({
             <QueryActions model={this.state.activeExplorer}
                           handleRevertChanges={this.handleRevertChanges}
                           handleQuerySubmit={this.handleQuerySubmit}
+                          saveQueryClick={this.saveQueryClick}
                           removeClick={this.removeSavedQueryClicked}
                           user={this.state.user}
                           persistence={this.props.persistence}

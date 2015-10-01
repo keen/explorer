@@ -2,6 +2,7 @@ var _ = require('lodash');
 var AppDispatcher = require('../dispatcher/AppDispatcher');
 var ExplorerConstants = require('../constants/ExplorerConstants');
 var ExplorerStore = require('../stores/ExplorerStore');
+var UserStore = require('../stores/UserStore');
 var ExplorerValidations = require('../validations/ExplorerValidations');
 var ValidationUtils = require('../utils/ValidationUtils');
 var ExplorerUtils = require('../utils/ExplorerUtils');
@@ -238,15 +239,16 @@ var ExplorerActions = {
           errorMsg: err
         });
       } else {
-        var formattedParams = ExplorerUtils.formatQueryParams(res);
+        var updatedModel = ExplorerUtils.mergeResponseWithExplorer(ExplorerStore.get(sourceId), res);
         AppDispatcher.dispatch({
           actionType: ExplorerConstants.EXPLORER_UPDATE,
           id: sourceId,
-          updates: ExplorerUtils.mergeResponseWithExplorer(ExplorerStore.get(sourceId), res)
+          updates: updatedModel
         });
+        // We need to use the new model id below, not the old sourceId passed in.
         AppDispatcher.dispatch({
           actionType: ExplorerConstants.EXPLORER_SAVE_SUCCESS,
-          id: sourceId,
+          id: updatedModel.id,
           saveType: 'save',
         });
       }

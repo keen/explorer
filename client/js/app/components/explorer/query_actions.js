@@ -47,13 +47,18 @@ var QueryActions = React.createClass({
           'btn btn-default code-sample-toggle pull-right': true,
           'open': !this.props.codeSampleHidden
         });
-    if (this.props.persistence && !ExplorerUtils.isEmailExtraction(this.props.model) && this.props.user.id === this.props.model.metadata.user.id) {
+    
+    var isEmailExtraction = ExplorerUtils.isEmailExtraction(this.props.model);
+    var userIsOwner = this.props.user.id === this.props.model.metadata.user.id;
+    var isPersisted = ExplorerUtils.isPersisted(this.props.model);
+
+    if (this.props.persistence && !isEmailExtraction && (userIsOwner || !isPersisted)) {
       saveBtn = (
         <button type="button" className="btn btn-success save-query" onClick={this.props.saveQueryClick} role="save-query" disabled={this.props.model.loading}>
           {ExplorerUtils.isPersisted(this.props.model) ? 'Update' : 'Save'}
         </button>
       );
-      if (this.props.removeClick) {
+      if (isPersisted && this.props.removeClick) {
         deleteBtn = (
           <button type="button" role="delete-query" className="btn btn-link" onClick={this.props.removeClick}>
             Delete

@@ -34,10 +34,11 @@ function App(config) {
   // Create the project store and kick off fetching schema for it.
   ProjectActions.create({ client: this.client });
 
-  // Create the main active explorer
+  // Create the main active explorer. Grab params form URL and load into new explorer
   var explorerAttrs = _.assign(
     { id: FormatUtils.generateRandomId("TEMP-") },
-    ExplorerUtils.formatQueryParams(QueryStringUtils.getQueryAttributes()) // Grab params form URL and load into new explorer
+    ExplorerUtils.formatQueryParams(QueryStringUtils.getQueryAttributes()),
+    { metadata: { user: config.user } }
   );
   ExplorerActions.create(explorerAttrs);
   ExplorerActions.setActive(explorerAttrs.id);

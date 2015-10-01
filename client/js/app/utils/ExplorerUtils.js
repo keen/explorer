@@ -64,12 +64,8 @@ module.exports = {
   },
 
   mergeResponseWithExplorer: function(explorer, response) {
-    var formattedParams = module.exports.formatQueryParams(response);
-    var newModel = _.assign({},
-                    explorer,
-                    formattedParams,
-                    { query: _.assign({}, explorer.query, formattedParams.query) },
-                    { visualization: _.assign({}, explorer.visualization, formattedParams.visualization) });
+    var newModel = _.assign({}, explorer, module.exports.formatQueryParams(response));
+    newModel.id = response.query_name; // Set the ID to the query_name (it's now persisted.)
     newModel.originalModel = _.cloneDeep(newModel);
     return newModel;
   },
@@ -114,18 +110,12 @@ module.exports = {
   },
 
   toJSON: function(explorer) {
-    var json = { query: module.exports.queryJSON(explorer) };
-    if (module.exports.isPersisted(explorer)) {
-      json.id = explorer.id;
-      // Set refresh rate to 0 for now
-    }
-    // if this is a saved/cached query
-    if (explorer.query_name) {
-      json.refresh_rate = 0;
-      json.query_name = explorer.query_name;
-      json.metadata = explorer.metadata;
-    }
-
+    var json = _.pick(explorer, [
+      'query_name',
+      'refresh_rate',
+      'metadata'
+    ]);
+    json.query = module.exports.queryJSON(explorer);
     return json;
   },
 
@@ -133,7 +123,9 @@ module.exports = {
     var attrs = module.exports.toJSON(explorer);
     return _.omit(attrs, [
       'id',
-      'name'
+      'query_name',
+      'refresh_rate',
+      'metadata'
     ]);
   },
 

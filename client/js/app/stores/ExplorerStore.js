@@ -25,6 +25,7 @@ function _defaultAttrs(){
     loading: false,
     isValid: true,
     timeframe_type: 'relative',
+    refresh_rate: 0,
     query: {
       event_collection: null,
       analysis_type: null,
