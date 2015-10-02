@@ -4,13 +4,22 @@
 
 var React = require('react');
 var classNames = require('classnames');
+var ExplorerActions = require('../../actions/ExplorerActions');
 
 var CacheToggle = React.createClass({
 
   setCached: function(event) {
+    var updates = _.clone(this.props.model);
+    if (this._isCached()) {
+      updates.refresh_rate = 0;
+    }
+    else {
+      updates.refresh_rate = 14400;
+    }
+
+    ExplorerActions.update(this.props.model.id, updates);
     this.setState({
-      cached: !this.state.cached,
-      settingsOpen: this.state.cached ? false : this.state.settingsOpen
+      settingsOpen: updates.refresh_rate == 0 ? false : this.state.settingsOpen
     });
   },
 
@@ -20,7 +29,11 @@ var CacheToggle = React.createClass({
   },
 
   setRefreshRate: function(event) {
-    this.setState({ refresh_rate: event.target.value });
+    var updates = _.clone(this.props.model);
+    updates.refresh_rate = event.target.value*60;
+
+    ExplorerActions.update(this.props.model.id, updates);
+    this.forceUpdate();
   },
 
   getInitialState: function() {
@@ -32,26 +45,28 @@ var CacheToggle = React.createClass({
   },
 
   render: function() {
+    var isCached = this._isCached();
     var parentClasses = classNames({
       'cache-toggle': true,
-      'inactive': !this.state.cached
+      'inactive': !isCached
     });
     var cacheDetailsClasses = classNames({
       "cache-details": true,
-      "hide": !this.state.cached
+      "hide": !isCached
     });
     var cacheSettingsClasses = classNames({
       "cache-settings": true,
       "hide": !this.state.settingsOpen
     });
 
-    var cacheToggleLabel = this.state.cached ? 'Caching enabled' : 'Enable caching';
+    var cacheToggleLabel = isCached? 'Caching enabled' : 'Enable caching';
 
     return (
       <div className={parentClasses}>
 
         <label htmlFor="cache">
-          <input type="checkbox" name="cache" id="cache" onChange={this.setCached} />
+          <input type="checkbox" name="cache" id="cache"
+            onChange={this.setCached} checked={isCached} />
           {cacheToggleLabel}
         </label>
 
@@ -63,10 +78,13 @@ var CacheToggle = React.createClass({
         </span>
 
         <span className={cacheSettingsClasses}>
-          Refresh every <input type="text" name="refresh_rate" value={this.state.refresh_rate} className="form-control" onChange={this.setRefreshRate} /> minutes
+          Refresh every <input type="text"
+            name="refresh_rate"
+            value={this.props.model.refresh_rate/60}
+            className="form-control"
+            onChange={this.setRefreshRate}
+            /> minutes
         </span>
-
-
 
         <div className="row">
           <div className="col-md-5">
@@ -75,6 +93,10 @@ var CacheToggle = React.createClass({
         </div>
       </div>
     );
+  },
+
+  _isCached: function() {
+    return this.props.model.refresh_rate != 0;
   }
 
 });

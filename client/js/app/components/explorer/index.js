@@ -222,7 +222,8 @@ var Explorer = React.createClass({
                                      createNewQuery={this.createNewQuery}
                                      persisted={ExplorerUtils.isPersisted(this.state.activeExplorer)} />;
       if (!ExplorerUtils.isEmailExtraction(this.state.activeExplorer)) {
-        cacheToggle = <CacheToggle />;
+        cacheToggle = <CacheToggle
+          model={this.state.activeExplorer} />;
       }
       if (this.state.appState.fetchingPersistedExplorers) {
         browseListNotice = <Notice notice={{ icon: 'info-sign', text: 'Loading saved queries...', type: 'info' }} closable={false} />
