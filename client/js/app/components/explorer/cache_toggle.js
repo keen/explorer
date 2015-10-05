@@ -5,6 +5,7 @@
 var React = require('react');
 var classNames = require('classnames');
 var ExplorerActions = require('../../actions/ExplorerActions');
+var _ = require('lodash');
 
 var CacheToggle = React.createClass({
 
@@ -39,8 +40,7 @@ var CacheToggle = React.createClass({
   getInitialState: function() {
     return {
       cached: false,
-      settingsOpen: false,
-      refresh_rate: 90
+      settingsOpen: false
     };
   },
 

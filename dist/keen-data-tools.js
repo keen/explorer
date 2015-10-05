@@ -2965,6 +2965,7 @@ module.exports = Timezone;
 var React = require('react');
 var classNames = require('classnames');
 var ExplorerActions = require('../../actions/ExplorerActions');
+var _ = require('lodash');
 
 var CacheToggle = React.createClass({displayName: "CacheToggle",
 
@@ -2999,8 +3000,7 @@ var CacheToggle = React.createClass({displayName: "CacheToggle",
   getInitialState: function() {
     return {
       cached: false,
-      settingsOpen: false,
-      refresh_rate: 90
+      settingsOpen: false
     };
   },
 
@@ -3063,7 +3063,7 @@ var CacheToggle = React.createClass({displayName: "CacheToggle",
 
 module.exports = CacheToggle;
 
-},{"../../actions/ExplorerActions":2,"classnames":75,"react":302}],28:[function(require,module,exports){
+},{"../../actions/ExplorerActions":2,"classnames":75,"lodash":84,"react":302}],28:[function(require,module,exports){
 /**
  * @jsx React.DOM
  */
