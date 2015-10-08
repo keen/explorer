@@ -48,9 +48,6 @@ function _defaultAttrs(){
       display_name: null,
       visualization: {
         chart_type: null
-      },
-      user: {
-        id: null
       }
     }
   };

@@ -6,14 +6,6 @@ var React = require('react');
 var _ = require('lodash');
 var moment = require('moment');
 
-function nameForUser(user) {
-  if (user.first_name && user.last_name) {
-    return user.first_name + " " + user.last_name;
-  } else {
-    return user.email;
-  }
-}
-
 function dateForItem(item) {
   if (item.created_at) {
     var datetime = moment(new Date(item.created_at.replace(' ', 'T')));
@@ -30,13 +22,6 @@ var BrowseQueries = React.createClass({
   buildList: function() {
     var listElements = this.props.listItems.map(_.bind(function(listItem, index) {
       if (listItem.originalModel) listItem = listItem.originalModel;
-
-      listItem.user = listItem.user || {};
-      if (String(listItem.metadata.display_name.toLowerCase()).search(this.state.searchterm.toLowerCase()) < 0) return;
-
-      if (this.state.filterType === 'user') {
-        if (!listItem.metadata.user.id || listItem.metadata.user.id !== this.props.user.id) return;
-      }
 
       var isSelected = (this.props.selectedIndex === index) ? true : false;
       var classes;
@@ -56,10 +41,6 @@ var BrowseQueries = React.createClass({
         <li className={classes} key={index} data-id={listItem.id} onClick={this.clickCallback}>
           <h5 className="name">{listItem.metadata.display_name}</h5>
           <div className="metadata clearfix">
-            <p className="author pull-left">
-              <span className="icon glyphicon glyphicon-user"></span>
-              {nameForUser(listItem.user)}
-            </p>
             {createdAt}
           </div>
         </li>
@@ -88,13 +69,6 @@ var BrowseQueries = React.createClass({
     };
   },
 
-  getInitialState: function() {
-    return {
-      searchterm: '',
-      filterType: 'all'
-    };
-  },
-
   render: function() {
     var emptyContent = this.props.listItems.length ? null: this.props.emptyContent;
     var listItems = this.buildList();
@@ -102,24 +76,6 @@ var BrowseQueries = React.createClass({
     return (
       <section className="query-pane-section browse-queries">
         {this.props.notice}
-        <div className="queries-group-options">
-          <div className="radio-inline">
-            <label>
-              <input type="radio" name="filterType" value="all" ref="all-filter" checked={this.state.filterType === 'all' ? true : false} onChange={this.fieldChanged} />
-              {"Team"}
-            </label>
-          </div>
-          <div className="radio-inline">
-            <label>
-              <input type="radio" name="filterType" value="user" ref="user-filter" checked={this.state.filterType === 'user' ? true : false} onChange={this.fieldChanged} />
-              {"Mine"}
-            </label>
-          </div>
-        </div>
-        <div className="search-box">
-          <input type="text" name="searchterm" ref="searchbox" placeholder="Search" onChange={this.fieldChanged} />
-          <span className="glyphicon glyphicon-search icon"></span>
-        </div>
         {listItems}
         {emptyContent}
       </section>

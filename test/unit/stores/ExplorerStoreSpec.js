@@ -54,9 +54,6 @@ describe('stores/ExplorerStore', function() {
           display_name: null,
           visualization: {
             chart_type: null
-          },
-          user: {
-            id: null
           }
         }
       };
@@ -625,12 +622,6 @@ describe('stores/ExplorerStore', function() {
             display_name: 'some name',
             visualization: {
               chart_type: 'metric'
-            },
-            user: {
-              id: 'SOMEUSERID5',
-              first_name: 'Don',
-              last_name: 'Draper',
-              email: 'don@keen.io'
             }
           }
         }));
@@ -671,12 +662,6 @@ describe('stores/ExplorerStore', function() {
             display_name: 'some name',
             visualization: {
               chart_type: 'metric'
-            },
-            user: {
-              id: 'SOMEUSERID5',
-              first_name: 'Don',
-              last_name: 'Draper',
-              email: 'don@keen.io'
             }
           },
           originalModel: model.originalModel

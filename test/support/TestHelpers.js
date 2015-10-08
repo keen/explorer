@@ -61,9 +61,6 @@ module.exports = {
 			  display_name: null,
 			  visualization: {
 			    chart_type: null
-			  },
-			  user: {
-			    id: null
 			  }
 			}
 		};

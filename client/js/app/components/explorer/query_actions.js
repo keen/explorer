@@ -49,13 +49,12 @@ var QueryActions = React.createClass({
         });
     
     var isEmailExtraction = ExplorerUtils.isEmailExtraction(this.props.model);
-    var userIsOwner = this.props.user.id === this.props.model.metadata.user.id;
     var isPersisted = ExplorerUtils.isPersisted(this.props.model);
 
-    if (this.props.persistence && !isEmailExtraction && (userIsOwner || !isPersisted)) {
+    if (this.props.persistence && !isEmailExtraction) {
       saveBtn = (
         <button type="button" className="btn btn-success save-query" onClick={this.props.saveQueryClick} role="save-query" disabled={this.props.model.loading}>
-          {ExplorerUtils.isPersisted(this.props.model) ? 'Update' : 'Save'}
+          {isPersisted ? 'Update' : 'Save'}
         </button>
       );
       if (isPersisted && this.props.removeClick) {
