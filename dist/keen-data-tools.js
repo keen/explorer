@@ -2964,8 +2964,12 @@ module.exports = Timezone;
 
 var React = require('react');
 var classNames = require('classnames');
+
 var ExplorerActions = require('../../actions/ExplorerActions');
+var ReactSelect = require('../common/react_select.js');
+
 var _ = require('lodash');
+var timeDivisor = 60 * 60;
 
 var CacheToggle = React.createClass({displayName: "CacheToggle",
 
@@ -2989,9 +2993,9 @@ var CacheToggle = React.createClass({displayName: "CacheToggle",
     this.setState({ settingsOpen: !this.state.settingsOpen });
   },
 
-  setRefreshRate: function(event) {
+  setRefreshRate: function(name, selection) {
     var updates = _.clone(this.props.model);
-    updates.refresh_rate = event.target.value*60;
+    updates.refresh_rate = parseInt(selection)*timeDivisor;
 
     ExplorerActions.update(this.props.model.id, updates);
     this.forceUpdate();
@@ -3038,12 +3042,15 @@ var CacheToggle = React.createClass({displayName: "CacheToggle",
         ), 
 
         React.createElement("span", {className: cacheSettingsClasses}, 
-          "Refresh every ", React.createElement("input", {type: "text", 
+          "Refresh every", 
+          React.createElement(ReactSelect, {
+            ref: "select", 
             name: "refresh_rate", 
-            value: this.props.model.refresh_rate/60, 
-            className: "form-control", 
-            onChange: this.setRefreshRate}
-            ), " minutes"
+            items: _.range(4, 25), 
+            className: "form-control cache-settings-input", 
+            value: this.props.model.refresh_rate/timeDivisor, 
+            handleChange: this.setRefreshRate}
+          ), " hours"
         ), 
 
         React.createElement("div", {className: "row"}, 
@@ -3063,7 +3070,7 @@ var CacheToggle = React.createClass({displayName: "CacheToggle",
 
 module.exports = CacheToggle;
 
-},{"../../actions/ExplorerActions":2,"classnames":75,"lodash":84,"react":302}],28:[function(require,module,exports){
+},{"../../actions/ExplorerActions":2,"../common/react_select.js":21,"classnames":75,"lodash":84,"react":302}],28:[function(require,module,exports){
 /**
  * @jsx React.DOM
  */
@@ -3421,13 +3428,12 @@ var QueryActions = React.createClass({displayName: "QueryActions",
         });
     
     var isEmailExtraction = ExplorerUtils.isEmailExtraction(this.props.model);
-    var userIsOwner = this.props.user.id === this.props.model.metadata.user.id;
     var isPersisted = ExplorerUtils.isPersisted(this.props.model);
 
-    if (this.props.persistence && !isEmailExtraction && (userIsOwner || !isPersisted)) {
+    if (this.props.persistence && !isEmailExtraction) {
       saveBtn = (
         React.createElement("button", {type: "button", className: "btn btn-success save-query", onClick: this.props.saveQueryClick, role: "save-query", disabled: this.props.model.loading}, 
-          ExplorerUtils.isPersisted(this.props.model) ? 'Update' : 'Save'
+          isPersisted ? 'Update' : 'Save'
         )
       );
       if (isPersisted && this.props.removeClick) {
@@ -4044,14 +4050,6 @@ var React = require('react');
 var _ = require('lodash');
 var moment = require('moment');
 
-function nameForUser(user) {
-  if (user.first_name && user.last_name) {
-    return user.first_name + " " + user.last_name;
-  } else {
-    return user.email;
-  }
-}
-
 function dateForItem(item) {
   if (item.created_at) {
     var datetime = moment(new Date(item.created_at.replace(' ', 'T')));
@@ -4068,13 +4066,6 @@ var BrowseQueries = React.createClass({displayName: "BrowseQueries",
   buildList: function() {
     var listElements = this.props.listItems.map(_.bind(function(listItem, index) {
       if (listItem.originalModel) listItem = listItem.originalModel;
-
-      listItem.user = listItem.user || {};
-      if (String(listItem.metadata.display_name.toLowerCase()).search(this.state.searchterm.toLowerCase()) < 0) return;
-
-      if (this.state.filterType === 'user') {
-        if (!listItem.metadata.user.id || listItem.metadata.user.id !== this.props.user.id) return;
-      }
 
       var isSelected = (this.props.selectedIndex === index) ? true : false;
       var classes;
@@ -4094,10 +4085,6 @@ var BrowseQueries = React.createClass({displayName: "BrowseQueries",
         React.createElement("li", {className: classes, key: index, "data-id": listItem.id, onClick: this.clickCallback}, 
           React.createElement("h5", {className: "name"}, listItem.metadata.display_name), 
           React.createElement("div", {className: "metadata clearfix"}, 
-            React.createElement("p", {className: "author pull-left"}, 
-              React.createElement("span", {className: "icon glyphicon glyphicon-user"}), 
-              nameForUser(listItem.user)
-            ), 
             createdAt
           )
         )
@@ -4126,13 +4113,6 @@ var BrowseQueries = React.createClass({displayName: "BrowseQueries",
     };
   },
 
-  getInitialState: function() {
-    return {
-      searchterm: '',
-      filterType: 'all'
-    };
-  },
-
   render: function() {
     var emptyContent = this.props.listItems.length ? null: this.props.emptyContent;
     var listItems = this.buildList();
@@ -4140,24 +4120,6 @@ var BrowseQueries = React.createClass({displayName: "BrowseQueries",
     return (
       React.createElement("section", {className: "query-pane-section browse-queries"}, 
         this.props.notice, 
-        React.createElement("div", {className: "queries-group-options"}, 
-          React.createElement("div", {className: "radio-inline"}, 
-            React.createElement("label", null, 
-              React.createElement("input", {type: "radio", name: "filterType", value: "all", ref: "all-filter", checked: this.state.filterType === 'all' ? true : false, onChange: this.fieldChanged}), 
-              "Team"
-            )
-          ), 
-          React.createElement("div", {className: "radio-inline"}, 
-            React.createElement("label", null, 
-              React.createElement("input", {type: "radio", name: "filterType", value: "user", ref: "user-filter", checked: this.state.filterType === 'user' ? true : false, onChange: this.fieldChanged}), 
-              "Mine"
-            )
-          )
-        ), 
-        React.createElement("div", {className: "search-box"}, 
-          React.createElement("input", {type: "text", name: "searchterm", ref: "searchbox", placeholder: "Search", onChange: this.fieldChanged}), 
-          React.createElement("span", {className: "glyphicon glyphicon-search icon"})
-        ), 
         listItems, 
         emptyContent
       )
@@ -4710,9 +4672,6 @@ function _defaultAttrs(){
       display_name: null,
       visualization: {
         chart_type: null
-      },
-      user: {
-        id: null
       }
     }
   };

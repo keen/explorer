@@ -4,8 +4,12 @@
 
 var React = require('react');
 var classNames = require('classnames');
+
 var ExplorerActions = require('../../actions/ExplorerActions');
+var ReactSelect = require('../common/react_select.js');
+
 var _ = require('lodash');
+var timeDivisor = 60 * 60;
 
 var CacheToggle = React.createClass({
 
@@ -29,9 +33,9 @@ var CacheToggle = React.createClass({
     this.setState({ settingsOpen: !this.state.settingsOpen });
   },
 
-  setRefreshRate: function(event) {
+  setRefreshRate: function(name, selection) {
     var updates = _.clone(this.props.model);
-    updates.refresh_rate = event.target.value*60;
+    updates.refresh_rate = parseInt(selection)*timeDivisor;
 
     ExplorerActions.update(this.props.model.id, updates);
     this.forceUpdate();
@@ -78,12 +82,15 @@ var CacheToggle = React.createClass({
         </span>
 
         <span className={cacheSettingsClasses}>
-          Refresh every <input type="text"
+          Refresh every
+          <ReactSelect
+            ref="select"
             name="refresh_rate"
-            value={this.props.model.refresh_rate/60}
-            className="form-control"
-            onChange={this.setRefreshRate}
-            /> minutes
+            items={_.range(4, 25)}
+            className="form-control cache-settings-input"
+            value={this.props.model.refresh_rate/timeDivisor}
+            handleChange={this.setRefreshRate}
+          /> hours
         </span>
 
         <div className="row">
