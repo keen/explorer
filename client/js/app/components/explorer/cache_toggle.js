@@ -93,11 +93,6 @@ var CacheToggle = React.createClass({
           /> hours
         </span>
 
-        <div className="row">
-          <div className="col-md-5">
-
-          </div>
-        </div>
       </div>
     );
   },

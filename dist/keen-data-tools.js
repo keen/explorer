@@ -3051,12 +3051,6 @@ var CacheToggle = React.createClass({displayName: "CacheToggle",
             value: this.props.model.refresh_rate/timeDivisor, 
             handleChange: this.setRefreshRate}
           ), " hours"
-        ), 
-
-        React.createElement("div", {className: "row"}, 
-          React.createElement("div", {className: "col-md-5"}
-
-          )
         )
       )
     );
