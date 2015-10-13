@@ -1,9 +1,8 @@
 var React = require('react');
-var Router = require('react-router');
-var RouteHandler = Router.RouteHandler;
 var Loader = require('./common/loader.js');
 var ProjectUtils = require('../utils/ProjectUtils');
 var ProjectStore = require('../stores/ProjectStore');
+var Explorer = require('./explorer/index.js');
 
 function getProjectState() {
   return {
@@ -32,10 +31,9 @@ var App = React.createClass({
     return (
     	<div id="keen-explorer">
     		<Loader visible={this.state.project.loading} additionalClasses="app-loader" />
-        <RouteHandler project={this.state.project}
-                      config={this.props.config}
-                      client={this.props.config.client}
-                      persistence={this.props.config.persistence} />
+        <Explorer project={this.state.project}
+                  client={this.props.client}
+                  persistence={this.props.persistence} />
       </div>
     );
   },

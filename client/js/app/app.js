@@ -1,13 +1,8 @@
 var _ = require('lodash');
 var React = require('react');
-var Router = require('react-router');
-var DefaultRoute = Router.DefaultRoute;
-var Route = Router.Route;
-var RouteHandler = Router.RouteHandler;
 var Persistence = require('./modules/persistence/persistence.js');
 var AppDispatcher = require('./dispatcher/AppDispatcher');
 var AppComponent = require('./components/app.js');
-var Explorer = require('./components/explorer/index.js');
 var ProjectActions = require('./actions/ProjectActions');
 var ExplorerActions = require('./actions/ExplorerActions');
 var UserActions = require('./actions/UserActions');
@@ -20,10 +15,6 @@ var ExplorerStore = require('./stores/ExplorerStore');
 var QueryStringUtils = require('./utils/QueryStringUtils');
 
 function App(config) {
-  if (config.persistence && !config.user) {
-    throw new Error("If you initialize Explorer with a persistence layer you must provide a user object as well.");
-  }
-
   this.appDispatcher = AppDispatcher;
   this.targetNode = document.getElementById(config.targetId);
   this.persistence = config.persistence || null;
@@ -58,21 +49,11 @@ function App(config) {
   if (this.persistence) {
     ExplorerActions.getPersisted(this.persistence);
   }
-
-  this.routes = (
-    <Route name="app" path={config.appRoot || "/"} handler={AppComponent}>
-      <Route name="explorer" handler={Explorer}/>
-    </Route>
-  );
 }
 
 App.prototype.render = function() {
-  var targetNode = this.targetNode;
-  var config = this.componentConfig;
-
-  Router.run(this.routes, Router.HistoryLocation, function(Handler) {
-    React.render(<Handler config={config}/>, targetNode);
-  });
+  var Component = React.createFactory(AppComponent);
+  React.render(Component(this.componentConfig), this.targetNode);
 };
 
 window.React = React;
