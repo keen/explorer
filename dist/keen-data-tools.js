@@ -4486,7 +4486,7 @@ KeenSavedQueries.prototype.makeRequest = function(action, id, body, callback) {
   }
   r.end(function(err, res){
     if (err) {
-      callback(JSON.parse(err.response.text).error);
+      callback(err);
       return;
     }
     callback(null, res.body);
