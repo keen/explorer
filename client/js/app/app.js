@@ -25,7 +25,10 @@ function App(config) {
   // Create the project store and kick off fetching schema for it.
   ProjectActions.create({ client: this.client });
 
-  // Create the main active explorer. Grab params form URL and load into new explorer
+  // Create the main active explorer. Grab params form URL and load into new explorer.
+  
+  // TODO: Grab the saved query from the server if this is a saved query URL rather than just Query params.
+  
   var explorerAttrs = _.assign(
     { id: FormatUtils.generateRandomId("TEMP-") },
     ExplorerUtils.formatQueryParams(QueryStringUtils.getQueryAttributes()),

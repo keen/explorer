@@ -445,7 +445,10 @@ function App(config) {
   // Create the project store and kick off fetching schema for it.
   ProjectActions.create({ client: this.client });
 
-  // Create the main active explorer. Grab params form URL and load into new explorer
+  // Create the main active explorer. Grab params form URL and load into new explorer.
+  
+  // TODO: Grab the saved query from the server if this is a saved query URL rather than just Query params.
+  
   var explorerAttrs = _.assign(
     { id: FormatUtils.generateRandomId("TEMP-") },
     ExplorerUtils.formatQueryParams(QueryStringUtils.getQueryAttributes()),
@@ -3344,7 +3347,11 @@ var Explorer = React.createClass({displayName: "Explorer",
 
   _onChange: function() {
     this.setState(getStoresState());
-    QueryStringUtils.updateSearchString(ExplorerUtils.paramsForURL(ExplorerStore.getActive()));
+    if (ExplorerUtils.isPersisted(this.state.activeExplorer)) {
+      window.history.pushState({ model: this.state.activeExplorer }, "", '?saved_query='+this.state.activeExplorer.id);
+    } else {
+      QueryStringUtils.updateSearchString(ExplorerUtils.paramsForURL(this.state.activeExplorer));
+    }
   }
 });
 

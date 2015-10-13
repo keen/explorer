@@ -297,7 +297,11 @@ var Explorer = React.createClass({
 
   _onChange: function() {
     this.setState(getStoresState());
-    QueryStringUtils.updateSearchString(ExplorerUtils.paramsForURL(ExplorerStore.getActive()));
+    if (ExplorerUtils.isPersisted(this.state.activeExplorer)) {
+      window.history.pushState({ model: this.state.activeExplorer }, "", '?saved_query='+this.state.activeExplorer.id);
+    } else {
+      QueryStringUtils.updateSearchString(ExplorerUtils.paramsForURL(this.state.activeExplorer));
+    }
   }
 });
 
