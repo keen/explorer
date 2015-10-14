@@ -14,7 +14,6 @@ var QueryActions = require('./query_actions.js');
 var Notice = require('../common/notice.js');
 var FilterManager = require('../common/filter_manager.js');
 var ExplorerStore = require('../../stores/ExplorerStore');
-var UserStore = require('../../stores/UserStore');
 var ExplorerActions = require('../../actions/ExplorerActions');
 var NoticeActions = require('../../actions/NoticeActions');
 var AppStateActions = require('../../actions/AppStateActions');
@@ -31,8 +30,7 @@ function getStoresState() {
     allPersistedExplorers: ExplorerStore.getAllPersisted(),
     activeExplorer: ExplorerStore.getActive(),
     notice: NoticeStore.getNotice(),
-    appState: AppStateStore.getState(),
-    user: UserStore.getUser()
+    appState: AppStateStore.getState()
   };
 }
 
@@ -94,7 +92,7 @@ var Explorer = React.createClass({
 
   createNewQuery: function(event) {
     event.preventDefault();
-    ExplorerActions.create({ metadata: { user: this.state.user } });
+    ExplorerActions.create();
     var newExplorer = ExplorerStore.getLast();
     ExplorerActions.setActive(newExplorer.id);
     this.setState({ activeQueryPane: 'build' });
@@ -277,7 +275,6 @@ var Explorer = React.createClass({
                           handleQuerySubmit={this.handleQuerySubmit}
                           saveQueryClick={this.saveQueryClick}
                           removeClick={this.removeSavedQueryClicked}
-                          user={this.state.user}
                           persistence={this.props.persistence}
                           codeSampleHidden={this.state.appState.codeSampleHidden}
                           toggleCodeSample={this.toggleCodeSample} />

@@ -2,7 +2,6 @@ var _ = require('lodash');
 var AppDispatcher = require('../dispatcher/AppDispatcher');
 var ExplorerConstants = require('../constants/ExplorerConstants');
 var ExplorerStore = require('../stores/ExplorerStore');
-var UserStore = require('../stores/UserStore');
 var ExplorerValidations = require('../validations/ExplorerValidations');
 var ValidationUtils = require('../utils/ValidationUtils');
 var ExplorerUtils = require('../utils/ExplorerUtils');

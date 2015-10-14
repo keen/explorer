@@ -5,7 +5,6 @@ var AppDispatcher = require('./dispatcher/AppDispatcher');
 var AppComponent = require('./components/app.js');
 var ProjectActions = require('./actions/ProjectActions');
 var ExplorerActions = require('./actions/ExplorerActions');
-var UserActions = require('./actions/UserActions');
 var ExplorerUtils = require('./utils/ExplorerUtils');
 var FormatUtils = require('./utils/FormatUtils');
 var runValidations = require('./utils/ValidationUtils').runValidations;
@@ -20,7 +19,10 @@ function App(config) {
   this.persistence = config.persistence || null;
   this.client = config.client;
 
-  UserActions.update(config.user || {});
+  // Grab the persisted explorers if a persitence module was passed in
+  if (this.persistence) {
+    ExplorerActions.getPersisted(this.persistence);
+  }
 
   // Create the project store and kick off fetching schema for it.
   ProjectActions.create({ client: this.client });
@@ -31,8 +33,7 @@ function App(config) {
   
   var explorerAttrs = _.assign(
     { id: FormatUtils.generateRandomId("TEMP-") },
-    ExplorerUtils.formatQueryParams(QueryStringUtils.getQueryAttributes()),
-    { metadata: { user: config.user } }
+    ExplorerUtils.formatQueryParams(QueryStringUtils.getQueryAttributes())
   );
   ExplorerActions.create(explorerAttrs);
   ExplorerActions.setActive(explorerAttrs.id);
@@ -47,11 +48,6 @@ function App(config) {
     options: config.options || {},
     client: this.client
   };
-
-  // Grab the persisted explorers if a persitence module was passed in
-  if (this.persistence) {
-    ExplorerActions.getPersisted(this.persistence);
-  }
 }
 
 App.prototype.render = function() {
