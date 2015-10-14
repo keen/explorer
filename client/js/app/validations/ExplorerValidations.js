@@ -15,6 +15,14 @@ module.exports = {
       }
     },
 
+    refresh_rate: {
+      msg: 'Refresh rate must be between 4 and 24 hours.',
+      validator: function(explorer) {
+        return (explorer.refresh_rate >= 1440 && explorer.refresh_rate <= 86400) ||
+          explorer.refresh_rate == 0;
+      }
+    },
+
     analysis_type: {
       msg: 'Choose an Analysis Type.',
       validator: function(explorer) {

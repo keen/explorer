@@ -4,12 +4,9 @@
 
 var React = require('react');
 var classNames = require('classnames');
-
 var ExplorerActions = require('../../actions/ExplorerActions');
-var ReactSelect = require('../common/react_select.js');
-
 var _ = require('lodash');
-var timeDivisor = 60 * 60;
+var refreshRateMultiplier = 60 * 60;
 
 var CacheToggle = React.createClass({
 
@@ -33,9 +30,14 @@ var CacheToggle = React.createClass({
     this.setState({ settingsOpen: !this.state.settingsOpen });
   },
 
-  setRefreshRate: function(name, selection) {
+  setRefreshRate: function(event) {
+    this.setState({ refresh_rate: event.target.value });
+  },
+
+  setRefreshRateBlur: function(event) {
+    var refresh_rate = Math.round(event.target.value*refreshRateMultiplier);
     var updates = _.clone(this.props.model);
-    updates.refresh_rate = parseInt(selection)*timeDivisor;
+    updates.refresh_rate = refresh_rate;
 
     ExplorerActions.update(this.props.model.id, updates);
     this.forceUpdate();
@@ -43,9 +45,14 @@ var CacheToggle = React.createClass({
 
   getInitialState: function() {
     return {
+      refresh_rate: this._refreshRateInHours(this.props.model),
       cached: false,
       settingsOpen: false
     };
+  },
+
+  componentWillReceiveProps: function(nextProps) {
+    this.setState({ refresh_rate: this._refreshRateInHours(nextProps.model) });
   },
 
   render: function() {
@@ -82,23 +89,24 @@ var CacheToggle = React.createClass({
         </span>
 
         <span className={cacheSettingsClasses}>
-          Refresh every
-          <ReactSelect
-            ref="select"
+          Refresh every <input type="text"
             name="refresh_rate"
-            items={_.range(4, 25)}
-            className="form-control cache-settings-input"
-            value={this.props.model.refresh_rate/timeDivisor}
-            handleChange={this.setRefreshRate}
-          /> hours
+            value={this.state.refresh_rate}
+            className="form-control"
+            onChange={this.setRefreshRate}
+            onBlur={this.setRefreshRateBlur}
+            /> hours (hours must be between 4 and 24).
         </span>
-
       </div>
     );
   },
 
   _isCached: function() {
     return this.props.model.refresh_rate != 0;
+  },
+
+  _refreshRateInHours: function(model) {
+    return (model.refresh_rate/refreshRateMultiplier) * 100 / 100;
   }
 
 });
