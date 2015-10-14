@@ -24,6 +24,7 @@ require('./validations/FilterValidationsSpec.js');
 // Actions
 // ***********************
 require('./actions/ExplorerActionsSpec.js');
+require('./actions/ProjectActionsSpec.js');
 
 // ***********************
 // Stores

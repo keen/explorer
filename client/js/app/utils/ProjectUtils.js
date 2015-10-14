@@ -1,7 +1,5 @@
 var _ = require('lodash');
-var request = require('superagent');
 var FormatUtils = require('./FormatUtils.js');
-var ProjectActions = require('../actions/ProjectActions');
 
 // ***********************
 // ** Project Constants
@@ -133,27 +131,12 @@ module.exports = {
     return endpoint+'/projects/'+projectId+'/events?api_key='+masterKey;
   },
 
-  unpackProjectSchema: function(project, projectSchema) {
-    ProjectActions.update(project.id, {
-      eventCollections: FormatUtils.sortItems(_.map(projectSchema, "name")),
-      projectSchema: projectSchema
-    });
-  },
-
-  fetchProjectSchema: function(project) {
-    return request.get(module.exports.eventsUrl(project.client))
-      .end(function(err, res){
-        if (err) {
-          throw new Error("Error fetching project schema: " + err);
-        } else {
-          module.exports.unpackProjectSchema(project, res.body);
-          ProjectActions.update(project.id, { loading: false });
-        }
-      });
+  getEventCollectionsFromSchema: function(schema) {
+    return FormatUtils.sortItems(_.map(schema, "name"));
   },
 
   getEventCollectionProperties: function(project, eventCollection) {
-    var eventCollection = _.find(project.projectSchema, { name: eventCollection });
+    var eventCollection = _.find(project.schema, { name: eventCollection });
     return eventCollection ? eventCollection.properties : {};
   },
 
@@ -163,7 +146,7 @@ module.exports = {
   },
 
   getPropertyType: function(project, eventCollection, propertyName) {
-    var eventCollection = _.find(project.projectSchema, { name: eventCollection });
+    var eventCollection = _.find(project.schema, { name: eventCollection });
     return eventCollection ? eventCollection.properties[propertyName] : null;
   }
 

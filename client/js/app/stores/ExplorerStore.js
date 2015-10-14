@@ -16,7 +16,7 @@ var _explorers = {};
 
 function _defaultAttrs(){
   return {
-    id: FormatUtils.generateRandomId("TEMP-"),
+    id: FormatUtils.generateTempId(),
     query_name: null,
     active: false,
     saving: false,
@@ -125,6 +125,7 @@ function _create(attrs) {
   attrs = attrs || {};
   var newAttrs = _.merge(_defaultAttrs(), attrs);
   _explorers[newAttrs.id] = newAttrs;
+  return _explorers[newAttrs.id];
 }
 
 function _update(id, updates) {
@@ -148,11 +149,10 @@ function _remove(id) {
 }
 
 function _setActive(id) {
-  var keys = Object.keys(_explorers);
-  for(var i=0; i<keys.length; i++) {
-    _explorers[keys[i]].active = false;
-    delete _explorers[keys[i]].originalModel;
-  }
+  _.each(_explorers, function(explorer, key) {
+    explorer.active = false;
+    delete explorer.originalModel;
+  });
   _explorers[id].active = true;
   _explorers[id].originalModel = _.cloneDeep(_explorers[id]);
 }

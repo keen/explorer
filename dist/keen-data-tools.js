@@ -407,6 +407,7 @@ var runValidations = require('./utils/ValidationUtils').runValidations;
 var explorerValidations = require('./validations/ExplorerValidations').explorer;
 var ProjectStore = require('./stores/ProjectStore');
 var ExplorerStore = require('./stores/ExplorerStore');
+var AppStateStore = require('./stores/AppStateStore');
 var QueryStringUtils = require('./utils/QueryStringUtils');
 
 function App(config) {
@@ -415,24 +416,30 @@ function App(config) {
   this.persistence = config.persistence || null;
   this.client = config.client;
 
-  // Grab the persisted explorers if a persitence module was passed in
-  if (this.persistence) {
-    ExplorerActions.getPersisted(this.persistence);
-  }
-
   // Create the project store and kick off fetching schema for it.
   ProjectActions.create({ client: this.client });
 
-  // Create the main active explorer. Grab params form URL and load into new explorer.
-  
-  // TODO: Grab the saved query from the server if this is a saved query URL rather than just Query params.
-  
-  var explorerAttrs = _.assign(
-    { id: FormatUtils.generateRandomId("TEMP-") },
-    ExplorerUtils.formatQueryParams(QueryStringUtils.getQueryAttributes())
-  );
-  ExplorerActions.create(explorerAttrs);
-  ExplorerActions.setActive(explorerAttrs.id);
+  // Create an active Explorer model to start: Either from a saved query or an unsaved one populated
+  // with the params from the query string.
+  var queryAttrs = QueryStringUtils.getQueryAttributes();
+
+  // Is this a saved query we want to load?
+  if (queryAttrs.saved_query) {
+    // TODO: Use a callback here and set the right Explorer model as active. We'll need to wait until the persistence
+    // module is done fetching the models from the server.
+    ExplorerActions.setActive(queryAttrs.saved_query);
+  // Not a saved query, so create a new temporary query from the query attributes.
+  } else {
+    var explorerAttrs = _.assign(
+      { id: FormatUtils.generateRandomId("TEMP-") },
+      ExplorerUtils.formatQueryParams(queryAttrs)
+    );
+    ExplorerActions.create(explorerAttrs);
+    ExplorerActions.setActive(explorerAttrs.id);
+  }
+
+  // Grab the persisted explorers if a persitence module was passed in
+  if (this.persistence) ExplorerActions.getPersisted(this.persistence);
 
   // Run the query for this explorer if it's valid
   if (!ExplorerUtils.isEmailExtraction(ExplorerStore.getActive()) && runValidations(explorerValidations, ExplorerStore.getActive()).isValid) {
@@ -456,7 +463,7 @@ window.Keen = window.Keen || {};
 window.Keen.DataTools = window.Keen.DataTools || {};
 window.Keen.DataTools.Persistence = Persistence;
 window.Keen.DataTools.App = module.exports = App;
-},{"./actions/ExplorerActions":2,"./actions/ProjectActions":4,"./components/app.js":6,"./dispatcher/AppDispatcher":48,"./modules/persistence/persistence.js":50,"./stores/ExplorerStore":52,"./stores/ProjectStore":54,"./utils/ExplorerUtils":55,"./utils/FormatUtils":57,"./utils/QueryStringUtils":59,"./utils/ValidationUtils":60,"./validations/ExplorerValidations":61,"lodash":81,"react":260}],6:[function(require,module,exports){
+},{"./actions/ExplorerActions":2,"./actions/ProjectActions":4,"./components/app.js":6,"./dispatcher/AppDispatcher":48,"./modules/persistence/persistence.js":50,"./stores/AppStateStore":51,"./stores/ExplorerStore":52,"./stores/ProjectStore":54,"./utils/ExplorerUtils":55,"./utils/FormatUtils":57,"./utils/QueryStringUtils":59,"./utils/ValidationUtils":60,"./validations/ExplorerValidations":61,"lodash":81,"react":260}],6:[function(require,module,exports){
 var React = require('react');
 var Loader = require('./common/loader.js');
 var ProjectUtils = require('../utils/ProjectUtils');

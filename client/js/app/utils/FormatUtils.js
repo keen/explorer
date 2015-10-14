@@ -75,6 +75,10 @@ module.exports = {
     return (prefix || '') + (+new Date() + Math.floor(Math.random() * 999999)).toString(36);
   },
 
+  generateTempId: function() {
+    return module.exports.generateRandomId('TEMP-');
+  },
+
   isValidQueryValue: function(value) {
     if (_.isArray(value)) {
       return value.length > 0;
