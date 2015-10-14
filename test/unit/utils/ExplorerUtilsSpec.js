@@ -472,6 +472,7 @@ describe('utils/ExplorerUtils', function() {
       it('has the timeframe attribute', function(){
         this.explorer = {
           timeframe_type: 'relative',
+          refresh_rate: 0,
           query: {
             analysis_type: 'count',
             event_collection: 'clicks',

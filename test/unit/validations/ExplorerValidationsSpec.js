@@ -24,6 +24,34 @@ describe('validations/ExplorerValidations', function() {
       });
     });
 
+    describe('refresh_rate validations', function() {
+      it('has an error message', function () {
+        var errorMessage = ExplorerValidations.explorer.refresh_rate.msg;
+        assert.equal(errorMessage, 'Refresh rate must be between 4 and 24 hours.');
+      });
+
+      it('returns true when refresh rate is between 4 and 24 hours or 0', function() {
+        assert.isTrue(ExplorerValidations.explorer.refresh_rate.validator({
+          refresh_rate: 0
+        }));
+        assert.isTrue(ExplorerValidations.explorer.refresh_rate.validator({
+          refresh_rate: 1440
+        }));
+        assert.isTrue(ExplorerValidations.explorer.refresh_rate.validator({
+          refresh_rate: 2000
+        }));
+      });
+
+      it('returns false when refresh_rate is out of range', function() {
+        assert.isFalse(ExplorerValidations.explorer.refresh_rate.validator({
+          refresh_rate: 1000
+        }));
+        assert.isFalse(ExplorerValidations.explorer.refresh_rate.validator({
+          refresh_rate: 90000
+        }));
+      });
+    });
+
     describe('query name', function () {
       it('has an error message', function () {
         var errorMessage = ExplorerValidations.explorer.query_name.msg;

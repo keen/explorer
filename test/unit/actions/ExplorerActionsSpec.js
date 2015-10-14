@@ -171,6 +171,7 @@ describe('actions/ExplorerActions', function() {
               sub_timeframe: 'weeks'
             }
           },
+          refresh_rate: 0,
           metadata: {
             visualization: {
               chart_type: 'metric'
@@ -181,6 +182,7 @@ describe('actions/ExplorerActions', function() {
           id: '2',
           name: 'favorite 2',
           timeframe_type: 'relative',
+          refresh_rate: 0,
           query: {
             event_collection: 'clicks',
             analysis_type: 'sum',
@@ -201,6 +203,7 @@ describe('actions/ExplorerActions', function() {
           id: '3',
           name: 'favorite 3',
           timeframe_type: 'relative',
+          refresh_rate: 0,
           query: {
             event_collection: 'clicks',
             analysis_type: 'max',
