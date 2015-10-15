@@ -82,7 +82,7 @@ var CacheToggle = React.createClass({
         </label>
 
         <span className={cacheDetailsClasses}>
-          Last updated 43 mins ago
+          {this._minutesAgo()}
           <a href="#" onClick={this.setSettingsOpen} className="margin-left-tiny">
             <span className="icon icon-cog glyphicon-cog glyphicon"></span>
           </a>
@@ -103,6 +103,19 @@ var CacheToggle = React.createClass({
 
   _isCached: function() {
     return this.props.model.refresh_rate != 0;
+  },
+
+  _minutesAgo: function() {
+    var timeNow = new Date();
+    var runInformation = this.props.model.run_information;
+
+    if (runInformation != null && runInformation.last_run_status == 200) {
+      var mins = Math.round((timeNow - new Date(runInformation.last_run_date)) /
+        (60 * 1000));
+      return 'Last updated ' + mins +
+          ' minutes ago.';
+    }
+    return 'Last updated information unavailable.';
   },
 
   _refreshRateInHours: function(model) {

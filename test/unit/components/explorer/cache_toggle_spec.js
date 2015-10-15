@@ -50,4 +50,29 @@ describe('components/explorer/cache_toggle', function() {
     });
   });
 
+  describe('last updated text', function() {
+    it('shows last updated time in hours and minutes when there is run information', function() {
+      this.model.run_information = {
+        last_run_date: new Date() - 20 * 60 * 1000,
+        last_run_status: 200
+      };
+      this.model.refresh_rate = 14400;
+      this.component.forceUpdate();
+
+      var cacheDetails = $R(this.component).find('.cache-details');
+
+      assert.equal(cacheDetails.text(), 'Last updated 20 minutes ago.');
+    });
+
+    it('shows unavailable prompt when there is no run information', function() {
+      this.model.run_information = null;
+      this.model.refresh_rate = 14400;
+      this.component.forceUpdate();
+
+      var cacheDetails = $R(this.component).find('.cache-details');
+
+      assert.equal(cacheDetails.text(), 'Last updated information unavailable.');
+    });
+  });
+
 });
