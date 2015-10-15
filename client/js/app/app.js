@@ -5,12 +5,12 @@ var AppDispatcher = require('./dispatcher/AppDispatcher');
 var AppComponent = require('./components/app.js');
 var ProjectActions = require('./actions/ProjectActions');
 var ExplorerActions = require('./actions/ExplorerActions');
+var AppStateActions = require('./actions/AppStateActions');
 var NoticeActions = require('./actions/NoticeActions');
 var ExplorerUtils = require('./utils/ExplorerUtils');
 var FormatUtils = require('./utils/FormatUtils');
 var runValidations = require('./utils/ValidationUtils').runValidations;
 var explorerValidations = require('./validations/ExplorerValidations').explorer;
-var AppStateStore = require('./stores/AppStateStore');
 var ExplorerStore = require('./stores/ExplorerStore');
 var ProjectStore = require('./stores/ProjectStore');
 var QueryStringUtils = require('./utils/QueryStringUtils');
@@ -23,47 +23,53 @@ function App(config) {
 
   ProjectActions.create({ client: this.client });
   ProjectActions.fetchProjectSchema();
-
-  if (this.persistence) ExplorerActions.getPersisted(this.persistence);
+  if (this.persistence) ExplorerActions.fetchAllPersisted(this.persistence, function(err) {
+    if (err) throw new Error("There was an error fetching the persisted explorers: " + err.message);
+  });
 
   // Create an active Explorer model to start: Either from a saved query or an unsaved one populated
   // with the params from the query string.
-  var attrs = ExplorerUtils.formatQueryParams(QueryStringUtils.getQueryAttributes());
+  var attrs = QueryStringUtils.getQueryAttributes();
+  // Not a saved query, so create a new temporary query from the query attributes.
+  var id = FormatUtils.generateTempId();
+  ExplorerActions.create(_.assign(ExplorerUtils.formatQueryParams(attrs) || {}, { id: id }));
+  ExplorerActions.setActive(id);
 
   // Is this a saved query we want to load?
   if (attrs.saved_query) {
     // Once the models come back from the server, mark the right one as active.
-    AppStateStore.once('change', this.doneFetchingExplorers.bind(this, attrs.saved_query)); 
+    ExplorerActions.fetchPersisted(this.persistence, { id: attrs.saved_query }, this.doneFetchingSavedQuery.bind(this, attrs.saved_query));
   } else {
-    // Not a saved query, so create a new temporary query from the query attributes.
-    var id = FormatUtils.generateTempId();
-    ExplorerActions.create(_.assign(attrs, { id: id }));
-    ExplorerActions.setActive(id);
+    AppStateActions.update({ ready: true });
     // Run the query for this explorer if it's valid
-    var activeExplorer = ExplorerStore.getActive();
-    var isEmailExtraction = !ExplorerUtils.isEmailExtraction(activeExplorer);
-    var isValid = runValidations(explorerValidations, activeExplorer).isValid;
+    var isEmailExtraction = !ExplorerUtils.isEmailExtraction(ExplorerStore.getActive());
+    var isValid = runValidations(explorerValidations, ExplorerStore.getActive()).isValid;
     if (!isEmailExtraction && isValid) {
       ExplorerActions.exec(this.client, ExplorerStore.getActive().id);
     }
   }
 }
 
-App.prototype.doneFetchingExplorers = function(savedQueryName) {
-  var appState = AppStateStore.getState();
-  if (!appState.fetchingPersistedExplorers && _.find(ExplorerStore.getAllPersisted(), { id: savedQueryName })) {
+App.prototype.doneFetchingSavedQuery = function(savedQueryName, err) {
+  if (!err) {
     ExplorerActions.setActive(savedQueryName);
     ExplorerActions.exec(this.client, savedQueryName);
+    AppStateActions.update({ ready: true });
   } else {
-    // We couldn't find that saved query.
-    NoticeActions.create({
-      text: 'The saved query '+savedQueryName+' could not be found.',
-      type: 'error',
-      icon: 'remove-sign'
-    });
-    var id = FormatUtils.generateTempId();
-    ExplorerActions.create({ id: id });
-    ExplorerActions.setActive(id);
+    if (err.status === 404) {
+      // We couldn't find that saved query.
+      NoticeActions.create({
+        text: 'The saved query '+savedQueryName+' could not be found.',
+        type: 'error',
+        icon: 'remove-sign'
+      });
+      var id = FormatUtils.generateTempId();
+      ExplorerActions.create({ id: id });
+      ExplorerActions.setActive(id);
+      AppStateActions.update({ ready: true });
+    } else {
+      throw new Error("There was a problem fetching a saved query");
+    }
   }
 };
 

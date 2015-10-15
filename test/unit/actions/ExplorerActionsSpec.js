@@ -155,7 +155,7 @@ describe('actions/ExplorerActions', function() {
     });
   });
 
-  describe('getPersisted', function () {
+  describe('fetchAllPersisted', function () {
     beforeEach(function () {
       this.models = [
         {
@@ -227,38 +227,39 @@ describe('actions/ExplorerActions', function() {
       this.persistence = {
         get: getFn.bind(this)
       };
+      this.callback = sinon.stub();
     });
 
     it('should format the params for each model', function () {
       var spy = sinon.spy(ExplorerUtils, 'formatQueryParams');
-      ExplorerActions.getPersisted(this.persistence);
+      ExplorerActions.fetchAllPersisted(this.persistence, this.callback);
       assert.strictEqual(spy.getCalls().length, 3);
       ExplorerUtils.formatQueryParams.restore();
     });
     it('should run validations for each model', function () {
       var spy = sinon.spy(ValidationUtils, 'runValidations');
-      ExplorerActions.getPersisted(this.persistence);
+      ExplorerActions.fetchAllPersisted(this.persistence, this.callback);
       assert.strictEqual(spy.getCalls().length, 3);
       ValidationUtils.runValidations.restore();  
     });
     it('should include invalid models', function () {
       this.models[2].query = {};
       var stub = sinon.stub(ExplorerActions, 'createBatch');
-      ExplorerActions.getPersisted(this.persistence);
+      ExplorerActions.fetchAllPersisted(this.persistence, this.callback);
       assert.strictEqual(stub.getCall(0).args[0].length, 3);
       ExplorerActions.createBatch.restore();  
     });
     it('should log a warning for invalid models', function () {
       this.models[2].query = {};
       var stub = sinon.stub(window.console, 'warn');
-      ExplorerActions.getPersisted(this.persistence);
+      ExplorerActions.fetchAllPersisted(this.persistence, this.callback);
       assert.strictEqual(stub.getCall(0).args[0], 'A persisted explorer model is invalid: ');
       assert.deepPropertyVal(stub.getCall(0).args[1], 'id', '3');
       window.console.warn.restore();
     });
     it('should call update app state when done and set fetchingPersistedExplorers to false', function () {
       var stub = sinon.stub(AppStateActions, 'update');
-      ExplorerActions.getPersisted(this.persistence);
+      ExplorerActions.fetchAllPersisted(this.persistence, this.callback);
       assert.isTrue(stub.calledWith({ fetchingPersistedExplorers: false }));
       AppStateActions.update.restore();
     });

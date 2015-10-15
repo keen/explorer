@@ -194,11 +194,13 @@ var ExplorerActions = {
     ExplorerActions.update(explorer.id, updates);
   },
 
-  getPersisted: function(persistence) {
+  fetchAllPersisted: function(persistence, callback) {
     AppStateActions.update({ fetchingPersistedExplorers: true });
     persistence.get(null, function(err, resp) {
-      if (!resp) throw new Error("There was an error fetching the persisted explorers: Response is empty.");
-      if (err) throw new Error("There was an error fetching the persisted explorers: " + err.message);
+      if (err) {
+        callback(err);
+        return;
+      }
       var models = [];
       _.each(resp, function(model) {
         var formattedModel = ExplorerUtils.formatQueryParams(model);
@@ -209,6 +211,22 @@ var ExplorerActions = {
       });
       ExplorerActions.createBatch(models);
       AppStateActions.update({ fetchingPersistedExplorers: false });
+      callback(null);
+    });
+  },
+
+  fetchPersisted: function(persistence, id, callback) {
+    persistence.get(id, function(err, resp) {
+      if (err) {
+        callback(err);
+        return;
+      }
+      var model = ExplorerUtils.formatQueryParams(resp);
+      if (!ValidationUtils.runValidations(ExplorerValidations.explorer, model).isValid) {
+        console.warn('A persisted explorer model is invalid: ', model);
+      }
+      ExplorerActions.create(model);
+      callback(null);
     });
   },
 

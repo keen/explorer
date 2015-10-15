@@ -256,7 +256,7 @@ module.exports = {
    * @return {Object} formatted attributes to be used for creating a new Explorer model.
    */
   formatQueryParams: function(params) {
-    if (!params.query) return;
+    if (!params || !params.query) return;
 
     if (params.query && params.query.timeframe) {
       var unpackedTime = module.exports.unpackTimeframeParam(params.query);

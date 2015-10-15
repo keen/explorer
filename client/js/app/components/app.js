@@ -30,7 +30,7 @@ var App = React.createClass({
   render: function () {
     return (
     	<div id="keen-explorer">
-    		<Loader visible={this.state.project.loading || this.state.app.fetchingPersistedExplorers} additionalClasses="app-loader" />
+    		<Loader visible={this.state.project.loading || !this.state.app.ready} additionalClasses="app-loader" />
         <Explorer project={this.state.project}
                   client={this.props.client}
                   persistence={this.props.persistence} />

@@ -8,7 +8,8 @@ var CHANGE_EVENT = 'change';
 function defaultState() {
   return {
     fetchingPersistedExplorers: false,
-    codeSampleHidden: true
+    codeSampleHidden: true,
+    ready: false
   };
 }
 

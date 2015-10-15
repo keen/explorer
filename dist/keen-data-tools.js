@@ -218,11 +218,13 @@ var ExplorerActions = {
     ExplorerActions.update(explorer.id, updates);
   },
 
-  getPersisted: function(persistence) {
+  fetchAllPersisted: function(persistence, callback) {
     AppStateActions.update({ fetchingPersistedExplorers: true });
     persistence.get(null, function(err, resp) {
-      if (!resp) throw new Error("There was an error fetching the persisted explorers: Response is empty.");
-      if (err) throw new Error("There was an error fetching the persisted explorers: " + err.message);
+      if (err) {
+        callback(err);
+        return;
+      }
       var models = [];
       _.each(resp, function(model) {
         var formattedModel = ExplorerUtils.formatQueryParams(model);
@@ -233,6 +235,22 @@ var ExplorerActions = {
       });
       ExplorerActions.createBatch(models);
       AppStateActions.update({ fetchingPersistedExplorers: false });
+      callback(null);
+    });
+  },
+
+  fetchPersisted: function(persistence, id, callback) {
+    persistence.get(id, function(err, resp) {
+      if (err) {
+        callback(err);
+        return;
+      }
+      var model = ExplorerUtils.formatQueryParams(resp);
+      if (!ValidationUtils.runValidations(ExplorerValidations.explorer, model).isValid) {
+        console.warn('A persisted explorer model is invalid: ', model);
+      }
+      ExplorerActions.create(model);
+      callback(null);
     });
   },
 
@@ -371,6 +389,9 @@ module.exports = NoticeActions;
 },{"../constants/NoticeConstants":46,"../dispatcher/AppDispatcher":48}],4:[function(require,module,exports){
 var AppDispatcher = require('../dispatcher/AppDispatcher');
 var ProjectConstants = require('../constants/ProjectConstants');
+var ProjectStore = require('../stores/ProjectStore');
+var ProjectUtils = require('../utils/ProjectUtils');
+var request = require('superagent');
 
 var ProjectActions = {
 
@@ -382,18 +403,41 @@ var ProjectActions = {
   },
 
   update: function(id, updates) {
+    var project = ProjectStore.getProject();
+
     AppDispatcher.dispatch({
       actionType: ProjectConstants.PROJECT_UPDATE,
-      id: id,
+      id: project.id,
       updates: updates
     });
-  }
+  },
+
+
+  fetchProjectSchema: function() {
+    var project = ProjectStore.getProject();
+    if (!project) throw new Error("Cannot fetchProjectSchema: No project model has been created yet.");
+
+    return request.get(ProjectUtils.eventsUrl(project.client))
+      .end(function(err, res) {
+        if (err) {
+          throw new Error("Error fetching project schema: " + err);
+        } else {
+          var schema = res.body;
+          var eventCollections = ProjectUtils.getEventCollectionsFromSchema(schema);
+          ProjectActions.update(project.id, {
+            schema: schema,
+            eventCollections: eventCollections,
+            loading: false
+          });
+        }
+      });
+  },
 
 };
 
 module.exports = ProjectActions;
 
-},{"../constants/ProjectConstants":47,"../dispatcher/AppDispatcher":48}],5:[function(require,module,exports){
+},{"../constants/ProjectConstants":47,"../dispatcher/AppDispatcher":48,"../stores/ProjectStore":54,"../utils/ProjectUtils":58,"superagent":262}],5:[function(require,module,exports){
 var _ = require('lodash');
 var React = require('react');
 var Persistence = require('./modules/persistence/persistence.js');
@@ -401,13 +445,14 @@ var AppDispatcher = require('./dispatcher/AppDispatcher');
 var AppComponent = require('./components/app.js');
 var ProjectActions = require('./actions/ProjectActions');
 var ExplorerActions = require('./actions/ExplorerActions');
+var AppStateActions = require('./actions/AppStateActions');
+var NoticeActions = require('./actions/NoticeActions');
 var ExplorerUtils = require('./utils/ExplorerUtils');
 var FormatUtils = require('./utils/FormatUtils');
 var runValidations = require('./utils/ValidationUtils').runValidations;
 var explorerValidations = require('./validations/ExplorerValidations').explorer;
-var ProjectStore = require('./stores/ProjectStore');
 var ExplorerStore = require('./stores/ExplorerStore');
-var AppStateStore = require('./stores/AppStateStore');
+var ProjectStore = require('./stores/ProjectStore');
 var QueryStringUtils = require('./utils/QueryStringUtils');
 
 function App(config) {
@@ -416,46 +461,64 @@ function App(config) {
   this.persistence = config.persistence || null;
   this.client = config.client;
 
-  // Create the project store and kick off fetching schema for it.
   ProjectActions.create({ client: this.client });
+  ProjectActions.fetchProjectSchema();
+  if (this.persistence) ExplorerActions.fetchAllPersisted(this.persistence, function(err) {
+    if (err) throw new Error("There was an error fetching the persisted explorers: " + err.message);
+  });
 
   // Create an active Explorer model to start: Either from a saved query or an unsaved one populated
   // with the params from the query string.
-  var queryAttrs = QueryStringUtils.getQueryAttributes();
+  var attrs = QueryStringUtils.getQueryAttributes();
+  // Not a saved query, so create a new temporary query from the query attributes.
+  var id = FormatUtils.generateTempId();
+  ExplorerActions.create(_.assign(ExplorerUtils.formatQueryParams(attrs) || {}, { id: id }));
+  ExplorerActions.setActive(id);
 
   // Is this a saved query we want to load?
-  if (queryAttrs.saved_query) {
-    // TODO: Use a callback here and set the right Explorer model as active. We'll need to wait until the persistence
-    // module is done fetching the models from the server.
-    ExplorerActions.setActive(queryAttrs.saved_query);
-  // Not a saved query, so create a new temporary query from the query attributes.
+  if (attrs.saved_query) {
+    // Once the models come back from the server, mark the right one as active.
+    ExplorerActions.fetchPersisted(this.persistence, { id: attrs.saved_query }, this.doneFetchingSavedQuery.bind(this, attrs.saved_query));
   } else {
-    var explorerAttrs = _.assign(
-      { id: FormatUtils.generateRandomId("TEMP-") },
-      ExplorerUtils.formatQueryParams(queryAttrs)
-    );
-    ExplorerActions.create(explorerAttrs);
-    ExplorerActions.setActive(explorerAttrs.id);
+    AppStateActions.update({ ready: true });
+    // Run the query for this explorer if it's valid
+    var isEmailExtraction = !ExplorerUtils.isEmailExtraction(ExplorerStore.getActive());
+    var isValid = runValidations(explorerValidations, ExplorerStore.getActive()).isValid;
+    if (!isEmailExtraction && isValid) {
+      ExplorerActions.exec(this.client, ExplorerStore.getActive().id);
+    }
   }
-
-  // Grab the persisted explorers if a persitence module was passed in
-  if (this.persistence) ExplorerActions.getPersisted(this.persistence);
-
-  // Run the query for this explorer if it's valid
-  if (!ExplorerUtils.isEmailExtraction(ExplorerStore.getActive()) && runValidations(explorerValidations, ExplorerStore.getActive()).isValid) {
-    ExplorerActions.exec(this.client, ExplorerStore.getActive().id);
-  }
-
-  this.componentConfig = {
-    persistence: this.persistence,
-    options: config.options || {},
-    client: this.client
-  };
 }
+
+App.prototype.doneFetchingSavedQuery = function(savedQueryName, err) {
+  if (!err) {
+    ExplorerActions.setActive(savedQueryName);
+    ExplorerActions.exec(this.client, savedQueryName);
+    AppStateActions.update({ ready: true });
+  } else {
+    if (err.status === 404) {
+      // We couldn't find that saved query.
+      NoticeActions.create({
+        text: 'The saved query '+savedQueryName+' could not be found.',
+        type: 'error',
+        icon: 'remove-sign'
+      });
+      var id = FormatUtils.generateTempId();
+      ExplorerActions.create({ id: id });
+      ExplorerActions.setActive(id);
+      AppStateActions.update({ ready: true });
+    } else {
+      throw new Error("There was a problem fetching a saved query");
+    }
+  }
+};
 
 App.prototype.render = function() {
   var Component = React.createFactory(AppComponent);
-  React.render(Component(this.componentConfig), this.targetNode);
+  React.render(Component({
+    persistence: this.persistence,
+    client: this.client
+  }), this.targetNode);
 };
 
 window.React = React;
@@ -463,16 +526,17 @@ window.Keen = window.Keen || {};
 window.Keen.DataTools = window.Keen.DataTools || {};
 window.Keen.DataTools.Persistence = Persistence;
 window.Keen.DataTools.App = module.exports = App;
-},{"./actions/ExplorerActions":2,"./actions/ProjectActions":4,"./components/app.js":6,"./dispatcher/AppDispatcher":48,"./modules/persistence/persistence.js":50,"./stores/AppStateStore":51,"./stores/ExplorerStore":52,"./stores/ProjectStore":54,"./utils/ExplorerUtils":55,"./utils/FormatUtils":57,"./utils/QueryStringUtils":59,"./utils/ValidationUtils":60,"./validations/ExplorerValidations":61,"lodash":81,"react":260}],6:[function(require,module,exports){
+},{"./actions/AppStateActions":1,"./actions/ExplorerActions":2,"./actions/NoticeActions":3,"./actions/ProjectActions":4,"./components/app.js":6,"./dispatcher/AppDispatcher":48,"./modules/persistence/persistence.js":50,"./stores/ExplorerStore":52,"./stores/ProjectStore":54,"./utils/ExplorerUtils":55,"./utils/FormatUtils":57,"./utils/QueryStringUtils":59,"./utils/ValidationUtils":60,"./validations/ExplorerValidations":61,"lodash":81,"react":260}],6:[function(require,module,exports){
 var React = require('react');
 var Loader = require('./common/loader.js');
-var ProjectUtils = require('../utils/ProjectUtils');
 var ProjectStore = require('../stores/ProjectStore');
+var AppStateStore = require('../stores/AppStateStore');
 var Explorer = require('./explorer/index.js');
 
 function getProjectState() {
   return {
-    project: ProjectStore.getProject()
+    project: ProjectStore.getProject(),
+    app: AppStateStore.getState()
   };
 }
 
@@ -480,13 +544,12 @@ var App = React.createClass({displayName: "App",
 
 	componentDidMount: function() {
     ProjectStore.addChangeListener(this._onChange);
-    if (this.state.project) {
-      ProjectUtils.fetchProjectSchema(this.state.project);
-    }
+    AppStateStore.addChangeListener(this._onChange);
 	},
 
   componentWillUnmount: function() {
     ProjectStore.removeChangeListener(this._onChange);
+    AppStateStore.addChangeListener(this._onChange);
   },
 
 	getInitialState: function() {
@@ -496,7 +559,7 @@ var App = React.createClass({displayName: "App",
   render: function () {
     return (
     	React.createElement("div", {id: "keen-explorer"}, 
-    		React.createElement(Loader, {visible: this.state.project.loading, additionalClasses: "app-loader"}), 
+    		React.createElement(Loader, {visible: this.state.project.loading || !this.state.app.ready, additionalClasses: "app-loader"}), 
         React.createElement(Explorer, {project: this.state.project, 
                   client: this.props.client, 
                   persistence: this.props.persistence})
@@ -512,7 +575,7 @@ var App = React.createClass({displayName: "App",
 
 module.exports = App;
 
-},{"../stores/ProjectStore":54,"../utils/ProjectUtils":58,"./common/loader.js":17,"./explorer/index.js":27,"react":260}],7:[function(require,module,exports){
+},{"../stores/AppStateStore":51,"../stores/ProjectStore":54,"./common/loader.js":17,"./explorer/index.js":27,"react":260}],7:[function(require,module,exports){
 /**
  * @jsx React.DOM
  */
@@ -4517,7 +4580,8 @@ var CHANGE_EVENT = 'change';
 function defaultState() {
   return {
     fetchingPersistedExplorers: false,
-    codeSampleHidden: true
+    codeSampleHidden: true,
+    ready: false
   };
 }
 
@@ -4598,7 +4662,7 @@ var _explorers = {};
 
 function _defaultAttrs(){
   return {
-    id: FormatUtils.generateRandomId("TEMP-"),
+    id: FormatUtils.generateTempId(),
     query_name: null,
     active: false,
     saving: false,
@@ -4707,6 +4771,7 @@ function _create(attrs) {
   attrs = attrs || {};
   var newAttrs = _.merge(_defaultAttrs(), attrs);
   _explorers[newAttrs.id] = newAttrs;
+  return _explorers[newAttrs.id];
 }
 
 function _update(id, updates) {
@@ -4730,11 +4795,10 @@ function _remove(id) {
 }
 
 function _setActive(id) {
-  var keys = Object.keys(_explorers);
-  for(var i=0; i<keys.length; i++) {
-    _explorers[keys[i]].active = false;
-    delete _explorers[keys[i]].originalModel;
-  }
+  _.each(_explorers, function(explorer, key) {
+    explorer.active = false;
+    delete explorer.originalModel;
+  });
   _explorers[id].active = true;
   _explorers[id].originalModel = _.cloneDeep(_explorers[id]);
 }
@@ -5053,6 +5117,7 @@ var EventEmitter = require('events').EventEmitter;
 var _ = require('lodash');
 var ProjectConstants = require('../constants/ProjectConstants');
 var ProjectUtils = require('../utils/ProjectUtils');
+var FormatUtils = require('../utils/FormatUtils');
 
 var CHANGE_EVENT = 'change';
 
@@ -5069,8 +5134,8 @@ function defaultAttrs() {
 }
 
 function _create(attrs) {
-  var tempId = "TEMP-" + (+new Date() + Math.floor(Math.random() * 999999)).toString(36);
-  _projects[tempId] = _.assign(defaultAttrs(), { id: tempId }, attrs);
+  var id = FormatUtils.generateTempId();
+  _projects[id] = _.assign(defaultAttrs(), { id: id }, attrs);
 }
 
 function _update(id, updates) {
@@ -5134,7 +5199,7 @@ var _dispatcherToken = AppDispatcher.register(function(action) {
 
 module.exports = ProjectStore;
 
-},{"../constants/ProjectConstants":47,"../dispatcher/AppDispatcher":48,"../utils/ProjectUtils":58,"events":70,"lodash":81}],55:[function(require,module,exports){
+},{"../constants/ProjectConstants":47,"../dispatcher/AppDispatcher":48,"../utils/FormatUtils":57,"../utils/ProjectUtils":58,"events":70,"lodash":81}],55:[function(require,module,exports){
 var _ = require('lodash');
 var Qs = require('qs');
 var stringify = require('json-stable-stringify');
@@ -5393,7 +5458,7 @@ module.exports = {
    * @return {Object} formatted attributes to be used for creating a new Explorer model.
    */
   formatQueryParams: function(params) {
-    if (!params.query) return;
+    if (!params || !params.query) return;
 
     if (params.query && params.query.timeframe) {
       var unpackedTime = module.exports.unpackTimeframeParam(params.query);
@@ -5778,6 +5843,10 @@ module.exports = {
     return (prefix || '') + (+new Date() + Math.floor(Math.random() * 999999)).toString(36);
   },
 
+  generateTempId: function() {
+    return module.exports.generateRandomId('TEMP-');
+  },
+
   isValidQueryValue: function(value) {
     if (_.isArray(value)) {
       return value.length > 0;
@@ -5811,9 +5880,7 @@ module.exports = {
 };
 },{"lodash":81,"moment":82,"string":261}],58:[function(require,module,exports){
 var _ = require('lodash');
-var request = require('superagent');
 var FormatUtils = require('./FormatUtils.js');
-var ProjectActions = require('../actions/ProjectActions');
 
 // ***********************
 // ** Project Constants
@@ -5945,27 +6012,12 @@ module.exports = {
     return endpoint+'/projects/'+projectId+'/events?api_key='+masterKey;
   },
 
-  unpackProjectSchema: function(project, projectSchema) {
-    ProjectActions.update(project.id, {
-      eventCollections: FormatUtils.sortItems(_.map(projectSchema, "name")),
-      projectSchema: projectSchema
-    });
-  },
-
-  fetchProjectSchema: function(project) {
-    return request.get(module.exports.eventsUrl(project.client))
-      .end(function(err, res){
-        if (err) {
-          throw new Error("Error fetching project schema: " + err);
-        } else {
-          module.exports.unpackProjectSchema(project, res.body);
-          ProjectActions.update(project.id, { loading: false });
-        }
-      });
+  getEventCollectionsFromSchema: function(schema) {
+    return FormatUtils.sortItems(_.map(schema, "name"));
   },
 
   getEventCollectionProperties: function(project, eventCollection) {
-    var eventCollection = _.find(project.projectSchema, { name: eventCollection });
+    var eventCollection = _.find(project.schema, { name: eventCollection });
     return eventCollection ? eventCollection.properties : {};
   },
 
@@ -5975,13 +6027,13 @@ module.exports = {
   },
 
   getPropertyType: function(project, eventCollection, propertyName) {
-    var eventCollection = _.find(project.projectSchema, { name: eventCollection });
+    var eventCollection = _.find(project.schema, { name: eventCollection });
     return eventCollection ? eventCollection.properties[propertyName] : null;
   }
 
 };
 
-},{"../actions/ProjectActions":4,"./FormatUtils.js":57,"lodash":81,"superagent":262}],59:[function(require,module,exports){
+},{"./FormatUtils.js":57,"lodash":81}],59:[function(require,module,exports){
 var Qs = require('qs');
 var _ = require('lodash');
 
