@@ -307,8 +307,8 @@ var ExplorerActions = {
         // We need to use the new model id below, not the old sourceId passed in.
         AppDispatcher.dispatch({
           actionType: ExplorerConstants.EXPLORER_SAVE_SUCCESS,
-          id: updatedModel.id
-          saveType: 'update',
+          id: updatedModel.id,
+          saveType: 'update'
         });
       }
     });

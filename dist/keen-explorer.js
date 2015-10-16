@@ -314,6 +314,7 @@ var ExplorerActions = {
     }
     var attrs = _.assign({}, ExplorerUtils.toJSON(ExplorerStore.get(sourceId)));
     persistence.update(attrs, function(err, res) {
+      var updatedModel = ExplorerUtils.mergeResponseWithExplorer(ExplorerStore.get(sourceId), res);
       if (err) {
         AppDispatcher.dispatch({
           actionType: ExplorerConstants.EXPLORER_SAVE_FAIL,
@@ -325,12 +326,13 @@ var ExplorerActions = {
         AppDispatcher.dispatch({
           actionType: ExplorerConstants.EXPLORER_UPDATE,
           id: sourceId,
-          updates: ExplorerUtils.mergeResponseWithExplorer(ExplorerStore.get(sourceId), res)
+          updates: updatedModel
         });
+        // We need to use the new model id below, not the old sourceId passed in.
         AppDispatcher.dispatch({
           actionType: ExplorerConstants.EXPLORER_SAVE_SUCCESS,
-          id: res.query_name, // Need to use query name here, as the id will have been updated by the update action above.
-          saveType: 'update',
+          id: updatedModel.id,
+          saveType: 'update'
         });
       }
     });
