@@ -329,7 +329,7 @@ var ExplorerActions = {
         });
         AppDispatcher.dispatch({
           actionType: ExplorerConstants.EXPLORER_SAVE_SUCCESS,
-          id: sourceId,
+          id: res.query_name, // Need to use query name here, as the id will have been updated by the update action above.
           saveType: 'update',
         });
       }
