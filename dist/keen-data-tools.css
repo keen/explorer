@@ -1849,6 +1849,9 @@
 #keen-explorer .cache-toggle.inactive label {
   color: #A2A2A2;
 }
+#keen-explorer .cache-settings {
+  white-space: nowrap;
+}
 #keen-explorer .cache-settings input[name="refresh_rate"] {
   display: inline-block;
   font-size: 12px;

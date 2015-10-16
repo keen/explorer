@@ -4092,8 +4092,8 @@ var _ = require('lodash');
 var moment = require('moment');
 
 function dateForItem(item) {
-  if (item.created_at) {
-    var datetime = moment(new Date(item.created_at.replace(' ', 'T')));
+  if (item.created_date) {
+    var datetime = moment(new Date(item.created_date.replace(' ', 'T')));
     return datetime.isValid() ? datetime.format('ll h:mm A') : null;
   }
 }
@@ -4106,8 +4106,6 @@ var BrowseQueries = React.createClass({displayName: "BrowseQueries",
 
   buildList: function() {
     var listElements = this.props.listItems.map(_.bind(function(listItem, index) {
-      if (listItem.originalModel) listItem = listItem.originalModel;
-
       var isSelected = (this.props.selectedIndex === index) ? true : false;
       var classes;
       if (isSelected) classes = 'active';
@@ -4121,11 +4119,13 @@ var BrowseQueries = React.createClass({displayName: "BrowseQueries",
           )
         );
       }
+      var isCachedText = listItem.refresh_rate > 0 ? 'Cached' : '';
 
       return (
         React.createElement("li", {className: classes, key: index, "data-id": listItem.id, onClick: this.clickCallback}, 
           React.createElement("h5", {className: "name"}, listItem.metadata.display_name), 
           React.createElement("div", {className: "metadata clearfix"}, 
+            React.createElement("p", {className: "date pull-left"}, isCachedText), 
             createdAt
           )
         )

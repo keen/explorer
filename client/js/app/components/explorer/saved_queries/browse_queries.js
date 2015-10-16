@@ -7,8 +7,8 @@ var _ = require('lodash');
 var moment = require('moment');
 
 function dateForItem(item) {
-  if (item.created_at) {
-    var datetime = moment(new Date(item.created_at.replace(' ', 'T')));
+  if (item.created_date) {
+    var datetime = moment(new Date(item.created_date.replace(' ', 'T')));
     return datetime.isValid() ? datetime.format('ll h:mm A') : null;
   }
 }
@@ -21,8 +21,6 @@ var BrowseQueries = React.createClass({
 
   buildList: function() {
     var listElements = this.props.listItems.map(_.bind(function(listItem, index) {
-      if (listItem.originalModel) listItem = listItem.originalModel;
-
       var isSelected = (this.props.selectedIndex === index) ? true : false;
       var classes;
       if (isSelected) classes = 'active';
@@ -36,11 +34,13 @@ var BrowseQueries = React.createClass({
           </p>
         );
       }
+      var isCachedText = listItem.refresh_rate > 0 ? 'Cached' : '';
 
       return (
         <li className={classes} key={index} data-id={listItem.id} onClick={this.clickCallback}>
           <h5 className="name">{listItem.metadata.display_name}</h5>
           <div className="metadata clearfix">
+            <p className="date pull-left">{isCachedText}</p>
             {createdAt}
           </div>
         </li>
