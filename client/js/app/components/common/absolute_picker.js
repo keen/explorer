@@ -17,15 +17,15 @@ var timeFormat = 'h:mm A';
 var AbsolutePicker = React.createClass({
 
   setDate: function(name, value) {
-    var time = this.props.model.query.time;
+    var time = this.props.time;
     var endValue = new Date(time.end);
 
-    var updates = _.cloneDeep(this.props.model);
+    var updates = _.cloneDeep(time);
     if (name === 'start_date' && value > endValue) {
-      updates.query.time.end = '';
+      updates.end = '';
     }
-    updates.query.time[name] = new Date(moment(new Date(value)).format(dateFormat) + " " + moment(time[name]).format(timeFormat));
-    ExplorerActions.update(this.props.model.id, updates);
+    updates[name] = new Date(moment(new Date(value)).format(dateFormat) + " " + moment(time[name]).format(timeFormat));
+    this.props.handleChange('time', updates);
   },
 
   handleDateBlur: function (event) {
@@ -35,16 +35,16 @@ var AbsolutePicker = React.createClass({
   },
 
   setTime: function(name, value) {
-    var time = this.props.model.query.time;
-    var updates = _.cloneDeep(this.props.model);
-    updates.query.time[name] = new Date(moment(time[name]).format(dateFormat) + " " + moment(new Date(value)).format(timeFormat));
-    ExplorerActions.update(this.props.model.id, updates);
+    var time = this.props.time;
+    var updates = _.cloneDeep(time);
+    updates[name] = new Date(moment(time[name]).format(dateFormat) + " " + moment(new Date(value)).format(timeFormat));
+    this.props.handleChange('time', updates);
   },
 
   // React methods
 
   render: function() {
-    var time = this.props.model.query.time;
+    var time = this.props.time;
 
     return (
       <div className="absolute-timeframe-picker">

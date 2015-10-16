@@ -56,13 +56,13 @@ module.exports = {
     time: {
       validator: function(explorer) {
         var time = explorer.query.time || {};
-        if (explorer.timeframe_type === 'relative') {
+        if (explorer.query.timeframe_type === 'relative') {
           if (time.relativity && time.amount && time.sub_timeframe) {
             return true;
           } else {
             return "You must choose all 3 options for relative timeframes.";
           }
-        } else if (explorer.timeframe_type === 'absolute') {
+        } else if (explorer.query.timeframe_type === 'absolute') {
           if (time.start && time.end) {
             return true;
           } else {

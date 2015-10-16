@@ -38,7 +38,6 @@ module.exports = {
       saving: false,
       isValid: true,
       refresh_rate: 0,
-      timeframe_type: 'relative',
       query_name: '',
       query: {
         event_collection: null,

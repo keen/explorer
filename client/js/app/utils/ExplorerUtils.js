@@ -82,7 +82,7 @@ module.exports = {
 
     // Set the timeframe (will get removed if it's null o undefined)
     params.timeframe = module.exports.getTimeframe(explorer);
-    if (explorer.timeframe_type === 'absolute') {
+    if (explorer.query.timeframe_type === 'absolute') {
       delete params.timezone;
     }
 
@@ -187,8 +187,8 @@ module.exports = {
   },
 
   getTimeframe: function(explorer) {
-    if (explorer.timeframe_type) {
-      return module.exports.timeframeBuilders[explorer.timeframe_type + '_timeframe'](explorer);
+    if (explorer.query.timeframe_type) {
+      return module.exports.timeframeBuilders[explorer.query.timeframe_type + '_timeframe'](explorer);
     }
   },
 
@@ -262,7 +262,7 @@ module.exports = {
       var unpackedTime = module.exports.unpackTimeframeParam(params.query);
       params.query.time = unpackedTime.time;
       params.query.timezone = unpackedTime.timezone;
-      params.timeframe_type = unpackedTime.timeframe_type;
+      params.query.timeframe_type = unpackedTime.timeframe_type;
     }
     if (params.query.filters) {
       params.query.filters = _.map(params.query.filters, function(filter) {
@@ -334,7 +334,7 @@ module.exports = {
 
       var queryAttrs = Qs.stringify(attrs);
 
-      if (attrs.timeframe && explorer.timeframe_type === 'absolute') {
+      if (attrs.timeframe && explorer.query.timeframe_type === 'absolute') {
         delete attrs['timeframe'];
         // This is an absolute timeframe, so we need to encode the object in a specific way before sending it, as per keen docs => https://keen.io/docs/data-analysis/timeframe/#absolute-timeframes
         timeframe = module.exports.encodeAttribute(timeframe);

@@ -38,14 +38,25 @@ var QueryBuilder = React.createClass({
     this.handleChange(event.target.name, event.target.value);
   },
 
-  handleChange: function(name, value) {
-    if (_.isArray(value)) {
-      value = _.compact(value);
+  handleChange: function(update, value) {
+    var newModel = _.cloneDeep(this.props.model);
+
+    if(_.isPlainObject(update)) {
+      for(key in update) {
+        newModel.query[key] = this.normalizeUpdateValue(update[key])
+      }
+    } else {
+      newModel.query[update] = this.normalizeUpdateValue(value);
     }
 
-    var updates = _.cloneDeep(this.props.model);
-    updates.query[name] = value;
-    ExplorerActions.update(this.props.model.id, updates);
+    ExplorerActions.update(this.props.model.id, newModel);
+  },
+
+  normalizeUpdateValue: function(value) {
+    if(_.isArray(value)) {
+      value = _.compact(value);
+    }
+    return value;
   },
 
   // Convenience Methods
@@ -108,7 +119,8 @@ var QueryBuilder = React.createClass({
                                    updateGroupBy={this.updateGroupBy}
                                    options={this.getEventPropertyNames()}
                                    handleChange={this.handleChange} />
-      intervalField = <Interval model={this.props.model} />;
+      intervalField = <Interval interval={this.props.model.query.interval} 
+                                handleChange={this.handleChange} />;
     }
     if (analysisType && analysisType !== 'count' && analysisType !== 'extraction') {
       targetPropertyField = <TargetPropertyField ref="target-property-field"
@@ -143,8 +155,10 @@ var QueryBuilder = React.createClass({
           {targetPropertyField}
           {percentileField}
           <Timeframe ref="timeframe"
-                     model={this.props.model}
-                     project={this.props.project} />
+                     time={this.props.model.query.time}
+                     timeframe_type={this.props.model.query.timeframe_type}
+                     timezone={this.props.model.query.timezone}  
+                     handleChange={this.handleChange}/>
           <hr className="fieldset-divider" />
           {groupByField}
           <div className="field-component">

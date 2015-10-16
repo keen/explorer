@@ -29,9 +29,7 @@ var Timezone = React.createClass({
     var timezone = _.find(timezones, { name: value }) || _.find(timezones, { value: value });
     value = timezone ? timezone.value : value;
     
-    var updates = _.cloneDeep(this.props.model);
-    updates.query.timezone = value;
-    ExplorerActions.update(this.props.model.id, updates);
+    this.props.handleChange('timezone', value);
   },
 
   // React methods
@@ -41,18 +39,16 @@ var Timezone = React.createClass({
   },
 
   componentDidMount: function() {
-    if (!this.props.model.query.timezone) {
-      ExplorerActions.update(this.props.model.id, { 
-        query: _.assign({}, this.props.model.query, { timezone: ProjectUtils.getConstant('DEFAULT_TIMEZONE') })
-      });
+    if (!this.props.timezone) {
+      this.props.handleChange('timezone', ProjectUtils.getConstant('DEFAULT_TIMEZONE'));
     }
     this.refs['timezone'].setState({ visible: false });
   },
 
   render: function(){
-    var timezone = this.props.model.query.timezone;
+    var timezone = this.props.timezone;
     var zones;
-    if (this.props.model.timeframe_type === 'relative') {
+    if (this.props.timeframe_type === 'relative') {
       zones = _.map(ProjectUtils.getConstant('TIMEZONES'), function(item) {
         return item.value;
       });
@@ -75,7 +71,7 @@ var Timezone = React.createClass({
           <ReactSelect ref="timezone"
                        name="timezone"
                        classes="timezone form-control"
-                       value={this.props.model.query.timezone}
+                       value={this.props.timezone}
                        items={zones}
                        handleChange={this.handleTimezoneChange}
                        handleBlur={this.handleTimezoneBlur} />

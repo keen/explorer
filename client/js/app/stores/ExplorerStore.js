@@ -24,7 +24,6 @@ function _defaultAttrs(){
     result: null,
     loading: false,
     isValid: true,
-    timeframe_type: 'relative',
     refresh_rate: 0,
     query: {
       event_collection: null,
@@ -34,6 +33,7 @@ function _defaultAttrs(){
       group_by: null,
       interval: null,
       timezone: ProjectUtils.getConstant('DEFAULT_TIMEZONE'),
+      timeframe_type: 'relative',
       filters: null,
       email: null,
       latest: null,

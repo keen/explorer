@@ -28,8 +28,7 @@ describe('stores/ExplorerStore', function() {
         result: null,
         loading: false,
         saving: false,
-        isValid: true,
-        timeframe_type: 'relative',
+        isValid: true,  
         query_name: null,
         refresh_rate: 0,
         query: {
@@ -40,6 +39,7 @@ describe('stores/ExplorerStore', function() {
           group_by: null,
           interval: null,
           timezone: ProjectUtils.getConstant('DEFAULT_TIMEZONE'),
+          timeframe_type: 'relative',
           filters: null,
           email: null,
           latest: null,
@@ -183,8 +183,8 @@ describe('stores/ExplorerStore', function() {
         }
       });
       ExplorerActions.update('SOME_ID', {
-        timeframe_type: 'absolute',
         query: {
+          timeframe_type: 'absolute',
           event_collection: 'not_clicks',
           analysis_type: 'not_count'
         },
@@ -193,7 +193,7 @@ describe('stores/ExplorerStore', function() {
         }
       });
       var explorer = ExplorerStore.getAll()['SOME_ID'];
-      assert.deepPropertyVal(explorer, 'timeframe_type', 'absolute');
+      assert.deepPropertyVal(explorer, 'query.timeframe_type', 'absolute');
       assert.deepPropertyVal(explorer, 'query.event_collection', 'not_clicks');
       assert.deepPropertyVal(explorer, 'query.analysis_type', 'not_count');
       assert.deepPropertyVal(explorer, 'visualization.chart_type', 'not_metric');
@@ -637,7 +637,6 @@ describe('stores/ExplorerStore', function() {
           loading: false,
           saving: false,
           isValid: true,
-          timeframe_type: 'relative',
           query_name: 'some name',
           refresh_rate: 0,
           query: {
@@ -648,6 +647,7 @@ describe('stores/ExplorerStore', function() {
             group_by: null,
             interval: null,
             timezone: ProjectUtils.getConstant('DEFAULT_TIMEZONE'),
+            timeframe_type: 'relative',
             filters: null,
             email: null,
             latest: null,
