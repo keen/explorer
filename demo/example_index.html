@@ -6,10 +6,10 @@
   <link href="https://d1kk3lo5kv9rxi.cloudfront.net/css/font/gotham/woff/a.css?v=1175" rel="stylesheet" type="text/css">
   <link href="https://d1kk3lo5kv9rxi.cloudfront.net/css/font/gotham/woff/b.css?v=1175" rel="stylesheet" type="text/css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-  <link rel="stylesheet" href="/dist/keen-data-tools.css">
+  <link rel="stylesheet" href="/dist/keen-explorer.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
   <script src="https://d26b395fwzu5fz.cloudfront.net/3.2.7/keen.min.js" type="text/javascript"></script>
-  <script src="/dist/keen-data-tools.js"></script>
+  <script src="/dist/keen-explorer.js"></script>
   <style>
     #explorer {
       padding: 20px;
@@ -32,18 +32,18 @@
       // Persistence is entirely optional. If you include it, a "saved queries" feature
       // will be shown and you can persist the state of the query you're working
       // with to be looked up at a later time. If you do not want to use persistence,
-      // just do not include it in the Keen.DataTools.App initialization below
+      // just do not include it in the Keen.Explorer.App initialization below
       // and the feature will not appear.
 
       // Example usage:
-      // var persistence = new Keen.DataTools.Persistence.REST({
+      // var persistence = new Keen.Explorer.Persistence.KeenSavedQueries({
       //   masterKey: 'your-master-key-here'
       //   baseUrl: '/bookmarks'
       // });
 
-      // If you want the DataTools app to run on a path other than the root,
+      // If you want the Explorer app to run on a path other than the root,
       // you can pass in the "root" configuration option, eg: root: '/your/custom/root/path'
-      var app = new Keen.DataTools.App({
+      var app = new Keen.Explorer.App({
         client: client,
         // Optionally add in persistance
         // persistence: persistence,

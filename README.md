@@ -30,7 +30,7 @@ Include a copy of Bootstrap 3, which you can do from the CDN:
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 ```
 
-Include a copy of the Keen.DataTools styling from this project, found under: `dist/keen-data-tools.css`.
+Include a copy of the Keen.DataTools styling from this project, found under: `dist/explorer.css`.
 
 #### HTML
 
@@ -54,7 +54,7 @@ Include a copy of Keen.js, the easiest way is to use our CDN version:
 <script src="https://d26b395fwzu5fz.cloudfront.net/3.1.0-beta/keen.min.js" type="text/javascript"></script>
 ```
 
-Include a copy of Keen.DataTools from this project, found under: `dist/keen-data-tools.js`.
+Include a copy of Keen.DataTools from this project, found under: `dist/explorer.js`.
 
 ### 3. Configure a Keen.js client and initialize the Keen.DataTools app
 
