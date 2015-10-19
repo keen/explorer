@@ -30,7 +30,7 @@ Include a copy of Bootstrap 3, which you can do from the CDN:
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 ```
 
-Include a copy of the Keen.DataTools styling from this project, found under: `dist/explorer.css`.
+Include a copy of the Keen.Explorer styling from this project, found under: `dist/keen-explorer.css`.
 
 #### HTML
 
@@ -54,11 +54,11 @@ Include a copy of Keen.js, the easiest way is to use our CDN version:
 <script src="https://d26b395fwzu5fz.cloudfront.net/3.1.0-beta/keen.min.js" type="text/javascript"></script>
 ```
 
-Include a copy of Keen.DataTools from this project, found under: `dist/explorer.js`.
+Include a copy of Keen.Explorer from this project, found under: `dist/keen-explorer.js`.
 
-### 3. Configure a Keen.js client and initialize the Keen.DataTools app
+### 3. Configure a Keen.js client and initialize the Keen.Explorer app
 
-Initialize a new Keen.js client and then pass that into the initialization of a new Keen.DataTools.App.
+Initialize a new Keen.js client and then pass that into the initialization of a new Keen.Explorer.App.
 
 ```html
 <script type="text/javascript">
@@ -72,7 +72,7 @@ Initialize a new Keen.js client and then pass that into the initialization of a 
         requestType: "jsonp"
       });
 
-      var app = new Keen.DataTools.App({
+      var app = new Keen.Explorer.App({
         client: client,
         targetId: 'content'
       });
@@ -82,15 +82,15 @@ Initialize a new Keen.js client and then pass that into the initialization of a 
 </script>
 ```
 
-If you want the DataTools app to run on a path other than the root, you can pass in the `root` configuration option, eg: `root: '/your/custom/root/path'`.
+If you want the Explorer app to run on a path other than the root, you can pass in the `root` configuration option, eg: `root: '/your/custom/root/path'`.
 
 You can read more about Keen.js here: [The Keen.js client library](https://github.com/keenlabs/keen-js/).
 
-### 3. Optionally include persistence
+### 3. Optionally include Saved Queries support
 
-Persistence is entirely optional. If you include it, a "saved queries" feature will be shown and you can persist the state of the query you're working with to be looked up at a later time. If you do not want to use persistence, just do not include it in the Keen.DataTools.App initialization, like above.
+Persistence support is optional. If you include it, a "saved queries" feature will be shown and you can persist the state of the query you're working with to be looked up at a later time. If you do not want to use saved queries, just do not include it in the Keen.Explorer.App initialization, like above.
 
-To include persistence, create a new persistence object (this must be a compliant REST server, which we will document), and then pass that persistence object to the `Keen.DataTools.App` initialization. So, instead of what you see above, you would have:
+To include saved queries, create a new `KeenSavedQueries` object, and then pass that object to the `Keen.Explorer.App` initialization. So, instead of what you see above, you would have:
 
 ```html
 <script type="text/javascript">
@@ -104,14 +104,15 @@ To include persistence, create a new persistence object (this must be a complian
       requestType: "xhr"
     });
 
-    // Initialization a new Firebase persistence object.
-    var persistence = new Keen.DataTools.Persistence.REST({
-      baseUrl: '/bookmarks'
+    // Initialization of new KeenSavedQueries object:
+    var keenSavedQueries = new Keen.Explorer.Persistence.KeenSavedQueries({
+      masterKey: "your_master_key",
+      baseUrl: "https://staging-api.keen.io/3.0/projects/{PROJECT_ID}/queries/saved"
     });
 
-    var app = new Keen.DataTools.App({
+    var app = new Keen.Explorer.App({
       client: client,
-      persistence: persistence, // Persistence now being passed in.
+      persistence: keenSavedQueries, // saved queries are supported
       targetId: 'content'
     });
 
@@ -119,7 +120,6 @@ To include persistence, create a new persistence object (this must be a complian
   });
 </script>
 ```
-You can read more about how to build your own persistence plugin here: [Keen.DataTools Persistence Docs](https://github.com/keenlabs/data-tools/docs/persistence.md/).
 
 ## Forking the Project to Customizing and Contribute
 
@@ -141,7 +141,7 @@ If you want to customize this project or contribute, here is how to get started:
         requestType: "jsonp"
       });
 
-      var app = new Keen.DataTools.App({
+      var app = new Keen.Explorer.App({
         client: client,
         targetId: 'content'
       });
