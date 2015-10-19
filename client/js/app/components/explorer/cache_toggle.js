@@ -3,9 +3,11 @@
  */
 
 var React = require('react');
-var classNames = require('classnames');
-var ExplorerActions = require('../../actions/ExplorerActions');
 var _ = require('lodash');
+var classNames = require('classnames');
+var moment = require('moment');
+
+var ExplorerActions = require('../../actions/ExplorerActions');
 var refreshRateMultiplier = 60 * 60;
 
 var CacheToggle = React.createClass({
@@ -106,16 +108,15 @@ var CacheToggle = React.createClass({
   },
 
   _minutesAgo: function() {
-    var timeNow = new Date();
     var runInformation = this.props.model.run_information;
 
     if (runInformation != null && runInformation.last_run_status == 200) {
-      var mins = Math.round((timeNow - new Date(runInformation.last_run_date)) /
-        (60 * 1000));
-      return 'Last updated ' + mins +
-          ' minutes ago.';
+      var lastRun = moment(runInformation.last_run_date).utcOffset(0);
+      var duration = moment.duration(lastRun.diff(moment())).humanize();
+      return 'Last updated ' + duration +
+          ' ago.';
     }
-    return 'Last updated information unavailable.';
+    return 'Last run information unavailable.';
   },
 
   _refreshRateInHours: function(model) {

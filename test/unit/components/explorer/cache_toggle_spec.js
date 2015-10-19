@@ -71,7 +71,7 @@ describe('components/explorer/cache_toggle', function() {
 
       var cacheDetails = $R(this.component).find('.cache-details');
 
-      assert.equal(cacheDetails.text(), 'Last updated information unavailable.');
+      assert.equal(cacheDetails.text(), 'Last run information unavailable.');
     });
   });
 
