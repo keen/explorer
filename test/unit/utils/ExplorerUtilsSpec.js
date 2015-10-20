@@ -283,8 +283,8 @@ describe('utils/ExplorerUtils', function() {
     });
     describe('relative_timeframe', function () {
       var explorer = {
-        timeframe_type: 'relative',
         query: {
+          timeframe_type: 'relative',
           time: {
             relativity: 'this',
             amount: '1',

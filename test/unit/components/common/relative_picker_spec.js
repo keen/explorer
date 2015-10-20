@@ -12,22 +12,20 @@ var TestHelpers = require('../../../support/TestHelpers');
 
 describe('components/common/relative_picker', function() {
   before(function () {
-    this.updateStub = sinon.stub(ExplorerActions, 'update');
-  });
-
-  after(function () {
-    ExplorerActions.update.restore();
+    this.handleChangeStub = sinon.stub();
   });
 
   beforeEach(function() {
-    this.updateStub.reset();
-    this.model = TestHelpers.createExplorerModel();
+    this.handleChangeStub.reset();
+
+    this.time = TestHelpers.createExplorerModel().query.time;
 
     var relativeIntervalTypes = ProjectUtils.getConstant('RELATIVE_INTERVAL_TYPES');
 
     this.component = TestUtils.renderIntoDocument(<RelativePicker intervalVisible={true}
-                                                                        relativeIntervalTypes={relativeIntervalTypes}
-                                                                        model={this.model} />);
+                                                                  relativeIntervalTypes={relativeIntervalTypes}
+                                                                  time={this.time} 
+                                                                  handleChange={this.handleChangeStub} />);
   });
 
   describe('setup', function() {
@@ -49,7 +47,7 @@ describe('components/common/relative_picker', function() {
             value: 'this'
           }
         });
-        assert.deepPropertyVal(this.updateStub.getCall(0).args[1], 'query.time.relativity', 'this');
+        assert.deepPropertyVal(this.handleChangeStub.getCall(0).args[1], 'relativity', 'this');
       });
     });
     describe('amount', function () {
@@ -61,7 +59,7 @@ describe('components/common/relative_picker', function() {
             value: '1'
           }
         });
-        assert.deepPropertyVal(this.updateStub.getCall(0).args[1], 'query.time.amount', '1');
+        assert.deepPropertyVal(this.handleChangeStub.getCall(0).args[1], 'amount', '1');
       });
     });
     describe('sub_timeframe', function () {
@@ -73,43 +71,39 @@ describe('components/common/relative_picker', function() {
             value: 'weeks'
           }
         });
-        assert.deepPropertyVal(this.updateStub.getCall(0).args[1], 'query.time.sub_timeframe', 'weeks');
+        assert.deepPropertyVal(this.handleChangeStub.getCall(0).args[1], 'sub_timeframe', 'weeks');
       });
     });
     describe('relativity description', function () {
       it('is empty when no relative query params are set', function () {
-        var newModel = _.assign({}, this.component.props.model, { query: { time: { relativity: '', amount: '', sub_timeframe: '' } } });
-        this.component.setProps({ model: newModel });
+        this.component.setProps({time: { relativity: '', amount: '', sub_timeframe: '' }});
         assert.lengthOf(TestUtils.scryRenderedDOMComponentsWithClass(this.component, 'help-block'), 0);
       });
       describe('when relativity is "this"', function () {
         beforeEach(function () {
-          this.model.query.time = {
-            relativity: 'this',
-            amount: '1',
-            sub_timeframe: 'weeks'
-          };
+          this.component.setProps({
+            time: {
+              relativity: 'this',
+              amount: '1',
+              sub_timeframe: 'weeks'
+            }
+          });
           this.component.forceUpdate();
         });
         it('describes the set interval and relativity', function () {
-          var descriptionNode = TestUtils.findRenderedDOMComponentWithClass(this.component, 'help-block').getDOMNode();
-          assert.equal(descriptionNode.textContent, 'The last 1 week including the current week.');
-        });
-        it('describes the interval when it is set', function () {
-          this.model.query.interval = 'weekly';
-          this.component.forceUpdate();
-
           var descriptionNode = TestUtils.findRenderedDOMComponentWithClass(this.component, 'help-block').getDOMNode();
           assert.equal(descriptionNode.textContent, 'The last 1 week including the current week.');
         });
       });
       describe('when relativity is not \'this\'', function () {
         it('describes the set interval and relativity', function () {
-          this.model.query.time = {
-            relativity: 'previous',
-            amount: '1',
-            sub_timeframe: 'weeks'
-          };
+          this.component.setProps({
+            time: {
+              relativity: 'previous',
+              amount: '1',
+              sub_timeframe: 'weeks'
+            }
+          });
           this.component.forceUpdate();
           var descriptionNode = TestUtils.findRenderedDOMComponentWithClass(this.component, 'help-block').getDOMNode();
           assert.equal(descriptionNode.textContent, 'The last 1 week excluding the current week.');

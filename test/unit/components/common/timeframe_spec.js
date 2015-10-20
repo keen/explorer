@@ -16,14 +16,21 @@ var TestUtils = React.addons.TestUtils;
 var TestHelpers = require('../../../support/TestHelpers');
 
 describe('components/common/timeframe', function() {
+  before(function () {
+    this.handleChangeStub = sinon.stub();
+  });
 
   beforeEach(function() {
+    this.handleChangeStub.reset();
+
     this.model = TestHelpers.createExplorerModel();
     this.project = TestHelpers.createProject();
 
-    this.component = TestUtils.renderIntoDocument(<Timeframe intervalVisible={true}
-                                                             model={this.model}
-                                                             project={this.project} />);
+    this.component = TestUtils.renderIntoDocument(<Timeframe time={this.model.query.time}
+                                                             timeframe_type={this.model.query.timeframe_type}
+                                                             timezone={this.model.query.timezone}
+                                                             handleChange={this.handleChangeStub} />
+   )
   });
 
   describe('setup', function() {
@@ -50,30 +57,26 @@ describe('components/common/timeframe', function() {
 
     describe('absolute_picker', function () {
       it('clicking the absolute tab updates the model to an absolute timeframe', function () {
-        var stub = sinon.stub(ExplorerActions, 'update');
         this.absoluteTimeframeLink = TestUtils.findRenderedDOMComponentWithClass(this.component, 'absolute-tab').getDOMNode();
         TestUtils.Simulate.click(this.absoluteTimeframeLink);
-        assert.deepPropertyVal(stub.getCall(0).args[1], 'timeframe_type', 'absolute');
-        assert.deepEqual(stub.getCall(0).args[1].query.time, {
+        assert.deepPropertyVal(this.handleChangeStub.getCall(0).args[0], 'timeframe_type', 'absolute');
+        assert.deepEqual(this.handleChangeStub.getCall(0).args[0].time, {
           start: new Date(moment().subtract(1, 'days').startOf('day').format()),
           end: new Date(moment().startOf('day').format())
         });
-        ExplorerActions.update.restore();
       });
     });
 
     describe('relative_picker', function () {
       it('clicking the relative tab updates the model to a relative timeframe', function () {
-        var stub = sinon.stub(ExplorerActions, 'update');
         this.relativeTimeframeLink = TestUtils.findRenderedDOMComponentWithClass(this.component, 'relative-tab').getDOMNode();
         TestUtils.Simulate.click(this.relativeTimeframeLink);
-        assert.deepPropertyVal(stub.getCall(0).args[1], 'timeframe_type', 'relative');
-        assert.deepEqual(stub.getCall(0).args[1].query.time, {
+        assert.deepPropertyVal(this.handleChangeStub.getCall(0).args[0], 'timeframe_type', 'relative');
+        assert.deepEqual(this.handleChangeStub.getCall(0).args[0].time, {
           relativity: 'this',
           amount: '14',
           sub_timeframe: 'days'
         });
-        ExplorerActions.update.restore();
       });
     });
 
