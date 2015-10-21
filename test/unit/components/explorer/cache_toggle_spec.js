@@ -63,16 +63,6 @@ describe('components/explorer/cache_toggle', function() {
 
       assert.equal(cacheDetails.text(), 'Last updated 20 minutes ago.');
     });
-
-    it('shows unavailable prompt when there is no run information', function() {
-      this.model.run_information = null;
-      this.model.refresh_rate = 14400;
-      this.component.forceUpdate();
-
-      var cacheDetails = $R(this.component).find('.cache-details');
-
-      assert.equal(cacheDetails.text(), 'Last run information unavailable.');
-    });
   });
 
 });

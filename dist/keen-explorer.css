@@ -1829,6 +1829,7 @@
   border: 1px solid rgba(0, 0, 0, 0.07);
   border-top: 0;
   padding: 5px 10px;
+  height: 32px;
 }
 #keen-explorer .cache-toggle label,
 #keen-explorer .cache-toggle span.cache-details,
@@ -1845,6 +1846,10 @@
 }
 #keen-explorer .cache-toggle input[name="cache"] {
   margin-right: 5px;
+}
+#keen-explorer .cache-toggle .limit-message {
+  display: inline-block;
+  margin-left: 25px;
 }
 #keen-explorer .cache-toggle.inactive label {
   color: #A2A2A2;

@@ -96,8 +96,13 @@ var CacheToggle = React.createClass({
             value={this.state.refresh_rate}
             className="form-control"
             onChange={this.setRefreshRate}
-            onBlur={this.setRefreshRateBlur}
-            /> hours (hours must be between 4 and 24).
+            onBlur={this.setRefreshRateBlur} /> hours ({"min 4 / max 24"})
+            <div className="limit-message clearfix">
+              <a href="https://keen.io/docs/api/#limits" target="_blank" className="pull-right">
+                <i className="icon glyphicon glyphicon-question-sign"></i>
+              </a>
+              <span>{"4"}/{"10"} cached</span>
+            </div>
         </span>
       </div>
     );
@@ -116,7 +121,6 @@ var CacheToggle = React.createClass({
       return 'Last updated ' + duration +
           ' ago.';
     }
-    return 'Last run information unavailable.';
   },
 
   _refreshRateInHours: function(model) {
