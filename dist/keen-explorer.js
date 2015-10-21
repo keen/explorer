@@ -3078,17 +3078,11 @@ var CacheToggle = React.createClass({displayName: "CacheToggle",
 
         React.createElement("span", {className: cacheSettingsClasses}, 
           "Refresh every ", React.createElement("input", {type: "text", 
-            name: "refresh_rate", 
-            value: this.state.refresh_rate, 
-            className: "form-control", 
-            onChange: this.setRefreshRate, 
-            onBlur: this.setRefreshRateBlur}), " hours (", "min 4 / max 24", ")", 
-            React.createElement("div", {className: "limit-message clearfix"}, 
-              React.createElement("a", {href: "https://keen.io/docs/api/#limits", target: "_blank", className: "pull-right"}, 
-                React.createElement("i", {className: "icon glyphicon glyphicon-question-sign"})
-              ), 
-              React.createElement("span", null, "4", "/", "10", " cached")
-            )
+                               name: "refresh_rate", 
+                               value: this.state.refresh_rate, 
+                               className: "form-control", 
+                               onChange: this.setRefreshRate, 
+                               onBlur: this.setRefreshRateBlur}), " hours (", "min 4 / max 24", ") />"
         )
       )
     );
@@ -3340,8 +3334,7 @@ var Explorer = React.createClass({displayName: "Explorer",
                                      createNewQuery: this.createNewQuery, 
                                      persisted: ExplorerUtils.isPersisted(this.state.activeExplorer)});
       if (!ExplorerUtils.isEmailExtraction(this.state.activeExplorer)) {
-        cacheToggle = React.createElement(CacheToggle, {
-          model: this.state.activeExplorer});
+        cacheToggle = React.createElement(CacheToggle, {model: this.state.activeExplorer});
       }
       if (this.state.appState.fetchingPersistedExplorers) {
         browseListNotice = React.createElement(Notice, {notice: { icon: 'info-sign', text: 'Loading saved queries...', type: 'info'}, closable: false})

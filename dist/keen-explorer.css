@@ -1258,6 +1258,9 @@
   padding-right: 28px;
   text-transform: none;
 }
+#keen-explorer .interactive-list li:last-child {
+  border-bottom: 1px solid #d7d7d7;
+}
 #keen-explorer .interactive-list li.active,
 #keen-explorer .interactive-list li.active:hover {
   background: #f2f2f2;
@@ -1846,10 +1849,6 @@
 }
 #keen-explorer .cache-toggle input[name="cache"] {
   margin-right: 5px;
-}
-#keen-explorer .cache-toggle .limit-message {
-  display: inline-block;
-  margin-left: 25px;
 }
 #keen-explorer .cache-toggle.inactive label {
   color: #A2A2A2;

@@ -92,17 +92,11 @@ var CacheToggle = React.createClass({
 
         <span className={cacheSettingsClasses}>
           Refresh every <input type="text"
-            name="refresh_rate"
-            value={this.state.refresh_rate}
-            className="form-control"
-            onChange={this.setRefreshRate}
-            onBlur={this.setRefreshRateBlur} /> hours ({"min 4 / max 24"})
-            <div className="limit-message clearfix">
-              <a href="https://keen.io/docs/api/#limits" target="_blank" className="pull-right">
-                <i className="icon glyphicon glyphicon-question-sign"></i>
-              </a>
-              <span>{this.props.cachedQueryCount}/{"10"} cached</span>
-            </div>
+                               name="refresh_rate"
+                               value={this.state.refresh_rate}
+                               className="form-control"
+                               onChange={this.setRefreshRate}
+                               onBlur={this.setRefreshRateBlur} /> hours ({"min 4 / max 24"}) />
         </span>
       </div>
     );
