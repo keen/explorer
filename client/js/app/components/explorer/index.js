@@ -28,6 +28,7 @@ var QueryStringUtils = require('../../utils/QueryStringUtils');
 function getStoresState() {
   return {
     allPersistedExplorers: ExplorerStore.getAllPersisted(),
+    allCachedExplorers: ExplorerStore.getAllCached(),
     activeExplorer: ExplorerStore.getActive(),
     notice: NoticeStore.getNotice(),
     appState: AppStateStore.getState()
@@ -220,8 +221,8 @@ var Explorer = React.createClass({
                                      createNewQuery={this.createNewQuery}
                                      persisted={ExplorerUtils.isPersisted(this.state.activeExplorer)} />;
       if (!ExplorerUtils.isEmailExtraction(this.state.activeExplorer)) {
-        cacheToggle = <CacheToggle
-          model={this.state.activeExplorer} />;
+        cacheToggle = <CacheToggle model={this.state.activeExplorer}
+                                   cachedQueryCount={this.state.allCachedExplorers.length} />;
       }
       if (this.state.appState.fetchingPersistedExplorers) {
         browseListNotice = <Notice notice={{ icon: 'info-sign', text: 'Loading saved queries...', type: 'info' }} closable={false} />

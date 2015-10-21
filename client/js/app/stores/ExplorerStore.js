@@ -221,6 +221,12 @@ var ExplorerStore = _.assign({}, EventEmitter.prototype, {
     });
   },
 
+  getAllCached: function() {
+    return _.filter(_explorers, function(explorer){
+      return ExplorerUtils.isPersisted(explorer) && explorer.refresh_rate > 0;
+    });
+  },
+
   emitChange: function() {
     this.emit(CHANGE_EVENT);
   },

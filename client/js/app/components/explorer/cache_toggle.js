@@ -101,7 +101,7 @@ var CacheToggle = React.createClass({
               <a href="https://keen.io/docs/api/#limits" target="_blank" className="pull-right">
                 <i className="icon glyphicon glyphicon-question-sign"></i>
               </a>
-              <span>{"4"}/{"10"} cached</span>
+              <span>{this.props.cachedQueryCount}/{"10"} cached</span>
             </div>
         </span>
       </div>
