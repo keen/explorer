@@ -81,6 +81,9 @@ var CacheToggle = React.createClass({
           <input type="checkbox" name="cache" id="cache"
             onChange={this.setCached} checked={isCached} />
           {cacheToggleLabel}
+          <a href="https://keen.io/docs/api/#saved-queries" target="_blank">
+            <i className="icon glyphicon glyphicon-question-sign"></i>
+          </a>
         </label>
 
         <span className={cacheDetailsClasses}>

@@ -3066,7 +3066,10 @@ var CacheToggle = React.createClass({displayName: "CacheToggle",
         React.createElement("label", {htmlFor: "cache"}, 
           React.createElement("input", {type: "checkbox", name: "cache", id: "cache", 
             onChange: this.setCached, checked: isCached}), 
-          cacheToggleLabel
+          cacheToggleLabel, 
+          React.createElement("a", {href: "https://keen.io/docs/api/#saved-queries", target: "_blank"}, 
+            React.createElement("i", {className: "icon glyphicon glyphicon-question-sign"})
+          )
         ), 
 
         React.createElement("span", {className: cacheDetailsClasses}, 
