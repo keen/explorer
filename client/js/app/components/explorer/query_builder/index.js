@@ -43,20 +43,13 @@ var QueryBuilder = React.createClass({
 
     if(_.isPlainObject(update)) {
       for(key in update) {
-        newModel.query[key] = this.normalizeUpdateValue(update[key])
+        newModel.query[key] = update[key];
       }
     } else {
-      newModel.query[update] = this.normalizeUpdateValue(value);
+      newModel.query[update] = value;
     }
 
     ExplorerActions.update(this.props.model.id, newModel);
-  },
-
-  normalizeUpdateValue: function(value) {
-    if(_.isArray(value)) {
-      value = _.compact(value);
-    }
-    return value;
   },
 
   // Convenience Methods
