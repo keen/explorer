@@ -3679,10 +3679,10 @@ var ExtractionOptions = React.createClass({displayName: "ExtractionOptions",
                placeholder: "your@email.com", 
                required: "true", 
                value: this.props.model.query.email, 
-               onChange: this.props.handleSelectionWithEvent})
+               onChange: this.props.handleChange})
       );
       latestField = (
-        React.createElement(LatestField, {model: this.props.model, handleChange: this.props.handleSelectionWithEvent})
+        React.createElement(LatestField, {model: this.props.model, handleChange: this.props.handleChange})
       );
     }
 
@@ -3887,7 +3887,7 @@ var QueryBuilder = React.createClass({displayName: "QueryBuilder",
     }
     if (analysisType === 'extraction') {
       extractionOptions = React.createElement(ExtractionOptions, {model: this.props.model, 
-                                             handleChange: this.handleChange, 
+                                             handleChange: this.handleSelectionWithEvent, 
                                              setExtractionType: this.props.setExtractionType});
     }
 
