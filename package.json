@@ -30,7 +30,7 @@
     ]
   },
   "devDependencies": {
-    "browserify-shim": "~3.7.0",
+    "browserify-shim": "~3.8.0",
     "chai": "^2.3.0",
     "chai-as-promised": "^5.0.0",
     "gulp": "^3.8.10",
@@ -45,7 +45,7 @@
     "gulp-concat": "~2.5.2",
     "gulp-awspublish": "0.0.23",
     "run-sequence": "~1.0.1",
-    "browserify": "4.2.3",
+    "browserify": "11.2.0",
     "vinyl-source-stream": "1.0.0",
     "gulp-mocha": "^1.0.0",
     "gulp-mocha-phantomjs": "0.8.1",
