@@ -123,7 +123,7 @@ var QueryBuilder = React.createClass({
     }
     if (analysisType === 'extraction') {
       extractionOptions = <ExtractionOptions model={this.props.model}
-                                             handleChange={this.handleChange}
+                                             handleChange={this.handleSelectionWithEvent}
                                              setExtractionType={this.props.setExtractionType} />;
     }
 

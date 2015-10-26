@@ -21,10 +21,10 @@ var ExtractionOptions = React.createClass({
                placeholder="your@email.com"
                required="true"
                value={this.props.model.query.email}
-               onChange={this.props.handleSelectionWithEvent} />
+               onChange={this.props.handleChange} />
       );
       latestField = (
-        <LatestField model={this.props.model} handleChange={this.props.handleSelectionWithEvent} />
+        <LatestField model={this.props.model} handleChange={this.props.handleChange} />
       );
     }
 
