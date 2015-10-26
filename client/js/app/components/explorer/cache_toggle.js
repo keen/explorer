@@ -99,7 +99,7 @@ var CacheToggle = React.createClass({
                                value={this.state.refresh_rate}
                                className="form-control"
                                onChange={this.setRefreshRate}
-                               onBlur={this.setRefreshRateBlur} /> hours ({"min 4 / max 24"}) />
+                               onBlur={this.setRefreshRateBlur} /> hours ({"min 4 / max 24"})
         </span>
       </div>
     );
