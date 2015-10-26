@@ -1440,6 +1440,9 @@
   line-height: 28px;
   margin: 0;
 }
+#keen-explorer .extraction-options label:first-child {
+  margin-right: 15px;
+}
 #keen-explorer .extraction-options input[type=radio] {
   margin-right: 5px;
 }
