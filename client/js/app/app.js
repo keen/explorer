@@ -23,9 +23,16 @@ function App(config) {
 
   ProjectActions.create({ client: this.client });
   ProjectActions.fetchProjectSchema();
-  if (this.persistence) ExplorerActions.fetchAllPersisted(this.persistence, function(err) {
-    if (err) throw new Error("There was an error fetching the persisted explorers: " + err.message);
-  });
+  if (this.persistence) {
+    if (_.isUndefined(this.client.masterKey())) {
+      throw new Error("You must include your project's master key for saved query support.");
+    }
+
+    this.persistence.config.masterKey = this.client.masterKey();
+    ExplorerActions.fetchAllPersisted(this.persistence, function(err) {
+      if (err) throw new Error("There was an error fetching the persisted explorers: " + err.message);
+    });
+  }
 
   // Create an active Explorer model to start: Either from a saved query or an unsaved one populated
   // with the params from the query string.

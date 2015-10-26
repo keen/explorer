@@ -465,9 +465,16 @@ function App(config) {
 
   ProjectActions.create({ client: this.client });
   ProjectActions.fetchProjectSchema();
-  if (this.persistence) ExplorerActions.fetchAllPersisted(this.persistence, function(err) {
-    if (err) throw new Error("There was an error fetching the persisted explorers: " + err.message);
-  });
+  if (this.persistence) {
+    if (_.isUndefined(this.client.masterKey())) {
+      throw new Error("You must include your project's master key for saved query support.");
+    }
+
+    this.persistence.config.masterKey = this.client.masterKey();
+    ExplorerActions.fetchAllPersisted(this.persistence, function(err) {
+      if (err) throw new Error("There was an error fetching the persisted explorers: " + err.message);
+    });
+  }
 
   // Create an active Explorer model to start: Either from a saved query or an unsaved one populated
   // with the params from the query string.
@@ -528,6 +535,7 @@ window.Keen = window.Keen || {};
 window.Keen.Explorer = window.Keen.Explorer || {};
 window.Keen.Explorer.Persistence = Persistence;
 window.Keen.Explorer.App = module.exports = App;
+
 },{"./actions/AppStateActions":1,"./actions/ExplorerActions":2,"./actions/NoticeActions":3,"./actions/ProjectActions":4,"./components/app.js":6,"./dispatcher/AppDispatcher":48,"./modules/persistence/persistence.js":50,"./stores/ExplorerStore":52,"./stores/ProjectStore":54,"./utils/ExplorerUtils":55,"./utils/FormatUtils":57,"./utils/QueryStringUtils":59,"./utils/ValidationUtils":60,"./validations/ExplorerValidations":61,"lodash":81,"react":260}],6:[function(require,module,exports){
 var React = require('react');
 var Loader = require('./common/loader.js');
