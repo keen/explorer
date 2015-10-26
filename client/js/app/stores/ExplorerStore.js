@@ -16,8 +16,8 @@ var _explorers = {};
 
 function _defaultAttrs(){
   return {
-    id: FormatUtils.generateRandomId("TEMP-"),
-    name: null,
+    id: FormatUtils.generateTempId(),
+    query_name: null,
     active: false,
     saving: false,
     error: null,
@@ -25,6 +25,7 @@ function _defaultAttrs(){
     loading: false,
     isValid: true,
     timeframe_type: 'relative',
+    refresh_rate: 0,
     query: {
       event_collection: null,
       analysis_type: null,
@@ -43,10 +44,12 @@ function _defaultAttrs(){
         sub_timeframe: 'days'
       }
     },
-    visualization: {
-      chart_type: null
-    },
-    user: {}
+    metadata: {
+      display_name: null,
+      visualization: {
+        chart_type: null
+      }
+    }
   };
 }
 
@@ -122,10 +125,17 @@ function _create(attrs) {
   attrs = attrs || {};
   var newAttrs = _.merge(_defaultAttrs(), attrs);
   _explorers[newAttrs.id] = newAttrs;
+  return _explorers[newAttrs.id];
 }
 
 function _update(id, updates) {
   var newModel = _.assign({}, _explorers[id], updates);
+  // If we're no longer doing an email extraction, remove the latest and email field.
+  // FIXME: Does this belong here? Maybe this should be in the onChange callback rather than hard-bound to the model.
+  if (!ExplorerUtils.isEmailExtraction(newModel)) {
+    newModel.query.latest = null;
+    newModel.query.email = null;
+  }
   if (updates.id && updates.id !== id) {
     _explorers[updates.id] = newModel;
     delete _explorers[id];
@@ -139,11 +149,10 @@ function _remove(id) {
 }
 
 function _setActive(id) {
-  var keys = Object.keys(_explorers);
-  for(var i=0; i<keys.length; i++) {
-    _explorers[keys[i]].active = false;
-    delete _explorers[keys[i]].originalModel;
-  }
+  _.each(_explorers, function(explorer, key) {
+    explorer.active = false;
+    delete explorer.originalModel;
+  });
   _explorers[id].active = true;
   _explorers[id].originalModel = _.cloneDeep(_explorers[id]);
 }
@@ -177,7 +186,7 @@ function _updateFilter(id, index, updates) {
 
 function _clear(id) {
   var model = _explorers[id];
-  _explorers[id] = _.assign({}, _defaultAttrs(), _.pick(model, ['id', 'name', 'active', 'user', 'originalModel']));
+  _explorers[id] = _.assign({}, _defaultAttrs(), _.pick(model, ['id', 'query_name', 'active', 'metadata', 'originalModel']));
 }
 
 var ExplorerStore = _.assign({}, EventEmitter.prototype, {

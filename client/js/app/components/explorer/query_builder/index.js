@@ -12,10 +12,12 @@ var AnalysisTypeField = require('./analysis_type_field.js');
 var TargetPropertyField = require('./target_property_field.js');
 var PercentileField = require('./percentile_field.js');
 var GroupByField = require('./group_by_field.js');
+var ExtractionOptions = require('./extraction_options.js');
 var Timeframe = require('../../common/timeframe.js');
 var Interval = require('../../common/interval.js');
+var Input = require('../../common/input.js');
 var ApiUrl = require('./api_url.js');
-var BuilderButtons = require('./builder_buttons.js');
+var ExplorerStore = require('../../../stores/ExplorerStore');
 var ExplorerUtils = require('../../../utils/ExplorerUtils');
 var ProjectUtils = require('../../../utils/ProjectUtils');
 var ExplorerActions = require('../../../actions/ExplorerActions');
@@ -30,14 +32,8 @@ function validFilters(filters) {
 
 var QueryBuilder = React.createClass({
 
-  handleQuerySubmit: function(event) {
-    event.preventDefault();
-    ExplorerActions.exec(this.props.client, this.props.model.id);
-    $('html,body').animate({ scrollTop: 0}, 300);
-  },
-
   // Event callbacks
-
+  
   handleSelectionWithEvent: function(event) {
     this.handleChange(event.target.name, event.target.value);
   },
@@ -64,15 +60,47 @@ var QueryBuilder = React.createClass({
     });
   },
 
+  handleRevertChanges: function(event) {
+    event.preventDefault();
+    ExplorerActions.revertActiveChanges();
+  },
+
+  shouldShowRevertButton: function() {
+    return ExplorerUtils.isPersisted(this.props.model) && this.props.model.originalModel && this.props.model.originalModel.query && !_.isEqual(this.props.model.query, this.props.model.originalModel.query);
+  },
+
   // React methods
 
   render: function() {
-    var groupByField;
-    var targetPropertyField;
-    var percentileField;
-    var intervalField;
-    var analysisType = this.props.model.query.analysis_type;
-    var apiQueryUrl = ExplorerUtils.getApiQueryUrl(this.props.client, this.props.model);
+    var groupByField,
+        targetPropertyField,
+        percentileField,
+        intervalField,
+        extractionOptions,
+        analysisType = this.props.model.query.analysis_type,
+        clearButton,
+        apiQueryUrl = ExplorerUtils.getApiQueryUrl(this.props.client, this.props.model);
+
+    if (!this.shouldShowRevertButton()) {
+      clearButton = (
+        <button type="reset" role="clear-query"
+          className="btn btn-default btn-block"
+          id="clear-explorer-query"
+          onClick={this.props.handleClearQuery}>
+            Clear
+        </button>
+      );
+    }
+    else {
+      clearButton = (
+        <button
+          className="btn btn-default btn-block"
+          onClick={this.handleRevertChanges}
+          role="revert-query">
+            Revert to original
+        </button>
+      );
+    }
 
     if (analysisType !== 'extraction') {
       groupByField = <GroupByField ref="group-by-field"
@@ -93,10 +121,15 @@ var QueryBuilder = React.createClass({
                                          value={this.props.model.query.percentile}
                                          onChange={this.handleSelectionWithEvent} />;
     }
+    if (analysisType === 'extraction') {
+      extractionOptions = <ExtractionOptions model={this.props.model}
+                                             handleChange={this.handleChange}
+                                             setExtractionType={this.props.setExtractionType} />;
+    }
 
     return (
       <section className="query-pane-section query-builder">
-        <form className="form query-builder-form" onSubmit={this.handleQuerySubmit}>
+        <form className="form query-builder-form" onSubmit={this.props.handleQuerySubmit}>
           <EventCollectionField ref="event-collection-field"
                                 value={this.props.model.query.event_collection}
                                 options={this.props.project.eventCollections}
@@ -106,6 +139,7 @@ var QueryBuilder = React.createClass({
                              value={this.props.model.query.analysis_type}
                              options={ProjectUtils.getConstant('ANALYSIS_TYPES')}
                              handleChange={this.handleChange} />
+          {extractionOptions}
           {targetPropertyField}
           {percentileField}
           <Timeframe ref="timeframe"
@@ -121,11 +155,10 @@ var QueryBuilder = React.createClass({
                           fieldsCount={validFilters(this.props.model.query.filters).length} />
           </div>
           {intervalField}
+          <div className="button-set-clear-toggle">
+            {clearButton}
+          </div>
           <ApiUrl url={ExplorerUtils.getApiQueryUrl(this.props.client, this.props.model)} />
-          <BuilderButtons clearQuery={this.props.clearQuery}
-                          model={this.props.model}
-                          handleQuerySubmit={this.handleQuerySubmit}
-                          handleRevertChanges={this.props.handleRevertChanges} />
         </form>
       </section>
     );

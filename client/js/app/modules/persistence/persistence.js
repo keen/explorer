@@ -1,5 +1,5 @@
 module.exports = {
 
-  REST: require('./REST.js')
+  KeenSavedQueries: require('./KeenSavedQueries.js')
 
 };

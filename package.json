@@ -1,5 +1,5 @@
 {
-  "name": "keen-data-tools",
+  "name": "keen-explorer",
   "version": "0.1.12",
   "private": true,
   "bucket-name": "keen-js",
@@ -9,12 +9,12 @@
     "flux": "^2.0.3",
     "json-stable-stringify": "1.0.0",
     "keymirror": "~0.1.0",
-    "lodash": "3.2.0",
+    "lodash": "3.10.1",
     "moment": "^2.7.0",
     "qs": "2.2.3",
     "react": "~0.13.3",
-    "react-router": "0.13.3",
     "reactify": "~0.15.1",
+    "rquery": "^2.0.4",
     "string": "^2.0.1",
     "stringify": "~3.0.0",
     "superagent": "1.2.0"

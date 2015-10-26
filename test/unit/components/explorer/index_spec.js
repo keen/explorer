@@ -25,7 +25,7 @@ describe('components/explorer/index', function() {
 
   beforeEach(function() {
     ExplorerStore.clearAll();
-    ExplorerActions.create({ id: '1', active: true, name: 'A persisted query' });
+    ExplorerActions.create({ id: '1', active: true, query_name: 'A persisted query', metadata: { display_name: 'some name' } });
 
     this.client = TestHelpers.createClient();
     this.project = TestHelpers.createProject();
@@ -53,13 +53,7 @@ describe('components/explorer/index', function() {
     });
 
     it('has the right number of Modal child components', function(){
-      assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, Modal), 3);
-    });
-
-    it('has the right number of Modal child components when the analysis type is extraction', function(){
-      this.explorer.query.analysis_type = 'extraction';
-      ExplorerStore.emit('CHANGE');
-      assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, Modal), 3);
+      assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, Modal), 2);
     });
 
     describe('persistence', function(){
@@ -84,7 +78,7 @@ describe('components/explorer/index', function() {
         });
 
         it('has the right number of Modal child components', function(){
-          assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, Modal), 3);
+          assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, Modal), 2);
         });
 
         describe('New query button', function () {
@@ -232,11 +226,11 @@ describe('components/explorer/index', function() {
 
     describe('removeSavedQueryClicked', function () {
       it('should call the destroy ExplorerAction with the right arguments', function () {
-        ExplorerActions.create(_.assign({}, TestHelpers.createExplorerModel(), { id: 'ABC-DESTROY' }));
+        this.explorer.id = 'ABC';
         var destroyStub = sinon.stub(ExplorerActions, 'destroy');
         sinon.stub(window, 'confirm').returns(true);
-        this.component.removeSavedQueryClicked(_.keys(ExplorerStore.getAll()).length-1);
-        assert.isTrue(destroyStub.calledWith(this.persistence, 'ABC-DESTROY'));
+        this.component.removeSavedQueryClicked();
+        assert.isTrue(destroyStub.calledWith(this.persistence, 'ABC'));
         ExplorerActions.destroy.restore();
         window.confirm.restore();
       });
@@ -288,9 +282,9 @@ describe('components/explorer/index', function() {
     describe('createNewQuery', function () {
       beforeEach(function() {
         ExplorerStore.clearAll();
-        ExplorerActions.create(_.assign({}, TestHelpers.createExplorerModel(), { id: 'abc', active: true }));
-        ExplorerActions.create(_.assign({}, TestHelpers.createExplorerModel(), { id: 'def', active: false }));
-        ExplorerActions.create(_.assign({}, TestHelpers.createExplorerModel(), { id: 'ghi', active: false }));
+        ExplorerActions.create(_.assign({}, TestHelpers.createExplorerModel(), { id: 'abc', active: true, metadata: { display_name: 'abc' } }));
+        ExplorerActions.create(_.assign({}, TestHelpers.createExplorerModel(), { id: 'def', active: false, metadata: { display_name: 'def' } }));
+        ExplorerActions.create(_.assign({}, TestHelpers.createExplorerModel(), { id: 'ghi', active: false, metadata: { display_name: 'ghi' } }));
         this.component.setProps({ persistence: {} });
         this.component.forceUpdate();
       });

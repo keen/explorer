@@ -55,13 +55,21 @@ module.exports = {
     return explorer.id && !explorer.id.toString().match('TEMP');
   },
 
+  isEmailExtraction: function(explorer) {
+    return (explorer.query.analysis_type === 'extraction' && !_.isNull(explorer.query.email));
+  },
+
+  isImmediateExtraction: function(explorer) {
+    return (explorer.query.analysis_type === 'extraction' && _.isNull(explorer.query.email));
+  },
+
   mergeResponseWithExplorer: function(explorer, response) {
-    var formattedParams = module.exports.formatQueryParams(response);
-    var newModel = _.assign({},
-                    explorer,
-                    formattedParams,
-                    { query: _.assign({}, explorer.query, formattedParams.query) },
-                    { visualization: _.assign({}, explorer.visualization, formattedParams.visualization) });
+    var newModel = _.defaultsDeep(
+      module.exports.formatQueryParams(response),
+      _.cloneDeep(explorer)
+    );
+    delete newModel.originalModel; // Remove the original model.
+    newModel.id = response.query_name; // Set the ID to the query_name (it's now persisted.)
     newModel.originalModel = _.cloneDeep(newModel);
     return newModel;
   },
@@ -106,21 +114,13 @@ module.exports = {
   },
 
   toJSON: function(explorer) {
-    var json = { query: module.exports.queryJSON(explorer) };
-    if (module.exports.isPersisted(explorer)) {
-      json.id = explorer.id;
-    }
-    if (explorer.name) {
-      json.name = explorer.name;
-    }
-    if (explorer.project_id) {
-      json.project_id = explorer.project_id;
-    }
-    if (explorer.project_id) {
-      json.project_id = explorer.project_id;
-    }
-    json.visualization = explorer.visualization;
-
+    var json = _.pick(explorer, [
+      'id',
+      'query_name',
+      'refresh_rate',
+      'metadata'
+    ]);
+    json.query = module.exports.queryJSON(explorer);
     return json;
   },
 
@@ -128,7 +128,9 @@ module.exports = {
     var attrs = module.exports.toJSON(explorer);
     return _.omit(attrs, [
       'id',
-      'name'
+      'query_name',
+      'refresh_rate',
+      'metadata'
     ]);
   },
 
@@ -254,7 +256,7 @@ module.exports = {
    * @return {Object} formatted attributes to be used for creating a new Explorer model.
    */
   formatQueryParams: function(params) {
-    if (!params.query) return;
+    if (!params || !params.query) return;
 
     if (params.query && params.query.timeframe) {
       var unpackedTime = module.exports.unpackTimeframeParam(params.query);
@@ -271,6 +273,9 @@ module.exports = {
         return filter;
       });
       params.query.filters = _.compact(params.query.filters);
+    }
+    if (!params.id && params.query_name) {
+      params.id = params.query_name;
     }
     return params;
   },
@@ -367,11 +372,11 @@ module.exports = {
   },
 
   isJSONViz: function(explorer) {
-    return explorer.visualization.chart_type && explorer.visualization.chart_type.toLowerCase() === 'json';
+    return explorer.metadata.visualization.chart_type && explorer.metadata.visualization.chart_type.toLowerCase() === 'json';
   },
 
   isTableViz: function(explorer) {
-    return explorer.visualization.chart_type && explorer.visualization.chart_type.toLowerCase() === 'table';
+    return explorer.metadata.visualization.chart_type && explorer.metadata.visualization.chart_type.toLowerCase() === 'table';
   },
 
   getSdkExample: function(explorer, client) {
@@ -435,6 +440,10 @@ module.exports = {
     ]
 
     return value.join('\n');
-  }
+  },
 
+  slugify: function(name) {
+    return name.toLowerCase().replace(/[^\w\s-]/g, '').replace(/ /g, '-');
+  }
+  
 };

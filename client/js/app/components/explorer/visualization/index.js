@@ -19,13 +19,6 @@ var FormatUtils = require('../../../utils/FormatUtils');
 
 var Visualization = React.createClass({
 
-  toggleCodeSample: function(event) {
-    event.preventDefault();
-    this.setState({
-      'codeSampleHidden': !this.state.codeSampleHidden
-    })
-  },
-
   noticeClosed: function() {
     NoticeActions.clearAll();
   },
@@ -34,9 +27,9 @@ var Visualization = React.createClass({
     var chartType = _.find(this.formatChartTypes(), function(type){
       return type.value === event.target.value;
     });
-    var updates = _.cloneDeep(this.props.model.visualization);
-    updates.chart_type = chartType.value;
-    ExplorerActions.update(this.props.model.id, { visualization: updates });
+    var updates = _.cloneDeep(this.props.model);
+    updates.metadata.visualization.chart_type = chartType.value;
+    ExplorerActions.update(this.props.model.id, updates);
   },
 
   formatChartTypes: function() {
@@ -48,12 +41,6 @@ var Visualization = React.createClass({
     });
   },
 
-  getInitialState: function() {
-    return {
-      codeSampleHidden: true
-    };
-  },
-
   componentWillMount: function() {
     this.dataviz = new Keen.Dataviz();
   },
@@ -63,63 +50,27 @@ var Visualization = React.createClass({
   },
 
   render: function() {
-    var csvExtractionBanner,
-        chartOptionsBar,
-        chartTitle,
-        saveBtn;
+    var chartTitle;
 
     var chartDetailBarClasses = classNames({
       'chart-detail-bar': true,
       'chart-detail-active': this.props.model.result !== null && !this.props.model.loading
     });
 
-    var codeSampleBtnClasses = classNames({
-      'btn btn-default code-sample-toggle': true,
-      'open': !this.state.codeSampleHidden
-    });
-
-    if (this.props.model.query.analysis_type === 'extraction') {
-      csvExtractionBanner = <div className="extraction-message-component">
-                              <div className="alert">
-                                <span className="icon glyphicon glyphicon-info-sign"></span>
-                                Previews are limited to the latest {ExplorerUtils.EXRACTION_EVENT_LIMIT} events. Larger extractions are available by email.
-                              </div>
-                              <button type="button" className="btn btn-default pull-right" onClick={this.props.onOpenCSVExtraction}>
-                                Email extraction
-                              </button>
-                            </div>;
-    }
-
-    if (this.props.persistence) {
-      saveBtn = (
-        <button type="button" disabled={this.props.model.loading} ref="save-query" className="btn btn-primary save-query" onClick={this.props.saveQueryClick}>
-          {ExplorerUtils.isPersisted(this.props.model) ? 'Update' : 'Save'}
-        </button>
-      );
-    }
-
-    if (this.props.model.result !== null && !this.props.model.loading) {
-      chartOptionsBar = <div className="chart-options clearfix">
-                          <div className="pull-left">
-                            {saveBtn}
-                          </div>
-                          <div className="pull-right">
-                            <button className={codeSampleBtnClasses} onClick={this.toggleCodeSample}>
-                              <span>&lt;/&gt; Embed</span>
-                            </button>
-                          </div>
-                        </div>;
-    }
-
     if (this.props.persistence) {
       chartTitle = (
         <div className="chart-title-component">
-          <input ref="input"
+          <input className="chart-display-name"
                  type="text"
-                 onChange={this.props.onNameChange}
+                 onChange={this.props.onDisplayNameChange}
                  spellCheck="false"
-                 value={this.props.model.name}
+                 value={this.props.model.metadata.display_name}
                  placeholder="Give your query a name..." />
+          <input className="chart-query-name"
+                 type="text"
+                 onChange={this.props.onQueryNameChange}
+                 spellCheck="false"
+                 value={this.props.model.query_name} />
         </div>
       );
     }
@@ -138,20 +89,18 @@ var Visualization = React.createClass({
                       classes="chart-type"
                       options={this.formatChartTypes()}
                       handleSelection={this.changeChartType}
-                      selectedOption={this.props.model.visualization.chart_type}
+                      selectedOption={this.props.model.metadata.visualization.chart_type}
                       emptyOption={false}
                       disabled={this.props.model.loading} />
             </div>
           </div>
-          {csvExtractionBanner}
           <div className="chart-component">
             <Chart model={this.props.model} dataviz={this.dataviz} />
           </div>
-          {chartOptionsBar}
           <CodeSample ref="codesample"
                       codeSample={ExplorerUtils.getSdkExample(this.props.model, this.props.client)}
-                      hidden={this.state.codeSampleHidden}
-                      onCloseClick={this.toggleCodeSample} />
+                      hidden={this.props.appState.codeSampleHidden}
+                      onCloseClick={this.props.toggleCodeSample} />
         </div>
       </div>
     );

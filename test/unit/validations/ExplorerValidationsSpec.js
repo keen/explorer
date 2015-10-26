@@ -14,42 +14,78 @@ describe('validations/ExplorerValidations', function() {
         var errorMessage = ExplorerValidations.explorer.event_collection.msg;
         assert.equal(errorMessage, 'Choose an Event Collection.');
       });
+
       it('returns true when event_collection is present', function () {
         assert.isTrue(ExplorerValidations.explorer.event_collection.validator({ query: { event_collection: 'value' } }));
       });
+
       it('returns false when event_collection is falsy', function () {
         assert.isFalse(ExplorerValidations.explorer.event_collection.validator({ query: { event_collection: '' } }));
       });
     });
 
-    describe('name', function () {
+    describe('refresh_rate validations', function() {
       it('has an error message', function () {
-        var errorMessage = ExplorerValidations.explorer.name.msg;
-        assert.equal(errorMessage, 'You must give your saved query a name.');
+        var errorMessage = ExplorerValidations.explorer.refresh_rate.msg;
+        assert.equal(errorMessage, 'Refresh rate must be between 4 and 24 hours.');
       });
+
+      it('returns true when refresh rate is between 4 and 24 hours or 0', function() {
+        assert.isTrue(ExplorerValidations.explorer.refresh_rate.validator({
+          refresh_rate: 0
+        }));
+        assert.isTrue(ExplorerValidations.explorer.refresh_rate.validator({
+          refresh_rate: 1440
+        }));
+        assert.isTrue(ExplorerValidations.explorer.refresh_rate.validator({
+          refresh_rate: 2000
+        }));
+      });
+
+      it('returns false when refresh_rate is out of range', function() {
+        assert.isFalse(ExplorerValidations.explorer.refresh_rate.validator({
+          refresh_rate: 1000
+        }));
+        assert.isFalse(ExplorerValidations.explorer.refresh_rate.validator({
+          refresh_rate: 90000
+        }));
+      });
+    });
+
+    describe('query name', function () {
+      it('has an error message', function () {
+        var errorMessage = ExplorerValidations.explorer.query_name.msg;
+        assert.equal(errorMessage, 'You must give your saved query a query name.');
+      });
+
       it('returns true even when the value is not valid when saving is false', function () {
         var explorer = TestHelpers.createExplorerModel();
         explorer.saving = false;
-        explorer.name = '';
-        assert.isTrue(ExplorerValidations.explorer.name.validator(explorer));
+        explorer.query_name = '';
+        assert.isTrue(ExplorerValidations.explorer.query_name.validator(explorer));
       });
+
       it('returns false when the value is not valid when saving is true', function () {
         var explorer = TestHelpers.createExplorerModel();
         explorer.saving = true;
-        explorer.name = '';
-        assert.isFalse(ExplorerValidations.explorer.name.validator(explorer));
+        explorer.query_name = '';
+        assert.isFalse(ExplorerValidations.explorer.query_name.validator(explorer));
       });
+
       it('returns true when name is present', function () {
-        assert.isTrue(ExplorerValidations.explorer.name.validator({ saving: true, name: 'a satisfactory value' }));
+        assert.isTrue(ExplorerValidations.explorer.query_name.validator({ saving: true, query_name: 'a satisfactory value' }));
       });
+
       it('returns false when name is an empty string', function () {
-        assert.isFalse(ExplorerValidations.explorer.name.validator({ saving: true, name: '' }));
+        assert.isFalse(ExplorerValidations.explorer.query_name.validator({ saving: true, query_name: '' }));
       });
+
       it('returns false when name is a null', function () {
-        assert.isFalse(ExplorerValidations.explorer.name.validator({ saving: true, name: null }));
+        assert.isFalse(ExplorerValidations.explorer.query_name.validator({ saving: true, query_name: null }));
       });
+
       it('returns false when name is a undefined', function () {
-        assert.isFalse(ExplorerValidations.explorer.name.validator({ saving: true, name: undefined }));
+        assert.isFalse(ExplorerValidations.explorer.query_name.validator({ saving: true, query_name: undefined }));
       });
     });
 
@@ -58,19 +94,24 @@ describe('validations/ExplorerValidations', function() {
         var errorMessage = ExplorerValidations.explorer.analysis_type.msg;
         assert.equal(errorMessage, 'Choose an Analysis Type.');
       });
+
       it('returns true when analysis_type is present', function () {
         assert.isTrue(ExplorerValidations.explorer.analysis_type.validator({ query: { analysis_type: 'value' } }));
       });
+
       it('returns false when analysis_type is falsy', function () {
         assert.isFalse(ExplorerValidations.explorer.analysis_type.validator({ query: { analysis_type: '' } }));
       });
     });
 
     describe('filters', function () {
-      it('has an error message', function () {
-        var errorMessage = ExplorerValidations.explorer.filters.msg;
-        assert.equal(errorMessage, 'One of your filters is invalid.');
+      describe('when query has invalid filters', function () {
+        it('has an error message', function () {
+          var errorMessage = ExplorerValidations.explorer.filters.msg;
+          assert.equal(errorMessage, 'One of your filters is invalid.');
+        });
       });
+
       describe('when query has valid filters', function () {
         it('returns true', function () {
           var filters = [
@@ -84,6 +125,7 @@ describe('validations/ExplorerValidations', function() {
           assert.isTrue(ExplorerValidations.explorer.filters.validator({ query: { filters: filters } }));
         });
       });
+
       describe('when the query has an invalid filter', function () {
         it('returns false', function () {
           var filters = [
@@ -97,6 +139,7 @@ describe('validations/ExplorerValidations', function() {
           assert.isFalse(ExplorerValidations.explorer.filters.validator({ query: { filters: filters } }));
         });
       });
+
       describe('when query has no filters', function () {
         it('returns true', function () {
           assert.isTrue(ExplorerValidations.explorer.filters.validator({ query: { filters: [] } }));
@@ -118,14 +161,17 @@ describe('validations/ExplorerValidations', function() {
         assert.isFalse(ExplorerValidations.emailExtractionExplorer.email.validator({ query: { email: "keen$example.com" } }));
       });
     });
+
     describe('latest', function () {
       describe('evaluates strings correctly', function () {
         it('should return true for 10', function () {
           assert.isTrue(ExplorerValidations.emailExtractionExplorer.latest.validator({ query: { latest: '10' } }));  
         });
+
         it('should return false for 10.1', function () {
           assert.isFalse(ExplorerValidations.emailExtractionExplorer.latest.validator({ query: { latest: '10.1' } }));
         });
+
         it('should return false for 10.00', function () {
           assert.isFalse(ExplorerValidations.emailExtractionExplorer.latest.validator({ query: { latest: '10.00' } }));
         });

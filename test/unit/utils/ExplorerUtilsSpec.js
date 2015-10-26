@@ -146,7 +146,7 @@ describe('utils/ExplorerUtils', function() {
     it('should keep all explorer attributes', function () {
       var explorer = {
         id: 'TEMP-ABC',
-        name: 'SOME NAME',
+        query_name: 'some-query-name',
         active: false,
         saving: false,
         error: null,
@@ -172,25 +172,29 @@ describe('utils/ExplorerUtils', function() {
             sub_timeframe: 'weeks'
           }
         },
-        visualization: {
-          chart_type: null
+        metadata: {
+          visualization: {
+            chart_type: null
+          }
         }
       };
       var response = {
-        id: 'ACTUAL-ID',
+        query_name: 'some-query-name',
         project_id: '10',
         query: {
           event_collection: 'clicks',
           analysis_type: 'count',
         },
-        visualization: {
-          chart_type: 'metric'
+        metadata: {
+          visualization: {
+            chart_type: 'metric'
+          }
         }
       };
       var expectedExplorer = {
-        id: 'ACTUAL-ID',
+        id: 'some-query-name',
         project_id: '10',
-        name: 'SOME NAME',
+        query_name: 'some-query-name',
         active: false,
         saving: false,
         error: null,
@@ -216,8 +220,10 @@ describe('utils/ExplorerUtils', function() {
             sub_timeframe: 'weeks'
           }
         },
-        visualization: {
-          chart_type: 'metric'
+        metadata: {
+          visualization: {
+            chart_type: 'metric'
+          }
         }
       };
       expectedExplorer.originalModel = _.cloneDeep(expectedExplorer);
@@ -466,6 +472,7 @@ describe('utils/ExplorerUtils', function() {
       it('has the timeframe attribute', function(){
         this.explorer = {
           timeframe_type: 'relative',
+          refresh_rate: 0,
           query: {
             analysis_type: 'count',
             event_collection: 'clicks',
@@ -486,5 +493,13 @@ describe('utils/ExplorerUtils', function() {
 
     })
 
+  });
+
+  describe('slugify', function() {
+    it('it creates a slug using query name', function() {
+      var newName = ExplorerUtils.slugify('Saved Query name!*');
+
+      assert.equal(newName, 'saved-query-name');
+    });
   });
 });

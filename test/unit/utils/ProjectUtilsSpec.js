@@ -39,68 +39,9 @@ describe('utils/ProjectUtils', function() {
     });
   });
 
-  describe('fetchProjectSchema', function() {
-
-    before(function() {
-      this.xhrOpenStub = sinon.stub(XMLHttpRequest.prototype, 'open');
-      this.xhrSendStub = sinon.stub(XMLHttpRequest.prototype, 'send');
-      this.client = TestHelpers.createClient();
-      this.project = {
-        id: 'someId',
-        client: this.client
-      };
-    });
-
-    after(function(){
-      this.xhrOpenStub.restore();
-      this.xhrSendStub.restore();
-    });
-
-    it('should make a request to the right URL', function () {
-      var expectedURL = this.client.config.protocol + 
-                        "://" +
-                        this.client.config.host +
-                        '/projects/' +
-                        this.client.config.projectId +
-                        '/events?api_key=' +
-                        this.client.config.masterKey;
-      ProjectUtils.fetchProjectSchema(this.project);
-      this.xhrOpenStub.calledWith('GET', expectedURL, true);
-    });
-
-    describe('calling project update actions', function () {
-      before(function () {
-        this.projectUpdateStub = sinon.stub(ProjectActions, 'update');
-      });
-
-      after(function () {
-        ProjectActions.update.restore();
-      });
-
-      beforeEach(function () {
-        this.req = ProjectUtils.fetchProjectSchema(this.project);
-        this.req.callback(null, {
-          body: TestHelpers.buildProjectSchema()
-        });
-      });
-
-      it('should update the project with the unpacked project Schema', function () {
-        var unpackedSchema = {
-          eventCollections: ['click'],
-          projectSchema: TestHelpers.buildProjectSchema()
-        };
-        assert.deepEqual(this.projectUpdateStub.getCall(0).args[1], unpackedSchema);
-      });
-
-      it('should update the project loading state', function () {
-        assert.deepEqual(this.projectUpdateStub.getCall(1).args[1], { loading: false });
-      });      
-    });
-  });
-
   describe('getEventCollectionProperties', function(){
     before(function () {
-      this.project = { projectSchema: TestHelpers.buildProjectSchema() };
+      this.project = { schema: TestHelpers.buildProjectSchema() };
     });
 
     it('should return an array of properties for a collection which exists', function () {
@@ -123,7 +64,7 @@ describe('utils/ProjectUtils', function() {
 
   describe('getPropertyType', function () {
     before(function () {
-      this.project = { projectSchema: TestHelpers.buildProjectSchema() };
+      this.project = { schema: TestHelpers.buildProjectSchema() };
     });
 
     it('should return the right type of property if it exists ', function () {

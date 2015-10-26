@@ -1,13 +1,13 @@
 var React = require('react');
-var Router = require('react-router');
-var RouteHandler = Router.RouteHandler;
 var Loader = require('./common/loader.js');
-var ProjectUtils = require('../utils/ProjectUtils');
 var ProjectStore = require('../stores/ProjectStore');
+var AppStateStore = require('../stores/AppStateStore');
+var Explorer = require('./explorer/index.js');
 
 function getProjectState() {
   return {
-    project: ProjectStore.getProject()
+    project: ProjectStore.getProject(),
+    app: AppStateStore.getState()
   };
 }
 
@@ -15,13 +15,12 @@ var App = React.createClass({
 
 	componentDidMount: function() {
     ProjectStore.addChangeListener(this._onChange);
-    if (this.state.project) {
-      ProjectUtils.fetchProjectSchema(this.state.project);
-    }
+    AppStateStore.addChangeListener(this._onChange);
 	},
 
   componentWillUnmount: function() {
     ProjectStore.removeChangeListener(this._onChange);
+    AppStateStore.addChangeListener(this._onChange);
   },
 
 	getInitialState: function() {
@@ -31,11 +30,10 @@ var App = React.createClass({
   render: function () {
     return (
     	<div id="keen-explorer">
-    		<Loader visible={this.state.project.loading} additionalClasses="app-loader" />
-        <RouteHandler project={this.state.project}
-                      config={this.props.config}
-                      client={this.props.config.client}
-                      persistence={this.props.config.persistence} />
+    		<Loader visible={this.state.project.loading || !this.state.app.ready} additionalClasses="app-loader" />
+        <Explorer project={this.state.project}
+                  client={this.props.client}
+                  persistence={this.props.persistence} />
       </div>
     );
   },

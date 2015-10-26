@@ -3,16 +3,17 @@ var assert = require('chai').assert;
 var _ = require('lodash');
 var sinon = require('sinon');
 var QueryBuilder = require('../../../../../client/js/app/components/explorer/query_builder/index.js');
-var BuilderButtons = require('../../../../../client/js/app/components/explorer/query_builder/builder_buttons.js');
 var Timeframe = require('../../../../../client/js/app/components/common/timeframe.js')
 var Interval = require('../../../../../client/js/app/components/common/interval.js')
 var ProjectUtils = require('../../../../../client/js/app/utils/ProjectUtils');;
 var ExplorerActions = require('../../../../../client/js/app/actions/ExplorerActions');
 var Input = require('../../../../../client/js/app/components/common/select.js');
+var ExtractionOptions = require('../../../../../client/js/app/components/explorer/query_builder/extraction_options.js');
 var ReactSelect = require('../../../../../client/js/app/components/common/react_select.js');
 var React = require('react/addons');
 var TestUtils = React.addons.TestUtils;
 var TestHelpers = require('../../../../support/TestHelpers');
+var $R = require('rquery')(_, React);
 
 describe('components/explorer/query_builder/index', function() {
   beforeEach(function() {
@@ -21,7 +22,18 @@ describe('components/explorer/query_builder/index', function() {
     this.model.active = true;
     this.client = TestHelpers.createClient();
     this.project = TestHelpers.createProject();
-    this.component = TestUtils.renderIntoDocument(<QueryBuilder project={this.project} model={this.model} client={this.client} />);
+
+    this.renderComponent = function(props) {
+      var defaults = {
+        project: this.project,
+        model: this.model,
+        client: this.client
+      };
+      var props = _.assign({}, defaults, props);
+      return TestUtils.renderIntoDocument(<QueryBuilder {...props} />);
+    }
+
+    this.component = this.renderComponent();
   });
 
   describe('setup', function() {
@@ -43,10 +55,6 @@ describe('components/explorer/query_builder/index', function() {
         model: this.model
       });
       assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, Interval), 0);
-    });    
-
-    it('has a single BuilderButtons child component', function(){
-      assert.isNotNull(TestUtils.findRenderedComponentWithType(this.component, BuilderButtons));
     });
 
     it('has the right number of ReactSelect child components', function(){
@@ -57,6 +65,19 @@ describe('components/explorer/query_builder/index', function() {
       this.model.query.analysis_type = 'extraction';
       this.component.forceUpdate();
       assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, ReactSelect), 3);
+    });
+
+    it('has the clear button button', function () {
+      assert.lengthOf($R(this.component).find('[role="clear-query"]').components, 1);
+    });
+
+    describe('button event bindings', function () {
+      it('calls clearQuery when the clear query button is clicked', function () {
+        var stub = sinon.stub();
+        this.component = this.renderComponent({ handleClearQuery: stub });
+        TestUtils.Simulate.click($R(this.component).find('[role="clear-query"]').components[0].getDOMNode());
+        assert.isTrue(stub.calledOnce);
+      });
     });
   });
 
@@ -86,6 +107,22 @@ describe('components/explorer/query_builder/index', function() {
           assert.lengthOf(TestUtils.scryRenderedDOMComponentsWithClass(this.component, 'percentile'), 1);
         });
       });
+      describe('analysis type is set to extraction', function () {
+        it('shows the extraction options component', function() {
+          this.model.query.event_collection = 'click';
+          this.model.query.analysis_type = 'extraction';
+          this.component.forceUpdate();
+          assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, ExtractionOptions), 1);
+        });
+      });
+      describe('analysis type is not extraction', function () {
+        it('does not show the extraction options component', function() {
+          this.model.query.event_collection = 'click';
+          this.model.query.analysis_type = 'count';
+          this.component.forceUpdate();
+          assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, ExtractionOptions), 0);
+        });
+      });
     });
 
     describe('group_by', function () {
@@ -112,12 +149,12 @@ describe('components/explorer/query_builder/index', function() {
     });
 
     describe('form submission', function () {
-      it('executes the query when the form is submitted', function () {
-        var execStub = sinon.stub(ExplorerActions, 'exec');
+      it('calls handleQuerySubmit prop function when the form is submitted', function () {
+        var submitStub = sinon.stub();
+        this.component = this.renderComponent({ handleQuerySubmit: submitStub });
         var formSubmitNode = TestUtils.findRenderedDOMComponentWithTag(this.component, 'form').getDOMNode();
         TestUtils.Simulate.submit(formSubmitNode);
-        assert.isTrue(execStub.calledWith(this.client, 10));
-        ExplorerActions.exec.restore();
+        assert.isTrue(submitStub.calledOnce);
       });
     });
   });
@@ -194,16 +231,6 @@ describe('components/explorer/query_builder/index', function() {
     });
   });
 
-  describe('run query button click', function () {
-    it('should call exec with the right arguments', function () {
-      var execStub = sinon.stub(ExplorerActions, 'exec');
-      var formSubmitNode = TestUtils.findRenderedDOMComponentWithClass(this.component, 'run-query').getDOMNode();
-      TestUtils.Simulate.click(formSubmitNode);
-      assert.isTrue(execStub.calledWith(this.client, 10));
-      ExplorerActions.exec.restore();
-    });
-  });
-
   describe('event_collection', function () {
     it('has the project events as dropdown options', function () {
       this.model.query.event_collection = 'click';
@@ -220,5 +247,28 @@ describe('components/explorer/query_builder/index', function() {
     });
   });
 
+  describe('helper functions', function () {
+    describe('shouldShowRevertButton', function () {
+      it('should return true if the model and its original are different', function () {
+        var model = TestHelpers.createExplorerModel();
+        model.id = 'abc-123';
+        model.query.event_collection = 'clicks';
+        model.query.analysis_type = 'count';
+        model.originalModel = _.cloneDeep(model);
+        model.query.event_collection = 'not clicks';
+        this.component = this.renderComponent({ model: model });
+        assert.isTrue(this.component.shouldShowRevertButton());
+      });
+      it('should return false if the model and its original are the same', function () {
+        var model = TestHelpers.createExplorerModel();
+        model.id = 'abc-123';
+        model.query.event_collection = 'clicks';
+        model.query.analysis_type = 'count';
+        model.originalModel = _.cloneDeep(model);
+        this.component = this.renderComponent({ model: model });
+        assert.isFalse(this.component.shouldShowRevertButton());
+      });
+    });
+  });
 
 });

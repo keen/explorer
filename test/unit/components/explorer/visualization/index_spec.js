@@ -8,12 +8,14 @@ var Visualization = require('../../../../../client/js/app/components/explorer/vi
 var Chart = require('../../../../../client/js/app/components/explorer/visualization/chart.js');
 var React = require('react/addons');
 var AppDispatcher = require('../../../../../client/js/app/dispatcher/AppDispatcher');
+var AppStateStore = require('../../../../../client/js/app/stores/AppStateStore');
 var ExplorerUtils = require('../../../../../client/js/app/utils/ExplorerUtils');
 var ExplorerConstants = require('../../../../../client/js/app/constants/ExplorerConstants');
 var ExplorerActions = require('../../../../../client/js/app/actions/ExplorerActions');
 var NoticeActions = require('../../../../../client/js/app/actions/NoticeActions');
 var TestUtils = React.addons.TestUtils;
 var TestHelpers = require('../../../../support/TestHelpers');
+var $R = require('rquery')(_, React);
 
 describe('components/explorer/visualization/index', function() {
   beforeEach(function() {
@@ -21,10 +23,22 @@ describe('components/explorer/visualization/index', function() {
     this.model = TestHelpers.createExplorerModel();
     this.model.id = 10;
     this.project = TestHelpers.createProject();
-
     var datavizStub = sinon.stub(Keen, 'Dataviz').returns(TestHelpers.createDataviz());
     this.chartOptionsStub = sinon.stub(ExplorerUtils, 'getChartTypeOptions').returns([]);
-    this.component = TestUtils.renderIntoDocument(<Visualization client={this.client} model={this.model} project={this.project} persistence={null} />);
+
+    this.renderComponent = function(props) {
+      var defaults = {
+        client: this.client,
+        model: this.model,
+        project: this.project,
+        persistence: null,
+        appState: AppStateStore.getState()
+      };
+      var props = _.assign({}, defaults, props);
+      return TestUtils.renderIntoDocument(<Visualization {...props} />);
+    };
+
+    this.component = this.renderComponent();
 
     this.getOptionsFromComponent = function(component) {
       var chartTypeSelect = this.component.refs['chart-type'].refs.select.getDOMNode();
@@ -50,26 +64,8 @@ describe('components/explorer/visualization/index', function() {
 
     describe('without persistence', function () {
       it('should not show the Save/Update button', function () {
-        assert.isUndefined(this.component.refs['save-query']);
+        assert.lengthOf($R(this.component).find('[role="save-query"]').components, 0);
       });
-    });
-
-    describe('with persistence', function () {
-      it('should show the Save/Update button', function () {
-        this.model.result = 50;
-        this.component.setProps({ persistence: {} });
-        assert.isDefined(this.component.refs['save-query']);
-      });
-    });
-  });
-
-  describe('interactions', function () {
-    it('should call props.saveQueryClick when the save button is clicked', function () {
-      var stub = sinon.stub();
-      this.model.result = 50;
-      this.component.setProps({ persistence: {}, saveQueryClick: stub });
-      TestUtils.Simulate.click(this.component.refs['save-query'].getDOMNode());
-      assert.isTrue(stub.calledOnce);
     });
   });
 
@@ -98,62 +94,6 @@ describe('components/explorer/visualization/index', function() {
       this.model.loading = true;
       this.component.forceUpdate();
       assert.isTrue(this.component.refs['chart-type'].refs.select.getDOMNode().disabled);
-    });
-
-  });
-
-
-  describe('custom limit message', function(){
-
-    beforeEach(function(){
-      this.model.result = 50;
-      sinon.stub(ExplorerUtils, 'resultCanBeVisualized').returns(true);
-    });
-
-    afterEach(function(){
-      ExplorerUtils.resultCanBeVisualized.restore();
-    });
-
-    describe('shows when the analysis type is extraction', function(){
-      beforeEach(function(){
-        this.model.query.analysis_type = 'extraction';
-      });
-
-      it('for JSON chart type', function(){
-        this.model.visualization.chart_type = 'json';
-        this.component.forceUpdate();
-        assert.lengthOf(TestUtils.scryRenderedDOMComponentsWithClass(this.component, 'extraction-message-component'), 1);
-      });
-
-      it('for Table chart type', function(){
-        this.model.result = [
-          { keen: { created_at: '2015-08-01' }, key: 'a', flag: true },
-          { keen: { created_at: '2015-08-20' }, key: 'b', flag: false }
-        ];
-        this.model.loading = false;
-        this.model.visualization.chart_type = 'table';
-        this.component.forceUpdate();
-        assert.lengthOf(TestUtils.scryRenderedDOMComponentsWithClass(this.component, 'extraction-message-component'), 1);
-      });
-    });
-
-    describe('does not show when the analysis type is not extraction', function(){
-
-      beforeEach(function(){
-        this.model.query.analysis_type = 'count';
-      });
-
-      it('for JSON chart type', function(){
-        this.model.visualization.chart_type = 'json';
-        this.component.forceUpdate();
-        assert.lengthOf(TestUtils.scryRenderedDOMComponentsWithClass(this.component, 'viz-notice'), 0);
-      });
-
-      it('for metric chart type', function(){
-        this.model.visualization.chart_type = 'metric';
-        this.component.forceUpdate();
-        assert.lengthOf(TestUtils.scryRenderedDOMComponentsWithClass(this.component, 'viz-notice'), 0);
-      });
     });
 
   });

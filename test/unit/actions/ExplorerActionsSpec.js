@@ -153,25 +153,9 @@ describe('actions/ExplorerActions', function() {
       ExplorerActions.runEmailExtraction(this.client, this.explorer, this.callback);
       assert.isFalse(this.runQueryStub.called);
     });
-
-    describe('callback', function () {
-      it('should call the callback with the expected results', function () {
-        ExplorerActions.runEmailExtraction(this.client, this.explorer, this.callback);
-        assert.deepEqual(this.callback.getCall(0).args[0], {
-          success: false,
-          error: 'The last error'
-        });
-      });
-      it('should remove empty latest attribute before making the request', function () {
-        this.runValidationsStub.returns({ isValid: true });
-        this.explorer.query.latest = "";
-        ExplorerActions.runEmailExtraction(this.client, this.explorer, this.callback);
-        assert.notDeepProperty(this.runQueryStub.getCall(0).args[0].query, 'latest');
-      });
-    });
   });
 
-  describe('getPersisted', function () {
+  describe('fetchAllPersisted', function () {
     beforeEach(function () {
       this.models = [
         {
@@ -187,14 +171,18 @@ describe('actions/ExplorerActions', function() {
               sub_timeframe: 'weeks'
             }
           },
-          visualization: {
-            chart_type: 'metric'
+          refresh_rate: 0,
+          metadata: {
+            visualization: {
+              chart_type: 'metric'
+            }
           }
         },
         {
           id: '2',
           name: 'favorite 2',
           timeframe_type: 'relative',
+          refresh_rate: 0,
           query: {
             event_collection: 'clicks',
             analysis_type: 'sum',
@@ -205,14 +193,17 @@ describe('actions/ExplorerActions', function() {
               sub_timeframe: 'weeks'
             }
           },
-          visualization: {
-            chart_type: 'metric'
+          metadata: {
+            visualization: {
+              chart_type: 'metric'
+            }
           }
         },
         {
           id: '3',
           name: 'favorite 3',
           timeframe_type: 'relative',
+          refresh_rate: 0,
           query: {
             event_collection: 'clicks',
             analysis_type: 'max',
@@ -223,8 +214,10 @@ describe('actions/ExplorerActions', function() {
               sub_timeframe: 'weeks'
             }
           },
-          visualization: {
-            chart_type: 'metric'
+          metadata: {
+            visualization: {
+              chart_type: 'metric'
+            }
           }
         }
       ];
@@ -234,38 +227,39 @@ describe('actions/ExplorerActions', function() {
       this.persistence = {
         get: getFn.bind(this)
       };
+      this.callback = sinon.stub();
     });
 
     it('should format the params for each model', function () {
       var spy = sinon.spy(ExplorerUtils, 'formatQueryParams');
-      ExplorerActions.getPersisted(this.persistence);
+      ExplorerActions.fetchAllPersisted(this.persistence, this.callback);
       assert.strictEqual(spy.getCalls().length, 3);
       ExplorerUtils.formatQueryParams.restore();
     });
     it('should run validations for each model', function () {
       var spy = sinon.spy(ValidationUtils, 'runValidations');
-      ExplorerActions.getPersisted(this.persistence);
+      ExplorerActions.fetchAllPersisted(this.persistence, this.callback);
       assert.strictEqual(spy.getCalls().length, 3);
       ValidationUtils.runValidations.restore();  
     });
     it('should include invalid models', function () {
       this.models[2].query = {};
       var stub = sinon.stub(ExplorerActions, 'createBatch');
-      ExplorerActions.getPersisted(this.persistence);
+      ExplorerActions.fetchAllPersisted(this.persistence, this.callback);
       assert.strictEqual(stub.getCall(0).args[0].length, 3);
       ExplorerActions.createBatch.restore();  
     });
     it('should log a warning for invalid models', function () {
       this.models[2].query = {};
       var stub = sinon.stub(window.console, 'warn');
-      ExplorerActions.getPersisted(this.persistence);
+      ExplorerActions.fetchAllPersisted(this.persistence, this.callback);
       assert.strictEqual(stub.getCall(0).args[0], 'A persisted explorer model is invalid: ');
       assert.deepPropertyVal(stub.getCall(0).args[1], 'id', '3');
       window.console.warn.restore();
     });
     it('should call update app state when done and set fetchingPersistedExplorers to false', function () {
       var stub = sinon.stub(AppStateActions, 'update');
-      ExplorerActions.getPersisted(this.persistence);
+      ExplorerActions.fetchAllPersisted(this.persistence, this.callback);
       assert.isTrue(stub.calledWith({ fetchingPersistedExplorers: false }));
       AppStateActions.update.restore();
     });
@@ -297,37 +291,45 @@ describe('actions/ExplorerActions', function() {
 
   describe('execSuccess', function () {
     beforeEach(function () {
-      var explorer = {
+      this.explorer = {
         id: 5,
         query: {
           analysis_type: 'count'
         },
-        visualization: { 
-          chart_type: 'metric'
+        metadata: {
+          visualization: {
+            chart_type: null
+          }
         }
       };
-      var response = { result: 100 };
-      sinon.stub(_, 'contains').returns(true);
-      ExplorerActions.execSuccess(explorer, response);
+      this.response = { result: 100 };
+      sinon.stub(ExplorerUtils, 'getChartTypeOptions').returns(['metric']);
+      sinon.stub(ExplorerUtils, 'resultSupportsChartType').returns(false);
     });
     afterEach(function () {
-      _.contains.restore();
+      ExplorerUtils.getChartTypeOptions.restore();
+      ExplorerUtils.resultSupportsChartType.restore();
     });
 
-    it('should call the diaptcher to update with the right arguments', function () {
+    it('should call the dispatcher to update with the right arguments', function () {
+      var expectedUpdates = _.cloneDeep(this.explorer);
+      expectedUpdates.loading = false;
+      expectedUpdates.result = 100;
+      expectedUpdates.metadata.visualization.chart_type = 'metric';
+      
+      ExplorerActions.execSuccess(this.explorer, this.response);
+
       assert.isTrue(this.dispatchStub.calledWith({
         actionType: 'EXPLORER_UPDATE',
         id: 5,
-        updates: { loading: false, result: 100 }
+        updates: expectedUpdates
       }));
     });
     it('should clear all notices', function () {
+      ExplorerActions.execSuccess(this.explorer, this.response);
       assert.isTrue(this.dispatchStub.calledWith({
         actionType: 'NOTICE_CLEAR_ALL'
       }));
-    });
-    xit('it should update the chart_type if it does not fit with the result returned', function(){
-
     });
   });
 

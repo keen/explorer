@@ -6,7 +6,7 @@ var TestUtils = React.addons.TestUtils;
 var _ = require('lodash');
 var sinon = require('sinon');
 var Persistence = require('../../../../client/js/app/modules/persistence/persistence.js');
-var RESTPersistence = require('../../../../client/js/app/modules/persistence/REST.js');
+var KeenSavedQueries = require('../../../../client/js/app/modules/persistence/KeenSavedQueries.js');
 
 describe('modules/persistence/persistence', function(){
 
@@ -18,7 +18,7 @@ describe('modules/persistence/persistence', function(){
     assert.isDefined(Persistence);
   });
 
-  it('has a REST key equal to the RESTPersistence class', function(){
-    assert.equal(Persistence.REST, RESTPersistence);
+  it('has a KeenSavedQueries key equal to the KeenSavedQueries class', function(){
+    assert.equal(Persistence.KeenSavedQueries, KeenSavedQueries);
   });
 });
