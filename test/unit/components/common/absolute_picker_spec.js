@@ -16,8 +16,7 @@ describe('components/common/absolute_picker', function() {
 
   beforeEach(function() {
     this.model = TestHelpers.createExplorerModel();
-    this.model.timeframe_type = 'absolute';
-    this.component = TestUtils.renderIntoDocument(<AbsolutePicker model={this.model}/>);
+    this.component = TestUtils.renderIntoDocument(<AbsolutePicker time={this.model.query.time}/>);
   });
 
   describe('setup', function() {
@@ -41,12 +40,11 @@ describe('components/common/absolute_picker', function() {
   describe('UI interactions', function () {
     beforeEach(function(){
       this.model = TestHelpers.createExplorerModel();
-      this.model.timeframe_type = 'absolute';
       this.model.query.time = {
         start: ExplorerUtils.convertDateToUTC(new Date(FormatUtils.formatISOTimeNoTimezone(new Date("June 7 2015 1:00 PM")))),
         end: ExplorerUtils.convertDateToUTC(new Date(FormatUtils.formatISOTimeNoTimezone(new Date("June 8 2015 3:37 PM"))))
       };
-      this.component = TestUtils.renderIntoDocument(<AbsolutePicker model={this.model}/>);
+      this.component = TestUtils.renderIntoDocument(<AbsolutePicker time={this.model.query.time}/>);
     });
     describe('displaying the correct dates and times at load', function () {
       it('should display the correct start date', function () {

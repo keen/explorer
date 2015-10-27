@@ -161,7 +161,6 @@ describe('actions/ExplorerActions', function() {
         {
           id: '1',
           name: 'favorite 1',
-          timeframe_type: 'relative',
           query: {
             event_collection: 'clicks',
             analysis_type: 'count',
@@ -181,7 +180,6 @@ describe('actions/ExplorerActions', function() {
         {
           id: '2',
           name: 'favorite 2',
-          timeframe_type: 'relative',
           refresh_rate: 0,
           query: {
             event_collection: 'clicks',
@@ -202,7 +200,6 @@ describe('actions/ExplorerActions', function() {
         {
           id: '3',
           name: 'favorite 3',
-          timeframe_type: 'relative',
           refresh_rate: 0,
           query: {
             event_collection: 'clicks',

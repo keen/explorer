@@ -13,18 +13,18 @@ var ExtractionOptions = React.createClass({
     var emailField,
         latestField;
 
-    if (ExplorerUtils.isEmailExtraction(this.props.model)) {
+    if (this.props.isEmail) {
       emailField = (
         <Input type="text"
                name="email"
                label="Recipient email address"
                placeholder="your@email.com"
                required="true"
-               value={this.props.model.query.email}
+               value={this.props.email}
                onChange={this.props.handleChange} />
       );
       latestField = (
-        <LatestField model={this.props.model} handleChange={this.props.handleChange} />
+        <LatestField latest={this.props.latest} handleChange={this.props.handleChange} />
       );
     }
 
@@ -32,10 +32,10 @@ var ExtractionOptions = React.createClass({
       <div className="field-component">
         <div className="extraction-options">
           <label>
-            <input type="radio" name="extraction_type" value="immediate" onChange={this.props.setExtractionType} checked={!ExplorerUtils.isEmailExtraction(this.props.model)}/> Preview lastest {ExplorerUtils.EXRACTION_EVENT_LIMIT} events now
+            <input type="radio" name="extraction_type" value="immediate" onChange={this.props.setExtractionType} checked={!this.props.isEmail}/> Preview lastest {ExplorerUtils.EXRACTION_EVENT_LIMIT} events now
           </label>
           <label>
-            <input type="radio" name="extraction_type" value="email" onChange={this.props.setExtractionType} checked={ExplorerUtils.isEmailExtraction(this.props.model)}/> Bulk CSV extraction by email
+            <input type="radio" name="extraction_type" value="email" onChange={this.props.setExtractionType} checked={this.props.isEmail}/> Bulk CSV extraction by email
           </label>
           {emailField}
           {latestField}

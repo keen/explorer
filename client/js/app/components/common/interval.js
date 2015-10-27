@@ -14,53 +14,46 @@ var ProjectUtils = require('../../utils/ProjectUtils');
 var Interval = React.createClass({
 
   setInterval: function(event) {
-    var updates = _.cloneDeep(this.props.model.query);
-    updates.interval = event.target.value;
-    ExplorerActions.update(this.props.model.id, { query: updates });
+    this.props.handleChange('interval', event.target.value);
   },
 
   intervalFieldsToggled: function(toggleState){
-    if (toggleState && !this.props.model.query.interval) {
-      var updates = _.cloneDeep(this.props.model.query);
-      updates.interval = 'daily';
-      ExplorerActions.update(this.props.model.id, { query: updates });
+    if (toggleState && !this.props.interval) {
+      this.props.handleChange('interval', 'daily')
     }
   },
 
   intervalUpdateFn: function(updates) {
-    ExplorerActions.update(this.props.model.id, {
-      query: _.assign({}, this.props.model.query, updates)
-    });
+    this.props.handleChange('interval', updates['interval'])
   },
 
   intervalGetFn: function(attr) {
-    return this.props.model.query[attr];
+    if (attr === 'interval') {
+      return this.props.interval;
+    } else {
+      throw new Error("Interval component is only aware of interval attributes")
+    }
   },
 
   // React Methods
 
   render: function() {
-    var hasTimeframe = ExplorerUtils.getTimeframe(this.props.model) ? true : false;
-    var warningMessage = (
-      <div className="alert alert-warning">Intervals require a timeframe property.</div>
-    );
     return (
       <div className="field-component">
         <FieldsToggle ref="interval-toggle"
                       name="Interval"
-                      initialOpenState={this.props.model.query.interval}
+                      initialOpenState={this.props.interval}
                       attrsToStore={'interval'}
                       getFn={this.intervalGetFn}
                       updateFn={this.intervalUpdateFn}
                       toggleCallback={this.intervalFieldsToggled}>
-          {hasTimeframe ? null : warningMessage}
           <Select label={false}
                   name="interval"
                   classes="interval-type"
                   options={ProjectUtils.getConstant('ABSOLUTE_INTERVAL_TYPES')}
                   emptyOption={false}
                   handleSelection={this.setInterval}
-                  selectedOption={this.props.model.query.interval}
+                  selectedOption={this.props.interval}
                   sort={false} />
         </FieldsToggle>
       </div>

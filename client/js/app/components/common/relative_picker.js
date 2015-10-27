@@ -13,8 +13,8 @@ var ExplorerUtils = require('../../utils/ExplorerUtils');
 var ExplorerActions = require('../../actions/ExplorerActions');
 var FormatUtils = require('../../utils/FormatUtils');
 
-function hasRelativeTimeframe(explorer) {
-  var time = explorer.query.time || {};
+function hasRelativeTimeframe(time) {
+  time = time || {};
   return time.relativity && time.amount && time.sub_timeframe;
 }
 
@@ -24,15 +24,15 @@ var RelativePicker = React.createClass({
     var name = event.target.name;
     var value = event.target.value;
 
-    var updates = _.cloneDeep(this.props.model);
-    updates.query.time[name] = value;
-    ExplorerActions.update(this.props.model.id, updates);
+    var updates = _.cloneDeep(this.props.time);
+    updates[name] = value
+    this.props.handleChange('time', updates)
   },
 
   buildDescriptionCopy: function() {
-    var time = this.props.model.query.time;
+    var time = this.props.time;
 
-    if (hasRelativeTimeframe(this.props.model)) {
+    if (hasRelativeTimeframe(this.props.time)) {
       var subIntervalCopy = FormatUtils.singularize(time.sub_timeframe, time.amount);
       var relativityCopy = time.relativity == 'this' ? 'including' : 'excluding';
       var singularCurrentInterval = FormatUtils.singularize(subIntervalCopy);
@@ -57,7 +57,7 @@ var RelativePicker = React.createClass({
                       options={RELATIVE_TIMEFRAMES}
                       emptyOption={false}
                       handleSelection={this.setRelativeTime}
-                      selectedOption={this.props.model.query.time.relativity} />
+                      selectedOption={this.props.time.relativity} />
             </div>
           </div>
           <div className="col-xs-3 form-collapse-left form-collapse-right" id="interval-amount">
@@ -66,7 +66,7 @@ var RelativePicker = React.createClass({
                    classes="amount"
                    onChange={this.setRelativeTime}
                    placeholder="e.g. 1"
-                   value={this.props.model.query.time.amount || ""} />
+                   value={this.props.time.amount || ""} />
           </div>
           <div className="col-xs-5 form-collapse-left" id="sub-interval-type">
             <Select label={false}
@@ -75,7 +75,7 @@ var RelativePicker = React.createClass({
                     options={this.props.relativeIntervalTypes}
                     emptyOption={false}
                     handleSelection={this.setRelativeTime}
-                    selectedOption={this.props.model.query.time.sub_timeframe}
+                    selectedOption={this.props.time.sub_timeframe}
                     sort={false} />
           </div>
         </div>

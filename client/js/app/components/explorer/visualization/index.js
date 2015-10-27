@@ -16,6 +16,8 @@ var ExplorerStore = require('../../../stores/ExplorerStore');
 var NoticeActions = require('../../../actions/NoticeActions');
 var ExplorerUtils = require('../../../utils/ExplorerUtils');
 var FormatUtils = require('../../../utils/FormatUtils');
+var runValidations = require('../../../utils/ValidationUtils').runValidations;
+var ExplorerValidations = require('../../../validations/ExplorerValidations');
 
 var Visualization = React.createClass({
 
@@ -50,12 +52,19 @@ var Visualization = React.createClass({
   },
 
   render: function() {
-    var chartTitle;
+    var chartTitle,
+        codeSample;
 
     var chartDetailBarClasses = classNames({
       'chart-detail-bar': true,
       'chart-detail-active': this.props.model.result !== null && !this.props.model.loading
     });
+
+
+    var validations = runValidations(ExplorerValidations.explorer, this.props.model);
+    if(validations.isValid) {
+      codeSample = ExplorerUtils.getSdkExample(this.props.model, this.props.client);
+    }
 
     if (this.props.persistence) {
       chartTitle = (
@@ -98,9 +107,10 @@ var Visualization = React.createClass({
             <Chart model={this.props.model} dataviz={this.dataviz} />
           </div>
           <CodeSample ref="codesample"
-                      codeSample={ExplorerUtils.getSdkExample(this.props.model, this.props.client)}
+                      codeSample={codeSample}
                       hidden={this.props.appState.codeSampleHidden}
-                      onCloseClick={this.props.toggleCodeSample} />
+                      onCloseClick={this.props.toggleCodeSample} 
+                      validation={validations} />
         </div>
       </div>
     );

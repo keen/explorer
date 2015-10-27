@@ -22,6 +22,7 @@ var ExplorerUtils = require('../../../utils/ExplorerUtils');
 var ProjectUtils = require('../../../utils/ProjectUtils');
 var ExplorerActions = require('../../../actions/ExplorerActions');
 var runValidations = require('../../../utils/ValidationUtils').runValidations;
+var ExplorerValidations = require('../../../validations/ExplorerValidations');
 var FilterValidations = require('../../../validations/FilterValidations');
 
 function validFilters(filters) {
@@ -38,14 +39,18 @@ var QueryBuilder = React.createClass({
     this.handleChange(event.target.name, event.target.value);
   },
 
-  handleChange: function(name, value) {
-    if (_.isArray(value)) {
-      value = _.compact(value);
+  handleChange: function(update, value) {
+    var newModel = _.cloneDeep(this.props.model);
+
+    if(_.isPlainObject(update)) {
+      for(key in update) {
+        newModel.query[key] = update[key];
+      }
+    } else {
+      newModel.query[update] = value;
     }
 
-    var updates = _.cloneDeep(this.props.model);
-    updates.query[name] = value;
-    ExplorerActions.update(this.props.model.id, updates);
+    ExplorerActions.update(this.props.model.id, newModel);
   },
 
   // Convenience Methods
@@ -79,7 +84,13 @@ var QueryBuilder = React.createClass({
         extractionOptions,
         analysisType = this.props.model.query.analysis_type,
         clearButton,
-        apiQueryUrl = ExplorerUtils.getApiQueryUrl(this.props.client, this.props.model);
+        apiQueryUrl;
+
+    var queryValidation = runValidations(ExplorerValidations.explorer, this.props.model);
+
+    if(queryValidation.isValid) {
+      apiQueryUrl = ExplorerUtils.getApiQueryUrl(this.props.client, this.props.model);
+    }
 
     if (!this.shouldShowRevertButton()) {
       clearButton = (
@@ -90,8 +101,7 @@ var QueryBuilder = React.createClass({
             Clear
         </button>
       );
-    }
-    else {
+    } else {
       clearButton = (
         <button
           className="btn btn-default btn-block"
@@ -108,7 +118,8 @@ var QueryBuilder = React.createClass({
                                    updateGroupBy={this.updateGroupBy}
                                    options={this.getEventPropertyNames()}
                                    handleChange={this.handleChange} />
-      intervalField = <Interval model={this.props.model} />;
+      intervalField = <Interval interval={this.props.model.query.interval} 
+                                handleChange={this.handleChange} />;
     }
     if (analysisType && analysisType !== 'count' && analysisType !== 'extraction') {
       targetPropertyField = <TargetPropertyField ref="target-property-field"
@@ -122,7 +133,9 @@ var QueryBuilder = React.createClass({
                                          onChange={this.handleSelectionWithEvent} />;
     }
     if (analysisType === 'extraction') {
-      extractionOptions = <ExtractionOptions model={this.props.model}
+      extractionOptions = <ExtractionOptions latest={this.props.model.query.latest}
+                                             email={this.props.model.query.email}
+                                             isEmail={ExplorerUtils.isEmailExtraction(this.props.model)}
                                              handleChange={this.handleSelectionWithEvent}
                                              setExtractionType={this.props.setExtractionType} />;
     }
@@ -143,8 +156,9 @@ var QueryBuilder = React.createClass({
           {targetPropertyField}
           {percentileField}
           <Timeframe ref="timeframe"
-                     model={this.props.model}
-                     project={this.props.project} />
+                     time={this.props.model.query.time}
+                     timezone={this.props.model.query.timezone}  
+                     handleChange={this.handleChange}/>
           <hr className="fieldset-divider" />
           {groupByField}
           <div className="field-component">
@@ -158,7 +172,8 @@ var QueryBuilder = React.createClass({
           <div className="button-set-clear-toggle">
             {clearButton}
           </div>
-          <ApiUrl url={ExplorerUtils.getApiQueryUrl(this.props.client, this.props.model)} />
+          <ApiUrl url={apiQueryUrl}
+                  validation={queryValidation} />
         </form>
       </section>
     );
