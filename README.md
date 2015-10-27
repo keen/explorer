@@ -1,6 +1,6 @@
-# Data Explorer
+# Keen IO Explorer
 
-The data explorer is an open source point-and-click interface for querying and visualizing your event data.
+The Keen Explorer is an open source point-and-click interface for querying and visualizing your event data.
 
 ![](https://s3.amazonaws.com/keen-event-images/Screen+Shot+2015-07-22+at+3.25.48+PM.png)
 
@@ -66,7 +66,7 @@ Initialize a new Keen.js client and then pass that into the initialization of a 
       client = new Keen({
         projectId: "your_project_id",
         readKey: "your_read_key",
-        masterKey: "your_master_key"
+        masterKey: "your_master_key",
         protocol: "https",
         host: "api.keen.io/3.0",
         requestType: "jsonp"
@@ -98,7 +98,6 @@ To include saved queries, create a new `KeenSavedQueries` object, and then pass 
     client = new Keen({
       projectId: "your_project_id",
       readKey: "your_read_key",
-      masterKey: "your_master_key",
       protocol: "https",
       host: "api.keen.io/3.0",
       requestType: "xhr"
@@ -135,7 +134,7 @@ If you want to customize this project or contribute, here is how to get started:
       client = new Keen({
         projectId: "your_project_id",
         readKey: "your_read_key",
-        masterKey: "your_master_key"
+        masterKey: "your_master_key",
         protocol: "https",
         host: "api.keen.io/3.0",
         requestType: "jsonp"
