@@ -3,7 +3,6 @@ var Qs = require('qs');
 var stringify = require('json-stable-stringify');
 var moment = require('moment');
 var ValidationUtils = require('./ValidationUtils');
-var ExplorerValidations = require('../validations/ExplorerValidations');
 var FormatUtils = require('./FormatUtils');
 var ProjectUtils = require('./ProjectUtils');
 var FilterUtils = require('./FilterUtils');
@@ -188,7 +187,13 @@ module.exports = {
 
   getTimeframe: function(explorer) {
     var timeframeType = module.exports.timeframeType(explorer.query.time);
-    return module.exports.timeframeBuilders[timeframeType + '_timeframe'](explorer);
+    var timeframeBuilder = module.exports.timeframeBuilders[timeframeType + '_timeframe'];
+
+    if(typeof(timeframeBuilder) === 'undefined') {
+      return "";
+    } else {
+      return timeframeBuilder(explorer);
+    }
   },
 
   convertDateToUTC: function(date) {
@@ -255,7 +260,9 @@ module.exports = {
    timeframeType: function(time) {
       var badTimeTypeError = new Error('Invalid time value');
 
-      if(!_.isPlainObject(time)) {
+      if(_.isUndefined(time)) {
+        return "";
+      } else if(!_.isPlainObject(time)) {
         throw badTimeTypeError;
       } else if(_.has(time, 'start') && _.has(time, 'end')) {
         return 'absolute';
@@ -329,48 +336,44 @@ module.exports = {
   },
 
   getApiQueryUrl: function(client, explorer) {
-    var valid = ValidationUtils.runValidations(ValidationUtils.explorer, explorer)
+    var endpoint = client.config.protocol + "://" + client.config.host;
+    var projectId = client.config.projectId;
+    var masterKey = client.config.masterKey;
 
-    if (valid.isValid) {
-      var endpoint = client.config.protocol + "://" + client.config.host;
-      var projectId = client.config.projectId;
-      var masterKey = client.config.masterKey;
+    var attrs = module.exports.queryJSON(explorer);
 
-      var attrs = module.exports.queryJSON(explorer);
+    var analysisType = attrs.analysis_type;
+    delete attrs['analysis_type'];
 
-      var analysisType = attrs.analysis_type;
-      delete attrs['analysis_type'];
+    var timeframe = _.cloneDeep(attrs['timeframe']);
 
-      var timeframe = _.cloneDeep(attrs['timeframe']);
+    var filters = _.map(attrs['filters'], function(filter) {
+      return _.omit(_.cloneDeep(filter), 'coercion_type');
+    });
+    delete attrs['filters'];
 
-      var filters = _.map(attrs['filters'], function(filter) {
-        return _.omit(_.cloneDeep(filter), 'coercion_type');
-      });
-      delete attrs['filters'];
+    var queryAttrs = Qs.stringify(attrs);
 
-      var queryAttrs = Qs.stringify(attrs);
-
-      if (attrs.timeframe && module.exports.timeframeType(explorer.query.time) === 'absolute') {
-        delete attrs['timeframe'];
-        // This is an absolute timeframe, so we need to encode the object in a specific way before sending it, as per keen docs => https://keen.io/docs/data-analysis/timeframe/#absolute-timeframes
-        timeframe = module.exports.encodeAttribute(timeframe);
-        queryAttrs += '&timeframe='+ timeframe;
-      }
-
-      // We need to encode the filters the same way as we encode the absolute timeframe.
-      if (filters) {
-        filters = module.exports.encodeAttribute(filters);
-        queryAttrs += '&filters='+ filters;
-      }
-
-      var url = endpoint + '/projects/'+projectId+'/queries/'
-                         + analysisType
-                         + '?api_key='
-                         + client.readKey()
-                         + '&'
-                         + queryAttrs;
-      return url;
+    if (attrs.timeframe && module.exports.timeframeType(explorer.query.time) === 'absolute') {
+      delete attrs['timeframe'];
+      // This is an absolute timeframe, so we need to encode the object in a specific way before sending it, as per keen docs => https://keen.io/docs/data-analysis/timeframe/#absolute-timeframes
+      timeframe = module.exports.encodeAttribute(timeframe);
+      queryAttrs += '&timeframe='+ timeframe;
     }
+
+    // We need to encode the filters the same way as we encode the absolute timeframe.
+    if (filters) {
+      filters = module.exports.encodeAttribute(filters);
+      queryAttrs += '&filters='+ filters;
+    }
+
+    var url = endpoint + '/projects/'+projectId+'/queries/'
+                       + analysisType
+                       + '?api_key='
+                       + client.readKey()
+                       + '&'
+                       + queryAttrs;
+    return url;
   },
 
   resultCanBeVisualized: function(explorer) {
@@ -396,10 +399,6 @@ module.exports = {
   },
 
   getSdkExample: function(explorer, client) {
-    var valid = ValidationUtils.runValidations(ExplorerValidations.explorer, explorer);
-    if (!valid.isValid) {
-      return "Your query is not valid right now, so we can't show you a code sample.";
-    }
 
     var defaultKeenJsOpts = {
           requestType: 'jsonp',

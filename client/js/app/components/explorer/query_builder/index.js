@@ -22,6 +22,7 @@ var ExplorerUtils = require('../../../utils/ExplorerUtils');
 var ProjectUtils = require('../../../utils/ProjectUtils');
 var ExplorerActions = require('../../../actions/ExplorerActions');
 var runValidations = require('../../../utils/ValidationUtils').runValidations;
+var ExplorerValidations = require('../../../validations/ExplorerValidations');
 var FilterValidations = require('../../../validations/FilterValidations');
 
 function validFilters(filters) {
@@ -83,7 +84,13 @@ var QueryBuilder = React.createClass({
         extractionOptions,
         analysisType = this.props.model.query.analysis_type,
         clearButton,
-        apiQueryUrl = ExplorerUtils.getApiQueryUrl(this.props.client, this.props.model);
+        apiQueryUrl;
+
+    var queryValidation = runValidations(ExplorerValidations.explorer, this.props.model);
+
+    if(queryValidation.isValid) {
+      apiQueryUrl = ExplorerUtils.getApiQueryUrl(this.props.client, this.props.model);
+    }
 
     if (!this.shouldShowRevertButton()) {
       clearButton = (
@@ -94,8 +101,7 @@ var QueryBuilder = React.createClass({
             Clear
         </button>
       );
-    }
-    else {
+    } else {
       clearButton = (
         <button
           className="btn btn-default btn-block"
@@ -164,7 +170,8 @@ var QueryBuilder = React.createClass({
           <div className="button-set-clear-toggle">
             {clearButton}
           </div>
-          <ApiUrl url={ExplorerUtils.getApiQueryUrl(this.props.client, this.props.model)} />
+          <ApiUrl url={apiQueryUrl}
+                  validation={queryValidation} />
         </form>
       </section>
     );
