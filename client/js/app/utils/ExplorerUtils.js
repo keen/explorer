@@ -266,6 +266,8 @@ module.exports = {
     }
     if (params.query.filters) {
       params.query.filters = _.map(params.query.filters, function(filter) {
+        filter.coercion_type = FilterUtils.getCoercionType(filter);
+        
         if (filter.coercion_type === 'List') {
           filter = _.assign({}, filter, FilterUtils.initList(filter));
         }

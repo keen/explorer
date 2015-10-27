@@ -6,6 +6,10 @@ function _isWrappedInSingleQuotes(value) {
   return value.substring(0, 1) === "'" && value.substring(value.length - 1) === "'";
 }
 
+function _isWrappedInDoubleQuotes(value) {
+  return value.substring(0, 1) === '"' && value.substring(value.length - 1) === '"';
+}
+
 module.exports = {
 
   toTitleCase: function(text) {
@@ -91,6 +95,7 @@ module.exports = {
 
   parseList: function(value) {
     if (value) {
+      if (!module.exports.isList(value)) return '';
       var parsedList = S(value).parseCSV();
 
       parsedList = _.map(parsedList, function(val) {
@@ -107,6 +112,16 @@ module.exports = {
     } else {
       return '';
     }
+  },
+
+  isList: function(str) {
+    var isList = true;
+    var items = str.match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g);
+    for(var i=0; i<items.length; i++) {
+      isList = (_isWrappedInSingleQuotes(items[i].trim()) || _isWrappedInDoubleQuotes(items[i].trim()));
+      if (!isList) break;
+    }
+    return isList;
   }
 
 };

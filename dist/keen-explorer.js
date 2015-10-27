@@ -5492,6 +5492,8 @@ module.exports = {
     }
     if (params.query.filters) {
       params.query.filters = _.map(params.query.filters, function(filter) {
+        filter.coercion_type = FilterUtils.getCoercionType(filter);
+        
         if (filter.coercion_type === 'List') {
           filter = _.assign({}, filter, FilterUtils.initList(filter));
         }
@@ -5686,6 +5688,10 @@ function exists(value) {
   return !_.isNull(value) && !_.isUndefined(value);
 }
 
+function toType(obj) {
+  return ({}).toString.call(obj).match(/\s([a-zA-Z]+)/)[1].toLowerCase()
+}
+
 module.exports = {
 
   coercionFunctions: {
@@ -5730,6 +5736,27 @@ module.exports = {
   getCoercedValue: function(filter) {
     if (!module.exports.coercionFunctions[filter.coercion_type]) return null;
     return module.exports.coercionFunctions[filter.coercion_type](filter);
+  },
+
+  getCoercionType: function(filter) {
+    var type;
+    switch (typeOf(filter.property_value)) {
+      case 'object':
+        return 'Geo';
+        break;
+      case 'string':
+        // TODO: Check if it's a datetime or just a string
+        return 'String';
+        break;
+      case 'array':
+        return 'List';
+        break;
+      case 'boolean':
+        return 'Boolean';
+        break;
+      case 'null':
+        break;
+    }
   },
 
   formatDatetimePropertyValue: function(filter) {

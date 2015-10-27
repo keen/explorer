@@ -349,10 +349,9 @@ describe('utils/ExplorerUtils', function() {
         query: {
           filters: [
             {
-              coercion_type: 'List',
               property_name: 'items',
               operator: 'eq',
-              property_value: 'a list of items'
+              property_value: '"a", "list", "of", "items"'
             }
           ]
         }
@@ -371,6 +370,73 @@ describe('utils/ExplorerUtils', function() {
       ExplorerUtils.formatQueryParams(params);
       assert.strictEqual(stub.callCount, 3);
       FilterUtils.getCoercedValue.restore();
+    });
+    describe('unpacking filters', function () {
+      it('should properly unpack Boolean filters', function () {
+        var params = {
+          query: {
+            filters: [{
+              property_name: 'is_admin',
+              operator: 'eq',
+              property_value: true
+            }]
+          }
+        };
+        var formattedParams = ExplorerUtils.formatQueryParams(params);
+        assert.strictEqual(formattedParams.query.filters[0].property_value, true);
+      });
+      it('should properly unpack List filters', function () {
+        var params = {
+          query: {
+            filters: [{
+              property_name: 'is_admin',
+              operator: 'eq',
+              property_value: [1,2,3]
+            }]
+          }
+        };
+        var formattedParams = ExplorerUtils.formatQueryParams(params);
+        assert.strictEqual(formattedParams.query.filters[0].property_value, "'1', '2', '3'");
+      });
+      it('should properly unpack String filters', function () {
+        var params = {
+          query: {
+            filters: [{
+              property_name: 'is_admin',
+              operator: 'eq',
+              property_value: 'a name'
+            }]
+          }
+        };
+        var formattedParams = ExplorerUtils.formatQueryParams(params);
+        assert.strictEqual(formattedParams.query.filters[0].property_value, "a name");
+      });
+      it('should properly unpack List filters', function () {
+        var params = {
+          query: {
+            filters: [{
+              property_name: 'is_admin',
+              operator: 'eq',
+              property_value: ["this, right here", "is", "a", "list", 1, 2, 3, 4]
+            }]
+          }
+        };
+        var formattedParams = ExplorerUtils.formatQueryParams(params);
+        assert.strictEqual(formattedParams.query.filters[0].property_value, '"this, right here", "is", "a", "list", \'1\', \'2\', \'3\', \'4\'');
+      });
+      it('should properly unpack Datetime filters', function () {
+        var params = {
+          query: {
+            filters: [{
+              property_name: 'is_admin',
+              operator: 'eq',
+              property_value: "2015-05-03T10:00:00.000"
+            }]
+          }
+        };
+        var formattedParams = ExplorerUtils.formatQueryParams(params);
+        assert.strictEqual(formattedParams.query.filters[0].property_value, "2015-05-03T10:00:00.000");
+      });
     });
   });
 
