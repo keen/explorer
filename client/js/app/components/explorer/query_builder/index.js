@@ -15,7 +15,7 @@ var GroupByField = require('./group_by_field.js');
 var Timeframe = require('../../common/timeframe.js');
 var Interval = require('../../common/interval.js');
 var ApiUrl = require('./api_url.js');
-var RunQuery = require('../../common/run_query.js');
+var BuilderButtons = require('./builder_buttons.js');
 var ExplorerUtils = require('../../../utils/ExplorerUtils');
 var ProjectUtils = require('../../../utils/ProjectUtils');
 var ExplorerActions = require('../../../actions/ExplorerActions');
@@ -29,10 +29,6 @@ function validFilters(filters) {
 }
 
 var QueryBuilder = React.createClass({
-
-  clearQuery: function() {
-    ExplorerActions.clear(this.props.model.id);
-  },
 
   handleQuerySubmit: function(event) {
     event.preventDefault();
@@ -125,11 +121,11 @@ var QueryBuilder = React.createClass({
                           fieldsCount={validFilters(this.props.model.query.filters).length} />
           </div>
           {intervalField}
-          <RunQuery classes="pull-right"
-                    clearQuery={this.clearQuery}
-                    model={this.props.model}
-                    handleQuerySubmit={this.handleQuerySubmit} />
           <ApiUrl url={ExplorerUtils.getApiQueryUrl(this.props.client, this.props.model)} />
+          <BuilderButtons clearQuery={this.props.clearQuery}
+                          model={this.props.model}
+                          handleQuerySubmit={this.handleQuerySubmit}
+                          handleRevertChanges={this.props.handleRevertChanges} />
         </form>
       </section>
     );

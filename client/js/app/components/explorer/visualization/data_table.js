@@ -2,45 +2,25 @@
  * @jsx React.DOM
  */
 var _ = require('lodash');
-var moment = require('moment');
 var React = require('react/addons');
 var Loader = require('../../common/loader.js');
 
 var DataTable = React.createClass({
 
-  // ***********************
-  // Convenience functions
-  // ***********************
-  _formatCell: function(row, header) {
-    if (header === 'timeframe') {
-      var startTime = new Date(row[header]['start']);
-      return moment(startTime).format('MMM Do, YYYY HH:mm:ss');
-    } else {
-      return row[header];
-    }
-  },
-
-  _generateHeader: function(headerFields) {
-    var cells = _.map(headerFields, function(cell) {
-      return <th>{cell}</th>;
+  _generateHeader: function(dataset) {
+    var cells = _.map(dataset.selectRow(0), function(key) {
+      return <th>{key}</th>;
     });
     return <tr>{cells}</tr>;
   },
 
-  _generateRows: function(data, headers) {
-    var _this = this;
-    var cells;
-    return _.map(data, function(row, index) {
+  _generateRows: function(dataset) {
+    return _.map(dataset.output().slice(1), function(row, index) {
       var className = index % 2 == 0 ? 'even' : 'odd';
-
-      if (_.isArray(row) || _.isObject(row)) {
-        cells = _.map(headers, function(header) {
-          return <td>{_this._formatCell(row, header)}</td>;
-        });
-      } else {
-        cells = <td>{row}</td>;
-      }
-
+      var cells = _.map(row, function(cell){
+        var value = ('undefined' !== typeof cell) ? String(cell) : '';
+        return <td>{value}</td>;
+      });
       return <tr className={className}>{cells}</tr>;
     });
   },
@@ -49,10 +29,21 @@ var DataTable = React.createClass({
   // Lifecycle hooks
   // ***********************
   render: function() {
-    var _this = this;
-    var headers = _.keys(_.first(this.props.data));
-    var headerRows = this._generateHeader(headers);
-    var tableRows = this._generateRows(this.props.data, headers);
+    var dataset, headerRows, tableRows;
+
+    this.props.dataviz.data({ result: this.props.model.result });
+    dataset = this.props.dataviz.dataset;
+
+    // TODO: Fix unit tests to handle proper instantiation
+    if ('undefined' !== typeof dataset) {
+      dataset.insertColumn(0, '#', function(row, i){
+        return i;
+      });
+      dataset.sortColumns('asc');
+      headerRows = this._generateHeader(dataset);
+      tableRows = this._generateRows(dataset);
+    }
+
     return (
       <table className='data-table table'>
         <thead>{headerRows}</thead>

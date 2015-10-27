@@ -11,14 +11,13 @@ var ProjectUtils = require('../utils/ProjectUtils');
 var ProjectStore = require('./ProjectStore');
 
 var CHANGE_EVENT = 'change';
-var DEFAULT_NAME = 'Untitled';
 
 var _explorers = {};
 
 function _defaultAttrs(){
   return {
     id: FormatUtils.generateRandomId("TEMP-"),
-    name: DEFAULT_NAME,
+    name: null,
     active: false,
     saving: false,
     error: null,
@@ -46,7 +45,8 @@ function _defaultAttrs(){
     },
     visualization: {
       chart_type: null
-    }
+    },
+    user: {}
   };
 }
 
@@ -142,8 +142,16 @@ function _setActive(id) {
   var keys = Object.keys(_explorers);
   for(var i=0; i<keys.length; i++) {
     _explorers[keys[i]].active = false;
+    delete _explorers[keys[i]].originalModel;
   }
   _explorers[id].active = true;
+  _explorers[id].originalModel = _.cloneDeep(_explorers[id]);
+}
+
+function _revertActiveChanges() {
+  var active = _.find(_explorers, { active: true });
+  var original = _explorers[active.id].originalModel;
+  _explorers[active.id] = _.assign({}, _.cloneDeep(original), { originalModel: original, result: active.result });
 }
 
 function _addFilter(id, attrs) {
@@ -169,7 +177,7 @@ function _updateFilter(id, index, updates) {
 
 function _clear(id) {
   var model = _explorers[id];
-  _explorers[id] = _.assign({}, _defaultAttrs(), { id: model.id, active: model.active });
+  _explorers[id] = _.assign({}, _defaultAttrs(), _.pick(model, ['id', 'name', 'active', 'user', 'originalModel']));
 }
 
 var ExplorerStore = _.assign({}, EventEmitter.prototype, {
@@ -254,6 +262,11 @@ ExplorerStore.dispatchToken = AppDispatcher.register(function(action) {
 
     case ExplorerConstants.EXPLORER_SET_ACTIVE:
       _setActive(action.id);
+      ExplorerStore.emitChange();
+      break;
+
+    case ExplorerConstants.EXPLORER_REVERT_ACTIVE_CHANGES:
+      _revertActiveChanges();
       ExplorerStore.emitChange();
       break;
 

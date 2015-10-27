@@ -187,7 +187,7 @@ describe('utils/ExplorerUtils', function() {
           chart_type: 'metric'
         }
       };
-      assert.deepEqual(ExplorerUtils.mergeResponseWithExplorer(explorer, response), {
+      var expectedExplorer = {
         id: 'ACTUAL-ID',
         project_id: '10',
         name: 'SOME NAME',
@@ -219,7 +219,9 @@ describe('utils/ExplorerUtils', function() {
         visualization: {
           chart_type: 'metric'
         }
-      });
+      };
+      expectedExplorer.originalModel = _.cloneDeep(expectedExplorer);
+      assert.deepEqual(ExplorerUtils.mergeResponseWithExplorer(explorer, response), expectedExplorer);
     });
   });
 
@@ -303,7 +305,7 @@ describe('utils/ExplorerUtils', function() {
       });
     });
     it('properly unpacks a relative timeframe', function () {
-      var query = { timeframe: 'this_8_days' };
+      var query = { timeframe: 'this_8_days', timezone: 'Europe/London' };
       var unpacked = ExplorerUtils.unpackTimeframeParam(query);
       assert.deepEqual(unpacked, {
         timeframe_type: 'relative',
@@ -311,7 +313,8 @@ describe('utils/ExplorerUtils', function() {
           relativity: 'this',
           amount: '8',
           sub_timeframe: 'days'
-        }
+        },
+        timezone: 'Europe/London'
       });
     });
   });

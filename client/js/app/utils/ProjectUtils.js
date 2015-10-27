@@ -59,11 +59,15 @@ var CONSTANTS = {
     { name: 'Europe/Amsterdam (GMT+01:00)',   value: 'Europe/Amsterdam',     offset: '+01:00' },
     { name: 'Europe/Stockholm (GMT+01:00)',   value: 'Europe/Stockholm',     offset: '+01:00' },
     { name: 'Europe/Prague (GMT+02:00)',      value: 'Europe/Prague',        offset: '+02:00' },
+    { name: "Asia/Istanbul (GMT+02:00)",      value: 'Asia/Istanbul',        offset: '+02:00' },
+    { name: "Europe/Istanbul (GMT+02:00)",    value: 'Europe/Istanbul',      offset: '+02:00' },
     { name: 'Europe/Copenhagen (GMT+02:00)',  value: 'Europe/Copenhagen',    offset: '+02:00' },
     { name: 'Asia/Jakarta (GMT+07:00)',       value: 'Asia/Jakarta',         offset: '+07:00' },
     { name: 'Asia/Singapore (GMT+08:00)',     value: 'Asia/Singapore',       offset: '+08:00' },
     { name: 'Australia/Perth (GMT+08:00)',    value: 'Australia/Perth',      offset: '+08:00' },
-    { name: 'Australia/Sydney (GMT+10:00)',   value: 'Australia/Sydney',     offset: '+10:00' }
+    { name: "Asia/Tokyo (GMT+09:00)",         value: 'Asia/Tokyo',           offset: '+09:00' },
+    { name: 'Australia/Sydney (GMT+10:00)',   value: 'Australia/Sydney',     offset: '+10:00' },
+    { name: "Pacific/Auckland (GMT+12:00)",   value: 'Pacific/Auckland',     offset: '+12:00' }
   ],
 
   FILTER_OPERATORS: [

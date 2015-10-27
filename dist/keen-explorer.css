@@ -667,6 +667,12 @@
 #keen-explorer .run-query {
   margin-left: 10px;
 }
+#keen-explorer .query-builder-buttons {
+  margin-bottom: -10px;
+  padding: 8px 0px;
+  background-color: rgba(0, 0, 0, 0.05);
+  border-top: 1px solid #EEEEEE;
+}
 #keen-explorer .datepicker-wrapper,
 #keen-explorer .timepicker-wrapper {
   position: relative;
@@ -1585,26 +1591,26 @@
 #keen-explorer textarea.json-view:focus {
   outline: 0;
 }
+#keen-explorer .extraction-viz {
+  border: 1px solid rgba(0, 0, 0, 0.07);
+  max-height: 450px;
+  overflow: scroll;
+  position: relative;
+}
 #keen-explorer table.data-table {
-  display: block;
+  border-collapse: inherit;
   font-family: "Gotham Rounded A", "Gotham Rounded B", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  max-height: 500px;
-  overflow-y: scroll;
+  font-size: 13px;
+  margin: 0;
   word-wrap: break-word;
 }
-#keen-explorer table.data-table thead {
-  background: #fff;
-  border-bottom: 2px solid #ddd;
-  height: 36px;
-  position: fixed;
-  top: 0px;
-  width: 100%;
+#keen-explorer table.data-table th,
+#keen-explorer table.data-table td {
+  border-right: 1px solid rgba(0, 0, 0, 0.07);
 }
-#keen-explorer table.data-table thead th {
-  border: none;
-}
-#keen-explorer table.data-table tbody {
-  border-top: 25px solid transparent;
+#keen-explorer table.data-table thead tr th {
+  padding: 5px 8px;
+  vertical-align: middle;
 }
 #keen-explorer table.data-table tbody tr.even {
   background: #F2F2F2;

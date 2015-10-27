@@ -36,6 +36,8 @@ var BrowseQueries = React.createClass({
 
   buildList: function() {
     var listElements = this.props.listItems.map(_.bind(function(listItem, index) {
+      if (listItem.originalModel) listItem = listItem.originalModel;
+      
       listItem.user = listItem.user || {};
       if (String(listItem.name.toLowerCase()).search(this.state.searchterm.toLowerCase()) < 0) return;
 

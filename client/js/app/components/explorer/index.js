@@ -58,6 +58,7 @@ var Explorer = React.createClass({
         text: "There is already a query in progress. Wait for it to finish loading before selecting a query."
       });
     } else {
+      ExplorerActions.revertActiveChanges();
       var modelId = event.currentTarget.dataset.id;
       ExplorerActions.setActive(modelId);
       ExplorerActions.exec(this.props.client, modelId);
@@ -98,6 +99,16 @@ var Explorer = React.createClass({
     this.setState({ activeQueryPane: 'build' });
   },
 
+  clearQuery: function() {
+    // NOTE: (Eric Anderson, Aug 19, 2015): Awful terrible hack to 
+    // ensure that the components properly display the values of the cleared
+    // model.
+    var self = this;
+    setTimeout(function(){
+      ExplorerActions.clear(self.state.activeExplorer.id);
+    }, 0);
+  },
+
   onBrowseEvents: function(event) {
     event.preventDefault();
     this.refs['event-browser'].refs.modal.open();
@@ -113,6 +124,11 @@ var Explorer = React.createClass({
 
   onNameChange: function(event) {
     ExplorerActions.update(this.state.activeExplorer.id, { name: event.target.value });
+  },
+
+  handleRevertChanges: function(event) {
+    event.preventDefault();
+    ExplorerActions.revertActiveChanges();
   },
 
   // ********************************
@@ -183,16 +199,20 @@ var Explorer = React.createClass({
       }
     }
 
-    var activeQueryPane;
+    var queryPane;
     if (!this.props.persistence || this.state.activeQueryPane === 'build') {
       queryPane = <QueryBuilder ref="query-builder"
                                 model={this.state.activeExplorer}
+                                originalModel={this.state.activeExplorerOriginal}
                                 client={this.props.client}
                                 project={this.props.project}
                                 onBrowseEvents={this.onBrowseEvents}
-                                handleFiltersToggle={this.handleFiltersToggle} />;
+                                clearQuery={this.clearQuery}
+                                handleFiltersToggle={this.handleFiltersToggle}
+                                handleRevertChanges={this.handleRevertChanges} />;
     } else {
-      queryPane = <BrowseQueries listItems={this.state.allPersistedExplorers}
+      queryPane = <BrowseQueries ref="query-browser"
+                                 listItems={this.state.allPersistedExplorers}
                                  emptyContent={browseEmptyContent}
                                  notice={browseListNotice}
                                  clickCallback={this.savedQueryClicked}

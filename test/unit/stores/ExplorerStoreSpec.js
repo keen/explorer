@@ -30,7 +30,7 @@ describe('stores/ExplorerStore', function() {
         saving: false,
         isValid: true,
         timeframe_type: 'relative',
-        name: 'Untitled',
+        name: null,
         query: {
           event_collection: null,
           analysis_type: null,
@@ -51,7 +51,8 @@ describe('stores/ExplorerStore', function() {
         },
         visualization: {
           chart_type: null
-        }
+        },
+        user: {}
       };
 
       var keys = Object.keys(ExplorerStore.getAll());
@@ -492,6 +493,7 @@ describe('stores/ExplorerStore', function() {
         ExplorerStore.clearAll();
         ExplorerActions.create(_.assign({}, TestHelpers.createExplorerModel(), {
           id: 'ABC-SOME-ID',
+          name: 'some name',
           active: true,
           query: {
             event_collection: 'clicks',
@@ -499,8 +501,17 @@ describe('stores/ExplorerStore', function() {
           },
           visualization: {
             chart_type: 'metric'
+          },
+          user: {
+            id: 'SOMEUSERID5',
+            first_name: 'Don',
+            last_name: 'Draper',
+            email: 'don@keen.io'
           }
         }));
+        var model = _.cloneDeep(ExplorerStore.get('ABC-SOME-ID'));
+        model.originalModel = _.cloneDeep(model);
+        ExplorerActions.update('ABC-SOME-ID', model);
         ExplorerActions.clear('ABC-SOME-ID');
         assert.deepEqual(ExplorerStore.get('ABC-SOME-ID'), {
           id: 'ABC-SOME-ID',
@@ -511,7 +522,7 @@ describe('stores/ExplorerStore', function() {
           saving: false,
           isValid: true,
           timeframe_type: 'relative',
-          name: 'Untitled',
+          name: 'some name',
           query: {
             event_collection: null,
             analysis_type: null,
@@ -532,7 +543,14 @@ describe('stores/ExplorerStore', function() {
           },
           visualization: {
             chart_type: null
-          }
+          },
+          user: {
+            id: 'SOMEUSERID5',
+            first_name: 'Don',
+            last_name: 'Draper',
+            email: 'don@keen.io'
+          },
+          originalModel: model.originalModel
         });
       });
     });

@@ -57,11 +57,13 @@ module.exports = {
 
   mergeResponseWithExplorer: function(explorer, response) {
     var formattedParams = module.exports.formatQueryParams(response);
-    return _.assign({},
-      explorer,
-      formattedParams,
-      { query: _.assign({}, explorer.query, formattedParams.query) },
-      { visualization: _.assign({}, explorer.visualization, formattedParams.visualization) });
+    var newModel = _.assign({},
+                    explorer,
+                    formattedParams,
+                    { query: _.assign({}, explorer.query, formattedParams.query) },
+                    { visualization: _.assign({}, explorer.visualization, formattedParams.visualization) });
+    newModel.originalModel = _.cloneDeep(newModel);
+    return newModel;
   },
 
   queryJSON: function(explorer) {
@@ -239,7 +241,8 @@ module.exports = {
           amount: split[1],
           sub_timeframe: split[2]
         },
-        timeframe_type: 'relative'
+        timeframe_type: 'relative',
+        timezone: query.timezone
       };
     }
   },

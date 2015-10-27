@@ -46,6 +46,12 @@ var ExplorerActions = {
     });
   },
 
+  revertActiveChanges: function() {
+    AppDispatcher.dispatch({
+      actionType: ExplorerConstants.EXPLORER_REVERT_ACTIVE_CHANGES
+    });
+  },
+
   clear: function(id) {
     AppDispatcher.dispatch({
       actionType: ExplorerConstants.EXPLORER_CLEAR,
@@ -195,6 +201,16 @@ var ExplorerActions = {
       id: sourceId,
       saveType: 'save'
     });
+    var valid = ValidationUtils.runValidations(ExplorerValidations.explorer, ExplorerStore.get(sourceId));
+    if (!valid.isValid) {
+      AppDispatcher.dispatch({
+        actionType: ExplorerConstants.EXPLORER_SAVE_FAIL,
+        saveType: 'save',
+        id: sourceId,
+        errorMsg: valid.lastError
+      });
+      return;
+    }
     var attrs = _.assign({}, ExplorerUtils.toJSON(ExplorerStore.get(sourceId)));
     persistence.create(attrs, function(err, res) {
       if (err) {
@@ -226,6 +242,16 @@ var ExplorerActions = {
       id: sourceId,
       saveType: 'update'
     });
+    var valid = ValidationUtils.runValidations(ExplorerValidations.explorer, ExplorerStore.get(sourceId));
+    if (!valid.isValid) {
+      AppDispatcher.dispatch({
+        actionType: ExplorerConstants.EXPLORER_SAVE_FAIL,
+        saveType: 'save',
+        id: sourceId,
+        errorMsg: valid.lastError
+      });
+      return;
+    }
     var attrs = _.assign({}, ExplorerUtils.toJSON(ExplorerStore.get(sourceId)));
     persistence.update(attrs, function(err, res) {
       if (err) {
