@@ -164,7 +164,6 @@ describe('actions/ExplorerActions', function() {
           query: {
             event_collection: 'clicks',
             analysis_type: 'count',
-            timeframe_type: 'relative',
             time: {
               relativity: 'this',
               amount: 1,
@@ -186,7 +185,6 @@ describe('actions/ExplorerActions', function() {
             event_collection: 'clicks',
             analysis_type: 'sum',
             target_property: 'size',
-            timeframe_type: 'relative',
             time: {
               relativity: 'this',
               amount: 1,
@@ -207,7 +205,6 @@ describe('actions/ExplorerActions', function() {
             event_collection: 'clicks',
             analysis_type: 'max',
             target_property: 'amount',
-            timeframe_type: 'relative',
             time: {
               relativity: 'this',
               amount: 1,

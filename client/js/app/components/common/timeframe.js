@@ -35,18 +35,15 @@ var Timeframe = React.createClass({
     event.preventDefault();
     var type = event.currentTarget.dataset.type;
 
-    this.props.handleChange({
-      timeframe_type: type,
-      time: (type === 'absolute') ? absoluteDefaults() : relativeDefaults()
-    });
+    this.props.handleChange('time', (type === 'absolute') ? absoluteDefaults() : relativeDefaults());
   },
 
   isAbsolute: function() {
-    return this.props.timeframe_type === 'absolute';
+    return ExplorerUtils.timeframeType(this.props.time) === 'absolute';
   },
 
   isRelative: function() {
-    return this.props.timeframe_type === 'relative';
+    return ExplorerUtils.timeframeType(this.props.time) === 'relative';
   },
 
   // React Methods
@@ -77,7 +74,7 @@ var Timeframe = React.createClass({
           </ul>
           {timeframePicker}
           <Timezone timezone={this.props.timezone} 
-                    timeframe_type={this.props.timeframe_type}
+                    timeframe_type={ExplorerUtils.timeframeType(this.props.time)}
                     handleChange={this.props.handleChange} />
         </div>
       </div>

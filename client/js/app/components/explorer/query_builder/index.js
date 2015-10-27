@@ -149,7 +149,6 @@ var QueryBuilder = React.createClass({
           {percentileField}
           <Timeframe ref="timeframe"
                      time={this.props.model.query.time}
-                     timeframe_type={this.props.model.query.timeframe_type}
                      timezone={this.props.model.query.timezone}  
                      handleChange={this.handleChange}/>
           <hr className="fieldset-divider" />

@@ -33,11 +33,10 @@ describe('utils/ExplorerUtils', function() {
         analysis_type: 'shouldRemain'
       });
     });
-    it('should remove the timezone if the timeframe_type is absolute', function () {
+    it('should remove the timezone if the timeframe type is absolute', function () {
       var explorer = {
         query: {
           timezone: 'US/Mountain',
-          timeframe_type: 'absolute',
           time: {
             start: new Date("Jan 1, 2015 1:00 PM"),
             end: new Date("Jan 2, 2015 1:00 PM")
@@ -103,7 +102,6 @@ describe('utils/ExplorerUtils', function() {
         query: { 
           event_collection: 'click',
           analysis_type: 'count',
-          timeframe_type: 'relative',
           time: {
             relativity: 'this',
             amount: '1',
@@ -161,7 +159,6 @@ describe('utils/ExplorerUtils', function() {
           group_by: null,
           interval: null,
           timezone: 'UTC',
-          timeframe_type: 'relative',
           filters: null,
           email: null,
           latest: null,
@@ -209,7 +206,6 @@ describe('utils/ExplorerUtils', function() {
           group_by: null,
           interval: null,
           timezone: 'UTC',
-          timeframe_type: 'relative',
           filters: null,
           email: null,
           latest: null,
@@ -235,7 +231,11 @@ describe('utils/ExplorerUtils', function() {
     it('should call the right timeframe builder for absolute timeframes', function () {
       var explorer = {
         query: {
-          timeframe_type: 'absolute'
+          timezone: 'US/Hawaii',
+          time: {
+            start: new Date(moment().subtract(1, 'days').startOf('day').format()),
+            end: new Date(moment().startOf('day').format())
+          }
         }
       };
       var stub = sinon.stub(ExplorerUtils.timeframeBuilders, 'absolute_timeframe');
@@ -246,7 +246,11 @@ describe('utils/ExplorerUtils', function() {
     it('should call the right timeframe builder for relative timeframes', function () {
       var explorer = {
         query: {
-          timeframe_type: 'relative'
+          time: {
+            relativity: 'this',
+            amount: '1',
+            sub_timeframe: 'days'
+          }
         }
       };
       var stub = sinon.stub(ExplorerUtils.timeframeBuilders, 'relative_timeframe');
@@ -262,7 +266,6 @@ describe('utils/ExplorerUtils', function() {
         var explorer = {
           query: {
             timezone: 'US/Hawaii',
-            timeframe_type: 'absolute',
             time: {
               start: new Date(moment().subtract(1, 'days').startOf('day').format()),
               end: new Date(moment().startOf('day').format())
@@ -284,7 +287,6 @@ describe('utils/ExplorerUtils', function() {
     describe('relative_timeframe', function () {
       var explorer = {
         query: {
-          timeframe_type: 'relative',
           time: {
             relativity: 'this',
             amount: '1',
@@ -306,7 +308,6 @@ describe('utils/ExplorerUtils', function() {
         }
       };
       assert.deepEqual(ExplorerUtils.unpackTimeframeParam(query), {
-        timeframe_type: 'absolute',
         timezone: 'US/Hawaii',
         time: {
           start: ExplorerUtils.convertDateToUTC(new Date(moment(new Date("June 7, 2015 1:00 PM")).format('YYYY-MM-DDTHH:mm:ss.SSS'))),
@@ -318,7 +319,6 @@ describe('utils/ExplorerUtils', function() {
       var query = { timeframe: 'this_8_days', timezone: 'Europe/London' };
       var unpacked = ExplorerUtils.unpackTimeframeParam(query);
       assert.deepEqual(unpacked, {
-        timeframe_type: 'relative',
         time: {
           relativity: 'this',
           amount: '8',
@@ -328,6 +328,38 @@ describe('utils/ExplorerUtils', function() {
       });
     });
   });
+
+  describe('timeframeType', function() {
+    it('recognizes relative timeframes', function() {
+      var relative_timeframe = {
+        relativity: 'this',
+        amount: '8',
+        sub_timeframe: 'days'
+      }
+
+      assert.equal(ExplorerUtils.timeframeType(relative_timeframe), 'relative');
+    });
+
+    it('recognizes absolute timeframes', function() {
+      var absolute_timeframe = {
+        start: moment().subtract(2, 'days').format(),
+        end: moment().subtract(1, 'days').format()
+      }
+
+      assert.equal(ExplorerUtils.timeframeType(absolute_timeframe), 'absolute');
+    });
+
+    describe('invalid timeframes', function() {
+      it('throws error for invalid time object', function() {
+        expect(ExplorerUtils.timeframeType.bind(window, {bee: 'boop'})).to.throw("Invalid time value");
+      });
+
+      it('throws errors for non-object time objects', function() {
+        expect(ExplorerUtils.timeframeType.bind(window, 'this_3_days')).to.throw("Invalid time value");
+      })
+    });
+  });
+
   describe('formatQueryParams', function () {
     it('should call unpackTimeframeParam if there is a timeframe', function () {
       var params = {
@@ -340,8 +372,7 @@ describe('utils/ExplorerUtils', function() {
           relativity: 'this',
           amount: '1',
           sub_timeframe: 'days'
-        },
-        timeframe_type: 'relative'
+        }
       });
       var formatted = ExplorerUtils.formatQueryParams(params);
       assert.isTrue(stub.calledOnce);
@@ -398,7 +429,6 @@ describe('utils/ExplorerUtils', function() {
               coercion_type: 'Number'
             },
           ],
-          timeframe_type: 'relative',
           time: {
             relativity: 'this',
             amount: '1',
@@ -490,6 +520,7 @@ describe('utils/ExplorerUtils', function() {
             chart_type: 'metric'
           }
         };
+        
         var found = ExplorerUtils.getSdkExample(this.explorer, this.client).match('timeframe: "this_1_days"');
         assert.lengthOf(found, 1);
       });

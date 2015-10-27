@@ -1,6 +1,7 @@
 var _ = require('lodash');
 var filterValidations = require('../validations/FilterValidations').filter;
 var runValidations = require('../utils/ValidationUtils').runValidations;
+var ExplorerUtils = require('../utils/ExplorerUtils');
 var FilterUtils = require('../utils/FilterUtils');
 
 module.exports = {
@@ -56,13 +57,13 @@ module.exports = {
     time: {
       validator: function(explorer) {
         var time = explorer.query.time || {};
-        if (explorer.query.timeframe_type === 'relative') {
+        if (ExplorerUtils.timeframeType(explorer.query.time) === 'relative') {
           if (time.relativity && time.amount && time.sub_timeframe) {
             return true;
           } else {
             return "You must choose all 3 options for relative timeframes.";
           }
-        } else if (explorer.query.timeframe_type === 'absolute') {
+        } else if (ExplorerUtils.timeframeType(explorer.query.time) === 'absolute') {
           if (time.start && time.end) {
             return true;
           } else {

@@ -33,7 +33,6 @@ function _defaultAttrs(){
       group_by: null,
       interval: null,
       timezone: ProjectUtils.getConstant('DEFAULT_TIMEZONE'),
-      timeframe_type: 'relative',
       filters: null,
       email: null,
       latest: null,

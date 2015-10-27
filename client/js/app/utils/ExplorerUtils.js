@@ -82,7 +82,7 @@ module.exports = {
 
     // Set the timeframe (will get removed if it's null o undefined)
     params.timeframe = module.exports.getTimeframe(explorer);
-    if (explorer.query.timeframe_type === 'absolute') {
+    if (module.exports.timeframeType(explorer.query.time) === 'absolute') {
       delete params.timezone;
     }
 
@@ -187,9 +187,8 @@ module.exports = {
   },
 
   getTimeframe: function(explorer) {
-    if (explorer.query.timeframe_type) {
-      return module.exports.timeframeBuilders[explorer.query.timeframe_type + '_timeframe'](explorer);
-    }
+    var timeframeType = module.exports.timeframeType(explorer.query.time);
+    return module.exports.timeframeBuilders[timeframeType + '_timeframe'](explorer);
   },
 
   convertDateToUTC: function(date) {
@@ -198,13 +197,12 @@ module.exports = {
 
   /**
    * Takes a URL encoded timerame string or object and returns a time object that looks how the Explorer store wants
-   * it to, as well as whether the timeframe_type is relative or absolute.
+   * it to
    * @param  {String} timeframe
    * @return {Object}
    * Return structure:
    * {
-   *  time: {an Object, either containing a deconstructed absolute or relative timeframe},
-   *  timeframe_type: {a String, either 'relative' or 'absolute'}
+   *  time: {an Object, either containing a deconstructed absolute or relative timeframe}
    * }
    */
   unpackTimeframeParam: function(query) {
@@ -232,7 +230,6 @@ module.exports = {
           start: module.exports.convertDateToUTC(new Date(timeframe.start)),
           end: module.exports.convertDateToUTC(new Date(timeframe.end))
         },
-        timeframe_type: 'absolute',
         timezone: timezone
       };
     } else if (typeof timeframe === 'string') {
@@ -243,11 +240,31 @@ module.exports = {
           amount: split[1],
           sub_timeframe: split[2]
         },
-        timeframe_type: 'relative',
         timezone: query.timezone
       };
     }
   },
+
+
+
+  /**
+   * Takes a time object and returns a string representing the timeframe type (absolute or relative)
+   * @param  {Object} time The time object
+   * @return {String} The type of timeframe, 'absolute' or 'relative'
+   */
+   timeframeType: function(time) {
+      var badTimeTypeError = new Error('Invalid time value');
+
+      if(!_.isPlainObject(time)) {
+        throw badTimeTypeError;
+      } else if(_.has(time, 'start') && _.has(time, 'end')) {
+        return 'absolute';
+      } else if(_.has(time, 'relativity') && _.has(time, 'amount') && _.has(time, 'sub_timeframe')) {
+        return 'relative'
+      } else {
+        throw badTimeTypeError;
+      }
+   },
 
   /**
    * Takes in an object of query params directly taken from the URL and formats/decomnstructs them appropriately to work well
@@ -262,7 +279,6 @@ module.exports = {
       var unpackedTime = module.exports.unpackTimeframeParam(params.query);
       params.query.time = unpackedTime.time;
       params.query.timezone = unpackedTime.timezone;
-      params.query.timeframe_type = unpackedTime.timeframe_type;
     }
     if (params.query.filters) {
       params.query.filters = _.map(params.query.filters, function(filter) {
@@ -334,7 +350,7 @@ module.exports = {
 
       var queryAttrs = Qs.stringify(attrs);
 
-      if (attrs.timeframe && explorer.query.timeframe_type === 'absolute') {
+      if (attrs.timeframe && module.exports.timeframeType(explorer.query.time) === 'absolute') {
         delete attrs['timeframe'];
         // This is an absolute timeframe, so we need to encode the object in a specific way before sending it, as per keen docs => https://keen.io/docs/data-analysis/timeframe/#absolute-timeframes
         timeframe = module.exports.encodeAttribute(timeframe);
@@ -400,7 +416,6 @@ module.exports = {
           'host', 'protocol', 'requestType'
         ],
         dynamicContructorValues;
-
 
     dynamicContructorValues = mapSkip(dynamicConstructorNames, function(name) {
       if (client.config[name] == defaultKeenJsOpts[name]) {
