@@ -11,10 +11,12 @@ var $R = require('rquery')(_, React);
 
 describe('components/explorer/query_builder/extraction_options', function() {
   beforeEach(function() {
-    this.model = TestHelpers.createExplorerModel();
+    var model = TestHelpers.createExplorerModel();
     this.defaultProps = {
       handleSelectionWithEvent: function(){},
-      model: this.model
+      latest: model.query.latest,
+      email: model.query.email,
+      isEmail: false,
     };
     this.renderComponent = function(props) {
       var props = _.assign({}, this.defaultProps, props);
@@ -23,36 +25,18 @@ describe('components/explorer/query_builder/extraction_options', function() {
     this.component = this.renderComponent();
   });
 
-  describe('analysis type is set to extraction and email is an empty string', function () {
+  describe('an email extraction', function () {
     it('shows the email field', function() {
-      this.model.query.event_collection = 'click';
-      this.model.query.analysis_type = 'extraction';
-      this.model.query.email = '';
-      this.component.forceUpdate();
+      this.component.setProps({
+        isEmail: true
+      });
       assert.lengthOf($R(this.component).find('input[name="email"]').components, 1);
     });
-    it('shows the email field', function() {
-      this.model.query.event_collection = 'click';
-      this.model.query.analysis_type = 'extraction';
-      this.model.query.email = '';
-      this.component.forceUpdate();
-      assert.lengthOf($R(this.component).find('input[name="latest"]').components, 1);
+    it('shows the latest field', function() {
+      this.component.setProps({
+        isEmail: true
+      });
+      assert.lengthOf($R(this.component).find('LatestField').components, 1);
     });
   });
-
-  describe('analysis type is not extraction', function () {
-    it('does not shows the email field', function() {
-      this.model.query.event_collection = 'click';
-      this.model.query.analysis_type = 'count';
-      this.component.forceUpdate();
-      assert.lengthOf($R(this.component).find('input[name="email"]').components, 0);
-    });
-    it('does not shows the email field', function() {
-      this.model.query.event_collection = 'click';
-      this.model.query.analysis_type = 'count';
-      this.component.forceUpdate();
-      assert.lengthOf($R(this.component).find('input[name="latest"]').components, 0);
-    });
-  });
-
 });

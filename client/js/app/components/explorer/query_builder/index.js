@@ -133,7 +133,9 @@ var QueryBuilder = React.createClass({
                                          onChange={this.handleSelectionWithEvent} />;
     }
     if (analysisType === 'extraction') {
-      extractionOptions = <ExtractionOptions model={this.props.model}
+      extractionOptions = <ExtractionOptions latest={this.props.model.query.latest}
+                                             email={this.props.model.query.email}
+                                             isEmail={ExplorerUtils.isEmailExtraction(this.props.model)}
                                              handleChange={this.handleSelectionWithEvent}
                                              setExtractionType={this.props.setExtractionType} />;
     }
