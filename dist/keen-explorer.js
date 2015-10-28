@@ -973,7 +973,7 @@ var EventBrowser = React.createClass({displayName: "EventBrowser",
             )
           ), 
           React.createElement("div", {className: "event-browser-content"}, 
-            React.createElement("ul", {className: "nav nav-pills view-options"}, 
+            React.createElement("ul", {className: "nav nav-tabs view-options"}, 
               React.createElement("li", {className: this.getNavClasses('schema')}, 
                 React.createElement("a", {href: "#", name: "schema", onClick: this.changeActiveView}, 
                   "Schema"

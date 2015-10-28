@@ -151,7 +151,7 @@ var EventBrowser = React.createClass({
             </ul>
           </div>
           <div className="event-browser-content">
-            <ul className="nav nav-pills view-options">
+            <ul className="nav nav-tabs view-options">
               <li className={this.getNavClasses('schema')}>
                 <a href="#" name="schema" onClick={this.changeActiveView}>
                   Schema
