@@ -21,29 +21,21 @@ var EventBrowser = React.createClass({
     }
   },
 
-  setActiveEventCollection: function(event) {
-    var collection = event.target.innerText;
-    this.setState({ activeEventCollection: collection });
-    if (!this.props.project.schema[collection].recentEvents) {
-      ProjectActions.fetchRecentEventsForCollection(this.props.client, collection);
-    }
-  },
-
   selectEventCollectionClick: function(event) {
     event.preventDefault();
-    this.selectEventCollection();
+    this.props.selectEventCollection(this.state.activeEventCollection);
   },
 
-  selectEventCollection: function() {
-    var updates = _.cloneDeep(this.props.model.query);
-    updates.event_collection = this.activeEventCollection;
-    ExplorerActions.update(this.props.model.id, { query: updates });
-    this.refs['event-browser-modal'].close();
+  setActiveEventCollectionClick: function(event) {
+    this.setActiveEventCollection(event.target.innerText);
   },
 
-  showEventData: function(event) {
-    event.preventDefault();
-    this.markModelActive(event.target.innerText);
+  setActiveEventCollection: function(collection, props) {
+    var props = props || this.props;
+    this.setState({ activeEventCollection: collection });
+    if (!props.project.schema[collection].recentEvents && !props.project.schema[collection].loading) {
+      ProjectActions.fetchRecentEventsForCollection(props.client, collection);
+    }
   },
 
   setSearchText: function(event) {
@@ -62,7 +54,7 @@ var EventBrowser = React.createClass({
 
       return (
         <li className={classes} key={eventCollection}>
-          <a href="#" onClick={this.setActiveEventCollection}>{eventCollection}</a>
+          <a href="#" onClick={this.setActiveEventCollectionClick}>{eventCollection}</a>
         </li>
       );
     }, this));
@@ -102,9 +94,20 @@ var EventBrowser = React.createClass({
     }
   },
 
+  componentDidMount: function() {
+    if (!this.state.activeEventCollection && !_.isEmpty(this.props.project.schema)) {
+      this.setActiveEventCollection(this.props.project.eventCollections[0]);
+    }
+  },
+
   componentWillReceiveProps: function(nextProps) {
-    // Mark the last chosen event collection in the Query Builder as active here, unless 
-    // this.setState({ activeEventCollection: nextProps.currentEventCollection });
+    if (!_.isEmpty(nextProps.project.schema)) {
+      if (nextProps.currentEventCollection !== this.props.currentEventCollection && nextProps.currentEventCollection !== null) {
+        this.setActiveEventCollection(nextProps.currentEventCollection, nextProps);
+      } else if (!this.state.activeEventCollection) {
+        this.setActiveEventCollection(nextProps.project.eventCollections[0], nextProps);
+      }
+    }
   },
 
   render: function() {
