@@ -67,21 +67,23 @@ module.exports = {
   },
 
   buildProjectSchema: function() {
-    return [
-    {
-      name: 'click',
-      properties: {
-        'stringProp': 'string',
-        'datetimeProp': 'datetime',
-        'numProp': 'num',
-        'nullProp': 'null',
-        'boolProp': 'bool',
-        'listProp': 'list',
-        'geoProp': 'geo'
-      },
-      url: 'https://api.keen.io/3.0/projects/projectId/'
-    }
-    ];
+    return { 
+      'click': {
+        name: 'click',
+        properties: {
+          'stringProp': 'string',
+          'datetimeProp': 'datetime',
+          'numProp': 'num',
+          'nullProp': 'null',
+          'boolProp': 'bool',
+          'listProp': 'list',
+          'geoProp': 'geo'
+        },
+        url: 'https://api.keen.io/3.0/projects/projectId/',
+        loading: false,
+        recentEvents: null
+      }
+    };
   },
 
   createProject: function() {
@@ -89,7 +91,7 @@ module.exports = {
     return {
       loading: false,
       eventCollections: FormatUtils.sortItems(_.map(schema, "name")),
-      projectSchema: schema
+      schema: schema
     };
   },
 

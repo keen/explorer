@@ -32,7 +32,7 @@ var ExtractionOptions = React.createClass({
       <div className="field-component">
         <div className="extraction-options">
           <label>
-            <input type="radio" name="extraction_type" value="immediate" onChange={this.props.setExtractionType} checked={!this.props.isEmail}/> Preview lastest {ExplorerUtils.EXRACTION_EVENT_LIMIT} events now
+            <input type="radio" name="extraction_type" value="immediate" onChange={this.props.setExtractionType} checked={!this.props.isEmail}/> Preview latest {ExplorerUtils.EXRACTION_EVENT_LIMIT} events now
           </label>
           <label>
             <input type="radio" name="extraction_type" value="email" onChange={this.props.setExtractionType} checked={this.props.isEmail}/> Bulk CSV extraction by email
