@@ -164,6 +164,25 @@ describe('utils/FormatUtils', function() {
         assert.deepEqual(parsedList, ['a, banana', 1, '1.25']);
       });
     });
+    describe('Incorrect', function () {
+      it('returns empty string for values that are not lists', function () {
+        var input = 'some name';
+        var parsedList = FormatUtils.parseList(input);
+        assert.deepEqual(parsedList, '');
+      });
+    });
+  });
+
+  describe('isList', function () {
+    it('returns true for a string in expected list format', function () {
+      assert.isTrue(FormatUtils.isList("\"a thing\", '1', '56', \"another thing\""));
+    });
+    it('returns true for a string in expected list format with comma inside quotes', function () {
+      assert.isTrue(FormatUtils.isList("\"a thing, with another thing\", '1', '56', \"another thing\""));
+    });
+    it('returns false for a string that is not in expected list format', function () {
+      assert.isFalse(FormatUtils.isList("a thing"));
+    });
   });
 
 });

@@ -9,12 +9,20 @@ function exists(value) {
   return !_.isNull(value) && !_.isUndefined(value);
 }
 
+function toType(obj) {
+  return ({}).toString.call(obj).match(/\s([a-zA-Z]+)/)[1].toLowerCase()
+}
+
 module.exports = {
 
   coercionFunctions: {
 
     'Datetime': function(filter) {
-      return module.exports.formatDatetimePropertyValue(filter);
+      var coercedDate = module.exports.formatDatetimePropertyValue(filter);
+      if (coercedDate !== null) return coercedDate;
+
+      var yesterday = new Date(moment().subtract(1, 'days').startOf('day').format());
+      return FormatUtils.formatISOTimeNoTimezone(yesterday);
     },
 
     'String': function(filter) {
@@ -55,13 +63,43 @@ module.exports = {
     return module.exports.coercionFunctions[filter.coercion_type](filter);
   },
 
-  formatDatetimePropertyValue: function(filter) {
-    if (moment(filter.property_value).isValid()) {
-      return FormatUtils.formatISOTimeNoTimezone(filter.property_value);
-    } else {
-      var datetime = new Date(moment().subtract(1, 'days').startOf('day').format());
-      return FormatUtils.formatISOTimeNoTimezone(datetime);
+  /**
+   * Gets the type for the given filter's property_value. This value should be raw, as in it should not have
+   * been put through getCoercedValue yet. So for example, if it's a list type, it should be a string with the
+   * expected list format: "\a word\"", '1', '56', \""another word\"" 
+   * @param  {Object} filter The filter to get the property value coercion type for.
+   * @return {String}        The determined type for the given property value.
+   */
+  getCoercionType: function(filter) {
+    switch (toType(filter.property_value)) {
+      case 'object':
+        return 'Geo';
+        break;
+      case 'string':
+        if (module.exports.formatDatetimePropertyValue(filter) !== null) return 'Datetime';
+        if (FormatUtils.isList(filter.property_value)) return 'List';
+        return 'String';
+        break;
+      case 'array':
+        return 'List';
+        break;
+      case 'boolean':
+        return 'Boolean';
+        break;
+      case 'number':
+        return 'Number';
+        break;
+      case 'null':
+        return 'Null';
+        break;
     }
+  },
+
+  formatDatetimePropertyValue: function(filter) {
+    if (!isNaN(Date.parse(filter.property_value))) {
+      return FormatUtils.formatISOTimeNoTimezone(filter.property_value);
+    }
+    return null;
   },
 
   isComplete: function(filter) {
@@ -97,7 +135,7 @@ module.exports = {
       attrs.property_value = FormatUtils.parseList(attrs.property_value);
     }
 
-    return _.pick(attrs, ['property_name', 'operator', 'property_value', 'coercion_type']);
+    return _.pick(attrs, ['property_name', 'operator', 'property_value']);
   },
 
   initList: function(filter) {
