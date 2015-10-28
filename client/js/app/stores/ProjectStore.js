@@ -17,7 +17,7 @@ function defaultAttrs() {
     loading: true,
     eventCollections: [],
     sortedEventCollections: {},
-    projectSchema: null
+    schema: {}
   };
 }
 
@@ -28,6 +28,15 @@ function _create(attrs) {
 
 function _update(id, updates) {
   _projects[id] = _.assign({}, _projects[id], updates);
+}
+
+function _updateEventCollection(id, collectionName, updates) {
+  var newCollection = _.assign(
+    {},
+    _projects[id].schema[collectionName],
+    updates
+  );
+  _projects[id].schema[collectionName] = newCollection;
 }
 
 var ProjectStore = _.assign({}, EventEmitter.prototype, {
@@ -75,6 +84,11 @@ var _dispatcherToken = AppDispatcher.register(function(action) {
 
     case ProjectConstants.PROJECT_UPDATE:
       _update(action.id, action.updates);
+      ProjectStore.emitChange();
+      break;
+
+    case ProjectConstants.PROJECT_UPDATE_EVENT_COLLECTION:
+      _updateEventCollection(action.id, action.collectionName, action.updates);
       ProjectStore.emitChange();
       break;
 

@@ -132,12 +132,11 @@ module.exports = {
   },
 
   getEventCollectionsFromSchema: function(schema) {
-    return FormatUtils.sortItems(_.map(schema, "name"));
+    return FormatUtils.sortItems(_.keys(schema));
   },
 
   getEventCollectionProperties: function(project, eventCollection) {
-    var eventCollection = _.find(project.schema, { name: eventCollection });
-    return eventCollection ? eventCollection.properties : {};
+    return project.schema[eventCollection] ? project.schema[eventCollection].properties : {};
   },
 
   getEventCollectionPropertyNames: function(project, eventCollection) {
@@ -146,7 +145,7 @@ module.exports = {
   },
 
   getPropertyType: function(project, eventCollection, propertyName) {
-    var eventCollection = _.find(project.schema, { name: eventCollection });
+    var eventCollection = project.schema[eventCollection];
     return eventCollection ? eventCollection.properties[propertyName] : null;
   }
 
