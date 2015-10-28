@@ -8,17 +8,14 @@ var classNames = require('classnames');
 var Loader = require('../common/loader.js');
 var FormatUtils = require('../../utils/FormatUtils');
 var ProjectUtils = require('../../utils/ProjectUtils');
-var ExplorerUtils = require('../../utils/ExplorerUtils');
-var ExplorerActions = require('../../actions/ExplorerActions');
 var ProjectActions = require('../../actions/ProjectActions');
 var Modal = require('./modal.js');
 
 var EventBrowser = React.createClass({
 
-  onKeyUp: function(e) {
-    if (e.keyCode == 13) { // enter key code
-      this.selectEventCollection();
-    }
+  onKeyUp: function(event) {
+    var enterKeyCode = 13;
+    if (event.keyCode === enterKeyCode) this.selectEventCollection();
   },
 
   selectEventCollectionClick: function(event) {
@@ -30,11 +27,21 @@ var EventBrowser = React.createClass({
     this.setActiveEventCollection(event.target.innerText);
   },
 
-  setActiveEventCollection: function(collection, props) {
-    var props = props || this.props;
+  setActiveEventCollection: function(collection) {
+    if (collection === this.state.activeEventCollection) return;
     this.setState({ activeEventCollection: collection });
-    if (!props.project.schema[collection].recentEvents && !props.project.schema[collection].loading) {
-      ProjectActions.fetchRecentEventsForCollection(props.client, collection);
+    if (this.state.activeView === 'recentEvents') this.fetchRecentEvents(collection);
+  },
+
+  modalOpened: function() {
+    if (this.state.activeView === 'recentEvents') this.fetchRecentEvents();
+  },
+
+  fetchRecentEvents: function(collectionToUse) {
+    var collection = collectionToUse ? collectionToUse : this.state.activeEventCollection;
+    var schema = this.props.project.schema;
+    if (!_.isEmpty(schema) && !schema[collection].recentEvents && !schema[collection].loading) {
+      ProjectActions.fetchRecentEventsForCollection(this.props.client, collection);
     }
   },
 
@@ -51,7 +58,6 @@ var EventBrowser = React.createClass({
         'active': this.state.activeEventCollection === eventCollection,
         'hide':  re.test(eventCollection) ? false : true
       });
-
       return (
         <li className={classes} key={eventCollection}>
           <a href="#" onClick={this.setActiveEventCollectionClick}>{eventCollection}</a>
@@ -81,7 +87,9 @@ var EventBrowser = React.createClass({
 
   changeActiveView: function(event) {
     event.preventDefault();
-    this.setState({ activeView: event.target.name });
+    var tabName = event.target.name;
+    this.setState({ activeView: tabName });
+    if (tabName === 'recentEvents') this.fetchRecentEvents();
   },
 
   // Lifecycle hooks
@@ -96,17 +104,16 @@ var EventBrowser = React.createClass({
 
   componentDidMount: function() {
     if (!this.state.activeEventCollection && !_.isEmpty(this.props.project.schema)) {
-      this.setActiveEventCollection(this.props.project.eventCollections[0]);
+      this.setActiveEventCollection(this.props.currentEventCollection || this.props.project.eventCollections[0]);
     }
   },
 
   componentWillReceiveProps: function(nextProps) {
-    if (!_.isEmpty(nextProps.project.schema)) {
-      if (nextProps.currentEventCollection !== this.props.currentEventCollection && nextProps.currentEventCollection !== null) {
-        this.setActiveEventCollection(nextProps.currentEventCollection, nextProps);
-      } else if (!this.state.activeEventCollection) {
-        this.setActiveEventCollection(nextProps.project.eventCollections[0], nextProps);
-      }
+    if (!_.isEmpty(nextProps.project.schema) && !this.state.activeEventCollection) {
+      this.setState({ activeEventCollection: nextProps.project.eventCollections[0] });
+    }
+    if (nextProps.currentEventCollection && nextProps.currentEventCollection != this.props.currentEventCollection) {
+      this.setState({ activeEventCollection: nextProps.currentEventCollection });
     }
   },
 
@@ -123,6 +130,7 @@ var EventBrowser = React.createClass({
              title="Project Event Collections"
              size="large"
              modalClasses="event-browser-modal"
+             onOpen={this.modalOpened}
              footerBtns={[
               { text: 'Close' },
               {
