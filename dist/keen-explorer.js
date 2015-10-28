@@ -5698,7 +5698,11 @@ module.exports = {
   coercionFunctions: {
 
     'Datetime': function(filter) {
-      return module.exports.formatDatetimePropertyValue(filter);
+      var coercedDate = module.exports.formatDatetimePropertyValue(filter);
+      if (coercedDate !== null) return coercedDate;
+
+      var yesterday = new Date(moment().subtract(1, 'days').startOf('day').format());
+      return FormatUtils.formatISOTimeNoTimezone(yesterday);
     },
 
     'String': function(filter) {
@@ -5739,14 +5743,21 @@ module.exports = {
     return module.exports.coercionFunctions[filter.coercion_type](filter);
   },
 
+  /**
+   * Gets the type for the given filter's property_value. This value should be raw, as in it should not have
+   * been put through getCoercedValue yet. So for example, if it's a list type, it should be a string with the
+   * expected list format: "\a word\"", '1', '56', \""another word\"" 
+   * @param  {Object} filter The filter to get the property value coercion type for.
+   * @return {String}        The determined type for the given property value.
+   */
   getCoercionType: function(filter) {
-    var type;
-    switch (typeOf(filter.property_value)) {
+    switch (toType(filter.property_value)) {
       case 'object':
         return 'Geo';
         break;
       case 'string':
-        // TODO: Check if it's a datetime or just a string
+        if (module.exports.formatDatetimePropertyValue(filter) !== null) return 'Datetime';
+        if (FormatUtils.isList(filter.property_value)) return 'List';
         return 'String';
         break;
       case 'array':
@@ -5755,18 +5766,20 @@ module.exports = {
       case 'boolean':
         return 'Boolean';
         break;
+      case 'number':
+        return 'Number';
+        break;
       case 'null':
+        return 'Null';
         break;
     }
   },
 
   formatDatetimePropertyValue: function(filter) {
-    if (moment(filter.property_value).isValid()) {
+    if (!isNaN(Date.parse(filter.property_value))) {
       return FormatUtils.formatISOTimeNoTimezone(filter.property_value);
-    } else {
-      var datetime = new Date(moment().subtract(1, 'days').startOf('day').format());
-      return FormatUtils.formatISOTimeNoTimezone(datetime);
     }
+    return null;
   },
 
   isComplete: function(filter) {
@@ -5802,7 +5815,7 @@ module.exports = {
       attrs.property_value = FormatUtils.parseList(attrs.property_value);
     }
 
-    return _.pick(attrs, ['property_name', 'operator', 'property_value', 'coercion_type']);
+    return _.pick(attrs, ['property_name', 'operator', 'property_value']);
   },
 
   initList: function(filter) {
@@ -5824,6 +5837,10 @@ var moment = require('moment');
 
 function _isWrappedInSingleQuotes(value) {
   return value.substring(0, 1) === "'" && value.substring(value.length - 1) === "'";
+}
+
+function _isWrappedInDoubleQuotes(value) {
+  return value.substring(0, 1) === '"' && value.substring(value.length - 1) === '"';
 }
 
 module.exports = {
@@ -5911,6 +5928,7 @@ module.exports = {
 
   parseList: function(value) {
     if (value) {
+      if (!module.exports.isList(value)) return '';
       var parsedList = S(value).parseCSV();
 
       parsedList = _.map(parsedList, function(val) {
@@ -5927,6 +5945,16 @@ module.exports = {
     } else {
       return '';
     }
+  },
+
+  isList: function(str) {
+    var isList = true;
+    var items = str.match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g);
+    for(var i=0; i<items.length; i++) {
+      isList = (_isWrappedInSingleQuotes(items[i].trim()) || _isWrappedInDoubleQuotes(items[i].trim()));
+      if (!isList) break;
+    }
+    return isList;
   }
 
 };
