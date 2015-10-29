@@ -89,11 +89,7 @@ var Explorer = React.createClass({
       });
       return;
     } else {
-      if (ExplorerUtils.isPersisted(this.state.activeExplorer)) {
-        ExplorerActions.saveExisting(this.props.persistence, this.state.activeExplorer.id);
-      } else {
-        ExplorerActions.saveNew(this.props.persistence, this.state.activeExplorer.id);
-      }
+      ExplorerActions.save(this.props.persistence, this.state.activeExplorer.id);
     }
   },
 
