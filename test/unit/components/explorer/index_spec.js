@@ -171,16 +171,13 @@ describe('components/explorer/index', function() {
 
     describe('saveQueryClick', function () {
       before(function () {
-        this.saveNewStub = sinon.stub(ExplorerActions, 'saveNew');
-        this.saveExistingStub = sinon.stub(ExplorerActions, 'saveExisting');
+        this.saveStub = sinon.stub(ExplorerActions, 'save');
       });
       after(function() {
-        ExplorerActions.saveNew.restore();
-        ExplorerActions.saveExisting.restore();
+        ExplorerActions.save.restore();
       });
       beforeEach(function() {
-        this.saveNewStub.reset();
-        this.saveExistingStub.reset();
+        this.saveStub.reset();
       });
 
       describe('yet to be persisted explorers', function () {
@@ -198,7 +195,7 @@ describe('components/explorer/index', function() {
         it('should call ExplorerActions.saveNew if validations pass', function () {
           sinon.stub(ValidationUtils, 'runValidations').returns({ isValid: true });
           this.component.saveQueryClick({ preventDefault: function(){} });
-          assert.isTrue(this.saveNewStub.calledOnce);
+          assert.isTrue(this.saveStub.calledOnce);
           ValidationUtils.runValidations.restore();
         });
       });
@@ -218,7 +215,7 @@ describe('components/explorer/index', function() {
         it('should call ExplorerActions.saveExisting if validations pass', function () {
           sinon.stub(ValidationUtils, 'runValidations').returns({ isValid: true });
           this.component.saveQueryClick({ preventDefault: function(){} });
-          assert.isTrue(this.saveExistingStub.calledOnce);
+          assert.isTrue(this.saveStub.calledOnce);
           ValidationUtils.runValidations.restore();
         });
       });

@@ -254,30 +254,32 @@ var ExplorerActions = {
     });
   },
 
-  saveNew: function(persistence, sourceId) {
+  save: function(persistence, sourceId) {
+    var saveType = ExplorerUtils.isPersisted(ExplorerStore.get(sourceId)) ? 'update' : 'save';
+    var persistenceFunction = saveType === 'save' ? 'create' : 'update';
+
     AppDispatcher.dispatch({
       actionType: ExplorerConstants.EXPLORER_SAVING,
       id: sourceId,
-      saveType: 'save'
+      saveType: saveType
     });
     var valid = ValidationUtils.runValidations(ExplorerValidations.explorer, ExplorerStore.get(sourceId));
     if (!valid.isValid) {
       AppDispatcher.dispatch({
         actionType: ExplorerConstants.EXPLORER_SAVE_FAIL,
-        saveType: 'save',
+        saveType: saveType,
         id: sourceId,
         errorMsg: valid.lastError
       });
       return;
     }
-    var attrs = _.assign({}, ExplorerUtils.toJSON(ExplorerStore.get(sourceId)));
-    persistence.create(attrs, function(err, res) {
+    persistence[persistenceFunction](ExplorerUtils.toJSON(ExplorerStore.get(sourceId)), function(err, res) {
       if (err) {
         AppDispatcher.dispatch({
           actionType: ExplorerConstants.EXPLORER_SAVE_FAIL,
-          saveType: 'save',
+          saveType: saveType,
           id: sourceId,
-          errorMsg: err
+          errorResp: err
         });
       } else {
         var updatedModel = ExplorerUtils.mergeResponseWithExplorer(ExplorerStore.get(sourceId), res);
@@ -290,49 +292,7 @@ var ExplorerActions = {
         AppDispatcher.dispatch({
           actionType: ExplorerConstants.EXPLORER_SAVE_SUCCESS,
           id: updatedModel.id,
-          saveType: 'save',
-        });
-      }
-    });
-  },
-
-  saveExisting: function(persistence, sourceId) {
-    AppDispatcher.dispatch({
-      actionType: ExplorerConstants.EXPLORER_SAVING,
-      id: sourceId,
-      saveType: 'update'
-    });
-    var valid = ValidationUtils.runValidations(ExplorerValidations.explorer, ExplorerStore.get(sourceId));
-    if (!valid.isValid) {
-      AppDispatcher.dispatch({
-        actionType: ExplorerConstants.EXPLORER_SAVE_FAIL,
-        saveType: 'save',
-        id: sourceId,
-        errorMsg: valid.lastError
-      });
-      return;
-    }
-    var attrs = _.assign({}, ExplorerUtils.toJSON(ExplorerStore.get(sourceId)));
-    persistence.update(attrs, function(err, res) {
-      var updatedModel = ExplorerUtils.mergeResponseWithExplorer(ExplorerStore.get(sourceId), res);
-      if (err) {
-        AppDispatcher.dispatch({
-          actionType: ExplorerConstants.EXPLORER_SAVE_FAIL,
-          saveType: 'update',
-          id: sourceId,
-          errorMsg: err
-        });
-      } else {
-        AppDispatcher.dispatch({
-          actionType: ExplorerConstants.EXPLORER_UPDATE,
-          id: sourceId,
-          updates: updatedModel
-        });
-        // We need to use the new model id below, not the old sourceId passed in.
-        AppDispatcher.dispatch({
-          actionType: ExplorerConstants.EXPLORER_SAVE_SUCCESS,
-          id: updatedModel.id,
-          saveType: 'update'
+          saveType: saveType
         });
       }
     });
@@ -3147,11 +3107,7 @@ var Explorer = React.createClass({displayName: "Explorer",
       });
       return;
     } else {
-      if (ExplorerUtils.isPersisted(this.state.activeExplorer)) {
-        ExplorerActions.saveExisting(this.props.persistence, this.state.activeExplorer.id);
-      } else {
-        ExplorerActions.saveNew(this.props.persistence, this.state.activeExplorer.id);
-      }
+      ExplorerActions.save(this.props.persistence, this.state.activeExplorer.id);
     }
   },
 
@@ -4531,7 +4487,7 @@ KeenSavedQueries.prototype.makeRequest = function(action, id, body, callback) {
   }
   r.end(function(err, res){
     if (err) {
-      callback(err);
+      callback(res); // Return the whole response so we can decide how to deal with the error response
       return;
     }
     callback(null, res.body);
@@ -4974,7 +4930,6 @@ var NoticeConstants = require('../constants/NoticeConstants');
 var ExplorerConstants = require('../constants/ExplorerConstants');
 var ExplorerStore = require('../stores/ExplorerStore');
 
-
 var CHANGE_EVENT = 'change';
 
 var _notices = {};
@@ -5061,10 +5016,18 @@ NoticeStore.dispatchToken = AppDispatcher.register(function(action) {
       break;
 
     case ExplorerConstants.EXPLORER_SAVE_FAIL:
-    var text = action.saveType === 'save' ? 'saving your query' : 'updating your query';
+      var msg;
+      var text = action.saveType === 'save' ? 'saving' : 'updating';
+      if (action.errorMsg) {
+        msg = 'Problem ' + text + ': ' + action.errorMsg;
+      } else if (action.errorResp && JSON.parse(action.errorResp.text).error_code === "OverCachedQueryLimitError") {
+        msg = 'Oops! Looks like you’ve reached your caching limit. Need more cached queries? Contact us at team@keen.io';
+      } else if (action.errorResp) {
+        msg = 'Problem ' + text + ': ' + JSON.parse(action.errorResp.text).message;
+      }
       _create({
         type: 'error',
-        text: 'There was a problem ' + text + ': ' + action.errorMsg,
+        text: msg,
         icon: 'remove-sign'
       });
       NoticeStore.emitChange();
@@ -6177,7 +6140,7 @@ module.exports = {
   explorer: {
 
     query_name: {
-      msg: 'You must give your saved query a query name.',
+      msg: 'You must give your saved query a name.',
       validator: function(explorer) {
         if (!explorer.saving) return true;
         return (explorer.query_name !== null && explorer.query_name !== undefined && typeof explorer.query_name === "string" && explorer.query_name.length > 0);
@@ -6187,8 +6150,8 @@ module.exports = {
     refresh_rate: {
       msg: 'Refresh rate must be between 4 and 24 hours.',
       validator: function(explorer) {
-        return (explorer.refresh_rate >= 1440 && explorer.refresh_rate <= 86400) ||
-          explorer.refresh_rate == 0;
+        return (typeof explorer.refresh_rate !== 'number' || (explorer.refresh_rate >= 1440 && explorer.refresh_rate <= 86400) ||
+          explorer.refresh_rate == 0);
       }
     },
 

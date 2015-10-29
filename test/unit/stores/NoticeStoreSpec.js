@@ -85,7 +85,7 @@ describe('stores/NoticeStore', function() {
         assert.deepEqual(NoticeStore.getNotice(), {
           type: 'error',
           icon: 'remove-sign',
-          text: 'There was a problem saving your query: ' + errorMessage
+          text: 'Problem saving: ' + errorMessage
         });
       });
       it('should create the right notice with the "update" saveType', function () {
@@ -99,7 +99,7 @@ describe('stores/NoticeStore', function() {
         assert.deepEqual(NoticeStore.getNotice(), {
           type: 'error',
           icon: 'remove-sign',
-          text: 'There was a problem updating your query: ' + errorMessage
+          text: 'Problem updating: ' + errorMessage
         });
       });
     });
