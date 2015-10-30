@@ -120,6 +120,7 @@ module.exports = {
       'metadata'
     ]);
     json.query = module.exports.queryJSON(explorer);
+    if (json.query.analysis_type === 'extraction') json.refresh_rate = 0;
     return json;
   },
 
