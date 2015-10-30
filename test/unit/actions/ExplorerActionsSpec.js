@@ -338,16 +338,16 @@ describe('actions/ExplorerActions', function() {
       ExplorerStore.get.restore();
     });
 
-    describe('saveNew', function () {
+    describe('save with unpersisted explorer', function () {
       beforeEach(function () {
         this.persistence = {
           create: function(model, callback) {
-            callback(null, _.assign({}, ExplorerUtils.formatQueryParams(ExplorerUtils.toJSON(model)), { id: 'abc123', project_id: 'def456' }));
+            callback(null, _.assign({}, ExplorerUtils.formatQueryParams(ExplorerUtils.toJSON(model)), { query_name: 'abc123' }));
           }
         };
         this.explorer = TestHelpers.createExplorerModel();
         this.explorer.id = 'TEMP-ABC';
-        this.explorer.name = 'some name';
+        this.explorer.query_name = 'some name';
         this.explorer.query.event_collection = 'clicks';
         this.explorer.query.analysis_type = 'count';
         this.getStub.returns(this.explorer);
@@ -359,7 +359,7 @@ describe('actions/ExplorerActions', function() {
       });
 
       it('should dispatch an EXPLORER_SAVING event', function () {
-        ExplorerActions.saveNew(this.persistence, 'TEMP-ABC');
+        ExplorerActions.save(this.persistence, 'TEMP-ABC');
         assert.isTrue(this.dispatchStub.calledWith({
           actionType: 'EXPLORER_SAVING',
           id: 'TEMP-ABC',
@@ -367,7 +367,7 @@ describe('actions/ExplorerActions', function() {
         }));
       });
       it('should dispatch to update the right model with params from mergeResponseWithExplorer if successful', function () {
-        ExplorerActions.saveNew(this.persistence, 'TEMP-ABC');
+        ExplorerActions.save(this.persistence, 'TEMP-ABC');
         assert.isTrue(this.dispatchStub.calledWith({
           actionType: 'EXPLORER_UPDATE',
           id: 'TEMP-ABC',
@@ -375,29 +375,30 @@ describe('actions/ExplorerActions', function() {
         }));
       });
       it('should dispatch a fail event if there is a failure', function () {
+        var errorResp = { text: 'an error' };
         this.persistence.create = function(model, callback) {
-          callback('ERROR');
+          callback(errorResp);
         };
-        ExplorerActions.saveNew(this.persistence, 'TEMP-ABC');
+        ExplorerActions.save(this.persistence, 'TEMP-ABC');
         assert.isTrue(this.dispatchStub.calledWith({
           actionType: 'EXPLORER_SAVE_FAIL',
           saveType: 'save',
           id: 'TEMP-ABC',
-          errorMsg: 'ERROR'
+          errorResp: errorResp
         }));
       });
     });
 
-    describe('saveExisting', function () {
+    describe('save with an already persisted explorer', function () {
       beforeEach(function () {
         this.persistence = {
           update: function(model, callback) {
-            callback(null, _.assign({}, ExplorerUtils.formatQueryParams(ExplorerUtils.toJSON(model)), { id: 'abc123', project_id: 'def456' }));
+            callback(null, _.assign({}, ExplorerUtils.formatQueryParams(ExplorerUtils.toJSON(model)), { query_name: 'abc123' }));
           }
         };
         this.explorer = TestHelpers.createExplorerModel();
-        this.explorer.id = 'ABC';
-        this.explorer.name = 'some name';
+        this.explorer.id = 'abc123';
+        this.explorer.query_name = 'anb123';
         this.explorer.query.event_collection = 'clicks';
         this.explorer.query.analysis_type = 'count';
         this.getStub.returns(this.explorer);
@@ -409,7 +410,7 @@ describe('actions/ExplorerActions', function() {
       });
 
       it('should dispatch an EXPLORER_SAVING event', function () {
-        ExplorerActions.saveExisting(this.persistence, 'ABC');
+        ExplorerActions.save(this.persistence, 'ABC');
         assert.isTrue(this.dispatchStub.calledWith({
           actionType: 'EXPLORER_SAVING',
           id: 'ABC',
@@ -417,7 +418,7 @@ describe('actions/ExplorerActions', function() {
         }));
       });
       it('should dispatch to update the right model with params from mergeResponseWithExplorer if successful', function () {
-        ExplorerActions.saveExisting(this.persistence, 'ABC');
+        ExplorerActions.save(this.persistence, 'ABC');
         assert.isTrue(this.dispatchStub.calledWith({
           actionType: 'EXPLORER_UPDATE',
           id: 'ABC',
@@ -425,15 +426,16 @@ describe('actions/ExplorerActions', function() {
         }));
       });
       it('should dispatch a fail event if there is a failure', function () {
+        var errorResp = { text: 'an error' };
         this.persistence.update = function(model, callback) {
-          callback('ERROR');
+          callback(errorResp);
         };
-        ExplorerActions.saveExisting(this.persistence, 'ABC');
+        ExplorerActions.save(this.persistence, 'ABC');
         assert.isTrue(this.dispatchStub.calledWith({
           actionType: 'EXPLORER_SAVE_FAIL',
           saveType: 'update',
           id: 'ABC',
-          errorMsg: 'ERROR'
+          errorResp: errorResp
         }));
       });
     });

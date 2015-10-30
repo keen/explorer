@@ -9,7 +9,7 @@ module.exports = {
   explorer: {
 
     query_name: {
-      msg: 'You must give your saved query a query name.',
+      msg: 'You must give your saved query a name.',
       validator: function(explorer) {
         if (!explorer.saving) return true;
         return (explorer.query_name !== null && explorer.query_name !== undefined && typeof explorer.query_name === "string" && explorer.query_name.length > 0);
@@ -19,8 +19,8 @@ module.exports = {
     refresh_rate: {
       msg: 'Refresh rate must be between 4 and 24 hours.',
       validator: function(explorer) {
-        return (explorer.refresh_rate >= 1440 && explorer.refresh_rate <= 86400) ||
-          explorer.refresh_rate == 0;
+        return (typeof explorer.refresh_rate !== 'number' || (explorer.refresh_rate >= 1440 && explorer.refresh_rate <= 86400) ||
+          explorer.refresh_rate == 0);
       }
     },
 

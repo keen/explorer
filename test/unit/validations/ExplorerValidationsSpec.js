@@ -55,7 +55,7 @@ describe('validations/ExplorerValidations', function() {
     describe('query name', function () {
       it('has an error message', function () {
         var errorMessage = ExplorerValidations.explorer.query_name.msg;
-        assert.equal(errorMessage, 'You must give your saved query a query name.');
+        assert.equal(errorMessage, 'You must give your saved query a name.');
       });
 
       it('returns true even when the value is not valid when saving is false', function () {
