@@ -48,6 +48,13 @@ var Explorer = React.createClass({
   // ********************************
   // Callbacks for child components
   // ********************************
+  
+  selectEventCollection: function(collectionName) {
+    var updates = _.cloneDeep(this.state.activeExplorer.query);
+    updates.event_collection = collectionName;
+    ExplorerActions.update(this.state.activeExplorer.id, { query: updates });
+    this.refs['event-browser'].refs.modal.close();
+  },
 
   savedQueryClicked: function(event) {
     event.preventDefault();
@@ -82,11 +89,7 @@ var Explorer = React.createClass({
       });
       return;
     } else {
-      if (ExplorerUtils.isPersisted(this.state.activeExplorer)) {
-        ExplorerActions.saveExisting(this.props.persistence, this.state.activeExplorer.id);
-      } else {
-        ExplorerActions.saveNew(this.props.persistence, this.state.activeExplorer.id);
-      }
+      ExplorerActions.save(this.props.persistence, this.state.activeExplorer.id);
     }
   },
 
@@ -282,7 +285,8 @@ var Explorer = React.createClass({
         <EventBrowser ref="event-browser"
                       client={this.props.client}
                       project={this.props.project}
-                      model={this.state.activeExplorer} />
+                      currentEventCollection={this.state.activeExplorer.query.event_collection}
+                      selectEventCollection={this.selectEventCollection} />
         <FilterManager ref="filter-manager"
                       model={this.state.activeExplorer}
                       project={this.props.project}

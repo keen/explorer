@@ -5,7 +5,6 @@ var NoticeConstants = require('../constants/NoticeConstants');
 var ExplorerConstants = require('../constants/ExplorerConstants');
 var ExplorerStore = require('../stores/ExplorerStore');
 
-
 var CHANGE_EVENT = 'change';
 
 var _notices = {};
@@ -92,10 +91,18 @@ NoticeStore.dispatchToken = AppDispatcher.register(function(action) {
       break;
 
     case ExplorerConstants.EXPLORER_SAVE_FAIL:
-    var text = action.saveType === 'save' ? 'saving your query' : 'updating your query';
+      var msg;
+      var text = action.saveType === 'save' ? 'saving' : 'updating';
+      if (action.errorMsg) {
+        msg = 'Problem ' + text + ': ' + action.errorMsg;
+      } else if (action.errorResp && JSON.parse(action.errorResp.text).error_code === "OverCachedQueryLimitError") {
+        msg = 'Oops! Looks like you’ve reached your caching limit. Need more cached queries? Contact us at team@keen.io';
+      } else if (action.errorResp) {
+        msg = 'Problem ' + text + ': ' + JSON.parse(action.errorResp.text).message;
+      }
       _create({
         type: 'error',
-        text: 'There was a problem ' + text + ': ' + action.errorMsg,
+        text: msg,
         icon: 'remove-sign'
       });
       NoticeStore.emitChange();

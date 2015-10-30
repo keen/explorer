@@ -215,8 +215,7 @@ describe('utils/FilterUtils', function() {
       assert.deepEqual(json, {
         property_name: 'name',
         operator: 'eq',
-        property_value: 'Earthworm Jim',
-        coercion_type: 'String'
+        property_value: 'Earthworm Jim'
       });
     });
   });

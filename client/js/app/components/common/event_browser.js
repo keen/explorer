@@ -8,61 +8,59 @@ var classNames = require('classnames');
 var Loader = require('../common/loader.js');
 var FormatUtils = require('../../utils/FormatUtils');
 var ProjectUtils = require('../../utils/ProjectUtils');
-var ExplorerUtils = require('../../utils/ExplorerUtils');
-var ExplorerActions = require('../../actions/ExplorerActions');
+var ProjectActions = require('../../actions/ProjectActions');
 var Modal = require('./modal.js');
 
 var EventBrowser = React.createClass({
 
-  // Callbacks
-
-  onKeyUp: function(e) {
-    if (e.keyCode == 13) { // enter key
-      this.selectEventCollection();
-    }
-  },
-
-  showEventData: function(event) {
-    event.preventDefault();
-    this.markModelActive(event.target.innerText);
-  },
-
-  filterEventNames: function(event) {
-    var eventNameNodes = this.refs['event-names-list'].getDOMNode().childNodes;
-    var models = this.state.models;
-
-    var re = new RegExp(event.target.value, 'i');
-    for (var i = 0; i < eventNameNodes.length; i++) {
-      var nodeText = eventNameNodes[i].childNodes[0].innerText;
-      models[i].visible = re.test(nodeText) ? true : false;
-    }
-    this.setState({ models: models });
+  onKeyUp: function(event) {
+    var enterKeyCode = 13;
+    if (event.keyCode === enterKeyCode) this.selectEventCollection();
   },
 
   selectEventCollectionClick: function(event) {
     event.preventDefault();
-    this.selectEventCollection();
+    this.props.selectEventCollection(this.state.activeEventCollection);
   },
 
-  selectEventCollection: function() {
-    var updates = _.cloneDeep(this.props.model.query);
-    updates.event_collection = this.getActiveModel().query.event_collection;
-    ExplorerActions.update(this.props.model.id, { query: updates });
-    this.refs['event-browser-modal'].close();
+  setActiveEventCollectionClick: function(event) {
+    this.setActiveEventCollection(event.target.innerText);
+  },
+
+  setActiveEventCollection: function(collection) {
+    if (collection === this.state.activeEventCollection) return;
+    this.setState({ activeEventCollection: collection });
+    if (this.state.activeView === 'recentEvents') this.fetchRecentEvents(collection);
+  },
+
+  modalOpened: function() {
+    if (this.state.activeView === 'recentEvents') this.fetchRecentEvents();
+  },
+
+  fetchRecentEvents: function(collectionToUse) {
+    var collection = collectionToUse ? collectionToUse : this.state.activeEventCollection;
+    var schema = this.props.project.schema;
+    if (!_.isEmpty(schema) && !schema[collection].recentEvents && !schema[collection].loading) {
+      ProjectActions.fetchRecentEventsForCollection(this.props.client, collection);
+    }
+  },
+
+  setSearchText: function(event) {
+    this.setState({ searchtext: event.target.value });
   },
 
   // Builders
 
   buildEventCollectionNodes: function() {
-    return _.map(this.state.models, _.bind(function(model) {
+    return _.map(this.props.project.eventCollections, _.bind(function(eventCollection) {
+      var re = new RegExp(this.state.searchtext, 'i');
       var classes = classNames({
-        'active': model.active,
-        'hide':  !model.visible
+        'active': this.state.activeEventCollection === eventCollection,
+        'hide':  re.test(eventCollection) ? false : true
       });
-
       return (
-        <li className={classes} key={model.name}>
-          <a href="#" onClick={this.showEventData}>{model.name}</a>
+        <li className={classes} key={eventCollection}>
+          <a href="#" onClick={this.setActiveEventCollectionClick}>{eventCollection}</a>
         </li>
       );
     }, this));
@@ -70,148 +68,69 @@ var EventBrowser = React.createClass({
 
   // Convenience functions
 
-  stateStore: {},
-
-  setStateBatch: function() {
-    this.setState(this.stateStore);
-    this.stateStore = {};
-  },
-
-  initializeModels: function() {
-    this.stateStore.models = _.map(this.props.project.eventCollections, function(eventCollection) {
-      return {
-        id: FormatUtils.generateRandomId(),
-        name: eventCollection,
-        active: false,
-        visible: true,
-        schema: FormatUtils.prettyPrintJSON(ProjectUtils.getEventCollectionProperties(this.props.project, eventCollection)),
-        result: null,
-        loading: false,
-        query: {
-          analysis_type: 'extraction',
-          event_collection: eventCollection,
-          latest: '10'
-        }
-      };
-    }, this);
-    this.stateStore.modelsInitialized = true;
-
-    // Mark the first collection active by default or use the currently selected event collection.
-    if (this.stateStore.models.length) {
-      this.markModelActive(this.props.model.query.event_collection || this.stateStore.models[0].name);
-    } else {
-      this.setStateBatch();
-    }
-  },
-
-  markModelActive: function(name) {
-    var models = this.stateStore.models || this.state.models;
-
-    _.each(models, function(model) {
-      model.active = false;
-
-      if (model.name === name) {
-        model.active = true;
-        // RUn the query and get the last 10 events if that hasn't happened yet.
-        if (!model.result && !model.loading) {
-          model.loading = true;
-          this.fetchEventsForModel(model);
-        }
-      }
-    }, this); 
-  
-    if (this.stateStore.models) {
-      this.setStateBatch();
-    } else {
-      this.setState({ models: models });
-    }
-  },
-
-  fetchEventsForModel: function(model) {
-    ExplorerUtils.runQuery({
-      client: this.props.client,
-      query: model.query,
-      success: _.bind(function(res){
-        var models = this.state.models;
-        _.find(models, { id: model.id }).result = res.result;
-        this.setState({ models: models });
-      }, this),
-      error: function(err) {
-        throw new Error("There was an error querying for latest events for collection: " + model.name);
-      },
-      complete: _.bind(function() {
-        var models = this.state.models;
-        _.find(models, { id: model.id }).loading = false;
-        this.setState({ models: models });
-      }, this)
-    });
-  },
-
   getNavClasses: function(name) {
     return (this.state.activeView === name) ? 'active' : '';
   },
 
-  getActiveModel: function() {
-    return _.find(this.state.models, { active: true });
+  shouldShowLoader: function() {
+    return (this.state.activeView === 'recentEvents' && this.props.project.schema[this.state.activeEventCollection].loading);
   },
 
-  getPreviewData: {
+  getRecentEvents: function() {
+    var recentEvents = this.props.project.schema[this.state.activeEventCollection].recentEvents;
+    return recentEvents ? FormatUtils.prettyPrintJSON(recentEvents) : "";
+  },
 
-    recentEvents: function(model) {
-      return (model && model.result) ? FormatUtils.prettyPrintJSON(model.result) : "";
-    },
-
-    schema: function(model) {
-      return model ? model.schema : "";
-    }
-
+  getSchema: function() {
+    return FormatUtils.prettyPrintJSON(ProjectUtils.getEventCollectionProperties(this.props.project, this.state.activeEventCollection)) || "";
   },
 
   changeActiveView: function(event) {
     event.preventDefault();
-    this.setState({ activeView: event.target.name });
+    var tabName = event.target.name;
+    this.setState({ activeView: tabName });
+    if (tabName === 'recentEvents') this.fetchRecentEvents();
   },
 
   // Lifecycle hooks
 
   getInitialState: function() {
     return {
-      models: [],
-      modelsInitialized: false,
-      activeView: 'schema'
+      activeView: 'schema',
+      activeEventCollection: null,
+      searchtext: ''
     }
   },
 
-  componentWillMount: function() {
-    // Initialize necessary modules.
-    if (!this.props.project.loading && !this.state.modelsInitialized) {
-      this.initializeModels();
+  componentDidMount: function() {
+    if (!this.state.activeEventCollection && !_.isEmpty(this.props.project.schema)) {
+      this.setActiveEventCollection(this.props.currentEventCollection || this.props.project.eventCollections[0]);
     }
   },
 
   componentWillReceiveProps: function(nextProps) {
-    if (!nextProps.project.loading && !this.state.modelsInitialized) {
-      this.initializeModels();
-    } else {
-      // Mark the last chosen event collection in the Query Builder as active here, unless 
-      var activeModel = this.getActiveModel();
-      var eventCollection = nextProps.model.query.event_collection;
-      if (activeModel && eventCollection && activeModel.name !== eventCollection) {
-        this.markModelActive(eventCollection);
-      }
+    if (!_.isEmpty(nextProps.project.schema) && !this.state.activeEventCollection) {
+      this.setState({ activeEventCollection: nextProps.project.eventCollections[0] });
+    }
+    if (nextProps.currentEventCollection && nextProps.currentEventCollection != this.props.currentEventCollection) {
+      this.setState({ activeEventCollection: nextProps.currentEventCollection });
     }
   },
 
   render: function() {
-    var activeModel = this.getActiveModel();
-    var loaderVisible = (activeModel && this.state.activeView === 'recentEvents') ? activeModel.loading : false;
-    var previewData = this.getPreviewData[this.state.activeView](activeModel);
+    var previewData;
+    if (this.state.activeView === 'recentEvents') {
+      previewData = this.getRecentEvents();
+    } else {
+      previewData = this.getSchema();
+    }
 
     return (
       <Modal ref="modal"
              title="Project Event Collections"
              size="large"
              modalClasses="event-browser-modal"
+             onOpen={this.modalOpened}
              footerBtns={[
               { text: 'Close' },
               {
@@ -224,7 +143,7 @@ var EventBrowser = React.createClass({
         <div className="event-browser" onKeyUp={this.handleKeyUp}>
           <div className="event-names">
             <div className="search-box">
-              <input type="text" name="search" ref="search-box" placeholder="Search..." onChange={this.filterEventNames} />
+              <input type="text" name="search" ref="search-box" placeholder="Search..." onChange={this.setSearchText} />
               <span className="glyphicon glyphicon-search icon"></span>
             </div>
             <ul className="nav nav-pills nav-stacked event-names-list" ref="event-names-list">
@@ -232,7 +151,7 @@ var EventBrowser = React.createClass({
             </ul>
           </div>
           <div className="event-browser-content">
-            <ul className="nav nav-pills view-options">
+            <ul className="nav nav-tabs view-options">
               <li className={this.getNavClasses('schema')}>
                 <a href="#" name="schema" onClick={this.changeActiveView}>
                   Schema
@@ -245,7 +164,7 @@ var EventBrowser = React.createClass({
               </li>
             </ul>
             <div ref="event-data-wrapper" className="event-data-wrapper">
-              <Loader ref="loader" visible={loaderVisible} />
+              <Loader ref="loader" visible={this.shouldShowLoader()} />
               <textarea className="json-view" value={previewData} readOnly />
             </div>
           </div>

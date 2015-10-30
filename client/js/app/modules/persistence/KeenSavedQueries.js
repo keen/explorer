@@ -28,7 +28,7 @@ KeenSavedQueries.prototype.makeRequest = function(action, id, body, callback) {
   }
   r.end(function(err, res){
     if (err) {
-      callback(err);
+      callback(res); // Return the whole response so we can decide how to deal with the error response
       return;
     }
     callback(null, res.body);
