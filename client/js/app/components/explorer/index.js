@@ -222,7 +222,7 @@ var Explorer = React.createClass({
                                      toggleCallback={this.toggleQueryPane}
                                      createNewQuery={this.createNewQuery}
                                      persisted={ExplorerUtils.isPersisted(this.state.activeExplorer)} />;
-      if (!ExplorerUtils.isEmailExtraction(this.state.activeExplorer)) {
+      if (this.state.activeExplorer.query.analysis_type !== 'extraction') {
         cacheToggle = <CacheToggle model={this.state.activeExplorer} />;
       }
       if (this.state.appState.fetchingPersistedExplorers) {
