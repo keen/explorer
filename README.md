@@ -173,14 +173,11 @@ This isn't normally requried, but if you need to, you can run the tests in the b
 * Run a server on another port, we use [http-server](https://www.npmjs.org/package/http-server) on port `8082`
 * See the mocha unit test suite run on `http://localhost:8082/test/unit/`
 
-### Why is this different than the one on keen.io's website?
+### Is this open source Keen Explorer different than the one on keen.io?
 
-In order to move quickly and provide a good experience for its customers, Keen runs a private fork of Explorer for internal bug fixes, new features, and design changes. Some of those changes may rely on specific items in Keen's infrastructure, and need to go through a migration phase to work properly in the open source version.
-
-Those migrations will happen frequently (it is likely that the two versions will usually be in sync), but there may be periods of lag after new larger features come out that this open source repo will behind what Keen shows on its website.
+Nope! We have recently moved all our development on the Keen Explorer to this open source version.  
 
 If you have any questions about using the open source Data Explorer feel free to contact us anytime at [team@keen.io](mailto:team@keen.io). 
-
 
 ### Contributing:
 To contribute to this project:
