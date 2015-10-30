@@ -15,6 +15,7 @@ var stringify = require('stringify');
 var source = require('vinyl-source-stream');
 var historyApiFallback = require('connect-history-api-fallback');
 var mochaPhantomJS = require('gulp-mocha-phantomjs');
+var mochaSelenium = require('gulp-mocha-selenium');
 
 // **********************
 // Build Config

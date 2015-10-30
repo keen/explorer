@@ -1470,30 +1470,6 @@
   padding: 10px;
   position: relative;
 }
-#keen-explorer .visualization-wrapper .alert {
-  font-size: 12px;
-}
-#keen-explorer .extraction-message-component {
-  position: relative;
-}
-#keen-explorer .extraction-message-component .alert {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.07);
-  border-radius: 0;
-  margin: 0 0 10px 0;
-  min-height: 46px;
-  padding: 0 164px 8px 0;
-}
-#keen-explorer .extraction-message-component .alert span.icon {
-  float: left;
-  font-size: 24px;
-  margin: 5px 10px 0 5px;
-}
-#keen-explorer .extraction-message-component .btn {
-  position: absolute;
-  right: 0;
-  top: 0;
-  z-index: 1;
-}
 #keen-explorer .chart {
   position: relative;
 }
@@ -1539,9 +1515,6 @@
   font-size: 13px;
 }
 #keen-explorer .chart-detail-bar .chart-type-component {
-  position: absolute;
-  right: 0px;
-  top: 0px;
   width: 100px;
 }
 #keen-explorer .chart-detail-bar .chart-type-component select {
