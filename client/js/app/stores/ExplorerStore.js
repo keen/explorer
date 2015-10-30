@@ -84,6 +84,35 @@ function _getDefaultFilterCoercionType(explorer, filter) {
 }
 
 /**
+ * Runs through the changeset and moves data around if necessary
+ * @param {Object} explorer   The explorer model that is being updated
+ * @param {Object} updates    The updated explorer model
+ * @return {Object}           The new set of updates
+ */
+function _prepareUpdates(explorer, updates) {
+  var newModel = _.assign({}, explorer, updates);
+
+  _removeEmailExtractionFields(explorer, newModel);
+
+  return newModel;
+}
+
+/**
+ * Removes fields from email extractions
+ * @param {Object} explorer   The explorer model that is being updated
+ * @param {Object} newModel   The updated explorer model
+ * @return {Object}           The new set of updates
+ */
+function _removeEmailExtractionFields(explorer, newModel) {
+  if (!ExplorerUtils.isEmailExtraction(newModel)) {
+    newModel.query.latest = null;
+    newModel.query.email = null;
+  }
+
+  return newModel;
+}
+
+/**
  * Looks at updates about to be made to a filter and performs a series of operations to
  * change the filter values depending on the coercion_type, operator and type of property_value.
  * @param  {Object} explorer  The explorer model that owns the filter to be updated
@@ -128,13 +157,8 @@ function _create(attrs) {
 }
 
 function _update(id, updates) {
-  var newModel = _.assign({}, _explorers[id], updates);
-  // If we're no longer doing an email extraction, remove the latest and email field.
-  // FIXME: Does this belong here? Maybe this should be in the onChange callback rather than hard-bound to the model.
-  if (!ExplorerUtils.isEmailExtraction(newModel)) {
-    newModel.query.latest = null;
-    newModel.query.email = null;
-  }
+  var newModel = _prepareUpdates(_explorers[id], updates);
+
   if (updates.id && updates.id !== id) {
     _explorers[updates.id] = newModel;
     delete _explorers[id];
