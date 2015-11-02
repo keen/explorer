@@ -88,14 +88,6 @@ gulp.task('images', function() {
     .pipe(gulp.dest('./dist/images'));
 });
 
-// Fonts
-// *******
-
-gulp.task('fonts', function() {
-  return gulp.src(['./client/fonts/**/*.*'])
-    .pipe(gulp.dest('./dist/fonts'));
-});
-
 // ********************
 // Testing
 // ********************
@@ -244,11 +236,11 @@ gulp.task('test:unit', function(callback) {
               callback);
 });
 
-gulp.task('development', ['build-scripts', 'images', 'fonts', 'build-styles', 'connect', 'watch']);
+gulp.task('development', ['build-scripts', 'images', 'build-styles', 'connect', 'watch']);
 
-gulp.task('development-with-tests', ['build-scripts', 'images', 'fonts', 'build-styles', 'connect', 'watch-with-tests']);
+gulp.task('development-with-tests', ['build-scripts', 'images', 'build-styles', 'connect', 'watch-with-tests']);
 
-gulp.task('production', ['scripts', 'images', 'fonts', 'styles', 'test:unit']);
+gulp.task('production', ['scripts', 'images', 'styles', 'test:unit']);
 
 
 // ********************
