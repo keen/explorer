@@ -18,12 +18,17 @@ var QueryStringUtils = require('./utils/QueryStringUtils');
 function App(config) {
   this.appDispatcher = AppDispatcher;
   this.targetNode = document.getElementById(config.targetId);
-  this.persistence = config.persistence || null;
+  this.persistence = null;
   this.client = config.client;
 
   ProjectActions.create({ client: this.client });
   ProjectActions.fetchProjectSchema();
-  if (this.persistence) {
+
+  if (config.savedQueries) {
+    this.persistence = new Keen.Explorer.Persistence.KeenSavedQueries({
+      baseUrl: this.client.config.protocol + "://" + this.client.config.host +
+        "/projects/" + this.client.config.projectId + "/queries/saved"
+    });
     if (_.isUndefined(this.client.masterKey())) {
       throw new Error("You must include your project's master key for saved query support.");
     }
