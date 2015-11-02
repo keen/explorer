@@ -20,7 +20,7 @@ The Keen IO Explorer is an open source point-and-click interface for querying an
 You have three options for including the necessary Explorer files:
 
 ##### Option 1: Use the hosted assets from our CDN
-```
+```html
   <!-- Include Bootstrap from CDN. We use bootstrap as our CSS framework for Explorer -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
   <!-- Include Explorer CSS from CDN -->
