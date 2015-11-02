@@ -58,11 +58,11 @@ Somewhere on the page that you want to show Explorer you'll need to configure a 
   var app = new Keen.Explorer.App({
     // Pass that client into a new Explorer
     client: client,
-    // Optionally add in persistance:
-    // Persistence is entirely optional. If you set it to true, a "saved queries" feature
-    // will be shown and you can persist the state of the query you're working
+    // Optionally add in saved queries support:
+    // Saved queries is entirely optional. If you set it to true, a "saved queries" feature
+    // will be available and you can save the state of the query you're working
     // on so that they can be looked up at a later time.
-    persistence: true,
+    savedQueries: true,
     // The targetId is the id of the DOM Node you want to display Explorer inside.
     targetId: 'explorer'
   });
