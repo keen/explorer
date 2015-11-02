@@ -1,8 +1,6 @@
 {
   "name": "keen-explorer",
-  "version": "0.1.12",
-  "private": true,
-  "bucket-name": "keen-js",
+  "version": "1.0.0",
   "dependencies": {
     "classnames": "2.1.2",
     "connect-history-api-fallback": "0.0.5",
@@ -54,5 +52,9 @@
     "run-sequence": "~1.0.1",
     "sinon": "1.14.1",
     "vinyl-source-stream": "1.0.0"
+  },
+  "scripts": {
+    "dev": "gulp",
+    "test": "gulp test:unit"
   }
 }
