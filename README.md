@@ -88,9 +88,9 @@ You can read more about Keen.js here: [The Keen.js client library](https://githu
 
 ### 3. Optionally include Saved Queries support
 
-Persistence support is optional. If you include it, a "saved queries" feature will be shown and you can persist the state of the query you're working with to be looked up at a later time. If you do not want to use saved queries, just do not include it in the Keen.Explorer.App initialization, like above.
+Saved query support is optional. If you include it, you can persist the state of the query you're working with to be looked up at a later time. If you do not want to use saved queries, just do not include it in the Keen.Explorer.App initialization, like above.
 
-To include saved queries, create a new `KeenSavedQueries` object, and then pass that object to the `Keen.Explorer.App` initialization. So, instead of what you see above, you would have:
+To include saved queries, just set the `savedQueries` config variable to `true`. You *must* include a master key if you want saved queries support.
 
 ```html
 <script type="text/javascript">
@@ -103,15 +103,9 @@ To include saved queries, create a new `KeenSavedQueries` object, and then pass 
       requestType: "xhr"
     });
 
-    // Initialization of new KeenSavedQueries object:
-    var keenSavedQueries = new Keen.Explorer.Persistence.KeenSavedQueries({
-      masterKey: "your_master_key",
-      baseUrl: "https://staging-api.keen.io/3.0/projects/{PROJECT_ID}/queries/saved"
-    });
-
     var app = new Keen.Explorer.App({
       client: client,
-      persistence: keenSavedQueries, // saved queries are supported
+      savedQueries: true, // saved queries are supported
       targetId: 'content'
     });
 
