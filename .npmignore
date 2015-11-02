@@ -1,0 +1,16 @@
+*.log
+*.md
+*.yml
+
+.awspublish-keen-js
+.DS_Store
+.git*
+.pairs
+.tmp*
+
+bower.json
+gulpfile.js
+
+demo
+node_modules
+test

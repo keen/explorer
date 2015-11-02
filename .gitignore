@@ -1,7 +1,10 @@
-.DS_Store
-.idea/
-test/unit/build/browserified_tests.js
-node_modules
 *.log
+
 .awspublish-keen-js
+.DS_Store
+
 demo/index.html
+node_modules
+test/unit/build/browserified_tests.js
+
+.idea/
