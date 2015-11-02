@@ -118,6 +118,31 @@ describe('utils/ExplorerUtils', function() {
     });
   });
 
+  describe('toJSON', function () {
+    it('should set the refresh_rate to 0 if the analysis_type is extraction', function () {
+      var explorer = { 
+        refresh_rate: 1440,
+        query: { 
+          event_collection: 'click',
+          analysis_type: 'extraction',
+          time: {
+            relativity: 'this',
+            amount: '1',
+            sub_timeframe: 'days'
+          }
+        }
+      };
+      assert.deepEqual(ExplorerUtils.toJSON(explorer), {
+        query: {
+          event_collection: 'click',
+          analysis_type: 'extraction',
+          timeframe: 'this_1_days'
+        },
+        refresh_rate: 0
+      });
+    });
+  });
+
   describe('runQuery', function () {
     it('should create a Keen.Query', function () {
       var client = { run: sinon.spy() };

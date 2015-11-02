@@ -1,6 +1,9 @@
 {
   "name": "keen-explorer",
+  "description": "Data Explorer by Keen IO",
   "version": "1.0.0",
+  "license": "MIT",
+  "bucket-name": "keen-js",
   "dependencies": {
     "classnames": "2.1.2",
     "connect-history-api-fallback": "0.0.5",
