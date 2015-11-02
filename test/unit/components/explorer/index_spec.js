@@ -8,6 +8,7 @@ var QueryPaneTabs = require('../../../../client/js/app/components/explorer/query
 var BrowseQueries = require('../../../../client/js/app/components/explorer/saved_queries/browse_queries.js');
 var Notice = require('../../../../client/js/app/components/common/notice.js');
 var EventBrowser = require('../../../../client/js/app/components/common/event_browser.js');
+var CacheToggle = require('../../../../client/js/app/components/explorer/cache_toggle.js');
 var Persistence = require('../../../../client/js/app/modules/persistence/persistence.js');
 var ExplorerStore = require('../../../../client/js/app/stores/ExplorerStore');
 var ExplorerActions = require('../../../../client/js/app/actions/ExplorerActions');
@@ -93,6 +94,18 @@ describe('components/explorer/index', function() {
             this.component.forceUpdate();
             assert.isUndefined(this.component.refs['query-pane-tabs'].refs['new-query']);
           });
+        });
+
+        it('has the cache toggle if the analysis_type is not extraction', function(){
+          this.explorer.query.analysis_type = 'count';
+          this.component.forceUpdate();
+          assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, CacheToggle), 1);
+        });
+
+        it('does not have the cache toggle if the analysis_type is extraction', function(){
+          this.explorer.query.analysis_type = 'extraction';
+          this.component.forceUpdate();
+          assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, CacheToggle), 0);
         });
       });
 
