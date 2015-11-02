@@ -1,0 +1,42 @@
+{
+  "name": "keen-explorer",
+  "description": "Data Explorer by Keen IO",
+  "license": "MIT",
+  "authors": [
+    "Eric Anderson <eric@keen.io>",
+    "Joanne Cheng <joanne@keen.io>",
+    "Joe Wegner <joe@keen.io>",
+    "Dustin Larimer <dustin@keen.io>"
+  ],
+  "keywords": [
+    "analytics",
+    "metrics",
+    "stats",
+    "data visualization",
+    "visualization",
+    "keen",
+    "keen.io",
+    "keen-io"
+  ],
+  "homepage": "http://keen.github.io/explorer/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/keen/explorer.git"
+  },
+  "ignore": [
+    "**/.*",
+    "client",
+    "demo",
+    "node_modules",
+    "test",
+    "gulpfile.js",
+    ".DS_Store",
+    ".git*",
+    ".npmignore",
+    ".pairs",
+    ".tmp*",
+    "*.json",
+    "*.md",
+    "*.yml"
+  ],
+}

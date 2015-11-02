@@ -1,7 +1,8 @@
 {
   "name": "keen-explorer",
-  "version": "0.1.12",
-  "private": true,
+  "description": "Data Explorer by Keen IO",
+  "version": "1.0.0",
+  "license": "MIT",
   "bucket-name": "keen-js",
   "dependencies": {
     "classnames": "2.1.2",
