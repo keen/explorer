@@ -55,5 +55,9 @@
     "run-sequence": "~1.0.1",
     "sinon": "1.14.1",
     "vinyl-source-stream": "1.0.0"
+  },
+  "scripts": {
+    "dev": "gulp",
+    "test": "gulp test:unit"
   }
 }
