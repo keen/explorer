@@ -1,6 +1,6 @@
 # Keen IO Explorer
 
-![](https://s3.amazonaws.com/keen-event-images/Screen+Shot+2015-07-22+at+3.25.48+PM.png)
+![](https://s3.amazonaws.com/keen_web_static/assets/img/keen-explorer-v1.0.0.png)
 
 The Keen IO Explorer is an open source point-and-click interface for querying and visualizing your event data. It's maintained by the team at [Keen IO](https://keen.io/).
 
