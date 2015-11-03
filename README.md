@@ -7,8 +7,8 @@ The Keen IO Explorer is an open source point-and-click interface for querying an
 [Check out the demo here.](http://keen.github.io/explorer/). Read on for instructions on how to use the Explorer on your website or in your web app and how to get set up to develop with the Explorer.
 
 ## Table of Contents
-1. [How to use Explorer on your site or in your app](#How-to-use-Explorer-on-your-site-or-in-your-app)
-2. [How to develop with the Explorer](#How-to-develop-with-the-Explorer)
+1. [How to use Explorer on your site or in your app](#how-to-use-explorer-on-your-site-or-in-your-app)
+2. [How to develop with the Explorer](#how-to-develop-with-the-explorer)
 3. [FAQ](#faq)
 4. [Contributing](#contributing)
 5. [Tech used in this project](#tech-used-in-this-project)
