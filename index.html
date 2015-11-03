@@ -16,7 +16,7 @@
   <!-- Demo Site Assets -->
   <link rel="shortcut icon" href="http://keen.github.io/explorer/favicon.ico" type="image/x-icon" />
   <link rel="stylesheet" type="text/css" href="//cloud.typography.com/737368/747986/css/fonts.css" />
-  <link rel="stylesheet" type="text/css" href="assets/vendor/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" href="assets/css/keen-static.css">
   <link rel="stylesheet" type="text/css" href="assets/css/keen-explorer-demo.css">
 
@@ -27,7 +27,7 @@
   <![endif]-->
 
   <!-- Explorer Assets -->
-  <link rel="stylesheet" type="text/css" href="assets/explorer-build/keen-explorer.css">
+  <link rel="stylesheet" href="https://d26b395fwzu5fz.cloudfront.net/apps/keen-explorer-1.0.0.min.css">
 </head>
 <body class="demo-ready">
   <div class="masthead hero">
@@ -145,12 +145,12 @@
   </div>
 
   <!-- Demo Site Assets -->
-  <script type="text/javascript" src="assets/vendor/jquery/dist/jquery.min.js"></script>
-  <script type="text/javascript" src="assets/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
 
   <!-- Explorer Dependencies -->
-  <script type="text/javascript" src="assets/vendor/keen-js/dist/keen.min.js"></script>
-  <script type="text/javascript" src="assets/explorer-build/keen-explorer.js"></script>
+  <script src="https://d26b395fwzu5fz.cloudfront.net/3.2.7/keen.min.js" type="text/javascript"></script>
+  <script src="https://d26b395fwzu5fz.cloudfront.net/apps/keen-explorer-1.0.0.min.js" type="text/javascript"></script>
   <script type="text/javascript">
 
   $(document).ready(function(){
@@ -196,12 +196,14 @@
     }
 
     Keen.ready(function() {
-      var app = window.explorerDemo = new Keen.Explorer.App({
-        client: client = new Keen({
-          projectId: '51cee1b7897a2c5a74000001',
-          readKey: 'd26495906529de8ee6f9ad9cdee37505b3eaf4d6f5b5c8c072eef9fc61db01011e7bff3a0ea98055239921986b15118480463aa1b2b6f89ef6328fa8ee84a43cb4927886657cdaab402dd36f0eca7a4a23761d5df3e50ac787803bd607272a719936261fa61b43458ec51de250fd8cf5',
-          masterKey: '9E1FFDC560020A7C0538AE64D96D34ED'
-        }),
+      var client = new Keen({
+        projectId: '51cee1b7897a2c5a74000001',
+        readKey: 'd26495906529de8ee6f9ad9cdee37505b3eaf4d6f5b5c8c072eef9fc61db01011e7bff3a0ea98055239921986b15118480463aa1b2b6f89ef6328fa8ee84a43cb4927886657cdaab402dd36f0eca7a4a23761d5df3e50ac787803bd607272a719936261fa61b43458ec51de250fd8cf5',
+        masterKey: '9E1FFDC560020A7C0538AE64D96D34ED'
+      });
+      var app = new Keen.Explorer.App({
+        client: client,
+        savedQueries: false,
         targetId: 'keen-data-explorer-wrapper'
       });
       app.render();
