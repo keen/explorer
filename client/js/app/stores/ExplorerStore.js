@@ -122,6 +122,10 @@ function _prepareUpdates(explorer, updates) {
 
 /**
  * If the query got changed to a funnel, move the step-specific parameters to a steps object.
+<<<<<<< 3777b8a6b8fec2695da874e5d7962e0ce0d733de
+=======
+ * and vice versa if it got changed FROM a funnel
+>>>>>>> move properties around when changing to/from funnels
  * @param {Object} explorer The explorer model that is being updated
  * @param {Object} newModel The updated explorer model
  * @return {Object}         The new set of updates
