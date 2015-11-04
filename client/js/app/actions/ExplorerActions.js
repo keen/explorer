@@ -152,7 +152,7 @@ var ExplorerActions = {
       success: function(res) {
         AppDispatcher.dispatch({
           actionType: ExplorerConstants.EXPLORER_QUERY_SUCCESS,
-          explorer: explorer
+          query: explorer.query
         });
         NoticeActions.clearAll();
         NoticeActions.create({ text: "Email extraction successfully requested. Check your email ("+explorer.query.email+").", type: 'success', icon: 'check' });
@@ -170,7 +170,7 @@ var ExplorerActions = {
   execError: function(explorer, err) {
     AppDispatcher.dispatch({
       actionType: ExplorerConstants.EXPLORER_QUERY_ERROR,
-      explorer: explorer,
+      query: explorer.query,
       error: err.message
     });
     ExplorerActions.update(explorer.id, { loading: false });
@@ -180,7 +180,7 @@ var ExplorerActions = {
   execSuccess: function (explorer, response) {
     AppDispatcher.dispatch({
       actionType: ExplorerConstants.EXPLORER_QUERY_SUCCESS,
-      explorer: explorer
+      query: explorer.query
     });
     NoticeActions.clearAll();
     
@@ -245,7 +245,8 @@ var ExplorerActions = {
         actionType: ExplorerConstants.EXPLORER_SAVE_FAIL,
         saveType: saveType,
         id: sourceId,
-        errorMsg: valid.lastError
+        errorMsg: valid.lastError,
+        query: ExplorerStore.get(sourceId).query
       });
       return;
     }
@@ -255,7 +256,8 @@ var ExplorerActions = {
           actionType: ExplorerConstants.EXPLORER_SAVE_FAIL,
           saveType: saveType,
           id: sourceId,
-          errorResp: err
+          errorResp: err,
+          query: ExplorerStore.get(sourceId).query
         });
       } else {
         var updatedModel = ExplorerUtils.mergeResponseWithExplorer(ExplorerStore.get(sourceId), res);
@@ -268,7 +270,8 @@ var ExplorerActions = {
         AppDispatcher.dispatch({
           actionType: ExplorerConstants.EXPLORER_SAVE_SUCCESS,
           id: updatedModel.id,
-          saveType: saveType
+          saveType: saveType,
+          query: updatedModel.query
         });
       }
     });
@@ -283,7 +286,8 @@ var ExplorerActions = {
       if (err) {
         AppDispatcher.dispatch({
           actionType: ExplorerConstants.EXPLORER_DESTROY_FAIL,
-          errorMsg: err
+          errorMsg: err,
+          query: ExplorerStore.get(sourceId).query
         });
       } else {
         AppDispatcher.dispatch({
@@ -291,7 +295,8 @@ var ExplorerActions = {
           id: sourceId
         });
         AppDispatcher.dispatch({
-          actionType: ExplorerConstants.EXPLORER_DESTROY_SUCCESS
+          actionType: ExplorerConstants.EXPLORER_DESTROY_SUCCESS,
+          query: attrs.query
         });
       }
     });
