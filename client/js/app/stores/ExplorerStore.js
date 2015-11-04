@@ -68,6 +68,23 @@ function _defaultGeoFilter() {
   };
 }
 
+function _defaultStep() {
+  return {
+    event_collection: null,
+    actor_property: null,
+    time: {
+      relativity: 'this',
+      amount: 14,
+      sub_timeframe: 'days'
+    },
+    timezone: ProjectUtils.getConstant('DEFAULT_TIMEZONE'),
+    filters: [],
+    optional: false,
+    inverted: false,
+    active: false
+  }
+}
+
 /**
  * Get the default coercion type for this filter based off the filter's property_name's set type
  * in the project schema.
@@ -92,7 +109,59 @@ function _getDefaultFilterCoercionType(explorer, filter) {
 function _prepareUpdates(explorer, updates) {
   var newModel = _.assign({}, explorer, updates);
 
-  _removeEmailExtractionFields(explorer, newModel);
+  newModel = _removeEmailExtractionFields(explorer, newModel);
+  newModel = _migrateFunnelSteps(explorer, newModel);
+
+  return newModel;
+}
+
+/**
+ * If the query got changed to a funnel, move the step-specific parameters to a steps object.
+ * and vice versa if it got changed FROM a funnel
+ * @param {Object} explorer The explorer model that is being updated
+ * @param {Object} newModel The updated explorer model
+ * @return {Object}         The new set of updates
+ */
+function _migrateFunnelSteps(explorer, newModel) {
+  var sharedProperties = ['event_collection', 'time', 'timezone', 'filters']
+  if(newModel.query.analysis_type === 'funnel' && explorer.query.analysis_type !== 'funnel') {
+    // Changing TO funnels
+    var firstStep = _defaultStep();
+    firstStep.active = true;
+
+    _.each(sharedProperties, function (key) {
+      if(typeof(explorer.query[key]) !== 'undefined' && explorer.query[key] !== null) {
+        firstStep[key] = explorer.query[key] 
+      }      
+
+      delete newModel.query[key]
+    });
+
+    if(typeof(explorer.query.target_property) !== 'undefined' && explorer.query.target_property !== null) {
+      firstStep.actor_property = explorer.query.target_property;
+      delete explorer.query.target_property;
+    }
+
+    newModel.query.steps = [firstStep];
+
+  } else if (newModel.query.analysis_type !== 'funnel' && explorer.query.analysis_type === 'funnel') {
+    // Changing FROM funnels
+    var activeStep = _.find(explorer.query.steps, function (step) {
+      return step.active
+    });
+
+    _.each(sharedProperties, function (key) {
+      if(typeof(activeStep[key]) !== 'undefined') {
+        newModel.query[key] = activeStep[key];
+      }
+    });
+
+    if(activeStep.actor_property !== null) {
+      newModel.query.target_property = activeStep.actor_property;
+    }
+
+    delete newModel.query.steps;
+  }
 
   return newModel;
 }
