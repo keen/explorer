@@ -181,7 +181,8 @@ var ExplorerActions = {
   execSuccess: function (explorer, response) {
     AppDispatcher.dispatch({
       actionType: ExplorerConstants.EXPLORER_QUERY_SUCCESS,
-      query: explorer.query
+      query: explorer.query,
+      isSaved: ExplorerUtils.isPersisted(explorer)
     });
     NoticeActions.clearAll();
     
