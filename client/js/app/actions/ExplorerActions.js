@@ -152,7 +152,8 @@ var ExplorerActions = {
       success: function(res) {
         AppDispatcher.dispatch({
           actionType: ExplorerConstants.EXPLORER_QUERY_SUCCESS,
-          query: explorer.query
+          query: explorer.query,
+          isSaved: ExplorerUtils.isPersisted(explorer)
         });
         NoticeActions.clearAll();
         NoticeActions.create({ text: "Email extraction successfully requested. Check your email ("+explorer.query.email+").", type: 'success', icon: 'check' });
