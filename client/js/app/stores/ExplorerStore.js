@@ -110,19 +110,19 @@ function _prepareUpdates(explorer, updates) {
   var newModel = _.assign({}, explorer, updates);
 
   newModel = _removeEmailExtractionFields(explorer, newModel);
-  newModel = _migrateFunnelSteps(explorer, newModel);
+  newModel = _migrateToFunnel(explorer, newModel);
+  newModel = _migrateFromFunnel(explorer, newModel);
 
   return newModel;
 }
 
 /**
  * If the query got changed to a funnel, move the step-specific parameters to a steps object.
- * and vice versa if it got changed FROM a funnel
  * @param {Object} explorer The explorer model that is being updated
  * @param {Object} newModel The updated explorer model
  * @return {Object}         The new set of updates
  */
-function _migrateFunnelSteps(explorer, newModel) {
+function _migrateToFunnel(explorer, newModel) {
   var sharedProperties = ['event_collection', 'time', 'timezone', 'filters']
   if(newModel.query.analysis_type === 'funnel' && explorer.query.analysis_type !== 'funnel') {
     // Changing TO funnels
@@ -143,8 +143,20 @@ function _migrateFunnelSteps(explorer, newModel) {
     }
 
     newModel.query.steps = [firstStep];
+  }
 
-  } else if (newModel.query.analysis_type !== 'funnel' && explorer.query.analysis_type === 'funnel') {
+  return newModel;
+}
+
+/**
+ * If the query got changed from a funnel, move the applicable parameters out to the root query
+ * @param {Object} explorer The explorer model that is being updated
+ * @param {Object} newModel The updated explorer model
+ * @return {Object}         The new set of updates
+ */
+function _migrateFromFunnel(explorer, newModel) {
+  var sharedProperties = ['event_collection', 'time', 'timezone', 'filters']
+  if (newModel.query.analysis_type !== 'funnel' && explorer.query.analysis_type === 'funnel') {
     // Changing FROM funnels
     var activeStep = _.find(explorer.query.steps, function (step) {
       return step.active
