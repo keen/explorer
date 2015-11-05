@@ -271,4 +271,71 @@ describe('components/explorer/query_builder/index', function() {
     });
   });
 
+  describe('event callbacks', function () {
+    describe('handleChange', function () {
+      before(function () {
+        this.stub = sinon.stub(ExplorerActions, 'update');
+      });
+
+      after(function () {
+        ExplorerActions.update.restore();
+      });
+
+      beforeEach(function () {
+        this.stub.reset();
+      });
+
+      describe('should move properties into the active step', function () {
+        beforeEach(function () {
+          this.stub.reset();
+          this.model.query.analysis_type = 'funnel'
+          this.model.query.steps = [{
+            active: true 
+          }]
+          this.component.setProps({
+            model: this.model
+          });;
+        });
+
+
+        it('event_collection', function () {
+          this.component.handleChange('event_collection', 'jumps');
+          assert.strictEqual(this.stub.getCall(0).args[1].query.steps[0].event_collection, 'jumps');
+        });
+
+        it('actor_property', function () {
+          this.component.handleChange('actor_property', 'site_id');
+          assert.strictEqual(this.stub.getCall(0).args[1].query.steps[0].actor_property, 'site_id');
+        });
+
+        it('time', function () {
+          this.component.handleChange('time', {
+            relativity: 'this',
+            amount: 100,
+            sub_timeframe: 'hours'            
+          });
+          assert.deepEqual(this.stub.getCall(0).args[1].query.steps[0].time, {
+            relativity: 'this',
+            amount: 100,
+            sub_timeframe: 'hours'            
+          });
+        });
+
+        it('timezone', function () {
+          this.component.handleChange('timezone', 'America/Central');
+          assert.strictEqual(this.stub.getCall(0).args[1].query.steps[0].timezone, 'America/Central');
+        });
+
+        it('optional', function() {
+          this.component.handleChange('optional', true);
+          assert.strictEqual(this.stub.getCall(0).args[1].query.steps[0].optional, true);
+        });
+
+        it('inverted', function() {
+          this.component.handleChange('inverted', true);
+          assert.strictEqual(this.stub.getCall(0).args[1].query.steps[0].inverted, true);
+        });
+      });
+    });
+  });
 });
