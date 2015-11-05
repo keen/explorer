@@ -384,7 +384,8 @@ describe('actions/ExplorerActions', function() {
           actionType: 'EXPLORER_SAVE_FAIL',
           saveType: 'save',
           id: 'TEMP-ABC',
-          errorResp: errorResp
+          errorResp: errorResp,
+          query: this.explorer.query
         }));
       });
     });
@@ -435,7 +436,8 @@ describe('actions/ExplorerActions', function() {
           actionType: 'EXPLORER_SAVE_FAIL',
           saveType: 'update',
           id: 'ABC',
-          errorResp: errorResp
+          errorResp: errorResp,
+          query: this.explorer.query
         }));
       });
     });
