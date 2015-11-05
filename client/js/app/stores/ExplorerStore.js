@@ -130,14 +130,14 @@ function _migrateFunnelSteps(explorer, newModel) {
     firstStep.active = true;
 
     _.each(sharedProperties, function (key) {
-      if(typeof(explorer.query[key]) !== 'undefined' && explorer.query[key] !== null) {
+      if(!_.isUndefined(explorer.query[key]) && !_.isNull(explorer.query[key])) {
         firstStep[key] = explorer.query[key] 
       }      
 
       delete newModel.query[key]
     });
 
-    if(typeof(explorer.query.target_property) !== 'undefined' && explorer.query.target_property !== null) {
+    if(!_.isUndefined(explorer.query.target_property) && !_.isNull(explorer.query.target_property)) {
       firstStep.actor_property = explorer.query.target_property;
       delete explorer.query.target_property;
     }
@@ -151,12 +151,12 @@ function _migrateFunnelSteps(explorer, newModel) {
     });
 
     _.each(sharedProperties, function (key) {
-      if(typeof(activeStep[key]) !== 'undefined') {
+      if(!_.isUndefined(activeStep[key])) {
         newModel.query[key] = activeStep[key];
       }
     });
 
-    if(activeStep.actor_property !== null) {
+    if(!_.isNull(activeStep.actor_property)) {
       newModel.query.target_property = activeStep.actor_property;
     }
 
