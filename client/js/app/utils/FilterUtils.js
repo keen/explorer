@@ -22,7 +22,7 @@ module.exports = {
       if (coercedDate !== null) return coercedDate;
 
       var yesterday = new Date(moment().subtract(1, 'days').startOf('day').format());
-      return FormatUtils.formatISOTimeNoTimezone(yesterday);
+      return FormatUtils.formatUTCTimezoneIntoISO(yesterday);
     },
 
     'String': function(filter) {
@@ -76,7 +76,7 @@ module.exports = {
         return 'Geo';
         break;
       case 'string':
-        if (module.exports.formatDatetimePropertyValue(filter) !== null) return 'Datetime';
+        if (FormatUtils.isDateInStrictFormat(filter.property_value)) return 'Datetime';
         if (FormatUtils.isList(filter.property_value)) return 'List';
         return 'String';
         break;
@@ -96,9 +96,7 @@ module.exports = {
   },
 
   formatDatetimePropertyValue: function(filter) {
-    if (!isNaN(Date.parse(filter.property_value))) {
-      return FormatUtils.formatISOTimeNoTimezone(filter.property_value);
-    }
+    if (!isNaN(Date.parse(filter.property_value))) return FormatUtils.formatUTCTimezoneIntoISO(filter.property_value);
     return null;
   },
 
@@ -129,7 +127,7 @@ module.exports = {
     attrs.property_value = module.exports.getCoercedValue(filter);
 
     if (attrs.coercion_type === 'Datetime') {
-      attrs.property_value = FormatUtils.formatISOTimeNoTimezone(moment(new Date(attrs.property_value)));
+      attrs.property_value = FormatUtils.formatUTCTimezoneIntoISO(moment(new Date(attrs.property_value)));
     }
     if (attrs.coercion_type === 'List') {
       attrs.property_value = FormatUtils.parseList(attrs.property_value);

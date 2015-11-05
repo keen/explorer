@@ -1,6 +1,7 @@
 var _ = require('lodash');
 var S = require('string');
 var moment = require('moment');
+var DATE_FORMAT = "YYYY-MM-DDTHH:mm:ss.SSS";
 
 function _isWrappedInSingleQuotes(value) {
   return value.substring(0, 1) === "'" && value.substring(value.length - 1) === "'";
@@ -71,8 +72,19 @@ module.exports = {
     });
   },
 
-  formatISOTimeNoTimezone: function(time) {
-    return moment(time).format('YYYY-MM-DDTHH:mm:ss.SSS');
+  /**
+   * Returns an ISO formatted datetime string.
+   * "time" is a UTC time, so Date.parse will put it back into local timezone.
+   * So we need to use .utc() to get it back to UTC format.
+   * @param  {String} time A UTC datetime
+   * @return {String}      ISO formatted datetime string
+   */
+  formatUTCTimezoneIntoISO: function(time) {
+    return moment(Date.parse(time)).utc().format(DATE_FORMAT);
+  },
+
+  isDateInStrictFormat: function(value) {
+    return moment(value, DATE_FORMAT, true).isValid();
   },
 
   generateRandomId: function(prefix) {

@@ -66,8 +66,6 @@ var FilterValueFields = React.createClass({
   handleDateBlur: function (event) {
     var name = event.target.name;
     var value = event.target.value;
-    // console.log('name is: ' + name);
-    // console.log('value is: ' + value);
     this.setDate(name, value);
   },
 

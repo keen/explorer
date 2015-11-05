@@ -54,7 +54,7 @@ var AbsolutePicker = React.createClass({
           </div>
           <div className="col-xs-5 form-collapse-right">
             <Datepicker ref="start-date"
-                        value={moment(time.start).format(dateFormat)}
+                        value={moment(Date.parse(time.start)).utc().format(dateFormat)}
                         name="start"
                         placeholder="Date"
                         onBlur={this.handleDateBlur}
@@ -62,7 +62,7 @@ var AbsolutePicker = React.createClass({
           </div>
           <div className="col-xs-5 form-collapse-left">
             <Timepicker ref="start-time"
-                        value={moment(time.start).format(timeFormat)}
+                        value={moment(Date.parse(time.start)).utc().format(timeFormat)}
                         name="start"
                         placeholder="Time"
                         handleBlur={this.setTime}
@@ -75,8 +75,8 @@ var AbsolutePicker = React.createClass({
           </div>
           <div className="col-xs-5 form-collapse-right">
             <Datepicker ref="end-date"
-                        value={moment(time.end).format(dateFormat)}
-                        minimum={moment(time.start).format(dateFormat)}
+                        value={moment(Date.parse(time.end)).utc().format(dateFormat)}
+                        minimum={moment(Date.parse(time.start)).utc().format(dateFormat)}
                         name="end"
                         placeholder="Date"
                         onBlur={this.handleDateBlur}

@@ -41,20 +41,20 @@ describe('components/common/absolute_picker', function() {
     beforeEach(function(){
       this.model = TestHelpers.createExplorerModel();
       this.model.query.time = {
-        start: ExplorerUtils.convertDateToUTC(new Date(FormatUtils.formatISOTimeNoTimezone(new Date("June 7 2015 1:00 PM")))),
-        end: ExplorerUtils.convertDateToUTC(new Date(FormatUtils.formatISOTimeNoTimezone(new Date("June 8 2015 3:37 PM"))))
+        start: "2015-01-01T13:00:00.000",
+        end: "2015-01-08T15:37:00.000"
       };
       this.component = TestUtils.renderIntoDocument(<AbsolutePicker time={this.model.query.time}/>);
     });
     describe('displaying the correct dates and times at load', function () {
       it('should display the correct start date', function () {
-        assert.strictEqual(this.component.refs['start-date'].refs['datepicker'].getDOMNode().value, "Jun 7, 2015");
+        assert.strictEqual(this.component.refs['start-date'].refs['datepicker'].getDOMNode().value, "Jan 1, 2015");
       });
       it('should display the correct start time', function () {
         assert.strictEqual(this.component.refs['start-time'].refs['timepicker'].refs.input.getDOMNode().value, "1:00 PM");
       });
-      it('should display the correct start date', function () {
-        assert.strictEqual(this.component.refs['end-date'].refs['datepicker'].getDOMNode().value, "Jun 8, 2015");
+      it('should display the correct end date', function () {
+        assert.strictEqual(this.component.refs['end-date'].refs['datepicker'].getDOMNode().value, "Jan 8, 2015");
       });
       it('should display the correct end time', function () {
         assert.strictEqual(this.component.refs['end-time'].refs['timepicker'].refs.input.getDOMNode().value, "3:37 PM");
@@ -71,7 +71,7 @@ describe('components/common/absolute_picker', function() {
         var startTimeInputNode = this.component.refs['start-time'].refs['timepicker'].refs.input.getDOMNode();
         startTimeInputNode.value = "2:55 PM";
         TestUtils.Simulate.blur(startTimeInputNode);
-        assert.strictEqual(this.component.refs['start-date'].refs['datepicker'].getDOMNode().value, "Jun 7, 2015");
+        assert.strictEqual(this.component.refs['start-date'].refs['datepicker'].getDOMNode().value, "Jan 1, 2015");
       });
     });
   });
