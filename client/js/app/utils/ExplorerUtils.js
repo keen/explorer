@@ -171,8 +171,8 @@ module.exports = {
         var offset = zone.offset || '+00:00';
 
         return {
-          start: FormatUtils.formatISOTimeNoTimezone(explorer.query.time.start) + offset,
-          end: FormatUtils.formatISOTimeNoTimezone(explorer.query.time.end) + offset
+          start: FormatUtils.formatUTCTimezoneIntoISO(explorer.query.time.start) + offset,
+          end: FormatUtils.formatUTCTimezoneIntoISO(explorer.query.time.end) + offset
         };
       }
     },

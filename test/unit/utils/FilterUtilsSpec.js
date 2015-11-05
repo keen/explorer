@@ -34,7 +34,7 @@ describe('utils/FilterUtils', function() {
           coercion_type: "Datetime",
           property_value: "May 3, 2015 10:00 AM",
         };
-        assert.strictEqual(FilterUtils.getCoercedValue(filter), "2015-05-03T10:00:00.000");
+        assert.strictEqual(FilterUtils.getCoercedValue(filter), "2015-05-03T16:00:00.000");
       });
     });
 
@@ -186,10 +186,10 @@ describe('utils/FilterUtils', function() {
         property_value: 'date',
         coercion_type: 'Datetime'
       }; 
-      var spy = sinon.spy(FormatUtils, 'formatISOTimeNoTimezone');
+      var spy = sinon.spy(FormatUtils, 'formatUTCTimezoneIntoISO');
       FilterUtils.queryJSON(filter);
       assert.lengthOf(spy.getCalls(), 2);
-      FormatUtils.formatISOTimeNoTimezone.restore();
+      FormatUtils.formatUTCTimezoneIntoISO.restore();
     });
     it('should parse the list if the coercion type is List', function () {
       var filter = {

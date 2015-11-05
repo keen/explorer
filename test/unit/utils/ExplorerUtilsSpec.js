@@ -288,24 +288,22 @@ describe('utils/ExplorerUtils', function() {
   describe('timeframeBuilders', function () {
     describe('absolute_timeframe', function () {
       it('should properly build a timeframe object', function () {
+        var expectedFormat = 'YYYY-MM-DDTHH:mm:ss.SSS';
         var explorer = {
           query: {
             timezone: 'US/Hawaii',
             time: {
-              start: new Date(moment().subtract(1, 'days').startOf('day').format()),
-              end: new Date(moment().startOf('day').format())
+              start: "2015-11-01T00:00:00.000",
+              end: "2015-11-05T00:00:00.000",
             }
           }
         };
         var timeframe = ExplorerUtils.getTimeframe(explorer);
-        var expectedFormat = 'YYYY-MM-DDTHH:mm:ss.SSS';
         var expectedTimezone = '-10:00'
-        var expectedStart = moment(new Date(explorer.query.time.start)).format(expectedFormat) + expectedTimezone;
-        var expectedEnd = moment(new Date(explorer.query.time.end)).format(expectedFormat) + expectedTimezone;
         
         assert.deepEqual(timeframe, {
-          start: expectedStart,
-          end: expectedEnd
+          start: "2015-11-01T00:00:00.000" + expectedTimezone,
+          end: "2015-11-05T00:00:00.000" + expectedTimezone
         });
       });
     });
