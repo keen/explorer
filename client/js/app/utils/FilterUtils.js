@@ -76,7 +76,7 @@ module.exports = {
         return 'Geo';
         break;
       case 'string':
-        if (module.exports.formatDatetimePropertyValue(filter) !== null) return 'Datetime';
+        if (FormatUtils.isDateInStrictFormat(filter.property_value)) return 'Datetime';
         if (FormatUtils.isList(filter.property_value)) return 'List';
         return 'String';
         break;
@@ -96,10 +96,7 @@ module.exports = {
   },
 
   formatDatetimePropertyValue: function(filter) {
-    if (!isNaN(Date.parse(filter.property_value))) {
-      return FormatUtils.formatISOTimeNoTimezone(filter.property_value);
-    }
-    return null;
+    return FormatUtils.formatISOTimeNoTimezone(filter.property_value);
   },
 
   isComplete: function(filter) {

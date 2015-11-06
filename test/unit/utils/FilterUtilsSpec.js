@@ -11,6 +11,20 @@ var FormatUtils = require('../../../client/js/app/utils/FormatUtils');
 var FilterUtils = require('../../../client/js/app/utils/FilterUtils');
 
 describe('utils/FilterUtils', function() {
+
+  describe('getCoercionType', function () {
+    describe('properly determining coercion types when none is set', function () {
+      it('String type when property_value can be parsed into a date', function () {
+        var filter = {
+          property_name: "created_at",
+          operator: "gt",
+          property_value: "query-string-1",
+          coercion_type: null
+        };
+        assert.strictEqual(FilterUtils.getCoercionType(filter), "String");
+      });
+    });
+  });
   
   describe('coercionFunctions', function () {
     it('should have coercion functions for all the types', function () {
