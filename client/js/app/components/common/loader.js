@@ -22,14 +22,14 @@ var LoaderComponent = React.createClass({
   },
 
   render: function() {
-    var classes = "loader";
+    var classes = "explorer-loader";
     if (!this.props.visible) classes += " hide";
     if (this.props.additionalClasses) classes += " " + this.props.additionalClasses;
 
     return (
       <div className={classes}>
         <div className="msg">
-          <div className="spinner">
+          <div className="explorer-spinner">
             <div className="rect1"></div>
             <div className="rect2"></div>
             <div className="rect3"></div>

@@ -5,7 +5,6 @@
 var _ = require('lodash');
 var React = require('react/addons');
 var Loader = require('../../common/loader.js');
-// var DataTable = require('./data_table.js');
 var KeenViz = require('./keen_viz.js');
 var ExplorerUtils = require('../../../utils/ExplorerUtils');
 var FormatUtils = require('../../../utils/FormatUtils');
