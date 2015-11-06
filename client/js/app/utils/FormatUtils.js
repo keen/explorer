@@ -1,6 +1,7 @@
 var _ = require('lodash');
 var S = require('string');
 var moment = require('moment');
+var ISO_DATE_FORMAT = 'YYYY-MM-DDTHH:mm:ss.SSS';
 
 function _isWrappedInSingleQuotes(value) {
   return value.substring(0, 1) === "'" && value.substring(value.length - 1) === "'";
@@ -69,6 +70,15 @@ module.exports = {
     return mapped.map(function(el){
       return items[el.index];
     });
+  },
+
+  /**
+   * Checks whether the given string is in a date format, as defined by:
+   * 'YYYY-MM-DDTHH:mm:ss.SSS'
+   * @return {Boolean} Whether or not the string is in the expected format.
+   */
+  isDateInStrictFormat: function(dateString) {
+    return moment(dateString, ISO_DATE_FORMAT, true).isValid();
   },
 
   formatISOTimeNoTimezone: function(time) {
