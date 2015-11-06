@@ -90,17 +90,23 @@ var Visualization = React.createClass({
         <Notice notice={this.props.notice} closeCallback={this.noticeClosed} />
         <div className="visualization-wrapper">
           <div className={chartDetailBarClasses}>
-            {chartTitle}
-            <div className="chart-type-component">
-              <Select label={false}
-                      ref="chart-type"
-                      name="chart_type"
-                      classes="chart-type"
-                      options={this.formatChartTypes()}
-                      handleSelection={this.changeChartType}
-                      selectedOption={this.props.model.metadata.visualization.chart_type}
-                      emptyOption={false}
-                      disabled={this.props.model.loading} />
+            <div className="row">
+              <div className="col-md-10 chart-title-col">
+                {chartTitle}
+              </div>
+              <div className="col-md-2">
+                <div className="chart-type-component">
+                  <Select label={false}
+                          ref="chart-type"
+                          name="chart_type"
+                          classes="chart-type"
+                          options={this.formatChartTypes()}
+                          handleSelection={this.changeChartType}
+                          selectedOption={this.props.model.metadata.visualization.chart_type}
+                          emptyOption={false}
+                          disabled={this.props.model.loading} />
+                </div>
+              </div>
             </div>
           </div>
           <div className="chart-component">

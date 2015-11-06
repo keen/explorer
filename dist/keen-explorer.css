@@ -1485,9 +1485,6 @@
 #keen-explorer .chart-detail-bar.chart-detail-active {
   opacity: 1;
 }
-#keen-explorer .chart-detail-bar .chart-title-component {
-  margin-right: 110px;
-}
 #keen-explorer .chart-detail-bar .chart-title-component input {
   border: 1px solid #d7d7d7;
   color: #536779;
@@ -1513,9 +1510,6 @@
   border-top-color: transparent;
   color: #808080;
   font-size: 13px;
-}
-#keen-explorer .chart-detail-bar .chart-type-component {
-  width: 100px;
 }
 #keen-explorer .chart-detail-bar .chart-type-component select {
   cursor: pointer;
