@@ -11,6 +11,7 @@ var ProjectUtils = require('../utils/ProjectUtils');
 var ProjectStore = require('./ProjectStore');
 
 var CHANGE_EVENT = 'change';
+var SHARED_FUNNEL_STEP_PROPERTIES = ['event_collection', 'time', 'timezone', 'filters'];
 
 var _explorers = {};
 
@@ -110,8 +111,11 @@ function _prepareUpdates(explorer, updates) {
   var newModel = _.assign({}, explorer, updates);
 
   newModel = _removeEmailExtractionFields(explorer, newModel);
-  newModel = _migrateToFunnel(explorer, newModel);
-  newModel = _migrateFromFunnel(explorer, newModel);
+  if(newModel.query.analysis_type === 'funnel' && explorer.query.analysis_type !== 'funnel') {
+    newModel = _migrateToFunnel(explorer, newModel);
+  } else if(newModel.query.analysis_type !== 'funnel' && explorer.query.analysis_type === 'funnel') {
+    newModel = _migrateFromFunnel(explorer, newModel);
+  }
 
   return newModel;
 }
@@ -123,27 +127,23 @@ function _prepareUpdates(explorer, updates) {
  * @return {Object}         The new set of updates
  */
 function _migrateToFunnel(explorer, newModel) {
-  var sharedProperties = ['event_collection', 'time', 'timezone', 'filters']
-  if(newModel.query.analysis_type === 'funnel' && explorer.query.analysis_type !== 'funnel') {
-    // Changing TO funnels
-    var firstStep = _defaultStep();
-    firstStep.active = true;
+  var firstStep = _defaultStep();
+  firstStep.active = true;
 
-    _.each(sharedProperties, function (key) {
-      if(!_.isUndefined(explorer.query[key]) && !_.isNull(explorer.query[key])) {
-        firstStep[key] = explorer.query[key] 
-      }      
+  _.each(SHARED_FUNNEL_STEP_PROPERTIES, function (key) {
+    if(!_.isUndefined(explorer.query[key]) && !_.isNull(explorer.query[key])) {
+      firstStep[key] = explorer.query[key] 
+    }      
 
-      delete newModel.query[key]
-    });
+    delete newModel.query[key]
+  });
 
-    if(!_.isUndefined(explorer.query.target_property) && !_.isNull(explorer.query.target_property)) {
-      firstStep.actor_property = explorer.query.target_property;
-      delete explorer.query.target_property;
-    }
-
-    newModel.query.steps = [firstStep];
+  if(!_.isUndefined(explorer.query.target_property) && !_.isNull(explorer.query.target_property)) {
+    firstStep.actor_property = explorer.query.target_property;
+    delete explorer.query.target_property;
   }
+
+  newModel.query.steps = [firstStep];
 
   return newModel;
 }
@@ -155,25 +155,21 @@ function _migrateToFunnel(explorer, newModel) {
  * @return {Object}         The new set of updates
  */
 function _migrateFromFunnel(explorer, newModel) {
-  var sharedProperties = ['event_collection', 'time', 'timezone', 'filters']
-  if (newModel.query.analysis_type !== 'funnel' && explorer.query.analysis_type === 'funnel') {
-    // Changing FROM funnels
-    var activeStep = _.find(explorer.query.steps, function (step) {
-      return step.active
-    });
+  var activeStep = _.find(explorer.query.steps, function (step) {
+    return step.active
+  });
 
-    _.each(sharedProperties, function (key) {
-      if(!_.isUndefined(activeStep[key])) {
-        newModel.query[key] = activeStep[key];
-      }
-    });
-
-    if(!_.isNull(activeStep.actor_property)) {
-      newModel.query.target_property = activeStep.actor_property;
+  _.each(SHARED_FUNNEL_STEP_PROPERTIES, function (key) {
+    if(!_.isUndefined(activeStep[key])) {
+      newModel.query[key] = activeStep[key];
     }
+  });
 
-    delete newModel.query.steps;
+  if(!_.isNull(activeStep.actor_property)) {
+    newModel.query.target_property = activeStep.actor_property;
   }
+
+  delete newModel.query.steps;
 
   return newModel;
 }
