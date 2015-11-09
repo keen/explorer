@@ -7,21 +7,6 @@ var FormatUtils = require('./FormatUtils');
 var ProjectUtils = require('./ProjectUtils');
 var FilterUtils = require('./FilterUtils');
 
-var QUERY_PARAMS = [
-  'event_collection',
-  'analysis_type',
-  'target_property',
-  'percentile',
-  'group_by',
-  'timeframe',
-  'interval',
-  'timezone',
-  'filters',
-  'email',
-  'latest',
-  'property_names'
-];
-
 function toCamelcaseName(name) {
   return name.replace(/_(.)/, function(match, p1) {
     return p1.toUpperCase();
@@ -85,29 +70,14 @@ module.exports = {
       delete params.timezone;
     }
 
-    // Remove any empty properties or ones that shouldn't be
-    // part of the query request.
-    _.each(params, function(value, key) {
-      if (!FormatUtils.isValidQueryValue(value)) {
-        delete params[key];
-      }
-      if (!_.contains(QUERY_PARAMS, key)) {
-        delete params[key];
-      }
-    });
-
     // Add filters
     if (params.filters) {
       params.filters = _.map(params.filters, function(filter){
         return FilterUtils.queryJSON(filter);
       });
-      params.filters = _.filter(params.filters, function(filter){
-        return !_.isEmpty(filter);
-      });
-      if (!params.filters.length) {
-        delete params.filters;
-      }
     }
+
+    FormatUtils.cleanQueryParameters(params);
 
     return params;
   },

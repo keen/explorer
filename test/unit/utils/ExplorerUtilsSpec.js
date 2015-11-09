@@ -7,6 +7,7 @@ var Qs = require('qs');
 var TestHelpers = require('../../support/TestHelpers');
 var ExplorerActions = require('../../../client/js/app/actions/ExplorerActions');
 var FilterUtils = require('../../../client/js/app/utils/FilterUtils');
+var FormatUtils = require('../../../client/js/app/utils/FormatUtils');
 var ValidationUtils = require('../../../client/js/app/utils/ValidationUtils');
 var ExplorerValidations = require('../../../client/js/app/validations/ExplorerValidations');
 var ExplorerUtils = require('../../../client/js/app/utils/ExplorerUtils');
@@ -56,13 +57,6 @@ describe('utils/ExplorerUtils', function() {
       assert.deepEqual(ExplorerUtils.queryJSON(explorer), {
         analysis_type: 'shouldRemain'
       });
-    });
-    it('should call FilterUtils.queryJSON for every filter', function () {
-      var explorer = { query: { filters: [{}, {}, {}] } };
-      var stub = sinon.stub(FilterUtils, 'queryJSON');
-      ExplorerUtils.queryJSON(explorer);
-      assert.lengthOf(stub.getCalls(), 3);
-      FilterUtils.queryJSON.restore();
     });
     it('should remove empty filters', function () {
       var explorer = { 

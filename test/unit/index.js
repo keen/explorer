@@ -3,15 +3,15 @@
 // ***********************
 // App
 // ***********************
-require('./app_spec.js');
+/*require('./app_spec.js');
 
 // ***********************
 // Utils
 // ***********************
 require('./utils/ProjectUtilsSpec.js');
-require('./utils/FormatUtilsSpec.js');
+require('./utils/FormatUtilsSpec.js');*/
 require('./utils/ExplorerUtilsSpec.js');
-require('./utils/FilterUtilsSpec.js');
+/*require('./utils/FilterUtilsSpec.js');
 require('./utils/ValidationUtilsSpec.js');
 
 // ***********************
@@ -75,4 +75,4 @@ require('./components/common/absolute_picker_spec.js');
 require('./components/common/modal_spec.js');
 require('./components/common/fields_toggle_spec.js');
 require('./components/common/event_browser_spec.js');
-require('./components/common/notice_spec.js');
+require('./components/common/notice_spec.js');*/
