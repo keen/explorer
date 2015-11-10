@@ -130,52 +130,94 @@ describe('utils/FormatUtils', function() {
     });
   });
 
+  describe('isValidQueryParameter', function () {
+    it('should return true for valid query parameters', function () {
+      assert.isTrue(FormatUtils.isValidQueryParameter('event_collection'));
+    });
+
+    it('should work for nested properties in dot notation', function () {
+      assert.isTrue(FormatUtils.isValidQueryParameter('filters.property_name'));
+    });
+
+    it('should return false for invalid query parameters', function () {
+      assert.isFalse(FormatUtils.isValidQueryParameter('not_a_real_thing'));
+    });
+  });
+
   describe('cleanQueryParameters', function () {
-    it('should remove values that are not part of the query params that get sent to Keen', function () {
+    it('calls isValidQueryParameter for every key in an object', function () {
+      var stub = sinon.stub(FormatUtils, 'isValidQueryParameter').returns(true);
       var params = {
-        someVal: 'shouldBeRemoved',
-        someOtherVal: 'shouldAlsoBeRemoved',
-        event_collection: 'shouldRemain',
-        analysis_type: 'shouldRemain'
-      };
+        first: 1,
+        second: 2,
+        third: 3
+      }
 
       FormatUtils.cleanQueryParameters(params);
 
-      assert.deepEqual(params, {
-        event_collection: 'shouldRemain',
-        analysis_type: 'shouldRemain'
-      });
-    });
-    it('should remove values that are not valid query values', function () {
+      var calls = stub.getCalls();
+      assert.strictEqual(stub.callCount, 3)
+      assert.strictEqual(stub.getCall(0).args[0], 'first');
+      assert.strictEqual(stub.getCall(1).args[0], 'second');
+      assert.strictEqual(stub.getCall(2).args[0], 'third');
+
+      FormatUtils.isValidQueryParameter.restore();
+    }); 
+    it('calls isValidQueryValue for every value in an object', function () {
+      var stub = sinon.stub(FormatUtils, 'isValidQueryValue').returns(true);
       var params = {
-        event_collection: undefined,
-        analysis_type: 'shouldRemain',
-        filters: []
-      };
+        event_collection: 'clicks',
+        analysis_type: 'count',
+        interval: 'daily'
+      }
 
       FormatUtils.cleanQueryParameters(params);
 
-      assert.deepEqual(params, {
-        analysis_type: 'shouldRemain'
-      });
-    });
+      var calls = stub.getCalls();
+      assert.strictEqual(stub.callCount, 3)
+      assert.strictEqual(stub.getCall(0).args[0], 'clicks');
+      assert.strictEqual(stub.getCall(1).args[0], 'count');
+      assert.strictEqual(stub.getCall(2).args[0], 'daily');
 
-    it('should remove empty filters', function () {
+      FormatUtils.isValidQueryValue.restore();
+    }); 
+    it('calls itself recursively for nested objects', function () {
+      var spy = sinon.spy(FormatUtils, 'cleanQueryParameters');
+      var params = {
+        timeframe: {
+          start: 1,
+          end: 10
+        }
+      }
+
+      FormatUtils.cleanQueryParameters(params);
+
+      assert.strictEqual(spy.callCount, 2);
+
+      FormatUtils.cleanQueryParameters.restore();
+    });
+    it('calls itself recursively for each object in an array', function () {
+      var spy = sinon.spy(FormatUtils, 'cleanQueryParameters');
       var params = {
         filters: [
-          { 
-            property_name: 'click',
-            operator: 'eq',
-            property_value: 'button',
+          {
+            filter: 'thing',
           },
-          {},
-          {}
+          {
+            filter: 'another thing',
+          },
+          {
+            filter: 'one more thing',
+          }
         ]
-      };
+      }
 
       FormatUtils.cleanQueryParameters(params);
 
-      assert.lengthOf(params.filters, 1);
+      assert.strictEqual(spy.callCount, 4);
+
+      FormatUtils.cleanQueryParameters.restore();
+
     });
   });
 
