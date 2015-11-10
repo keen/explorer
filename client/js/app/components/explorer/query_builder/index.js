@@ -44,10 +44,10 @@ var QueryBuilder = React.createClass({
 
     if(_.isPlainObject(update)) {
       for(key in update) {
-        newModel.query[key] = update[key];
+        this.placeUpdatedProperty(newModel, key, update[key]);
       }
     } else {
-      newModel.query[update] = value;
+      this.placeUpdatedProperty(newModel, update, value);
     }
 
     ExplorerActions.update(this.props.model.id, newModel);
@@ -57,6 +57,27 @@ var QueryBuilder = React.createClass({
 
   getEventPropertyNames: function()  {
     return ProjectUtils.getEventCollectionPropertyNames(this.props.project, this.props.model.query.event_collection);
+  },
+
+  placeUpdatedProperty: function(updates, key, value) {
+    var stepParameters = [
+      'event_collection',
+      'actor_property',
+      'time',
+      'timezone',
+      'optional',
+      'inverted'
+    ];
+
+    if(updates.query.analysis_type === 'funnel' && _.includes(stepParameters, key)) {
+      var activeStepIndex = _.findIndex(updates.query.steps, function (step) {
+        return step.active;
+      });
+
+      updates.query.steps[activeStepIndex][key] = value;
+    } else {
+      updates.query[key] = value;
+    }
   },
 
   updateGroupBy: function(updates) {
