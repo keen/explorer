@@ -785,6 +785,71 @@
   outline: 0;
   z-index: 1;
 }
+#keen-explorer .margin-top-bump {
+  margin-top: 3px;
+}
+#keen-explorer .margin-bottom-bump {
+  margin-bottom: 3px;
+}
+#keen-explorer .margin-right-bump {
+  margin-right: 3px;
+}
+#keen-explorer .margin-left-bump {
+  margin-left: 3px;
+}
+#keen-explorer .margin-top-tiny {
+  margin-top: 8px;
+}
+#keen-explorer .margin-bottom-tiny {
+  margin-bottom: 8px;
+}
+#keen-explorer .margin-right-tiny {
+  margin-right: 8px;
+}
+#keen-explorer .margin-left-tiny {
+  margin-left: 8px;
+}
+#keen-explorer .padding-tiny {
+  padding: 8px;
+}
+#keen-explorer .padding-right-tiny {
+  padding-right: 8px;
+}
+#keen-explorer .margin-top-small {
+  margin-top: 15px;
+}
+#keen-explorer .margin-bottom-small {
+  margin-bottom: 15px;
+}
+#keen-explorer .margin-left-small {
+  margin-left: 15px;
+}
+#keen-explorer .margin-right-small {
+  margin-right: 15px;
+}
+#keen-explorer .margin-top-medium {
+  margin-top: 25px;
+}
+#keen-explorer .margin-bottom-medium {
+  margin-bottom: 25px;
+}
+#keen-explorer .margin-right-medium {
+  margin-right: 25px;
+}
+#keen-explorer .margin-left-medium {
+  margin-left: 25px;
+}
+#keen-explorer .no-margin {
+  margin: 0;
+}
+#keen-explorer .no-radius-left {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+#keen-explorer .no-radius-right {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
 #keen-explorer .explorer-loader {
   background: rgba(255, 255, 255, 0.67);
   height: 100%;
