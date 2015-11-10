@@ -328,6 +328,115 @@ describe('stores/ExplorerStore', function() {
         var explorer = explorers[Object.keys(explorers)[0]];
         assert.deepPropertyVal(explorer, 'query.latest', '1000');
       });
+      it('should set group_by and interval to null if the analysis type is extraction', function () {
+        ExplorerActions.create({
+          id: 'SOME_ID',
+          name: 'A saved query',
+          query: {
+            analysis_type: 'count',
+            event_collection: 'clicks',
+            timeframe: 'this_1_days'
+          },
+          visualization: {
+            chart_type: 'metric'
+          }
+        });
+        ExplorerActions.update('SOME_ID', {
+          query: {
+            event_collection: 'clicks',
+            analysis_type: 'extraction',
+            timeframe: 'this_1_days',
+            interval: 'daily',
+            group_by: 'org.name',
+            latest: '1000'
+          }
+        });
+        var explorers = ExplorerStore.getAll();
+        var explorer = explorers[Object.keys(explorers)[0]];
+        assert.deepPropertyVal(explorer, 'query.interval', null);
+        assert.deepPropertyVal(explorer, 'query.group_by', null);
+      });
+      it('should set percentile to null if the analysis type is not percentile', function () {
+        ExplorerActions.create({
+          id: 'SOME_ID',
+          name: 'A saved query',
+          query: {
+            event_collection: 'clicks',
+            analysis_type: 'percentile',
+            target_property: 'response.time',
+            percentile: '99',
+            timeframe: 'this_1_days'
+          },
+          visualization: {
+            chart_type: 'metric'
+          }
+        });
+        ExplorerActions.update('SOME_ID', {
+          query: {
+            event_collection: 'clicks',
+            analysis_type: 'count',
+            target_property: 'response.time',
+            percentile: '99',
+            timeframe: 'this_1_days'
+          }
+        });
+        var explorers = ExplorerStore.getAll();
+        var explorer = explorers[Object.keys(explorers)[0]];
+        assert.deepPropertyVal(explorer, 'query.percentile', null);
+        assert.deepPropertyVal(explorer, 'query.target_property', null);
+      });
+      it('should set target_property to null if the analysis type is count', function () {
+        ExplorerActions.create({
+          id: 'SOME_ID',
+          name: 'A saved query',
+          query: {
+            event_collection: 'clicks',
+            analysis_type: 'count_unique',
+            target_property: 'response.time',
+            timeframe: 'this_1_days'
+          },
+          visualization: {
+            chart_type: 'metric'
+          }
+        });
+        ExplorerActions.update('SOME_ID', {
+          query: {
+            event_collection: 'clicks',
+            analysis_type: 'count',
+            target_property: 'response.time',
+            timeframe: 'this_1_days'
+          }
+        });
+        var explorers = ExplorerStore.getAll();
+        var explorer = explorers[Object.keys(explorers)[0]];
+        assert.deepPropertyVal(explorer, 'query.target_property', null);
+      });
+      it('should set target_property to null if the analysis type is extraction', function () {
+        ExplorerActions.create({
+          id: 'SOME_ID',
+          name: 'A saved query',
+          query: {
+            event_collection: 'clicks',
+            analysis_type: 'count_unique',
+            target_property: 'response.time',
+            timeframe: 'this_1_days'
+          },
+          visualization: {
+            chart_type: 'metric'
+          }
+        });
+        ExplorerActions.update('SOME_ID', {
+          query: {
+            event_collection: 'clicks',
+            analysis_type: 'extraction',
+            target_property: 'response.time',
+            timeframe: 'this_1_days'
+          }
+        });
+        var explorers = ExplorerStore.getAll();
+        var explorer = explorers[Object.keys(explorers)[0]];
+        assert.deepPropertyVal(explorer, 'query.target_property', null);
+      });
     });
   });
 

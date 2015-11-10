@@ -110,7 +110,7 @@ function _getDefaultFilterCoercionType(explorer, filter) {
 function _prepareUpdates(explorer, updates) {
   var newModel = _.assign({}, explorer, updates);
 
-  newModel = _removeEmailExtractionFields(explorer, newModel);
+  newModel = _removeInvalidFields(explorer, newModel);
   if(newModel.query.analysis_type === 'funnel' && explorer.query.analysis_type !== 'funnel') {
     newModel = _migrateToFunnel(explorer, newModel);
   } else if(newModel.query.analysis_type !== 'funnel' && explorer.query.analysis_type === 'funnel') {
@@ -175,17 +175,29 @@ function _migrateFromFunnel(explorer, newModel) {
 }
 
 /**
- * Removes fields from email extractions
+ * Removes fields from the query that aren't valid given the new analysis type.
  * @param {Object} explorer   The explorer model that is being updated
  * @param {Object} newModel   The updated explorer model
  * @return {Object}           The new set of updates
  */
-function _removeEmailExtractionFields(explorer, newModel) {
+function _removeInvalidFields(explorer, newModel) {
   if (!ExplorerUtils.isEmailExtraction(newModel)) {
     newModel.query.latest = null;
     newModel.query.email = null;
   }
-
+  if (newModel.query.analysis_type === 'extraction') {
+    newModel.query.group_by = null;
+    newModel.query.interval = null;
+  }
+  if (newModel.query.analysis_type !== 'extraction') {
+    newModel.query.latest = null;
+  }
+  if (newModel.query.analysis_type !== 'percentile') {
+    newModel.query.percentile = null;
+  }
+  if (_.includes(['count', 'extraction'], newModel.query.analysis_type)) {
+    newModel.query.target_property = null;
+  }
   return newModel;
 }
 
