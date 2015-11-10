@@ -11,6 +11,7 @@ var ProjectUtils = require('../utils/ProjectUtils');
 var ProjectStore = require('./ProjectStore');
 
 var CHANGE_EVENT = 'change';
+var SHARED_FUNNEL_STEP_PROPERTIES = ['event_collection', 'time', 'timezone', 'filters'];
 
 var _explorers = {};
 
@@ -68,6 +69,23 @@ function _defaultGeoFilter() {
   };
 }
 
+function _defaultStep() {
+  return {
+    event_collection: null,
+    actor_property: null,
+    time: {
+      relativity: 'this',
+      amount: 14,
+      sub_timeframe: 'days'
+    },
+    timezone: ProjectUtils.getConstant('DEFAULT_TIMEZONE'),
+    filters: [],
+    optional: false,
+    inverted: false,
+    active: false
+  }
+}
+
 /**
  * Get the default coercion type for this filter based off the filter's property_name's set type
  * in the project schema.
@@ -81,6 +99,94 @@ function _getDefaultFilterCoercionType(explorer, filter) {
     explorer.query.event_collection,
     filter.property_name);
   return targetCoercionType = FormatUtils.coercionTypeForPropertyType(propertyType);
+}
+
+/**
+ * Runs through the changeset and moves data around if necessary
+ * @param {Object} explorer   The explorer model that is being updated
+ * @param {Object} updates    The updated explorer model
+ * @return {Object}           The new set of updates
+ */
+function _prepareUpdates(explorer, updates) {
+  var newModel = _.assign({}, explorer, updates);
+
+  newModel = _removeEmailExtractionFields(explorer, newModel);
+  if(newModel.query.analysis_type === 'funnel' && explorer.query.analysis_type !== 'funnel') {
+    newModel = _migrateToFunnel(explorer, newModel);
+  } else if(newModel.query.analysis_type !== 'funnel' && explorer.query.analysis_type === 'funnel') {
+    newModel = _migrateFromFunnel(explorer, newModel);
+  }
+
+  return newModel;
+}
+
+/**
+ * If the query got changed to a funnel, move the step-specific parameters to a steps object.
+ * @param {Object} explorer The explorer model that is being updated
+ * @param {Object} newModel The updated explorer model
+ * @return {Object}         The new set of updates
+ */
+function _migrateToFunnel(explorer, newModel) {
+  var firstStep = _defaultStep();
+  firstStep.active = true;
+
+  _.each(SHARED_FUNNEL_STEP_PROPERTIES, function (key) {
+    if(!_.isUndefined(explorer.query[key]) && !_.isNull(explorer.query[key])) {
+      firstStep[key] = explorer.query[key] 
+    }      
+
+    delete newModel.query[key]
+  });
+
+  if(!_.isUndefined(explorer.query.target_property) && !_.isNull(explorer.query.target_property)) {
+    firstStep.actor_property = explorer.query.target_property;
+    delete explorer.query.target_property;
+  }
+
+  newModel.query.steps = [firstStep];
+
+  return newModel;
+}
+
+/**
+ * If the query got changed from a funnel, move the applicable parameters out to the root query
+ * @param {Object} explorer The explorer model that is being updated
+ * @param {Object} newModel The updated explorer model
+ * @return {Object}         The new set of updates
+ */
+function _migrateFromFunnel(explorer, newModel) {
+  var activeStep = _.find(explorer.query.steps, function (step) {
+    return step.active
+  });
+
+  _.each(SHARED_FUNNEL_STEP_PROPERTIES, function (key) {
+    if(!_.isUndefined(activeStep[key])) {
+      newModel.query[key] = activeStep[key];
+    }
+  });
+
+  if(!_.isNull(activeStep.actor_property)) {
+    newModel.query.target_property = activeStep.actor_property;
+  }
+
+  delete newModel.query.steps;
+
+  return newModel;
+}
+
+/**
+ * Removes fields from email extractions
+ * @param {Object} explorer   The explorer model that is being updated
+ * @param {Object} newModel   The updated explorer model
+ * @return {Object}           The new set of updates
+ */
+function _removeEmailExtractionFields(explorer, newModel) {
+  if (!ExplorerUtils.isEmailExtraction(newModel)) {
+    newModel.query.latest = null;
+    newModel.query.email = null;
+  }
+
+  return newModel;
 }
 
 /**
@@ -128,13 +234,8 @@ function _create(attrs) {
 }
 
 function _update(id, updates) {
-  var newModel = _.assign({}, _explorers[id], updates);
-  // If we're no longer doing an email extraction, remove the latest and email field.
-  // FIXME: Does this belong here? Maybe this should be in the onChange callback rather than hard-bound to the model.
-  if (!ExplorerUtils.isEmailExtraction(newModel)) {
-    newModel.query.latest = null;
-    newModel.query.email = null;
-  }
+  var newModel = _prepareUpdates(_explorers[id], updates);
+
   if (updates.id && updates.id !== id) {
     _explorers[updates.id] = newModel;
     delete _explorers[id];

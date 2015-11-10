@@ -683,4 +683,117 @@ describe('stores/ExplorerStore', function() {
       assert.lengthOf(Object.keys(ExplorerStore.getAll()), 2);
     });
   });
+
+  describe('funnels', function () {
+    describe('changing TO funnels', function () {
+      var explorer;
+      beforeEach(function () {
+        explorer = ExplorerActions.create({id: 'abc123'});
+      });
+      it('should remove root query properties', function () {
+        ExplorerActions.update('abc123', { query: { analysis_type: 'funnel' } });  
+
+        var newExplorer = ExplorerStore.get('abc123');
+        assert.notDeepProperty(newExplorer, 'query.event_collection');
+        assert.notDeepProperty(newExplorer, 'query.target_property');
+        assert.notDeepProperty(newExplorer, 'query.time');
+        assert.notDeepProperty(newExplorer, 'query.timezone');
+        assert.notDeepProperty(newExplorer, 'query.filters');
+      });
+
+      it('should create a first active step', function () {
+        ExplorerActions.update('abc123', { query: { analysis_type: 'funnel' } });  
+
+        var newExplorer = ExplorerStore.get('abc123');
+        assert.deepProperty(newExplorer, 'query.steps');
+        assert.strictEqual(newExplorer.query.steps.length, 1);
+        assert.strictEqual(newExplorer.query.steps[0].active, true);
+      });
+
+      it('should move root properties over to the first step', function () {
+        ExplorerActions.update('abc123', {
+          query: {
+            event_collection: 'pageviews',
+            target_property: 'user',
+            time: {
+             relativity: 'this',
+             amount: 1,
+             sub_timeframe: 'hours'
+            }
+          }
+        });
+
+        ExplorerActions.update('abc123', { query: { analysis_type: 'funnel' } });
+
+        var newExplorer = ExplorerStore.get('abc123');
+
+        assert.strictEqual(newExplorer.query.steps[0].event_collection, 'pageviews');
+        assert.strictEqual(newExplorer.query.steps[0].actor_property, 'user');
+        assert.deepEqual(newExplorer.query.steps[0].time, {
+         relativity: 'this',
+         amount: 1,
+         sub_timeframe: 'hours'
+        });
+      });
+    });
+
+    describe('changing FROM funnels', function () {
+      var explorer;
+      beforeEach(function () {
+        explorer = ExplorerActions.create({
+          id: 'abc123',
+          query: {
+            analysis_type: 'funnel',
+            steps: [
+              {
+                event_collection: 'pageviews',
+                actor_property: 'user',
+                time: {
+                  relativity: 'this',
+                  amount: 32,
+                  sub_timeframe: 'days'
+                },
+                timezone: 'PDT',
+                active: false
+              },
+              {
+                event_collection: 'signups',
+                actor_property: 'user',
+                time: {
+                  relativity: 'this',
+                  amount: 7,
+                  sub_timeframe: 'days'
+                },
+                timezone: 'PDT',
+                active: true
+              }
+            ]   
+          }
+        });
+      });
+
+      it('removes the steps property', function() {
+        ExplorerActions.update('abc123', { query: { analysis_type: 'count' } });
+
+        var newExplorer = ExplorerStore.get('abc123');
+
+        assert.notDeepProperty(newExplorer, 'query.steps');
+      });
+
+      it('moves active step properties to the root query', function () {
+        ExplorerActions.update('abc123', { query: { analysis_type: 'count' } });
+
+        var newExplorer = ExplorerStore.get('abc123');
+       
+        assert.strictEqual(newExplorer.query.event_collection, 'signups');
+        assert.strictEqual(newExplorer.query.target_property, 'user');
+        assert.strictEqual(newExplorer.query.timezone, 'PDT');
+        assert.deepEqual(newExplorer.query.time, {
+          relativity: 'this',
+          amount: 7,
+          sub_timeframe: 'days'
+        });
+      });
+    });
+  });
 });
