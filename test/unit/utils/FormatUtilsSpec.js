@@ -124,6 +124,59 @@ describe('utils/FormatUtils', function() {
     it('should return true for numeric 0', function () {
       assert.isTrue(FormatUtils.isValidQueryValue(0));
     });
+
+    it('should return true for numeric 1', function() {
+      assert.isTrue(FormatUtils.isValidQueryValue(1));
+    });
+  });
+
+  describe('cleanQueryParameters', function () {
+    it('should remove values that are not part of the query params that get sent to Keen', function () {
+      var params = {
+        someVal: 'shouldBeRemoved',
+        someOtherVal: 'shouldAlsoBeRemoved',
+        event_collection: 'shouldRemain',
+        analysis_type: 'shouldRemain'
+      };
+
+      FormatUtils.cleanQueryParameters(params);
+
+      assert.deepEqual(params, {
+        event_collection: 'shouldRemain',
+        analysis_type: 'shouldRemain'
+      });
+    });
+    it('should remove values that are not valid query values', function () {
+      var params = {
+        event_collection: undefined,
+        analysis_type: 'shouldRemain',
+        filters: []
+      };
+
+      FormatUtils.cleanQueryParameters(params);
+
+      assert.deepEqual(params, {
+        analysis_type: 'shouldRemain'
+      });
+    });
+
+    it('should remove empty filters', function () {
+      var params = {
+        filters: [
+          { 
+            property_name: 'click',
+            operator: 'eq',
+            property_value: 'button',
+          },
+          {},
+          {}
+        ]
+      };
+
+      FormatUtils.cleanQueryParameters(params);
+
+      assert.lengthOf(params.filters, 1);
+    });
   });
 
   describe('parseList', function () {

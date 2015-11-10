@@ -20,19 +20,14 @@ describe('utils/ExplorerUtils', function() {
   });
 
   describe('queryJSON', function () {
-    it('should remove values that are not part of the query params that get sent to Keen', function () {
-      var explorer = {
-        query: {
-          someVal: 'shouldBeRemoved',
-          someOtherVal: 'shouldAlsoBeRemoved',
-          event_collection: 'sholdRemain',
-          analysis_type: 'shouldRemain'
-        }
-      };
-      assert.deepEqual(ExplorerUtils.queryJSON(explorer), {
-        event_collection: 'sholdRemain',
-        analysis_type: 'shouldRemain'
-      });
+    it('should call FormatUtils.cleanQueryParameters', function () {
+      var explorer = { query: { analysis_type: 'count' } };
+      var cleanStub = sinon.stub(FormatUtils, 'cleanQueryParameters').returns(explorer);
+
+      ExplorerUtils.queryJSON(explorer);
+      assert(cleanStub.called);       
+      
+      FormatUtils.cleanQueryParameters.restore();
     });
     it('should remove the timezone if the timeframe type is absolute', function () {
       var explorer = {
@@ -45,36 +40,6 @@ describe('utils/ExplorerUtils', function() {
         }
       };
       assert.notDeepProperty(ExplorerUtils.queryJSON(explorer), 'timezone');
-    });
-    it('should remove values that are not valid query values', function () {
-      var explorer = {
-        query: {
-          event_collection: undefined,
-          analysis_type: 'shouldRemain',
-          filters: []
-        }
-      };
-      assert.deepEqual(ExplorerUtils.queryJSON(explorer), {
-        analysis_type: 'shouldRemain'
-      });
-    });
-    it('should remove empty filters', function () {
-      var explorer = { 
-        query: { 
-          filters: [
-            { 
-              property_name: 'click',
-              operator: 'eq',
-              property_value: 'button',
-              coercion_type: 'String'
-            },
-            {},
-            {}
-          ]
-        }
-      };
-      var json = ExplorerUtils.queryJSON(explorer);
-      assert.lengthOf(json.filters, 1);
     });
     it('should remove the fitlers key if it is empty after getting their queryJSON verisons', function () {
       var explorer = { 
