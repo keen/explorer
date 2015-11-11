@@ -132,7 +132,7 @@ describe('components/explorer/query_builder/index', function() {
           sinon.stub(ProjectUtils, 'getEventCollectionPropertyNames').returns(expectedOptions);
           this.model.query.event_collection = 'click';
           this.model.query.analysis_type = 'count';
-          this.model.query.group_by = 'one';
+          this.model.query.group_by = ['one'];
           this.component.forceUpdate();
 
           var groupByNode = TestUtils.findRenderedDOMComponentWithClass(this.component, 'group-by').getDOMNode();
@@ -219,14 +219,15 @@ describe('components/explorer/query_builder/index', function() {
       it('tries to update the attribute when the field changes', function() {
         this.model.query.event_collection = 'clicks';
         this.model.query.analysis_type = 'percentile';  
-        this.model.query.group_by = 'group_by_property';
+        this.model.query.group_by = ['old_group_by_value'];
         this.component.forceUpdate();
 
-        this.component.refs['group-by-field'].refs.select.refs.input.getDOMNode().value = 'new_group_by_property';
-        TestUtils.Simulate.change(this.component.refs['group-by-field'].refs.select.refs.input.getDOMNode());
+        var input = $R(this.component).find('.group-by').components[0];
+        input.getDOMNode().value = 'new_group_by_value';
+        TestUtils.Simulate.change(input.getDOMNode());
 
         assert.strictEqual(this.stub.getCall(0).args[0], this.model.id);
-        assert.deepPropertyVal(this.stub.getCall(0).args[1], 'query.group_by', 'new_group_by_property');
+        assert.sameMembers(this.stub.getCall(0).args[1].query.group_by, ['new_group_by_value']);
       });
     });
   });
