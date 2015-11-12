@@ -18,8 +18,8 @@ module.exports = {
   coercionFunctions: {
 
     'Datetime': function(filter) {
-      var coercedDate = module.exports.formatDatetimePropertyValue(filter);
-      if (coercedDate !== null) return coercedDate;
+      var coercedDate = FormatUtils.formatISOTimeNoTimezone(filter.property_value);
+      if (coercedDate !== null && coercedDate !== 'Invalid date') return coercedDate;
 
       var yesterday = new Date(moment().subtract(1, 'days').startOf('day').format());
       return FormatUtils.formatISOTimeNoTimezone(yesterday);
@@ -93,10 +93,6 @@ module.exports = {
         return 'Null';
         break;
     }
-  },
-
-  formatDatetimePropertyValue: function(filter) {
-    return FormatUtils.formatISOTimeNoTimezone(filter.property_value);
   },
 
   isComplete: function(filter) {
