@@ -75,6 +75,46 @@ describe('utils/ExplorerUtils', function() {
         timeframe: 'this_1_days'
       });
     });
+    it('sets the timeframe on steps', function () {
+      var explorer = {
+        query: {
+          steps: [
+            {
+              timezone: 'US/Mountain',
+              time: {
+                start: new Date("Jan 1, 2015 1:00 PM"),
+                end: new Date("Jan 2, 2015 1:00 PM")
+              }
+            }
+          ]
+        }
+      }
+
+      assert.deepProperty(ExplorerUtils.queryJSON(explorer).steps[0], 'timeframe.start')
+      assert.deepProperty(ExplorerUtils.queryJSON(explorer).steps[0], 'timeframe.end');;
+    });
+    it('should call FilterUtils.queryJSON for step filters', function () {
+      var stub = sinon.stub(FilterUtils, 'queryJSON');
+
+      var explorer = {
+        query: {
+          steps: [
+            {
+              filters: [{property_name: 'test'}]
+            },
+            {
+              filters: [{property_name: 'test2'}]
+            }
+          ]
+        }
+      }
+
+      ExplorerUtils.queryJSON(explorer);
+
+      assert.lengthOf(stub.getCalls(), 2);
+
+      FilterUtils.queryJSON.restore();
+    }); 
   });
 
   describe('toJSON', function () {
@@ -213,32 +253,23 @@ describe('utils/ExplorerUtils', function() {
 
   describe('getTimeframe', function () {
     it('should call the right timeframe builder for absolute timeframes', function () {
-      var explorer = {
-        query: {
-          timezone: 'US/Hawaii',
-          time: {
-            start: new Date(moment().subtract(1, 'days').startOf('day').format()),
-            end: new Date(moment().startOf('day').format())
-          }
-        }
+      var time = {
+        start: new Date(moment().subtract(1, 'days').startOf('day').format()),
+        end: new Date(moment().startOf('day').format())
       };
       var stub = sinon.stub(ExplorerUtils.timeframeBuilders, 'absolute_timeframe');
-      ExplorerUtils.getTimeframe(explorer);
+      ExplorerUtils.getTimeframe(time, 'US/Hawaii');
       assert.isTrue(stub.calledOnce);
       ExplorerUtils.timeframeBuilders.absolute_timeframe.restore();
     });
     it('should call the right timeframe builder for relative timeframes', function () {
-      var explorer = {
-        query: {
-          time: {
-            relativity: 'this',
-            amount: '1',
-            sub_timeframe: 'days'
-          }
-        }
+      var time = {
+        relativity: 'this',
+        amount: '1',
+        sub_timeframe: 'days'
       };
       var stub = sinon.stub(ExplorerUtils.timeframeBuilders, 'relative_timeframe');
-      ExplorerUtils.getTimeframe(explorer);
+      ExplorerUtils.getTimeframe(time);
       assert.isTrue(stub.calledOnce);
       ExplorerUtils.timeframeBuilders.relative_timeframe.restore();
     });
@@ -247,20 +278,15 @@ describe('utils/ExplorerUtils', function() {
   describe('timeframeBuilders', function () {
     describe('absolute_timeframe', function () {
       it('should properly build a timeframe object', function () {
-        var explorer = {
-          query: {
-            timezone: 'US/Hawaii',
-            time: {
-              start: new Date(moment().subtract(1, 'days').startOf('day').format()),
-              end: new Date(moment().startOf('day').format())
-            }
-          }
+        var time = {
+          start: new Date(moment().subtract(1, 'days').startOf('day').format()),
+          end: new Date(moment().startOf('day').format())
         };
-        var timeframe = ExplorerUtils.getTimeframe(explorer);
+        var timeframe = ExplorerUtils.getTimeframe(time, 'US/Hawaii');
         var expectedFormat = 'YYYY-MM-DDTHH:mm:ss.SSS';
         var expectedTimezone = '-10:00'
-        var expectedStart = moment(new Date(explorer.query.time.start)).format(expectedFormat) + expectedTimezone;
-        var expectedEnd = moment(new Date(explorer.query.time.end)).format(expectedFormat) + expectedTimezone;
+        var expectedStart = moment(new Date(time.start)).format(expectedFormat) + expectedTimezone;
+        var expectedEnd = moment(new Date(time.end)).format(expectedFormat) + expectedTimezone;
         
         assert.deepEqual(timeframe, {
           start: expectedStart,
@@ -269,16 +295,12 @@ describe('utils/ExplorerUtils', function() {
       });
     });
     describe('relative_timeframe', function () {
-      var explorer = {
-        query: {
-          time: {
-            relativity: 'this',
-            amount: '1',
-            sub_timeframe: 'days'
-          }
-        }
+      var time = {
+        relativity: 'this',
+        amount: '1',
+        sub_timeframe: 'days'
       };
-      var timeframe = ExplorerUtils.getTimeframe(explorer);
+      var timeframe = ExplorerUtils.getTimeframe(time);
       assert.deepEqual(timeframe, 'this_1_days');
     });
   });
