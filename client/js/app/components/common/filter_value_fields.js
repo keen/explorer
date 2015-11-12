@@ -28,6 +28,12 @@ function coerceGeoValue(value) {
   }
 }
 
+function pasrseIntoDate(dateString, timeString) {
+  var date = moment(new Date(dateString)).format(dateFormat);
+  var time = moment(new Date(timeString)).format(timeFormat);
+  return new Date(date + " " + time).toString();
+}
+
 var FilterValueFields = React.createClass({
 
   handleGeoSelection: function(event) {
@@ -53,13 +59,13 @@ var FilterValueFields = React.createClass({
 
   setDate: function(name, value) {
     var updates = _.cloneDeep(this.props.filter);
-    updates.property_value = new Date(moment(new Date(value)).format(dateFormat) + " " + moment(this.props.filter.property_value).format(timeFormat));
+    updates.property_value = pasrseIntoDate(value, this.props.filter.property_value);
     ExplorerActions.updateFilter(this.props.model.id, this.props.index, updates);
   },
 
   setTime: function(name, value) {
     var updates = _.cloneDeep(this.props.filter);
-    updates.property_value = new Date(moment(this.props.filter.property_value).format(dateFormat) + " " + moment(new Date(value)).format(timeFormat));
+    updates.property_value = pasrseIntoDate(this.props.filter.property_value, value);
     ExplorerActions.updateFilter(this.props.model.id, this.props.index, updates);
   },
 
@@ -128,7 +134,7 @@ var FilterValueFields = React.createClass({
         <div className="row property-value">
           <div className="col-md-6 form-collapse-right">
             <Datepicker ref="date-value-input"
-                        value={moment(this.state.property_value).format(dateFormat)}
+                        value={moment(new Date(this.state.property_value)).format(dateFormat)}
                         label={false}
                         name="property_value"
                         placeholder="Date"
@@ -138,7 +144,7 @@ var FilterValueFields = React.createClass({
           </div>
           <div className="col-md-6 form-collapse-left">
             <Timepicker ref="time-value-input"
-                        value={moment(this.state.property_value).format(timeFormat)}
+                        value={moment(new Date(this.state.property_value)).format(timeFormat)}
                         label={false}
                         name="property_value"
                         placeholder="Time"
