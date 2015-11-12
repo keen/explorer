@@ -50,6 +50,16 @@ describe('utils/FilterUtils', function() {
         };
         assert.strictEqual(FilterUtils.getCoercedValue(filter), "2015-05-03T10:00:00.000");
       });
+      it('should return a datetime for yesterday if the value is not parsable into a date time', function () {
+        var filter = {
+          property_name: "created_at",
+          property_value: "",
+          operator: "eq",
+          coercion_type: "Datetime",
+          property_value: "true",
+        };
+        assert.strictEqual(FilterUtils.getCoercedValue(filter), FilterUtils.defaultDate());
+      });
     });
 
     describe('String', function () {

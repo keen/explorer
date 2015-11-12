@@ -20,9 +20,7 @@ module.exports = {
     'Datetime': function(filter) {
       var coercedDate = FormatUtils.formatISOTimeNoTimezone(filter.property_value);
       if (coercedDate !== null && coercedDate !== 'Invalid date') return coercedDate;
-
-      var yesterday = new Date(moment().subtract(1, 'days').startOf('day').format());
-      return FormatUtils.formatISOTimeNoTimezone(yesterday);
+      return module.exports.defaultDate();
     },
 
     'String': function(filter) {
@@ -56,6 +54,11 @@ module.exports = {
       return filter.property_value;
     }
 
+  },
+
+  defaultDate: function() {
+    var yesterday = moment().subtract(1, 'days').startOf('day').format();
+    return FormatUtils.formatISOTimeNoTimezone(yesterday);
   },
 
   getCoercedValue: function(filter) {
@@ -121,9 +124,6 @@ module.exports = {
     var attrs = _.cloneDeep(filter);
     attrs.property_value = module.exports.getCoercedValue(filter);
 
-    if (attrs.coercion_type === 'Datetime') {
-      attrs.property_value = FormatUtils.formatISOTimeNoTimezone(moment(new Date(attrs.property_value)));
-    }
     if (attrs.coercion_type === 'List') {
       attrs.property_value = FormatUtils.parseList(attrs.property_value);
     }
