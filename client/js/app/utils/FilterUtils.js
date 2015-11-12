@@ -20,7 +20,7 @@ module.exports = {
     'Datetime': function(filter) {
       if (typeof filter.property_value === 'string') {
         var coercedDate = new Date(filter.property_value);
-        if (coercedDate !== null && coercedDate !== 'Invalid Date') return coercedDate.toString();
+        if (coercedDate !== null && coercedDate.toString() !== 'Invalid Date') return coercedDate.toString();
       } 
       return module.exports.defaultDate();
     },

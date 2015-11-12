@@ -165,7 +165,7 @@ module.exports = {
 
   getTimezoneOffset: function(explorer) {
     var zone = _.find(ProjectUtils.getConstant('TIMEZONES'), { value: explorer.query.timezone });
-    return zone.offset || '+00:00';
+    return zone ? zone.offset : '+00:00';
   },
 
   timeframeBuilders: {
