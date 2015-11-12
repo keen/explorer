@@ -124,6 +124,101 @@ describe('utils/FormatUtils', function() {
     it('should return true for numeric 0', function () {
       assert.isTrue(FormatUtils.isValidQueryValue(0));
     });
+
+    it('should return true for numeric 1', function() {
+      assert.isTrue(FormatUtils.isValidQueryValue(1));
+    });
+  });
+
+  describe('isValidQueryParameter', function () {
+    it('should return true for valid query parameters', function () {
+      assert.isTrue(FormatUtils.isValidQueryParameter('event_collection'));
+    });
+
+    it('should work for nested properties in dot notation', function () {
+      assert.isTrue(FormatUtils.isValidQueryParameter('filters.property_name'));
+    });
+
+    it('should return false for invalid query parameters', function () {
+      assert.isFalse(FormatUtils.isValidQueryParameter('not_a_real_thing'));
+    });
+  });
+
+  describe('cleanQueryParameters', function () {
+    it('calls isValidQueryParameter for every key in an object', function () {
+      var stub = sinon.stub(FormatUtils, 'isValidQueryParameter').returns(true);
+      var params = {
+        first: 1,
+        second: 2,
+        third: 3
+      }
+
+      FormatUtils.cleanQueryParameters(params);
+
+      var calls = stub.getCalls();
+      assert.strictEqual(stub.callCount, 3)
+      assert.strictEqual(stub.getCall(0).args[0], 'first');
+      assert.strictEqual(stub.getCall(1).args[0], 'second');
+      assert.strictEqual(stub.getCall(2).args[0], 'third');
+
+      FormatUtils.isValidQueryParameter.restore();
+    }); 
+    it('calls isValidQueryValue for every value in an object', function () {
+      var stub = sinon.stub(FormatUtils, 'isValidQueryValue').returns(true);
+      var params = {
+        event_collection: 'clicks',
+        analysis_type: 'count',
+        interval: 'daily'
+      }
+
+      FormatUtils.cleanQueryParameters(params);
+
+      var calls = stub.getCalls();
+      assert.strictEqual(stub.callCount, 3)
+      assert.strictEqual(stub.getCall(0).args[0], 'clicks');
+      assert.strictEqual(stub.getCall(1).args[0], 'count');
+      assert.strictEqual(stub.getCall(2).args[0], 'daily');
+
+      FormatUtils.isValidQueryValue.restore();
+    }); 
+    it('calls itself recursively for nested objects', function () {
+      var spy = sinon.spy(FormatUtils, 'cleanQueryParameters');
+      var params = {
+        timeframe: {
+          start: 1,
+          end: 10
+        }
+      }
+
+      FormatUtils.cleanQueryParameters(params);
+
+      assert.strictEqual(spy.callCount, 2);
+
+      FormatUtils.cleanQueryParameters.restore();
+    });
+    it('calls itself recursively for each object in an array', function () {
+      var spy = sinon.spy(FormatUtils, 'cleanQueryParameters');
+      var params = {
+        filters: [
+          {
+            filter: 'thing',
+          },
+          {
+            filter: 'another thing',
+          },
+          {
+            filter: 'one more thing',
+          }
+        ]
+      }
+
+      FormatUtils.cleanQueryParameters(params);
+
+      assert.strictEqual(spy.callCount, 4);
+
+      FormatUtils.cleanQueryParameters.restore();
+
+    });
   });
 
   describe('parseList', function () {

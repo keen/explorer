@@ -7,6 +7,7 @@ var Qs = require('qs');
 var TestHelpers = require('../../support/TestHelpers');
 var ExplorerActions = require('../../../client/js/app/actions/ExplorerActions');
 var FilterUtils = require('../../../client/js/app/utils/FilterUtils');
+var FormatUtils = require('../../../client/js/app/utils/FormatUtils');
 var ValidationUtils = require('../../../client/js/app/utils/ValidationUtils');
 var ExplorerValidations = require('../../../client/js/app/validations/ExplorerValidations');
 var ExplorerUtils = require('../../../client/js/app/utils/ExplorerUtils');
@@ -19,19 +20,14 @@ describe('utils/ExplorerUtils', function() {
   });
 
   describe('queryJSON', function () {
-    it('should remove values that are not part of the query params that get sent to Keen', function () {
-      var explorer = {
-        query: {
-          someVal: 'shouldBeRemoved',
-          someOtherVal: 'shouldAlsoBeRemoved',
-          event_collection: 'sholdRemain',
-          analysis_type: 'shouldRemain'
-        }
-      };
-      assert.deepEqual(ExplorerUtils.queryJSON(explorer), {
-        event_collection: 'sholdRemain',
-        analysis_type: 'shouldRemain'
-      });
+    it('should call FormatUtils.cleanQueryParameters', function () {
+      var explorer = { query: { analysis_type: 'count' } };
+      var cleanStub = sinon.stub(FormatUtils, 'cleanQueryParameters').returns(explorer);
+
+      ExplorerUtils.queryJSON(explorer);
+      assert(cleanStub.called);       
+      
+      FormatUtils.cleanQueryParameters.restore();
     });
     it('should remove the timezone if the timeframe type is absolute', function () {
       var explorer = {
@@ -44,43 +40,6 @@ describe('utils/ExplorerUtils', function() {
         }
       };
       assert.notDeepProperty(ExplorerUtils.queryJSON(explorer), 'timezone');
-    });
-    it('should remove values that are not valid query values', function () {
-      var explorer = {
-        query: {
-          event_collection: undefined,
-          analysis_type: 'shouldRemain',
-          filters: []
-        }
-      };
-      assert.deepEqual(ExplorerUtils.queryJSON(explorer), {
-        analysis_type: 'shouldRemain'
-      });
-    });
-    it('should call FilterUtils.queryJSON for every filter', function () {
-      var explorer = { query: { filters: [{}, {}, {}] } };
-      var stub = sinon.stub(FilterUtils, 'queryJSON');
-      ExplorerUtils.queryJSON(explorer);
-      assert.lengthOf(stub.getCalls(), 3);
-      FilterUtils.queryJSON.restore();
-    });
-    it('should remove empty filters', function () {
-      var explorer = { 
-        query: { 
-          filters: [
-            { 
-              property_name: 'click',
-              operator: 'eq',
-              property_value: 'button',
-              coercion_type: 'String'
-            },
-            {},
-            {}
-          ]
-        }
-      };
-      var json = ExplorerUtils.queryJSON(explorer);
-      assert.lengthOf(json.filters, 1);
     });
     it('should remove the fitlers key if it is empty after getting their queryJSON verisons', function () {
       var explorer = { 
@@ -116,6 +75,46 @@ describe('utils/ExplorerUtils', function() {
         timeframe: 'this_1_days'
       });
     });
+    it('sets the timeframe on steps', function () {
+      var explorer = {
+        query: {
+          steps: [
+            {
+              timezone: 'US/Mountain',
+              time: {
+                start: new Date("Jan 1, 2015 1:00 PM"),
+                end: new Date("Jan 2, 2015 1:00 PM")
+              }
+            }
+          ]
+        }
+      }
+
+      assert.deepProperty(ExplorerUtils.queryJSON(explorer).steps[0], 'timeframe.start')
+      assert.deepProperty(ExplorerUtils.queryJSON(explorer).steps[0], 'timeframe.end');;
+    });
+    it('should call FilterUtils.queryJSON for step filters', function () {
+      var stub = sinon.stub(FilterUtils, 'queryJSON');
+
+      var explorer = {
+        query: {
+          steps: [
+            {
+              filters: [{property_name: 'test'}]
+            },
+            {
+              filters: [{property_name: 'test2'}]
+            }
+          ]
+        }
+      }
+
+      ExplorerUtils.queryJSON(explorer);
+
+      assert.lengthOf(stub.getCalls(), 2);
+
+      FilterUtils.queryJSON.restore();
+    }); 
   });
 
   describe('toJSON', function () {
@@ -254,32 +253,23 @@ describe('utils/ExplorerUtils', function() {
 
   describe('getTimeframe', function () {
     it('should call the right timeframe builder for absolute timeframes', function () {
-      var explorer = {
-        query: {
-          timezone: 'US/Hawaii',
-          time: {
-            start: new Date(moment().subtract(1, 'days').startOf('day').format()),
-            end: new Date(moment().startOf('day').format())
-          }
-        }
+      var time = {
+        start: new Date(moment().subtract(1, 'days').startOf('day').format()),
+        end: new Date(moment().startOf('day').format())
       };
       var stub = sinon.stub(ExplorerUtils.timeframeBuilders, 'absolute_timeframe');
-      ExplorerUtils.getTimeframe(explorer);
+      ExplorerUtils.getTimeframe(time, 'US/Hawaii');
       assert.isTrue(stub.calledOnce);
       ExplorerUtils.timeframeBuilders.absolute_timeframe.restore();
     });
     it('should call the right timeframe builder for relative timeframes', function () {
-      var explorer = {
-        query: {
-          time: {
-            relativity: 'this',
-            amount: '1',
-            sub_timeframe: 'days'
-          }
-        }
+      var time = {
+        relativity: 'this',
+        amount: '1',
+        sub_timeframe: 'days'
       };
       var stub = sinon.stub(ExplorerUtils.timeframeBuilders, 'relative_timeframe');
-      ExplorerUtils.getTimeframe(explorer);
+      ExplorerUtils.getTimeframe(time);
       assert.isTrue(stub.calledOnce);
       ExplorerUtils.timeframeBuilders.relative_timeframe.restore();
     });
@@ -288,20 +278,15 @@ describe('utils/ExplorerUtils', function() {
   describe('timeframeBuilders', function () {
     describe('absolute_timeframe', function () {
       it('should properly build a timeframe object', function () {
-        var explorer = {
-          query: {
-            timezone: 'US/Hawaii',
-            time: {
-              start: new Date(moment().subtract(1, 'days').startOf('day').format()),
-              end: new Date(moment().startOf('day').format())
-            }
-          }
+        var time = {
+          start: new Date(moment().subtract(1, 'days').startOf('day').format()),
+          end: new Date(moment().startOf('day').format())
         };
-        var timeframe = ExplorerUtils.getTimeframe(explorer);
+        var timeframe = ExplorerUtils.getTimeframe(time, 'US/Hawaii');
         var expectedFormat = 'YYYY-MM-DDTHH:mm:ss.SSS';
         var expectedTimezone = '-10:00'
-        var expectedStart = moment(new Date(explorer.query.time.start)).format(expectedFormat) + expectedTimezone;
-        var expectedEnd = moment(new Date(explorer.query.time.end)).format(expectedFormat) + expectedTimezone;
+        var expectedStart = moment(new Date(time.start)).format(expectedFormat) + expectedTimezone;
+        var expectedEnd = moment(new Date(time.end)).format(expectedFormat) + expectedTimezone;
         
         assert.deepEqual(timeframe, {
           start: expectedStart,
@@ -310,16 +295,12 @@ describe('utils/ExplorerUtils', function() {
       });
     });
     describe('relative_timeframe', function () {
-      var explorer = {
-        query: {
-          time: {
-            relativity: 'this',
-            amount: '1',
-            sub_timeframe: 'days'
-          }
-        }
+      var time = {
+        relativity: 'this',
+        amount: '1',
+        sub_timeframe: 'days'
       };
-      var timeframe = ExplorerUtils.getTimeframe(explorer);
+      var timeframe = ExplorerUtils.getTimeframe(time);
       assert.deepEqual(timeframe, 'this_1_days');
     });
   });

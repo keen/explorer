@@ -7,21 +7,6 @@ var FormatUtils = require('./FormatUtils');
 var ProjectUtils = require('./ProjectUtils');
 var FilterUtils = require('./FilterUtils');
 
-var QUERY_PARAMS = [
-  'event_collection',
-  'analysis_type',
-  'target_property',
-  'percentile',
-  'group_by',
-  'timeframe',
-  'interval',
-  'timezone',
-  'filters',
-  'email',
-  'latest',
-  'property_names'
-];
-
 function toCamelcaseName(name) {
   return name.replace(/_(.)/, function(match, p1) {
     return p1.toUpperCase();
@@ -79,35 +64,38 @@ module.exports = {
     }
     var params = _.cloneDeep(explorer.query);
 
-    // Set the timeframe (will get removed if it's null o undefined)
-    params.timeframe = module.exports.getTimeframe(explorer);
-    if (module.exports.timeframeType(explorer.query.time) === 'absolute') {
-      delete params.timezone;
+    // Set the timeframe
+    if(params.time) {
+      params.timeframe = module.exports.getTimeframe(params.time, params.timezone);
+      if (module.exports.timeframeType(params.time) === 'absolute') {
+        delete params.timezone;
+      }
     }
-
-    // Remove any empty properties or ones that shouldn't be
-    // part of the query request.
-    _.each(params, function(value, key) {
-      if (!FormatUtils.isValidQueryValue(value)) {
-        delete params[key];
-      }
-      if (!_.contains(QUERY_PARAMS, key)) {
-        delete params[key];
-      }
-    });
 
     // Add filters
     if (params.filters) {
       params.filters = _.map(params.filters, function(filter){
         return FilterUtils.queryJSON(filter);
       });
-      params.filters = _.filter(params.filters, function(filter){
-        return !_.isEmpty(filter);
-      });
-      if (!params.filters.length) {
-        delete params.filters;
-      }
     }
+
+    // Do everything above, but for steps
+    if(params.steps) {
+      _.each(params.steps, function(step) {
+        step.timeframe = module.exports.getTimeframe(step.time, step.timezone);
+        if(module.exports.timeframeType(step.time) === 'absolute') {
+          delete step.timezone;
+        }
+
+        if(step.filters) {
+          step.filters = _.map(step.filters, function(filter) {
+            return FilterUtils.queryJSON(filter);
+          });
+        }
+      });
+    }
+
+    FormatUtils.cleanQueryParameters(params);
 
     return params;
   },
@@ -165,35 +153,34 @@ module.exports = {
 
   timeframeBuilders: {
 
-    absolute_timeframe: function(explorer) {
-      if (explorer.query && explorer.query.time && explorer.query.time.start && explorer.query.time.end) {
-        var zone = _.find(ProjectUtils.getConstant('TIMEZONES'), { value: explorer.query.timezone });
+    absolute_timeframe: function(time, timezone) {
+      if (time && time.start && time.end) {
+        var zone = _.find(ProjectUtils.getConstant('TIMEZONES'), { value: timezone });
         var offset = zone.offset || '+00:00';
 
         return {
-          start: FormatUtils.formatISOTimeNoTimezone(explorer.query.time.start) + offset,
-          end: FormatUtils.formatISOTimeNoTimezone(explorer.query.time.end) + offset
+          start: FormatUtils.formatISOTimeNoTimezone(time.start) + offset,
+          end: FormatUtils.formatISOTimeNoTimezone(time.end) + offset
         };
       }
     },
 
-    relative_timeframe: function(explorer) {
-      var query = explorer.query;
-      if (query && query.time && query.time.relativity && query.time.amount && query.time.sub_timeframe) {
-        return [query.time.relativity, query.time.amount, query.time.sub_timeframe].join('_');
+    relative_timeframe: function(time, timezone) {
+      if (time && time.relativity && time.amount && time.sub_timeframe) {
+        return [time.relativity, time.amount, time.sub_timeframe].join('_');
       }
     }
 
   },
 
-  getTimeframe: function(explorer) {
-    var timeframeType = module.exports.timeframeType(explorer.query.time);
+  getTimeframe: function(time, timezone) {
+    var timeframeType = module.exports.timeframeType(time);
     var timeframeBuilder = module.exports.timeframeBuilders[timeframeType + '_timeframe'];
 
     if(typeof(timeframeBuilder) === 'undefined') {
       return "";
     } else {
-      return timeframeBuilder(explorer);
+      return timeframeBuilder(time, timezone);
     }
   },
 

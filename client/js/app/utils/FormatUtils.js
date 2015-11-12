@@ -3,6 +3,38 @@ var S = require('string');
 var moment = require('moment');
 var ISO_DATE_FORMAT = 'YYYY-MM-DDTHH:mm:ss.SSS';
 
+var QUERY_PARAMS = [
+  'event_collection',
+  'analysis_type',
+  'target_property',
+  'percentile',
+  'group_by',
+  'timeframe',
+  'timeframe.start',
+  'timeframe.end',
+  'interval',
+  'timezone',
+  'filters',
+  'filters.property_name',
+  'filters.operator',
+  'filters.property_value',
+  'email',
+  'latest',
+  'property_names',
+  'steps',
+  'steps.event_collection',
+  'steps.actor_property',
+  'steps.timeframe',
+  'steps.timeframe.start',
+  'steps.timeframe.end',
+  'steps.timezone',
+  'steps.filters.property_name', 
+  'steps.filters.operator',
+  'steps.filters.property_value',
+  'steps.optional',
+  'steps.inverted'
+];
+
 function _isWrappedInSingleQuotes(value) {
   return value.substring(0, 1) === "'" && value.substring(value.length - 1) === "'";
 }
@@ -99,8 +131,43 @@ module.exports = {
     } else {
       if (value === false) return true;
       if (value === 0) return true;
-      return !_.isUndefined(value) && !_.isNull(value) && !_.isEmpty(value);
+      return !_.isUndefined(value) && !_.isNull(value) && !(!_.isNumber(value) && _.isEmpty(value));
     }
+  },
+
+  isValidQueryParameter: function(key) {
+    return _.contains(QUERY_PARAMS, key);
+  },
+  
+  // Remove any empty properties or ones that shouldn't be
+  // part of the query request.
+  cleanQueryParameters: function(params, prefix) {
+    if(_.isUndefined(prefix)) {
+      prefix = "";
+    } else {
+      prefix = prefix + ".";
+    }
+
+    _.each(params, function(value, key) {
+
+      // Oh hell yeah, recursion.
+      if(_.isPlainObject(value)) {
+        module.exports.cleanQueryParameters(value, prefix + key);      
+      } else if(_.isArray(value) && _.isPlainObject(value[0])) { // an array of objects (we don't ever have mixed arrays...right?)
+        _.each(value, function(subValue, index) {
+          module.exports.cleanQueryParameters(subValue, prefix + key);
+        });
+      }
+
+      // cleanQueryParameters may have set some array items to undefined or empty objects
+      _.remove(value, function (subValue) {
+        return _.isUndefined(subValue) || (_.isPlainObject(subValue) && _.isEmpty(subValue));
+      });
+      
+      if(!module.exports.isValidQueryParameter(prefix + key) || !module.exports.isValidQueryValue(value)) {
+        delete params[key];
+      }
+    });
   },
 
   parseList: function(value) {
