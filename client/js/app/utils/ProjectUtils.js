@@ -19,7 +19,8 @@ var CONSTANTS = {
     'select_unique',
     'extraction',
     'percentile',
-    'median'
+    'median',
+    'funnel'
   ],
 
   ABSOLUTE_INTERVAL_TYPES: [

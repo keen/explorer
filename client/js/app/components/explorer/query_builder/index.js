@@ -13,6 +13,7 @@ var TargetPropertyField = require('./target_property_field.js');
 var PercentileField = require('./percentile_field.js');
 var GroupByField = require('./group_by_field.js');
 var ExtractionOptions = require('./extraction_options.js');
+var FunnelBuilder = require('./funnels/funnel_builder.js');
 var Timeframe = require('../../common/timeframe.js');
 var Interval = require('../../common/interval.js');
 var Input = require('../../common/input.js');
@@ -74,26 +75,111 @@ var QueryBuilder = React.createClass({
     return ExplorerUtils.isPersisted(this.props.model) && this.props.model.originalModel && this.props.model.originalModel.query && !_.isEqual(this.props.model.query, this.props.model.originalModel.query);
   },
 
-  // React methods
-
-  render: function() {
-    var groupByField,
-        targetPropertyField,
-        percentileField,
-        intervalField,
-        extractionOptions,
-        analysisType = this.props.model.query.analysis_type,
-        clearButton,
-        apiQueryUrl;
-
-    var queryValidation = runValidations(ExplorerValidations.explorer, this.props.model);
-
-    if(queryValidation.isValid) {
-      apiQueryUrl = ExplorerUtils.getApiQueryUrl(this.props.client, this.props.model);
+  // Fields Builders
+  
+  buildEventCollectionField: function() {
+    if (this.props.model.query.analysis_type !== 'funnel') {
+      return (
+        <EventCollectionField ref="event-collection-field"
+                              value={this.props.model.query.event_collection}
+                              options={this.props.project.eventCollections}
+                              handleChange={this.handleChange}
+                              onBrowseEvents={this.props.onBrowseEvents} />
+      );
     }
+  },
 
+  buildExtractionOptions: function() {
+    if (this.props.model.query.analysis_type === 'extraction') {
+      return (
+        <ExtractionOptions latest={this.props.model.query.latest}
+                           email={this.props.model.query.email}
+                           isEmail={ExplorerUtils.isEmailExtraction(this.props.model)}
+                           handleChange={this.handleSelectionWithEvent}
+                           setExtractionType={this.props.setExtractionType} />
+      );
+    }
+  },
+
+  buildGroupByField: function() {
+    if (['extraction', 'funnel'].indexOf(this.props.model.query.analysis_type) === -1) {
+      return (
+        <GroupByField ref="group-by-field"
+                      value={this.props.model.query.group_by}
+                      updateGroupBy={this.updateGroupBy}
+                      options={this.getEventPropertyNames()}
+                      handleChange={this.handleChange} />
+      );
+    }
+  },
+
+  buildTargetPropertyField: function() {
+    if (['count', 'extraction', 'funnel'].indexOf(this.props.model.query.analysis_type) === -1) {
+      return (
+        <TargetPropertyField ref="target-property-field"
+                             value={this.props.model.query.target_property}
+                             options={this.getEventPropertyNames()}
+                             handleChange={this.handleChange} />
+      );
+    }
+  },
+
+  buildPercentileField: function() {
+    if (this.props.model.query.analysis_type === 'percentile') {
+      return (
+        <PercentileField ref="percentile-field"
+                         value={this.props.model.query.percentile}
+                         onChange={this.handleSelectionWithEvent} />
+      );
+    }
+  },
+
+  buildIntervalField: function() {
+    if (['extraction', 'funnel'].indexOf(this.props.model.query.analysis_type) === -1) {
+      return (
+        <Interval interval={this.props.model.query.interval} 
+                  handleChange={this.handleChange} />
+      );
+    }
+  },
+
+  buildFilters: function() {
+    if (this.props.model.query.analysis_type !== 'funnel') {
+      return (
+        <div className="field-component">
+          <FieldsToggle ref="filters-fields-toggle"
+                        name="Filters"
+                        model={this.props.model}
+                        toggleCallback={this.props.handleFiltersToggle}
+                        fieldsCount={validFilters(this.props.model.query.filters).length} />
+        </div>
+      );
+    }
+  },
+
+  buildGlobalTimeframePicker: function() {
+    if (this.props.model.query.analysis_type !== 'funnel') {
+      return (
+        <div>
+          <Timeframe ref="timeframe"
+                     time={this.props.model.query.time}
+                     timezone={this.props.model.query.timezone}  
+                     handleChange={this.handleChange}/>
+          <hr className="fieldset-divider" />
+        </div>
+      );
+    }
+  },
+
+  buildFunnelBuilder: function() {
+    if (this.props.model.query.analysis_type === 'funnel') {
+      return <FunnelBuilder model={this.props.model} />;
+    }
+  },
+
+  buildClearButton: function() {
     if (!this.shouldShowRevertButton()) {
-      clearButton = (
+      return (
         <button type="reset" role="clear-query"
           className="btn btn-default btn-block"
           id="clear-explorer-query"
@@ -102,7 +188,7 @@ var QueryBuilder = React.createClass({
         </button>
       );
     } else {
-      clearButton = (
+      return (
         <button
           className="btn btn-default btn-block"
           onClick={this.handleRevertChanges}
@@ -111,66 +197,35 @@ var QueryBuilder = React.createClass({
         </button>
       );
     }
+  },
 
-    if (analysisType !== 'extraction') {
-      groupByField = <GroupByField ref="group-by-field"
-                                   value={this.props.model.query.group_by}
-                                   updateGroupBy={this.updateGroupBy}
-                                   options={this.getEventPropertyNames()}
-                                   handleChange={this.handleChange} />
-      intervalField = <Interval interval={this.props.model.query.interval} 
-                                handleChange={this.handleChange} />;
-    }
-    if (analysisType && analysisType !== 'count' && analysisType !== 'extraction') {
-      targetPropertyField = <TargetPropertyField ref="target-property-field"
-                                                 value={this.props.model.query.target_property}
-                                                 options={this.getEventPropertyNames()}
-                                                 handleChange={this.handleChange} />;
-    }
-    if (analysisType === 'percentile') {
-      percentileField = <PercentileField ref="percentile-field"
-                                         value={this.props.model.query.percentile}
-                                         onChange={this.handleSelectionWithEvent} />;
-    }
-    if (analysisType === 'extraction') {
-      extractionOptions = <ExtractionOptions latest={this.props.model.query.latest}
-                                             email={this.props.model.query.email}
-                                             isEmail={ExplorerUtils.isEmailExtraction(this.props.model)}
-                                             handleChange={this.handleSelectionWithEvent}
-                                             setExtractionType={this.props.setExtractionType} />;
+  // React methods
+
+  render: function() {
+    var apiQueryUrl;
+    var queryValidation = runValidations(ExplorerValidations.explorer, this.props.model);
+    if(queryValidation.isValid) {
+      apiQueryUrl = ExplorerUtils.getApiQueryUrl(this.props.client, this.props.model);
     }
 
     return (
       <section className="query-pane-section query-builder">
         <form className="form query-builder-form" onSubmit={this.props.handleQuerySubmit}>
-          <EventCollectionField ref="event-collection-field"
-                                value={this.props.model.query.event_collection}
-                                options={this.props.project.eventCollections}
-                                handleChange={this.handleChange}
-                                onBrowseEvents={this.props.onBrowseEvents} />
+          {this.buildEventCollectionField()}
           <AnalysisTypeField ref="analysis-type-field"
                              value={this.props.model.query.analysis_type}
                              options={ProjectUtils.getConstant('ANALYSIS_TYPES')}
                              handleChange={this.handleChange} />
-          {extractionOptions}
-          {targetPropertyField}
-          {percentileField}
-          <Timeframe ref="timeframe"
-                     time={this.props.model.query.time}
-                     timezone={this.props.model.query.timezone}  
-                     handleChange={this.handleChange}/>
-          <hr className="fieldset-divider" />
-          {groupByField}
-          <div className="field-component">
-            <FieldsToggle ref="filters-fields-toggle"
-                          name="Filters"
-                          model={this.props.model}
-                          toggleCallback={this.props.handleFiltersToggle}
-                          fieldsCount={validFilters(this.props.model.query.filters).length} />
-          </div>
-          {intervalField}
+          {this.buildFunnelBuilder()}
+          {this.buildExtractionOptions()}
+          {this.buildTargetPropertyField()}
+          {this.buildPercentileField()}
+          {this.buildGlobalTimeframePicker()}
+          {this.buildGroupByField()}
+          {this.buildFilters()}
+          {this.buildIntervalField()}
           <div className="button-set-clear-toggle">
-            {clearButton}
+            {this.buildClearButton()}
           </div>
           <ApiUrl url={apiQueryUrl}
                   validation={queryValidation} />
