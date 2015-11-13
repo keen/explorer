@@ -99,7 +99,7 @@ module.exports = {
     // Add filters
     if (params.filters) {
       params.filters = _.map(params.filters, function(filter){
-        return FilterUtils.queryJSON(filter);
+        return FilterUtils.queryJSON(filter, module.exports.getTimezoneOffset(explorer));
       });
       params.filters = _.filter(params.filters, function(filter){
         return !_.isEmpty(filter);
@@ -163,13 +163,16 @@ module.exports = {
     );
   },
 
+  getTimezoneOffset: function(explorer) {
+    var zone = _.find(ProjectUtils.getConstant('TIMEZONES'), { value: explorer.query.timezone });
+    return zone ? zone.offset : '+00:00';
+  },
+
   timeframeBuilders: {
 
     absolute_timeframe: function(explorer) {
       if (explorer.query && explorer.query.time && explorer.query.time.start && explorer.query.time.end) {
-        var zone = _.find(ProjectUtils.getConstant('TIMEZONES'), { value: explorer.query.timezone });
-        var offset = zone.offset || '+00:00';
-
+        var offset = module.exports.getTimezoneOffset(explorer)
         return {
           start: FormatUtils.formatISOTimeNoTimezone(explorer.query.time.start) + offset,
           end: FormatUtils.formatISOTimeNoTimezone(explorer.query.time.end) + offset
@@ -282,27 +285,15 @@ module.exports = {
    */
   formatQueryParams: function(params) {
     if (!params || !params.query) return;
-
     if (params.query && params.query.timeframe) {
       var unpackedTime = module.exports.unpackTimeframeParam(params.query);
       params.query.time = unpackedTime.time;
       params.query.timezone = unpackedTime.timezone;
     }
     if (params.query.filters) {
-      params.query.filters = _.map(params.query.filters, function(filter) {
-        filter.coercion_type = FilterUtils.getCoercionType(filter);
-        
-        if (filter.coercion_type === 'List') {
-          filter = _.assign({}, filter, FilterUtils.initList(filter));
-        }
-        filter.property_value = FilterUtils.getCoercedValue(filter);
-        return filter;
-      });
-      params.query.filters = _.compact(params.query.filters);
+      params.query.filters = _.compact(_.map(params.query.filters, FilterUtils.formatFilterParams));
     }
-    if (!params.id && params.query_name) {
-      params.id = params.query_name;
-    }
+    if (!params.id && params.query_name) params.id = params.query_name;
     return params;
   },
 

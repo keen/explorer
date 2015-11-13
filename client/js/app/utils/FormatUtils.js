@@ -82,7 +82,11 @@ module.exports = {
   },
 
   formatISOTimeNoTimezone: function(time) {
-    return moment(time).format('YYYY-MM-DDTHH:mm:ss.SSS');
+    return moment(new Date(time)).format('YYYY-MM-DDTHH:mm:ss.SSS');
+  },
+
+  formatISOTimeAddOffset: function(time, offset) {
+    return module.exports.formatISOTimeNoTimezone(time) + offset;
   },
 
   generateRandomId: function(prefix) {

@@ -18,11 +18,11 @@ module.exports = {
   coercionFunctions: {
 
     'Datetime': function(filter) {
-      var coercedDate = module.exports.formatDatetimePropertyValue(filter);
-      if (coercedDate !== null) return coercedDate;
-
-      var yesterday = new Date(moment().subtract(1, 'days').startOf('day').format());
-      return FormatUtils.formatISOTimeNoTimezone(yesterday);
+      if (typeof filter.property_value === 'string') {
+        var coercedDate = new Date(filter.property_value);
+        if (coercedDate !== null && coercedDate.toString() !== 'Invalid Date') return coercedDate.toString();
+      } 
+      return module.exports.defaultDate();
     },
 
     'String': function(filter) {
@@ -58,6 +58,11 @@ module.exports = {
 
   },
 
+  defaultDate: function() {
+    var yesterday = moment().subtract(1, 'days').startOf('day').format('x');
+    return new Date(Number(yesterday));
+  },
+
   getCoercedValue: function(filter) {
     if (!module.exports.coercionFunctions[filter.coercion_type]) return null;
     return module.exports.coercionFunctions[filter.coercion_type](filter);
@@ -76,7 +81,7 @@ module.exports = {
         return 'Geo';
         break;
       case 'string':
-        if (FormatUtils.isDateInStrictFormat(filter.property_value)) return 'Datetime';
+        if (FormatUtils.isDateInStrictFormat(filter.property_value.substring(0, filter.property_value.length-6))) return 'Datetime';
         if (FormatUtils.isList(filter.property_value)) return 'List';
         return 'String';
         break;
@@ -93,10 +98,6 @@ module.exports = {
         return 'Null';
         break;
     }
-  },
-
-  formatDatetimePropertyValue: function(filter) {
-    return FormatUtils.formatISOTimeNoTimezone(filter.property_value);
   },
 
   isComplete: function(filter) {
@@ -116,7 +117,7 @@ module.exports = {
     return complete;
   },
 
-  queryJSON: function(filter) {
+  queryJSON: function(filter, timezoneOffset) {
     var valid = ValidationUtils.runValidations(FilterValidations.filter, filter);
     if (!valid.isValid) {
       return {};
@@ -126,7 +127,7 @@ module.exports = {
     attrs.property_value = module.exports.getCoercedValue(filter);
 
     if (attrs.coercion_type === 'Datetime') {
-      attrs.property_value = FormatUtils.formatISOTimeNoTimezone(moment(new Date(attrs.property_value)));
+      attrs.property_value = FormatUtils.formatISOTimeAddOffset(attrs.property_value, timezoneOffset);
     }
     if (attrs.coercion_type === 'List') {
       attrs.property_value = FormatUtils.parseList(attrs.property_value);
@@ -143,6 +144,20 @@ module.exports = {
       if (index !== filter.property_value.length - 1) newVal += ', ';
     }, this);
     filter.property_value = newVal;
+    return filter;
+  },
+
+  formatFilterParams: function(filter) {
+    filter.coercion_type = module.exports.getCoercionType(filter);
+    if (filter.coercion_type === 'List') {
+      filter = _.assign({}, filter, module.exports.initList(filter));
+    }
+    filter.property_value = module.exports.getCoercedValue(filter);
+    // Add the local offset back to the datetime to get it back to UTC.
+    if (filter.coercion_type === 'Datetime') {
+      var offset = new Date(filter.property_value).getTimezoneOffset()
+      filter.property_value = new Date(moment(new Date(filter.property_value)).add(offset, 'minutes').format()).toString()
+    }
     return filter;
   }
 

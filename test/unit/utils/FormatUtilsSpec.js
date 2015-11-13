@@ -74,7 +74,7 @@ describe('utils/FormatUtils', function() {
 
   describe('formatISOTimeNoTimezone', function () {
     it('formats as ISO time without a timezone', function () {
-      var time = moment('2014-08-20 15:44');
+      var time = moment('2014-08-20 15:44').format();
       assert.match(FormatUtils.formatISOTimeNoTimezone(time), /\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}/);
     });
   });
