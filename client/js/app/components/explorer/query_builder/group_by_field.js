@@ -20,15 +20,40 @@ var GroupByField = React.createClass({
     }
   },
 
+  multiGroupToggle: function() {
+    var icon = this.props.value.length > 1 ? 'remove' : 'plus';
+    var text = this.props.value.length > 1 ? 'Remove second property' : 'Group by a second property';
+    return (
+      <a href="#" onClick={this.toggleMultiGroupBy}>
+        <i className={"margin-right-bump icon glyphicon glyphicon-"+icon}></i>
+        {text}
+      </a>
+    );
+  },
+
+  secondField: function() {
+    if (this.props.value.length > 1) {
+      return (
+        <ReactSelect ref="select"
+                     inputClasses="group-by form-control margin-bottom-tiny"
+                     wrapClasses="margin-top-tiny"
+                     name="group_by.1"
+                     items={this.props.options}
+                     handleChange={this.handleChange}
+                     value={this.props.value[1] || ''}
+                     sort={true} />
+      )
+    }
+  },
+
   getGroupBy: function() {
     return this.props.value;
   },
 
   handleChange: function(name, value) {
     var newVal = this.props.value.slice();
-    var index = name.split('.')[1];
-    newVal[index] = value;
-    this.props.handleChange(name.split('.')[0], newVal);
+    newVal[name.split('.')[1]] = value;
+    this.props.handleChange('group_by', newVal);
   },
 
   toggleMultiGroupBy: function(event) {
@@ -51,31 +76,6 @@ var GroupByField = React.createClass({
   // React methods
 
   render: function() {
-    var secondGroupByField;
-    var toggleText = "Group by a second property";
-    var toggleIcon = "plus";
-
-    if (this.props.value.length > 1) {
-      secondGroupByField = (
-        <ReactSelect ref="select"
-                     inputClasses="group-by form-control margin-bottom-tiny"
-                     wrapClasses="margin-top-tiny"
-                     name="group_by.1"
-                     items={this.props.options}
-                     handleChange={this.handleChange}
-                     value={this.props.value[1] || ''}
-                     sort={true} />
-      )
-      toggleText = "Remove second property";
-      toggleIcon = "remove";
-    }
-    var multiGroupToggle = (
-      <a href="#" onClick={this.toggleMultiGroupBy}>
-        <i className={"margin-right-bump icon glyphicon glyphicon-"+toggleIcon}></i>
-        {toggleText}
-      </a>
-    );
-
     return (
       <div className="field-component">
         <FieldsToggle ref="toggle"
@@ -95,8 +95,8 @@ var GroupByField = React.createClass({
                        handleChange={this.handleChange}
                        value={this.props.value[0] || ''}
                        sort={true} />
-          {secondGroupByField}
-          {multiGroupToggle}
+          {this.secondField()}
+          {this.multiGroupToggle()}
         </FieldsToggle>
       </div>
     );
