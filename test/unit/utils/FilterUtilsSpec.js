@@ -48,7 +48,7 @@ describe('utils/FilterUtils', function() {
           coercion_type: "Datetime",
           property_value: "May 3, 2015 10:00 AM"
         };
-        assert.strictEqual(FilterUtils.getCoercedValue(filter), "Sun May 03 2015 10:00:00 GMT-0600 (MDT)");
+        assert.strictEqual(FilterUtils.getCoercedValue(filter), new Date(filter.property_value).toString());
       });
       it('should return a datetime for yesterday if the value is not parsable into a date time: true as a boolean', function () {
         var filter = {
