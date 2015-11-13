@@ -288,6 +288,9 @@ module.exports = {
       params.query.time = unpackedTime.time;
       params.query.timezone = unpackedTime.timezone;
     }
+    if (params.query.group_by && !_.isArray(params.query.group_by)) {
+      params.query.group_by = [params.query.group_by];
+    }
     if (params.query.filters) {
       params.query.filters = _.map(params.query.filters, function(filter) {
         filter.coercion_type = FilterUtils.getCoercionType(filter);
