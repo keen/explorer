@@ -1,5 +1,11 @@
 /** @jsx React.DOM */
 
+// **********************
+// Dependencies
+// **********************
+require('keen-js');
+require('jquery-browserify');
+
 // ***********************
 // App
 // ***********************
