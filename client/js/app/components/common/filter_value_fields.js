@@ -24,7 +24,7 @@ function pasrseIntoDate(dateString, timeString) {
 var FilterValueFields = React.createClass({
 
   handleChangeWithEvent: function(event) {
-    this.props.handleChange(this.props.index, event.target.name, event.target.value);
+    this.props.handleChange(event.target.name, event.target.value);
   },
 
   setValueState: function(event) {
@@ -34,11 +34,11 @@ var FilterValueFields = React.createClass({
   },
 
   setDate: function(name, value) {
-    this.props.handleChange(this.props.index, name, pasrseIntoDate(value, this.props.filter.property_value));
+    this.props.handleChange(name, pasrseIntoDate(value, this.props.filter.property_value));
   },
 
   setTime: function(name, value) {
-    this.props.handleChange(this.props.index, name, pasrseIntoDate(this.props.filter.property_value, value));
+    this.props.handleChange(name, pasrseIntoDate(this.props.filter.property_value, value));
   },
 
   handleDateBlur: function (event) {
@@ -46,7 +46,7 @@ var FilterValueFields = React.createClass({
   },
 
   handleChange: function(event) {
-    this.props.handleChange(this.props.index, event.target.name, event.target.value);
+    this.props.handleChange(event.target.name, event.target.value);
   },
 
   getCoercionOptions: function() {
@@ -75,7 +75,7 @@ var FilterValueFields = React.createClass({
     var valueInput;
     if (this.propertyType === 'geo' || this.props.filter.operator === 'within') {
       valueInput = (
-        <Geo handleChangeWithEvent={this.handleChangeWithEvent}
+        <Geo handleChange={this.handleChangeWithEvent}
              filter={this.props.filter}/>
       );
     } else if (this.props.filter.operator === 'exists' || this.props.filter.coercion_type === 'Boolean') {
@@ -84,7 +84,7 @@ var FilterValueFields = React.createClass({
                 classes="property-value"
                 ref="boolean-value-set"
                 options={['true', 'false']}
-                handleBlur={this.handleSelectionWithEvent}
+                handleBlur={this.handleChangeWithEvent}
                 handleSelection={this.setValueState}
                 selectedOption={FormatUtils.booleanMap(this.state.property_value) || 'true'}
                 emptyOption={false} />

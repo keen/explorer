@@ -30,9 +30,8 @@ var FilterManager = React.createClass({
                 propertyType={this.getPropertyType(filter.property_name)}
                 eventCollection={this.props.eventCollection}
                 eventPropertyNames={ProjectUtils.getEventCollectionPropertyNames(this.props.project, this.props.eventCollection)}
-                updateFilter={this.updateFilter}
-                removeFilter={this.removeFilter}
                 handleChange={this.handleChange}
+                removeFilter={this.removeFilter}
                 filterOperators={ProjectUtils.getConstant('FILTER_OPERATORS')} />
       );
     }.bind(this));
@@ -76,12 +75,6 @@ var FilterManager = React.createClass({
     ExplorerActions.removeFilter(this.props.modelId, index);
   },
 
-  handleChange: function(index, name, selection) {
-    var updates = {};
-    updates[name] = selection;
-    ExplorerActions.updateFilter(this.props.modelId, index, updates);
-  },
-
   getPropertyType: function (property_name) {
     return ProjectUtils.getPropertyType(
       this.props.project,
@@ -90,11 +83,12 @@ var FilterManager = React.createClass({
     );
   },
 
-  updateFilter: function(index, name, value) {
+  handleChange: function(index, name, value) {
     var updates = _.cloneDeep(this.props.filters[index]);
     
     if (!_.isNull(name.match('coordinates'))) {
-      updates.property_value.coordinates[parseInt(name.substr(name.length - 1))] = coerceGeoValue(value);
+      var coordinateIndex = parseInt(name.split('.')[1]);
+      updates.property_value.coordinates[coordinateIndex] = coerceGeoValue(value);
     } else if (updates.coercion_type === 'Geo') {
       updates.property_value[name] = coerceGeoValue(value);
     } else {

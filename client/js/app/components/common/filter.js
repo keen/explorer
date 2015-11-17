@@ -26,10 +26,8 @@ var Filter = React.createClass({
   buildValueFormGroup: function() {
     return (
       <FilterValueFields filter={this.props.filter}
-                         index={this.props.index}
                          filterOperators={this.props.filterOperators}
-                         handleChange={this.props.handleChange}
-                         updateFilter={this.props.updateFilter} />
+                         handleChange={this.handleChange} />
     );
   },
 
