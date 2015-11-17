@@ -129,8 +129,9 @@ module.exports = {
   },
 
   isList: function(str) {
+    var strVal = String(str);
     var isList = true;
-    var items = str.match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g);
+    var items = strVal.match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g);
     for(var i=0; i<items.length; i++) {
       isList = (_isWrappedInSingleQuotes(items[i].trim()) || _isWrappedInDoubleQuotes(items[i].trim()));
       if (!isList) break;
