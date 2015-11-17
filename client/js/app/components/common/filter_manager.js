@@ -42,7 +42,6 @@ var FilterManager = React.createClass({
         {filterNodes}
         <div className="filter-buttons">
           <a href="#" className="add-filter btn btn-primary" onClick={this.addFilter}>
-            <span className="icon glyphicon-plus glyphicon"></span>
             Add another filter
           </a>
         </div>
@@ -53,9 +52,12 @@ var FilterManager = React.createClass({
   noFiltersMarkup: function() {
     return (
       <div className="row">
-        <div className="col-md-12">
+        <div className="col-md-10 col-md-offset-1">
           <div className="no-filters-msg callout">
-            <p>Please select an Event Collection before making a filter.</p>
+            <p className="lead">
+              <i className="icon glyphicon glyphicon-info-sign margin-right-tiny"></i>
+              Please select an Event Collection before making a filter.
+            </p>
           </div>
         </div>
       </div>
