@@ -20,6 +20,7 @@ var AppStateActions = require('../../actions/AppStateActions');
 var NoticeStore = require('../../stores/NoticeStore');
 var AppStateStore = require('../../stores/AppStateStore');
 var ExplorerUtils = require('../../utils/ExplorerUtils');
+var FilterUtils = require('../../utils/FilterUtils');
 var ExplorerActions = require('../../actions/ExplorerActions');
 var ValidationUtils = require('../../utils/ValidationUtils');
 var ExplorerValidations = require('../../validations/ExplorerValidations');
@@ -152,6 +153,32 @@ var Explorer = React.createClass({
     }, 0);
   },
 
+  handleAddFilter: function(event) {
+    event.preventDefault();
+    ExplorerActions.addFilter(this.state.activeExplorer.id);
+  },
+
+  handleRemoveFilter: function(event) {
+    event.preventDefault();
+    var index = parseInt(event.currentTarget.dataset.index);
+    ExplorerActions.removeFilter(this.state.activeExplorer.id, index);
+  },
+
+  handleFilterChange: function(index, name, value) {
+    var updates = _.cloneDeep(this.state.activeExplorer.query.filters[index]);
+    
+    if (!_.isNull(name.match('coordinates'))) {
+      var coordinateIndex = parseInt(name.split('.')[1]);
+      updates.property_value.coordinates[coordinateIndex] = FilterUtils.coerceGeoValue(value);
+    } else if (updates.coercion_type === 'Geo') {
+      updates.property_value[name] = FilterUtils.coerceGeoValue(value);
+    } else {
+      updates[name] = value;
+    }
+
+    ExplorerActions.updateFilter(this.state.activeExplorer.id, index, updates);
+  },
+
   // ********************************
   // Convenience functions
   // ********************************
@@ -201,6 +228,10 @@ var Explorer = React.createClass({
     ExplorerStore.removeChangeListener(this._onChange);
     NoticeStore.removeChangeListener(this._onChange);
     AppStateStore.removeChangeListener(this._onChange);
+    // Create a default filter if there are no filters already on this model
+    if (!this.state.activeExplorer.query.filters.length) {
+      ExplorerActions.addFilter(this.state.activeExplorer.id);
+    }
   },
 
   getInitialState: function() {
@@ -291,7 +322,10 @@ var Explorer = React.createClass({
                        modelId={this.state.activeExplorer.id}
                        eventCollection={this.state.activeExplorer.query.event_collection}
                        filters={this.state.activeExplorer.query.filters}
-                       project={this.props.project} />
+                       project={this.props.project}
+                       handleChange={this.handleFilterChange}
+                       removeFilter={this.handleRemoveFilter}
+                       addFilter={this.handleAddFilter} />
       </div>
     );
   },

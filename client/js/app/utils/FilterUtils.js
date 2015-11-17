@@ -159,6 +159,15 @@ module.exports = {
       filter.property_value = new Date(moment(new Date(filter.property_value)).add(offset, 'minutes').format()).toString()
     }
     return filter;
+  },
+
+  coerceGeoValue: function(value) {
+    var trailingDecimals = value.match(/\.+$/);
+    if (value === '-' || (trailingDecimals && trailingDecimals.length)) {
+      return value;
+    } else {
+      return parseFloat(value) || 0;
+    }
   }
 
 };
