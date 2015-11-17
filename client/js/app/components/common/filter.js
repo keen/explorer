@@ -48,7 +48,7 @@ var Filter = React.createClass({
     return (
       <ReactSelect name="property_name"
                    inputClasses="property-name form-control"
-                   items={this.props.eventPropertyNames}
+                   items={this.props.propertyNames}
                    handleChange={this.handleChange}
                    placeholder="Select a property name"
                    value={this.props.filter.property_name}
