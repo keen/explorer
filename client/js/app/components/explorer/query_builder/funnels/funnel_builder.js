@@ -6,8 +6,10 @@ var ProjectUtils = require('../../../../utils/ProjectUtils.js');
 
 var FunnelsBuilder = React.createClass({
 
-  handleChange: function() {
-    // TODO
+  handleChange: function(index, name, value) {
+    var updates = {}
+    updates[name] = value;
+    ExplorerActions.updateStep(this.props.model.id, index, updates);
   },
 
   addStep: function(e) {

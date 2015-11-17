@@ -13,8 +13,17 @@ var FunnelStep = React.createClass({
     }
   },
 
-  handleChange: function() {
-    // TODO: this.props.handleChange
+  handleChange: function(name, value) {
+    this.props.handleChange(this.props.index, name, value);
+  },
+
+  handleChangeWithEvent: function(e) {
+    e.preventDefault();
+    this.props.handleChange(this.props.index, e.target.name, e.target.value);
+  },
+
+  handleCheckboxChange: function(e) {
+    this.props.handleChange(this.props.index, e.target.name, e.target.checked);
   },
 
   handleSubmit: function(e) {
@@ -48,11 +57,11 @@ var FunnelStep = React.createClass({
                        time={this.props.step.time}
                        timezone={this.props.step.timezone}  
                        handleChange={this.handleChange}/>
-            <label htmlFor="optional" className="block-label margin-top-small">
-              <input name="optional" type="checkbox" checked={this.props.step.optional} /> Optional Step
+            <label className="block-label margin-top-small">
+              <input name="optional" type="checkbox" checked={this.props.step.optional} onChange={this.handleCheckboxChange} /> Optional Step
             </label>
-            <label htmlFor="inverted" className="block-label">
-              <input name="inverted" type="checkbox" checked={this.props.step.inverted} /> Inverted Step
+            <label className="block-label">
+              <input name="inverted" type="checkbox" checked={this.props.step.inverted} onChange={this.handleCheckboxChange} /> Inverted Step
             </label>
             <hr />
             <a href="#" className="remove-step" onClick={this.removeStep}>
