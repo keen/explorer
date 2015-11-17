@@ -1767,7 +1767,8 @@
 }
 #keen-explorer .funnel-builder a.add-step {
   font-size: 16px;
-  padding: 10px 15px;
+  display: block;
+  margin: 10px 15px;
 }
 #keen-explorer .funnel-builder a.remove-step,
 #keen-explorer .funnel-builder a.remove-step .icon {
