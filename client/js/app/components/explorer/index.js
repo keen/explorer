@@ -163,6 +163,9 @@ var Explorer = React.createClass({
   },
 
   handleFilterChange: function(index, name, value) {
+    // TODO: This is repeated in the funnels/funnel_builder component. We should refactor
+    // and DRY it up.
+    
     var updates = _.cloneDeep(this.state.activeExplorer.query.filters[index]);
     
     if (!_.isNull(name.match('coordinates'))) {

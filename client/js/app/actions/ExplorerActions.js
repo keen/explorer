@@ -117,6 +117,34 @@ var ExplorerActions = {
     });
   },
 
+  addStepFilter: function(id, stepIndex, attrs) {
+    AppDispatcher.dispatch({
+      actionType: ExplorerConstants.EXPLORER_ADD_STEP_FILTER,
+      id: id,
+      stepIndex: stepIndex,
+      attrs: attrs
+    });
+  },
+
+  removeStepFilter: function(id, stepIndex, filterIndex) {
+    AppDispatcher.dispatch({
+      actionType: ExplorerConstants.EXPLORER_REMOVE_STEP_FILTER,
+      id: id,
+      stepIndex: stepIndex,
+      filterIndex: filterIndex
+    });
+  },
+
+  updateStepFilter: function(id, stepIndex, filterIndex, attrs) {
+    AppDispatcher.dispatch({
+      actionType: ExplorerConstants.EXPLORER_UPDATE_STEP_FILTER,
+      id: id,
+      stepIndex: stepIndex,
+      filterIndex: filterIndex,
+      attrs: attrs
+    });
+  },
+
   exec: function(client, id) { 
     var explorer = ExplorerStore.get(id);
 

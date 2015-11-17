@@ -316,6 +316,27 @@ function _setStepActive(id, index) {
   _explorers[id].query.steps[index].active = true;
 }
 
+function _addStepFilter(id, stepIndex, attrs) {
+  attrs = attrs || {};
+  _explorers[id].query.steps[stepIndex].filters.push(_.assign(_defaultFilter(), attrs));
+}
+
+function _removeStepFilter(id, stepIndex, filterIndex) {
+  _explorers[id].query.steps[stepIndex].filters.splice(filterIndex, 1);
+}
+
+function _updateStepFilter(id, stepIndex, filterIndex, updates) {
+  var filter = _explorers[id].query.steps[stepIndex].filters[filterIndex];
+  var updates = _prepareFilterUpdates(_explorers[id], filter, updates);
+  _explorers[id].query.steps[stepIndex].filters[filterIndex] = _.assign({}, filter, updates);
+
+  // Hack around the fact that _.assign doesn't assign null values. But we
+  // actually WANT a null value if the coercion_type is null.
+  if (_explorers[id].query.steps[stepIndex].filters[filterIndex].coercion_type === 'Null') {
+    _explorers[id].query.steps[stepIndex].filters[filterIndex].property_value = null;
+  }
+}
+
 function _clear(id) {
   var model = _explorers[id];
   _explorers[id] = _.assign({}, _defaultAttrs(), _.pick(model, ['id', 'query_name', 'active', 'metadata', 'originalModel']));
@@ -463,6 +484,21 @@ ExplorerStore.dispatchToken = AppDispatcher.register(function(action) {
 
     case ExplorerConstants.EXPLORER_SET_STEP_ACTIVE:
       _setStepActive(action.id, action.index);
+      ExplorerStore.emitChange();
+      break;
+
+    case ExplorerConstants.EXPLORER_ADD_STEP_FILTER:
+      _addStepFilter(action.id, action.stepIndex, action.attrs);
+      ExplorerStore.emitChange();
+      break;
+
+    case ExplorerConstants.EXPLORER_REMOVE_STEP_FILTER:
+      _removeStepFilter(action.id, action.stepIndex, action.filterIndex);
+      ExplorerStore.emitChange();
+      break;
+
+    case ExplorerConstants.EXPLORER_UPDATE_STEP_FILTER:
+      _updateStepFilter(action.id, action.stepIndex, action.filterIndex, action.attrs);
       ExplorerStore.emitChange();
       break;
 

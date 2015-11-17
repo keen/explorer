@@ -172,7 +172,7 @@ module.exports = {
 
   validFilters: function(filters) {
     return _.filter(filters, function(filter) {
-      return runValidations(FilterValidations.filter, filter).isValid;
+      return ValidationUtils.runValidations(FilterValidations.filter, filter).isValid;
     });
   }
 

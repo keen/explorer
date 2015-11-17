@@ -56,6 +56,18 @@ var FunnelStep = React.createClass({
     this.refs['filter-manager'].open();
   },
 
+  handleAddFilter: function() {
+    this.props.handleAddFilter(this.props.index);
+  },
+
+  handleRemoveFilter: function(filterIndex) {
+    this.props.handleRemoveFilter(this.props.index, filterIndex);
+  },
+
+  handleFilterChange: function(filterIndex, name, value) {
+    this.props.handleFilterChange(this.props.index, filterIndex, name, value);
+  },
+
   buildStepBody: function() {
     if (this.props.step.active === true) {
       return (
@@ -87,9 +99,9 @@ var FunnelStep = React.createClass({
             <FilterManager ref="filter-manager"
                            eventCollection={this.props.step.event_collection}
                            filters={this.props.step.filters}
-                           handleChange={this.props.handleFilterChange}
+                           handleChange={this.handleFilterChange}
                            removeFilter={this.props.handleRemoveFilter}
-                           addFilter={this.props.handleAddFilter}
+                           addFilter={this.handleAddFilter}
                            getPropertyType={this.props.getPropertyType}
                            propertyNames={this.props.propertyNames} />
             <label className="block-label margin-top-small">
