@@ -296,6 +296,27 @@ function _updateFilter(id, index, updates) {
   }
 }
 
+function _addStep(id, attrs) {
+  attrs = attrs || {};
+  _explorers[id].query.steps.push(_.assign(_defaultStep(), attrs));
+}
+
+function _removeStep(id, index) {
+  _explorers[id].query.steps.splice(index, 1);
+}
+
+function _updateStep(id, index, updates) {
+  var step = _explorers[id].query.steps[index];
+  _explorers[id].query.steps[index] = _.assign({}, step, updates);
+}
+
+function _setStepActive(id, index) {
+  _explorers[id].query.steps.forEach(function(step) {
+    step.active = false
+  })
+  _explorers[id].query.steps[index].active = true;
+}
+
 function _clear(id) {
   var model = _explorers[id];
   _explorers[id] = _.assign({}, _defaultAttrs(), _.pick(model, ['id', 'query_name', 'active', 'metadata', 'originalModel']));
@@ -423,6 +444,26 @@ ExplorerStore.dispatchToken = AppDispatcher.register(function(action) {
 
     case ExplorerConstants.EXPLORER_UPDATE_FILTER:
       _updateFilter(action.id, action.index, action.attrs);
+      ExplorerStore.emitChange();
+      break;
+
+    case ExplorerConstants.EXPLORER_ADD_STEP:
+      _addStep(action.id, action.attrs);
+      ExplorerStore.emitChange();
+      break;
+
+    case ExplorerConstants.EXPLORER_REMOVE_STEP:
+      _removeStep(action.id, action.index);
+      ExplorerStore.emitChange();
+      break;
+
+    case ExplorerConstants.EXPLORER_UPDATE_STEP:
+      _updateStep(action.id, action.index, action.attrs);
+      ExplorerStore.emitChange();
+      break;
+
+    case ExplorerConstants.EXPLORER_SET_STEP_ACTIVE:
+      _setStepActive(action.id, action.index);
       ExplorerStore.emitChange();
       break;
 

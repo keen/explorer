@@ -7,9 +7,7 @@ var React = require('react/addons');
 
 // Components
 var FieldsToggle = require('../../common/fields_toggle.js');
-var EventCollectionField = require('./event_collection_field.js');
-var AnalysisTypeField = require('./analysis_type_field.js');
-var TargetPropertyField = require('./target_property_field.js');
+var SelectField = require('./select_field.js');
 var PercentileField = require('./percentile_field.js');
 var GroupByField = require('./group_by_field.js');
 var ExtractionOptions = require('./extraction_options.js');
@@ -80,11 +78,13 @@ var QueryBuilder = React.createClass({
   buildEventCollectionField: function() {
     if (this.props.model.query.analysis_type !== 'funnel') {
       return (
-        <EventCollectionField ref="event-collection-field"
-                              value={this.props.model.query.event_collection}
-                              options={this.props.project.eventCollections}
-                              handleChange={this.handleChange}
-                              onBrowseEvents={this.props.onBrowseEvents} />
+        <SelectField name="event_collection" 
+                     label="Event Collection"
+                     value={this.props.model.query.event_collection}
+                     requiredLabel={true}
+                     onBrowseEvents={this.props.onBrowseEvents}
+                     handleChange={this.handleChange}
+                     options={this.props.project.eventCollections} />
       );
     }
   },
@@ -114,12 +114,17 @@ var QueryBuilder = React.createClass({
   },
 
   buildTargetPropertyField: function() {
-    if (['count', 'extraction', 'funnel'].indexOf(this.props.model.query.analysis_type) === -1) {
+    var type = this.props.model.query.analysis_type;
+    if (type !== null && ['count', 'extraction', 'funnel'].indexOf(type) === -1) {
       return (
-        <TargetPropertyField ref="target-property-field"
-                             value={this.props.model.query.target_property}
-                             options={this.getEventPropertyNames()}
-                             handleChange={this.handleChange} />
+        <SelectField name="target_property"
+                     label="Target Property"
+                     inputClasses={['target-property']}
+                     requiredLabel={true}
+                     handleChange={this.handleChange}
+                     options={this.getEventPropertyNames()}
+                     value={this.props.model.query.target_property}
+                     sort={true} />
       );
     }
   },
@@ -173,7 +178,10 @@ var QueryBuilder = React.createClass({
 
   buildFunnelBuilder: function() {
     if (this.props.model.query.analysis_type === 'funnel') {
-      return <FunnelBuilder model={this.props.model} />;
+      return <FunnelBuilder model={this.props.model}
+                            project={this.props.project}
+                            onBrowseEvents={this.props.onBrowseEvents}
+                            getEventPropertyNames={this.getEventPropertyNames} />;
     }
   },
 
@@ -212,10 +220,13 @@ var QueryBuilder = React.createClass({
       <section className="query-pane-section query-builder">
         <form className="form query-builder-form" onSubmit={this.props.handleQuerySubmit}>
           {this.buildEventCollectionField()}
-          <AnalysisTypeField ref="analysis-type-field"
-                             value={this.props.model.query.analysis_type}
-                             options={ProjectUtils.getConstant('ANALYSIS_TYPES')}
-                             handleChange={this.handleChange} />
+          <SelectField name="analysis_type"
+                       label="Analysis Type"
+                       inputClasses={['analysis-type']}
+                       options={ProjectUtils.getConstant('ANALYSIS_TYPES')}
+                       value={this.props.model.query.analysis_type}
+                       handleChange={this.handleChange}
+                       requiredLabel={true} />
           {this.buildFunnelBuilder()}
           {this.buildExtractionOptions()}
           {this.buildTargetPropertyField()}

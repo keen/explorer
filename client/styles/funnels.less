@@ -1,0 +1,87 @@
+@active-color: #536778;
+
+.funnel-builder {
+
+  .funnel-step {
+    padding: 0 5px;
+  }
+
+  .funnel-body {
+    padding: 0 10px;
+  }
+
+  .funnel-step.active {
+    padding: 0;
+  }
+  
+  .steps {
+    list-style: none;
+    padding: 0;
+  }
+
+  .step-header {
+    display: block;
+    background: #E7E7E7;
+    padding: 8px 10px;
+    border-radius: 2px;
+    border-bottom: 2px solid #DADADA;
+  }
+
+  .step-number {
+    float: left;
+    background: #FFF;
+    height: 30px;
+    width: 30px;
+    line-height: 30px;
+    text-align: center;
+    font-weight: bold;
+    border-radius: 100px;
+    color: @active-color;
+    margin-right: 10px;
+  }
+
+  .step-name {
+    float: left;
+    color: #5C6F7F;
+    line-height: 30px;
+  }
+
+  .step-move-btns {
+    display: none;
+  }
+
+  a.add-step {
+    font-size: 16px;
+    padding: 10px 15px;
+  }
+
+  a.remove-step, a.remove-step .icon {
+    color: #D4D4D4;
+  }
+  
+  /* 
+   * Active Step
+   */
+  .funnel-step.active {
+    padding: 0;
+    
+    .step-header {
+      background: @active-color;
+      border-bottom: none;
+    }
+
+    .step-name {
+      color: #FFF;
+    }
+
+    .step-move-btns {
+      float: right;
+    }
+
+    .step-body {
+      padding: 0 15px;
+    }
+
+  }
+
+}

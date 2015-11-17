@@ -84,6 +84,39 @@ var ExplorerActions = {
     });
   },
 
+  addStep: function(id, attrs) {
+    AppDispatcher.dispatch({
+      actionType: ExplorerConstants.EXPLORER_ADD_STEP,
+      id: id,
+      attrs: attrs
+    });
+  },
+
+  removeStep: function(id, index) {
+    AppDispatcher.dispatch({
+      actionType: ExplorerConstants.EXPLORER_REMOVE_STEP,
+      id: id,
+      index: index
+    });
+  },
+
+  setStepActive: function(id, index) {
+    AppDispatcher.dispatch({
+      actionType: ExplorerConstants.EXPLORER_SET_STEP_ACTIVE,
+      id: id,
+      index: index
+    });
+  },
+
+  updateStep: function(id, index, attrs) {
+    AppDispatcher.dispatch({
+      actionType: ExplorerConstants.EXPLORER_UPDATE_STEP,
+      id: id,
+      index: index,
+      attrs: attrs
+    });
+  },
+
   exec: function(client, id) { 
     var explorer = ExplorerStore.get(id);
 
