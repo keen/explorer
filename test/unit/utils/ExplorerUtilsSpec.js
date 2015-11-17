@@ -7,6 +7,7 @@ var Qs = require('qs');
 var TestHelpers = require('../../support/TestHelpers');
 var ExplorerActions = require('../../../client/js/app/actions/ExplorerActions');
 var FilterUtils = require('../../../client/js/app/utils/FilterUtils');
+var FunnelUtils = require('../../../client/js/app/utils/FunnelUtils');
 var ValidationUtils = require('../../../client/js/app/utils/ValidationUtils');
 var ExplorerValidations = require('../../../client/js/app/validations/ExplorerValidations')
 var ExplorerUtils = require('../../../client/js/app/utils/ExplorerUtils');;
@@ -64,6 +65,13 @@ describe('utils/ExplorerUtils', function() {
       ExplorerUtils.queryJSON(explorer);
       assert.lengthOf(stub.getCalls(), 3);
       FilterUtils.queryJSON.restore();
+    });
+    it('should call StepUtils.stepJSON for every filter', function () {
+      var explorer = { query: { steps: [{}, {}, {}] } };
+      var stub = sinon.stub(FunnelUtils, 'stepJSON');
+      ExplorerUtils.queryJSON(explorer);
+      assert.lengthOf(stub.getCalls(), 3);
+      FunnelUtils.stepJSON.restore();
     });
     it('should remove empty filters', function () {
       var explorer = { 

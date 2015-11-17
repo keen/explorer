@@ -4,6 +4,7 @@ var stringify = require('json-stable-stringify');
 var moment = require('moment');
 var ValidationUtils = require('./ValidationUtils');
 var FormatUtils = require('./FormatUtils');
+var FunnelUtils = require('./FunnelUtils');
 var ProjectUtils = require('./ProjectUtils');
 var FilterUtils = require('./FilterUtils');
 var TimeframeUtils = require('./TimeframeUtils');
@@ -81,32 +82,33 @@ module.exports = {
     }
     var params = _.cloneDeep(explorer.query);
 
-    // Set the timeframe (will get removed if it's null o undefined)
     _.assign(params, TimeframeUtils.getTimeParameters(params.time, params.timezone));
-
-    // Remove any empty properties or ones that shouldn't be
-    // part of the query request.
-    _.each(params, function(value, key) {
-      if (!FormatUtils.isValidQueryValue(value)) {
-        delete params[key];
-      }
-      if (!_.contains(QUERY_PARAMS, key)) {
-        delete params[key];
-      }
-    });
 
     // Add filters
     if (params.filters) {
       params.filters = _.map(params.filters, function(filter){
-        return FilterUtils.queryJSON(filter, TimeframeUtils.getTimezoneOffset(explorer));
+        return FilterUtils.queryJSON(filter, TimeframeUtils.getTimezoneOffset(params.timezone));
       });
-      params.filters = _.filter(params.filters, function(filter){
-        return !_.isEmpty(filter);
-      });
-      if (!params.filters.length) {
-        delete params.filters;
-      }
     }
+
+    if(params.steps) {
+      params.steps = _.map(params.steps, FunnelUtils.stepJSON); 
+    }
+
+    _.each(params, function(value, key) {
+      // If it's an array, clean out any empty elements
+      if(_.isArray(value)) {
+        _.remove(value, function(element) {
+          return !_.isNumber(element) && _.isEmpty(element);
+        });
+      }
+
+      // Remove any empty properties or ones that shouldn't be
+      // part of the query request.
+      if (!FormatUtils.isValidQueryValue(value) || !_.contains(QUERY_PARAMS, key)) {
+        delete params[key];
+      }
+    });
 
     return params;
   },
