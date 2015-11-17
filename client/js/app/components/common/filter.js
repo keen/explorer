@@ -15,12 +15,20 @@ var filterValidations = require('../../validations/FilterValidations').filter;
 
 var Filter = React.createClass({
 
+  handleChange: function(name, value) {
+    this.props.handleChange(this.props.index, name, value);
+  },
+
+  handleChangeWithEvent: function(e) {
+    this.props.handleChange(this.props.index, e.target.name, e.target.value);
+  },
+
   buildValueFormGroup: function() {
     return (
       <FilterValueFields filter={this.props.filter}
                          index={this.props.index}
                          filterOperators={this.props.filterOperators}
-                         handleChange={this.handleChange}
+                         handleChange={this.props.handleChange}
                          updateFilter={this.props.updateFilter} />
     );
   },
@@ -43,7 +51,7 @@ var Filter = React.createClass({
       <ReactSelect name="property_name"
                    inputClasses="property-name form-control"
                    items={this.props.eventPropertyNames}
-                   handleChange={this.props.handleChange}
+                   handleChange={this.handleChange}
                    placeholder="Select a property name"
                    value={this.props.filter.property_name}
                    sort={true} />

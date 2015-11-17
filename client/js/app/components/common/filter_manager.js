@@ -32,7 +32,7 @@ var FilterManager = React.createClass({
                 eventPropertyNames={ProjectUtils.getEventCollectionPropertyNames(this.props.project, this.props.eventCollection)}
                 updateFilter={this.updateFilter}
                 removeFilter={this.removeFilter}
-                handleChange={this.props.handleChange}
+                handleChange={this.handleChange}
                 filterOperators={ProjectUtils.getConstant('FILTER_OPERATORS')} />
       );
     }.bind(this));
@@ -42,6 +42,7 @@ var FilterManager = React.createClass({
         {filterNodes}
         <div className="filter-buttons">
           <a href="#" className="add-filter btn btn-primary" onClick={this.addFilter}>
+            <i className="icon glyphicon glyphicon-plus margin-right-tiny"></i>
             Add another filter
           </a>
         </div>
@@ -121,7 +122,13 @@ var FilterManager = React.createClass({
              size="large"
              onClose={this.modalClosed}
              modalClasses="filters-modal"
-             footerBtns={[ { text: 'Done' } ]}>
+             footerBtns={[
+              { 
+                text: 'Done',
+                classes: 'btn-success',
+                iconName: 'ok-circle'
+              }
+            ]}>
         <div className="filters">
           {filterContent}
         </div>
