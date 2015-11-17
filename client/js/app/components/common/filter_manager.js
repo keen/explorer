@@ -12,7 +12,7 @@ var ExplorerActions = require('../../actions/ExplorerActions');
 var FilterManager = React.createClass({
 
   buildFilterNodes: function() {
-    var filterNodes = this.props.model.query.filters.map(_.bind(function(filter, index) {
+    var filterNodes = this.props.filters.map(_.bind(function(filter, index) {
       return(
         <Filter filter={filter}
                 project={this.props.project}
@@ -50,26 +50,26 @@ var FilterManager = React.createClass({
 
   addFilter: function(event) {
     event.preventDefault();
-    ExplorerActions.addFilter(this.props.model.id);
+    ExplorerActions.addFilter(this.props.modelId);
   },
 
   removeFilter: function(event) {
     event.preventDefault();
     var index = parseInt(event.currentTarget.dataset.index);
-    ExplorerActions.removeFilter(this.props.model.id, index);
+    ExplorerActions.removeFilter(this.props.modelId, index);
   },
 
   // React methods
 
   componentWillMount: function() {
     // Create a default filter if there are no filters already on this model
-    if (!this.props.model.query.filters.length) {
-      ExplorerActions.addFilter(this.props.model.id);
+    if (!this.props.filters.length) {
+      ExplorerActions.addFilter(this.props.modelId);
     }
   },
 
   render: function() {
-    var filterContent = this.props.model.query.event_collection ? this.buildFilterNodes() : this.noFiltersMarkup()
+    var filterContent = this.props.eventCollection ? this.buildFilterNodes() : this.noFiltersMarkup()
 
     return (
       <Modal ref="modal"

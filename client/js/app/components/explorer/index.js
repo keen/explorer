@@ -288,9 +288,10 @@ var Explorer = React.createClass({
                       currentEventCollection={this.state.activeExplorer.query.event_collection}
                       selectEventCollection={this.selectEventCollection} />
         <FilterManager ref="filter-manager"
-                      model={this.state.activeExplorer}
-                      project={this.props.project}
-                      client={this.props.client} />
+                       modelId={this.state.activeExplorer.id}
+                       eventCollection={this.state.activeExplorer.query.event_collection}
+                       filters={this.state.activeExplorer.query.filters}
+                       project={this.props.project} />
       </div>
     );
   },

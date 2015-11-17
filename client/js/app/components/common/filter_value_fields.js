@@ -46,7 +46,7 @@ var FilterValueFields = React.createClass({
     } else {
       updates.property_value[name] = coerceGeoValue(value);
     }
-    ExplorerActions.updateFilter(this.props.model.id, this.props.index, updates)
+    ExplorerActions.updateFilter(this.props.modelId, this.props.index, updates)
   },
 
   onChange: function(event) {
@@ -66,7 +66,7 @@ var FilterValueFields = React.createClass({
   setTime: function(name, value) {
     var updates = _.cloneDeep(this.props.filter);
     updates.property_value = pasrseIntoDate(this.props.filter.property_value, value);
-    ExplorerActions.updateFilter(this.props.model.id, this.props.index, updates);
+    ExplorerActions.updateFilter(this.props.modelId, this.props.index, updates);
   },
 
   handleDateBlur: function (event) {
@@ -82,7 +82,7 @@ var FilterValueFields = React.createClass({
     var value = event.target.value;
     var updates = _.cloneDeep(this.props.filter);
     updates[name] = value;
-    ExplorerActions.updateFilter(this.props.model.id, this.props.index, updates);
+    ExplorerActions.updateFilter(this.props.modelId, this.props.index, updates);
   },
 
   getCoercionOptions: function() {
@@ -112,7 +112,7 @@ var FilterValueFields = React.createClass({
 
     var propertyType = getPropertyType(
       this.props.project,
-      this.props.model.query.event_collection,
+      this.props.eventCollection,
       this.props.filter.property_name
     );
 

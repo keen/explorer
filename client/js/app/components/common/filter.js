@@ -19,7 +19,7 @@ var Filter = React.createClass({
   handleChange: function(name, selection) {
     var updates = {};
     updates[name] = selection;
-    ExplorerActions.updateFilter(this.props.model.id, this.props.index, updates);
+    ExplorerActions.updateFilter(this.props.modelId, this.props.index, updates);
   },
 
   handleSelectionWithEvent: function(event) {
@@ -30,7 +30,7 @@ var Filter = React.createClass({
 
   typeOfPropertyName: function () {
     var propertyName = this.props.filter.property_name;
-    var eventName = this.props.model.query.event_collection;
+    var eventName = this.props.eventCollection;
     return ProjectUtils.getPropertyType(this.props.project, eventName, propertyName);
   },
 
@@ -63,7 +63,7 @@ var Filter = React.createClass({
   },
 
   buildPropertyNameSelect: function() {
-    var eventCollection = this.props.model.query.event_collection;
+    var eventCollection = this.props.eventCollection;
     var eventPropertyNames = ProjectUtils.getEventCollectionPropertyNames(this.props.project, eventCollection);
 
     return (
@@ -93,7 +93,7 @@ var Filter = React.createClass({
     var type = this.typeOfPropertyName();
 
     if (type && type == 'geo') {
-      ExplorerActions.updateFilter(this.props.model.id, this.props.index, { coercion_type: 'Geo' });
+      ExplorerActions.updateFilter(this.props.modelId, this.props.index, { coercion_type: 'Geo' });
     }
   },
 
