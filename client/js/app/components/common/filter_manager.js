@@ -6,22 +6,36 @@ var _ = require('lodash');
 var React = require('react');
 var Filter = require('./filter.js');
 var Modal = require('./modal.js');
-
 var ExplorerActions = require('../../actions/ExplorerActions');
+var ProjectUtils = require('../../utils/ProjectUtils');
+
+function coerceGeoValue(value) {
+  var trailingDecimals = value.match(/\.+$/);
+  if (value === '-' || (trailingDecimals && trailingDecimals.length)) {
+    return value;
+  } else {
+    return parseFloat(value) || 0;
+  }
+}
 
 var FilterManager = React.createClass({
 
   buildFilterNodes: function() {
-    var filterNodes = this.props.filters.map(_.bind(function(filter, index) {
+    var filterNodes = this.props.filters.map(function(filter, index) {
       return(
-        <Filter filter={filter}
-                project={this.props.project}
-                removeFilter={this.removeFilter}
-                key={index}
+        <Filter key={index}
                 index={index}
-                model={this.props.model} />
+                filter={filter}
+                project={this.props.project}
+                propertyType={this.getPropertyType(filter.property_name)}
+                eventCollection={this.props.eventCollection}
+                eventPropertyNames={ProjectUtils.getEventCollectionPropertyNames(this.props.project, this.props.eventCollection)}
+                updateFilter={this.updateFilter}
+                removeFilter={this.removeFilter}
+                handleChange={this.props.handleChange}
+                filterOperators={ProjectUtils.getConstant('FILTER_OPERATORS')} />
       );
-    }, this));
+    }.bind(this));
 
     return (
       <div>
@@ -57,6 +71,34 @@ var FilterManager = React.createClass({
     event.preventDefault();
     var index = parseInt(event.currentTarget.dataset.index);
     ExplorerActions.removeFilter(this.props.modelId, index);
+  },
+
+  handleChange: function(index, name, selection) {
+    var updates = {};
+    updates[name] = selection;
+    ExplorerActions.updateFilter(this.props.modelId, index, updates);
+  },
+
+  getPropertyType: function (property_name) {
+    return ProjectUtils.getPropertyType(
+      this.props.project,
+      this.props.eventCollection,
+      property_name
+    );
+  },
+
+  updateFilter: function(index, name, value) {
+    var updates = _.cloneDeep(this.props.filters[index]);
+    
+    if (!_.isNull(name.match('coordinates'))) {
+      updates.property_value.coordinates[parseInt(name.substr(name.length - 1))] = coerceGeoValue(value);
+    } else if (updates.coercion_type === 'Geo') {
+      updates.property_value[name] = coerceGeoValue(value);
+    } else {
+      updates[name] = value;
+    }
+
+    ExplorerActions.updateFilter(this.props.modelId, index, updates);
   },
 
   // React methods

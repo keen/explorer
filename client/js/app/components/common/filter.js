@@ -12,65 +12,38 @@ var ProjectUtils = require('../../utils/ProjectUtils');
 var FilterUtils = require('../../utils/FilterUtils');
 var runValidations = require('../../utils/ValidationUtils').runValidations;
 var filterValidations = require('../../validations/FilterValidations').filter;
-var ExplorerActions = require('../../actions/ExplorerActions');
 
 var Filter = React.createClass({
 
-  handleChange: function(name, selection) {
-    var updates = {};
-    updates[name] = selection;
-    ExplorerActions.updateFilter(this.props.modelId, this.props.index, updates);
-  },
-
-  handleSelectionWithEvent: function(event) {
-    var name = event.target.name;
-    var selection = event.target.value;
-    this.handleChange(name, selection);
-  },
-
-  typeOfPropertyName: function () {
-    var propertyName = this.props.filter.property_name;
-    var eventName = this.props.eventCollection;
-    return ProjectUtils.getPropertyType(this.props.project, eventName, propertyName);
-  },
-
   buildValueFormGroup: function() {
-    var filter = this.props.filter;
-    var type = this.typeOfPropertyName() || 'String';
     return (
-      <FilterValueFields model={this.props.model}
-                         filter={this.props.filter}
+      <FilterValueFields filter={this.props.filter}
                          index={this.props.index}
-                         project={this.props.project} />
+                         filterOperators={this.props.filterOperators}
+                         handleChange={this.handleChange}
+                         updateFilter={this.props.updateFilter} />
     );
   },
 
   buildOperatorSelect: function() {
-    var type = this.typeOfPropertyName() || '';
-    var coercionType = this.props.filter.coercion_type || '';
-    var operators = ProjectUtils.getConstant('FILTER_OPERATORS');
-
     return (
       <Select label={false}
               name="operator"
               classes="operator"
-              options={operators}
+              options={this.props.filterOperators}
               emptyOption={false}
               sort={false}
-              handleSelection={this.handleSelectionWithEvent}
+              handleSelection={this.handleChangeWithEvent}
               selectedOption={this.props.filter.operator} />
     );
   },
 
   buildPropertyNameSelect: function() {
-    var eventCollection = this.props.eventCollection;
-    var eventPropertyNames = ProjectUtils.getEventCollectionPropertyNames(this.props.project, eventCollection);
-
     return (
       <ReactSelect name="property_name"
                    inputClasses="property-name form-control"
-                   items={eventPropertyNames}
-                   handleChange={this.handleChange}
+                   items={this.props.eventPropertyNames}
+                   handleChange={this.props.handleChange}
                    placeholder="Select a property name"
                    value={this.props.filter.property_name}
                    sort={true} />
@@ -89,19 +62,7 @@ var Filter = React.createClass({
 
   // React functions
 
-  componentDidUpdate: function() {
-    var type = this.typeOfPropertyName();
-
-    if (type && type == 'geo') {
-      ExplorerActions.updateFilter(this.props.modelId, this.props.index, { coercion_type: 'Geo' });
-    }
-  },
-
   render: function() {
-    var propertyNameSelect = this.buildPropertyNameSelect();
-    var operatorSelect = this.buildOperatorSelect();
-    var valueFormGroup = this.buildValueFormGroup();
-    var listSyntaxInfo = this.getListSyntaxInfo();
     var filterValidity = runValidations(filterValidations, this.props.filter);
     var completeAndInvalid = FilterUtils.isComplete(this.props.filter) && !filterValidity.isValid;
     var invalidMsg;
@@ -126,14 +87,14 @@ var Filter = React.createClass({
       <div className={filterClasses}>
         <div className="row">
           <div className="col-md-4 filter-property-col">
-            {propertyNameSelect}
+            {this.buildPropertyNameSelect()}
           </div>
           <div className="col-md-2 filter-operator-col">
-            {operatorSelect}
+            {this.buildOperatorSelect()}
           </div>
           <div className="col-md-5 filter-value-col">
-            {valueFormGroup}
-            {listSyntaxInfo}
+            {this.buildValueFormGroup()}
+            {this.getListSyntaxInfo()}
           </div>
           <div className="col-md-1 filter-close-col">
             <a href="#" className="remove-filter" onClick={this.props.removeFilter} data-index={this.props.index}>
