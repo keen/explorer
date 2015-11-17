@@ -6,6 +6,10 @@ var ProjectUtils = require('../../../../utils/ProjectUtils.js');
 
 var FunnelsBuilder = React.createClass({
 
+  handleChange: function() {
+    // TODO
+  },
+
   addStep: function(e) {
     e.preventDefault();
     ExplorerActions.addStep(this.props.model.id);
@@ -19,14 +23,12 @@ var FunnelsBuilder = React.createClass({
     return ProjectUtils.getEventCollectionPropertyNames(this.props.project, event_collection);
   },
 
-  makeStepActive: function(index) {
-    ExplorerActions.setStepActive(this.props.model.id, index);
-  },
-
-  makeStepInactive: function(index) {
-    ExplorerActions.updateStep(this.props.model.id, index, {
-      active: false
-    });
+  toggleStepActive: function(index, active) {
+    if (active) {
+      ExplorerActions.setStepActive(this.props.model.id, index);
+    } else {
+      ExplorerActions.updateStep(this.props.model.id, index, { active: false });
+    }
   },
 
   buildSteps: function() {
@@ -39,7 +41,8 @@ var FunnelsBuilder = React.createClass({
                       eventCollections={this.props.project.eventCollections}
                       getEventPropertyNames={this.getEventPropertyNames}
                       onBrowseEvents={this.props.onBrowseEvents}
-                      makeStepActive={this.makeStepActive} />
+                      toggleStepActive={this.toggleStepActive}
+                      handleChange={this.handleChange} />
         </li>
       );
     }.bind(this));

@@ -14,7 +14,7 @@ var FunnelStep = React.createClass({
   },
 
   handleChange: function() {
-    // TODO
+    // TODO: this.props.handleChange
   },
 
   handleSubmit: function(e) {
@@ -23,11 +23,7 @@ var FunnelStep = React.createClass({
 
   toggleStepActive: function(e) {
     e.preventDefault();
-    if (this.step.active) {
-      this.props.makeStepActive(this.props.index);
-    } else {
-      this.props.makeStepInactive(this.props.index);
-    }
+    this.props.toggleStepActive(this.props.index, !this.props.step.active);
   },
 
   buildStepBody: function() {
@@ -76,7 +72,7 @@ var FunnelStep = React.createClass({
     })
     return (
       <div className={stepWrapperClasses}>
-        <a href="#" className="step-header clearfix" onClick={this.makeStepActive}>
+        <a href="#" className="step-header clearfix" onClick={this.toggleStepActive}>
           <div className="step-move-btns">
             <button className="up">Up</button>
             <button className="down">Down</button>
