@@ -2,9 +2,26 @@ var React = require('react');
 var _ = require('lodash');
 var SelectField = require('../select_field.js');
 var Timeframe = require('../../../common/timeframe.js');
+var FieldsToggle = require('../../../common/fields_toggle.js');
+var FilterManager = require('../../../common/filter_manager.js');
+var FilterUtils = require('../../../../utils/FilterUtils.js');
 var classNames = require('classnames');
 
 var FunnelStep = React.createClass({
+
+  propTypes: {
+    index:                React.PropTypes.number.isRequired,
+    step:                 React.PropTypes.object.isRequired,
+    eventCollections:     React.PropTypes.array.isRequired,
+    propertyNames:        React.PropTypes.array.isRequired,
+    onBrowseEvents:       React.PropTypes.func.isRequired,
+    removeStep:           React.PropTypes.func.isRequired,
+    handleChange:         React.PropTypes.func.isRequired,
+    toggleStepActive:     React.PropTypes.func.isRequired,
+    handleFilterChange:   React.PropTypes.func.isRequired,
+    handleAddFilter:      React.PropTypes.func.isRequired,
+    handleRemoveFilter:   React.PropTypes.func.isRequired
+  },
 
   removeStep: function(e) {
     e.preventDefault();
@@ -35,6 +52,10 @@ var FunnelStep = React.createClass({
     this.props.toggleStepActive(this.props.index, !this.props.step.active);
   },
 
+  handleFiltersToggle: function() {
+    this.refs['filter-manager'].open();
+  },
+
   buildStepBody: function() {
     if (this.props.step.active === true) {
       return (
@@ -50,13 +71,27 @@ var FunnelStep = React.createClass({
             <SelectField name="actor_property"
                          label="Actor Property"
                          value={this.props.step.actor_property}
-                         options={this.props.getEventPropertyNames(this.props.step.event_collection)}
+                         options={this.props.propertyNames}
                          requiredLabel={true}
                          handleChange={this.handleChange} />
             <Timeframe ref="timeframe"
                        time={this.props.step.time}
                        timezone={this.props.step.timezone}  
                        handleChange={this.handleChange}/>
+            <div className="field-component">
+              <FieldsToggle ref="filters-fields-toggle"
+                            name="Filters"
+                            toggleCallback={this.handleFiltersToggle}
+                            fieldsCount={FilterUtils.validFilters(this.props.step.filters).length} />
+            </div>
+            <FilterManager ref="filter-manager"
+                           eventCollection={this.props.step.event_collection}
+                           filters={this.props.step.filters}
+                           handleChange={this.props.handleFilterChange}
+                           removeFilter={this.props.handleRemoveFilter}
+                           addFilter={this.props.handleAddFilter}
+                           getPropertyType={this.props.getPropertyType}
+                           propertyNames={this.props.propertyNames} />
             <label className="block-label margin-top-small">
               <input name="optional" type="checkbox" checked={this.props.step.optional} onChange={this.handleCheckboxChange} /> Optional Step
             </label>

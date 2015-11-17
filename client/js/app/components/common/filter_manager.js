@@ -10,18 +10,41 @@ var ProjectUtils = require('../../utils/ProjectUtils');
 
 var FilterManager = React.createClass({
 
+  propTypes: {
+    eventCollection:  React.PropTypes.string,
+    propertyNames:    React.PropTypes.array,
+    filters:          React.PropTypes.array,
+    addFilter:        React.PropTypes.func.isRequired,
+    removeFilter:     React.PropTypes.func.isRequired,
+    handleChange:     React.PropTypes.func.isRequired,
+    getPropertyType:  React.PropTypes.func.isRequired
+  },
+
+  open: function() {
+    this.refs.modal.open();
+  },
+
+  addFilter: function(e) {
+    e.preventDefault();
+    this.props.addFilter();
+  },
+
+  removeFilter: function(e) {
+    e.preventDefault();
+    this.props.removeFilter(this.props.index);
+  },
+
   buildFilterNodes: function() {
     var filterNodes = this.props.filters.map(function(filter, index) {
       return(
         <Filter key={index}
                 index={index}
                 filter={filter}
-                project={this.props.project}
-                propertyType={this.getPropertyType(filter.property_name)}
+                propertyType={this.getPropertyType(this.props.eventCollection, filter.property_name)}
                 eventCollection={this.props.eventCollection}
-                eventPropertyNames={ProjectUtils.getEventCollectionPropertyNames(this.props.project, this.props.eventCollection)}
+                propertyNames={htis.props.propertyNames}
                 handleChange={this.props.handleChange}
-                removeFilter={this.props.removeFilter}
+                removeFilter={this.removeFilter}
                 filterOperators={ProjectUtils.getConstant('FILTER_OPERATORS')} />
       );
     }.bind(this));
@@ -30,7 +53,7 @@ var FilterManager = React.createClass({
       <div>
         {filterNodes}
         <div className="filter-buttons">
-          <a href="#" className="add-filter btn btn-primary" onClick={this.props.addFilter}>
+          <a href="#" className="add-filter btn btn-primary" onClick={this.addFilter}>
             <i className="icon glyphicon glyphicon-plus margin-right-tiny"></i>
             Add another filter
           </a>
@@ -51,14 +74,6 @@ var FilterManager = React.createClass({
           </div>
         </div>
       </div>
-    );
-  },
-
-  getPropertyType: function (property_name) {
-    return ProjectUtils.getPropertyType(
-      this.props.project,
-      this.props.eventCollection,
-      property_name
     );
   },
 

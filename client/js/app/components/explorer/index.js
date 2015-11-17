@@ -21,6 +21,7 @@ var NoticeStore = require('../../stores/NoticeStore');
 var AppStateStore = require('../../stores/AppStateStore');
 var ExplorerUtils = require('../../utils/ExplorerUtils');
 var FilterUtils = require('../../utils/FilterUtils');
+var ProjectUtils = require('../../utils/ProjectUtils');
 var ExplorerActions = require('../../actions/ExplorerActions');
 var ValidationUtils = require('../../utils/ValidationUtils');
 var ExplorerValidations = require('../../validations/ExplorerValidations');
@@ -108,7 +109,7 @@ var Explorer = React.createClass({
   },
 
   handleFiltersToggle: function() {
-    this.refs['filter-manager'].refs.modal.open();
+    this.refs['filter-manager'].open();
   },
 
   onDisplayNameChange: function(event) {
@@ -153,14 +154,11 @@ var Explorer = React.createClass({
     }, 0);
   },
 
-  handleAddFilter: function(event) {
-    event.preventDefault();
+  handleAddFilter: function() {
     ExplorerActions.addFilter(this.state.activeExplorer.id);
   },
 
-  handleRemoveFilter: function(event) {
-    event.preventDefault();
-    var index = parseInt(event.currentTarget.dataset.index);
+  handleRemoveFilter: function(index) {
     ExplorerActions.removeFilter(this.state.activeExplorer.id, index);
   },
 
@@ -214,6 +212,21 @@ var Explorer = React.createClass({
     AppStateActions.update({
       codeSampleHidden: !this.state.appState.codeSampleHidden
     });
+  },
+
+  getEventPropertyNames: function(collection)  {
+    return ProjectUtils.getEventCollectionPropertyNames(
+      this.props.project,
+      collection
+    );
+  },
+
+  getPropertyType: function (eventCollection, property_name) {
+    return ProjectUtils.getPropertyType(
+      this.props.project,
+      eventCollection,
+      property_name
+    );
   },
 
   // Lifecycle hooks
@@ -274,7 +287,10 @@ var Explorer = React.createClass({
                                 handleRevertChanges={this.handleRevertChanges}
                                 handleQuerySubmit={this.handleQuerySubmit}
                                 setExtractionType={this.setExtractionType}
-                                handleClearQuery={this.handleClearQuery} />;
+                                handleClearQuery={this.handleClearQuery}
+                                getEventPropertyNames={this.getEventPropertyNames}
+                                getPropertyType={this.getPropertyType}
+                                analysisTypes={ProjectUtils.getConstant('ANALYSIS_TYPES')} />;
     } else {
       queryPane = <BrowseQueries ref="query-browser"
                                  listItems={this.state.allPersistedExplorers}
@@ -319,13 +335,13 @@ var Explorer = React.createClass({
                       currentEventCollection={this.state.activeExplorer.query.event_collection}
                       selectEventCollection={this.selectEventCollection} />
         <FilterManager ref="filter-manager"
-                       modelId={this.state.activeExplorer.id}
                        eventCollection={this.state.activeExplorer.query.event_collection}
                        filters={this.state.activeExplorer.query.filters}
-                       project={this.props.project}
                        handleChange={this.handleFilterChange}
                        removeFilter={this.handleRemoveFilter}
-                       addFilter={this.handleAddFilter} />
+                       addFilter={this.handleAddFilter}
+                       getPropertyType={this.getPropertyType} 
+                       propertyNames={this.getEventPropertyNames(this.state.activeExplorer.query.event_collection)} />
       </div>
     );
   },

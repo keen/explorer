@@ -2,49 +2,70 @@ var React = require('react');
 var _ = require('lodash');
 var FunnelStep = require('./funnel_step.js');
 var ExplorerActions = require('../../../../actions/ExplorerActions.js');
-var ProjectUtils = require('../../../../utils/ProjectUtils.js');
 
 var FunnelsBuilder = React.createClass({
+
+  propTypes: {
+    modelId:               React.PropTypes.string.isRequired,
+    eventCollections:      React.PropTypes.array.isRequired,
+    steps:                 React.PropTypes.array.isRequired,
+    onBrowseEvents:        React.PropTypes.func.isRequired,
+    getEventPropertyNames: React.PropTypes.func.isRequired,
+    getPropertyType:       React.PropTypes.func.isRequired
+  },
 
   handleChange: function(index, name, value) {
     var updates = {}
     updates[name] = value;
-    ExplorerActions.updateStep(this.props.model.id, index, updates);
+    ExplorerActions.updateStep(this.props.modelId, index, updates);
   },
 
   addStep: function(e) {
     e.preventDefault();
-    ExplorerActions.addStep(this.props.model.id);
+    ExplorerActions.addStep(this.props.modelId);
   },
 
   removeStep: function(index) {
-    ExplorerActions.removeStep(this.props.model.id, index);
+    ExplorerActions.removeStep(this.props.modelId, index);
   },
 
-  getEventPropertyNames: function(event_collection)  {
-    return ProjectUtils.getEventCollectionPropertyNames(this.props.project, event_collection);
+  handleAddFilter: function() {
+    // TODO
+  },
+
+  handleRemoveFilter: function(index) {
+    // TODO
+  },
+
+  handleFilterChange: function(index, name, value) {
+    // TODO
   },
 
   toggleStepActive: function(index, active) {
     if (active) {
-      ExplorerActions.setStepActive(this.props.model.id, index);
+      ExplorerActions.setStepActive(this.props.modelId, index);
     } else {
-      ExplorerActions.updateStep(this.props.model.id, index, { active: false });
+      ExplorerActions.updateStep(this.props.modelId, index, { active: false });
     }
   },
 
   buildSteps: function() {
-    return this.props.model.query.steps.map(function(step, index) {
+    return this.props.steps.map(function(step, index) {
       return (
         <li key={index}>
           <FunnelStep index={index}
                       step={step}
                       removeStep={this.removeStep}
-                      eventCollections={this.props.project.eventCollections}
-                      getEventPropertyNames={this.getEventPropertyNames}
+                      eventCollections={this.props.eventCollections}
+                      propertyNames={this.props.getEventPropertyNames(step.event_collection)}
                       onBrowseEvents={this.props.onBrowseEvents}
                       toggleStepActive={this.toggleStepActive}
-                      handleChange={this.handleChange} />
+                      handleChange={this.handleChange}
+                      handleAddFilter={this.handleAddFilter}
+                      handleRemoveFilter={this.handleRemoveFilter}
+                      handleFilterChange={this.handleFilterChange}
+                      getPropertyType={this.props.getPropertyType}
+                      handleFiltersToggle={this.handleFiltersToggle} />
         </li>
       );
     }.bind(this));

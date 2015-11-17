@@ -168,6 +168,12 @@ module.exports = {
     } else {
       return parseFloat(value) || 0;
     }
+  },
+
+  validFilters: function(filters) {
+    return _.filter(filters, function(filter) {
+      return runValidations(FilterValidations.filter, filter).isValid;
+    });
   }
 
 };

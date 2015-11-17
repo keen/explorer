@@ -18,17 +18,11 @@ var Input = require('../../common/input.js');
 var ApiUrl = require('./api_url.js');
 var ExplorerStore = require('../../../stores/ExplorerStore');
 var ExplorerUtils = require('../../../utils/ExplorerUtils');
-var ProjectUtils = require('../../../utils/ProjectUtils');
+var FilterUtils = require('../../../utils/FilterUtils');
 var ExplorerActions = require('../../../actions/ExplorerActions');
 var runValidations = require('../../../utils/ValidationUtils').runValidations;
 var ExplorerValidations = require('../../../validations/ExplorerValidations');
 var FilterValidations = require('../../../validations/FilterValidations');
-
-function validFilters(filters) {
-  return _.filter(filters, function(filter) {
-    return runValidations(FilterValidations.filter, filter).isValid;
-  });
-}
 
 var QueryBuilder = React.createClass({
 
@@ -53,10 +47,6 @@ var QueryBuilder = React.createClass({
   },
 
   // Convenience Methods
-
-  getEventPropertyNames: function()  {
-    return ProjectUtils.getEventCollectionPropertyNames(this.props.project, this.props.model.query.event_collection);
-  },
 
   updateGroupBy: function(updates) {
     ExplorerActions.update(this.props.model.id, {
@@ -107,7 +97,7 @@ var QueryBuilder = React.createClass({
         <GroupByField ref="group-by-field"
                       value={this.props.model.query.group_by}
                       updateGroupBy={this.updateGroupBy}
-                      options={this.getEventPropertyNames()}
+                      options={this.props.getEventPropertyNames(this.props.model.query.event_collection)}
                       handleChange={this.handleChange} />
       );
     }
@@ -122,7 +112,7 @@ var QueryBuilder = React.createClass({
                      inputClasses={['target-property']}
                      requiredLabel={true}
                      handleChange={this.handleChange}
-                     options={this.getEventPropertyNames()}
+                     options={this.props.getEventPropertyNames(this.props.model.query.event_collection)}
                      value={this.props.model.query.target_property}
                      sort={true} />
       );
@@ -154,9 +144,8 @@ var QueryBuilder = React.createClass({
         <div className="field-component">
           <FieldsToggle ref="filters-fields-toggle"
                         name="Filters"
-                        model={this.props.model}
                         toggleCallback={this.props.handleFiltersToggle}
-                        fieldsCount={validFilters(this.props.model.query.filters).length} />
+                        fieldsCount={FilterUtils.validFilters(this.props.model.query.filters).length} />
         </div>
       );
     }
@@ -178,10 +167,13 @@ var QueryBuilder = React.createClass({
 
   buildFunnelBuilder: function() {
     if (this.props.model.query.analysis_type === 'funnel') {
-      return <FunnelBuilder model={this.props.model}
+      return <FunnelBuilder modelId={this.props.model.id}
+                            steps={this.props.model.query.steps}
                             project={this.props.project}
                             onBrowseEvents={this.props.onBrowseEvents}
-                            getEventPropertyNames={this.getEventPropertyNames} />;
+                            eventCollections={this.props.project.eventCollections}
+                            getEventPropertyNames={this.props.getEventPropertyNames}
+                            getPropertyType={this.props.getPropertyType} />;
     }
   },
 
@@ -223,7 +215,7 @@ var QueryBuilder = React.createClass({
           <SelectField name="analysis_type"
                        label="Analysis Type"
                        inputClasses={['analysis-type']}
-                       options={ProjectUtils.getConstant('ANALYSIS_TYPES')}
+                       options={this.props.analysisTypes}
                        value={this.props.model.query.analysis_type}
                        handleChange={this.handleChange}
                        requiredLabel={true} />
