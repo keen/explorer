@@ -155,9 +155,8 @@ function _migrateToFunnel(explorer, newModel) {
  * @return {Object}         The new set of updates
  */
 function _migrateFromFunnel(explorer, newModel) {
-  var activeStep = _.find(explorer.query.steps, function (step) {
-    return step.active
-  });
+  if (explorer.query.steps.length < 1) return;
+  var activeStep = _.find(explorer.query.steps, { active: true }) || explorer.query.steps[0];
 
   _.each(SHARED_FUNNEL_STEP_PROPERTIES, function (key) {
     if(!_.isUndefined(activeStep[key])) {
