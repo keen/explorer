@@ -6,6 +6,7 @@ var ValidationUtils = require('./ValidationUtils');
 var FormatUtils = require('./FormatUtils');
 var ProjectUtils = require('./ProjectUtils');
 var FilterUtils = require('./FilterUtils');
+var TimeframeUtils = require('./TimeframeUtils');
 
 var QUERY_PARAMS = [
   'event_collection',
@@ -17,6 +18,7 @@ var QUERY_PARAMS = [
   'interval',
   'timezone',
   'filters',
+  'steps',
   'email',
   'latest',
   'property_names'
@@ -80,10 +82,7 @@ module.exports = {
     var params = _.cloneDeep(explorer.query);
 
     // Set the timeframe (will get removed if it's null o undefined)
-    params.timeframe = module.exports.getTimeframe(explorer);
-    if (module.exports.timeframeType(explorer.query.time) === 'absolute') {
-      delete params.timezone;
-    }
+    _.assign(params, TimeframeUtils.getTimeParameters(params.time, params.timezone));
 
     // Remove any empty properties or ones that shouldn't be
     // part of the query request.
@@ -99,7 +98,7 @@ module.exports = {
     // Add filters
     if (params.filters) {
       params.filters = _.map(params.filters, function(filter){
-        return FilterUtils.queryJSON(filter, module.exports.getTimezoneOffset(explorer));
+        return FilterUtils.queryJSON(filter, TimeframeUtils.getTimezoneOffset(explorer));
       });
       params.filters = _.filter(params.filters, function(filter){
         return !_.isEmpty(filter);
@@ -163,120 +162,6 @@ module.exports = {
     );
   },
 
-  getTimezoneOffset: function(explorer) {
-    var zone = _.find(ProjectUtils.getConstant('TIMEZONES'), { value: explorer.query.timezone });
-    return zone ? zone.offset : '+00:00';
-  },
-
-  timeframeBuilders: {
-
-    absolute_timeframe: function(explorer) {
-      if (explorer.query && explorer.query.time && explorer.query.time.start && explorer.query.time.end) {
-        var offset = module.exports.getTimezoneOffset(explorer)
-        return {
-          start: FormatUtils.formatISOTimeNoTimezone(explorer.query.time.start) + offset,
-          end: FormatUtils.formatISOTimeNoTimezone(explorer.query.time.end) + offset
-        };
-      }
-    },
-
-    relative_timeframe: function(explorer) {
-      var query = explorer.query;
-      if (query && query.time && query.time.relativity && query.time.amount && query.time.sub_timeframe) {
-        return [query.time.relativity, query.time.amount, query.time.sub_timeframe].join('_');
-      }
-    }
-
-  },
-
-  getTimeframe: function(explorer) {
-    var timeframeType = module.exports.timeframeType(explorer.query.time);
-    var timeframeBuilder = module.exports.timeframeBuilders[timeframeType + '_timeframe'];
-
-    if(typeof(timeframeBuilder) === 'undefined') {
-      return "";
-    } else {
-      return timeframeBuilder(explorer);
-    }
-  },
-
-  convertDateToUTC: function(date) {
-    return new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds());
-  },
-
-  /**
-   * Takes a URL encoded timerame string or object and returns a time object that looks how the Explorer store wants
-   * it to
-   * @param  {String} timeframe
-   * @return {Object}
-   * Return structure:
-   * {
-   *  time: {an Object, either containing a deconstructed absolute or relative timeframe}
-   * }
-   */
-  unpackTimeframeParam: function(query) {
-    var timeframe = query.timeframe;
-    var timeFormat = 'h:mm A';
-    var dateFormat = 'MMM D, YYYY';
-
-    if (typeof timeframe === 'object') {
-      var offset = timeframe.start.substring(timeframe.start.length, timeframe.start.length-6);
-
-      timeframe.start = timeframe.start.substring(0, timeframe.start.length-6);
-      timeframe.end = timeframe.end.substring(0, timeframe.end.length-6);
-
-      var timezone;
-      var zone = _.find(ProjectUtils.getConstant('TIMEZONES'), { offset: offset });
-      if (zone) {
-        timezone = zone.value;
-      } else if (!zone && query.timezone) {
-        timezone = query.timezone;
-      } else if (!zone && !query.timezone) {
-        throw new Error("A timezone was not part of the datestring for the timeframe with a start of: " + timeframe.start + ". There also was no timezone parameter found in the query. You must provide one or the other.");
-      }
-      return {
-        time: {
-          start: module.exports.convertDateToUTC(new Date(timeframe.start)),
-          end: module.exports.convertDateToUTC(new Date(timeframe.end))
-        },
-        timezone: timezone
-      };
-    } else if (typeof timeframe === 'string') {
-      var split = timeframe.split('_');
-      return {
-        time: {
-          relativity: split[0],
-          amount: split[1],
-          sub_timeframe: split[2]
-        },
-        timezone: query.timezone
-      };
-    }
-  },
-
-
-
-  /**
-   * Takes a time object and returns a string representing the timeframe type (absolute or relative)
-   * @param  {Object} time The time object
-   * @return {String} The type of timeframe, 'absolute' or 'relative'
-   */
-   timeframeType: function(time) {
-      var badTimeTypeError = new Error('Invalid time value');
-
-      if(_.isUndefined(time)) {
-        return "";
-      } else if(!_.isPlainObject(time)) {
-        throw badTimeTypeError;
-      } else if(_.has(time, 'start') && _.has(time, 'end')) {
-        return 'absolute';
-      } else if(_.has(time, 'relativity') && _.has(time, 'amount') && _.has(time, 'sub_timeframe')) {
-        return 'relative'
-      } else {
-        throw badTimeTypeError;
-      }
-   },
-
   /**
    * Takes in an object of query params directly taken from the URL and formats/decomnstructs them appropriately to work well
    * with our data model.
@@ -286,7 +171,7 @@ module.exports = {
   formatQueryParams: function(params) {
     if (!params || !params.query) return;
     if (params.query && params.query.timeframe) {
-      var unpackedTime = module.exports.unpackTimeframeParam(params.query);
+      var unpackedTime = TimeframeUtils.unpackTimeframeParam(params.query);
       params.query.time = unpackedTime.time;
       params.query.timezone = unpackedTime.timezone;
     }
@@ -348,7 +233,7 @@ module.exports = {
 
     var queryAttrs = Qs.stringify(attrs);
 
-    if (attrs.timeframe && module.exports.timeframeType(explorer.query.time) === 'absolute') {
+    if (attrs.timeframe && TimeframeUtils.timeframeType(explorer.query.time) === 'absolute') {
       delete attrs['timeframe'];
       // This is an absolute timeframe, so we need to encode the object in a specific way before sending it, as per keen docs => https://keen.io/docs/data-analysis/timeframe/#absolute-timeframes
       timeframe = module.exports.encodeAttribute(timeframe);
