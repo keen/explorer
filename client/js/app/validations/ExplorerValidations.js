@@ -57,10 +57,12 @@ module.exports = {
     
     validate: function(model) {
       for (var i=0; i<model.query.filters.length; i++) {
+        var filter = model.query.filters[i];
         var complete = FilterUtils.isComplete(filter);
         var valid = RunValidations(FilterValidations, filter).length === 0;
         if (complete && !valid) return false;
       }
+      return true;
     }
 
   },
