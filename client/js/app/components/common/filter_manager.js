@@ -7,6 +7,7 @@ var React = require('react');
 var Filter = require('./filter.js');
 var Modal = require('./modal.js');
 var ProjectUtils = require('../../utils/ProjectUtils');
+var FilterUtils = require('../../utils/FilterUtils');
 
 var FilterManager = React.createClass({
 
@@ -34,6 +35,21 @@ var FilterManager = React.createClass({
     this.props.removeFilter(this.props.index);
   },
 
+  handleChange: function(index, name, value) {
+    var updates = _.cloneDeep(this.props.filters[index]);
+    
+    if (!_.isNull(name.match('coordinates'))) {
+      var coordinateIndex = parseInt(name.split('.')[1]);
+      updates.property_value.coordinates[coordinateIndex] = FilterUtils.coerceGeoValue(value);
+    } else if (name === 'property_value' && updates.coercion_type === 'Geo') {
+      updates.property_value[name] = FilterUtils.coerceGeoValue(value);
+    } else {
+      updates[name] = value;
+    }
+
+    this.props.handleChange(index, updates);
+  },
+
   buildFilterNodes: function() {
     var filterNodes = this.props.filters.map(function(filter, index) {
       return(
@@ -43,7 +59,7 @@ var FilterManager = React.createClass({
                 propertyType={this.props.getPropertyType(this.props.eventCollection, filter.property_name)}
                 eventCollection={this.props.eventCollection}
                 propertyNames={this.props.propertyNames}
-                handleChange={this.props.handleChange}
+                handleChange={this.handleChange}
                 removeFilter={this.removeFilter}
                 filterOperators={ProjectUtils.getConstant('FILTER_OPERATORS')} />
       );

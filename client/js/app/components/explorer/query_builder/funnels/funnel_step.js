@@ -64,8 +64,8 @@ var FunnelStep = React.createClass({
     this.props.handleRemoveFilter(this.props.index, filterIndex);
   },
 
-  handleFilterChange: function(filterIndex, name, value) {
-    this.props.handleFilterChange(this.props.index, filterIndex, name, value);
+  handleFilterChange: function(filterIndex, updates) {
+    this.props.handleFilterChange(this.props.index, filterIndex, updates);
   },
 
   buildStepBody: function() {

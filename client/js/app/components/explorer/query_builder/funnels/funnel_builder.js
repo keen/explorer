@@ -37,20 +37,7 @@ var FunnelsBuilder = React.createClass({
     ExplorerActions.removeStepFilter(this.props.modelId, stepIndex, filterIndex);
   },
 
-  handleFilterChange: function(stepIndex, filterIndex, name, value) {
-    var updates = _.cloneDeep(this.props.steps[stepIndex].filters[filterIndex]);
-    
-    // TODO: This is repeated in the explorer/index component. We should refactor
-    // and DRY it up.
-    if (!_.isNull(name.match('coordinates'))) {
-      var coordinateIndex = parseInt(name.split('.')[1]);
-      updates.property_value.coordinates[coordinateIndex] = FilterUtils.coerceGeoValue(value);
-    } else if (name === 'property_value' && updates.coercion_type === 'Geo') {
-      updates.property_value[name] = FilterUtils.coerceGeoValue(value);
-    } else {
-      updates[name] = value;
-    }
-
+  handleFilterChange: function(stepIndex, filterIndex, updates) {
     ExplorerActions.updateStepFilter(this.props.modelId, stepIndex, filterIndex, updates);
   },
 
