@@ -162,7 +162,7 @@ var ExplorerActions = {
     explorer = ExplorerStore.get(id);
     if (!explorer.isValid) {
       NoticeActions.create({
-        text: valid.lastError,
+        text: explorer.errors[0].msg,
         type: 'error',
         icon: 'remove-sign'
       });
