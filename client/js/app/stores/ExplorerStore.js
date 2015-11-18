@@ -263,7 +263,7 @@ function _create(attrs) {
   attrs = attrs || {};
   var newAttrs = _.merge(_defaultAttrs(), attrs);
   _explorers[newAttrs.id] = newAttrs;
-  return _explorers[newAttrs.id];
+  return newAttrs.id;
 }
 
 function _update(id, updates) {
@@ -272,8 +272,10 @@ function _update(id, updates) {
   if (updates.id && updates.id !== id) {
     _explorers[updates.id] = newModel;
     delete _explorers[id];
+    return updates.id;
   } else {
     _explorers[id] = newModel;
+    return id;
   }
 }
 
@@ -294,6 +296,7 @@ function _revertActiveChanges() {
   var active = _.find(_explorers, { active: true });
   var original = _explorers[active.id].originalModel;
   _explorers[active.id] = _.assign({}, _.cloneDeep(original), { originalModel: original, result: active.result });
+  return active.id;
 }
 
 function _addFilter(id, attrs) {
@@ -365,6 +368,7 @@ function _clear(id) {
 }
 
 var ExplorerStore = _.assign({}, EventEmitter.prototype, {
+
   unregisterWithDispatcher: function() {
     AppDispatcher.unregister(this.dispatchToken);
   },
@@ -407,126 +411,129 @@ var ExplorerStore = _.assign({}, EventEmitter.prototype, {
   removeChangeListener: function(callback) {
     this.removeListener(CHANGE_EVENT, callback);
   }
+
 });
 
 // Register callback to handle all updates
 ExplorerStore.dispatchToken = AppDispatcher.register(function(action) {
-  var attrs;
+
+  function finishAction(id) {
+    // Validate the model
+    if (id) _validate(id);
+
+    // Emit change
+    ExplorerStore.emitChange();
+  }
 
   switch(action.actionType) {
     case ExplorerConstants.EXPLORER_CREATE:
-      _create(action.attrs);
-      ExplorerStore.emitChange();
+      var id = _create(action.attrs);
+      finishAction(id);
       break;
 
     case ExplorerConstants.EXPLORER_CREATE_BATCH:
-      _.each(action.models, function(model) {
-        if (_explorers[model.id]) {
-          _update(model.id, model);
-        } else {
-          _create(model);
-        }
+      action.models.forEach(function(model) {
+        _explorers[model.id] ? _update(model.id, model) : _create(model);        
       });
-      ExplorerStore.emitChange();
+      finishAction();
       break;
 
     case ExplorerConstants.EXPLORER_UPDATE:
-      _update(action.id, action.updates);
-      ExplorerStore.emitChange();
+      var id = _update(action.id, action.updates);
+      finishAction(id);
       break;
 
     case ExplorerConstants.EXPLORER_REMOVE:
       var wasActive = (_explorers[action.id].active === true);
       _remove(action.id);
-      if (wasActive) {
-        _create({ active: true }); // Create a new active explorer to replace the previously active one.
-      }
-      ExplorerStore.emitChange();
+      // Create a new active explorer to replace the previously active one.
+      if (wasActive) _create({ active: true });
+      finishAction();
       break;
 
     case ExplorerConstants.EXPLORER_SET_ACTIVE:
       _setActive(action.id);
-      ExplorerStore.emitChange();
+      finishAction(action.id);
       break;
 
     case ExplorerConstants.EXPLORER_REVERT_ACTIVE_CHANGES:
-      _revertActiveChanges();
-      ExplorerStore.emitChange();
+      var id = _revertActiveChanges();
+      finishAction(id);
       break;
 
     case ExplorerConstants.EXPLORER_CLEAR:
       _clear(action.id);
-      ExplorerStore.emitChange();
+      finishAction(action.id);
       break;
 
     case ExplorerConstants.EXPLORER_SAVING:
       _update(action.id, { saving: true });
-      ExplorerStore.emitChange();
+      finishAction(action.id);
       break;
 
     case ExplorerConstants.EXPLORER_SAVE_SUCCESS:
       _update(action.id, { saving: false });
-      ExplorerStore.emitChange();
+      finishAction(action.id);
       break;
 
     case ExplorerConstants.EXPLORER_SAVE_FAIL:
       _update(action.id, { saving: false });
-      ExplorerStore.emitChange();
+      finishAction(action.id);
       break;
 
     case ExplorerConstants.EXPLORER_ADD_FILTER:
       _addFilter(action.id, action.attrs);
-      ExplorerStore.emitChange();
+      finishAction(action.id);
       break;
 
     case ExplorerConstants.EXPLORER_REMOVE_FILTER:
       _removeFilter(action.id, action.index);
-      ExplorerStore.emitChange();
+      finishAction(action.id);
       break;
 
     case ExplorerConstants.EXPLORER_UPDATE_FILTER:
       _updateFilter(action.id, action.index, action.attrs);
-      ExplorerStore.emitChange();
+      finishAction(action.id);
       break;
 
     case ExplorerConstants.EXPLORER_ADD_STEP:
       _addStep(action.id, action.attrs);
-      ExplorerStore.emitChange();
+      finishAction(action.id);
       break;
 
     case ExplorerConstants.EXPLORER_REMOVE_STEP:
       _removeStep(action.id, action.index);
-      ExplorerStore.emitChange();
+      finishAction(action.id);
       break;
 
     case ExplorerConstants.EXPLORER_UPDATE_STEP:
       _updateStep(action.id, action.index, action.attrs);
-      ExplorerStore.emitChange();
+      finishAction(action.id);
       break;
 
     case ExplorerConstants.EXPLORER_SET_STEP_ACTIVE:
       _setStepActive(action.id, action.index);
-      ExplorerStore.emitChange();
+      finishAction(action.id);
       break;
 
     case ExplorerConstants.EXPLORER_ADD_STEP_FILTER:
       _addStepFilter(action.id, action.stepIndex, action.attrs);
-      ExplorerStore.emitChange();
+      finishAction(action.id);
       break;
 
     case ExplorerConstants.EXPLORER_REMOVE_STEP_FILTER:
       _removeStepFilter(action.id, action.stepIndex, action.filterIndex);
-      ExplorerStore.emitChange();
+      finishAction(action.id);
       break;
 
     case ExplorerConstants.EXPLORER_UPDATE_STEP_FILTER:
       _updateStepFilter(action.id, action.stepIndex, action.filterIndex, action.attrs);
-      ExplorerStore.emitChange();
+      finishAction(action.id);
       break;
 
     case ExplorerConstants.EXPLORER_VALIDATE:
       _validate(action.id);
-      ExplorerStore.emitChange();
+      finishAction();
       break;
 
     default:

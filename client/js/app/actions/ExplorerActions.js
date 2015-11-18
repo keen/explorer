@@ -309,7 +309,6 @@ var ExplorerActions = {
       saveType: saveType
     });
 
-    ExplorerActions.validate(sourceId);
     var explorer = ExplorerStore.get(sourceId);
     if (!explorer.isValid) {
       NoticeActions.create({
