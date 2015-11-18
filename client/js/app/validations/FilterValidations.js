@@ -2,6 +2,10 @@ var _ = require('lodash');
 var RunValidations = require('../utils/RunValidations');
 var FormatUtils = require('../utils/FormatUtils');
 
+function isGeoCoercionType(model) {
+  return model.coercionType === 'Geo';
+}
+
 module.exports = {
 
   filter: {
@@ -36,9 +40,7 @@ module.exports = {
 
         if (coercionType == 'List') {
           return FormatUtils.parseList(value) ? true : false;
-        } else if (coercionType === 'Geo') {
-          return model.property_value && RunValidations(module.exports.geo, model.property_value).length === 0;
-        } else if (coercionType === 'Null' || coercionType === 'Boolean') {
+         else if (coercionType === 'Null' || coercionType === 'Boolean') {
           return true;
         } else if (coercionType === 'Number') {
           return _.isNumber(value);
@@ -63,37 +65,37 @@ module.exports = {
 
   },
 
-  geo: {
+  coordinates: {
+    
+    msg: 'Provide all coordinates.',
 
-    coordinates: {
-      
-      msg: 'Provide all coordinates.',
-      
-      validate: function(geoObj) {
-        var value = geoObj.coordinates;
-        var valid = _.isArray(value) && value.length === 2;
-        if (!valid) return valid;
+    shouldRun: isGeoCoercionType,
+    
+    validate: function(geoObj) {
+      var value = geoObj.coordinates;
+      var valid = _.isArray(value) && value.length === 2;
+      if (!valid) return valid;
 
-        for(var i=0; i<value.length; i++) {
-          if (!valid) break;
-          valid = _.isNumber(value[i]);
-        }
-        return valid;
+      for(var i=0; i<value.length; i++) {
+        if (!valid) break;
+        valid = _.isNumber(value[i]);
       }
-
-    },
-
-    max_distance_miles: {
-      
-      msg: 'Provide a max distance in miles.',
-      
-      validate: function(geoObj) {
-        var value = geoObj.max_distance_miles;
-        return value && _.isNumber(value);
-      }
-      
+      return valid;
     }
 
+  },
+
+  max_distance_miles: {
+    
+    msg: 'Provide a max distance in miles.',
+
+    shouldRun: isGeoCoercionType,
+    
+    validate: function(geoObj) {
+      var value = geoObj.max_distance_miles;
+      return value && _.isNumber(value);
+    }
+    
   }
 
 };
