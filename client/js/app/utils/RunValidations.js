@@ -4,11 +4,11 @@ module.exports = function(validatorSet, model) {
 
   for (var i=0; i<keys.length; i++) {
     var validator = validatorSet[keys[i]];
-    if (!validator.shouldRun || !validator.shouldRun(model)) continue;
+    if (validator.shouldRun && !validator.shouldRun(model)) continue;
 
     var result = validator.validate(model);
     if (result === true) continue;
-    var errorMsg = (result === false) ? result.msg : result;
+    var errorMsg = (result === false) ? validator.msg : result;
     errors.push({
       attribute: keys[i],
       msg: errorMsg
