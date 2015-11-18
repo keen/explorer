@@ -98,6 +98,13 @@ function _validate(id) {
   var errors = RunValidations(ExplorerValidations, newExplorer);
   newExplorer.isValid = (errors.length > 0) ? false : true;
   newExplorer.errors = errors;
+
+  for (var i=0; i<newExplorer.query.filters.length; i++) {
+    var filterErrors = RunValidations(FilterValidations, newExplorer.query.filters[i]);
+    newExplorer.query.filters[i].errors = filterErrors;
+    newExplorer.query.filters[i].isValid = filterErrors.length ? false: true;
+  }
+
   _explorers[id] = newExplorer;
 }
 
