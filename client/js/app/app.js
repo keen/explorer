@@ -46,6 +46,7 @@ function App(config) {
   var id = FormatUtils.generateTempId();
   ExplorerActions.create(_.assign(ExplorerUtils.formatQueryParams(attrs) || {}, { id: id }));
   ExplorerActions.setActive(id);
+  ExplorerActions.validate(id);
 
   // Is this a saved query we want to load?
   if (attrs.saved_query) {
