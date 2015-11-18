@@ -1,35 +1,43 @@
-var ValidationUtils = require('../utils/ValidationUtils');
-var FormatUtils = require('../utils/FormatUtils');
 var _ = require('lodash');
+var RunValidations = require('../utils/RunValidations');
+var FormatUtils = require('../utils/FormatUtils');
 
 module.exports = {
 
   filter: {
 
     property_name: {
+
       msg: 'Choose a property name',
-      validator: function(filter) {
-        return filter.property_name ? true : false;
+      
+      validate: function(model) {
+        return model.property_name ? true : false;
       }
+
     },
 
     operator: {
+      
       msg: 'Choose an operator',
-      validator: function(filter) {
-        return filter.operator ? true : false;
+      
+      validate: function(model) {
+        return model.operator ? true : false;
       }
+
     },
 
     property_value: {
+      
       msg: 'Choose a property value.',
-      validator: function(filter) {
-        var value = filter.property_value;
-        var coercionType = filter.coercion_type;
+      
+      validate: function(model) {
+        var value = model.property_value;
+        var coercionType = model.coercion_type;
 
         if (coercionType == 'List') {
           return FormatUtils.parseList(value) ? true : false;
         } else if (coercionType === 'Geo') {
-          return filter.property_value && ValidationUtils.runValidations(module.exports.geo, filter.property_value).isValid;
+          return model.property_value && RunValidations(module.exports.geo, model.property_value).length === 0;
         } else if (coercionType === 'Null' || coercionType === 'Boolean') {
           return true;
         } else if (coercionType === 'Number') {
@@ -40,13 +48,17 @@ module.exports = {
           return value ? true : false;
         }
       }
+
     },
 
     coercion_type: {
+      
       msg: 'Choose a coercion type',
-      validator: function(filter) {
-        return filter.coercion_type ? true : false;
+      
+      validate: function(model) {
+        return model.coercion_type ? true : false;
       }
+
     }
 
   },
@@ -54,8 +66,10 @@ module.exports = {
   geo: {
 
     coordinates: {
+      
       msg: 'Provide all coordinates.',
-      validator: function(geoObj) {
+      
+      validate: function(geoObj) {
         var value = geoObj.coordinates;
         var valid = _.isArray(value) && value.length === 2;
         if (!valid) return valid;
@@ -66,14 +80,18 @@ module.exports = {
         }
         return valid;
       }
+
     },
 
     max_distance_miles: {
+      
       msg: 'Provide a max distance in miles.',
-      validator: function(geoObj) {
+      
+      validate: function(geoObj) {
         var value = geoObj.max_distance_miles;
         return value && _.isNumber(value);
       }
+      
     }
 
   }

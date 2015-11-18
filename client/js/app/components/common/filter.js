@@ -10,8 +10,6 @@ var ReactSelect = require('./react_select.js');
 var FilterValueFields = require('./filter_value_fields.js');
 var ProjectUtils = require('../../utils/ProjectUtils');
 var FilterUtils = require('../../utils/FilterUtils');
-var runValidations = require('../../utils/ValidationUtils').runValidations;
-var filterValidations = require('../../validations/FilterValidations').filter;
 
 var Filter = React.createClass({
 
@@ -66,27 +64,31 @@ var Filter = React.createClass({
     }
   },
 
-  // React functions
-
-  render: function() {
-    var filterValidity = runValidations(filterValidations, this.props.filter);
-    var completeAndInvalid = FilterUtils.isComplete(this.props.filter) && !filterValidity.isValid;
-    var invalidMsg;
-
-    if (completeAndInvalid) {
-      invalidMsg = (
+  buildValidationError: function() {
+    if (this.filterCompleteAndInvalid()) {
+      return (
         <div className="row">
           <div className="col-md-12">
-            <p className="invalid">Invalid: {filterValidity.lastError}</p>
+            <p className="invalid">Invalid: {this.props.filter.errors[0].msg}</p>
           </div>
         </div>
       );
     }
+  },
 
+  filterCompleteAndInvalid: function() {
+    var complete = FilterUtils.isComplete(this.props.filter);
+    var valid = this.props.filter.isValid;
+    return complete && !valid;
+  },
+
+  // React functions
+
+  render: function() {
     var filterClasses = classNames({
       'filter-row': true,
-      'filter-complete': !FilterUtils.isComplete(this.props.filter) || filterValidity.isValid,
-      'filter-incomplete': completeAndInvalid
+      'filter-complete': !FilterUtils.isComplete(this.props.filter) || this.props.filter.isValid,
+      'filter-incomplete': this.filterCompleteAndInvalid()
     });
 
     return (
@@ -108,7 +110,7 @@ var Filter = React.createClass({
             </a>
           </div>
         </div>
-        {invalidMsg}
+        {this.buildValidationError()}
       </div>
     );
   }

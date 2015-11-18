@@ -1,69 +1,81 @@
-var _ = require('lodash');
+var RunValidations = require('../utils/RunValidations');
 var filterValidations = require('../validations/FilterValidations').filter;
-var runValidations = require('../utils/ValidationUtils').runValidations;
 var ExplorerUtils = require('../utils/ExplorerUtils');
 var FilterUtils = require('../utils/FilterUtils');
 
-module.exports = {
-
-  explorer: {
+module.exports = {  
 
     query_name: {
+      
       msg: 'You must give your saved query a name.',
-      validator: function(explorer) {
-        if (!explorer.saving) return true;
-        return (explorer.query_name !== null && explorer.query_name !== undefined && typeof explorer.query_name === "string" && explorer.query_name.length > 0);
+      
+      shouldRun: function(model) {
+        return model.saving;
+      },
+      
+      validate: function(model) {
+        var name = model.query_name;
+        return (name !== null && name !== undefined && typeof name === "string" && name.length > 0);
       }
+
     },
 
     refresh_rate: {
+      
       msg: 'Refresh rate must be between 4 and 24 hours.',
-      validator: function(explorer) {
-        return (typeof explorer.refresh_rate !== 'number' || (explorer.refresh_rate >= 1440 && explorer.refresh_rate <= 86400) ||
-          explorer.refresh_rate == 0);
+      
+      validate: function(model) {
+        var rate = model.refresh_rate;
+        return (typeof rate !== 'number' || (rate >= 1440 && rate <= 86400) || rate == 0);
       }
+
     },
 
     analysis_type: {
+      
       msg: 'Choose an Analysis Type.',
-      validator: function(explorer) {
-        return explorer.query.analysis_type ? true : false;
+      
+      validate: function(model) {
+        return model.query.analysis_type ? true : false;
       }
+
     },
 
     event_collection: {
+      
       msg: 'Choose an Event Collection.',
-      validator: function(explorer) {
-        return explorer.query.event_collection ? true : false;
+      
+      validate: function(model) {
+        return model.query.event_collection ? true : false;
       }
+
     },
 
     filters: {
-
+      
       msg: 'One of your filters is invalid.',
-      validator: function(explorer) {
-        var isValid = true;
-
-        _.each(explorer.query.filters, function(filter) {
-          if (FilterUtils.isComplete(filter) && !runValidations(filterValidations, filter).isValid) {
-            isValid = false;
-          }
-        });
-
-        return isValid;
+      
+      validate: function(model) {
+        for (var i=0; i<model.query.filters.length; i++) {
+          var complete FilterUtils.isComplete(filter);
+          var valid = RunValidations(filterValidations, filter).length === 0;
+          if (complete && !valid) return false;
+        }
       }
+
     },
 
     time: {
-      validator: function(explorer) {
-        var time = explorer.query.time || {};
-        if (ExplorerUtils.timeframeType(explorer.query.time) === 'relative') {
+      
+      validate: function(model) {
+        var time = model.query.time || {};
+        if (ExplorerUtils.timeframeType(model.query.time) === 'relative') {
           if (time.relativity && time.amount && time.sub_timeframe) {
             return true;
           } else {
             return "You must choose all 3 options for relative timeframes.";
           }
-        } else if (ExplorerUtils.timeframeType(explorer.query.time) === 'absolute') {
+        } else if (ExplorerUtils.timeframeType(model.query.time) === 'absolute') {
           if (time.start && time.end) {
             return true;
           } else {
@@ -74,29 +86,34 @@ module.exports = {
         }
         return true;
       }
+
     }
 
   },
 
-  emailExtractionExplorer: {
+  email: {
     
-    email: {
-      msg: 'A valid email address is required.',
-      validator: function(explorer) {
-        return new RegExp(/.+@.+\..+/i).test(explorer.query.email);
-      }
-    },
-
-    latest: {
-      msg: 'Latest must be a number.',
-      validator: function(explorer) {
-        var value = explorer.query.latest;
-        if (!value) return true;
-        var n = ~~Number(value);
-        return String(n) === value && n >= 0;
-      }
+    msg: 'A valid email address is required.',
+    
+    shouldRun: ExplorerUtils.isEmailExtraction,
+    
+    validate: function(model) {
+      return new RegExp(/.+@.+\..+/i).test(model.query.email);
     }
 
-  }
+  },
+
+  latest: {
+    
+    msg: 'Latest must be a number.',
+    
+    shouldRun: ExplorerUtils.isEmailExtraction,
+
+    validate: function(model) {
+      var value = model.query.latest;
+      if (!value) return true;
+      var n = ~~Number(value);
+      return String(n) === value && n >= 0;
+    }
   
 };

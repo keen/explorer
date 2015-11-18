@@ -3,10 +3,11 @@ var AppDispatcher = require('../dispatcher/AppDispatcher');
 var ExplorerConstants = require('../constants/ExplorerConstants');
 var ExplorerStore = require('../stores/ExplorerStore');
 var ExplorerValidations = require('../validations/ExplorerValidations');
-var ValidationUtils = require('../utils/ValidationUtils');
-var ExplorerUtils = require('../utils/ExplorerUtils');
 var NoticeActions = require('./NoticeActions');
 var AppStateActions = require('./AppStateActions');
+
+var RunValidations = require('../utils/RunValidations');
+var ExplorerUtils = require('../utils/ExplorerUtils');
 
 var ExplorerActions = {
 
@@ -55,6 +56,13 @@ var ExplorerActions = {
   clear: function(id) {
     AppDispatcher.dispatch({
       actionType: ExplorerConstants.EXPLORER_CLEAR,
+      id: id
+    });
+  },
+
+  validate: function(id) {
+    AppDispatcher.dispatch({
+      actionType: ExplorerConstants.EXPLORER_VALIDATE,
       id: id
     });
   },
@@ -152,7 +160,7 @@ var ExplorerActions = {
       throw new Error("Warning: calling exec when model loading is true. Explorer id: " + explorer.id);
     }
 
-    var valid = ValidationUtils.runValidations(ExplorerValidations.explorer, explorer);
+    var valid = RunValidations(ExplorerValidations, explorer);
     if (!valid.isValid) {
       NoticeActions.create({ text: valid.lastError, type: 'error', icon: 'remove-sign' });
       return;
@@ -186,13 +194,13 @@ var ExplorerActions = {
   runEmailExtraction: function(client, id) {
     var explorer = ExplorerStore.get(id);
 
-    var valid = ValidationUtils.runValidations(ExplorerValidations.explorer, explorer);
+    var valid = RunValidations(ExplorerValidations, explorer);
     if (!valid.isValid) {
       NoticeActions.create({ text: valid.lastError, type: 'error', icon: 'remove-sign' });
       return;
     }
 
-    var valid = ValidationUtils.runValidations(ExplorerValidations.emailExtractionExplorer, explorer);
+    var valid = RunValidations(ExplorerValidations, explorer);
     if (!valid.isValid) {
       NoticeActions.create({ text: valid.lastError, type: 'error', icon: 'remove-sign' });
       return;
@@ -267,7 +275,7 @@ var ExplorerActions = {
       var models = [];
       _.each(resp, function(model) {
         var formattedModel = ExplorerUtils.formatQueryParams(model);
-        if (!ValidationUtils.runValidations(ExplorerValidations.explorer, formattedModel).isValid) {
+        if (!RunValidations(ExplorerValidations, formattedModel).isValid) {
           console.warn('A persisted explorer model is invalid: ', formattedModel);
         }
         models.push(formattedModel);
@@ -285,7 +293,7 @@ var ExplorerActions = {
         return;
       }
       var model = ExplorerUtils.formatQueryParams(resp);
-      if (!ValidationUtils.runValidations(ExplorerValidations.explorer, model).isValid) {
+      if (!RunValidations(ExplorerValidations, model).isValid) {
         console.warn('A persisted explorer model is invalid: ', model);
       }
       ExplorerActions.create(model);
@@ -294,6 +302,18 @@ var ExplorerActions = {
   },
 
   save: function(persistence, sourceId) {
+    var validity = RunValidations(ExplorerValidations, ExplorerStore.get(sourceId));
+    if (!validity.isValid) {
+      NoticeActions.create({
+        icon: 'remove-circle',
+        type: 'error',
+        text: "Can't save: " + validity.lastError
+      });
+      return;
+    }
+
+    NoticeActions.clearAll();
+
     var saveType = ExplorerUtils.isPersisted(ExplorerStore.get(sourceId)) ? 'update' : 'save';
     var persistenceFunction = saveType === 'save' ? 'create' : 'update';
 
@@ -302,7 +322,7 @@ var ExplorerActions = {
       id: sourceId,
       saveType: saveType
     });
-    var valid = ValidationUtils.runValidations(ExplorerValidations.explorer, ExplorerStore.get(sourceId));
+    var valid = RunValidations(ExplorerValidations, ExplorerStore.get(sourceId));
     if (!valid.isValid) {
       AppDispatcher.dispatch({
         actionType: ExplorerConstants.EXPLORER_SAVE_FAIL,

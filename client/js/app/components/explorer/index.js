@@ -23,8 +23,6 @@ var ExplorerUtils = require('../../utils/ExplorerUtils');
 var FilterUtils = require('../../utils/FilterUtils');
 var ProjectUtils = require('../../utils/ProjectUtils');
 var ExplorerActions = require('../../actions/ExplorerActions');
-var ValidationUtils = require('../../utils/ValidationUtils');
-var ExplorerValidations = require('../../validations/ExplorerValidations');
 var QueryStringUtils = require('../../utils/QueryStringUtils');
 
 function getStoresState() {
@@ -82,17 +80,7 @@ var Explorer = React.createClass({
 
   saveQueryClick: function(event) {
     event.preventDefault();
-    var validity = ValidationUtils.runValidations(ExplorerValidations.explorer, this.state.activeExplorer);
-    if (!validity.isValid) {
-      NoticeActions.create({
-        icon: 'remove-circle',
-        type: 'error',
-        text: "Can't save: " + validity.lastError
-      });
-      return;
-    } else {
-      ExplorerActions.save(this.props.persistence, this.state.activeExplorer.id);
-    }
+    ExplorerActions.save(this.props.persistence, this.state.activeExplorer.id);
   },
 
   createNewQuery: function(event) {

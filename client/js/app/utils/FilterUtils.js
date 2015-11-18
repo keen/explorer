@@ -3,7 +3,7 @@ var moment = require('moment');
 var S = require('string');
 var FormatUtils = require('./FormatUtils');
 var FilterValidations = require('../validations/FilterValidations');
-var ValidationUtils = require('./ValidationUtils');
+var RunValidations = require('./RunValidations');
 
 function exists(value) {
   return !_.isNull(value) && !_.isUndefined(value);
@@ -118,10 +118,8 @@ module.exports = {
   },
 
   queryJSON: function(filter, timezoneOffset) {
-    var valid = ValidationUtils.runValidations(FilterValidations.filter, filter);
-    if (!valid.isValid) {
-      return {};
-    }
+    var errors = RunValidations(FilterValidations.filter, filter);
+    if (errors.length > 0) return {};
 
     var attrs = _.cloneDeep(filter);
     attrs.property_value = module.exports.getCoercedValue(filter);
@@ -172,7 +170,7 @@ module.exports = {
 
   validFilters: function(filters) {
     return _.filter(filters, function(filter) {
-      return ValidationUtils.runValidations(FilterValidations.filter, filter).isValid;
+      return RunValidations(FilterValidations.filter, filter).length === 0;
     });
   }
 

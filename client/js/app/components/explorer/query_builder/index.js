@@ -22,7 +22,6 @@ var FilterUtils = require('../../../utils/FilterUtils');
 var ExplorerActions = require('../../../actions/ExplorerActions');
 var runValidations = require('../../../utils/ValidationUtils').runValidations;
 var ExplorerValidations = require('../../../validations/ExplorerValidations');
-var FilterValidations = require('../../../validations/FilterValidations');
 
 var QueryBuilder = React.createClass({
 
@@ -203,8 +202,7 @@ var QueryBuilder = React.createClass({
 
   render: function() {
     var apiQueryUrl;
-    var queryValidation = runValidations(ExplorerValidations.explorer, this.props.model);
-    if(queryValidation.isValid) {
+    if (this.props.model.isValid) {
       apiQueryUrl = ExplorerUtils.getApiQueryUrl(this.props.client, this.props.model);
     }
 
@@ -231,7 +229,7 @@ var QueryBuilder = React.createClass({
             {this.buildClearButton()}
           </div>
           <ApiUrl url={apiQueryUrl}
-                  validation={queryValidation} />
+                  isValid={this.props.model.isValid} />
         </form>
       </section>
     );

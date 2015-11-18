@@ -9,7 +9,7 @@ var AppStateActions = require('./actions/AppStateActions');
 var NoticeActions = require('./actions/NoticeActions');
 var ExplorerUtils = require('./utils/ExplorerUtils');
 var FormatUtils = require('./utils/FormatUtils');
-var runValidations = require('./utils/ValidationUtils').runValidations;
+var RunValidations = require('./utils/RunValidations');
 var explorerValidations = require('./validations/ExplorerValidations').explorer;
 var ExplorerStore = require('./stores/ExplorerStore');
 var ProjectStore = require('./stores/ProjectStore');
@@ -55,7 +55,7 @@ function App(config) {
     AppStateActions.update({ ready: true });
     // Run the query for this explorer if it's valid
     var isEmailExtraction = ExplorerUtils.isEmailExtraction(ExplorerStore.getActive());
-    var isValid = runValidations(explorerValidations, ExplorerStore.getActive()).isValid;
+    var isValid = RunValidations(explorerValidations, ExplorerStore.getActive()).isValid;
 
     if (!isEmailExtraction && isValid) {
       ExplorerActions.exec(this.client, ExplorerStore.getActive().id);

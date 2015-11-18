@@ -10,6 +10,10 @@ var FilterUtils = require('../utils/FilterUtils');
 var ProjectUtils = require('../utils/ProjectUtils');
 var ProjectStore = require('./ProjectStore');
 
+var RunValidations = require('../utils/RunValidations.js');
+var ExplorerValidations = require('../validations/ExplorerValidations.js');
+var FilterValidations = require('../validations/FilterValidations.js');
+
 var CHANGE_EVENT = 'change';
 var SHARED_FUNNEL_STEP_PROPERTIES = ['event_collection', 'time', 'timezone', 'filters'];
 
@@ -25,6 +29,7 @@ function _defaultAttrs(){
     result: null,
     loading: false,
     isValid: true,
+    errors: [],
     refresh_rate: 0,
     query: {
       event_collection: null,
@@ -58,7 +63,9 @@ function _defaultFilter() {
     property_name: null,
     property_value: null,
     operator: 'eq',
-    coercion_type: 'String'
+    coercion_type: 'String',
+    isValid: true,
+    lastError: null
   };
 }
 
@@ -84,6 +91,14 @@ function _defaultStep() {
     inverted: false,
     active: false
   }
+}
+
+function _validate(id) {
+  var newExplorer = _.cloneDeep(_explorers[id]);
+  var errors = RunValidations(ExplorerValidations, newExplorer);
+  newExplorer.isValid = (errors.length > 0) ? false : true;
+  newExplorer.errors = errors;
+  _explorers[id] = newExplorer;
 }
 
 /**
@@ -499,6 +514,11 @@ ExplorerStore.dispatchToken = AppDispatcher.register(function(action) {
 
     case ExplorerConstants.EXPLORER_UPDATE_STEP_FILTER:
       _updateStepFilter(action.id, action.stepIndex, action.filterIndex, action.attrs);
+      ExplorerStore.emitChange();
+      break;
+
+    case ExplorerConstants.EXPLORER_VALIDATE:
+      _validate(action.id);
       ExplorerStore.emitChange();
       break;
 

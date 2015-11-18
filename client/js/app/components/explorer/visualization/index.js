@@ -16,8 +16,6 @@ var ExplorerStore = require('../../../stores/ExplorerStore');
 var NoticeActions = require('../../../actions/NoticeActions');
 var ExplorerUtils = require('../../../utils/ExplorerUtils');
 var FormatUtils = require('../../../utils/FormatUtils');
-var runValidations = require('../../../utils/ValidationUtils').runValidations;
-var ExplorerValidations = require('../../../validations/ExplorerValidations');
 
 var Visualization = React.createClass({
 
@@ -61,8 +59,7 @@ var Visualization = React.createClass({
     });
 
 
-    var validations = runValidations(ExplorerValidations.explorer, this.props.model);
-    if(validations.isValid) {
+    if (this.props.model.isValid) {
       codeSample = ExplorerUtils.getSdkExample(this.props.model, this.props.client);
     }
 
@@ -116,7 +113,7 @@ var Visualization = React.createClass({
                       codeSample={codeSample}
                       hidden={this.props.appState.codeSampleHidden}
                       onCloseClick={this.props.toggleCodeSample} 
-                      validation={validations} />
+                      isValid={this.props.model.isValid} />
         </div>
       </div>
     );
