@@ -257,7 +257,7 @@ var Explorer = React.createClass({
                                      toggleCallback={this.toggleQueryPane}
                                      createNewQuery={this.createNewQuery}
                                      persisted={ExplorerUtils.isPersisted(this.state.activeExplorer)} />;
-      if (this.state.activeExplorer.query.analysis_type !== 'extraction') {
+      if (['extraction', 'funnel'].indexOf(this.state.activeExplorer.query.analysis_type) === -1) {
         cacheToggle = <CacheToggle model={this.state.activeExplorer} />;
       }
       if (this.state.appState.fetchingPersistedExplorers) {
@@ -338,11 +338,12 @@ var Explorer = React.createClass({
   },
 
   _onChange: function() {
-    this.setState(getStoresState());
-    if (ExplorerUtils.isPersisted(this.state.activeExplorer)) {
-      window.history.pushState({ model: this.state.activeExplorer }, "", '?saved_query='+this.state.activeExplorer.id);
+    var newState = getStoresState();
+    this.setState(newState);
+    if (ExplorerUtils.isPersisted(newState.activeExplorer)) {
+      window.history.pushState({ model: newState.activeExplorer }, "", '?saved_query='+newState.activeExplorer.id);
     } else {
-      QueryStringUtils.updateSearchString(ExplorerUtils.paramsForURL(this.state.activeExplorer));
+      QueryStringUtils.updateSearchString(ExplorerUtils.paramsForURL(newState.activeExplorer));
     }
   }
 });
