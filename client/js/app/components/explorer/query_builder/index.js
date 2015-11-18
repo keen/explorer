@@ -20,8 +20,6 @@ var ExplorerStore = require('../../../stores/ExplorerStore');
 var ExplorerUtils = require('../../../utils/ExplorerUtils');
 var FilterUtils = require('../../../utils/FilterUtils');
 var ExplorerActions = require('../../../actions/ExplorerActions');
-var runValidations = require('../../../utils/ValidationUtils').runValidations;
-var ExplorerValidations = require('../../../validations/ExplorerValidations');
 
 var QueryBuilder = React.createClass({
 

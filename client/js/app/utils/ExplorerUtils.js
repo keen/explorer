@@ -2,7 +2,6 @@ var _ = require('lodash');
 var Qs = require('qs');
 var stringify = require('json-stable-stringify');
 var moment = require('moment');
-var ValidationUtils = require('./ValidationUtils');
 var FormatUtils = require('./FormatUtils');
 var ProjectUtils = require('./ProjectUtils');
 var FilterUtils = require('./FilterUtils');
@@ -21,6 +20,8 @@ var QUERY_PARAMS = [
   'latest',
   'property_names'
 ];
+
+var EXRACTION_EVENT_LIMIT = 100;
 
 function toCamelcaseName(name) {
   return name.replace(/_(.)/, function(match, p1) {
@@ -48,10 +49,14 @@ function echoIf(valueMaybe, append) {
 
 module.exports = {
 
-  EXRACTION_EVENT_LIMIT: 100,
+  EXRACTION_EVENT_LIMIT: EXRACTION_EVENT_LIMIT,
 
-  isPersisted: function (explorer) {
+  isPersisted: function(explorer) {
     return explorer.id && !explorer.id.toString().match('TEMP');
+  },
+
+  saveType: function(explorer) {
+    return module.exports.isPersisted(explorer) ? 'update' : 'save';
   },
 
   isEmailExtraction: function(explorer) {
@@ -78,6 +83,10 @@ module.exports = {
       return;
     }
     var params = _.cloneDeep(explorer.query);
+
+    if (params.analysis_type === 'extraction') {
+      params.latest = EXRACTION_EVENT_LIMIT;
+    }
 
     // Set the timeframe (will get removed if it's null o undefined)
     params.timeframe = module.exports.getTimeframe(explorer);

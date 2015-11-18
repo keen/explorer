@@ -8,59 +8,59 @@ function isGeoCoercionType(model) {
 
 module.exports = {
 
-  filter: {
+  property_name: {
 
-    property_name: {
+    msg: 'Choose a property name',
+    
+    validate: function(model) {
+      return model.property_name ? true : false;
+    }
 
-      msg: 'Choose a property name',
-      
-      validate: function(model) {
-        return model.property_name ? true : false;
-      }
+  },
 
+  operator: {
+    
+    msg: 'Choose an operator',
+    
+    validate: function(model) {
+      return model.operator ? true : false;
+    }
+
+  },
+
+  property_value: {
+    
+    msg: 'Choose a property value.',
+
+    shouldRun: function(model) {
+      return !isGeoCoercionType(model);
     },
+    
+    validate: function(model) {
+      var value = model.property_value;
+      var coercionType = model.coercion_type;
 
-    operator: {
-      
-      msg: 'Choose an operator',
-      
-      validate: function(model) {
-        return model.operator ? true : false;
+      if (coercionType == 'List') {
+        return FormatUtils.parseList(value) ? true : false;
+      } else if (coercionType === 'Null' || coercionType === 'Boolean') {
+        return true;
+      } else if (coercionType === 'Number') {
+        return _.isNumber(value);
+      } else if (String(value) === "0") {
+        return true;
+      } else {
+        return value ? true : false;
       }
+    }
 
-    },
+  },
 
-    property_value: {
-      
-      msg: 'Choose a property value.',
-      
-      validate: function(model) {
-        var value = model.property_value;
-        var coercionType = model.coercion_type;
-
-        if (coercionType == 'List') {
-          return FormatUtils.parseList(value) ? true : false;
-         else if (coercionType === 'Null' || coercionType === 'Boolean') {
-          return true;
-        } else if (coercionType === 'Number') {
-          return _.isNumber(value);
-        } else if (String(value) === "0") {
-          return true;
-        } else {
-          return value ? true : false;
-        }
-      }
-
-    },
-
-    coercion_type: {
-      
-      msg: 'Choose a coercion type',
-      
-      validate: function(model) {
-        return model.coercion_type ? true : false;
-      }
-
+  coercion_type: {
+    
+    msg: 'Choose a coercion type',
+    
+    validate: function(model) {
+      return model.coercion_type ? true : false;
     }
 
   },
