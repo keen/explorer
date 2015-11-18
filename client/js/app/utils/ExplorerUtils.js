@@ -380,17 +380,8 @@ module.exports = {
   },
 
   resultCanBeVisualized: function(explorer) {
-    if (explorer.result) {
-      var result = explorer.result;
-
-      if (_.isNumber(result) || (_.isArray(result) && result.length)) {
-        return true;
-      } else {
-        return false;
-      }
-    } else {
-      return false;
-    }
+    var result = explorer.result;
+    return (_.isNumber(result) || (_.isArray(result) && result.length));
   },
 
   isJSONViz: function(explorer) {
