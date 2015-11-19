@@ -99,11 +99,12 @@ module.exports = {
 
   isValidQueryValue: function(value) {
     if (_.isArray(value)) {
+
       return value.length > 0;
     } else {
       if (value === false) return true;
       if (value === 0) return true;
-      return !_.isUndefined(value) && !_.isNull(value) && !_.isEmpty(value);
+      return !_.isUndefined(value) && !_.isNull(value) && (!_.isPlainObject(value) && !_.isEmpty(value));
     }
   },
 

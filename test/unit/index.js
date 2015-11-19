@@ -19,6 +19,8 @@ require('./utils/FormatUtilsSpec.js');
 require('./utils/ExplorerUtilsSpec.js');
 require('./utils/FilterUtilsSpec.js');
 require('./utils/ValidationUtilsSpec.js');
+require('./utils/FunnelUtilsSpec.js');
+require('./utils/TimeframeUtilsSpec.js');
 
 // ***********************
 // Validations
