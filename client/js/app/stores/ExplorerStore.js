@@ -43,6 +43,7 @@ function _defaultAttrs(){
       email: null,
       latest: null,
       filters: [],
+      steps: [],
       time: {
         relativity: 'this',
         amount: 14,
@@ -132,12 +133,12 @@ function _getDefaultFilterCoercionType(explorer, filter) {
 function _prepareUpdates(explorer, updates) {
   var newModel = _.assign({}, explorer, updates);
 
-  newModel = _removeInvalidFields(explorer, newModel);
   if(newModel.query.analysis_type === 'funnel' && explorer.query.analysis_type !== 'funnel') {
     newModel = _migrateToFunnel(explorer, newModel);
   } else if(newModel.query.analysis_type !== 'funnel' && explorer.query.analysis_type === 'funnel') {
     newModel = _migrateFromFunnel(explorer, newModel);
   }
+  newModel = _removeInvalidFields(explorer, newModel);
 
   return newModel;
 }
@@ -216,8 +217,11 @@ function _removeInvalidFields(explorer, newModel) {
   if (newModel.query.analysis_type !== 'percentile') {
     newModel.query.percentile = null;
   }
-  if (_.includes(['count', 'extraction'], newModel.query.analysis_type)) {
+  if (_.includes(['count', 'extraction', 'funnel'], newModel.query.analysis_type)) {
     newModel.query.target_property = null;
+  }
+  if (newModel.query.analysis_type !== 'funnel') {
+    newModel.query.steps = null;
   }
   return newModel;
 }

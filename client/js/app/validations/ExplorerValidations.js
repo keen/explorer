@@ -1,9 +1,89 @@
-var RunValidations = require('../utils/RunValidations');
-var FilterValidations = require('../validations/FilterValidations');
+var _ = require('lodash');
 var ExplorerUtils = require('../utils/ExplorerUtils');
-var FilterUtils = require('../utils/FilterUtils');
+var SharedValidations = require('./SharedValidations');
+var StepValidations = require('./StepValidations');
 
-module.exports = {  
+function isNotFunnel(model) {
+  return model.query.analysis_type !== 'funnel';
+}
+
+module.exports = {
+
+  analysis_type: {
+    
+    msg: 'Choose an Analysis Type.',
+    
+    validate: function(model) {
+      return model.query.analysis_type ? true : false;
+    }
+
+  },
+
+  target_property: {
+    
+    msg: 'Choose an Target Property.',
+
+    shouldRun: function(model) {
+      return ['extraction', 'funnel', 'count'].indexOf(model.query.analysis_type) === -1;
+    },
+    
+    validate: function(model) {
+      return model.query.target_property ? true : false;
+    }
+
+  },
+
+  event_collection: _.assign({}, 
+    
+    SharedValidations.event_collection, 
+
+    { shouldRun: isNotFunnel }
+
+  ),
+
+  filters: _.assign({},
+
+    SharedValidations.filters,
+
+    { 
+      shouldRun: isNotFunnel,
+      validate: function(model) {
+        return SharedValidations.filters.validate(model.query.filters);
+      }
+    }
+
+  ),
+
+  steps: {
+
+    msg: 'One of your funnel steps is invalid.',
+
+    shouldRun: function(model) {
+      return model.query.analysis_type === 'funnel';
+    },
+
+    validate: function(model) {
+      for (var i=0; i<model.query.steps.length; i++) {
+        var valid = RunValidations(StepValidations, model.query.steps[i]).length === 0;
+        if (!valid) return false;
+      }
+      return true;
+    },
+
+  },
+
+  time: _.assign({}, 
+
+    SharedValidations.time,
+
+    {
+      shouldRun: isNotFunnel,
+      validate: function(model) {
+        return SharedValidations.time.validate(model.query.time)
+      }
+    }
+
+  ),
 
   query_name: {
     
@@ -27,66 +107,6 @@ module.exports = {
     validate: function(model) {
       var rate = model.refresh_rate;
       return (typeof rate !== 'number' || (rate >= 1440 && rate <= 86400) || rate == 0);
-    }
-
-  },
-
-  analysis_type: {
-    
-    msg: 'Choose an Analysis Type.',
-    
-    validate: function(model) {
-      return model.query.analysis_type ? true : false;
-    }
-
-  },
-
-  event_collection: {
-    
-    msg: 'Choose an Event Collection.',
-    
-    validate: function(model) {
-      return model.query.event_collection ? true : false;
-    }
-
-  },
-
-  filters: {
-    
-    msg: 'One of your filters is invalid.',
-    
-    validate: function(model) {
-      for (var i=0; i<model.query.filters.length; i++) {
-        var filter = model.query.filters[i];
-        var complete = FilterUtils.isComplete(filter);
-        var valid = RunValidations(FilterValidations, filter).length === 0;
-        if (complete && !valid) return false;
-      }
-      return true;
-    }
-
-  },
-
-  time: {
-    
-    validate: function(model) {
-      var time = model.query.time || {};
-      if (ExplorerUtils.timeframeType(model.query.time) === 'relative') {
-        if (time.relativity && time.amount && time.sub_timeframe) {
-          return true;
-        } else {
-          return "You must choose all 3 options for relative timeframes.";
-        }
-      } else if (ExplorerUtils.timeframeType(model.query.time) === 'absolute') {
-        if (time.start && time.end) {
-          return true;
-        } else {
-          return "You must provide a start and end time for absolute timeframes.";
-        }
-      } else {
-        return "You must provide a timeframe.";
-      }
-      return true;
     }
 
   },

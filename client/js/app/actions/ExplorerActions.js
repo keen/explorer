@@ -275,6 +275,7 @@ var ExplorerActions = {
         var errors = RunValidations(ExplorerValidations, formattedModel);
         if (errors.length) {
           console.warn('A persisted explorer model is invalid: ', formattedModel);
+          console.log('Errors: ', errors);
         }
         models.push(formattedModel);
       });
