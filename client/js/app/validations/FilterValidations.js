@@ -1,9 +1,9 @@
 var _ = require('lodash');
-var RunValidations = require('../utils/RunValidations');
+var RunValidations = require('../utils/RunValidations').run;
 var FormatUtils = require('../utils/FormatUtils');
 
 function isGeoCoercionType(model) {
-  return model.coercionType === 'Geo';
+  return model.coercion_type === 'Geo';
 }
 
 module.exports = {
@@ -71,8 +71,8 @@ module.exports = {
 
     shouldRun: isGeoCoercionType,
     
-    validate: function(geoObj) {
-      var value = geoObj.coordinates;
+    validate: function(model) {
+      var value = model.property_value.coordinates;
       var valid = _.isArray(value) && value.length === 2;
       if (!valid) return valid;
 
@@ -91,8 +91,8 @@ module.exports = {
 
     shouldRun: isGeoCoercionType,
     
-    validate: function(geoObj) {
-      var value = geoObj.max_distance_miles;
+    validate: function(model) {
+      var value = model.property_value.max_distance_miles;
       return value && _.isNumber(value);
     }
     

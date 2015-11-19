@@ -23,7 +23,8 @@ describe('utils/ProjectUtils', function() {
         'select_unique',
         'extraction',
         'percentile',
-        'median'
+        'median',
+        'funnel'
       ];
       assert.sameMembers(ProjectUtils.getConstant('ANALYSIS_TYPES'), expectedAnalyisTypes);
     });

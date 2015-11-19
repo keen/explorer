@@ -103,7 +103,8 @@ module.exports = {
     } else {
       if (value === false) return true;
       if (value === 0) return true;
-      return !_.isUndefined(value) && !_.isNull(value) && !_.isEmpty(value);
+      if (_.isPlainObject(value)) return !_.isEmpty(value);
+      return !_.isUndefined(value) && !_.isNull(value);
     }
   },
 

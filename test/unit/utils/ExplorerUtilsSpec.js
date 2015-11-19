@@ -7,8 +7,6 @@ var Qs = require('qs');
 var TestHelpers = require('../../support/TestHelpers');
 var ExplorerActions = require('../../../client/js/app/actions/ExplorerActions');
 var FilterUtils = require('../../../client/js/app/utils/FilterUtils');
-var ValidationUtils = require('../../../client/js/app/utils/ValidationUtils');
-var ExplorerValidations = require('../../../client/js/app/validations/ExplorerValidations');
 var ExplorerUtils = require('../../../client/js/app/utils/ExplorerUtils');
 
 describe('utils/ExplorerUtils', function() {

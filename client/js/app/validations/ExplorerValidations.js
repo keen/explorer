@@ -2,7 +2,7 @@ var _ = require('lodash');
 var ExplorerUtils = require('../utils/ExplorerUtils');
 var SharedValidations = require('./SharedValidations');
 var StepValidations = require('./StepValidations');
-var RunValidations = require('../utils/RunValidations');
+var RunValidations = require('../utils/RunValidations').run;
 
 function isNotFunnel(model) {
   return model.query.analysis_type !== 'funnel';

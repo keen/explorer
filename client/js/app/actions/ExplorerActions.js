@@ -5,7 +5,6 @@ var ExplorerStore = require('../stores/ExplorerStore');
 var ExplorerValidations = require('../validations/ExplorerValidations');
 var NoticeActions = require('./NoticeActions');
 var AppStateActions = require('./AppStateActions');
-
 var RunValidations = require('../utils/RunValidations');
 var ExplorerUtils = require('../utils/ExplorerUtils');
 
@@ -281,7 +280,7 @@ var ExplorerActions = {
       var models = [];
       resp.forEach(function(model) {
         var formattedModel = ExplorerUtils.formatQueryParams(model);
-        var errors = RunValidations(ExplorerValidations, formattedModel);
+        var errors = RunValidations.run(ExplorerValidations, formattedModel);
         if (errors.length) {
           console.warn('A persisted explorer model is invalid: ', formattedModel);
           console.log('Errors: ', errors);
@@ -301,7 +300,7 @@ var ExplorerActions = {
         return;
       }
       var model = ExplorerUtils.formatQueryParams(resp);
-      var errors = RunValidations(ExplorerValidations, model);
+      var errors = RunValidations.run(ExplorerValidations, model);
       if (errors.length) {
         console.warn('A persisted explorer model is invalid: ', model);
       }

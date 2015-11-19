@@ -37,6 +37,7 @@ module.exports = {
       loading: false,
       saving: false,
       isValid: true,
+      errors: [],
       refresh_rate: 0,
       query_name: '',
       query: {
@@ -51,6 +52,7 @@ module.exports = {
         email: null,
         latest: null,
         filters: [],
+        steps: [],
         time: {
           relativity: 'this',
           amount: 1,

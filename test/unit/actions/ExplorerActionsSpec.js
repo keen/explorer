@@ -9,7 +9,7 @@ var AppDispatcher = require('../../../client/js/app/dispatcher/AppDispatcher');
 var ExplorerActions = require('../../../client/js/app/actions/ExplorerActions');
 var AppStateActions = require('../../../client/js/app/actions/AppStateActions');
 var FilterUtils = require('../../../client/js/app/utils/FilterUtils');
-var ValidationUtils = require('../../../client/js/app/utils/ValidationUtils');
+var RunValidations = require('../../../client/js/app/utils/RunValidations');
 var ExplorerValidations = require('../../../client/js/app/validations/ExplorerValidations');
 var ExplorerUtils = require('../../../client/js/app/utils/ExplorerUtils');
 var ExplorerStore = require('../../../client/js/app/stores/ExplorerStore');
@@ -47,77 +47,58 @@ describe('actions/ExplorerActions', function() {
       this.getStub.returns(explorer);
       expect(ExplorerActions.exec.bind(null, this.client, explorer.id)).to.throw("Warning: calling exec when model loading is true. Explorer id: 5");
     });
-    it('should call runValidations with the right arguments', function () {
+    it('should run the validations with the right arguments', function () {
       var explorer = TestHelpers.createExplorerModel();
       this.getStub.returns(explorer);
-      var stub = sinon.stub(ValidationUtils, 'runValidations').returns({
-        isValid: true
-      });
+      var stub = sinon.stub(ExplorerActions, 'validate');
       ExplorerActions.exec(this.client, explorer.id);
-      assert.isTrue(stub.calledWith(ExplorerValidations.explorer, explorer));
-      ValidationUtils.runValidations.restore();
+      assert.isTrue(stub.calledOnce);
+      ExplorerActions.validate.restore();
     });
     it('should call the dispatcher to update the store and set loading to true', function () {
       var explorer = {
         id: 5,
         loading: false,
-        query: {}
+        query: {},
+        isValid: true
       };
       this.getStub.returns(explorer);
-      sinon.stub(ValidationUtils, 'runValidations').returns({
-        isValid: true
-      });
-      ExplorerActions.exec(this.client, explorer);
+      ExplorerActions.exec(this.client, explorer.id);
       assert.isTrue(this.dispatchStub.calledWith({
         actionType: 'EXPLORER_UPDATE', 
         id: 5,
         updates: { loading: true }
       }));
-      ValidationUtils.runValidations.restore();
     });
-    it('should add the latest attribute with a limit when the analysis_type is extraction', function () {
+    it('should add the latest attribute with a limit for extractions', function () {
       var explorer = {
         id: 5,
         loading: false,
+        isValid: true,
         query: { 
           event_collection: 'click',
           analysis_type: 'extraction'
         }
       };
       this.getStub.returns(explorer);
-      sinon.stub(ValidationUtils, 'runValidations').returns({
-        isValid: true
-      });
-      ExplorerActions.exec(this.client, explorer);
+      ExplorerActions.exec(this.client, explorer.id);
       assert.strictEqual(
         this.client.run.getCalls()[0].args[0].params.latest,
         100
       );
-      ValidationUtils.runValidations.restore();
     });
   });
 
   describe('runEmailExtraction', function () {
-    before(function () {
-      this.runValidationsStub = sinon.stub(ValidationUtils, 'runValidations');
-      this.runQueryStub = sinon.stub(ExplorerUtils, 'runQuery');
-      this.getStub = sinon.stub(ExplorerStore, 'get');
-    });
-    after(function () {
-      ValidationUtils.runValidations.restore();
-      ExplorerUtils.runQuery.restore();
-      ExplorerStore.get.restore();
-    });
-
     beforeEach(function () {
-      this.runValidationsStub.returns({
-        isValid: false,
-        lastError: 'The last error'
-      });
-      this.runValidationsStub.reset();
-      this.runQueryStub.reset();
+      this.validateStub = sinon.stub(ExplorerActions, 'validate');
+      this.runQueryStub = sinon.stub(ExplorerUtils, 'runQuery');
       this.client = { run: sinon.stub() };
       this.explorer = {
+        isValid: false,
+        errors: [{
+          msg: 'invalid'
+        }],
         query: {
           analysis_type: 'count',
           event_collection: 'click',
@@ -125,32 +106,22 @@ describe('actions/ExplorerActions', function() {
           latest: '100'
         }
       };
-      this.getStub.returns(this.explorer);
-      this.callback = sinon.stub();
+      this.getStub = sinon.stub(ExplorerStore, 'get').returns(this.explorer);
     });
 
-    it('should run the standard explorer validation set', function () {
-      ExplorerActions.runEmailExtraction(this.client, this.explorer, this.callback);
-      assert.isTrue(this.runValidationsStub.calledWith(ExplorerValidations.explorer, this.explorer));
+    afterEach(function () {
+      ExplorerActions.validate.restore();
+      ExplorerUtils.runQuery.restore();
+      ExplorerStore.get.restore();
     });
-    it('should run the emailExtractionExplorer validation set if the standard validations pass', function () {
-      this.runValidationsStub.returns({ isValid: true });
-      ExplorerActions.runEmailExtraction(this.client, this.explorer, this.callback);
-      assert.isTrue(this.runValidationsStub.calledWith(ExplorerValidations.emailExtractionExplorer, this.explorer));
+
+    it('should run validations', function () {
+      ExplorerActions.runEmailExtraction(this.client, this.explorer.id);
+      assert.isTrue(this.validateStub.calledOnce);
     });
-    it('should NOT run the emailExtractionExplorer validation set if the standard validations fail', function () {
-      this.explorer.query.analysis_type = null;
-      ExplorerActions.runEmailExtraction(this.client, this.explorer, this.callback);
-      assert.isFalse(this.runValidationsStub.calledWith(ExplorerValidations.emailExtractionExplorer, this.explorer));
-    });
-    it('should NOT run the query if standard validaton fails', function () {
-      this.explorer.query.analysis_type = null;
-      ExplorerActions.runEmailExtraction(this.client, this.explorer, this.callback);
-      assert.isFalse(this.runQueryStub.called);
-    });
-    it('should NOT run the query if emailExtraction validaton fails', function () {
-      this.explorer.query.email = null;
-      ExplorerActions.runEmailExtraction(this.client, this.explorer, this.callback);
+    it('should NOT run the query if validaton fails', function () {
+      this.validateStub.returns([{ msg: 'invalid' }]);
+      ExplorerActions.runEmailExtraction(this.client, this.explorer.id);
       assert.isFalse(this.runQueryStub.called);
     });
   });
@@ -234,10 +205,10 @@ describe('actions/ExplorerActions', function() {
       ExplorerUtils.formatQueryParams.restore();
     });
     it('should run validations for each model', function () {
-      var spy = sinon.spy(ValidationUtils, 'runValidations');
+      var stub = sinon.stub(RunValidations, 'run').returns([]);
       ExplorerActions.fetchAllPersisted(this.persistence, this.callback);
-      assert.strictEqual(spy.getCalls().length, 3);
-      ValidationUtils.runValidations.restore();  
+      assert.strictEqual(stub.getCalls().length, 3);
+      RunValidations.run.restore();  
     });
     it('should include invalid models', function () {
       this.models[2].query = {};

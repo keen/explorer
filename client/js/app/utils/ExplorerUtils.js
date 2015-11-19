@@ -51,6 +51,45 @@ function echoIf(valueMaybe, append) {
 
 module.exports = {
 
+  defaultAttrs: function() {
+    return {
+      id: FormatUtils.generateTempId(),
+      query_name: null,
+      active: false,
+      saving: false,
+      error: null,
+      result: null,
+      loading: false,
+      isValid: true,
+      errors: [],
+      refresh_rate: 0,
+      query: {
+        event_collection: null,
+        analysis_type: null,
+        target_property: null,
+        percentile: null,
+        group_by: null,
+        interval: null,
+        timezone: ProjectUtils.getConstant('DEFAULT_TIMEZONE'),
+        filters: [],
+        steps: [],
+        email: null,
+        latest: null,
+        time: {
+          relativity: 'this',
+          amount: 14,
+          sub_timeframe: 'days'
+        }
+      },
+      metadata: {
+        display_name: null,
+        visualization: {
+          chart_type: null
+        }
+      }
+    };
+  },
+
   EXRACTION_EVENT_LIMIT: EXRACTION_EVENT_LIMIT,
 
   isPersisted: function(explorer) {
@@ -90,7 +129,7 @@ module.exports = {
     }
     var params = _.cloneDeep(explorer.query);
 
-    if (params.analysis_type === 'extraction') {
+    if (params.analysis_type === 'extraction' && (_.isNull(params.email) || _.isUndefined(params.email))) {
       params.latest = EXRACTION_EVENT_LIMIT;
     }
 
@@ -314,7 +353,14 @@ module.exports = {
       params.query.filters = _.compact(_.map(params.query.filters, FilterUtils.formatFilterParams));
     }
     if (!params.id && params.query_name) params.id = params.query_name;
-    return params;
+    return _.assign(
+      module.exports.defaultAttrs(),
+      params,
+      {
+        query: _.assign(module.exports.defaultAttrs().query, params.query),
+        metadata: _.assign(module.exports.defaultAttrs().metadata, params.metadata)
+      }
+    );
   },
 
   getChartTypeOptions: function(result, analysisType) {

@@ -118,7 +118,7 @@ module.exports = {
   },
 
   queryJSON: function(filter, timezoneOffset) {
-    var errors = RunValidations(FilterValidations, filter);
+    var errors = RunValidations.run(FilterValidations, filter);
     if (errors.length) return {};
 
     var attrs = _.cloneDeep(filter);

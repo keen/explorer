@@ -1,4 +1,4 @@
-var RunValidations = require('../utils/RunValidations');
+var RunValidations = require('../utils/RunValidations').run;
 var FilterValidations = require('../validations/FilterValidations');
 var ExplorerUtils = require('../utils/ExplorerUtils');
 var FilterUtils = require('../utils/FilterUtils');
