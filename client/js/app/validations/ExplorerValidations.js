@@ -2,6 +2,7 @@ var _ = require('lodash');
 var ExplorerUtils = require('../utils/ExplorerUtils');
 var SharedValidations = require('./SharedValidations');
 var StepValidations = require('./StepValidations');
+var RunValidations = require('../utils/RunValidations');
 
 function isNotFunnel(model) {
   return model.query.analysis_type !== 'funnel';
@@ -24,7 +25,7 @@ module.exports = {
     msg: 'Choose an Target Property.',
 
     shouldRun: function(model) {
-      return ['extraction', 'funnel', 'count'].indexOf(model.query.analysis_type) === -1;
+      return ExplorerUtils.shouldHaveTarget(model);
     },
     
     validate: function(model) {

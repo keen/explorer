@@ -13,6 +13,7 @@ var ProjectStore = require('./ProjectStore');
 var RunValidations = require('../utils/RunValidations.js');
 var ExplorerValidations = require('../validations/ExplorerValidations.js');
 var FilterValidations = require('../validations/FilterValidations.js');
+var StepValidations = require('../validations/StepValidations.js');
 
 var CHANGE_EVENT = 'change';
 var SHARED_FUNNEL_STEP_PROPERTIES = ['event_collection', 'time', 'timezone', 'filters'];
@@ -39,11 +40,10 @@ function _defaultAttrs(){
       group_by: null,
       interval: null,
       timezone: ProjectUtils.getConstant('DEFAULT_TIMEZONE'),
-      filters: null,
-      email: null,
-      latest: null,
       filters: [],
       steps: [],
+      email: null,
+      latest: null,
       time: {
         relativity: 'this',
         amount: 14,
@@ -106,6 +106,12 @@ function _validate(id) {
     newExplorer.query.filters[i].isValid = filterErrors.length ? false: true;
   }
 
+  for (var i=0; i<newExplorer.query.steps.length; i++) {
+    var stepErrors = RunValidations(StepValidations, newExplorer.query.steps[i]);
+    newExplorer.query.steps[i].errors = stepErrors;
+    newExplorer.query.steps[i].isValid = stepErrors.length ? false: true;
+  }
+
   _explorers[id] = newExplorer;
 }
 
@@ -158,12 +164,12 @@ function _migrateToFunnel(explorer, newModel) {
       firstStep[key] = explorer.query[key] 
     }      
 
-    delete newModel.query[key]
+    newModel.query[key] = (key === 'filters') ? [] : null;
   });
 
   if(!_.isUndefined(explorer.query.target_property) && !_.isNull(explorer.query.target_property)) {
     firstStep.actor_property = explorer.query.target_property;
-    delete explorer.query.target_property;
+    explorer.query.target_property = null;
   }
 
   newModel.query.steps = [firstStep];
@@ -182,16 +188,16 @@ function _migrateFromFunnel(explorer, newModel) {
   var activeStep = _.find(explorer.query.steps, { active: true }) || explorer.query.steps[0];
 
   _.each(SHARED_FUNNEL_STEP_PROPERTIES, function (key) {
-    if(!_.isUndefined(activeStep[key])) {
+    if (!_.isUndefined(activeStep[key])) {
       newModel.query[key] = activeStep[key];
     }
   });
 
-  if(!_.isNull(activeStep.actor_property)) {
+  if (!_.isNull(activeStep.actor_property) && ExplorerUtils.shouldHaveTarget(newModel)) {
     newModel.query.target_property = activeStep.actor_property;
   }
 
-  delete newModel.query.steps;
+  newModel.query.steps = [];
 
   return newModel;
 }
@@ -221,7 +227,8 @@ function _removeInvalidFields(explorer, newModel) {
     newModel.query.target_property = null;
   }
   if (newModel.query.analysis_type !== 'funnel') {
-    newModel.query.steps = null;
+    newModel.query.steps = [];
+    newModel.query.filters = [];
   }
   return newModel;
 }

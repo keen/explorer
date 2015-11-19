@@ -102,7 +102,7 @@ var QueryBuilder = React.createClass({
 
   buildTargetPropertyField: function() {
     var type = this.props.model.query.analysis_type;
-    if (type !== null && ['count', 'extraction', 'funnel'].indexOf(type) === -1) {
+    if (type !== null && ExplorerUtils.shouldHaveTarget(this.props.model)) {
       return (
         <SelectField name="target_property"
                      label="Target Property"

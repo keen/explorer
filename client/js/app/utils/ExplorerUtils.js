@@ -23,6 +23,8 @@ var QUERY_PARAMS = [
 
 var EXRACTION_EVENT_LIMIT = 100;
 
+var ANALYSIS_TYPES_WITHOUT_TARGET = ['extraction', 'count', 'funnel'];
+
 function toCamelcaseName(name) {
   return name.replace(/_(.)/, function(match, p1) {
     return p1.toUpperCase();
@@ -57,6 +59,10 @@ module.exports = {
 
   saveType: function(explorer) {
     return module.exports.isPersisted(explorer) ? 'update' : 'save';
+  },
+
+  shouldHaveTarget: function(explorer) {
+    return ANALYSIS_TYPES_WITHOUT_TARGET.indexOf(explorer.query.analysis_type) === -1;
   },
 
   isEmailExtraction: function(explorer) {
@@ -106,7 +112,7 @@ module.exports = {
     });
 
     // Add filters
-    if (params.filters) {
+    if (params.analysis_type !== 'funnel' && params.filters) {
       params.filters = _.map(params.filters, function(filter){
         return FilterUtils.queryJSON(filter, module.exports.getTimezoneOffset(explorer));
       });
