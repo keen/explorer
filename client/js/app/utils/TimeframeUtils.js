@@ -16,13 +16,13 @@ module.exports = {
    timeframeType: function(time) {
       var badTimeTypeError = new Error('Invalid time value');
 
-      if(_.isUndefined(time)) {
+      if (_.isUndefined(time)) {
         return null;
-      } else if(!_.isPlainObject(time)) {
+      } else if (!_.isPlainObject(time)) {
         throw badTimeTypeError;
-      } else if(_.has(time, 'start') && _.has(time, 'end')) {
+      } else if (_.has(time, 'start') && _.has(time, 'end')) {
         return 'absolute';
-      } else if(_.has(time, 'relativity') && _.has(time, 'amount') && _.has(time, 'sub_timeframe')) {
+      } else if (_.has(time, 'relativity') && _.has(time, 'amount') && _.has(time, 'sub_timeframe')) {
         return 'relative';
       } else {
         throw badTimeTypeError;
@@ -58,7 +58,7 @@ module.exports = {
     var timeframeType = module.exports.timeframeType(time);
     var timeframeBuilder = module.exports.timeframeBuilders[timeframeType + '_timeframe'];
 
-    if(typeof(timeframeBuilder) === 'undefined') {
+    if (typeof(timeframeBuilder) === 'undefined') {
       return "";
     } else {
       return timeframeBuilder(time, timezone);

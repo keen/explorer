@@ -262,6 +262,15 @@ describe('utils/ExplorerUtils', function() {
   });
 
   describe('formatQueryParams', function () {
+    it('should call FunnelUtils.formatQueryParams for each step', function () {
+      var stub = sinon.stub(FunnelUtils, 'formatQueryParams').returns({});
+
+      ExplorerUtils.formatQueryParams({query: { steps: [{}, {}, {}]} });
+
+      assert.lengthOf(stub.getCalls(), 3);
+
+      FunnelUtils.formatQueryParams.restore();
+    });
     it('should call unpackTimeframeParam if there is a timeframe', function () {
       var params = {
         query: {

@@ -19,7 +19,7 @@ module.exports = {
 
     _.assign(params, TimeframeUtils.getTimeParameters(step.time, step.timezone));
 
-    if(params.filters) {
+    if (params.filters) {
       params.filters = _.map(params.filters, function(filter) {
         FilterUtils.queryJSON(filter, TimeframeUtils.getTimezoneOffset(params.timezone)); 
       });
@@ -29,11 +29,25 @@ module.exports = {
 
     // Remove empty, null, or unnecessary properties
     _.each(params, function(value, key) {
-      if(!FormatUtils.isValidQueryValue(value) || !_.contains(STEP_PARAMS, key)) {
+      if (!FormatUtils.isValidQueryValue(value) || !_.contains(STEP_PARAMS, key)) {
         delete params[key];
       }
     });
 
     return params;
+  },
+
+  formatQueryParams: function (step) {
+    if (step.timeframe) {
+      var unpackedTime = TimeframeUtils.unpackTimeframeParam(step.timeframe, step.timezone);
+      step.time = unpackedTime.time;
+      step.timezone = unpackedTime.timezone;
+    }
+
+    if (step.filters) {
+      step.filters = _.compact(_.map(step.filters, FilterUtils.formatFilterParams));
+    }
+
+    return step;
   }
 };

@@ -91,13 +91,13 @@ module.exports = {
       });
     }
 
-    if(params.steps) {
+    if (params.steps) {
       params.steps = _.map(params.steps, FunnelUtils.stepJSON); 
     }
 
     _.each(params, function(value, key) {
       // If it's an array, clean out any empty elements
-      if(_.isArray(value)) {
+      if (_.isArray(value)) {
         _.remove(value, function(element) {
           return !_.isNumber(element) && _.isEmpty(element);
         });
@@ -177,9 +177,15 @@ module.exports = {
       params.query.time = unpackedTime.time;
       params.query.timezone = unpackedTime.timezone;
     }
+
     if (params.query.filters) {
       params.query.filters = _.compact(_.map(params.query.filters, FilterUtils.formatFilterParams));
     }
+
+    if (params.query.steps) {
+      params.query.steps = _.compact(_.map(params.query.steps, FunnelUtils.formatQueryParams));
+    }
+
     if (!params.id && params.query_name) params.id = params.query_name;
     return params;
   },
