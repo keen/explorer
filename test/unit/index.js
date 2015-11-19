@@ -38,15 +38,15 @@ require('./actions/ProjectActionsSpec.js');
 // ***********************
 // Stores
 // ***********************
-// require('./stores/ExplorerStoreSpec.js');
-// require('./stores/ProjectStoreSpec.js');
-// require('./stores/NoticeStoreSpec.js');
+require('./stores/ExplorerStoreSpec.js');
+require('./stores/ProjectStoreSpec.js');
+require('./stores/NoticeStoreSpec.js');
 
 // ***********************
 // Persistence
 // ***********************
-// require('./modules/persistence/persistence_spec.js');
-// require('./modules/persistence/KeenSavedQueriesSpec.js');
+require('./modules/persistence/persistence_spec.js');
+require('./modules/persistence/KeenSavedQueriesSpec.js');
 
 // ***********************
 // Components

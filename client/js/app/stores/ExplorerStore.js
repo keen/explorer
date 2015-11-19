@@ -26,7 +26,6 @@ function _defaultAttrs() {
     query_name: null,
     active: false,
     saving: false,
-    error: null,
     result: null,
     loading: false,
     isValid: true,
@@ -66,7 +65,7 @@ function _defaultFilter() {
     operator: 'eq',
     coercion_type: 'String',
     isValid: true,
-    lastError: null
+    errors: []
   };
 }
 
@@ -461,8 +460,8 @@ ExplorerStore.dispatchToken = AppDispatcher.register(function(action) {
 
   switch(action.actionType) {
     case ExplorerConstants.EXPLORER_CREATE:
-      var id = _create(action.attrs);
-      finishAction(id);
+      _create(action.attrs);
+      finishAction();
       break;
 
     case ExplorerConstants.EXPLORER_CREATE_BATCH:
@@ -497,7 +496,7 @@ ExplorerStore.dispatchToken = AppDispatcher.register(function(action) {
 
     case ExplorerConstants.EXPLORER_CLEAR:
       _clear(action.id);
-      finishAction(action.id);
+      finishAction();
       break;
 
     case ExplorerConstants.EXPLORER_SAVING:

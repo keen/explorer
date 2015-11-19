@@ -32,7 +32,6 @@ module.exports = {
     return {
       id: 'some_id',
       active: false,
-      error: null,
       result: null,
       loading: false,
       saving: false,
