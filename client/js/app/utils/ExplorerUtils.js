@@ -54,45 +54,6 @@ function echoIf(valueMaybe, append) {
 
 module.exports = {
 
-  defaultAttrs: function() {
-    return {
-      id: FormatUtils.generateTempId(),
-      query_name: null,
-      active: false,
-      saving: false,
-      error: null,
-      result: null,
-      loading: false,
-      isValid: true,
-      errors: [],
-      refresh_rate: 0,
-      query: {
-        event_collection: null,
-        analysis_type: null,
-        target_property: null,
-        percentile: null,
-        group_by: null,
-        interval: null,
-        timezone: ProjectUtils.getConstant('DEFAULT_TIMEZONE'),
-        filters: [],
-        steps: [],
-        email: null,
-        latest: null,
-        time: {
-          relativity: 'this',
-          amount: 14,
-          sub_timeframe: 'days'
-        }
-      },
-      metadata: {
-        display_name: null,
-        visualization: {
-          chart_type: null
-        }
-      }
-    };
-  },
-
   EXRACTION_EVENT_LIMIT: EXRACTION_EVENT_LIMIT,
 
   isPersisted: function(explorer) {
@@ -127,16 +88,12 @@ module.exports = {
   },
 
   queryJSON: function(explorer) {
-    if (!explorer || !explorer.query) {
-      return;
-    }
+    if (!explorer || !explorer.query) return;
     var params = _.cloneDeep(explorer.query);
 
     if (params.analysis_type === 'extraction' && FormatUtils.isNullOrUndefined(params.email)) {
       params.latest = EXRACTION_EVENT_LIMIT;
     }
-
-
     _.assign(params, TimeframeUtils.getTimeParameters(params.time, params.timezone));
 
     // Add filters
@@ -220,7 +177,7 @@ module.exports = {
   },
 
   /**
-   * Takes in an object of query params directly taken from the URL and formats/decomnstructs them appropriately to work well
+   * Takes in an object of query params directly taken from the URL and formats/deconstructs them appropriately to work well
    * with our data model.
    * @param  {Object} the raw params from the URL
    * @return {Object} formatted attributes to be used for creating a new Explorer model.
@@ -232,24 +189,14 @@ module.exports = {
       params.query.time = unpackedTime.time;
       params.query.timezone = unpackedTime.timezone;
     }
-
     if (params.query.filters) {
       params.query.filters = _.compact(_.map(params.query.filters, FilterUtils.formatFilterParams));
     }
-
     if (params.query.steps) {
       params.query.steps = _.compact(_.map(params.query.steps, FunnelUtils.formatQueryParams));
     }
-
     if (!params.id && params.query_name) params.id = params.query_name;
-    return _.assign(
-      module.exports.defaultAttrs(),
-      params,
-      {
-        query: _.assign(module.exports.defaultAttrs().query, params.query),
-        metadata: _.assign(module.exports.defaultAttrs().metadata, params.metadata)
-      }
-    );
+    return params;
   },
 
   getChartTypeOptions: function(result, analysisType) {

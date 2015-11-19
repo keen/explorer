@@ -8,6 +8,7 @@ var TestHelpers = require('../../support/TestHelpers');
 var ExplorerActions = require('../../../client/js/app/actions/ExplorerActions');
 var ExplorerUtils = require('../../../client/js/app/utils/ExplorerUtils');
 var FilterUtils = require('../../../client/js/app/utils/FilterUtils');
+var FunnelUtils = require('../../../client/js/app/utils/FunnelUtils');
 var TimeframeUtils = require('../../../client/js/app/utils/TimeframeUtils');
 var RunValidations = require('../../../client/js/app/utils/RunValidations');
 var ExplorerValidations = require('../../../client/js/app/validations/ExplorerValidations')
@@ -65,7 +66,7 @@ describe('utils/ExplorerUtils', function() {
       assert.lengthOf(stub.getCalls(), 3);
       FilterUtils.queryJSON.restore();
     });
-    it('should call StepUtils.stepJSON for every filter', function () {
+    it('should call FunnelUtils.stepJSON for every step', function () {
       var explorer = { query: { steps: [{}, {}, {}] } };
       var stub = sinon.stub(FunnelUtils, 'stepJSON');
       ExplorerUtils.queryJSON(explorer);
@@ -144,7 +145,8 @@ describe('utils/ExplorerUtils', function() {
         query: {
           event_collection: 'click',
           analysis_type: 'extraction',
-          timeframe: 'this_1_days'
+          timeframe: 'this_1_days',
+          latest: 100
         },
         refresh_rate: 0
       });
@@ -180,10 +182,10 @@ describe('utils/ExplorerUtils', function() {
         query_name: 'some-query-name',
         active: false,
         saving: false,
-        error: null,
+        isValid: true,
+        errors: [],
         result: null,
         loading: false,
-        isValid: true,
         query: {
           event_collection: null,
           analysis_type: null,
@@ -192,10 +194,10 @@ describe('utils/ExplorerUtils', function() {
           group_by: null,
           interval: null,
           timezone: 'UTC',
-          filters: null,
           email: null,
           latest: null,
           filters: [],
+          steps: [],
           time: {
             relativity: 'this',
             amount: 1,
@@ -203,6 +205,7 @@ describe('utils/ExplorerUtils', function() {
           }
         },
         metadata: {
+          display_name: null,
           visualization: {
             chart_type: null
           }
@@ -227,10 +230,10 @@ describe('utils/ExplorerUtils', function() {
         query_name: 'some-query-name',
         active: false,
         saving: false,
-        error: null,
         result: null,
         loading: false,
         isValid: true,
+        errors: [],
         query: {
           event_collection: 'clicks',
           analysis_type: 'count',
@@ -243,6 +246,7 @@ describe('utils/ExplorerUtils', function() {
           email: null,
           latest: null,
           filters: [],
+          steps: [],
           time: {
             relativity: 'this',
             amount: 1,
@@ -250,6 +254,7 @@ describe('utils/ExplorerUtils', function() {
           }
         },
         metadata: {
+          display_name: null,
           visualization: {
             chart_type: 'metric'
           }

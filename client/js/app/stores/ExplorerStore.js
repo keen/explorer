@@ -20,6 +20,45 @@ var SHARED_FUNNEL_STEP_PROPERTIES = ['event_collection', 'time', 'timezone', 'fi
 
 var _explorers = {};
 
+function _defaultAttrs() {
+  return {
+    id: FormatUtils.generateTempId(),
+    query_name: null,
+    active: false,
+    saving: false,
+    error: null,
+    result: null,
+    loading: false,
+    isValid: true,
+    errors: [],
+    refresh_rate: 0,
+    query: {
+      event_collection: null,
+      analysis_type: null,
+      target_property: null,
+      percentile: null,
+      group_by: null,
+      interval: null,
+      timezone: ProjectUtils.getConstant('DEFAULT_TIMEZONE'),
+      filters: [],
+      steps: [],
+      email: null,
+      latest: null,
+      time: {
+        relativity: 'this',
+        amount: 14,
+        sub_timeframe: 'days'
+      }
+    },
+    metadata: {
+      display_name: null,
+      visualization: {
+        chart_type: null
+      }
+    }
+  };
+}
+
 function _defaultFilter() {
   return {
     property_name: null,
@@ -233,7 +272,7 @@ function _prepareFilterUpdates(explorer, filter, updates) {
 
 function _create(attrs) {
   attrs = attrs || {};
-  var newAttrs = _.merge(ExplorerUtils.defaultAttrs(), attrs);
+  var newAttrs = _.merge(_defaultAttrs(), attrs);
   _explorers[newAttrs.id] = newAttrs;
   return newAttrs.id;
 }
@@ -359,7 +398,7 @@ function _updateStepFilter(id, stepIndex, filterIndex, updates) {
 
 function _clear(id) {
   var model = _explorers[id];
-  _explorers[id] = _.assign({}, ExplorerUtils.defaultAttrs(), _.pick(model, ['id', 'query_name', 'active', 'metadata', 'originalModel']));
+  _explorers[id] = _.assign({}, _defaultAttrs(), _.pick(model, ['id', 'query_name', 'active', 'metadata', 'originalModel']));
 }
 
 var ExplorerStore = _.assign({}, EventEmitter.prototype, {
