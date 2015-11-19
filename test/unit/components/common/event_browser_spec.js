@@ -40,4 +40,23 @@ describe('components/common/event_browser', function() {
       assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, Loader), 1);
     });
   });
+
+  describe("delete schema property", function() {
+    it("calls endpoint to delete schema property", function() {
+      var eventCollection = ""; // what
+      var propertyName = ""; // seriously i don't know
+
+      var expectedURL = this.client.config.protocol +
+        "://" + this.client.config.host +
+        "/projects/" + this.client.config.projectId +
+        "/events/" + eventCollection +
+        "/properties/" + propertyName;
+
+      var expectedURL = this.client.;
+
+      assert.isTrue(this.xhrOpenSpy.calledWith('DELETE', expectedURL, true));
+    });
+
+    it("prompts user for confirmation before endpoint is called");
+  });
 });
