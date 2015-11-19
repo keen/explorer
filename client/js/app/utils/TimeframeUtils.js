@@ -17,13 +17,13 @@ module.exports = {
       var badTimeTypeError = new Error('Invalid time value');
 
       if(_.isUndefined(time)) {
-        return "";
+        return null;
       } else if(!_.isPlainObject(time)) {
         throw badTimeTypeError;
       } else if(_.has(time, 'start') && _.has(time, 'end')) {
         return 'absolute';
       } else if(_.has(time, 'relativity') && _.has(time, 'amount') && _.has(time, 'sub_timeframe')) {
-        return 'relative'
+        return 'relative';
       } else {
         throw badTimeTypeError;
       }
@@ -67,8 +67,8 @@ module.exports = {
 
   getTimeParameters: function(time, timezone) {
     return {
-      timeframe: module.exports.getTimeframe(time, timezone),
-      timezone: module.exports.timeframeType(time) === 'absolute' ? null : timezone
+      timeframe: time ? module.exports.getTimeframe(time, timezone) : null,
+      timezone: module.exports.timeframeType(time) === 'relative' ? timezone : null
     };
   },
 
@@ -96,7 +96,7 @@ module.exports = {
       if (zone) {
         timezone = zone.value;
       } else if (!zone && !timezone) {
-        throw new Error("A timezone was not part of the datestring for the timeframe with a start of: " + timeframe.start + ". There also was no timezone parameter found in the query. You must provide one or the other.");
+        throw new Error("A timezone was not part of the datestring for the timeframe with a start of: " + timeframe.start + ". There also was no timezone parameter provided. You must provide one or the other.");
       }
       return {
         time: {
@@ -113,7 +113,7 @@ module.exports = {
           amount: split[1],
           sub_timeframe: split[2]
         },
-        timezone: query.timezone
+        timezone: timezone
       };
     }
   },

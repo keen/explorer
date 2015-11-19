@@ -173,7 +173,7 @@ module.exports = {
   formatQueryParams: function(params) {
     if (!params || !params.query) return;
     if (params.query && params.query.timeframe) {
-      var unpackedTime = TimeframeUtils.unpackTimeframeParam(params.query);
+      var unpackedTime = TimeframeUtils.unpackTimeframeParam(params.query.timeframe, params.query.timezone);
       params.query.time = unpackedTime.time;
       params.query.timezone = unpackedTime.timezone;
     }
