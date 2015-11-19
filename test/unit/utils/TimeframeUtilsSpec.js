@@ -1,5 +1,4 @@
 var assert = require('chai').assert;
-var expect = require('chai').expect;
 var moment = require('moment');
 var sinon = require('sinon');
 var TimeframeUtils = require('../../../client/js/app/utils/TimeframeUtils');

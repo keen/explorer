@@ -1,6 +1,5 @@
 /** @jsx React.DOM */
 var assert = require('chai').assert;
-var expect = require('chai').expect;
 var _ = require('lodash');
 var sinon = require('sinon');
 var RelativePicker = require('../../../../client/js/app/components/common/relative_picker.js');

@@ -8,7 +8,6 @@ var Select = require('./select.js');
 var classNames = require('classnames');
 var ReactSelect = require('./react_select.js');
 var FilterValueFields = require('./filter_value_fields.js');
-var ProjectUtils = require('../../utils/ProjectUtils');
 var FilterUtils = require('../../utils/FilterUtils');
 
 var Filter = React.createClass({

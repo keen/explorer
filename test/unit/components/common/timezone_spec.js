@@ -1,5 +1,4 @@
 var assert = require('chai').assert;
-var expect = require('chai').expect;
 var React = require('react');
 var _ = require('lodash');
 var sinon = require('sinon');

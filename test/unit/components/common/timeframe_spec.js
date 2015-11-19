@@ -1,6 +1,5 @@
 /** @jsx React.DOM */
 var assert = require('chai').assert;
-var expect = require('chai').expect;
 var _ = require('lodash');
 var moment = require('moment');
 var sinon = require('sinon');

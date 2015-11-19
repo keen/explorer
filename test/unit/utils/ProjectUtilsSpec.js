@@ -1,5 +1,4 @@
 var assert = require('chai').assert;
-var expect = require('chai').expect;
 var sinon = require('sinon');
 var TestHelpers = require('../../support/TestHelpers');
 var ProjectActions = require('../../../client/js/app/actions/ProjectActions');
