@@ -6,9 +6,8 @@ var sinon = require('sinon');
 var FilterValueFields = require('../../../../client/js/app/components/common/filter_value_fields.js');
 var Geo = require('../../../../client/js/app/components/common/geo.js');
 var Datepicker = require('../../../../client/js/app/components/common/datepicker.js');
+var ProjectUtils = require('../../../../client/js/app/utils/ProjectUtils.js');
 var Select = require('../../../../client/js/app/components/common/select.js');
-var ProjectUtils = require('../../../../client/js/app/utils/ProjectUtils');
-var ExplorerActions = require('../../../../client/js/app/actions/ExplorerActions');
 var React = require('react/addons');
 var TestUtils = React.addons.TestUtils;
 var TestHelpers = require('../../../support/TestHelpers');
@@ -21,6 +20,8 @@ describe('components/common/filter_value_fields', function() {
     this.project = TestHelpers.createProject();
     this.model = TestHelpers.createExplorerModel();;
     this.model.event_collection = 'click';
+    this.handleChangeStub = sinon.stub();
+    this.operators = ProjectUtils.getConstant('FILTER_OPERATORS');
     this.filter = {
       property_name: 'propOne',
       operator: 'eq',
@@ -29,15 +30,9 @@ describe('components/common/filter_value_fields', function() {
     };
     this.index = 0;
 
-    this.component = TestUtils.renderIntoDocument(<FilterValueFields model={this.model}
-                                                                     filter={this.filter}
-                                                                     project={this.project}
-                                                                     index={this.index} />);
-    this.updateFilterStub = sinon.stub(ExplorerActions, 'updateFilter');
-  });
-
-  afterEach(function(){
-    ExplorerActions.updateFilter.restore();
+    this.component = TestUtils.renderIntoDocument(<FilterValueFields filter={this.filter}
+                                                                     filterOperators={this.operators}
+                                                                     handleChange={this.handleChangeStub} />);
   });
 
   describe('setup', function() {
@@ -61,7 +56,7 @@ describe('components/common/filter_value_fields', function() {
           this.component.refs['date-value-input'].refs.datepicker.getDOMNode().value = 'Jan 1, 2015';
           TestUtils.Simulate.blur(this.component.refs['date-value-input'].refs.datepicker.getDOMNode());
           assert.strictEqual(
-            moment(this.updateFilterStub.getCall(0).args[2].property_value).format(datetimeFormat),
+            moment(this.handleChangeStub.getCall(0).args[1]).format(datetimeFormat),
             "Jan 1, 2015 10:00 AM"
           );
         });
@@ -71,7 +66,7 @@ describe('components/common/filter_value_fields', function() {
           inputNode.value = '03:47 PM';
           TestUtils.Simulate.blur(inputNode);
           assert.strictEqual(
-            moment(this.updateFilterStub.getCall(0).args[2].property_value).format(datetimeFormat),
+            moment(this.handleChangeStub.getCall(0).args[1]).format(datetimeFormat),
             "May 15, 2015 3:47 PM"
           );  
         });
