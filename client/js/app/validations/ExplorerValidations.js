@@ -64,6 +64,7 @@ module.exports = {
     },
 
     validate: function(model) {
+      if (!model.query.steps) return false;
       for (var i=0; i<model.query.steps.length; i++) {
         var valid = RunValidations(StepValidations, model.query.steps[i]).length === 0;
         if (!valid) return false;
