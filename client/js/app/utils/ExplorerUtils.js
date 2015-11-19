@@ -94,9 +94,14 @@ module.exports = {
       params.latest = EXRACTION_EVENT_LIMIT;
     }
 
-    // Set the timeframe (will get removed if it's null o undefined)
-    params.timeframe = module.exports.getTimeframe(explorer);
-    if (module.exports.timeframeType(explorer.query.time) === 'absolute') {
+    // Set the timeframe (will get removed if it's null or undefined)
+    if (params.analysis_type !== 'funnel') {
+      params.timeframe = module.exports.getTimeframe(explorer);
+      if (module.exports.timeframeType(explorer.query.time) === 'absolute') {
+        delete params.timezone;
+      }
+    } else {
+      delete params.time;
       delete params.timezone;
     }
 
