@@ -1,3 +1,4 @@
+var _ = require('lodash');
 var RunValidations = require('../utils/RunValidations').run;
 var FilterValidations = require('../validations/FilterValidations');
 var TimeframeUtils = require('../utils/TimeframeUtils');
@@ -20,6 +21,7 @@ module.exports = {
     msg: 'One of your filters is invalid.',
     
     validate: function(filters) {
+      if (!filters || (_.isArray(filters) && !filters.length)) return true;
       for (var i=0; i<filters.length; i++) {
         var complete = FilterUtils.isComplete(filters[i]);
         var valid = RunValidations(FilterValidations, filters[i]).length === 0;
