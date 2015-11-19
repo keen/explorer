@@ -1,6 +1,6 @@
 var RunValidations = require('../utils/RunValidations').run;
 var FilterValidations = require('../validations/FilterValidations');
-var ExplorerUtils = require('../utils/ExplorerUtils');
+var TimeframeUtils = require('../utils/TimeframeUtils');
 var FilterUtils = require('../utils/FilterUtils');
 
 module.exports = {
@@ -34,13 +34,13 @@ module.exports = {
     
     validate: function(time) {
       var time = time || {};
-      if (ExplorerUtils.timeframeType(time) === 'relative') {
+      if (TimeframeUtils.timeframeType(time) === 'relative') {
         if (time.relativity && time.amount && time.sub_timeframe) {
           return true;
         } else {
           return "You must choose all 3 options for relative timeframes.";
         }
-      } else if (ExplorerUtils.timeframeType(time) === 'absolute') {
+      } else if (TimeframeUtils.timeframeType(time) === 'absolute') {
         if (time.start && time.end) {
           return true;
         } else {

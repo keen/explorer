@@ -11,7 +11,7 @@ var FieldsToggle = require('./fields_toggle.js');
 var ReactSelect = require('./react_select.js');
 var Timezone = require('./timezone.js');
 var ExplorerActions = require('../../actions/ExplorerActions');
-var ExplorerUtils = require('../../utils/ExplorerUtils');
+var TimeframeUtils = require('../../utils/TimeframeUtils');
 var ProjectUtils = require('../../utils/ProjectUtils');
 
 function relativeDefaults() {
@@ -39,11 +39,11 @@ var Timeframe = React.createClass({
   },
 
   isAbsolute: function() {
-    return ExplorerUtils.timeframeType(this.props.time) === 'absolute';
+    return TimeframeUtils.timeframeType(this.props.time) === 'absolute';
   },
 
   isRelative: function() {
-    return ExplorerUtils.timeframeType(this.props.time) === 'relative';
+    return TimeframeUtils.timeframeType(this.props.time) === 'relative';
   },
 
   // React Methods
@@ -74,7 +74,7 @@ var Timeframe = React.createClass({
           </ul>
           {timeframePicker}
           <Timezone timezone={this.props.timezone} 
-                    timeframe_type={ExplorerUtils.timeframeType(this.props.time)}
+                    timeframe_type={TimeframeUtils.timeframeType(this.props.time)}
                     handleChange={this.props.handleChange} />
         </div>
       </div>

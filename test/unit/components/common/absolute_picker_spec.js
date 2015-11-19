@@ -6,7 +6,7 @@ var React = require('react/addons');
 var TestUtils = React.addons.TestUtils;
 var sinon = require('sinon');
 var FormatUtils = require('../../../../client/js/app/utils/FormatUtils');
-var ExplorerUtils = require('../../../../client/js/app/utils/ExplorerUtils');
+var TimeframeUtils = require('../../../../client/js/app/utils/TimeframeUtils');
 var AbsolutePicker = require('../../../../client/js/app/components/common/absolute_picker.js');
 var Datepicker = require('../../../../client/js/app/components/common/datepicker.js');
 var Timepicker = require('../../../../client/js/app/components/common/timepicker.js');
@@ -41,8 +41,8 @@ describe('components/common/absolute_picker', function() {
     beforeEach(function(){
       this.model = TestHelpers.createExplorerModel();
       this.model.query.time = {
-        start: ExplorerUtils.convertDateToUTC(new Date(FormatUtils.formatISOTimeNoTimezone("June 7 2015 1:00 PM"))),
-        end: ExplorerUtils.convertDateToUTC(new Date(FormatUtils.formatISOTimeNoTimezone("June 8 2015 3:37 PM")))
+        start: TimeframeUtils.convertDateToUTC(new Date(FormatUtils.formatISOTimeNoTimezone("June 7 2015 1:00 PM"))),
+        end: TimeframeUtils.convertDateToUTC(new Date(FormatUtils.formatISOTimeNoTimezone("June 8 2015 3:37 PM")))
       };
       this.component = TestUtils.renderIntoDocument(<AbsolutePicker time={this.model.query.time}/>);
     });

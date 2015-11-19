@@ -7,7 +7,7 @@ var TestUtils = React.addons.TestUtils;
 var TestHelpers = require('../../../support/TestHelpers');
 
 var ExplorerActions = require('../../../../client/js/app/actions/ExplorerActions');
-var ExplorerUtils = require('../../../../client/js/app/utils/ExplorerUtils');
+var TimeframeUtils = require('../../../../client/js/app/utils/TimeframeUtils');
 var ProjectUtils = require('../../../../client/js/app/utils/ProjectUtils');
 var Timezone = require('../../../../client/js/app/components/common/timezone.js');
 
@@ -22,7 +22,7 @@ describe('components/common/timezone', function() {
     this.handleChangeStub.reset();
     this.model = TestHelpers.createExplorerModel();
     this.component = TestUtils.renderIntoDocument(<Timezone timezone={this.model.query.timezone} 
-                                                            timeframe_type={ExplorerUtils.timeframeType(this.model.query.time)}
+                                                            timeframe_type={TimeframeUtils.timeframeType(this.model.query.time)}
                                                             handleChange={this.handleChangeStub} />);
   });
 

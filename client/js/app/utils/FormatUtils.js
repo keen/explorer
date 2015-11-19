@@ -98,14 +98,11 @@ module.exports = {
   },
 
   isValidQueryValue: function(value) {
-    if (_.isArray(value)) {
-      return value.length > 0;
-    } else {
-      if (value === false) return true;
-      if (value === 0) return true;
-      if (_.isPlainObject(value)) return !_.isEmpty(value);
-      return !_.isUndefined(value) && !_.isNull(value);
-    }
+    if (_.isArray(value)) return value.length > 0;
+    if (value === false) return true;
+    if (value === 0) return true;
+    if (_.isPlainObject(value)) return !_.isEmpty(value);
+    return !module.exports.isNullOrUndefined(value);
   },
 
   parseList: function(value) {
