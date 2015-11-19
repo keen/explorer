@@ -49,6 +49,10 @@ var FunnelsBuilder = React.createClass({
     }
   },
 
+  moveStep: function(index, direction) {
+    ExplorerActions.moveStep(this.props.modelId, index, direction);
+  },
+
   buildSteps: function() {
     return this.props.steps.map(function(step, index) {
       return (
@@ -65,7 +69,8 @@ var FunnelsBuilder = React.createClass({
                       handleRemoveFilter={this.handleRemoveFilter}
                       handleFilterChange={this.handleFilterChange}
                       getPropertyType={this.props.getPropertyType}
-                      handleFiltersToggle={this.handleFiltersToggle} />
+                      handleFiltersToggle={this.handleFiltersToggle}
+                      moveStep={this.moveStep} />
         </li>
       );
     }.bind(this));

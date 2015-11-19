@@ -125,6 +125,15 @@ var ExplorerActions = {
     });
   },
 
+  moveStep: function(id, index, direction) {
+    AppDispatcher.dispatch({
+      actionType: ExplorerConstants.EXPLORER_MOVE_STEP,
+      id: id,
+      index: index,
+      direction: direction
+    });
+  },
+
   addStepFilter: function(id, stepIndex, attrs) {
     AppDispatcher.dispatch({
       actionType: ExplorerConstants.EXPLORER_ADD_STEP_FILTER,

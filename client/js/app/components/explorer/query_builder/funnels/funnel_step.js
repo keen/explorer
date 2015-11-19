@@ -48,7 +48,6 @@ var FunnelStep = React.createClass({
   },
 
   toggleStepActive: function(e) {
-    e.preventDefault();
     this.props.toggleStepActive(this.props.index, !this.props.step.active);
   },
 
@@ -66,6 +65,16 @@ var FunnelStep = React.createClass({
 
   handleFilterChange: function(filterIndex, updates) {
     this.props.handleFilterChange(this.props.index, filterIndex, updates);
+  },
+
+  moveStepUp: function(e) {
+    e.preventDefault();
+    this.props.moveStep(this.props.index, 'up');
+  },
+
+  moveStepDown: function(e) {
+    e.preventDefault();
+    this.props.moveStep(this.props.index, 'down');
   },
 
   buildStepBody: function() {
@@ -125,13 +134,20 @@ var FunnelStep = React.createClass({
     var stepWrapperClasses = classNames({
       'funnel-step': true,
       'active': this.props.step.active
-    })
+    });
     return (
       <div className={stepWrapperClasses}>
-        <a href="#" className="step-header clearfix" onClick={this.toggleStepActive}>
+        <div className="step-header clearfix" onClick={this.toggleStepActive}>
           <div className="step-move-btns">
-            <button className="up">Up</button>
-            <button className="down">Down</button>
+            <a href="#" className="up" onClick={this.moveStepUp}>
+              <span className="arrow"></span>
+            </a>
+            <a href="#" className="down" onClick={this.moveStepDown}>
+              <span className="arrow"></span>
+            </a>
+            <a href="#" className="down" onClick={this.moveStepDown}>
+              <span className="arrow"></span>
+            </a>
           </div>
           <div className="step-number">
             {this.props.index + 1}
@@ -139,7 +155,7 @@ var FunnelStep = React.createClass({
           <div className="step-name">
             Step {this.props.index + 1}
           </div>
-        </a>
+        </div>
         {this.buildStepBody()}
       </div>
     );

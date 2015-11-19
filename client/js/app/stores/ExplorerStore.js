@@ -352,6 +352,29 @@ function _setStepActive(id, index) {
   _explorers[id].query.steps[index].active = true;
 }
 
+function _moveStep(id, index, direction) {
+  var steps = _.cloneDeep(_explorers[id].query.steps);
+
+  if (direction === 'up') {
+    if (index === 0) return;
+
+    var stepToDisplace = steps[index-1];
+    var step = steps[index];
+    steps[index-1] = step;
+    steps[index] = stepToDisplace;
+  }
+  if (direction === 'down') {
+    if (index === steps.length-1) return;
+
+    var stepToDisplace = steps[index+1];
+    var step = steps[index];
+    steps[index+1] = step;
+    steps[index] = stepToDisplace;
+  }
+
+  _explorers[id].query.steps = steps;
+}
+
 function _addStepFilter(id, stepIndex, attrs) {
   attrs = attrs || {};
   _explorers[id].query.steps[stepIndex].filters.push(_.assign(_defaultFilter(), attrs));
@@ -524,6 +547,11 @@ ExplorerStore.dispatchToken = AppDispatcher.register(function(action) {
 
     case ExplorerConstants.EXPLORER_SET_STEP_ACTIVE:
       _setStepActive(action.id, action.index);
+      finishAction(action.id);
+      break;
+
+    case ExplorerConstants.EXPLORER_MOVE_STEP:
+      _moveStep(action.id, action.index, action.direction);
       finishAction(action.id);
       break;
 

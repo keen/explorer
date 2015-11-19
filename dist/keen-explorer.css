@@ -1739,6 +1739,7 @@
   padding: 0;
 }
 #keen-explorer .funnel-builder .step-header {
+  cursor: pointer;
   display: block;
   background: #E7E7E7;
   padding: 8px 10px;
@@ -1748,9 +1749,9 @@
 #keen-explorer .funnel-builder .step-number {
   float: left;
   background: #FFF;
-  height: 30px;
-  width: 30px;
-  line-height: 30px;
+  height: 35px;
+  width: 35px;
+  line-height: 35px;
   text-align: center;
   font-weight: bold;
   border-radius: 100px;
@@ -1760,10 +1761,44 @@
 #keen-explorer .funnel-builder .step-name {
   float: left;
   color: #5C6F7F;
-  line-height: 30px;
+  line-height: 35px;
 }
 #keen-explorer .funnel-builder .step-move-btns {
   display: none;
+  position: relative;
+  width: 25px;
+  height: 35px;
+}
+#keen-explorer .funnel-builder .step-move-btns a {
+  position: absolute;
+  left: 0px;
+  width: 25px;
+  height: 15px;
+  background: #617688;
+}
+#keen-explorer .funnel-builder .step-move-btns a.up {
+  top: 0px;
+}
+#keen-explorer .funnel-builder .step-move-btns a.down {
+  bottom: 0px;
+}
+#keen-explorer .funnel-builder .step-move-btns .arrow {
+  width: 0;
+  height: 0;
+  position: absolute;
+  left: 7px;
+}
+#keen-explorer .funnel-builder .step-move-btns .up .arrow {
+  bottom: 6px;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: 5px solid #FFF;
+}
+#keen-explorer .funnel-builder .step-move-btns .down .arrow {
+  top: 6px;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid #FFF;
 }
 #keen-explorer .funnel-builder a.add-step {
   font-size: 16px;
@@ -1785,6 +1820,7 @@
   color: #FFF;
 }
 #keen-explorer .funnel-builder .funnel-step.active .step-move-btns {
+  display: block;
   float: right;
 }
 #keen-explorer .funnel-builder .funnel-step.active .step-body {
