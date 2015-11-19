@@ -1,4 +1,5 @@
 var _ = require('lodash');
+var FormatUtils = require('../utils/FormatUtils');
 var SharedValidations = require('./SharedValidations');
 
 module.exports = {
@@ -45,6 +46,7 @@ module.exports = {
     msg: 'You must select whether this step is optional.',
 
     validate: function(model) {
+      if (FormatUtils.isNullOrUndefined(model.optional)) return false;
       return model.optional ? true : false;
     }
 
@@ -55,6 +57,7 @@ module.exports = {
     msg: 'You must select whether this step is inverted.',
 
     validate: function(model) {
+      if (FormatUtils.isNullOrUndefined(model.inverted)) return false;
       return model.inverted ? true : false;
     }
 

@@ -138,6 +138,10 @@ module.exports = {
       if (!isList) break;
     }
     return isList;
+  },
+
+  isNullOrUndefined: function(value) {
+    return (_.isNull(value) || _.isUndefined(value));
   }
 
 };
