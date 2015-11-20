@@ -170,7 +170,7 @@ module.exports = {
 
   validFilters: function(filters) {
     return _.filter(filters, function(filter) {
-      return RunValidations(FilterValidations, filter).length === 0;
+      return RunValidations.run(FilterValidations, filter).length === 0;
     });
   }
 
