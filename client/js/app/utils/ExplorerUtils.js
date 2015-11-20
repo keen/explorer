@@ -94,7 +94,10 @@ module.exports = {
     if (params.analysis_type === 'extraction' && FormatUtils.isNullOrUndefined(params.email)) {
       params.latest = EXRACTION_EVENT_LIMIT;
     }
-    _.assign(params, TimeframeUtils.getTimeParameters(params.time, params.timezone));
+
+    if (params.analysis_type !== 'funnel') {
+      _.assign(params, TimeframeUtils.getTimeParameters(params.time, params.timezone));
+    }
 
     // Add filters
     if (params.filters) {
