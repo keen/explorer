@@ -10,21 +10,26 @@ var FilterUtils = require('../utils/FilterUtils');
 var ProjectUtils = require('../utils/ProjectUtils');
 var ProjectStore = require('./ProjectStore');
 
+var RunValidations = require('../utils/RunValidations.js').run;
+var ExplorerValidations = require('../validations/ExplorerValidations.js');
+var FilterValidations = require('../validations/FilterValidations.js');
+var StepValidations = require('../validations/StepValidations.js');
+
 var CHANGE_EVENT = 'change';
 var SHARED_FUNNEL_STEP_PROPERTIES = ['event_collection', 'time', 'timezone', 'filters'];
 
 var _explorers = {};
 
-function _defaultAttrs(){
+function _defaultAttrs() {
   return {
     id: FormatUtils.generateTempId(),
     query_name: null,
     active: false,
     saving: false,
-    error: null,
-    result: null,
+    response: null,
     loading: false,
     isValid: true,
+    errors: [],
     refresh_rate: 0,
     query: {
       event_collection: null,
@@ -34,10 +39,10 @@ function _defaultAttrs(){
       group_by: null,
       interval: null,
       timezone: ProjectUtils.getConstant('DEFAULT_TIMEZONE'),
-      filters: null,
+      filters: [],
+      steps: [],
       email: null,
       latest: null,
-      filters: [],
       time: {
         relativity: 'this',
         amount: 14,
@@ -58,7 +63,9 @@ function _defaultFilter() {
     property_name: null,
     property_value: null,
     operator: 'eq',
-    coercion_type: 'String'
+    coercion_type: 'String',
+    isValid: true,
+    errors: []
   };
 }
 
@@ -86,6 +93,27 @@ function _defaultStep() {
   }
 }
 
+function _validate(id) {
+  var newExplorer = _.cloneDeep(_explorers[id]);
+  var errors = RunValidations(ExplorerValidations, newExplorer);
+  newExplorer.isValid = (errors.length > 0) ? false : true;
+  newExplorer.errors = errors;
+
+  for (var i=0; i<newExplorer.query.filters.length; i++) {
+    var filterErrors = RunValidations(FilterValidations, newExplorer.query.filters[i]);
+    newExplorer.query.filters[i].errors = filterErrors;
+    newExplorer.query.filters[i].isValid = filterErrors.length ? false: true;
+  }
+
+  for (var i=0; i<newExplorer.query.steps.length; i++) {
+    var stepErrors = RunValidations(StepValidations, newExplorer.query.steps[i]);
+    newExplorer.query.steps[i].errors = stepErrors;
+    newExplorer.query.steps[i].isValid = stepErrors.length ? false: true;
+  }
+
+  _explorers[id] = newExplorer;
+}
+
 /**
  * Get the default coercion type for this filter based off the filter's property_name's set type
  * in the project schema.
@@ -110,12 +138,12 @@ function _getDefaultFilterCoercionType(explorer, filter) {
 function _prepareUpdates(explorer, updates) {
   var newModel = _.assign({}, explorer, updates);
 
-  newModel = _removeInvalidFields(explorer, newModel);
   if(newModel.query.analysis_type === 'funnel' && explorer.query.analysis_type !== 'funnel') {
     newModel = _migrateToFunnel(explorer, newModel);
   } else if(newModel.query.analysis_type !== 'funnel' && explorer.query.analysis_type === 'funnel') {
     newModel = _migrateFromFunnel(explorer, newModel);
   }
+  newModel = _removeInvalidFields(explorer, newModel);
 
   return newModel;
 }
@@ -135,12 +163,12 @@ function _migrateToFunnel(explorer, newModel) {
       firstStep[key] = explorer.query[key] 
     }      
 
-    delete newModel.query[key]
+    newModel.query[key] = (key === 'filters') ? [] : null;
   });
 
   if(!_.isUndefined(explorer.query.target_property) && !_.isNull(explorer.query.target_property)) {
     firstStep.actor_property = explorer.query.target_property;
-    delete explorer.query.target_property;
+    explorer.query.target_property = null;
   }
 
   newModel.query.steps = [firstStep];
@@ -155,21 +183,20 @@ function _migrateToFunnel(explorer, newModel) {
  * @return {Object}         The new set of updates
  */
 function _migrateFromFunnel(explorer, newModel) {
-  var activeStep = _.find(explorer.query.steps, function (step) {
-    return step.active
-  });
+  if (explorer.query.steps.length < 1) return;
+  var activeStep = _.find(explorer.query.steps, { active: true }) || explorer.query.steps[0];
 
   _.each(SHARED_FUNNEL_STEP_PROPERTIES, function (key) {
-    if(!_.isUndefined(activeStep[key])) {
+    if (!_.isUndefined(activeStep[key])) {
       newModel.query[key] = activeStep[key];
     }
   });
 
-  if(!_.isNull(activeStep.actor_property)) {
+  if (!_.isNull(activeStep.actor_property) && ExplorerUtils.shouldHaveTarget(newModel)) {
     newModel.query.target_property = activeStep.actor_property;
   }
 
-  delete newModel.query.steps;
+  newModel.query.steps = [];
 
   return newModel;
 }
@@ -195,8 +222,12 @@ function _removeInvalidFields(explorer, newModel) {
   if (newModel.query.analysis_type !== 'percentile') {
     newModel.query.percentile = null;
   }
-  if (_.includes(['count', 'extraction'], newModel.query.analysis_type)) {
+  if (_.includes(['count', 'extraction', 'funnel'], newModel.query.analysis_type)) {
     newModel.query.target_property = null;
+  }
+  if (newModel.query.analysis_type !== 'funnel') {
+    newModel.query.steps = [];
+    newModel.query.filters = [];
   }
   return newModel;
 }
@@ -241,8 +272,15 @@ function _prepareFilterUpdates(explorer, filter, updates) {
 function _create(attrs) {
   attrs = attrs || {};
   var newAttrs = _.merge(_defaultAttrs(), attrs);
+
+  if(newAttrs.query.steps) {
+    newAttrs.query.steps = _.map(newAttrs.query.steps, function (step) {
+      return _.merge(_defaultStep(), step);
+    });
+  }
+
   _explorers[newAttrs.id] = newAttrs;
-  return _explorers[newAttrs.id];
+  return newAttrs.id;
 }
 
 function _update(id, updates) {
@@ -251,8 +289,10 @@ function _update(id, updates) {
   if (updates.id && updates.id !== id) {
     _explorers[updates.id] = newModel;
     delete _explorers[id];
+    return updates.id;
   } else {
     _explorers[id] = newModel;
+    return id;
   }
 }
 
@@ -272,7 +312,8 @@ function _setActive(id) {
 function _revertActiveChanges() {
   var active = _.find(_explorers, { active: true });
   var original = _explorers[active.id].originalModel;
-  _explorers[active.id] = _.assign({}, _.cloneDeep(original), { originalModel: original, result: active.result });
+  _explorers[active.id] = _.assign({}, _.cloneDeep(original), { originalModel: original, response: active.response });
+  return active.id;
 }
 
 function _addFilter(id, attrs) {
@@ -296,12 +337,78 @@ function _updateFilter(id, index, updates) {
   }
 }
 
+function _addStep(id, attrs) {
+  attrs = attrs || {};
+  _explorers[id].query.steps.push(_.assign(_defaultStep(), attrs));
+}
+
+function _removeStep(id, index) {
+  _explorers[id].query.steps.splice(index, 1);
+}
+
+function _updateStep(id, index, updates) {
+  var step = _explorers[id].query.steps[index];
+  _explorers[id].query.steps[index] = _.assign({}, step, updates);
+}
+
+function _setStepActive(id, index) {
+  _explorers[id].query.steps.forEach(function(step) {
+    step.active = false
+  })
+  _explorers[id].query.steps[index].active = true;
+}
+
+function _moveStep(id, index, direction) {
+  var steps = _.cloneDeep(_explorers[id].query.steps);
+
+  if (direction === 'up') {
+    if (index === 0) return;
+
+    var stepToDisplace = steps[index-1];
+    var step = steps[index];
+    steps[index-1] = step;
+    steps[index] = stepToDisplace;
+  }
+  if (direction === 'down') {
+    if (index === steps.length-1) return;
+
+    var stepToDisplace = steps[index+1];
+    var step = steps[index];
+    steps[index+1] = step;
+    steps[index] = stepToDisplace;
+  }
+
+  _explorers[id].query.steps = steps;
+}
+
+function _addStepFilter(id, stepIndex, attrs) {
+  attrs = attrs || {};
+  _explorers[id].query.steps[stepIndex].filters.push(_.assign(_defaultFilter(), attrs));
+}
+
+function _removeStepFilter(id, stepIndex, filterIndex) {
+  _explorers[id].query.steps[stepIndex].filters.splice(filterIndex, 1);
+}
+
+function _updateStepFilter(id, stepIndex, filterIndex, updates) {
+  var filter = _explorers[id].query.steps[stepIndex].filters[filterIndex];
+  var updates = _prepareFilterUpdates(_explorers[id], filter, updates);
+  _explorers[id].query.steps[stepIndex].filters[filterIndex] = _.assign({}, filter, updates);
+
+  // Hack around the fact that _.assign doesn't assign null values. But we
+  // actually WANT a null value if the coercion_type is null.
+  if (_explorers[id].query.steps[stepIndex].filters[filterIndex].coercion_type === 'Null') {
+    _explorers[id].query.steps[stepIndex].filters[filterIndex].property_value = null;
+  }
+}
+
 function _clear(id) {
   var model = _explorers[id];
   _explorers[id] = _.assign({}, _defaultAttrs(), _.pick(model, ['id', 'query_name', 'active', 'metadata', 'originalModel']));
 }
 
 var ExplorerStore = _.assign({}, EventEmitter.prototype, {
+
   unregisterWithDispatcher: function() {
     AppDispatcher.unregister(this.dispatchToken);
   },
@@ -344,86 +451,134 @@ var ExplorerStore = _.assign({}, EventEmitter.prototype, {
   removeChangeListener: function(callback) {
     this.removeListener(CHANGE_EVENT, callback);
   }
+
 });
 
 // Register callback to handle all updates
 ExplorerStore.dispatchToken = AppDispatcher.register(function(action) {
-  var attrs;
+
+  function finishAction(id) {
+    // Validate the model
+    if (id) _validate(id);
+
+    // Emit change
+    ExplorerStore.emitChange();
+  }
 
   switch(action.actionType) {
     case ExplorerConstants.EXPLORER_CREATE:
       _create(action.attrs);
-      ExplorerStore.emitChange();
+      finishAction();
       break;
 
     case ExplorerConstants.EXPLORER_CREATE_BATCH:
-      _.each(action.models, function(model) {
-        if (_explorers[model.id]) {
-          _update(model.id, model);
-        } else {
-          _create(model);
-        }
+      action.models.forEach(function(model) {
+        _explorers[model.id] ? _update(model.id, model) : _create(model);        
       });
-      ExplorerStore.emitChange();
+      finishAction();
       break;
 
     case ExplorerConstants.EXPLORER_UPDATE:
-      _update(action.id, action.updates);
-      ExplorerStore.emitChange();
+      var id = _update(action.id, action.updates);
+      finishAction(id);
       break;
 
     case ExplorerConstants.EXPLORER_REMOVE:
       var wasActive = (_explorers[action.id].active === true);
       _remove(action.id);
-      if (wasActive) {
-        _create({ active: true }); // Create a new active explorer to replace the previously active one.
-      }
-      ExplorerStore.emitChange();
+      // Create a new active explorer to replace the previously active one.
+      if (wasActive) _create({ active: true });
+      finishAction();
       break;
 
     case ExplorerConstants.EXPLORER_SET_ACTIVE:
       _setActive(action.id);
-      ExplorerStore.emitChange();
+      finishAction(action.id);
       break;
 
     case ExplorerConstants.EXPLORER_REVERT_ACTIVE_CHANGES:
-      _revertActiveChanges();
-      ExplorerStore.emitChange();
+      var id = _revertActiveChanges();
+      finishAction(id);
       break;
 
     case ExplorerConstants.EXPLORER_CLEAR:
       _clear(action.id);
-      ExplorerStore.emitChange();
+      finishAction();
       break;
 
     case ExplorerConstants.EXPLORER_SAVING:
       _update(action.id, { saving: true });
-      ExplorerStore.emitChange();
+      finishAction(action.id);
       break;
 
     case ExplorerConstants.EXPLORER_SAVE_SUCCESS:
       _update(action.id, { saving: false });
-      ExplorerStore.emitChange();
+      finishAction(action.id);
       break;
 
     case ExplorerConstants.EXPLORER_SAVE_FAIL:
       _update(action.id, { saving: false });
-      ExplorerStore.emitChange();
+      finishAction(action.id);
       break;
 
     case ExplorerConstants.EXPLORER_ADD_FILTER:
       _addFilter(action.id, action.attrs);
-      ExplorerStore.emitChange();
+      finishAction(action.id);
       break;
 
     case ExplorerConstants.EXPLORER_REMOVE_FILTER:
       _removeFilter(action.id, action.index);
-      ExplorerStore.emitChange();
+      finishAction(action.id);
       break;
 
     case ExplorerConstants.EXPLORER_UPDATE_FILTER:
       _updateFilter(action.id, action.index, action.attrs);
-      ExplorerStore.emitChange();
+      finishAction(action.id);
+      break;
+
+    case ExplorerConstants.EXPLORER_ADD_STEP:
+      _addStep(action.id, action.attrs);
+      finishAction(action.id);
+      break;
+
+    case ExplorerConstants.EXPLORER_REMOVE_STEP:
+      _removeStep(action.id, action.index);
+      finishAction(action.id);
+      break;
+
+    case ExplorerConstants.EXPLORER_UPDATE_STEP:
+      _updateStep(action.id, action.index, action.attrs);
+      finishAction(action.id);
+      break;
+
+    case ExplorerConstants.EXPLORER_SET_STEP_ACTIVE:
+      _setStepActive(action.id, action.index);
+      finishAction(action.id);
+      break;
+
+    case ExplorerConstants.EXPLORER_MOVE_STEP:
+      _moveStep(action.id, action.index, action.direction);
+      finishAction(action.id);
+      break;
+
+    case ExplorerConstants.EXPLORER_ADD_STEP_FILTER:
+      _addStepFilter(action.id, action.stepIndex, action.attrs);
+      finishAction(action.id);
+      break;
+
+    case ExplorerConstants.EXPLORER_REMOVE_STEP_FILTER:
+      _removeStepFilter(action.id, action.stepIndex, action.filterIndex);
+      finishAction(action.id);
+      break;
+
+    case ExplorerConstants.EXPLORER_UPDATE_STEP_FILTER:
+      _updateStepFilter(action.id, action.stepIndex, action.filterIndex, action.attrs);
+      finishAction(action.id);
+      break;
+
+    case ExplorerConstants.EXPLORER_VALIDATE:
+      _validate(action.id);
+      finishAction();
       break;
 
     default:

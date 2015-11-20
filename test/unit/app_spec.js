@@ -1,5 +1,4 @@
 var assert = require('chai').assert;
-var expect = require('chai').expect;
 var App = require('../../client/js/app/app.js');
 var QueryStringUtils =  require('../../client/js/app/utils/QueryStringUtils.js');
 var React = require('react/addons');

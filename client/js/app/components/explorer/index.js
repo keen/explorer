@@ -20,9 +20,9 @@ var AppStateActions = require('../../actions/AppStateActions');
 var NoticeStore = require('../../stores/NoticeStore');
 var AppStateStore = require('../../stores/AppStateStore');
 var ExplorerUtils = require('../../utils/ExplorerUtils');
+var FilterUtils = require('../../utils/FilterUtils');
+var ProjectUtils = require('../../utils/ProjectUtils');
 var ExplorerActions = require('../../actions/ExplorerActions');
-var ValidationUtils = require('../../utils/ValidationUtils');
-var ExplorerValidations = require('../../validations/ExplorerValidations');
 var QueryStringUtils = require('../../utils/QueryStringUtils');
 
 function getStoresState() {
@@ -80,17 +80,7 @@ var Explorer = React.createClass({
 
   saveQueryClick: function(event) {
     event.preventDefault();
-    var validity = ValidationUtils.runValidations(ExplorerValidations.explorer, this.state.activeExplorer);
-    if (!validity.isValid) {
-      NoticeActions.create({
-        icon: 'remove-circle',
-        type: 'error',
-        text: "Can't save: " + validity.lastError
-      });
-      return;
-    } else {
-      ExplorerActions.save(this.props.persistence, this.state.activeExplorer.id);
-    }
+    ExplorerActions.save(this.props.persistence, this.state.activeExplorer.id);
   },
 
   createNewQuery: function(event) {
@@ -107,7 +97,7 @@ var Explorer = React.createClass({
   },
 
   handleFiltersToggle: function() {
-    this.refs['filter-manager'].refs.modal.open();
+    this.refs['filter-manager'].open();
   },
 
   onDisplayNameChange: function(event) {
@@ -152,6 +142,18 @@ var Explorer = React.createClass({
     }, 0);
   },
 
+  handleAddFilter: function() {
+    ExplorerActions.addFilter(this.state.activeExplorer.id);
+  },
+
+  handleRemoveFilter: function(index) {
+    ExplorerActions.removeFilter(this.state.activeExplorer.id, index);
+  },
+
+  handleFilterChange: function(index, updates) {
+    ExplorerActions.updateFilter(this.state.activeExplorer.id, index, updates);
+  },
+
   // ********************************
   // Convenience functions
   // ********************************
@@ -189,6 +191,21 @@ var Explorer = React.createClass({
     });
   },
 
+  getEventPropertyNames: function(collection)  {
+    return ProjectUtils.getEventCollectionPropertyNames(
+      this.props.project,
+      collection
+    );
+  },
+
+  getPropertyType: function (eventCollection, property_name) {
+    return ProjectUtils.getPropertyType(
+      this.props.project,
+      eventCollection,
+      property_name
+    );
+  },
+
   // Lifecycle hooks
 
   componentDidMount: function() {
@@ -201,6 +218,10 @@ var Explorer = React.createClass({
     ExplorerStore.removeChangeListener(this._onChange);
     NoticeStore.removeChangeListener(this._onChange);
     AppStateStore.removeChangeListener(this._onChange);
+    // Create a default filter if there are no filters already on this model
+    if (!this.state.activeExplorer.query.filters.length) {
+      ExplorerActions.addFilter(this.state.activeExplorer.id);
+    }
   },
 
   getInitialState: function() {
@@ -222,7 +243,7 @@ var Explorer = React.createClass({
                                      toggleCallback={this.toggleQueryPane}
                                      createNewQuery={this.createNewQuery}
                                      persisted={ExplorerUtils.isPersisted(this.state.activeExplorer)} />;
-      if (this.state.activeExplorer.query.analysis_type !== 'extraction') {
+      if (['extraction', 'funnel'].indexOf(this.state.activeExplorer.query.analysis_type) === -1) {
         cacheToggle = <CacheToggle model={this.state.activeExplorer} />;
       }
       if (this.state.appState.fetchingPersistedExplorers) {
@@ -243,7 +264,10 @@ var Explorer = React.createClass({
                                 handleRevertChanges={this.handleRevertChanges}
                                 handleQuerySubmit={this.handleQuerySubmit}
                                 setExtractionType={this.setExtractionType}
-                                handleClearQuery={this.handleClearQuery} />;
+                                handleClearQuery={this.handleClearQuery}
+                                getEventPropertyNames={this.getEventPropertyNames}
+                                getPropertyType={this.getPropertyType}
+                                analysisTypes={ProjectUtils.getConstant('ANALYSIS_TYPES')} />;
     } else {
       queryPane = <BrowseQueries ref="query-browser"
                                  listItems={this.state.allPersistedExplorers}
@@ -288,19 +312,24 @@ var Explorer = React.createClass({
                       currentEventCollection={this.state.activeExplorer.query.event_collection}
                       selectEventCollection={this.selectEventCollection} />
         <FilterManager ref="filter-manager"
-                      model={this.state.activeExplorer}
-                      project={this.props.project}
-                      client={this.props.client} />
+                       eventCollection={this.state.activeExplorer.query.event_collection}
+                       filters={this.state.activeExplorer.query.filters}
+                       handleChange={this.handleFilterChange}
+                       removeFilter={this.handleRemoveFilter}
+                       addFilter={this.handleAddFilter}
+                       getPropertyType={this.getPropertyType} 
+                       propertyNames={this.getEventPropertyNames(this.state.activeExplorer.query.event_collection)} />
       </div>
     );
   },
 
   _onChange: function() {
-    this.setState(getStoresState());
-    if (ExplorerUtils.isPersisted(this.state.activeExplorer)) {
-      window.history.pushState({ model: this.state.activeExplorer }, "", '?saved_query='+this.state.activeExplorer.id);
+    var newState = getStoresState();
+    this.setState(newState);
+    if (ExplorerUtils.isPersisted(newState.activeExplorer)) {
+      window.history.pushState({ model: newState.activeExplorer }, "", '?saved_query='+newState.activeExplorer.id);
     } else {
-      QueryStringUtils.updateSearchString(ExplorerUtils.paramsForURL(this.state.activeExplorer));
+      QueryStringUtils.updateSearchString(ExplorerUtils.paramsForURL(newState.activeExplorer));
     }
   }
 });

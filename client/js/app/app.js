@@ -9,8 +9,8 @@ var AppStateActions = require('./actions/AppStateActions');
 var NoticeActions = require('./actions/NoticeActions');
 var ExplorerUtils = require('./utils/ExplorerUtils');
 var FormatUtils = require('./utils/FormatUtils');
-var runValidations = require('./utils/ValidationUtils').runValidations;
-var explorerValidations = require('./validations/ExplorerValidations').explorer;
+var RunValidations = require('./utils/RunValidations').run;
+var ExplorerValidations = require('./validations/ExplorerValidations');
 var ExplorerStore = require('./stores/ExplorerStore');
 var ProjectStore = require('./stores/ProjectStore');
 var QueryStringUtils = require('./utils/QueryStringUtils');
@@ -46,6 +46,7 @@ function App(config) {
   var id = FormatUtils.generateTempId();
   ExplorerActions.create(_.assign(ExplorerUtils.formatQueryParams(attrs) || {}, { id: id }));
   ExplorerActions.setActive(id);
+  ExplorerActions.validate(id);
 
   // Is this a saved query we want to load?
   if (attrs.saved_query) {
@@ -55,9 +56,9 @@ function App(config) {
     AppStateActions.update({ ready: true });
     // Run the query for this explorer if it's valid
     var isEmailExtraction = ExplorerUtils.isEmailExtraction(ExplorerStore.getActive());
-    var isValid = runValidations(explorerValidations, ExplorerStore.getActive()).isValid;
+    var errors = RunValidations(ExplorerValidations, ExplorerStore.getActive());
 
-    if (!isEmailExtraction && isValid) {
+    if (!isEmailExtraction && !errors.length) {
       ExplorerActions.exec(this.client, ExplorerStore.getActive().id);
     }
   }

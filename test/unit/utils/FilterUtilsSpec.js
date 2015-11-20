@@ -1,12 +1,11 @@
 var assert = require('chai').assert;
-var expect = require('chai').expect;
 var sinon = require('sinon');
 var moment = require('moment');
 var _ = require('lodash');
 var TestHelpers = require('../../support/TestHelpers');
 var ExplorerActions = require('../../../client/js/app/actions/ExplorerActions');
 var FilterValidations = require('../../../client/js/app/validations/FilterValidations');
-var ValidationUtils = require('../../../client/js/app/utils/ValidationUtils');
+var RunValidations = require('../../../client/js/app/utils/RunValidations');
 var FormatUtils = require('../../../client/js/app/utils/FormatUtils');
 var FilterUtils = require('../../../client/js/app/utils/FilterUtils');
 
@@ -206,12 +205,10 @@ describe('utils/FilterUtils', function() {
         property_value: 'value',
         coercion_type: 'String'
       };
-      var stub = sinon.stub(ValidationUtils, 'runValidations').returns({
-        isValid: false
-      });
+      var spy = sinon.spy(RunValidations, 'run');
       var json = FilterUtils.queryJSON(filter);
-      assert.isTrue(stub.calledWith(FilterValidations.filter, filter));
-      ValidationUtils.runValidations.restore();
+      assert.isTrue(spy.calledWith(FilterValidations, filter));
+      RunValidations.run.restore();
     });
     it('should parse the list if the coercion type is List', function () {
       var filter = {

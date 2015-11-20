@@ -3,10 +3,10 @@ var AppDispatcher = require('../dispatcher/AppDispatcher');
 var ExplorerConstants = require('../constants/ExplorerConstants');
 var ExplorerStore = require('../stores/ExplorerStore');
 var ExplorerValidations = require('../validations/ExplorerValidations');
-var ValidationUtils = require('../utils/ValidationUtils');
-var ExplorerUtils = require('../utils/ExplorerUtils');
 var NoticeActions = require('./NoticeActions');
 var AppStateActions = require('./AppStateActions');
+var RunValidations = require('../utils/RunValidations');
+var ExplorerUtils = require('../utils/ExplorerUtils');
 
 var ExplorerActions = {
 
@@ -59,6 +59,13 @@ var ExplorerActions = {
     });
   },
 
+  validate: function(id) {
+    AppDispatcher.dispatch({
+      actionType: ExplorerConstants.EXPLORER_VALIDATE,
+      id: id
+    });
+  },
+
   addFilter: function(id, attrs) {
     AppDispatcher.dispatch({
       actionType: ExplorerConstants.EXPLORER_ADD_FILTER,
@@ -84,19 +91,91 @@ var ExplorerActions = {
     });
   },
 
+  addStep: function(id, attrs) {
+    AppDispatcher.dispatch({
+      actionType: ExplorerConstants.EXPLORER_ADD_STEP,
+      id: id,
+      attrs: attrs
+    });
+  },
+
+  removeStep: function(id, index) {
+    AppDispatcher.dispatch({
+      actionType: ExplorerConstants.EXPLORER_REMOVE_STEP,
+      id: id,
+      index: index
+    });
+  },
+
+  setStepActive: function(id, index) {
+    AppDispatcher.dispatch({
+      actionType: ExplorerConstants.EXPLORER_SET_STEP_ACTIVE,
+      id: id,
+      index: index
+    });
+  },
+
+  updateStep: function(id, index, attrs) {
+    AppDispatcher.dispatch({
+      actionType: ExplorerConstants.EXPLORER_UPDATE_STEP,
+      id: id,
+      index: index,
+      attrs: attrs
+    });
+  },
+
+  moveStep: function(id, index, direction) {
+    AppDispatcher.dispatch({
+      actionType: ExplorerConstants.EXPLORER_MOVE_STEP,
+      id: id,
+      index: index,
+      direction: direction
+    });
+  },
+
+  addStepFilter: function(id, stepIndex, attrs) {
+    AppDispatcher.dispatch({
+      actionType: ExplorerConstants.EXPLORER_ADD_STEP_FILTER,
+      id: id,
+      stepIndex: stepIndex,
+      attrs: attrs
+    });
+  },
+
+  removeStepFilter: function(id, stepIndex, filterIndex) {
+    AppDispatcher.dispatch({
+      actionType: ExplorerConstants.EXPLORER_REMOVE_STEP_FILTER,
+      id: id,
+      stepIndex: stepIndex,
+      filterIndex: filterIndex
+    });
+  },
+
+  updateStepFilter: function(id, stepIndex, filterIndex, attrs) {
+    AppDispatcher.dispatch({
+      actionType: ExplorerConstants.EXPLORER_UPDATE_STEP_FILTER,
+      id: id,
+      stepIndex: stepIndex,
+      filterIndex: filterIndex,
+      attrs: attrs
+    });
+  },
+
   exec: function(client, id) { 
     var explorer = ExplorerStore.get(id);
-
     if (explorer.loading) {
       throw new Error("Warning: calling exec when model loading is true. Explorer id: " + explorer.id);
     }
-
-    var valid = ValidationUtils.runValidations(ExplorerValidations.explorer, explorer);
-    if (!valid.isValid) {
-      NoticeActions.create({ text: valid.lastError, type: 'error', icon: 'remove-sign' });
+    ExplorerActions.validate(explorer.id);
+    explorer = ExplorerStore.get(id);
+    if (!explorer.isValid) {
+      NoticeActions.create({
+        text: explorer.errors[0].msg,
+        type: 'error',
+        icon: 'remove-sign'
+      });
       return;
     }
-
     NoticeActions.clearAll();
     
     AppDispatcher.dispatch({
@@ -105,67 +184,12 @@ var ExplorerActions = {
       updates: { loading: true }
     });
 
-    var attrs = ExplorerUtils.queryJSON(explorer);
-    if (explorer.query.analysis_type === 'extraction') {
-      _.assign(attrs, { latest: ExplorerUtils.EXRACTION_EVENT_LIMIT });
-    }
-
     ExplorerUtils.runQuery({
       client: client,
-      query: attrs,
-      error: function(err) {
-        module.exports.execError(explorer, err);
-      },
-      success: function(res) {
-        module.exports.execSuccess(explorer, res);
-      }
+      query: ExplorerUtils.queryJSON(explorer),
+      error: module.exports.execError.bind(this, explorer),
+      success: module.exports.execSuccess.bind(this, explorer)
     });
-  },
-
-  runEmailExtraction: function(client, id) {
-    var explorer = ExplorerStore.get(id);
-
-    var valid = ValidationUtils.runValidations(ExplorerValidations.explorer, explorer);
-    if (!valid.isValid) {
-      NoticeActions.create({ text: valid.lastError, type: 'error', icon: 'remove-sign' });
-      return;
-    }
-
-    var valid = ValidationUtils.runValidations(ExplorerValidations.emailExtractionExplorer, explorer);
-    if (!valid.isValid) {
-      NoticeActions.create({ text: valid.lastError, type: 'error', icon: 'remove-sign' });
-      return;
-    }
-
-    NoticeActions.clearAll();
-
-    AppDispatcher.dispatch({
-      actionType: ExplorerConstants.EXPLORER_UPDATE,
-      id: explorer.id,
-      updates: { loading: true }
-    });
-
-    var attrs = ExplorerUtils.queryJSON(explorer);
-    ExplorerUtils.runQuery({
-      client: client,
-      query: attrs,
-      success: function(res) {
-        AppDispatcher.dispatch({
-          actionType: ExplorerConstants.EXPLORER_QUERY_SUCCESS,
-          query: explorer.query,
-          isSaved: ExplorerUtils.isPersisted(explorer)
-        });
-        NoticeActions.clearAll();
-        NoticeActions.create({ text: "Email extraction successfully requested. Check your email ("+explorer.query.email+").", type: 'success', icon: 'check' });
-        ExplorerActions.update(explorer.id, {
-          result: res,
-          loading: false
-        });
-      },
-      error: function(err) {
-        NoticeActions.create({ text: err.message, type: 'error', icon: 'remove-sign' });
-      }
-    });  
   },
 
   execError: function(explorer, err) {
@@ -187,13 +211,63 @@ var ExplorerActions = {
     NoticeActions.clearAll();
     
     var updates = _.cloneDeep(explorer);
-    updates.result = response.result;
+    updates.response = response;
     updates.loading = false;
 
-    if (!ExplorerUtils.resultSupportsChartType(response.result, explorer.metadata.visualization.chart_type, explorer.query.analysis_type)) {
-      updates.metadata.visualization.chart_type = ExplorerUtils.getChartTypeOptions(response.result, explorer.query.analysis_type)[0];
+    if (!ExplorerUtils.responseSupportsChartType(response, explorer.metadata.visualization.chart_type, explorer.query.analysis_type)) {
+      updates.metadata.visualization.chart_type = ExplorerUtils.getChartTypeOptions(response, explorer.query.analysis_type)[0];
     }
     ExplorerActions.update(explorer.id, updates);
+  },
+
+  runEmailExtraction: function(client, id) {
+    ExplorerActions.validate(id);
+    var explorer = ExplorerStore.get(id);
+
+    if (!explorer.isValid) {
+      NoticeActions.create({
+        text: explorer.errors[0].msg,
+        type: 'error',
+        icon: 'remove-sign'
+      });
+      return;
+    }
+    NoticeActions.clearAll();
+
+    AppDispatcher.dispatch({
+      actionType: ExplorerConstants.EXPLORER_UPDATE,
+      id: explorer.id,
+      updates: { loading: true }
+    });
+
+    ExplorerUtils.runQuery({
+      client: client,
+      query: ExplorerUtils.queryJSON(explorer),
+      success: module.exports.runEmailExtractionSuccess.bind(this, explorer),
+      error: module.exports.runEmailExtractionError,
+    });  
+  },
+
+  runEmailExtractionSuccess: function(explorer, res) {
+    AppDispatcher.dispatch({
+      actionType: ExplorerConstants.EXPLORER_QUERY_SUCCESS,
+      query: explorer.query,
+      isSaved: ExplorerUtils.isPersisted(explorer)
+    });
+    NoticeActions.clearAll();
+    NoticeActions.create({
+      text: "Email extraction successfully requested. Check your email ("+explorer.query.email+").",
+      type: 'success',
+      icon: 'check'
+    });
+    ExplorerActions.update(explorer.id, {
+      result: res,
+      loading: false
+    });
+  },
+
+  runEmailExtractionError: function(err) {
+    NoticeActions.create({ text: err.message, type: 'error', icon: 'remove-sign' });
   },
 
   fetchAllPersisted: function(persistence, callback) {
@@ -204,10 +278,12 @@ var ExplorerActions = {
         return;
       }
       var models = [];
-      _.each(resp, function(model) {
+      resp.forEach(function(model) {
         var formattedModel = ExplorerUtils.formatQueryParams(model);
-        if (!ValidationUtils.runValidations(ExplorerValidations.explorer, formattedModel).isValid) {
+        var errors = RunValidations.run(ExplorerValidations, formattedModel);
+        if (errors.length) {
           console.warn('A persisted explorer model is invalid: ', formattedModel);
+          console.log('Errors: ', errors);
         }
         models.push(formattedModel);
       });
@@ -224,7 +300,8 @@ var ExplorerActions = {
         return;
       }
       var model = ExplorerUtils.formatQueryParams(resp);
-      if (!ValidationUtils.runValidations(ExplorerValidations.explorer, model).isValid) {
+      var errors = RunValidations.run(ExplorerValidations, model);
+      if (errors.length) {
         console.warn('A persisted explorer model is invalid: ', model);
       }
       ExplorerActions.create(model);
@@ -233,26 +310,27 @@ var ExplorerActions = {
   },
 
   save: function(persistence, sourceId) {
-    var saveType = ExplorerUtils.isPersisted(ExplorerStore.get(sourceId)) ? 'update' : 'save';
+    var saveType = ExplorerUtils.saveType(ExplorerStore.get(sourceId));
     var persistenceFunction = saveType === 'save' ? 'create' : 'update';
-
     AppDispatcher.dispatch({
       actionType: ExplorerConstants.EXPLORER_SAVING,
       id: sourceId,
       saveType: saveType
     });
-    var valid = ValidationUtils.runValidations(ExplorerValidations.explorer, ExplorerStore.get(sourceId));
-    if (!valid.isValid) {
-      AppDispatcher.dispatch({
-        actionType: ExplorerConstants.EXPLORER_SAVE_FAIL,
-        saveType: saveType,
-        id: sourceId,
-        errorMsg: valid.lastError,
-        query: ExplorerStore.get(sourceId).query
+
+    var explorer = ExplorerStore.get(sourceId);
+    if (!explorer.isValid) {
+      NoticeActions.create({
+        icon: 'remove-circle',
+        type: 'error',
+        text: "Can't save: " + explorer.errors[0].msg
       });
       return;
     }
-    persistence[persistenceFunction](ExplorerUtils.toJSON(ExplorerStore.get(sourceId)), function(err, res) {
+    NoticeActions.clearAll();
+
+    var explorerJSON = ExplorerUtils.toJSON(ExplorerStore.get(sourceId));
+    persistence[persistenceFunction](explorerJSON, function(err, res) {
       if (err) {
         AppDispatcher.dispatch({
           actionType: ExplorerConstants.EXPLORER_SAVE_FAIL,
@@ -261,21 +339,26 @@ var ExplorerActions = {
           errorResp: err,
           query: ExplorerStore.get(sourceId).query
         });
-      } else {
-        var updatedModel = ExplorerUtils.mergeResponseWithExplorer(ExplorerStore.get(sourceId), res);
-        AppDispatcher.dispatch({
-          actionType: ExplorerConstants.EXPLORER_UPDATE,
-          id: sourceId,
-          updates: updatedModel
-        });
-        // We need to use the new model id below, not the old sourceId passed in.
-        AppDispatcher.dispatch({
-          actionType: ExplorerConstants.EXPLORER_SAVE_SUCCESS,
-          id: updatedModel.id,
-          saveType: saveType,
-          query: updatedModel.query
-        });
+        return;
       }
+      module.exports.saveSuccess(sourceId, res);
+    });
+  },
+
+  saveSuccess: function(sourceId, res) {
+    var saveType = ExplorerUtils.saveType(ExplorerStore.get(sourceId));
+    var updatedModel = ExplorerUtils.mergeResponseWithExplorer(ExplorerStore.get(sourceId), res);
+    AppDispatcher.dispatch({
+      actionType: ExplorerConstants.EXPLORER_UPDATE,
+      id: sourceId,
+      updates: updatedModel
+    });
+    // We need to use the new model id below, not the old sourceId passed in.
+    AppDispatcher.dispatch({
+      actionType: ExplorerConstants.EXPLORER_SAVE_SUCCESS,
+      id: updatedModel.id,
+      saveType: saveType,
+      query: updatedModel.query
     });
   },
 

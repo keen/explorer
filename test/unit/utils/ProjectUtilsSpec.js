@@ -1,5 +1,4 @@
 var assert = require('chai').assert;
-var expect = require('chai').expect;
 var sinon = require('sinon');
 var TestHelpers = require('../../support/TestHelpers');
 var ProjectActions = require('../../../client/js/app/actions/ProjectActions');
@@ -23,7 +22,8 @@ describe('utils/ProjectUtils', function() {
         'select_unique',
         'extraction',
         'percentile',
-        'median'
+        'median',
+        'funnel'
       ];
       assert.sameMembers(ProjectUtils.getConstant('ANALYSIS_TYPES'), expectedAnalyisTypes);
     });

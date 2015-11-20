@@ -48,6 +48,9 @@ module.exports = {
       step.filters = _.compact(_.map(step.filters, FilterUtils.formatFilterParams));
     }
 
+    step.inverted = step.inverted === "true";
+    step.optional = step.optional === "true";
+
     return step;
   }
 };
