@@ -272,17 +272,17 @@ describe('actions/ExplorerActions', function() {
       };
       this.response = { result: 100 };
       sinon.stub(ExplorerUtils, 'getChartTypeOptions').returns(['metric']);
-      sinon.stub(ExplorerUtils, 'resultSupportsChartType').returns(false);
+      sinon.stub(ExplorerUtils, 'responseSupportsChartType').returns(false);
     });
     afterEach(function () {
       ExplorerUtils.getChartTypeOptions.restore();
-      ExplorerUtils.resultSupportsChartType.restore();
+      ExplorerUtils.responseSupportsChartType.restore();
     });
 
     it('should call the dispatcher to update with the right arguments', function () {
       var expectedUpdates = _.cloneDeep(this.explorer);
       expectedUpdates.loading = false;
-      expectedUpdates.result = 100;
+      expectedUpdates.response = this.response;
       expectedUpdates.metadata.visualization.chart_type = 'metric';
       
       ExplorerActions.execSuccess(this.explorer, this.response);

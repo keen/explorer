@@ -33,7 +33,7 @@ var Visualization = React.createClass({
   },
 
   formatChartTypes: function() {
-    return _.map(ExplorerUtils.getChartTypeOptions(this.props.model.result, this.props.model.query.analysis_type), function(type) {
+    return _.map(ExplorerUtils.getChartTypeOptions(this.props.model.response, this.props.model.query.analysis_type), function(type) {
       return {
         name: (type !== 'JSON') ? FormatUtils.toTitleCase(type).replace('chart', '') : type,
         value: type
@@ -55,7 +55,7 @@ var Visualization = React.createClass({
 
     var chartDetailBarClasses = classNames({
       'chart-detail-bar': true,
-      'chart-detail-active': this.props.model.result !== null && !this.props.model.loading
+      'chart-detail-active': this.props.model.response !== null && !this.props.model.loading
     });
 
 

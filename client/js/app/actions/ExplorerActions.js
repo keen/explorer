@@ -211,11 +211,11 @@ var ExplorerActions = {
     NoticeActions.clearAll();
     
     var updates = _.cloneDeep(explorer);
-    updates.result = response.result;
+    updates.response = response;
     updates.loading = false;
 
-    if (!ExplorerUtils.resultSupportsChartType(response.result, explorer.metadata.visualization.chart_type, explorer.query.analysis_type)) {
-      updates.metadata.visualization.chart_type = ExplorerUtils.getChartTypeOptions(response.result, explorer.query.analysis_type)[0];
+    if (!ExplorerUtils.responseSupportsChartType(response, explorer.metadata.visualization.chart_type, explorer.query.analysis_type)) {
+      updates.metadata.visualization.chart_type = ExplorerUtils.getChartTypeOptions(response, explorer.query.analysis_type)[0];
     }
     ExplorerActions.update(explorer.id, updates);
   },
