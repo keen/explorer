@@ -207,7 +207,6 @@ var QueryBuilder = React.createClass({
     return (
       <section className="query-pane-section query-builder">
         <form className="form query-builder-form" onSubmit={this.props.handleQuerySubmit}>
-          {this.buildEventCollectionField()}
           <SelectField name="analysis_type"
                        label="Analysis Type"
                        inputClasses={['analysis-type']}
@@ -215,6 +214,7 @@ var QueryBuilder = React.createClass({
                        value={this.props.model.query.analysis_type}
                        handleChange={this.handleChange}
                        requiredLabel={true} />
+          {this.buildEventCollectionField()}
           {this.buildFunnelBuilder()}
           {this.buildExtractionOptions()}
           {this.buildTargetPropertyField()}
