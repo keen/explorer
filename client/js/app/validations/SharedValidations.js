@@ -35,23 +35,19 @@ module.exports = {
   time: {
     
     validate: function(time) {
-      var time = time || {};
+      var defaultError = "You must provide a timeframe.";
+      
+      if (!time) return defaultError;
       if (TimeframeUtils.timeframeType(time) === 'relative') {
-        if (time.relativity && time.amount && time.sub_timeframe) {
-          return true;
-        } else {
-          return "You must choose all 3 options for relative timeframes.";
-        }
-      } else if (TimeframeUtils.timeframeType(time) === 'absolute') {
-        if (time.start && time.end) {
-          return true;
-        } else {
-          return "You must provide a start and end time for absolute timeframes.";
-        }
-      } else {
-        return "You must provide a timeframe.";
+        if (time.relativity && time.amount && time.sub_timeframe) return true;
+        return "You must choose all 3 options for relative timeframes.";
       }
-      return true;
+      if (TimeframeUtils.timeframeType(time) === 'absolute') {
+        if (time.start && time.end) return true;
+        return "You must provide a start and end time for absolute timeframes.";
+      }
+
+      return defaultError;
     }
 
   }
