@@ -1792,13 +1792,13 @@
   bottom: 6px;
   border-left: 5px solid transparent;
   border-right: 5px solid transparent;
-  border-bottom: 5px solid #FFF;
+  border-bottom: 5px solid #ffffff;
 }
 #keen-explorer .funnel-builder .step-move-btns .down .arrow {
   top: 6px;
   border-left: 5px solid transparent;
   border-right: 5px solid transparent;
-  border-top: 5px solid #FFF;
+  border-top: 5px solid #ffffff;
 }
 #keen-explorer .funnel-builder a.add-step {
   font-size: 16px;
