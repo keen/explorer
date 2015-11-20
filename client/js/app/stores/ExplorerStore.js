@@ -338,12 +338,21 @@ function _updateFilter(id, index, updates) {
 }
 
 function _addStep(id, attrs) {
-  attrs = attrs || {};
-  _explorers[id].query.steps.push(_.assign(_defaultStep(), attrs));
+  var step = _.assign(_defaultStep(), attrs || {});
+  step.active = true;
+
+  _explorers[id].query.steps.push(step);
+  _setStepActive(id, _explorers[id].query.steps.length - 1);
 }
 
 function _removeStep(id, index) {
   _explorers[id].query.steps.splice(index, 1);
+
+  if(index > _explorers[id].query.steps.length - 1) {
+    _setStepActive(id, _explorers[id].query.steps.length - 1);
+  } else {
+    _setStepActive(id, index);
+  }
 }
 
 function _updateStep(id, index, updates) {

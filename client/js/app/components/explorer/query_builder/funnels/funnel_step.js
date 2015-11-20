@@ -25,7 +25,7 @@ var FunnelStep = React.createClass({
 
   removeStep: function(e) {
     e.preventDefault();
-    if (confirm("Are you sure you want to delete this funnel step?")) {
+    if (this.props.canRemove && confirm("Are you sure you want to delete this funnel step?")) {
       this.props.removeStep(this.props.index);
     }
   },
@@ -74,6 +74,17 @@ var FunnelStep = React.createClass({
   },
 
   buildStepBody: function() {
+    var remove;
+
+    if(this.props.canRemove) {
+      remove = (
+        <a href="#" className="remove-step" onClick={this.removeStep}>
+          <i className="icon glyphicon glyphicon-remove-circle margin-right-tiny"></i>
+          Remove Step
+        </a>
+      );
+    }
+
     if (this.props.step.active === true) {
       return (
         <div className="step-body margin-top-small margin-bottom-small">
@@ -115,10 +126,7 @@ var FunnelStep = React.createClass({
             <input name="inverted" type="checkbox" checked={this.props.step.inverted} onChange={this.handleCheckboxChange} /> Inverted Step
           </label>
           <hr />
-          <a href="#" className="remove-step" onClick={this.removeStep}>
-            <i className="icon glyphicon glyphicon-remove-circle margin-right-tiny"></i>
-            Remove Step
-          </a>
+          {remove}
         </div>
       );
     }

@@ -60,6 +60,7 @@ var FunnelsBuilder = React.createClass({
           <FunnelStep index={index}
                       step={step}
                       removeStep={this.removeStep}
+                      canRemove={this.props.steps.length > 1}
                       eventCollections={this.props.eventCollections}
                       propertyNames={this.props.getEventPropertyNames(step.event_collection)}
                       onBrowseEvents={this.props.onBrowseEvents}
