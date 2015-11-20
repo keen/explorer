@@ -43,10 +43,6 @@ var FunnelStep = React.createClass({
     this.props.handleChange(this.props.index, e.target.name, e.target.checked);
   },
 
-  handleSubmit: function(e) {
-    e.preventDefault();
-  },
-
   toggleStepActive: function(e) {
     this.props.toggleStepActive(this.props.index, !this.props.step.active);
   },
@@ -81,50 +77,48 @@ var FunnelStep = React.createClass({
     if (this.props.step.active === true) {
       return (
         <div className="step-body margin-top-small margin-bottom-small">
-          <form onSubmit={this.handleSubmit}>
-            <SelectField name="event_collection" 
-                         label="Event Collection"
-                         value={this.props.step.event_collection}
-                         options={this.props.eventCollections}
-                         requiredLabel={true}
-                         onBrowseEvents={this.props.onBrowseEvents}
-                         handleChange={this.handleChange} />
-            <SelectField name="actor_property"
-                         label="Actor Property"
-                         value={this.props.step.actor_property}
-                         options={this.props.propertyNames}
-                         requiredLabel={true}
-                         handleChange={this.handleChange} />
-            <Timeframe ref="timeframe"
-                       time={this.props.step.time}
-                       timezone={this.props.step.timezone}  
-                       handleChange={this.handleChange}/>
-            <div className="field-component">
-              <FieldsToggle ref="filters-fields-toggle"
-                            name="Filters"
-                            toggleCallback={this.handleFiltersToggle}
-                            fieldsCount={FilterUtils.validFilters(this.props.step.filters).length} />
-            </div>
-            <FilterManager ref="filter-manager"
-                           eventCollection={this.props.step.event_collection}
-                           filters={this.props.step.filters}
-                           handleChange={this.handleFilterChange}
-                           removeFilter={this.handleRemoveFilter}
-                           addFilter={this.handleAddFilter}
-                           getPropertyType={this.props.getPropertyType}
-                           propertyNames={this.props.propertyNames} />
-            <label className="block-label margin-top-small">
-              <input name="optional" type="checkbox" checked={this.props.step.optional} onChange={this.handleCheckboxChange} /> Optional Step
-            </label>
-            <label className="block-label">
-              <input name="inverted" type="checkbox" checked={this.props.step.inverted} onChange={this.handleCheckboxChange} /> Inverted Step
-            </label>
-            <hr />
-            <a href="#" className="remove-step" onClick={this.removeStep}>
-              <i className="icon glyphicon glyphicon-remove-circle margin-right-tiny"></i>
-              Remove Step
-            </a>
-          </form>
+          <SelectField name="event_collection" 
+                       label="Event Collection"
+                       value={this.props.step.event_collection}
+                       options={this.props.eventCollections}
+                       requiredLabel={true}
+                       onBrowseEvents={this.props.onBrowseEvents}
+                       handleChange={this.handleChange} />
+          <SelectField name="actor_property"
+                       label="Actor Property"
+                       value={this.props.step.actor_property}
+                       options={this.props.propertyNames}
+                       requiredLabel={true}
+                       handleChange={this.handleChange} />
+          <Timeframe ref="timeframe"
+                     time={this.props.step.time}
+                     timezone={this.props.step.timezone}  
+                     handleChange={this.handleChange}/>
+          <div className="field-component">
+            <FieldsToggle ref="filters-fields-toggle"
+                          name="Filters"
+                          toggleCallback={this.handleFiltersToggle}
+                          fieldsCount={FilterUtils.validFilters(this.props.step.filters).length} />
+          </div>
+          <FilterManager ref="filter-manager"
+                         eventCollection={this.props.step.event_collection}
+                         filters={this.props.step.filters}
+                         handleChange={this.handleFilterChange}
+                         removeFilter={this.handleRemoveFilter}
+                         addFilter={this.handleAddFilter}
+                         getPropertyType={this.props.getPropertyType}
+                         propertyNames={this.props.propertyNames} />
+          <label className="block-label margin-top-small">
+            <input name="optional" type="checkbox" checked={this.props.step.optional} onChange={this.handleCheckboxChange} /> Optional Step
+          </label>
+          <label className="block-label">
+            <input name="inverted" type="checkbox" checked={this.props.step.inverted} onChange={this.handleCheckboxChange} /> Inverted Step
+          </label>
+          <hr />
+          <a href="#" className="remove-step" onClick={this.removeStep}>
+            <i className="icon glyphicon glyphicon-remove-circle margin-right-tiny"></i>
+            Remove Step
+          </a>
         </div>
       );
     }
