@@ -339,11 +339,20 @@ function _updateFilter(id, index, updates) {
 }
 
 function _addStep(id, attrs) {
+  var explorer = _explorers[id];
   var step = _.assign(_defaultStep(), attrs || {});
   step.active = true;
 
-  _explorers[id].query.steps.push(step);
-  _setStepActive(id, _explorers[id].query.steps.length - 1);
+  // This is likely always true, but I like being defensive
+  if(explorer.query.steps.length > 0) {
+    var lastStep = explorer.query.steps[explorer.query.steps.length - 1];
+
+    step.time = lastStep.time;
+    step.timezone = lastStep.timezone;
+  }
+
+  explorer.query.steps.push(step);
+  _setStepActive(id, explorer.query.steps.length - 1);
 }
 
 function _removeStep(id, index) {
