@@ -23,7 +23,7 @@ describe('stores/ExplorerStore', function() {
       ExplorerActions.create();
       var defaults = {
         active: false,
-        result: null,
+        response: null,
         loading: false,
         saving: false,
         isValid: true,
@@ -723,7 +723,7 @@ describe('stores/ExplorerStore', function() {
         var expectedModel = {
           id: 'ABC-SOME-ID',
           active: true,
-          result: null,
+          response: null,
           loading: false,
           saving: false,
           isValid: true,

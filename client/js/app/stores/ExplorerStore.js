@@ -26,7 +26,7 @@ function _defaultAttrs() {
     query_name: null,
     active: false,
     saving: false,
-    result: null,
+    response: null,
     loading: false,
     isValid: true,
     errors: [],
@@ -312,7 +312,7 @@ function _setActive(id) {
 function _revertActiveChanges() {
   var active = _.find(_explorers, { active: true });
   var original = _explorers[active.id].originalModel;
-  _explorers[active.id] = _.assign({}, _.cloneDeep(original), { originalModel: original, result: active.result });
+  _explorers[active.id] = _.assign({}, _.cloneDeep(original), { originalModel: original, response: active.response });
   return active.id;
 }
 

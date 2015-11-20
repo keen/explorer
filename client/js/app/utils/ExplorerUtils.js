@@ -203,12 +203,12 @@ module.exports = {
     return params;
   },
 
-  getChartTypeOptions: function(result, analysisType) {
+  getChartTypeOptions: function(response, analysisType) {
     var chartTypes = [];
 
-    if (result) {
+    if (response) {
       var dataviz = new Keen.Dataviz();
-      dataviz.data({ result: result });
+      dataviz.data(response);
       var dataType = dataviz.dataType();
 
       if (dataType && Keen.Dataviz.dataTypeMap[dataType]) {
@@ -219,7 +219,7 @@ module.exports = {
         if (!_.contains(chartTypes, 'json')) {
           chartTypes.push('JSON');
         }
-      } else if (result && _.contains(['extraction', 'select_unique'], analysisType)) {
+      } else if (response && _.contains(['extraction', 'select_unique'], analysisType)) {
         chartTypes = ['JSON', 'table'];
       }
     }
@@ -227,8 +227,8 @@ module.exports = {
     return chartTypes;
   },
 
-  resultSupportsChartType: function(result, chartType, analysisType) {
-    return _.contains(module.exports.getChartTypeOptions(result, analysisType), chartType);
+  responseSupportsChartType: function(response, chartType, analysisType) {
+    return _.contains(module.exports.getChartTypeOptions(response, analysisType), chartType);
   },
 
   encodeAttribute: function(attr) {
@@ -277,7 +277,7 @@ module.exports = {
   },
 
   resultCanBeVisualized: function(explorer) {
-    return (explorer.result || _.isNumber(explorer.result) || (_.isArray(explorer.result) && explorer.result.length));
+    return (explorer.response && explorer.response.result && (_.isNumber(explorer.response.result) || (_.isArray(explorer.response.result) && explorer.response.result.length)));
   },
 
   isJSONViz: function(explorer) {
