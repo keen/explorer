@@ -228,6 +228,7 @@ function _removeInvalidFields(explorer, newModel) {
   if (newModel.query.analysis_type !== 'funnel') {
     newModel.query.steps = [];
     newModel.query.filters = [];
+    newModel.query.timeframe = null;
   }
   return newModel;
 }
