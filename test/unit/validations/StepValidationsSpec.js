@@ -13,12 +13,24 @@ describe('validations/StepValidations', function() {
       assert.equal(errorMessage, 'You must select whether this step is optional.');
     });
 
-    it('returns true when the value is truthy', function () {
+    it('returns true when the value is true', function () {
       assert.isTrue(StepValidations.optional.validate({ optional: true }));
     });
 
-    it('returns false when the value is falsy', function () {
-      assert.isFalse(StepValidations.optional.validate({ optional: false }));
+    it('returns true when the value is false', function () {
+      assert.isTrue(StepValidations.optional.validate({ optional: false }));
+    });
+
+    it('returns false when the value is null', function () {
+      assert.isFalse(StepValidations.optional.validate({ optional: null }));
+    });
+
+    it('returns false when the value is undefined', function () {
+      assert.isFalse(StepValidations.optional.validate({ optional: undefined }));
+    });
+
+    it('returns false when the value is not a boolean', function () {
+      assert.isFalse(StepValidations.optional.validate({ optional: 'nope' }));
     });
   });
 
@@ -28,12 +40,24 @@ describe('validations/StepValidations', function() {
       assert.equal(errorMessage, 'You must select whether this step is inverted.');
     });
 
-    it('returns true when the value is truthy', function () {
+    it('returns true when the value is true', function () {
       assert.isTrue(StepValidations.inverted.validate({ inverted: true }));
     });
 
-    it('returns false when the value is falsy', function () {
-      assert.isFalse(StepValidations.inverted.validate({ inverted: false }));
+    it('returns true when the value is false', function () {
+      assert.isTrue(StepValidations.inverted.validate({ inverted: false }));
+    });
+
+    it('returns false when the value is null', function () {
+      assert.isFalse(StepValidations.inverted.validate({ inverted: null }));
+    });
+
+    it('returns false when the value is undefined', function () {
+      assert.isFalse(StepValidations.inverted.validate({ inverted: undefined }));
+    });
+
+    it('returns false when the value is not a boolean', function () {
+      assert.isFalse(StepValidations.inverted.validate({ inverted: 'nope' }));
     });
   });
 

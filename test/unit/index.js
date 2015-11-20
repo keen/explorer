@@ -28,6 +28,7 @@ require('./utils/TimeframeUtilsSpec.js');
 require('./validations/SharedValidationsSpec.js');
 require('./validations/ExplorerValidationsSpec.js');
 require('./validations/FilterValidationsSpec.js');
+require('./validations/StepValidationsSpec.js');
 
 // ***********************
 // Actions

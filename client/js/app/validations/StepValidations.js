@@ -47,7 +47,7 @@ module.exports = {
 
     validate: function(model) {
       if (FormatUtils.isNullOrUndefined(model.optional)) return false;
-      return model.optional ? true : false;
+      return typeof model.optional === 'boolean';
     }
 
   },
@@ -58,7 +58,7 @@ module.exports = {
 
     validate: function(model) {
       if (FormatUtils.isNullOrUndefined(model.inverted)) return false;
-      return model.inverted ? true : false;
+      return typeof model.inverted === 'boolean';
     }
 
   },
