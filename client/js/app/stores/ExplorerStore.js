@@ -109,6 +109,12 @@ function _validate(id) {
     var stepErrors = RunValidations(StepValidations, newExplorer.query.steps[i]);
     newExplorer.query.steps[i].errors = stepErrors;
     newExplorer.query.steps[i].isValid = stepErrors.length ? false: true;
+
+    for(var j=0; j<newExplorer.query.steps[i].filters.length; j++) {
+      var filterErrors = RunValidations(FilterValidations, newExplorer.query.steps[i].filters[j]);
+      newExplorer.query.steps[i].filters[j].errors = filterErrors;
+      newExplorer.query.steps[i].filters[j].isValid = filterErrors.length ? false: true;
+    }
   }
 
   _explorers[id] = newExplorer;
@@ -227,6 +233,8 @@ function _removeInvalidFields(explorer, newModel) {
   }
   if (newModel.query.analysis_type !== 'funnel') {
     newModel.query.steps = [];
+  }
+  if(newModel.query.analysis_type === 'funnel') {
     newModel.query.filters = [];
     newModel.query.timeframe = null;
   }

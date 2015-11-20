@@ -50,7 +50,7 @@ module.exports = {
 
     step.inverted = step.inverted === "true";
     step.optional = step.optional === "true";
-
+    
     return step;
   }
 };
