@@ -811,6 +811,7 @@ describe('stores/ExplorerStore', function() {
       it('should move root properties over to the first step', function () {
         ExplorerActions.update('abc123', {
           query: {
+            filters: [],
             event_collection: 'pageviews',
             target_property: 'user',
             time: {

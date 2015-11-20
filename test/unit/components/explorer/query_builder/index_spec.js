@@ -239,7 +239,7 @@ describe('components/explorer/query_builder/index', function() {
       project.eventCollections = ['one', 'two'];
       this.component = this.renderComponent({ project: project });
 
-      var eventCollectionComponent = TestUtils.scryRenderedComponentsWithType(this.component, SelectField)[0];
+      var eventCollectionComponent = TestUtils.scryRenderedComponentsWithType(this.component, SelectField)[1];
       assert.sameMembers(eventCollectionComponent.props.options, ['one', 'two']);
     });
   });
