@@ -282,7 +282,7 @@ describe('actions/ExplorerActions', function() {
     it('should call the dispatcher to update with the right arguments', function () {
       var expectedUpdates = _.cloneDeep(this.explorer);
       expectedUpdates.loading = false;
-      expectedUpdates.result = 100;
+      expectedUpdates.response = this.response;
       expectedUpdates.metadata.visualization.chart_type = 'metric';
       
       ExplorerActions.execSuccess(this.explorer, this.response);
