@@ -197,6 +197,7 @@ module.exports = {
     }
     if (params.query.steps) {
       params.query.steps = _.compact(_.map(params.query.steps, FunnelUtils.formatQueryParams));
+      params.query.steps[0].active = true
     }
     if (!params.id && params.query_name) params.id = params.query_name;
     return params;

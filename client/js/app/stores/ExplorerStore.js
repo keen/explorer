@@ -272,6 +272,13 @@ function _prepareFilterUpdates(explorer, filter, updates) {
 function _create(attrs) {
   attrs = attrs || {};
   var newAttrs = _.merge(_defaultAttrs(), attrs);
+
+  if(newAttrs.query.steps) {
+    newAttrs.query.steps = _.map(newAttrs.query.steps, function (step) {
+      return _.merge(_defaultStep(), step);
+    });
+  }
+
   _explorers[newAttrs.id] = newAttrs;
   return newAttrs.id;
 }
