@@ -298,13 +298,28 @@ module.exports = {
         params = module.exports.queryJSON(explorer),
         s = stringify,
         dynamicCriteria,
-        dynamicParamNames = [
-          'filters', 'group_by', 'interval', 'target_property', 'timeframe', 'timezone'
-        ],
+        paramNames,
         dynamicConstructorNames = [
           'host', 'protocol', 'requestType'
         ],
+        funnelRootParams = [
+          'event_collection', 'steps'
+        ],
         dynamicContructorValues;
+
+    switch(params.analysis_type) {
+      case 'funnel':
+        paramNames = ['steps'];
+        break;
+
+      default:
+        paramNames = ['event_collection', 'filters', 'group_by', 'interval', 'target_property', 'timeframe', 'timezone'];
+        break;
+    }
+
+    if(params.steps) {
+      params.steps = _.map(params.steps, function(step) { return _.omit(step, 'active'); });
+    }
 
     dynamicContructorValues = mapSkip(dynamicConstructorNames, function(name) {
       if (client.config[name] == defaultKeenJsOpts[name]) {
@@ -315,11 +330,11 @@ module.exports = {
     // remove coercion from example; it's already been handled elsewhere.
     _.each(params['filters'], function(filter) { delete filter['coercion_type'] })
 
-    dynamicCriteria = mapSkip(dynamicParamNames, function(param) {
+    dynamicCriteria = mapSkip(paramNames, function(param) {
       if (!params[param]) {
         return SKIP
       }
-      return '    ' + toCamelcaseName(param) + ': ' + s(params[param])
+      return '    ' + toCamelcaseName(param) + ': ' + s(params[param], {space: 4})
     }).join(',\n');
 
     value = [
@@ -332,7 +347,6 @@ module.exports = {
       'Keen.ready(function(){',
       '  ',
       '  var query = new Keen.Query(' + s(params.analysis_type) + ', {',
-      '    eventCollection: ' + s(params.event_collection) + echoIf(dynamicCriteria, ','),
       dynamicCriteria,
       '  });',
       '  ',
