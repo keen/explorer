@@ -31,7 +31,7 @@ var DataTable = React.createClass({
   render: function() {
     var dataset, headerRows, tableRows;
 
-    this.props.dataviz.data({ result: this.props.model.result });
+    this.props.dataviz.data(this.props.model.response);
     dataset = this.props.dataviz.dataset;
 
     // TODO: Fix unit tests to handle proper instantiation
