@@ -14,6 +14,7 @@ var STEP_PARAMS = [
   'inverted'
 ];
 module.exports = {
+
   stepJSON: function (step) {
     var params = _.cloneDeep(step);
 
@@ -53,4 +54,5 @@ module.exports = {
     
     return step;
   }
+  
 };
