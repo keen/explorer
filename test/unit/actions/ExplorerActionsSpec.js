@@ -25,7 +25,6 @@ describe('actions/ExplorerActions', function() {
 
   beforeEach(function () {
     this.dispatchStub.reset();
-
   });
 
   describe('exec', function () {
