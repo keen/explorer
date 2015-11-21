@@ -19,6 +19,25 @@ describe('utils/ExplorerUtils', function() {
     });
   });
 
+  describe('shouldHaveTarget', function () {
+    it('should return false if the analysis_type is null', function () {
+      var explorer = { query: { analysis_type: null } };
+      assert.isFalse(ExplorerUtils.shouldHaveTarget(explorer));
+    });
+    it('should return false if the analysis_type is undefined', function () {
+      var explorer = { query: {} };
+      assert.isFalse(ExplorerUtils.shouldHaveTarget(explorer));
+    });
+    it('should return false if the analysis_type is not in the required types', function () {
+      var explorer = { query: { analysis_type: 'count' } };
+      assert.isFalse(ExplorerUtils.shouldHaveTarget(explorer));
+    });
+    it('should return false if the analysis_type in the required types', function () {
+      var explorer = { query: { analysis_type: 'count_unique' } };
+      assert.isTrue(ExplorerUtils.shouldHaveTarget(explorer));
+    });
+  });
+
   describe('queryJSON', function () {
     it('should remove values that are not part of the query params that get sent to Keen', function () {
       var explorer = {

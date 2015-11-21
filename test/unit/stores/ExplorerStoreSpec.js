@@ -1,4 +1,5 @@
 var assert = require('chai').assert;
+var expect = require('chai').expect;
 var _ = require('lodash');
 var sinon = require('sinon');
 var moment = require('moment');
@@ -898,7 +899,7 @@ describe('stores/ExplorerStore', function() {
     describe('Funnel step management', function () {
       beforeEach(function() {
         ExplorerStore.clearAll();
-        ExplorerActions.create({ id: 'abc123' });
+        ExplorerActions.create({ id: 'abc123', query: { analysis_type: 'funnel' } });
       });
       it('should properly add a step when addStep is called', function () {
         var oldStepsLength = ExplorerStore.get('abc123').query.steps.length;
@@ -925,11 +926,73 @@ describe('stores/ExplorerStore', function() {
           isValid: false,
           errors: [
             {
-              attribute: 'actor_property',
-              msg: 'You must select an actor property'
+              "attribute": "event_collection",
+              "msg": "Choose an Event Collection."
+            },
+            {
+              "attribute": "actor_property",
+              "msg": "You must select an actor property"
             }
           ]
         });
+      });
+      it('should throw an error if a step is attempted to be added without the explorer having a funnel analysis type', function () {
+        var updates = _.cloneDeep(ExplorerStore.get('abc123'));
+        updates.query.analysis_type = 'count';
+        ExplorerActions.update('abc123', updates);
+        expect(ExplorerActions.addStep.bind(null, 'abc123')).to.throw("Error: Attempting to add a step to a non-funnel query. Explorer id: abc123");
+      });
+      it('should properly remove a step at the given index', function () {
+        ExplorerActions.addStep('abc123', { event_collection: 'one' });
+        ExplorerActions.addStep('abc123', { event_collection: 'two' });
+        ExplorerActions.addStep('abc123', { event_collection: 'three' });
+        ExplorerActions.addStep('abc123', { event_collection: 'four' });
+        assert.equal(ExplorerStore.get('abc123').query.steps.length, 4);
+        ExplorerActions.removeStep('abc123', 2);
+        assert.equal(ExplorerStore.get('abc123').query.steps.length, 3);
+        
+        assert.equal(ExplorerStore.get('abc123').query.steps[0].event_collection, 'one');
+        assert.equal(ExplorerStore.get('abc123').query.steps[1].event_collection, 'two');
+        assert.equal(ExplorerStore.get('abc123').query.steps[2].event_collection, 'four');
+      });
+      it('should properly update a step at the given index and not change any others', function () {
+        ExplorerActions.addStep('abc123', { event_collection: 'one' });
+        ExplorerActions.addStep('abc123', { event_collection: 'two' });
+        ExplorerActions.addStep('abc123', { event_collection: 'three' });
+        ExplorerActions.addStep('abc123', { event_collection: 'four' });
+        
+        ExplorerActions.updateStep('abc123', 1, { event_collection: 'something else' });
+        
+        assert.equal(ExplorerStore.get('abc123').query.steps[0].event_collection, 'one');
+        assert.equal(ExplorerStore.get('abc123').query.steps[1].event_collection, 'something else');
+        assert.equal(ExplorerStore.get('abc123').query.steps[2].event_collection, 'three');
+        assert.equal(ExplorerStore.get('abc123').query.steps[3].event_collection, 'four');
+      });
+      it('should properly set a step active and all others inactive', function () {
+        ExplorerActions.addStep('abc123', { event_collection: 'one' });
+        ExplorerActions.addStep('abc123', { event_collection: 'two' });
+        ExplorerActions.addStep('abc123', { event_collection: 'three' });
+        ExplorerActions.addStep('abc123', { event_collection: 'four' });
+
+        assert.isFalse(ExplorerStore.get('abc123').query.steps[0].active, 'step 1');
+        assert.isFalse(ExplorerStore.get('abc123').query.steps[1].active, 'step 2');
+        assert.isFalse(ExplorerStore.get('abc123').query.steps[2].active, 'step 3');
+        assert.isTrue(ExplorerStore.get('abc123').query.steps[3].active, 'step 4');
+        
+        ExplorerActions.setStepActive('abc123', 2);
+        
+        assert.isFalse(ExplorerStore.get('abc123').query.steps[0].active, 'step 1');
+        assert.isFalse(ExplorerStore.get('abc123').query.steps[1].active, 'step 2');
+        assert.isTrue(ExplorerStore.get('abc123').query.steps[2].active, 'step 3');
+        assert.isFalse(ExplorerStore.get('abc123').query.steps[3].active, 'step 4');
+      });
+
+      xit('should properly move the step up', function () {
+        
+      });
+
+      xit('should properly move the step down', function () {
+        
       });
     });
   });

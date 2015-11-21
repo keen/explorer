@@ -26,7 +26,11 @@ var QUERY_PARAMS = [
 
 var EXRACTION_EVENT_LIMIT = 100;
 
-var ANALYSIS_TYPES_WITHOUT_TARGET = ['extraction', 'count', 'funnel'];
+var ANALYSIS_TYPES_WITHOUT_TARGET = [
+  'extraction',
+  'count',
+  'funnel'
+];
 
 function toCamelcaseName(name) {
   return name.replace(/_(.)/, function(match, p1) {
@@ -65,7 +69,7 @@ module.exports = {
   },
 
   shouldHaveTarget: function(explorer) {
-    return ANALYSIS_TYPES_WITHOUT_TARGET.indexOf(explorer.query.analysis_type) === -1;
+    return !FormatUtils.isNullOrUndefined(explorer.query.analysis_type) &&ANALYSIS_TYPES_WITHOUT_TARGET.indexOf(explorer.query.analysis_type) === -1;
   },
 
   isEmailExtraction: function(explorer) {

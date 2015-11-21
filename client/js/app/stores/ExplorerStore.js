@@ -168,7 +168,7 @@ function _migrateToFunnel(explorer, newModel) {
  * @return {Object}         The new set of updates
  */
 function _migrateFromFunnel(explorer, newModel) {
-  if (explorer.query.steps.length < 1) return;
+  if (explorer.query.steps.length < 1) return newModel;
   var activeStep = _.find(explorer.query.steps, { active: true }) || explorer.query.steps[0];
 
   _.each(SHARED_FUNNEL_STEP_PROPERTIES, function (key) {
@@ -327,6 +327,9 @@ function _updateFilter(id, index, updates) {
 
 function _addStep(id, attrs) {
   var explorer = _explorers[id];
+  if (explorer.query.analysis_type !== 'funnel') {
+    throw new Error('Error: Attempting to add a step to a non-funnel query. Explorer id: '+explorer.id);
+  }
   var step = _.assign(_defaultStep(), attrs || {});
   step.active = true;
 
