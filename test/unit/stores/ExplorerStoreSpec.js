@@ -894,6 +894,20 @@ describe('stores/ExplorerStore', function() {
           sub_timeframe: 'days'
         });
       });
+
+      it('returns the unchanged model if there are no steps', function () {
+        ExplorerActions.create({ id: 'def456', 
+          query: {
+            event_collection: 'collection',
+            analysis_type: 'funnel',
+          }
+        });
+        var updates = _.cloneDeep(ExplorerStore.get('def456'));
+        updates.query.analysis_type = 'count';
+        ExplorerActions.update('def456', updates);
+        assert.strictEqual(ExplorerStore.get('def456').query.event_collection, 'collection');
+        assert.strictEqual(ExplorerStore.get('def456').query.analysis_type, 'count');
+      });
     });
 
     describe('Funnel step management', function () {
