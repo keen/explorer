@@ -89,7 +89,9 @@ function _defaultStep() {
     filters: [],
     optional: false,
     inverted: false,
-    active: false
+    active: false,
+    isValid: true,
+    errors: []
   }
 }
 
