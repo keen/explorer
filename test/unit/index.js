@@ -25,7 +25,7 @@ require('./utils/TimeframeUtilsSpec.js');
 // ***********************
 // Validations
 // ***********************
-require('./validations/SharedValidationsSpec.js');
+require('./validations/SharedValidatorsSpec.js');
 require('./validations/ExplorerValidationsSpec.js');
 require('./validations/FilterValidationsSpec.js');
 require('./validations/StepValidationsSpec.js');

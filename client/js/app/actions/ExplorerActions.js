@@ -280,10 +280,10 @@ var ExplorerActions = {
       var models = [];
       resp.forEach(function(model) {
         var formattedModel = ExplorerUtils.formatQueryParams(model);
-        var errors = RunValidations.run(ExplorerValidations, formattedModel);
-        if (errors.length) {
+        RunValidations.run(ExplorerValidations, formattedModel);
+        if (!formattedModel.isValid) {
           console.warn('A persisted explorer model is invalid: ', formattedModel);
-          console.log('Errors: ', errors);
+          console.log('Errors: ', formattedModel.errors);
         }
         models.push(formattedModel);
       });
@@ -300,8 +300,8 @@ var ExplorerActions = {
         return;
       }
       var model = ExplorerUtils.formatQueryParams(resp);
-      var errors = RunValidations.run(ExplorerValidations, model);
-      if (errors.length) {
+      RunValidations.run(ExplorerValidations, model);
+      if (!model.isValid) {
         console.warn('A persisted explorer model is invalid: ', model);
       }
       ExplorerActions.create(model);

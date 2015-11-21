@@ -1,44 +1,46 @@
 var _ = require('lodash');
 var FormatUtils = require('../utils/FormatUtils');
-var SharedValidations = require('./SharedValidations');
+var SharedValidators = require('./SharedValidators');
 
 module.exports = {
 
-  event_collection: SharedValidations.event_collection,
+  event_collection: {
+    
+    msg: 'Choose an Event Collection.',
+    
+    validate: function(model) {
+      return (typeof model.event_collection ==='string' && model.event_collection.length > 0);
+    }
+
+  },
 
   actor_property: {
 
     msg: 'You must select an actor property',
 
     validate: function(model) {
-      return (model.actor_property) ? true : false;
+      return (typeof model.actor_property ==='string' && model.actor_property.length > 0);
     },
 
   },
 
-  time: _.assign({},
+  time: {
 
-    SharedValidations.time,
-
-    {
-      validate: function(model) {
-        return SharedValidations.time.validate(model.time);
-      }
+    validate: function(model) {
+      return SharedValidators.time(model.time);
     }
 
-  ),
+  },
 
-  filters: _.assign({},
+  filters: {
 
-    SharedValidations.filters,
+    msg: 'One of your filters is invalid.',
 
-    {
-      validate: function(model) {
-        return SharedValidations.filters.validate(model.filters);
-      }
+    validate: function(model) {
+      return SharedValidators.filters(model.filters);
     }
 
-  ),
+  },
 
 
   optional: {

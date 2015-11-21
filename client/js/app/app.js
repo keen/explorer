@@ -56,9 +56,9 @@ function App(config) {
     AppStateActions.update({ ready: true });
     // Run the query for this explorer if it's valid
     var isEmailExtraction = ExplorerUtils.isEmailExtraction(ExplorerStore.getActive());
-    var errors = RunValidations(ExplorerValidations, ExplorerStore.getActive());
+    RunValidations(ExplorerValidations, ExplorerStore.getActive());
 
-    if (!isEmailExtraction && !errors.length) {
+    if (!isEmailExtraction && ExplorerStore.getActive().isValid) {
       ExplorerActions.exec(this.client, ExplorerStore.getActive().id);
     }
   }

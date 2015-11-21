@@ -5,7 +5,7 @@ var moment = require('moment');
 var TestHelpers = require('../../support/TestHelpers');
 var RunValidations = require('../../../client/js/app/utils/RunValidations');
 
-describe.only('utils/RunValidations', function() {
+describe('utils/RunValidations', function() {
   it('should run each validator', function () {
     var spyOne = sinon.spy();
     var spyTwo = sinon.spy();

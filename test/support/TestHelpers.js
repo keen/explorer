@@ -67,6 +67,36 @@ module.exports = {
     };
   },
 
+  createFilter: function() {
+    return {
+      property_name: null,
+      property_value: null,
+      operator: 'eq',
+      coercion_type: 'String',
+      isValid: true,
+      errors: []
+    };
+  },
+
+  createStep: function() {
+    return {
+      event_collection: null,
+      actor_property: null,
+      time: {
+        relativity: 'this',
+        amount: 14,
+        sub_timeframe: 'days'
+      },
+      timezone: ProjectUtils.getConstant('DEFAULT_TIMEZONE'),
+      filters: [],
+      optional: false,
+      inverted: false,
+      active: false,
+      isValid: true,
+      errors: []
+    };
+  },
+
   buildProjectSchema: function() {
     return { 
       'click': {

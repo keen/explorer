@@ -13,7 +13,7 @@ module.exports = {
     msg: 'Choose a property name',
     
     validate: function(model) {
-      return model.property_name ? true : false;
+      return (typeof model.property_name === 'string' && model.property_name.length > 0);
     }
 
   },
@@ -23,7 +23,7 @@ module.exports = {
     msg: 'Choose an operator',
     
     validate: function(model) {
-      return model.operator ? true : false;
+      return (typeof model.operator === 'string' && model.operator.length > 0);
     }
 
   },
@@ -60,7 +60,7 @@ module.exports = {
     msg: 'Choose a coercion type',
     
     validate: function(model) {
-      return model.coercion_type ? true : false;
+      return (typeof model.coercion_type ==='string' && model.coercion_type.length > 0);
     }
 
   },

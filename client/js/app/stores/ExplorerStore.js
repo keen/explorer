@@ -89,35 +89,14 @@ function _defaultStep() {
     filters: [],
     optional: false,
     inverted: false,
-    active: false
+    active: false,
+    isValid: true,
+    errors: []
   }
 }
 
 function _validate(id) {
-  var newExplorer = _.cloneDeep(_explorers[id]);
-  var errors = RunValidations(ExplorerValidations, newExplorer);
-  newExplorer.isValid = (errors.length > 0) ? false : true;
-  newExplorer.errors = errors;
-
-  for (var i=0; i<newExplorer.query.filters.length; i++) {
-    var filterErrors = RunValidations(FilterValidations, newExplorer.query.filters[i]);
-    newExplorer.query.filters[i].errors = filterErrors;
-    newExplorer.query.filters[i].isValid = filterErrors.length ? false: true;
-  }
-
-  for (var i=0; i<newExplorer.query.steps.length; i++) {
-    var stepErrors = RunValidations(StepValidations, newExplorer.query.steps[i]);
-    newExplorer.query.steps[i].errors = stepErrors;
-    newExplorer.query.steps[i].isValid = stepErrors.length ? false: true;
-
-    for(var j=0; j<newExplorer.query.steps[i].filters.length; j++) {
-      var filterErrors = RunValidations(FilterValidations, newExplorer.query.steps[i].filters[j]);
-      newExplorer.query.steps[i].filters[j].errors = filterErrors;
-      newExplorer.query.steps[i].filters[j].isValid = filterErrors.length ? false: true;
-    }
-  }
-
-  _explorers[id] = newExplorer;
+  RunValidations(ExplorerValidations, _explorers[id]);
 }
 
 /**

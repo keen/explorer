@@ -48,18 +48,16 @@ describe('validations/ExplorerValidations', function() {
         var explorer = TestHelpers.createExplorerModel();
         explorer.saving = false;
         explorer.query_name = '';
-        assert.strictEqual(RunValidations.run({ 
-          query_name: ExplorerValidations.query_name
-        }, explorer).length, 0);
+        RunValidations.run({ query_name: ExplorerValidations.query_name }, explorer);
+        assert.strictEqual(explorer.errors.length, 0);
       });
 
       it('returns false when the value is not valid when saving is true', function () {
         var explorer = TestHelpers.createExplorerModel();
         explorer.saving = true;
         explorer.query_name = '';
-        assert.strictEqual(RunValidations.run({ 
-          query_name: ExplorerValidations.query_name
-        }, explorer).length, 1);
+        RunValidations.run({ query_name: ExplorerValidations.query_name }, explorer)
+        assert.strictEqual(explorer.errors.length, 1);
       });
 
       it('returns true when name is present', function () {
@@ -168,5 +166,94 @@ describe('validations/ExplorerValidations', function() {
         });
       });
     });
+  });
+
+  describe('Nested validations', function () {
+
+    it('should set validation properties on filters', function () {
+      var model = TestHelpers.createExplorerModel();
+      model.query.event_collection = '';
+      model.query.analysis_type = 'count';
+
+      var filter1 = TestHelpers.createFilter();
+      filter1.property_name = '';
+      filter1.property_value = '';
+      model.query.filters.push(filter1);
+
+      var filter2 = TestHelpers.createFilter();
+      filter2.property_name = 'name';
+      filter2.operator = '';
+      filter2.property_value = 'value';
+      model.query.filters.push(filter2);
+
+      RunValidations.run(ExplorerValidations, model);
+
+      assert.isFalse(model.isValid);
+      assert.strictEqual(model.errors.length, 2, 'Root model');
+
+      assert.isFalse(model.query.filters[0].isValid);
+      assert.strictEqual(model.query.filters[0].errors.length, 2);
+
+      assert.isFalse(model.query.filters[1].isValid);
+      assert.strictEqual(model.query.filters[1].errors.length, 1);
+    });
+
+    it('should set validation properties on steps and their filters', function () {
+      var model = TestHelpers.createExplorerModel();
+      model.query.event_collection = 'some collection';
+      model.query.analysis_type = 'funnel';
+
+      var step1 = TestHelpers.createStep();
+      step1.event_collection = 'colletion';
+      step1.actor_property = 'property';
+
+      var filter1 = TestHelpers.createFilter();
+      filter1.property_name = '';
+      filter1.property_value = 'count';
+      step1.filters.push(filter1)
+      
+      var filter2 = TestHelpers.createFilter();
+      filter2.property_name = 'name';
+      filter2.property_value = 'value';
+      step1.filters.push(filter2);
+
+      model.query.steps.push(step1);
+
+      var step2 = TestHelpers.createStep();
+      step2.event_collection = 'colletion';
+      step2.actor_property = '';
+
+      var filter3 = TestHelpers.createFilter();
+      filter3.property_name = '';
+      filter3.property_value = '';
+      step2.filters.push(filter3)
+      
+      var filter4 = TestHelpers.createFilter();
+      filter4.property_name = 'name';
+      filter4.property_value = 'value';
+      step2.filters.push(filter4);
+
+      model.query.steps.push(step2);
+
+      RunValidations.run(ExplorerValidations, model);
+
+      var steps = model.query.steps;
+      assert.isFalse(model.isValid, 'root model');
+      assert.isFalse(steps[0].isValid, 'first step');
+      assert.isFalse(steps[1].isValid, 'second setp');
+      assert.isFalse(steps[0].filters[0].isValid, 'first filter of first step');
+      assert.isTrue(steps[0].filters[1].isValid, 'second filter of first step');
+      assert.isFalse(steps[1].filters[0].isValid, 'first filter of second step');
+      assert.isTrue(steps[1].filters[1].isValid, 'second filter of secon step');
+
+      assert.strictEqual(model.errors.length, 1);
+      assert.strictEqual(steps[0].errors.length, 1);
+      assert.strictEqual(steps[1].errors.length, 2);
+      assert.strictEqual(steps[0].filters[0].errors.length, 1);
+      assert.strictEqual(steps[0].filters[1].errors.length, 0);
+      assert.strictEqual(steps[1].filters[0].errors.length, 2);
+      assert.strictEqual(steps[1].filters[1].errors.length, 0);
+    });
+    
   });
 });
