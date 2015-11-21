@@ -124,6 +124,20 @@ describe('utils/ExplorerUtils', function() {
         timeframe: 'this_1_days'
       });
     });
+    it('should set the latest property to the EXRACTION_EVENT_LIMIT constant if the query is a synchronous extraction', function () {
+      var explorer = {
+        query: {
+          analysis_type: 'extraction',
+          event_collection: 'click'
+        }
+      };
+      var json = ExplorerUtils.queryJSON(explorer);
+      assert.deepEqual(json, {
+        event_collection: 'click',
+        analysis_type: 'extraction',
+        latest: ExplorerUtils.EXRACTION_EVENT_LIMIT
+      })
+    });
   });
 
   describe('toJSON', function () {
