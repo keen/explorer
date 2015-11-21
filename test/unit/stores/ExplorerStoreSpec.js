@@ -894,5 +894,43 @@ describe('stores/ExplorerStore', function() {
         });
       });
     });
+
+    describe('Funnel step management', function () {
+      beforeEach(function() {
+        ExplorerStore.clearAll();
+        ExplorerActions.create({ id: 'abc123' });
+      });
+      it('should properly add a step when addStep is called', function () {
+        var oldStepsLength = ExplorerStore.get('abc123').query.steps.length;
+        ExplorerActions.addStep('abc123');
+        assert.equal(ExplorerStore.get('abc123').query.steps.length, oldStepsLength+1);
+      });
+      it('should make the first step active when added', function () {
+        assert.equal(ExplorerStore.get('abc123').query.steps.length, 0);
+        ExplorerActions.addStep('abc123');
+        assert.equal(ExplorerStore.get('abc123').query.steps.length, 1);
+        assert.deepEqual(ExplorerStore.get('abc123').query.steps[0], {
+          event_collection: null,
+          actor_property: null,
+          time: {
+            relativity: 'this',
+            amount: 14,
+            sub_timeframe: 'days'
+          },
+          timezone: ProjectUtils.getConstant('DEFAULT_TIMEZONE'),
+          filters: [],
+          optional: false,
+          inverted: false,
+          active: true,
+          isValid: false,
+          errors: [
+            {
+              attribute: 'actor_property',
+              msg: 'You must select an actor property'
+            }
+          ]
+        });
+      });
+    });
   });
 });
