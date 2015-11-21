@@ -987,12 +987,97 @@ describe('stores/ExplorerStore', function() {
         assert.isFalse(ExplorerStore.get('abc123').query.steps[3].active, 'step 4');
       });
 
-      xit('should properly move the step up', function () {
-        
+      it('should properly move the step up', function () {
+        ExplorerActions.addStep('abc123', { event_collection: 'one' });
+        ExplorerActions.addStep('abc123', { event_collection: 'two' });
+        ExplorerActions.addStep('abc123', { event_collection: 'three' });
+        ExplorerActions.addStep('abc123', { event_collection: 'four' });
+
+        ExplorerActions.moveStep('abc123', 2, 'up');
+
+        assert.equal(ExplorerStore.get('abc123').query.steps[0].event_collection, 'one');
+        assert.equal(ExplorerStore.get('abc123').query.steps[1].event_collection, 'three');
+        assert.equal(ExplorerStore.get('abc123').query.steps[2].event_collection, 'two');
+        assert.equal(ExplorerStore.get('abc123').query.steps[3].event_collection, 'four');
       });
 
-      xit('should properly move the step down', function () {
-        
+      it('should properly move the step down', function () {
+        ExplorerActions.addStep('abc123', { event_collection: 'one' });
+        ExplorerActions.addStep('abc123', { event_collection: 'two' });
+        ExplorerActions.addStep('abc123', { event_collection: 'three' });
+        ExplorerActions.addStep('abc123', { event_collection: 'four' });
+
+        ExplorerActions.moveStep('abc123', 2, 'down');
+
+        assert.equal(ExplorerStore.get('abc123').query.steps[0].event_collection, 'one');
+        assert.equal(ExplorerStore.get('abc123').query.steps[1].event_collection, 'two');
+        assert.equal(ExplorerStore.get('abc123').query.steps[2].event_collection, 'four');
+        assert.equal(ExplorerStore.get('abc123').query.steps[3].event_collection, 'three');
+      });
+
+      it('should be a no op if you try to move the first step up', function () {
+        ExplorerActions.addStep('abc123', { event_collection: 'one' });
+        ExplorerActions.addStep('abc123', { event_collection: 'two' });
+        ExplorerActions.addStep('abc123', { event_collection: 'three' });
+        ExplorerActions.addStep('abc123', { event_collection: 'four' });
+
+        ExplorerActions.moveStep('abc123', 0, 'up');
+
+        assert.equal(ExplorerStore.get('abc123').query.steps[0].event_collection, 'one');
+        assert.equal(ExplorerStore.get('abc123').query.steps[1].event_collection, 'two');
+        assert.equal(ExplorerStore.get('abc123').query.steps[2].event_collection, 'three');
+        assert.equal(ExplorerStore.get('abc123').query.steps[3].event_collection, 'four');
+      });
+
+      it('should be a no op if you try to move the last step down', function () {
+        ExplorerActions.addStep('abc123', { event_collection: 'one' });
+        ExplorerActions.addStep('abc123', { event_collection: 'two' });
+        ExplorerActions.addStep('abc123', { event_collection: 'three' });
+        ExplorerActions.addStep('abc123', { event_collection: 'four' });
+
+        ExplorerActions.moveStep('abc123', 3, 'down');
+
+        assert.equal(ExplorerStore.get('abc123').query.steps[0].event_collection, 'one');
+        assert.equal(ExplorerStore.get('abc123').query.steps[1].event_collection, 'two');
+        assert.equal(ExplorerStore.get('abc123').query.steps[2].event_collection, 'three');
+        assert.equal(ExplorerStore.get('abc123').query.steps[3].event_collection, 'four');
+      });
+
+      describe('Funnel Step Filters', function () {
+        it('should add a filter to a step', function () {
+          ExplorerActions.addStep('abc123', { event_collection: 'one' });
+          ExplorerActions.addStep('abc123', { event_collection: 'two' });
+          ExplorerActions.addStepFilter('abc123', 1, { property_name: 'name' });
+
+          assert.equal(ExplorerStore.get('abc123').query.steps[1].filters.length, 1);
+          assert.equal(ExplorerStore.get('abc123').query.steps[1].filters[0].property_name, 'name');
+        });
+        it('should remove a filter from the correct step', function () {
+          ExplorerActions.addStep('abc123', { event_collection: 'one' });
+          ExplorerActions.addStep('abc123', { event_collection: 'two' });
+          ExplorerActions.addStepFilter('abc123', 0, { property_name: 'one' });
+          ExplorerActions.addStepFilter('abc123', 1, { property_name: 'two' });
+          ExplorerActions.addStepFilter('abc123', 1, { property_name: 'three' });
+          ExplorerActions.removeStepFilter('abc123', 1, 0);
+
+          assert.equal(ExplorerStore.get('abc123').query.steps[1].filters.length, 1);
+          assert.equal(ExplorerStore.get('abc123').query.steps[1].filters[0].property_name, 'three');
+        });
+        it('should update a filter at the correct step', function () {
+          sinon.stub(ProjectUtils, 'getPropertyType').returns('String');
+
+          ExplorerActions.addStep('abc123', { event_collection: 'one' });
+          ExplorerActions.addStep('abc123', { event_collection: 'two' });
+          ExplorerActions.addStepFilter('abc123', 0, { property_name: 'one' });
+          ExplorerActions.addStepFilter('abc123', 1, { property_name: 'two' });
+          ExplorerActions.addStepFilter('abc123', 1, { property_name: 'three' });
+          ExplorerActions.updateStepFilter('abc123', 1, 0, { property_name: 'something else' });
+
+          assert.equal(ExplorerStore.get('abc123').query.steps[1].filters.length, 2);
+          assert.equal(ExplorerStore.get('abc123').query.steps[1].filters[0].property_name, 'something else');
+
+          ProjectUtils.getPropertyType.restore();
+        });
       });
     });
   });
