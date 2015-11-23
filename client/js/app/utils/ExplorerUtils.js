@@ -2,7 +2,6 @@ var _ = require('lodash');
 var Qs = require('qs');
 var stringify = require('json-stable-stringify');
 var moment = require('moment');
-var ValidationUtils = require('./ValidationUtils');
 var FormatUtils = require('./FormatUtils');
 var FunnelUtils = require('./FunnelUtils');
 var ProjectUtils = require('./ProjectUtils');
@@ -23,6 +22,14 @@ var QUERY_PARAMS = [
   'email',
   'latest',
   'property_names'
+];
+
+var EXRACTION_EVENT_LIMIT = 100;
+
+var ANALYSIS_TYPES_WITHOUT_TARGET = [
+  'extraction',
+  'count',
+  'funnel'
 ];
 
 function toCamelcaseName(name) {
@@ -51,10 +58,18 @@ function echoIf(valueMaybe, append) {
 
 module.exports = {
 
-  EXRACTION_EVENT_LIMIT: 100,
+  EXRACTION_EVENT_LIMIT: EXRACTION_EVENT_LIMIT,
 
-  isPersisted: function (explorer) {
+  isPersisted: function(explorer) {
     return explorer.id && !explorer.id.toString().match('TEMP');
+  },
+
+  saveType: function(explorer) {
+    return module.exports.isPersisted(explorer) ? 'update' : 'save';
+  },
+
+  shouldHaveTarget: function(explorer) {
+    return !FormatUtils.isNullOrUndefined(explorer.query.analysis_type) && ANALYSIS_TYPES_WITHOUT_TARGET.indexOf(explorer.query.analysis_type) === -1;
   },
 
   isEmailExtraction: function(explorer) {
@@ -77,12 +92,16 @@ module.exports = {
   },
 
   queryJSON: function(explorer) {
-    if (!explorer || !explorer.query) {
-      return;
-    }
+    if (!explorer || !explorer.query) return;
     var params = _.cloneDeep(explorer.query);
 
-    _.assign(params, TimeframeUtils.getTimeParameters(params.time, params.timezone));
+    if (params.analysis_type === 'extraction' && FormatUtils.isNullOrUndefined(params.email)) {
+      params.latest = EXRACTION_EVENT_LIMIT;
+    }
+
+    if (params.analysis_type !== 'funnel') {
+      _.assign(params, TimeframeUtils.getTimeParameters(params.time, params.timezone));
+    }
 
     // Add filters
     if (params.filters) {
@@ -165,7 +184,7 @@ module.exports = {
   },
 
   /**
-   * Takes in an object of query params directly taken from the URL and formats/decomnstructs them appropriately to work well
+   * Takes in an object of query params directly taken from the URL and formats/deconstructs them appropriately to work well
    * with our data model.
    * @param  {Object} the raw params from the URL
    * @return {Object} formatted attributes to be used for creating a new Explorer model.
@@ -177,25 +196,23 @@ module.exports = {
       params.query.time = unpackedTime.time;
       params.query.timezone = unpackedTime.timezone;
     }
-
     if (params.query.filters) {
       params.query.filters = _.compact(_.map(params.query.filters, FilterUtils.formatFilterParams));
     }
-
     if (params.query.steps) {
       params.query.steps = _.compact(_.map(params.query.steps, FunnelUtils.formatQueryParams));
+      params.query.steps[params.query.steps.length - 1].active = true
     }
-
     if (!params.id && params.query_name) params.id = params.query_name;
     return params;
   },
 
-  getChartTypeOptions: function(result, analysisType) {
+  getChartTypeOptions: function(response, analysisType) {
     var chartTypes = [];
 
-    if (result) {
+    if (response) {
       var dataviz = new Keen.Dataviz();
-      dataviz.data({ result: result });
+      dataviz.data(response);
       var dataType = dataviz.dataType();
 
       if (dataType && Keen.Dataviz.dataTypeMap[dataType]) {
@@ -206,7 +223,7 @@ module.exports = {
         if (!_.contains(chartTypes, 'json')) {
           chartTypes.push('JSON');
         }
-      } else if (result && _.contains(['extraction', 'select_unique'], analysisType)) {
+      } else if (response && _.contains(['extraction', 'select_unique'], analysisType)) {
         chartTypes = ['JSON', 'table'];
       }
     }
@@ -214,8 +231,8 @@ module.exports = {
     return chartTypes;
   },
 
-  resultSupportsChartType: function(result, chartType, analysisType) {
-    return _.contains(module.exports.getChartTypeOptions(result, analysisType), chartType);
+  responseSupportsChartType: function(response, chartType, analysisType) {
+    return _.contains(module.exports.getChartTypeOptions(response, analysisType), chartType);
   },
 
   encodeAttribute: function(attr) {
@@ -239,6 +256,12 @@ module.exports = {
     });
     delete attrs['filters'];
 
+    var steps;
+    if (attrs['steps']) {
+      steps = module.exports.encodeAttribute(attrs['steps']);
+      delete attrs['steps'];
+    }
+
     var queryAttrs = Qs.stringify(attrs);
 
     if (attrs.timeframe && TimeframeUtils.timeframeType(explorer.query.time) === 'absolute') {
@@ -254,6 +277,10 @@ module.exports = {
       queryAttrs += '&filters='+ filters;
     }
 
+    if(steps) {
+      queryAttrs += '&steps=' + steps;
+    }
+
     var url = endpoint + '/projects/'+projectId+'/queries/'
                        + analysisType
                        + '?api_key='
@@ -264,17 +291,7 @@ module.exports = {
   },
 
   resultCanBeVisualized: function(explorer) {
-    if (explorer.result) {
-      var result = explorer.result;
-
-      if (_.isNumber(result) || (_.isArray(result) && result.length)) {
-        return true;
-      } else {
-        return false;
-      }
-    } else {
-      return false;
-    }
+    return (explorer.response && explorer.response.result && (_.isNumber(explorer.response.result) || (_.isArray(explorer.response.result) && explorer.response.result.length)));
   },
 
   isJSONViz: function(explorer) {
@@ -295,13 +312,28 @@ module.exports = {
         params = module.exports.queryJSON(explorer),
         s = stringify,
         dynamicCriteria,
-        dynamicParamNames = [
-          'filters', 'group_by', 'interval', 'target_property', 'timeframe', 'timezone'
-        ],
+        paramNames,
         dynamicConstructorNames = [
           'host', 'protocol', 'requestType'
         ],
+        funnelRootParams = [
+          'event_collection', 'steps'
+        ],
         dynamicContructorValues;
+
+    switch(params.analysis_type) {
+      case 'funnel':
+        paramNames = ['steps'];
+        break;
+
+      default:
+        paramNames = ['event_collection', 'filters', 'group_by', 'interval', 'target_property', 'timeframe', 'timezone'];
+        break;
+    }
+
+    if(params.steps) {
+      params.steps = _.map(params.steps, function(step) { return _.omit(step, 'active'); });
+    }
 
     dynamicContructorValues = mapSkip(dynamicConstructorNames, function(name) {
       if (client.config[name] == defaultKeenJsOpts[name]) {
@@ -312,11 +344,11 @@ module.exports = {
     // remove coercion from example; it's already been handled elsewhere.
     _.each(params['filters'], function(filter) { delete filter['coercion_type'] })
 
-    dynamicCriteria = mapSkip(dynamicParamNames, function(param) {
+    dynamicCriteria = mapSkip(paramNames, function(param) {
       if (!params[param]) {
         return SKIP
       }
-      return '    ' + toCamelcaseName(param) + ': ' + s(params[param])
+      return '    ' + toCamelcaseName(param) + ': ' + s(params[param], {space: 4})
     }).join(',\n');
 
     value = [
@@ -329,7 +361,6 @@ module.exports = {
       'Keen.ready(function(){',
       '  ',
       '  var query = new Keen.Query(' + s(params.analysis_type) + ', {',
-      '    eventCollection: ' + s(params.event_collection) + echoIf(dynamicCriteria, ','),
       dynamicCriteria,
       '  });',
       '  ',

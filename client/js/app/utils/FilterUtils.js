@@ -3,7 +3,7 @@ var moment = require('moment');
 var S = require('string');
 var FormatUtils = require('./FormatUtils');
 var FilterValidations = require('../validations/FilterValidations');
-var ValidationUtils = require('./ValidationUtils');
+var RunValidations = require('./RunValidations');
 
 function exists(value) {
   return !_.isNull(value) && !_.isUndefined(value);
@@ -118,10 +118,8 @@ module.exports = {
   },
 
   queryJSON: function(filter, timezoneOffset) {
-    var valid = ValidationUtils.runValidations(FilterValidations.filter, filter);
-    if (!valid.isValid) {
-      return {};
-    }
+    RunValidations.run(FilterValidations, filter);
+    if (!filter.isValid) return {};
 
     var attrs = _.cloneDeep(filter);
     attrs.property_value = module.exports.getCoercedValue(filter);
@@ -159,6 +157,22 @@ module.exports = {
       filter.property_value = new Date(moment(new Date(filter.property_value)).add(offset, 'minutes').format()).toString()
     }
     return filter;
+  },
+
+  coerceGeoValue: function(value) {
+    var trailingDecimals = value.match(/\.+$/);
+    if (value === '-' || (trailingDecimals && trailingDecimals.length)) {
+      return value;
+    } else {
+      return parseFloat(value) || 0;
+    }
+  },
+
+  validFilters: function(filters) {
+    return _.filter(filters, function(filter) {
+      RunValidations.run(FilterValidations, filter)
+      return filter.isValid;
+    });
   }
 
 };

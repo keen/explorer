@@ -634,6 +634,9 @@
   font-size: 16px;
   color: #536779;
 }
+#keen-explorer label.block-label {
+  display: block;
+}
 #keen-explorer label.valign {
   line-height: 30px;
 }
@@ -784,6 +787,47 @@
   cursor: default;
   outline: 0;
   z-index: 1;
+}
+#keen-explorer .margin-top-tiny {
+  margin-top: 8px;
+}
+#keen-explorer .margin-bottom-tiny {
+  margin-bottom: 8px;
+}
+#keen-explorer .margin-right-tiny {
+  margin-right: 8px;
+}
+#keen-explorer .margin-left-tiny {
+  margin-left: 8px;
+}
+#keen-explorer .margin-top-small {
+  margin-top: 15px;
+}
+#keen-explorer .margin-top-medium {
+  margin-top: 25px;
+}
+#keen-explorer .margin-bottom-medium {
+  margin-bottom: 25px;
+}
+#keen-explorer .margin-bottom-small {
+  margin-bottom: 15px;
+}
+#keen-explorer .no-margin {
+  margin: 0;
+}
+#keen-explorer .padding-tiny {
+  padding: 8px;
+}
+#keen-explorer .padding-right-tiny {
+  padding-right: 8px;
+}
+#keen-explorer .no-radius-left {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+#keen-explorer .no-radius-right {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
 }
 #keen-explorer .explorer-loader {
   background: rgba(255, 255, 255, 0.67);
@@ -1675,6 +1719,112 @@
 }
 #keen-explorer .coercion-type select {
   font-size: 12px;
+}
+#keen-explorer .funnel-builder {
+  /* 
+   * Active Step
+   */
+}
+#keen-explorer .funnel-builder .funnel-step {
+  padding: 0 5px;
+}
+#keen-explorer .funnel-builder .funnel-body {
+  padding: 0 10px;
+}
+#keen-explorer .funnel-builder .funnel-step.active {
+  padding: 0;
+}
+#keen-explorer .funnel-builder .steps {
+  list-style: none;
+  padding: 0;
+}
+#keen-explorer .funnel-builder .step-header {
+  cursor: pointer;
+  display: block;
+  background: #E7E7E7;
+  padding: 6px 10px;
+  border-radius: 2px;
+  border-bottom: 2px solid #DADADA;
+}
+#keen-explorer .funnel-builder .step-number {
+  float: left;
+  background: #FFF;
+  height: 35px;
+  width: 35px;
+  line-height: 35px;
+  text-align: center;
+  font-weight: bold;
+  border-radius: 100px;
+  color: #536778;
+  margin-right: 10px;
+}
+#keen-explorer .funnel-builder .step-name {
+  float: left;
+  color: #5C6F7F;
+  line-height: 35px;
+}
+#keen-explorer .funnel-builder .step-move-btns {
+  display: none;
+  position: relative;
+  width: 25px;
+  height: 35px;
+}
+#keen-explorer .funnel-builder .step-move-btns a {
+  position: absolute;
+  left: 0px;
+  width: 25px;
+  height: 15px;
+  background: #617688;
+}
+#keen-explorer .funnel-builder .step-move-btns a.up {
+  top: 0px;
+}
+#keen-explorer .funnel-builder .step-move-btns a.down {
+  bottom: 0px;
+}
+#keen-explorer .funnel-builder .step-move-btns .arrow {
+  width: 0;
+  height: 0;
+  position: absolute;
+  left: 7px;
+}
+#keen-explorer .funnel-builder .step-move-btns .up .arrow {
+  bottom: 6px;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: 5px solid #FFF;
+}
+#keen-explorer .funnel-builder .step-move-btns .down .arrow {
+  top: 6px;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid #FFF;
+}
+#keen-explorer .funnel-builder a.add-step {
+  font-size: 16px;
+  display: block;
+  margin: 10px 15px;
+}
+#keen-explorer .funnel-builder a.remove-step,
+#keen-explorer .funnel-builder a.remove-step .icon {
+  color: #9A9A9A;
+}
+#keen-explorer .funnel-builder .funnel-step.active {
+  padding: 0;
+}
+#keen-explorer .funnel-builder .funnel-step.active .step-header {
+  background: #536778;
+  border-bottom: none;
+}
+#keen-explorer .funnel-builder .funnel-step.active .step-name {
+  color: #FFF;
+}
+#keen-explorer .funnel-builder .funnel-step.active .step-move-btns {
+  display: block;
+  float: right;
+}
+#keen-explorer .funnel-builder .funnel-step.active .step-body {
+  padding: 0 15px;
 }
 #keen-explorer .timeframe {
   margin: 20px 0 10px;

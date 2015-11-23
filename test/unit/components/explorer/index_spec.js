@@ -1,6 +1,10 @@
 /** @jsx React.DOM */
 var assert = require('chai').assert;
 var _ = require('lodash');
+var React = require('react/addons');
+var TestUtils = React.addons.TestUtils;
+var TestHelpers = require('../../../support/TestHelpers.js');
+var sinon = require('sinon');
 var Explorer = require('../../../../client/js/app/components/explorer/index.js');
 var Visualization = require('../../../../client/js/app/components/explorer/visualization/index.js');
 var QueryBuilder = require('../../../../client/js/app/components/explorer/query_builder/index.js');
@@ -12,15 +16,10 @@ var CacheToggle = require('../../../../client/js/app/components/explorer/cache_t
 var Persistence = require('../../../../client/js/app/modules/persistence/persistence.js');
 var ExplorerStore = require('../../../../client/js/app/stores/ExplorerStore');
 var ExplorerActions = require('../../../../client/js/app/actions/ExplorerActions');
-var ExplorerValidations = require('../../../../client/js/app/validations/ExplorerValidations');
-var ValidationUtils = require('../../../../client/js/app/utils/ValidationUtils');
+var RunValidations = require('../../../../client/js/app/utils/RunValidations');
 var NoticeActions = require('../../../../client/js/app/actions/NoticeActions');
 var ExplorerUtils = require('../../../../client/js/app/utils/ExplorerUtils');
 var Modal = require('../../../../client/js/app/components/common/modal.js');
-var React = require('react/addons');
-var TestUtils = React.addons.TestUtils;
-var TestHelpers = require('../../../support/TestHelpers.js');
-var sinon = require('sinon');
 
 describe('components/explorer/index', function() {
 
@@ -31,7 +30,7 @@ describe('components/explorer/index', function() {
     this.client = TestHelpers.createClient();
     this.project = TestHelpers.createProject();
     this.config = { persistence: null };
-    this.explorer = ExplorerStore.getAll()[Object.keys(ExplorerStore.getAll())[0]];
+    this.explorer = ExplorerStore.get('1');
     this.component = TestUtils.renderIntoDocument(<Explorer client={this.client} project={this.project} config={this.config} />);
   });
 
@@ -128,12 +127,6 @@ describe('components/explorer/index', function() {
 
   describe('basic interaction', function() {
 
-    describe('clearing a query', function () {
-      xit('should clear the fields but NOT alter the data for a persisted explorer in the ExplorerStore', function () {
-        // TODO: This will need a second copy of the currently active model to track changes against.
-      });
-    });
-
     describe('tabbing between panes', function () {
       it('properly tabs from the query builder to browsing favorites', function () {
         this.component.setProps({ persistence: {} });
@@ -149,17 +142,6 @@ describe('components/explorer/index', function() {
         assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, QueryBuilder), 1);
         assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, BrowseQueries), 0);
       });
-    });
-
-    it('shows the proper notice if you run an empty query', function() {
-      var queryBuilderForm = TestUtils.findRenderedDOMComponentWithTag(this.component, 'form');
-      var getStub = sinon.stub(ExplorerStore, 'get').returns(this.explorer);
-      TestUtils.Simulate.submit(queryBuilderForm);
-
-      var notice = TestUtils.findRenderedComponentWithType(this.component, Notice);
-      assert.notMatch(notice.getDOMNode().className, /hide/);
-      assert.match(notice.getDOMNode().textContent, /Choose an Event Collection./);
-      ExplorerStore.get.restore();
     });
 
     it('can launch the filter modal', function() {
@@ -183,54 +165,19 @@ describe('components/explorer/index', function() {
     });
 
     describe('saveQueryClick', function () {
-      before(function () {
-        this.saveStub = sinon.stub(ExplorerActions, 'save');
-      });
-      after(function() {
+      it('should call ExplorerActions.save', function () {
+        var saveStub = sinon.stub(ExplorerActions, 'save');
+        sinon.stub(RunValidations, 'run').returns([]);
+
+        this.explorer.id = 'TEMP-ABC';
+        this.component.forceUpdate();
+        
+        this.component.saveQueryClick(TestHelpers.fakeEvent());
+
+        assert.isTrue(saveStub.calledOnce);
+        
+        RunValidations.run.restore();
         ExplorerActions.save.restore();
-      });
-      beforeEach(function() {
-        this.saveStub.reset();
-      });
-
-      describe('yet to be persisted explorers', function () {
-        beforeEach(function(){
-          this.explorer.id = 'TEMP-ABC';
-          this.component.forceUpdate();
-        });
-
-        it('should run validations on the model', function () {
-          var stub = sinon.stub(ValidationUtils, 'runValidations').returns({ isValid: false });
-          this.component.saveQueryClick({ preventDefault: function(){} });
-          assert.isTrue(stub.calledWith(ExplorerValidations.explorer, this.explorer));
-          ValidationUtils.runValidations.restore();
-        });
-        it('should call ExplorerActions.saveNew if validations pass', function () {
-          sinon.stub(ValidationUtils, 'runValidations').returns({ isValid: true });
-          this.component.saveQueryClick({ preventDefault: function(){} });
-          assert.isTrue(this.saveStub.calledOnce);
-          ValidationUtils.runValidations.restore();
-        });
-      });
-
-      describe('already persisted explorers', function () {
-        beforeEach(function(){
-          this.explorer.id = 'ABC';
-          this.component.forceUpdate();
-        });
-
-        it('should run validations on the model', function () {
-          var stub = sinon.stub(ValidationUtils, 'runValidations').returns({ isValid: false });
-          this.component.saveQueryClick({ preventDefault: function(){} });
-          assert.isTrue(stub.calledWith(ExplorerValidations.explorer, this.explorer));
-          ValidationUtils.runValidations.restore();
-        });
-        it('should call ExplorerActions.saveExisting if validations pass', function () {
-          sinon.stub(ValidationUtils, 'runValidations').returns({ isValid: true });
-          this.component.saveQueryClick({ preventDefault: function(){} });
-          assert.isTrue(this.saveStub.calledOnce);
-          ValidationUtils.runValidations.restore();
-        });
       });
     });
 

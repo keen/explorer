@@ -16,8 +16,6 @@ var ExplorerStore = require('../../../stores/ExplorerStore');
 var NoticeActions = require('../../../actions/NoticeActions');
 var ExplorerUtils = require('../../../utils/ExplorerUtils');
 var FormatUtils = require('../../../utils/FormatUtils');
-var runValidations = require('../../../utils/ValidationUtils').runValidations;
-var ExplorerValidations = require('../../../validations/ExplorerValidations');
 
 var Visualization = React.createClass({
 
@@ -35,7 +33,7 @@ var Visualization = React.createClass({
   },
 
   formatChartTypes: function() {
-    return _.map(ExplorerUtils.getChartTypeOptions(this.props.model.result, this.props.model.query.analysis_type), function(type) {
+    return _.map(ExplorerUtils.getChartTypeOptions(this.props.model.response, this.props.model.query.analysis_type), function(type) {
       return {
         name: (type !== 'JSON') ? FormatUtils.toTitleCase(type).replace('chart', '') : type,
         value: type
@@ -57,12 +55,11 @@ var Visualization = React.createClass({
 
     var chartDetailBarClasses = classNames({
       'chart-detail-bar': true,
-      'chart-detail-active': this.props.model.result !== null && !this.props.model.loading
+      'chart-detail-active': this.props.model.response !== null && !this.props.model.loading
     });
 
 
-    var validations = runValidations(ExplorerValidations.explorer, this.props.model);
-    if(validations.isValid) {
+    if (this.props.model.isValid) {
       codeSample = ExplorerUtils.getSdkExample(this.props.model, this.props.client);
     }
 
@@ -116,7 +113,7 @@ var Visualization = React.createClass({
                       codeSample={codeSample}
                       hidden={this.props.appState.codeSampleHidden}
                       onCloseClick={this.props.toggleCodeSample} 
-                      validation={validations} />
+                      isValid={this.props.model.isValid} />
         </div>
       </div>
     );

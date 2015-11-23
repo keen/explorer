@@ -1,22 +1,40 @@
 var assert = require('chai').assert;
-var expect = require('chai').expect;
 var sinon = require('sinon');
 var moment = require('moment');
 var _ = require('lodash');
 var Qs = require('qs');
 var TestHelpers = require('../../support/TestHelpers');
 var ExplorerActions = require('../../../client/js/app/actions/ExplorerActions');
+var ExplorerUtils = require('../../../client/js/app/utils/ExplorerUtils');
 var FilterUtils = require('../../../client/js/app/utils/FilterUtils');
 var FunnelUtils = require('../../../client/js/app/utils/FunnelUtils');
-var ValidationUtils = require('../../../client/js/app/utils/ValidationUtils');
-var ExplorerValidations = require('../../../client/js/app/validations/ExplorerValidations')
-var ExplorerUtils = require('../../../client/js/app/utils/ExplorerUtils');;
 var TimeframeUtils = require('../../../client/js/app/utils/TimeframeUtils');
+var RunValidations = require('../../../client/js/app/utils/RunValidations');
+var ExplorerValidations = require('../../../client/js/app/validations/ExplorerValidations')
 
 describe('utils/ExplorerUtils', function() {
   describe('extraction event limit', function () {
     it('should be 100', function () {
       assert.strictEqual(ExplorerUtils.EXRACTION_EVENT_LIMIT, 100);
+    });
+  });
+
+  describe('shouldHaveTarget', function () {
+    it('should return false if the analysis_type is null', function () {
+      var explorer = { query: { analysis_type: null } };
+      assert.isFalse(ExplorerUtils.shouldHaveTarget(explorer));
+    });
+    it('should return false if the analysis_type is undefined', function () {
+      var explorer = { query: {} };
+      assert.isFalse(ExplorerUtils.shouldHaveTarget(explorer));
+    });
+    it('should return false if the analysis_type is not in the required types', function () {
+      var explorer = { query: { analysis_type: 'count' } };
+      assert.isFalse(ExplorerUtils.shouldHaveTarget(explorer));
+    });
+    it('should return false if the analysis_type in the required types', function () {
+      var explorer = { query: { analysis_type: 'count_unique' } };
+      assert.isTrue(ExplorerUtils.shouldHaveTarget(explorer));
     });
   });
 
@@ -66,7 +84,7 @@ describe('utils/ExplorerUtils', function() {
       assert.lengthOf(stub.getCalls(), 3);
       FilterUtils.queryJSON.restore();
     });
-    it('should call StepUtils.stepJSON for every filter', function () {
+    it('should call FunnelUtils.stepJSON for every step', function () {
       var explorer = { query: { steps: [{}, {}, {}] } };
       var stub = sinon.stub(FunnelUtils, 'stepJSON');
       ExplorerUtils.queryJSON(explorer);
@@ -125,6 +143,31 @@ describe('utils/ExplorerUtils', function() {
         timeframe: 'this_1_days'
       });
     });
+    it('should set the latest property to the EXRACTION_EVENT_LIMIT constant if the query is a synchronous extraction', function () {
+      var explorer = {
+        query: {
+          analysis_type: 'extraction',
+          event_collection: 'click'
+        }
+      };
+      var json = ExplorerUtils.queryJSON(explorer);
+      assert.deepEqual(json, {
+        event_collection: 'click',
+        analysis_type: 'extraction',
+        latest: ExplorerUtils.EXRACTION_EVENT_LIMIT
+      });
+    });
+    it('should not call getTimeParameters on the root query if the analysis type is funnel', function () {
+      var stub = sinon.stub(TimeframeUtils, 'getTimeParameters');
+      var explorer = {
+        query: {
+          analysis_type: 'funnel'
+        }
+      };
+      var json = ExplorerUtils.queryJSON(explorer);
+      assert.isFalse(stub.called);
+      TimeframeUtils.getTimeParameters.restore();
+    });
   });
 
   describe('toJSON', function () {
@@ -145,7 +188,8 @@ describe('utils/ExplorerUtils', function() {
         query: {
           event_collection: 'click',
           analysis_type: 'extraction',
-          timeframe: 'this_1_days'
+          timeframe: 'this_1_days',
+          latest: 100
         },
         refresh_rate: 0
       });
@@ -181,10 +225,10 @@ describe('utils/ExplorerUtils', function() {
         query_name: 'some-query-name',
         active: false,
         saving: false,
-        error: null,
+        isValid: true,
+        errors: [],
         result: null,
         loading: false,
-        isValid: true,
         query: {
           event_collection: null,
           analysis_type: null,
@@ -193,10 +237,10 @@ describe('utils/ExplorerUtils', function() {
           group_by: null,
           interval: null,
           timezone: 'UTC',
-          filters: null,
           email: null,
           latest: null,
           filters: [],
+          steps: [],
           time: {
             relativity: 'this',
             amount: 1,
@@ -204,6 +248,7 @@ describe('utils/ExplorerUtils', function() {
           }
         },
         metadata: {
+          display_name: null,
           visualization: {
             chart_type: null
           }
@@ -228,10 +273,10 @@ describe('utils/ExplorerUtils', function() {
         query_name: 'some-query-name',
         active: false,
         saving: false,
-        error: null,
         result: null,
         loading: false,
         isValid: true,
+        errors: [],
         query: {
           event_collection: 'clicks',
           analysis_type: 'count',
@@ -244,6 +289,7 @@ describe('utils/ExplorerUtils', function() {
           email: null,
           latest: null,
           filters: [],
+          steps: [],
           time: {
             relativity: 'this',
             amount: 1,
@@ -251,6 +297,7 @@ describe('utils/ExplorerUtils', function() {
           }
         },
         metadata: {
+          display_name: null,
           visualization: {
             chart_type: 'metric'
           }
@@ -442,6 +489,32 @@ describe('utils/ExplorerUtils', function() {
         it('does not have the coercion_type property', function () {
           assert.notInclude(ExplorerUtils.getApiQueryUrl(this.client, this.explorer), "coercion_type");
         });
+      });
+
+      describe('steps', function () {
+        var explorer = { 
+          query: {
+            analysis_type: 'funnel',
+            steps: [{
+              event_collection: 'signups',
+              actor_property: 'user',
+              time: {
+                relativity: 'this',
+                amount: 1,
+                sub_timeframe: 'days'
+              },
+              timezone: 'US/Hawaii'
+            }]
+          }
+        };
+
+        it('has the expected steps attribute', function () {
+          assert.include(ExplorerUtils.getApiQueryUrl(this.client, explorer), "&steps=%5B%7B%22")
+        })
+
+        it('does not have a separate query param for each steop', function () {
+          assert.notInclude(ExplorerUtils.getApiQueryUrl(this.client, explorer), encodeURIComponent("steps[0]"));
+        })
       });
     });
   });

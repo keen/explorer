@@ -98,14 +98,11 @@ module.exports = {
   },
 
   isValidQueryValue: function(value) {
-    if (_.isArray(value)) {
-
-      return value.length > 0;
-    } else {
-      if (value === false) return true;
-      if (value === 0) return true;
-      return !_.isUndefined(value) && !_.isNull(value) && (!_.isPlainObject(value) && !_.isEmpty(value));
-    }
+    if (_.isArray(value)) return value.length > 0;
+    if (value === false) return true;
+    if (value === 0) return true;
+    if (_.isPlainObject(value)) return !_.isEmpty(value);
+    return !module.exports.isNullOrUndefined(value);
   },
 
   parseList: function(value) {
@@ -130,13 +127,18 @@ module.exports = {
   },
 
   isList: function(str) {
+    var strVal = String(str);
     var isList = true;
-    var items = str.match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g);
+    var items = strVal.match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g);
     for(var i=0; i<items.length; i++) {
       isList = (_isWrappedInSingleQuotes(items[i].trim()) || _isWrappedInDoubleQuotes(items[i].trim()));
       if (!isList) break;
     }
     return isList;
+  },
+
+  isNullOrUndefined: function(value) {
+    return (_.isNull(value) || _.isUndefined(value));
   }
 
 };

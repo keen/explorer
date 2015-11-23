@@ -6,29 +6,71 @@ var _ = require('lodash');
 var React = require('react');
 var Filter = require('./filter.js');
 var Modal = require('./modal.js');
-
-var ExplorerActions = require('../../actions/ExplorerActions');
+var ProjectUtils = require('../../utils/ProjectUtils');
+var FilterUtils = require('../../utils/FilterUtils');
 
 var FilterManager = React.createClass({
 
+  propTypes: {
+    eventCollection:  React.PropTypes.string,
+    propertyNames:    React.PropTypes.array,
+    filters:          React.PropTypes.array,
+    addFilter:        React.PropTypes.func.isRequired,
+    removeFilter:     React.PropTypes.func.isRequired,
+    handleChange:     React.PropTypes.func.isRequired,
+    getPropertyType:  React.PropTypes.func.isRequired
+  },
+
+  open: function() {
+    this.refs.modal.open();
+  },
+
+  addFilter: function(e) {
+    e.preventDefault();
+    this.props.addFilter();
+  },
+
+  removeFilter: function(e) {
+    e.preventDefault();
+    this.props.removeFilter(this.props.index);
+  },
+
+  handleChange: function(index, name, value) {
+    var updates = _.cloneDeep(this.props.filters[index]);
+    
+    if (!_.isNull(name.match('coordinates'))) {
+      var coordinateIndex = parseInt(name.split('.')[1]);
+      updates.property_value.coordinates[coordinateIndex] = FilterUtils.coerceGeoValue(value);
+    } else if (name === 'property_value' && updates.coercion_type === 'Geo') {
+      updates.property_value[name] = FilterUtils.coerceGeoValue(value);
+    } else {
+      updates[name] = value;
+    }
+
+    this.props.handleChange(index, updates);
+  },
+
   buildFilterNodes: function() {
-    var filterNodes = this.props.model.query.filters.map(_.bind(function(filter, index) {
+    var filterNodes = this.props.filters.map(function(filter, index) {
       return(
-        <Filter filter={filter}
-                project={this.props.project}
-                removeFilter={this.removeFilter}
-                key={index}
+        <Filter key={index}
                 index={index}
-                model={this.props.model} />
+                filter={filter}
+                propertyType={this.props.getPropertyType(this.props.eventCollection, filter.property_name)}
+                eventCollection={this.props.eventCollection}
+                propertyNames={this.props.propertyNames}
+                handleChange={this.handleChange}
+                removeFilter={this.removeFilter}
+                filterOperators={ProjectUtils.getConstant('FILTER_OPERATORS')} />
       );
-    }, this));
+    }.bind(this));
 
     return (
       <div>
         {filterNodes}
         <div className="filter-buttons">
           <a href="#" className="add-filter btn btn-primary" onClick={this.addFilter}>
-            <span className="icon glyphicon-plus glyphicon"></span>
+            <i className="icon glyphicon glyphicon-plus margin-right-tiny"></i>
             Add another filter
           </a>
         </div>
@@ -39,37 +81,20 @@ var FilterManager = React.createClass({
   noFiltersMarkup: function() {
     return (
       <div className="row">
-        <div className="col-md-12">
+        <div className="col-md-10 col-md-offset-1">
           <div className="no-filters-msg callout">
-            <p>Please select an Event Collection before making a filter.</p>
+            <p className="lead">
+              <i className="icon glyphicon glyphicon-info-sign margin-right-tiny"></i>
+              Please select an Event Collection before making a filter.
+            </p>
           </div>
         </div>
       </div>
     );
   },
 
-  addFilter: function(event) {
-    event.preventDefault();
-    ExplorerActions.addFilter(this.props.model.id);
-  },
-
-  removeFilter: function(event) {
-    event.preventDefault();
-    var index = parseInt(event.currentTarget.dataset.index);
-    ExplorerActions.removeFilter(this.props.model.id, index);
-  },
-
-  // React methods
-
-  componentWillMount: function() {
-    // Create a default filter if there are no filters already on this model
-    if (!this.props.model.query.filters.length) {
-      ExplorerActions.addFilter(this.props.model.id);
-    }
-  },
-
   render: function() {
-    var filterContent = this.props.model.query.event_collection ? this.buildFilterNodes() : this.noFiltersMarkup()
+    var filterContent = this.props.eventCollection ? this.buildFilterNodes() : this.noFiltersMarkup();
 
     return (
       <Modal ref="modal"
@@ -77,7 +102,13 @@ var FilterManager = React.createClass({
              size="large"
              onClose={this.modalClosed}
              modalClasses="filters-modal"
-             footerBtns={[ { text: 'Done' } ]}>
+             footerBtns={[
+              { 
+                text: 'Done',
+                classes: 'btn-success',
+                iconName: 'ok-circle'
+              }
+            ]}>
         <div className="filters">
           {filterContent}
         </div>

@@ -1,100 +1,142 @@
 var _ = require('lodash');
-var filterValidations = require('../validations/FilterValidations').filter;
-var runValidations = require('../utils/ValidationUtils').runValidations;
-var TimeframeUtils = require('../utils/TimeframeUtils');
-var FilterUtils = require('../utils/FilterUtils');
+var ExplorerUtils = require('../utils/ExplorerUtils');
+var SharedValidators = require('./SharedValidators');
+var StepValidations = require('./StepValidations');
+var RunValidations = require('../utils/RunValidations').run;
+
+function isNotFunnel(model) {
+  return model.query.analysis_type !== 'funnel';
+}
 
 module.exports = {
 
-  explorer: {
-
-    query_name: {
-      msg: 'You must give your saved query a name.',
-      validator: function(explorer) {
-        if (!explorer.saving) return true;
-        return (explorer.query_name !== null && explorer.query_name !== undefined && typeof explorer.query_name === "string" && explorer.query_name.length > 0);
-      }
-    },
-
-    refresh_rate: {
-      msg: 'Refresh rate must be between 4 and 24 hours.',
-      validator: function(explorer) {
-        return (typeof explorer.refresh_rate !== 'number' || (explorer.refresh_rate >= 1440 && explorer.refresh_rate <= 86400) ||
-          explorer.refresh_rate == 0);
-      }
-    },
-
-    analysis_type: {
-      msg: 'Choose an Analysis Type.',
-      validator: function(explorer) {
-        return explorer.query.analysis_type ? true : false;
-      }
-    },
-
-    event_collection: {
-      msg: 'Choose an Event Collection.',
-      validator: function(explorer) {
-        return explorer.query.event_collection ? true : false;
-      }
-    },
-
-    filters: {
-
-      msg: 'One of your filters is invalid.',
-      validator: function(explorer) {
-        var isValid = true;
-
-        _.each(explorer.query.filters, function(filter) {
-          if (FilterUtils.isComplete(filter) && !runValidations(filterValidations, filter).isValid) {
-            isValid = false;
-          }
-        });
-
-        return isValid;
-      }
-    },
-
-    time: {
-      validator: function(explorer) {
-        var time = explorer.query.time || {};
-        if (TimeframeUtils.timeframeType(explorer.query.time) === 'relative') {
-          if (time.relativity && time.amount && time.sub_timeframe) {
-            return true;
-          } else {
-            return "You must choose all 3 options for relative timeframes.";
-          }
-        } else if (TimeframeUtils.timeframeType(explorer.query.time) === 'absolute') {
-          if (time.start && time.end) {
-            return true;
-          } else {
-            return "You must provide a start and end time for absolute timeframes.";
-          }
-        } else {
-          return "You must provide a timeframe.";
-        }
-        return true;
-      }
+  analysis_type: {
+    
+    msg: 'Choose an Analysis Type.',
+    
+    validate: function(model) {
+      return (typeof model.query.analysis_type ==='string' && model.query.analysis_type.length > 0);
     }
 
   },
 
-  emailExtractionExplorer: {
+  event_collection: {
     
-    email: {
-      msg: 'A valid email address is required.',
-      validator: function(explorer) {
-        return new RegExp(/.+@.+\..+/i).test(explorer.query.email);
-      }
+    msg: 'Choose an Event Collection.',
+
+    shouldRun: isNotFunnel,
+    
+    validate: function(model) {
+      return (typeof model.query.event_collection ==='string' && model.query.event_collection.length > 0);
+    }
+
+  },
+
+  target_property: {
+    
+    msg: 'Choose an Target Property.',
+
+    shouldRun: function(model) {
+      return ExplorerUtils.shouldHaveTarget(model);
+    },
+    
+    validate: function(model) {
+      return (typeof model.query.target_property ==='string' && model.query.target_property.length > 0);
+    }
+
+  },
+
+  filters: {
+
+    shouldRun: isNotFunnel,
+
+    msg: 'One of your filters is invalid.',
+
+    validate: function(model) {
+      return SharedValidators.filters(model.query.filters);
+    }
+
+  },
+
+  steps: {
+
+    msg: 'One of your funnel steps is invalid.',
+
+    shouldRun: function(model) {
+      return model.query.analysis_type === 'funnel';
     },
 
-    latest: {
-      msg: 'Latest must be a number.',
-      validator: function(explorer) {
-        var value = explorer.query.latest;
-        if (!value) return true;
-        var n = ~~Number(value);
-        return String(n) === value && n >= 0;
+    validate: function(model) {
+      if (!model.query.steps) return false;
+      var isValid = true;
+      for (var i=0; i<model.query.steps.length; i++) {
+        RunValidations(StepValidations, model.query.steps[i]);
+        if (!model.query.steps[i].isValid) isValid = false;
       }
+      return isValid;
+    },
+
+  },
+
+  time: { 
+
+    shouldRun: isNotFunnel,
+
+    validate: function(model) {
+      return SharedValidators.time(model.query.time);
+    }
+
+  },
+
+  query_name: {
+    
+    msg: 'You must give your saved query a name.',
+    
+    shouldRun: function(model) {
+      return model.saving;
+    },
+    
+    validate: function(model) {
+      var name = model.query_name;
+      return (name !== null && name !== undefined && typeof name === "string" && name.length > 0);
+    }
+
+  },
+
+  refresh_rate: {
+    
+    msg: 'Refresh rate must be between 4 and 24 hours.',
+    
+    validate: function(model) {
+      var rate = model.refresh_rate;
+      return (typeof rate !== 'number' || (rate >= 1440 && rate <= 86400) || rate == 0);
+    }
+
+  },
+
+  email: {
+    
+    msg: 'A valid email address is required.',
+    
+    shouldRun: ExplorerUtils.isEmailExtraction,
+    
+    validate: function(model) {
+      return new RegExp(/.+@.+\..+/i).test(model.query.email);
+    }
+
+  },
+
+  latest: {
+    
+    msg: 'Latest must be a number.',
+    
+    shouldRun: ExplorerUtils.isEmailExtraction,
+
+    validate: function(model) {
+      var value = model.query.latest;
+      if (!value) return true;
+      var n = ~~Number(value);
+      return String(n) === value && n >= 0;
     }
 
   }

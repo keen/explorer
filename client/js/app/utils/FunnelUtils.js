@@ -14,6 +14,7 @@ var STEP_PARAMS = [
   'inverted'
 ];
 module.exports = {
+
   stepJSON: function (step) {
     var params = _.cloneDeep(step);
 
@@ -21,9 +22,9 @@ module.exports = {
 
     if (params.filters) {
       params.filters = _.map(params.filters, function(filter) {
-        FilterUtils.queryJSON(filter, TimeframeUtils.getTimezoneOffset(params.timezone)); 
+        return FilterUtils.queryJSON(filter, TimeframeUtils.getTimezoneOffset(params.timezone)); 
       });
-      
+     
       _.remove(params.filters, _.isEmpty);
     }
 
@@ -48,6 +49,10 @@ module.exports = {
       step.filters = _.compact(_.map(step.filters, FilterUtils.formatFilterParams));
     }
 
+    step.inverted = step.inverted === "true";
+    step.optional = step.optional === "true";
+    
     return step;
   }
+  
 };

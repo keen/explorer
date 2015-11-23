@@ -5,6 +5,7 @@ var sinon = require('sinon');
 var TimeframeUtils = require('../../../client/js/app/utils/TimeframeUtils');
 
 describe('utils/TimeframeUtils', function () {
+
   describe('getTimeframe', function () {
     it('should call the right timeframe builder for absolute timeframes', function () {
       var time = {
