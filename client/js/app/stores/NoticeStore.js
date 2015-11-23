@@ -165,6 +165,7 @@ NoticeStore.dispatchToken = AppDispatcher.register(function(action) {
         explorer.query.steps.forEach(function(step, index) {
           if (!step.isValid) {
             _create({
+              id: explorer.id,
               location: 'step',
               stepIndex: index,
               text: step.errors[0].msg,

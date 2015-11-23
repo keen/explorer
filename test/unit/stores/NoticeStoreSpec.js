@@ -153,7 +153,60 @@ describe('stores/NoticeStore', function() {
           location: 'global'
         });
       });
-    });    
+    });
+
+    describe('EXPLORER_FOUND_INVALID actionType', function () {
+      it('should create one notice for each invalid step of a funnel query', function () {
+        ExplorerActions.create({
+          id: 'abc123',
+          errors: [{ msg: 'An error' }],
+          isValid: false,
+          query: {
+            analysis_type: 'funnel',
+            steps: [
+              _.assign(TestHelpers.createStep(), {
+                isValid: false,
+                errors: [
+                  { msg: 'step 1 invalid' },
+                  { msg: 'step 1 invalid two' }
+                ]
+              }),
+              _.assign(TestHelpers.createStep(), {
+                isValid: true
+              }),
+              _.assign(TestHelpers.createStep(), {
+                isValid: false,
+                errors: [
+                  { msg: 'step 3 invalid' },
+                  { msg: 'step 3 invalid two' }
+                ]
+              })
+            ]
+          }
+        });
+        AppDispatcher.dispatch({
+          actionType: ExplorerConstants.EXPLORER_FOUND_INVALID,
+          id: 'abc123'
+        });
+        assert.lengthOf(NoticeStore.getStepNotices(), 2, 'number of notices');
+        assert.deepEqual(NoticeStore.getStepNotices()[0], {
+          id: 'abc123',
+          location: 'step',
+          stepIndex: 0,
+          text: 'step 1 invalid',
+          type: 'error',
+          icon: 'remove-sign'
+        }, 'first step quality');
+        assert.deepEqual(NoticeStore.getStepNotices()[1], {
+          id: 'abc123',
+          location: 'step',
+          stepIndex: 2,
+          text: 'step 3 invalid',
+          type: 'error',
+          icon: 'remove-sign'
+        }, 'second step equality');
+      });
+    });
   });
 
 });
