@@ -11,6 +11,7 @@ function getProps(props) {
   var props = props || {};
   var defaults = {
     index: 0,
+    canRemove: true,
     step: TestHelpers.createStep(),
     eventCollections: [],
     propertyNames: [],
@@ -52,7 +53,6 @@ describe('components/explorer/query_builder/funnels/funnel_step', function() {
 
   it('should call removeStep if the user confirms they want to delete the step', function () {
     this.component = TestHelpers.renderComponent(FunnelStep, getProps({
-      canRemove: true,
       step: _.assign(TestHelpers.createStep(), { active: true })
     }));
     sinon.stub(window, 'confirm').returns(true);
@@ -67,6 +67,26 @@ describe('components/explorer/query_builder/funnels/funnel_step', function() {
       step: _.assign(TestHelpers.createStep(), { active: true })
     }));
     assert.lengthOf($R(this.component).find('.remove-step').components, 0);
+  });
+
+  it('calls handleChange when the event collection field is changed', function () {
+    this.component = TestHelpers.renderComponent(FunnelStep, getProps({
+      step: _.assign(TestHelpers.createStep(), { active: true })
+    }));
+    var node = $R(this.component).find('input[name="event_collection"]').components[0].getDOMNode();
+    node.value = 'test';
+    TestUtils.Simulate.change(node);
+    assert.isTrue(this.component.props.handleChange.calledWith(0, 'event_collection', 'test'));
+  });
+
+  it('calls handleChange when the actor property collection field is changed', function () {
+    this.component = TestHelpers.renderComponent(FunnelStep, getProps({
+      step: _.assign(TestHelpers.createStep(), { active: true })
+    }));
+    var node = $R(this.component).find('input[name="actor_property"]').components[0].getDOMNode();
+    node.value = 'test';
+    TestUtils.Simulate.change(node);
+    assert.isTrue(this.component.props.handleChange.calledWith(0, 'actor_property', 'test'));
   });
   
 });
