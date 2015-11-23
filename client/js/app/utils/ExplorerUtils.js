@@ -69,7 +69,7 @@ module.exports = {
   },
 
   shouldHaveTarget: function(explorer) {
-    return !FormatUtils.isNullOrUndefined(explorer.query.analysis_type) &&ANALYSIS_TYPES_WITHOUT_TARGET.indexOf(explorer.query.analysis_type) === -1;
+    return !FormatUtils.isNullOrUndefined(explorer.query.analysis_type) && ANALYSIS_TYPES_WITHOUT_TARGET.indexOf(explorer.query.analysis_type) === -1;
   },
 
   isEmailExtraction: function(explorer) {
