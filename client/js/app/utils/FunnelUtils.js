@@ -24,7 +24,7 @@ module.exports = {
       params.filters = _.map(params.filters, function(filter) {
         return FilterUtils.queryJSON(filter, TimeframeUtils.getTimezoneOffset(params.timezone)); 
       });
-      
+     
       _.remove(params.filters, _.isEmpty);
     }
 
