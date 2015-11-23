@@ -256,6 +256,12 @@ module.exports = {
     });
     delete attrs['filters'];
 
+    var steps;
+    if (attrs['steps']) {
+      steps = module.exports.encodeAttribute(attrs['steps']);
+      delete attrs['steps'];
+    }
+
     var queryAttrs = Qs.stringify(attrs);
 
     if (attrs.timeframe && TimeframeUtils.timeframeType(explorer.query.time) === 'absolute') {
@@ -269,6 +275,10 @@ module.exports = {
     if (filters) {
       filters = module.exports.encodeAttribute(filters);
       queryAttrs += '&filters='+ filters;
+    }
+
+    if(steps) {
+      queryAttrs += '&steps=' + steps;
     }
 
     var url = endpoint + '/projects/'+projectId+'/queries/'
