@@ -23,6 +23,8 @@ module.exports = {
   event_collection: {
     
     msg: 'Choose an Event Collection.',
+
+    shouldRun: isNotFunnel,
     
     validate: function(model) {
       return (typeof model.query.event_collection ==='string' && model.query.event_collection.length > 0);

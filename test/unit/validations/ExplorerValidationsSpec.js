@@ -92,6 +92,15 @@ describe('validations/ExplorerValidations', function() {
       });
     });
 
+    describe('event_collection', function () {
+      it('shouldRun is false when the analysis_type is funnel', function () {
+        assert.isFalse(ExplorerValidations.event_collection.shouldRun({ query: { analysis_type: 'funnel' } }));
+      });
+      it('shouldRun is true when the analysis_type is not', function () {
+        assert.isTrue(ExplorerValidations.event_collection.shouldRun({ query: { analysis_type: 'count' } }));
+      });
+    });
+
     describe('filters', function () {
       describe('when query has invalid filters', function () {
         it('has an error message', function () {
