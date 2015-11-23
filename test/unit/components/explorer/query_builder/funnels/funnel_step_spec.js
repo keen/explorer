@@ -21,7 +21,8 @@ function getProps(props) {
     toggleStepActive: sinon.stub(),
     handleFilterChange: sinon.stub(),
     handleAddFilter: sinon.stub(),
-    handleRemoveFilter: sinon.stub()
+    handleRemoveFilter: sinon.stub(),
+    getPropertyType: sinon.stub()
   };
   return _.assign({}, defaults, props);
 }
@@ -47,6 +48,25 @@ describe('components/explorer/query_builder/funnels/funnel_step', function() {
     TestUtils.Simulate.click($R(this.component).find('.step-header').components[0].getDOMNode());
     assert.isTrue(this.component.props.toggleStepActive.calledWith(0, true));
     assert.isFalse(this.component.props.moveStep.called);
+  });
+
+  it('should call removeStep if the user confirms they want to delete the step', function () {
+    this.component = TestHelpers.renderComponent(FunnelStep, getProps({
+      canRemove: true,
+      step: _.assign(TestHelpers.createStep(), { active: true })
+    }));
+    sinon.stub(window, 'confirm').returns(true);
+    TestUtils.Simulate.click($R(this.component).find('.remove-step').components[0].getDOMNode());
+    assert.isTrue(this.component.props.removeStep.calledWith(0));
+    window.confirm.restore();
+  });
+
+  it('should NOT show the removeStep button if canRemove is false', function () {
+    this.component = TestHelpers.renderComponent(FunnelStep, getProps({
+      canRemove: false,
+      step: _.assign(TestHelpers.createStep(), { active: true })
+    }));
+    assert.lengthOf($R(this.component).find('.remove-step').components, 0);
   });
   
 });

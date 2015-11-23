@@ -15,6 +15,7 @@ var FunnelStep = React.createClass({
     eventCollections:     React.PropTypes.array.isRequired,
     propertyNames:        React.PropTypes.array.isRequired,
     onBrowseEvents:       React.PropTypes.func.isRequired,
+    getPropertyType:      React.PropTypes.func.isRequired,
     moveStep:             React.PropTypes.func.isRequired, 
     removeStep:           React.PropTypes.func.isRequired,
     handleChange:         React.PropTypes.func.isRequired,
@@ -79,7 +80,7 @@ var FunnelStep = React.createClass({
   buildStepBody: function() {
     var remove;
 
-    if(this.props.canRemove) {
+    if (this.props.canRemove) {
       remove = (
         <a href="#" className="remove-step" onClick={this.removeStep}>
           <i className="icon glyphicon glyphicon-remove-circle margin-right-tiny"></i>
