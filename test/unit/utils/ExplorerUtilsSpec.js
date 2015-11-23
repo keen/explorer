@@ -155,7 +155,18 @@ describe('utils/ExplorerUtils', function() {
         event_collection: 'click',
         analysis_type: 'extraction',
         latest: ExplorerUtils.EXRACTION_EVENT_LIMIT
-      })
+      });
+    });
+    it('should not call getTimeParameters on the root query if the analysis type is funnel', function () {
+      var stub = sinon.stub(TimeframeUtils, 'getTimeParameters');
+      var explorer = {
+        query: {
+          analysis_type: 'funnel'
+        }
+      };
+      var json = ExplorerUtils.queryJSON(explorer);
+      assert.isFalse(stub.called);
+      TimeframeUtils.getTimeParameters.restore();
     });
   });
 
