@@ -25,10 +25,11 @@ describe('stores/NoticeStore', function() {
           saveType: 'save',
           id: 1
         });
-        assert.deepEqual(NoticeStore.getNotice(), {
+        assert.deepEqual(NoticeStore.getGlobalNotice(), {
           type: 'info',
           icon: 'info-sign',
-          text: 'Saving query...'
+          text: 'Saving query...',
+          location: 'global'
         });
       });
       it('should create the right notice with the "update" saveType', function () {
@@ -37,10 +38,11 @@ describe('stores/NoticeStore', function() {
           saveType: 'update',
           id: 1
         });
-        assert.deepEqual(NoticeStore.getNotice(), {
+        assert.deepEqual(NoticeStore.getGlobalNotice(), {
           type: 'info',
           icon: 'info-sign',
-          text: 'Updating query...'
+          text: 'Updating query...',
+          location: 'global'
         });
       });
     });
@@ -52,10 +54,11 @@ describe('stores/NoticeStore', function() {
           saveType: 'save',
           id: 1
         });
-        assert.deepEqual(NoticeStore.getNotice(), {
+        assert.deepEqual(NoticeStore.getGlobalNotice(), {
           type: 'success',
           icon: 'ok',
-          text: 'Query saved.'
+          text: 'Query saved.',
+          location: 'global'
         });
       });
       it('should create the right notice with the "update" saveType', function () {
@@ -64,10 +67,11 @@ describe('stores/NoticeStore', function() {
           saveType: 'update',
           id: 1
         });
-        assert.deepEqual(NoticeStore.getNotice(), {
+        assert.deepEqual(NoticeStore.getGlobalNotice(), {
           type: 'success',
           icon: 'ok',
-          text: 'Query updated.'
+          text: 'Query updated.',
+          location: 'global'
         });
       });
     });
@@ -81,10 +85,11 @@ describe('stores/NoticeStore', function() {
           errorMsg: errorMessage,
           id: 1
         });
-        assert.deepEqual(NoticeStore.getNotice(), {
+        assert.deepEqual(NoticeStore.getGlobalNotice(), {
           type: 'error',
           icon: 'remove-sign',
-          text: 'Problem saving: ' + errorMessage
+          text: 'Problem saving: ' + errorMessage,
+          location: 'global'
         });
       });
       it('should create the right notice with the "update" saveType', function () {
@@ -95,10 +100,11 @@ describe('stores/NoticeStore', function() {
           errorMsg: errorMessage,
           id: 1
         });
-        assert.deepEqual(NoticeStore.getNotice(), {
+        assert.deepEqual(NoticeStore.getGlobalNotice(), {
           type: 'error',
           icon: 'remove-sign',
-          text: 'Problem updating: ' + errorMessage
+          text: 'Problem updating: ' + errorMessage,
+          location: 'global'
         });
       });
     });
@@ -109,10 +115,11 @@ describe('stores/NoticeStore', function() {
           actionType: ExplorerConstants.EXPLORER_DESTROYING,
           id: 1
         });
-        assert.deepEqual(NoticeStore.getNotice(), {
+        assert.deepEqual(NoticeStore.getGlobalNotice(), {
           type: 'info',
           text: 'Deleting query...',
-          icon: 'info-sign'
+          icon: 'info-sign',
+          location: 'global'
         });
       });
     });
@@ -122,10 +129,11 @@ describe('stores/NoticeStore', function() {
         AppDispatcher.dispatch({
           actionType: ExplorerConstants.EXPLORER_DESTROY_SUCCESS
         });
-        assert.deepEqual(NoticeStore.getNotice(), {
+        assert.deepEqual(NoticeStore.getGlobalNotice(), {
           type: 'success',
           text: 'Query deleted.',
-          icon: 'ok'
+          icon: 'ok',
+          location: 'global'
         });
       });
     });
@@ -138,10 +146,11 @@ describe('stores/NoticeStore', function() {
           id: 1,
           errorMsg: errorMsg
         });
-        assert.deepEqual(NoticeStore.getNotice(), {
+        assert.deepEqual(NoticeStore.getGlobalNotice(), {
           type: 'error',
           text: 'There was a problem deleting your query: ' + errorMsg,
-          icon: 'remove-sign'
+          icon: 'remove-sign',
+          location: 'global'
         });
       });
     });    
