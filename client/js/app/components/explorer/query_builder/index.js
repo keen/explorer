@@ -166,7 +166,6 @@ var QueryBuilder = React.createClass({
     if (this.props.model.query.analysis_type === 'funnel') {
       return <FunnelBuilder modelId={this.props.model.id}
                             steps={this.props.model.query.steps}
-                            project={this.props.project}
                             onBrowseEvents={this.props.onBrowseEvents}
                             eventCollections={this.props.project.eventCollections}
                             getEventPropertyNames={this.props.getEventPropertyNames}

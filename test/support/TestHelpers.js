@@ -1,11 +1,16 @@
+var _ = require('lodash');
 var React = require('react/addons');
 var TestUtils = React.addons.TestUtils;
-var _ = require('lodash');
 var ProjectUtils = require('../../client/js/app/utils/ProjectUtils');
 var FormatUtils = require('../../client/js/app/utils/FormatUtils');
 var sinon = require('sinon');
 
 module.exports = {
+
+  renderComponent: function(componentClass, props) {
+    var Component = React.createFactory(componentClass);
+    return TestUtils.renderIntoDocument(Component(props));
+  },
 
   createClient: function() {
     return {

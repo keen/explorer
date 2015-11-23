@@ -15,6 +15,7 @@ var FunnelStep = React.createClass({
     eventCollections:     React.PropTypes.array.isRequired,
     propertyNames:        React.PropTypes.array.isRequired,
     onBrowseEvents:       React.PropTypes.func.isRequired,
+    moveStep:             React.PropTypes.func.isRequired, 
     removeStep:           React.PropTypes.func.isRequired,
     handleChange:         React.PropTypes.func.isRequired,
     toggleStepActive:     React.PropTypes.func.isRequired,
