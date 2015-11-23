@@ -25,7 +25,7 @@ require('./utils/TimeframeUtilsSpec.js');
 // ***********************
 // Validations
 // ***********************
-require('./validations/SharedValidationsSpec.js');
+require('./validations/SharedValidatorsSpec.js');
 require('./validations/ExplorerValidationsSpec.js');
 require('./validations/FilterValidationsSpec.js');
 require('./validations/StepValidationsSpec.js');
@@ -59,6 +59,8 @@ require('./components/explorer/index_spec.js');
 require('./components/explorer/query_actions_spec.js');
 require('./components/explorer/query_builder/extraction_options_spec.js');
 require('./components/explorer/query_builder/index_spec.js');
+require('./components/explorer/query_builder/funnels/funnel_builder_spec.js');
+require('./components/explorer/query_builder/funnels/funnel_step_spec.js');
 require('./components/explorer/saved_queries/browse_queries_spec.js');
 require('./components/explorer/visualization/chart_spec.js');
 require('./components/explorer/visualization/index_spec.js');

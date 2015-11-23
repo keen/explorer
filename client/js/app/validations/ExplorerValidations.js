@@ -1,6 +1,6 @@
 var _ = require('lodash');
 var ExplorerUtils = require('../utils/ExplorerUtils');
-var SharedValidations = require('./SharedValidations');
+var SharedValidators = require('./SharedValidators');
 var StepValidations = require('./StepValidations');
 var RunValidations = require('../utils/RunValidations').run;
 
@@ -15,7 +15,19 @@ module.exports = {
     msg: 'Choose an Analysis Type.',
     
     validate: function(model) {
-      return model.query.analysis_type ? true : false;
+      return (typeof model.query.analysis_type ==='string' && model.query.analysis_type.length > 0);
+    }
+
+  },
+
+  event_collection: {
+    
+    msg: 'Choose an Event Collection.',
+
+    shouldRun: isNotFunnel,
+    
+    validate: function(model) {
+      return (typeof model.query.event_collection ==='string' && model.query.event_collection.length > 0);
     }
 
   },
@@ -29,31 +41,22 @@ module.exports = {
     },
     
     validate: function(model) {
-      return model.query.target_property ? true : false;
+      return (typeof model.query.target_property ==='string' && model.query.target_property.length > 0);
     }
 
   },
 
-  event_collection: _.assign({}, 
-    
-    SharedValidations.event_collection, 
+  filters: {
 
-    { shouldRun: isNotFunnel }
+    shouldRun: isNotFunnel,
 
-  ),
+    msg: 'One of your filters is invalid.',
 
-  filters: _.assign({},
-
-    SharedValidations.filters,
-
-    { 
-      shouldRun: isNotFunnel,
-      validate: function(model) {
-        return SharedValidations.filters.validate(model.query.filters);
-      }
+    validate: function(model) {
+      return SharedValidators.filters(model.query.filters);
     }
 
-  ),
+  },
 
   steps: {
 
@@ -65,27 +68,25 @@ module.exports = {
 
     validate: function(model) {
       if (!model.query.steps) return false;
+      var isValid = true;
       for (var i=0; i<model.query.steps.length; i++) {
-        var valid = RunValidations(StepValidations, model.query.steps[i]).length === 0;
-        if (!valid) return false;
+        RunValidations(StepValidations, model.query.steps[i]);
+        if (!model.query.steps[i].isValid) isValid = false;
       }
-      return true;
+      return isValid;
     },
 
   },
 
-  time: _.assign({}, 
+  time: { 
 
-    SharedValidations.time,
+    shouldRun: isNotFunnel,
 
-    {
-      shouldRun: isNotFunnel,
-      validate: function(model) {
-        return SharedValidations.time.validate(model.query.time)
-      }
+    validate: function(model) {
+      return SharedValidators.time(model.query.time);
     }
 
-  ),
+  },
 
   query_name: {
     

@@ -118,8 +118,8 @@ module.exports = {
   },
 
   queryJSON: function(filter, timezoneOffset) {
-    var errors = RunValidations.run(FilterValidations, filter);
-    if (errors.length) return {};
+    RunValidations.run(FilterValidations, filter);
+    if (!filter.isValid) return {};
 
     var attrs = _.cloneDeep(filter);
     attrs.property_value = module.exports.getCoercedValue(filter);
@@ -170,7 +170,8 @@ module.exports = {
 
   validFilters: function(filters) {
     return _.filter(filters, function(filter) {
-      return RunValidations.run(FilterValidations, filter).length === 0;
+      RunValidations.run(FilterValidations, filter)
+      return filter.isValid;
     });
   }
 

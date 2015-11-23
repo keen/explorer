@@ -19,6 +19,25 @@ describe('utils/ExplorerUtils', function() {
     });
   });
 
+  describe('shouldHaveTarget', function () {
+    it('should return false if the analysis_type is null', function () {
+      var explorer = { query: { analysis_type: null } };
+      assert.isFalse(ExplorerUtils.shouldHaveTarget(explorer));
+    });
+    it('should return false if the analysis_type is undefined', function () {
+      var explorer = { query: {} };
+      assert.isFalse(ExplorerUtils.shouldHaveTarget(explorer));
+    });
+    it('should return false if the analysis_type is not in the required types', function () {
+      var explorer = { query: { analysis_type: 'count' } };
+      assert.isFalse(ExplorerUtils.shouldHaveTarget(explorer));
+    });
+    it('should return false if the analysis_type in the required types', function () {
+      var explorer = { query: { analysis_type: 'count_unique' } };
+      assert.isTrue(ExplorerUtils.shouldHaveTarget(explorer));
+    });
+  });
+
   describe('queryJSON', function () {
     it('should remove values that are not part of the query params that get sent to Keen', function () {
       var explorer = {
@@ -123,6 +142,31 @@ describe('utils/ExplorerUtils', function() {
         analysis_type: 'count',
         timeframe: 'this_1_days'
       });
+    });
+    it('should set the latest property to the EXRACTION_EVENT_LIMIT constant if the query is a synchronous extraction', function () {
+      var explorer = {
+        query: {
+          analysis_type: 'extraction',
+          event_collection: 'click'
+        }
+      };
+      var json = ExplorerUtils.queryJSON(explorer);
+      assert.deepEqual(json, {
+        event_collection: 'click',
+        analysis_type: 'extraction',
+        latest: ExplorerUtils.EXRACTION_EVENT_LIMIT
+      });
+    });
+    it('should not call getTimeParameters on the root query if the analysis type is funnel', function () {
+      var stub = sinon.stub(TimeframeUtils, 'getTimeParameters');
+      var explorer = {
+        query: {
+          analysis_type: 'funnel'
+        }
+      };
+      var json = ExplorerUtils.queryJSON(explorer);
+      assert.isFalse(stub.called);
+      TimeframeUtils.getTimeParameters.restore();
     });
   });
 

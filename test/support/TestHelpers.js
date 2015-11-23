@@ -1,11 +1,16 @@
+var _ = require('lodash');
 var React = require('react/addons');
 var TestUtils = React.addons.TestUtils;
-var _ = require('lodash');
 var ProjectUtils = require('../../client/js/app/utils/ProjectUtils');
 var FormatUtils = require('../../client/js/app/utils/FormatUtils');
 var sinon = require('sinon');
 
 module.exports = {
+
+  renderComponent: function(componentClass, props) {
+    var Component = React.createFactory(componentClass);
+    return TestUtils.renderIntoDocument(Component(props));
+  },
 
   createClient: function() {
     return {
@@ -64,6 +69,36 @@ module.exports = {
           chart_type: null
         }
       }
+    };
+  },
+
+  createFilter: function() {
+    return {
+      property_name: null,
+      property_value: null,
+      operator: 'eq',
+      coercion_type: 'String',
+      isValid: true,
+      errors: []
+    };
+  },
+
+  createStep: function() {
+    return {
+      event_collection: null,
+      actor_property: null,
+      time: {
+        relativity: 'this',
+        amount: 14,
+        sub_timeframe: 'days'
+      },
+      timezone: ProjectUtils.getConstant('DEFAULT_TIMEZONE'),
+      filters: [],
+      optional: false,
+      inverted: false,
+      active: false,
+      isValid: true,
+      errors: []
     };
   },
 

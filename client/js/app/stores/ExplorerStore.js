@@ -89,35 +89,14 @@ function _defaultStep() {
     filters: [],
     optional: false,
     inverted: false,
-    active: false
+    active: false,
+    isValid: true,
+    errors: []
   }
 }
 
 function _validate(id) {
-  var newExplorer = _.cloneDeep(_explorers[id]);
-  var errors = RunValidations(ExplorerValidations, newExplorer);
-  newExplorer.isValid = (errors.length > 0) ? false : true;
-  newExplorer.errors = errors;
-
-  for (var i=0; i<newExplorer.query.filters.length; i++) {
-    var filterErrors = RunValidations(FilterValidations, newExplorer.query.filters[i]);
-    newExplorer.query.filters[i].errors = filterErrors;
-    newExplorer.query.filters[i].isValid = filterErrors.length ? false: true;
-  }
-
-  for (var i=0; i<newExplorer.query.steps.length; i++) {
-    var stepErrors = RunValidations(StepValidations, newExplorer.query.steps[i]);
-    newExplorer.query.steps[i].errors = stepErrors;
-    newExplorer.query.steps[i].isValid = stepErrors.length ? false: true;
-
-    for(var j=0; j<newExplorer.query.steps[i].filters.length; j++) {
-      var filterErrors = RunValidations(FilterValidations, newExplorer.query.steps[i].filters[j]);
-      newExplorer.query.steps[i].filters[j].errors = filterErrors;
-      newExplorer.query.steps[i].filters[j].isValid = filterErrors.length ? false: true;
-    }
-  }
-
-  _explorers[id] = newExplorer;
+  RunValidations(ExplorerValidations, _explorers[id]);
 }
 
 /**
@@ -189,7 +168,7 @@ function _migrateToFunnel(explorer, newModel) {
  * @return {Object}         The new set of updates
  */
 function _migrateFromFunnel(explorer, newModel) {
-  if (explorer.query.steps.length < 1) return;
+  if (explorer.query.steps.length < 1) return newModel;
   var activeStep = _.find(explorer.query.steps, { active: true }) || explorer.query.steps[0];
 
   _.each(SHARED_FUNNEL_STEP_PROPERTIES, function (key) {
@@ -305,6 +284,14 @@ function _update(id, updates) {
   }
 }
 
+function _markFirstInvalidStepActive(id) {
+  var explorer = _explorers[id];
+  if (explorer.query.analysis_type !== 'funnel') return;
+  explorer.query.steps.forEach(function(step, index) {
+    if (!step.isValid) _setStepActive(id, index);
+  });
+}
+
 function _remove(id) {
   delete _explorers[id];
 }
@@ -348,6 +335,9 @@ function _updateFilter(id, index, updates) {
 
 function _addStep(id, attrs) {
   var explorer = _explorers[id];
+  if (explorer.query.analysis_type !== 'funnel') {
+    throw new Error('Error: Attempting to add a step to a non-funnel query. Explorer id: '+explorer.id);
+  }
   var step = _.assign(_defaultStep(), attrs || {});
   step.active = true;
 
@@ -605,6 +595,12 @@ ExplorerStore.dispatchToken = AppDispatcher.register(function(action) {
 
     case ExplorerConstants.EXPLORER_VALIDATE:
       _validate(action.id);
+      finishAction();
+      break;
+
+    case ExplorerConstants.EXPLORER_FOUND_INVALID:
+      // Find any invalid steps and mark the first one active to display the notice.
+      _markFirstInvalidStepActive(action.id);
       finishAction();
       break;
 

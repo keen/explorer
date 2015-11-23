@@ -26,7 +26,7 @@ describe('utils/RunValidations', function() {
     assert.isTrue(spyTwo.calledWith(model));
   });
 
-  it('should properly return an array of error objects if a validator fails', function () {
+  it('should properly set the errors on the model if a validator fails', function () {
     validations = {
       arrayVal: {
         msg: 'is not array',
@@ -45,8 +45,8 @@ describe('utils/RunValidations', function() {
       arrayVal: 'not an array',
       stringVal: ['not', 'a', 'string']
     };
-    var result = RunValidations.run(validations, model);
-    assert.deepEqual(result, [
+    RunValidations.run(validations, model);
+    assert.deepEqual(model.errors, [
       {
         attribute: 'arrayVal',
         msg: 'is not array'
@@ -56,42 +56,36 @@ describe('utils/RunValidations', function() {
         msg: 'is not string'
       }
     ]);
+    assert.strictEqual(model.isValid, false);
   });
 
   it('should not run validations if the shouldRun function returns false', function () {
+    var stub = sinon.stub();
     validations = {
-      arrayVal: {
-        msg: 'is not array',
+      attribute: {
+        msg: 'is not valid',
         shouldRun: function() { return false; },
-        validate: function(model, value) {
-          return _.isArray(value);
-        }
+        validate: stub
       }
     };
-    model = {
-      arrayVal: 'not an array',
-    };
-    var result = RunValidations.run(validations, model);
-    assert.deepEqual(result, []);
+    model = { attribute: 'not valid' };
+    RunValidations.run(validations, model);
+    assert.isFalse(stub.getCalls().length > 0);
   });
 
   it('should run validations if the shouldRun function returns true', function () {
+    var stub = sinon.stub().returns(false);
     validations = {
       arrayVal: {
         msg: 'is not array',
         shouldRun: function() { return true; },
-        validate: function(model, value) {
-          return _.isArray(value);
-        }
+        validate: stub
       }
     };
     model = {
       arrayVal: 'not an array',
     };
-    var result = RunValidations.run(validations, model);
-    assert.deepEqual(result, [{
-      attribute: 'arrayVal',
-      msg: 'is not array'
-    }]);
+    RunValidations.run(validations, model);
+    assert.isTrue(stub.calledOnce);
   });
 });

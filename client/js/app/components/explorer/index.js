@@ -29,7 +29,8 @@ function getStoresState() {
   return {
     allPersistedExplorers: ExplorerStore.getAllPersisted(),
     activeExplorer: ExplorerStore.getActive(),
-    notice: NoticeStore.getNotice(),
+    notice: NoticeStore.getGlobalNotice(),
+    stepNotices: NoticeStore.getStepNotices(),
     appState: AppStateStore.getState()
   };
 }
@@ -267,7 +268,8 @@ var Explorer = React.createClass({
                                 handleClearQuery={this.handleClearQuery}
                                 getEventPropertyNames={this.getEventPropertyNames}
                                 getPropertyType={this.getPropertyType}
-                                analysisTypes={ProjectUtils.getConstant('ANALYSIS_TYPES')} />;
+                                analysisTypes={ProjectUtils.getConstant('ANALYSIS_TYPES')}
+                                stepNotices={this.state.stepNotices} />;
     } else {
       queryPane = <BrowseQueries ref="query-browser"
                                  listItems={this.state.allPersistedExplorers}
