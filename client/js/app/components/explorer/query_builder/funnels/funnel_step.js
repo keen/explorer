@@ -3,6 +3,7 @@ var _ = require('lodash');
 var SelectField = require('../select_field.js');
 var Timeframe = require('../../../common/timeframe.js');
 var FieldsToggle = require('../../../common/fields_toggle.js');
+var Notice = require('../../../common/notice.js');
 var FilterManager = require('../../../common/filter_manager.js');
 var FilterUtils = require('../../../../utils/FilterUtils.js');
 var classNames = require('classnames');
@@ -78,7 +79,7 @@ var FunnelStep = React.createClass({
   },
 
   buildStepBody: function() {
-    var remove;
+    var remove, notice;
 
     if (this.props.canRemove) {
       remove = (
@@ -88,10 +89,14 @@ var FunnelStep = React.createClass({
         </a>
       );
     }
+    if (this.props.notice) {
+      notice = (<Notice notice={this.props.notice} closable={false} />);
+    }
 
     if (this.props.step.active === true) {
       return (
         <div className="step-body margin-top-small margin-bottom-small">
+          {notice}
           <SelectField name="event_collection" 
                        label="Event Collection"
                        value={this.props.step.event_collection}

@@ -169,10 +169,9 @@ var ExplorerActions = {
     ExplorerActions.validate(explorer.id);
     explorer = ExplorerStore.get(id);
     if (!explorer.isValid) {
-      NoticeActions.create({
-        text: explorer.errors[0].msg,
-        type: 'error',
-        icon: 'remove-sign'
+      AppDispatcher.dispatch({
+        actionType: ExplorerConstants.EXPLORER_FOUND_INVALID,
+        id: explorer.id
       });
       return;
     }
@@ -225,10 +224,9 @@ var ExplorerActions = {
     var explorer = ExplorerStore.get(id);
 
     if (!explorer.isValid) {
-      NoticeActions.create({
-        text: explorer.errors[0].msg,
-        type: 'error',
-        icon: 'remove-sign'
+      AppDispatcher.dispatch({
+        actionType: ExplorerConstants.EXPLORER_FOUND_INVALID,
+        id: explorer.id
       });
       return;
     }
@@ -320,10 +318,9 @@ var ExplorerActions = {
 
     var explorer = ExplorerStore.get(sourceId);
     if (!explorer.isValid) {
-      NoticeActions.create({
-        icon: 'remove-circle',
-        type: 'error',
-        text: "Can't save: " + explorer.errors[0].msg
+      AppDispatcher.dispatch({
+        actionType: ExplorerConstants.EXPLORER_FOUND_INVALID,
+        id: explorer.id
       });
       return;
     }

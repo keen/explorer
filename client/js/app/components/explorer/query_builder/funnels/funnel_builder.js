@@ -9,6 +9,7 @@ var FunnelsBuilder = React.createClass({
     modelId:               React.PropTypes.string.isRequired,
     eventCollections:      React.PropTypes.array.isRequired,
     steps:                 React.PropTypes.array.isRequired,
+    stepNotices:           React.PropTypes.array.isRequired,
     onBrowseEvents:        React.PropTypes.func.isRequired,
     getEventPropertyNames: React.PropTypes.func.isRequired,
     getPropertyType:       React.PropTypes.func.isRequired
@@ -55,10 +56,12 @@ var FunnelsBuilder = React.createClass({
 
   buildSteps: function() {
     return this.props.steps.map(function(step, index) {
+      var notice = _.findWhere(this.props.stepNotices, { stepIndex: index });
       return (
         <li key={index}>
           <FunnelStep index={index}
                       step={step}
+                      notice={notice}
                       removeStep={this.removeStep}
                       canRemove={this.props.steps.length > 1}
                       eventCollections={this.props.eventCollections}

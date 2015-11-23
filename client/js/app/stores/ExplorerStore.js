@@ -284,6 +284,14 @@ function _update(id, updates) {
   }
 }
 
+function _markFirstInvalidStepActive(id) {
+  var explorer = _explorers[id];
+  if (explorer.query.analysis_type !== 'funnel') return;
+  explorer.query.steps.forEach(function(step, index) {
+    if (!step.isValid) _setStepActive(id, index);
+  });
+}
+
 function _remove(id) {
   delete _explorers[id];
 }
@@ -587,6 +595,12 @@ ExplorerStore.dispatchToken = AppDispatcher.register(function(action) {
 
     case ExplorerConstants.EXPLORER_VALIDATE:
       _validate(action.id);
+      finishAction();
+      break;
+
+    case ExplorerConstants.EXPLORER_FOUND_INVALID:
+      // Find any invalid steps and mark the first one active to display the notice.
+      _markFirstInvalidStepActive(action.id);
       finishAction();
       break;
 
