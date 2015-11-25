@@ -12,6 +12,11 @@ var FilterUtils = require('../../utils/FilterUtils');
 
 var Filter = React.createClass({
 
+  removeFilter: function(e) {
+    e.preventDefault();
+    this.props.removeFilter(this.props.index);
+  },
+
   handleChange: function(name, value) {
     this.props.handleChange(this.props.index, name, value);
   },
@@ -104,7 +109,7 @@ var Filter = React.createClass({
             {this.getListSyntaxInfo()}
           </div>
           <div className="col-md-1 filter-close-col">
-            <a href="#" className="remove-filter" onClick={this.props.removeFilter} data-index={this.props.index}>
+            <a href="#" className="remove-filter" onClick={this.removeFilter} data-index={this.props.index}>
               <span className="icon no-margin">&times;</span>
             </a>
           </div>

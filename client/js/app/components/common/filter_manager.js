@@ -30,9 +30,8 @@ var FilterManager = React.createClass({
     this.props.addFilter();
   },
 
-  removeFilter: function(e) {
-    e.preventDefault();
-    this.props.removeFilter(this.props.index);
+  removeFilter: function(index) {
+    this.props.removeFilter(index);
   },
 
   handleChange: function(index, name, value) {
