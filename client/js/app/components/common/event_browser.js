@@ -18,6 +18,12 @@ var EventBrowser = React.createClass({
     if (event.keyCode === enterKeyCode) this.selectEventCollection();
   },
 
+  deleteProperty: function(propertyName, eventCollection, event) {
+    if(confirm("Are you sure you want to delete " + propertyName + " from " + eventCollection + "?")) {
+      ProjectActions.deleteProperty(propertyName, eventCollection, this.props.client);
+    }
+  },
+
   selectEventCollectionClick: function(event) {
     event.preventDefault();
     this.props.selectEventCollection(this.state.activeEventCollection);
@@ -78,11 +84,13 @@ var EventBrowser = React.createClass({
 
   getRecentEvents: function() {
     var recentEvents = this.props.project.schema[this.state.activeEventCollection].recentEvents;
-    return recentEvents ? FormatUtils.prettyPrintJSON(recentEvents) : "";
+    var recentEventsText = recentEvents ? FormatUtils.prettyPrintJSON(recentEvents) : "";
+
+    return <textarea className="json-view" value={recentEventsText} readOnly />
   },
 
   getSchema: function() {
-    return FormatUtils.prettyPrintJSON(ProjectUtils.getEventCollectionProperties(this.props.project, this.state.activeEventCollection)) || "";
+    return this.formatSchemaTable(this.props.project, this.state.activeEventCollection);
   },
 
   changeActiveView: function(event) {
@@ -165,12 +173,28 @@ var EventBrowser = React.createClass({
             </ul>
             <div ref="event-data-wrapper" className="event-data-wrapper">
               <Loader ref="loader" visible={this.shouldShowLoader()} />
-              <textarea className="json-view" value={previewData} readOnly />
+              {previewData}
             </div>
           </div>
         </div>
       </Modal>
     );
+  },
+
+  formatSchemaTable: function(project, eventCollection) {
+    var properties = project.schema[eventCollection] ? project.schema[eventCollection].properties : {};
+    var _this = this;
+
+    var rows = Object.keys(properties).map(function(propertyName) {
+      return (<tr>
+          <td>{propertyName}</td>
+          <td>{properties[propertyName]}</td>
+          <td>
+            <span className="delete-icon" onClick={_this.deleteProperty.bind(_this, propertyName, eventCollection)}>trash icon</span>
+          </td>
+        </tr>);
+    });
+    return (<table><tbody className="collection-details">{rows}</tbody></table>);
   }
 });
 

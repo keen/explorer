@@ -87,6 +87,23 @@ var ProjectActions = {
         });
       }
     });
+  },
+
+  deleteProperty: function(propertyName, eventCollection, client) {
+    var url = client.config.protocol +
+      "://" + client.config.host +
+      "/projects/" + client.config.projectId +
+      "/events/" + eventCollection +
+      "/properties/" + propertyName +
+      "?api_key=" + client.config.masterKey;
+    var req = request("DELETE", url).type("application/json");
+    req.end(function(err, res) {
+      if (err) {
+        throw new Error("Error deleting " + propertyName +":" + err);
+      } else {
+        ProjectActions.fetchProjectSchema();
+      }
+    });
   }
 
 };

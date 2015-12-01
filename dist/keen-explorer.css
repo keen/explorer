@@ -1028,6 +1028,17 @@
   resize: none;
   border-radius: 0 0 5px 0;
 }
+#keen-explorer .event-browser tbody.collection-details {
+  overflow-y: scroll;
+  display: block;
+  height: 300px;
+  border: 0;
+  background: #FFF;
+  table-layout: fixed;
+}
+#keen-explorer .event-browser tbody.collection-details span.delete-icon {
+  cursor: pointer;
+}
 #keen-explorer .event-browser-modal .modal-body {
   padding: 0;
 }

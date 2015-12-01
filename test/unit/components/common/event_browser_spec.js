@@ -1,16 +1,17 @@
 /** @jsx React.DOM */
-var sinon = require('sinon');
-var assert = require('chai').assert;
-var _ = require('lodash');
 var React = require('react/addons');
-var TestUtils = React.addons.TestUtils;
-var TestHelpers = require('../../../support/TestHelpers');
+var _ = require('lodash');
+var $R = require('rquery')(_, React);
+var assert = require('chai').assert;
+var sinon = require('sinon');
+
 var EventBrowser = require('../../../../client/js/app/components/common/event_browser.js');
-var Loader = require('../../../../client/js/app/components/common/loader.js');
-var ExplorerActions = require('../../../../client/js/app/actions/ExplorerActions');
 var ExplorerUtils = require('../../../../client/js/app/utils/ExplorerUtils');
+var Loader = require('../../../../client/js/app/components/common/loader.js');
 var ProjectUtils = require('../../../../client/js/app/utils/ProjectUtils');
-var FormatUtils = require('../../../../client/js/app/utils/FormatUtils');
+var ProjectActions = require('../../../../client/js/app/actions/ProjectActions');
+var TestHelpers = require('../../../support/TestHelpers');
+var TestUtils = React.addons.TestUtils;
 
 describe('components/common/event_browser', function() {
 
@@ -28,7 +29,12 @@ describe('components/common/event_browser', function() {
     this.project.loading = true;
     this.currentEventCollection = 'click';
     this.client = TestHelpers.createClient();
-    this.component = TestUtils.renderIntoDocument(<EventBrowser client={this.client} currentEventCollection={this.currentEventCollection} project={this.project} />);
+    this.component = TestUtils.renderIntoDocument(
+        <EventBrowser
+        client={this.client}
+        currentEventCollection={this.currentEventCollection}
+        project={this.project}
+        />);
   });
 
   describe('setup', function() {
@@ -43,20 +49,24 @@ describe('components/common/event_browser', function() {
 
   describe("delete schema property", function() {
     it("calls endpoint to delete schema property", function() {
-      var eventCollection = ""; // what
-      var propertyName = ""; // seriously i don't know
-
+      sinon.stub(window, 'confirm').returns(true);
+      var xhrOpenSpy = sinon.spy(XMLHttpRequest.prototype, 'open');
+      var xhrSendStub = sinon.stub(XMLHttpRequest.prototype, 'send');
+      var eventCollection = "click";
+      var propertyName = "stringProp";
       var expectedURL = this.client.config.protocol +
         "://" + this.client.config.host +
         "/projects/" + this.client.config.projectId +
         "/events/" + eventCollection +
-        "/properties/" + propertyName;
+        "/properties/" + propertyName +
+        "?api_key=" + this.client.config.masterKey;
 
-      var expectedURL = this.client.;
+      var deleteIcon = $R(this.component).find(".delete-icon").at(0)
+        .components[0]
+        .getDOMNode();
+      TestUtils.Simulate.click(deleteIcon);
 
-      assert.isTrue(this.xhrOpenSpy.calledWith('DELETE', expectedURL, true));
+      assert.isTrue(xhrOpenSpy.calledWith('DELETE', expectedURL, true));
     });
-
-    it("prompts user for confirmation before endpoint is called");
   });
 });
