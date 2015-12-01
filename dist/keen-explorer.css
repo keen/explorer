@@ -1028,16 +1028,36 @@
   resize: none;
   border-radius: 0 0 5px 0;
 }
-#keen-explorer .event-browser tbody.collection-details {
+#keen-explorer .event-browser table {
   overflow-y: scroll;
-  display: block;
   height: 300px;
+  table-layout: fixed;
+  display: block;
+}
+#keen-explorer .event-browser table th,
+#keen-explorer .event-browser table td {
+  padding: 5px;
+}
+#keen-explorer .event-browser table thead.collection-details {
+  border-bottom: solid 1px #ccc;
+}
+#keen-explorer .event-browser table td.property-name,
+#keen-explorer .event-browser table th.property-name {
+  width: 60%;
+}
+#keen-explorer .event-browser table tbody.collection-details {
   border: 0;
   background: #FFF;
-  table-layout: fixed;
 }
-#keen-explorer .event-browser tbody.collection-details span.delete-icon {
+#keen-explorer .event-browser table tbody.collection-details tr {
+  border-bottom: solid 1px #ccc;
+}
+#keen-explorer .event-browser table tbody.collection-details span.delete-icon {
   cursor: pointer;
+  opacity: 0;
+}
+#keen-explorer .event-browser table tbody.collection-details span.delete-icon:hover {
+  opacity: 1;
 }
 #keen-explorer .event-browser-modal .modal-body {
   padding: 0;

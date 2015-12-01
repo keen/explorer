@@ -69,16 +69,40 @@
     border-radius: 0 0 5px 0;
   }
 
-  tbody.collection-details {
+  table {
     overflow-y: scroll;
-    display: block;
     height: 300px;
-    border: 0;
-    background: #FFF;
     table-layout:fixed;
+    display: block;
 
-    span.delete-icon {
-      cursor: pointer;
+    th, td {
+      padding: 5px;
+    }
+
+    thead.collection-details {
+      border-bottom: solid 1px #ccc;
+    }
+
+    td.property-name, th.property-name {
+      width: 60%;
+    }
+
+    tbody.collection-details {
+      border: 0;
+      background: #FFF;
+
+      tr {
+        border-bottom: solid 1px #ccc;
+      }
+
+      span.delete-icon {
+        cursor: pointer;
+        opacity: 0;
+      }
+
+      span.delete-icon:hover {
+        opacity: 1;
+      }
     }
   }
 }

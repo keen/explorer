@@ -96,10 +96,10 @@ var ProjectActions = {
       "/events/" + eventCollection +
       "/properties/" + propertyName +
       "?api_key=" + client.config.masterKey;
-    var req = request("DELETE", url).type("application/json");
+    var req = request("DELETE", url);
     req.end(function(err, res) {
       if (err) {
-        throw new Error("Error deleting " + propertyName +":" + err);
+        throw new Error("Error deleting " + propertyName +":" + err.message);
       } else {
         ProjectActions.fetchProjectSchema();
       }

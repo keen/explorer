@@ -19,7 +19,10 @@ var EventBrowser = React.createClass({
   },
 
   deleteProperty: function(propertyName, eventCollection, event) {
-    if(confirm("Are you sure you want to delete " + propertyName + " from " + eventCollection + "?")) {
+    var confirmDeleteMessage = "Are you sure you want to delete " +
+      propertyName + " from " +
+      eventCollection + "? This operation may take a while and is not reversible."
+    if(confirm(confirmDeleteMessage)) {
       ProjectActions.deleteProperty(propertyName, eventCollection, this.props.client);
     }
   },
@@ -187,14 +190,23 @@ var EventBrowser = React.createClass({
 
     var rows = Object.keys(properties).map(function(propertyName) {
       return (<tr>
-          <td>{propertyName}</td>
-          <td>{properties[propertyName]}</td>
+          <td className="property-name">{propertyName}</td>
+          <td className="type">{properties[propertyName]}</td>
           <td>
-            <span className="delete-icon" onClick={_this.deleteProperty.bind(_this, propertyName, eventCollection)}>trash icon</span>
+            <span className="delete-icon" onClick={_this.deleteProperty.bind(_this, propertyName, eventCollection)}>
+            <i className="icon glyphicon glyphicon-remove-circle"></i>
+            </span>
           </td>
         </tr>);
     });
-    return (<table><tbody className="collection-details">{rows}</tbody></table>);
+    return (<table>
+        <thead className="collection-details"><tr>
+          <th className="property-name">Property Name</th>
+          <th>Type</th>
+          <th><i className="icon glyphicon glyphicon-remove-circle"/></th>
+        </tr></thead>
+        <tbody className="collection-details">{rows}</tbody>
+        </table>);
   }
 });
 
