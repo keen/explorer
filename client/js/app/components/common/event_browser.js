@@ -4,12 +4,15 @@
 
 var React = require('react');
 var _ = require('lodash');
+var request = require('superagent');
 var classNames = require('classnames');
-var Loader = require('../common/loader.js');
+
 var FormatUtils = require('../../utils/FormatUtils');
-var ProjectUtils = require('../../utils/ProjectUtils');
+var Loader = require('./loader');
+var Modal = require('./modal');
+var Notice = require('./notice');
 var ProjectActions = require('../../actions/ProjectActions');
-var Modal = require('./modal.js');
+var ProjectUtils = require('../../utils/ProjectUtils');
 
 var EventBrowser = React.createClass({
 
@@ -19,12 +22,33 @@ var EventBrowser = React.createClass({
   },
 
   deleteProperty: function(propertyName, eventCollection, event) {
-    var confirmDeleteMessage = "Are you sure you want to delete " +
+    var _this = this;
+    var confirmDeleteMessage = "Are you sure you want to delete all values for " +
       propertyName + " from " +
-      eventCollection + "? This operation may take a while and is not reversible."
-    if(confirm(confirmDeleteMessage)) {
-      ProjectActions.deleteProperty(propertyName, eventCollection, this.props.client);
-    }
+      eventCollection + "? This operation may take a while and is not reversible.";
+
+      if(confirm(confirmDeleteMessage)) {
+        var client = this.props.client;
+        var url = client.config.protocol +
+          "://" + client.config.host +
+          "/projects/" + client.config.projectId +
+          "/events/" + eventCollection +
+          "/properties/" + propertyName +
+          "?api_key=" + client.config.masterKey;
+        var req = request("DELETE", url);
+
+        req.end(function(err, res) {
+          if (err) {
+            _this.setState({ eventNotice: { text: res.body.message, type: 'error' } });
+          } else {
+            _this.setState({ eventNotice: { text: "Successfully deleted values for " + propertyName } });
+          }
+        });
+      }
+  },
+
+  closeNotice: function() {
+    this.setState({ eventNotice: undefined });
   },
 
   selectEventCollectionClick: function(event) {
@@ -103,6 +127,31 @@ var EventBrowser = React.createClass({
     if (tabName === 'recentEvents') this.fetchRecentEvents();
   },
 
+  formatSchemaTable: function(project, eventCollection) {
+    var properties = project.schema[eventCollection] ? project.schema[eventCollection].properties : {};
+    var _this = this;
+
+    var rows = Object.keys(properties).map(function(propertyName) {
+      return (<tr>
+          <td className="property-name">{propertyName}</td>
+          <td className="type">{properties[propertyName]}</td>
+          <td>
+            <span className="delete-icon" onClick={_this.deleteProperty.bind(_this, propertyName, eventCollection)}>
+            <i className="icon glyphicon glyphicon-remove-circle" />
+            </span>
+          </td>
+        </tr>);
+    });
+    return (<table>
+        <thead className="collection-details"><tr>
+          <th className="property-name">Property Name</th>
+          <th>Type</th>
+          <th><i className="icon glyphicon glyphicon-remove-circle"/></th>
+        </tr></thead>
+        <tbody className="collection-details">{rows}</tbody>
+        </table>);
+  },
+
   // Lifecycle hooks
 
   getInitialState: function() {
@@ -151,6 +200,7 @@ var EventBrowser = React.createClass({
                 onClick: this.selectEventCollectionClick
               }
              ]}>
+        <Notice notice={this.state.eventNotice} closeCallback={this.closeNotice} />
         <div className="event-browser" onKeyUp={this.handleKeyUp}>
           <div className="event-names">
             <div className="search-box">
@@ -182,31 +232,6 @@ var EventBrowser = React.createClass({
         </div>
       </Modal>
     );
-  },
-
-  formatSchemaTable: function(project, eventCollection) {
-    var properties = project.schema[eventCollection] ? project.schema[eventCollection].properties : {};
-    var _this = this;
-
-    var rows = Object.keys(properties).map(function(propertyName) {
-      return (<tr>
-          <td className="property-name">{propertyName}</td>
-          <td className="type">{properties[propertyName]}</td>
-          <td>
-            <span className="delete-icon" onClick={_this.deleteProperty.bind(_this, propertyName, eventCollection)}>
-            <i className="icon glyphicon glyphicon-remove-circle"></i>
-            </span>
-          </td>
-        </tr>);
-    });
-    return (<table>
-        <thead className="collection-details"><tr>
-          <th className="property-name">Property Name</th>
-          <th>Type</th>
-          <th><i className="icon glyphicon glyphicon-remove-circle"/></th>
-        </tr></thead>
-        <tbody className="collection-details">{rows}</tbody>
-        </table>);
   }
 });
 

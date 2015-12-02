@@ -8,7 +8,6 @@ var sinon = require('sinon');
 var EventBrowser = require('../../../../client/js/app/components/common/event_browser.js');
 var ExplorerUtils = require('../../../../client/js/app/utils/ExplorerUtils');
 var Loader = require('../../../../client/js/app/components/common/loader.js');
-var ProjectUtils = require('../../../../client/js/app/utils/ProjectUtils');
 var ProjectActions = require('../../../../client/js/app/actions/ProjectActions');
 var TestHelpers = require('../../../support/TestHelpers');
 var TestUtils = React.addons.TestUtils;
@@ -48,10 +47,22 @@ describe('components/common/event_browser', function() {
   });
 
   describe("delete schema property", function() {
-    it("calls endpoint to delete schema property", function() {
+
+    beforeEach(function() {
       sinon.stub(window, 'confirm').returns(true);
-      var xhrOpenSpy = sinon.spy(XMLHttpRequest.prototype, 'open');
-      var xhrSendStub = sinon.stub(XMLHttpRequest.prototype, 'send');
+      this.xhr = sinon.useFakeXMLHttpRequest();
+      var requests = this.requests = [];
+      this.xhr.onCreate = function (xhr) {
+        requests.push(xhr);
+      };
+    });
+
+    afterEach(function() {
+      window.confirm.restore();
+      this.xhr.restore();
+    });
+
+    it("calls endpoint to delete schema property", function() {
       var eventCollection = "click";
       var propertyName = "stringProp";
       var expectedURL = this.client.config.protocol +
@@ -65,8 +76,25 @@ describe('components/common/event_browser', function() {
         .components[0]
         .getDOMNode();
       TestUtils.Simulate.click(deleteIcon);
+      var request = this.requests[0];
 
-      assert.isTrue(xhrOpenSpy.calledWith('DELETE', expectedURL, true));
+      assert.equal(request.method, "DELETE");
+      assert.equal(request.url, expectedURL);
+    });
+
+    it("renders notice when there's an error", function() {
+      var deleteIcon = $R(this.component).find(".delete-icon").at(0)
+        .components[0]
+        .getDOMNode();
+      TestUtils.Simulate.click(deleteIcon);
+      var request = this.requests[0];
+      var errorMessage = {error: "Error", message: "This is an error"};
+      request.respond(500, {"Content-Type": "application/json"}, JSON.stringify(errorMessage));
+
+      this.component.forceUpdate();
+      var notice = $R(this.component).find(".notice-component");
+
+      assert.include(notice.text(), errorMessage.message);
     });
   });
 });
