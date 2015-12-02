@@ -11,13 +11,28 @@ var _notices = {};
 
 function defaultAttrs() {
   return {
+    location: 'global',
     text: null,
     type: null
   };
 }
 
+function _removeGlobalNotices() {
+  _.each(_notices, function(val, key) {
+    if (val.location === 'global') delete _notices[key];
+  });
+}
+
+function _removeStepNotices() {
+  _.each(_notices, function(val, key) {
+    if (val.location === 'step') delete _notices[key];
+  });
+}
+
 function _create(attrs) {
-  _notices = {};
+  if (!attrs.location || attrs.location === 'global') {
+    _removeGlobalNotices();
+  }
   var tempId = "TEMP-" + (+new Date() + Math.floor(Math.random() * 999999)).toString(36);
   _notices[tempId] = _.assign(defaultAttrs(), attrs);
 }
@@ -31,11 +46,14 @@ var NoticeStore = _.assign({}, EventEmitter.prototype, {
     AppDispatcher.unregister(this.dispatchToken);
   },
 
-  getNotice: function() {
-    var keys = Object.keys(_notices);
-    if (keys.length) {
-      return _notices[keys[0]];
-    }
+  getGlobalNotice: function() {
+    return _.findWhere(_notices, { location: 'global' });
+  },
+
+  getStepNotices: function() {
+    return _.filter(_notices, function(notice) {
+      if (notice.location === 'step') return notice;
+    });
   },
 
   clearAll: function() {
@@ -132,6 +150,31 @@ NoticeStore.dispatchToken = AppDispatcher.register(function(action) {
         text: 'There was a problem deleting your query: ' + action.errorMsg,
         icon: 'remove-sign'
       });
+      NoticeStore.emitChange();
+      break;
+
+    case ExplorerConstants.EXPLORER_FOUND_INVALID:
+      var explorer = ExplorerStore.get(action.id);
+      _create({
+        text: 'There was a problem: ' + explorer.errors[0].msg,
+        type: 'error',
+        icon: 'remove-sign'
+      });
+      if (explorer.query.analysis_type === 'funnel') {
+        _removeStepNotices();
+        explorer.query.steps.forEach(function(step, index) {
+          if (!step.isValid) {
+            _create({
+              id: explorer.id,
+              location: 'step',
+              stepIndex: index,
+              text: step.errors[0].msg,
+              type: 'error',
+              icon: 'remove-sign',
+            });
+          }
+        });
+      }
       NoticeStore.emitChange();
       break;
 

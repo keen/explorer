@@ -2,10 +2,11 @@ var _ = require('lodash');
 var Qs = require('qs');
 var stringify = require('json-stable-stringify');
 var moment = require('moment');
-var ValidationUtils = require('./ValidationUtils');
 var FormatUtils = require('./FormatUtils');
+var FunnelUtils = require('./FunnelUtils');
 var ProjectUtils = require('./ProjectUtils');
 var FilterUtils = require('./FilterUtils');
+var TimeframeUtils = require('./TimeframeUtils');
 
 var QUERY_PARAMS = [
   'event_collection',
@@ -17,9 +18,18 @@ var QUERY_PARAMS = [
   'interval',
   'timezone',
   'filters',
+  'steps',
   'email',
   'latest',
   'property_names'
+];
+
+var EXRACTION_EVENT_LIMIT = 100;
+
+var ANALYSIS_TYPES_WITHOUT_TARGET = [
+  'extraction',
+  'count',
+  'funnel'
 ];
 
 function toCamelcaseName(name) {
@@ -48,10 +58,18 @@ function echoIf(valueMaybe, append) {
 
 module.exports = {
 
-  EXRACTION_EVENT_LIMIT: 100,
+  EXRACTION_EVENT_LIMIT: EXRACTION_EVENT_LIMIT,
 
-  isPersisted: function (explorer) {
+  isPersisted: function(explorer) {
     return explorer.id && !explorer.id.toString().match('TEMP');
+  },
+
+  saveType: function(explorer) {
+    return module.exports.isPersisted(explorer) ? 'update' : 'save';
+  },
+
+  shouldHaveTarget: function(explorer) {
+    return !FormatUtils.isNullOrUndefined(explorer.query.analysis_type) && ANALYSIS_TYPES_WITHOUT_TARGET.indexOf(explorer.query.analysis_type) === -1;
   },
 
   isEmailExtraction: function(explorer) {
@@ -74,40 +92,42 @@ module.exports = {
   },
 
   queryJSON: function(explorer) {
-    if (!explorer || !explorer.query) {
-      return;
-    }
+    if (!explorer || !explorer.query) return;
     var params = _.cloneDeep(explorer.query);
 
-    // Set the timeframe (will get removed if it's null o undefined)
-    params.timeframe = module.exports.getTimeframe(explorer);
-    if (module.exports.timeframeType(explorer.query.time) === 'absolute') {
-      delete params.timezone;
+    if (params.analysis_type === 'extraction' && FormatUtils.isNullOrUndefined(params.email)) {
+      params.latest = EXRACTION_EVENT_LIMIT;
     }
 
-    // Remove any empty properties or ones that shouldn't be
-    // part of the query request.
-    _.each(params, function(value, key) {
-      if (!FormatUtils.isValidQueryValue(value)) {
-        delete params[key];
-      }
-      if (!_.contains(QUERY_PARAMS, key)) {
-        delete params[key];
-      }
-    });
+    if (params.analysis_type !== 'funnel') {
+      _.assign(params, TimeframeUtils.getTimeParameters(params.time, params.timezone));
+    }
 
     // Add filters
     if (params.filters) {
       params.filters = _.map(params.filters, function(filter){
-        return FilterUtils.queryJSON(filter);
+        return FilterUtils.queryJSON(filter, TimeframeUtils.getTimezoneOffset(params.timezone));
       });
-      params.filters = _.filter(params.filters, function(filter){
-        return !_.isEmpty(filter);
-      });
-      if (!params.filters.length) {
-        delete params.filters;
-      }
     }
+
+    if (params.steps) {
+      params.steps = _.map(params.steps, FunnelUtils.stepJSON); 
+    }
+
+    _.each(params, function(value, key) {
+      // If it's an array, clean out any empty elements
+      if (_.isArray(value)) {
+        _.remove(value, function(element) {
+          return !_.isNumber(element) && _.isEmpty(element);
+        });
+      }
+
+      // Remove any empty properties or ones that shouldn't be
+      // part of the query request.
+      if (!FormatUtils.isValidQueryValue(value) || !_.contains(QUERY_PARAMS, key)) {
+        delete params[key];
+      }
+    });
 
     return params;
   },
@@ -163,128 +183,16 @@ module.exports = {
     );
   },
 
-  timeframeBuilders: {
-
-    absolute_timeframe: function(explorer) {
-      if (explorer.query && explorer.query.time && explorer.query.time.start && explorer.query.time.end) {
-        var zone = _.find(ProjectUtils.getConstant('TIMEZONES'), { value: explorer.query.timezone });
-        var offset = zone.offset || '+00:00';
-
-        return {
-          start: FormatUtils.formatISOTimeNoTimezone(explorer.query.time.start) + offset,
-          end: FormatUtils.formatISOTimeNoTimezone(explorer.query.time.end) + offset
-        };
-      }
-    },
-
-    relative_timeframe: function(explorer) {
-      var query = explorer.query;
-      if (query && query.time && query.time.relativity && query.time.amount && query.time.sub_timeframe) {
-        return [query.time.relativity, query.time.amount, query.time.sub_timeframe].join('_');
-      }
-    }
-
-  },
-
-  getTimeframe: function(explorer) {
-    var timeframeType = module.exports.timeframeType(explorer.query.time);
-    var timeframeBuilder = module.exports.timeframeBuilders[timeframeType + '_timeframe'];
-
-    if(typeof(timeframeBuilder) === 'undefined') {
-      return "";
-    } else {
-      return timeframeBuilder(explorer);
-    }
-  },
-
-  convertDateToUTC: function(date) {
-    return new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds());
-  },
-
   /**
-   * Takes a URL encoded timerame string or object and returns a time object that looks how the Explorer store wants
-   * it to
-   * @param  {String} timeframe
-   * @return {Object}
-   * Return structure:
-   * {
-   *  time: {an Object, either containing a deconstructed absolute or relative timeframe}
-   * }
-   */
-  unpackTimeframeParam: function(query) {
-    var timeframe = query.timeframe;
-    var timeFormat = 'h:mm A';
-    var dateFormat = 'MMM D, YYYY';
-
-    if (typeof timeframe === 'object') {
-      var offset = timeframe.start.substring(timeframe.start.length, timeframe.start.length-6);
-
-      timeframe.start = timeframe.start.substring(0, timeframe.start.length-6);
-      timeframe.end = timeframe.end.substring(0, timeframe.end.length-6);
-
-      var timezone;
-      var zone = _.find(ProjectUtils.getConstant('TIMEZONES'), { offset: offset });
-      if (zone) {
-        timezone = zone.value;
-      } else if (!zone && query.timezone) {
-        timezone = query.timezone;
-      } else if (!zone && !query.timezone) {
-        throw new Error("A timezone was not part of the datestring for the timeframe with a start of: " + timeframe.start + ". There also was no timezone parameter found in the query. You must provide one or the other.");
-      }
-      return {
-        time: {
-          start: module.exports.convertDateToUTC(new Date(timeframe.start)),
-          end: module.exports.convertDateToUTC(new Date(timeframe.end))
-        },
-        timezone: timezone
-      };
-    } else if (typeof timeframe === 'string') {
-      var split = timeframe.split('_');
-      return {
-        time: {
-          relativity: split[0],
-          amount: split[1],
-          sub_timeframe: split[2]
-        },
-        timezone: query.timezone
-      };
-    }
-  },
-
-
-
-  /**
-   * Takes a time object and returns a string representing the timeframe type (absolute or relative)
-   * @param  {Object} time The time object
-   * @return {String} The type of timeframe, 'absolute' or 'relative'
-   */
-   timeframeType: function(time) {
-      var badTimeTypeError = new Error('Invalid time value');
-
-      if(_.isUndefined(time)) {
-        return "";
-      } else if(!_.isPlainObject(time)) {
-        throw badTimeTypeError;
-      } else if(_.has(time, 'start') && _.has(time, 'end')) {
-        return 'absolute';
-      } else if(_.has(time, 'relativity') && _.has(time, 'amount') && _.has(time, 'sub_timeframe')) {
-        return 'relative'
-      } else {
-        throw badTimeTypeError;
-      }
-   },
-
-  /**
-   * Takes in an object of query params directly taken from the URL and formats/decomnstructs them appropriately to work well
+   * Takes in an object of query params directly taken from the URL and formats/deconstructs them appropriately to work well
    * with our data model.
    * @param  {Object} the raw params from the URL
    * @return {Object} formatted attributes to be used for creating a new Explorer model.
    */
   formatQueryParams: function(params) {
     if (!params || !params.query) return;
-
     if (params.query && params.query.timeframe) {
-      var unpackedTime = module.exports.unpackTimeframeParam(params.query);
+      var unpackedTime = TimeframeUtils.unpackTimeframeParam(params.query.timeframe, params.query.timezone);
       params.query.time = unpackedTime.time;
       params.query.timezone = unpackedTime.timezone;
     }
@@ -292,29 +200,22 @@ module.exports = {
       params.query.group_by = [params.query.group_by];
     }
     if (params.query.filters) {
-      params.query.filters = _.map(params.query.filters, function(filter) {
-        filter.coercion_type = FilterUtils.getCoercionType(filter);
-        
-        if (filter.coercion_type === 'List') {
-          filter = _.assign({}, filter, FilterUtils.initList(filter));
-        }
-        filter.property_value = FilterUtils.getCoercedValue(filter);
-        return filter;
-      });
-      params.query.filters = _.compact(params.query.filters);
+      params.query.filters = _.compact(_.map(params.query.filters, FilterUtils.formatFilterParams));
     }
-    if (!params.id && params.query_name) {
-      params.id = params.query_name;
+    if (params.query.steps) {
+      params.query.steps = _.compact(_.map(params.query.steps, FunnelUtils.formatQueryParams));
+      params.query.steps[params.query.steps.length - 1].active = true
     }
+    if (!params.id && params.query_name) params.id = params.query_name;
     return params;
   },
 
-  getChartTypeOptions: function(result, analysisType) {
+  getChartTypeOptions: function(response, analysisType) {
     var chartTypes = [];
 
-    if (result) {
+    if (response) {
       var dataviz = new Keen.Dataviz();
-      dataviz.data({ result: result });
+      dataviz.data(response);
       var dataType = dataviz.dataType();
 
       if (dataType && Keen.Dataviz.dataTypeMap[dataType]) {
@@ -325,7 +226,7 @@ module.exports = {
         if (!_.contains(chartTypes, 'json')) {
           chartTypes.push('JSON');
         }
-      } else if (result && _.contains(['extraction', 'select_unique'], analysisType)) {
+      } else if (response && _.contains(['extraction', 'select_unique'], analysisType)) {
         chartTypes = ['JSON', 'table'];
       }
     }
@@ -333,8 +234,8 @@ module.exports = {
     return chartTypes;
   },
 
-  resultSupportsChartType: function(result, chartType, analysisType) {
-    return _.contains(module.exports.getChartTypeOptions(result, analysisType), chartType);
+  responseSupportsChartType: function(response, chartType, analysisType) {
+    return _.contains(module.exports.getChartTypeOptions(response, analysisType), chartType);
   },
 
   encodeAttribute: function(attr) {
@@ -358,9 +259,15 @@ module.exports = {
     });
     delete attrs['filters'];
 
+    var steps;
+    if (attrs['steps']) {
+      steps = module.exports.encodeAttribute(attrs['steps']);
+      delete attrs['steps'];
+    }
+
     var queryAttrs = Qs.stringify(attrs);
 
-    if (attrs.timeframe && module.exports.timeframeType(explorer.query.time) === 'absolute') {
+    if (attrs.timeframe && TimeframeUtils.timeframeType(explorer.query.time) === 'absolute') {
       delete attrs['timeframe'];
       // This is an absolute timeframe, so we need to encode the object in a specific way before sending it, as per keen docs => https://keen.io/docs/data-analysis/timeframe/#absolute-timeframes
       timeframe = module.exports.encodeAttribute(timeframe);
@@ -373,6 +280,10 @@ module.exports = {
       queryAttrs += '&filters='+ filters;
     }
 
+    if(steps) {
+      queryAttrs += '&steps=' + steps;
+    }
+
     var url = endpoint + '/projects/'+projectId+'/queries/'
                        + analysisType
                        + '?api_key='
@@ -383,17 +294,7 @@ module.exports = {
   },
 
   resultCanBeVisualized: function(explorer) {
-    if (explorer.result) {
-      var result = explorer.result;
-
-      if (_.isNumber(result) || (_.isArray(result) && result.length)) {
-        return true;
-      } else {
-        return false;
-      }
-    } else {
-      return false;
-    }
+    return (explorer.response && explorer.response.result && (_.isNumber(explorer.response.result) || (_.isArray(explorer.response.result) && explorer.response.result.length)));
   },
 
   isJSONViz: function(explorer) {
@@ -414,13 +315,28 @@ module.exports = {
         params = module.exports.queryJSON(explorer),
         s = stringify,
         dynamicCriteria,
-        dynamicParamNames = [
-          'filters', 'group_by', 'interval', 'target_property', 'timeframe', 'timezone'
-        ],
+        paramNames,
         dynamicConstructorNames = [
           'host', 'protocol', 'requestType'
         ],
+        funnelRootParams = [
+          'event_collection', 'steps'
+        ],
         dynamicContructorValues;
+
+    switch(params.analysis_type) {
+      case 'funnel':
+        paramNames = ['steps'];
+        break;
+
+      default:
+        paramNames = ['event_collection', 'filters', 'group_by', 'interval', 'target_property', 'timeframe', 'timezone'];
+        break;
+    }
+
+    if(params.steps) {
+      params.steps = _.map(params.steps, function(step) { return _.omit(step, 'active'); });
+    }
 
     dynamicContructorValues = mapSkip(dynamicConstructorNames, function(name) {
       if (client.config[name] == defaultKeenJsOpts[name]) {
@@ -431,11 +347,11 @@ module.exports = {
     // remove coercion from example; it's already been handled elsewhere.
     _.each(params['filters'], function(filter) { delete filter['coercion_type'] })
 
-    dynamicCriteria = mapSkip(dynamicParamNames, function(param) {
+    dynamicCriteria = mapSkip(paramNames, function(param) {
       if (!params[param]) {
         return SKIP
       }
-      return '    ' + toCamelcaseName(param) + ': ' + s(params[param])
+      return '    ' + toCamelcaseName(param) + ': ' + s(params[param], {space: 4})
     }).join(',\n');
 
     value = [
@@ -448,7 +364,6 @@ module.exports = {
       'Keen.ready(function(){',
       '  ',
       '  var query = new Keen.Query(' + s(params.analysis_type) + ', {',
-      '    eventCollection: ' + s(params.event_collection) + echoIf(dynamicCriteria, ','),
       dynamicCriteria,
       '  });',
       '  ',

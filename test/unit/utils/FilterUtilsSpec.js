@@ -1,12 +1,11 @@
 var assert = require('chai').assert;
-var expect = require('chai').expect;
 var sinon = require('sinon');
 var moment = require('moment');
 var _ = require('lodash');
 var TestHelpers = require('../../support/TestHelpers');
 var ExplorerActions = require('../../../client/js/app/actions/ExplorerActions');
 var FilterValidations = require('../../../client/js/app/validations/FilterValidations');
-var ValidationUtils = require('../../../client/js/app/utils/ValidationUtils');
+var RunValidations = require('../../../client/js/app/utils/RunValidations');
 var FormatUtils = require('../../../client/js/app/utils/FormatUtils');
 var FilterUtils = require('../../../client/js/app/utils/FilterUtils');
 
@@ -46,9 +45,29 @@ describe('utils/FilterUtils', function() {
           property_value: "",
           operator: "eq",
           coercion_type: "Datetime",
-          property_value: "May 3, 2015 10:00 AM",
+          property_value: "May 3, 2015 10:00 AM"
         };
-        assert.strictEqual(FilterUtils.getCoercedValue(filter), "2015-05-03T10:00:00.000");
+        assert.strictEqual(FilterUtils.getCoercedValue(filter), new Date(filter.property_value).toString());
+      });
+      it('should return a datetime for yesterday if the value is not parsable into a date time: true as a boolean', function () {
+        var filter = {
+          property_name: "created_at",
+          property_value: "",
+          operator: "eq",
+          coercion_type: "Datetime",
+          property_value: true
+        };
+        assert.strictEqual(FilterUtils.getCoercedValue(filter).toString(), FilterUtils.defaultDate().toString());
+      });
+      it('should return a datetime for yesterday if the value is not parsable into a date time: true as a string', function () {
+        var filter = {
+          property_name: "created_at",
+          property_value: "",
+          operator: "eq",
+          coercion_type: "Datetime",
+          property_value: "true"
+        };
+        assert.strictEqual(FilterUtils.getCoercedValue(filter).toString(), FilterUtils.defaultDate().toString());
       });
     });
 
@@ -186,24 +205,10 @@ describe('utils/FilterUtils', function() {
         property_value: 'value',
         coercion_type: 'String'
       };
-      var stub = sinon.stub(ValidationUtils, 'runValidations').returns({
-        isValid: false
-      });
+      var spy = sinon.spy(RunValidations, 'run');
       var json = FilterUtils.queryJSON(filter);
-      assert.isTrue(stub.calledWith(FilterValidations.filter, filter));
-      ValidationUtils.runValidations.restore();
-    });
-    it('should format the property value if the coercion type is Datetime', function () {
-      var filter = {
-        property_name: 'date',
-        operator: 'eq',
-        property_value: 'date',
-        coercion_type: 'Datetime'
-      }; 
-      var spy = sinon.spy(FormatUtils, 'formatISOTimeNoTimezone');
-      FilterUtils.queryJSON(filter);
-      assert.lengthOf(spy.getCalls(), 2);
-      FormatUtils.formatISOTimeNoTimezone.restore();
+      assert.isTrue(spy.calledWith(FilterValidations, filter));
+      RunValidations.run.restore();
     });
     it('should parse the list if the coercion type is List', function () {
       var filter = {

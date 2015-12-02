@@ -1,6 +1,5 @@
 /** @jsx React.DOM */
 var assert = require('chai').assert;
-var expect = require('chai').expect;
 var _ = require('lodash');
 var sinon = require('sinon');
 var Chart = require('../../../../../client/js/app/components/explorer/visualization/chart.js');
@@ -28,7 +27,7 @@ describe('components/explorer/visualization/chart', function() {
     it('shows the correct message about email extractions ', function () {
       this.model.query.analysis_type = 'extraction';
       this.model.query.email = 'someone@keen.io';
-      this.model.result = { success: true };
+      this.model.response = { result: 10, success: true };
       this.component = TestUtils.renderIntoDocument(<Chart model={this.model} dataviz={this.dataviz} />);
       var message = "Email extractions don't have visualizations.";
       assert.equal(this.component.refs.notice.getDOMNode().textContent, message);

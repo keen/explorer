@@ -14,7 +14,7 @@ var CodeSample = React.createClass({
     });
 
     var text;
-    if(this.props.validation.isValid) {
+    if(this.props.isValid) {
       text = this.props.codeSample;
     } else {
       text = "Your query is not valid right now, so we can't show you a code sample.";

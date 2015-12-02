@@ -1,7 +1,5 @@
 /** @jsx React.DOM */
 var assert = require('chai').assert;
-var expect = require('chai').expect;
-var sinon = require('sinon');
 var _ = require('lodash');
 var React = require('react/addons');
 var TestUtils = React.addons.TestUtils;

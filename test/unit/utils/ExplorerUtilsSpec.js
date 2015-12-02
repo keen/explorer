@@ -1,20 +1,40 @@
 var assert = require('chai').assert;
-var expect = require('chai').expect;
 var sinon = require('sinon');
 var moment = require('moment');
 var _ = require('lodash');
 var Qs = require('qs');
 var TestHelpers = require('../../support/TestHelpers');
 var ExplorerActions = require('../../../client/js/app/actions/ExplorerActions');
-var FilterUtils = require('../../../client/js/app/utils/FilterUtils');
-var ValidationUtils = require('../../../client/js/app/utils/ValidationUtils');
-var ExplorerValidations = require('../../../client/js/app/validations/ExplorerValidations');
 var ExplorerUtils = require('../../../client/js/app/utils/ExplorerUtils');
+var FilterUtils = require('../../../client/js/app/utils/FilterUtils');
+var FunnelUtils = require('../../../client/js/app/utils/FunnelUtils');
+var TimeframeUtils = require('../../../client/js/app/utils/TimeframeUtils');
+var RunValidations = require('../../../client/js/app/utils/RunValidations');
+var ExplorerValidations = require('../../../client/js/app/validations/ExplorerValidations')
 
 describe('utils/ExplorerUtils', function() {
   describe('extraction event limit', function () {
     it('should be 100', function () {
       assert.strictEqual(ExplorerUtils.EXRACTION_EVENT_LIMIT, 100);
+    });
+  });
+
+  describe('shouldHaveTarget', function () {
+    it('should return false if the analysis_type is null', function () {
+      var explorer = { query: { analysis_type: null } };
+      assert.isFalse(ExplorerUtils.shouldHaveTarget(explorer));
+    });
+    it('should return false if the analysis_type is undefined', function () {
+      var explorer = { query: {} };
+      assert.isFalse(ExplorerUtils.shouldHaveTarget(explorer));
+    });
+    it('should return false if the analysis_type is not in the required types', function () {
+      var explorer = { query: { analysis_type: 'count' } };
+      assert.isFalse(ExplorerUtils.shouldHaveTarget(explorer));
+    });
+    it('should return false if the analysis_type in the required types', function () {
+      var explorer = { query: { analysis_type: 'count_unique' } };
+      assert.isTrue(ExplorerUtils.shouldHaveTarget(explorer));
     });
   });
 
@@ -63,6 +83,13 @@ describe('utils/ExplorerUtils', function() {
       ExplorerUtils.queryJSON(explorer);
       assert.lengthOf(stub.getCalls(), 3);
       FilterUtils.queryJSON.restore();
+    });
+    it('should call FunnelUtils.stepJSON for every step', function () {
+      var explorer = { query: { steps: [{}, {}, {}] } };
+      var stub = sinon.stub(FunnelUtils, 'stepJSON');
+      ExplorerUtils.queryJSON(explorer);
+      assert.lengthOf(stub.getCalls(), 3);
+      FunnelUtils.stepJSON.restore();
     });
     it('should remove empty filters', function () {
       var explorer = { 
@@ -116,6 +143,31 @@ describe('utils/ExplorerUtils', function() {
         timeframe: 'this_1_days'
       });
     });
+    it('should set the latest property to the EXRACTION_EVENT_LIMIT constant if the query is a synchronous extraction', function () {
+      var explorer = {
+        query: {
+          analysis_type: 'extraction',
+          event_collection: 'click'
+        }
+      };
+      var json = ExplorerUtils.queryJSON(explorer);
+      assert.deepEqual(json, {
+        event_collection: 'click',
+        analysis_type: 'extraction',
+        latest: ExplorerUtils.EXRACTION_EVENT_LIMIT
+      });
+    });
+    it('should not call getTimeParameters on the root query if the analysis type is funnel', function () {
+      var stub = sinon.stub(TimeframeUtils, 'getTimeParameters');
+      var explorer = {
+        query: {
+          analysis_type: 'funnel'
+        }
+      };
+      var json = ExplorerUtils.queryJSON(explorer);
+      assert.isFalse(stub.called);
+      TimeframeUtils.getTimeParameters.restore();
+    });
   });
 
   describe('toJSON', function () {
@@ -136,7 +188,8 @@ describe('utils/ExplorerUtils', function() {
         query: {
           event_collection: 'click',
           analysis_type: 'extraction',
-          timeframe: 'this_1_days'
+          timeframe: 'this_1_days',
+          latest: 100
         },
         refresh_rate: 0
       });
@@ -172,10 +225,10 @@ describe('utils/ExplorerUtils', function() {
         query_name: 'some-query-name',
         active: false,
         saving: false,
-        error: null,
+        isValid: true,
+        errors: [],
         result: null,
         loading: false,
-        isValid: true,
         query: {
           event_collection: null,
           analysis_type: null,
@@ -184,10 +237,10 @@ describe('utils/ExplorerUtils', function() {
           group_by: null,
           interval: null,
           timezone: 'UTC',
-          filters: null,
           email: null,
           latest: null,
           filters: [],
+          steps: [],
           time: {
             relativity: 'this',
             amount: 1,
@@ -195,6 +248,7 @@ describe('utils/ExplorerUtils', function() {
           }
         },
         metadata: {
+          display_name: null,
           visualization: {
             chart_type: null
           }
@@ -219,10 +273,10 @@ describe('utils/ExplorerUtils', function() {
         query_name: 'some-query-name',
         active: false,
         saving: false,
-        error: null,
         result: null,
         loading: false,
         isValid: true,
+        errors: [],
         query: {
           event_collection: 'clicks',
           analysis_type: 'count',
@@ -235,6 +289,7 @@ describe('utils/ExplorerUtils', function() {
           email: null,
           latest: null,
           filters: [],
+          steps: [],
           time: {
             relativity: 'this',
             amount: 1,
@@ -242,6 +297,7 @@ describe('utils/ExplorerUtils', function() {
           }
         },
         metadata: {
+          display_name: null,
           visualization: {
             chart_type: 'metric'
           }
@@ -252,147 +308,23 @@ describe('utils/ExplorerUtils', function() {
     });
   });
 
-  describe('getTimeframe', function () {
-    it('should call the right timeframe builder for absolute timeframes', function () {
-      var explorer = {
-        query: {
-          timezone: 'US/Hawaii',
-          time: {
-            start: new Date(moment().subtract(1, 'days').startOf('day').format()),
-            end: new Date(moment().startOf('day').format())
-          }
-        }
-      };
-      var stub = sinon.stub(ExplorerUtils.timeframeBuilders, 'absolute_timeframe');
-      ExplorerUtils.getTimeframe(explorer);
-      assert.isTrue(stub.calledOnce);
-      ExplorerUtils.timeframeBuilders.absolute_timeframe.restore();
-    });
-    it('should call the right timeframe builder for relative timeframes', function () {
-      var explorer = {
-        query: {
-          time: {
-            relativity: 'this',
-            amount: '1',
-            sub_timeframe: 'days'
-          }
-        }
-      };
-      var stub = sinon.stub(ExplorerUtils.timeframeBuilders, 'relative_timeframe');
-      ExplorerUtils.getTimeframe(explorer);
-      assert.isTrue(stub.calledOnce);
-      ExplorerUtils.timeframeBuilders.relative_timeframe.restore();
-    });
-  });
-
-  describe('timeframeBuilders', function () {
-    describe('absolute_timeframe', function () {
-      it('should properly build a timeframe object', function () {
-        var explorer = {
-          query: {
-            timezone: 'US/Hawaii',
-            time: {
-              start: new Date(moment().subtract(1, 'days').startOf('day').format()),
-              end: new Date(moment().startOf('day').format())
-            }
-          }
-        };
-        var timeframe = ExplorerUtils.getTimeframe(explorer);
-        var expectedFormat = 'YYYY-MM-DDTHH:mm:ss.SSS';
-        var expectedTimezone = '-10:00'
-        var expectedStart = moment(new Date(explorer.query.time.start)).format(expectedFormat) + expectedTimezone;
-        var expectedEnd = moment(new Date(explorer.query.time.end)).format(expectedFormat) + expectedTimezone;
-        
-        assert.deepEqual(timeframe, {
-          start: expectedStart,
-          end: expectedEnd
-        });
-      });
-    });
-    describe('relative_timeframe', function () {
-      var explorer = {
-        query: {
-          time: {
-            relativity: 'this',
-            amount: '1',
-            sub_timeframe: 'days'
-          }
-        }
-      };
-      var timeframe = ExplorerUtils.getTimeframe(explorer);
-      assert.deepEqual(timeframe, 'this_1_days');
-    });
-  });
-
-  describe('unpackTimeframeParam', function () {
-    it('properly unpacks an absolute timeframe', function () {
-      var query = {
-        timeframe: {
-          start: moment(new Date("June 7, 2015 1:00 PM")).format('YYYY-MM-DDTHH:mm:ss.SSS')+"-10:00",
-          end: moment(new Date("June 8, 2015 2:00 PM")).format('YYYY-MM-DDTHH:mm:ss.SSS')+"-10:00"
-        }
-      };
-      assert.deepEqual(ExplorerUtils.unpackTimeframeParam(query), {
-        timezone: 'US/Hawaii',
-        time: {
-          start: ExplorerUtils.convertDateToUTC(new Date(moment(new Date("June 7, 2015 1:00 PM")).format('YYYY-MM-DDTHH:mm:ss.SSS'))),
-          end: ExplorerUtils.convertDateToUTC(new Date(moment(new Date("June 8, 2015 2:00 PM")).format('YYYY-MM-DDTHH:mm:ss.SSS')))
-        }
-      });
-    });
-    it('properly unpacks a relative timeframe', function () {
-      var query = { timeframe: 'this_8_days', timezone: 'Europe/London' };
-      var unpacked = ExplorerUtils.unpackTimeframeParam(query);
-      assert.deepEqual(unpacked, {
-        time: {
-          relativity: 'this',
-          amount: '8',
-          sub_timeframe: 'days'
-        },
-        timezone: 'Europe/London'
-      });
-    });
-  });
-
-  describe('timeframeType', function() {
-    it('recognizes relative timeframes', function() {
-      var relative_timeframe = {
-        relativity: 'this',
-        amount: '8',
-        sub_timeframe: 'days'
-      }
-
-      assert.equal(ExplorerUtils.timeframeType(relative_timeframe), 'relative');
-    });
-
-    it('recognizes absolute timeframes', function() {
-      var absolute_timeframe = {
-        start: moment().subtract(2, 'days').format(),
-        end: moment().subtract(1, 'days').format()
-      }
-
-      assert.equal(ExplorerUtils.timeframeType(absolute_timeframe), 'absolute');
-    });
-
-    describe('invalid timeframes', function() {
-      it('throws error for invalid time object', function() {
-        expect(ExplorerUtils.timeframeType.bind(window, {bee: 'boop'})).to.throw("Invalid time value");
-      });
-
-      it('throws errors for non-object time objects', function() {
-        expect(ExplorerUtils.timeframeType.bind(window, 'this_3_days')).to.throw("Invalid time value");
-      })
-    });
-  });
-
   describe('formatQueryParams', function () {
+    it('should call FunnelUtils.formatQueryParams for each step', function () {
+      var stub = sinon.stub(FunnelUtils, 'formatQueryParams').returns({});
+
+      ExplorerUtils.formatQueryParams({query: { steps: [{}, {}, {}]} });
+
+      assert.lengthOf(stub.getCalls(), 3);
+
+      FunnelUtils.formatQueryParams.restore();
+    });
     it('should call unpackTimeframeParam if there is a timeframe', function () {
       var params = {
         query: {
           timeframe: 'this_1_days'
         }
       };
-      var stub = sinon.stub(ExplorerUtils, 'unpackTimeframeParam').returns({
+      var stub = sinon.stub(TimeframeUtils, 'unpackTimeframeParam').returns({
         time: {
           relativity: 'this',
           amount: '1',
@@ -401,7 +333,7 @@ describe('utils/ExplorerUtils', function() {
       });
       var formatted = ExplorerUtils.formatQueryParams(params);
       assert.isTrue(stub.calledOnce);
-      ExplorerUtils.unpackTimeframeParam.restore();
+      TimeframeUtils.unpackTimeframeParam.restore();
     });
     it('should call FilterUtils.initList for list filters', function () {
       var stub = sinon.stub(FilterUtils, 'initList');
@@ -566,6 +498,32 @@ describe('utils/ExplorerUtils', function() {
         it('does not have the coercion_type property', function () {
           assert.notInclude(ExplorerUtils.getApiQueryUrl(this.client, this.explorer), "coercion_type");
         });
+      });
+
+      describe('steps', function () {
+        var explorer = { 
+          query: {
+            analysis_type: 'funnel',
+            steps: [{
+              event_collection: 'signups',
+              actor_property: 'user',
+              time: {
+                relativity: 'this',
+                amount: 1,
+                sub_timeframe: 'days'
+              },
+              timezone: 'US/Hawaii'
+            }]
+          }
+        };
+
+        it('has the expected steps attribute', function () {
+          assert.include(ExplorerUtils.getApiQueryUrl(this.client, explorer), "&steps=%5B%7B%22")
+        })
+
+        it('does not have a separate query param for each steop', function () {
+          assert.notInclude(ExplorerUtils.getApiQueryUrl(this.client, explorer), encodeURIComponent("steps[0]"));
+        })
       });
     });
   });

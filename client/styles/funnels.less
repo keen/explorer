@@ -1,0 +1,128 @@
+@active-color: #536778;
+@arrow-size: 5px;
+
+.funnel-builder {
+
+  .funnel-step {
+    padding: 0 5px;
+  }
+
+  .funnel-body {
+    padding: 0 10px;
+  }
+
+  .funnel-step.active {
+    padding: 0;
+  }
+  
+  .steps {
+    list-style: none;
+    padding: 0;
+  }
+
+  .step-header {
+    cursor: pointer;
+    display: block;
+    background: #E7E7E7;
+    padding: 6px 10px;
+    border-radius: 2px;
+    border-bottom: 2px solid #DADADA;
+  }
+
+  .step-number {
+    float: left;
+    background: #FFF;
+    height: 35px;
+    width: 35px;
+    line-height: 35px;
+    text-align: center;
+    font-weight: bold;
+    border-radius: 100px;
+    color: @active-color;
+    margin-right: 10px;
+  }
+
+  .step-name {
+    float: left;
+    color: #5C6F7F;
+    line-height: 35px;
+  }
+
+  .step-move-btns {
+    display: none;
+    position: relative;
+    width: 25px;
+    height: 35px;
+
+    a {
+      position: absolute;
+      left: 0px;
+      width: 25px;
+      height: 15px;
+      background: #617688;
+    }
+    a.up {
+      top: 0px;
+    }
+    a.down {
+      bottom: 0px;
+    }
+
+    .arrow {
+      width: 0;
+      height: 0;
+      position: absolute;
+      left: 7px;
+    }
+    .up .arrow {
+      bottom: 6px;
+      border-left: @arrow-size solid transparent;
+      border-right: @arrow-size solid transparent;
+      border-bottom: @arrow-size solid #FFF;
+
+    }
+    .down .arrow {
+      top: 6px;
+      border-left: @arrow-size solid transparent;
+      border-right: @arrow-size solid transparent;
+      border-top: @arrow-size solid #FFF;
+    }
+  }
+
+  a.add-step {
+    font-size: 16px;
+    display: block;
+    margin: 10px 15px;
+  }
+
+  a.remove-step, a.remove-step .icon {
+    color: #9A9A9A;
+  }
+  
+  /* 
+   * Active Step
+   */
+  .funnel-step.active {
+    padding: 0;
+    
+    .step-header {
+      background: @active-color;
+      border-bottom: none;
+    }
+
+    .step-name {
+      color: #FFF;
+    }
+
+    .step-move-btns {
+      display: block;
+      float: right;
+    }
+
+    .step-body {
+      padding: 0 15px;
+    }
+
+  }
+
+}

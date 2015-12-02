@@ -3,9 +3,10 @@ var assert = require('chai').assert;
 var _ = require('lodash');
 var sinon = require('sinon');
 var QueryBuilder = require('../../../../../client/js/app/components/explorer/query_builder/index.js');
+var GroupByField = require('../../../../../client/js/app/components/explorer/query_builder/group_by_field.js');
+var SelectField = require('../../../../../client/js/app/components/explorer/query_builder/select_field.js');
 var Timeframe = require('../../../../../client/js/app/components/common/timeframe.js')
 var Interval = require('../../../../../client/js/app/components/common/interval.js')
-var ProjectUtils = require('../../../../../client/js/app/utils/ProjectUtils');;
 var ExplorerActions = require('../../../../../client/js/app/actions/ExplorerActions');
 var Input = require('../../../../../client/js/app/components/common/select.js');
 var ExtractionOptions = require('../../../../../client/js/app/components/explorer/query_builder/extraction_options.js');
@@ -27,7 +28,8 @@ describe('components/explorer/query_builder/index', function() {
       var defaults = {
         project: this.project,
         model: this.model,
-        client: this.client
+        client: this.client,
+        getEventPropertyNames: function() {}
       };
       var props = _.assign({}, defaults, props);
       return TestUtils.renderIntoDocument(<QueryBuilder {...props} />);
@@ -126,25 +128,45 @@ describe('components/explorer/query_builder/index', function() {
     });
 
     describe('group_by', function () {
+
       describe('when event_collection is set', function () {
+
         it('there are group_by options', function () {
           var expectedOptions = ['one', 'two', 'three'];
-          sinon.stub(ProjectUtils, 'getEventCollectionPropertyNames').returns(expectedOptions);
+          this.component.props.getEventPropertyNames = function() { return expectedOptions; }
           this.model.query.event_collection = 'click';
           this.model.query.analysis_type = 'count';
           this.model.query.group_by = ['one'];
           this.component.forceUpdate();
 
-          var groupByNode = TestUtils.findRenderedDOMComponentWithClass(this.component, 'group-by').getDOMNode();
+          var groupByNode = $R(this.component).find('input[name="group_by.0"]').components[0].getDOMNode();
           TestUtils.Simulate.focus(groupByNode);
+
           var groupByOptions = _.map(groupByNode.parentNode.childNodes[1].childNodes[1].childNodes, function(node){
             return node.textContent;
           });
           groupByOptions = _.compact(groupByOptions);
 
           assert.sameMembers(groupByOptions, expectedOptions);
-          ProjectUtils.getEventCollectionPropertyNames.restore();
         });
+
+        it('when event_collection is set group_by has the options returned getEventPropertyNames', function () {
+          var model = TestHelpers.createExplorerModel();
+          model.query.event_collection = 'click';
+          model.query.analysis_type = 'count';
+          model.query.group_by = 'one';
+
+          this.component = this.renderComponent({
+            model: model,
+            getEventPropertyNames: function(val) {
+              if (val) return ['one', 'two'];
+            }
+          });
+
+          var groupByComponent = TestUtils.findRenderedComponentWithType(this.component, GroupByField);
+          assert.sameMembers(groupByComponent.props.options, ['one', 'two']);
+        });
+
       });
     });
 
@@ -166,15 +188,15 @@ describe('components/explorer/query_builder/index', function() {
     after(function () {
       ExplorerActions.update.restore();
     });
-
     beforeEach(function () {
       this.stub.reset();
     });
 
     describe('event_collection', function () {
       it('tries to update the attribute when the field changes', function() {
-        this.component.refs['event-collection-field'].refs.select.refs.input.getDOMNode().value = 'clicks';
-        TestUtils.Simulate.change(this.component.refs['event-collection-field'].refs.select.refs.input.getDOMNode());
+        var node = $R(this.component).find('input[name="event_collection"]').components[0].getDOMNode();
+        node.value = 'clicks';
+        TestUtils.Simulate.change(node);
 
         assert.strictEqual(this.stub.getCall(0).args[0], this.model.id);
         assert.deepPropertyVal(this.stub.getCall(0).args[1], 'query.event_collection', 'clicks');
@@ -182,8 +204,9 @@ describe('components/explorer/query_builder/index', function() {
     });
     describe('analysis_type', function () {
       it('tries to update the attribute when the field changes', function() {
-        this.component.refs['analysis-type-field'].refs.select.refs.input.getDOMNode().value = 'count';
-        TestUtils.Simulate.change(this.component.refs['analysis-type-field'].refs.select.refs.input.getDOMNode());
+        var node = $R(this.component).find('input[name="analysis_type"]').components[0].getDOMNode();
+        node.value = 'count';
+        TestUtils.Simulate.change(node);
 
         assert.strictEqual(this.stub.getCall(0).args[0], this.model.id);
         assert.deepPropertyVal(this.stub.getCall(0).args[1], 'query.analysis_type', 'count');
@@ -195,8 +218,9 @@ describe('components/explorer/query_builder/index', function() {
         this.model.query.analysis_type = 'sum';
         this.component.forceUpdate();
 
-        this.component.refs['target-property-field'].refs.select.refs.input.getDOMNode().value = 'target';
-        TestUtils.Simulate.change(this.component.refs['target-property-field'].refs.select.refs.input.getDOMNode());
+        var node = $R(this.component).find('input[name="target_property"]').components[0].getDOMNode();
+        node.value = 'target';
+        TestUtils.Simulate.change(node);
 
         assert.strictEqual(this.stub.getCall(0).args[0], this.model.id);
         assert.deepPropertyVal(this.stub.getCall(0).args[1], 'query.target_property', 'target');
@@ -208,8 +232,9 @@ describe('components/explorer/query_builder/index', function() {
         this.model.query.analysis_type = 'percentile';
         this.component.forceUpdate();
 
-        this.component.refs['percentile-field'].refs.input.refs.input.getDOMNode().value = '10';
-        TestUtils.Simulate.change(this.component.refs['percentile-field'].refs.input.refs.input.getDOMNode());
+        var node = $R(this.component).find('input[name="percentile"]').components[0].getDOMNode();
+        node.value = '10';
+        TestUtils.Simulate.change(node);
 
         assert.strictEqual(this.stub.getCall(0).args[0], this.model.id);
         assert.deepPropertyVal(this.stub.getCall(0).args[1], 'query.percentile', '10');
@@ -222,9 +247,9 @@ describe('components/explorer/query_builder/index', function() {
         this.model.query.group_by = ['old_group_by_value'];
         this.component.forceUpdate();
 
-        var input = $R(this.component).find('.group-by').components[0];
-        input.getDOMNode().value = 'new_group_by_value';
-        TestUtils.Simulate.change(input.getDOMNode());
+        var node = $R(this.component).find('input[name="group_by.0"]').components[0].getDOMNode();
+        node.value = 'new_group_by_value';
+        TestUtils.Simulate.change(node);
 
         assert.strictEqual(this.stub.getCall(0).args[0], this.model.id);
         assert.sameMembers(this.stub.getCall(0).args[1].query.group_by, ['new_group_by_value']);
@@ -234,17 +259,12 @@ describe('components/explorer/query_builder/index', function() {
 
   describe('event_collection', function () {
     it('has the project events as dropdown options', function () {
-      this.model.query.event_collection = 'click';
-      this.model.query.analysis_type = 'count';
-      this.component.forceUpdate();
+      var project = TestHelpers.createProject();
+      project.eventCollections = ['one', 'two'];
+      this.component = this.renderComponent({ project: project });
 
-      var node = this.component.refs['event-collection-field'].refs.select.refs.input.getDOMNode();
-      TestUtils.Simulate.focus(node);
-      var optionsInSelect = _.map(node.parentNode.childNodes[1].childNodes[1].childNodes, function(node){
-        return node.textContent;
-      });
-      optionsInSelect = _.compact(optionsInSelect);
-      assert.sameMembers(optionsInSelect, this.project.eventCollections);
+      var eventCollectionComponent = TestUtils.scryRenderedComponentsWithType(this.component, SelectField)[1];
+      assert.sameMembers(eventCollectionComponent.props.options, ['one', 'two']);
     });
   });
 

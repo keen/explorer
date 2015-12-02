@@ -16,7 +16,7 @@ var Geo = React.createClass({
                  name="coordinates.0"
                  className="form-control"
                  value={this.props.filter.property_value.coordinates[0] || ""}
-                 onChange={this.props.handleGeoSelection} />
+                 onChange={this.props.handleChange} />
         </div>
         <div className="col-md-12">
           <label htmlFor="amount">Latitude</label>
@@ -24,7 +24,7 @@ var Geo = React.createClass({
                  name="coordinates.1"
                  className="form-control"
                  value={this.props.filter.property_value.coordinates[1] || ""}
-                 onChange={this.props.handleGeoSelection} />
+                 onChange={this.props.handleChange} />
         </div>
         <div className="col-md-12">
           <label htmlFor="amount">Radius in Miles</label>
@@ -32,7 +32,7 @@ var Geo = React.createClass({
                  name="max_distance_miles"
                  className="form-control"
                  value={this.props.filter.property_value.max_distance_miles || ""}
-                 onChange={this.props.handleGeoSelection} />
+                 onChange={this.props.handleChange} />
         </div>
       </div>
     );

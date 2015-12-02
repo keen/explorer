@@ -3,85 +3,55 @@
  */
 
 var _ = require('lodash');
-var Select = require('./select.js');
+var moment = require('moment');
 var React = require('react');
+var Select = require('./select.js');
 var Datepicker = require('./datepicker.js');
 var Timepicker = require('./timepicker.js');
 var Geo = require('./geo.js');
-var moment = require('moment');
-var ProjectUtils = require('../../utils/ProjectUtils');
-var FILTER_OPERATORS = ProjectUtils.getConstant('FILTER_OPERATORS');
-var getPropertyType = ProjectUtils.getPropertyType;
-var ExplorerActions = require('../../actions/ExplorerActions');
 var FormatUtils = require('../../utils/FormatUtils');
 var FilterUtils = require('../../utils/FilterUtils');
 
 var dateFormat = 'll';
 var timeFormat = 'h:mm A';
 
-function coerceGeoValue(value) {
-  var trailingDecimals = value.match(/\.+$/);
-  if (value === '-' || (trailingDecimals && trailingDecimals.length)) {
-    return value;
-  } else {
-    return parseFloat(value) || 0;
-  }
+function pasrseIntoDate(dateString, timeString) {
+  var date = moment(new Date(dateString)).format(dateFormat);
+  var time = moment(new Date(timeString)).format(timeFormat);
+  return new Date(date + " " + time).toString();
 }
 
 var FilterValueFields = React.createClass({
 
-  handleGeoSelection: function(event) {
-    var name = event.target.name;
-    var value = event.target.value;
-
-    var updates = _.cloneDeep(this.props.filter);
-    if (!_.isNull(name.match('coordinates'))) {
-      updates.property_value.coordinates[parseInt(name.substr(name.length - 1))] = coerceGeoValue(value);
-    } else {
-      updates.property_value[name] = coerceGeoValue(value);
-    }
-    ExplorerActions.updateFilter(this.props.model.id, this.props.index, updates)
+  handleChangeWithEvent: function(event) {
+    this.props.handleChange(event.target.name, event.target.value);
   },
 
-  onChange: function(event) {
-    var name = event.target.name;
-    var value = event.target.value;
+  setValueState: function(event) {
     var updates = {};
-    updates[name] = value;
+    updates[event.target.name] = event.target.value;
     this.setState(updates);
   },
 
   setDate: function(name, value) {
-    var updates = _.cloneDeep(this.props.filter);
-    updates.property_value = new Date(moment(new Date(value)).format(dateFormat) + " " + moment(this.props.filter.property_value).format(timeFormat));
-    ExplorerActions.updateFilter(this.props.model.id, this.props.index, updates);
+    this.props.handleChange(name, pasrseIntoDate(value, this.props.filter.property_value));
   },
 
   setTime: function(name, value) {
-    var updates = _.cloneDeep(this.props.filter);
-    updates.property_value = new Date(moment(this.props.filter.property_value).format(dateFormat) + " " + moment(new Date(value)).format(timeFormat));
-    ExplorerActions.updateFilter(this.props.model.id, this.props.index, updates);
+    this.props.handleChange(name, pasrseIntoDate(this.props.filter.property_value, value));
   },
 
   handleDateBlur: function (event) {
-    var name = event.target.name;
-    var value = event.target.value;
-    // console.log('name is: ' + name);
-    // console.log('value is: ' + value);
-    this.setDate(name, value);
+    this.setDate(event.target.name, event.target.value);
   },
 
-  updateFilter: function(event) {
-    var name = event.target.name;
-    var value = event.target.value;
-    var updates = _.cloneDeep(this.props.filter);
-    updates[name] = value;
-    ExplorerActions.updateFilter(this.props.model.id, this.props.index, updates);
+  handleChange: function(event) {
+    this.props.handleChange(event.target.name, event.target.value);
   },
 
   getCoercionOptions: function() {
     var operator = this.props.filter.operator;
-    return operator ? _.find(FILTER_OPERATORS, { value: operator }).canBeCoeredTo : [];
+    return operator ? _.find(this.props.filterOperators, { value: operator }).canBeCoeredTo : [];
   },
 
   getInputPlaceholder: function() {
@@ -103,23 +73,19 @@ var FilterValueFields = React.createClass({
 
   render: function() {
     var valueInput;
-
-    var propertyType = getPropertyType(
-      this.props.project,
-      this.props.model.query.event_collection,
-      this.props.filter.property_name
-    );
-
-    if (propertyType === 'geo' || this.props.filter.operator === 'within') {
-      valueInput = <Geo handleGeoSelection={this.handleGeoSelection} filter={this.props.filter}/>;
+    if (this.propertyType === 'geo' || this.props.filter.operator === 'within') {
+      valueInput = (
+        <Geo handleChange={this.handleChangeWithEvent}
+             filter={this.props.filter}/>
+      );
     } else if (this.props.filter.operator === 'exists' || this.props.filter.coercion_type === 'Boolean') {
       valueInput = (
         <Select name="property_value"
                 classes="property-value"
                 ref="boolean-value-set"
                 options={['true', 'false']}
-                handleBlur={this.updateFilter}
-                handleSelection={this.onChange}
+                handleBlur={this.handleChangeWithEvent}
+                handleSelection={this.setValueState}
                 selectedOption={FormatUtils.booleanMap(this.state.property_value) || 'true'}
                 emptyOption={false} />
       );
@@ -128,7 +94,7 @@ var FilterValueFields = React.createClass({
         <div className="row property-value">
           <div className="col-md-6 form-collapse-right">
             <Datepicker ref="date-value-input"
-                        value={moment(this.state.property_value).format(dateFormat)}
+                        value={moment(new Date(this.state.property_value)).format(dateFormat)}
                         label={false}
                         name="property_value"
                         placeholder="Date"
@@ -138,7 +104,7 @@ var FilterValueFields = React.createClass({
           </div>
           <div className="col-md-6 form-collapse-left">
             <Timepicker ref="time-value-input"
-                        value={moment(this.state.property_value).format(timeFormat)}
+                        value={moment(new Date(this.state.property_value)).format(timeFormat)}
                         label={false}
                         name="property_value"
                         placeholder="Time"
@@ -155,8 +121,8 @@ var FilterValueFields = React.createClass({
                name="property_value"
                className="form-control property-value"
                value={this.state.property_value}
-               onChange={this.onChange}
-               onBlur={this.updateFilter}
+               onChange={this.setValueState}
+               onBlur={this.handleChangeWithEvent}
                placeholder={this.getInputPlaceholder()}
                readOnly={this.props.filter.coercion_type === 'Null'}/>
       );
@@ -171,7 +137,7 @@ var FilterValueFields = React.createClass({
                   classes="coercion-type"
                   sort={false}
                   options={this.getCoercionOptions()}
-                  handleSelection={this.updateFilter}
+                  handleSelection={this.handleChangeWithEvent}
                   selectedOption={this.props.filter.coercion_type}
                   emptyOption={false} />
         </div>

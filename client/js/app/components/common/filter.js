@@ -8,68 +8,49 @@ var Select = require('./select.js');
 var classNames = require('classnames');
 var ReactSelect = require('./react_select.js');
 var FilterValueFields = require('./filter_value_fields.js');
-var ProjectUtils = require('../../utils/ProjectUtils');
 var FilterUtils = require('../../utils/FilterUtils');
-var runValidations = require('../../utils/ValidationUtils').runValidations;
-var filterValidations = require('../../validations/FilterValidations').filter;
-var ExplorerActions = require('../../actions/ExplorerActions');
 
 var Filter = React.createClass({
 
-  handleChange: function(name, selection) {
-    var updates = {};
-    updates[name] = selection;
-    ExplorerActions.updateFilter(this.props.model.id, this.props.index, updates);
+  removeFilter: function(e) {
+    e.preventDefault();
+    this.props.removeFilter(this.props.index);
   },
 
-  handleSelectionWithEvent: function(event) {
-    var name = event.target.name;
-    var selection = event.target.value;
-    this.handleChange(name, selection);
+  handleChange: function(name, value) {
+    this.props.handleChange(this.props.index, name, value);
   },
 
-  typeOfPropertyName: function () {
-    var propertyName = this.props.filter.property_name;
-    var eventName = this.props.model.query.event_collection;
-    return ProjectUtils.getPropertyType(this.props.project, eventName, propertyName);
+  handleChangeWithEvent: function(e) {
+    this.props.handleChange(this.props.index, e.target.name, e.target.value);
   },
 
   buildValueFormGroup: function() {
-    var filter = this.props.filter;
-    var type = this.typeOfPropertyName() || 'String';
     return (
-      <FilterValueFields model={this.props.model}
-                         filter={this.props.filter}
-                         index={this.props.index}
-                         project={this.props.project} />
+      <FilterValueFields filter={this.props.filter}
+                         filterOperators={this.props.filterOperators}
+                         handleChange={this.handleChange} />
     );
   },
 
   buildOperatorSelect: function() {
-    var type = this.typeOfPropertyName() || '';
-    var coercionType = this.props.filter.coercion_type || '';
-    var operators = ProjectUtils.getConstant('FILTER_OPERATORS');
-
     return (
       <Select label={false}
               name="operator"
               classes="operator"
-              options={operators}
+              options={this.props.filterOperators}
               emptyOption={false}
               sort={false}
-              handleSelection={this.handleSelectionWithEvent}
+              handleSelection={this.handleChangeWithEvent}
               selectedOption={this.props.filter.operator} />
     );
   },
 
   buildPropertyNameSelect: function() {
-    var eventCollection = this.props.model.query.event_collection;
-    var eventPropertyNames = ProjectUtils.getEventCollectionPropertyNames(this.props.project, eventCollection);
-
     return (
       <ReactSelect name="property_name"
                    inputClasses="property-name form-control"
-                   items={eventPropertyNames}
+                   items={this.props.propertyNames}
                    handleChange={this.handleChange}
                    placeholder="Select a property name"
                    value={this.props.filter.property_name}
@@ -87,61 +68,53 @@ var Filter = React.createClass({
     }
   },
 
-  // React functions
-
-  componentDidUpdate: function() {
-    var type = this.typeOfPropertyName();
-
-    if (type && type == 'geo') {
-      ExplorerActions.updateFilter(this.props.model.id, this.props.index, { coercion_type: 'Geo' });
-    }
-  },
-
-  render: function() {
-    var propertyNameSelect = this.buildPropertyNameSelect();
-    var operatorSelect = this.buildOperatorSelect();
-    var valueFormGroup = this.buildValueFormGroup();
-    var listSyntaxInfo = this.getListSyntaxInfo();
-    var filterValidity = runValidations(filterValidations, this.props.filter);
-    var completeAndInvalid = FilterUtils.isComplete(this.props.filter) && !filterValidity.isValid;
-    var invalidMsg;
-
-    if (completeAndInvalid) {
-      invalidMsg = (
+  buildValidationError: function() {
+    if (this.filterCompleteAndInvalid()) {
+      return (
         <div className="row">
           <div className="col-md-12">
-            <p className="invalid">Invalid: {filterValidity.lastError}</p>
+            <p className="invalid">Invalid: {this.props.filter.errors[0].msg}</p>
           </div>
         </div>
       );
     }
+  },
 
+  filterCompleteAndInvalid: function() {
+    var complete = FilterUtils.isComplete(this.props.filter);
+    var valid = this.props.filter.isValid;
+    return complete && !valid;
+  },
+
+  // React functions
+
+  render: function() {
     var filterClasses = classNames({
       'filter-row': true,
-      'filter-complete': !FilterUtils.isComplete(this.props.filter) || filterValidity.isValid,
-      'filter-incomplete': completeAndInvalid
+      'filter-complete': !FilterUtils.isComplete(this.props.filter) || this.props.filter.isValid,
+      'filter-incomplete': this.filterCompleteAndInvalid()
     });
 
     return (
       <div className={filterClasses}>
         <div className="row">
           <div className="col-md-4 filter-property-col">
-            {propertyNameSelect}
+            {this.buildPropertyNameSelect()}
           </div>
           <div className="col-md-2 filter-operator-col">
-            {operatorSelect}
+            {this.buildOperatorSelect()}
           </div>
           <div className="col-md-5 filter-value-col">
-            {valueFormGroup}
-            {listSyntaxInfo}
+            {this.buildValueFormGroup()}
+            {this.getListSyntaxInfo()}
           </div>
           <div className="col-md-1 filter-close-col">
-            <a href="#" className="remove-filter" onClick={this.props.removeFilter} data-index={this.props.index}>
+            <a href="#" className="remove-filter" onClick={this.removeFilter} data-index={this.props.index}>
               <span className="icon no-margin">&times;</span>
             </a>
           </div>
         </div>
-        {invalidMsg}
+        {this.buildValidationError()}
       </div>
     );
   }

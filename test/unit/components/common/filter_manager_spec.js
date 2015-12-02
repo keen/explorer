@@ -1,53 +1,53 @@
-/** @jsx React.DOM */
 var sinon = require('sinon');
 var assert = require('chai').assert;
 var _ = require('lodash');
 var React = require('react/addons');
+var $R = require('rquery')(_, React);
 var TestUtils = React.addons.TestUtils;
 var TestHelpers = require('../../../support/TestHelpers.js');
 var FilterManager = require('../../../../client/js/app/components/common/filter_manager.js');
-var ExplorerActions = require('../../../../client/js/app/actions/ExplorerActions');
+
+function defaultProps() {
+  return {
+    eventCollection: null,
+    filters: [],
+    handleChange: sinon.stub(),
+    removeFilter: sinon.stub(),
+    addFilter: sinon.stub(),
+    getPropertyType: sinon.stub().returns('String'),
+    propertyNames: []
+  };
+}
 
 describe('components/common/filter_manager', function() {
-
-  before(function () {
-    this.addFilterStub = sinon.stub(ExplorerActions, 'addFilter');
+  it('has a message telling the user to choose an event collection is one is not set', function(){
+    var component = TestHelpers.renderComponent(FilterManager, defaultProps);
+    var message = 'Please select an Event Collection before making a filter.';
+    assert.equal(message, TestUtils.findRenderedDOMComponentWithClass(component, 'no-filters-msg').getDOMNode().textContent);
   });
-
-  after(function () {
-    ExplorerActions.addFilter.restore();
+  it("no longer shows the message when an event collection is set", function() {
+    var component = TestHelpers.renderComponent(FilterManager, _.assign(defaultProps(), {
+      eventCollection: 'click'
+    }));
+    assert.lengthOf(TestUtils.scryRenderedDOMComponentsWithClass(component, 'no-filters-msg'), 0);
   });
-
-  beforeEach(function() {
-    this.client = TestHelpers.createClient();
-    this.project = TestHelpers.createProject();
-    this.project.loading = true;
-    this.model = TestHelpers.createExplorerModel();
-    this.component = TestUtils.renderIntoDocument(<FilterManager client={this.client} project={this.project} model={this.model} />);
+  it("has an add filter button when an event collection is set", function() {
+    var component = TestHelpers.renderComponent(FilterManager, _.assign(defaultProps(), {
+      eventCollection: 'click'
+    }));
+    assert.lengthOf(TestUtils.scryRenderedDOMComponentsWithClass(component, 'add-filter'), 1);
   });
-
-  describe('setup', function(){
-    it('should have tried to create a default empty filter', function () {
-      assert.isTrue(this.addFilterStub.calledOnce);
-    });
-    it('has an empty filters message by default', function(){
-      var message = 'Please select an Event Collection before making a filter.';
-      assert.equal(message, TestUtils.findRenderedDOMComponentWithClass(this.component, 'no-filters-msg').getDOMNode().textContent);
-    });
-  });
-  describe('field change reactions', function () {
-    describe('event_collection', function () {
-      beforeEach(function(){
-        this.model.query.event_collection = 'click';
-        this.component.forceUpdate();
-      });
-
-      it("no longer shows the 'Please select an event collection' message", function() {
-        assert.lengthOf(TestUtils.scryRenderedDOMComponentsWithClass(this.component, 'no-filters-msg'), 0);
-      });
-      it("has an add filter button", function() {
-        assert.lengthOf(TestUtils.scryRenderedDOMComponentsWithClass(this.component, 'add-filter'), 1);
-      });
-    });
+  it('should call removeFilter with the correct filter index when the remove button is clicked', function () {
+    var component = TestHelpers.renderComponent(FilterManager, _.assign(defaultProps(), {
+      eventCollection: 'click',
+      filters: [
+        TestHelpers.createFilter(),
+        TestHelpers.createFilter(),
+        TestHelpers.createFilter()
+      ]
+    }));
+    var node = $R(component).find('.remove-filter').components[1];
+    TestUtils.Simulate.click(node);
+    assert.isTrue(component.props.removeFilter.calledWith(1));
   });
 });
