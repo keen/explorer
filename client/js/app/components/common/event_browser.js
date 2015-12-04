@@ -123,10 +123,19 @@ var EventBrowser = React.createClass({
     var properties = project.schema[eventCollection] ? project.schema[eventCollection].properties : {};
     var _this = this;
 
-    var rows = Object.keys(properties).map(function(propertyName) {
-      return { property: propertyName, type: properties[propertyName] };
+    var rows = Object.keys(properties).map(function(propertyName, index) {
+      return {
+        id: index + 1,
+        property: propertyName,
+        type: properties[propertyName],
+        deleteButton: "<i className=''/>"
+      };
     });
-    var columns = [ { name: "property" }, { name: "type" } ]
+    var columns = [
+      { name: "id", width: 40 },
+      { name: "property" },
+      { name: "type", width: 75 }
+    ];
 
     return <DataGrid idProperty="property" dataSource={rows} columns={columns} />;
   },
