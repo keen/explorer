@@ -6,6 +6,7 @@ var uglify = require('gulp-uglify');
 var concat = require('gulp-concat');
 var minifycss = require('gulp-minify-css');
 var less = require('gulp-less');
+var gzip = require('gulp-gzip');
 var prefix = require('gulp-autoprefixer');
 var rename = require('gulp-rename');
 var connect = require('gulp-connect');
@@ -46,6 +47,12 @@ gulp.task('minify-scripts', function(){
   return gulp.src('./dist/'+buildConfig.buildName+'.js')
     .pipe(uglify())
     .pipe(rename(buildConfig.buildName+'.min.js'))
+    .pipe(gulp.dest('./dist/'));
+});
+
+gulp.task('compress-scripts', function() {
+  return gulp.src('./dist/'+buildConfig.buildName+'.min.js')
+    .pipe(gzip())
     .pipe(gulp.dest('./dist/'));
 });
 
@@ -133,6 +140,7 @@ gulp.task('connect', function () {
 gulp.task('scripts', function(callback) {
   runSequence('build-scripts',
               'minify-scripts',
+              'compress-scripts',
               callback);
 });
 

@@ -6,7 +6,6 @@
   "bucket-name": "keen-js",
   "dependencies": {
     "classnames": "2.1.2",
-    "connect-history-api-fallback": "0.0.5",
     "flux": "^2.0.3",
     "json-stable-stringify": "1.0.0",
     "keymirror": "~0.1.0",
@@ -14,10 +13,8 @@
     "moment": "^2.7.0",
     "qs": "2.2.3",
     "react": "~0.13.3",
-    "reactify": "~0.15.1",
     "rquery": "^2.0.4",
     "string": "^2.0.1",
-    "stringify": "~3.0.0",
     "superagent": "1.2.0"
   },
   "browserify-shim": {
@@ -35,12 +32,14 @@
     "browserify-shim": "~3.8.0",
     "chai": "^2.3.0",
     "chai-as-promised": "^5.0.0",
+    "connect-history-api-fallback": "0.0.5",
     "gulp": "^3.8.10",
     "gulp-autoprefixer": "~2.1.0",
     "gulp-awspublish": "0.0.23",
     "gulp-clean": "~0.3.1",
     "gulp-concat": "~2.5.2",
     "gulp-connect": "2.0.6",
+    "gulp-gzip": "^1.2.0",
     "gulp-less": "3.0.0",
     "gulp-minify-css": "~0.4.6",
     "gulp-mocha": "^1.0.0",
@@ -52,8 +51,10 @@
     "jquery-browserify": "^1.8.1",
     "keen-js": "^3.3.0",
     "phantomjs": "1.9.7-15",
+    "reactify": "~0.15.1",
     "run-sequence": "~1.0.1",
     "sinon": "1.14.1",
+    "stringify": "~3.0.0",
     "vinyl-source-stream": "1.0.0"
   },
   "scripts": {
