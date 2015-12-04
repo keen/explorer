@@ -6,6 +6,7 @@ var React = require('react');
 var _ = require('lodash');
 var request = require('superagent');
 var classNames = require('classnames');
+var DataGrid = require('react-datagrid');
 
 var FormatUtils = require('../../utils/FormatUtils');
 var Loader = require('./loader');
@@ -117,7 +118,17 @@ var EventBrowser = React.createClass({
   },
 
   getSchema: function() {
-    return this.formatSchemaTable(this.props.project, this.state.activeEventCollection);
+    var project = this.props.project;
+    var eventCollection = this.state.activeEventCollection;
+    var properties = project.schema[eventCollection] ? project.schema[eventCollection].properties : {};
+    var _this = this;
+
+    var rows = Object.keys(properties).map(function(propertyName) {
+      return { property: propertyName, type: properties[propertyName] };
+    });
+    var columns = [ { name: "property" }, { name: "type" } ]
+
+    return <DataGrid idProperty="property" dataSource={rows} columns={columns} />;
   },
 
   changeActiveView: function(event) {
@@ -125,31 +136,6 @@ var EventBrowser = React.createClass({
     var tabName = event.target.name;
     this.setState({ activeView: tabName });
     if (tabName === 'recentEvents') this.fetchRecentEvents();
-  },
-
-  formatSchemaTable: function(project, eventCollection) {
-    var properties = project.schema[eventCollection] ? project.schema[eventCollection].properties : {};
-    var _this = this;
-
-    var rows = Object.keys(properties).map(function(propertyName) {
-      return (<tr>
-          <td className="property-name">{propertyName}</td>
-          <td className="type">{properties[propertyName]}</td>
-          <td>
-            <span className="delete-icon" onClick={_this.deleteProperty.bind(_this, propertyName, eventCollection)}>
-            <i className="icon glyphicon glyphicon-remove-circle" />
-            </span>
-          </td>
-        </tr>);
-    });
-    return (<table>
-        <thead className="collection-details"><tr>
-          <th className="property-name">Property Name</th>
-          <th>Type</th>
-          <th><i className="icon glyphicon glyphicon-remove-circle"/></th>
-        </tr></thead>
-        <tbody className="collection-details">{rows}</tbody>
-        </table>);
   },
 
   // Lifecycle hooks
