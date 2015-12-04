@@ -88,7 +88,6 @@ var ProjectActions = {
       }
     });
   }
-
 };
 
 module.exports = ProjectActions;

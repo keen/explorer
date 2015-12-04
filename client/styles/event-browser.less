@@ -1,76 +1,75 @@
 .event-browser {
-	overflow: hidden;
-	height: 360px;
+  overflow: hidden;
+  height: 360px;
 
-	.search-box {
-		margin: 4px;
-	}
+  .search-box {
+    margin: 4px;
+  }
 
-	.event-names, .event-browser-content {
-		float: left;
-	}
+  .event-names, .event-browser-content {
+    float: left;
+  }
 
-	.event-names {
-		width: 25%;
-		border-right: 1px solid #DDD;
-	}
+  .event-names {
+    width: 25%;
+    border-right: 1px solid #DDD;
+  }
 
-	.event-browser-content {
-		width: 75%;
-	}
+  .event-browser-content {
+    width: 75%;
+  }
 
-	ul.event-names-list {
-		width: 100%;
-		height: 360px;
-		overflow-y: scroll;
+  ul.event-names-list {
+    width: 100%;
+    height: 360px;
+    overflow-y: scroll;
 
-		li {
-			margin: 0;
+    li {
+      margin: 0;
 
-			a {
-				display: block;
-				padding: 10px;
-				border-radius: 0;
-				border-top: 1px solid #EFEFEF;
-			}
-			a:not(:hover) {
-				background: #FFF;
-			}
-		}
-		li.active {
-			a, a:hover, a:active, a:focus {
-				color: #FFF;
-				background-color: #00BBDE;
-			}
-		}
-	}
+      a {
+        display: block;
+        padding: 10px;
+        border-radius: 0;
+        border-top: 1px solid #EFEFEF;
+      }
+      a:not(:hover) {
+        background: #FFF;
+      }
+    }
+    li.active {
+      a, a:hover, a:active, a:focus {
+        color: #FFF;
+        background-color: #00BBDE;
+      }
+    }
+  }
 
-	.select-btn {
-		position: absolute;
-		top: 10px;
-		right: 10px;
-	}
+  .select-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+  }
 
-	.view-options {
-		width: 100%;
-		border-bottom: 1px solid #DDD;
-		padding: 10px 0 0 10px;
-	}
+  .view-options {
+    width: 100%;
+    border-bottom: 1px solid #DDD;
+    padding: 10px 0 0 10px;
+  }
 
-	.event-data-wrapper {
-		position: relative;
-	}
+  .event-data-wrapper {
+    position: relative;
+  }
 
-	textarea.json-view {
-		overflow-y: scroll;
-		border: 0;
-		background: #FFF;
-		resize: none;
-		border-radius: 0 0 5px 0;
-	}
-
+  textarea.json-view {
+    overflow-y: scroll;
+    border: 0;
+    background: #FFF;
+    resize: none;
+    border-radius: 0 0 5px 0;
+  }
 }
 
 .event-browser-modal .modal-body {
-	padding: 0;
+  padding: 0;
 }

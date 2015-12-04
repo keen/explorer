@@ -4,18 +4,52 @@
 
 var React = require('react');
 var _ = require('lodash');
+var request = require('superagent');
 var classNames = require('classnames');
-var Loader = require('../common/loader.js');
+var DataGrid = require('react-datagrid');
+
 var FormatUtils = require('../../utils/FormatUtils');
-var ProjectUtils = require('../../utils/ProjectUtils');
+var Loader = require('./loader');
+var Modal = require('./modal');
+var Notice = require('./notice');
 var ProjectActions = require('../../actions/ProjectActions');
-var Modal = require('./modal.js');
+var ProjectUtils = require('../../utils/ProjectUtils');
 
 var EventBrowser = React.createClass({
 
   onKeyUp: function(event) {
     var enterKeyCode = 13;
     if (event.keyCode === enterKeyCode) this.selectEventCollection();
+  },
+
+  deleteProperty: function(propertyName, eventCollection, event) {
+    var _this = this;
+    var confirmDeleteMessage = "Are you sure you want to delete all values for " +
+      propertyName + " from " +
+      eventCollection + "? This operation may take a while and is not reversible.";
+
+      if(confirm(confirmDeleteMessage)) {
+        var client = this.props.client;
+        var url = client.config.protocol +
+          "://" + client.config.host +
+          "/projects/" + client.config.projectId +
+          "/events/" + eventCollection +
+          "/properties/" + propertyName +
+          "?api_key=" + client.config.masterKey;
+        var req = request("DELETE", url);
+
+        req.end(function(err, res) {
+          if (err) {
+            _this.setState({ eventNotice: { text: res.body.message, type: 'error' } });
+          } else {
+            _this.setState({ eventNotice: { text: "Successfully deleted values for " + propertyName } });
+          }
+        });
+      }
+  },
+
+  closeNotice: function() {
+    this.setState({ eventNotice: undefined });
   },
 
   selectEventCollectionClick: function(event) {
@@ -78,11 +112,32 @@ var EventBrowser = React.createClass({
 
   getRecentEvents: function() {
     var recentEvents = this.props.project.schema[this.state.activeEventCollection].recentEvents;
-    return recentEvents ? FormatUtils.prettyPrintJSON(recentEvents) : "";
+    var recentEventsText = recentEvents ? FormatUtils.prettyPrintJSON(recentEvents) : "";
+
+    return <textarea className="json-view" value={recentEventsText} readOnly />
   },
 
   getSchema: function() {
-    return FormatUtils.prettyPrintJSON(ProjectUtils.getEventCollectionProperties(this.props.project, this.state.activeEventCollection)) || "";
+    var project = this.props.project;
+    var eventCollection = this.state.activeEventCollection;
+    var properties = project.schema[eventCollection] ? project.schema[eventCollection].properties : {};
+    var _this = this;
+
+    var rows = Object.keys(properties).map(function(propertyName, index) {
+      return {
+        id: index + 1,
+        property: propertyName,
+        type: properties[propertyName],
+        deleteButton: "<i className=''/>"
+      };
+    });
+    var columns = [
+      { name: "id", width: 40 },
+      { name: "property" },
+      { name: "type", width: 75 }
+    ];
+
+    return <DataGrid idProperty="property" dataSource={rows} columns={columns} />;
   },
 
   changeActiveView: function(event) {
@@ -140,6 +195,7 @@ var EventBrowser = React.createClass({
                 onClick: this.selectEventCollectionClick
               }
              ]}>
+        <Notice notice={this.state.eventNotice} closeCallback={this.closeNotice} />
         <div className="event-browser" onKeyUp={this.handleKeyUp}>
           <div className="event-names">
             <div className="search-box">
@@ -165,7 +221,7 @@ var EventBrowser = React.createClass({
             </ul>
             <div ref="event-data-wrapper" className="event-data-wrapper">
               <Loader ref="loader" visible={this.shouldShowLoader()} />
-              <textarea className="json-view" value={previewData} readOnly />
+              {previewData}
             </div>
           </div>
         </div>

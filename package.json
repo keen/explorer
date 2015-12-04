@@ -14,6 +14,7 @@
     "moment": "^2.7.0",
     "qs": "2.2.3",
     "react": "~0.13.3",
+    "react-datagrid": "^1.2.15",
     "reactify": "~0.15.1",
     "rquery": "^2.0.4",
     "string": "^2.0.1",
