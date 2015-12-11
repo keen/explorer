@@ -1,0 +1,61 @@
+{
+  "name": "keen-explorer",
+  "dependencies": {
+    "react-datagrid": {
+      "version": "^1.2.15",
+      "dependencies": {
+        "react-virtual-scroller": {
+          "version": "git://github.com/zippyui/react-virtual-scroller"
+        },
+        "clone": {
+          "version": "^0.1.18"
+        },
+        "css-utils": {
+          "version": "^0.4.2"
+        },
+        "drag-helper": {
+          "version": "^1.2.3"
+        },
+        "es6-promise": {
+          "version": "^2.1.1"
+        },
+        "hasown": {
+          "version": "^1.0.1"
+        },
+        "normalize.css": {
+          "version": "^3.0.3"
+        },
+        "object-assign": {
+          "version": "^2.0.0"
+        },
+        "react-load-mask": {
+          "version": "^1.0.1"
+        },
+        "react-menus": {
+          "version": "^1.1.1"
+        },
+        "react-simple-toolbar": {
+          "version": "^1.0.5"
+        },
+        "react-style-normalizer": {
+          "version": "^1.2.8"
+        },
+        "react-virtual-scroller": {
+          "version": "git://github.com/zippyui/react-virtual-scroller"
+        },
+        "region": {
+          "version": "^2.1.2"
+        },
+        "region-align": {
+          "version": "^2.1.2"
+        },
+        "ustring": {
+          "version": "^1.4.1"
+        },
+        "whatwg-fetch": {
+          "version": "^0.7.0"
+        }
+     }
+    }
+  }
+}
