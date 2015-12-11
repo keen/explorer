@@ -1,8 +1,9 @@
 /** @jsx React.DOM */
 var assert = require('chai').assert;
 var _ = require('lodash');
-var React = require('react/addons');
-var TestUtils = React.addons.TestUtils;
+var React = require('react');
+var ReactDOM = require('react-dom');
+var TestUtils = require('react-addons-test-utils');
 var TestHelpers = require('../../../support/TestHelpers.js');
 var sinon = require('sinon');
 var Explorer = require('../../../../client/js/app/components/explorer/index.js');
@@ -89,7 +90,7 @@ describe('components/explorer/index', function() {
         });
 
         it('can show BrowseQueries if persistence has been passed in', function(){
-          TestUtils.Simulate.click(this.component.refs['query-pane-tabs'].refs['browse-tab'].getDOMNode());
+          TestUtils.Simulate.click(this.component.refs['query-pane-tabs'].refs['browse-tab']);
           assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, BrowseQueries), 1);
         });
 
@@ -145,15 +146,21 @@ describe('components/explorer/index', function() {
 
     describe('tabbing between panes', function () {
       it('properly tabs from the query builder to browsing favorites', function () {
-        this.component.setProps({ persistence: {} });
-        TestUtils.Simulate.click(this.component.refs['query-pane-tabs'].refs['browse-tab'].getDOMNode());
+        var props = _.assign({}, this.component.props, { persistence: {} });
+        this.component = TestHelpers.renderComponent(Explorer, props);
+
+        TestUtils.Simulate.click(this.component.refs['query-pane-tabs'].refs['browse-tab']);
+
         assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, BrowseQueries), 1);
         assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, QueryBuilder), 0);
       });
+
       it('properly tabs from the query builder to browsing favorites', function () {
-        this.component.setProps({ persistence: {} });
+        var props = _.assign({}, this.component.props, { persistence: {} });
         this.component.setState({ activeQueryPane: 'browse' });
-        TestUtils.Simulate.click(this.component.refs['query-pane-tabs'].refs['build-tab'].getDOMNode());
+        this.component = TestHelpers.renderComponent(Explorer, props);
+
+        TestUtils.Simulate.click(this.component.refs['query-pane-tabs'].refs['build-tab']);
 
         assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, QueryBuilder), 1);
         assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, BrowseQueries), 0);
@@ -161,9 +168,9 @@ describe('components/explorer/index', function() {
     });
 
     it('can launch the filter modal', function() {
-      var filtersFieldsToggleNode = this.component.refs['query-builder'].refs['filters-fields-toggle'].refs['toggle-label'].getDOMNode();
+      var filtersFieldsToggleNode = this.component.refs['query-builder'].refs['filters-fields-toggle'].refs['toggle-label'];
       TestUtils.Simulate.click(filtersFieldsToggleNode);
-      assert.match(this.component.refs['filter-manager'].refs.modal.getDOMNode().className, /block/);
+      assert.match(ReactDOM.findDOMNode(this.component.refs['filter-manager'].refs.modal).className, /block/);
     });
 
   });
@@ -259,8 +266,9 @@ describe('components/explorer/index', function() {
         ExplorerActions.setActive('abc');
         ExplorerActions.create(_.assign({}, TestHelpers.createExplorerModel(), { id: 'def', metadata: { display_name: 'def' } }));
         ExplorerActions.create(_.assign({}, TestHelpers.createExplorerModel(), { id: 'ghi', metadata: { display_name: 'ghi' } }));
-        this.component.setProps({ persistence: {} });
-        this.component.forceUpdate();
+
+        var props = _.assign({}, this.component.props, { persistence: {} });
+        this.component = TestHelpers.renderComponent(Explorer, props);
       });
       it('should add a new explorer in the store', function () {
         this.component.createNewQuery(TestHelpers.fakeEvent());
@@ -275,10 +283,10 @@ describe('components/explorer/index', function() {
         ExplorerActions.setActive.restore();
       });
       it('should change the text on the query builder tab to "Create a new query"', function () {
-        assert.strictEqual(this.component.refs['query-pane-tabs'].refs['build-tab'].getDOMNode().textContent, 'Edit query');
+        assert.strictEqual(this.component.refs['query-pane-tabs'].refs['build-tab'].textContent, 'Edit query');
         this.component.createNewQuery(TestHelpers.fakeEvent());
         this.component._onChange();
-        assert.strictEqual(this.component.refs['query-pane-tabs'].refs['build-tab'].getDOMNode().textContent, 'Create a new query');
+        assert.strictEqual(this.component.refs['query-pane-tabs'].refs['build-tab'].textContent, 'Create a new query');
       });
       it('should update component state to show the build tab', function () {
         this.component.setState({ activeQueryPane: 'browse' });

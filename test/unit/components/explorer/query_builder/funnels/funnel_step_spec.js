@@ -1,9 +1,10 @@
 var _ = require('lodash');
 var sinon = require('sinon');
 var assert = require('chai').assert;
-var React = require('react/addons');
-var $R = require('rquery')(_, React);
-var TestUtils = React.addons.TestUtils;
+var React = require('react');
+var ReactDOM = require('react-dom');
+var TestUtils = require('react-addons-test-utils');
+var $R = require('rquery')(_, React, ReactDOM, TestUtils);
 var TestHelpers = require('../../../../../support/TestHelpers');
 var FunnelStep = require('../../../../../../client/js/app/components/explorer/query_builder/funnels/funnel_step.js');
 
@@ -32,21 +33,21 @@ describe('components/explorer/query_builder/funnels/funnel_step', function() {
 
   it('should ONLY call moveStepUp if the up button is clicked', function () {
     this.component = TestHelpers.renderComponent(FunnelStep, getProps());
-    TestUtils.Simulate.click($R(this.component).find('.step-move-btns .up').components[0].getDOMNode());
+    TestUtils.Simulate.click($R(this.component).find('.step-move-btns .up').components[0]);
     assert.isTrue(this.component.props.moveStep.calledWith(0, 'up'));
     assert.isFalse(this.component.props.toggleStepActive.called);
   });
 
   it('should ONLY call moveStepDown if the down button is clicked', function () {
     this.component = TestHelpers.renderComponent(FunnelStep, getProps());
-    TestUtils.Simulate.click($R(this.component).find('.step-move-btns .down').components[0].getDOMNode());
+    TestUtils.Simulate.click($R(this.component).find('.step-move-btns .down').components[0]);
     assert.isTrue(this.component.props.moveStep.calledWith(0, 'down'));
     assert.isFalse(this.component.props.toggleStepActive.called);
   });
 
   it('should ONLY call toggleStepActive if the header is clicked', function () {
     this.component = TestHelpers.renderComponent(FunnelStep, getProps());
-    TestUtils.Simulate.click($R(this.component).find('.step-header').components[0].getDOMNode());
+    TestUtils.Simulate.click($R(this.component).find('.step-header').components[0]);
     assert.isTrue(this.component.props.toggleStepActive.calledWith(0, true));
     assert.isFalse(this.component.props.moveStep.called);
   });
@@ -56,7 +57,7 @@ describe('components/explorer/query_builder/funnels/funnel_step', function() {
       step: _.assign(TestHelpers.createStep(), { active: true })
     }));
     sinon.stub(window, 'confirm').returns(true);
-    TestUtils.Simulate.click($R(this.component).find('.remove-step').components[0].getDOMNode());
+    TestUtils.Simulate.click($R(this.component).find('.remove-step').components[0]);
     assert.isTrue(this.component.props.removeStep.calledWith(0));
     window.confirm.restore();
   });
@@ -73,7 +74,7 @@ describe('components/explorer/query_builder/funnels/funnel_step', function() {
     this.component = TestHelpers.renderComponent(FunnelStep, getProps({
       step: _.assign(TestHelpers.createStep(), { active: true })
     }));
-    var node = $R(this.component).find('input[name="event_collection"]').components[0].getDOMNode();
+    var node = $R(this.component).find('input[name="event_collection"]').components[0];
     node.value = 'test';
     TestUtils.Simulate.change(node);
     assert.isTrue(this.component.props.handleChange.calledWith(0, 'event_collection', 'test'));
@@ -83,7 +84,7 @@ describe('components/explorer/query_builder/funnels/funnel_step', function() {
     this.component = TestHelpers.renderComponent(FunnelStep, getProps({
       step: _.assign(TestHelpers.createStep(), { active: true })
     }));
-    var node = $R(this.component).find('input[name="actor_property"]').components[0].getDOMNode();
+    var node = $R(this.component).find('input[name="actor_property"]').components[0];
     node.value = 'test';
     TestUtils.Simulate.change(node);
     assert.isTrue(this.component.props.handleChange.calledWith(0, 'actor_property', 'test'));

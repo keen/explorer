@@ -7,10 +7,11 @@ var Filter = require('../../../../client/js/app/components/common/filter.js');
 var Geo = require('../../../../client/js/app/components/common/geo.js');
 var Select = require('../../../../client/js/app/components/common/select.js');
 var ReactSelect = require('../../../../client/js/app/components/common/react_select.js');
-var React = require('react/addons');
-var TestUtils = React.addons.TestUtils;
+var React = require('react');
+var ReactDOM = require('react-dom');
+var TestUtils = require('react-addons-test-utils');
 var TestHelpers = require('../../../support/TestHelpers');
-var $R = require('rquery')(_, React);
+var $R = require('rquery')(_, React, ReactDOM, TestUtils);
 
 describe('components/common/filter', function() {
   beforeEach(function() {
@@ -49,7 +50,7 @@ describe('components/common/filter', function() {
     // TODO: Remove
     this.getSelectOptions = function(selectClass, activeOnly) {
       activeOnly = activeOnly || false;
-      var operatorSelect = TestUtils.findRenderedDOMComponentWithClass(this.component, selectClass).getDOMNode().childNodes[0];
+      var operatorSelect = TestUtils.findRenderedDOMComponentWithClass(this.component, selectClass).childNodes[0];
       var operators = _.map(operatorSelect.childNodes[0].childNodes, function(node){
         if (!activeOnly) {
           return node.value;
@@ -93,7 +94,7 @@ describe('components/common/filter', function() {
       }
     };
     this.component = this.renderComponent(props);
-    var selectNode = $R(this.component).find('select').components[1].getDOMNode();
+    var selectNode = $R(this.component).find('select').components[1];
     var options = _.map(selectNode.childNodes, function(node) {
       return node.value;
     });

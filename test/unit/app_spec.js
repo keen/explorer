@@ -1,8 +1,8 @@
 var assert = require('chai').assert;
 var App = require('../../client/js/app/app.js');
 var QueryStringUtils =  require('../../client/js/app/utils/QueryStringUtils.js');
-var React = require('react/addons');
-var TestUtils = React.addons.TestUtils;
+var React = require('react');
+var TestUtils = require('react-addons-test-utils');
 var TestHelpers = require('../support/TestHelpers.js');
 var sinon = require('sinon');
 
@@ -30,5 +30,5 @@ describe('app', function() {
     QueryStringUtils.getQueryAttributes.restore();
     xhrOpenStub.restore();
     xhrSendStub.restore();
-  });   
+  });
 });

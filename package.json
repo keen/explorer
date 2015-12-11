@@ -12,8 +12,10 @@
     "lodash": "3.10.1",
     "moment": "^2.7.0",
     "qs": "2.2.3",
-    "react": "~0.13.3",
-    "rquery": "^2.0.4",
+    "react": "^0.14.3",
+    "react-addons-test-utils": "^0.14.3",
+    "react-dom": "^0.14.3",
+    "rquery": "^3.1.1",
     "string": "^2.0.1",
     "superagent": "1.2.0"
   },

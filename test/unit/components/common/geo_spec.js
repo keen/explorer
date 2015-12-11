@@ -2,8 +2,8 @@
 var assert = require('chai').assert;
 var sinon = require('sinon');
 var _ = require('lodash');
-var React = require('react/addons');
-var TestUtils = React.addons.TestUtils;
+var React = require('react');
+var TestUtils = require('react-addons-test-utils');
 var Geo = require('../../../../client/js/app/components/common/geo.js');
 var TestHelpers = require('../../../support/TestHelpers');
 

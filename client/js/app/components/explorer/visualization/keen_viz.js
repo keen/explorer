@@ -3,7 +3,7 @@
  */
 
 var _ = require('lodash');
-var React = require('react/addons');
+var React = require('react');
 
 var ExplorerUtils = require('../../../utils/ExplorerUtils');
 
@@ -18,7 +18,7 @@ var KeenViz = React.createClass({
   	this.props.dataviz.data(this.props.model.response)
   		.title('') // No title - not necessary for Explorer
 	    .chartType(this.props.model.metadata.visualization.chart_type)
-    	.el(this.refs['keen-viz'].getDOMNode())
+    	.el(this.refs['keen-viz'])
     	.height(400)
     	.render();
 	},

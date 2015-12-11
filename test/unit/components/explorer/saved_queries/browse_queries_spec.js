@@ -2,8 +2,8 @@
 var sinon = require('sinon');
 var assert = require('chai').assert;
 var _ = require('lodash');
-var React = require('react/addons');
-var TestUtils = React.addons.TestUtils;
+var React = require('react');
+var TestUtils = require('react-addons-test-utils');
 var BrowseQueries = require('../../../../../client/js/app/components/explorer/saved_queries/browse_queries.js');
 var ExplorerUtils = require('../../../../../client/js/app/utils/ExplorerUtils');
 var ExplorerActions = require('../../../../../client/js/app/actions/ExplorerActions');
@@ -58,7 +58,7 @@ describe('components/explorer/saved_queries/browse_queries', function() {
     });
 
     it("creates a list item for each listItem prop", function() {
-      assert.equal(this.component.refs.list.getDOMNode().childNodes.length, 3);
+      assert.equal(this.component.refs.list.childNodes.length, 3);
     });
 
     it("uses placeholder text for queries that do not have metadata or display_name", function() {
@@ -86,7 +86,7 @@ describe('components/explorer/saved_queries/browse_queries', function() {
       it('should call the callback if a list element is clicked', function () {
         var stub = sinon.stub();
         this.component = this.renderComponent({ clickCallback: stub });
-        var firstListItem = this.component.refs.list.getDOMNode().childNodes[0];
+        var firstListItem = this.component.refs.list.childNodes[0];
         TestUtils.Simulate.click(firstListItem);
         assert.isTrue(stub.calledOnce);
       });
