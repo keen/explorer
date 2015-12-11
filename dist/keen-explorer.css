@@ -2319,6 +2319,13 @@ html.u-app body * {
   resize: none;
   border-radius: 0 0 5px 0;
 }
+#keen-explorer .event-browser span.delete-icon {
+  cursor: pointer;
+  opacity: 0;
+}
+#keen-explorer .event-browser span.delete-icon:hover {
+  opacity: 1;
+}
 #keen-explorer .event-browser-modal .modal-body {
   padding: 0;
 }

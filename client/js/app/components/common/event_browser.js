@@ -128,13 +128,24 @@ var EventBrowser = React.createClass({
         id: index + 1,
         property: propertyName,
         type: properties[propertyName],
-        deleteButton: "<i className=''/>"
+        x: { name: propertyName, collection: eventCollection }
       };
     });
     var columns = [
       { name: "id", width: 40 },
       { name: "property" },
-      { name: "type", width: 75 }
+      { name: "type", width: 75 },
+      { name: "x",
+        width: 35,
+        align: "center",
+        render: function(value) {
+          return <span
+            className="delete-icon"
+            onClick={_this.deleteProperty.bind(_this, value.name, value.collection)}>
+              <i className="icon glyphicon glyphicon-remove-circle" />
+            </span>
+        }
+      }
     ];
 
     return <DataGrid idProperty="property" dataSource={rows} columns={columns} />;
