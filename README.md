@@ -91,7 +91,7 @@ The project is built with [Gulp.js](https://github.com/gulpjs/gulp).
 #### Testing
 
 **Run Unit Tests**
-* Run `gulp test:unit` to run the unit tests.
+* Run `npm run test` to run all the tests. Currently there are only unit tests.
 
 **Run In Browser Mocha Unit Tests**
 This isn't normally requried, but if you need to, you can run the tests in the browser.
