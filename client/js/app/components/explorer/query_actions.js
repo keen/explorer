@@ -52,7 +52,7 @@ var QueryActions = React.createClass({
     var isPersisted = ExplorerUtils.isPersisted(this.props.model);
     var isFunnel = this.props.model.query.analysis_type === 'funnel';
 
-    if (this.props.persistence && !isEmailExtraction && !isFunnel) {
+    if (this.props.persistence && !isEmailExtraction) {
       saveBtn = (
         <button type="button" className="btn btn-success save-query" onClick={this.props.saveQueryClick} role="save-query" disabled={this.props.model.loading}>
           {isPersisted ? 'Update' : 'Save'}
