@@ -2,7 +2,6 @@
 var assert = require('chai').assert;
 var _ = require('lodash');
 var sinon = require('sinon');
-var Select = require('../../../../../client/js/app/components/common/select.js');
 var Visualization = require('../../../../../client/js/app/components/explorer/visualization/index.js');
 var Chart = require('../../../../../client/js/app/components/explorer/visualization/chart.js');
 var React = require('react/addons');
@@ -95,6 +94,20 @@ describe('components/explorer/visualization/index', function() {
       assert.isTrue(this.component.refs['chart-type'].refs.select.getDOMNode().disabled);
     });
 
+  });
+
+  describe('default chart type', function() {
+    it('renders a default chart type if there is no metadata.visualization object', function() {
+      this.chartOptionsStub.returns([
+          'metric',
+          'JSON'
+      ]);
+
+      this.component.forceUpdate();
+      var selectField = this.component.refs['chart-type'].refs.select;
+
+      assert.equal(selectField.props.value, 'metric');
+    });
   });
 
 });
