@@ -788,6 +788,9 @@
   outline: 0;
   z-index: 1;
 }
+#keen-explorer .no-margin {
+  margin: 0;
+}
 #keen-explorer .margin-top-tiny {
   margin-top: 8px;
 }
@@ -811,9 +814,6 @@
 }
 #keen-explorer .margin-bottom-small {
   margin-bottom: 15px;
-}
-#keen-explorer .no-margin {
-  margin: 0;
 }
 #keen-explorer .padding-tiny {
   padding: 8px;
