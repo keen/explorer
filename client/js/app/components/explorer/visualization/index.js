@@ -41,6 +41,16 @@ var Visualization = React.createClass({
     });
   },
 
+  chartType: function() {
+    if (this.props.model.metadata.visualization &&
+        this.props.model.metadata.visualization.chart_type) {
+      return this.props.model.metadata.visualization.chart_type;
+    }
+    else {
+      return _.first(ExplorerUtils.getChartTypeOptions(this.props.model.response, this.props.model.query.analysis_type))
+    }
+  },
+
   componentWillMount: function() {
     this.dataviz = new Keen.Dataviz();
   },
@@ -81,7 +91,6 @@ var Visualization = React.createClass({
       );
     }
 
-
     return (
       <div className="visualization">
         <Notice notice={this.props.notice} closeCallback={this.noticeClosed} />
@@ -99,7 +108,7 @@ var Visualization = React.createClass({
                           classes="chart-type"
                           options={this.formatChartTypes()}
                           handleSelection={this.changeChartType}
-                          selectedOption={this.props.model.metadata.visualization.chart_type}
+                          selectedOption={this.chartType()}
                           emptyOption={false}
                           disabled={this.props.model.loading} />
                 </div>
