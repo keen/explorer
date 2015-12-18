@@ -298,6 +298,16 @@ describe('actions/ExplorerActions', function() {
         actionType: 'NOTICE_CLEAR_ALL'
       }));
     });
+    it('should add a query object on the response if one is not there', function () {
+      ExplorerActions.execSuccess(this.explorer, this.response);
+      assert.deepPropertyVal(this.dispatchStub.getCall(2).args[0].updates.response, 'query');
+      assert.deepEqual(this.dispatchStub.getCall(2).args[0].updates.response.query, { analysis_type: 'count' });
+    });
+    it('should not add a query object on the response if one is not there', function () {
+      ExplorerActions.execSuccess(this.explorer, _.assign({}, this.response, { query: { analysis_type: 'not_count' } }));
+      assert.deepPropertyVal(this.dispatchStub.getCall(2).args[0].updates.response, 'query');
+      assert.deepEqual(this.dispatchStub.getCall(2).args[0].updates.response.query, { analysis_type: 'not_count' });
+    });
   });
 
   describe('async functions', function () {
