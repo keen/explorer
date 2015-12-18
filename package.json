@@ -59,6 +59,7 @@
   },
   "scripts": {
     "dev": "gulp",
+    "production": "gulp production",
     "test": "gulp test:unit"
   }
 }

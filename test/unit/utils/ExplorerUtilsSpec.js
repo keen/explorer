@@ -429,6 +429,15 @@ describe('utils/ExplorerUtils', function() {
         var formattedParams = ExplorerUtils.formatQueryParams(params);
         assert.strictEqual(formattedParams.query.filters[0].property_value, "2015-05-03T10:00:00.000");
       });
+      it('should create arrays out of string group_by properties', function () {
+        var params = {
+          query: {
+            group_by: 'string value'
+          }
+        };
+        var formattedParams = ExplorerUtils.formatQueryParams(params);
+        assert.sameMembers(formattedParams.query.group_by, ['string value']);
+      });
     });
   });
 

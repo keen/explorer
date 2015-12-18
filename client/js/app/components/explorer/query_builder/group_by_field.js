@@ -20,8 +20,57 @@ var GroupByField = React.createClass({
     }
   },
 
+  multiGroupToggle: function() {
+    var icon = this.props.value.length > 1 ? 'remove' : 'plus';
+    var text = this.props.value.length > 1 ? 'Remove second property' : 'Group by a second property';
+    return (
+      <a className="double-groupby-toggle" href="#" onClick={this.toggleMultiGroupBy}>
+        <i className={"margin-right-bump icon glyphicon glyphicon-"+icon}></i>
+        {text}
+      </a>
+    );
+  },
+
+  secondField: function() {
+    if (this.props.value.length > 1) {
+      return (
+        <ReactSelect ref="select"
+                     inputClasses="group-by form-control margin-bottom-tiny"
+                     wrapClasses="margin-top-tiny"
+                     name="group_by.1"
+                     items={this.props.options}
+                     handleChange={this.handleChange}
+                     value={this.props.value[1] || ''}
+                     sort={true} />
+      )
+    }
+  },
+
   getGroupBy: function() {
     return this.props.value;
+  },
+
+  handleChange: function(name, value) {
+    var newVal = this.props.value.slice();
+    newVal[name.split('.')[1]] = value;
+    this.props.handleChange('group_by', newVal);
+  },
+
+  toggleMultiGroupBy: function(event) {
+    event.preventDefault();
+    var newVal;
+    switch (this.props.value.length) {
+      case 0:
+        newVal = this.props.value = ['', ''];
+        break;
+      case 1:
+        newVal = this.props.value.concat(['']);
+        break;
+      case 2:
+        newVal = this.props.value.slice(0,1);
+        break;
+    }
+    this.props.handleChange('group_by', newVal);
   },
 
   // React methods
@@ -31,18 +80,23 @@ var GroupByField = React.createClass({
       <div className="field-component">
         <FieldsToggle ref="toggle"
                       name="Group By"
-                      initialOpenState={this.props.value}
+                      initialOpenState={this.props.value.length > 0}
                       updateFn={this.props.updateGroupBy}
                       getFn={this.getGroupBy}
                       attrsToStore="group_by"
+                      resetValues={{
+                        group_by: []
+                      }}
                       toggleCallback={this.focusOnReactSelect}>
           <ReactSelect ref="select"
-                       inputClasses="group-by form-control"
-                       name="group_by"
+                       inputClasses="group-by form-control margin-bottom-tiny"
+                       name="group_by.0"
                        items={this.props.options}
-                       handleChange={this.props.handleChange}
-                       value={this.props.value || ''}
+                       handleChange={this.handleChange}
+                       value={this.props.value[0] || ''}
                        sort={true} />
+          {this.secondField()}
+          {this.multiGroupToggle()}
         </FieldsToggle>
       </div>
     );

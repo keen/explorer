@@ -128,21 +128,45 @@ describe('components/explorer/query_builder/index', function() {
     });
 
     describe('group_by', function () {
-      it('when event_collection is set group_by has the options returned getEventPropertyNames', function () {
-        var model = TestHelpers.createExplorerModel();
-        model.query.event_collection = 'click';
-        model.query.analysis_type = 'count';
-        model.query.group_by = 'one';
 
-        this.component = this.renderComponent({
-          model: model,
-          getEventPropertyNames: function(val) {
-            if (val) return ['one', 'two'];
-          }
+      describe('when event_collection is set', function () {
+
+        it('there are group_by options', function () {
+          var expectedOptions = ['one', 'two', 'three'];
+          this.component.props.getEventPropertyNames = function() { return expectedOptions; }
+          this.model.query.event_collection = 'click';
+          this.model.query.analysis_type = 'count';
+          this.model.query.group_by = ['one'];
+          this.component.forceUpdate();
+
+          var groupByNode = $R(this.component).find('input[name="group_by.0"]').components[0].getDOMNode();
+          TestUtils.Simulate.focus(groupByNode);
+
+          var groupByOptions = _.map(groupByNode.parentNode.childNodes[1].childNodes[1].childNodes, function(node){
+            return node.textContent;
+          });
+          groupByOptions = _.compact(groupByOptions);
+
+          assert.sameMembers(groupByOptions, expectedOptions);
         });
 
-        var groupByComponent = TestUtils.findRenderedComponentWithType(this.component, GroupByField);
-        assert.sameMembers(groupByComponent.props.options, ['one', 'two']);
+        it('when event_collection is set group_by has the options returned getEventPropertyNames', function () {
+          var model = TestHelpers.createExplorerModel();
+          model.query.event_collection = 'click';
+          model.query.analysis_type = 'count';
+          model.query.group_by = 'one';
+
+          this.component = this.renderComponent({
+            model: model,
+            getEventPropertyNames: function(val) {
+              if (val) return ['one', 'two'];
+            }
+          });
+
+          var groupByComponent = TestUtils.findRenderedComponentWithType(this.component, GroupByField);
+          assert.sameMembers(groupByComponent.props.options, ['one', 'two']);
+        });
+
       });
     });
 
@@ -220,15 +244,15 @@ describe('components/explorer/query_builder/index', function() {
       it('tries to update the attribute when the field changes', function() {
         this.model.query.event_collection = 'clicks';
         this.model.query.analysis_type = 'percentile';  
-        this.model.query.group_by = 'group_by_property';
+        this.model.query.group_by = ['old_group_by_value'];
         this.component.forceUpdate();
 
-        var node = $R(this.component).find('input[name="group_by"]').components[0].getDOMNode();
-        node.value = 'new_group_by_property';
+        var node = $R(this.component).find('input[name="group_by.0"]').components[0].getDOMNode();
+        node.value = 'new_group_by_value';
         TestUtils.Simulate.change(node);
 
         assert.strictEqual(this.stub.getCall(0).args[0], this.model.id);
-        assert.deepPropertyVal(this.stub.getCall(0).args[1], 'query.group_by', 'new_group_by_property');
+        assert.sameMembers(this.stub.getCall(0).args[1].query.group_by, ['new_group_by_value']);
       });
     });
   });
