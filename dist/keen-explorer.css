@@ -788,6 +788,9 @@
   outline: 0;
   z-index: 1;
 }
+#keen-explorer .no-margin {
+  margin: 0;
+}
 #keen-explorer .margin-top-bump {
   margin-top: 3px;
 }

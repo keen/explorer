@@ -62,7 +62,7 @@ describe('components/explorer/query_actions', function() {
             assert.lengthOf($R(this.component).find('[role="delete-query"]').components, 1);
           });
           describe('if the query is an email extraction', function () {
-            it('does not show the save button', function () {
+            it('the save button is disabled', function () {
               var model = TestHelpers.createExplorerModel();
               model.query.analysis_type = 'extraction';
               model.query.email = 'someone@keen.io';
@@ -70,7 +70,7 @@ describe('components/explorer/query_actions', function() {
                 model: model,
                 persistence: {}
               });
-              assert.lengthOf($R(this.component).find('[role="save-query"]').components, 0);
+              assert.isTrue($R(this.component).find('[role="save-query"]').components[0].getDOMNode().disabled);
             });
           });
         });
