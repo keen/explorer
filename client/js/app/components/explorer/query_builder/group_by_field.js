@@ -24,7 +24,7 @@ var GroupByField = React.createClass({
     var icon = this.props.value.length > 1 ? 'remove' : 'plus';
     var text = this.props.value.length > 1 ? 'Remove second property' : 'Group by a second property';
     return (
-      <a href="#" onClick={this.toggleMultiGroupBy}>
+      <a className="double-groupby-toggle" href="#" onClick={this.toggleMultiGroupBy}>
         <i className={"margin-right-bump icon glyphicon glyphicon-"+icon}></i>
         {text}
       </a>
