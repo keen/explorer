@@ -36,7 +36,7 @@ function _defaultAttrs() {
       analysis_type: null,
       target_property: null,
       percentile: null,
-      group_by: null,
+      group_by: [],
       interval: null,
       timezone: ProjectUtils.getConstant('DEFAULT_TIMEZONE'),
       filters: [],

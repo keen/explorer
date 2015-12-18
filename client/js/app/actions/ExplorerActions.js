@@ -211,6 +211,9 @@ var ExplorerActions = {
     
     var updates = _.cloneDeep(explorer);
     updates.response = response;
+    // If there is no query object on the response, add one. This is required for Dataviz to properly auto-parse
+    // the result + the query to correctly choose a chart type.
+    if (!response.query) response.query = ExplorerUtils.queryJSON(explorer);
     updates.loading = false;
 
     if (!ExplorerUtils.responseSupportsChartType(response, explorer.metadata.visualization.chart_type, explorer.query.analysis_type)) {

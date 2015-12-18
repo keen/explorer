@@ -58,6 +58,7 @@ require('./components/explorer/cache_toggle_spec.js');
 require('./components/explorer/index_spec.js');
 require('./components/explorer/query_actions_spec.js');
 require('./components/explorer/query_builder/extraction_options_spec.js');
+require('./components/explorer/query_builder/group_by_field_spec.js');
 require('./components/explorer/query_builder/index_spec.js');
 require('./components/explorer/query_builder/funnels/funnel_builder_spec.js');
 require('./components/explorer/query_builder/funnels/funnel_step_spec.js');
