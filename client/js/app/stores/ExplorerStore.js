@@ -49,11 +49,15 @@ function _defaultAttrs() {
         sub_timeframe: 'days'
       }
     },
-    metadata: {
-      display_name: null,
-      visualization: {
-        chart_type: null
-      }
+    metadata: _defaultMetadata()
+  };
+}
+
+function _defaultMetadata() {
+  return {
+    display_name: null,
+    visualization: {
+      chart_type: null
     }
   };
 }
@@ -261,11 +265,13 @@ function _create(attrs) {
   attrs = attrs || {};
   var newAttrs = _.merge(_defaultAttrs(), attrs);
 
-  if(newAttrs.query.steps) {
+  if (newAttrs.query.steps) {
     newAttrs.query.steps = _.map(newAttrs.query.steps, function (step) {
       return _.merge(_defaultStep(), step);
     });
   }
+  if (!newAttrs.metadata) newAttrs.metadata = _defaultMetadata();
+  if (!_.isArray(newAttrs.query.group_by)) newAttrs.query.group_by = [newAttrs.query.group_by];
 
   _explorers[newAttrs.id] = newAttrs;
   return newAttrs.id;
