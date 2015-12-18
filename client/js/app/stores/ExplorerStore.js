@@ -270,8 +270,8 @@ function _create(attrs) {
       return _.merge(_defaultStep(), step);
     });
   }
-
   if (!newAttrs.metadata) newAttrs.metadata = _defaultMetadata();
+  if (!_.isArray(newAttrs.query.group_by)) newAttrs.query.group_by = [newAttrs.query.group_by];
 
   _explorers[newAttrs.id] = newAttrs;
   return newAttrs.id;

@@ -98,6 +98,15 @@ describe('stores/ExplorerStore', function() {
         }
       });
     });
+    it('should turn query.group_by into an array if it is not one already', function () {
+      ExplorerActions.create({
+        id: 'abc123',
+        query: {
+          group_by: 'thing'
+        }
+      });
+      assert.sameMembers(ExplorerStore.get('abc123').query.group_by, ['thing']);
+    });
   });
 
   describe('crateBatch', function () {
