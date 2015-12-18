@@ -60,6 +60,25 @@ describe('components/explorer/saved_queries/browse_queries', function() {
     it("creates a list item for each listItem prop", function() {
       assert.equal(this.component.refs.list.getDOMNode().childNodes.length, 3);
     });
+
+    it("uses placeholder text for queries that do not have metadata or display_name", function() {
+      this.component = this.renderComponent({
+        listItems: [
+          {
+            id: 1,
+            query_name: 'logins-over-last-30-days',
+            created_at: '2015-06-07 11:15:37.000000',
+            metadata: {
+              display_name: null,
+              visualization: {
+                chart_type: null
+              }
+            }
+          }
+        ]
+      })
+      assert.equal($R(this.component).find('h5').components[0].getDOMNode().textContent, 'Query not named');
+    });
   });
 
   describe('Interactions', function () {
