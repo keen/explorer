@@ -38,7 +38,7 @@ var BrowseQueries = React.createClass({
 
       return (
         <li className={classes} key={index} data-id={listItem.id} onClick={this.clickCallback}>
-          <h5 className="name">{listItem.metadata.display_name}</h5>
+          <h5 className="name">{listItem.metadata.display_name ? listItem.metadata.display_name : 'Query not named'}</h5>
           <div className="metadata clearfix">
             <p className="date pull-left">{isCachedText}</p>
             {createdAt}

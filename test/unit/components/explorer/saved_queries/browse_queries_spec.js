@@ -7,7 +7,8 @@ var TestUtils = React.addons.TestUtils;
 var BrowseQueries = require('../../../../../client/js/app/components/explorer/saved_queries/browse_queries.js');
 var ExplorerUtils = require('../../../../../client/js/app/utils/ExplorerUtils');
 var ExplorerActions = require('../../../../../client/js/app/actions/ExplorerActions');
-var TestHelpers = require('../../../../support/TestHelpers')
+var TestHelpers = require('../../../../support/TestHelpers');
+var $R = require('rquery')(_, React);
 
 describe('components/explorer/saved_queries/browse_queries', function() {
   beforeEach(function() {
@@ -18,11 +19,7 @@ describe('components/explorer/saved_queries/browse_queries', function() {
           query_name: 'logins-over-last-30-days',
           created_at: '2015-06-07 11:15:37.000000',
           metadata: {
-            display_name: 'Logins over last 30 days',
-            user: {
-              id: 1,
-              email: 'eric@keen.io'
-            }
+            display_name: 'Logins over last 30 days'
           }
         },
         {
@@ -30,11 +27,7 @@ describe('components/explorer/saved_queries/browse_queries', function() {
           query_name: 'activation-rate',
           created_at: '2015-06-07 11:15:37.000000',
           metadata: {
-            display_name: 'Activation rate',
-            user: {
-              id: 1,
-              email: 'john@keen.io'
-            }
+            display_name: 'Activation rate'
           }
         },
         {
@@ -42,15 +35,10 @@ describe('components/explorer/saved_queries/browse_queries', function() {
           query_name: 'QUERY-RATES-THIS-WEEK',
           created_at: '2015-06-07 11:15:37.000000',
           metadata: {
-            display_name: 'QUERY RATES THIS WEEK',
-            user: {
-              id: 1,
-              email: 'michelle@keen.io'
-            }
+            display_name: 'QUERY RATES THIS WEEK'
           }
         }
       ],
-      user: { id: 1 },
       removeCallback: null,
       clickCallback: null,
       selectedIndex: null,
@@ -71,6 +59,25 @@ describe('components/explorer/saved_queries/browse_queries', function() {
 
     it("creates a list item for each listItem prop", function() {
       assert.equal(this.component.refs.list.getDOMNode().childNodes.length, 3);
+    });
+
+    it("uses placeholder text for queries that do not have metadata or display_name", function() {
+      this.component = this.renderComponent({
+        listItems: [
+          {
+            id: 1,
+            query_name: 'logins-over-last-30-days',
+            created_at: '2015-06-07 11:15:37.000000',
+            metadata: {
+              display_name: null,
+              visualization: {
+                chart_type: null
+              }
+            }
+          }
+        ]
+      })
+      assert.equal($R(this.component).find('h5').components[0].getDOMNode().textContent, 'Query not named');
     });
   });
 

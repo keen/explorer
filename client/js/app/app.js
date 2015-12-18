@@ -35,7 +35,7 @@ function App(config) {
 
     this.persistence.config.masterKey = this.client.masterKey();
     ExplorerActions.fetchAllPersisted(this.persistence, function(err) {
-      if (err) throw new Error("There was an error fetching the persisted explorers: " + err.message);
+      if (err) throw new Error("There was an error fetching the persisted explorers: " + err.text);
     });
   }
 
