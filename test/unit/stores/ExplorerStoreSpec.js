@@ -86,6 +86,18 @@ describe('stores/ExplorerStore', function() {
       var keys = Object.keys(ExplorerStore.getAll());
       assert.deepPropertyVal(ExplorerStore.getAll()[keys[0]], 'id', 'abc123');
     });
+    it('should create default metadata if metadata is null', function () {
+      ExplorerActions.create({
+        id: 'abc123',
+        metadata: null
+      });
+      assert.deepEqual(ExplorerStore.get('abc123').metadata, {
+        display_name: null,
+        visualization: {
+          chart_type: null
+        }
+      });
+    });
   });
 
   describe('crateBatch', function () {

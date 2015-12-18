@@ -13,11 +13,6 @@ function dateForItem(item) {
   }
 }
 
-function getDisplayName(query) {
-  if (query.metadata && query.metadata.display_name) return query.metadata.display_name;
-  return 'Query currently not named';
-}
-
 var BrowseQueries = React.createClass({
 
   clickCallback: function(event) {
@@ -43,7 +38,7 @@ var BrowseQueries = React.createClass({
 
       return (
         <li className={classes} key={index} data-id={listItem.id} onClick={this.clickCallback}>
-          <h5 className="name">{getDisplayName(listItem)}</h5>
+          <h5 className="name">{listItem.metadata.display_name}</h5>
           <div className="metadata clearfix">
             <p className="date pull-left">{isCachedText}</p>
             {createdAt}
