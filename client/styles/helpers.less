@@ -3,6 +3,8 @@
 @small-size: 15px;
 @medium-size: 25px;
 
+// No margin goes first to ensure we can use it alongside the other
+// margin helpers below, otherwise it'll override them.
 .no-margin {
   margin: 0;
 }
@@ -75,9 +77,7 @@
 
 // Other
 // ***********************
-.no-margin {
-	margin: 0;
-}
+
 .no-radius-left {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
