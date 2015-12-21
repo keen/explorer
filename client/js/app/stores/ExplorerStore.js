@@ -261,6 +261,12 @@ function _prepareFilterUpdates(explorer, filter, updates) {
   return updates;
 }
 
+function _wrapGroupBy(attrs) {
+  attrs = _.cloneDeep(attrs);
+  if (!_.isArray(attrs.query.group_by)) attrs.query.group_by = [attrs.query.group_by];
+  return attrs;
+}
+
 function _create(attrs) {
   attrs = attrs || {};
   var newAttrs = _.merge(_defaultAttrs(), attrs);
@@ -271,7 +277,7 @@ function _create(attrs) {
     });
   }
   if (!newAttrs.metadata) newAttrs.metadata = _defaultMetadata();
-  if (!_.isArray(newAttrs.query.group_by)) newAttrs.query.group_by = [newAttrs.query.group_by];
+  newAttrs = _wrapGroupBy(newAttrs)
 
   _explorers[newAttrs.id] = newAttrs;
   return newAttrs.id;
@@ -279,6 +285,7 @@ function _create(attrs) {
 
 function _update(id, updates) {
   var newModel = _prepareUpdates(_explorers[id], updates);
+  newModel = _wrapGroupBy(newModel)
 
   if (updates.id && updates.id !== id) {
     _explorers[updates.id] = newModel;
