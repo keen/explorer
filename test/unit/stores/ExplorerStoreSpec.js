@@ -235,6 +235,23 @@ describe('stores/ExplorerStore', function() {
       assert.lengthOf(Object.keys(explorers), 1);
       assert.propertyVal(explorers, 'abc123');
     });
+    it('should wrap the group_by property in an array if it is not already', function () {
+      ExplorerActions.create({
+        id: 'SOME_ID',
+        query_name: 'A saved query',
+        query: {
+          event_collection: 'clicks',
+          analysis_type: 'count'
+        },
+        visualization: {
+          chart_type: 'metric'
+        }
+      });
+      var newQuery = _.cloneDeep(ExplorerStore.get('SOME_ID').query);
+      newQuery.group_by = 'not_wrapped';
+      ExplorerActions.update('SOME_ID', { query: newQuery });
+      assert.sameMembers(ExplorerStore.get('SOME_ID').query.group_by, ['not_wrapped']);
+    });
     describe('clearing values', function () {
       it('should set email to null if updating analysis type to something that is not extraction', function () {
         ExplorerActions.create({
@@ -327,7 +344,7 @@ describe('stores/ExplorerStore', function() {
 
         assert.deepPropertyVal(ExplorerStore.get('SOME_ID'), 'query.latest', '1000');
       });
-      it('should set group_by and interval to null if the analysis type is extraction', function () {
+      it('should set group_by to empty array and interval to null if the analysis type is extraction', function () {
         ExplorerActions.create({
           id: 'SOME_ID',
           name: 'A saved query',
@@ -348,7 +365,7 @@ describe('stores/ExplorerStore', function() {
         ExplorerActions.update('SOME_ID', updates);
 
         assert.deepPropertyVal(ExplorerStore.get('SOME_ID'), 'query.interval', null);
-        assert.deepPropertyVal(ExplorerStore.get('SOME_ID'), 'query.group_by', null);
+        assert.sameMembers(ExplorerStore.get('SOME_ID').query.group_by, [null]);
       });
       it('should set percentile to null if the analysis type is not percentile', function () {
         ExplorerActions.create({
