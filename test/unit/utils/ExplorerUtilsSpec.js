@@ -491,11 +491,21 @@ describe('utils/ExplorerUtils', function() {
         assert.lengthOf(found, 1);
       });
 
-      it('should properly JSON stringify the group_by property', function () {
+      it('should properly JSON stringify the group_by property if it is a multiple item array', function () {
+        var explorer = TestHelpers.createExplorerModel();
+        explorer.query.group_by = ['user.name', 'product.id'];
+        var url = ExplorerUtils.getApiQueryUrl(this.client, explorer);
+        var encodedValue = encodeURIComponent(JSON.stringify(['user.name', 'product.id']));
+        assert.isTrue(url.match(encodedValue).length === 1);
+      });
+
+      it('should not JSON stringify the group_by property if it is a single item array', function () {
         var explorer = TestHelpers.createExplorerModel();
         explorer.query.group_by = ['user.name'];
         var url = ExplorerUtils.getApiQueryUrl(this.client, explorer);
-        var encodedValue = encodeURIComponent(JSON.stringify(['user.name']));
+        var arrayEncodedValue = encodeURIComponent(JSON.stringify(['user.name']));
+        var encodedValue = encodeURIComponent('user.name');
+        assert.strictEqual(url.match(arrayEncodedValue), null);
         assert.isTrue(url.match(encodedValue).length === 1);
       });
 
