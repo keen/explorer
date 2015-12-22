@@ -218,6 +218,17 @@ describe('utils/ExplorerUtils', function() {
     });
   });
 
+  describe('resultCanBeVisualized', function () {
+    it('should return true if the value is the number 0', function () {
+      var explorer = {
+        response: {
+          result: 0
+        }
+      };
+      assert.isTrue(ExplorerUtils.resultCanBeVisualized(explorer));
+    });
+  });
+
   describe('mergeResponseWithExplorer', function () {
     it('should keep all explorer attributes', function () {
       var explorer = {
