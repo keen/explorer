@@ -265,6 +265,10 @@ module.exports = {
       delete attrs['steps'];
     }
 
+    if (attrs.group_by && _.isArray(attrs.group_by) && attrs.group_by.length) {
+      attrs.group_by = (attrs.group_by.length > 1) ? JSON.stringify(attrs.group_by) : attrs.group_by[0];
+    }
+
     var queryAttrs = Qs.stringify(attrs);
 
     if (attrs.timeframe && TimeframeUtils.timeframeType(explorer.query.time) === 'absolute') {
