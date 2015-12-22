@@ -517,7 +517,10 @@ ExplorerStore.dispatchToken = AppDispatcher.register(function(action) {
       var wasActive = (_explorers[action.id].active === true);
       _remove(action.id);
       // Create a new active explorer to replace the previously active one.
-      if (wasActive) _create({ active: true });
+      if (wasActive) {
+        var id = _create();
+        _setActive(id);
+      }
       finishAction();
       break;
 
