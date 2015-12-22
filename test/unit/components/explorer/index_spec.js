@@ -15,6 +15,8 @@ var EventBrowser = require('../../../../client/js/app/components/common/event_br
 var CacheToggle = require('../../../../client/js/app/components/explorer/cache_toggle.js');
 var Persistence = require('../../../../client/js/app/modules/persistence/persistence.js');
 var ExplorerStore = require('../../../../client/js/app/stores/ExplorerStore');
+var NoticeStore = require('../../../../client/js/app/stores/NoticeStore');
+var AppStateStore = require('../../../../client/js/app/stores/AppStateStore');
 var ExplorerActions = require('../../../../client/js/app/actions/ExplorerActions');
 var RunValidations = require('../../../../client/js/app/utils/RunValidations');
 var NoticeActions = require('../../../../client/js/app/actions/NoticeActions');
@@ -23,14 +25,28 @@ var Modal = require('../../../../client/js/app/components/common/modal.js');
 
 describe('components/explorer/index', function() {
 
+  before(function() {
+    sinon.stub(ExplorerStore, 'addChangeListener');
+    sinon.stub(NoticeStore, 'addChangeListener');
+    sinon.stub(AppStateStore, 'addChangeListener');
+  });
+
+  after(function() {
+    ExplorerStore.addChangeListener.restore();
+    NoticeStore.addChangeListener.restore();
+    AppStateStore.addChangeListener.restore();
+  });
+
   beforeEach(function() {
     ExplorerStore.clearAll();
-    ExplorerActions.create({ id: '1', active: true, query_name: 'A persisted query', metadata: { display_name: 'some name' } });
+    ExplorerActions.create({ id: '1', query_name: 'A persisted query', metadata: { display_name: 'some name' } });
+    ExplorerActions.setActive('1');
 
     this.client = TestHelpers.createClient();
     this.project = TestHelpers.createProject();
     this.config = { persistence: null };
     this.explorer = ExplorerStore.get('1');
+
     this.component = TestUtils.renderIntoDocument(<Explorer client={this.client} project={this.project} config={this.config} />);
   });
 
@@ -239,9 +255,10 @@ describe('components/explorer/index', function() {
     describe('createNewQuery', function () {
       beforeEach(function() {
         ExplorerStore.clearAll();
-        ExplorerActions.create(_.assign({}, TestHelpers.createExplorerModel(), { id: 'abc', active: true, metadata: { display_name: 'abc' } }));
-        ExplorerActions.create(_.assign({}, TestHelpers.createExplorerModel(), { id: 'def', active: false, metadata: { display_name: 'def' } }));
-        ExplorerActions.create(_.assign({}, TestHelpers.createExplorerModel(), { id: 'ghi', active: false, metadata: { display_name: 'ghi' } }));
+        ExplorerActions.create(_.assign({}, TestHelpers.createExplorerModel(), { id: 'abc', metadata: { display_name: 'abc' } }));
+        ExplorerActions.setActive('abc');
+        ExplorerActions.create(_.assign({}, TestHelpers.createExplorerModel(), { id: 'def', metadata: { display_name: 'def' } }));
+        ExplorerActions.create(_.assign({}, TestHelpers.createExplorerModel(), { id: 'ghi', metadata: { display_name: 'ghi' } }));
         this.component.setProps({ persistence: {} });
         this.component.forceUpdate();
       });
@@ -260,6 +277,7 @@ describe('components/explorer/index', function() {
       it('should change the text on the query builder tab to "Create a new query"', function () {
         assert.strictEqual(this.component.refs['query-pane-tabs'].refs['build-tab'].getDOMNode().textContent, 'Edit query');
         this.component.createNewQuery(TestHelpers.fakeEvent());
+        this.component._onChange();
         assert.strictEqual(this.component.refs['query-pane-tabs'].refs['build-tab'].getDOMNode().textContent, 'Create a new query');
       });
       it('should update component state to show the build tab', function () {

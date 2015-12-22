@@ -20,6 +20,9 @@ describe('stores/ExplorerStore', function() {
       ExplorerActions.create();
       assert.lengthOf(Object.keys(ExplorerStore.getAll()), 1)
     });
+    it('should not allow creating with active set to true', function () {
+      expect(ExplorerActions.create.bind(null, { active: true })).to.throw("You must use setActive to set a model as active.");
+    });
     it('should create a explorer with the right default attributes', function () {
       ExplorerActions.create();
       var defaults = {
@@ -454,6 +457,48 @@ describe('stores/ExplorerStore', function() {
       ExplorerActions.remove('SOME_ID');
       assert.notDeepProperty(this.store, 'SOME_ID');
     });
+    describe('creating a new active model after removal of the currently active one', function () {
+      beforeEach(function() {
+        ExplorerActions.create({
+          id: 'abc',
+          query: {
+            event_collection: 'clicks',
+            analysis_type: 'count'
+          },
+          metadata: {
+            visualization: {
+              chart_type: 'metric'
+            }
+          }
+        });
+        ExplorerActions.create({
+          id: '123',
+          query: {
+            event_collection: 'signups',
+            analysis_type: 'count'
+          },
+          metadata: {
+            visualization: {
+              chart_type: 'metric'
+            }
+          }
+        });
+        ExplorerActions.setActive('abc');
+        ExplorerActions.remove('abc');  
+      });
+      it('should have an active model after', function () {
+        assert.isTrue(ExplorerStore.getActive().active);
+      });
+      it('should create the new model, not select an existing persisted model', function () {
+        assert.strictEqual(ExplorerStore.getActive().id.match('TEMP-').length, 1);  
+      });
+      it('should only have a single active model', function () {
+        assert.strictEqual(_.where(ExplorerStore.getAll(), { active: true  }).length, 1);  
+      });
+      it('should create the new active model and then set it active to ensure it has an originalModel property', function () {
+        assert.isTrue(!_.isUndefined(ExplorerStore.getActive().originalModel));
+      });
+    });
   });
 
   describe('set active', function () {
@@ -740,7 +785,6 @@ describe('stores/ExplorerStore', function() {
         ExplorerActions.create(_.assign({}, TestHelpers.createExplorerModel(), {
           id: 'ABC-SOME-ID',
           query_name: 'some name',
-          active: true,
           query: {
             event_collection: 'clicks',
             analysis_type: 'count'
@@ -752,6 +796,7 @@ describe('stores/ExplorerStore', function() {
             }
           }
         }));
+        ExplorerActions.setActive('ABC-SOME-ID');
         var updates = _.cloneDeep(ExplorerStore.get('ABC-SOME-ID'));
         var originalModel = _.cloneDeep(ExplorerStore.get('ABC-SOME-ID'));
         updates.originalModel = originalModel;
@@ -806,7 +851,8 @@ describe('stores/ExplorerStore', function() {
     it('should return the active explorer', function () {
       ExplorerActions.create();
       ExplorerActions.create();
-      ExplorerActions.create({ active: true });
+      ExplorerActions.create({ id: 'some_id' });
+      ExplorerActions.setActive('some_id');
       var keys = Object.keys(ExplorerStore.getAll());
       assert.strictEqual(ExplorerStore.getActive().id, ExplorerStore.getAll()[keys[2]].id);
     });
