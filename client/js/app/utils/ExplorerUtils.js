@@ -298,7 +298,7 @@ module.exports = {
   },
 
   resultCanBeVisualized: function(explorer) {
-    return (explorer.response && explorer.response.result && (_.isNumber(explorer.response.result) || (_.isArray(explorer.response.result) && explorer.response.result.length)));
+    return (explorer.response && !FormatUtils.isNullOrUndefined(explorer.response.result) && (_.isNumber(explorer.response.result) || (_.isArray(explorer.response.result) && explorer.response.result.length)));
   },
 
   isJSONViz: function(explorer) {
