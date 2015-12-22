@@ -268,6 +268,11 @@ function _wrapGroupBy(attrs) {
 }
 
 function _create(attrs) {
+  if (attrs && attrs.active === true) {
+    throw new Error('You must use setActive to set a model as active.');
+    return;
+  }
+
   attrs = attrs || {};
   var newAttrs = _.merge(_defaultAttrs(), attrs);
 
@@ -284,6 +289,11 @@ function _create(attrs) {
 }
 
 function _update(id, updates) {
+  if (updates && updates.active === true && !_explorers[id].active) {
+    throw new Error('You must use setActive to set a model as active.');
+    return;
+  }
+
   var newModel = _prepareUpdates(_explorers[id], updates);
   newModel = _wrapGroupBy(newModel)
 
