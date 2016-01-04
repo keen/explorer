@@ -3,12 +3,13 @@ var sinon = require('sinon');
 var assert = require('chai').assert;
 var _ = require('lodash');
 var React = require('react');
+var ReactDOM = require('react-dom');
 var TestUtils = require('react-addons-test-utils');
 var BrowseQueries = require('../../../../../client/js/app/components/explorer/saved_queries/browse_queries.js');
 var ExplorerUtils = require('../../../../../client/js/app/utils/ExplorerUtils');
 var ExplorerActions = require('../../../../../client/js/app/actions/ExplorerActions');
 var TestHelpers = require('../../../../support/TestHelpers');
-var $R = require('rquery')(_, React);
+var $R = require('rquery')(_, React, ReactDOM, TestUtils);
 
 describe('components/explorer/saved_queries/browse_queries', function() {
   beforeEach(function() {
@@ -76,8 +77,9 @@ describe('components/explorer/saved_queries/browse_queries', function() {
             }
           }
         ]
-      })
-      assert.equal($R(this.component).find('h5').components[0].getDOMNode().textContent, 'Query not named');
+      });
+      console.log($R(this.component).find('h5')[0]);
+      assert.equal($R(this.component).find('h5')[0].textContent, 'Query not named');
     });
   });
 

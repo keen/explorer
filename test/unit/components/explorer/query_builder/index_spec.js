@@ -135,13 +135,16 @@ describe('components/explorer/query_builder/index', function() {
 
         it('there are group_by options', function () {
           var expectedOptions = ['one', 'two', 'three'];
-          this.component.props.getEventPropertyNames = function() { return expectedOptions; }
+          var props = _.extend({},
+              this.component.props,
+              { getEventPropertyNames: function() { return expectedOptions } }
+          );
           this.model.query.event_collection = 'click';
           this.model.query.analysis_type = 'count';
           this.model.query.group_by = ['one'];
-          this.component.forceUpdate();
+          this.component = TestHelpers.renderComponent(QueryBuilder, props);
 
-          var groupByNode = $R(this.component).find('input[name="group_by.0"]').components[0].getDOMNode();
+          var groupByNode = $R(this.component).find('input[name="group_by.0"]').components[0];
           TestUtils.Simulate.focus(groupByNode);
 
           var groupByOptions = _.map(groupByNode.parentNode.childNodes[1].childNodes[1].childNodes, function(node){

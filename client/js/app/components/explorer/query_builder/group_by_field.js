@@ -15,7 +15,7 @@ var GroupByField = React.createClass({
     if (toggled && !this.props.value) {
       var self = this;
       setTimeout(function(){
-        self.refs.select.refs.input.getDOMNode().focus();
+        self.refs.select.refs.input.focus();
       }, 100);
     }
   },

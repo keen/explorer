@@ -160,7 +160,7 @@ var Explorer = React.createClass({
   // ********************************
 
   setVizWrapTop: function(top) {
-    this.refs['viz-area'].getDOMNode().style.top = top + 'px';
+    this.refs['viz-area'].style.top = top + 'px';
   },
 
   getSelectedIndex: function() {

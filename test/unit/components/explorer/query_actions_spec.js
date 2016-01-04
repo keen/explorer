@@ -71,7 +71,7 @@ describe('components/explorer/query_actions', function() {
                 model: model,
                 persistence: {}
               });
-              assert.isTrue($R(this.component).find('[role="save-query"]').components[0].getDOMNode().disabled);
+              assert.isTrue($R(this.component).find('[role="save-query"]').components[0].disabled);
             });
           });
         });
