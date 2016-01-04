@@ -27,6 +27,10 @@
       "reactify"
     ]
   },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:keen/explorer.git"
+  },
   "devDependencies": {
     "browserify": "11.2.0",
     "browserify-shim": "~3.8.0",
