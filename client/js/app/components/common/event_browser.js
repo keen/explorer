@@ -82,7 +82,10 @@ var EventBrowser = React.createClass({
   },
 
   getSchema: function() {
-    return FormatUtils.prettyPrintJSON(ProjectUtils.getEventCollectionProperties(this.props.project, this.state.activeEventCollection)) || "";
+    var schema = this.props.project.schema;
+    var collection = this.state.activeEventCollection;
+    var properties = schema[collection] ? schema[collection].properties : {};
+    return FormatUtils.prettyPrintJSON(properties) || "";
   },
 
   changeActiveView: function(event) {
