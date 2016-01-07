@@ -219,6 +219,8 @@ var ExplorerActions = {
     if (!ExplorerUtils.responseSupportsChartType(response, explorer.metadata.visualization.chart_type, explorer.query.analysis_type)) {
       updates.metadata.visualization.chart_type = ExplorerUtils.getChartTypeOptions(response, explorer.query.analysis_type)[0];
     }
+
+    updates.dataTimestamp = Date.now();
     ExplorerActions.update(explorer.id, updates);
   },
 
