@@ -29,7 +29,13 @@ var KeenViz = React.createClass({
 	// ***********************
   
   shouldComponentUpdate: function(nextProps, nextState) {
-    return (!this.state.lastDataTimestamp || this.state.lastDataTimestamp !== nextProps.model.dataTimestamp);
+    if (this.props.model.metadata.visualization.chart_type !== nextProps.model.metadata.visualization.chart_type) {
+      return true;
+    }
+    if (!this.state.lastDataTimestamp || this.state.lastDataTimestamp !== nextProps.model.dataTimestamp) {
+      return true
+    }
+    return false;
   },
   
   getInitialState: function() {
