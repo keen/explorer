@@ -89,8 +89,17 @@ module.exports = {
     if (typeof timeframe === 'object') {
       var offset = timeframe.start.substring(timeframe.start.length, timeframe.start.length-6);
 
-      timeframe.start = timeframe.start.substring(0, timeframe.start.length-6);
-      timeframe.end = timeframe.end.substring(0, timeframe.end.length-6);
+      if (timeframe.start) {
+        timeframe.start = timeframe.start.substring(0, timeframe.start.length-6);
+      } else {
+        timeframe.start = Date.now();
+      }
+
+      if (timeframe.end) {
+        timeframe.end = timeframe.end.substring(0, timeframe.end.length-6);
+      } else {
+       timeframe.end = Date.now();
+      }
 
       var zone = _.find(ProjectUtils.getConstant('TIMEZONES'), { offset: offset });
       if (zone) {
