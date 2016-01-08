@@ -2,11 +2,12 @@
 var assert = require('chai').assert;
 var sinon = require('sinon');
 var _ = require('lodash');
-var React = require('react/addons');
-var TestUtils = React.addons.TestUtils;
+var React = require('react');
+var ReactDOM = require('react-dom');
+var TestUtils = require('react-addons-test-utils');
 var QueryActions = require('../../../../client/js/app/components/explorer/query_actions.js');
 var TestHelpers = require('../../../support/TestHelpers');
-var $R = require('rquery')(_, React);
+var $R = require('rquery')(_, React, ReactDOM, TestUtils);
 
 describe('components/explorer/query_actions', function() {
 
@@ -70,7 +71,7 @@ describe('components/explorer/query_actions', function() {
                 model: model,
                 persistence: {}
               });
-              assert.isTrue($R(this.component).find('[role="save-query"]').components[0].getDOMNode().disabled);
+              assert.isTrue($R(this.component).find('[role="save-query"]').components[0].disabled);
             });
           });
         });
@@ -82,25 +83,25 @@ describe('components/explorer/query_actions', function() {
     it('calls handleQuerySubmit when the run query button is clicked', function () {
       var stub = sinon.stub();
       this.component = this.renderComponent({ handleQuerySubmit: stub });
-      TestUtils.Simulate.click($R(this.component).find('[role="run-query"]').components[0].getDOMNode());
+      TestUtils.Simulate.click($R(this.component).find('[role="run-query"]').components[0]);
       assert.isTrue(stub.calledOnce);
     });
     it('calls saveQueryClick when the save query button is clicked', function () {
       var stub = sinon.stub();
       this.component = this.renderComponent({ persistence: {}, saveQueryClick: stub });
-      TestUtils.Simulate.click($R(this.component).find('[role="save-query"]').components[0].getDOMNode());
+      TestUtils.Simulate.click($R(this.component).find('[role="save-query"]').components[0]);
       assert.isTrue(stub.calledOnce);
     });
     it('calls removeClick when the delete query button is clicked', function () {
       var stub = sinon.stub();
       this.component = this.renderComponent({ persistence: {}, removeClick: stub });
-      TestUtils.Simulate.click($R(this.component).find('[role="delete-query"]').components[0].getDOMNode());
+      TestUtils.Simulate.click($R(this.component).find('[role="delete-query"]').components[0]);
       assert.isTrue(stub.calledOnce);
     });
     it('calls toggleCodeSample when the embed button is clicked', function () {
       var stub = sinon.stub();
       this.component = this.renderComponent({ toggleCodeSample: stub });
-      TestUtils.Simulate.click($R(this.component).find('[role="toggle-code-sample"]').components[0].getDOMNode());
+      TestUtils.Simulate.click($R(this.component).find('[role="toggle-code-sample"]').components[0]);
       assert.isTrue(stub.calledOnce);
     });
   });

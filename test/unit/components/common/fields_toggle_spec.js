@@ -2,8 +2,9 @@
 var sinon = require('sinon');
 var assert = require('chai').assert;
 var _ = require('lodash');
-var React = require('react/addons');
-var TestUtils = React.addons.TestUtils;
+var React = require('react');
+var ReactDOM = require('react-dom');
+var TestUtils = require('react-addons-test-utils');
 var FieldsToggle = require('../../../../client/js/app/components/common/fields_toggle.js');
 var TestHelpers = require('../../../support/TestHelpers');
 
@@ -30,7 +31,7 @@ describe('components/common/fields_toggle', function() {
                                                                   getFn={this.getFn} />);
     });
     it('displays the name prop', function(){
-      var nameDisplayed = this.component.refs['name'].getDOMNode().textContent;
+      var nameDisplayed = this.component.refs['name'].textContent;
       assert.strictEqual(nameDisplayed, 'Some Field');
     });
   });
@@ -44,12 +45,12 @@ describe('components/common/fields_toggle', function() {
                                                                   getFn={this.getFn} />);
     });
     it('displays the fields count prop', function(){
-      var nameDisplayed = this.component.refs['icon'].getDOMNode().textContent;
+      var nameDisplayed = this.component.refs['icon'].textContent;
       assert.strictEqual(nameDisplayed, '5');
     });
     it('doesnt call handleFieldsToggle when toggled', function(){
       var spy = sinon.spy(this.component, 'handleFieldsToggle');
-      TestUtils.Simulate.click(this.component.refs['toggle-label'].getDOMNode());
+      TestUtils.Simulate.click(this.component.refs['toggle-label']);
       assert.isFalse(spy.called);
       this.component.handleFieldsToggle.restore();
     });
@@ -64,7 +65,7 @@ describe('components/common/fields_toggle', function() {
                                                                   updateFn={this.updateFn}
                                                                   getFn={this.getFn} />);
       var spy = sinon.spy(this.component, 'toggle');
-      TestUtils.Simulate.click(this.component.refs['toggle-label'].getDOMNode());
+      TestUtils.Simulate.click(this.component.refs['toggle-label']);
       assert.isTrue(spy.calledOnce);
       this.component.toggle.restore();
     });
@@ -80,7 +81,7 @@ describe('components/common/fields_toggle', function() {
                                                                   updateFn={this.updateFn} />);
 
 
-      TestUtils.Simulate.click(this.component.refs['toggle-label'].getDOMNode());
+      TestUtils.Simulate.click(this.component.refs['toggle-label']);
       assert.isTrue(spy.calledOnce);
     });
 
@@ -93,8 +94,8 @@ describe('components/common/fields_toggle', function() {
                                                                     getFn={this.getFn}
                                                                     updateFn={this.updateFn} />);
 
-        TestUtils.Simulate.click(this.component.refs['toggle-label'].getDOMNode());
-        assert.isFalse(this.component.getDOMNode().classList.contains('open'));
+        TestUtils.Simulate.click(this.component.refs['toggle-label']);
+        assert.isFalse(ReactDOM.findDOMNode(this.component).classList.contains('open'));
       });
       it('closing', function(){
         this.component = TestUtils.renderIntoDocument(<FieldsToggle model={this.model}
@@ -104,8 +105,8 @@ describe('components/common/fields_toggle', function() {
                                                                     getFn={this.getFn}
                                                                     updateFn={this.updateFn} />);
 
-        TestUtils.Simulate.click(this.component.refs['toggle-label'].getDOMNode());
-        assert.isTrue(this.component.getDOMNode().classList.contains('open'));
+        TestUtils.Simulate.click(this.component.refs['toggle-label']);
+        assert.isTrue(ReactDOM.findDOMNode(this.component).classList.contains('open'));
       });
     });
   });

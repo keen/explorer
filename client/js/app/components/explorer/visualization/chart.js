@@ -3,7 +3,7 @@
  */
 
 var _ = require('lodash');
-var React = require('react/addons');
+var React = require('react');
 var Loader = require('../../common/loader.js');
 var KeenViz = require('./keen_viz.js');
 var ExplorerUtils = require('../../../utils/ExplorerUtils');

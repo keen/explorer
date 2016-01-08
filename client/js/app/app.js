@@ -1,5 +1,6 @@
 var _ = require('lodash');
 var React = require('react');
+var ReactDOM = require('react-dom');
 var Persistence = require('./modules/persistence/persistence.js');
 var AppDispatcher = require('./dispatcher/AppDispatcher');
 var AppComponent = require('./components/app.js');
@@ -89,7 +90,7 @@ App.prototype.doneFetchingSavedQuery = function(savedQueryName, err) {
 
 App.prototype.render = function() {
   var Component = React.createFactory(AppComponent);
-  React.render(Component({
+  ReactDOM.render(Component({
     persistence: this.persistence,
     client: this.client
   }), this.targetNode);

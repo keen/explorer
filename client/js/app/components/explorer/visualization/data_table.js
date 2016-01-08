@@ -2,7 +2,7 @@
  * @jsx React.DOM
  */
 var _ = require('lodash');
-var React = require('react/addons');
+var React = require('react');
 var Loader = require('../../common/loader.js');
 
 var DataTable = React.createClass({

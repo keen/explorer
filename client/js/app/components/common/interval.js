@@ -4,7 +4,7 @@
 
 var _ = require('lodash');
 var moment = require('moment');
-var React = require('react/addons');
+var React = require('react');
 var Select = require('./select.js');
 var FieldsToggle = require('./fields_toggle.js');
 var ExplorerActions = require('../../actions/ExplorerActions');

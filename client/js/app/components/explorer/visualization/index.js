@@ -3,7 +3,7 @@
  */
 
 var _ = require('lodash');
-var React = require('react/addons');
+var React = require('react');
 var classNames = require('classnames');
 var Select = require('../../common/select.js');
 var Notice = require('../../common/notice.js');

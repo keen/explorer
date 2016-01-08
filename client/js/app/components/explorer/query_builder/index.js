@@ -3,7 +3,7 @@
  */
 
 var _ = require('lodash');
-var React = require('react/addons');
+var React = require('react');
 
 // Components
 var FieldsToggle = require('../../common/fields_toggle.js');

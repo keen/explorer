@@ -3,11 +3,12 @@ var assert = require('chai').assert;
 var expect = require('chai').expect;
 var sinon = require('sinon');
 var _ = require('lodash');
-var React = require('react/addons');
-var TestUtils = React.addons.TestUtils;
+var React = require('react');
+var ReactDOM = require('react-dom');
+var TestUtils = require('react-addons-test-utils');
 var GroupByField = require('../../../../../client/js/app/components/explorer/query_builder/group_by_field.js');
 var TestHelpers = require('../../../../../test/support/TestHelpers');
-var $R = require('rquery')(_, React);
+var $R = require('rquery')(_, React, ReactDOM, TestUtils);
 
 describe('components/explorer/query_builder/group_by_field', function() {
   beforeEach(function() {
@@ -28,7 +29,7 @@ describe('components/explorer/query_builder/group_by_field', function() {
       assert.lengthOf($R(this.component).find('.group-by').components, 1);
     });
     it('shows the correct toggle button text', function() {
-      assert.strictEqual($R(this.component).find('a').components[1].getDOMNode().innerText, "Group by a second property");
+      assert.strictEqual($R(this.component).find('a').components[1].innerText, "Group by a second property");
     });
   });
   describe('with a double group by', function () {
@@ -41,7 +42,7 @@ describe('components/explorer/query_builder/group_by_field', function() {
       assert.lengthOf($R(this.component).find('.group-by').components, 2);
     });
     it('shows the correct toggle button text', function() {
-      assert.strictEqual($R(this.component).find('a').components[1].getDOMNode().innerText, "Remove second property");
+      assert.strictEqual($R(this.component).find('a').components[1].innerText, "Remove second property");
     });
   });
   describe('toggle link', function () {
@@ -49,21 +50,21 @@ describe('components/explorer/query_builder/group_by_field', function() {
       this.component = this.renderComponent({
         value: []
       });
-      TestUtils.Simulate.click($R(this.component).find('a').components[1].getDOMNode());
+      TestUtils.Simulate.click($R(this.component).find('a').components[1]);
       assert.sameMembers(this.handleChangeStub.getCall(0).args[1], ['', '']);
     });
     it('should call props.handleChange with an empty string array value at index 1 if there is only one group by', function () {
       this.component = this.renderComponent({
         value: ['one']
       });
-      TestUtils.Simulate.click($R(this.component).find('a').components[1].getDOMNode());
+      TestUtils.Simulate.click($R(this.component).find('a').components[1]);
       assert.sameMembers(this.handleChangeStub.getCall(0).args[1], ['one', '']);
     });
     it('should call props.handleChange with a single item array if there is two values', function () {
       this.component = this.renderComponent({
         value: ['one', 'two']
       });
-      TestUtils.Simulate.click($R(this.component).find('a').components[1].getDOMNode());
+      TestUtils.Simulate.click($R(this.component).find('a').components[1]);
       assert.sameMembers(this.handleChangeStub.getCall(0).args[1], ['one']);
     });
   });

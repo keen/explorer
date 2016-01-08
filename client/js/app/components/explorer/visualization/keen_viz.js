@@ -3,8 +3,7 @@
  */
 
 var _ = require('lodash');
-var React = require('react/addons');
-var ExplorerActions = require('../../../actions/ExplorerActions');
+var React = require('react');
 
 var KeenViz = React.createClass({
 
@@ -17,7 +16,7 @@ var KeenViz = React.createClass({
   	this.props.dataviz.data(this.props.model.response)
   		.title('') // No title - not necessary for Explorer
 	    .chartType(this.props.model.metadata.visualization.chart_type)
-    	.el(this.refs['keen-viz'].getDOMNode())
+    	.el(this.refs['keen-viz'])
     	.height(400)
     	.render();
     

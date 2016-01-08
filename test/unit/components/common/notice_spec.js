@@ -2,8 +2,9 @@
 var assert = require('chai').assert;
 var sinon = require('sinon');
 var _ = require('lodash');
-var React = require('react/addons');
-var TestUtils = React.addons.TestUtils;
+var React = require('react');
+var ReactDOM = require('react-dom');
+var TestUtils = require('react-addons-test-utils');
 var Notice = require('../../../../client/js/app/components/common/notice.js');
 var TestHelpers = require('../../../support/TestHelpers');
 
@@ -23,7 +24,7 @@ describe('components/common/notice', function() {
           text: 'A very important message'
         };
         component = TestUtils.renderIntoDocument(<Notice notice={notice} />);
-        assert.match(component.getDOMNode().textContent, /A very important message/);
+        assert.match(ReactDOM.findDOMNode(component).textContent, /A very important message/);
       });
     });
   });
@@ -34,7 +35,7 @@ describe('components/common/notice', function() {
         text: 'Some text'
       };
       component = TestUtils.renderIntoDocument(<Notice notice={notice} />);
-      assert.match(component.getDOMNode().className, /alert-success/);
+      assert.match(ReactDOM.findDOMNode(component).className, /alert-success/);
     });
     it('it has the danger class for a type of error', function () {
       notice = {
@@ -42,7 +43,7 @@ describe('components/common/notice', function() {
         text: 'Some text'
       };
       component = TestUtils.renderIntoDocument(<Notice notice={notice} />);
-      assert.match(component.getDOMNode().className, /alert-danger/);
+      assert.match(ReactDOM.findDOMNode(component).className, /alert-danger/);
     });
   });
   describe('icons', function () {
@@ -59,26 +60,34 @@ describe('components/common/notice', function() {
       });
     });
   });
+
   describe('closing', function () {
+    beforeEach(function() {
+      var notice = { type: 'error', text: 'some error' };
+      this.component = TestUtils.renderIntoDocument(<Notice notice={notice} />);
+    });
+
     it('can be closed', function () {
-      var notice = { type: 'error', text: 'some error' };
-      var component = component = TestUtils.renderIntoDocument(<Notice notice={notice} />);
-      TestUtils.Simulate.click(TestUtils.findRenderedDOMComponentWithClass(component, 'close'));
-      assert.include(component.getDOMNode().className, 'hide');
+      TestUtils.Simulate.click(TestUtils.findRenderedDOMComponentWithClass(this.component, 'close'));
+
+      assert.include(ReactDOM.findDOMNode(this.component).className, 'hide');
     });
+
     it('shows itself again after new props are passed in', function () {
+      TestUtils.Simulate.click(TestUtils.findRenderedDOMComponentWithClass(this.component, 'close'));
+      assert.include(ReactDOM.findDOMNode(this.component).className, 'hide');
+
       var notice = { type: 'error', text: 'some error' };
-      var component = component = TestUtils.renderIntoDocument(<Notice notice={notice} />);
-      TestUtils.Simulate.click(TestUtils.findRenderedDOMComponentWithClass(component, 'close'));
-      assert.include(component.getDOMNode().className, 'hide');
-      component.setProps(notice);
-      assert.notInclude(component.getDOMNode().className, 'hide');
+      this.component = TestUtils.renderIntoDocument(<Notice notice={notice} />);
+
+      assert.notInclude(ReactDOM.findDOMNode(this.component).className, 'hide');
     });
+
     it('calls the closeCallback', function () {
-      var notice = { type: 'error', text: 'some error' };
       var closeCallback = sinon.stub();
-      var component = component = TestUtils.renderIntoDocument(<Notice notice={notice} closeCallback={closeCallback} />);
-      TestUtils.Simulate.click(TestUtils.findRenderedDOMComponentWithClass(component, 'close'));
+      this.component = TestUtils.renderIntoDocument(<Notice notice={notice} closeCallback={closeCallback} />);
+      TestUtils.Simulate.click(TestUtils.findRenderedDOMComponentWithClass(this.component, 'close'));
+
       assert.isTrue(closeCallback.calledOnce);
     });
   });

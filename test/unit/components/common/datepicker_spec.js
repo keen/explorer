@@ -2,8 +2,9 @@
 var assert = require('chai').assert;
 var sinon = require('sinon');
 var _ = require('lodash');
-var React = require('react/addons');
-var TestUtils = React.addons.TestUtils;
+var React = require('react');
+var ReactDOM = require('react-dom');
+var TestUtils = require('react-addons-test-utils');
 var Datepicker = require('../../../../client/js/app/components/common/datepicker.js');
 var TestHelpers = require('../../../support/TestHelpers');
 
@@ -28,9 +29,9 @@ describe('components/common/datepicker', function() {
 
   describe('interactions', function() {
     it('should call the onSet prop function with the correct day', function() {
-      var inputNode = this.component.refs.datepicker.getDOMNode();
+      var inputNode = this.component.refs.datepicker;
       TestUtils.Simulate.focus(inputNode);
-      var dayNodes = $(this.component.getDOMNode()).find('td[role="presentation"] div');
+      var dayNodes = $(ReactDOM.findDOMNode(this.component)).find('td[role="presentation"] div');
       var fifteenthDayNode;
       _.each(dayNodes, function(dayNode) {
         if (dayNode.textContent === '15') {
