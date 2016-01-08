@@ -282,6 +282,7 @@ describe('actions/ExplorerActions', function() {
       var expectedUpdates = _.cloneDeep(this.explorer);
       expectedUpdates.loading = false;
       expectedUpdates.response = this.response;
+      expectedUpdates.dataTimestamp = Date.now();
       expectedUpdates.metadata.visualization.chart_type = 'metric';
       
       ExplorerActions.execSuccess(this.explorer, this.response);

@@ -28,6 +28,7 @@ describe('stores/ExplorerStore', function() {
       var defaults = {
         active: false,
         response: null,
+        dataTimestamp: null,
         loading: false,
         saving: false,
         isValid: true,
@@ -808,6 +809,7 @@ describe('stores/ExplorerStore', function() {
           id: 'ABC-SOME-ID',
           active: true,
           response: null,
+          dataTimestamp: null,
           loading: false,
           saving: false,
           isValid: true,

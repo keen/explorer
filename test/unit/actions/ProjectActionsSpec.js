@@ -55,6 +55,15 @@ describe('actions/ProjectActions', function() {
           eventCollections: ['click'],
           schema: TestHelpers.buildProjectSchema()
         };
+        expectedUpdates.schema.click.sortedProperties = [
+          'boolProp',
+          'datetimeProp',
+          'geoProp',
+          'listProp',
+          'nullProp',
+          'numProp',
+          'stringProp'
+        ]
         assert.deepEqual(this.projectUpdateStub.getCall(0).args[1], expectedUpdates);
       });
 
