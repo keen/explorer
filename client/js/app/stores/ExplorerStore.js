@@ -26,6 +26,7 @@ function _defaultAttrs() {
     query_name: null,
     active: false,
     saving: false,
+    dataTimestamp: null,
     response: null,
     loading: false,
     isValid: true,

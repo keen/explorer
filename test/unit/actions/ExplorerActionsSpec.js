@@ -286,11 +286,20 @@ describe('actions/ExplorerActions', function() {
       
       ExplorerActions.execSuccess(this.explorer, this.response);
 
-      assert.isTrue(this.dispatchStub.calledWith({
-        actionType: 'EXPLORER_UPDATE',
-        id: 5,
-        updates: expectedUpdates
-      }));
+      assert.strictEqual(this.dispatchStub.getCall(2).args[0].actionType, 'EXPLORER_UPDATE');
+      assert.strictEqual(this.dispatchStub.getCall(2).args[0].id, 5);
+
+      // We need to check the dataTimestamp separately because we cannot get Date.now()'s to match
+      // as they will be off by a few milliseconds.
+      assert.deepEqual(_.omit(this.dispatchStub.getCall(2).args[0].updates, 'dataTimestamp'), expectedUpdates);
+
+      var actualTimestamp = this.dispatchStub.getCall(2).args[0].updates.dataTimestamp;
+      actualTimestamp = actualTimestamp.toString().substring(0, actualTimestamp.length-5);
+
+      var expectedTimestamp = Date.now();
+      expectedTimestamp = expectedTimestamp.toString().substring(0, expectedTimestamp.length-5);
+
+      assert.strictEqual(actualTimestamp, expectedTimestamp);
     });
     it('should clear all notices', function () {
       ExplorerActions.execSuccess(this.explorer, this.response);

@@ -39,29 +39,6 @@ describe('utils/ProjectUtils', function() {
     });
   });
 
-  describe('getEventCollectionProperties', function(){
-    before(function () {
-      this.project = { schema: TestHelpers.buildProjectSchema() };
-    });
-
-    it('should return an array of properties for a collection which exists', function () {
-      var properties = {
-        'stringProp': 'string',
-        'datetimeProp': 'datetime',
-        'numProp': 'num',
-        'nullProp': 'null',
-        'boolProp': 'bool',
-        'listProp': 'list',
-        'geoProp': 'geo'
-      };
-      assert.deepEqual(ProjectUtils.getEventCollectionProperties(this.project, 'click'), properties);
-    });
-
-    it('should return an empty object if the collection does not exist', function () {
-      assert.deepEqual(ProjectUtils.getEventCollectionProperties(this.project, 'wrong-prop-friend'), {});
-    });
-  });
-
   describe('getPropertyType', function () {
     before(function () {
       this.project = { schema: TestHelpers.buildProjectSchema() };

@@ -48,25 +48,27 @@ Somewhere on the page that you want to show Explorer you'll need to configure a 
 ```html
 <div id="explorer"></div>
 <script type="text/javascript">
-  // Configure a new Keen.js client with your project ID, read key and master key.
-  var client = new Keen({
-    projectId: "YOUR_PROJECT_ID",
-    readKey: "YOUR_PROJECT_READ_KEY",
-    masterKey: "YOUR_PROJECT_MASTER_KEY"
-  });
+  Keen.ready(function() {
+    // Configure a new Keen.js client with your project ID, read key and master key.
+    var client = new Keen({
+      projectId: "YOUR_PROJECT_ID",
+      readKey: "YOUR_PROJECT_READ_KEY",
+      masterKey: "YOUR_PROJECT_MASTER_KEY"
+    });
 
-  var app = new Keen.Explorer.App({
-    // Pass that client into a new Explorer
-    client: client,
-    // Optionally add in saved queries support:
-    // Saved queries is entirely optional. If you set it to true, a "saved queries" feature
-    // will be available and you can save the state of the query you're working
-    // on so that they can be looked up at a later time.
-    savedQueries: true,
-    // The targetId is the id of the DOM Node you want to display Explorer inside.
-    targetId: 'explorer'
+    var app = new Keen.Explorer.App({
+      // Pass that client into a new Explorer
+      client: client,
+      // Optionally add in saved queries support:
+      // Saved queries is entirely optional. If you set it to true, a "saved queries" feature
+      // will be available and you can save the state of the query you're working
+      // on so that they can be looked up at a later time.
+      savedQueries: true,
+      // The targetId is the id of the DOM Node you want to display Explorer inside.
+      targetId: 'explorer'
+    });
+    app.render();
   });
-  app.render();
 </script>
 ```
 
