@@ -214,7 +214,8 @@ module.exports = {
     var chartTypes = [];
 
     if (response) {
-      var dataviz = new Keen.Dataviz();
+      var dataviz = new Keen.Dataviz()
+        .library('c3');
       dataviz.data(response);
       var dataType = dataviz.dataType();
 
