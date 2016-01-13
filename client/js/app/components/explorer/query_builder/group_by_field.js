@@ -73,6 +73,10 @@ var GroupByField = React.createClass({
     this.props.handleChange('group_by', newVal);
   },
 
+  shouldBeOpen: function() {
+    return this.props.value && this.props.value[0]
+  },
+
   // React methods
 
   render: function() {
@@ -80,7 +84,7 @@ var GroupByField = React.createClass({
       <div className="field-component">
         <FieldsToggle ref="toggle"
                       name="Group By"
-                      initialOpenState={this.props.value.length > 0}
+                      initialOpenState={this.shouldBeOpen()}
                       updateFn={this.props.updateGroupBy}
                       getFn={this.getGroupBy}
                       attrsToStore="group_by"
