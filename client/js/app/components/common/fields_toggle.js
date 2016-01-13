@@ -66,6 +66,12 @@ var FieldsToggle = React.createClass({
     };
   },
 
+  componentWillReceiveProps: function(nextProps) {
+    if (!this.props.initialOpenState && nextProps.initialOpenState) {
+      this.setState({ open: true });
+    }
+  },
+
   render: function() {
     var fieldsCount = this.props.fieldsCount ? this.props.fieldsCount : null;
 
