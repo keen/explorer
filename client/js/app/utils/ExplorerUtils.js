@@ -231,7 +231,7 @@ module.exports = {
     var group_by = query.group_by || [];
     var interval = query.interval;
 
-    var chartTypes = ['table', 'JSON'];
+    var chartTypes = ['JSON'];
     
     if (['count', 'count_unique', 'sum', 'maximum', 'minimum', 'average', 'percentile', 'median'].indexOf(type) > -1 && !group_by.length && !interval) {
       chartTypes.push('metric');
@@ -245,7 +245,8 @@ module.exports = {
       chartTypes.push('linechart');
       chartTypes.push('areachart');
       chartTypes.push('columnchart');
-    }    
+    }
+    // TODO: Figure out when table is ok to add.
 
     return chartTypes;
   },
