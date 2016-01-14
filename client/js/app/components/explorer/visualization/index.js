@@ -29,7 +29,7 @@ var Visualization = React.createClass({
     });
     var updates = {
       metadata: {
-        visualization: { chartType: chartType.value }
+        visualization: { chart_type: chartType.value }
       }
     };
     ExplorerActions.update(this.props.model.id, updates);
