@@ -209,7 +209,7 @@ var ExplorerActions = {
     });
     NoticeActions.clearAll();
     
-    var updates = _.cloneDeep(explorer);
+    var updates = {};
     updates.response = response;
     // If there is no query object on the response, add one. This is required for Dataviz to properly auto-parse
     // the result + the query to correctly choose a chart type.
@@ -217,7 +217,8 @@ var ExplorerActions = {
     updates.loading = false;
 
     if (!ExplorerUtils.responseSupportsChartType(response, explorer.metadata.visualization.chart_type, explorer.query.analysis_type)) {
-      updates.metadata.visualization.chart_type = ExplorerUtils.getChartTypeOptions(response, explorer.query.analysis_type)[0];
+      updates.metadata = _.cloneDeep(explorer.metadata);
+      updates.metadata.visualization.chart_type = ExplorerUtils.getChartTypeOptions(response.query)[0];
     }
 
     updates.dataTimestamp = Date.now();

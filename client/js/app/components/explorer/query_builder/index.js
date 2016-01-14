@@ -30,25 +30,23 @@ var QueryBuilder = React.createClass({
   },
 
   handleChange: function(update, value) {
-    var newModel = _.cloneDeep(this.props.model);
+    var updates = { query: {} };
 
     if(_.isPlainObject(update)) {
       for(key in update) {
-        newModel.query[key] = update[key];
+        updates.query[key] = update[key];
       }
     } else {
-      newModel.query[update] = value;
+      updates.query[update] = value;
     }
 
-    ExplorerActions.update(this.props.model.id, newModel);
+    ExplorerActions.update(this.props.model.id, updates);
   },
 
   // Convenience Methods
 
   updateGroupBy: function(updates) {
-    ExplorerActions.update(this.props.model.id, {
-      query: _.assign(_.cloneDeep(this.props.model.query), updates)
-    });
+    ExplorerActions.update(this.props.model.id, { query: updates });
   },
 
   handleRevertChanges: function(event) {

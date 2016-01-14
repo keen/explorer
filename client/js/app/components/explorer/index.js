@@ -51,9 +51,12 @@ var Explorer = React.createClass({
   // ********************************
   
   selectEventCollection: function(collectionName) {
-    var updates = _.cloneDeep(this.state.activeExplorer.query);
-    updates.event_collection = collectionName;
-    ExplorerActions.update(this.state.activeExplorer.id, { query: updates });
+    var updates = {
+      query: {
+        event_collection: collectionName
+      }
+    };
+    ExplorerActions.update(this.state.activeExplorer.id, updates);
     this.refs['event-browser'].refs.modal.close();
   },
 
@@ -102,9 +105,12 @@ var Explorer = React.createClass({
   },
 
   onDisplayNameChange: function(event) {
-    var updates = _.cloneDeep(this.state.activeExplorer);
-    updates.metadata.display_name = event.target.value;
-    updates.query_name = ExplorerUtils.slugify(event.target.value);
+    var updates = {
+      query_name: ExplorerUtils.slugify(event.target.value),
+      metadata: {
+        display_name: event.target.value
+      }
+    };
     ExplorerActions.update(this.state.activeExplorer.id, updates);
   },
 
@@ -128,8 +134,11 @@ var Explorer = React.createClass({
   },
 
   setExtractionType: function(event) {
-    var updates = _.cloneDeep(this.state.activeExplorer);
-    updates.query.email = event.target.value === 'email' ? "" : null;
+    var updates = {
+      query: {
+        email: event.target.value === 'email' ? "" : null
+      }
+    };
     ExplorerActions.update(this.state.activeExplorer.id, updates);
   },
 

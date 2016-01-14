@@ -27,13 +27,16 @@ var Visualization = React.createClass({
     var chartType = _.find(this.formatChartTypes(), function(type){
       return type.value === event.target.value;
     });
-    var updates = _.cloneDeep(this.props.model);
-    updates.metadata.visualization.chart_type = chartType.value;
+    var updates = {
+      metadata: {
+        visualization: { chartType: chartType.value }
+      }
+    };
     ExplorerActions.update(this.props.model.id, updates);
   },
 
   formatChartTypes: function() {
-    return _.map(ExplorerUtils.getChartTypeOptions(this.props.model.response, this.props.model.query.analysis_type), function(type) {
+    return _.map(ExplorerUtils.getChartTypeOptions(this.props.model.query), function(type) {
       return {
         name: (type !== 'JSON') ? FormatUtils.toTitleCase(type).replace('chart', '') : type,
         value: type
@@ -47,7 +50,7 @@ var Visualization = React.createClass({
       return this.props.model.metadata.visualization.chart_type;
     }
     else {
-      return _.first(ExplorerUtils.getChartTypeOptions(this.props.model.response, this.props.model.query.analysis_type))
+      return _.first(ExplorerUtils.getChartTypeOptions(this.props.model.query))
     }
   },
 

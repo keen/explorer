@@ -81,10 +81,7 @@ module.exports = {
   },
 
   mergeResponseWithExplorer: function(explorer, response) {
-    var newModel = _.defaultsDeep(
-      module.exports.formatQueryParams(response),
-      _.cloneDeep(explorer)
-    );
+    var newModel = _.defaultsDeep(module.exports.formatQueryParams(response), explorer);
     delete newModel.originalModel; // Remove the original model.
     newModel.id = response.query_name; // Set the ID to the query_name (it's now persisted.)
     newModel.originalModel = _.cloneDeep(newModel);
@@ -234,8 +231,8 @@ module.exports = {
     return chartTypes;
   },
 
-  responseSupportsChartType: function(response, chartType, analysisType) {
-    return _.contains(module.exports.getChartTypeOptions(response, analysisType), chartType);
+  responseSupportsChartType: function(query, chartType) {
+    return _.contains(module.exports.getChartTypeOptions(query), chartType);
   },
 
   encodeAttribute: function(attr) {
