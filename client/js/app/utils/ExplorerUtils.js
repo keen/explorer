@@ -207,26 +207,45 @@ module.exports = {
     return params;
   },
 
-  getChartTypeOptions: function(response, analysisType) {
-    var chartTypes = [];
+  getChartTypeOptions: function(query) {
+    // var chartTypes = [];
 
-    if (response) {
-      var dataviz = new Keen.Dataviz();
-      dataviz.data(response);
-      var dataType = dataviz.dataType();
+    // if (response) {
+    //   var dataviz = new Keen.Dataviz();
+    //   dataviz.data(response);
+    //   var dataType = dataviz.dataType();
 
-      if (dataType && Keen.Dataviz.dataTypeMap[dataType]) {
-        var library = Keen.Dataviz.dataTypeMap[dataType].library;
-        var libraryDefaults = Keen.Dataviz.libraries[library]._defaults;
-        chartTypes = _.clone(libraryDefaults[dataType]);
+    //   if (dataType && Keen.Dataviz.dataTypeMap[dataType]) {
+    //     var library = Keen.Dataviz.dataTypeMap[dataType].library;
+    //     var libraryDefaults = Keen.Dataviz.libraries[library]._defaults;
+    //     chartTypes = _.clone(libraryDefaults[dataType]);
 
-        if (!_.contains(chartTypes, 'json')) {
-          chartTypes.push('JSON');
-        }
-      } else if (response && _.contains(['extraction', 'select_unique'], analysisType)) {
-        chartTypes = ['JSON', 'table'];
-      }
+    //     if (!_.contains(chartTypes, 'json')) {
+    //       chartTypes.push('JSON');
+    //     }
+    //   } else if (response && _.contains(['extraction', 'select_unique'], analysisType)) {
+    //     chartTypes = ['JSON', 'table'];
+    //   }
+    // }
+    var type = query.analysis_type;
+    var group_by = query.group_by || [];
+    var interval = query.interval;
+
+    var chartTypes = ['table', 'JSON'];
+    
+    if (['count', 'count_unique', 'sum', 'maximum', 'minimum', 'average', 'percentile', 'median'].indexOf(type) > -1 && !group_by.length && !interval) {
+      chartTypes.push('metric');
     }
+    if (['count', 'count_unique', 'sum', 'maximum', 'minimum', 'average', 'percentile', 'median'].indexOf(type) > -1 && group_by.length && !interval) {
+      chartTypes.push('piechart');
+      chartTypes.push('barchart');
+      chartTypes.push('columnchart');
+    }
+    if (['count', 'count_unique', 'sum', 'maximum', 'minimum', 'average', 'percentile', 'median'].indexOf(type) > -1 && group_by.length && interval) {
+      chartTypes.push('linechart');
+      chartTypes.push('areachart');
+      chartTypes.push('columnchart');
+    }    
 
     return chartTypes;
   },
