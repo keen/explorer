@@ -126,7 +126,10 @@ function _getDefaultFilterCoercionType(explorer, filter) {
  * @return {Object}           The new set of updates
  */
 function _prepareUpdates(explorer, updates) {
-  var newModel = _.merge({}, explorer, updates);
+  // TODO: We're merging directly into the model here, but if we merge or assign into a new object the CPU usage
+  // spikes and the browser freezes for an unacceptably long period of time (5-20+ seconds).
+  var newModel = _.merge(explorer, _.omit(updates, 'response'));
+  if (updates.response) newModel.response = updates.response;
 
   if(newModel.query.analysis_type === 'funnel' && explorer.query.analysis_type !== 'funnel') {
     newModel = _migrateToFunnel(explorer, newModel);
