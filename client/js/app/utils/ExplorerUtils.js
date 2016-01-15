@@ -207,48 +207,70 @@ module.exports = {
     return params;
   },
 
+  getQueryDataType: function(query){
+    var isInterval = typeof query.interval === "string",
+    isGroupBy = typeof query.group_by === "string",
+    is2xGroupBy = query.group_by instanceof Array,
+    dataType;
+
+    // metric
+    if (!isGroupBy && !isInterval) {
+      dataType = 'singular';
+    }
+
+    // group_by, no interval
+    if (isGroupBy && !isInterval) {
+      dataType = 'categorical';
+    }
+
+    // interval, no group_by
+    if (isInterval && !isGroupBy) {
+      dataType = 'chronological';
+    }
+
+    // interval, group_by
+    if (isInterval && isGroupBy) {
+      dataType = 'cat-chronological';
+    }
+
+    // 2x group_by
+    // TODO: research possible dataType options
+    if (!isInterval && is2xGroupBy) {
+      dataType = 'categorical';
+    }
+
+    // interval, 2x group_by
+    // TODO: research possible dataType options
+    if (isInterval && is2xGroupBy) {
+      dataType = 'cat-chronological';
+    }
+
+    if (query.analysis_type === "funnel") {
+      dataType = 'cat-ordinal';
+    }
+
+    if (query.analysis_type === "extraction") {
+      dataType = 'extraction';
+    }
+    if (query.analysis_type === "select_unique") {
+      dataType = 'nominal';
+    }
+
+    return dataType;
+  },
+
   getChartTypeOptions: function(query) {
-    // var chartTypes = [];
-
-    // if (response) {
-    //   var dataviz = new Keen.Dataviz();
-    //   dataviz.data(response);
-    //   var dataType = dataviz.dataType();
-
-    //   if (dataType && Keen.Dataviz.dataTypeMap[dataType]) {
-    //     var library = Keen.Dataviz.dataTypeMap[dataType].library;
-    //     var libraryDefaults = Keen.Dataviz.libraries[library]._defaults;
-    //     chartTypes = _.clone(libraryDefaults[dataType]);
-
-    //     if (!_.contains(chartTypes, 'json')) {
-    //       chartTypes.push('JSON');
-    //     }
-    //   } else if (response && _.contains(['extraction', 'select_unique'], analysisType)) {
-    //     chartTypes = ['JSON', 'table'];
-    //   }
-    // }
-    var type = query.analysis_type;
-    var group_by = query.group_by || [];
-    var interval = query.interval;
-
-    var chartTypes = ['JSON'];
-    
-    if (['count', 'count_unique', 'sum', 'maximum', 'minimum', 'average', 'percentile', 'median'].indexOf(type) > -1 && !group_by.length && !interval) {
-      chartTypes.push('metric');
-    }
-    if (['count', 'count_unique', 'sum', 'maximum', 'minimum', 'average', 'percentile', 'median'].indexOf(type) > -1 && group_by.length && !interval) {
-      chartTypes.push('piechart');
-      chartTypes.push('barchart');
-      chartTypes.push('columnchart');
-    }
-    if (['count', 'count_unique', 'sum', 'maximum', 'minimum', 'average', 'percentile', 'median'].indexOf(type) > -1 && group_by.length && interval) {
-      chartTypes.push('linechart');
-      chartTypes.push('areachart');
-      chartTypes.push('columnchart');
-    }
-    // TODO: Figure out when table is ok to add.
-
-    return chartTypes;
+    var dataTypes = {
+      'categorical':        ['piechart', 'barchart', 'columnchart', 'table'],
+      'cat-interval':       ['columnchart', 'barchart', 'table'],
+      'cat-ordinal':        ['barchart', 'columnchart', 'areachart', 'linechart', 'table'],
+      'chronological':      ['areachart', 'linechart', 'table'],
+      'cat-chronological':  ['linechart', 'columnchart', 'barchart', 'areachart'],
+      'nominal':            ['table'],
+      'extraction':         ['table']
+    };
+    var queryDataType = module.exports.getQueryDataType(query);
+    return dataTypes[queryDataType];
   },
 
   responseSupportsChartType: function(query, chartType) {
