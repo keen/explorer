@@ -126,9 +126,9 @@ function _getDefaultFilterCoercionType(explorer, filter) {
  * @return {Object}           The new set of updates
  */
 function _prepareUpdates(explorer, updates) {
-  // TODO: We're merging directly into the model here, but if we merge or assign into a new object the CPU usage
-  // spikes and the browser freezes for an unacceptably long period of time (5-20+ seconds).
-  var newModel = _.merge(explorer, _.omit(updates, 'response'));
+  // TODO: We're assigning the response object directly onto the model so we
+  // don't have to loop through the (sometimes) massive response object.
+  var newModel = _.assign({}, explorer, _.omit(updates, 'response'));
   if (updates.response) newModel.response = updates.response;
 
   if(newModel.query.analysis_type === 'funnel' && explorer.query.analysis_type !== 'funnel') {
@@ -136,7 +136,7 @@ function _prepareUpdates(explorer, updates) {
   } else if(newModel.query.analysis_type !== 'funnel' && explorer.query.analysis_type === 'funnel') {
     newModel = _migrateFromFunnel(explorer, newModel);
   }
-  newModel = _removeInvalidFields(explorer, newModel);
+  newModel = _removeInvalidFields(newModel);
 
   return newModel;
 }
@@ -196,11 +196,10 @@ function _migrateFromFunnel(explorer, newModel) {
 
 /**
  * Removes fields from the query that aren't valid given the new analysis type.
- * @param {Object} explorer   The explorer model that is being updated
  * @param {Object} newModel   The updated explorer model
  * @return {Object}           The new set of updates
  */
-function _removeInvalidFields(explorer, newModel) {
+function _removeInvalidFields(newModel) {
   if (!ExplorerUtils.isEmailExtraction(newModel)) {
     newModel.query.latest = null;
     newModel.query.email = null;
@@ -223,7 +222,8 @@ function _removeInvalidFields(explorer, newModel) {
   }
   if(newModel.query.analysis_type === 'funnel') {
     newModel.query.filters = [];
-    newModel.query.timeframe = null;
+    newModel.query.time = null;
+    newModel.query.timezone = null;
   }
   return newModel;
 }
