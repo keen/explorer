@@ -128,7 +128,7 @@ function _getDefaultFilterCoercionType(explorer, filter) {
 function _prepareUpdates(explorer, updates) {
   // TODO: We're assigning the response object directly onto the model so we
   // don't have to loop through the (sometimes) massive response object.
-  var newModel = _.assign({}, explorer, _.omit(updates, 'response'));
+  var newModel = _.merge({}, explorer, _.omit(updates, 'response'));
   if (updates.response) newModel.response = updates.response;
 
   if(newModel.query.analysis_type === 'funnel' && explorer.query.analysis_type !== 'funnel') {
