@@ -22,10 +22,12 @@ function App(config) {
   this.persistence = null;
   this.client = config.client;
 
-  Keen.Dataviz.dataTypeMap['singular'] = { library: 'c3', chartType: 'gauge' };
-  Keen.Dataviz.dataTypeMap['categorical'] = { library: 'c3', chartType: 'donut' };
-  Keen.Dataviz.dataTypeMap['chronological'] = { library: 'c3', chartType: 'area' };
-  Keen.Dataviz.dataTypeMap['cat-chronological'] = { library: 'c3', chartType: 'line' };
+  Keen.Dataviz.dataTypeMap = {
+    singular: { library: 'keen-io', chartType: 'metric' },
+    categorical: { library: 'c3', chartType: 'donut' },
+    chronological: { library: 'c3', chartType: 'line' },
+    'cat-chronological': { library: 'c3', chartType: 'line' }
+  };
 
   ProjectActions.create({ client: this.client });
   ProjectActions.fetchProjectSchema();

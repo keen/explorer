@@ -16,10 +16,17 @@ var KeenViz = React.createClass({
     this.props.dataviz.data(this.props.model.response)
       .title('') // No title - not necessary for Explorer
       .el(this.refs['keen-viz'])
-      .library('c3')
       .chartType(this.props.model.metadata.visualization.chart_type)
-      .height(400)
-      .render();
+      .height(400);
+
+    if (this.props.dataviz.view.adapter.chartType !== "metric") {
+      this.props.dataviz.library("c3");
+    }
+    else {
+      this.props.dataviz.library("keen-io");
+    }
+
+    this.props.dataviz.render();
 
     this.setState({ lastDataTimestamp: this.props.model.dataTimestamp });
   },
