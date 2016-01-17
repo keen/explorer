@@ -22,6 +22,13 @@ function App(config) {
   this.persistence = null;
   this.client = config.client;
 
+  Keen.Dataviz.dataTypeMap = {
+    singular: { library: 'keen-io', chartType: 'metric' },
+    categorical: { library: 'c3', chartType: 'donut' },
+    chronological: { library: 'c3', chartType: 'line' },
+    'cat-chronological': { library: 'c3', chartType: 'line' }
+  };
+
   ProjectActions.create({ client: this.client });
   ProjectActions.fetchProjectSchema();
 

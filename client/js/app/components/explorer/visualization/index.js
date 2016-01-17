@@ -52,7 +52,9 @@ var Visualization = React.createClass({
   },
 
   componentWillMount: function() {
-    this.dataviz = new Keen.Dataviz();
+    console.log("mounting viz");
+    this.dataviz = new Keen.Dataviz()
+      .library('c3');
   },
 
   componentWillUnmount: function() {
