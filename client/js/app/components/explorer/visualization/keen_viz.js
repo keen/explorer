@@ -12,7 +12,10 @@ var KeenViz = React.createClass({
   // ***********************
 
   showVisualization: function() {
-    this.props.dataviz.destroy(); // Remove the old one first.
+    // this fucking line is breaking explorer whenever we load a pie/donut chart
+    // this.props.dataviz.destroy(); // Remove the old one first.
+    console.log(this.props.dataviz);
+
     this.props.dataviz.data(this.props.model.response)
       .title('') // No title - not necessary for Explorer
       .el(this.refs['keen-viz'])
@@ -20,7 +23,10 @@ var KeenViz = React.createClass({
       .height(400);
 
     if (this.props.dataviz.view.adapter.chartType !== "metric") {
-      this.props.dataviz.library("c3");
+      this.props.dataviz.library("c3")
+        .chartOptions({
+          gauge: { gauge_min: 0 }
+        });
     }
     else {
       this.props.dataviz.library("keen-io");
