@@ -261,6 +261,7 @@ module.exports = {
 
   getChartTypeOptions: function(query) {
     var dataTypes = {
+      'singular':           ['metric'],
       'categorical':        ['piechart', 'barchart', 'columnchart', 'table'],
       'cat-interval':       ['columnchart', 'barchart', 'table'],
       'cat-ordinal':        ['barchart', 'columnchart', 'areachart', 'linechart', 'table'],
