@@ -126,14 +126,17 @@ function _getDefaultFilterCoercionType(explorer, filter) {
  * @return {Object}           The new set of updates
  */
 function _prepareUpdates(explorer, updates) {
-  var newModel = _.assign({}, explorer, updates);
+  // TODO: We're assigning the response object directly onto the model so we
+  // don't have to loop through the (sometimes) massive response object.
+  var newModel = _.merge({}, explorer, _.omit(updates, 'response'));
+  if (updates.response) newModel.response = updates.response;
 
   if(newModel.query.analysis_type === 'funnel' && explorer.query.analysis_type !== 'funnel') {
     newModel = _migrateToFunnel(explorer, newModel);
   } else if(newModel.query.analysis_type !== 'funnel' && explorer.query.analysis_type === 'funnel') {
     newModel = _migrateFromFunnel(explorer, newModel);
   }
-  newModel = _removeInvalidFields(explorer, newModel);
+  newModel = _removeInvalidFields(newModel);
 
   return newModel;
 }
@@ -193,11 +196,10 @@ function _migrateFromFunnel(explorer, newModel) {
 
 /**
  * Removes fields from the query that aren't valid given the new analysis type.
- * @param {Object} explorer   The explorer model that is being updated
  * @param {Object} newModel   The updated explorer model
  * @return {Object}           The new set of updates
  */
-function _removeInvalidFields(explorer, newModel) {
+function _removeInvalidFields(newModel) {
   if (!ExplorerUtils.isEmailExtraction(newModel)) {
     newModel.query.latest = null;
     newModel.query.email = null;
@@ -220,7 +222,8 @@ function _removeInvalidFields(explorer, newModel) {
   }
   if(newModel.query.analysis_type === 'funnel') {
     newModel.query.filters = [];
-    newModel.query.timeframe = null;
+    newModel.query.time = null;
+    newModel.query.timezone = null;
   }
   return newModel;
 }
@@ -236,7 +239,7 @@ function _removeInvalidFields(explorer, newModel) {
 function _prepareFilterUpdates(explorer, filter, updates) {
   if (updates.property_name && updates.property_name !== filter.property_name) {
     // No need to update the operator - we allow any operator for any property type right now.
-    updates.coercion_type = _getDefaultFilterCoercionType(explorer, _.assign({}, filter, updates));
+    updates.coercion_type = _getDefaultFilterCoercionType(explorer, _.merge({}, filter, updates));
   } 
   else if (updates.operator && updates.operator !== filter.operator) {
     var newOp = updates.operator;
@@ -257,15 +260,14 @@ function _prepareFilterUpdates(explorer, filter, updates) {
     updates.property_value = _defaultGeoFilter();
   }
   
-  updates.property_value = FilterUtils.getCoercedValue(_.assign({}, filter, updates));
+  updates.property_value = FilterUtils.getCoercedValue(_.merge({}, filter, updates));
 
   return updates;
 }
 
-function _wrapGroupBy(attrs) {
-  attrs = _.cloneDeep(attrs);
-  if (!_.isArray(attrs.query.group_by)) attrs.query.group_by = [attrs.query.group_by];
-  return attrs;
+function _wrapGroupBy(group_by) {
+  if (!_.isArray(group_by)) group_by = [group_by];
+  return group_by;
 }
 
 function _create(attrs) {
@@ -283,7 +285,7 @@ function _create(attrs) {
     });
   }
   if (!newAttrs.metadata) newAttrs.metadata = _defaultMetadata();
-  newAttrs = _wrapGroupBy(newAttrs)
+  newAttrs.query.group_by = _wrapGroupBy(newAttrs.query.group_by)
 
   _explorers[newAttrs.id] = newAttrs;
   return newAttrs.id;
@@ -296,7 +298,7 @@ function _update(id, updates) {
   }
 
   var newModel = _prepareUpdates(_explorers[id], updates);
-  newModel = _wrapGroupBy(newModel)
+  newModel.query.group_by = _wrapGroupBy(newModel.query.group_by)
 
   if (updates.id && updates.id !== id) {
     _explorers[updates.id] = newModel;
@@ -332,7 +334,7 @@ function _setActive(id) {
 function _revertActiveChanges() {
   var active = _.find(_explorers, { active: true });
   var original = _explorers[active.id].originalModel;
-  _explorers[active.id] = _.assign({}, _.cloneDeep(original), { originalModel: original, response: active.response });
+  _explorers[active.id] = _.assign({}, original, { originalModel: original, response: active.response });
   return active.id;
 }
 
