@@ -266,20 +266,7 @@ module.exports = {
     return url;
   },
 
-  resultCanBeVisualized: function(explorer) {
-    return (explorer.response && !FormatUtils.isNullOrUndefined(explorer.response.result) && (_.isNumber(explorer.response.result) || (_.isArray(explorer.response.result) && explorer.response.result.length)));
-  },
-
-  isJSONViz: function(explorer) {
-    return explorer.metadata.visualization.chart_type && explorer.metadata.visualization.chart_type.toLowerCase() === 'json';
-  },
-
-  isTableViz: function(explorer) {
-    return explorer.metadata.visualization.chart_type && explorer.metadata.visualization.chart_type.toLowerCase() === 'table';
-  },
-
   getSdkExample: function(explorer, client) {
-
     var defaultKeenJsOpts = {
           requestType: 'jsonp',
           host: 'api.keen.io/3.0',
