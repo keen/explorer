@@ -14,7 +14,6 @@ var KeenViz = React.createClass({
 	// ***********************
 
 	showVisualization: function() {
-    console.log(new Date(), 'INSIDE showVisualization!')
     this.props.dataviz.destroy(); // Remove the old one first.
   	this.props.dataviz.data(this.props.model.response)
   		.title('') // No title - not necessary for Explorer
