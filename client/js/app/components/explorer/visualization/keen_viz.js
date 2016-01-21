@@ -7,6 +7,8 @@ var React = require('react');
 
 var KeenViz = React.createClass({
 
+  lastDataTimestamp: null,
+
 	// ***********************
 	// Convenience functions
 	// ***********************
@@ -19,8 +21,8 @@ var KeenViz = React.createClass({
     	.el(this.refs['keen-viz'])
     	.height(400)
     	.render();
-    
-    this.setState({ lastDataTimestamp: this.props.model.dataTimestamp });
+
+    this.lastDataTimestamp = this.props.model.dataTimestamp;
 	},
 
 	// ***********************
@@ -31,14 +33,10 @@ var KeenViz = React.createClass({
     if (this.props.model.metadata.visualization.chart_type !== nextProps.model.metadata.visualization.chart_type) {
       return true;
     }
-    if (!this.state.lastDataTimestamp || this.state.lastDataTimestamp !== nextProps.model.dataTimestamp) {
+    if (!this.lastDataTimestamp || this.lastDataTimestamp !== nextProps.model.dataTimestamp) {
       return true
     }
     return false;
-  },
-  
-  getInitialState: function() {
-    return { lastDataTimestamp: null };
   },
 
 	componentDidUpdate: function() {
