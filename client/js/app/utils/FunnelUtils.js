@@ -30,7 +30,7 @@ module.exports = {
 
     // Remove empty, null, or unnecessary properties
     _.each(params, function(value, key) {
-      if (!FormatUtils.isValidQueryValue(value) || !_.contains(STEP_PARAMS, key)) {
+      if (!FormatUtils.isValidQueryValue(value) || !_.includes(STEP_PARAMS, key)) {
         delete params[key];
       }
     });

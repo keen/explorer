@@ -221,6 +221,62 @@ describe('stores/ExplorerStore', function() {
       assert.deepPropertyVal(explorer, 'query.analysis_type', 'not_count');
       assert.deepPropertyVal(explorer, 'visualization.chart_type', 'not_metric');
     });
+
+    it('should properly merge array values', function () {
+      ExplorerActions.create({
+        id: 'SOME_ID',
+        query: {
+          event_collection: 'clicks',
+          analysis_type: 'count',
+          group_by: ['name', 'name-two']
+        },
+        visualization: {
+          chart_type: 'metric'
+        }
+      });
+      var explorer = ExplorerStore.get('SOME_ID');
+      var updates = { query: { group_by: ['name'] } }
+      ExplorerActions.update('SOME_ID', updates);
+
+      explorer = ExplorerStore.get('SOME_ID');
+      
+      assert.sameMembers(explorer.query.group_by, ['name']);
+    });
+
+    it('should properly merge the time object', function () {
+      ExplorerActions.create({
+        id: 'SOME_ID',
+        query: {
+          event_collection: 'clicks',
+          analysis_type: 'count',
+          time: {
+            start: 'start date',
+            end: 'end date'
+          }
+        },
+        visualization: {
+          chart_type: 'metric'
+        }
+      });
+      var explorer = ExplorerStore.get('SOME_ID');
+      var updates = { 
+        query: { 
+          time: {
+            amount: "14",
+            relativity: "this",
+            sub_timeframe: "days"
+          }
+        }
+      }
+      ExplorerActions.update('SOME_ID', updates);
+      explorer = ExplorerStore.get('SOME_ID');
+      assert.deepEqual(explorer.query.time, {
+        amount: "14",
+        relativity: "this",
+        sub_timeframe: "days"
+      });
+    });
+
     it('should replace the store object key with the new ID if one is passed in via updates', function () {
       ExplorerActions.create({
         id: 'SOME_ID',
@@ -494,7 +550,7 @@ describe('stores/ExplorerStore', function() {
         assert.strictEqual(ExplorerStore.getActive().id.match('TEMP-').length, 1);  
       });
       it('should only have a single active model', function () {
-        assert.strictEqual(_.where(ExplorerStore.getAll(), { active: true  }).length, 1);  
+        assert.strictEqual(_.filter(ExplorerStore.getAll(), { active: true  }).length, 1);  
       });
       it('should create the new active model and then set it active to ensure it has an originalModel property', function () {
         assert.isTrue(!_.isUndefined(ExplorerStore.getActive().originalModel));

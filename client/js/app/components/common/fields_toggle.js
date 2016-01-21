@@ -25,7 +25,7 @@ var FieldsToggle = React.createClass({
         var resetVal = this.props.resetValues[attrName] || null;
         updates[attrName] = resetVal;
       }
-    }, this);
+    }.bind(this));
 
     this.props.updateFn(updates);
   },

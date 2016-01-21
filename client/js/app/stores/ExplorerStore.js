@@ -128,7 +128,14 @@ function _getDefaultFilterCoercionType(explorer, filter) {
 function _prepareUpdates(explorer, updates) {
   // TODO: We're assigning the response object directly onto the model so we
   // don't have to loop through the (sometimes) massive response object.
-  var newModel = _.merge({}, explorer, _.omit(updates, 'response'));
+  function customizer(objValue, srcValue, key) {
+    if (_.isArray(objValue)) {
+      return srcValue;
+    } else if (key === 'time' && _.isPlainObject(objValue)) {
+      return srcValue;
+    }
+  }
+  var newModel = _.mergeWith({}, explorer, _.omit(updates, 'response'), customizer);
   if (updates.response) newModel.response = updates.response;
 
   if(newModel.query.analysis_type === 'funnel' && explorer.query.analysis_type !== 'funnel') {
@@ -251,7 +258,7 @@ function _prepareFilterUpdates(explorer, filter, updates) {
     // as an option for this new operator.
     var coercionOptions = _.find(ProjectUtils.getConstant('FILTER_OPERATORS'), { value: updates.operator }).canBeCoeredTo;
     var coercion_type = updates.coercion_type || filter.coercion_type;
-    if (!_.contains(coercionOptions, coercion_type)) {
+    if (!_.includes(coercionOptions, coercion_type)) {
       updates.coercion_type = coercionOptions[0];
     }
   }
