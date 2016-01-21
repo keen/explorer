@@ -243,6 +243,40 @@ describe('stores/ExplorerStore', function() {
       assert.sameMembers(explorer.query.group_by, ['name']);
     });
 
+    it('should properly the time object', function () {
+      ExplorerActions.create({
+        id: 'SOME_ID',
+        query: {
+          event_collection: 'clicks',
+          analysis_type: 'count',
+          time: {
+            start: 'start date',
+            end: 'end date'
+          }
+        },
+        visualization: {
+          chart_type: 'metric'
+        }
+      });
+      var explorer = ExplorerStore.get('SOME_ID');
+      var updates = { 
+        query: { 
+          time: {
+            amount: "14",
+            relativity: "this",
+            sub_timeframe: "days"
+          }
+        }
+      }
+      ExplorerActions.update('SOME_ID', updates);
+      explorer = ExplorerStore.get('SOME_ID');
+      assert.deepEqual(explorer.query.time, {
+        amount: "14",
+        relativity: "this",
+        sub_timeframe: "days"
+      });
+    });
+
     it('should replace the store object key with the new ID if one is passed in via updates', function () {
       ExplorerActions.create({
         id: 'SOME_ID',

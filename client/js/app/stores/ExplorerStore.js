@@ -128,8 +128,12 @@ function _getDefaultFilterCoercionType(explorer, filter) {
 function _prepareUpdates(explorer, updates) {
   // TODO: We're assigning the response object directly onto the model so we
   // don't have to loop through the (sometimes) massive response object.
-  function customizer(objValue, srcValue) {
-    if (_.isArray(objValue)) return srcValue;
+  function customizer(objValue, srcValue, key, object, source) {
+    if (_.isArray(objValue)) {
+      return srcValue;
+    } else if (key === 'time' && _.isPlainObject(objValue)) {
+      return srcValue;
+    }
   }
   var newModel = _.mergeWith({}, explorer, _.omit(updates, 'response'), customizer);
   if (updates.response) newModel.response = updates.response;
