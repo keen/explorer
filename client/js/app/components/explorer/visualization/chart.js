@@ -63,18 +63,19 @@ var Chart = React.createClass({
       );
     }
 
-    if (!this.resultCanBeVisualized(this.props.model)) {
-      return (
-        <div ref="notice" className="big-notice">
-          <div className="alert alert-danger">
-            <span className="icon glyphicon glyphicon-info-sign error"></span>
-            Your query returned no results.
-          </div>
-        </div>
-      );
+    if (this.resultCanBeVisualized()) {
+      return this.buildViz();
     }
 
-    return this.buildViz();
+    return (
+      <div ref="notice" className="big-notice">
+        <div className="alert alert-danger">
+          <span className="icon glyphicon glyphicon-info-sign error"></span>
+          {'Your query returned no results.'}
+        </div>
+      </div>
+     );
+
   },
 
   isJSONViz: function() {
@@ -83,7 +84,9 @@ var Chart = React.createClass({
       explorer.metadata.visualization.chart_type.toLowerCase() === 'json';
   },
 
-  resultCanBeVisualized: function(explorer) {
+  resultCanBeVisualized: function() {
+    var explorer = this.props.model;
+
     return (explorer.response &&
       !FormatUtils.isNullOrUndefined(explorer.response.result) &&
       (_.isNumber(explorer.response.result) ||

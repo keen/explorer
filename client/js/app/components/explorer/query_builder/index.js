@@ -20,6 +20,7 @@ var ExplorerStore = require('../../../stores/ExplorerStore');
 var ExplorerUtils = require('../../../utils/ExplorerUtils');
 var FilterUtils = require('../../../utils/FilterUtils');
 var ExplorerActions = require('../../../actions/ExplorerActions');
+var ApiQueryUrl = require('../../../modules/api_query_url');
 
 var QueryBuilder = React.createClass({
 
@@ -199,7 +200,7 @@ var QueryBuilder = React.createClass({
   render: function() {
     var apiQueryUrl;
     if (this.props.model.isValid) {
-      apiQueryUrl = ExplorerUtils.getApiQueryUrl(this.props.client, this.props.model);
+      apiQueryUrl = new ApiQueryUrl(this.props.client, this.props.model).getUrl();
     }
 
     return (

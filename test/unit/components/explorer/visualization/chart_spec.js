@@ -20,16 +20,27 @@ describe('components/explorer/visualization/chart', function() {
     it('is of the right type', function() {
       assert.isTrue(TestUtils.isCompositeComponentWithType(this.component, Chart));
     });
+
     it('has a get started message when there is no query yet', function(){
       var message = "Let's go exploring!";
       assert.equal(this.component.refs.notice.textContent, message);
     });
-    it('shows the correct message about email extractions ', function () {
+
+    it('shows the correct message about email extractions ', function() {
       this.model.query.analysis_type = 'extraction';
       this.model.query.email = 'someone@keen.io';
       this.model.response = { result: 10, success: true };
       this.component = TestUtils.renderIntoDocument(<Chart model={this.model} dataviz={this.dataviz} />);
       var message = "Email extractions don't have visualizations.";
+
+      assert.equal(this.component.refs.notice.textContent, message);
+    });
+
+    it('shows correct message if result cannot be visualized', function() {
+      this.model.response = { result: null };
+      this.component = TestUtils.renderIntoDocument(<Chart model={this.model} dataviz={this.dataviz} />);
+      var message = "Your query returned no results.";
+
       assert.equal(this.component.refs.notice.textContent, message);
     });
   });
