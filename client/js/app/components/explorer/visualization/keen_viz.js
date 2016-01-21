@@ -37,7 +37,6 @@ var KeenViz = React.createClass({
     if (!this.lastDataTimestamp || this.lastDataTimestamp !== nextProps.model.dataTimestamp) {
       return true
     }
-    console.log(new Date(), 'NEITHER are true')
     return false;
   },
 
