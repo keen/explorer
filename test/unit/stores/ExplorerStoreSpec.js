@@ -243,7 +243,7 @@ describe('stores/ExplorerStore', function() {
       assert.sameMembers(explorer.query.group_by, ['name']);
     });
 
-    it('should properly the time object', function () {
+    it('should properly merge the time object', function () {
       ExplorerActions.create({
         id: 'SOME_ID',
         query: {
