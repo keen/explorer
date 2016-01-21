@@ -254,7 +254,7 @@ function _prepareFilterUpdates(explorer, filter, updates) {
     // as an option for this new operator.
     var coercionOptions = _.find(ProjectUtils.getConstant('FILTER_OPERATORS'), { value: updates.operator }).canBeCoeredTo;
     var coercion_type = updates.coercion_type || filter.coercion_type;
-    if (!_.contains(coercionOptions, coercion_type)) {
+    if (!_.includes(coercionOptions, coercion_type)) {
       updates.coercion_type = coercionOptions[0];
     }
   }

@@ -121,7 +121,7 @@ module.exports = {
 
       // Remove any empty properties or ones that shouldn't be
       // part of the query request.
-      if (!FormatUtils.isValidQueryValue(value) || !_.contains(QUERY_PARAMS, key)) {
+      if (!FormatUtils.isValidQueryValue(value) || !_.includes(QUERY_PARAMS, key)) {
         delete params[key];
       }
     });
@@ -275,7 +275,7 @@ module.exports = {
   },
 
   responseSupportsChartType: function(query, chartType) {
-    return _.contains(module.exports.getChartTypeOptions(query), chartType);
+    return _.includes(module.exports.getChartTypeOptions(query), chartType);
   },
 
   encodeAttribute: function(attr) {

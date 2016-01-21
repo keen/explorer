@@ -516,7 +516,7 @@ describe('stores/ExplorerStore', function() {
         assert.strictEqual(ExplorerStore.getActive().id.match('TEMP-').length, 1);  
       });
       it('should only have a single active model', function () {
-        assert.strictEqual(_.where(ExplorerStore.getAll(), { active: true  }).length, 1);  
+        assert.strictEqual(_.filter(ExplorerStore.getAll(), { active: true  }).length, 1);  
       });
       it('should create the new active model and then set it active to ensure it has an originalModel property', function () {
         assert.isTrue(!_.isUndefined(ExplorerStore.getActive().originalModel));
