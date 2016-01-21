@@ -221,6 +221,28 @@ describe('stores/ExplorerStore', function() {
       assert.deepPropertyVal(explorer, 'query.analysis_type', 'not_count');
       assert.deepPropertyVal(explorer, 'visualization.chart_type', 'not_metric');
     });
+
+    it('should properly merge array values', function () {
+      ExplorerActions.create({
+        id: 'SOME_ID',
+        query: {
+          event_collection: 'clicks',
+          analysis_type: 'count',
+          group_by: ['name', 'name-two']
+        },
+        visualization: {
+          chart_type: 'metric'
+        }
+      });
+      var explorer = ExplorerStore.get('SOME_ID');
+      var updates = { query: { group_by: ['name'] } }
+      ExplorerActions.update('SOME_ID', updates);
+
+      explorer = ExplorerStore.get('SOME_ID');
+      
+      assert.sameMembers(explorer.query.group_by, ['name']);
+    });
+
     it('should replace the store object key with the new ID if one is passed in via updates', function () {
       ExplorerActions.create({
         id: 'SOME_ID',
