@@ -219,40 +219,40 @@ module.exports = {
     }
 
     // group_by, no interval
-    if (isGroupBy && !isInterval) {
+    else if (isGroupBy && !isInterval) {
       dataType = 'categorical';
     }
 
     // interval, no group_by
-    if (isInterval && !isGroupBy) {
+    else if (isInterval && !isGroupBy) {
       dataType = 'chronological';
     }
 
     // interval, group_by
-    if (isInterval && isGroupBy) {
+    else if (isInterval && isGroupBy) {
       dataType = 'cat-chronological';
     }
 
     // 2x group_by
     // TODO: research possible dataType options
-    if (!isInterval && is2xGroupBy) {
+    else if (!isInterval && is2xGroupBy) {
       dataType = 'categorical';
     }
 
     // interval, 2x group_by
     // TODO: research possible dataType options
-    if (isInterval && is2xGroupBy) {
+    else if (isInterval && is2xGroupBy) {
       dataType = 'cat-chronological';
     }
 
-    if (query.analysis_type === "funnel") {
+    else if (query.analysis_type === "funnel") {
       dataType = 'cat-ordinal';
     }
 
-    if (query.analysis_type === "extraction") {
+    else if (query.analysis_type === "extraction") {
       dataType = 'extraction';
     }
-    if (query.analysis_type === "select_unique") {
+    else if (query.analysis_type === "select_unique") {
       dataType = 'nominal';
     }
 
