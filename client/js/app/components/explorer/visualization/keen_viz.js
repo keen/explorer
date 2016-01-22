@@ -33,7 +33,7 @@ var KeenViz = React.createClass({
 
   shouldComponentUpdate: function(nextProps, nextState) {
     if (this.lastChartType !== nextProps.model.metadata.visualization.chart_type) {
-      return true;
+      return true
     }
     if (!this.lastDataTimestamp || this.lastDataTimestamp !== nextProps.model.dataTimestamp) {
       return true
@@ -42,10 +42,12 @@ var KeenViz = React.createClass({
   },
 
   componentDidUpdate: function() {
+    console.log("updated");
     this.showVisualization();
   },
 
   componentDidMount: function() {
+    console.log("mounted");
     this.showVisualization();
   },
 
