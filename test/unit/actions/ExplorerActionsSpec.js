@@ -271,7 +271,7 @@ describe('actions/ExplorerActions', function() {
       };
       this.response = { result: 100 };
       sinon.stub(ExplorerUtils, 'getChartTypeOptions').returns(['metric']);
-      sinon.stub(ExplorerUtils, 'responseSupportsChartType').returns(false);
+      this.responseSupportsChartTypeStub = sinon.stub(ExplorerUtils, 'responseSupportsChartType').returns(false);
     });
     afterEach(function () {
       ExplorerUtils.getChartTypeOptions.restore();
@@ -319,6 +319,11 @@ describe('actions/ExplorerActions', function() {
       ExplorerActions.execSuccess(this.explorer, _.assign({}, this.response, { query: { analysis_type: 'not_count' } }));
       assert.deepPropertyVal(this.dispatchStub.getCall(2).args[0].updates.response, 'query');
       assert.deepEqual(this.dispatchStub.getCall(2).args[0].updates.response.query, { analysis_type: 'not_count' });
+    });
+    it('should call ExplorerUtils.responseSupportsChartType with the right arguments', function () {
+      var response = _.assign({}, this.response, { query: { analysis_type: 'not_count' } });
+      ExplorerActions.execSuccess(this.explorer, response);
+      assert.isTrue(this.responseSupportsChartTypeStub.calledWith(response.query, this.explorer.metadata.visualization.chart_type));
     });
   });
 
