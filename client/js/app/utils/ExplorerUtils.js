@@ -271,7 +271,7 @@ module.exports = {
       'extraction':         ['table']
     };
     var queryDataType = module.exports.getQueryDataType(query);
-    return dataTypes[queryDataType];
+    return dataTypes[queryDataType].concat(['JSON']);
   },
 
   responseSupportsChartType: function(query, chartType) {
