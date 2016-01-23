@@ -253,7 +253,7 @@ var Explorer = React.createClass({
                                      toggleCallback={this.toggleQueryPane}
                                      createNewQuery={this.createNewQuery}
                                      persisted={ExplorerUtils.isPersisted(this.state.activeExplorer)} />;
-      if (['extraction', 'funnel'].indexOf(this.state.activeExplorer.query.analysis_type) === -1) {
+      if (['extraction'].indexOf(this.state.activeExplorer.query.analysis_type) === -1) {
         cacheToggle = <CacheToggle model={this.state.activeExplorer} />;
       }
       if (this.state.appState.fetchingPersistedExplorers) {
