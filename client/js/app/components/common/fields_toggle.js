@@ -25,7 +25,7 @@ var FieldsToggle = React.createClass({
         var resetVal = this.props.resetValues[attrName] || null;
         updates[attrName] = resetVal;
       }
-    }, this);
+    }.bind(this));
 
     this.props.updateFn(updates);
   },
@@ -64,6 +64,12 @@ var FieldsToggle = React.createClass({
     return {
       open: this.props.initialOpenState ? true : false
     };
+  },
+
+  componentWillReceiveProps: function(nextProps) {
+    if (!this.props.initialOpenState && nextProps.initialOpenState) {
+      this.setState({ open: true });
+    }
   },
 
   render: function() {

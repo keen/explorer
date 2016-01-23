@@ -47,7 +47,7 @@ var NoticeStore = _.assign({}, EventEmitter.prototype, {
   },
 
   getGlobalNotice: function() {
-    return _.findWhere(_notices, { location: 'global' });
+    return _.find(_notices, { location: 'global' });
   },
 
   getStepNotices: function() {

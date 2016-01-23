@@ -140,7 +140,7 @@ module.exports = {
       if (_.isString(item)) newVal += '"' + item + '"';
       if (_.isNumber(item)) newVal += "'" + item + "'";
       if (index !== filter.property_value.length - 1) newVal += ', ';
-    }, this);
+    });
     filter.property_value = newVal;
     return filter;
   },

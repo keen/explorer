@@ -1,8 +1,9 @@
 /** @jsx React.DOM */
 var assert = require('chai').assert;
 var _ = require('lodash');
-var React = require('react/addons');
-var TestUtils = React.addons.TestUtils;
+var React = require('react');
+var ReactDOM = require('react-dom');
+var TestUtils = require('react-addons-test-utils');
 var TestHelpers = require('../../../support/TestHelpers.js');
 var sinon = require('sinon');
 var Explorer = require('../../../../client/js/app/components/explorer/index.js');
@@ -15,6 +16,8 @@ var EventBrowser = require('../../../../client/js/app/components/common/event_br
 var CacheToggle = require('../../../../client/js/app/components/explorer/cache_toggle.js');
 var Persistence = require('../../../../client/js/app/modules/persistence/persistence.js');
 var ExplorerStore = require('../../../../client/js/app/stores/ExplorerStore');
+var NoticeStore = require('../../../../client/js/app/stores/NoticeStore');
+var AppStateStore = require('../../../../client/js/app/stores/AppStateStore');
 var ExplorerActions = require('../../../../client/js/app/actions/ExplorerActions');
 var RunValidations = require('../../../../client/js/app/utils/RunValidations');
 var NoticeActions = require('../../../../client/js/app/actions/NoticeActions');
@@ -23,14 +26,28 @@ var Modal = require('../../../../client/js/app/components/common/modal.js');
 
 describe('components/explorer/index', function() {
 
+  before(function() {
+    sinon.stub(ExplorerStore, 'addChangeListener');
+    sinon.stub(NoticeStore, 'addChangeListener');
+    sinon.stub(AppStateStore, 'addChangeListener');
+  });
+
+  after(function() {
+    ExplorerStore.addChangeListener.restore();
+    NoticeStore.addChangeListener.restore();
+    AppStateStore.addChangeListener.restore();
+  });
+
   beforeEach(function() {
     ExplorerStore.clearAll();
-    ExplorerActions.create({ id: '1', active: true, query_name: 'A persisted query', metadata: { display_name: 'some name' } });
+    ExplorerActions.create({ id: '1', query_name: 'A persisted query', metadata: { display_name: 'some name' } });
+    ExplorerActions.setActive('1');
 
     this.client = TestHelpers.createClient();
     this.project = TestHelpers.createProject();
     this.config = { persistence: null };
     this.explorer = ExplorerStore.get('1');
+
     this.component = TestUtils.renderIntoDocument(<Explorer client={this.client} project={this.project} config={this.config} />);
   });
 
@@ -73,7 +90,7 @@ describe('components/explorer/index', function() {
         });
 
         it('can show BrowseQueries if persistence has been passed in', function(){
-          TestUtils.Simulate.click(this.component.refs['query-pane-tabs'].refs['browse-tab'].getDOMNode());
+          TestUtils.Simulate.click(this.component.refs['query-pane-tabs'].refs['browse-tab']);
           assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, BrowseQueries), 1);
         });
 
@@ -129,15 +146,21 @@ describe('components/explorer/index', function() {
 
     describe('tabbing between panes', function () {
       it('properly tabs from the query builder to browsing favorites', function () {
-        this.component.setProps({ persistence: {} });
-        TestUtils.Simulate.click(this.component.refs['query-pane-tabs'].refs['browse-tab'].getDOMNode());
+        var props = _.assign({}, this.component.props, { persistence: {} });
+        this.component = TestHelpers.renderComponent(Explorer, props);
+
+        TestUtils.Simulate.click(this.component.refs['query-pane-tabs'].refs['browse-tab']);
+
         assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, BrowseQueries), 1);
         assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, QueryBuilder), 0);
       });
+
       it('properly tabs from the query builder to browsing favorites', function () {
-        this.component.setProps({ persistence: {} });
+        var props = _.assign({}, this.component.props, { persistence: {} });
         this.component.setState({ activeQueryPane: 'browse' });
-        TestUtils.Simulate.click(this.component.refs['query-pane-tabs'].refs['build-tab'].getDOMNode());
+        this.component = TestHelpers.renderComponent(Explorer, props);
+
+        TestUtils.Simulate.click(this.component.refs['query-pane-tabs'].refs['build-tab']);
 
         assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, QueryBuilder), 1);
         assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, BrowseQueries), 0);
@@ -145,9 +168,9 @@ describe('components/explorer/index', function() {
     });
 
     it('can launch the filter modal', function() {
-      var filtersFieldsToggleNode = this.component.refs['query-builder'].refs['filters-fields-toggle'].refs['toggle-label'].getDOMNode();
+      var filtersFieldsToggleNode = this.component.refs['query-builder'].refs['filters-fields-toggle'].refs['toggle-label'];
       TestUtils.Simulate.click(filtersFieldsToggleNode);
-      assert.match(this.component.refs['filter-manager'].refs.modal.getDOMNode().className, /block/);
+      assert.match(ReactDOM.findDOMNode(this.component.refs['filter-manager'].refs.modal).className, /block/);
     });
 
   });
@@ -239,11 +262,13 @@ describe('components/explorer/index', function() {
     describe('createNewQuery', function () {
       beforeEach(function() {
         ExplorerStore.clearAll();
-        ExplorerActions.create(_.assign({}, TestHelpers.createExplorerModel(), { id: 'abc', active: true, metadata: { display_name: 'abc' } }));
-        ExplorerActions.create(_.assign({}, TestHelpers.createExplorerModel(), { id: 'def', active: false, metadata: { display_name: 'def' } }));
-        ExplorerActions.create(_.assign({}, TestHelpers.createExplorerModel(), { id: 'ghi', active: false, metadata: { display_name: 'ghi' } }));
-        this.component.setProps({ persistence: {} });
-        this.component.forceUpdate();
+        ExplorerActions.create(_.assign({}, TestHelpers.createExplorerModel(), { id: 'abc', metadata: { display_name: 'abc' } }));
+        ExplorerActions.setActive('abc');
+        ExplorerActions.create(_.assign({}, TestHelpers.createExplorerModel(), { id: 'def', metadata: { display_name: 'def' } }));
+        ExplorerActions.create(_.assign({}, TestHelpers.createExplorerModel(), { id: 'ghi', metadata: { display_name: 'ghi' } }));
+
+        var props = _.assign({}, this.component.props, { persistence: {} });
+        this.component = TestHelpers.renderComponent(Explorer, props);
       });
       it('should add a new explorer in the store', function () {
         this.component.createNewQuery(TestHelpers.fakeEvent());
@@ -258,9 +283,10 @@ describe('components/explorer/index', function() {
         ExplorerActions.setActive.restore();
       });
       it('should change the text on the query builder tab to "Create a new query"', function () {
-        assert.strictEqual(this.component.refs['query-pane-tabs'].refs['build-tab'].getDOMNode().textContent, 'Edit query');
+        assert.strictEqual(this.component.refs['query-pane-tabs'].refs['build-tab'].textContent, 'Edit query');
         this.component.createNewQuery(TestHelpers.fakeEvent());
-        assert.strictEqual(this.component.refs['query-pane-tabs'].refs['build-tab'].getDOMNode().textContent, 'Create a new query');
+        this.component._onChange();
+        assert.strictEqual(this.component.refs['query-pane-tabs'].refs['build-tab'].textContent, 'Create a new query');
       });
       it('should update component state to show the build tab', function () {
         this.component.setState({ activeQueryPane: 'browse' });

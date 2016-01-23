@@ -56,7 +56,7 @@ var FunnelsBuilder = React.createClass({
 
   buildSteps: function() {
     return this.props.steps.map(function(step, index) {
-      var notice = _.findWhere(this.props.stepNotices, { stepIndex: index });
+      var notice = _.find(this.props.stepNotices, { stepIndex: index });
       return (
         <li key={index}>
           <FunnelStep index={index}

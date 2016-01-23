@@ -9,11 +9,13 @@
     "flux": "^2.0.3",
     "json-stable-stringify": "1.0.0",
     "keymirror": "~0.1.0",
-    "lodash": "3.10.1",
+    "lodash": "4.0.0",
     "moment": "^2.7.0",
     "qs": "2.2.3",
-    "react": "~0.13.3",
-    "rquery": "^2.0.4",
+    "react": "^0.14.3",
+    "react-addons-test-utils": "^0.14.3",
+    "react-dom": "^0.14.3",
+    "rquery": "^3.1.1",
     "string": "^2.0.1",
     "superagent": "1.2.0"
   },
@@ -26,6 +28,10 @@
       "browserify-shim",
       "reactify"
     ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:keen/explorer.git"
   },
   "devDependencies": {
     "browserify": "11.2.0",

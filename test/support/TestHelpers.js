@@ -1,6 +1,6 @@
 var _ = require('lodash');
-var React = require('react/addons');
-var TestUtils = React.addons.TestUtils;
+var React = require('react');
+var TestUtils = require('react-addons-test-utils');
 var ProjectUtils = require('../../client/js/app/utils/ProjectUtils');
 var FormatUtils = require('../../client/js/app/utils/FormatUtils');
 var sinon = require('sinon');
@@ -37,6 +37,7 @@ module.exports = {
     return {
       id: 'some_id',
       active: false,
+      dataTimestamp: null,
       response: null,
       loading: false,
       saving: false,
@@ -49,7 +50,7 @@ module.exports = {
         analysis_type: null,
         target_property: null,
         percentile: null,
-        group_by: null,
+        group_by: [],
         interval: null,
         timezone: ProjectUtils.getConstant('DEFAULT_TIMEZONE'),
         filters: null,

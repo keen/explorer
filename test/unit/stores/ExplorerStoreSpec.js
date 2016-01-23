@@ -20,11 +20,15 @@ describe('stores/ExplorerStore', function() {
       ExplorerActions.create();
       assert.lengthOf(Object.keys(ExplorerStore.getAll()), 1)
     });
+    it('should not allow creating with active set to true', function () {
+      expect(ExplorerActions.create.bind(null, { active: true })).to.throw("You must use setActive to set a model as active.");
+    });
     it('should create a explorer with the right default attributes', function () {
       ExplorerActions.create();
       var defaults = {
         active: false,
         response: null,
+        dataTimestamp: null,
         loading: false,
         saving: false,
         isValid: true,
@@ -36,7 +40,7 @@ describe('stores/ExplorerStore', function() {
           analysis_type: null,
           target_property: null,
           percentile: null,
-          group_by: null,
+          group_by: [],
           interval: null,
           timezone: ProjectUtils.getConstant('DEFAULT_TIMEZONE'),
           filters: null,
@@ -85,6 +89,27 @@ describe('stores/ExplorerStore', function() {
       });
       var keys = Object.keys(ExplorerStore.getAll());
       assert.deepPropertyVal(ExplorerStore.getAll()[keys[0]], 'id', 'abc123');
+    });
+    it('should create default metadata if metadata is null', function () {
+      ExplorerActions.create({
+        id: 'abc123',
+        metadata: null
+      });
+      assert.deepEqual(ExplorerStore.get('abc123').metadata, {
+        display_name: null,
+        visualization: {
+          chart_type: null
+        }
+      });
+    });
+    it('should turn query.group_by into an array if it is not one already', function () {
+      ExplorerActions.create({
+        id: 'abc123',
+        query: {
+          group_by: 'thing'
+        }
+      });
+      assert.sameMembers(ExplorerStore.get('abc123').query.group_by, ['thing']);
     });
   });
 
@@ -196,6 +221,62 @@ describe('stores/ExplorerStore', function() {
       assert.deepPropertyVal(explorer, 'query.analysis_type', 'not_count');
       assert.deepPropertyVal(explorer, 'visualization.chart_type', 'not_metric');
     });
+
+    it('should properly merge array values', function () {
+      ExplorerActions.create({
+        id: 'SOME_ID',
+        query: {
+          event_collection: 'clicks',
+          analysis_type: 'count',
+          group_by: ['name', 'name-two']
+        },
+        visualization: {
+          chart_type: 'metric'
+        }
+      });
+      var explorer = ExplorerStore.get('SOME_ID');
+      var updates = { query: { group_by: ['name'] } }
+      ExplorerActions.update('SOME_ID', updates);
+
+      explorer = ExplorerStore.get('SOME_ID');
+      
+      assert.sameMembers(explorer.query.group_by, ['name']);
+    });
+
+    it('should properly merge the time object', function () {
+      ExplorerActions.create({
+        id: 'SOME_ID',
+        query: {
+          event_collection: 'clicks',
+          analysis_type: 'count',
+          time: {
+            start: 'start date',
+            end: 'end date'
+          }
+        },
+        visualization: {
+          chart_type: 'metric'
+        }
+      });
+      var explorer = ExplorerStore.get('SOME_ID');
+      var updates = { 
+        query: { 
+          time: {
+            amount: "14",
+            relativity: "this",
+            sub_timeframe: "days"
+          }
+        }
+      }
+      ExplorerActions.update('SOME_ID', updates);
+      explorer = ExplorerStore.get('SOME_ID');
+      assert.deepEqual(explorer.query.time, {
+        amount: "14",
+        relativity: "this",
+        sub_timeframe: "days"
+      });
+    });
+
     it('should replace the store object key with the new ID if one is passed in via updates', function () {
       ExplorerActions.create({
         id: 'SOME_ID',
@@ -213,6 +294,23 @@ describe('stores/ExplorerStore', function() {
       var explorers = ExplorerStore.getAll();
       assert.lengthOf(Object.keys(explorers), 1);
       assert.propertyVal(explorers, 'abc123');
+    });
+    it('should wrap the group_by property in an array if it is not already', function () {
+      ExplorerActions.create({
+        id: 'SOME_ID',
+        query_name: 'A saved query',
+        query: {
+          event_collection: 'clicks',
+          analysis_type: 'count'
+        },
+        visualization: {
+          chart_type: 'metric'
+        }
+      });
+      var newQuery = _.cloneDeep(ExplorerStore.get('SOME_ID').query);
+      newQuery.group_by = 'not_wrapped';
+      ExplorerActions.update('SOME_ID', { query: newQuery });
+      assert.sameMembers(ExplorerStore.get('SOME_ID').query.group_by, ['not_wrapped']);
     });
     describe('clearing values', function () {
       it('should set email to null if updating analysis type to something that is not extraction', function () {
@@ -306,7 +404,7 @@ describe('stores/ExplorerStore', function() {
 
         assert.deepPropertyVal(ExplorerStore.get('SOME_ID'), 'query.latest', '1000');
       });
-      it('should set group_by and interval to null if the analysis type is extraction', function () {
+      it('should set group_by to empty array and interval to null if the analysis type is extraction', function () {
         ExplorerActions.create({
           id: 'SOME_ID',
           name: 'A saved query',
@@ -327,7 +425,7 @@ describe('stores/ExplorerStore', function() {
         ExplorerActions.update('SOME_ID', updates);
 
         assert.deepPropertyVal(ExplorerStore.get('SOME_ID'), 'query.interval', null);
-        assert.deepPropertyVal(ExplorerStore.get('SOME_ID'), 'query.group_by', null);
+        assert.sameMembers(ExplorerStore.get('SOME_ID').query.group_by, [null]);
       });
       it('should set percentile to null if the analysis type is not percentile', function () {
         ExplorerActions.create({
@@ -415,6 +513,48 @@ describe('stores/ExplorerStore', function() {
       assert.deepProperty(ExplorerStore.getAll(), 'SOME_ID');
       ExplorerActions.remove('SOME_ID');
       assert.notDeepProperty(this.store, 'SOME_ID');
+    });
+    describe('creating a new active model after removal of the currently active one', function () {
+      beforeEach(function() {
+        ExplorerActions.create({
+          id: 'abc',
+          query: {
+            event_collection: 'clicks',
+            analysis_type: 'count'
+          },
+          metadata: {
+            visualization: {
+              chart_type: 'metric'
+            }
+          }
+        });
+        ExplorerActions.create({
+          id: '123',
+          query: {
+            event_collection: 'signups',
+            analysis_type: 'count'
+          },
+          metadata: {
+            visualization: {
+              chart_type: 'metric'
+            }
+          }
+        });
+        ExplorerActions.setActive('abc');
+        ExplorerActions.remove('abc');  
+      });
+      it('should have an active model after', function () {
+        assert.isTrue(ExplorerStore.getActive().active);
+      });
+      it('should create the new model, not select an existing persisted model', function () {
+        assert.strictEqual(ExplorerStore.getActive().id.match('TEMP-').length, 1);  
+      });
+      it('should only have a single active model', function () {
+        assert.strictEqual(_.filter(ExplorerStore.getAll(), { active: true  }).length, 1);  
+      });
+      it('should create the new active model and then set it active to ensure it has an originalModel property', function () {
+        assert.isTrue(!_.isUndefined(ExplorerStore.getActive().originalModel));
+      });
     });
   });
 
@@ -702,7 +842,6 @@ describe('stores/ExplorerStore', function() {
         ExplorerActions.create(_.assign({}, TestHelpers.createExplorerModel(), {
           id: 'ABC-SOME-ID',
           query_name: 'some name',
-          active: true,
           query: {
             event_collection: 'clicks',
             analysis_type: 'count'
@@ -714,6 +853,7 @@ describe('stores/ExplorerStore', function() {
             }
           }
         }));
+        ExplorerActions.setActive('ABC-SOME-ID');
         var updates = _.cloneDeep(ExplorerStore.get('ABC-SOME-ID'));
         var originalModel = _.cloneDeep(ExplorerStore.get('ABC-SOME-ID'));
         updates.originalModel = originalModel;
@@ -725,6 +865,7 @@ describe('stores/ExplorerStore', function() {
           id: 'ABC-SOME-ID',
           active: true,
           response: null,
+          dataTimestamp: null,
           loading: false,
           saving: false,
           isValid: true,
@@ -736,7 +877,7 @@ describe('stores/ExplorerStore', function() {
             analysis_type: null,
             target_property: null,
             percentile: null,
-            group_by: null,
+            group_by: [],
             interval: null,
             timezone: ProjectUtils.getConstant('DEFAULT_TIMEZONE'),
             filters: null,
@@ -768,7 +909,8 @@ describe('stores/ExplorerStore', function() {
     it('should return the active explorer', function () {
       ExplorerActions.create();
       ExplorerActions.create();
-      ExplorerActions.create({ active: true });
+      ExplorerActions.create({ id: 'some_id' });
+      ExplorerActions.setActive('some_id');
       var keys = Object.keys(ExplorerStore.getAll());
       assert.strictEqual(ExplorerStore.getActive().id, ExplorerStore.getAll()[keys[2]].id);
     });

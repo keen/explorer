@@ -48,25 +48,27 @@ Somewhere on the page that you want to show Explorer you'll need to configure a 
 ```html
 <div id="explorer"></div>
 <script type="text/javascript">
-  // Configure a new Keen.js client with your project ID, read key and master key.
-  var client = new Keen({
-    projectId: "YOUR_PROJECT_ID",
-    readKey: "YOUR_PROJECT_READ_KEY",
-    masterKey: "YOUR_PROJECT_MASTER_KEY"
-  });
+  Keen.ready(function() {
+    // Configure a new Keen.js client with your project ID, read key and master key.
+    var client = new Keen({
+      projectId: "YOUR_PROJECT_ID",
+      readKey: "YOUR_PROJECT_READ_KEY",
+      masterKey: "YOUR_PROJECT_MASTER_KEY"
+    });
 
-  var app = new Keen.Explorer.App({
-    // Pass that client into a new Explorer
-    client: client,
-    // Optionally add in saved queries support:
-    // Saved queries is entirely optional. If you set it to true, a "saved queries" feature
-    // will be available and you can save the state of the query you're working
-    // on so that they can be looked up at a later time.
-    savedQueries: true,
-    // The targetId is the id of the DOM Node you want to display Explorer inside.
-    targetId: 'explorer'
+    var app = new Keen.Explorer.App({
+      // Pass that client into a new Explorer
+      client: client,
+      // Optionally add in saved queries support:
+      // Saved queries is entirely optional. If you set it to true, a "saved queries" feature
+      // will be available and you can save the state of the query you're working
+      // on so that they can be looked up at a later time.
+      savedQueries: true,
+      // The targetId is the id of the DOM Node you want to display Explorer inside.
+      targetId: 'explorer'
+    });
+    app.render();
   });
-  app.render();
 </script>
 ```
 
@@ -111,20 +113,33 @@ If you have any questions about using this project, Explorer feel free to contac
 To contribute to this project:
 
 * Fork the repo.
-* Submit a Pull Request **with** test coverage.
+* Submit a Pull Request **with** test coverage. 
 * Follow our PR template, which includes the following sections:
 
 ```markdown
-# What's this PR do?
 
-# Where should the reviewer start?
+## What does this PR do? How does it affect users?
 
-# How should this be manually tested?
+## How should this be tested?
 
-# Screenshots (if appropriate)
+Step through the code line by line. Things to keep in mind as you review:
+ - Are there any edge cases not covered by this code?
+ - Does this code follow conventions (naming, formatting, modularization, etc) where applicable?
+
+Fetch the branch and/or deploy to staging to test the following:
+
+- [ ] Does the code compile without warnings (check shell, console)?
+- [ ] Do all tests pass?
+- [ ] Does the UI, pixel by pixel, look exactly as expected (check various screen sizes, including mobile)?
+- [ ] If the feature makes requests from the browser, inspect them in the Web Inspector. Do they look as expected (parameters, headers, etc)?
+- [ ] If the feature sends data to Keen, is the data visible in the project if you run an extraction (include link to collection/query)?
+- [ ] If the feature saves data to a database, can you confirm the data is indeed created in the database?
+
+## Related tickets?
+
 ```
 
-Would an animated GIF be more informative than a screenshot? Then we recommend [Recordit](http://recordit.co/).
+Screenshots encouraged! Would an animated GIF be more informative than a screenshot? Then we recommend [Recordit](http://recordit.co/).
 
 ### Tech used in this project
 

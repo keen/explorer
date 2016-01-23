@@ -271,7 +271,7 @@ describe('actions/ExplorerActions', function() {
       };
       this.response = { result: 100 };
       sinon.stub(ExplorerUtils, 'getChartTypeOptions').returns(['metric']);
-      sinon.stub(ExplorerUtils, 'responseSupportsChartType').returns(false);
+      this.responseSupportsChartTypeStub = sinon.stub(ExplorerUtils, 'responseSupportsChartType').returns(false);
     });
     afterEach(function () {
       ExplorerUtils.getChartTypeOptions.restore();
@@ -279,24 +279,51 @@ describe('actions/ExplorerActions', function() {
     });
 
     it('should call the dispatcher to update with the right arguments', function () {
-      var expectedUpdates = _.cloneDeep(this.explorer);
-      expectedUpdates.loading = false;
-      expectedUpdates.response = this.response;
+      // var expectedUpdates = _.cloneDeep(this.explorer);
+      expectedUpdates = {
+        loading: false,
+        response: this.response,
+        metadata: _.cloneDeep(this.explorer.metadata)
+      };
       expectedUpdates.metadata.visualization.chart_type = 'metric';
       
       ExplorerActions.execSuccess(this.explorer, this.response);
 
-      assert.isTrue(this.dispatchStub.calledWith({
-        actionType: 'EXPLORER_UPDATE',
-        id: 5,
-        updates: expectedUpdates
-      }));
+      assert.strictEqual(this.dispatchStub.getCall(2).args[0].actionType, 'EXPLORER_UPDATE');
+      assert.strictEqual(this.dispatchStub.getCall(2).args[0].id, 5);
+
+      // We need to check the dataTimestamp separately because we cannot get Date.now()'s to match
+      // as they will be off by a few milliseconds.
+      assert.deepEqual(_.omit(this.dispatchStub.getCall(2).args[0].updates, 'dataTimestamp'), expectedUpdates);
+
+      var actualTimestamp = this.dispatchStub.getCall(2).args[0].updates.dataTimestamp;
+      actualTimestamp = actualTimestamp.toString().substring(0, actualTimestamp.length-5);
+
+      var expectedTimestamp = Date.now();
+      expectedTimestamp = expectedTimestamp.toString().substring(0, expectedTimestamp.length-5);
+
+      assert.strictEqual(actualTimestamp, expectedTimestamp);
     });
     it('should clear all notices', function () {
       ExplorerActions.execSuccess(this.explorer, this.response);
       assert.isTrue(this.dispatchStub.calledWith({
         actionType: 'NOTICE_CLEAR_ALL'
       }));
+    });
+    it('should add a query object on the response if one is not there', function () {
+      ExplorerActions.execSuccess(this.explorer, this.response);
+      assert.deepPropertyVal(this.dispatchStub.getCall(2).args[0].updates.response, 'query');
+      assert.deepEqual(this.dispatchStub.getCall(2).args[0].updates.response.query, { analysis_type: 'count' });
+    });
+    it('should not add a query object on the response if one is not there', function () {
+      ExplorerActions.execSuccess(this.explorer, _.assign({}, this.response, { query: { analysis_type: 'not_count' } }));
+      assert.deepPropertyVal(this.dispatchStub.getCall(2).args[0].updates.response, 'query');
+      assert.deepEqual(this.dispatchStub.getCall(2).args[0].updates.response.query, { analysis_type: 'not_count' });
+    });
+    it('should call ExplorerUtils.responseSupportsChartType with the right arguments', function () {
+      var response = _.assign({}, this.response, { query: { analysis_type: 'not_count' } });
+      ExplorerActions.execSuccess(this.explorer, response);
+      assert.isTrue(this.responseSupportsChartTypeStub.calledWith(response.query, this.explorer.metadata.visualization.chart_type));
     });
   });
 

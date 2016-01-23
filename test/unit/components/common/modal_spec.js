@@ -2,8 +2,9 @@
 var sinon = require('sinon');
 var assert = require('chai').assert;
 var _ = require('lodash');
-var React = require('react/addons');
-var TestUtils = React.addons.TestUtils;
+var React = require('react');
+var ReactDOM = require('react-dom');
+var TestUtils = require('react-addons-test-utils');
 var Modal = require('../../../../client/js/app/components/common/modal.js');
 
 describe('components/common/modal', function() {
@@ -18,24 +19,24 @@ describe('components/common/modal', function() {
     it('it adds the modal classes', function() {
       var modal = TestUtils.renderIntoDocument(<Modal title="Test Modal" modalClasses="a-test-class some-other-class" />);
       var classes = 'a-test-class some-other-class modal';
-      assert.equal(modal.getDOMNode().className, classes);
+      assert.equal(ReactDOM.findDOMNode(modal).className, classes);
     });
 
     it('it adds the large class', function() {
       var modal = TestUtils.renderIntoDocument(<Modal title="Test Modal" size="large" />);
       var classes = 'modal-dialog modal-lg';
-      assert.equal(modal.getDOMNode().childNodes[0].className, classes);
+      assert.equal(ReactDOM.findDOMNode(modal).childNodes[0].className, classes);
     });
 
     it('it sets the title', function() {
       var modal = TestUtils.renderIntoDocument(<Modal title="Test Modal" />);
-      var headerText = $(modal.getDOMNode()).find('.modal-title').text();
+      var headerText = $(ReactDOM.findDOMNode(modal)).find('.modal-title').text();
       assert.strictEqual(headerText, 'Test Modal');
     });
 
     it("it doesn't have a footer by default", function() {
       var modal = TestUtils.renderIntoDocument(<Modal title="Test Modal" />);
-      assert.lengthOf($(modal.getDOMNode()).find('.modal-footer'), 0);
+      assert.lengthOf($(ReactDOM.findDOMNode(modal)).find('.modal-footer'), 0);
     });
 
     it("it sets up the footer properly", function() {
@@ -48,8 +49,8 @@ describe('components/common/modal', function() {
         classes: 'btn-primary'
       }]} />);
 
-      var defaultButton = TestUtils.findRenderedDOMComponentWithClass(modal, 'btn-default').getDOMNode();
-      var primaryButton = TestUtils.findRenderedDOMComponentWithClass(modal, 'btn-primary').getDOMNode();
+      var defaultButton = TestUtils.findRenderedDOMComponentWithClass(modal, 'btn-default');
+      var primaryButton = TestUtils.findRenderedDOMComponentWithClass(modal, 'btn-primary');
 
       TestUtils.Simulate.click(primaryButton);
 

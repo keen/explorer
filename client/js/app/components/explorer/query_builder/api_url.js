@@ -17,7 +17,7 @@ var ApiUrl = React.createClass({
     self.setState({ active: !self.state.active });
     if (!self.state.active) {
       setTimeout(function(){
-        self.refs['input'].getDOMNode().focus();
+        self.refs['input'].focus();
       }, 50);
     }
   },

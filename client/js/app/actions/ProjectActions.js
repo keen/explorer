@@ -5,6 +5,7 @@ var ProjectConstants = require('../constants/ProjectConstants');
 var ProjectStore = require('../stores/ProjectStore');
 var ProjectUtils = require('../utils/ProjectUtils');
 var ExplorerUtils = require('../utils/ExplorerUtils');
+var FormatUtils = require('../utils/FormatUtils');
 
 var ProjectActions = {
 
@@ -37,14 +38,15 @@ var ProjectActions = {
         } else {
           var schema = {};
           _.each(res.body, function(collection) {
-            schema[collection.name] = _.assign(collection, { 
+            schema[collection.name] = _.assign(collection, {
+              sortedProperties: FormatUtils.sortItems(_.keys(collection.properties)),
               loading: false,
               recentEvents: null
             });
           });
           ProjectActions.update(project.id, {
             schema: schema,
-            eventCollections: ProjectUtils.getEventCollectionsFromSchema(schema),
+            eventCollections: FormatUtils.sortItems(_.keys(schema)),
             loading: false
           });
         }

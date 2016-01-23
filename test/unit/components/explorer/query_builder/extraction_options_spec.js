@@ -1,11 +1,12 @@
 /** @jsx React.DOM */
 var assert = require('chai').assert;
 var _ = require('lodash');
-var React = require('react/addons');
-var TestUtils = React.addons.TestUtils;
+var React = require('react');
+var ReactDOM = require('react-dom');
+var TestUtils = require('react-addons-test-utils');
 var ExtractionOptions = require('../../../../../client/js/app/components/explorer/query_builder/extraction_options.js');
 var TestHelpers = require('../../../../../test/support/TestHelpers');
-var $R = require('rquery')(_, React);
+var $R = require('rquery')(_, React, ReactDOM, TestUtils);
 
 describe('components/explorer/query_builder/extraction_options', function() {
   beforeEach(function() {
@@ -25,15 +26,15 @@ describe('components/explorer/query_builder/extraction_options', function() {
 
   describe('an email extraction', function () {
     it('shows the email field', function() {
-      this.component.setProps({
-        isEmail: true
-      });
+      var props = _.assign({}, this.component.props, { isEmail: true });
+      this.component = TestHelpers.renderComponent(ExtractionOptions, props);
+
       assert.lengthOf($R(this.component).find('input[name="email"]').components, 1);
     });
     it('shows the latest field', function() {
-      this.component.setProps({
-        isEmail: true
-      });
+      var props = _.assign({}, this.component.props, { isEmail: true });
+      this.component = TestHelpers.renderComponent(ExtractionOptions, props);
+
       assert.lengthOf($R(this.component).find('LatestField').components, 1);
     });
   });

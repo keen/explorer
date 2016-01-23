@@ -218,6 +218,17 @@ describe('utils/ExplorerUtils', function() {
     });
   });
 
+  describe('resultCanBeVisualized', function () {
+    it('should return true if the value is the number 0', function () {
+      var explorer = {
+        response: {
+          result: 0
+        }
+      };
+      assert.isTrue(ExplorerUtils.resultCanBeVisualized(explorer));
+    });
+  });
+
   describe('mergeResponseWithExplorer', function () {
     it('should keep all explorer attributes', function () {
       var explorer = {
@@ -429,6 +440,15 @@ describe('utils/ExplorerUtils', function() {
         var formattedParams = ExplorerUtils.formatQueryParams(params);
         assert.strictEqual(formattedParams.query.filters[0].property_value, "2015-05-03T10:00:00.000");
       });
+      it('should create arrays out of string group_by properties', function () {
+        var params = {
+          query: {
+            group_by: 'string value'
+          }
+        };
+        var formattedParams = ExplorerUtils.formatQueryParams(params);
+        assert.sameMembers(formattedParams.query.group_by, ['string value']);
+      });
     });
   });
 
@@ -480,6 +500,24 @@ describe('utils/ExplorerUtils', function() {
       it('has the timeframe attribute', function(){
         var found = ExplorerUtils.getApiQueryUrl(this.client, this.explorer).match('timeframe=this_1_days');
         assert.lengthOf(found, 1);
+      });
+
+      it('should properly JSON stringify the group_by property if it is a multiple item array', function () {
+        var explorer = TestHelpers.createExplorerModel();
+        explorer.query.group_by = ['user.name', 'product.id'];
+        var url = ExplorerUtils.getApiQueryUrl(this.client, explorer);
+        var encodedValue = encodeURIComponent(JSON.stringify(['user.name', 'product.id']));
+        assert.isTrue(url.match(encodedValue).length === 1);
+      });
+
+      it('should not JSON stringify the group_by property if it is a single item array', function () {
+        var explorer = TestHelpers.createExplorerModel();
+        explorer.query.group_by = ['user.name'];
+        var url = ExplorerUtils.getApiQueryUrl(this.client, explorer);
+        var arrayEncodedValue = encodeURIComponent(JSON.stringify(['user.name']));
+        var encodedValue = encodeURIComponent('user.name');
+        assert.strictEqual(url.match(arrayEncodedValue), null);
+        assert.isTrue(url.match(encodedValue).length === 1);
       });
 
       describe('filters', function () {

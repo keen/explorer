@@ -5,8 +5,8 @@ var sinon = require('sinon');
 var RelativePicker = require('../../../../client/js/app/components/common/relative_picker.js');
 var ProjectUtils = require('../../../../client/js/app/utils/ProjectUtils');
 var ExplorerActions = require('../../../../client/js/app/actions/ExplorerActions');
-var React = require('react/addons');
-var TestUtils = React.addons.TestUtils;
+var React = require('react');
+var TestUtils = require('react-addons-test-utils');
 var TestHelpers = require('../../../support/TestHelpers');
 
 describe('components/common/relative_picker', function() {
@@ -39,7 +39,7 @@ describe('components/common/relative_picker', function() {
   describe('field change reactions', function(){
     describe('relativity', function () {
       it('sets the chosen relativity on the query', function () {
-        selectNode = TestUtils.findRenderedDOMComponentWithClass(this.component, 'relativity').getDOMNode().childNodes[0].childNodes[0];
+        selectNode = TestUtils.findRenderedDOMComponentWithClass(this.component, 'relativity').childNodes[0].childNodes[0];
         TestUtils.Simulate.change(selectNode, {
           target: {
             name: 'relativity',
@@ -51,7 +51,7 @@ describe('components/common/relative_picker', function() {
     });
     describe('amount', function () {
       it('sets the amount on the query', function () {
-        var amountInput = TestUtils.findRenderedDOMComponentWithClass(this.component, 'amount').getDOMNode().childNodes[0];
+        var amountInput = TestUtils.findRenderedDOMComponentWithClass(this.component, 'amount').childNodes[0];
         TestUtils.Simulate.change(amountInput, {
           target: {
             name: 'amount',
@@ -63,7 +63,7 @@ describe('components/common/relative_picker', function() {
     });
     describe('sub_timeframe', function () {
       it('sets the chosen sub-timeframe on the query', function () {
-        selectNode = TestUtils.findRenderedDOMComponentWithClass(this.component, 'sub-timeframe').getDOMNode().childNodes[0].childNodes[0];
+        selectNode = TestUtils.findRenderedDOMComponentWithClass(this.component, 'sub-timeframe').childNodes[0].childNodes[0];
         TestUtils.Simulate.change(selectNode, {
           target: {
             name: 'sub_timeframe',
@@ -75,36 +75,51 @@ describe('components/common/relative_picker', function() {
     });
     describe('relativity description', function () {
       it('is empty when no relative query params are set', function () {
-        this.component.setProps({time: { relativity: '', amount: '', sub_timeframe: '' }});
+        var props = _.assign({},
+          this.component.props,
+          {time: { relativity: '', amount: '', sub_timeframe: '' }}
+        );
+        this.component = TestHelpers.renderComponent(RelativePicker, props);
+
         assert.lengthOf(TestUtils.scryRenderedDOMComponentsWithClass(this.component, 'help-block'), 0);
       });
+
       describe('when relativity is "this"', function () {
         beforeEach(function () {
-          this.component.setProps({
-            time: {
-              relativity: 'this',
-              amount: '1',
-              sub_timeframe: 'weeks'
+          var props = _.assign({},
+            this.component.props,
+            {
+              time: {
+                relativity: 'this',
+                amount: '1',
+                sub_timeframe: 'weeks'
+              }
             }
-          });
-          this.component.forceUpdate();
+          );
+          this.component = TestHelpers.renderComponent(RelativePicker, props);
         });
+
         it('describes the set interval and relativity', function () {
-          var descriptionNode = TestUtils.findRenderedDOMComponentWithClass(this.component, 'help-block').getDOMNode();
+          var descriptionNode = TestUtils.findRenderedDOMComponentWithClass(this.component, 'help-block');
           assert.equal(descriptionNode.textContent, 'The last 1 week including the current week.');
         });
       });
+
       describe('when relativity is not \'this\'', function () {
         it('describes the set interval and relativity', function () {
-          this.component.setProps({
-            time: {
-              relativity: 'previous',
-              amount: '1',
-              sub_timeframe: 'weeks'
+          var props = _.assign({},
+            this.component.props,
+            {
+              time: {
+                relativity: 'previous',
+                amount: '1',
+                sub_timeframe: 'weeks'
+              }
             }
-          });
-          this.component.forceUpdate();
-          var descriptionNode = TestUtils.findRenderedDOMComponentWithClass(this.component, 'help-block').getDOMNode();
+          );
+          this.component = TestHelpers.renderComponent(RelativePicker, props);
+          var descriptionNode = TestUtils.findRenderedDOMComponentWithClass(this.component, 'help-block');
+
           assert.equal(descriptionNode.textContent, 'The last 1 week excluding the current week.');
         });
       });

@@ -132,22 +132,13 @@ module.exports = {
     return endpoint+'/projects/'+projectId+'/events?api_key='+masterKey;
   },
 
-  getEventCollectionsFromSchema: function(schema) {
-    return FormatUtils.sortItems(_.keys(schema));
+  getEventCollectionPropertyNames: function(project, collection) {
+    return project.schema[collection] ? project.schema[collection].sortedProperties : [];
   },
 
-  getEventCollectionProperties: function(project, eventCollection) {
-    return project.schema[eventCollection] ? project.schema[eventCollection].properties : {};
-  },
-
-  getEventCollectionPropertyNames: function(project, eventCollection) {
-    var propertyNames = _.keys(module.exports.getEventCollectionProperties(project, eventCollection));
-    return FormatUtils.sortItems(propertyNames);
-  },
-
-  getPropertyType: function(project, eventCollection, propertyName) {
-    var eventCollection = project.schema[eventCollection];
-    return eventCollection ? eventCollection.properties[propertyName] : null;
+  getPropertyType: function(project, collection, propertyName) {
+    var collection = project.schema[collection];
+    return collection ? collection.properties[propertyName] : null;
   }
 
 };

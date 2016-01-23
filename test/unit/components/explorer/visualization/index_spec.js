@@ -2,19 +2,19 @@
 var assert = require('chai').assert;
 var _ = require('lodash');
 var sinon = require('sinon');
-var Select = require('../../../../../client/js/app/components/common/select.js');
 var Visualization = require('../../../../../client/js/app/components/explorer/visualization/index.js');
 var Chart = require('../../../../../client/js/app/components/explorer/visualization/chart.js');
-var React = require('react/addons');
 var AppDispatcher = require('../../../../../client/js/app/dispatcher/AppDispatcher');
 var AppStateStore = require('../../../../../client/js/app/stores/AppStateStore');
 var ExplorerUtils = require('../../../../../client/js/app/utils/ExplorerUtils');
 var ExplorerConstants = require('../../../../../client/js/app/constants/ExplorerConstants');
 var ExplorerActions = require('../../../../../client/js/app/actions/ExplorerActions');
 var NoticeActions = require('../../../../../client/js/app/actions/NoticeActions');
-var TestUtils = React.addons.TestUtils;
 var TestHelpers = require('../../../../support/TestHelpers');
-var $R = require('rquery')(_, React);
+var React = require('react');
+var ReactDOM = require('react-dom');
+var TestUtils = require('react-addons-test-utils');
+var $R = require('rquery')(_, React, ReactDOM, TestUtils);
 
 describe('components/explorer/visualization/index', function() {
   beforeEach(function() {
@@ -40,7 +40,7 @@ describe('components/explorer/visualization/index', function() {
     this.component = this.renderComponent();
 
     this.getOptionsFromComponent = function(component) {
-      var chartTypeSelect = this.component.refs['chart-type'].refs.select.getDOMNode();
+      var chartTypeSelect = this.component.refs['chart-type'].refs.select;
       var optionNodes = chartTypeSelect.childNodes;
       return _.map(optionNodes, function(optionNode) {
         return optionNode.textContent;
@@ -86,15 +86,29 @@ describe('components/explorer/visualization/index', function() {
       this.model.result = 50;
       this.model.loading = false;
       this.component.forceUpdate();
-      assert.isFalse(this.component.refs['chart-type'].refs.select.getDOMNode().disabled);
+      assert.isFalse(this.component.refs['chart-type'].refs.select.disabled);
     });
 
     it('is disabled when the model is actively loading', function(){
       this.model.loading = true;
       this.component.forceUpdate();
-      assert.isTrue(this.component.refs['chart-type'].refs.select.getDOMNode().disabled);
+      assert.isTrue(this.component.refs['chart-type'].refs.select.disabled);
     });
 
+  });
+
+  describe('default chart type', function() {
+    it('renders a default chart type if there is no metadata.visualization object', function() {
+      this.chartOptionsStub.returns([
+          'metric',
+          'JSON'
+      ]);
+
+      this.component.forceUpdate();
+      var selectField = this.component.refs['chart-type'].refs.select;
+
+      assert.equal(selectField.value, 'metric');
+    });
   });
 
 });

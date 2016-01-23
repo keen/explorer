@@ -3,7 +3,7 @@
  */
 
 var _ = require('lodash');
-var React = require('react/addons');
+var React = require('react');
 var classNames = require('classnames');
 var Select = require('../../common/select.js');
 var Notice = require('../../common/notice.js');
@@ -27,18 +27,31 @@ var Visualization = React.createClass({
     var chartType = _.find(this.formatChartTypes(), function(type){
       return type.value === event.target.value;
     });
-    var updates = _.cloneDeep(this.props.model);
-    updates.metadata.visualization.chart_type = chartType.value;
+    var updates = {
+      metadata: {
+        visualization: { chart_type: chartType.value }
+      }
+    };
     ExplorerActions.update(this.props.model.id, updates);
   },
 
   formatChartTypes: function() {
-    return _.map(ExplorerUtils.getChartTypeOptions(this.props.model.response, this.props.model.query.analysis_type), function(type) {
+    return _.map(ExplorerUtils.getChartTypeOptions(this.props.model.query), function(type) {
       return {
         name: (type !== 'JSON') ? FormatUtils.toTitleCase(type).replace('chart', '') : type,
         value: type
       };
     });
+  },
+
+  chartType: function() {
+    if (this.props.model.metadata.visualization &&
+        this.props.model.metadata.visualization.chart_type) {
+      return this.props.model.metadata.visualization.chart_type;
+    }
+    else {
+      return _.first(ExplorerUtils.getChartTypeOptions(this.props.model.query))
+    }
   },
 
   componentWillMount: function() {
@@ -81,7 +94,6 @@ var Visualization = React.createClass({
       );
     }
 
-
     return (
       <div className="visualization">
         <Notice notice={this.props.notice} closeCallback={this.noticeClosed} />
@@ -99,7 +111,7 @@ var Visualization = React.createClass({
                           classes="chart-type"
                           options={this.formatChartTypes()}
                           handleSelection={this.changeChartType}
-                          selectedOption={this.props.model.metadata.visualization.chart_type}
+                          selectedOption={this.chartType()}
                           emptyOption={false}
                           disabled={this.props.model.loading} />
                 </div>

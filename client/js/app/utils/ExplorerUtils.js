@@ -81,10 +81,7 @@ module.exports = {
   },
 
   mergeResponseWithExplorer: function(explorer, response) {
-    var newModel = _.defaultsDeep(
-      module.exports.formatQueryParams(response),
-      _.cloneDeep(explorer)
-    );
+    var newModel = _.defaultsDeep(module.exports.formatQueryParams(response), explorer);
     delete newModel.originalModel; // Remove the original model.
     newModel.id = response.query_name; // Set the ID to the query_name (it's now persisted.)
     newModel.originalModel = _.cloneDeep(newModel);
@@ -124,7 +121,7 @@ module.exports = {
 
       // Remove any empty properties or ones that shouldn't be
       // part of the query request.
-      if (!FormatUtils.isValidQueryValue(value) || !_.contains(QUERY_PARAMS, key)) {
+      if (!FormatUtils.isValidQueryValue(value) || !_.includes(QUERY_PARAMS, key)) {
         delete params[key];
       }
     });
@@ -196,6 +193,9 @@ module.exports = {
       params.query.time = unpackedTime.time;
       params.query.timezone = unpackedTime.timezone;
     }
+    if (params.query.group_by && !_.isArray(params.query.group_by)) {
+      params.query.group_by = [params.query.group_by];
+    }
     if (params.query.filters) {
       params.query.filters = _.compact(_.map(params.query.filters, FilterUtils.formatFilterParams));
     }
@@ -207,32 +207,75 @@ module.exports = {
     return params;
   },
 
-  getChartTypeOptions: function(response, analysisType) {
-    var chartTypes = [];
+  getQueryDataType: function(query){
+    var isInterval = typeof query.interval === "string",
+    isGroupBy = typeof query.group_by === "string",
+    is2xGroupBy = query.group_by instanceof Array,
+    dataType;
 
-    if (response) {
-      var dataviz = new Keen.Dataviz();
-      dataviz.data(response);
-      var dataType = dataviz.dataType();
-
-      if (dataType && Keen.Dataviz.dataTypeMap[dataType]) {
-        var library = Keen.Dataviz.dataTypeMap[dataType].library;
-        var libraryDefaults = Keen.Dataviz.libraries[library]._defaults;
-        chartTypes = _.clone(libraryDefaults[dataType]);
-
-        if (!_.contains(chartTypes, 'json')) {
-          chartTypes.push('JSON');
-        }
-      } else if (response && _.contains(['extraction', 'select_unique'], analysisType)) {
-        chartTypes = ['JSON', 'table'];
-      }
+    // metric
+    if (!isGroupBy && !isInterval) {
+      dataType = 'singular';
     }
 
-    return chartTypes;
+    // group_by, no interval
+    else if (isGroupBy && !isInterval) {
+      dataType = 'categorical';
+    }
+
+    // interval, no group_by
+    else if (isInterval && !isGroupBy) {
+      dataType = 'chronological';
+    }
+
+    // interval, group_by
+    else if (isInterval && isGroupBy) {
+      dataType = 'cat-chronological';
+    }
+
+    // 2x group_by
+    // TODO: research possible dataType options
+    else if (!isInterval && is2xGroupBy) {
+      dataType = 'categorical';
+    }
+
+    // interval, 2x group_by
+    // TODO: research possible dataType options
+    else if (isInterval && is2xGroupBy) {
+      dataType = 'cat-chronological';
+    }
+
+    else if (query.analysis_type === "funnel") {
+      dataType = 'cat-ordinal';
+    }
+
+    else if (query.analysis_type === "extraction") {
+      dataType = 'extraction';
+    }
+    else if (query.analysis_type === "select_unique") {
+      dataType = 'nominal';
+    }
+
+    return dataType;
   },
 
-  responseSupportsChartType: function(response, chartType, analysisType) {
-    return _.contains(module.exports.getChartTypeOptions(response, analysisType), chartType);
+  getChartTypeOptions: function(query) {
+    var dataTypes = {
+      'singular':           ['metric'],
+      'categorical':        ['piechart', 'barchart', 'columnchart', 'table'],
+      'cat-interval':       ['columnchart', 'barchart', 'table'],
+      'cat-ordinal':        ['barchart', 'columnchart', 'areachart', 'linechart', 'table'],
+      'chronological':      ['areachart', 'linechart', 'table'],
+      'cat-chronological':  ['linechart', 'columnchart', 'barchart', 'areachart'],
+      'nominal':            ['table'],
+      'extraction':         ['table']
+    };
+    var queryDataType = module.exports.getQueryDataType(query);
+    return dataTypes[queryDataType].concat(['JSON']);
+  },
+
+  responseSupportsChartType: function(query, chartType) {
+    return _.includes(module.exports.getChartTypeOptions(query), chartType);
   },
 
   encodeAttribute: function(attr) {
@@ -260,6 +303,10 @@ module.exports = {
     if (attrs['steps']) {
       steps = module.exports.encodeAttribute(attrs['steps']);
       delete attrs['steps'];
+    }
+
+    if (attrs.group_by && _.isArray(attrs.group_by) && attrs.group_by.length) {
+      attrs.group_by = (attrs.group_by.length > 1) ? JSON.stringify(attrs.group_by) : attrs.group_by[0];
     }
 
     var queryAttrs = Qs.stringify(attrs);
@@ -291,7 +338,7 @@ module.exports = {
   },
 
   resultCanBeVisualized: function(explorer) {
-    return (explorer.response && explorer.response.result && (_.isNumber(explorer.response.result) || (_.isArray(explorer.response.result) && explorer.response.result.length)));
+    return (explorer.response && !FormatUtils.isNullOrUndefined(explorer.response.result) && (_.isNumber(explorer.response.result) || (_.isArray(explorer.response.result) && explorer.response.result.length)));
   },
 
   isJSONViz: function(explorer) {

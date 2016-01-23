@@ -37,8 +37,10 @@ var QueryActions = React.createClass({
   },
 
   render: function() {
-    var saveBtn,
+    var saveMsg,
+        saveBtn,
         deleteBtn,
+        actionsSupported = true,
         runButtonClasses = classNames({
           'disabled': this.props.model.loading,
           'btn btn-primary run-query': true
@@ -52,25 +54,31 @@ var QueryActions = React.createClass({
     var isPersisted = ExplorerUtils.isPersisted(this.props.model);
     var isFunnel = this.props.model.query.analysis_type === 'funnel';
 
-    if (this.props.persistence && !isEmailExtraction) {
+    if (this.props.persistence) {
+      if (isEmailExtraction) {
+        actionsSupported = false;
+        saveMsg = (
+          <p className="no-margin margin-top-tiny">
+            <small>The Keen IO API currently does not support saving email extraction or funnel queries.</small>
+          </p>
+        );
+      }
       saveBtn = (
-        <button type="button" className="btn btn-success save-query" onClick={this.props.saveQueryClick} role="save-query" disabled={this.props.model.loading}>
+        <button type="button" className="btn btn-success save-query" onClick={actionsSupported ? this.props.saveQueryClick : function(){}} role="save-query" disabled={this.props.model.loading || !actionsSupported}>
           {isPersisted ? 'Update' : 'Save'}
         </button>
       );
-      if (isPersisted && this.props.removeClick) {
-        deleteBtn = (
-          <button type="button" role="delete-query" className="btn btn-link" onClick={this.props.removeClick}>
-            Delete
-          </button>
-        );
-      }
+      deleteBtn = (
+        <button type="button" role="delete-query" className="btn btn-link" onClick={actionsSupported ? this.props.removeClick : function(){}} disabled={!actionsSupported}>
+          Delete
+        </button>
+      );
     }
 
     return (
       <div className="query-actions clearfix">
         <div className="row">
-          <div className="col-md-10 clearfix">
+          <div className="col-md-10 clearfix">            
             <div className="run-group pull-left">
               <button type="submit" role="run-query" className={runButtonClasses} id="run-query" onClick={this.props.handleQuerySubmit}>
                 {this.runButtonText()}
@@ -87,6 +95,7 @@ var QueryActions = React.createClass({
             </button>
           </div>
         </div>
+        {saveMsg}
       </div>
     );
   }

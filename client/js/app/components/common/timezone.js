@@ -12,14 +12,14 @@ var Timezone = React.createClass({
 
   handleTimezoneBlur: function() {
     this.setState({ active: false });
-    this.refs['timezone-display'].getDOMNode().focus();
+    this.refs['timezone-display'].focus();
   },
 
   handleTimezoneActivated: function(){
     var self = this;
     this.setState({ active: true });
     setTimeout(function(){
-      self.refs['timezone'].refs['input'].getDOMNode().focus();
+      self.refs['timezone'].refs['input'].focus();
       self.refs['timezone'].setState({ visible: true });
     }, 100);
   },
