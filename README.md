@@ -82,19 +82,18 @@ And that's it. You're done!
   2. Configure the Keen.js client in the demo file at demo/index.html with your project ID and Keen IO API keys.
   3. Install the dependencies with `npm install`.
   4. Run the development script with `npm run dev` or `export PORT=8082; npm run dev`.
-  5. You can now view the demo locally at `http://localhost:8081/explorer` or your specified port.
+  5. You can now view the demo locally at `http://localhost:8081/` or your specified port.
 
 #### Building the project:
 
 The project is built with [Gulp.js](https://github.com/gulpjs/gulp).
 
-* Run `gulp` from the root directory of the project
-* The demo app will be running on `http://localhost:8081/explorer`.
+* Run `npm run production` from the root directory of the project to build ALL files, including the minified versions for production use.
 
 #### Testing
 
 **Run Unit Tests**
-* Run `gulp test:unit` to run the unit tests.
+* Run `npm run test` to run all the tests. Currently there are only unit tests.
 
 **Run In Browser Mocha Unit Tests**
 This isn't normally requried, but if you need to, you can run the tests in the browser.

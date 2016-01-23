@@ -55,7 +55,7 @@ var QueryActions = React.createClass({
     var isFunnel = this.props.model.query.analysis_type === 'funnel';
 
     if (this.props.persistence) {
-      if (isEmailExtraction || isFunnel) {
+      if (isEmailExtraction) {
         actionsSupported = false;
         saveMsg = (
           <p className="no-margin margin-top-tiny">
@@ -63,7 +63,6 @@ var QueryActions = React.createClass({
           </p>
         );
       }
-
       saveBtn = (
         <button type="button" className="btn btn-success save-query" onClick={actionsSupported ? this.props.saveQueryClick : function(){}} role="save-query" disabled={this.props.model.loading || !actionsSupported}>
           {isPersisted ? 'Update' : 'Save'}

@@ -213,8 +213,12 @@ module.exports = {
     is2xGroupBy = query.group_by instanceof Array,
     dataType;
 
+    if (query.analysis_type === "funnel") {
+      dataType = 'cat-ordinal';
+    }
+
     // metric
-    if (!isGroupBy && !isInterval) {
+    else if (!isGroupBy && !isInterval) {
       dataType = 'singular';
     }
 
@@ -243,10 +247,6 @@ module.exports = {
     // TODO: research possible dataType options
     else if (isInterval && is2xGroupBy) {
       dataType = 'cat-chronological';
-    }
-
-    else if (query.analysis_type === "funnel") {
-      dataType = 'cat-ordinal';
     }
 
     else if (query.analysis_type === "extraction") {
