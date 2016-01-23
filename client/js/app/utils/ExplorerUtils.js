@@ -209,7 +209,7 @@ module.exports = {
 
   getQueryDataType: function(query){
     var isInterval = typeof query.interval === "string",
-    isGroupBy = typeof query.group_by === "string",
+    isGroupBy = typeof query.group_by === "string" || (query.group_by instanceof Array && query.group_by.length === 1),
     is2xGroupBy = query.group_by instanceof Array,
     dataType;
 
