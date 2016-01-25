@@ -21,6 +21,7 @@ require('./utils/FilterUtilsSpec.js');
 require('./utils/RunValidationsSpec.js');
 require('./utils/FunnelUtilsSpec.js');
 require('./utils/TimeframeUtilsSpec.js');
+require('./utils/ChartTypeUtilsSpec.js');
 
 // ***********************
 // Validations

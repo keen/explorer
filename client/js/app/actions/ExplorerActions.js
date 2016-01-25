@@ -7,6 +7,7 @@ var NoticeActions = require('./NoticeActions');
 var AppStateActions = require('./AppStateActions');
 var RunValidations = require('../utils/RunValidations');
 var ExplorerUtils = require('../utils/ExplorerUtils');
+var ChartTypeUtils = require('../utils/ChartTypeUtils');
 
 var ExplorerActions = {
 
@@ -216,9 +217,9 @@ var ExplorerActions = {
     if (!response.query) response.query = ExplorerUtils.queryJSON(explorer);
     updates.loading = false;
 
-    if (!ExplorerUtils.responseSupportsChartType(response.query, explorer.metadata.visualization.chart_type)) {
+    if (!ChartTypeUtils.responseSupportsChartType(response.query, explorer.metadata.visualization.chart_type)) {
       updates.metadata = _.cloneDeep(explorer.metadata);
-      updates.metadata.visualization.chart_type = ExplorerUtils.getChartTypeOptions(response.query)[0];
+      updates.metadata.visualization.chart_type = ChartTypeUtils.getChartTypeOptions(response.query)[0];
     }
 
     updates.dataTimestamp = Date.now();

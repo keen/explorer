@@ -7,6 +7,7 @@ var Chart = require('../../../../../client/js/app/components/explorer/visualizat
 var AppDispatcher = require('../../../../../client/js/app/dispatcher/AppDispatcher');
 var AppStateStore = require('../../../../../client/js/app/stores/AppStateStore');
 var ExplorerUtils = require('../../../../../client/js/app/utils/ExplorerUtils');
+var ChartTypeUtils = require('../../../../../client/js/app/utils/ChartTypeUtils');
 var ExplorerConstants = require('../../../../../client/js/app/constants/ExplorerConstants');
 var ExplorerActions = require('../../../../../client/js/app/actions/ExplorerActions');
 var NoticeActions = require('../../../../../client/js/app/actions/NoticeActions');
@@ -23,7 +24,7 @@ describe('components/explorer/visualization/index', function() {
     this.model.id = 10;
     this.project = TestHelpers.createProject();
     var datavizStub = sinon.stub(Keen, 'Dataviz').returns(TestHelpers.createDataviz());
-    this.chartOptionsStub = sinon.stub(ExplorerUtils, 'getChartTypeOptions').returns([]);
+    this.chartOptionsStub = sinon.stub(ChartTypeUtils, 'getChartTypeOptions').returns([]);
 
     this.renderComponent = function(props) {
       var defaults = {
@@ -50,7 +51,7 @@ describe('components/explorer/visualization/index', function() {
 
   afterEach(function () {
     Keen.Dataviz.restore();
-    ExplorerUtils.getChartTypeOptions.restore();
+    ChartTypeUtils.getChartTypeOptions.restore();
   });
 
   describe('setup', function() {

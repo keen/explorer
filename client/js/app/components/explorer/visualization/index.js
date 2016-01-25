@@ -15,6 +15,7 @@ var ExplorerActions = require('../../../actions/ExplorerActions');
 var ExplorerStore = require('../../../stores/ExplorerStore');
 var NoticeActions = require('../../../actions/NoticeActions');
 var ExplorerUtils = require('../../../utils/ExplorerUtils');
+var ChartTypeUtils = require('../../../utils/ChartTypeUtils');
 var FormatUtils = require('../../../utils/FormatUtils');
 
 var Visualization = React.createClass({
@@ -36,7 +37,7 @@ var Visualization = React.createClass({
   },
 
   formatChartTypes: function() {
-    return _.map(ExplorerUtils.getChartTypeOptions(this.props.model.query), function(type) {
+    return _.map(ChartTypeUtils.getChartTypeOptions(this.props.model.query), function(type) {
       return {
         name: (type !== 'JSON') ? FormatUtils.toTitleCase(type).replace('chart', '') : type,
         value: type
@@ -50,7 +51,7 @@ var Visualization = React.createClass({
       return this.props.model.metadata.visualization.chart_type;
     }
     else {
-      return _.first(ExplorerUtils.getChartTypeOptions(this.props.model.query))
+      return _.first(ChartTypeUtils.getChartTypeOptions(this.props.model.query))
     }
   },
 

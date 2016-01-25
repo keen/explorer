@@ -12,6 +12,7 @@ var FilterUtils = require('../../../client/js/app/utils/FilterUtils');
 var RunValidations = require('../../../client/js/app/utils/RunValidations');
 var ExplorerValidations = require('../../../client/js/app/validations/ExplorerValidations');
 var ExplorerUtils = require('../../../client/js/app/utils/ExplorerUtils');
+var ChartTypeUtils = require('../../../client/js/app/utils/ChartTypeUtils');
 var ExplorerStore = require('../../../client/js/app/stores/ExplorerStore');
 
 describe('actions/ExplorerActions', function() {
@@ -270,12 +271,12 @@ describe('actions/ExplorerActions', function() {
         }
       };
       this.response = { result: 100 };
-      sinon.stub(ExplorerUtils, 'getChartTypeOptions').returns(['metric']);
-      this.responseSupportsChartTypeStub = sinon.stub(ExplorerUtils, 'responseSupportsChartType').returns(false);
+      sinon.stub(ChartTypeUtils, 'getChartTypeOptions').returns(['metric']);
+      this.responseSupportsChartTypeStub = sinon.stub(ChartTypeUtils, 'responseSupportsChartType').returns(false);
     });
     afterEach(function () {
-      ExplorerUtils.getChartTypeOptions.restore();
-      ExplorerUtils.responseSupportsChartType.restore();
+      ChartTypeUtils.getChartTypeOptions.restore();
+      ChartTypeUtils.responseSupportsChartType.restore();
     });
 
     it('should call the dispatcher to update with the right arguments', function () {

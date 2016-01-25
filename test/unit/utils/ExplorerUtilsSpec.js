@@ -623,14 +623,4 @@ describe('utils/ExplorerUtils', function() {
       assert.equal(newName, 'saved-query-name');
     });
   });
-
-  describe('getQueryDataType', function () {
-    it('returns "categorical" if there is a single item group_by array and no interval', function () {
-      var query = {
-        analysis_type: 'count',
-        group_by: ['single.group_by']
-      };
-      assert.strictEqual(ExplorerUtils.getQueryDataType(query), 'categorical');
-    });
-  });
 });
