@@ -55,11 +55,11 @@ module.exports = {
   getChartTypeOptions: function(query) {
     var dataTypes = {
       'singular':           ['metric'],
-      'categorical':        ['piechart', 'barchart', 'columnchart', 'table'],
-      'cat-interval':       ['columnchart', 'barchart', 'table'],
-      'cat-ordinal':        ['barchart', 'columnchart', 'areachart', 'linechart', 'table'],
-      'chronological':      ['areachart', 'linechart', 'table'],
-      'cat-chronological':  ['linechart', 'columnchart', 'barchart', 'areachart'],
+      'categorical':        ['pie', 'barchart', 'donut', 'table'],
+      'cat-interval':       ['bar', 'table'],
+      'cat-ordinal':        ['barchart', 'area', 'line', 'table'],
+      'chronological':      ['area', 'line', 'table'],
+      'cat-chronological':  ['line', 'bar', 'area'],
       'nominal':            ['table'],
       'extraction':         ['table']
     };

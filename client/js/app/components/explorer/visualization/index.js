@@ -5,6 +5,7 @@
 var _ = require('lodash');
 var React = require('react');
 var classNames = require('classnames');
+var Dataviz = require('keen-dataviz');
 var Select = require('../../common/select.js');
 var Notice = require('../../common/notice.js');
 var Chart = require('./chart.js');
@@ -56,7 +57,7 @@ var Visualization = React.createClass({
   },
 
   componentWillMount: function() {
-    this.dataviz = new Keen.Dataviz();
+    this.dataviz = new Dataviz();
   },
 
   componentWillUnmount: function() {

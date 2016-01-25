@@ -47,7 +47,6 @@ var KeenViz = React.createClass({
   },
 
   componentDidMount: function() {
-    console.log("mounted");
     this.showVisualization();
   },
 
