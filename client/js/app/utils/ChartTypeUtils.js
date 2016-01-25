@@ -18,7 +18,7 @@ module.exports = {
     }
 
     // metric
-    else if (!isGroupBy && !isInterval) {
+    else if (!isGroupBy && !isInterval && !is2xGroupBy) {
       dataType = 'singular';
     }
 
@@ -28,12 +28,12 @@ module.exports = {
     }
 
     // interval, no group_by
-    else if (isInterval && !isGroupBy) {
+    else if (isInterval && (!isGroupBy && !is2xGroupBy)) {
       dataType = 'chronological';
     }
 
     // interval, group_by
-    else if (isInterval && isGroupBy) {
+    else if (isInterval && (isGroupBy || is2xGroupBy)) {
       dataType = 'cat-chronological';
     }
 
@@ -41,12 +41,6 @@ module.exports = {
     // TODO: research possible dataType options
     else if (!isInterval && is2xGroupBy) {
       dataType = 'categorical';
-    }
-
-    // interval, 2x group_by
-    // TODO: research possible dataType options
-    else if (isInterval && is2xGroupBy) {
-      dataType = 'cat-chronological';
     }
 
     return dataType;
