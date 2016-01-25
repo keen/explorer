@@ -18,5 +18,30 @@ describe('utils/ChartTypeUtils', function() {
 
       assert.strictEqual(ChartTypeUtils.getQueryDataType(query), 'extraction');
     });
+
+    it('returns "categorical" if is 2xGroupBy and no interval', function() {
+      var query = {
+        analysis_type: 'count',
+        group_by: [
+          'one',
+          'two'
+        ]
+      };
+
+      assert.strictEqual(ChartTypeUtils.getQueryDataType(query), 'categorical');
+    });
+
+    it('returns "cat-chronological" if is 2xGroupBy and there is an interval', function() {
+      var query = {
+        analysis_type: 'count',
+        interval: 'daily',
+        group_by: [
+          'one',
+          'two'
+        ]
+      };
+
+      assert.strictEqual(ChartTypeUtils.getQueryDataType(query), 'cat-chronological');
+    });
   });
 });
