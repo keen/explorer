@@ -45,10 +45,11 @@ require('./stores/ProjectStoreSpec.js');
 require('./stores/NoticeStoreSpec.js');
 
 // ***********************
-// Persistence
+// Modules
 // ***********************
 require('./modules/persistence/persistence_spec.js');
 require('./modules/persistence/KeenSavedQueriesSpec.js');
+require('./modules/api_query_url_spec.js');
 
 // ***********************
 // Components

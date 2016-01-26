@@ -207,79 +207,78 @@ module.exports = {
     return params;
   },
 
-  encodeAttribute: function(attr) {
-    return encodeURIComponent(JSON.stringify(attr));
+  getQueryDataType: function(query){
+    var isInterval = typeof query.interval === "string",
+    isGroupBy = typeof query.group_by === "string" || (query.group_by instanceof Array && query.group_by.length === 1),
+    is2xGroupBy = query.group_by instanceof Array,
+    dataType;
+
+    if (query.analysis_type === "funnel") {
+      dataType = 'cat-ordinal';
+    }
+
+    // metric
+    else if (!isGroupBy && !isInterval) {
+      dataType = 'singular';
+    }
+
+    // group_by, no interval
+    else if (isGroupBy && !isInterval) {
+      dataType = 'categorical';
+    }
+
+    // interval, no group_by
+    else if (isInterval && !isGroupBy) {
+      dataType = 'chronological';
+    }
+
+    // interval, group_by
+    else if (isInterval && isGroupBy) {
+      dataType = 'cat-chronological';
+    }
+
+    // 2x group_by
+    // TODO: research possible dataType options
+    else if (!isInterval && is2xGroupBy) {
+      dataType = 'categorical';
+    }
+
+    // interval, 2x group_by
+    // TODO: research possible dataType options
+    else if (isInterval && is2xGroupBy) {
+      dataType = 'cat-chronological';
+    }
+
+    else if (query.analysis_type === "extraction") {
+      dataType = 'extraction';
+    }
+    else if (query.analysis_type === "select_unique") {
+      dataType = 'nominal';
+    }
+
+    return dataType;
   },
 
-  getApiQueryUrl: function(client, explorer) {
-    var endpoint = client.config.protocol + "://" + client.config.host;
-    var projectId = client.config.projectId;
-    var masterKey = client.config.masterKey;
-
-    var attrs = module.exports.queryJSON(explorer);
-
-    var analysisType = attrs.analysis_type;
-    delete attrs['analysis_type'];
-
-    var timeframe = _.cloneDeep(attrs['timeframe']);
-
-    var filters = _.map(attrs['filters'], function(filter) {
-      return _.omit(_.cloneDeep(filter), 'coercion_type');
-    });
-    delete attrs['filters'];
-
-    var steps;
-    if (attrs['steps']) {
-      steps = module.exports.encodeAttribute(attrs['steps']);
-      delete attrs['steps'];
-    }
-
-    if (attrs.group_by && _.isArray(attrs.group_by) && attrs.group_by.length) {
-      attrs.group_by = (attrs.group_by.length > 1) ? JSON.stringify(attrs.group_by) : attrs.group_by[0];
-    }
-
-    var queryAttrs = Qs.stringify(attrs);
-
-    if (attrs.timeframe && TimeframeUtils.timeframeType(explorer.query.time) === 'absolute') {
-      delete attrs['timeframe'];
-      // This is an absolute timeframe, so we need to encode the object in a specific way before sending it, as per keen docs => https://keen.io/docs/data-analysis/timeframe/#absolute-timeframes
-      timeframe = module.exports.encodeAttribute(timeframe);
-      queryAttrs += '&timeframe='+ timeframe;
-    }
-
-    // We need to encode the filters the same way as we encode the absolute timeframe.
-    if (filters) {
-      filters = module.exports.encodeAttribute(filters);
-      queryAttrs += '&filters='+ filters;
-    }
-
-    if(steps) {
-      queryAttrs += '&steps=' + steps;
-    }
-
-    var url = endpoint + '/projects/'+projectId+'/queries/'
-                       + analysisType
-                       + '?api_key='
-                       + client.readKey()
-                       + '&'
-                       + queryAttrs;
-    return url;
+  getChartTypeOptions: function(query) {
+    var dataTypes = {
+      'singular':           ['metric'],
+      'categorical':        ['piechart', 'barchart', 'columnchart', 'table'],
+      'cat-interval':       ['columnchart', 'barchart', 'table'],
+      'cat-ordinal':        ['barchart', 'columnchart', 'areachart', 'linechart', 'table'],
+      'chronological':      ['areachart', 'linechart', 'table'],
+      'cat-chronological':  ['linechart', 'columnchart', 'barchart', 'areachart'],
+      'nominal':            ['table'],
+      'extraction':         ['table']
+    };
+    var queryDataType = module.exports.getQueryDataType(query);
+    return dataTypes[queryDataType].concat(['JSON']);
   },
 
-  resultCanBeVisualized: function(explorer) {
-    return (explorer.response && !FormatUtils.isNullOrUndefined(explorer.response.result) && (_.isNumber(explorer.response.result) || (_.isArray(explorer.response.result) && explorer.response.result.length)));
-  },
-
-  isJSONViz: function(explorer) {
-    return explorer.metadata.visualization.chart_type && explorer.metadata.visualization.chart_type.toLowerCase() === 'json';
-  },
-
-  isTableViz: function(explorer) {
-    return explorer.metadata.visualization.chart_type && explorer.metadata.visualization.chart_type.toLowerCase() === 'table';
+  responseSupportsChartType: function(query, chartType) {
+    return _.includes(module.exports.getChartTypeOptions(query), chartType);
   },
 
   getSdkExample: function(explorer, client) {
-
     var defaultKeenJsOpts = {
           requestType: 'jsonp',
           host: 'api.keen.io/3.0',
