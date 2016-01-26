@@ -4,16 +4,11 @@ var ExplorerUtils = require('../utils/ExplorerUtils');
 var TimeframeUtils = require('../utils/TimeframeUtils');
 
 function ApiQueryUrl(client, explorer) {
-  this.client = client;
-  this.explorer = explorer;
-}
+  var endpoint = client.config.protocol + "://" + client.config.host;
+  var projectId = client.config.projectId;
+  var masterKey = client.config.masterKey;
 
-ApiQueryUrl.prototype.getUrl = function() {
-  var endpoint = this.client.config.protocol + "://" + this.client.config.host;
-  var projectId = this.client.config.projectId;
-  var masterKey = this.client.config.masterKey;
-
-  var attrs = ExplorerUtils.queryJSON(this.explorer);
+  var attrs = ExplorerUtils.queryJSON(explorer);
 
   var analysisType = attrs.analysis_type;
   delete attrs['analysis_type'];
@@ -27,7 +22,7 @@ ApiQueryUrl.prototype.getUrl = function() {
 
   var steps;
   if (attrs['steps']) {
-    steps = this._encodeAttribute(attrs['steps']);
+    steps = _encodeAttribute(attrs['steps']);
     delete attrs['steps'];
   }
 
@@ -37,16 +32,16 @@ ApiQueryUrl.prototype.getUrl = function() {
 
   var queryAttrs = Qs.stringify(attrs);
 
-  if (attrs.timeframe && TimeframeUtils.timeframeType(this.explorer.query.time) === 'absolute') {
+  if (attrs.timeframe && TimeframeUtils.timeframeType(explorer.query.time) === 'absolute') {
     delete attrs['timeframe'];
     // This is an absolute timeframe, so we need to encode the object in a specific way before sending it, as per keen docs => https://keen.io/docs/data-analysis/timeframe/#absolute-timeframes
-    timeframe = this._encodeAttribute(timeframe);
+    timeframe = _encodeAttribute(timeframe);
     queryAttrs += '&timeframe='+ timeframe;
   }
 
   // We need to encode the filters the same way as we encode the absolute timeframe.
   if (filters) {
-    filters = this._encodeAttribute(filters);
+    filters = _encodeAttribute(filters);
     queryAttrs += '&filters='+ filters;
   }
 
@@ -57,13 +52,13 @@ ApiQueryUrl.prototype.getUrl = function() {
   var url = endpoint + '/projects/'+projectId+'/queries/'
     + analysisType
     + '?api_key='
-    + this.client.readKey()
+    + client.readKey()
     + '&'
     + queryAttrs;
   return url;
 }
 
-ApiQueryUrl.prototype._encodeAttribute = function(attr) {
+function _encodeAttribute(attr) {
   return encodeURIComponent(JSON.stringify(attr));
 }
 

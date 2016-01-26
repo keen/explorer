@@ -200,7 +200,7 @@ var QueryBuilder = React.createClass({
   render: function() {
     var apiQueryUrl;
     if (this.props.model.isValid) {
-      apiQueryUrl = new ApiQueryUrl(this.props.client, this.props.model).getUrl();
+      apiQueryUrl = ApiQueryUrl(this.props.client, this.props.model);
     }
 
     return (
