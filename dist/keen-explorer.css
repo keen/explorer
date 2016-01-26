@@ -2027,6 +2027,108 @@
   text-align: center;
   width: 56px;
 }
+#keen-explorer .keen-dataviz {
+  box-sizing: border-box;
+}
+#keen-explorer .keen-dataviz .keen-dataviz-title {
+  color: #404a54;
+  font-family: 'Gotham Rounded SSm A', 'Gotham Rounded SSm B', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 200;
+  line-height: 32px;
+}
+#keen-explorer .keen-dataviz .keen-dataviz-stage {
+  display: block;
+}
+#keen-explorer .keen-dataviz .keen-dataviz-notes {
+  color: #768798;
+  display: block;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 12px;
+  line-height: 32px;
+}
+#keen-explorer .keen-dataviz .keen-dataviz-message {
+  color: #aeb8c2;
+  display: block;
+  font-family: 'Gotham Rounded SSm A', 'Gotham Rounded SSm B', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 21px;
+  font-weight: 200;
+  line-height: 24px;
+  text-align: center;
+}
+#keen-explorer .keen-dataviz .keen-dataviz-metric {
+  background-color: #00bbde;
+  border-radius: 4px;
+  color: #fff;
+  font-family: 'Gotham Rounded SSm A', 'Gotham Rounded SSm B', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  text-align: center;
+}
+#keen-explorer .keen-dataviz .keen-dataviz-metric .keen-dataviz-metric-value {
+  display: block;
+  font-size: 72px;
+  font-weight: 700;
+  line-height: 72px;
+}
+#keen-explorer .keen-dataviz .keen-dataviz-metric .keen-dataviz-metric-title {
+  display: block;
+  font-size: 24px;
+  font-weight: 200;
+  line-height: 24px;
+  padding-top: 8px;
+}
+#keen-explorer .keen-dataviz .keen-dataviz-message {
+  box-sizing: border-box;
+}
+#keen-explorer .keen-dataviz .keen-dataviz-table {
+  border-bottom: 1px solid #d9dee2;
+  box-sizing: border-box;
+  overflow: scroll;
+  position: relative;
+}
+#keen-explorer .keen-dataviz .keen-dataviz-table table {
+  background: #FFF;
+  border-collapse: collapse;
+  font-family: 'Gotham Rounded SSm A', 'Gotham Rounded SSm B', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  margin: 0;
+  position: relative;
+  width: 100%;
+}
+#keen-explorer .keen-dataviz .keen-dataviz-table th,
+#keen-explorer .keen-dataviz .keen-dataviz-table td {
+  border-collapse: collapse;
+  font-size: 13px;
+  padding: 10px;
+  text-align: left;
+  white-space: nowrap;
+}
+#keen-explorer .keen-dataviz .keen-dataviz-table th {
+  border-bottom: 1px solid #d9dee2;
+  color: #404a54;
+}
+#keen-explorer .keen-dataviz .keen-dataviz-table td {
+  background-color: #FFF;
+  color: #4d5966;
+  -webkit-transition: background-color 0.1s, color 0.05s;
+          transition: background-color 0.1s, color 0.05s;
+}
+#keen-explorer .keen-dataviz .keen-dataviz-table tr:nth-child(even) td {
+  background-color: #f3f5f6;
+}
+#keen-explorer .keen-dataviz .keen-dataviz-table tr:hover td {
+  background-color: #e8ebed;
+  color: #404a54;
+}
+#keen-explorer .keen-dataviz .keen-dataviz-table .keen-dataviz-table-dataset thead {
+  visibility: hidden;
+}
+#keen-explorer .keen-dataviz .keen-dataviz-table .keen-dataviz-table-fixed-header {
+  background: #FFF;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+  position: absolute;
+  top: 0;
+  -webkit-transition: top .1s;
+          transition: top .1s;
+}
 #keen-explorer a {
   color: #00bbde;
 }
