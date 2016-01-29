@@ -81,6 +81,7 @@ module.exports = {
         return 'Geo';
         break;
       case 'string':
+        if (filter.operator === 'exists') return 'Boolean';
         if (FormatUtils.isDateInStrictFormat(filter.property_value.substring(0, filter.property_value.length-6))) return 'Datetime';
         if (FormatUtils.isList(filter.property_value)) return 'List';
         return 'String';
@@ -153,8 +154,8 @@ module.exports = {
     filter.property_value = module.exports.getCoercedValue(filter);
     // Add the local offset back to the datetime to get it back to UTC.
     if (filter.coercion_type === 'Datetime') {
-      var offset = new Date(filter.property_value).getTimezoneOffset()
-      filter.property_value = new Date(moment(new Date(filter.property_value)).add(offset, 'minutes').format()).toString()
+      var offset = new Date(filter.property_value).getTimezoneOffset();
+      filter.property_value = new Date(moment(new Date(filter.property_value)).add(offset, 'minutes').format()).toString();
     }
     return filter;
   },
