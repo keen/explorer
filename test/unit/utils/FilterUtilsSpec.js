@@ -13,6 +13,7 @@ describe('utils/FilterUtils', function() {
 
   describe('getCoercionType', function () {
     describe('properly determining coercion types when none is set', function () {
+      
       it('String type when property_value can be parsed into a date', function () {
         var filter = {
           property_name: "created_at",
@@ -22,6 +23,16 @@ describe('utils/FilterUtils', function() {
         };
         assert.strictEqual(FilterUtils.getCoercionType(filter), "String");
       });
+
+      it('String type when property_value can be parsed into a date', function () {
+        var filter = {
+          property_name: "created_at",
+          operator: "exists",
+          property_value: "false"
+        };
+        assert.strictEqual(FilterUtils.getCoercionType(filter), "Boolean");
+      });
+
     });
   });
   
