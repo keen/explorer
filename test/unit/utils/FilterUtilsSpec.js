@@ -24,7 +24,7 @@ describe('utils/FilterUtils', function() {
         assert.strictEqual(FilterUtils.getCoercionType(filter), "String");
       });
 
-      it('String type when property_value can be parsed into a date', function () {
+      it('Boolean type when operator is exists', function () {
         var filter = {
           property_name: "created_at",
           operator: "exists",
