@@ -57,12 +57,23 @@
         outline: 0;
       }
     }
-    input.chart-query-name {
+    .chart-query-name {
       background-color: rgba(0, 0, 0, 0.05);
-      border-radius: 0 0 2px 2px;
+      border-radius: 2px;
       border-top-color: transparent;
-      color: #808080;
+      display: none;
       font-size: 13px;
+      padding: 5px 10px;
+      input {
+        background: #FFF;
+        border: medium none;
+        color: #808080;
+        padding: 5px 10px;
+      }
+      label {
+        color: #808080;
+        font-size: 11px;
+      }
     }
   }
   .chart-type-component {
@@ -76,6 +87,10 @@
       }
     }
   }
+}
+
+.chart-detail-bar-focus .chart-title-component .chart-query-name {
+  display: block;
 }
 
 .chart-options {
