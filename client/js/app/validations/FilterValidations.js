@@ -11,7 +11,7 @@ module.exports = {
   property_name: {
 
     msg: 'Choose a property name',
-    
+
     validate: function(model) {
       return (typeof model.property_name === 'string' && model.property_name.length > 0);
     }
@@ -19,9 +19,9 @@ module.exports = {
   },
 
   operator: {
-    
+
     msg: 'Choose an operator',
-    
+
     validate: function(model) {
       return (typeof model.operator === 'string' && model.operator.length > 0);
     }
@@ -29,13 +29,13 @@ module.exports = {
   },
 
   property_value: {
-    
+
     msg: 'Choose a property value.',
 
     shouldRun: function(model) {
       return !isGeoCoercionType(model);
     },
-    
+
     validate: function(model) {
       var value = model.property_value;
       var coercionType = model.coercion_type;
@@ -46,7 +46,7 @@ module.exports = {
         return true;
       } else if (coercionType === 'Number') {
         return _.isNumber(value);
-      } else if (String(value) === "0") {
+      } else if (coercionType === 'String') {
         return true;
       } else {
         return value ? true : false;
@@ -56,9 +56,9 @@ module.exports = {
   },
 
   coercion_type: {
-    
+
     msg: 'Choose a coercion type',
-    
+
     validate: function(model) {
       return (typeof model.coercion_type ==='string' && model.coercion_type.length > 0);
     }
@@ -66,11 +66,11 @@ module.exports = {
   },
 
   coordinates: {
-    
+
     msg: 'Provide all coordinates.',
 
     shouldRun: isGeoCoercionType,
-    
+
     validate: function(model) {
       var value = model.property_value.coordinates;
       var valid = _.isArray(value) && value.length === 2;
@@ -86,16 +86,16 @@ module.exports = {
   },
 
   max_distance_miles: {
-    
+
     msg: 'Provide a max distance in miles.',
 
     shouldRun: isGeoCoercionType,
-    
+
     validate: function(model) {
       var value = model.property_value.max_distance_miles;
       return value && _.isNumber(value);
     }
-    
+
   }
 
 };
