@@ -34,7 +34,7 @@ module.exports = {
 
   target_property: {
     
-    msg: 'Choose an Target Property.',
+    msg: 'Choose a Target Property.',
 
     shouldRun: function(model) {
       return ExplorerUtils.shouldHaveTarget(model);
