@@ -163,7 +163,7 @@ describe('validations/ExplorerValidations', function() {
     describe('latest', function () {
       describe('evaluates strings correctly', function () {
         it('should return true for 10', function () {
-          assert.isTrue(ExplorerValidations.latest.validate({ query: { latest: '10' } }));  
+          assert.isTrue(ExplorerValidations.latest.validate({ query: { latest: '10' } }));
         });
 
         it('should return false for 10.1', function () {
@@ -201,7 +201,7 @@ describe('validations/ExplorerValidations', function() {
       assert.strictEqual(model.errors.length, 2, 'Root model');
 
       assert.isFalse(model.query.filters[0].isValid);
-      assert.strictEqual(model.query.filters[0].errors.length, 2);
+      assert.strictEqual(model.query.filters[0].errors.length, 1);
 
       assert.isFalse(model.query.filters[1].isValid);
       assert.strictEqual(model.query.filters[1].errors.length, 1);
@@ -220,7 +220,7 @@ describe('validations/ExplorerValidations', function() {
       filter1.property_name = '';
       filter1.property_value = 'count';
       step1.filters.push(filter1)
-      
+
       var filter2 = TestHelpers.createFilter();
       filter2.property_name = 'name';
       filter2.property_value = 'value';
@@ -236,7 +236,7 @@ describe('validations/ExplorerValidations', function() {
       filter3.property_name = '';
       filter3.property_value = '';
       step2.filters.push(filter3)
-      
+
       var filter4 = TestHelpers.createFilter();
       filter4.property_name = 'name';
       filter4.property_value = 'value';
@@ -260,9 +260,9 @@ describe('validations/ExplorerValidations', function() {
       assert.strictEqual(steps[1].errors.length, 2);
       assert.strictEqual(steps[0].filters[0].errors.length, 1);
       assert.strictEqual(steps[0].filters[1].errors.length, 0);
-      assert.strictEqual(steps[1].filters[0].errors.length, 2);
+      assert.strictEqual(steps[1].filters[0].errors.length, 1);
       assert.strictEqual(steps[1].filters[1].errors.length, 0);
     });
-    
+
   });
 });
