@@ -46,7 +46,7 @@ module.exports = {
         return true;
       } else if (coercionType === 'Number') {
         return _.isNumber(value);
-      } else if (coercionType === 'String' || String(value) === "0") {
+      } else if (coercionType === 'String') {
         return true;
       } else {
         return value ? true : false;
