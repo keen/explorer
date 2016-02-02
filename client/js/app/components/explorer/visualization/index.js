@@ -20,6 +20,34 @@ var FormatUtils = require('../../../utils/FormatUtils');
 
 var Visualization = React.createClass({
 
+  getInitialState: function() {
+    return {
+      focusDisplayName: false,
+      focusQueryName: false,
+      blurTimeout: 100
+    };
+  },
+
+  handleDisplayNameFocus: function(){
+    this.setState({ focusDisplayName: true });
+  },
+
+  handleDisplayNameBlur: function(){
+    setTimeout(function(){
+      this.setState({ focusDisplayName: false });
+    }.bind(this), this.state.blurTimeout);
+  },
+
+  handleQueryNameFocus: function(){
+    this.setState({ focusQueryName: true });
+  },
+
+  handleQueryNameBlur: function(){
+    setTimeout(function(){
+      this.setState({ focusQueryName: false });
+    }.bind(this), this.state.blurTimeout);
+  },
+
   noticeClosed: function() {
     NoticeActions.clearAll();
   },
@@ -69,9 +97,9 @@ var Visualization = React.createClass({
 
     var chartDetailBarClasses = classNames({
       'chart-detail-bar': true,
+      'chart-detail-bar-focus': (this.state.focusDisplayName || this.state.focusQueryName) && this.props.model.response !== null && !this.props.model.loading,
       'chart-detail-active': this.props.model.response !== null && !this.props.model.loading
     });
-
 
     if (this.props.model.isValid) {
       codeSample = ExplorerUtils.getSdkExample(this.props.model, this.props.client);
@@ -83,14 +111,26 @@ var Visualization = React.createClass({
           <input className="chart-display-name"
                  type="text"
                  onChange={this.props.onDisplayNameChange}
+                 onBlur={this.handleDisplayNameBlur}
+                 onFocus={this.handleDisplayNameFocus}
                  spellCheck="false"
                  value={this.props.model.metadata.display_name}
                  placeholder="Give your query a name..." />
-          <input className="chart-query-name"
-                 type="text"
-                 onChange={this.props.onQueryNameChange}
-                 spellCheck="false"
-                 value={this.props.model.query_name} />
+          <div className="chart-query-name">
+            <label>
+              Saved Query Resource Name &nbsp;
+              <a href="https://keen.io/docs/api/#saved-queries" target="_blank">
+                <i className="icon glyphicon glyphicon-question-sign"></i>
+              </a>
+            </label>
+            <input className="chart-query-name"
+                   type="text"
+                   onChange={this.props.onQueryNameChange}
+                   onBlur={this.handleQueryNameBlur}
+                   onFocus={this.handleQueryNameFocus}
+                   spellCheck="false"
+                   value={this.props.model.query_name} />
+          </div>
         </div>
       );
     }
@@ -125,7 +165,7 @@ var Visualization = React.createClass({
           <CodeSample ref="codesample"
                       codeSample={codeSample}
                       hidden={this.props.appState.codeSampleHidden}
-                      onCloseClick={this.props.toggleCodeSample} 
+                      onCloseClick={this.props.toggleCodeSample}
                       isValid={this.props.model.isValid} />
         </div>
       </div>
