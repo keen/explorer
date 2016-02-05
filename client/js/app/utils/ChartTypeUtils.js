@@ -4,7 +4,7 @@ module.exports = {
   getQueryDataType: function(query){
     var isInterval = typeof query.interval === "string";
     var isGroupBy = typeof query.group_by === "string" || (query.group_by instanceof Array && query.group_by.length === 1);
-    var is2xGroupBy = query.group_by instanceof Array;
+    var is2xGroupBy = query.group_by instanceof Array && query.group_by.length === 2;
     var dataType;
 
     if (query.analysis_type === "funnel") {
@@ -53,7 +53,7 @@ module.exports = {
       'cat-interval':       ['columnchart', 'barchart', 'table'],
       'cat-ordinal':        ['barchart', 'columnchart', 'areachart', 'linechart', 'table'],
       'chronological':      ['areachart', 'linechart', 'table'],
-      'cat-chronological':  ['linechart', 'columnchart', 'barchart', 'areachart'],
+      'cat-chronological':  ['linechart', 'columnchart', 'barchart', 'areachart', 'table'],
       'nominal':            ['table'],
       'extraction':         ['table']
     };

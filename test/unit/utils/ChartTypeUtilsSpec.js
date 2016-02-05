@@ -44,4 +44,15 @@ describe('utils/ChartTypeUtils', function() {
       assert.strictEqual(ChartTypeUtils.getQueryDataType(query), 'cat-chronological');
     });
   });
+
+  describe('getChartTypeOptions', function () {
+    it('returns table as an option for cat-chronological types', function () {
+      var query = {
+        analysis_type: 'count',
+        interval: 'daily'
+      };
+
+      assert.isTrue(ChartTypeUtils.getChartTypeOptions(query).indexOf('table') > -1);
+    });
+  });
 });
