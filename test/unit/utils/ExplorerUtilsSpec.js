@@ -497,8 +497,17 @@ describe('utils/ExplorerUtils', function() {
     });
 
     describe('it constructs the URL correctly', function(){
+      it('properly constructs a URL with an absolute timeframe', function () {
+        this.explorer.query.time = {
+          start: new Date(),
+          end: new Date()
+        }
+        var found = ExplorerUtils.getApiQueryUrl(this.client, this.explorer).match(/timeframe/ig);
+        assert.lengthOf(found, 1);
+      });
+
       it('has the timeframe attribute', function(){
-        var found = ExplorerUtils.getApiQueryUrl(this.client, this.explorer).match('timeframe=this_1_days');
+        var found = ExplorerUtils.getApiQueryUrl(this.client, this.explorer).match(/timeframe=this_1_days/ig);
         assert.lengthOf(found, 1);
       });
 

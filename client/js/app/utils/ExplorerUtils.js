@@ -222,6 +222,7 @@ module.exports = {
     delete attrs['analysis_type'];
 
     var timeframe = _.cloneDeep(attrs['timeframe']);
+    delete attrs['timeframe'];
 
     var filters = _.map(attrs['filters'], function(filter) {
       return _.omit(_.cloneDeep(filter), 'coercion_type');
@@ -240,8 +241,10 @@ module.exports = {
 
     var queryAttrs = Qs.stringify(attrs);
 
-    if (attrs.timeframe && TimeframeUtils.timeframeType(explorer.query.time) === 'absolute') {
-      delete attrs['timeframe'];
+    if (timeframe && TimeframeUtils.timeframeType(explorer.query.time) === 'relative') {
+      queryAttrs += '&timeframe='+ timeframe;
+    }
+    else if (timeframe && TimeframeUtils.timeframeType(explorer.query.time) === 'absolute') {
       // This is an absolute timeframe, so we need to encode the object in a specific way before sending it, as per keen docs => https://keen.io/docs/data-analysis/timeframe/#absolute-timeframes
       timeframe = module.exports.encodeAttribute(timeframe);
       queryAttrs += '&timeframe='+ timeframe;
