@@ -96,7 +96,6 @@ App.prototype.render = function() {
   }), this.targetNode);
 };
 
-window.React = React;
 window.Keen = window.Keen || {};
 window.Keen.Explorer = window.Keen.Explorer || {};
 window.Keen.Explorer.Persistence = Persistence;
