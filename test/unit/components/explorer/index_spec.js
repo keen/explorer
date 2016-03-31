@@ -194,11 +194,11 @@ describe('components/explorer/index', function() {
 
         this.explorer.id = 'TEMP-ABC';
         this.component.forceUpdate();
-        
+
         this.component.saveQueryClick(TestHelpers.fakeEvent());
 
         assert.isTrue(saveStub.calledOnce);
-        
+
         RunValidations.run.restore();
         ExplorerActions.save.restore();
       });
@@ -228,7 +228,7 @@ describe('components/explorer/index', function() {
         this.persistence = {};
         this.component = TestUtils.renderIntoDocument(<Explorer persistence={this.persistence} client={this.client} project={this.project} config={this.config} />);
       });
-      
+
       describe('clicking a saved query', function () {
         it('should not load the saved query and show a notice if there is already a query in-flight', function () {
           var setActiveStub = sinon.stub(ExplorerActions, 'setActive');
@@ -242,7 +242,7 @@ describe('components/explorer/index', function() {
           });
           var fakeEvent = TestHelpers.fakeEvent();
           this.component.savedQueryClicked(fakeEvent);
-          
+
           assert.isFalse(setActiveStub.called);
           assert.isFalse(execStub.called);
           assert.isTrue(noticeCreateStub.calledWith({
@@ -294,7 +294,7 @@ describe('components/explorer/index', function() {
         assert.strictEqual(this.component.state.activeQueryPane, 'build');
       });
     });
-  
+
   });
 
 });

@@ -248,7 +248,7 @@ describe('components/explorer/query_builder/index', function() {
     describe('group_by', function () {
       it('tries to update the attribute when the field changes', function() {
         this.model.query.event_collection = 'clicks';
-        this.model.query.analysis_type = 'percentile';  
+        this.model.query.analysis_type = 'percentile';
         this.model.query.group_by = ['old_group_by_value'];
         this.component.forceUpdate();
 

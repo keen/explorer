@@ -1,7 +1,3 @@
-/**
- * @jsx React.DOM
- */
-
 var React = require('react');
 var ExplorerUtils = require('../../../utils/ExplorerUtils');
 var Input = require('../../common/input.js');

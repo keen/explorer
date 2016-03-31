@@ -1,7 +1,3 @@
-/**
- * @jsx React.DOM
- */
-
 var React = require('react');
 var _ = require('lodash');
 var FieldsToggle = require('../../common/fields_toggle.js');

@@ -1,7 +1,3 @@
-/**
- * @jsx React.DOM
- */
-
 var _ = require('lodash');
 var React = require('react');
 
@@ -24,7 +20,7 @@ var ExplorerActions = require('../../../actions/ExplorerActions');
 var QueryBuilder = React.createClass({
 
   // Event callbacks
-  
+
   handleSelectionWithEvent: function(event) {
     this.handleChange(event.target.name, event.target.value);
   },
@@ -59,11 +55,11 @@ var QueryBuilder = React.createClass({
   },
 
   // Fields Builders
-  
+
   buildEventCollectionField: function() {
     if (this.props.model.query.analysis_type !== 'funnel') {
       return (
-        <SelectField name="event_collection" 
+        <SelectField name="event_collection"
                      label="Event Collection"
                      value={this.props.model.query.event_collection}
                      requiredLabel={true}
@@ -127,7 +123,7 @@ var QueryBuilder = React.createClass({
   buildIntervalField: function() {
     if (['extraction', 'funnel'].indexOf(this.props.model.query.analysis_type) === -1) {
       return (
-        <Interval interval={this.props.model.query.interval} 
+        <Interval interval={this.props.model.query.interval}
                   handleChange={this.handleChange} />
       );
     }
@@ -152,7 +148,7 @@ var QueryBuilder = React.createClass({
         <div>
           <Timeframe ref="timeframe"
                      time={this.props.model.query.time}
-                     timezone={this.props.model.query.timezone}  
+                     timezone={this.props.model.query.timezone}
                      handleChange={this.handleChange}/>
           <hr className="fieldset-divider" />
         </div>
