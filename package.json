@@ -9,7 +9,7 @@
     "flux": "^2.0.3",
     "json-stable-stringify": "1.0.0",
     "keen-analysis": "^1.0.1",
-    "keen-dataviz": "file:../keen-dataviz.js",
+    "keen-dataviz": "^1.0.0-rc2",
     "keymirror": "~0.1.0",
     "lodash": "4.0.0",
     "moment": "^2.7.0",
