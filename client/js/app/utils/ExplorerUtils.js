@@ -108,7 +108,7 @@ module.exports = {
     }
 
     if (params.steps) {
-      params.steps = _.map(params.steps, FunnelUtils.stepJSON); 
+      params.steps = _.map(params.steps, FunnelUtils.stepJSON);
     }
 
     _.each(params, function(value, key) {
@@ -356,5 +356,5 @@ module.exports = {
   slugify: function(name) {
     return name.toLowerCase().replace(/[^\w\s-]/g, '').replace(/ /g, '-');
   }
-  
+
 };

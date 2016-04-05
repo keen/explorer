@@ -5,6 +5,7 @@
 var _ = require('lodash');
 var React = require('react');
 var classNames = require('classnames');
+var KeenDataviz = require('keen-dataviz');
 var Select = require('../../common/select.js');
 var Notice = require('../../common/notice.js');
 var Chart = require('./chart.js');
@@ -84,7 +85,7 @@ var Visualization = React.createClass({
   },
 
   componentWillMount: function() {
-    this.dataviz = new Keen.Dataviz();
+    this.dataviz = new KeenDataviz();
   },
 
   componentWillUnmount: function() {
@@ -140,23 +141,17 @@ var Visualization = React.createClass({
         <Notice notice={this.props.notice} closeCallback={this.noticeClosed} />
         <div className="visualization-wrapper">
           <div className={chartDetailBarClasses}>
-            <div className="row">
-              <div className="col-md-10 chart-title-col">
-                {chartTitle}
-              </div>
-              <div className="col-md-2">
-                <div className="chart-type-component">
-                  <Select label={false}
-                          ref="chart-type"
-                          name="chart_type"
-                          classes="chart-type"
-                          options={this.formatChartTypes()}
-                          handleSelection={this.changeChartType}
-                          selectedOption={this.chartType()}
-                          emptyOption={false}
-                          disabled={this.props.model.loading} />
-                </div>
-              </div>
+            {chartTitle}
+            <div className="chart-type-component">
+              <Select label={false}
+                      ref="chart-type"
+                      name="chart_type"
+                      classes="chart-type"
+                      options={this.formatChartTypes()}
+                      handleSelection={this.changeChartType}
+                      selectedOption={this.chartType()}
+                      emptyOption={false}
+                      disabled={this.props.model.loading} />
             </div>
           </div>
           <div className="chart-component">

@@ -1,6 +1,9 @@
 var _ = require('lodash');
+var KeenAnalysis = require('keen-analysis');
 var React = require('react');
 var ReactDOM = require('react-dom');
+
+
 var Persistence = require('./modules/persistence/persistence.js');
 var AppDispatcher = require('./dispatcher/AppDispatcher');
 var AppComponent = require('./components/app.js');
@@ -20,15 +23,17 @@ function App(config) {
   this.appDispatcher = AppDispatcher;
   this.targetNode = document.getElementById(config.targetId);
   this.persistence = null;
-  this.client = config.client;
+  this.client = new KeenAnalysis(config.client);
+  this.client.resources({
+    'events': '{protocol}://{host}/3.0/projects/{projectId}/events'
+  });
 
   ProjectActions.create({ client: this.client });
   ProjectActions.fetchProjectSchema();
 
   if (config.savedQueries) {
     this.persistence = new Keen.Explorer.Persistence.KeenSavedQueries({
-      baseUrl: this.client.config.protocol + "://" + this.client.config.host +
-        "/projects/" + this.client.config.projectId + "/queries/saved"
+      baseUrl: this.client.url('queries', 'saved')
     });
     if (_.isUndefined(this.client.masterKey())) {
       throw new Error("You must include your project's master key for saved query support.");

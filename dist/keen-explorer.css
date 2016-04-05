@@ -1578,6 +1578,7 @@
   margin: 15px;
 }
 #keen-explorer .chart-detail-bar {
+  height: 37px;
   margin-bottom: 10px;
   opacity: .35;
   position: relative;
@@ -1585,6 +1586,11 @@
 }
 #keen-explorer .chart-detail-bar.chart-detail-active {
   opacity: 1;
+}
+#keen-explorer .chart-detail-bar .chart-title-component {
+  left: 0;
+  position: absolute;
+  right: 132px;
 }
 #keen-explorer .chart-detail-bar .chart-title-component input {
   border: 1px solid #d7d7d7;
@@ -1622,6 +1628,11 @@
 #keen-explorer .chart-detail-bar .chart-title-component .chart-query-name label {
   color: #808080;
   font-size: 11px;
+}
+#keen-explorer .chart-detail-bar .chart-type-component {
+  position: absolute;
+  right: 0px;
+  width: 124px;
 }
 #keen-explorer .chart-detail-bar .chart-type-component select {
   cursor: pointer;
