@@ -1,0 +1,82 @@
+/** @jsx React.DOM */
+var assert = require('chai').assert;
+var _ = require('lodash');
+var moment = require('moment');
+var sinon = require('sinon');
+var Timeframe = require('../../../../client/js/app/components/common/timeframe.jsx');
+var Timezone = require('../../../../client/js/app/components/common/timezone.jsx');
+var RelativePicker = require('../../../../client/js/app/components/common/relative_picker.jsx');
+var AbsolutePicker = require('../../../../client/js/app/components/common/absolute_picker.jsx');
+var ReactSelect = require('../../../../client/js/app/components/common/react_select.jsx');
+var FieldsToggle = require('../../../../client/js/app/components/common/fields_toggle.jsx');
+var ExplorerActions = require('../../../../client/js/app/actions/ExplorerActions');
+var React = require('react');
+var TestUtils = require('react-addons-test-utils');
+var TestHelpers = require('../../../support/TestHelpers');
+
+describe('components/common/timeframe', function() {
+  before(function () {
+    this.handleChangeStub = sinon.stub();
+  });
+
+  beforeEach(function() {
+    this.handleChangeStub.reset();
+
+    this.model = TestHelpers.createExplorerModel();
+    this.project = TestHelpers.createProject();
+
+    this.component = TestUtils.renderIntoDocument(<Timeframe time={this.model.query.time}
+                                                             timezone={this.model.query.timezone}
+                                                             handleChange={this.handleChangeStub} />
+   )
+  });
+
+  describe('setup', function() {
+    it('is of the right type', function() {
+      assert.isTrue(TestUtils.isCompositeComponentWithType(this.component, Timeframe));
+    });
+
+    it('has the relative tab selected by default', function(){
+      var relativeTab = TestUtils.findRenderedDOMComponentWithTag(this.component, 'ul').childNodes[0];
+      assert.isTrue(relativeTab.classList.contains('active'));
+    });
+
+    it('has the relative picker shown by default', function(){
+      assert.lengthOf(TestUtils.scryRenderedDOMComponentsWithClass(this.component, 'relative-timeframe-picker'), 1);
+      assert.lengthOf(TestUtils.scryRenderedDOMComponentsWithClass(this.component, 'absolute-timeframe-picker'), 0);
+    });
+
+    it('has one Timezone component', function(){
+      assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, Timezone), 1);
+    });
+  });
+
+  describe('interactions', function() {
+
+    describe('absolute_picker', function () {
+      it('clicking the absolute tab updates the model to an absolute timeframe', function () {
+        this.absoluteTimeframeLink = TestUtils.findRenderedDOMComponentWithClass(this.component, 'absolute-tab');
+        TestUtils.Simulate.click(this.absoluteTimeframeLink);
+        assert.strictEqual(this.handleChangeStub.getCall(0).args[0], 'time')
+        assert.deepEqual(this.handleChangeStub.getCall(0).args[1], {
+          start: new Date(moment().subtract(1, 'days').startOf('day').format()),
+          end: new Date(moment().startOf('day').format())
+        });
+      });
+    });
+
+    describe('relative_picker', function () {
+      it('clicking the relative tab updates the model to a relative timeframe', function () {
+        this.relativeTimeframeLink = TestUtils.findRenderedDOMComponentWithClass(this.component, 'relative-tab');
+        TestUtils.Simulate.click(this.relativeTimeframeLink);
+        assert.strictEqual(this.handleChangeStub.getCall(0).args[0], 'time')
+        assert.deepEqual(this.handleChangeStub.getCall(0).args[1], {
+          relativity: 'this',
+          amount: '14',
+          sub_timeframe: 'days'
+        });
+      });
+    });
+
+  });
+});
