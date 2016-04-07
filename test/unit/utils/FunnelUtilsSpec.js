@@ -63,5 +63,63 @@ describe('utils/FunnelUtils', function() {
 
       FilterUtils.formatFilterParams.restore(); 
     });
+
+    describe('boolean value handling', function () {
+      it('should properly format true boolean values from API for the "inverted" property', function () {
+        var result = FunnelUtils.formatQueryParams({
+          inverted: true
+        });
+        assert.strictEqual(result.inverted, true);
+      });
+
+      it('should properly format string true as boolean values from API for the "inverted" property', function () {
+        var result = FunnelUtils.formatQueryParams({
+          inverted: "true"
+        });
+        assert.strictEqual(result.inverted, true);
+      });
+
+      it('should properly format false boolean values from API for the "inverted" property', function () {
+        var result = FunnelUtils.formatQueryParams({
+          inverted: false
+        });
+        assert.strictEqual(result.inverted, false);
+      });
+
+      it('should properly format string false as boolean values from API for the "inverted" property', function () {
+        var result = FunnelUtils.formatQueryParams({
+          inverted: "false"
+        });
+        assert.strictEqual(result.inverted, false);
+      });
+
+      it('should properly format true boolean values from API for the "optional" property', function () {
+        var result = FunnelUtils.formatQueryParams({
+          optional: true
+        });
+        assert.strictEqual(result.optional, true);
+      });
+
+      it('should properly format string true as boolean values from API for the "optional" property', function () {
+        var result = FunnelUtils.formatQueryParams({
+          optional: "true"
+        });
+        assert.strictEqual(result.optional, true);
+      });
+
+      it('should properly format false boolean values from API for the "optional" property', function () {
+        var result = FunnelUtils.formatQueryParams({
+          optional: false
+        });
+        assert.strictEqual(result.optional, false);
+      });
+
+      it('should properly format string false as boolean values from API for the "optional" property', function () {
+        var result = FunnelUtils.formatQueryParams({
+          optional: "false"
+        });
+        assert.strictEqual(result.optional, false);
+      });
+    });
   });
 });
