@@ -15,18 +15,14 @@
   <div id="explorer" style="padding: 20px;"></div>
   <script type="text/javascript">
     $(document).ready(function(){
-      var app = new Keen.Explorer.App({
-          // Pass client configuration into a new Explorer
-          client: {
-            projectId: "YOUR_PROJECT_ID",
-            readKey: "YOUR_READ_KEY",
-            masterKey: "YOUR_MASTER_KEY"
-          },
-          savedQueries: true,
-          // DOM Node ID
-          targetId: 'explorer'
-      });
-      app.render();
+      var app = new Keen.Explorer.App('#explorer')
+        .client({
+          projectId: "PROJECT_ID",
+          readKey: "READ_KEY",
+          masterKey: "MASTER_KEY"
+        })
+        .persistence(true)
+        .fetch();
     });
   </script>
 </body>
