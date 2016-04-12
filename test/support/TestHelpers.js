@@ -14,21 +14,15 @@ module.exports = {
 
   createClient: function() {
     return {
-      readKey: function() {
-        return 'readKey'
-      },
-      config: {
-        projectId: 'projectId',
-        protocol: 'https',
-        host: 'api.keen.io/3.0',
-        masterKey: 'masterKey'
-      },
-      run: function(){}
-    }
+      projectId: 'projectId',
+      protocol: 'https',
+      host: 'api.keen.io/3.0',
+      masterKey: 'masterKey'
+    };
   },
 
   fakeEvent: function(){
-    return { 
+    return {
       preventDefault: function(){}
     }
   },
@@ -104,7 +98,7 @@ module.exports = {
   },
 
   buildProjectSchema: function() {
-    return { 
+    return {
       'click': {
         name: 'click',
         properties: {

@@ -6,7 +6,7 @@ var TestUtils = require('react-addons-test-utils');
 var TestHelpers = require('../support/TestHelpers.js');
 var sinon = require('sinon');
 
-describe('app', function() {
+describe('App', function() {
   it('runs a query if the querystring has query attrs in it', function () {
     var queryAttributesStub = sinon.stub(QueryStringUtils, 'getQueryAttributes').returns({
       query: {
@@ -15,15 +15,15 @@ describe('app', function() {
         time: {
           relativity: 'this',
           amount: 14,
-          sub_timeframe: 'days' 
+          sub_timeframe: 'days'
         }
       }
-    }); 
+    });
     var xhrOpenStub = sinon.stub(XMLHttpRequest.prototype, 'open');
     var xhrSendStub = sinon.stub(XMLHttpRequest.prototype, 'send');
-    var client = TestHelpers.createClient();
 
-    App({client: client, targetId: 'explorer'});
+    var clientConfig = TestHelpers.createClient();
+    var app = new App('#explorer').client(clientConfig);
 
     assert.isTrue(queryAttributesStub.calledOnce);
 

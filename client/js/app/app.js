@@ -3,7 +3,6 @@ var KeenAnalysis = require('keen-analysis');
 var React = require('react');
 var ReactDOM = require('react-dom');
 
-
 var Persistence = require('./modules/persistence/persistence.js');
 var AppDispatcher = require('./dispatcher/AppDispatcher');
 var AppComponent = require('./components/app.js');
@@ -19,61 +18,90 @@ var ExplorerStore = require('./stores/ExplorerStore');
 var ProjectStore = require('./stores/ProjectStore');
 var QueryStringUtils = require('./utils/QueryStringUtils');
 
-function App(config) {
+function App(el) {
   this.appDispatcher = AppDispatcher;
-  this.targetNode = document.getElementById(config.targetId);
-  this.persistence = null;
-  this.client = new KeenAnalysis(config.client);
-  this.client.resources({
+  this.config = {
+    params: QueryStringUtils.getQueryAttributes(),
+    persistence: null
+  };
+  this.el(el);
+}
+
+App.prototype.client = function(obj) {
+  if (!arguments.length) return this.config.client;
+  this.config.client = new KeenAnalysis(obj);
+  this.config.client.resources({
     'events': '{protocol}://{host}/3.0/projects/{projectId}/events'
   });
-
-  ProjectActions.create({ client: this.client });
+  ProjectActions.create({ client: this.config.client });
   ProjectActions.fetchProjectSchema();
+  return this;
+};
 
-  if (config.savedQueries) {
-    this.persistence = new Keen.Explorer.Persistence.KeenSavedQueries({
-      baseUrl: this.client.url('queries', 'saved')
-    });
-    if (_.isUndefined(this.client.masterKey())) {
-      throw new Error("You must include your project's master key for saved query support.");
-    }
+App.prototype.el = function(target) {
+  if (!arguments.length) return this.config.el;
+  if (target.nodeName) {
+    this.config.el = target;
+  }
+  else if (document.querySelector) {
+    this.config.el = document.querySelector(target);
+  }
+  else {
+    this.config.el = undefined;
+  }
+  return this;
+};
 
-    this.persistence.config.masterKey = this.client.masterKey();
-    ExplorerActions.fetchAllPersisted(this.persistence, function(err) {
-      if (err) throw new Error("There was an error fetching the persisted explorers: " + err.text);
+App.prototype.fetch = function(){
+  var id = FormatUtils.generateTempId();
+
+  if (this.config.persistence) {
+    ExplorerActions.fetchAllPersisted(this.config.persistence, function(err) {
+      if (err) throw new Error('There was an error fetching the persisted explorers: ' + err.text);
     });
   }
 
-  // Create an active Explorer model to start: Either from a saved query or an unsaved one populated
-  // with the params from the query string.
-  var attrs = QueryStringUtils.getQueryAttributes();
-  // Not a saved query, so create a new temporary query from the query attributes.
-  var id = FormatUtils.generateTempId();
-  ExplorerActions.create(_.assign(ExplorerUtils.formatQueryParams(attrs) || {}, { id: id }));
+  ExplorerActions.create(_.assign(ExplorerUtils.formatQueryParams(this.config.params) || {}, { 'id': id }));
   ExplorerActions.setActive(id);
   ExplorerActions.validate(id);
 
   // Is this a saved query we want to load?
-  if (attrs.saved_query) {
+  if (this.config.persistence && this.config.params.saved_query) {
     // Once the models come back from the server, mark the right one as active.
-    ExplorerActions.fetchPersisted(this.persistence, { id: attrs.saved_query }, this.doneFetchingSavedQuery.bind(this, attrs.saved_query));
+    ExplorerActions.fetchPersisted(this.config.persistence, { id: this.config.params.saved_query },
+      this.doneFetchingSavedQuery.bind(this, this.config.params.saved_query));
   } else {
     AppStateActions.update({ ready: true });
     // Run the query for this explorer if it's valid
     var isEmailExtraction = ExplorerUtils.isEmailExtraction(ExplorerStore.getActive());
     RunValidations(ExplorerValidations, ExplorerStore.getActive());
-
     if (!isEmailExtraction && ExplorerStore.getActive().isValid) {
-      ExplorerActions.exec(this.client, ExplorerStore.getActive().id);
+      ExplorerActions.exec(this.config.client, ExplorerStore.getActive().id);
     }
   }
-}
+
+  this.render();
+  return this;
+};
+
+App.prototype.persistence = function(bool) {
+  if (!arguments.length) return this.config.persistence;
+  if (typeof bool === 'boolean' && bool) {
+    if (!this.config.client || !this.config.client.masterKey()) {
+      throw new Error('This feature requires a client instance with a masterKey value');
+    }
+    this.config.persistence = new Keen.Explorer.Persistence.KeenSavedQueries({
+      baseUrl: this.config.client.url('queries', 'saved')
+    });
+    this.config.persistence.config.masterKey = this.config.client.masterKey();
+  }
+  return this;
+};
 
 App.prototype.doneFetchingSavedQuery = function(savedQueryName, err) {
   if (!err) {
     ExplorerActions.setActive(savedQueryName);
-    ExplorerActions.exec(this.client, savedQueryName);
+    ExplorerActions.exec(this.config.client, savedQueryName);
     AppStateActions.update({ ready: true });
   } else {
     if (err.status === 404) {
@@ -96,9 +124,9 @@ App.prototype.doneFetchingSavedQuery = function(savedQueryName, err) {
 App.prototype.render = function() {
   var Component = React.createFactory(AppComponent);
   ReactDOM.render(Component({
-    persistence: this.persistence,
-    client: this.client
-  }), this.targetNode);
+    persistence: this.config.persistence,
+    client: this.config.client
+  }), this.config.el);
 };
 
 window.React = React;

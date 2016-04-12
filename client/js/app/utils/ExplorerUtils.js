@@ -212,13 +212,9 @@ module.exports = {
   },
 
   getApiQueryUrl: function(client, explorer) {
-    var endpoint = client.config.protocol + "://" + client.config.host;
-    var projectId = client.config.projectId;
-    var masterKey = client.config.masterKey;
-
     var attrs = module.exports.queryJSON(explorer);
+    var url = client.url('queries', attrs.analysis_type);
 
-    var analysisType = attrs.analysis_type;
     delete attrs['analysis_type'];
 
     var timeframe = _.cloneDeep(attrs['timeframe']);
@@ -260,12 +256,7 @@ module.exports = {
       queryAttrs += '&steps=' + steps;
     }
 
-    var url = endpoint + '/projects/'+projectId+'/queries/'
-                       + analysisType
-                       + '?api_key='
-                       + client.readKey()
-                       + '&'
-                       + queryAttrs;
+    url += '?api_key=' + client.readKey() + '&' + queryAttrs;
     return url;
   },
 

@@ -1,6 +1,7 @@
 /** @jsx React.DOM */
 var assert = require('chai').assert;
 var _ = require('lodash');
+var KeenAnalysis = require('keen-analysis');
 var sinon = require('sinon');
 var Visualization = require('../../../../../client/js/app/components/explorer/visualization/index.js');
 var Chart = require('../../../../../client/js/app/components/explorer/visualization/chart.js');
@@ -19,7 +20,7 @@ var $R = require('rquery')(_, React, ReactDOM, TestUtils);
 
 describe('components/explorer/visualization/index', function() {
   beforeEach(function() {
-    this.client = TestHelpers.createClient();
+    this.client = new KeenAnalysis(TestHelpers.createClient());
     this.model = TestHelpers.createExplorerModel();
     this.model.id = 10;
     this.project = TestHelpers.createProject();

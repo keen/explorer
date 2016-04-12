@@ -3,6 +3,7 @@ var sinon = require('sinon');
 var TestHelpers = require('../../support/TestHelpers');
 var ProjectActions = require('../../../client/js/app/actions/ProjectActions');
 var ProjectUtils = require('../../../client/js/app/utils/ProjectUtils');
+var KeenAnalysis = require('keen-analysis');
 
 describe('actions/ProjectActions', function() {
 
@@ -11,7 +12,7 @@ describe('actions/ProjectActions', function() {
     before(function() {
       this.xhrOpenStub = sinon.stub(XMLHttpRequest.prototype, 'open');
       this.xhrSendStub = sinon.stub(XMLHttpRequest.prototype, 'send');
-      this.client = TestHelpers.createClient();
+      this.client = new KeenAnalysis(TestHelpers.createClient());
       ProjectActions.create({
         id: 'someId',
         client: this.client
@@ -24,7 +25,7 @@ describe('actions/ProjectActions', function() {
     });
 
     it('should make a request to the right URL', function () {
-      var expectedURL = this.client.config.protocol + 
+      var expectedURL = this.client.config.protocol +
                         "://" +
                         this.client.config.host +
                         '/projects/' +
@@ -69,7 +70,7 @@ describe('actions/ProjectActions', function() {
 
       it('should update the project loading state', function () {
         assert.deepPropertyVal(this.projectUpdateStub.getCall(0).args[1], 'loading', false);
-      });      
+      });
     });
   });
 
