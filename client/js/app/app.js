@@ -19,12 +19,16 @@ var ProjectStore = require('./stores/ProjectStore');
 var QueryStringUtils = require('./utils/QueryStringUtils');
 
 function App(el) {
+  var tempId = FormatUtils.generateTempId();
   this.appDispatcher = AppDispatcher;
   this.config = {
     params: QueryStringUtils.getQueryAttributes(),
     persistence: null
   };
   this.el(el);
+  ExplorerActions.create(_.assign(ExplorerUtils.formatQueryParams(this.config.params) || {}, { 'id': tempId }));
+  ExplorerActions.setActive(tempId);
+  ExplorerActions.validate(tempId);
 }
 
 App.prototype.client = function(obj) {
@@ -53,33 +57,25 @@ App.prototype.el = function(target) {
 };
 
 App.prototype.fetch = function(){
-  var id = FormatUtils.generateTempId();
-
   if (this.config.persistence) {
     ExplorerActions.fetchAllPersisted(this.config.persistence, function(err) {
       if (err) throw new Error('There was an error fetching the persisted explorers: ' + err.text);
     });
-  }
-
-  ExplorerActions.create(_.assign(ExplorerUtils.formatQueryParams(this.config.params) || {}, { 'id': id }));
-  ExplorerActions.setActive(id);
-  ExplorerActions.validate(id);
-
-  // Is this a saved query we want to load?
-  if (this.config.persistence && this.config.params.saved_query) {
-    // Once the models come back from the server, mark the right one as active.
-    ExplorerActions.fetchPersisted(this.config.persistence, { id: this.config.params.saved_query },
-      this.doneFetchingSavedQuery.bind(this, this.config.params.saved_query));
-  } else {
-    AppStateActions.update({ ready: true });
-    // Run the query for this explorer if it's valid
-    var isEmailExtraction = ExplorerUtils.isEmailExtraction(ExplorerStore.getActive());
-    RunValidations(ExplorerValidations, ExplorerStore.getActive());
-    if (!isEmailExtraction && ExplorerStore.getActive().isValid) {
-      ExplorerActions.exec(this.config.client, ExplorerStore.getActive().id);
+    // Is this a saved query we want to load?
+    if (this.config.params.saved_query) {
+      // Once the models come back from the server, mark the right one as active.
+      ExplorerActions.fetchPersisted(this.config.persistence, { id: this.config.params.saved_query },
+        this.doneFetchingSavedQuery.bind(this, this.config.params.saved_query));
+    } else {
+      AppStateActions.update({ ready: true });
+      // Run the query for this explorer if it's valid
+      var isEmailExtraction = ExplorerUtils.isEmailExtraction(ExplorerStore.getActive());
+      RunValidations(ExplorerValidations, ExplorerStore.getActive());
+      if (!isEmailExtraction && ExplorerStore.getActive().isValid) {
+        ExplorerActions.exec(this.config.client, ExplorerStore.getActive().id);
+      }
     }
   }
-
   this.render();
   return this;
 };
