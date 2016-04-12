@@ -7,6 +7,7 @@
 /**
  * Note: the root picker element should *NOT* be styled more than what’s here.
  */
+@import '../../node_modules/keen-dataviz/dist/keen-dataviz.css';
 .picker {
   font-size: 16px;
   text-align: left;

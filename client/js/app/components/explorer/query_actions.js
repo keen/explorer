@@ -59,7 +59,7 @@ var QueryActions = React.createClass({
         actionsSupported = false;
         saveMsg = (
           <p className="no-margin margin-top-tiny">
-            <small>The Keen IO API currently does not support saving email extraction or funnel queries.</small>
+            <small>The Keen IO API currently does not support saving email extraction.</small>
           </p>
         );
       }
