@@ -256,7 +256,7 @@ module.exports = {
       queryAttrs += '&filters='+ filters;
     }
 
-    if(steps) {
+    if (steps) {
       queryAttrs += '&steps=' + steps;
     }
 
