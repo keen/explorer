@@ -219,20 +219,20 @@ module.exports = {
     var attrs = module.exports.queryJSON(explorer);
 
     var analysisType = attrs.analysis_type;
-    delete attrs['analysis_type'];
+    delete attrs.analysis_type;
 
-    var timeframe = _.cloneDeep(attrs['timeframe']);
-    delete attrs['timeframe'];
+    var timeframe = _.cloneDeep(attrs.timeframe);
+    delete attrs.timeframe;
 
-    var filters = _.map(attrs['filters'], function(filter) {
+    var filters = _.map(attrs.filters, function(filter) {
       return _.omit(_.cloneDeep(filter), 'coercion_type');
     });
-    delete attrs['filters'];
+    delete attrs.filters;
 
     var steps;
-    if (attrs['steps']) {
-      steps = module.exports.encodeAttribute(attrs['steps']);
-      delete attrs['steps'];
+    if (attrs.steps) {
+      steps = module.exports.encodeAttribute(attrs.steps);
+      delete attrs.steps;
     }
 
     if (attrs.group_by && _.isArray(attrs.group_by) && attrs.group_by.length) {
