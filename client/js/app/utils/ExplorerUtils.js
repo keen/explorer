@@ -229,7 +229,7 @@ module.exports = {
     delete attrs.filters;
 
     var steps;
-    if (attrs.steps) {
+    if (attrs.steps && attrs.steps.length) {
       steps = module.exports.encodeAttribute(attrs.steps);
       delete attrs.steps;
     }
