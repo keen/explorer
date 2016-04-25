@@ -539,27 +539,41 @@ describe('utils/ExplorerUtils', function() {
       });
 
       describe('steps', function () {
-        var explorer = { 
-          query: {
-            analysis_type: 'funnel',
-            steps: [{
-              event_collection: 'signups',
-              actor_property: 'user',
-              time: {
-                relativity: 'this',
-                amount: 1,
-                sub_timeframe: 'days'
-              },
-              timezone: 'US/Hawaii'
-            }]
-          }
-        };
-
         it('has the expected steps attribute', function () {
-          assert.include(ExplorerUtils.getApiQueryUrl(this.client, explorer), "&steps=%5B%7B%22")
+          var explorer = { 
+            query: {
+              analysis_type: 'funnel',
+              steps: [{
+                event_collection: 'signups',
+                actor_property: 'user',
+                time: {
+                  relativity: 'this',
+                  amount: 1,
+                  sub_timeframe: 'days'
+                },
+                timezone: 'US/Hawaii'
+              }]
+            }
+          };
+          assert.include(ExplorerUtils.getApiQueryUrl(this.client, explorer), encodeURIComponent('&steps=[{"'))
         })
 
-        it('does not have a separate query param for each steop', function () {
+        it('does not have a separate query param for each step', function () {
+          var explorer = { 
+            query: {
+              analysis_type: 'funnel',
+              steps: [{
+                event_collection: 'signups',
+                actor_property: 'user',
+                time: {
+                  relativity: 'this',
+                  amount: 1,
+                  sub_timeframe: 'days'
+                },
+                timezone: 'US/Hawaii'
+              }]
+            }
+          };
           assert.notInclude(ExplorerUtils.getApiQueryUrl(this.client, explorer), encodeURIComponent("steps[0]"));
         })
       });
