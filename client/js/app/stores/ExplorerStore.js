@@ -172,6 +172,7 @@ function _migrateToFunnel(explorer, newModel) {
   }
 
   newModel.query.steps = [firstStep];
+  newModel.query.timeframe = null;
 
   return newModel;
 }
