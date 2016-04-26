@@ -172,7 +172,6 @@ function _migrateToFunnel(explorer, newModel) {
   }
 
   newModel.query.steps = [firstStep];
-  newModel.query.timeframe = null;
 
   return newModel;
 }
@@ -232,6 +231,7 @@ function _removeInvalidFields(newModel) {
     newModel.query.filters = [];
     newModel.query.time = null;
     newModel.query.timezone = null;
+    newModel.query.timeframe = null;
   }
   return newModel;
 }
