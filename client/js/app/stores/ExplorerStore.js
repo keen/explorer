@@ -231,6 +231,7 @@ function _removeInvalidFields(newModel) {
     newModel.query.filters = [];
     newModel.query.time = null;
     newModel.query.timezone = null;
+    newModel.query.group_by = null;
   }
   return newModel;
 }

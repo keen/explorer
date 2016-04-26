@@ -977,6 +977,28 @@ describe('stores/ExplorerStore', function() {
          sub_timeframe: 'hours'
         });
       });
+
+      it('should remove the root group_by property', function () {
+        ExplorerActions.update('abc123', {
+          query: {
+            analysis_type: 'count',
+            event_collection: 'pageviews',
+            group_by: 'grouping_property',
+            filters: [],
+            time: {
+             relativity: 'this',
+             amount: 1,
+             sub_timeframe: 'hours'
+            }
+          }
+        });
+
+        ExplorerActions.update('abc123', { query: { analysis_type: 'funnel' } });
+
+        var newExplorer = ExplorerStore.get('abc123');
+
+        assert.sameMembers(newExplorer.query.group_by, [null]);
+      });
     });
 
     describe('changing FROM funnels', function () {
