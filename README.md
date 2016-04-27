@@ -24,13 +24,13 @@ You have three options for including the necessary Explorer files:
   <!-- Include Bootstrap from CDN. We use bootstrap as our CSS framework for Explorer -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
   <!-- Include Explorer CSS from CDN -->
-  <link rel="stylesheet" href="https://d26b395fwzu5fz.cloudfront.net/apps/keen-explorer-2.2.0.min.css">
+  <link rel="stylesheet" href="https://d26b395fwzu5fz.cloudfront.net/apps/keen-explorer-2.3.0.min.css">
   <!-- Include jQuery from Google. We use jQuery for a few of our UI components, like calendar pickers. -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
   <!-- Include keen.js from CDN. This is our Javascript SDK that powers querying and visualizations in Explorer. -->
   <script src="https://d26b395fwzu5fz.cloudfront.net/3.4.0-rc4/keen.min.js" type="text/javascript"></script>
   <!-- Include keen-explorer.js from CDN. -->
-  <script src="https://d26b395fwzu5fz.cloudfront.net/apps/keen-explorer-2.2.0.min.js"></script>
+  <script src="https://d26b395fwzu5fz.cloudfront.net/apps/keen-explorer-2.3.0.min.js"></script>
 ```
 
 ##### Option 2: Include the files yourself
