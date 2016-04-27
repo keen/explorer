@@ -386,6 +386,16 @@ describe('actions/ExplorerActions', function() {
           query: this.explorer.query
         }));
       });
+      it('should set the "saving" property back to false if found invalid', function () {
+        this.explorer.query.query_name = '';
+        this.explorer.isValid = false;
+        ExplorerActions.save(this.persistence, 'TEMP-ABC');
+        assert.isTrue(this.dispatchStub.calledWith({
+          actionType: 'EXPLORER_UPDATE',
+          id: 'TEMP-ABC',
+          updates: { saving: false }
+        }));
+      });
     });
 
     describe('save with an already persisted explorer', function () {

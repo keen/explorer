@@ -231,7 +231,11 @@ function _removeInvalidFields(newModel) {
     newModel.query.filters = [];
     newModel.query.time = null;
     newModel.query.timezone = null;
+<<<<<<< HEAD
     newModel.query.group_by = null;
+=======
+    newModel.query.timeframe = null;
+>>>>>>> 58cea2fe6a967d529d0e0ad8bbbcdfb96fde19df
   }
   return newModel;
 }

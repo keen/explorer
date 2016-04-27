@@ -10,7 +10,11 @@ function exists(value) {
 }
 
 function toType(obj) {
-  return ({}).toString.call(obj).match(/\s([a-zA-Z]+)/)[1].toLowerCase()
+  return ({}).toString.call(obj).match(/\s([a-zA-Z]+)/)[1].toLowerCase();
+}
+
+function isNumeric(num) {
+  return !isNaN(num);
 }
 
 module.exports = {
@@ -82,6 +86,7 @@ module.exports = {
         break;
       case 'string':
         if (filter.operator === 'exists') return 'Boolean';
+        if (isNumeric(filter.property_value)) return 'Number';
         if (FormatUtils.isDateInStrictFormat(filter.property_value.substring(0, filter.property_value.length-6))) return 'Datetime';
         if (FormatUtils.isList(filter.property_value)) return 'List';
         return 'String';
