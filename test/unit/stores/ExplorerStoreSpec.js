@@ -1015,6 +1015,46 @@ describe('stores/ExplorerStore', function() {
          sub_timeframe: 'hours'
         });
       });
+
+<<<<<<< HEAD
+      it('should remove the root group_by property', function () {
+        ExplorerActions.update('abc123', {
+          query: {
+            analysis_type: 'count',
+            event_collection: 'pageviews',
+            group_by: 'grouping_property',
+            filters: [],
+=======
+      it('should set the global timeframe property to null', function () {
+        ExplorerActions.update('abc123', {
+          query: {
+            filters: [],
+            event_collection: 'pageviews',
+            target_property: 'user',
+>>>>>>> 58cea2fe6a967d529d0e0ad8bbbcdfb96fde19df
+            time: {
+             relativity: 'this',
+             amount: 1,
+             sub_timeframe: 'hours'
+<<<<<<< HEAD
+            }
+=======
+            },
+            timeframe: 'this_1_hours'
+>>>>>>> 58cea2fe6a967d529d0e0ad8bbbcdfb96fde19df
+          }
+        });
+
+        ExplorerActions.update('abc123', { query: { analysis_type: 'funnel' } });
+
+        var newExplorer = ExplorerStore.get('abc123');
+
+<<<<<<< HEAD
+        assert.sameMembers(newExplorer.query.group_by, [null]);
+=======
+        assert.strictEqual(newExplorer.query.timeframe, null);
+>>>>>>> 58cea2fe6a967d529d0e0ad8bbbcdfb96fde19df
+      });
     });
 
     describe('changing FROM funnels', function () {
