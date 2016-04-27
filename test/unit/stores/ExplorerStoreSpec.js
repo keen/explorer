@@ -972,21 +972,21 @@ describe('stores/ExplorerStore', function() {
       it('should set root query properties to null or empty arrays', function () {
         ExplorerActions.update('abc123', { query: { analysis_type: 'funnel' } });  
 
-        var newExplorer = ExplorerStore.get('abc123');
-        assert.deepPropertyVal(newExplorer, 'query.event_collection', null);
-        assert.deepPropertyVal(newExplorer, 'query.target_property', null);
-        assert.deepPropertyVal(newExplorer, 'query.time', null);
-        assert.deepPropertyVal(newExplorer, 'query.timezone', null);
-        assert.sameMembers(newExplorer.query.filters, []);
+        var explorer = ExplorerStore.get('abc123');
+        assert.deepPropertyVal(explorer, 'query.event_collection', null);
+        assert.deepPropertyVal(explorer, 'query.target_property', null);
+        assert.deepPropertyVal(explorer, 'query.time', null);
+        assert.deepPropertyVal(explorer, 'query.timezone', null);
+        assert.sameMembers(explorer.query.filters, []);
       });
 
       it('should create a first active step', function () {
         ExplorerActions.update('abc123', { query: { analysis_type: 'funnel' } });  
 
-        var newExplorer = ExplorerStore.get('abc123');
-        assert.deepProperty(newExplorer, 'query.steps');
-        assert.strictEqual(newExplorer.query.steps.length, 1);
-        assert.strictEqual(newExplorer.query.steps[0].active, true);
+        var explorer = ExplorerStore.get('abc123');
+        assert.deepProperty(explorer, 'query.steps');
+        assert.strictEqual(explorer.query.steps.length, 1);
+        assert.strictEqual(explorer.query.steps[0].active, true);
       });
 
       it('should move root properties over to the first step', function () {
@@ -1002,21 +1002,18 @@ describe('stores/ExplorerStore', function() {
             }
           }
         });
-
         ExplorerActions.update('abc123', { query: { analysis_type: 'funnel' } });
+        var explorer = ExplorerStore.get('abc123');
 
-        var newExplorer = ExplorerStore.get('abc123');
-
-        assert.strictEqual(newExplorer.query.steps[0].event_collection, 'pageviews');
-        assert.strictEqual(newExplorer.query.steps[0].actor_property, 'user');
-        assert.deepEqual(newExplorer.query.steps[0].time, {
+        assert.strictEqual(explorer.query.steps[0].event_collection, 'pageviews');
+        assert.strictEqual(explorer.query.steps[0].actor_property, 'user');
+        assert.deepEqual(explorer.query.steps[0].time, {
          relativity: 'this',
          amount: 1,
          sub_timeframe: 'hours'
         });
       });
 
-<<<<<<< HEAD
       it('should remove the root group_by property', function () {
         ExplorerActions.update('abc123', {
           query: {
@@ -1024,37 +1021,33 @@ describe('stores/ExplorerStore', function() {
             event_collection: 'pageviews',
             group_by: 'grouping_property',
             filters: [],
-=======
+            group_by: 'some_group_by_property'
+          }
+        });
+        ExplorerActions.update('abc123', { query: { analysis_type: 'funnel' } });
+        var explorer = ExplorerStore.get('abc123');
+        assert.sameMembers(explorer.query.group_by, [null]);
+      });
+
       it('should set the global timeframe property to null', function () {
         ExplorerActions.update('abc123', {
           query: {
             filters: [],
             event_collection: 'pageviews',
             target_property: 'user',
->>>>>>> 58cea2fe6a967d529d0e0ad8bbbcdfb96fde19df
             time: {
              relativity: 'this',
              amount: 1,
              sub_timeframe: 'hours'
-<<<<<<< HEAD
-            }
-=======
             },
             timeframe: 'this_1_hours'
->>>>>>> 58cea2fe6a967d529d0e0ad8bbbcdfb96fde19df
           }
         });
-
         ExplorerActions.update('abc123', { query: { analysis_type: 'funnel' } });
-
-        var newExplorer = ExplorerStore.get('abc123');
-
-<<<<<<< HEAD
-        assert.sameMembers(newExplorer.query.group_by, [null]);
-=======
-        assert.strictEqual(newExplorer.query.timeframe, null);
->>>>>>> 58cea2fe6a967d529d0e0ad8bbbcdfb96fde19df
+        var explorer = ExplorerStore.get('abc123');
+        assert.strictEqual(explorer.query.timeframe, null);
       });
+
     });
 
     describe('changing FROM funnels', function () {
