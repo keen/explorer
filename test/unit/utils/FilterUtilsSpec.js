@@ -33,6 +33,33 @@ describe('utils/FilterUtils', function() {
         assert.strictEqual(FilterUtils.getCoercionType(filter), "Boolean");
       });
 
+      describe('Number property_values', function () {
+        it('Number type when property_value is a string that can be parsed into an Int number', function () {
+          var filter = {
+            property_name: "num_projects",
+            operator: "eq",
+            property_value: "4"
+          };
+          assert.strictEqual(FilterUtils.getCoercionType(filter), "Number");
+        });
+        it('Number type when property_value is a string that can be parsed into the number 0', function () {
+          var filter = {
+            property_name: "num_projects",
+            operator: "eq",
+            property_value: "0"
+          };
+          assert.strictEqual(FilterUtils.getCoercionType(filter), "Number");
+        });
+        it('Number type when property_value is a string that can be parsed into a double number', function () {
+          var filter = {
+            property_name: "num_projects",
+            operator: "eq",
+            property_value: "4.4"
+          };
+          assert.strictEqual(FilterUtils.getCoercionType(filter), "Number");
+        });
+      });
+
     });
   });
   
