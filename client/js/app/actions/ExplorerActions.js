@@ -329,6 +329,7 @@ var ExplorerActions = {
         actionType: ExplorerConstants.EXPLORER_FOUND_INVALID,
         id: explorer.id
       });
+      module.exports.update(sourceId, { saving: false });
       return;
     }
     NoticeActions.clearAll();

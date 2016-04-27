@@ -723,6 +723,44 @@ describe('stores/ExplorerStore', function() {
             assert.deepPropertyVal(ExplorerStore.get(this.explorer.id).query.filters[0], 'property_name', 'name');
             assert.deepPropertyVal(ExplorerStore.get(this.explorer.id).query.filters[0], 'coercion_type', 'List');
           });
+          describe('with exists operator', function() {
+            it('should keep the coercion_type as Boolean', function () {
+              ExplorerActions.updateFilter(this.explorer.id, 0, {
+                property_name: 'name',
+                operator: 'exists',
+                coercion_type: 'Boolean',
+                property_value: true
+              });
+              ExplorerActions.updateFilter(this.explorer.id, 0, {
+                property_name: 'new value'
+              });
+              assert.deepPropertyVal(ExplorerStore.get(this.explorer.id).query.filters[0], 'coercion_type', 'Boolean');
+            });
+            it('should keep the property_value as the Boolean value (true)', function () {
+              ExplorerActions.updateFilter(this.explorer.id, 0, {
+                property_name: 'name',
+                operator: 'exists',
+                coercion_type: 'Boolean',
+                property_value: true
+              });
+              ExplorerActions.updateFilter(this.explorer.id, 0, {
+                property_name: 'new value'
+              });
+              assert.deepPropertyVal(ExplorerStore.get(this.explorer.id).query.filters[0], 'property_value', true);
+            });
+            it('should keep the property_value as the Boolean value (false)', function () {
+              ExplorerActions.updateFilter(this.explorer.id, 0, {
+                property_name: 'name',
+                operator: 'exists',
+                coercion_type: 'Boolean',
+                property_value: false
+              });
+              ExplorerActions.updateFilter(this.explorer.id, 0, {
+                property_name: 'new value'
+              });
+              assert.deepPropertyVal(ExplorerStore.get(this.explorer.id).query.filters[0], 'property_value', false);
+            });
+          });
         });
         
         describe('operator', function () {
@@ -976,6 +1014,46 @@ describe('stores/ExplorerStore', function() {
          amount: 1,
          sub_timeframe: 'hours'
         });
+      });
+
+<<<<<<< HEAD
+      it('should remove the root group_by property', function () {
+        ExplorerActions.update('abc123', {
+          query: {
+            analysis_type: 'count',
+            event_collection: 'pageviews',
+            group_by: 'grouping_property',
+            filters: [],
+=======
+      it('should set the global timeframe property to null', function () {
+        ExplorerActions.update('abc123', {
+          query: {
+            filters: [],
+            event_collection: 'pageviews',
+            target_property: 'user',
+>>>>>>> 58cea2fe6a967d529d0e0ad8bbbcdfb96fde19df
+            time: {
+             relativity: 'this',
+             amount: 1,
+             sub_timeframe: 'hours'
+<<<<<<< HEAD
+            }
+=======
+            },
+            timeframe: 'this_1_hours'
+>>>>>>> 58cea2fe6a967d529d0e0ad8bbbcdfb96fde19df
+          }
+        });
+
+        ExplorerActions.update('abc123', { query: { analysis_type: 'funnel' } });
+
+        var newExplorer = ExplorerStore.get('abc123');
+
+<<<<<<< HEAD
+        assert.sameMembers(newExplorer.query.group_by, [null]);
+=======
+        assert.strictEqual(newExplorer.query.timeframe, null);
+>>>>>>> 58cea2fe6a967d529d0e0ad8bbbcdfb96fde19df
       });
     });
 
