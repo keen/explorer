@@ -723,6 +723,44 @@ describe('stores/ExplorerStore', function() {
             assert.deepPropertyVal(ExplorerStore.get(this.explorer.id).query.filters[0], 'property_name', 'name');
             assert.deepPropertyVal(ExplorerStore.get(this.explorer.id).query.filters[0], 'coercion_type', 'List');
           });
+          describe('with exists operator', function() {
+            it('should keep the coercion_type as Boolean', function () {
+              ExplorerActions.updateFilter(this.explorer.id, 0, {
+                property_name: 'name',
+                operator: 'exists',
+                coercion_type: 'Boolean',
+                property_value: true
+              });
+              ExplorerActions.updateFilter(this.explorer.id, 0, {
+                property_name: 'new value'
+              });
+              assert.deepPropertyVal(ExplorerStore.get(this.explorer.id).query.filters[0], 'coercion_type', 'Boolean');
+            });
+            it('should keep the property_value as the Boolean value (true)', function () {
+              ExplorerActions.updateFilter(this.explorer.id, 0, {
+                property_name: 'name',
+                operator: 'exists',
+                coercion_type: 'Boolean',
+                property_value: true
+              });
+              ExplorerActions.updateFilter(this.explorer.id, 0, {
+                property_name: 'new value'
+              });
+              assert.deepPropertyVal(ExplorerStore.get(this.explorer.id).query.filters[0], 'property_value', true);
+            });
+            it('should keep the property_value as the Boolean value (false)', function () {
+              ExplorerActions.updateFilter(this.explorer.id, 0, {
+                property_name: 'name',
+                operator: 'exists',
+                coercion_type: 'Boolean',
+                property_value: false
+              });
+              ExplorerActions.updateFilter(this.explorer.id, 0, {
+                property_name: 'new value'
+              });
+              assert.deepPropertyVal(ExplorerStore.get(this.explorer.id).query.filters[0], 'property_value', false);
+            });
+          });
         });
         
         describe('operator', function () {

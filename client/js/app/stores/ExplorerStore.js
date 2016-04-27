@@ -250,9 +250,13 @@ function _removeInvalidFields(newModel) {
  */
 function _prepareFilterUpdates(explorer, filter, updates) {
   if (updates.property_name && updates.property_name !== filter.property_name) {
-    // No need to update the operator - we allow any operator for any property type right now.
-    updates.coercion_type = _getDefaultFilterCoercionType(explorer, _.merge({}, filter, updates));
-  } 
+    if (filter.operator === 'exists') {
+      updates.coercion_type = 'Boolean';
+    } else {
+      // No need to update the operator - we allow any operator for any property type right now.
+      updates.coercion_type = _getDefaultFilterCoercionType(explorer, _.merge({}, filter, updates));
+    }
+  }
   else if (updates.operator && updates.operator !== filter.operator) {
     var newOp = updates.operator;
     if (newOp === 'in') updates.coercion_type = 'List';
@@ -362,6 +366,7 @@ function _removeFilter(id, index) {
 function _updateFilter(id, index, updates) {
   var filter = _explorers[id].query.filters[index];
   var updates = _prepareFilterUpdates(_explorers[id], filter, updates);
+
   _explorers[id].query.filters[index] = _.assign({}, filter, updates);
 
   // Hack around the fact that _.assign doesn't assign null values. But we
