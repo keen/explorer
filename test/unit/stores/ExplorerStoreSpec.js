@@ -977,6 +977,28 @@ describe('stores/ExplorerStore', function() {
          sub_timeframe: 'hours'
         });
       });
+
+      it('should set the global timeframe property to null', function () {
+        ExplorerActions.update('abc123', {
+          query: {
+            filters: [],
+            event_collection: 'pageviews',
+            target_property: 'user',
+            time: {
+             relativity: 'this',
+             amount: 1,
+             sub_timeframe: 'hours'
+            },
+            timeframe: 'this_1_hours'
+          }
+        });
+
+        ExplorerActions.update('abc123', { query: { analysis_type: 'funnel' } });
+
+        var newExplorer = ExplorerStore.get('abc123');
+
+        assert.strictEqual(newExplorer.query.timeframe, null);
+      });
     });
 
     describe('changing FROM funnels', function () {
