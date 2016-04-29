@@ -29,103 +29,106 @@ describe('actions/ExplorerActions', function() {
     this.dispatchStub.reset();
   });
 
-  // describe('exec', function () {
-  //   before(function () {
-  //     this.client = new KeenAnalysis(TestHelpers.createClient()); //{ run: sinon.spy() };
-  //     this.getStub = sinon.stub(ExplorerStore, 'get');
-  //   });
-  //
-  //   after(function () {
-  //     ExplorerStore.get.restore();
-  //   });
-  //
-  //   beforeEach(function () {
-  //     this.client.run.reset();
-  //   });
-  //
-  //   it('should throw an error if the model is currently loading', function () {
-  //     var explorer = { id: 5, loading: true };
-  //     this.getStub.returns(explorer);
-  //     expect(ExplorerActions.exec.bind(null, this.client, explorer.id)).to.throw("Warning: calling exec when model loading is true. Explorer id: 5");
-  //   });
-  //   it('should run the validations with the right arguments', function () {
-  //     var explorer = TestHelpers.createExplorerModel();
-  //     this.getStub.returns(explorer);
-  //     var stub = sinon.stub(ExplorerActions, 'validate');
-  //     ExplorerActions.exec(this.client, explorer.id);
-  //     assert.isTrue(stub.calledOnce);
-  //     ExplorerActions.validate.restore();
-  //   });
-  //   it('should call the dispatcher to update the store and set loading to true', function () {
-  //     var explorer = {
-  //       id: 5,
-  //       loading: false,
-  //       query: {},
-  //       isValid: true
-  //     };
-  //     this.getStub.returns(explorer);
-  //     ExplorerActions.exec(this.client, explorer.id);
-  //     assert.isTrue(this.dispatchStub.calledWith({
-  //       actionType: 'EXPLORER_UPDATE',
-  //       id: 5,
-  //       updates: { loading: true }
-  //     }));
-  //   });
-  //   it('should add the latest attribute with a limit for extractions', function () {
-  //     var explorer = {
-  //       id: 5,
-  //       loading: false,
-  //       isValid: true,
-  //       query: {
-  //         event_collection: 'click',
-  //         analysis_type: 'extraction'
-  //       }
-  //     };
-  //     this.getStub.returns(explorer);
-  //     ExplorerActions.exec(this.client, explorer.id);
-  //     assert.strictEqual(
-  //       this.client.run.getCalls()[0].args[0].params.latest,
-  //       100
-  //     );
-  //   });
-  // });
+  describe('exec', function () {
+    before(function () {
+      this.client = new KeenAnalysis(TestHelpers.createClient());
+      this.getStub = sinon.stub(ExplorerStore, 'get');
+      this.runQueryStub = sinon.stub(ExplorerUtils, 'runQuery');
+    });
+  
+    after(function () {
+      ExplorerStore.get.restore();
+      ExplorerUtils.runQuery.restore();
+    });
 
-  // describe('runEmailExtraction', function () {
-  //   beforeEach(function () {
-  //     this.validateStub = sinon.stub(ExplorerActions, 'validate');
-  //     this.runQueryStub = sinon.stub(ExplorerUtils, 'runQuery');
-  //     this.client = { run: sinon.stub() };
-  //     this.explorer = {
-  //       isValid: false,
-  //       errors: [{
-  //         msg: 'invalid'
-  //       }],
-  //       query: {
-  //         analysis_type: 'count',
-  //         event_collection: 'click',
-  //         email: 'contact@keen.io',
-  //         latest: '100'
-  //       }
-  //     };
-  //     this.getStub = sinon.stub(ExplorerStore, 'get').returns(this.explorer);
-  //   });
-  //
-  //   afterEach(function () {
-  //     ExplorerActions.validate.restore();
-  //     ExplorerUtils.runQuery.restore();
-  //     ExplorerStore.get.restore();
-  //   });
-  //
-  //   it('should run validations', function () {
-  //     ExplorerActions.runEmailExtraction(this.client, this.explorer.id);
-  //     assert.isTrue(this.validateStub.calledOnce);
-  //   });
-  //   it('should NOT run the query if validaton fails', function () {
-  //     this.validateStub.returns([{ msg: 'invalid' }]);
-  //     ExplorerActions.runEmailExtraction(this.client, this.explorer.id);
-  //     assert.isFalse(this.runQueryStub.called);
-  //   });
-  // });
+    beforeEach(function () {
+      this.runQueryStub.reset();
+    });
+  
+    it('should throw an error if the model is currently loading', function () {
+      var explorer = { id: 5, loading: true };
+      this.getStub.returns(explorer);
+      expect(ExplorerActions.exec.bind(null, this.client, explorer.id)).to.throw("Warning: calling exec when model loading is true. Explorer id: 5");
+    });
+    it('should run the validations with the right arguments', function () {
+      var explorer = TestHelpers.createExplorerModel();
+      explorer.query.analysis_type = 'count';
+      this.getStub.returns(explorer);
+      var stub = sinon.stub(ExplorerActions, 'validate');
+      ExplorerActions.exec(this.client, explorer.id);
+      assert.isTrue(stub.calledOnce);
+      ExplorerActions.validate.restore();
+    });
+    it('should call the dispatcher to update the store and set loading to true', function () {
+      var explorer = {
+        id: 5,
+        loading: false,
+        query: {},
+        isValid: true
+      };
+      this.getStub.returns(explorer);
+      ExplorerActions.exec(this.client, explorer.id);
+      assert.isTrue(this.dispatchStub.calledWith({
+        actionType: 'EXPLORER_UPDATE',
+        id: 5,
+        updates: { loading: true }
+      }));
+    });
+    it('should add the latest attribute with a limit for extractions', function () {
+      var explorer = {
+        id: 5,
+        loading: false,
+        isValid: true,
+        query: {
+          event_collection: 'click',
+          analysis_type: 'extraction'
+        }
+      };
+      this.getStub.returns(explorer);
+      ExplorerActions.exec(this.client, explorer.id);
+      assert.strictEqual(
+        this.runQueryStub.getCall(0).args[0].query.latest,
+        100
+      );
+    });
+  });
+
+  describe('runEmailExtraction', function () {
+    beforeEach(function () {
+      this.validateStub = sinon.stub(ExplorerActions, 'validate');
+      this.runQueryStub = sinon.stub(ExplorerUtils, 'runQuery');
+      this.client = { run: sinon.stub() };
+      this.explorer = {
+        isValid: false,
+        errors: [{
+          msg: 'invalid'
+        }],
+        query: {
+          analysis_type: 'count',
+          event_collection: 'click',
+          email: 'contact@keen.io',
+          latest: '100'
+        }
+      };
+      this.getStub = sinon.stub(ExplorerStore, 'get').returns(this.explorer);
+    });
+  
+    afterEach(function () {
+      ExplorerActions.validate.restore();
+      ExplorerUtils.runQuery.restore();
+      ExplorerStore.get.restore();
+    });
+  
+    it('should run validations', function () {
+      ExplorerActions.runEmailExtraction(this.client, this.explorer.id);
+      assert.isTrue(this.validateStub.calledOnce);
+    });
+    it('should NOT run the query if validaton fails', function () {
+      this.validateStub.returns([{ msg: 'invalid' }]);
+      ExplorerActions.runEmailExtraction(this.client, this.explorer.id);
+      assert.isFalse(this.runQueryStub.called);
+    });
+  });
 
   describe('fetchAllPersisted', function () {
     beforeEach(function () {

@@ -166,7 +166,6 @@ module.exports = {
    * @return {undefined}
    */
   runQuery: function(config) {
-    console.log(config);
     config.client
       .query(config.query.analysis_type, _.omit(config.query, 'analysis_type'))
       .then(function(res, err){
