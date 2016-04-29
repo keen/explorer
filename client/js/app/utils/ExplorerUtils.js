@@ -166,18 +166,18 @@ module.exports = {
    * @return {undefined}
    */
   runQuery: function(config) {
-    config.client.run(
-      new Keen.Query(config.query.analysis_type, _.omit(config.query, 'analysis_type')),
-      function(err, response) {
+    console.log(config);
+    config.client
+      .query(config.query.analysis_type, _.omit(config.query, 'analysis_type'))
+      .then(function(res, err){
         if (err) {
           config.error(err);
         }
         else {
-          config.success(response);
+          config.success(res);
         }
-        if (config.complete) config.complete(err, response);
-      }
-    );
+        if (config.complete) config.complete(err, res);
+      });
   },
 
   /**
