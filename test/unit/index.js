@@ -22,6 +22,7 @@ require('./utils/RunValidationsSpec.js');
 require('./utils/FunnelUtilsSpec.js');
 require('./utils/TimeframeUtilsSpec.js');
 require('./utils/ChartTypeUtilsSpec.js');
+require('./utils/QueryStringUtilsSpec.js');
 
 // ***********************
 // Validations

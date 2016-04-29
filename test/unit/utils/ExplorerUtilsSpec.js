@@ -557,11 +557,56 @@ describe('utils/ExplorerUtils', function() {
 
         it('has the expected steps attribute', function () {
           assert.include(ExplorerUtils.getApiQueryUrl(this.client, this.explorer), "&steps=%5B%7B%22")
-        })
+        });
 
         it('does not have a separate query param for each step', function () {
           assert.notInclude(ExplorerUtils.getApiQueryUrl(this.client, this.explorer), encodeURIComponent("steps[0]"));
-        })
+        });
+
+        it('has the expected steps attribute', function () {
+          var explorer = { 
+            query: {
+              analysis_type: 'funnel',
+              steps: [{
+                event_collection: 'signups',
+                actor_property: 'user',
+                time: {
+                  relativity: 'this',
+                  amount: 1,
+                  sub_timeframe: 'days'
+                },
+                timezone: 'US/Hawaii'
+              }]
+            }
+          };
+          var expectedURLcomponent = 'steps=' + encodeURIComponent(JSON.stringify([{
+            event_collection: 'signups',
+            actor_property: 'user',
+            timezone: 'US/Hawaii',
+            timeframe: 'this_1_days'
+          }]));
+          assert.include(ExplorerUtils.getApiQueryUrl(this.client, explorer), expectedURLcomponent);
+        });
+
+        it('does not have a separate query param for each step', function () {
+          var explorer = { 
+            query: {
+              analysis_type: 'funnel',
+              steps: [{
+                event_collection: 'signups',
+                actor_property: 'user',
+                time: {
+                  relativity: 'this',
+                  amount: 1,
+                  sub_timeframe: 'days'
+                },
+                timezone: 'US/Hawaii'
+              }]
+            }
+          };
+          assert.notInclude(ExplorerUtils.getApiQueryUrl(this.client, explorer), encodeURIComponent("steps[0]"));
+        });
+
       });
 
     });

@@ -723,6 +723,44 @@ describe('stores/ExplorerStore', function() {
             assert.deepPropertyVal(ExplorerStore.get(this.explorer.id).query.filters[0], 'property_name', 'name');
             assert.deepPropertyVal(ExplorerStore.get(this.explorer.id).query.filters[0], 'coercion_type', 'List');
           });
+          describe('with exists operator', function() {
+            it('should keep the coercion_type as Boolean', function () {
+              ExplorerActions.updateFilter(this.explorer.id, 0, {
+                property_name: 'name',
+                operator: 'exists',
+                coercion_type: 'Boolean',
+                property_value: true
+              });
+              ExplorerActions.updateFilter(this.explorer.id, 0, {
+                property_name: 'new value'
+              });
+              assert.deepPropertyVal(ExplorerStore.get(this.explorer.id).query.filters[0], 'coercion_type', 'Boolean');
+            });
+            it('should keep the property_value as the Boolean value (true)', function () {
+              ExplorerActions.updateFilter(this.explorer.id, 0, {
+                property_name: 'name',
+                operator: 'exists',
+                coercion_type: 'Boolean',
+                property_value: true
+              });
+              ExplorerActions.updateFilter(this.explorer.id, 0, {
+                property_name: 'new value'
+              });
+              assert.deepPropertyVal(ExplorerStore.get(this.explorer.id).query.filters[0], 'property_value', true);
+            });
+            it('should keep the property_value as the Boolean value (false)', function () {
+              ExplorerActions.updateFilter(this.explorer.id, 0, {
+                property_name: 'name',
+                operator: 'exists',
+                coercion_type: 'Boolean',
+                property_value: false
+              });
+              ExplorerActions.updateFilter(this.explorer.id, 0, {
+                property_name: 'new value'
+              });
+              assert.deepPropertyVal(ExplorerStore.get(this.explorer.id).query.filters[0], 'property_value', false);
+            });
+          });
         });
         
         describe('operator', function () {
@@ -934,21 +972,21 @@ describe('stores/ExplorerStore', function() {
       it('should set root query properties to null or empty arrays', function () {
         ExplorerActions.update('abc123', { query: { analysis_type: 'funnel' } });  
 
-        var newExplorer = ExplorerStore.get('abc123');
-        assert.deepPropertyVal(newExplorer, 'query.event_collection', null);
-        assert.deepPropertyVal(newExplorer, 'query.target_property', null);
-        assert.deepPropertyVal(newExplorer, 'query.time', null);
-        assert.deepPropertyVal(newExplorer, 'query.timezone', null);
-        assert.sameMembers(newExplorer.query.filters, []);
+        var explorer = ExplorerStore.get('abc123');
+        assert.deepPropertyVal(explorer, 'query.event_collection', null);
+        assert.deepPropertyVal(explorer, 'query.target_property', null);
+        assert.deepPropertyVal(explorer, 'query.time', null);
+        assert.deepPropertyVal(explorer, 'query.timezone', null);
+        assert.sameMembers(explorer.query.filters, []);
       });
 
       it('should create a first active step', function () {
         ExplorerActions.update('abc123', { query: { analysis_type: 'funnel' } });  
 
-        var newExplorer = ExplorerStore.get('abc123');
-        assert.deepProperty(newExplorer, 'query.steps');
-        assert.strictEqual(newExplorer.query.steps.length, 1);
-        assert.strictEqual(newExplorer.query.steps[0].active, true);
+        var explorer = ExplorerStore.get('abc123');
+        assert.deepProperty(explorer, 'query.steps');
+        assert.strictEqual(explorer.query.steps.length, 1);
+        assert.strictEqual(explorer.query.steps[0].active, true);
       });
 
       it('should move root properties over to the first step', function () {
@@ -964,19 +1002,52 @@ describe('stores/ExplorerStore', function() {
             }
           }
         });
-
         ExplorerActions.update('abc123', { query: { analysis_type: 'funnel' } });
+        var explorer = ExplorerStore.get('abc123');
 
-        var newExplorer = ExplorerStore.get('abc123');
-
-        assert.strictEqual(newExplorer.query.steps[0].event_collection, 'pageviews');
-        assert.strictEqual(newExplorer.query.steps[0].actor_property, 'user');
-        assert.deepEqual(newExplorer.query.steps[0].time, {
+        assert.strictEqual(explorer.query.steps[0].event_collection, 'pageviews');
+        assert.strictEqual(explorer.query.steps[0].actor_property, 'user');
+        assert.deepEqual(explorer.query.steps[0].time, {
          relativity: 'this',
          amount: 1,
          sub_timeframe: 'hours'
         });
       });
+
+      it('should remove the root group_by property', function () {
+        ExplorerActions.update('abc123', {
+          query: {
+            analysis_type: 'count',
+            event_collection: 'pageviews',
+            group_by: 'grouping_property',
+            filters: [],
+            group_by: 'some_group_by_property'
+          }
+        });
+        ExplorerActions.update('abc123', { query: { analysis_type: 'funnel' } });
+        var explorer = ExplorerStore.get('abc123');
+        assert.sameMembers(explorer.query.group_by, [null]);
+      });
+
+      it('should set the global timeframe property to null', function () {
+        ExplorerActions.update('abc123', {
+          query: {
+            filters: [],
+            event_collection: 'pageviews',
+            target_property: 'user',
+            time: {
+             relativity: 'this',
+             amount: 1,
+             sub_timeframe: 'hours'
+            },
+            timeframe: 'this_1_hours'
+          }
+        });
+        ExplorerActions.update('abc123', { query: { analysis_type: 'funnel' } });
+        var explorer = ExplorerStore.get('abc123');
+        assert.strictEqual(explorer.query.timeframe, null);
+      });
+
     });
 
     describe('changing FROM funnels', function () {

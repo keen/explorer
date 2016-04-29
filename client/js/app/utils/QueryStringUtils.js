@@ -18,7 +18,7 @@ module.exports = {
   },
 
   getQueryAttributes: function() {
-    return Qs.parse(this.getSearchString().replace('?', ''));
+    return Qs.parse(this.getSearchString().replace('?', ''), { depth: 7 });
   }
 
 };
