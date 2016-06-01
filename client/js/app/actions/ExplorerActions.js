@@ -28,16 +28,16 @@ var ExplorerActions = {
   },
 
   update: function(id, updates) {
-    var q, project = ProjectStore.getProject();
+    var updated_query, project = ProjectStore.getProject();
     AppDispatcher.dispatch({
       actionType: ExplorerConstants.EXPLORER_UPDATE,
       id: id,
       updates: updates
     });
     // Fetch schema for selected event collection
-    q = updates.query ? updates.query : updates.response && updates.response.query ? updates.response.query : {};
-    if (q.event_collection) {
-      ProjectActions.fetchCollectionSchema(project.client, q.event_collection);
+    updated_query = updates.query ? updates.query : updates.response && updates.response.query ? updates.response.query : {};
+    if (updated_query.event_collection) {
+      ProjectActions.fetchCollectionSchema(project.client, updated_query.event_collection);
     }
   },
 
