@@ -55,6 +55,9 @@ var ProjectActions = {
 
   fetchCollectionSchema: function(client, collectionName) {
     var project = ProjectStore.getProject();
+    if (project.eventCollections.indexOf(collectionName) < 0) {
+      return false;
+    }
     ProjectActions.updateEventCollection(collectionName, {
       loading: true
     });
