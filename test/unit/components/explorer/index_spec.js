@@ -20,7 +20,6 @@ var ExplorerStore = require('../../../../client/js/app/stores/ExplorerStore');
 var NoticeStore = require('../../../../client/js/app/stores/NoticeStore');
 var AppStateStore = require('../../../../client/js/app/stores/AppStateStore');
 var ExplorerActions = require('../../../../client/js/app/actions/ExplorerActions');
-// var ProjectActions = require('../../../../client/js/app/actions/ProjectActions');
 var RunValidations = require('../../../../client/js/app/utils/RunValidations');
 var NoticeActions = require('../../../../client/js/app/actions/NoticeActions');
 var ExplorerUtils = require('../../../../client/js/app/utils/ExplorerUtils');
@@ -50,7 +49,6 @@ describe('components/explorer/index', function() {
     this.project.client.resources({
       'events': '{protocol}://{host}/3.0/projects/{projectId}/events'
     });
-    // ProjectActions.create({ client: this.client });
 
     this.config = { persistence: null };
     this.explorer = ExplorerStore.get('1');

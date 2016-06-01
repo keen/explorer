@@ -9,7 +9,6 @@ var TestHelpers = require('../../../support/TestHelpers');
 var EventBrowser = require('../../../../client/js/app/components/common/event_browser.js');
 var Loader = require('../../../../client/js/app/components/common/loader.js');
 var ExplorerActions = require('../../../../client/js/app/actions/ExplorerActions');
-// var ProjectActions = require('../../../../client/js/app/actions/ProjectActions');
 var ExplorerUtils = require('../../../../client/js/app/utils/ExplorerUtils');
 var ProjectUtils = require('../../../../client/js/app/utils/ProjectUtils');
 var FormatUtils = require('../../../../client/js/app/utils/FormatUtils');
@@ -34,7 +33,6 @@ describe('components/common/event_browser', function() {
     this.project.client.resources({
       'events': '{protocol}://{host}/3.0/projects/{projectId}/events'
     });
-    // ProjectActions.create({ client: this.client });
 
     this.component = TestUtils.renderIntoDocument(<EventBrowser client={this.client} currentEventCollection={this.currentEventCollection} project={this.project} />);
   });
