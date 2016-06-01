@@ -34,11 +34,11 @@ var ProjectActions = {
       .auth(project.client.masterKey())
       .send()
       .then(function(res){
-        if (res.events.length < 1000) {
-          ProjectActions.fetchProjectSchema();
-          return res;
-        }
-        var schema = {};
+        // if (res.events.length < 1000) {
+        //   ProjectActions.fetchProjectSchema();
+        //   return res;
+        // }
+        var schema = _.assign({}, project.schema);
         _.each(res.events, function(collection) {
           schema[collection.name] = _.assign(collection, {
             sortedProperties: [],
@@ -50,6 +50,9 @@ var ProjectActions = {
           schema: schema,
           eventCollections: FormatUtils.sortItems(_.keys(schema)),
           loading: false
+        });
+        _.each(res.events, function(collection) {
+          ProjectActions.fetchCollectionSchema(collection.name);
         });
       })
       .catch(function(err){
@@ -77,6 +80,27 @@ var ProjectActions = {
         ProjectActions.update(project.id, {
           schema: schema,
           eventCollections: FormatUtils.sortItems(_.keys(schema)),
+          loading: false
+        });
+      })
+      .catch(function(err){
+        throw new Error('Error fetching project collections: ' + err);
+      });
+  },
+
+  fetchCollectionSchema: function(collectionName) {
+    var project = ProjectStore.getProject();
+    ProjectActions.updateEventCollection(collectionName, {
+      loading: true
+    });
+    return project.client
+      .get(project.client.url('events', collectionName))
+      .auth(project.client.masterKey())
+      .send()
+      .then(function(res) {
+        ProjectActions.updateEventCollection(collectionName, {
+          properties: res.properties,
+          sortedProperties: FormatUtils.sortItems(_.keys(res.properties)),
           loading: false
         });
       })
