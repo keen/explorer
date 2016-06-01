@@ -7,7 +7,7 @@ var KeenAnalysis = require('keen-analysis');
 
 describe('actions/ProjectActions', function() {
 
-  describe('fetchProjectSchema', function() {
+  describe('fetchCollectionSchema', function() {
 
     before(function() {
       this.xhrOpenStub = sinon.stub(XMLHttpRequest.prototype, 'open');
@@ -30,48 +30,12 @@ describe('actions/ProjectActions', function() {
                         this.client.config.host +
                         '/projects/' +
                         this.client.config.projectId +
-                        '/events?api_key=' +
+                        '/events/test?api_key=' +
                         this.client.config.masterKey;
-      ProjectActions.fetchProjectSchema();
+      ProjectActions.fetchCollectionSchema('test');
       this.xhrOpenStub.calledWith('GET', expectedURL, true);
     });
 
-    describe('calling project update actions', function () {
-      before(function () {
-        this.projectUpdateStub = sinon.stub(ProjectActions, 'update');
-      });
-
-      after(function () {
-        ProjectActions.update.restore();
-      });
-
-      beforeEach(function () {
-        var req = ProjectActions.fetchProjectSchema();
-        req.callback(null, { body: TestHelpers.buildProjectSchema() });
-      });
-
-      it('should update the project with the unpacked project Schema', function () {
-        var expectedUpdates = {
-          loading: false,
-          eventCollections: ['click'],
-          schema: TestHelpers.buildProjectSchema()
-        };
-        expectedUpdates.schema.click.sortedProperties = [
-          'boolProp',
-          'datetimeProp',
-          'geoProp',
-          'listProp',
-          'nullProp',
-          'numProp',
-          'stringProp'
-        ]
-        assert.deepEqual(this.projectUpdateStub.getCall(0).args[1], expectedUpdates);
-      });
-
-      it('should update the project loading state', function () {
-        assert.deepPropertyVal(this.projectUpdateStub.getCall(0).args[1], 'loading', false);
-      });
-    });
   });
 
 });
