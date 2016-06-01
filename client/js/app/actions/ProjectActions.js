@@ -37,6 +37,7 @@ var ProjectActions = {
         var schema = _.assign({}, project.schema);
         _.each(res.events, function(collection) {
           schema[collection.name] = _.assign(collection, {
+            properties: {},
             sortedProperties: [],
             loading: false,
             recentEvents: null
