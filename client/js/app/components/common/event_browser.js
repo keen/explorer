@@ -30,15 +30,21 @@ var EventBrowser = React.createClass({
   setActiveEventCollection: function(collection) {
     if (collection === this.state.activeEventCollection) return;
     this.setState({ activeEventCollection: collection });
-    ProjectActions.fetchCollectionSchema(collection);
     if (this.state.activeView === 'recentEvents') {
       this.fetchRecentEvents(collection);
+    }
+    else {
+      ProjectActions.fetchCollectionSchema(this.props.client, collection);
     }
   },
 
   modalOpened: function() {
-    ProjectActions.fetchCollectionSchema(this.state.activeEventCollection);
-    if (this.state.activeView === 'recentEvents') this.fetchRecentEvents();
+    if (this.state.activeView === 'recentEvents') {
+      this.fetchRecentEvents();
+    }
+    else {
+      ProjectActions.fetchCollectionSchema(this.props.client, this.state.activeEventCollection);
+    }
   },
 
   fetchRecentEvents: function(collectionToUse) {

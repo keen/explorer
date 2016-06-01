@@ -32,7 +32,7 @@ describe('actions/ProjectActions', function() {
                         this.client.config.projectId +
                         '/events/test?api_key=' +
                         this.client.config.masterKey;
-      ProjectActions.fetchCollectionSchema('test');
+      ProjectActions.fetchCollectionSchema(this.client, 'test');
       this.xhrOpenStub.calledWith('GET', expectedURL, true);
     });
 

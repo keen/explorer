@@ -6,6 +6,7 @@ var ExplorerValidations = require('../validations/ExplorerValidations');
 var NoticeActions = require('./NoticeActions');
 var AppStateActions = require('./AppStateActions');
 var ProjectActions = require('./ProjectActions');
+var ProjectStore = require('../stores/ProjectStore');
 var RunValidations = require('../utils/RunValidations');
 var ExplorerUtils = require('../utils/ExplorerUtils');
 var ChartTypeUtils = require('../utils/ChartTypeUtils');
@@ -27,7 +28,7 @@ var ExplorerActions = {
   },
 
   update: function(id, updates) {
-    var q;
+    var q, project = ProjectStore.getProject();
     AppDispatcher.dispatch({
       actionType: ExplorerConstants.EXPLORER_UPDATE,
       id: id,
@@ -36,7 +37,7 @@ var ExplorerActions = {
     // Fetch schema for selected event collection
     q = updates.query ? updates.query : updates.response && updates.response.query ? updates.response.query : {};
     if (q.event_collection) {
-      ProjectActions.fetchCollectionSchema(q.event_collection);
+      ProjectActions.fetchCollectionSchema(project.client, q.event_collection);
     }
   },
 

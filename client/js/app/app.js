@@ -38,7 +38,7 @@ App.prototype.client = function(obj) {
     'events': '{protocol}://{host}/3.0/projects/{projectId}/events'
   });
   ProjectActions.create({ client: this.config.client });
-  ProjectActions.fetchProjectCollections();
+  ProjectActions.fetchProjectCollections(this.config.client);
   return this;
 };
 

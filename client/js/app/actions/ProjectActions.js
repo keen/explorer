@@ -25,13 +25,13 @@ var ProjectActions = {
     });
   },
 
-  fetchProjectCollections: function() {
+  fetchProjectCollections: function(client) {
     var project = ProjectStore.getProject();
     if (!project) throw new Error("Cannot fetchProjectCollections: No project model has been created yet.");
 
-    return project.client
-      .get(project.client.url('projectId'))
-      .auth(project.client.masterKey())
+    return client
+      .get(client.url('projectId'))
+      .auth(client.masterKey())
       .send()
       .then(function(res){
         var schema = _.assign({}, project.schema);
@@ -53,14 +53,14 @@ var ProjectActions = {
       });
   },
 
-  fetchCollectionSchema: function(collectionName) {
+  fetchCollectionSchema: function(client, collectionName) {
     var project = ProjectStore.getProject();
     ProjectActions.updateEventCollection(collectionName, {
       loading: true
     });
-    return project.client
-      .get(project.client.url('events', collectionName))
-      .auth(project.client.masterKey())
+    return client
+      .get(client.url('events', collectionName))
+      .auth(client.masterKey())
       .send()
       .then(function(res) {
         ProjectActions.updateEventCollection(collectionName, {
