@@ -1,5 +1,4 @@
 var _ = require('lodash');
-var request = require('superagent');
 var AppDispatcher = require('../dispatcher/AppDispatcher');
 var ProjectConstants = require('../constants/ProjectConstants');
 var ProjectStore = require('../stores/ProjectStore');
@@ -26,30 +25,63 @@ var ProjectActions = {
     });
   },
 
+  fetchProjectCollections: function() {
+    var project = ProjectStore.getProject();
+    if (!project) throw new Error("Cannot fetchProjectCollections: No project model has been created yet.");
+
+    return project.client
+      .get(project.client.url('projectId'))
+      .auth(project.client.masterKey())
+      .send()
+      .then(function(res){
+        if (res.events.length < 1000) {
+          ProjectActions.fetchProjectSchema();
+          return res;
+        }
+        var schema = {};
+        _.each(res.events, function(collection) {
+          schema[collection.name] = _.assign(collection, {
+            sortedProperties: [],
+            loading: false,
+            recentEvents: null
+          });
+        });
+        ProjectActions.update(project.id, {
+          schema: schema,
+          eventCollections: FormatUtils.sortItems(_.keys(schema)),
+          loading: false
+        });
+      })
+      .catch(function(err){
+        throw new Error('Error fetching project collections: ' + err);
+      });
+  },
 
   fetchProjectSchema: function() {
     var project = ProjectStore.getProject();
     if (!project) throw new Error("Cannot fetchProjectSchema: No project model has been created yet.");
 
-    return request.get(ProjectUtils.eventsUrl(project.client))
-      .end(function(err, res) {
-        if (err) {
-          throw new Error("Error fetching project schema: " + err);
-        } else {
-          var schema = {};
-          _.each(res.body, function(collection) {
-            schema[collection.name] = _.assign(collection, {
-              sortedProperties: FormatUtils.sortItems(_.keys(collection.properties)),
-              loading: false,
-              recentEvents: null
-            });
+    return project.client
+      .get(project.client.url('events'))
+      .auth(project.client.masterKey())
+      .send()
+      .then(function(res){
+        var schema = {};
+        _.each(res, function(collection) {
+          schema[collection.name] = _.assign(collection, {
+            sortedProperties: FormatUtils.sortItems(_.keys(collection.properties)),
+            loading: false,
+            recentEvents: null
           });
-          ProjectActions.update(project.id, {
-            schema: schema,
-            eventCollections: FormatUtils.sortItems(_.keys(schema)),
-            loading: false
-          });
-        }
+        });
+        ProjectActions.update(project.id, {
+          schema: schema,
+          eventCollections: FormatUtils.sortItems(_.keys(schema)),
+          loading: false
+        });
+      })
+      .catch(function(err){
+        throw new Error('Error fetching project collections: ' + err);
       });
   },
 
