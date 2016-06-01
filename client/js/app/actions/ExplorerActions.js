@@ -39,6 +39,11 @@ var ExplorerActions = {
     if (updated_query.event_collection) {
       ProjectActions.fetchCollectionSchema(project.client, updated_query.event_collection);
     }
+    if (updated_query.steps && updated_query.steps.length) {
+      _.each(updated_query.steps, function(step, i) {
+        ProjectActions.fetchCollectionSchema(project.client, step.event_collection);
+      });
+    }
   },
 
   remove: function(id) {
@@ -125,12 +130,18 @@ var ExplorerActions = {
   },
 
   updateStep: function(id, index, attrs) {
+    var project = ProjectStore.getProject();
     AppDispatcher.dispatch({
       actionType: ExplorerConstants.EXPLORER_UPDATE_STEP,
       id: id,
       index: index,
       attrs: attrs
     });
+
+    // Fetch schema for selected event collection
+    if (attrs.event_collection) {
+      ProjectActions.fetchCollectionSchema(project.client, attrs.event_collection);
+    }
   },
 
   moveStep: function(id, index, direction) {
