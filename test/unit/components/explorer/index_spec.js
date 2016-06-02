@@ -6,6 +6,7 @@ var ReactDOM = require('react-dom');
 var TestUtils = require('react-addons-test-utils');
 var TestHelpers = require('../../../support/TestHelpers.js');
 var sinon = require('sinon');
+var KeenAnalysis = require('keen-analysis');
 var Explorer = require('../../../../client/js/app/components/explorer/index.js');
 var Visualization = require('../../../../client/js/app/components/explorer/visualization/index.js');
 var QueryBuilder = require('../../../../client/js/app/components/explorer/query_builder/index.js');
@@ -43,12 +44,15 @@ describe('components/explorer/index', function() {
     ExplorerActions.create({ id: '1', query_name: 'A persisted query', metadata: { display_name: 'some name' } });
     ExplorerActions.setActive('1');
 
-    this.client = TestHelpers.createClient();
     this.project = TestHelpers.createProject();
+    this.project.client = this.client = new KeenAnalysis(TestHelpers.createClient());
+    this.project.client.resources({
+      'events': '{protocol}://{host}/3.0/projects/{projectId}/events'
+    });
+
     this.config = { persistence: null };
     this.explorer = ExplorerStore.get('1');
-
-    this.component = TestUtils.renderIntoDocument(<Explorer client={this.client} project={this.project} config={this.config} />);
+    this.component = TestUtils.renderIntoDocument(<Explorer client={this.client} project={this.project} persistence={null} />);
   });
 
   describe('setup', function() {
@@ -194,11 +198,11 @@ describe('components/explorer/index', function() {
 
         this.explorer.id = 'TEMP-ABC';
         this.component.forceUpdate();
-        
+
         this.component.saveQueryClick(TestHelpers.fakeEvent());
 
         assert.isTrue(saveStub.calledOnce);
-        
+
         RunValidations.run.restore();
         ExplorerActions.save.restore();
       });
@@ -228,7 +232,7 @@ describe('components/explorer/index', function() {
         this.persistence = {};
         this.component = TestUtils.renderIntoDocument(<Explorer persistence={this.persistence} client={this.client} project={this.project} config={this.config} />);
       });
-      
+
       describe('clicking a saved query', function () {
         it('should not load the saved query and show a notice if there is already a query in-flight', function () {
           var setActiveStub = sinon.stub(ExplorerActions, 'setActive');
@@ -242,7 +246,7 @@ describe('components/explorer/index', function() {
           });
           var fakeEvent = TestHelpers.fakeEvent();
           this.component.savedQueryClicked(fakeEvent);
-          
+
           assert.isFalse(setActiveStub.called);
           assert.isFalse(execStub.called);
           assert.isTrue(noticeCreateStub.calledWith({
@@ -294,7 +298,7 @@ describe('components/explorer/index', function() {
         assert.strictEqual(this.component.state.activeQueryPane, 'build');
       });
     });
-  
+
   });
 
 });

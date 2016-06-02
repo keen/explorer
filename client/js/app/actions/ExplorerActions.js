@@ -5,6 +5,8 @@ var ExplorerStore = require('../stores/ExplorerStore');
 var ExplorerValidations = require('../validations/ExplorerValidations');
 var NoticeActions = require('./NoticeActions');
 var AppStateActions = require('./AppStateActions');
+var ProjectActions = require('./ProjectActions');
+var ProjectStore = require('../stores/ProjectStore');
 var RunValidations = require('../utils/RunValidations');
 var ExplorerUtils = require('../utils/ExplorerUtils');
 var ChartTypeUtils = require('../utils/ChartTypeUtils');
@@ -26,11 +28,22 @@ var ExplorerActions = {
   },
 
   update: function(id, updates) {
+    var updated_query, project = ProjectStore.getProject();
     AppDispatcher.dispatch({
       actionType: ExplorerConstants.EXPLORER_UPDATE,
       id: id,
       updates: updates
     });
+    // Fetch schema for selected event collection
+    updated_query = updates.query ? updates.query : updates.response && updates.response.query ? updates.response.query : {};
+    if (updated_query.event_collection) {
+      ProjectActions.fetchCollectionSchema(project.client, updated_query.event_collection);
+    }
+    if (updated_query.steps && updated_query.steps.length) {
+      _.each(updated_query.steps, function(step, i) {
+        ProjectActions.fetchCollectionSchema(project.client, step.event_collection);
+      });
+    }
   },
 
   remove: function(id) {
@@ -117,12 +130,18 @@ var ExplorerActions = {
   },
 
   updateStep: function(id, index, attrs) {
+    var project = ProjectStore.getProject();
     AppDispatcher.dispatch({
       actionType: ExplorerConstants.EXPLORER_UPDATE_STEP,
       id: id,
       index: index,
       attrs: attrs
     });
+
+    // Fetch schema for selected event collection
+    if (attrs.event_collection) {
+      ProjectActions.fetchCollectionSchema(project.client, attrs.event_collection);
+    }
   },
 
   moveStep: function(id, index, direction) {
@@ -162,7 +181,7 @@ var ExplorerActions = {
     });
   },
 
-  exec: function(client, id) { 
+  exec: function(client, id) {
     var explorer = ExplorerStore.get(id);
     if (explorer.loading) {
       throw new Error("Warning: calling exec when model loading is true. Explorer id: " + explorer.id);
@@ -177,7 +196,7 @@ var ExplorerActions = {
       return;
     }
     NoticeActions.clearAll();
-    
+
     AppDispatcher.dispatch({
       actionType: ExplorerConstants.EXPLORER_UPDATE,
       id: explorer.id,
@@ -250,7 +269,7 @@ var ExplorerActions = {
       query: ExplorerUtils.queryJSON(explorer),
       success: module.exports.runEmailExtractionSuccess.bind(this, explorer),
       error: module.exports.runEmailExtractionError,
-    });  
+    });
   },
 
   runEmailExtractionSuccess: function(explorer, res) {
