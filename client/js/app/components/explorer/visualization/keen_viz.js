@@ -15,13 +15,14 @@ var KeenViz = React.createClass({
   // ***********************
 
   showVisualization: function() {
-    this.props.dataviz.destroy()
+    this.props.dataviz.destroy();
 
     this.props.dataviz
       .data(this.props.model.response)
       .el(this.refs['keen-viz'])
       .height(300)
       .title(null)
+      .sortGroups('desc')
       .type(this.props.model.metadata.visualization.chart_type);
 
     this.props.dataviz.render();

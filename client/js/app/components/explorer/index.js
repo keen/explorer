@@ -49,7 +49,7 @@ var Explorer = React.createClass({
   // ********************************
   // Callbacks for child components
   // ********************************
-  
+
   selectEventCollection: function(collectionName) {
     var updates = {
       query: {
@@ -328,7 +328,7 @@ var Explorer = React.createClass({
                        handleChange={this.handleFilterChange}
                        removeFilter={this.handleRemoveFilter}
                        addFilter={this.handleAddFilter}
-                       getPropertyType={this.getPropertyType} 
+                       getPropertyType={this.getPropertyType}
                        propertyNames={this.getEventPropertyNames(this.state.activeExplorer.query.event_collection)} />
       </div>
     );
