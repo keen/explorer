@@ -40,7 +40,7 @@ var FilterManager = React.createClass({
     if (!_.isNull(name.match('coordinates'))) {
       var coordinateIndex = parseInt(name.split('.')[1]);
       updates.property_value.coordinates[coordinateIndex] = FilterUtils.coerceGeoValue(value);
-    } else if (name === 'property_value' && updates.coercion_type === 'Geo') {
+    } else if (name === 'max_distance_miles' && updates.coercion_type === 'Geo') {
       updates.property_value[name] = FilterUtils.coerceGeoValue(value);
     } else {
       updates[name] = value;
