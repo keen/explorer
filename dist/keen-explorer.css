@@ -728,6 +728,7 @@
 }
 /* METRIC */
 .keen-dataviz .keen-dataviz-metric {
+  background-color: #00BBDE;
   border-radius: 4px;
   color: #FFFFFF;
   font-family: 'Gotham Rounded SSm A', 'Gotham Rounded SSm B', 'Helvetica Neue', Helvetica, Arial, sans-serif;
