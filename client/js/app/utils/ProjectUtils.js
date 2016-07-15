@@ -126,10 +126,9 @@ module.exports = {
   },
 
   eventsUrl: function(client) {
-    var endpoint = client.config.protocol + "://" + client.config.host;
-    var projectId = client.config.projectId;
-    var masterKey = client.config.masterKey;
-    return endpoint+'/projects/'+projectId+'/events?api_key='+masterKey;
+    return client.url('events', {
+      api_key: client.config.masterKey
+    });
   },
 
   getEventCollectionPropertyNames: function(project, collection) {

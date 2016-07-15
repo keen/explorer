@@ -1,5 +1,6 @@
 var gulp = require('gulp');
 var pkg = require('./package.json');
+var path = require('path');
 var clean = require('gulp-clean');
 var runSequence = require('run-sequence');
 var uglify = require('gulp-uglify');
@@ -54,7 +55,12 @@ gulp.task('minify-scripts', function(){
 
 gulp.task('build-styles', function() {
   return gulp.src('./client/styles/base.less')
-    .pipe(less())
+    .pipe(less({
+      paths: [
+        path.join(__dirname, 'client', 'styles'),
+        path.join(__dirname, 'node_modules')
+      ]
+    }))
     .pipe(concat(buildConfig.buildName+'.css'))
     .pipe(prefix())
     .pipe(gulp.dest('./dist'));

@@ -108,7 +108,7 @@ module.exports = {
     }
 
     if (params.steps) {
-      params.steps = _.map(params.steps, FunnelUtils.stepJSON); 
+      params.steps = _.map(params.steps, FunnelUtils.stepJSON);
     }
 
     _.each(params, function(value, key) {
@@ -166,18 +166,17 @@ module.exports = {
    * @return {undefined}
    */
   runQuery: function(config) {
-    config.client.run(
-      new Keen.Query(config.query.analysis_type, _.omit(config.query, 'analysis_type')),
-      function(err, response) {
+    config.client
+      .query(config.query.analysis_type, _.omit(config.query, 'analysis_type'))
+      .then(function(res, err){
         if (err) {
           config.error(err);
         }
         else {
-          config.success(response);
+          config.success(res);
         }
-        if (config.complete) config.complete(err, response);
-      }
-    );
+        if (config.complete) config.complete(err, res);
+      });
   },
 
   /**
@@ -212,10 +211,8 @@ module.exports = {
   },
 
   getApiQueryUrl: function(client, explorer) {
-    var endpoint = client.config.protocol + "://" + client.config.host;
-    var projectId = client.config.projectId;
-
     var attrs = module.exports.queryJSON(explorer);
+    var url = client.url('queries', attrs.analysis_type);
 
     var analysisType = attrs.analysis_type;
     delete attrs.analysis_type;
@@ -259,12 +256,7 @@ module.exports = {
       queryAttrs += '&steps=' + steps;
     }
 
-    var url = endpoint + '/projects/'+projectId+'/queries/'
-                       + analysisType
-                       + '?api_key='
-                       + client.readKey()
-                       + '&'
-                       + queryAttrs;
+    url += '?api_key=' + client.readKey() + '&' + queryAttrs;
     return url;
   },
 
@@ -355,5 +347,5 @@ module.exports = {
   slugify: function(name) {
     return name.toLowerCase().replace(/[^\w\s-]/g, '').replace(/ /g, '-');
   }
-  
+
 };

@@ -30,11 +30,21 @@ var EventBrowser = React.createClass({
   setActiveEventCollection: function(collection) {
     if (collection === this.state.activeEventCollection) return;
     this.setState({ activeEventCollection: collection });
-    if (this.state.activeView === 'recentEvents') this.fetchRecentEvents(collection);
+    if (this.state.activeView === 'recentEvents') {
+      this.fetchRecentEvents(collection);
+    }
+    else {
+      ProjectActions.fetchCollectionSchema(this.props.client, collection);
+    }
   },
 
   modalOpened: function() {
-    if (this.state.activeView === 'recentEvents') this.fetchRecentEvents();
+    if (this.state.activeView === 'recentEvents') {
+      this.fetchRecentEvents();
+    }
+    else {
+      ProjectActions.fetchCollectionSchema(this.props.client, this.state.activeEventCollection);
+    }
   },
 
   fetchRecentEvents: function(collectionToUse) {
@@ -73,7 +83,10 @@ var EventBrowser = React.createClass({
   },
 
   shouldShowLoader: function() {
-    return (this.state.activeView === 'recentEvents' && this.props.project.schema[this.state.activeEventCollection].loading);
+    if (this.props.project.schema[this.state.activeEventCollection]) {
+      return this.props.project.schema[this.state.activeEventCollection].loading;
+    }
+    return false;
   },
 
   getRecentEvents: function() {
@@ -85,7 +98,13 @@ var EventBrowser = React.createClass({
     var schema = this.props.project.schema;
     var collection = this.state.activeEventCollection;
     var properties = schema[collection] ? schema[collection].properties : {};
-    return FormatUtils.prettyPrintJSON(properties) || "";
+    var ordered = {};
+    if (properties) {
+      _.each(Object.keys(properties).sort(), function(key, i) {
+        ordered[key] = properties[key];
+      });
+    }
+    return FormatUtils.prettyPrintJSON(ordered) || '';
   },
 
   changeActiveView: function(event) {

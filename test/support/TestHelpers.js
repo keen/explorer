@@ -1,5 +1,6 @@
 var _ = require('lodash');
 var React = require('react');
+var KeenAnalysis = require('keen-analysis');
 var TestUtils = require('react-addons-test-utils');
 var ProjectUtils = require('../../client/js/app/utils/ProjectUtils');
 var FormatUtils = require('../../client/js/app/utils/FormatUtils');
@@ -14,21 +15,15 @@ module.exports = {
 
   createClient: function() {
     return {
-      readKey: function() {
-        return 'readKey'
-      },
-      config: {
-        projectId: 'projectId',
-        protocol: 'https',
-        host: 'api.keen.io/3.0',
-        masterKey: 'masterKey'
-      },
-      run: function(){}
-    }
+      projectId: 'projectId',
+      protocol: 'https',
+      host: 'api.keen.io/3.0',
+      masterKey: 'masterKey'
+    };
   },
 
   fakeEvent: function(){
-    return { 
+    return {
       preventDefault: function(){}
     }
   },
@@ -104,7 +99,7 @@ module.exports = {
   },
 
   buildProjectSchema: function() {
-    return { 
+    return {
       'click': {
         name: 'click',
         properties: {
@@ -126,8 +121,14 @@ module.exports = {
   createProject: function() {
     var schema = this.buildProjectSchema();
     return {
+      client: new KeenAnalysis({
+        projectId: 'projectId',
+        protocol: 'https',
+        host: 'api.keen.io/3.0',
+        masterKey: 'masterKey'
+      }),
       loading: false,
-      eventCollections: FormatUtils.sortItems(_.map(schema, "name")),
+      eventCollections: FormatUtils.sortItems(_.map(schema, 'name')),
       schema: schema
     };
   },

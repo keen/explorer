@@ -1,6 +1,7 @@
 /** @jsx React.DOM */
 var assert = require('chai').assert;
 var _ = require('lodash');
+var KeenAnalysis = require('keen-analysis');
 var sinon = require('sinon');
 var QueryBuilder = require('../../../../../client/js/app/components/explorer/query_builder/index.js');
 var GroupByField = require('../../../../../client/js/app/components/explorer/query_builder/group_by_field.js');
@@ -23,7 +24,7 @@ describe('components/explorer/query_builder/index', function() {
     this.model = TestHelpers.createExplorerModel();
     this.model.id = 10;
     this.model.active = true;
-    this.client = TestHelpers.createClient();
+    this.client = new KeenAnalysis(TestHelpers.createClient());
     this.project = TestHelpers.createProject();
 
     this.renderComponent = function(props) {
@@ -248,7 +249,7 @@ describe('components/explorer/query_builder/index', function() {
     describe('group_by', function () {
       it('tries to update the attribute when the field changes', function() {
         this.model.query.event_collection = 'clicks';
-        this.model.query.analysis_type = 'percentile';  
+        this.model.query.analysis_type = 'percentile';
         this.model.query.group_by = ['old_group_by_value'];
         this.component.forceUpdate();
 

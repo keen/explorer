@@ -30,6 +30,7 @@
 }
 
 .chart-detail-bar {
+  height: 37px;
   margin-bottom: 10px;
   opacity: .35;
   position: relative;
@@ -40,6 +41,11 @@
   }
 
   .chart-title-component {
+    background: #fff;
+    left: 0;
+    position: absolute;
+    right: 132px;
+
     input {
       border: 1px solid #d7d7d7;
       color: #536779;
@@ -81,6 +87,10 @@
     }
   }
   .chart-type-component {
+    position: absolute;
+    right: 0px;
+    width: 124px;
+
     select {
       cursor: pointer;
       &:focus,
@@ -142,7 +152,7 @@ textarea.json-view {
   display: block;
   font-size: 12px;
   line-height: 1.5;
-  min-height: 400px;
+  min-height: 300px;
   padding: 15px;
   resize: none;
   word-break: break-all;

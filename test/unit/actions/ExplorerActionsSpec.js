@@ -3,6 +3,7 @@ var expect = require('chai').expect;
 var sinon = require('sinon');
 var moment = require('moment');
 var _ = require('lodash');
+var KeenAnalysis = require('keen-analysis');
 var Qs = require('qs');
 var TestHelpers = require('../../support/TestHelpers');
 var AppDispatcher = require('../../../client/js/app/dispatcher/AppDispatcher');
@@ -30,18 +31,20 @@ describe('actions/ExplorerActions', function() {
 
   describe('exec', function () {
     before(function () {
-      this.client = { run: sinon.spy() };
+      this.client = new KeenAnalysis(TestHelpers.createClient());
       this.getStub = sinon.stub(ExplorerStore, 'get');
+      this.runQueryStub = sinon.stub(ExplorerUtils, 'runQuery');
     });
-
+  
     after(function () {
       ExplorerStore.get.restore();
+      ExplorerUtils.runQuery.restore();
     });
 
     beforeEach(function () {
-      this.client.run.reset();
+      this.runQueryStub.reset();
     });
-
+  
     it('should throw an error if the model is currently loading', function () {
       var explorer = { id: 5, loading: true };
       this.getStub.returns(explorer);
@@ -49,6 +52,7 @@ describe('actions/ExplorerActions', function() {
     });
     it('should run the validations with the right arguments', function () {
       var explorer = TestHelpers.createExplorerModel();
+      explorer.query.analysis_type = 'count';
       this.getStub.returns(explorer);
       var stub = sinon.stub(ExplorerActions, 'validate');
       ExplorerActions.exec(this.client, explorer.id);
@@ -65,7 +69,7 @@ describe('actions/ExplorerActions', function() {
       this.getStub.returns(explorer);
       ExplorerActions.exec(this.client, explorer.id);
       assert.isTrue(this.dispatchStub.calledWith({
-        actionType: 'EXPLORER_UPDATE', 
+        actionType: 'EXPLORER_UPDATE',
         id: 5,
         updates: { loading: true }
       }));
@@ -75,7 +79,7 @@ describe('actions/ExplorerActions', function() {
         id: 5,
         loading: false,
         isValid: true,
-        query: { 
+        query: {
           event_collection: 'click',
           analysis_type: 'extraction'
         }
@@ -83,7 +87,7 @@ describe('actions/ExplorerActions', function() {
       this.getStub.returns(explorer);
       ExplorerActions.exec(this.client, explorer.id);
       assert.strictEqual(
-        this.client.run.getCalls()[0].args[0].params.latest,
+        this.runQueryStub.getCall(0).args[0].query.latest,
         100
       );
     });
@@ -108,13 +112,13 @@ describe('actions/ExplorerActions', function() {
       };
       this.getStub = sinon.stub(ExplorerStore, 'get').returns(this.explorer);
     });
-
+  
     afterEach(function () {
       ExplorerActions.validate.restore();
       ExplorerUtils.runQuery.restore();
       ExplorerStore.get.restore();
     });
-
+  
     it('should run validations', function () {
       ExplorerActions.runEmailExtraction(this.client, this.explorer.id);
       assert.isTrue(this.validateStub.calledOnce);
@@ -208,14 +212,14 @@ describe('actions/ExplorerActions', function() {
       var stub = sinon.stub(RunValidations, 'run').returns([]);
       ExplorerActions.fetchAllPersisted(this.persistence, this.callback);
       assert.strictEqual(stub.getCalls().length, 3);
-      RunValidations.run.restore();  
+      RunValidations.run.restore();
     });
     it('should include invalid models', function () {
       this.models[2].query = {};
       var stub = sinon.stub(ExplorerActions, 'createBatch');
       ExplorerActions.fetchAllPersisted(this.persistence, this.callback);
       assert.strictEqual(stub.getCall(0).args[0].length, 3);
-      ExplorerActions.createBatch.restore();  
+      ExplorerActions.createBatch.restore();
     });
     it('should log a warning for invalid models', function () {
       this.models[2].query = {};
@@ -242,7 +246,7 @@ describe('actions/ExplorerActions', function() {
     it('should call the dispatcher to update with the right argments', function () {
       assert.isTrue(this.dispatchStub.calledWith({
         actionType: 'EXPLORER_UPDATE',
-        id: 5, 
+        id: 5,
         updates: { loading: false }
       }));
     });
@@ -287,7 +291,7 @@ describe('actions/ExplorerActions', function() {
         metadata: _.cloneDeep(this.explorer.metadata)
       };
       expectedUpdates.metadata.visualization.chart_type = 'metric';
-      
+
       ExplorerActions.execSuccess(this.explorer, this.response);
 
       assert.strictEqual(this.dispatchStub.getCall(2).args[0].actionType, 'EXPLORER_UPDATE');
@@ -452,16 +456,16 @@ describe('actions/ExplorerActions', function() {
 
     describe('destroy', function () {
       xit('should dispatch a EXPLORER_DESTROYING message', function () {
-        
+
       });
       xit('should dispatch a EXPLORER_DESTROY_FAIL message if destroy call fails', function () {
-        
+
       });
       xit('should dispatch a EXPLORER_DESTROY_SUCCESS message if destroy call succeeds', function () {
-        
+
       });
       xit('should remove the model if destroy call succeeds', function () {
-        
+
       });
     });
   });
