@@ -206,7 +206,7 @@ var EventBrowser = React.createClass({
              onOpen={this.modalOpened}
              footerBtns={footerBtns}>
 
-        { this.props.project.eventCollections.length > 0 ? browseContent :alertContent }
+        { this.props.project.eventCollections.length > 0 ? browseContent : alertContent }
       </Modal>
     );
   }
