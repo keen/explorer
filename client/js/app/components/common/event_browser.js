@@ -153,50 +153,66 @@ var EventBrowser = React.createClass({
       previewData = this.getSchema();
     }
 
+    var browseContent = (
+      <div className="event-browser" onKeyUp={this.handleKeyUp}>
+        <div className="event-names">
+          <div className="search-box">
+            <input type="text" name="search" ref="search-box" placeholder="Search..." onChange={this.setSearchText} />
+            <span className="glyphicon glyphicon-search icon"></span>
+          </div>
+          <ul className="nav nav-pills nav-stacked event-names-list" ref="event-names-list">
+            {this.buildEventCollectionNodes()}
+          </ul>
+        </div>
+        <div className="event-browser-content">
+          <ul className="nav nav-tabs view-options">
+            <li className={this.getNavClasses('schema')}>
+              <a href="#" name="schema" onClick={this.changeActiveView}>
+                Schema
+              </a>
+            </li>
+            <li className={this.getNavClasses('recentEvents')}>
+              <a href="#" name="recentEvents" onClick={this.changeActiveView}>
+                Recent Events
+              </a>
+            </li>
+          </ul>
+          <div ref="event-data-wrapper" className="event-data-wrapper">
+            <Loader ref="loader" visible={this.shouldShowLoader()} />
+            <textarea className="json-view" value={previewData} readOnly />
+          </div>
+        </div>
+      </div>
+    );
+
+    var alertContent = (
+      <div className="alert alert-info no-margin no-collections-alert">
+        There is no data to preview. This project does not have any event collections. 
+      </div>
+    );
+
+    var footerBtns = [{ text: 'Close' }];
+
+    var modalClasses = this.props.project.eventCollections.length > 0 ? "event-browser-modal" : "";
+
+    if (this.props.project.eventCollections.length > 0) {
+      footerBtns.push({
+        text: 'Use this Event Collection',
+        iconName: 'ok',
+        classes: 'btn-primary',
+        onClick: this.selectEventCollectionClick
+      });
+    }
+
     return (
       <Modal ref="modal"
              title="Project Event Collections"
              size="large"
-             modalClasses="event-browser-modal"
+             modalClasses={modalClasses}
              onOpen={this.modalOpened}
-             footerBtns={[
-              { text: 'Close' },
-              {
-                text: 'Use this Event Collection',
-                iconName: 'ok',
-                classes: 'btn-primary',
-                onClick: this.selectEventCollectionClick
-              }
-             ]}>
-        <div className="event-browser" onKeyUp={this.handleKeyUp}>
-          <div className="event-names">
-            <div className="search-box">
-              <input type="text" name="search" ref="search-box" placeholder="Search..." onChange={this.setSearchText} />
-              <span className="glyphicon glyphicon-search icon"></span>
-            </div>
-            <ul className="nav nav-pills nav-stacked event-names-list" ref="event-names-list">
-              {this.buildEventCollectionNodes()}
-            </ul>
-          </div>
-          <div className="event-browser-content">
-            <ul className="nav nav-tabs view-options">
-              <li className={this.getNavClasses('schema')}>
-                <a href="#" name="schema" onClick={this.changeActiveView}>
-                  Schema
-                </a>
-              </li>
-              <li className={this.getNavClasses('recentEvents')}>
-                <a href="#" name="recentEvents" onClick={this.changeActiveView}>
-                  Recent Events
-                </a>
-              </li>
-            </ul>
-            <div ref="event-data-wrapper" className="event-data-wrapper">
-              <Loader ref="loader" visible={this.shouldShowLoader()} />
-              <textarea className="json-view" value={previewData} readOnly />
-            </div>
-          </div>
-        </div>
+             footerBtns={footerBtns}>
+
+        { this.props.project.eventCollections.length > 0 ? browseContent : alertContent }
       </Modal>
     );
   }
