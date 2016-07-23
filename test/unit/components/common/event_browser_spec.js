@@ -25,7 +25,6 @@ describe('components/common/event_browser', function() {
 
   beforeEach(function() {
     this.runQueryStub.reset();
-    this.currentEventCollection = 'click';
 
     this.project = TestHelpers.createProject();
     this.project.loading = true;
@@ -33,8 +32,18 @@ describe('components/common/event_browser', function() {
     this.project.client.resources({
       'events': '{protocol}://{host}/3.0/projects/{projectId}/events'
     });
+    // Ensure there are already some recent events
+    this.project.schema.click.recentEvents = [{ name: 'first recent event' }];
 
-    this.component = TestUtils.renderIntoDocument(<EventBrowser client={this.client} currentEventCollection={this.currentEventCollection} project={this.project} />);
+    this.renderComponent = function(props) {
+      var props = props || {};
+      var defaultProps = {
+        currentEventCollection: 'click',
+        project: this.project
+      };
+      return TestUtils.renderIntoDocument(<EventBrowser {..._.assign({}, defaultProps, props)} />);
+    };
+    this.component = this.renderComponent();
   });
 
   describe('setup', function() {
@@ -44,6 +53,17 @@ describe('components/common/event_browser', function() {
 
     it('has a single a Loader component', function(){
       assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, Loader), 1);
+    });
+  });
+
+  describe('handling the active event collection', function () {
+    it('does not try to access recent events when activeEventCollection is a string that does not match a collection', function () {
+      this.component = this.renderComponent({ currentEventCollection: 'some string that does not match an event collection' });
+      assert.strictEqual(this.component.getRecentEvents(), "");
+    });
+    it('properly returns the recent events when activeEventCollection is a string that matches a collection', function () {
+      this.component = this.renderComponent({ currentEventCollection: 'click' });
+      assert.strictEqual(this.component.getRecentEvents(), FormatUtils.prettyPrintJSON([{ name: 'first recent event' }]));
     });
   });
 });
