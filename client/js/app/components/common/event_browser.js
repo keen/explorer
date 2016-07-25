@@ -18,6 +18,11 @@ var EventBrowser = React.createClass({
     if (event.keyCode === enterKeyCode) this.selectEventCollection();
   },
 
+  shouldFetchCollectionSchema: function (collection) {
+    if (!this.props.project.schema[collection]) return false;
+    return _.keys(this.props.project.schema[collection].properties).length < 1;
+  },
+
   selectEventCollectionClick: function(event) {
     event.preventDefault();
     this.props.selectEventCollection(this.state.activeEventCollection);
@@ -33,7 +38,7 @@ var EventBrowser = React.createClass({
     if (this.state.activeView === 'recentEvents') {
       this.fetchRecentEvents(collection);
     }
-    else {
+    else if (this.shouldFetchCollectionSchema(collection)) {
       ProjectActions.fetchCollectionSchema(this.props.client, collection);
     }
   },
@@ -42,7 +47,7 @@ var EventBrowser = React.createClass({
     if (this.state.activeView === 'recentEvents') {
       this.fetchRecentEvents();
     }
-    else {
+    else if (this.shouldFetchCollectionSchema(this.state.activeEventCollection)) {
       ProjectActions.fetchCollectionSchema(this.props.client, this.state.activeEventCollection);
     }
   },
@@ -50,7 +55,7 @@ var EventBrowser = React.createClass({
   fetchRecentEvents: function(collectionToUse) {
     var collection = collectionToUse ? collectionToUse : this.state.activeEventCollection;
     var schema = this.props.project.schema;
-    if (!_.isEmpty(schema) && !schema[collection].recentEvents && !schema[collection].loading) {
+    if (!_.isEmpty(schema) && schema[collection] && !schema[collection].recentEvents && !schema[collection].loading) {
       ProjectActions.fetchRecentEventsForCollection(this.props.client, collection);
     }
   },
@@ -90,6 +95,7 @@ var EventBrowser = React.createClass({
   },
 
   getRecentEvents: function() {
+    if (!this.props.project.schema[this.state.activeEventCollection]) return "";
     var recentEvents = this.props.project.schema[this.state.activeEventCollection].recentEvents;
     return recentEvents ? FormatUtils.prettyPrintJSON(recentEvents) : "";
   },
