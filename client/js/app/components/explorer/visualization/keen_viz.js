@@ -22,8 +22,11 @@ var KeenViz = React.createClass({
       .el(this.refs['keen-viz'])
       .height(300)
       .title(null)
-      .sortGroups('desc')
       .type(this.props.model.metadata.visualization.chart_type);
+
+    if (this.props.model.query.analysis_type !== "funnel") {
+      this.props.dataviz.sortGroups('desc')
+    }
 
     this.props.dataviz.render();
 
