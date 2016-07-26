@@ -24,7 +24,7 @@ var KeenViz = React.createClass({
       .title(null)
       .type(this.props.model.metadata.visualization.chart_type);
 
-    if (!this.props.model.query.analysis_type === "funnel") {
+    if (this.props.model.query.analysis_type !== "funnel") {
       this.props.dataviz.sortGroups('desc')
     }
 
