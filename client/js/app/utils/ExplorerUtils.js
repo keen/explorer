@@ -284,7 +284,7 @@ module.exports = {
         dynamicCriteria,
         paramNames,
         dynamicConstructorNames = [
-        'host', 'protocol', 'requestType'
+          'host', 'protocol', 'requestType'
         ],
         funnelRootParams = [
           'event_collection', 'steps'
