@@ -275,15 +275,16 @@ module.exports = {
   getSdkExample: function(explorer, client) {
 
     var defaultKeenJsOpts = {
-          requestType: 'jsonp',
+          host: 'api.keen.io/3.0',
           protocol: 'https',
+          requestType: 'jsonp'
         },
         params = module.exports.queryJSON(explorer),
         s = stringify,
         dynamicCriteria,
         paramNames,
         dynamicConstructorNames = [
-        'protocol', 'requestType'
+        'host', 'protocol', 'requestType'
         ],
         funnelRootParams = [
           'event_collection', 'steps'
@@ -339,8 +340,7 @@ module.exports = {
       '  ',
       '});'
     ]
-
-    return value.join('\n');
+    return _.filter(value, function(val) { return val !== ""; }).join('\n');
   },
 
   slugify: function(name) {

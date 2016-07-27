@@ -35,7 +35,7 @@ App.prototype.client = function(obj) {
   if (!arguments.length) return this.config.client;
   this.config.client = new KeenAnalysis(obj);
   this.config.client.resources({
-    'events': '{protocol}://{host}/3.0/projects/{projectId}/events'
+    'events': '{protocol}://{host}/projects/{projectId}/events'
   });
   ProjectActions.create({ client: this.config.client });
   ProjectActions.fetchProjectCollections(this.config.client);
