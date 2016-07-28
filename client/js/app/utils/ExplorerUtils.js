@@ -327,7 +327,7 @@ module.exports = {
       '  readKey: ' + s(client.config.readKey) + echoIf(dynamicConstructorValues, ','),
       dynamicConstructorValues,
       '});',
-      '',
+      '  ',
       'Keen.ready(function(){',
       '  ',
       '  var query = new Keen.Query(' + s(params.analysis_type) + ', {',
