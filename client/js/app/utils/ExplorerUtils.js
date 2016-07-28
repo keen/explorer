@@ -275,9 +275,9 @@ module.exports = {
   getSdkExample: function(explorer, client) {
 
     var defaultKeenJsOpts = {
-          requestType: 'jsonp',
           host: 'api.keen.io/3.0',
           protocol: 'https',
+          requestType: 'jsonp'
         },
         params = module.exports.queryJSON(explorer),
         s = stringify,
@@ -289,7 +289,7 @@ module.exports = {
         funnelRootParams = [
           'event_collection', 'steps'
         ],
-        dynamicContructorValues;
+        dynamicConstructorValues;
 
     switch(params.analysis_type) {
       case 'funnel':
@@ -305,7 +305,7 @@ module.exports = {
       params.steps = _.map(params.steps, function(step) { return _.omit(step, 'active'); });
     }
 
-    dynamicContructorValues = mapSkip(dynamicConstructorNames, function(name) {
+    dynamicConstructorValues = mapSkip(dynamicConstructorNames, function(name) {
       if (client.config[name] == defaultKeenJsOpts[name]) {
         return SKIP
       }
@@ -324,10 +324,10 @@ module.exports = {
     value = [
       'var client = new Keen({',
       '  projectId: ' + s(client.config.projectId) + ',',
-      '  readKey: ' + s(client.config.readKey) + echoIf(dynamicContructorValues, ','),
-      dynamicContructorValues,
+      '  readKey: ' + s(client.config.readKey) + echoIf(dynamicConstructorValues, ','),
+      dynamicConstructorValues,
       '});',
-      '',
+      '  ',
       'Keen.ready(function(){',
       '  ',
       '  var query = new Keen.Query(' + s(params.analysis_type) + ', {',
@@ -340,8 +340,7 @@ module.exports = {
       '  ',
       '});'
     ]
-
-    return value.join('\n');
+    return _.filter(value, function(val) { return val !== ""; }).join('\n');
   },
 
   slugify: function(name) {
