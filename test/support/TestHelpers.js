@@ -17,7 +17,7 @@ module.exports = {
     return {
       projectId: 'projectId',
       protocol: 'https',
-      host: 'api.keen.io/3.0',
+      host: 'api.keen.io',
       masterKey: 'masterKey'
     };
   },

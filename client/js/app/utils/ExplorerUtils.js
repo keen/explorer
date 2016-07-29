@@ -275,7 +275,7 @@ module.exports = {
   getSdkExample: function(explorer, client) {
 
     var defaultKeenJsOpts = {
-          host: 'api.keen.io/3.0',
+          host: 'api.keen.io',
           protocol: 'https',
           requestType: 'jsonp'
         },
