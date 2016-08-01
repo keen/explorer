@@ -274,8 +274,8 @@ module.exports = {
 
   getSdkExample: function(explorer, client) {
 
-    var defaultKeenJsOpts = {
-          host: 'api.keen.io/3.0',
+    var defaultKeenAnalysisOpts = {
+          host: 'api.keen.io',
           protocol: 'https',
           requestType: 'jsonp'
         },
@@ -306,7 +306,7 @@ module.exports = {
     }
 
     dynamicConstructorValues = mapSkip(dynamicConstructorNames, function(name) {
-      if (client.config[name] == defaultKeenJsOpts[name]) {
+      if (client.config[name] == defaultKeenAnalysisOpts[name]) {
         return SKIP
       }
       return '  ' + name + ': ' + s(client.config[name])
