@@ -811,7 +811,6 @@
 }
 .keen-dataviz .keen-spinner-indicator {
   border-radius: 100%;
-  border: 3px solid #000000;
   border: 3px solid rgba(0, 0, 0, 0.1);
   border-top-color: rgba(0, 0, 0, 0.45);
   box-sizing: border-box;
@@ -858,7 +857,6 @@
   top: 0;
 }
 .keen-c3-legend-label-overlay {
-  background: #ffffff;
   background: rgba(255, 255, 255, 0.9);
   box-shadow: 0 1px 1px rgba(26, 26, 26, 0.1);
   font-family: 'Gotham Rounded SSm A', 'Gotham Rounded SSm B', 'Helvetica Neue', Helvetica, Arial, sans-serif;
