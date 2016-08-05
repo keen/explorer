@@ -283,6 +283,10 @@ function _wrapGroupBy(group_by) {
   return group_by;
 }
 
+function _coerceToNumber(str) {
+  return str && typeof(str) === 'string' ? Number(str) : str;
+}
+
 function _create(attrs) {
   if (attrs && attrs.active === true) {
     throw new Error('You must use setActive to set a model as active.');
@@ -298,7 +302,8 @@ function _create(attrs) {
     });
   }
   if (!newAttrs.metadata) newAttrs.metadata = _defaultMetadata();
-  newAttrs.query.group_by = _wrapGroupBy(newAttrs.query.group_by)
+  newAttrs.query.group_by = _wrapGroupBy(newAttrs.query.group_by);
+  newAttrs.query.percentile = _coerceToNumber(newAttrs.query.percentile);
 
   _explorers[newAttrs.id] = newAttrs;
   return newAttrs.id;
@@ -311,7 +316,8 @@ function _update(id, updates) {
   }
 
   var newModel = _prepareUpdates(_explorers[id], updates);
-  newModel.query.group_by = _wrapGroupBy(newModel.query.group_by)
+  newModel.query.group_by = _wrapGroupBy(newModel.query.group_by);
+  newModel.query.percentile = _coerceToNumber(newModel.query.percentile);
 
   if (updates.id && updates.id !== id) {
     _explorers[updates.id] = newModel;
