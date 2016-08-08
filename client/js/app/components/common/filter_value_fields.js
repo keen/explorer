@@ -49,6 +49,10 @@ var FilterValueFields = React.createClass({
     this.props.handleChange(event.target.name, event.target.value);
   },
 
+  handleKeyPress: function(event) {
+    this.props.handleKeyPress(event.key);
+  },
+
   getCoercionOptions: function() {
     var operator = this.props.filter.operator;
     return operator ? _.find(this.props.filterOperators, { value: operator }).canBeCoeredTo : [];
@@ -123,6 +127,7 @@ var FilterValueFields = React.createClass({
                value={this.state.property_value}
                onChange={this.setValueState}
                onBlur={this.handleChangeWithEvent}
+               onKeyPress={this.handleKeyPress}
                placeholder={this.getInputPlaceholder()}
                readOnly={this.props.filter.coercion_type === 'Null'}/>
       );

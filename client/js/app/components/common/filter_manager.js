@@ -25,6 +25,10 @@ var FilterManager = React.createClass({
     this.refs.modal.open();
   },
 
+  close: function() {
+    this.refs.modal.close();
+  },
+
   addFilter: function(e) {
     e.preventDefault();
     this.props.addFilter();
@@ -49,6 +53,12 @@ var FilterManager = React.createClass({
     this.props.handleChange(index, updates);
   },
 
+  handleKeyPress: function(key) {
+    if (key === 'Enter') {
+      this.close();
+    }
+  },
+
   buildFilterNodes: function() {
     var filterNodes = this.props.filters.map(function(filter, index) {
       return(
@@ -59,6 +69,7 @@ var FilterManager = React.createClass({
                 eventCollection={this.props.eventCollection}
                 propertyNames={this.props.propertyNames}
                 handleChange={this.handleChange}
+                handleKeyPress={this.handleKeyPress}
                 removeFilter={this.removeFilter}
                 filterOperators={ProjectUtils.getConstant('FILTER_OPERATORS')} />
       );
