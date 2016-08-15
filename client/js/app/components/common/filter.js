@@ -21,15 +21,21 @@ var Filter = React.createClass({
     this.props.handleChange(this.props.index, name, value);
   },
 
+
   handleChangeWithEvent: function(e) {
     this.props.handleChange(this.props.index, e.target.name, e.target.value);
+  },
+
+  handleKeyPress: function(key) {
+    this.props.handleKeyPress(key);
   },
 
   buildValueFormGroup: function() {
     return (
       <FilterValueFields filter={this.props.filter}
                          filterOperators={this.props.filterOperators}
-                         handleChange={this.handleChange} />
+                         handleChange={this.handleChange} 
+                         handleKeyPress={this.handleKeyPress} />
     );
   },
 
