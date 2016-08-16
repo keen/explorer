@@ -1,7 +1,3 @@
-/**
-* @jsx React.DOM
-*/
-
 var _ = require('lodash');
 var moment = require('moment');
 var React = require('react');
@@ -73,7 +69,7 @@ var Timeframe = React.createClass({
             </li>
           </ul>
           {timeframePicker}
-          <Timezone timezone={this.props.timezone} 
+          <Timezone timezone={this.props.timezone}
                     timeframe_type={TimeframeUtils.timeframeType(this.props.time)}
                     handleChange={this.props.handleChange} />
         </div>

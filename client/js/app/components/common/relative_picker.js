@@ -1,7 +1,3 @@
-/**
- * @jsx React.DOM
- */
-
 var React = require('react');
 var _ = require('lodash');
 var Input = require('./input.js');

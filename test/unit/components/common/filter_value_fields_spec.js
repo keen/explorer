@@ -70,7 +70,7 @@ describe('components/common/filter_value_fields', function() {
           assert.strictEqual(
             moment(this.handleChangeStub.getCall(0).args[1]).format(datetimeFormat),
             "May 15, 2015 3:47 PM"
-          );  
+          );
         });
       });
     });

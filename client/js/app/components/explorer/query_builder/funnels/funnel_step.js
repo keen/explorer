@@ -17,7 +17,7 @@ var FunnelStep = React.createClass({
     propertyNames:        React.PropTypes.array.isRequired,
     onBrowseEvents:       React.PropTypes.func.isRequired,
     getPropertyType:      React.PropTypes.func.isRequired,
-    moveStep:             React.PropTypes.func.isRequired, 
+    moveStep:             React.PropTypes.func.isRequired,
     removeStep:           React.PropTypes.func.isRequired,
     handleChange:         React.PropTypes.func.isRequired,
     toggleStepActive:     React.PropTypes.func.isRequired,
@@ -97,7 +97,7 @@ var FunnelStep = React.createClass({
       return (
         <div className="step-body margin-top-small margin-bottom-small">
           {notice}
-          <SelectField name="event_collection" 
+          <SelectField name="event_collection"
                        label="Event Collection"
                        value={this.props.step.event_collection}
                        options={this.props.eventCollections}
@@ -112,7 +112,7 @@ var FunnelStep = React.createClass({
                        handleChange={this.handleChange} />
           <Timeframe ref="timeframe"
                      time={this.props.step.time}
-                     timezone={this.props.step.timezone}  
+                     timezone={this.props.step.timezone}
                      handleChange={this.handleChange}/>
           <div className="field-component">
             <FieldsToggle ref="filters-fields-toggle"

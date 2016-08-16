@@ -20,7 +20,7 @@ describe('components/common/timezone', function() {
   beforeEach(function () {
     this.handleChangeStub.reset();
     this.model = TestHelpers.createExplorerModel();
-    this.component = TestUtils.renderIntoDocument(<Timezone timezone={this.model.query.timezone} 
+    this.component = TestUtils.renderIntoDocument(<Timezone timezone={this.model.query.timezone}
                                                             timeframe_type={TimeframeUtils.timeframeType(this.model.query.time)}
                                                             handleChange={this.handleChangeStub} />);
   });

@@ -1,7 +1,3 @@
-/**
- * @jsx React.DOM
- */
-
 var React = require('react');
 var classNames = require('classnames');
 var _ = require('lodash');
@@ -49,7 +45,7 @@ var QueryActions = React.createClass({
           'btn btn-default code-sample-toggle pull-right': true,
           'open': !this.props.codeSampleHidden
         });
-    
+
     var isEmailExtraction = ExplorerUtils.isEmailExtraction(this.props.model);
     var isPersisted = ExplorerUtils.isPersisted(this.props.model);
     var isFunnel = this.props.model.query.analysis_type === 'funnel';
@@ -78,7 +74,7 @@ var QueryActions = React.createClass({
     return (
       <div className="query-actions clearfix">
         <div className="row">
-          <div className="col-md-10 clearfix">            
+          <div className="col-md-10 clearfix">
             <div className="run-group pull-left">
               <button type="submit" role="run-query" className={runButtonClasses} id="run-query" onClick={this.props.handleQuerySubmit}>
                 {this.runButtonText()}
