@@ -1,12 +1,8 @@
-/**
- * @jsx React.DOM
- */
-
 var React = require('react');
 var _ = require('lodash');
 var EventBrowser = require('../common/event_browser.js');
 var Visualization = require('./visualization/index.js')
-var QueryPaneTabs = require('./query_pane_tabs.js');;
+var QueryPaneTabs = require('./query_pane_tabs.js');
 var QueryBuilder = require('./query_builder/index.js');
 var BrowseQueries = require('./saved_queries/browse_queries.js');
 var CacheToggle = require('./cache_toggle.js');

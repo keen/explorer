@@ -1,7 +1,3 @@
-/**
- * @jsx React.DOM
- */
-
 var _ = require('lodash');
 var React = require('react');
 var Loader = require('../../common/loader.js');

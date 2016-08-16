@@ -23,7 +23,7 @@ describe('components/common/relative_picker', function() {
 
     this.component = TestUtils.renderIntoDocument(<RelativePicker intervalVisible={true}
                                                                   relativeIntervalTypes={relativeIntervalTypes}
-                                                                  time={this.time} 
+                                                                  time={this.time}
                                                                   handleChange={this.handleChangeStub} />);
   });
 

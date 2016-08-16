@@ -58,7 +58,7 @@ describe('components/common/fields_toggle', function() {
 
   describe('basic interactions', function(){
     it('calls the toggle function when the toggle-label is clicked', function(){
-      this.component = TestUtils.renderIntoDocument(<FieldsToggle model={this.model} 
+      this.component = TestUtils.renderIntoDocument(<FieldsToggle model={this.model}
                                                                   name="Some Field"
                                                                   initialOpenState={true}
                                                                   attrsToStore={'analysisType'}

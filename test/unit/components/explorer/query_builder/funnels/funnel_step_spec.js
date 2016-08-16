@@ -89,5 +89,5 @@ describe('components/explorer/query_builder/funnels/funnel_step', function() {
     TestUtils.Simulate.change(node);
     assert.isTrue(this.component.props.handleChange.calledWith(0, 'actor_property', 'test'));
   });
-  
+
 });

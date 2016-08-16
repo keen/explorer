@@ -51,7 +51,7 @@ describe('components/explorer/query_actions', function() {
           });
           it('does not show the delete button if persistence is null', function () {
             assert.lengthOf($R(this.component).find('[role="delete-query"]').components, 0);
-          });  
+          });
         });
         describe('with persistence', function () {
           it('does show the save button', function () {
@@ -67,7 +67,7 @@ describe('components/explorer/query_actions', function() {
               var model = TestHelpers.createExplorerModel();
               model.query.analysis_type = 'extraction';
               model.query.email = 'someone@keen.io';
-              this.component = this.renderComponent({ 
+              this.component = this.renderComponent({
                 model: model,
                 persistence: {}
               });
