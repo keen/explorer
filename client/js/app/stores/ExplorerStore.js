@@ -298,7 +298,8 @@ function _create(attrs) {
     });
   }
   if (!newAttrs.metadata) newAttrs.metadata = _defaultMetadata();
-  newAttrs.query.group_by = _wrapGroupBy(newAttrs.query.group_by)
+  newAttrs.query.group_by = _wrapGroupBy(newAttrs.query.group_by);
+  newAttrs.query.percentile = parseFloat(newAttrs.query.percentile) || null;
 
   _explorers[newAttrs.id] = newAttrs;
   return newAttrs.id;
@@ -311,7 +312,8 @@ function _update(id, updates) {
   }
 
   var newModel = _prepareUpdates(_explorers[id], updates);
-  newModel.query.group_by = _wrapGroupBy(newModel.query.group_by)
+  newModel.query.group_by = _wrapGroupBy(newModel.query.group_by);
+  newModel.query.percentile = parseFloat(newModel.query.percentile) || null;
 
   if (updates.id && updates.id !== id) {
     _explorers[updates.id] = newModel;

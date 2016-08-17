@@ -111,9 +111,18 @@ describe('stores/ExplorerStore', function() {
       });
       assert.sameMembers(ExplorerStore.get('abc123').query.group_by, ['thing']);
     });
+    it('should turn percentile value into a number if it was originally a string', function () {
+      ExplorerActions.create({
+        id: 'abc123',
+        query: {
+          percentile: '50'
+        }
+      });
+      assert.typeOf(ExplorerStore.get('abc123').query.percentile, 'number');
+    });
   });
 
-  describe('crateBatch', function () {
+  describe('createBatch', function () {
     it('should create a model for every object in the array under the key "models"', function () {
       ExplorerActions.createBatch([
         {
@@ -312,6 +321,27 @@ describe('stores/ExplorerStore', function() {
       ExplorerActions.update('SOME_ID', { query: newQuery });
       assert.sameMembers(ExplorerStore.get('SOME_ID').query.group_by, ['not_wrapped']);
     });
+
+    it('should turn percentile value into a number if it was originally a string', function () {
+      ExplorerActions.create({
+        id: 'SOME_ID',
+        query_name: 'A saved query',
+        query: {
+          event_collection: 'purchases',
+          analysis_type: 'percentile',
+          target_property: 'price',
+          percentile: '50'
+        },
+        visualization: {
+          chart_type: 'metric'
+        }
+      });
+      var newQuery = _.cloneDeep(ExplorerStore.get('SOME_ID').query);
+      newQuery.percentile = '75';
+      ExplorerActions.update('SOME_ID', { query: newQuery });
+      assert.typeOf(ExplorerStore.get('SOME_ID').query.percentile, 'number');
+    });
+
     describe('clearing values', function () {
       it('should set email to null if updating analysis type to something that is not extraction', function () {
         ExplorerActions.create({
