@@ -1,7 +1,3 @@
-/**
- * @jsx React.DOM
- */
-
 var _ = require('lodash');
 var React = require('react');
 var ReactSelect = require('./react_select.js');
@@ -28,7 +24,7 @@ var Timezone = React.createClass({
     var timezones = ProjectUtils.getConstant('TIMEZONES');
     var timezone = _.find(timezones, { name: value }) || _.find(timezones, { value: value });
     value = timezone ? timezone.value : value;
-    
+
     this.props.handleChange('timezone', value);
   },
 

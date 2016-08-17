@@ -1,7 +1,3 @@
-/**
- * @jsx React.DOM
- */
-
 var _ = require('lodash');
 var React = require('react');
 var Filter = require('./filter.js');
@@ -36,7 +32,7 @@ var FilterManager = React.createClass({
 
   handleChange: function(index, name, value) {
     var updates = _.cloneDeep(this.props.filters[index]);
-    
+
     if (!_.isNull(name.match('coordinates'))) {
       var coordinateIndex = parseInt(name.split('.')[1]);
       updates.property_value.coordinates[coordinateIndex] = FilterUtils.coerceGeoValue(value);
@@ -102,7 +98,7 @@ var FilterManager = React.createClass({
              onClose={this.modalClosed}
              modalClasses="filters-modal"
              footerBtns={[
-              { 
+              {
                 text: 'Done',
                 classes: 'btn-success',
                 iconName: 'ok-circle'

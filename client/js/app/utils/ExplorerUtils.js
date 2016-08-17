@@ -297,7 +297,7 @@ module.exports = {
         break;
 
       default:
-        paramNames = ['event_collection', 'filters', 'group_by', 'interval', 'target_property', 'timeframe', 'timezone'];
+        paramNames = ['event_collection', 'filters', 'group_by', 'interval', 'target_property', 'percentile', 'timeframe', 'timezone'];
         break;
     }
 

@@ -28,7 +28,7 @@ describe('components/explorer/query_builder/funnels/funnel_builder', function() 
 
   it('should render as many FunnelStep child components as there are steps', function () {
     this.component = TestHelpers.renderComponent(FunnelBuilder, getProps({
-      steps: [ 
+      steps: [
         TestHelpers.createStep(),
         TestHelpers.createStep(),
         TestHelpers.createStep()

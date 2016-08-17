@@ -125,7 +125,6 @@ App.prototype.render = function() {
   }), this.config.el);
 };
 
-window.React = React;
 window.Keen = window.Keen || {};
 window.Keen.Explorer = window.Keen.Explorer || {};
 window.Keen.Explorer.Persistence = Persistence;
