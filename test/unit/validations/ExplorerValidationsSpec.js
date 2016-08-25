@@ -101,6 +101,21 @@ describe('validations/ExplorerValidations', function() {
       });
     });
 
+    describe('percentile_value', function () {
+      it('has an error message', function () {
+        var errorMessage = ExplorerValidations.percentile_value.msg;
+        assert.equal(errorMessage, 'Choose a Percentile Value.');
+      });
+
+      it('returns true when a percentile value is present', function () {
+        assert.isTrue(ExplorerValidations.percentile_value.validate({ query: { percentile: 50 } }));
+      });
+
+      it('returns false when there is no percentile value', function () {
+        assert.isFalse(ExplorerValidations.percentile_value.validate({ query: { percentile: null } }));
+      });
+    });
+
     describe('filters', function () {
       describe('when query has invalid filters', function () {
         it('has an error message', function () {

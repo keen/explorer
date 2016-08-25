@@ -46,6 +46,20 @@ module.exports = {
 
   },
 
+  percentile_value: {
+    
+    msg: 'Choose a Percentile Value.',
+
+    shouldRun: function(model) {
+      return model.query.analysis_type === 'percentile';
+    },
+    
+    validate: function(model) {
+      return typeof model.query.percentile ==='number';
+    }
+
+  },
+
   filters: {
 
     shouldRun: isNotFunnel,
