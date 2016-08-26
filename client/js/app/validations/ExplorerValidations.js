@@ -55,7 +55,7 @@ module.exports = {
     },
     
     validate: function(model) {
-      return typeof model.query.percentile === 'number';
+      return model.query.percentile !== null && model.query.percentile !== '' && typeof model.query.percentile === 'number';
     }
 
   },
