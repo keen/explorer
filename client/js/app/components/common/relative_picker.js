@@ -47,7 +47,7 @@ var RelativePicker = React.createClass({
       <div className="relative-timeframe-picker">
         <div className="row">
           <div className="col-xs-4 form-collapse-right" id="relative-type">
-            <div clasName="btn-group">
+            <div className="btn-group">
               <Select label={false}
                       name="relativity"
                       classes="relativity"
