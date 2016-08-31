@@ -176,7 +176,8 @@ module.exports = {
           config.success(res);
         }
         if (config.complete) config.complete(err, res);
-      });
+      })
+      .catch(config.error);
   },
 
   /**
