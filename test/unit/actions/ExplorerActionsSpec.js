@@ -468,5 +468,15 @@ describe('actions/ExplorerActions', function() {
 
       });
     });
+    
+    describe('clone a saved query', function () {
+        it('should dispatch an EXPLORER_CLONE event', function () {
+          ExplorerActions.clone('ABC');
+          assert.isTrue(this.dispatchStub.calledWith({
+            actionType: 'EXPLORER_CLONE',
+            id: 'ABC'
+          }));
+        });
+    });
   });
 });

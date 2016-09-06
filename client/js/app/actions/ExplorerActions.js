@@ -26,6 +26,18 @@ var ExplorerActions = {
       models: models
     });
   },
+  
+  clone: function(sourceId) {
+	AppDispatcher.dispatch({
+	  actionType: ExplorerConstants.EXPLORER_CLONE,
+	  id: sourceId
+	});
+	NoticeActions.create({
+      text: "Query cloned! Set a name for this cloned query and save it",
+      type: 'success',
+      icon: 'check'
+    });
+  },
 
   update: function(id, updates) {
     var updated_query, project = ProjectStore.getProject();
