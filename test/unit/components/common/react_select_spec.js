@@ -49,5 +49,47 @@ describe('components/common/react_select', function() {
       });
       assert.sameMembers(listItems, ['ONE']);
     });
+
+    it('should display items with square bracket (RegExp reserved char)', function() {
+      var propsStep1 = _.assign({}, this.component.props, { items: ['ONE', 'TWO[2]', 'THREE'], value: 'two[' });
+      this.component = TestHelpers.renderComponent(ReactSelect, propsStep1);
+      this.component.setState({ initialFocus: false });
+
+      TestUtils.Simulate.focus(this.component.refs.input);
+      TestUtils.Simulate.change(this.component.refs.input);
+
+      var listItems = _.map(ReactDOM.findDOMNode(this.component.refs.list).childNodes, function(item) {
+        return item.textContent;
+      });
+      assert.sameMembers(listItems, ['TWO[2]']);
+    });
+
+    it('should display items with curly braces (RegExp reserved char)', function() {
+      var propsStep1 = _.assign({}, this.component.props, { items: ['ONE', 'TWO', 'THREE{tres}'], value: 'three{' });
+      this.component = TestHelpers.renderComponent(ReactSelect, propsStep1);
+      this.component.setState({ initialFocus: false });
+
+      TestUtils.Simulate.focus(this.component.refs.input);
+      TestUtils.Simulate.change(this.component.refs.input);
+
+      var listItems = _.map(ReactDOM.findDOMNode(this.component.refs.list).childNodes, function(item) {
+        return item.textContent;
+      });
+      assert.sameMembers(listItems, ['THREE{tres}']);
+    });
+
+    it('should display items with curly braces (RegExp reserved char)', function() {
+      var propsStep1 = _.assign({}, this.component.props, { items: ['ONE', 'TWO', 'THREE(3)'], value: 'three(' });
+      this.component = TestHelpers.renderComponent(ReactSelect, propsStep1);
+      this.component.setState({ initialFocus: false });
+
+      TestUtils.Simulate.focus(this.component.refs.input);
+      TestUtils.Simulate.change(this.component.refs.input);
+
+      var listItems = _.map(ReactDOM.findDOMNode(this.component.refs.list).childNodes, function(item) {
+        return item.textContent;
+      });
+      assert.sameMembers(listItems, ['THREE(3)']);
+    });
   });
 });

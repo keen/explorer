@@ -239,7 +239,7 @@ var ReactSelect = React.createClass({
     var inputString = this.state.initialFocus ? '' : (this.props.value || '');
     return this.props.items.map(function(item, index) {
       // If input is present, skip items that don't match
-      if (inputString.length > 0 && String(item).toLowerCase().search(_.escapeRegExp(inputString.toLowerCase())) < 0) return;
+      if (inputString.length > 0 && String(item).toLowerCase().search(_.escapeRegExp(inputString).toLowerCase()) < 0) return;
 
       // Simple result limiting
       count++; if (count > self.state.limit) return;
