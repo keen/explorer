@@ -4,7 +4,7 @@ var React = require('react');
 var TestUtils = require('react-addons-test-utils');
 var TestHelpers = require('../../../../support/TestHelpers');
 
-describe('components/explorer/visualization/keen_vis_config', function() {
+describe('components/explorer/visualization/keen_viz_config', function() {
 
   beforeEach(function() {
     this.component = TestUtils.renderIntoDocument(<KeenVizConfig />);
