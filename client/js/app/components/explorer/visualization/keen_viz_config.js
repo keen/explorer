@@ -4,7 +4,7 @@ var KeenVizConfig = React.createClass({
 
   render: function() {
     return (
-      <div></div>
+      <div>Hello, World!</div>
     );
   }
 
