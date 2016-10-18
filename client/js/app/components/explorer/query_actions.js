@@ -33,23 +33,6 @@ var QueryActions = React.createClass({
     return this.props.model.loading ? btnStates.active : btnStates.inactive;
   },
 
-  getInitialState: function() {
-    return {
-      showVizConfig: false
-    };
-  },
-
-  toggleVizConfig: function() {
-    this.setState({
-      showVizConfig: true
-    });
-  },
-
-  onCloseClick: function() {
-    return console.log('test');
-
-  },
-
   render: function() {
     var saveMsg,
         saveBtn,
@@ -63,6 +46,10 @@ var QueryActions = React.createClass({
           'btn btn-default code-sample-toggle pull-right': true,
           'open': !this.props.codeSampleHidden
         });
+        vizConfigBtnClasses = classNames({
+          'btn btn-default viz-config-toggle pull-right': true,
+          'open': !this.props.vizConfigHidden
+        })
 
     var isEmailExtraction = ExplorerUtils.isEmailExtraction(this.props.model);
     var isPersisted = ExplorerUtils.isPersisted(this.props.model);
@@ -107,18 +94,10 @@ var QueryActions = React.createClass({
             <button className={codeSampleBtnClasses} role="toggle-code-sample" onClick={this.props.toggleCodeSample}>
               <span>&lt;/&gt; Embed</span>
             </button>
-
-            <button className="btn btn-default pull-right" role="toggle-viz-config" onClick={this.toggleVizConfig}>
+            <button className={vizConfigBtnClasses} role="toggle-viz-config" onClick={this.props.toggleVizConfig}>
               Customize
             </button>
           </div>
-
-          <div className="row"> 
-            <div className="col-md-12">
-              {this.state.showVizConfig ? <KeenVizConfig onCloseClick={this.onCloseClick} /> : null }
-            </div>
-          </div>
-
         </div>
         {saveMsg}
       </div>

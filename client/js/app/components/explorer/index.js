@@ -197,6 +197,13 @@ var Explorer = React.createClass({
     });
   },
 
+  toggleVizConfig: function(event) {
+    event.preventDefault();
+    AppStateActions.update({
+      vizConfigHidden: !this.state.appState.vizConfigHidden
+    });
+  },
+
   getEventPropertyNames: function(collection)  {
     return ProjectUtils.getEventCollectionPropertyNames(
       this.props.project,
@@ -300,6 +307,7 @@ var Explorer = React.createClass({
                            onNameChange={this.onNameChange}
                            appState={this.state.appState}
                            toggleCodeSample={this.toggleCodeSample}
+                           toggleVizConfig={this.toggleVizConfig}
                            onQueryNameChange={this.onQueryNameChange}
                            onDisplayNameChange={this.onDisplayNameChange} />
             {cacheToggle}
@@ -310,7 +318,9 @@ var Explorer = React.createClass({
                           removeClick={this.removeSavedQueryClicked}
                           persistence={this.props.persistence}
                           codeSampleHidden={this.state.appState.codeSampleHidden}
-                          toggleCodeSample={this.toggleCodeSample} />
+                          vizConfigHidden={this.state.appState.vizConfigHidden}
+                          toggleCodeSample={this.toggleCodeSample}
+                          toggleVizConfig={this.toggleVizConfig} />
           </div>
         </div>
         <EventBrowser ref="event-browser"
