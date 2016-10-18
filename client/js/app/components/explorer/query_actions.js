@@ -45,6 +45,11 @@ var QueryActions = React.createClass({
     });
   },
 
+  onCloseClick: function() {
+    return console.log('test');
+
+  },
+
   render: function() {
     var saveMsg,
         saveBtn,
@@ -106,8 +111,14 @@ var QueryActions = React.createClass({
             <button className="btn btn-default pull-right" role="toggle-viz-config" onClick={this.toggleVizConfig}>
               Customize
             </button>
-            {this.state.showVizConfig ? <KeenVizConfig /> : null }
           </div>
+
+          <div className="row"> 
+            <div className="col-md-12">
+              {this.state.showVizConfig ? <KeenVizConfig onCloseClick={this.onCloseClick} /> : null }
+            </div>
+          </div>
+
         </div>
         {saveMsg}
       </div>
