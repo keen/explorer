@@ -2,6 +2,7 @@ var React = require('react');
 var classNames = require('classnames');
 var _ = require('lodash');
 var ExplorerUtils = require('../../utils/ExplorerUtils');
+var KeenVizConfig = require('./visualization/keen_viz_config.js');
 
 var QueryActions = React.createClass({
 
@@ -45,6 +46,10 @@ var QueryActions = React.createClass({
           'btn btn-default code-sample-toggle pull-right': true,
           'open': !this.props.codeSampleHidden
         });
+        vizConfigBtnClasses = classNames({
+          'btn btn-default viz-config-toggle pull-right': true,
+          'open': !this.props.vizConfigHidden
+        })
 
     var isEmailExtraction = ExplorerUtils.isEmailExtraction(this.props.model);
     var isPersisted = ExplorerUtils.isPersisted(this.props.model);
@@ -74,7 +79,7 @@ var QueryActions = React.createClass({
     return (
       <div className="query-actions clearfix">
         <div className="row">
-          <div className="col-md-10 clearfix">
+          <div className="col-md-6 clearfix">
             <div className="run-group pull-left">
               <button type="submit" role="run-query" className={runButtonClasses} id="run-query" onClick={this.props.handleQuerySubmit}>
                 {this.runButtonText()}
@@ -85,9 +90,12 @@ var QueryActions = React.createClass({
               {deleteBtn}
             </div>
           </div>
-          <div className="col-md-2">
+          <div className="col-md-6">
             <button className={codeSampleBtnClasses} role="toggle-code-sample" onClick={this.props.toggleCodeSample}>
               <span>&lt;/&gt; Embed</span>
+            </button>
+            <button className={vizConfigBtnClasses} role="toggle-viz-config" onClick={this.props.toggleVizConfig}>
+              Customize
             </button>
           </div>
         </div>

@@ -9,6 +9,7 @@ function defaultState() {
   return {
     fetchingPersistedExplorers: false,
     codeSampleHidden: true,
+    vizConfigHidden: true,
     ready: false
   };
 }
