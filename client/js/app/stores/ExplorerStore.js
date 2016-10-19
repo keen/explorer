@@ -58,7 +58,8 @@ function _defaultMetadata() {
   return {
     display_name: null,
     visualization: {
-      chart_type: null
+      chart_type: null,
+      footnotes: null
     }
   };
 }
