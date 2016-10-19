@@ -104,6 +104,12 @@ describe('components/explorer/query_actions', function() {
       TestUtils.Simulate.click($R(this.component).find('[role="toggle-code-sample"]').components[0]);
       assert.isTrue(stub.calledOnce);
     });
+    it('calls toggleVizConfig when the customize button is clicked', function () {
+      var stub = sinon.stub();
+      this.component = this.renderComponent({ toggleVizConfig: stub });
+      TestUtils.Simulate.click($R(this.component).find('[role="toggle-viz-config"]').components[0]);
+      assert.isTrue(stub.calledOnce);
+    });
   });
 
   describe('Button text', function(){

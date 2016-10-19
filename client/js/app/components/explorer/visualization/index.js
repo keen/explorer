@@ -14,6 +14,7 @@ var NoticeActions = require('../../../actions/NoticeActions');
 var ExplorerUtils = require('../../../utils/ExplorerUtils');
 var ChartTypeUtils = require('../../../utils/ChartTypeUtils');
 var FormatUtils = require('../../../utils/FormatUtils');
+var KeenVizConfig = require('./keen_viz_config.js')
 
 var Visualization = React.createClass({
 
@@ -158,6 +159,9 @@ var Visualization = React.createClass({
                       hidden={this.props.appState.codeSampleHidden}
                       onCloseClick={this.props.toggleCodeSample}
                       isValid={this.props.model.isValid} />
+          <KeenVizConfig onCloseClick={this.props.toggleVizConfig} 
+                         hidden={this.props.appState.vizConfigHidden}
+          />
         </div>
       </div>
     );
