@@ -170,6 +170,7 @@ var Visualization = React.createClass({
                       isValid={this.props.model.isValid} />
           <KeenVizConfig onCloseClick={this.props.toggleVizConfig} 
                          hidden={this.props.appState.vizConfigHidden}
+                         footnotes={this.props.model.metadata.visualization.footnotes}
                          updateChartFootnotes={this.updateChartFootnotes} />
         </div>
       </div>

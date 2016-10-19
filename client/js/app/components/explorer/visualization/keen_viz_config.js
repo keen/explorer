@@ -7,6 +7,7 @@ var KeenVizConfig = React.createClass({
   propTypes: {
     onCloseClick: React.PropTypes.func.isRequired,
     hidden: React.PropTypes.bool.isRequired,
+    footnotes: React.PropTypes.string,
     updateChartFootnotes: React.PropTypes.func.isRequired
   },
 
@@ -24,7 +25,8 @@ var KeenVizConfig = React.createClass({
         <div className="alert alert-info">
            <TextareaComponent onChange={this.props.updateChartFootnotes} 
                               readOnly={false} 
-                              placeholder={"Footnotes..."} />
+                              placeholder={"Footnotes..."} 
+                              value={this.props.footnotes} />
         </div>
       </div>
     );
