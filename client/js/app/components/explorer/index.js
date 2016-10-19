@@ -189,7 +189,7 @@ var Explorer = React.createClass({
 
   getSelectedIndex: function() {
     var index;
-    for (i=0; i<this.state.allPersistedExplorers.length; i++) {
+    for (var i=0; i<this.state.allPersistedExplorers.length; i++) {
       if (this.state.allPersistedExplorers[i].active) {
         index = i;
         break;
