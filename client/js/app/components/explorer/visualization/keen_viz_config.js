@@ -16,7 +16,7 @@ var KeenVizConfig = React.createClass({
 
     return (
       <div className={panelClasses}>
-        <a href="#" className="close-btn pull-right" onClick={this.props.onCloseClick}>
+        <a href="#" className="close-btn pull-right" role="close-viz-config" onClick={this.props.onCloseClick}>
           <span className="icon glyphicon glyphicon glyphicon-remove-circle no-margin"></span>
         </a>
         <div className="alert alert-info">Hello, World.</div>
