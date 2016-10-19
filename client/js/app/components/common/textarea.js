@@ -3,6 +3,11 @@ var _ = require('lodash');
 
 var TextareaComponent = React.createClass({
 
+  propTypes: {
+    readOnly: React.PropTypes.bool,
+    value: React.PropTypes.string
+  },
+
   // Convenience functions
 
   setHeight: function() {
@@ -19,10 +24,10 @@ var TextareaComponent = React.createClass({
   // Callbacks
 
   onChange: function(event) {
+    this.setState({ value: event.target.value });
     if (this.props.dynamicHeight) {
       this.setHeight();
     }
-
     this.props.onChange(event);
   },
 
@@ -47,8 +52,13 @@ var TextareaComponent = React.createClass({
 
   getInitialState: function() {
     return {
-      styles: {}
+      styles: {},
+      value: this.props.value || ''
     };
+  },
+
+  componentWillReceiveProps: function(nextProps) {
+    this.setState({ value: nextProps.value });
   },
 
   render: function() {
@@ -66,7 +76,7 @@ var TextareaComponent = React.createClass({
                   placeholder={this.props.placeholder}
                   value={this.props.value}
                   onChange={this.onChange}
-                  readOnly={true}></textarea>
+                  readOnly={this.props.readOnly}></textarea>
       </div>
     );
   }

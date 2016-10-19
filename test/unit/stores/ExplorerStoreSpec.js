@@ -57,7 +57,8 @@ describe('stores/ExplorerStore', function() {
         metadata: {
           display_name: null,
           visualization: {
-            chart_type: null
+            chart_type: null,
+            footnotes: null
           }
         }
       };
@@ -98,7 +99,8 @@ describe('stores/ExplorerStore', function() {
       assert.deepEqual(ExplorerStore.get('abc123').metadata, {
         display_name: null,
         visualization: {
-          chart_type: null
+          chart_type: null,
+          footnotes: null
         }
       });
     });
@@ -917,7 +919,8 @@ describe('stores/ExplorerStore', function() {
           metadata: {
             display_name: 'some name',
             visualization: {
-              chart_type: 'metric'
+              chart_type: 'metric',
+              footnotes: null
             }
           }
         }));
@@ -962,7 +965,8 @@ describe('stores/ExplorerStore', function() {
           metadata: {
             display_name: 'some name',
             visualization: {
-              chart_type: 'metric'
+              chart_type: 'metric',
+              footnotes: null
             }
           },
           originalModel: originalModel

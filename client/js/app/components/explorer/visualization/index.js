@@ -81,6 +81,15 @@ var Visualization = React.createClass({
     }
   },
 
+  updateChartFootnotes: function(event) {
+    var updates = {
+      metadata: {
+        visualization: { footnotes: event.target.value }
+      }
+    };
+    ExplorerActions.update(this.props.model.id, updates);
+  },
+
   componentWillMount: function() {
     this.dataviz = new KeenDataviz();
   },
@@ -161,7 +170,8 @@ var Visualization = React.createClass({
                       isValid={this.props.model.isValid} />
           <KeenVizConfig onCloseClick={this.props.toggleVizConfig} 
                          hidden={this.props.appState.vizConfigHidden}
-          />
+                         footnotes={this.props.model.metadata.visualization.footnotes}
+                         updateChartFootnotes={this.updateChartFootnotes} />
         </div>
       </div>
     );
