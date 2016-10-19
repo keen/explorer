@@ -84,7 +84,7 @@ var Visualization = React.createClass({
   updateChartFootnotes: function(event) {
     var updates = {
       metadata: {
-        visualization: { footnotes: "Some notes about this chart." }
+        visualization: { footnotes: event.target.value }
       }
     };
     ExplorerActions.update(this.props.model.id, updates);

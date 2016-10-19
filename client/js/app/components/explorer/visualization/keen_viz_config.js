@@ -1,5 +1,6 @@
 var React = require('react');
 var classNames = require('classnames');
+var TextareaComponent = require('../../common/textarea.js')
 
 var KeenVizConfig = React.createClass({
 
@@ -21,7 +22,9 @@ var KeenVizConfig = React.createClass({
           <span className="icon glyphicon glyphicon glyphicon-remove-circle no-margin"></span>
         </a>
         <div className="alert alert-info">
-          <button onClick={this.props.updateChartFootnotes}>Hello, World.</button>
+           <TextareaComponent onChange={this.props.updateChartFootnotes} 
+                              readOnly={false} 
+                              placeholder={"Footnotes..."} />
         </div>
       </div>
     );
