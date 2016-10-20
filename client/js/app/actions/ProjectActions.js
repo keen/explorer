@@ -63,7 +63,7 @@ var ProjectActions = {
       loading: true
     });
     return client
-      .get(client.url('events', collectionName))
+      .get(client.url('events', encodeURIComponent(collectionName)))
       .auth(client.masterKey())
       .send()
       .then(function(res) {
