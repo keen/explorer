@@ -1059,12 +1059,12 @@ describe('stores/ExplorerStore', function() {
         assert.sameMembers(explorer.query.group_by, [null]);
       });
 
-      it('should remove the root interval property', function () {
+      it('should set unsupported interval property value to null', function () {
         ExplorerActions.update('abc123', {
           query: {
             analysis_type: 'count',
             event_collection: 'pageviews',
-            interval: 'interval_property',
+            interval: 'interval_value',
             filters: []
           }
         });
