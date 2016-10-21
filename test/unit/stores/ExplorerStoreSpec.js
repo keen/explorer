@@ -1059,6 +1059,20 @@ describe('stores/ExplorerStore', function() {
         assert.sameMembers(explorer.query.group_by, [null]);
       });
 
+      it('should remove the root interval property', function () {
+        ExplorerActions.update('abc123', {
+          query: {
+            analysis_type: 'count',
+            event_collection: 'pageviews',
+            interval: 'interval_property',
+            filters: []
+          }
+        });
+        ExplorerActions.update('abc123', { query: { analysis_type: 'funnel' } });
+        var explorer = ExplorerStore.get('abc123');
+        assert.equal(explorer.query.interval, null);
+      });
+
       it('should set the global timeframe property to null', function () {
         ExplorerActions.update('abc123', {
           query: {
