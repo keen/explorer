@@ -233,6 +233,7 @@ function _removeInvalidFields(newModel) {
     newModel.query.timezone = null;
     newModel.query.group_by = null;
     newModel.query.timeframe = null;
+    newModel.query.interval = null;
   }
   return newModel;
 }
