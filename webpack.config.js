@@ -1,19 +1,24 @@
-'use strict';
-
 const webpack = require('webpack');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+
+const buildName = 'keen-explorer';
 
 const devModule = {
-  entry: './client/js/app/app.js',
+  entry: ['./client/js/app/app.js', './client/styles/base.less'],
+
   output: {
-    filename: 'keen-explorer-webpack.js',
-    path: './dist/'
+    filename: `${buildName}.js`,
+    path: './dist/',
+    chunkFilename: `${buildName}.js`
   },
+
   module: {
     loaders: [
       {
         test: /picker/,
         loader: 'imports?define=>false'
       },
+
       {
         test: /\.js$/,
         loader: 'babel-loader',
@@ -21,9 +26,20 @@ const devModule = {
         query: {
           presets: ['es2015', 'react'],
         }
+      },
+
+      {
+        test: /\.less$/,
+        loader: ExtractTextPlugin.extract("style-loader", "style!css!autoprefixer!less")
       }
     ]
   },
+
+  plugins: [
+    // extract inline css into separate 'styles.css'
+    new ExtractTextPlugin('styles.css'),
+  ],
+
   externals: {
     jquery: 'jQuery',
   }
