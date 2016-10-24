@@ -30,14 +30,14 @@ const devModule = {
 
       {
         test: /\.less$/,
-        loader: ExtractTextPlugin.extract("style-loader", "style!css!autoprefixer!less")
+        loader: ExtractTextPlugin.extract("style-loader", "css!less")
       }
     ]
   },
 
   plugins: [
     // extract inline css into separate 'styles.css'
-    new ExtractTextPlugin('styles.css'),
+    new ExtractTextPlugin(`${buildName}.css`),
   ],
 
   externals: {
