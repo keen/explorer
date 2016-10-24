@@ -36,6 +36,78 @@ describe('actions/ProjectActions', function() {
       this.xhrOpenStub.calledWith('GET', expectedURL, true);
     });
 
+    it('should encode a / in the collection name', function() {
+      var expectedURL = this.client.config.protocol +
+        "://" +
+        this.client.config.host +
+        '/projects/' +
+        this.client.config.projectId +
+        '/events/test%2ftest?api_key=' +
+        this.client.config.masterKey;
+      ProjectActions.fetchCollectionSchema(this.client, 'test/test');
+      this.xhrOpenStub.calledWith('GET', expectedURL, true);
+    });
+
+    it('should encode a [space] in the collection name', function() {
+      var expectedURL = this.client.config.protocol +
+        "://" +
+        this.client.config.host +
+        '/projects/' +
+        this.client.config.projectId +
+        '/events/test%20test?api_key=' +
+        this.client.config.masterKey;
+      ProjectActions.fetchCollectionSchema(this.client, 'test test');
+      this.xhrOpenStub.calledWith('GET', expectedURL, true);
+    });
+
+    it('should encode a hash in the collection name', function() {
+      var expectedURL = this.client.config.protocol +
+          "://" +
+          this.client.config.host +
+          '/projects/' +
+          this.client.config.projectId +
+          '/events/test%26test?api_key=' +
+          this.client.config.masterKey;
+      ProjectActions.fetchCollectionSchema(this.client, 'test#test');
+      this.xhrOpenStub.calledWith('GET', expectedURL, true);
+    });
+
+    it('should encode a question mark in the collection name', function() {
+      var expectedURL = this.client.config.protocol +
+          "://" +
+          this.client.config.host +
+          '/projects/' +
+          this.client.config.projectId +
+          '/events/test%3Ftest?api_key=' +
+          this.client.config.masterKey;
+      ProjectActions.fetchCollectionSchema(this.client, 'test?test');
+      this.xhrOpenStub.calledWith('GET', expectedURL, true);
+    });
+
+    it('should encode a colon in the collection name', function() {
+      var expectedURL = this.client.config.protocol +
+          "://" +
+          this.client.config.host +
+          '/projects/' +
+          this.client.config.projectId +
+          '/events/test%3Atest?api_key=' +
+          this.client.config.masterKey;
+      ProjectActions.fetchCollectionSchema(this.client, 'test:test');
+      this.xhrOpenStub.calledWith('GET', expectedURL, true);
+    });
+
+    it('should encode an ampersand in the collection name', function() {
+      var expectedURL = this.client.config.protocol +
+          "://" +
+          this.client.config.host +
+          '/projects/' +
+          this.client.config.projectId +
+          '/events/test%26test?api_key=' +
+          this.client.config.masterKey;
+      ProjectActions.fetchCollectionSchema(this.client, 'test&test');
+      this.xhrOpenStub.calledWith('GET', expectedURL, true);
+    });
+
   });
 
 });
