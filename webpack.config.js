@@ -8,8 +8,7 @@ const devModule = {
 
   output: {
     filename: `${buildName}.js`,
-    path: './dist/',
-    chunkFilename: `${buildName}.js`
+    path: './dist/'
   },
 
   module: {

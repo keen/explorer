@@ -74,10 +74,11 @@
     "stringify": "~3.0.0",
     "style-loader": "^0.13.1",
     "vinyl-source-stream": "1.0.0",
-    "webpack": "^1.13.2"
+    "webpack": "^1.13.2",
+    "webpack-dev-server": "^1.16.2"
   },
   "scripts": {
-    "dev": "gulp",
+    "dev": "./node_modules/webpack-dev-server/bin/webpack-dev-server.js --progress --colors --port 8081",
     "production": "gulp production",
     "test": "gulp test:unit"
   }
