@@ -145,7 +145,9 @@ module.exports = {
       width: 	   function(){ return this; },
       render: 	 function(){ return this; },
       dataType:  function(){ return this; },
-      title:  	 function(){ return this; }
+      title:  	 function(){ return this; },
+      type:      function(){ return this; },
+      sortGroups: function(){ return this; }
     };
   },
 

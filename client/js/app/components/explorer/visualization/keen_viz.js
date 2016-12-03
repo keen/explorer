@@ -1,5 +1,6 @@
 var _ = require('lodash');
 var React = require('react');
+var ChartTypeUtils = require('../../../utils/ChartTypeUtils');
 
 var KeenViz = React.createClass({
 
@@ -53,8 +54,21 @@ var KeenViz = React.createClass({
   },
 
   render: function() {
+	var exportBtn;
+	
+	if (ChartTypeUtils.isTableChartType(this.props.model.metadata.visualization.chart_type)) {
+	  exportBtn = (
+	    <button type="button" role="export-table" className="btn btn-link" onClick={this.props.exportToCsv}>
+          Export
+        </button>
+      );
+	}
+	
     return (
-      <div ref="keen-viz"></div>
+      <div ref="keen-viz-wrapper">
+      	<div ref="keen-viz"></div>
+      	{exportBtn}
+      </div>
     );
   }
 });
