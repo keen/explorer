@@ -9,6 +9,7 @@ var AppDispatcher = require('../../../../../client/js/app/dispatcher/AppDispatch
 var AppStateStore = require('../../../../../client/js/app/stores/AppStateStore');
 var ExplorerUtils = require('../../../../../client/js/app/utils/ExplorerUtils');
 var ChartTypeUtils = require('../../../../../client/js/app/utils/ChartTypeUtils');
+var DataUtils = require('../../../../../client/js/app/utils/DataUtils');
 var ExplorerConstants = require('../../../../../client/js/app/constants/ExplorerConstants');
 var ExplorerActions = require('../../../../../client/js/app/actions/ExplorerActions');
 var NoticeActions = require('../../../../../client/js/app/actions/NoticeActions');
@@ -26,6 +27,7 @@ describe('components/explorer/visualization/index', function() {
     this.project = TestHelpers.createProject();
     var datavizStub = sinon.stub(Keen, 'Dataviz').returns(TestHelpers.createDataviz());
     this.chartOptionsStub = sinon.stub(ChartTypeUtils, 'getChartTypeOptions').returns([]);
+    this.exportToCsvStub = sinon.stub(DataUtils, 'exportToCsv').returns([]);
 
     this.renderComponent = function(props) {
       var defaults = {
@@ -53,6 +55,7 @@ describe('components/explorer/visualization/index', function() {
   afterEach(function () {
     Keen.Dataviz.restore();
     ChartTypeUtils.getChartTypeOptions.restore();
+    DataUtils.exportToCsv.restore();
   });
 
   describe('setup', function() {
@@ -111,6 +114,14 @@ describe('components/explorer/visualization/index', function() {
 
       assert.equal(selectField.value, 'metric');
     });
+  });
+  
+  describe('export to csv', function() {
+	 it('exports to csv chart data', function() {
+		 this.component.exportToCsv([['column1', 'column2'], ['row1 value 1', 'row2 value2']]);
+		 
+		 sinon.assert.called(this.exportToCsvStub);
+	 });
   });
 
 });
