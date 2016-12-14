@@ -262,6 +262,47 @@ describe('components/explorer/index', function() {
       });
 
     });
+      
+    describe('cloneQueryClick', function () {
+      beforeEach(function() {
+        ExplorerStore.clearAll();
+        ExplorerActions.create(_.assign({}, TestHelpers.createExplorerModel(), { id: 'abc', metadata: { display_name: 'abc' } }));
+        ExplorerActions.setActive('abc');
+        ExplorerActions.create(_.assign({}, TestHelpers.createExplorerModel(), { id: 'def', metadata: { display_name: 'def' } }));
+        ExplorerActions.create(_.assign({}, TestHelpers.createExplorerModel(), { id: 'ghi', metadata: { display_name: 'ghi' } }));
+
+        var props = _.assign({}, this.component.props, { persistence: {} });
+        this.component = TestHelpers.renderComponent(Explorer, props);
+      });
+      it('should add a new explorer in the store', function () {
+        this.component.cloneQueryClick(TestHelpers.fakeEvent());
+        assert.strictEqual(_.keys(ExplorerStore.getAll()).length, 4);
+      });
+      it('should set the newly created explorer as active', function () {
+        var stub = sinon.stub(ExplorerActions, 'setActive');
+        this.component.cloneQueryClick(TestHelpers.fakeEvent());
+        var keys = _.keys(ExplorerStore.getAll());
+        var lastExplorer = ExplorerStore.getAll()[keys[keys.length-1]];
+        assert.isTrue(stub.calledWith(lastExplorer.id));
+        ExplorerActions.setActive.restore();
+      });
+      it('should change the text on the query builder tab to "Create a new query"', function () {
+        assert.strictEqual(this.component.refs['query-pane-tabs'].refs['build-tab'].textContent, 'Edit query');
+        this.component.cloneQueryClick(TestHelpers.fakeEvent());
+        this.component._onChange();
+        assert.strictEqual(this.component.refs['query-pane-tabs'].refs['build-tab'].textContent, 'Create a new query');
+      });
+      it('should update component state to show the build tab', function () {
+        this.component.setState({ activeQueryPane: 'browse' });
+        this.component.cloneQueryClick(TestHelpers.fakeEvent());
+        assert.strictEqual(this.component.state.activeQueryPane, 'build');
+      });
+      it('should call clone method passing current or active explorer', function() {
+    	  var cloneStub = sinon.stub(ExplorerActions, 'clone');
+    	  this.component.cloneQueryClick(TestHelpers.fakeEvent());
+    	  assert.isTrue(cloneStub.calledWith('abc'));
+      });
+    });
 
     describe('createNewQuery', function () {
       beforeEach(function() {

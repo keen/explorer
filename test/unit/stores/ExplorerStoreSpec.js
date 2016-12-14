@@ -121,6 +121,25 @@ describe('stores/ExplorerStore', function() {
       assert.typeOf(ExplorerStore.get('abc123').query.percentile, 'number');
     });
   });
+  
+  describe('clone', function () {
+	it('should clone only query data', function() {
+	  ExplorerActions.create({
+	    id: 'abc123',
+	    query: {
+		  event_collection: 'signups',
+	      analysis_type: 'count'
+		}
+	  });
+	  var source = ExplorerStore.get('abc123');
+	  ExplorerActions.clone(source.id);
+	  var keys = Object.keys(ExplorerStore.getAll());
+	  assert.lengthOf(Object.keys(ExplorerStore.getAll()), 2);
+	  assert.isTrue(ExplorerStore.getAll()[keys[keys.length - 1]].id != source.id);
+      assert.deepPropertyVal(ExplorerStore.getAll()[keys[keys.length - 1]], 'query.event_collection', 'signups');
+      assert.deepPropertyVal(ExplorerStore.getAll()[keys[keys.length - 1]], 'query.analysis_type', 'count');
+	})
+  });
 
   describe('createBatch', function () {
     it('should create a model for every object in the array under the key "models"', function () {

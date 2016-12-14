@@ -52,6 +52,9 @@ describe('components/explorer/query_actions', function() {
           it('does not show the delete button if persistence is null', function () {
             assert.lengthOf($R(this.component).find('[role="delete-query"]').components, 0);
           });
+          it('does not show the clone button if persistence is null', function () {
+            assert.lengthOf($R(this.component).find('[role="clone-query"]').components, 0);
+          });
         });
         describe('with persistence', function () {
           it('does show the save button', function () {
@@ -61,6 +64,10 @@ describe('components/explorer/query_actions', function() {
           it('does show the delete button', function () {
             this.component = this.renderComponent({ persistence: {} });
             assert.lengthOf($R(this.component).find('[role="delete-query"]').components, 1);
+          });
+          it('does show the clone button', function () {
+            this.component = this.renderComponent({ persistence: {} });
+            assert.lengthOf($R(this.component).find('[role="clone-query"]').components, 1);
           });
           describe('if the query is an email extraction', function () {
             it('the save button is disabled', function () {
