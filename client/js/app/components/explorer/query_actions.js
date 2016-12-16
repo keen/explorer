@@ -72,7 +72,7 @@ var QueryActions = React.createClass({
       );
       if (isPersisted) {
         cloneBtn = (
-          <button type="button" className="btn btn-primary" onClick={actionsSupported ? this.props.cloneQueryClick : function(){}} role="clone-query" disabled={this.props.model.loading || !actionsSupported}>
+          <button type="button" className="btn btn-default" onClick={actionsSupported ? this.props.cloneQueryClick : function(){}} role="clone-query" disabled={this.props.model.loading || !actionsSupported}>
             Clone
           </button>
         );
