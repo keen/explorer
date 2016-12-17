@@ -100,16 +100,6 @@ function _defaultStep() {
   }
 }
 
-/**
- * Clone the query attributes to a new object.
- * @param {Object} source  Source object from get the data to be copied.
- * @returns {Object} Copy of the query attributes of th source object
- */
-function _cloneAttrs(source) {
-	return {
-	    query: source.query
-	};
-}
 
 function _validate(id) {
   RunValidations(ExplorerValidations, _explorers[id]);
@@ -551,7 +541,7 @@ ExplorerStore.dispatchToken = AppDispatcher.register(function(action) {
       
     case ExplorerConstants.EXPLORER_CLONE:
       var source = ExplorerStore.get(action.id);
-      _create(_cloneAttrs(source));
+      _create({ query: _.cloneDeep(source.query) });
       finishAction();
       break;
 
