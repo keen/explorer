@@ -541,7 +541,14 @@ ExplorerStore.dispatchToken = AppDispatcher.register(function(action) {
       
     case ExplorerConstants.EXPLORER_CLONE:
       var source = ExplorerStore.get(action.id);
-      _create({ query: _.cloneDeep(source.query) });
+      _create({ query: _.cloneDeep(source.query), 
+                metadata : {
+                  display_name: null,
+                  visualization: {
+                    chart_type: _.cloneDeep(source.metadata.visualization.chart_type) 
+                  }
+                }
+              });
       finishAction();
       break;
 
