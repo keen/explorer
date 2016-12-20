@@ -84,8 +84,8 @@ var Explorer = React.createClass({
   },
   
   cloneQueryClick: function(event) {
-	event.preventDefault();
-	ExplorerActions.clone(this.state.activeExplorer.id);
+    event.preventDefault();
+    ExplorerActions.clone(this.state.activeExplorer.id);
     var newExplorer = ExplorerStore.getLast();
     ExplorerActions.setActive(newExplorer.id);
     this.setState({ activeQueryPane: 'build' });
