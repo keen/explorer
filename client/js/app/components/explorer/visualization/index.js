@@ -88,11 +88,10 @@ var Visualization = React.createClass({
   componentWillUnmount: function() {
     AppDispatcher.unregister(this.dispatcherToken);
   },
-  
+
   exportToCsv: function() {
 	  var data = this.dataviz.dataset.matrix;
-	  var filename = this.props.model.query_name;
-	  
+	  var filename = this.props.model.query_name || 'Untitled';
 	  DataUtils.exportToCsv(data, filename);
   },
 
@@ -159,7 +158,7 @@ var Visualization = React.createClass({
             </div>
           </div>
           <div className="chart-component">
-            <Chart model={this.props.model} 
+            <Chart model={this.props.model}
             		dataviz={this.dataviz}
             		exportToCsv={this.exportToCsv}/>
           </div>

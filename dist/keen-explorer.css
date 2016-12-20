@@ -1907,6 +1907,9 @@
 #keen-explorer .google-visualization-table {
   min-width: 100%;
 }
+#keen-explorer .btn-download-csv {
+  margin-top: 10px;
+}
 #keen-explorer .explorer-visualization {
   position: relative;
 }
