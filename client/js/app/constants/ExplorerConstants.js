@@ -3,6 +3,7 @@ var keyMirror = require('keymirror');
 module.exports = keyMirror({
   EXPLORER_CREATE: null,
   EXPLORER_CREATE_BATCH: null,
+  EXPLORER_CLONE: null,
   EXPLORER_UPDATE: null,
   EXPLORER_REMOVE: null,
   EXPLORER_SET_ACTIVE: null,

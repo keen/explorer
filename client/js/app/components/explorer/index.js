@@ -82,6 +82,14 @@ var Explorer = React.createClass({
     event.preventDefault();
     ExplorerActions.save(this.props.persistence, this.state.activeExplorer.id);
   },
+  
+  cloneQueryClick: function(event) {
+    event.preventDefault();
+    ExplorerActions.clone(this.state.activeExplorer.id);
+    var newExplorer = ExplorerStore.getLast();
+    ExplorerActions.setActive(newExplorer.id);
+    this.setState({ activeQueryPane: 'build' });
+  },
 
   createNewQuery: function(event) {
     event.preventDefault();
@@ -308,6 +316,7 @@ var Explorer = React.createClass({
                           handleQuerySubmit={this.handleQuerySubmit}
                           saveQueryClick={this.saveQueryClick}
                           removeClick={this.removeSavedQueryClicked}
+                          cloneQueryClick={this.cloneQueryClick}
                           persistence={this.props.persistence}
                           codeSampleHidden={this.state.appState.codeSampleHidden}
                           toggleCodeSample={this.toggleCodeSample} />

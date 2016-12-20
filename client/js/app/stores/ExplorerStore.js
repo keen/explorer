@@ -100,6 +100,7 @@ function _defaultStep() {
   }
 }
 
+
 function _validate(id) {
   RunValidations(ExplorerValidations, _explorers[id]);
 }
@@ -535,6 +536,19 @@ ExplorerStore.dispatchToken = AppDispatcher.register(function(action) {
       action.models.forEach(function(model) {
         _explorers[model.id] ? _update(model.id, model) : _create(model);        
       });
+      finishAction();
+      break;
+      
+    case ExplorerConstants.EXPLORER_CLONE:
+      var source = ExplorerStore.get(action.id);
+      _create({ query: _.cloneDeep(source.query), 
+                metadata: {
+                  display_name: null,
+                  visualization: {
+                    chart_type: _.cloneDeep(source.metadata.visualization.chart_type) 
+                  }
+                }
+              });
       finishAction();
       break;
 
