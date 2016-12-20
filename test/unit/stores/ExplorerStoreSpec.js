@@ -121,6 +121,72 @@ describe('stores/ExplorerStore', function() {
       assert.typeOf(ExplorerStore.get('abc123').query.percentile, 'number');
     });
   });
+  
+  describe('clone', function() {
+    it('should only clone query data and metadata.visualization.chart_type', function() {
+      ExplorerActions.create({
+        id: 'abc123',
+        query_name: 'Test Query',
+        query: {
+        event_collection: 'signups',
+          analysis_type: 'count'
+        },
+        metadata: {
+          display_name: 'Test',
+          visualization: {
+            chart_type: 'metric'
+          }
+        }
+      });
+
+      var source = ExplorerStore.get('abc123');
+      ExplorerActions.clone(source.id);
+      var clone = ExplorerStore.getLast();
+      var keys = Object.keys(ExplorerStore.getAll());
+
+      assert.lengthOf(keys, 2);
+      assert.isTrue(clone.id !== source.id);
+      assert.deepPropertyNotVal(clone, 'id', 'abc123');
+      assert.deepPropertyNotVal(clone, 'query_name', 'Test Query');
+      assert.deepPropertyVal(clone, 'query_name', null);
+      assert.deepPropertyVal(clone, 'query.event_collection', 'signups');
+      assert.deepPropertyVal(clone, 'query.analysis_type', 'count');
+      assert.deepPropertyVal(clone, 'metadata.display_name', null);
+      assert.deepPropertyVal(clone, 'metadata.visualization.chart_type', 'metric');
+    });
+
+    it('should clone query into a new object and not modify original object', function() {
+      ExplorerActions.create({
+        id: 'abc456',
+        query_name: 'Another Test Query',
+        query: {
+          event_collection: 'signups',
+          analysis_type: 'count'
+        },
+        metadata: {
+          display_name: 'Another Test',
+          visualization: {
+            chart_type: 'metric'
+          }
+        }
+      });
+
+      var source = ExplorerStore.get('abc456');
+      ExplorerActions.clone(source.id);
+      var clone = ExplorerStore.getLast();
+      var keys = Object.keys(ExplorerStore.getAll());
+
+      assert.lengthOf(keys, 2);
+      assert.notStrictEqual(source.query, clone.query);
+      assert.notStrictEqual(source.metadata.visualization, clone.metadata.visualization);
+      assert.deepPropertyVal(source, 'id','abc456');
+      assert.deepPropertyVal(source, 'query_name', 'Another Test Query'); 
+      assert.deepPropertyVal(source, 'query.event_collection', 'signups');
+      assert.deepPropertyVal(source, 'query.analysis_type', 'count');
+      assert.deepPropertyVal(source, 'metadata.display_name', 'Another Test');
+      assert.deepPropertyVal(source, 'metadata.visualization.chart_type', 'metric');
+    });
+  });
 
   describe('createBatch', function () {
     it('should create a model for every object in the array under the key "models"', function () {
