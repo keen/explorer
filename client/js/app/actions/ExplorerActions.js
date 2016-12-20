@@ -33,7 +33,7 @@ var ExplorerActions = {
 	  id: sourceId
 	});
 	NoticeActions.create({
-      text: "Query cloned! Set a name for this cloned query and save it.",
+      text: "Query cloned! Add a name for this cloned query and save it.",
       type: 'success',
       icon: 'check'
     });

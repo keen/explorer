@@ -132,6 +132,7 @@ describe('stores/ExplorerStore', function() {
   	      analysis_type: 'count'
   		  },
         metadata: {
+          display_name: 'Test',
           visualization: {
             chart_type: 'metric'
           }
@@ -139,8 +140,8 @@ describe('stores/ExplorerStore', function() {
   	  });
   	  var source = ExplorerStore.get('abc123');
   	  ExplorerActions.clone(source.id);
+      var clone = ExplorerStore.getLast();
   	  var keys = Object.keys(ExplorerStore.getAll());
-      var clone = ExplorerStore.getAll()[keys[1]];
       assert.lengthOf(keys, 2);
       assert.isTrue(clone.id !== source.id);
       assert.deepPropertyNotVal(clone, 'id', 'abc123');
@@ -148,6 +149,7 @@ describe('stores/ExplorerStore', function() {
       assert.deepPropertyVal(clone, 'query_name', null);
       assert.deepPropertyVal(clone, 'query.event_collection', 'signups');
       assert.deepPropertyVal(clone, 'query.analysis_type', 'count');
+      assert.deepPropertyVal(clone, 'metadata.display_name', null);
       assert.deepPropertyVal(clone, 'metadata.visualization.chart_type', 'metric');
     });
     it('should clone query into a new object and not modify original object', function() {
@@ -159,6 +161,7 @@ describe('stores/ExplorerStore', function() {
           analysis_type: 'count'
         },
         metadata: {
+          display_name: 'Another Test',
           visualization: {
             chart_type: 'metric'
           }
@@ -166,14 +169,16 @@ describe('stores/ExplorerStore', function() {
       });
       var source = ExplorerStore.get('abc456');
       ExplorerActions.clone(source.id);
+      var clone = ExplorerStore.getLast();
       var keys = Object.keys(ExplorerStore.getAll());
-      var clone = ExplorerStore.getAll()[keys[1]]
+      assert.lengthOf(keys, 2);
       assert.notStrictEqual(source.query, clone.query);
       assert.notStrictEqual(source.metadata.visualization, clone.metadata.visualization);
       assert.deepPropertyVal(source, 'id','abc456');
       assert.deepPropertyVal(source, 'query_name', 'Another Test Query'); 
       assert.deepPropertyVal(source, 'query.event_collection', 'signups');
       assert.deepPropertyVal(source, 'query.analysis_type', 'count');
+      assert.deepPropertyVal(source, 'metadata.display_name', 'Another Test');
       assert.deepPropertyVal(source, 'metadata.visualization.chart_type', 'metric');
     });
   });

@@ -543,6 +543,7 @@ ExplorerStore.dispatchToken = AppDispatcher.register(function(action) {
       var source = ExplorerStore.get(action.id);
       _create({ query: _.cloneDeep(source.query), 
                 metadata : {
+                  display_name: null,
                   visualization: {
                     chart_type: _.cloneDeep(source.metadata.visualization.chart_type) 
                   }
