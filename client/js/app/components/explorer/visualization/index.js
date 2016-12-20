@@ -91,7 +91,7 @@ var Visualization = React.createClass({
 
   exportToCsv: function() {
 	  var data = this.dataviz.dataset.matrix;
-	  var filename = this.props.model.query_name || 'Untitled';
+	  var filename = this.props.model.query_name || 'untitled-query';
 	  DataUtils.exportToCsv(data, filename);
   },
 
