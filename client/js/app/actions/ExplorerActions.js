@@ -28,11 +28,11 @@ var ExplorerActions = {
   },
   
   clone: function(sourceId) {
-	AppDispatcher.dispatch({
-	  actionType: ExplorerConstants.EXPLORER_CLONE,
-	  id: sourceId
-	});
-	NoticeActions.create({
+    AppDispatcher.dispatch({
+      actionType: ExplorerConstants.EXPLORER_CLONE,
+      id: sourceId
+    });
+    NoticeActions.create({
       text: "Query cloned! Add a name for this cloned query and save it.",
       type: 'success',
       icon: 'check'

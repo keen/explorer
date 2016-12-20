@@ -264,7 +264,6 @@ describe('components/explorer/index', function() {
     });
       
     describe('cloneQueryClick', function () {
-
       beforeEach(function() {
         ExplorerStore.clearAll();
         ExplorerActions.create(_.assign({}, TestHelpers.createExplorerModel(), { id: 'abc', metadata: { display_name: 'abc' } }));
