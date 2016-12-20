@@ -64,8 +64,8 @@ module.exports = {
   responseSupportsChartType: function(query, chartType) {
     return _.includes(module.exports.getChartTypeOptions(query), chartType);
   },
-  
+
   isTableChartType: function(chartType) {
-	  return chartType == 'table';
+    return chartType == 'table';
   }
 }

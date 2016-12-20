@@ -115,13 +115,12 @@ describe('components/explorer/visualization/index', function() {
       assert.equal(selectField.value, 'metric');
     });
   });
-  
+
   describe('export to csv', function() {
-	 it('exports to csv chart data', function() {
-		 this.component.exportToCsv([['column1', 'column2'], ['row1 value 1', 'row2 value2']]);
-		 
-		 sinon.assert.called(this.exportToCsvStub);
-	 });
+    it('exports to csv chart data', function() {
+      this.component.exportToCsv([['column1', 'column2'], ['row1 value 1', 'row2 value2']]);
+      sinon.assert.called(this.exportToCsvStub);
+    });
   });
 
 });

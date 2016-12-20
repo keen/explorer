@@ -159,8 +159,8 @@ var Visualization = React.createClass({
           </div>
           <div className="chart-component">
             <Chart model={this.props.model}
-            		dataviz={this.dataviz}
-            		exportToCsv={this.exportToCsv}/>
+                   dataviz={this.dataviz}
+                   exportToCsv={this.exportToCsv}/>
           </div>
           <CodeSample ref="codesample"
                       codeSample={codeSample}
