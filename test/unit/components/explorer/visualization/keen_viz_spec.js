@@ -21,7 +21,7 @@ describe('components/explorer/visualization/keen_viz', function() {
   });
 
   describe('export to csv button', function() {
-    it('expor to csv button is not shown when chart type is different than table', function() {
+    it('export to csv button is not shown when chart type is different than table', function() {
     	assert.lengthOf($R(this.component).find('[role="export-table"]').components, 0);
     });
     it('export to csv button is shown when char type table is selected', function() {
