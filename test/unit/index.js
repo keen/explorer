@@ -64,6 +64,7 @@ require('./components/explorer/query_builder/funnels/funnel_builder_spec.js');
 require('./components/explorer/query_builder/funnels/funnel_step_spec.js');
 require('./components/explorer/saved_queries/browse_queries_spec.js');
 require('./components/explorer/visualization/chart_spec.js');
+require('./components/explorer/visualization/keen_viz_spec.js');
 require('./components/explorer/visualization/index_spec.js');
 
 // Common
