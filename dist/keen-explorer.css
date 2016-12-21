@@ -1907,6 +1907,9 @@
 #keen-explorer .google-visualization-table {
   min-width: 100%;
 }
+#keen-explorer .btn-download-csv {
+  margin-top: 10px;
+}
 #keen-explorer .explorer-visualization {
   position: relative;
 }
@@ -2047,7 +2050,6 @@
   outline: 0;
 }
 #keen-explorer .extraction-viz {
-  border: 1px solid rgba(0, 0, 0, 0.07);
   max-height: 450px;
   overflow: scroll;
   position: relative;

@@ -66,7 +66,8 @@ var Chart = React.createClass({
 		}
 		else {
 	  	chartContent = (
-	  		<KeenViz model={this.props.model} dataviz={this.props.dataviz} />
+	  		<KeenViz model={this.props.model} dataviz={this.props.dataviz}
+	  				exportToCsv={this.props.exportToCsv}/>
 	  	);
 	  }
 

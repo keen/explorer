@@ -14,6 +14,7 @@ var NoticeActions = require('../../../actions/NoticeActions');
 var ExplorerUtils = require('../../../utils/ExplorerUtils');
 var ChartTypeUtils = require('../../../utils/ChartTypeUtils');
 var FormatUtils = require('../../../utils/FormatUtils');
+var DataUtils = require('../../../utils/DataUtils');
 
 var Visualization = React.createClass({
 
@@ -88,6 +89,12 @@ var Visualization = React.createClass({
     AppDispatcher.unregister(this.dispatcherToken);
   },
 
+  exportToCsv: function() {
+    var data = this.dataviz.dataset.matrix;
+    var filename = this.props.model.query_name || 'untitled-query';
+    DataUtils.exportToCsv(data, filename);
+  },
+
   render: function() {
     var chartTitle,
         codeSample;
@@ -151,7 +158,9 @@ var Visualization = React.createClass({
             </div>
           </div>
           <div className="chart-component">
-            <Chart model={this.props.model} dataviz={this.dataviz} />
+            <Chart model={this.props.model}
+                   dataviz={this.dataviz}
+                   exportToCsv={this.exportToCsv}/>
           </div>
           <CodeSample ref="codesample"
                       codeSample={codeSample}
