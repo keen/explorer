@@ -8,7 +8,7 @@
     "classnames": "2.1.2",
     "flux": "^2.0.3",
     "json-stable-stringify": "1.0.0",
-    "keen-analysis": "^1.1.0",
+    "keen-analysis": "^1.2.0",
     "keen-dataviz": "^1.0.4",
     "keymirror": "~0.1.0",
     "lodash": "4.0.0",
