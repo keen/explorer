@@ -92,6 +92,16 @@ describe('stores/ExplorerStore', function() {
       var keys = Object.keys(ExplorerStore.getAll());
       assert.equal(ExplorerStore.getAll()[keys[0]].query.group_by.length, 0);
     });
+    it('should wrap non-null group_by values in an array', function () {
+      ExplorerActions.create({
+        query: {
+          group_by: 'thing'
+        }
+      });
+      var keys = Object.keys(ExplorerStore.getAll());
+      assert.equal(ExplorerStore.getAll()[keys[0]].query.group_by.length, 1);
+      assert.equal(ExplorerStore.getAll()[keys[0]].query.group_by[0], 'thing');
+    });
     it('should set the store object key to the id is one is passed in', function () {
       ExplorerActions.create({
         id: 'abc123'
