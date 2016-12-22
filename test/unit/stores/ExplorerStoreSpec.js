@@ -83,6 +83,25 @@ describe('stores/ExplorerStore', function() {
       assert.deepPropertyVal(ExplorerStore.getAll()[keys[0]], 'query.analysis_type', 'count');
       assert.deepPropertyVal(ExplorerStore.getAll()[keys[0]], 'metadata.visualization.chart_type', 'metric');
     });
+    it('should translate a null group_by to an empty array', function () {
+      ExplorerActions.create({
+        query: {
+          group_by: null
+        }
+      });
+      var keys = Object.keys(ExplorerStore.getAll());
+      assert.equal(ExplorerStore.getAll()[keys[0]].query.group_by.length, 0);
+    });
+    it('should wrap non-null group_by values in an array', function () {
+      ExplorerActions.create({
+        query: {
+          group_by: 'thing'
+        }
+      });
+      var keys = Object.keys(ExplorerStore.getAll());
+      assert.equal(ExplorerStore.getAll()[keys[0]].query.group_by.length, 1);
+      assert.equal(ExplorerStore.getAll()[keys[0]].query.group_by[0], 'thing');
+    });
     it('should set the store object key to the id is one is passed in', function () {
       ExplorerActions.create({
         id: 'abc123'
@@ -521,7 +540,7 @@ describe('stores/ExplorerStore', function() {
         ExplorerActions.update('SOME_ID', updates);
 
         assert.deepPropertyVal(ExplorerStore.get('SOME_ID'), 'query.interval', null);
-        assert.sameMembers(ExplorerStore.get('SOME_ID').query.group_by, [null]);
+        assert.sameMembers(ExplorerStore.get('SOME_ID').query.group_by, []);
       });
       it('should set percentile to null if the analysis type is not percentile', function () {
         ExplorerActions.create({
@@ -1122,7 +1141,7 @@ describe('stores/ExplorerStore', function() {
         });
         ExplorerActions.update('abc123', { query: { analysis_type: 'funnel' } });
         var explorer = ExplorerStore.get('abc123');
-        assert.sameMembers(explorer.query.group_by, [null]);
+        assert.sameMembers(explorer.query.group_by, []);
       });
 
       it('should set unsupported interval property value to null', function () {

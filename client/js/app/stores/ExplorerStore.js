@@ -282,7 +282,7 @@ function _prepareFilterUpdates(explorer, filter, updates) {
 
 function _wrapGroupBy(group_by) {
   if (!_.isArray(group_by)) group_by = [group_by];
-  return group_by;
+  return _.pull(group_by, null);
 }
 
 function _create(attrs) {
