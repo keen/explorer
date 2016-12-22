@@ -319,7 +319,7 @@ module.exports = {
       if (!params[param]) {
         return SKIP
       }
-      return '    ' + toCamelcaseName(param) + ': ' + s(params[param], {space: 4})
+      return '    ' + param + ': ' + s(params[param], {space: 4})
     }).join(',\n');
 
     value = [
