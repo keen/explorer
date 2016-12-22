@@ -1,5 +1,5 @@
 var _ = require('lodash');
-var KeenAnalysis = require('keen-analysis').noConflict();
+var KeenAnalysis = require('keen-analysis');
 var React = require('react');
 var ReactDOM = require('react-dom');
 

@@ -1,7 +1,7 @@
 // **********************
 // Dependencies
 // **********************
-require('keen-js');
+// require('keen-js');
 require('jquery-browserify');
 
 // ***********************
