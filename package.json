@@ -4,12 +4,17 @@
   "version": "3.0.0-rc2",
   "license": "MIT",
   "bucket-name": "keen-js",
+  "scripts": {
+    "dev": "gulp",
+    "production": "gulp production",
+    "test": "gulp test:unit"
+  },
   "dependencies": {
     "classnames": "2.1.2",
     "flux": "^2.0.3",
     "json-stable-stringify": "1.0.0",
-    "keen-analysis": "^1.2.0",
-    "keen-dataviz": "^1.1.0",
+    "keen-analysis": "1.2.1",
+    "keen-dataviz": "1.1.0",
     "keymirror": "~0.1.0",
     "lodash": "4.0.0",
     "moment": "^2.7.0",
@@ -63,10 +68,5 @@
     "sinon": "1.14.1",
     "stringify": "~3.0.0",
     "vinyl-source-stream": "1.0.0"
-  },
-  "scripts": {
-    "dev": "gulp",
-    "production": "gulp production",
-    "test": "gulp test:unit"
   }
 }
