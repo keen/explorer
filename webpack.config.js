@@ -2,12 +2,13 @@ const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const buildName = 'keen-explorer';
+const minExt = (process.env.NODE_ENV === 'production' ? 'min.' : '');
 
 const devModule = {
   entry: ['./client/js/app/app.js', './client/styles/base.less'],
 
   output: {
-    filename: `${buildName}.js`,
+    filename: `${buildName}.${minExt}js`,
     path: './dist/'
   },
 
@@ -35,8 +36,7 @@ const devModule = {
   },
 
   plugins: [
-    // extract inline css into separate 'styles.css'
-    new ExtractTextPlugin(`${buildName}.css`),
+    new ExtractTextPlugin(`${buildName}.${minExt}css`),
   ],
 
   externals: {
