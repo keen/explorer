@@ -59,7 +59,6 @@
     "gulp-mocha-selenium": "^1.0.0",
     "gulp-react": "2.0.0",
     "gulp-rename": "~1.2.0",
-    "http-server": "^0.9.0",
     "imports-loader": "^0.6.5",
     "jquery-browserify": "^1.8.1",
     "keen-js": "^3.3.0",
@@ -75,10 +74,10 @@
     "webpack": "^1.13.2"
   },
   "scripts": {
-    "dev": "webpack --watch --color -d & ./node_modules/http-server/bin/http-server -p 8081",
+    "dev": "./node_modules/webpack/bin/webpack --watch --color -d & gulp connect",
     "test": "gulp test:unit",
-    "build": "webpack",
-    "minify": "npm run build && NODE_ENV=production webpack -p",
+    "build": "./node_modules/webpack/bin/webpack",
+    "minify": "npm run build && NODE_ENV=production ./node_modules/webpack/bin/webpack -p",
     "production": "npm run minify && npm run test"
   }
 }

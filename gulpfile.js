@@ -22,6 +22,20 @@ var buildConfig = {
   buildName: 'keen-explorer'
 };
 
+// **********************
+// Server
+// **********************
+
+gulp.task('connect', function () {
+  connect.server({
+    root: [__dirname, 'demo', 'dist'],
+    port: process.env.PORT || 8081,
+    middleware: function(connect, opt) {
+      return [ historyApiFallback ];
+    }
+  });
+});
+
 // ********************
 // Testing
 // ********************
