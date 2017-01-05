@@ -44,7 +44,7 @@ function toUnderscoreName(name) {
   })
 }
 
-SKIP = {}
+var SKIP = {}
 function mapSkip(collection, fn) {
   return _.without(_.map(collection, fn), SKIP);
 }
@@ -322,7 +322,7 @@ module.exports = {
       return '    ' + param + ': ' + s(params[param], {space: 4})
     }).join(',\n');
 
-    value = [
+    var value = [
       'var client = new Keen({',
       '  projectId: ' + s(client.config.projectId) + ',',
       '  readKey: ' + s(client.config.readKey) + echoIf(dynamicConstructorValues, ','),

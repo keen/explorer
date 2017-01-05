@@ -112,7 +112,7 @@ module.exports = {
 
       parsedList = _.map(parsedList, function(val) {
         if (_isWrappedInSingleQuotes(val)) {
-          quotelessVal = val.replace("'", "");
+          var quotelessVal = val.replace("'", "");
           if (parseFloat(quotelessVal)) {
             val = parseFloat(quotelessVal);
           }
