@@ -117,7 +117,8 @@ function _getDefaultFilterCoercionType(explorer, filter) {
     ProjectStore.getProject(),
     explorer.query.event_collection,
     filter.property_name);
-  return targetCoercionType = FormatUtils.coercionTypeForPropertyType(propertyType);
+  var targetCoercionType = FormatUtils.coercionTypeForPropertyType(propertyType);
+  return targetCoercionType;
 }
 
 /**

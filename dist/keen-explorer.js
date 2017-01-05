@@ -14642,165 +14642,197 @@
 /* 30 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var KeenLibrary = __webpack_require__(31);
+	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(global) {var K = __webpack_require__(31);
 	var Promise = __webpack_require__(37);
 
 	var each = __webpack_require__(32),
 	    extend = __webpack_require__(33);
 
 	var request = __webpack_require__(42);
-	extend(KeenLibrary.prototype, request);
 
-	KeenLibrary.prototype.readKey = function(str){
-	  if (!arguments.length) return this.config.readKey;
-	  this.config.readKey = str ? String(str) : null;
-	  return this;
-	};
+	(function(env){
 
-	KeenLibrary.prototype.query = function(a, b){
-	  if (a && b && typeof b === 'string') {
-	    if (b.indexOf('/result') < 0) {
-	      b += '/result';
+	  // Extend default configurations
+	  // --------------------------------
+	  K.resources.queries = '{protocol}://{host}/3.0/projects/{projectId}/queries';
+
+	  // Extend client instance methods
+	  // --------------------------------
+	  extend(K.prototype, request);
+
+	  K.prototype.readKey = function(str){
+	    if (!arguments.length) return this.config.readKey;
+	    this.config.readKey = str ? String(str) : null;
+	    return this;
+	  };
+
+	  K.prototype.query = function(a, b){
+	    if (a && b && typeof b === 'string') {
+	      if (b.indexOf('/result') < 0) {
+	        b += '/result';
+	      }
+	      return this
+	        .get(this.url('queries', a, b))
+	        .auth(this.readKey())
+	        .send();
 	    }
-	    return this
-	      .get(this.url('queries', a, b))
-	      .auth(this.readKey())
-	      .send();
-	  }
-	  else if (a && b && typeof b === 'object') {
-	    // Include analysis_type for downstream use
-	    var q = extend({ analysis_type: a }, b);
-	    return this
-	      .post(this.url('queries', a))
-	      .auth(this.readKey())
-	      .send(q);
-	  }
-	  else if (a && !b) {
-	    return Promise.reject({
-	      error_code: 'SDKError',
-	      message: ".query() called with incorrect arguments"
-	    });
-	  }
-	};
-
-	// Keen.Query handler
-	// --------------------------------
-	KeenLibrary.Query = Query;
-
-	KeenLibrary.prototype.run = function(q, callback){
-	  var self = this,
-	      cb = callback,
-	      queries,
-	      promises,
-	      output;
-
-	  callback = null;
-	  queries = q instanceof Array? q : [q];
-	  promises = [];
-
-	  each(queries, function(query, i){
-	    if (typeof query === 'string') {
-	      promises.push(self.query('saved', query + '/result'));
-	    }
-	    else if (query instanceof KeenLibrary.Query) {
+	    else if (a && b && typeof b === 'object') {
 	      // Include analysis_type for downstream use
-	      promises.push(self.query(query.analysis, extend({ analysis_type: query.analysis }, query.params)));
+	      var q = extend({ analysis_type: a }, b);
+	      return this
+	        .post(this.url('queries', a))
+	        .auth(this.readKey())
+	        .send(q);
 	    }
-	  });
-
-	  if (promises.length > 1) {
-	    output = Promise.all(promises);
-	  }
-	  else {
-	    // Only return single
-	    output = promises[0];
-	  }
-
-	  if (cb) {
-	    // Manually handle callback, as
-	    // Promise.nodeify drops nulls
-	    output.then(function(res){
-	      cb(null, res);
-	    });
-	    output['catch'](function(err){
-	      cb(err, null);
-	    });
-	  }
-
-	  return output;
-	};
-
-	function Query(analysisType, params) {
-	  this.analysis = analysisType;
-	  this.params = {};
-	  this.set(params);
-
-	  // Localize timezone if none is set
-	  if (this.params.timezone === void 0) {
-	    this.params.timezone = new Date().getTimezoneOffset() * -60;
-	  }
-	}
-
-	Query.prototype.set = function(attributes) {
-	  var self = this;
-	  each(attributes, function(v, k){
-	    var key = k, value = v;
-	    if (k.match(new RegExp('[A-Z]'))) {
-	      key = k.replace(/([A-Z])/g, function($1) { return '_'+$1.toLowerCase(); });
-	    }
-	    self.params[key] = value;
-	    if (value instanceof Array) {
-	      each(value, function(dv, index){
-	        if (dv instanceof Array == false && typeof dv === 'object') {
-	          each(dv, function(deepValue, deepKey){
-	            if (deepKey.match(new RegExp('[A-Z]'))) {
-	              var _deepKey = deepKey.replace(/([A-Z])/g, function($1) { return '_'+$1.toLowerCase(); });
-	              delete self.params[key][index][deepKey];
-	              self.params[key][index][_deepKey] = deepValue;
-	            }
-	          });
-	        }
+	    else if (a && !b) {
+	      return Promise.reject({
+	        error_code: 'SDKError',
+	        message: ".query() called with incorrect arguments"
 	      });
 	    }
-	  });
-	  return self;
-	};
+	  };
 
-	Query.prototype.get = function(attribute) {
-	  var key = attribute;
-	  if (key.match(new RegExp('[A-Z]'))) {
-	    key = key.replace(/([A-Z])/g, function($1) { return '_'+$1.toLowerCase(); });
+	  // Keen.Query handler
+	  // --------------------------------
+	  K.Query = Query;
+
+	  K.prototype.run = function(q, callback){
+	    var self = this,
+	        cb = callback,
+	        queries,
+	        promises,
+	        output;
+
+	    callback = null;
+	    queries = q instanceof Array? q : [q];
+	    promises = [];
+
+	    each(queries, function(query, i){
+	      if (typeof query === 'string') {
+	        promises.push(self.query('saved', query + '/result'));
+	      }
+	      else if (query instanceof K.Query) {
+	        // Include analysis_type for downstream use
+	        promises.push(self.query(query.analysis, extend({ analysis_type: query.analysis }, query.params)));
+	      }
+	    });
+
+	    if (promises.length > 1) {
+	      output = Promise.all(promises);
+	    }
+	    else {
+	      // Only return single
+	      output = promises[0];
+	    }
+
+	    if (cb) {
+	      // Manually handle callback, as
+	      // Promise.nodeify drops nulls
+	      output.then(function(res){
+	        cb(null, res);
+	      });
+	      output['catch'](function(err){
+	        cb(err, null);
+	      });
+	    }
+
+	    return output;
+	  };
+
+	  function Query(analysisType, params) {
+	    this.analysis = analysisType;
+	    this.params = {};
+	    this.set(params);
+
+	    // Localize timezone if none is set
+	    if (this.params.timezone === void 0) {
+	      this.params.timezone = new Date().getTimezoneOffset() * -60;
+	    }
 	  }
-	  if (this.params) {
-	    return this.params[key] || null;
+
+	  Query.prototype.set = function(attributes) {
+	    var self = this;
+	    each(attributes, function(v, k){
+	      var key = k, value = v;
+	      if (k.match(new RegExp('[A-Z]'))) {
+	        key = k.replace(/([A-Z])/g, function($1) { return '_'+$1.toLowerCase(); });
+	      }
+	      self.params[key] = value;
+	      if (value instanceof Array) {
+	        each(value, function(dv, index){
+	          if (dv instanceof Array == false && typeof dv === 'object') {
+	            each(dv, function(deepValue, deepKey){
+	              if (deepKey.match(new RegExp('[A-Z]'))) {
+	                var _deepKey = deepKey.replace(/([A-Z])/g, function($1) { return '_'+$1.toLowerCase(); });
+	                delete self.params[key][index][deepKey];
+	                self.params[key][index][_deepKey] = deepValue;
+	              }
+	            });
+	          }
+	        });
+	      }
+	    });
+	    return self;
+	  };
+
+	  Query.prototype.get = function(attribute) {
+	    var key = attribute;
+	    if (key.match(new RegExp('[A-Z]'))) {
+	      key = key.replace(/([A-Z])/g, function($1) { return '_'+$1.toLowerCase(); });
+	    }
+	    if (this.params) {
+	      return this.params[key] || null;
+	    }
+	  };
+
+	  Query.prototype.addFilter = function(property, operator, value) {
+	    this.params.filters = this.params.filters || [];
+	    this.params.filters.push({
+	      'property_name': property,
+	      'operator': operator,
+	      'property_value': value
+	    });
+	    return this;
+	  };
+
+
+	  // Module Definitions
+	  // --------------------
+
+	  // Global
+	  if (env) {
+	    env.Keen = K;
 	  }
-	};
 
-	Query.prototype.addFilter = function(property, operator, value) {
-	  this.params.filters = this.params.filters || [];
-	  this.params.filters.push({
-	    'property_name': property,
-	    'operator': operator,
-	    'property_value': value
-	  });
-	  return this;
-	};
+	  // CommonJS
+	  if (typeof module !== 'undefined' && module.exports) {
+	    module.exports = K;
+	  }
 
-	module.exports = KeenLibrary;
+	  // RequireJS
+	  if (true) {
+	    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function(){
+	      return K;
+	    }.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+	  }
 
+	}).call(this, typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {});
+
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
 /* 31 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(global) {(function(env){
-	  var previousKeen = env.Keen || undefined;
-	  var each = __webpack_require__(32),
-	      extend = __webpack_require__(33),
-	      parseParams = __webpack_require__(34),
-	      serialize = __webpack_require__(35);
+	/* WEBPACK VAR INJECTION */(function(global) {var each = __webpack_require__(32),
+	    extend = __webpack_require__(33),
+	    parseParams = __webpack_require__(34),
+	    serialize = __webpack_require__(35);
 
-	  var Emitter = __webpack_require__(36);
+	var Emitter = __webpack_require__(36);
+
+	(function(env){
+	  var initialKeen = typeof env.Keen !== 'undefined' ? env.Keen : undefined;
 
 	  function Client(props){
 	    if (this instanceof Client === false) {
@@ -14816,10 +14848,6 @@
 	    Client.emit('client', this);
 	  }
 
-	  if (previousKeen && typeof previousKeen.resources === 'undefined') {
-	    Client.legacyVersion = previousKeen;
-	  }
-
 	  Emitter(Client);
 	  Emitter(Client.prototype);
 
@@ -14827,48 +14855,20 @@
 	    debug: false,
 	    enabled: true,
 	    loaded: false,
+	    resources: {
+	      'base'      : '{protocol}://{host}',
+	      'version'   : '{protocol}://{host}/3.0',
+	      'projects'  : '{protocol}://{host}/3.0/projects',
+	      'projectId' : '{protocol}://{host}/3.0/projects/{projectId}'
+	    },
+	    utils: {
+	      'each'        : each,
+	      'extend'      : extend,
+	      'parseParams' : parseParams,
+	      'serialize'   : serialize
+	    },
 	    version: '__VERSION__'
 	  });
-
-	  // Set or extend helpers
-	  Client.helpers = Client.helpers || {};
-
-	  // Set or extend resources
-	  Client.resources = Client.resources || {};
-	  extend(Client.resources, {
-	    'base'      : '{protocol}://{host}',
-	    'version'   : '{protocol}://{host}/3.0',
-	    'projects'  : '{protocol}://{host}/3.0/projects',
-	    'projectId' : '{protocol}://{host}/3.0/projects/{projectId}',
-	    'events'    : '{protocol}://{host}/3.0/projects/{projectId}/events',
-	    'queries'   : '{protocol}://{host}/3.0/projects/{projectId}/queries'
-	  });
-
-	  // Set or extend utils
-	  Client.utils = Client.utils || {};
-	  extend(Client.utils, {
-	    'each'        : each,
-	    'extend'      : extend,
-	    'parseParams' : parseParams,
-	    'serialize'   : serialize
-	  });
-
-	  Client.extendLibrary = function(target, source) {
-	    var previous = previousKeen || source;
-	    if (isDefined(previous) && isDefined(previous.resources)) {
-	      each(previous, function(value, key) {
-	        if (typeof value === 'object') {
-	          target[key] = target[key] || {};
-	          extend(target[key], value);
-	        }
-	        else {
-	          target[key] = target[key] || value;
-	        }
-	      });
-	      extend(target.prototype, previous.prototype);
-	    }
-	    return target;
-	  };
 
 	  Client.log = function(str){
 	    if (Client.debug && typeof console === 'object') {
@@ -14877,9 +14877,7 @@
 	  };
 
 	  Client.noConflict = function(){
-	    if (typeof env.Keen !== 'undefined') {
-	      env.Keen = Client.legacyVersion || previousKeen;
-	    }
+	    env.Keen = initialKeen;
 	    return Client;
 	  };
 
@@ -14941,7 +14939,7 @@
 
 	  Client.prototype.url = function(name){
 	    var args = Array.prototype.slice.call(arguments, 1),
-	        baseUrl = this.config.resources.base || '{protocol}://{host}',
+	        baseUrl = Client.resources.base || '{protocol}://{host}',
 	        path;
 
 	    if (name && typeof name === 'string') {
@@ -15010,15 +15008,20 @@
 	    }
 	  }
 
-	  function isDefined(target) {
-	    return typeof target !== 'undefined';
+	  // Module Definitions
+	  // --------------------
+
+	  // Global
+	  if (env) {
+	    env.Keen = Client;
 	  }
 
-	  function isUndefined(target) {
-	    return typeof target === 'undefined';
+	  // CommonJS
+	  if (typeof module !== 'undefined' && module.exports) {
+	    module.exports = Client;
 	  }
 
-	  module.exports = Client;
+	  /* RequireJS defintion not necessary */
 
 	}).call(this, typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {});
 
@@ -81881,10 +81884,6 @@
 	    return String(input);
 	  }
 
-	  if (Math.abs(input) >= 1000000000000000) {
-	    return sciNo;
-	  }
-
 	  if (input >= 1 || input <= -1) {
 	    if (input < 0){
 	      //Pull off the negative side and stash that.
@@ -83249,7 +83248,8 @@
 	 */
 	function _getDefaultFilterCoercionType(explorer, filter) {
 	  var propertyType = ProjectUtils.getPropertyType(ProjectStore.getProject(), explorer.query.event_collection, filter.property_name);
-	  return targetCoercionType = FormatUtils.coercionTypeForPropertyType(propertyType);
+	  var targetCoercionType = FormatUtils.coercionTypeForPropertyType(propertyType);
+	  return targetCoercionType;
 	}
 
 	/**
