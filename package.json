@@ -1,14 +1,14 @@
 {
   "name": "keen-explorer",
   "description": "Data Explorer by Keen IO",
-  "version": "3.1.0",
+  "version": "3.1.1",
   "license": "MIT",
   "bucket-name": "keen-js",
   "scripts": {
     "dev": "./node_modules/webpack/bin/webpack.js --watch --color -d & gulp connect",
     "test": "gulp test:unit",
     "build": "./node_modules/webpack/bin/webpack.js",
-    "minify": "npm run build && NODE_ENV=production ./node_modules/webpack/bin/webpack.js -p",
+    "minify": "NODE_ENV=production ./node_modules/webpack/bin/webpack.js -p",
     "production": "npm run minify && npm run test"
   },
   "dependencies": {
