@@ -22,13 +22,13 @@ You have three options for including the necessary Explorer files:
 ##### Option 1: Use the hosted assets from our CDN
 
 ```html
-  <!-- Dependencies -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<!-- Dependencies -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
-  <!-- Explorer Assets -->
-  <link rel="stylesheet" href="https://d26b395fwzu5fz.cloudfront.net/apps/keen-explorer-3.1.1.min.css">
-  <script src="https://d26b395fwzu5fz.cloudfront.net/apps/keen-explorer-3.1.1.min.js"></script>
+<!-- Explorer Assets -->
+<link rel="stylesheet" href="https://d26b395fwzu5fz.cloudfront.net/apps/keen-explorer-3.1.1.min.css">
+<script src="https://d26b395fwzu5fz.cloudfront.net/apps/keen-explorer-3.1.1.min.js"></script>
 ```
 
 ##### Option 2: Include the files yourself
