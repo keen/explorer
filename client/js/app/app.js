@@ -87,7 +87,8 @@ App.prototype.persistence = function(bool) {
       throw new Error('This feature requires a client instance with a masterKey value');
     }
     this.config.persistence = new Keen.Explorer.Persistence.KeenSavedQueries({
-      baseUrl: this.config.client.url('queries', 'saved')
+      baseUrl: this.config.client.url('queries', 'saved'),
+      client: this.config.client
     });
     this.config.persistence.config.masterKey = this.config.client.masterKey();
   }
