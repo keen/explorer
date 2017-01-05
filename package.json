@@ -1,15 +1,22 @@
 {
   "name": "keen-explorer",
   "description": "Data Explorer by Keen IO",
-  "version": "3.0.0-rc2",
+  "version": "3.1.0",
   "license": "MIT",
   "bucket-name": "keen-js",
+  "scripts": {
+    "dev": "./node_modules/webpack/bin/webpack.js --watch --color -d & gulp connect",
+    "test": "gulp test:unit",
+    "build": "./node_modules/webpack/bin/webpack.js",
+    "minify": "npm run build && NODE_ENV=production ./node_modules/webpack/bin/webpack.js -p",
+    "production": "npm run minify && npm run test"
+  },
   "dependencies": {
     "classnames": "2.1.2",
     "flux": "^2.0.3",
     "json-stable-stringify": "1.0.0",
-    "keen-analysis": "1.1.0",
-    "keen-dataviz": "^1.0.4",
+    "keen-analysis": "1.2.2",
+    "keen-dataviz": "1.1.1",
     "keymirror": "~0.1.0",
     "lodash": "4.0.0",
     "moment": "^2.7.0",
@@ -18,8 +25,7 @@
     "react-addons-test-utils": "^0.14.3",
     "react-dom": "^0.14.3",
     "rquery": "^3.1.1",
-    "string": "^2.0.1",
-    "superagent": "1.2.0"
+    "string": "^2.0.1"
   },
   "browserify-shim": {
     "moment": "^2.7.0",
@@ -72,12 +78,5 @@
     "style-loader": "^0.13.1",
     "vinyl-source-stream": "1.0.0",
     "webpack": "^1.13.2"
-  },
-  "scripts": {
-    "dev": "./node_modules/webpack/bin/webpack --watch --color -d & gulp connect",
-    "test": "gulp test:unit",
-    "build": "./node_modules/webpack/bin/webpack",
-    "minify": "npm run build && NODE_ENV=production ./node_modules/webpack/bin/webpack -p",
-    "production": "npm run minify && npm run test"
   }
 }
