@@ -87206,7 +87206,7 @@
 	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 	
 	/*!
-	 * pickadate.js v3.5.6, 2015/04/20
+	 * pickadate.js v3.5.4, 2014/09/11
 	 * By Amsul, http://amsul.ca
 	 * Hosted on http://amsul.github.io/pickadate.js
 	 * Licensed under MIT
@@ -87214,11 +87214,11 @@
 	
 	(function (factory) {
 	
-	    // Node.js/browserify.
-	    if (( false ? 'undefined' : _typeof(exports)) == 'object') module.exports = factory(__webpack_require__(/*! jquery */ 415));
-	
 	    // AMD.
-	    else if (typeof define == 'function' && define.amd) define('picker', ['jquery'], factory);
+	    if (typeof define == 'function' && define.amd) define('picker', ['jquery'], factory);
+	
+	    // Node.js/browserify.
+	    else if (( false ? 'undefined' : _typeof(exports)) == 'object') module.exports = factory(__webpack_require__(/*! jquery */ 415));
 	
 	        // Browser globals.
 	        else this.Picker = factory(jQuery);
@@ -87227,7 +87227,6 @@
 	    var $window = $(window);
 	    var $document = $(document);
 	    var $html = $(document.documentElement);
-	    var supportsTransitions = document.documentElement.style.transition != null;
 	
 	    /**
 	     * The picker constructor that creates a blank picker.
@@ -87287,7 +87286,7 @@
 	
 	                // Confirm focus state, convert into text input to remove UA stylings,
 	                // and set as readonly to prevent keyboard popup.
-	                ELEMENT.autofocus = ELEMENT == getActiveElement();
+	                ELEMENT.autofocus = ELEMENT == document.activeElement;
 	                ELEMENT.readOnly = !SETTINGS.editable;
 	                ELEMENT.id = ELEMENT.id || STATE.id;
 	                if (ELEMENT.type != 'text') {
@@ -87297,13 +87296,9 @@
 	                // Create a new picker component with the settings.
 	                P.component = new COMPONENT(P, SETTINGS);
 	
-	                // Create the picker root and then prepare it.
-	                P.$root = $('<div class="' + CLASSES.picker + '" id="' + ELEMENT.id + '_root" />');
+	                // Create the picker root with a holder and then prepare it.
+	                P.$root = $(PickerConstructor._.node('div', createWrappedComponent(), CLASSES.picker, 'id="' + ELEMENT.id + '_root"'));
 	                prepareElementRoot();
-	
-	                // Create the picker holder and then prepare it.
-	                P.$holder = $(createWrappedComponent()).appendTo(P.$root);
-	                prepareElementHolder();
 	
 	                // If there’s a format for the hidden input element, create the element.
 	                if (SETTINGS.formatSubmit) {
@@ -87312,9 +87307,6 @@
 	
 	                // Prepare the input element.
 	                prepareElement();
-	
-	                // Insert the hidden input as specified in the settings.
-	                if (SETTINGS.containerHidden) $(SETTINGS.containerHidden).append(P._hidden);else $ELEMENT.after(P._hidden);
 	
 	                // Insert the root as specified in the settings.
 	                if (SETTINGS.container) $(SETTINGS.container).append(P.$root);else $ELEMENT.after(P.$root);
@@ -87337,7 +87329,7 @@
 	                });
 	
 	                // Once we’re all set, check the theme in use.
-	                IS_DEFAULT_THEME = isUsingDefaultTheme(P.$holder[0]);
+	                IS_DEFAULT_THEME = isUsingDefaultTheme(P.$root.children()[0]);
 	
 	                // If the element has autofocus, open the picker.
 	                if (ELEMENT.autofocus) {
@@ -87355,11 +87347,7 @@
 	            render: function render(entireComponent) {
 	
 	                // Insert a new component holder in the root or box.
-	                if (entireComponent) {
-	                    P.$holder = $(createWrappedComponent());
-	                    prepareElementHolder();
-	                    P.$root.html(P.$holder);
-	                } else P.$root.find('.' + CLASSES.box).html(P.component.nodes(STATE.open));
+	                if (entireComponent) P.$root.html(createWrappedComponent());else P.$root.find('.' + CLASSES.box).html(P.component.nodes(STATE.open));
 	
 	                // Trigger the queued “render” events.
 	                return P.trigger('render');
@@ -87440,8 +87428,8 @@
 	                        $html.css('overflow', 'hidden').css('padding-right', '+=' + getScrollbarWidth());
 	                    }
 	
-	                    // Pass focus to the root element’s jQuery object.
-	                    focusPickerOnceOpened();
+	                    // Pass focus to the element’s jQuery object.
+	                    $ELEMENT.trigger('focus');
 	
 	                    // Bind the document events.
 	                    $document.on('click.' + STATE.id + ' focusin.' + STATE.id, function (event) {
@@ -87459,7 +87447,7 @@
 	
 	                            // If the target was the holder that covers the screen,
 	                            // keep the element focused to maintain tabindex.
-	                            P.close(target === P.$holder[0]);
+	                            P.close(target === P.$root.children()[0]);
 	                        }
 	                    }).on('keydown.' + STATE.id, function (event) {
 	
@@ -87481,7 +87469,7 @@
 	                        }
 	
 	                        // Check if there is a key movement or “enter” keypress on the element.
-	                        else if (target == P.$holder[0] && (keycodeToMove || keycode == 13)) {
+	                        else if (target == ELEMENT && (keycodeToMove || keycode == 13)) {
 	
 	                                // Prevent the default action to stop page movement.
 	                                event.preventDefault();
@@ -87493,10 +87481,7 @@
 	
 	                                // On “enter”, if the highlighted item isn’t disabled, set the value and close.
 	                                else if (!P.$root.find('.' + CLASSES.highlighted).hasClass(CLASSES.disabled)) {
-	                                        P.set('select', P.component.item.highlight);
-	                                        if (SETTINGS.closeOnSelect) {
-	                                            P.close(true);
-	                                        }
+	                                        P.set('select', P.component.item.highlight).close();
 	                                    }
 	                            }
 	
@@ -87521,17 +87506,13 @@
 	
 	                // If we need to give focus, do it before changing states.
 	                if (giveFocus) {
-	                    if (SETTINGS.editable) {
-	                        ELEMENT.focus();
-	                    } else {
-	                        // ....ah yes! It would’ve been incomplete without a crazy workaround for IE :|
-	                        // The focus is triggered *after* the close has completed - causing it
-	                        // to open again. So unbind and rebind the event at the next tick.
-	                        P.$holder.off('focus.toOpen').focus();
-	                        setTimeout(function () {
-	                            P.$holder.on('focus.toOpen', handleFocusToOpenEvent);
-	                        }, 0);
-	                    }
+	                    // ....ah yes! It would’ve been incomplete without a crazy workaround for IE :|
+	                    // The focus is triggered *after* the close has completed - causing it
+	                    // to open again. So unbind and rebind the event at the next tick.
+	                    $ELEMENT.off('focus.' + STATE.id).trigger('focus');
+	                    setTimeout(function () {
+	                        $ELEMENT.on('focus.' + STATE.id, focusToOpen);
+	                    }, 0);
 	                }
 	
 	                // Remove the “active” class.
@@ -87633,14 +87614,6 @@
 	                // If a picker state exists, return that.
 	                if (STATE[thing] != null) {
 	                    return STATE[thing];
-	                }
-	
-	                // Return the submission value, if that.
-	                if (thing == 'valueSubmit') {
-	                    if (P._hidden) {
-	                        return P._hidden.value;
-	                    }
-	                    thing = 'value';
 	                }
 	
 	                // Return the value, if that.
@@ -87764,7 +87737,7 @@
 	            CLASSES.frame),
 	
 	            // Picker holder class
-	            CLASSES.holder, 'tabindex="-1"'); //endreturn
+	            CLASSES.holder); //endreturn
 	        } //createWrappedComponent
 	
 	
@@ -87782,21 +87755,45 @@
 	            addClass(CLASSES.input).
 	
 	            // If there’s a `data-value`, update the value of the element.
-	            val($ELEMENT.data('value') ? P.get('select', SETTINGS.format) : ELEMENT.value);
+	            val($ELEMENT.data('value') ? P.get('select', SETTINGS.format) : ELEMENT.value).
+	
+	            // On focus/click, open the picker and adjust the root “focused” state.
+	            on('focus.' + STATE.id + ' click.' + STATE.id, focusToOpen);
 	
 	            // Only bind keydown events if the element isn’t editable.
 	            if (!SETTINGS.editable) {
 	
-	                $ELEMENT.
-	
-	                // On focus/click, open the picker.
-	                on('focus.' + STATE.id + ' click.' + STATE.id, function (event) {
-	                    event.preventDefault();
-	                    P.open();
-	                }).
-	
 	                // Handle keyboard event based on the picker being opened or not.
-	                on('keydown.' + STATE.id, handleKeydownEvent);
+	                $ELEMENT.on('keydown.' + STATE.id, function (event) {
+	
+	                    var keycode = event.keyCode,
+	
+	
+	                    // Check if one of the delete keys was pressed.
+	                    isKeycodeDelete = /^(8|46)$/.test(keycode);
+	
+	                    // For some reason IE clears the input value on “escape”.
+	                    if (keycode == 27) {
+	                        P.close();
+	                        return false;
+	                    }
+	
+	                    // Check if `space` or `delete` was pressed or the picker is closed with a key movement.
+	                    if (keycode == 32 || isKeycodeDelete || !STATE.open && P.component.key[keycode]) {
+	
+	                        // Prevent it from moving the page and bubbling to doc.
+	                        event.preventDefault();
+	                        event.stopPropagation();
+	
+	                        // If `delete` was pressed, clear the values and close the picker.
+	                        // Otherwise open the picker.
+	                        if (isKeycodeDelete) {
+	                            P.clear().close();
+	                        } else {
+	                            P.open();
+	                        }
+	                    }
+	                });
 	            }
 	
 	            // Update the aria attributes.
@@ -87804,7 +87801,7 @@
 	                haspopup: true,
 	                expanded: false,
 	                readonly: false,
-	                owns: ELEMENT.id + '_root'
+	                owns: ELEMENT.id + '_root' + (P._hidden ? ' ' + P._hidden.id : '')
 	            });
 	        }
 	
@@ -87812,41 +87809,24 @@
 	         * Prepare the root picker element with all bindings.
 	         */
 	        function prepareElementRoot() {
-	            aria(P.$root[0], 'hidden', true);
-	        }
 	
-	        /**
-	         * Prepare the holder picker element with all bindings.
-	         */
-	        function prepareElementHolder() {
+	            P.$root.on({
 	
-	            P.$holder.on({
-	
-	                // For iOS8.
-	                keydown: handleKeydownEvent,
-	
-	                'focus.toOpen': handleFocusToOpenEvent,
-	
-	                blur: function blur() {
-	                    // Remove the “target” class.
-	                    $ELEMENT.removeClass(CLASSES.target);
-	                },
-	
-	                // When something within the holder is focused, stop from bubbling
+	                // When something within the root is focused, stop from bubbling
 	                // to the doc and remove the “focused” state from the root.
 	                focusin: function focusin(event) {
 	                    P.$root.removeClass(CLASSES.focused);
 	                    event.stopPropagation();
 	                },
 	
-	                // When something within the holder is clicked, stop it
+	                // When something within the root holder is clicked, stop it
 	                // from bubbling to the doc.
 	                'mousedown click': function mousedownClick(event) {
 	
 	                    var target = event.target;
 	
 	                    // Make sure the target isn’t the root holder so it can bubble up.
-	                    if (target != P.$holder[0]) {
+	                    if (target != P.$root.children()[0]) {
 	
 	                        event.stopPropagation();
 	
@@ -87854,17 +87834,16 @@
 	                        //   prevent cases where focus is shifted onto external elements
 	                        //   when using things like jQuery mobile or MagnificPopup (ref: #249 & #120).
 	                        //   Also, for Firefox, don’t prevent action on the `option` element.
-	                        if (event.type == 'mousedown' && !$(target).is('input, select, textarea, button, option')) {
+	                        if (event.type == 'mousedown' && !$(target).is(':input') && target.nodeName != 'OPTION') {
 	
 	                            event.preventDefault();
 	
-	                            // Re-focus onto the holder so that users can click away
+	                            // Re-focus onto the element so that users can click away
 	                            // from elements focused within the picker.
-	                            P.$holder[0].focus();
+	                            ELEMENT.focus();
 	                        }
 	                    }
 	                }
-	
 	            }).
 	
 	            // If there’s a click on an actionable element, carry out the actions.
@@ -87877,12 +87856,12 @@
 	
 	                // * For IE, non-focusable elements can be active elements as well
 	                //   (http://stackoverflow.com/a/2684561).
-	                activeElement = getActiveElement();
-	                activeElement = activeElement && (activeElement.type || activeElement.href);
+	                activeElement = document.activeElement;
+	                activeElement = activeElement && (activeElement.type || activeElement.href) && activeElement;
 	
 	                // If it’s disabled or nothing inside is actively focused, re-focus the element.
 	                if (targetDisabled || activeElement && !$.contains(P.$root[0], activeElement)) {
-	                    P.$holder[0].focus();
+	                    ELEMENT.focus();
 	                }
 	
 	                // If something is superficially changed, update the `highlight` based on the `nav`.
@@ -87892,22 +87871,18 @@
 	
 	                // If something is picked, set `select` then close with focus.
 	                else if (!targetDisabled && 'pick' in targetData) {
-	                        P.set('select', targetData.pick);
-	                        if (SETTINGS.closeOnSelect) {
-	                            P.close(true);
-	                        }
+	                        P.set('select', targetData.pick).close(true);
 	                    }
 	
 	                    // If a “clear” button is pressed, empty the values and close with focus.
 	                    else if (targetData.clear) {
-	                            P.clear();
-	                            if (SETTINGS.closeOnClear) {
-	                                P.close(true);
-	                            }
+	                            P.clear().close(true);
 	                        } else if (targetData.close) {
 	                            P.close(true);
 	                        }
-	            }); //P.$holder
+	            }); //P.$root
+	
+	            aria(P.$root[0], 'hidden', true);
 	        }
 	
 	        /**
@@ -87938,67 +87913,25 @@
 	            // If the value changes, update the hidden input with the correct format.
 	            on('change.' + STATE.id, function () {
 	                P._hidden.value = ELEMENT.value ? P.get('select', SETTINGS.formatSubmit) : '';
-	            });
+	            }).
+	
+	            // Insert the hidden input after the element.
+	            after(P._hidden);
 	        }
 	
-	        // Wait for transitions to end before focusing the holder. Otherwise, while
-	        // using the `container` option, the view jumps to the container.
-	        function focusPickerOnceOpened() {
-	
-	            if (IS_DEFAULT_THEME && supportsTransitions) {
-	                P.$holder.find('.' + CLASSES.frame).one('transitionend', function () {
-	                    P.$holder[0].focus();
-	                });
-	            } else {
-	                P.$holder[0].focus();
-	            }
-	        }
-	
-	        function handleFocusToOpenEvent(event) {
+	        // Separated for IE
+	        function focusToOpen(event) {
 	
 	            // Stop the event from propagating to the doc.
 	            event.stopPropagation();
 	
-	            // Add the “target” class.
-	            $ELEMENT.addClass(CLASSES.target);
-	
-	            // Add the “focused” class to the root.
-	            P.$root.addClass(CLASSES.focused);
+	            // If it’s a focus event, add the “focused” class to the root.
+	            if (event.type == 'focus') {
+	                P.$root.addClass(CLASSES.focused);
+	            }
 	
 	            // And then finally open the picker.
 	            P.open();
-	        }
-	
-	        // For iOS8.
-	        function handleKeydownEvent(event) {
-	
-	            var keycode = event.keyCode,
-	
-	
-	            // Check if one of the delete keys was pressed.
-	            isKeycodeDelete = /^(8|46)$/.test(keycode);
-	
-	            // For some reason IE clears the input value on “escape”.
-	            if (keycode == 27) {
-	                P.close(true);
-	                return false;
-	            }
-	
-	            // Check if `space` or `delete` was pressed or the picker is closed with a key movement.
-	            if (keycode == 32 || isKeycodeDelete || !STATE.open && P.component.key[keycode]) {
-	
-	                // Prevent it from moving the page and bubbling to doc.
-	                event.preventDefault();
-	                event.stopPropagation();
-	
-	                // If `delete` was pressed, clear the values and close the picker.
-	                // Otherwise open the picker.
-	                if (isKeycodeDelete) {
-	                    P.clear().close();
-	                } else {
-	                    P.open();
-	                }
-	            }
 	        }
 	
 	        // Return a new picker instance.
@@ -88019,7 +87952,6 @@
 	
 	            input: prefix + '__input',
 	            active: prefix + '__input--active',
-	            target: prefix + '__input--target',
 	
 	            holder: prefix + '__holder',
 	
@@ -88180,7 +88112,7 @@
 	         * Tell if something is a date object.
 	         */
 	        isDate: function isDate(value) {
-	            return {}.toString.call(value).indexOf('Date') > -1 && this.isInteger(value.getDate());
+	            return {}.toString.call(value).indexOf('Date') > -1 && this.isInteger(value.getUTCDate());
 	        },
 	
 	        /**
@@ -88259,13 +88191,6 @@
 	        return data;
 	    }
 	
-	    // IE8 bug throws an error for activeElements within iframes.
-	    function getActiveElement() {
-	        try {
-	            return document.activeElement;
-	        } catch (err) {}
-	    }
-	
 	    // Expose the picker constructor.
 	    return PickerConstructor;
 	});
@@ -88295,7 +88220,7 @@
 	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 	
 	/*!
-	 * Date picker for pickadate.js v3.5.6
+	 * Date picker for pickadate.js v3.5.4
 	 * http://amsul.github.io/pickadate.js/date.htm
 	 */
 	
@@ -88369,10 +88294,7 @@
 	        // When there’s a value, set the `select`, which in turn
 	        // also sets the `highlight` and `view`.
 	        if (valueString) {
-	            calendar.set('select', valueString, {
-	                format: formatString,
-	                defaultValue: true
-	            });
+	            calendar.set('select', valueString, { format: formatString });
 	        }
 	
 	        // If there’s no value, default to highlighting “today”.
@@ -88392,7 +88314,7 @@
 	            }, // Left
 	            go: function go(timeChange) {
 	                var highlightedObject = calendar.item.highlight,
-	                    targetDate = new Date(highlightedObject.year, highlightedObject.month, highlightedObject.date + timeChange);
+	                    targetDate = new Date(Date.UTC(highlightedObject.year, highlightedObject.month, highlightedObject.date + timeChange));
 	                calendar.set('highlight', targetDate, { interval: timeChange });
 	                this.render();
 	            }
@@ -88500,26 +88422,31 @@
 	            // If it’s an array, convert it into a date and make sure
 	            // that it’s a valid date – otherwise default to today.
 	            else if ($.isArray(value)) {
-	                    value = new Date(value[0], value[1], value[2]);
+	                    value = new Date(Date.UTC(value[0], value[1], value[2]));
 	                    value = _.isDate(value) ? value : calendar.create().obj;
 	                }
 	
-	                // If it’s a number or date object, make a normalized date.
-	                else if (_.isInteger(value) || _.isDate(value)) {
+	                // If it’s a number, make a normalized date.
+	                else if (_.isInteger(value)) {
 	                        value = calendar.normalize(new Date(value), options);
 	                    }
 	
-	                    // If it’s a literal true or any other case, set it to now.
-	                    else /*if ( value === true )*/{
-	                            value = calendar.now(type, value, options);
+	                    // If it’s a date object, make a normalized date.
+	                    else if (_.isDate(value)) {
+	                            value = calendar.normalize(value, options);
 	                        }
+	
+	                        // If it’s a literal true or any other case, set it to now.
+	                        else /*if ( value === true )*/{
+	                                value = calendar.now(type, value, options);
+	                            }
 	
 	        // Return the compiled object.
 	        return {
-	            year: isInfiniteValue || value.getFullYear(),
-	            month: isInfiniteValue || value.getMonth(),
-	            date: isInfiniteValue || value.getDate(),
-	            day: isInfiniteValue || value.getDay(),
+	            year: isInfiniteValue || value.getUTCFullYear(),
+	            month: isInfiniteValue || value.getUTCMonth(),
+	            date: isInfiniteValue || value.getUTCDate(),
+	            day: isInfiniteValue || value.getUTCDay(),
 	            obj: isInfiniteValue || value,
 	            pick: isInfiniteValue || value.getTime()
 	        };
@@ -88590,7 +88517,7 @@
 	    DatePicker.prototype.now = function (type, value, options) {
 	        value = new Date();
 	        if (options && options.rel) {
-	            value.setDate(value.getDate() + options.rel);
+	            value.setUTCDate(value.getUTCDate() + options.rel);
 	        }
 	        return this.normalize(value, options);
 	    };
@@ -88629,13 +88556,13 @@
 	            }
 	
 	            // Figure out the expected target year and month.
-	            targetDateObject = new Date(targetYear, targetMonth + (options && options.nav ? options.nav : 0), 1);
-	            targetYear = targetDateObject.getFullYear();
-	            targetMonth = targetDateObject.getMonth();
+	            targetDateObject = new Date(Date.UTC(targetYear, targetMonth + (options && options.nav ? options.nav : 0), 1));
+	            targetYear = targetDateObject.getUTCFullYear();
+	            targetMonth = targetDateObject.getUTCMonth();
 	
 	            // If the month we’re going to doesn’t have enough days,
 	            // keep decreasing the date until we reach the month’s last date.
-	            while ( /*safety &&*/new Date(targetYear, targetMonth, targetDate).getMonth() !== targetMonth) {
+	            while ( /*safety &&*/new Date(Date.UTC(targetYear, targetMonth, targetDate)).getUTCMonth() !== targetMonth) {
 	                targetDate -= 1;
 	                /*safety -= 1
 	                if ( !safety ) {
@@ -88654,7 +88581,7 @@
 	     * Normalize a date by setting the hours to midnight.
 	     */
 	    DatePicker.prototype.normalize = function (value /*, options*/) {
-	        value.setHours(0, 0, 0, 0);
+	        value.setUTCHours(0, 0, 0, 0);
 	        return value;
 	    };
 	
@@ -88750,7 +88677,7 @@
 	        // • Not inverted and date enabled.
 	        // • Inverted and all dates disabled.
 	        // • ..and anything else.
-	        if (!options || !options.nav && !options.defaultValue) if (
+	        if (!options || !options.nav) if (
 	        /* 1 */!isFlippedBase && calendar.disabled(dateObject) ||
 	        /* 2 */isFlippedBase && calendar.disabled(dateObject) && (hasEnabledWeekdays || hasEnabledBeforeTarget || hasEnabledAfterTarget) ||
 	        /* 3 */!isFlippedBase && (dateObject.pick <= minLimitObject.pick || dateObject.pick >= maxLimitObject.pick)) {
@@ -88895,8 +88822,7 @@
 	        function getWordLengthFromCollection(string, collection, dateObject) {
 	
 	            // Grab the first word from the string.
-	            // Regex pattern from http://stackoverflow.com/q/150033
-	            var word = string.match(/[^\x00-\x7F]+|\w+/)[0];
+	            var word = string.match(/\w+/)[0];
 	
 	            // If there's no month index, add it to the date object
 	            if (!dateObject.mm && !dateObject.m) {
@@ -89151,7 +89077,7 @@
 	                                    matchFound = unitToEnable;
 	                                    if (!matchFound[3]) matchFound.push('inverted');
 	                                } else if (_.isDate(unitToEnable)) {
-	                                    matchFound = [unitToEnable.getFullYear(), unitToEnable.getMonth(), unitToEnable.getDate(), 'inverted'];
+	                                    matchFound = [unitToEnable.getUTCFullYear(), unitToEnable.getUTCMonth(), unitToEnable.getUTCDate(), 'inverted'];
 	                                }
 	                                break;
 	                            }
@@ -89360,8 +89286,7 @@
 	
 	                        var isSelected = selectedObject && selectedObject.pick == targetDate.pick,
 	                            isHighlighted = highlightedObject && highlightedObject.pick == targetDate.pick,
-	                            isDisabled = disabledCollection && calendar.disabled(targetDate) || targetDate.pick < minLimitObject.pick || targetDate.pick > maxLimitObject.pick,
-	                            formattedDate = _.trigger(calendar.formats.toString, calendar, [settings.format, targetDate]);
+	                            isDisabled = disabledCollection && calendar.disabled(targetDate) || targetDate.pick < minLimitObject.pick || targetDate.pick > maxLimitObject.pick;
 	
 	                        return [_.node('div', targetDate.date, function (klasses) {
 	
@@ -89391,8 +89316,7 @@
 	                            return klasses.join(' ');
 	                        }([settings.klass.day]), 'data-pick=' + targetDate.pick + ' ' + _.ariaAttr({
 	                            role: 'gridcell',
-	                            label: formattedDate,
-	                            selected: isSelected && calendar.$node.val() === formattedDate ? true : null,
+	                            selected: isSelected && calendar.$node.val() === _.trigger(calendar.formats.toString, calendar, [settings.format, targetDate]) ? true : null,
 	                            activedescendant: isHighlighted ? true : null,
 	                            disabled: isDisabled ? true : null
 	                        })), '', _.ariaAttr({ role: 'presentation' })]; //endreturn
@@ -89435,10 +89359,6 @@
 	            today: 'Today',
 	            clear: 'Clear',
 	            close: 'Close',
-	
-	            // Picker close behavior
-	            closeOnSelect: true,
-	            closeOnClear: true,
 	
 	            // The format to show on the `input` element
 	            format: 'd mmmm, yyyy',
@@ -89501,7 +89421,7 @@
 	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 	
 	/*!
-	 * Time picker for pickadate.js v3.5.6
+	 * Time picker for pickadate.js v3.5.4
 	 * http://amsul.github.io/pickadate.js/time.htm
 	 */
 	
@@ -89569,7 +89489,8 @@
 	        // also sets the `highlight` and `view`.
 	        if (valueString) {
 	            clock.set('select', valueString, {
-	                format: formatString
+	                format: formatString,
+	                fromValue: !!elementValue
 	            });
 	        }
 	
@@ -89652,14 +89573,14 @@
 	        } else if (type == 'interval') {
 	            clock.set('min', clockItem.min, options).set('max', clockItem.max, options);
 	        } else if (type.match(/^(flip|min|max|disable|enable)$/)) {
-	            if (clockItem.select && clock.disabled(clockItem.select)) {
-	                clock.set('select', value, options);
-	            }
-	            if (clockItem.highlight && clock.disabled(clockItem.highlight)) {
-	                clock.set('highlight', value, options);
-	            }
 	            if (type == 'min') {
 	                clock.set('max', clockItem.max, options);
+	            }
+	            if (clockItem.select && clock.disabled(clockItem.select)) {
+	                clock.set('select', clockItem.select, options);
+	            }
+	            if (clockItem.highlight && clock.disabled(clockItem.highlight)) {
+	                clock.set('highlight', clockItem.highlight, options);
 	            }
 	        }
 	
@@ -89732,7 +89653,7 @@
 	            time: (MINUTES_IN_DAY + value) % MINUTES_IN_DAY,
 	
 	            // Reference to the “relative” value to pick.
-	            pick: value % MINUTES_IN_DAY
+	            pick: value
 	        };
 	    }; //TimePicker.prototype.create
 	
@@ -90337,8 +90258,7 @@
 	                var timeMinutes = loopedTime.pick,
 	                    isSelected = selectedObject && selectedObject.pick == timeMinutes,
 	                    isHighlighted = highlightedObject && highlightedObject.pick == timeMinutes,
-	                    isDisabled = disabledCollection && clock.disabled(loopedTime),
-	                    formattedTime = _.trigger(clock.formats.toString, clock, [settings.format, loopedTime]);
+	                    isDisabled = disabledCollection && clock.disabled(loopedTime);
 	                return [_.trigger(clock.formats.toString, clock, [_.trigger(settings.formatLabel, clock, [loopedTime]) || settings.format, loopedTime]), function (klasses) {
 	
 	                    if (isSelected) {
@@ -90360,8 +90280,7 @@
 	                    return klasses.join(' ');
 	                }([settings.klass.listItem]), 'data-pick=' + loopedTime.pick + ' ' + _.ariaAttr({
 	                    role: 'option',
-	                    label: formattedTime,
-	                    selected: isSelected && clock.$node.val() === formattedTime ? true : null,
+	                    selected: isSelected && clock.$node.val() === _.trigger(clock.formats.toString, clock, [settings.format, loopedTime]) ? true : null,
 	                    activedescendant: isHighlighted ? true : null,
 	                    disabled: isDisabled ? true : null
 	                })];
@@ -90373,9 +90292,10 @@
 	    }; //TimePicker.prototype.nodes
 	
 	
-	    /**
-	     * Extend the picker to add the component with the defaults.
-	     */
+	    /* ==========================================================================
+	       Extend the picker to add the component with the defaults.
+	       ========================================================================== */
+	
 	    TimePicker.defaults = function (prefix) {
 	
 	        return {
@@ -90388,10 +90308,6 @@
 	
 	            // The interval between each time
 	            interval: 30,
-	
-	            // Picker close behavior
-	            closeOnSelect: true,
-	            closeOnClear: true,
 	
 	            // Classes
 	            klass: {
