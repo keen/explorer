@@ -48,6 +48,7 @@ var CONSTANTS = {
     { name: 'Africa/Nairobi (GMT+03:00)',     value: 'Africa/Nairobi',       offset: '+03:00' },
     { name: 'Asia/Dubai (GMT+04:00)',         value: 'Asia/Dubai',           offset: '+04:00' },
     { name: 'America/Sao Paulo (GMT-03:00)',  value: 'America/Sao_Paulo',    offset: '-03:00' },
+    { name: 'America/Caracas (GMT-04:00)',    value: 'America/Caracas',      offset: '-04:00' },
     { name: 'US/Eastern (GMT-05:00)',         value: 'US/Eastern',           offset: '-05:00' },
     { name: 'US/Central (GMT-06:00)',         value: 'US/Central',           offset: '-06:00' },
     { name: 'US/Mountain (GMT-07:00)',        value: 'US/Mountain',          offset: '-07:00' },
