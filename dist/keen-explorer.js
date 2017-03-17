@@ -113,6 +113,9 @@
 	    persistence: null
 	  };
 	  this.el(el);
+	
+	  console.log(_.cloneDeep(this.config));
+	
 	  ExplorerActions.create(_.assign(ExplorerUtils.formatQueryParams(this.config.params) || {}, { 'id': tempId }));
 	  ExplorerActions.setActive(tempId);
 	  ExplorerActions.validate(tempId);
@@ -15347,7 +15350,7 @@
 	/* WEBPACK VAR INJECTION */(function(process, global, setImmediate) {/* @preserve
 	 * The MIT License (MIT)
 	 * 
-	 * Copyright (c) 2013-2015 Petka Antonov
+	 * Copyright (c) 2013-2017 Petka Antonov
 	 * 
 	 * Permission is hereby granted, free of charge, to any person obtaining a copy
 	 * of this software and associated documentation files (the "Software"), to deal
@@ -15369,7 +15372,7 @@
 	 * 
 	 */
 	/**
-	 * bluebird build version 3.4.7
+	 * bluebird build version 3.5.0
 	 * Features enabled: core
 	 * Features disabled: race, call_get, generators, map, nodeify, promisify, props, reduce, settle, some, using, timers, filter, any, each
 	*/
@@ -17032,10 +17035,11 @@
 	
 	},{}],11:[function(_dereq_,module,exports){
 	"use strict";
-	module.exports = function(Promise, tryConvertToPromise) {
+	module.exports = function(Promise, tryConvertToPromise, NEXT_FILTER) {
 	var util = _dereq_("./util");
 	var CancellationError = Promise.CancellationError;
 	var errorObj = util.errorObj;
+	var catchFilter = _dereq_("./catch_filter")(NEXT_FILTER);
 	
 	function PassThroughHandlerContext(promise, type, handler) {
 	    this.promise = promise;
@@ -17087,7 +17091,9 @@
 	        var ret = this.isFinallyHandler()
 	            ? handler.call(promise._boundValue())
 	            : handler.call(promise._boundValue(), reasonOrValue);
-	        if (ret !== undefined) {
+	        if (ret === NEXT_FILTER) {
+	            return ret;
+	        } else if (ret !== undefined) {
 	            promise._setReturnedNonUndefined();
 	            var maybePromise = tryConvertToPromise(ret, promise);
 	            if (maybePromise instanceof Promise) {
@@ -17136,14 +17142,46 @@
 	                             finallyHandler);
 	};
 	
+	
 	Promise.prototype.tap = function (handler) {
 	    return this._passThrough(handler, 1, finallyHandler);
+	};
+	
+	Promise.prototype.tapCatch = function (handlerOrPredicate) {
+	    var len = arguments.length;
+	    if(len === 1) {
+	        return this._passThrough(handlerOrPredicate,
+	                                 1,
+	                                 undefined,
+	                                 finallyHandler);
+	    } else {
+	         var catchInstances = new Array(len - 1),
+	            j = 0, i;
+	        for (i = 0; i < len - 1; ++i) {
+	            var item = arguments[i];
+	            if (util.isObject(item)) {
+	                catchInstances[j++] = item;
+	            } else {
+	                return Promise.reject(new TypeError(
+	                    "tapCatch statement predicate: "
+	                    + "expecting an object but got " + util.classString(item)
+	                ));
+	            }
+	        }
+	        catchInstances.length = j;
+	        var handler = arguments[i];
+	        return this._passThrough(catchFilter(catchInstances, handler, this),
+	                                 1,
+	                                 undefined,
+	                                 finallyHandler);
+	    }
+	
 	};
 	
 	return PassThroughHandlerContext;
 	};
 	
-	},{"./util":21}],12:[function(_dereq_,module,exports){
+	},{"./catch_filter":5,"./util":21}],12:[function(_dereq_,module,exports){
 	"use strict";
 	module.exports =
 	function(Promise, PromiseArray, tryConvertToPromise, INTERNAL, async,
@@ -17478,30 +17516,31 @@
 	var debug = _dereq_("./debuggability")(Promise, Context);
 	var CapturedTrace = debug.CapturedTrace;
 	var PassThroughHandlerContext =
-	    _dereq_("./finally")(Promise, tryConvertToPromise);
+	    _dereq_("./finally")(Promise, tryConvertToPromise, NEXT_FILTER);
 	var catchFilter = _dereq_("./catch_filter")(NEXT_FILTER);
 	var nodebackForPromise = _dereq_("./nodeback");
 	var errorObj = util.errorObj;
 	var tryCatch = util.tryCatch;
 	function check(self, executor) {
+	    if (self == null || self.constructor !== Promise) {
+	        throw new TypeError("the promise constructor cannot be invoked directly\u000a\u000a    See http://goo.gl/MqrFmX\u000a");
+	    }
 	    if (typeof executor !== "function") {
 	        throw new TypeError("expecting a function but got " + util.classString(executor));
 	    }
-	    if (self.constructor !== Promise) {
-	        throw new TypeError("the promise constructor cannot be invoked directly\u000a\u000a    See http://goo.gl/MqrFmX\u000a");
-	    }
+	
 	}
 	
 	function Promise(executor) {
+	    if (executor !== INTERNAL) {
+	        check(this, executor);
+	    }
 	    this._bitField = 0;
 	    this._fulfillmentHandler0 = undefined;
 	    this._rejectionHandler0 = undefined;
 	    this._promise0 = undefined;
 	    this._receiver0 = undefined;
-	    if (executor !== INTERNAL) {
-	        check(this, executor);
-	        this._resolveFromExecutor(executor);
-	    }
+	    this._resolveFromExecutor(executor);
 	    this._promiseCreated();
 	    this._fireEvent("promiseCreated", this);
 	}
@@ -17520,8 +17559,8 @@
 	            if (util.isObject(item)) {
 	                catchInstances[j++] = item;
 	            } else {
-	                return apiRejection("expecting an object but got " +
-	                    "A catch statement predicate " + util.classString(item));
+	                return apiRejection("Catch statement predicate: " +
+	                    "expecting an object but got " + util.classString(item));
 	            }
 	        }
 	        catchInstances.length = j;
@@ -17900,6 +17939,7 @@
 	};
 	
 	Promise.prototype._resolveFromExecutor = function (executor) {
+	    if (executor === INTERNAL) return;
 	    var promise = this;
 	    this._captureStackTrace();
 	    this._pushContext();
@@ -18157,7 +18197,7 @@
 	_dereq_("./join")(
 	    Promise, PromiseArray, tryConvertToPromise, INTERNAL, async, getDomain);
 	Promise.Promise = Promise;
-	Promise.version = "3.4.7";
+	Promise.version = "3.5.0";
 	                                                         
 	    util.toFastProperties(Promise);                                          
 	    util.toFastProperties(Promise.prototype);                                
@@ -18194,6 +18234,7 @@
 	    switch(val) {
 	    case -2: return [];
 	    case -3: return {};
+	    case -6: return new Map();
 	    }
 	}
 	
@@ -18481,11 +18522,11 @@
 	
 	        var scheduleToggle = function() {
 	            if (toggleScheduled) return;
-	                toggleScheduled = true;
-	                div2.classList.toggle("foo");
-	            };
+	            toggleScheduled = true;
+	            div2.classList.toggle("foo");
+	        };
 	
-	            return function schedule(fn) {
+	        return function schedule(fn) {
 	            var o = new MutationObserver(function() {
 	                o.disconnect();
 	                fn();
@@ -39979,7 +40020,15 @@
 	var FilterUtils = __webpack_require__(/*! ./FilterUtils */ 330);
 	var TimeframeUtils = __webpack_require__(/*! ./TimeframeUtils */ 333);
 	
-	var QUERY_PARAMS = ['event_collection', 'analysis_type', 'target_property', 'percentile', 'group_by', 'timeframe', 'interval', 'timezone', 'filters', 'steps', 'email', 'latest', 'property_names'];
+	var QUERY_PARAMS = ['event_collection', 'analysis_type', 'target_property', 'percentile', 'group_by', 'timeframe', 'interval', 'timezone', 'filters', 'steps', 'email', 'latest', 'property_names', 'dst'];
+	
+	function leftPad(number, targetLength) {
+	  var output = number + '';
+	  while (output.length < targetLength) {
+	    output = '0' + output;
+	  }
+	  return output;
+	}
 	
 	var EXRACTION_EVENT_LIMIT = 100;
 	
@@ -40050,13 +40099,13 @@
 	    }
 	
 	    if (params.analysis_type !== 'funnel') {
-	      _.assign(params, TimeframeUtils.getTimeParameters(params.time, params.timezone));
+	      _.assign(params, TimeframeUtils.getTimeParameters(params.time, params.timezone, params.dst));
 	    }
 	
 	    // Add filters
 	    if (params.filters) {
 	      params.filters = _.map(params.filters, function (filter) {
-	        return FilterUtils.queryJSON(filter, TimeframeUtils.getTimezoneOffset(params.timezone));
+	        return FilterUtils.queryJSON(filter, TimeframeUtils.getTimezoneOffset(params.timezone, false));
 	      });
 	    }
 	
@@ -40127,8 +40176,9 @@
 	   */
 	  formatQueryParams: function formatQueryParams(params) {
 	    if (!params || !params.query) return;
+	    params.query.dst = params.query.dst === 'true';
 	    if (params.query && params.query.timeframe) {
-	      var unpackedTime = TimeframeUtils.unpackTimeframeParam(params.query.timeframe, params.query.timezone);
+	      var unpackedTime = TimeframeUtils.unpackTimeframeParam(params.query.timeframe, params.query.timezone, params.query.dst);
 	      params.query.time = unpackedTime.time;
 	      params.query.timezone = unpackedTime.timezone;
 	    }
@@ -40180,6 +40230,25 @@
 	    if (timeframe && TimeframeUtils.timeframeType(explorer.query.time) === 'relative') {
 	      queryAttrs += '&timeframe=' + timeframe;
 	    } else if (timeframe && TimeframeUtils.timeframeType(explorer.query.time) === 'absolute') {
+	      console.log('timeframe', _.cloneDeep(timeframe));
+	
+	      if (attrs.dst) {
+	        var extractor = /([+-])(\d\d):(\d\d)$/;
+	
+	        var parts = timeframe.start.match(extractor);
+	
+	        if (parts) {
+	          if (parts[1] === '+') {
+	            parts[4] = leftPad(parseInt(parts[2], 10) + 1, 2);
+	          } else {
+	            parts[4] = leftPad(parseInt(parts[2], 10) - 1, 2);
+	          }
+	
+	          timeframe.start = timeframe.start.substring(0, timeframe.start.length - 6) + parts[1] + parts[4] + ':' + parts[3];
+	          timeframe.end = timeframe.end.substring(0, timeframe.end.length - 6) + parts[1] + parts[4] + ':' + parts[3];
+	        }
+	      }
+	
 	      // This is an absolute timeframe, so we need to encode the object in a specific way before sending it, as per keen docs => https://keen.io/docs/data-analysis/timeframe/#absolute-timeframes
 	      timeframe = module.exports.encodeAttribute(timeframe);
 	      queryAttrs += '&timeframe=' + timeframe;
@@ -59699,7 +59768,7 @@
 	
 	    if (params.filters) {
 	      params.filters = _.map(params.filters, function (filter) {
-	        return FilterUtils.queryJSON(filter, TimeframeUtils.getTimezoneOffset(params.timezone));
+	        return FilterUtils.queryJSON(filter, TimeframeUtils.getTimezoneOffset(params.timezone, params.dst));
 	      });
 	
 	      _.remove(params.filters, _.isEmpty);
@@ -60087,6 +60156,14 @@
 	var ProjectUtils = __webpack_require__(/*! ./ProjectUtils */ 334);
 	var FormatUtils = __webpack_require__(/*! ./FormatUtils */ 327);
 	
+	function leftPad(number, targetLength) {
+	  var output = number + '';
+	  while (output.length < targetLength) {
+	    output = '0' + output;
+	  }
+	  return output;
+	}
+	
 	module.exports = {
 	
 	  convertDateToUTC: function convertDateToUTC(date) {
@@ -60114,16 +60191,16 @@
 	    }
 	  },
 	
-	  getTimezoneOffset: function getTimezoneOffset(timezone) {
+	  getTimezoneOffset: function getTimezoneOffset(timezone, dst) {
 	    var zone = _.find(ProjectUtils.getConstant('TIMEZONES'), { value: timezone });
 	    return zone ? zone.offset : '+00:00';
 	  },
 	
 	  timeframeBuilders: {
 	
-	    absolute_timeframe: function absolute_timeframe(time, timezone) {
+	    absolute_timeframe: function absolute_timeframe(time, timezone, dst) {
 	      if (time && time.start && time.end) {
-	        var offset = module.exports.getTimezoneOffset(timezone);
+	        var offset = module.exports.getTimezoneOffset(timezone, dst);
 	        return {
 	          start: FormatUtils.formatISOTimeNoTimezone(time.start) + offset,
 	          end: FormatUtils.formatISOTimeNoTimezone(time.end) + offset
@@ -60139,20 +60216,20 @@
 	
 	  },
 	
-	  getTimeframe: function getTimeframe(time, timezone) {
+	  getTimeframe: function getTimeframe(time, timezone, dst) {
 	    var timeframeType = module.exports.timeframeType(time);
 	    var timeframeBuilder = module.exports.timeframeBuilders[timeframeType + '_timeframe'];
 	
 	    if (typeof timeframeBuilder === 'undefined') {
 	      return "";
 	    } else {
-	      return timeframeBuilder(time, timezone);
+	      return timeframeBuilder(time, timezone, dst);
 	    }
 	  },
 	
-	  getTimeParameters: function getTimeParameters(time, timezone) {
+	  getTimeParameters: function getTimeParameters(time, timezone, dst) {
 	    return {
-	      timeframe: time ? module.exports.getTimeframe(time, timezone) : null,
+	      timeframe: time ? module.exports.getTimeframe(time, timezone, dst) : null,
 	      timezone: module.exports.timeframeType(time) === 'relative' ? timezone : null
 	    };
 	  },
@@ -60167,7 +60244,8 @@
 	   *  time: {an Object, either containing a deconstructed absolute or relative timeframe}
 	   * }
 	   */
-	  unpackTimeframeParam: function unpackTimeframeParam(timeframe, timezone) {
+	  unpackTimeframeParam: function unpackTimeframeParam(timeframe, timezone, dst) {
+	
 	    var timeFormat = 'h:mm A';
 	    var dateFormat = 'MMM D, YYYY';
 	
@@ -60240,7 +60318,7 @@
 	
 	  RELATIVE_INTERVAL_TYPES: [{ name: 'minutes', value: 'minutes' }, { name: 'hours', value: 'hours' }, { name: 'days', value: 'days' }, { name: 'weeks', value: 'weeks' }, { name: 'months', value: 'months' }, { name: 'years', value: 'years' }],
 	
-	  TIMEZONES: [{ name: 'UTC Time (GMT+00:00)', value: 'UTC', offset: '+00:00' }, { name: 'Europe/London (GMT+00:00)', value: 'Europe/London', offset: '+00:00' }, { name: 'Africa/Casablanca (GMT+00:00)', value: 'Africa/Casablanca', offset: '+00:00' }, { name: 'Africa/Nairobi (GMT+03:00)', value: 'Africa/Nairobi', offset: '+03:00' }, { name: 'Asia/Dubai (GMT+04:00)', value: 'Asia/Dubai', offset: '+04:00' }, { name: 'America/Sao Paulo (GMT-03:00)', value: 'America/Sao_Paulo', offset: '-03:00' }, { name: 'US/Eastern (GMT-05:00)', value: 'US/Eastern', offset: '-05:00' }, { name: 'US/Central (GMT-06:00)', value: 'US/Central', offset: '-06:00' }, { name: 'US/Mountain (GMT-07:00)', value: 'US/Mountain', offset: '-07:00' }, { name: 'US/Pacific (GMT-08:00)', value: 'US/Pacific', offset: '-08:00' }, { name: 'US/Alaska (GMT-09:00)', value: 'US/Alaska', offset: '-09:00' }, { name: 'US/Hawaii (GMT-10:00)', value: 'US/Hawaii', offset: '-10:00' }, { name: 'Europe/Paris (GMT+01:00)', value: 'Europe/Paris', offset: '+01:00' }, { name: 'Europe/Amsterdam (GMT+01:00)', value: 'Europe/Amsterdam', offset: '+01:00' }, { name: 'Europe/Stockholm (GMT+01:00)', value: 'Europe/Stockholm', offset: '+01:00' }, { name: 'Europe/Prague (GMT+02:00)', value: 'Europe/Prague', offset: '+02:00' }, { name: "Asia/Istanbul (GMT+02:00)", value: 'Asia/Istanbul', offset: '+02:00' }, { name: "Europe/Istanbul (GMT+02:00)", value: 'Europe/Istanbul', offset: '+02:00' }, { name: 'Europe/Copenhagen (GMT+02:00)', value: 'Europe/Copenhagen', offset: '+02:00' }, { name: 'Asia/Jakarta (GMT+07:00)', value: 'Asia/Jakarta', offset: '+07:00' }, { name: 'Asia/Singapore (GMT+08:00)', value: 'Asia/Singapore', offset: '+08:00' }, { name: 'Australia/Perth (GMT+08:00)', value: 'Australia/Perth', offset: '+08:00' }, { name: "Asia/Tokyo (GMT+09:00)", value: 'Asia/Tokyo', offset: '+09:00' }, { name: 'Australia/Sydney (GMT+10:00)', value: 'Australia/Sydney', offset: '+10:00' }, { name: "Pacific/Auckland (GMT+12:00)", value: 'Pacific/Auckland', offset: '+12:00' }],
+	  TIMEZONES: [{ name: 'UTC Time (GMT+00:00)', value: 'UTC', offset: '+00:00' }, { name: 'Europe/London (GMT+00:00)', value: 'Europe/London', offset: '+00:00' }, { name: 'Africa/Casablanca (GMT+00:00)', value: 'Africa/Casablanca', offset: '+00:00' }, { name: 'Africa/Nairobi (GMT+03:00)', value: 'Africa/Nairobi', offset: '+03:00' }, { name: 'Asia/Dubai (GMT+04:00)', value: 'Asia/Dubai', offset: '+04:00' }, { name: 'Europe/Azores (GMT-01:00)', value: 'Europe/Azores', offset: '-01:00' }, { name: 'America/Brazil Sumer Time (GMT-02:00)', value: 'America/Brazil Sumer Time', offset: '-02:00' }, { name: 'America/Sao Paulo (GMT-03:00)', value: 'America/Sao_Paulo', offset: '-03:00' }, { name: 'America/Caracas (GMT-04:00)', value: 'America/Caracas', offset: '-04:00' }, { name: 'US/Eastern (GMT-05:00)', value: 'US/Eastern', offset: '-05:00' }, { name: 'US/Central (GMT-06:00)', value: 'US/Central', offset: '-06:00' }, { name: 'US/Mountain (GMT-07:00)', value: 'US/Mountain', offset: '-07:00' }, { name: 'US/Pacific (GMT-08:00)', value: 'US/Pacific', offset: '-08:00' }, { name: 'US/Alaska (GMT-09:00)', value: 'US/Alaska', offset: '-09:00' }, { name: 'US/Hawaii (GMT-10:00)', value: 'US/Hawaii', offset: '-10:00' }, { name: 'Europe/Paris (GMT+01:00)', value: 'Europe/Paris', offset: '+01:00' }, { name: 'Europe/Amsterdam (GMT+01:00)', value: 'Europe/Amsterdam', offset: '+01:00' }, { name: 'Europe/Stockholm (GMT+01:00)', value: 'Europe/Stockholm', offset: '+01:00' }, { name: 'Europe/Prague (GMT+02:00)', value: 'Europe/Prague', offset: '+02:00' }, { name: "Asia/Istanbul (GMT+02:00)", value: 'Asia/Istanbul', offset: '+02:00' }, { name: "Europe/Istanbul (GMT+02:00)", value: 'Europe/Istanbul', offset: '+02:00' }, { name: 'Europe/Copenhagen (GMT+02:00)', value: 'Europe/Copenhagen', offset: '+02:00' }, { name: 'Asia/Jakarta (GMT+07:00)', value: 'Asia/Jakarta', offset: '+07:00' }, { name: 'Asia/Singapore (GMT+08:00)', value: 'Asia/Singapore', offset: '+08:00' }, { name: 'Australia/Perth (GMT+08:00)', value: 'Australia/Perth', offset: '+08:00' }, { name: "Asia/Tokyo (GMT+09:00)", value: 'Asia/Tokyo', offset: '+09:00' }, { name: 'Australia/Sydney (GMT+10:00)', value: 'Australia/Sydney', offset: '+10:00' }, { name: "Pacific/Auckland (GMT+12:00)", value: 'Pacific/Auckland', offset: '+12:00' }],
 	
 	  FILTER_OPERATORS: [{ name: '= Equal to',
 	    value: 'eq',
@@ -83845,6 +83923,7 @@
 	      id: id,
 	      updates: updates
 	    });
+	
 	    // Fetch schema for selected event collection
 	    updated_query = updates.query ? updates.query : updates.response && updates.response.query ? updates.response.query : {};
 	    if (updated_query.event_collection) {
@@ -84270,6 +84349,7 @@
 	    errors: [],
 	    refresh_rate: 0,
 	    query: {
+	      dst: false,
 	      event_collection: null,
 	      analysis_type: null,
 	      target_property: null,
@@ -84328,6 +84408,7 @@
 	      sub_timeframe: 'days'
 	    },
 	    timezone: ProjectUtils.getConstant('DEFAULT_TIMEZONE'),
+	    dst: false,
 	    filters: [],
 	    optional: false,
 	    inverted: false,
@@ -85541,6 +85622,7 @@
 	        null,
 	        React.createElement(Timeframe, { ref: 'timeframe',
 	          time: this.props.model.query.time,
+	          dst: this.props.model.query.dst,
 	          timezone: this.props.model.query.timezone,
 	          handleChange: this.handleChange }),
 	        React.createElement('hr', { className: 'fieldset-divider' })
@@ -86940,6 +87022,7 @@
 	        ),
 	        timeframePicker,
 	        React.createElement(Timezone, { timezone: this.props.timezone,
+	          dst: this.props.dst,
 	          timeframe_type: TimeframeUtils.timeframeType(this.props.time),
 	          handleChange: this.props.handleChange })
 	      )
@@ -90638,6 +90721,12 @@
 	    this.props.handleChange('timezone', value);
 	  },
 	
+	  handleDSTChange: function handleDSTChange(evt) {
+	    var newValue = evt.target.checked;
+	
+	    this.props.handleChange('dst', newValue);
+	  },
+	
 	  // React methods
 	
 	  getInitialState: function getInitialState() {
@@ -90678,6 +90767,18 @@
 	          React.createElement('span', { className: 'icon glyphicon glyphicon-globe' }),
 	          ' Timezone: ',
 	          timezone
+	        ),
+	        React.createElement(
+	          'label',
+	          { style: { float: "right" } },
+	          React.createElement('input', { type: 'checkbox',
+	            checked: this.props.dst,
+	            onChange: this.handleDSTChange }),
+	          React.createElement(
+	            'span',
+	            null,
+	            'DST'
+	          )
 	        )
 	      ),
 	      React.createElement(

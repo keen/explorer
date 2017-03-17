@@ -70,6 +70,7 @@ var Timeframe = React.createClass({
           </ul>
           {timeframePicker}
           <Timezone timezone={this.props.timezone}
+                    dst={this.props.dst}
                     timeframe_type={TimeframeUtils.timeframeType(this.props.time)}
                     handleChange={this.props.handleChange} />
         </div>

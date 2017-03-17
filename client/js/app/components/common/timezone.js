@@ -28,6 +28,12 @@ var Timezone = React.createClass({
     this.props.handleChange('timezone', value);
   },
 
+  handleDSTChange: function (evt) {
+    var newValue = evt.target.checked;
+
+    this.props.handleChange('dst', newValue);
+  },
+
   // React methods
 
   getInitialState: function(){
@@ -62,6 +68,12 @@ var Timezone = React.createClass({
                   onClick={this.handleTimezoneActivated}>
             <span className="icon glyphicon glyphicon-globe"></span> Timezone: {timezone}
           </button>
+          <label style={ {float: "right"} }>
+            <input type="checkbox"
+                  checked={this.props.dst}
+                  onChange={this.handleDSTChange}/>
+            <span>DST</span>
+          </label>
         </div>
         <div className="toggle-options">
           <ReactSelect ref="timezone"

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Keen IO Explorer</title>
+  <title>Kinetic Data Explorer</title>
   <link href="https://d1kk3lo5kv9rxi.cloudfront.net/css/font/gotham/woff/a.css?v=1175" rel="stylesheet" type="text/css">
   <link href="https://d1kk3lo5kv9rxi.cloudfront.net/css/font/gotham/woff/b.css?v=1175" rel="stylesheet" type="text/css">
   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" type="text/css">
@@ -17,9 +17,9 @@
     $(document).ready(function(){
       var app = new Keen.Explorer.App('#explorer')
         .client({
-          projectId: "PROJECT_ID",
-          readKey: "READ_KEY",
-          masterKey: "MASTER_KEY"
+          projectId: "57c6315e8db53dfda8a6d88d",
+          readKey: "CABBB2D2F81601AFEEDF8F76B92EABE27DEFF5670FE4652CDAB11DC36246DB542B8428B969492E72F04E0CB21876B12ED3743F25FFADE9E6B0A509527A2106DB721B5DC31106F923A76BDC520CF8D8603C0BAB4A0C45D90C74C8375DE8CA937E",
+          masterKey: "D80F73E624390EDEF96491870109FCAFE15A9A2B2F10A305050CA67F8742280E"
         })
         .persistence(true)
         .fetch();
