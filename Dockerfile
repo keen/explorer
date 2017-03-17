@@ -12,6 +12,8 @@ RUN apt-get install -y nodejs
 
 ADD . .
 
+RUN npm config set strict-ssl false
+
 RUN npm install
 
 RUN npm run build
