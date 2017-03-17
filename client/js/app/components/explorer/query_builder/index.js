@@ -148,6 +148,7 @@ var QueryBuilder = React.createClass({
         <div>
           <Timeframe ref="timeframe"
                      time={this.props.model.query.time}
+                     dst={this.props.model.query.dst}
                      timezone={this.props.model.query.timezone}
                      handleChange={this.handleChange}/>
           <hr className="fieldset-divider" />

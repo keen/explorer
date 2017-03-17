@@ -26,6 +26,9 @@ function App(el) {
     persistence: null
   };
   this.el(el);
+
+  console.log(_.cloneDeep(this.config))
+
   ExplorerActions.create(_.assign(ExplorerUtils.formatQueryParams(this.config.params) || {}, { 'id': tempId }));
   ExplorerActions.setActive(tempId);
   ExplorerActions.validate(tempId);

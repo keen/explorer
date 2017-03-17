@@ -33,6 +33,7 @@ function _defaultAttrs() {
     errors: [],
     refresh_rate: 0,
     query: {
+      dst: false,
       event_collection: null,
       analysis_type: null,
       target_property: null,
@@ -91,6 +92,7 @@ function _defaultStep() {
       sub_timeframe: 'days'
     },
     timezone: ProjectUtils.getConstant('DEFAULT_TIMEZONE'),
+    dst: false,
     filters: [],
     optional: false,
     inverted: false,

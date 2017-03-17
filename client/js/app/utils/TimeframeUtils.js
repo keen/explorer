@@ -2,6 +2,14 @@ var _ = require('lodash');
 var ProjectUtils = require('./ProjectUtils');
 var FormatUtils = require('./FormatUtils');
 
+function leftPad(number, targetLength) {
+    var output = number + '';
+    while (output.length < targetLength) {
+        output = '0' + output;
+    }
+    return output;
+}
+
 module.exports = {
 
   convertDateToUTC: function(date) {
@@ -29,16 +37,16 @@ module.exports = {
       }
    },
 
-  getTimezoneOffset: function(timezone) {
+  getTimezoneOffset: function(timezone, dst) {
     var zone = _.find(ProjectUtils.getConstant('TIMEZONES'), { value: timezone });
     return zone ? zone.offset : '+00:00';
   },
 
   timeframeBuilders: {
 
-    absolute_timeframe: function(time, timezone) {
+    absolute_timeframe: function(time, timezone, dst) {
       if (time && time.start && time.end) {
-        var offset = module.exports.getTimezoneOffset(timezone)
+        var offset = module.exports.getTimezoneOffset(timezone, dst)
         return {
           start: FormatUtils.formatISOTimeNoTimezone(time.start) + offset,
           end: FormatUtils.formatISOTimeNoTimezone(time.end) + offset
@@ -54,20 +62,20 @@ module.exports = {
 
   },
 
-  getTimeframe: function(time, timezone) {
+  getTimeframe: function(time, timezone, dst) {
     var timeframeType = module.exports.timeframeType(time);
     var timeframeBuilder = module.exports.timeframeBuilders[timeframeType + '_timeframe'];
 
     if (typeof(timeframeBuilder) === 'undefined') {
       return "";
     } else {
-      return timeframeBuilder(time, timezone);
+      return timeframeBuilder(time, timezone, dst);
     }
   },
 
-  getTimeParameters: function(time, timezone) {
+  getTimeParameters: function(time, timezone, dst) {
     return {
-      timeframe: time ? module.exports.getTimeframe(time, timezone) : null,
+      timeframe: time ? module.exports.getTimeframe(time, timezone, dst) : null,
       timezone: module.exports.timeframeType(time) === 'relative' ? timezone : null
     };
   },
@@ -82,7 +90,8 @@ module.exports = {
    *  time: {an Object, either containing a deconstructed absolute or relative timeframe}
    * }
    */
-  unpackTimeframeParam: function(timeframe, timezone) {
+  unpackTimeframeParam: function(timeframe, timezone, dst) {
+
     var timeFormat = 'h:mm A';
     var dateFormat = 'MMM D, YYYY';
 

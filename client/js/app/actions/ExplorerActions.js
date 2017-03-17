@@ -46,6 +46,7 @@ var ExplorerActions = {
       id: id,
       updates: updates
     });
+
     // Fetch schema for selected event collection
     updated_query = updates.query ? updates.query : updates.response && updates.response.query ? updates.response.query : {};
     if (updated_query.event_collection) {

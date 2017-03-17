@@ -21,8 +21,19 @@ var QUERY_PARAMS = [
   'steps',
   'email',
   'latest',
-  'property_names'
+  'property_names',
+  'dst'
 ];
+
+
+function leftPad(number, targetLength) {
+    var output = number + '';
+    while (output.length < targetLength) {
+        output = '0' + output;
+    }
+    return output;
+}
+
 
 var EXRACTION_EVENT_LIMIT = 100;
 
@@ -97,13 +108,13 @@ module.exports = {
     }
 
     if (params.analysis_type !== 'funnel') {
-      _.assign(params, TimeframeUtils.getTimeParameters(params.time, params.timezone));
+      _.assign(params, TimeframeUtils.getTimeParameters(params.time, params.timezone, params.dst));      
     }
 
     // Add filters
     if (params.filters) {
       params.filters = _.map(params.filters, function(filter){
-        return FilterUtils.queryJSON(filter, TimeframeUtils.getTimezoneOffset(params.timezone));
+        return FilterUtils.queryJSON(filter, TimeframeUtils.getTimezoneOffset(params.timezone, false));
       });
     }
 
@@ -188,8 +199,9 @@ module.exports = {
    */
   formatQueryParams: function(params) {
     if (!params || !params.query) return;
+    params.query.dst = params.query.dst === 'true';
     if (params.query && params.query.timeframe) {
-      var unpackedTime = TimeframeUtils.unpackTimeframeParam(params.query.timeframe, params.query.timezone);
+      var unpackedTime = TimeframeUtils.unpackTimeframeParam(params.query.timeframe, params.query.timezone, params.query.dst);
       params.query.time = unpackedTime.time;
       params.query.timezone = unpackedTime.timezone;
     }
@@ -242,6 +254,26 @@ module.exports = {
       queryAttrs += '&timeframe='+ timeframe;
     }
     else if (timeframe && TimeframeUtils.timeframeType(explorer.query.time) === 'absolute') {
+      console.log('timeframe', _.cloneDeep(timeframe))
+
+      if (attrs.dst) {
+        var extractor = /([+-])(\d\d):(\d\d)$/;
+
+        var parts = timeframe.start.match(extractor)
+
+        if (parts) {
+          if (parts[1] === '+') {
+            parts[4] = leftPad((parseInt(parts[2], 10) + 1), 2)
+          } else {
+            parts[4] = leftPad((parseInt(parts[2], 10) - 1), 2)
+          }
+
+          timeframe.start = timeframe.start.substring(0, timeframe.start.length - 6) + parts[1] + parts[4] + ':' + parts[3];
+          timeframe.end = timeframe.end.substring(0, timeframe.end.length - 6) + parts[1] + parts[4] + ':' + parts[3];
+        }
+
+      }
+
       // This is an absolute timeframe, so we need to encode the object in a specific way before sending it, as per keen docs => https://keen.io/docs/data-analysis/timeframe/#absolute-timeframes
       timeframe = module.exports.encodeAttribute(timeframe);
       queryAttrs += '&timeframe='+ timeframe;
