@@ -18,5 +18,4 @@ RUN npm install
 
 RUN npm run build
 
-ADD ./nginx/site.conf /etc/nginx/conf.d/default.conf
-ADD ./nginx/nginx.conf /etc/nginx/nginx.conf
+CMD rm -rf /www/keen-explorer && mkdir -p /www/keen-explorer && cp -r ./dist /www/keen-explorer && cp ./demo/index.html /www/keen-explorer
