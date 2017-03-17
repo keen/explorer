@@ -63,7 +63,8 @@ var RelativePicker = React.createClass({
                    classes="amount"
                    onChange={this.setRelativeTime}
                    placeholder="e.g. 1"
-                   value={this.props.time.amount || ""} />
+                   value={this.props.time.amount || ""}
+                   autoComplete="off" />
           </div>
           <div className="col-xs-5 form-collapse-left" id="sub-interval-type">
             <Select label={false}

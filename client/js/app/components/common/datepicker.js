@@ -72,7 +72,8 @@ var Datepicker = React.createClass({
                onChange={this.props.onChange}
                onBlur={this.handleOnBlur}
                onFocus={this.onFocus}
-               placeholder={this.props.placeholder} />
+               placeholder={this.props.placeholder}
+               autoComplete="off" />
         {errorMsg}
       </div>
     );

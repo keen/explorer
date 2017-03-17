@@ -46,7 +46,8 @@ var InputComponent = React.createClass({
                onChange={this._onChange}
                onBlur={this.props.onBlur}
                value={this.state.value}
-               readOnly={this.props.readonly} />
+               readOnly={this.props.readonly}
+               autoComplete="off" />
       </div>
     );
   }
