@@ -145,6 +145,10 @@ module.exports = {
 
   isNullOrUndefined: function(value) {
     return (_.isNull(value) || _.isUndefined(value));
+  },
+
+  padLeft: function(value) {
+    return value < 10 ? '0' + value : value;
   }
 
 };

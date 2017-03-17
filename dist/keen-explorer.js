@@ -58630,6 +58630,10 @@
 	
 	  isNullOrUndefined: function isNullOrUndefined(value) {
 	    return _.isNull(value) || _.isUndefined(value);
+	  },
+	
+	  padLeft: function padLeft(value) {
+	    return value < 10 ? '0' + value : value;
 	  }
 	
 	};
@@ -60224,6 +60228,7 @@
 	'use strict';
 	
 	var _ = __webpack_require__(/*! lodash */ 27);
+	var DateUtils = __webpack_require__(/*! ./DateUtils */ 436);
 	var FormatUtils = __webpack_require__(/*! ./FormatUtils.js */ 327);
 	
 	// ***********************
@@ -60299,6 +60304,20 @@
 	  getPropertyType: function getPropertyType(project, collection, propertyName) {
 	    var collection = project.schema[collection];
 	    return collection ? collection.properties[propertyName] : null;
+	  },
+	
+	  getLocalTimezoneOffset: function getLocalTimezoneOffset(date) {
+	    var offset = new Date().getTimezoneOffset();
+	    if (DateUtils.isDST()) {
+	      offset += 60;
+	    }
+	    var strSign = offset > 0 ? '-' : '+';
+	    var strHours = FormatUtils.padLeft(Math.floor(offset / 60));
+	    var strMinutes = FormatUtils.padLeft(offset % 60);
+	    var found = _.find(CONSTANTS.TIMEZONES, function (timezone) {
+	      return timezone.offset === strSign + strHours + ':' + strMinutes;
+	    });
+	    return found ? found.value : nowOffset * -60;
 	  }
 	
 	};
@@ -84276,7 +84295,7 @@
 	      percentile: null,
 	      group_by: [],
 	      interval: null,
-	      timezone: ProjectUtils.getConstant('DEFAULT_TIMEZONE'),
+	      timezone: ProjectUtils.getLocalTimezoneOffset(),
 	      filters: [],
 	      steps: [],
 	      email: null,
@@ -84327,7 +84346,7 @@
 	      amount: 14,
 	      sub_timeframe: 'days'
 	    },
-	    timezone: ProjectUtils.getConstant('DEFAULT_TIMEZONE'),
+	    timezone: ProjectUtils.getLocalTimezoneOffset(),
 	    filters: [],
 	    optional: false,
 	    inverted: false,
@@ -92002,6 +92021,28 @@
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
+
+/***/ },
+/* 433 */,
+/* 434 */,
+/* 435 */,
+/* 436 */
+/*!******************************************!*\
+  !*** ./client/js/app/utils/DateUtils.js ***!
+  \******************************************/
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	module.exports = {
+	  isDST: function isDST() {
+	    var date = new Date();
+	    var jan = new Date(date.getFullYear(), 0, 1);
+	    var jul = new Date(date.getFullYear(), 6, 1);
+	    var stdOffset = Math.max(jan.getTimezoneOffset(), jul.getTimezoneOffset());
+	    return date.getTimezoneOffset() < stdOffset;
+	  }
+	};
 
 /***/ }
 /******/ ]);

@@ -14,7 +14,7 @@ describe('stores/ExplorerStore', function() {
   beforeEach(function () {
     ExplorerStore.clearAll();
   });
-  
+
   describe('create', function () {
     it('should create a single', function () {
       ExplorerActions.create();
@@ -32,7 +32,7 @@ describe('stores/ExplorerStore', function() {
         loading: false,
         saving: false,
         isValid: true,
-        errors: [],  
+        errors: [],
         query_name: null,
         refresh_rate: 0,
         query: {
@@ -42,7 +42,7 @@ describe('stores/ExplorerStore', function() {
           percentile: null,
           group_by: [],
           interval: null,
-          timezone: ProjectUtils.getConstant('DEFAULT_TIMEZONE'),
+          timezone: ProjectUtils.getLocalTimezoneOffset(),
           filters: null,
           email: null,
           latest: null,
@@ -140,7 +140,7 @@ describe('stores/ExplorerStore', function() {
       assert.typeOf(ExplorerStore.get('abc123').query.percentile, 'number');
     });
   });
-  
+
   describe('clone', function() {
     it('should only clone query data and metadata.visualization.chart_type', function() {
       ExplorerActions.create({
@@ -199,7 +199,7 @@ describe('stores/ExplorerStore', function() {
       assert.notStrictEqual(source.query, clone.query);
       assert.notStrictEqual(source.metadata.visualization, clone.metadata.visualization);
       assert.deepPropertyVal(source, 'id','abc456');
-      assert.deepPropertyVal(source, 'query_name', 'Another Test Query'); 
+      assert.deepPropertyVal(source, 'query_name', 'Another Test Query');
       assert.deepPropertyVal(source, 'query.event_collection', 'signups');
       assert.deepPropertyVal(source, 'query.analysis_type', 'count');
       assert.deepPropertyVal(source, 'metadata.display_name', 'Another Test');
@@ -288,7 +288,7 @@ describe('stores/ExplorerStore', function() {
       assert.strictEqual(ExplorerStore.getLast().id, 'THREE');
     });
   });
-  
+
   describe('update', function () {
     it('should properly update the correct explorer', function () {
       ExplorerActions.create({
@@ -310,7 +310,7 @@ describe('stores/ExplorerStore', function() {
       ExplorerActions.update('SOME_ID', updates);
 
       explorer = ExplorerStore.get('SOME_ID');
-      
+
       assert.deepPropertyVal(explorer, 'query.event_collection', 'not_clicks');
       assert.deepPropertyVal(explorer, 'query.analysis_type', 'not_count');
       assert.deepPropertyVal(explorer, 'visualization.chart_type', 'not_metric');
@@ -333,7 +333,7 @@ describe('stores/ExplorerStore', function() {
       ExplorerActions.update('SOME_ID', updates);
 
       explorer = ExplorerStore.get('SOME_ID');
-      
+
       assert.sameMembers(explorer.query.group_by, ['name']);
     });
 
@@ -353,8 +353,8 @@ describe('stores/ExplorerStore', function() {
         }
       });
       var explorer = ExplorerStore.get('SOME_ID');
-      var updates = { 
-        query: { 
+      var updates = {
+        query: {
           time: {
             amount: "14",
             relativity: "this",
@@ -656,16 +656,16 @@ describe('stores/ExplorerStore', function() {
           }
         });
         ExplorerActions.setActive('abc');
-        ExplorerActions.remove('abc');  
+        ExplorerActions.remove('abc');
       });
       it('should have an active model after', function () {
         assert.isTrue(ExplorerStore.getActive().active);
       });
       it('should create the new model, not select an existing persisted model', function () {
-        assert.strictEqual(ExplorerStore.getActive().id.match('TEMP-').length, 1);  
+        assert.strictEqual(ExplorerStore.getActive().id.match('TEMP-').length, 1);
       });
       it('should only have a single active model', function () {
-        assert.strictEqual(_.filter(ExplorerStore.getAll(), { active: true  }).length, 1);  
+        assert.strictEqual(_.filter(ExplorerStore.getAll(), { active: true  }).length, 1);
       });
       it('should create the new active model and then set it active to ensure it has an originalModel property', function () {
         assert.isTrue(!_.isUndefined(ExplorerStore.getActive().originalModel));
@@ -688,7 +688,7 @@ describe('stores/ExplorerStore', function() {
       var keys = Object.keys(ExplorerStore.getAll());
       ExplorerActions.setActive(keys[0]);
       ExplorerActions.setActive(keys[2]);
-      
+
       assert.isFalse(ExplorerStore.getAll()[keys[0]].active);
       assert.isFalse(ExplorerStore.getAll()[keys[1]].active);
       assert.isTrue(ExplorerStore.getAll()[keys[2]].active);
@@ -814,7 +814,7 @@ describe('stores/ExplorerStore', function() {
       });
 
       describe('preparing updates before updating the filter', function () {
-        
+
         describe('property_name', function () {
           it('should set the coercion type to the default for that type when the property name is changed', function () {
             this.coercionTypeForPropertyTypeStub.returns('Datetime');
@@ -877,7 +877,7 @@ describe('stores/ExplorerStore', function() {
             });
           });
         });
-        
+
         describe('operator', function () {
           it('should NOT change coercion_type if the operator is the same', function () {
             this.coercionTypeForPropertyTypeStub.returns('List');
@@ -901,7 +901,7 @@ describe('stores/ExplorerStore', function() {
                 coercion_type: 'String'
               });
             });
-            
+
             it('should change the coercion_type to List for operator "in"', function () {
               ExplorerActions.updateFilter(this.explorer.id, 0, {
                 operator: 'in'
@@ -1011,7 +1011,7 @@ describe('stores/ExplorerStore', function() {
         var originalModel = _.cloneDeep(ExplorerStore.get('ABC-SOME-ID'));
         updates.originalModel = originalModel;
         ExplorerActions.update('ABC-SOME-ID', updates);
-        
+
         ExplorerActions.clear('ABC-SOME-ID');
 
         var expectedModel = {
@@ -1032,7 +1032,7 @@ describe('stores/ExplorerStore', function() {
             percentile: null,
             group_by: [],
             interval: null,
-            timezone: ProjectUtils.getConstant('DEFAULT_TIMEZONE'),
+            timezone: ProjectUtils.getLocalTimezoneOffset(),
             filters: null,
             email: null,
             latest: null,
@@ -1079,13 +1079,13 @@ describe('stores/ExplorerStore', function() {
 
   describe('funnels', function () {
     describe('changing TO funnels', function () {
-      
+
       beforeEach(function () {
         ExplorerActions.create({id: 'abc123'});
       });
 
       it('should set root query properties to null or empty arrays', function () {
-        ExplorerActions.update('abc123', { query: { analysis_type: 'funnel' } });  
+        ExplorerActions.update('abc123', { query: { analysis_type: 'funnel' } });
 
         var explorer = ExplorerStore.get('abc123');
         assert.deepPropertyVal(explorer, 'query.event_collection', null);
@@ -1096,7 +1096,7 @@ describe('stores/ExplorerStore', function() {
       });
 
       it('should create a first active step', function () {
-        ExplorerActions.update('abc123', { query: { analysis_type: 'funnel' } });  
+        ExplorerActions.update('abc123', { query: { analysis_type: 'funnel' } });
 
         var explorer = ExplorerStore.get('abc123');
         assert.deepProperty(explorer, 'query.steps');
@@ -1208,7 +1208,7 @@ describe('stores/ExplorerStore', function() {
                 timezone: 'PDT',
                 active: true
               }
-            ]   
+            ]
           }
         });
       });
@@ -1226,7 +1226,7 @@ describe('stores/ExplorerStore', function() {
         ExplorerActions.update('abc123', updates);
 
         var newExplorer = ExplorerStore.get('abc123');
-       
+
         assert.strictEqual(newExplorer.query.event_collection, 'signups');
         assert.strictEqual(newExplorer.query.target_property, 'user');
         assert.strictEqual(newExplorer.query.timezone, 'PDT');
@@ -1238,7 +1238,7 @@ describe('stores/ExplorerStore', function() {
       });
 
       it('returns the unchanged model if there are no steps', function () {
-        ExplorerActions.create({ id: 'def456', 
+        ExplorerActions.create({ id: 'def456',
           query: {
             event_collection: 'collection',
             analysis_type: 'funnel',
@@ -1274,7 +1274,7 @@ describe('stores/ExplorerStore', function() {
             amount: 14,
             sub_timeframe: 'days'
           },
-          timezone: ProjectUtils.getConstant('DEFAULT_TIMEZONE'),
+          timezone: ProjectUtils.getLocalTimezoneOffset(),
           filters: [],
           optional: false,
           inverted: false,
@@ -1306,7 +1306,7 @@ describe('stores/ExplorerStore', function() {
         assert.equal(ExplorerStore.get('abc123').query.steps.length, 4);
         ExplorerActions.removeStep('abc123', 2);
         assert.equal(ExplorerStore.get('abc123').query.steps.length, 3);
-        
+
         assert.equal(ExplorerStore.get('abc123').query.steps[0].event_collection, 'one');
         assert.equal(ExplorerStore.get('abc123').query.steps[1].event_collection, 'two');
         assert.equal(ExplorerStore.get('abc123').query.steps[2].event_collection, 'four');
@@ -1316,9 +1316,9 @@ describe('stores/ExplorerStore', function() {
         ExplorerActions.addStep('abc123', { event_collection: 'two' });
         ExplorerActions.addStep('abc123', { event_collection: 'three' });
         ExplorerActions.addStep('abc123', { event_collection: 'four' });
-        
+
         ExplorerActions.updateStep('abc123', 1, { event_collection: 'something else' });
-        
+
         assert.equal(ExplorerStore.get('abc123').query.steps[0].event_collection, 'one');
         assert.equal(ExplorerStore.get('abc123').query.steps[1].event_collection, 'something else');
         assert.equal(ExplorerStore.get('abc123').query.steps[2].event_collection, 'three');
@@ -1334,9 +1334,9 @@ describe('stores/ExplorerStore', function() {
         assert.isFalse(ExplorerStore.get('abc123').query.steps[1].active, 'step 2');
         assert.isFalse(ExplorerStore.get('abc123').query.steps[2].active, 'step 3');
         assert.isTrue(ExplorerStore.get('abc123').query.steps[3].active, 'step 4');
-        
+
         ExplorerActions.setStepActive('abc123', 2);
-        
+
         assert.isFalse(ExplorerStore.get('abc123').query.steps[0].active, 'step 1');
         assert.isFalse(ExplorerStore.get('abc123').query.steps[1].active, 'step 2');
         assert.isTrue(ExplorerStore.get('abc123').query.steps[2].active, 'step 3');

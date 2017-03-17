@@ -39,7 +39,7 @@ function _defaultAttrs() {
       percentile: null,
       group_by: [],
       interval: null,
-      timezone: ProjectUtils.getConstant('DEFAULT_TIMEZONE'),
+      timezone: ProjectUtils.getLocalTimezoneOffset(),
       filters: [],
       steps: [],
       email: null,
@@ -90,7 +90,7 @@ function _defaultStep() {
       amount: 14,
       sub_timeframe: 'days'
     },
-    timezone: ProjectUtils.getConstant('DEFAULT_TIMEZONE'),
+    timezone: ProjectUtils.getLocalTimezoneOffset(),
     filters: [],
     optional: false,
     inverted: false,
@@ -162,8 +162,8 @@ function _migrateToFunnel(explorer, newModel) {
 
   _.each(SHARED_FUNNEL_STEP_PROPERTIES, function (key) {
     if(!_.isUndefined(explorer.query[key]) && !_.isNull(explorer.query[key])) {
-      firstStep[key] = explorer.query[key] 
-    }      
+      firstStep[key] = explorer.query[key]
+    }
 
     newModel.query[key] = (key === 'filters') ? [] : null;
   });
@@ -262,7 +262,7 @@ function _prepareFilterUpdates(explorer, filter, updates) {
     if (newOp === 'in') updates.coercion_type = 'List';
     if (newOp === 'exists') updates.coercion_type = 'Boolean';
     if (newOp === 'within') updates.coercion_type = 'Geo';
-    
+
     // If it's not any of these operators, we still need to make sure that the current coercion_type is available
     // as an option for this new operator.
     var coercionOptions = _.find(ProjectUtils.getConstant('FILTER_OPERATORS'), { value: updates.operator }).canBeCoeredTo;
@@ -271,11 +271,11 @@ function _prepareFilterUpdates(explorer, filter, updates) {
       updates.coercion_type = coercionOptions[0];
     }
   }
-  
+
   if (updates.coercion_type === 'Geo' && filter.coercion_type !== 'Geo') {
     updates.property_value = _defaultGeoFilter();
   }
-  
+
   updates.property_value = FilterUtils.getCoercedValue(_.merge({}, filter, updates));
 
   return updates;
@@ -535,18 +535,18 @@ ExplorerStore.dispatchToken = AppDispatcher.register(function(action) {
 
     case ExplorerConstants.EXPLORER_CREATE_BATCH:
       action.models.forEach(function(model) {
-        _explorers[model.id] ? _update(model.id, model) : _create(model);        
+        _explorers[model.id] ? _update(model.id, model) : _create(model);
       });
       finishAction();
       break;
-      
+
     case ExplorerConstants.EXPLORER_CLONE:
       var source = ExplorerStore.get(action.id);
-      _create({ query: _.cloneDeep(source.query), 
+      _create({ query: _.cloneDeep(source.query),
                 metadata: {
                   display_name: null,
                   visualization: {
-                    chart_type: _.cloneDeep(source.metadata.visualization.chart_type) 
+                    chart_type: _.cloneDeep(source.metadata.visualization.chart_type)
                   }
                 }
               });
