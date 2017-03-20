@@ -60317,7 +60317,7 @@
 	    var found = _.find(CONSTANTS.TIMEZONES, function (timezone) {
 	      return timezone.offset === strSign + strHours + ':' + strMinutes;
 	    });
-	    return found ? found.value : nowOffset * -60;
+	    return found ? found.value : offset * -60;
 	  }
 	
 	};
