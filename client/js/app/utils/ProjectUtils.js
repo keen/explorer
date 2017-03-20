@@ -1,4 +1,5 @@
 var _ = require('lodash');
+var DateUtils = require('./DateUtils');
 var FormatUtils = require('./FormatUtils.js');
 
 // ***********************
@@ -138,6 +139,20 @@ module.exports = {
   getPropertyType: function(project, collection, propertyName) {
     var collection = project.schema[collection];
     return collection ? collection.properties[propertyName] : null;
-  }
+  },
+
+  getLocalTimezoneOffset: function(date){
+    var offset = new Date().getTimezoneOffset();
+    if (DateUtils.isDST()) {
+      offset += 60;
+    }
+    var strSign = offset > 0 ? '-' : '+';
+    var strHours = FormatUtils.padLeft(Math.floor(offset / 60));
+    var strMinutes = FormatUtils.padLeft(offset % 60);
+    var found = _.find(CONSTANTS.TIMEZONES, function(timezone){
+      return timezone.offset === strSign + strHours + ':' + strMinutes;
+    });
+    return found ? found.value : nowOffset * -60;
+  },
 
 };
