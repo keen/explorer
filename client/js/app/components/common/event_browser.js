@@ -153,7 +153,7 @@ var EventBrowser = React.createClass({
       <div className="event-browser" onKeyUp={this.handleKeyUp}>
         <div className="event-names">
           <div className="search-box">
-            <input type="text" name="search" ref="search-box" placeholder="Search..." onChange={this.setSearchText} />
+            <input type="text" name="search" ref="search-box" placeholder="Search..." onChange={this.setSearchText} autoComplete="off" />
             <span className="glyphicon glyphicon-search icon"></span>
           </div>
           <ul className="nav nav-pills nav-stacked event-names-list" ref="event-names-list">
@@ -183,7 +183,7 @@ var EventBrowser = React.createClass({
 
     var alertContent = (
       <div className="alert alert-info no-margin no-collections-alert">
-        There is no data to preview. This project does not have any event collections. 
+        There is no data to preview. This project does not have any event collections.
       </div>
     );
 

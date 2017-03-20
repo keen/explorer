@@ -320,7 +320,8 @@ var ReactSelect = React.createClass({
                aria-owns={this.props.id + '-scrollpane'}
                aria-label={this.props.title || "Select value"}
                aria-selected={(this.props.value && this.props.value.length) ? true : undefined}
-               aria-live="polite" />
+               aria-live="polite"
+               autoComplete="off" />
         {scrollpane}
       </div>
     );

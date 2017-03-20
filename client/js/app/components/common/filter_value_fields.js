@@ -120,7 +120,8 @@ var FilterValueFields = React.createClass({
                onChange={this.setValueState}
                onBlur={this.handleChangeWithEvent}
                placeholder={this.getInputPlaceholder()}
-               readOnly={this.props.filter.coercion_type === 'Null'}/>
+               readOnly={this.props.filter.coercion_type === 'Null'}
+               autoComplete="off" />
       );
     }
 
