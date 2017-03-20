@@ -48,7 +48,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	__webpack_require__(/*! ./client/js/app/app.js */26);
-	module.exports = __webpack_require__(/*! ./client/styles/base.less */432);
+	module.exports = __webpack_require__(/*! ./client/styles/base.less */433);
 
 
 /***/ },
@@ -91,19 +91,19 @@
 	var ReactDOM = __webpack_require__(/*! react-dom */ 200);
 	
 	var Persistence = __webpack_require__(/*! ./modules/persistence/persistence.js */ 201);
-	var AppDispatcher = __webpack_require__(/*! ./dispatcher/AppDispatcher */ 335);
-	var AppComponent = __webpack_require__(/*! ./components/app.js */ 339);
-	var ProjectActions = __webpack_require__(/*! ./actions/ProjectActions */ 350);
-	var ExplorerActions = __webpack_require__(/*! ./actions/ExplorerActions */ 390);
-	var AppStateActions = __webpack_require__(/*! ./actions/AppStateActions */ 397);
-	var NoticeActions = __webpack_require__(/*! ./actions/NoticeActions */ 395);
+	var AppDispatcher = __webpack_require__(/*! ./dispatcher/AppDispatcher */ 336);
+	var AppComponent = __webpack_require__(/*! ./components/app.js */ 340);
+	var ProjectActions = __webpack_require__(/*! ./actions/ProjectActions */ 351);
+	var ExplorerActions = __webpack_require__(/*! ./actions/ExplorerActions */ 391);
+	var AppStateActions = __webpack_require__(/*! ./actions/AppStateActions */ 398);
+	var NoticeActions = __webpack_require__(/*! ./actions/NoticeActions */ 396);
 	var ExplorerUtils = __webpack_require__(/*! ./utils/ExplorerUtils */ 203);
 	var FormatUtils = __webpack_require__(/*! ./utils/FormatUtils */ 327);
 	var RunValidations = __webpack_require__(/*! ./utils/RunValidations */ 332).run;
-	var ExplorerValidations = __webpack_require__(/*! ./validations/ExplorerValidations */ 392);
-	var ExplorerStore = __webpack_require__(/*! ./stores/ExplorerStore */ 391);
-	var ProjectStore = __webpack_require__(/*! ./stores/ProjectStore */ 341);
-	var QueryStringUtils = __webpack_require__(/*! ./utils/QueryStringUtils */ 431);
+	var ExplorerValidations = __webpack_require__(/*! ./validations/ExplorerValidations */ 393);
+	var ExplorerStore = __webpack_require__(/*! ./stores/ExplorerStore */ 392);
+	var ProjectStore = __webpack_require__(/*! ./stores/ProjectStore */ 342);
+	var QueryStringUtils = __webpack_require__(/*! ./utils/QueryStringUtils */ 432);
 	
 	function App(el) {
 	  var tempId = FormatUtils.generateTempId();
@@ -60228,7 +60228,7 @@
 	'use strict';
 	
 	var _ = __webpack_require__(/*! lodash */ 27);
-	var DateUtils = __webpack_require__(/*! ./DateUtils */ 436);
+	var DateUtils = __webpack_require__(/*! ./DateUtils */ 335);
 	var FormatUtils = __webpack_require__(/*! ./FormatUtils.js */ 327);
 	
 	// ***********************
@@ -60324,6 +60324,25 @@
 
 /***/ },
 /* 335 */
+/*!******************************************!*\
+  !*** ./client/js/app/utils/DateUtils.js ***!
+  \******************************************/
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	module.exports = {
+	  isDST: function isDST() {
+	    var date = new Date();
+	    var jan = new Date(date.getFullYear(), 0, 1);
+	    var jul = new Date(date.getFullYear(), 6, 1);
+	    var stdOffset = Math.max(jan.getTimezoneOffset(), jul.getTimezoneOffset());
+	    return date.getTimezoneOffset() < stdOffset;
+	  }
+	};
+
+/***/ },
+/* 336 */
 /*!***************************************************!*\
   !*** ./client/js/app/dispatcher/AppDispatcher.js ***!
   \***************************************************/
@@ -60331,12 +60350,12 @@
 
 	'use strict';
 	
-	var Dispatcher = __webpack_require__(/*! flux */ 336).Dispatcher;
+	var Dispatcher = __webpack_require__(/*! flux */ 337).Dispatcher;
 	
 	module.exports = new Dispatcher();
 
 /***/ },
-/* 336 */
+/* 337 */
 /*!*************************!*\
   !*** ./~/flux/index.js ***!
   \*************************/
@@ -60351,11 +60370,11 @@
 	 * of patent rights can be found in the PATENTS file in the same directory.
 	 */
 	
-	module.exports.Dispatcher = __webpack_require__(/*! ./lib/Dispatcher */ 337);
+	module.exports.Dispatcher = __webpack_require__(/*! ./lib/Dispatcher */ 338);
 
 
 /***/ },
-/* 337 */
+/* 338 */
 /*!**********************************!*\
   !*** ./~/flux/lib/Dispatcher.js ***!
   \**********************************/
@@ -60380,7 +60399,7 @@
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 	
-	var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 338);
+	var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 339);
 	
 	var _prefix = 'ID_';
 	
@@ -60595,7 +60614,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../process/browser.js */ 39)))
 
 /***/ },
-/* 338 */
+/* 339 */
 /*!*********************************!*\
   !*** ./~/fbjs/lib/invariant.js ***!
   \*********************************/
@@ -60653,7 +60672,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../process/browser.js */ 39)))
 
 /***/ },
-/* 339 */
+/* 340 */
 /*!*****************************************!*\
   !*** ./client/js/app/components/app.js ***!
   \*****************************************/
@@ -60662,10 +60681,10 @@
 	'use strict';
 	
 	var React = __webpack_require__(/*! react */ 44);
-	var Loader = __webpack_require__(/*! ./common/loader.js */ 340);
-	var ProjectStore = __webpack_require__(/*! ../stores/ProjectStore */ 341);
-	var AppStateStore = __webpack_require__(/*! ../stores/AppStateStore */ 345);
-	var Explorer = __webpack_require__(/*! ./explorer/index.js */ 347);
+	var Loader = __webpack_require__(/*! ./common/loader.js */ 341);
+	var ProjectStore = __webpack_require__(/*! ../stores/ProjectStore */ 342);
+	var AppStateStore = __webpack_require__(/*! ../stores/AppStateStore */ 346);
+	var Explorer = __webpack_require__(/*! ./explorer/index.js */ 348);
 	
 	function getProjectState() {
 	  return {
@@ -60712,7 +60731,7 @@
 	module.exports = App;
 
 /***/ },
-/* 340 */
+/* 341 */
 /*!***************************************************!*\
   !*** ./client/js/app/components/common/loader.js ***!
   \***************************************************/
@@ -60771,7 +60790,7 @@
 	module.exports = LoaderComponent;
 
 /***/ },
-/* 341 */
+/* 342 */
 /*!**********************************************!*\
   !*** ./client/js/app/stores/ProjectStore.js ***!
   \**********************************************/
@@ -60781,10 +60800,10 @@
 	
 	/* ExplorerStore */
 	
-	var AppDispatcher = __webpack_require__(/*! ../dispatcher/AppDispatcher */ 335);
-	var EventEmitter = __webpack_require__(/*! events */ 342).EventEmitter;
+	var AppDispatcher = __webpack_require__(/*! ../dispatcher/AppDispatcher */ 336);
+	var EventEmitter = __webpack_require__(/*! events */ 343).EventEmitter;
 	var _ = __webpack_require__(/*! lodash */ 27);
-	var ProjectConstants = __webpack_require__(/*! ../constants/ProjectConstants */ 343);
+	var ProjectConstants = __webpack_require__(/*! ../constants/ProjectConstants */ 344);
 	var ProjectUtils = __webpack_require__(/*! ../utils/ProjectUtils */ 334);
 	var FormatUtils = __webpack_require__(/*! ../utils/FormatUtils */ 327);
 	
@@ -60879,7 +60898,7 @@
 	module.exports = ProjectStore;
 
 /***/ },
-/* 342 */
+/* 343 */
 /*!****************************!*\
   !*** ./~/events/events.js ***!
   \****************************/
@@ -61189,7 +61208,7 @@
 
 
 /***/ },
-/* 343 */
+/* 344 */
 /*!*****************************************************!*\
   !*** ./client/js/app/constants/ProjectConstants.js ***!
   \*****************************************************/
@@ -61197,7 +61216,7 @@
 
 	'use strict';
 	
-	var keyMirror = __webpack_require__(/*! keymirror */ 344);
+	var keyMirror = __webpack_require__(/*! keymirror */ 345);
 	
 	module.exports = keyMirror({
 	  PROJECT_CREATE: null,
@@ -61206,7 +61225,7 @@
 	});
 
 /***/ },
-/* 344 */
+/* 345 */
 /*!******************************!*\
   !*** ./~/keymirror/index.js ***!
   \******************************/
@@ -61268,7 +61287,7 @@
 
 
 /***/ },
-/* 345 */
+/* 346 */
 /*!***********************************************!*\
   !*** ./client/js/app/stores/AppStateStore.js ***!
   \***********************************************/
@@ -61277,9 +61296,9 @@
 	'use strict';
 	
 	var _ = __webpack_require__(/*! lodash */ 27);
-	var AppDispatcher = __webpack_require__(/*! ../dispatcher/AppDispatcher */ 335);
-	var EventEmitter = __webpack_require__(/*! events */ 342).EventEmitter;
-	var AppStateConstants = __webpack_require__(/*! ../constants/AppStateConstants */ 346);
+	var AppDispatcher = __webpack_require__(/*! ../dispatcher/AppDispatcher */ 336);
+	var EventEmitter = __webpack_require__(/*! events */ 343).EventEmitter;
+	var AppStateConstants = __webpack_require__(/*! ../constants/AppStateConstants */ 347);
 	
 	var CHANGE_EVENT = 'change';
 	
@@ -61350,7 +61369,7 @@
 	module.exports = AppStateStore;
 
 /***/ },
-/* 346 */
+/* 347 */
 /*!******************************************************!*\
   !*** ./client/js/app/constants/AppStateConstants.js ***!
   \******************************************************/
@@ -61358,7 +61377,7 @@
 
 	'use strict';
 	
-	var keyMirror = __webpack_require__(/*! keymirror */ 344);
+	var keyMirror = __webpack_require__(/*! keymirror */ 345);
 	
 	module.exports = keyMirror({
 	  APP_STATE_UPDATE: null,
@@ -61366,7 +61385,7 @@
 	});
 
 /***/ },
-/* 347 */
+/* 348 */
 /*!****************************************************!*\
   !*** ./client/js/app/components/explorer/index.js ***!
   \****************************************************/
@@ -61380,26 +61399,26 @@
 	
 	var React = __webpack_require__(/*! react */ 44);
 	var _ = __webpack_require__(/*! lodash */ 27);
-	var EventBrowser = __webpack_require__(/*! ../common/event_browser.js */ 348);
-	var Visualization = __webpack_require__(/*! ./visualization/index.js */ 352);
-	var QueryPaneTabs = __webpack_require__(/*! ./query_pane_tabs.js */ 399);
-	var QueryBuilder = __webpack_require__(/*! ./query_builder/index.js */ 400);
-	var BrowseQueries = __webpack_require__(/*! ./saved_queries/browse_queries.js */ 427);
-	var CacheToggle = __webpack_require__(/*! ./cache_toggle.js */ 428);
-	var QueryActions = __webpack_require__(/*! ./query_actions.js */ 429);
-	var Notice = __webpack_require__(/*! ../common/notice.js */ 384);
-	var FilterManager = __webpack_require__(/*! ../common/filter_manager.js */ 421);
-	var ExplorerStore = __webpack_require__(/*! ../../stores/ExplorerStore */ 391);
-	var ExplorerActions = __webpack_require__(/*! ../../actions/ExplorerActions */ 390);
-	var NoticeActions = __webpack_require__(/*! ../../actions/NoticeActions */ 395);
-	var AppStateActions = __webpack_require__(/*! ../../actions/AppStateActions */ 397);
-	var NoticeStore = __webpack_require__(/*! ../../stores/NoticeStore */ 430);
-	var AppStateStore = __webpack_require__(/*! ../../stores/AppStateStore */ 345);
+	var EventBrowser = __webpack_require__(/*! ../common/event_browser.js */ 349);
+	var Visualization = __webpack_require__(/*! ./visualization/index.js */ 353);
+	var QueryPaneTabs = __webpack_require__(/*! ./query_pane_tabs.js */ 400);
+	var QueryBuilder = __webpack_require__(/*! ./query_builder/index.js */ 401);
+	var BrowseQueries = __webpack_require__(/*! ./saved_queries/browse_queries.js */ 428);
+	var CacheToggle = __webpack_require__(/*! ./cache_toggle.js */ 429);
+	var QueryActions = __webpack_require__(/*! ./query_actions.js */ 430);
+	var Notice = __webpack_require__(/*! ../common/notice.js */ 385);
+	var FilterManager = __webpack_require__(/*! ../common/filter_manager.js */ 422);
+	var ExplorerStore = __webpack_require__(/*! ../../stores/ExplorerStore */ 392);
+	var ExplorerActions = __webpack_require__(/*! ../../actions/ExplorerActions */ 391);
+	var NoticeActions = __webpack_require__(/*! ../../actions/NoticeActions */ 396);
+	var AppStateActions = __webpack_require__(/*! ../../actions/AppStateActions */ 398);
+	var NoticeStore = __webpack_require__(/*! ../../stores/NoticeStore */ 431);
+	var AppStateStore = __webpack_require__(/*! ../../stores/AppStateStore */ 346);
 	var ExplorerUtils = __webpack_require__(/*! ../../utils/ExplorerUtils */ 203);
 	var FilterUtils = __webpack_require__(/*! ../../utils/FilterUtils */ 330);
 	var ProjectUtils = __webpack_require__(/*! ../../utils/ProjectUtils */ 334);
-	var ExplorerActions = __webpack_require__(/*! ../../actions/ExplorerActions */ 390);
-	var QueryStringUtils = __webpack_require__(/*! ../../utils/QueryStringUtils */ 431);
+	var ExplorerActions = __webpack_require__(/*! ../../actions/ExplorerActions */ 391);
+	var QueryStringUtils = __webpack_require__(/*! ../../utils/QueryStringUtils */ 432);
 	
 	function getStoresState() {
 	  return {
@@ -61715,7 +61734,7 @@
 	module.exports = Explorer;
 
 /***/ },
-/* 348 */
+/* 349 */
 /*!**********************************************************!*\
   !*** ./client/js/app/components/common/event_browser.js ***!
   \**********************************************************/
@@ -61725,12 +61744,12 @@
 	
 	var React = __webpack_require__(/*! react */ 44);
 	var _ = __webpack_require__(/*! lodash */ 27);
-	var classNames = __webpack_require__(/*! classnames */ 349);
-	var Loader = __webpack_require__(/*! ../common/loader.js */ 340);
+	var classNames = __webpack_require__(/*! classnames */ 350);
+	var Loader = __webpack_require__(/*! ../common/loader.js */ 341);
 	var FormatUtils = __webpack_require__(/*! ../../utils/FormatUtils */ 327);
 	var ProjectUtils = __webpack_require__(/*! ../../utils/ProjectUtils */ 334);
-	var ProjectActions = __webpack_require__(/*! ../../actions/ProjectActions */ 350);
-	var Modal = __webpack_require__(/*! ./modal.js */ 351);
+	var ProjectActions = __webpack_require__(/*! ../../actions/ProjectActions */ 351);
+	var Modal = __webpack_require__(/*! ./modal.js */ 352);
 	
 	var EventBrowser = React.createClass({
 	  displayName: 'EventBrowser',
@@ -61965,7 +61984,7 @@
 	module.exports = EventBrowser;
 
 /***/ },
-/* 349 */
+/* 350 */
 /*!*******************************!*\
   !*** ./~/classnames/index.js ***!
   \*******************************/
@@ -62023,7 +62042,7 @@
 
 
 /***/ },
-/* 350 */
+/* 351 */
 /*!*************************************************!*\
   !*** ./client/js/app/actions/ProjectActions.js ***!
   \*************************************************/
@@ -62032,9 +62051,9 @@
 	'use strict';
 	
 	var _ = __webpack_require__(/*! lodash */ 27);
-	var AppDispatcher = __webpack_require__(/*! ../dispatcher/AppDispatcher */ 335);
-	var ProjectConstants = __webpack_require__(/*! ../constants/ProjectConstants */ 343);
-	var ProjectStore = __webpack_require__(/*! ../stores/ProjectStore */ 341);
+	var AppDispatcher = __webpack_require__(/*! ../dispatcher/AppDispatcher */ 336);
+	var ProjectConstants = __webpack_require__(/*! ../constants/ProjectConstants */ 344);
+	var ProjectStore = __webpack_require__(/*! ../stores/ProjectStore */ 342);
 	var ProjectUtils = __webpack_require__(/*! ../utils/ProjectUtils */ 334);
 	var ExplorerUtils = __webpack_require__(/*! ../utils/ExplorerUtils */ 203);
 	var FormatUtils = __webpack_require__(/*! ../utils/FormatUtils */ 327);
@@ -62144,7 +62163,7 @@
 	module.exports = ProjectActions;
 
 /***/ },
-/* 351 */
+/* 352 */
 /*!**************************************************!*\
   !*** ./client/js/app/components/common/modal.js ***!
   \**************************************************/
@@ -62154,7 +62173,7 @@
 	
 	var React = __webpack_require__(/*! react */ 44);
 	var _ = __webpack_require__(/*! lodash */ 27);
-	var classNames = __webpack_require__(/*! classnames */ 349);
+	var classNames = __webpack_require__(/*! classnames */ 350);
 	
 	var Modal = React.createClass({
 	  displayName: 'Modal',
@@ -62340,7 +62359,7 @@
 	module.exports = Modal;
 
 /***/ },
-/* 352 */
+/* 353 */
 /*!******************************************************************!*\
   !*** ./client/js/app/components/explorer/visualization/index.js ***!
   \******************************************************************/
@@ -62350,21 +62369,21 @@
 	
 	var _ = __webpack_require__(/*! lodash */ 27);
 	var React = __webpack_require__(/*! react */ 44);
-	var classNames = __webpack_require__(/*! classnames */ 349);
-	var KeenDataviz = __webpack_require__(/*! keen-dataviz */ 353);
-	var Select = __webpack_require__(/*! ../../common/select.js */ 383);
-	var Notice = __webpack_require__(/*! ../../common/notice.js */ 384);
-	var Chart = __webpack_require__(/*! ./chart.js */ 385);
-	var CodeSample = __webpack_require__(/*! ./code_sample.js */ 388);
-	var AppDispatcher = __webpack_require__(/*! ../../../dispatcher/AppDispatcher */ 335);
-	var ExplorerConstants = __webpack_require__(/*! ../../../constants/ExplorerConstants */ 389);
-	var ExplorerActions = __webpack_require__(/*! ../../../actions/ExplorerActions */ 390);
-	var ExplorerStore = __webpack_require__(/*! ../../../stores/ExplorerStore */ 391);
-	var NoticeActions = __webpack_require__(/*! ../../../actions/NoticeActions */ 395);
+	var classNames = __webpack_require__(/*! classnames */ 350);
+	var KeenDataviz = __webpack_require__(/*! keen-dataviz */ 354);
+	var Select = __webpack_require__(/*! ../../common/select.js */ 384);
+	var Notice = __webpack_require__(/*! ../../common/notice.js */ 385);
+	var Chart = __webpack_require__(/*! ./chart.js */ 386);
+	var CodeSample = __webpack_require__(/*! ./code_sample.js */ 389);
+	var AppDispatcher = __webpack_require__(/*! ../../../dispatcher/AppDispatcher */ 336);
+	var ExplorerConstants = __webpack_require__(/*! ../../../constants/ExplorerConstants */ 390);
+	var ExplorerActions = __webpack_require__(/*! ../../../actions/ExplorerActions */ 391);
+	var ExplorerStore = __webpack_require__(/*! ../../../stores/ExplorerStore */ 392);
+	var NoticeActions = __webpack_require__(/*! ../../../actions/NoticeActions */ 396);
 	var ExplorerUtils = __webpack_require__(/*! ../../../utils/ExplorerUtils */ 203);
-	var ChartTypeUtils = __webpack_require__(/*! ../../../utils/ChartTypeUtils */ 387);
+	var ChartTypeUtils = __webpack_require__(/*! ../../../utils/ChartTypeUtils */ 388);
 	var FormatUtils = __webpack_require__(/*! ../../../utils/FormatUtils */ 327);
-	var DataUtils = __webpack_require__(/*! ../../../utils/DataUtils */ 398);
+	var DataUtils = __webpack_require__(/*! ../../../utils/DataUtils */ 399);
 	
 	var Visualization = React.createClass({
 	  displayName: 'Visualization',
@@ -62539,21 +62558,21 @@
 	module.exports = Visualization;
 
 /***/ },
-/* 353 */
+/* 354 */
 /*!*************************************!*\
   !*** ./~/keen-dataviz/lib/index.js ***!
   \*************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(global) {(function(env){
-	  var Dataset = __webpack_require__(/*! ./dataset */ 354),
-	      data = __webpack_require__(/*! ./data */ 368);
+	  var Dataset = __webpack_require__(/*! ./dataset */ 355),
+	      data = __webpack_require__(/*! ./data */ 369);
 	
 	  // Utils
-	  var each = __webpack_require__(/*! ./utils/each */ 357),
-	      extend = __webpack_require__(/*! ./utils/extend */ 365),
-	      isDateString = __webpack_require__(/*! ./utils/assert-date-string */ 369),
-	      escapeHtml = __webpack_require__(/*! ./utils/escape-html */ 370);
+	  var each = __webpack_require__(/*! ./utils/each */ 358),
+	      extend = __webpack_require__(/*! ./utils/extend */ 366),
+	      isDateString = __webpack_require__(/*! ./utils/assert-date-string */ 370),
+	      escapeHtml = __webpack_require__(/*! ./utils/escape-html */ 371);
 	
 	  // Constructor
 	  function Dataviz(){
@@ -62597,7 +62616,7 @@
 	
 	  Dataviz.libraries = { 'default': {} };
 	  if ('undefined' !== typeof window) {
-	    Dataviz.libraries['default'] = __webpack_require__(/*! ./libraries */ 371)(Dataviz);
+	    Dataviz.libraries['default'] = __webpack_require__(/*! ./libraries */ 372)(Dataviz);
 	  }
 	  Dataviz.visuals = [];
 	
@@ -63067,7 +63086,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 354 */
+/* 355 */
 /*!*********************************************!*\
   !*** ./~/keen-dataviz/lib/dataset/index.js ***!
   \*********************************************/
@@ -63076,18 +63095,18 @@
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(global) {(function(env){
 	
 	  // Modifiers
-	  var append = __webpack_require__(/*! ./modifiers/append */ 355),
-	      del = __webpack_require__(/*! ./modifiers/delete */ 358),
-	      filter = __webpack_require__(/*! ./modifiers/filter */ 359),
-	      insert = __webpack_require__(/*! ./modifiers/insert */ 360),
-	      select = __webpack_require__(/*! ./modifiers/select */ 361),
-	      sort   = __webpack_require__(/*! ./modifiers/sort */ 362),
-	      update = __webpack_require__(/*! ./modifiers/update */ 363);
+	  var append = __webpack_require__(/*! ./modifiers/append */ 356),
+	      del = __webpack_require__(/*! ./modifiers/delete */ 359),
+	      filter = __webpack_require__(/*! ./modifiers/filter */ 360),
+	      insert = __webpack_require__(/*! ./modifiers/insert */ 361),
+	      select = __webpack_require__(/*! ./modifiers/select */ 362),
+	      sort   = __webpack_require__(/*! ./modifiers/sort */ 363),
+	      update = __webpack_require__(/*! ./modifiers/update */ 364);
 	
 	  // Utils
-	  var analyses = __webpack_require__(/*! ./utils/analyses */ 364),
-	      extend = __webpack_require__(/*! ../utils/extend */ 365),
-	      parsers = __webpack_require__(/*! ./utils/parsers */ 366);
+	  var analyses = __webpack_require__(/*! ./utils/analyses */ 365),
+	      extend = __webpack_require__(/*! ../utils/extend */ 366),
+	      parsers = __webpack_require__(/*! ./utils/parsers */ 367);
 	
 	  // Constructor
 	  function Dataset(){
@@ -63179,14 +63198,14 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 355 */
+/* 356 */
 /*!********************************************************!*\
   !*** ./~/keen-dataviz/lib/dataset/modifiers/append.js ***!
   \********************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	var createNullList = __webpack_require__(/*! ../utils/create-null-list */ 356),
-	    each = __webpack_require__(/*! ../../utils/each */ 357);
+	var createNullList = __webpack_require__(/*! ../utils/create-null-list */ 357),
+	    each = __webpack_require__(/*! ../../utils/each */ 358);
 	
 	module.exports = {
 	  'appendColumn': appendColumn,
@@ -63284,7 +63303,7 @@
 
 
 /***/ },
-/* 356 */
+/* 357 */
 /*!**************************************************************!*\
   !*** ./~/keen-dataviz/lib/dataset/utils/create-null-list.js ***!
   \**************************************************************/
@@ -63300,7 +63319,7 @@
 
 
 /***/ },
-/* 357 */
+/* 358 */
 /*!******************************************!*\
   !*** ./~/keen-dataviz/lib/utils/each.js ***!
   \******************************************/
@@ -63336,13 +63355,13 @@
 
 
 /***/ },
-/* 358 */
+/* 359 */
 /*!********************************************************!*\
   !*** ./~/keen-dataviz/lib/dataset/modifiers/delete.js ***!
   \********************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	var each = __webpack_require__(/*! ../../utils/each */ 357);
+	var each = __webpack_require__(/*! ../../utils/each */ 358);
 	
 	module.exports = {
 	  'deleteColumn': deleteColumn,
@@ -63372,13 +63391,13 @@
 
 
 /***/ },
-/* 359 */
+/* 360 */
 /*!********************************************************!*\
   !*** ./~/keen-dataviz/lib/dataset/modifiers/filter.js ***!
   \********************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	var each = __webpack_require__(/*! ../../utils/each */ 357);
+	var each = __webpack_require__(/*! ../../utils/each */ 358);
 	
 	module.exports = {
 	  'filterColumns': filterColumns,
@@ -63422,15 +63441,15 @@
 
 
 /***/ },
-/* 360 */
+/* 361 */
 /*!********************************************************!*\
   !*** ./~/keen-dataviz/lib/dataset/modifiers/insert.js ***!
   \********************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	var each = __webpack_require__(/*! ../../utils/each */ 357);
-	var createNullList = __webpack_require__(/*! ../utils/create-null-list */ 356);
-	var append = __webpack_require__(/*! ./append */ 355);
+	var each = __webpack_require__(/*! ../../utils/each */ 358);
+	var createNullList = __webpack_require__(/*! ../utils/create-null-list */ 357);
+	var append = __webpack_require__(/*! ./append */ 356);
 	
 	var appendRow = append.appendRow,
 	    appendColumn = append.appendColumn;
@@ -63529,13 +63548,13 @@
 
 
 /***/ },
-/* 361 */
+/* 362 */
 /*!********************************************************!*\
   !*** ./~/keen-dataviz/lib/dataset/modifiers/select.js ***!
   \********************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	var each = __webpack_require__(/*! ../../utils/each */ 357);
+	var each = __webpack_require__(/*! ../../utils/each */ 358);
 	
 	module.exports = {
 	  'selectColumn': selectColumn,
@@ -63566,13 +63585,13 @@
 
 
 /***/ },
-/* 362 */
+/* 363 */
 /*!******************************************************!*\
   !*** ./~/keen-dataviz/lib/dataset/modifiers/sort.js ***!
   \******************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	var each = __webpack_require__(/*! ../../utils/each */ 357);
+	var each = __webpack_require__(/*! ../../utils/each */ 358);
 	
 	module.exports = {
 	  'sortColumns': sortColumns,
@@ -63632,15 +63651,15 @@
 
 
 /***/ },
-/* 363 */
+/* 364 */
 /*!********************************************************!*\
   !*** ./~/keen-dataviz/lib/dataset/modifiers/update.js ***!
   \********************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	var each = __webpack_require__(/*! ../../utils/each */ 357);
-	var createNullList = __webpack_require__(/*! ../utils/create-null-list */ 356);
-	var append = __webpack_require__(/*! ./append */ 355);
+	var each = __webpack_require__(/*! ../../utils/each */ 358);
+	var createNullList = __webpack_require__(/*! ../utils/create-null-list */ 357);
+	var append = __webpack_require__(/*! ./append */ 356);
 	
 	var appendRow = append.appendRow,
 	    appendColumn = append.appendColumn;
@@ -63735,14 +63754,14 @@
 
 
 /***/ },
-/* 364 */
+/* 365 */
 /*!******************************************************!*\
   !*** ./~/keen-dataviz/lib/dataset/utils/analyses.js ***!
   \******************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	var each = __webpack_require__(/*! ../../utils/each */ 357),
-	    extend = __webpack_require__(/*! ../../utils/extend */ 365);
+	var each = __webpack_require__(/*! ../../utils/each */ 358),
+	    extend = __webpack_require__(/*! ../../utils/extend */ 366);
 	
 	var helpers = {};
 	var methods = {
@@ -63827,7 +63846,7 @@
 
 
 /***/ },
-/* 365 */
+/* 366 */
 /*!********************************************!*\
   !*** ./~/keen-dataviz/lib/utils/extend.js ***!
   \********************************************/
@@ -63846,7 +63865,7 @@
 
 
 /***/ },
-/* 366 */
+/* 367 */
 /*!*****************************************************!*\
   !*** ./~/keen-dataviz/lib/dataset/utils/parsers.js ***!
   \*****************************************************/
@@ -63854,8 +63873,8 @@
 
 	var Dataset; /* injected */
 	
-	var each = __webpack_require__(/*! ../../utils/each */ 357),
-	    flatten = __webpack_require__(/*! ../utils/flatten */ 367);
+	var each = __webpack_require__(/*! ../../utils/each */ 358),
+	    flatten = __webpack_require__(/*! ../utils/flatten */ 368);
 	
 	// Parser definitions
 	var parsers = {
@@ -64040,7 +64059,7 @@
 
 
 /***/ },
-/* 367 */
+/* 368 */
 /*!*****************************************************!*\
   !*** ./~/keen-dataviz/lib/dataset/utils/flatten.js ***!
   \*****************************************************/
@@ -64069,14 +64088,14 @@
 
 
 /***/ },
-/* 368 */
+/* 369 */
 /*!************************************!*\
   !*** ./~/keen-dataviz/lib/data.js ***!
   \************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	var Dataset = __webpack_require__(/*! ./dataset */ 354);
-	var extend = __webpack_require__(/*! ./utils/extend */ 365);
+	var Dataset = __webpack_require__(/*! ./dataset */ 355);
+	var extend = __webpack_require__(/*! ./utils/extend */ 366);
 	
 	module.exports = function(data){
 	  if (!arguments.length) return this.dataset.data();
@@ -64295,7 +64314,7 @@
 
 
 /***/ },
-/* 369 */
+/* 370 */
 /*!********************************************************!*\
   !*** ./~/keen-dataviz/lib/utils/assert-date-string.js ***!
   \********************************************************/
@@ -64325,7 +64344,7 @@
 
 
 /***/ },
-/* 370 */
+/* 371 */
 /*!*************************************************!*\
   !*** ./~/keen-dataviz/lib/utils/escape-html.js ***!
   \*************************************************/
@@ -64393,29 +64412,29 @@
 	}
 
 /***/ },
-/* 371 */
+/* 372 */
 /*!***********************************************!*\
   !*** ./~/keen-dataviz/lib/libraries/index.js ***!
   \***********************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	var c3 = __webpack_require__(/*! c3 */ 372),
-	    d3 = __webpack_require__(/*! d3 */ 373);
+	var c3 = __webpack_require__(/*! c3 */ 373),
+	    d3 = __webpack_require__(/*! d3 */ 374);
 	
-	var each = __webpack_require__(/*! ../utils/each */ 357),
-	    extend = __webpack_require__(/*! ../utils/extend */ 365),
-	    extendDeep = __webpack_require__(/*! ../utils/extend-deep */ 374),
-	    isDateString = __webpack_require__(/*! ../utils/assert-date-string */ 369);
+	var each = __webpack_require__(/*! ../utils/each */ 358),
+	    extend = __webpack_require__(/*! ../utils/extend */ 366),
+	    extendDeep = __webpack_require__(/*! ../utils/extend-deep */ 375),
+	    isDateString = __webpack_require__(/*! ../utils/assert-date-string */ 370);
 	
-	var c3DefaultDateFormat = __webpack_require__(/*! ./c3/extensions/default-date-format */ 375);
-	var c3PaginatingLegend = __webpack_require__(/*! ./c3/extensions/paginating-legend */ 376);
-	var c3TooltipContents = __webpack_require__(/*! ./c3/extensions/tooltip-contents */ 377);
+	var c3DefaultDateFormat = __webpack_require__(/*! ./c3/extensions/default-date-format */ 376);
+	var c3PaginatingLegend = __webpack_require__(/*! ./c3/extensions/paginating-legend */ 377);
+	var c3TooltipContents = __webpack_require__(/*! ./c3/extensions/tooltip-contents */ 378);
 	
 	var types = {
-	  'message' : __webpack_require__(/*! ./default/message */ 378),
-	  'metric'  : __webpack_require__(/*! ./default/metric */ 379),
-	  'table'   : __webpack_require__(/*! ./default/table */ 381),
-	  'spinner' : __webpack_require__(/*! ./default/spinner */ 382)
+	  'message' : __webpack_require__(/*! ./default/message */ 379),
+	  'metric'  : __webpack_require__(/*! ./default/metric */ 380),
+	  'table'   : __webpack_require__(/*! ./default/table */ 382),
+	  'spinner' : __webpack_require__(/*! ./default/spinner */ 383)
 	};
 	
 	module.exports = function(lib) {
@@ -64693,7 +64712,7 @@
 
 
 /***/ },
-/* 372 */
+/* 373 */
 /*!********************!*\
   !*** ./~/c3/c3.js ***!
   \********************/
@@ -64750,7 +64769,7 @@
 	
 	    function ChartInternal(api) {
 	        var $$ = this;
-	        $$.d3 = window.d3 ? window.d3 :  true ? __webpack_require__(/*! d3 */ 373) : undefined;
+	        $$.d3 = window.d3 ? window.d3 :  true ? __webpack_require__(/*! d3 */ 374) : undefined;
 	        $$.api = api;
 	        $$.config = $$.getDefaultConfig();
 	        $$.data = {};
@@ -72893,7 +72912,7 @@
 	    /* jshint ignore:end */
 	
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(/*! d3 */ 373)], __WEBPACK_AMD_DEFINE_RESULT__ = function () { return c3; }.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(/*! d3 */ 374)], __WEBPACK_AMD_DEFINE_RESULT__ = function () { return c3; }.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 	    } else if ('undefined' !== typeof exports && 'undefined' !== typeof module) {
 	        module.exports = c3;
 	    } else {
@@ -72904,7 +72923,7 @@
 
 
 /***/ },
-/* 373 */
+/* 374 */
 /*!********************!*\
   !*** ./~/d3/d3.js ***!
   \********************/
@@ -82466,13 +82485,13 @@
 	}();
 
 /***/ },
-/* 374 */
+/* 375 */
 /*!*************************************************!*\
   !*** ./~/keen-dataviz/lib/utils/extend-deep.js ***!
   \*************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	var each = __webpack_require__(/*! ./each */ 357);
+	var each = __webpack_require__(/*! ./each */ 358);
 	
 	module.exports = extendDeep;
 	
@@ -82494,7 +82513,7 @@
 
 
 /***/ },
-/* 375 */
+/* 376 */
 /*!***************************************************************************!*\
   !*** ./~/keen-dataviz/lib/libraries/c3/extensions/default-date-format.js ***!
   \***************************************************************************/
@@ -82543,15 +82562,15 @@
 
 
 /***/ },
-/* 376 */
+/* 377 */
 /*!*************************************************************************!*\
   !*** ./~/keen-dataviz/lib/libraries/c3/extensions/paginating-legend.js ***!
   \*************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	var d3 = __webpack_require__(/*! d3 */ 373);
+	var d3 = __webpack_require__(/*! d3 */ 374);
 	
-	var isDateString = __webpack_require__(/*! ../../../utils/assert-date-string */ 369);
+	var isDateString = __webpack_require__(/*! ../../../utils/assert-date-string */ 370);
 	
 	module.exports = function(cols){
 	  var self = this,
@@ -82786,13 +82805,13 @@
 
 
 /***/ },
-/* 377 */
+/* 378 */
 /*!************************************************************************!*\
   !*** ./~/keen-dataviz/lib/libraries/c3/extensions/tooltip-contents.js ***!
   \************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	var escapeHtml = __webpack_require__(/*! ../../../utils/escape-html */ 370);
+	var escapeHtml = __webpack_require__(/*! ../../../utils/escape-html */ 371);
 	
 	module.exports = function (d, defaultTitleFormat, defaultValueFormat, color) {
 	  var bgcolor,
@@ -82831,13 +82850,13 @@
 
 
 /***/ },
-/* 378 */
+/* 379 */
 /*!*********************************************************!*\
   !*** ./~/keen-dataviz/lib/libraries/default/message.js ***!
   \*********************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	var escapeHtml = __webpack_require__(/*! ../../utils/escape-html */ 370);
+	var escapeHtml = __webpack_require__(/*! ../../utils/escape-html */ 371);
 	
 	module.exports = {
 	  render: function(text){
@@ -82883,14 +82902,14 @@
 
 
 /***/ },
-/* 379 */
+/* 380 */
 /*!********************************************************!*\
   !*** ./~/keen-dataviz/lib/libraries/default/metric.js ***!
   \********************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	var prettyNumber = __webpack_require__(/*! ../../utils/pretty-number */ 380);
-	var escapeHtml = __webpack_require__(/*! ../../utils/escape-html */ 370);
+	var prettyNumber = __webpack_require__(/*! ../../utils/pretty-number */ 381);
+	var escapeHtml = __webpack_require__(/*! ../../utils/escape-html */ 371);
 	
 	module.exports = {
 	  render: function(){
@@ -82949,7 +82968,7 @@
 
 
 /***/ },
-/* 380 */
+/* 381 */
 /*!***************************************************!*\
   !*** ./~/keen-dataviz/lib/utils/pretty-number.js ***!
   \***************************************************/
@@ -83031,14 +83050,14 @@
 
 
 /***/ },
-/* 381 */
+/* 382 */
 /*!*******************************************************!*\
   !*** ./~/keen-dataviz/lib/libraries/default/table.js ***!
   \*******************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	var each = __webpack_require__(/*! ../../utils/each */ 357);
-	var escapeHtml = __webpack_require__(/*! ../../utils/escape-html */ 370);
+	var each = __webpack_require__(/*! ../../utils/each */ 358);
+	var escapeHtml = __webpack_require__(/*! ../../utils/escape-html */ 371);
 	
 	var defaults = {
 	  height: undefined,
@@ -83145,7 +83164,7 @@
 
 
 /***/ },
-/* 382 */
+/* 383 */
 /*!*********************************************************!*\
   !*** ./~/keen-dataviz/lib/libraries/default/spinner.js ***!
   \*********************************************************/
@@ -83203,7 +83222,7 @@
 
 
 /***/ },
-/* 383 */
+/* 384 */
 /*!***************************************************!*\
   !*** ./client/js/app/components/common/select.js ***!
   \***************************************************/
@@ -83343,7 +83362,7 @@
 	module.exports = SelectComponent;
 
 /***/ },
-/* 384 */
+/* 385 */
 /*!***************************************************!*\
   !*** ./client/js/app/components/common/notice.js ***!
   \***************************************************/
@@ -83436,7 +83455,7 @@
 	module.exports = NoticeComponent;
 
 /***/ },
-/* 385 */
+/* 386 */
 /*!******************************************************************!*\
   !*** ./client/js/app/components/explorer/visualization/chart.js ***!
   \******************************************************************/
@@ -83446,8 +83465,8 @@
 	
 	var _ = __webpack_require__(/*! lodash */ 27);
 	var React = __webpack_require__(/*! react */ 44);
-	var Loader = __webpack_require__(/*! ../../common/loader.js */ 340);
-	var KeenViz = __webpack_require__(/*! ./keen_viz.js */ 386);
+	var Loader = __webpack_require__(/*! ../../common/loader.js */ 341);
+	var KeenViz = __webpack_require__(/*! ./keen_viz.js */ 387);
 	var ExplorerUtils = __webpack_require__(/*! ../../../utils/ExplorerUtils */ 203);
 	var FormatUtils = __webpack_require__(/*! ../../../utils/FormatUtils */ 327);
 	
@@ -83546,7 +83565,7 @@
 	module.exports = Chart;
 
 /***/ },
-/* 386 */
+/* 387 */
 /*!*********************************************************************!*\
   !*** ./client/js/app/components/explorer/visualization/keen_viz.js ***!
   \*********************************************************************/
@@ -83555,7 +83574,7 @@
 	'use strict';
 	
 	var React = __webpack_require__(/*! react */ 44);
-	var ChartTypeUtils = __webpack_require__(/*! ../../../utils/ChartTypeUtils */ 387);
+	var ChartTypeUtils = __webpack_require__(/*! ../../../utils/ChartTypeUtils */ 388);
 	
 	var KeenViz = React.createClass({
 	  displayName: 'KeenViz',
@@ -83630,7 +83649,7 @@
 	module.exports = KeenViz;
 
 /***/ },
-/* 387 */
+/* 388 */
 /*!***********************************************!*\
   !*** ./client/js/app/utils/ChartTypeUtils.js ***!
   \***********************************************/
@@ -83709,7 +83728,7 @@
 	};
 
 /***/ },
-/* 388 */
+/* 389 */
 /*!************************************************************************!*\
   !*** ./client/js/app/components/explorer/visualization/code_sample.js ***!
   \************************************************************************/
@@ -83719,7 +83738,7 @@
 	
 	var _ = __webpack_require__(/*! lodash */ 27);
 	var React = __webpack_require__(/*! react */ 44);
-	var classNames = __webpack_require__(/*! classnames */ 349);
+	var classNames = __webpack_require__(/*! classnames */ 350);
 	
 	var CodeSample = React.createClass({
 	  displayName: 'CodeSample',
@@ -83761,7 +83780,7 @@
 	module.exports = CodeSample;
 
 /***/ },
-/* 389 */
+/* 390 */
 /*!******************************************************!*\
   !*** ./client/js/app/constants/ExplorerConstants.js ***!
   \******************************************************/
@@ -83769,7 +83788,7 @@
 
 	'use strict';
 	
-	var keyMirror = __webpack_require__(/*! keymirror */ 344);
+	var keyMirror = __webpack_require__(/*! keymirror */ 345);
 	
 	module.exports = keyMirror({
 	  EXPLORER_CREATE: null,
@@ -83807,7 +83826,7 @@
 	});
 
 /***/ },
-/* 390 */
+/* 391 */
 /*!**************************************************!*\
   !*** ./client/js/app/actions/ExplorerActions.js ***!
   \**************************************************/
@@ -83816,17 +83835,17 @@
 	'use strict';
 	
 	var _ = __webpack_require__(/*! lodash */ 27);
-	var AppDispatcher = __webpack_require__(/*! ../dispatcher/AppDispatcher */ 335);
-	var ExplorerConstants = __webpack_require__(/*! ../constants/ExplorerConstants */ 389);
-	var ExplorerStore = __webpack_require__(/*! ../stores/ExplorerStore */ 391);
-	var ExplorerValidations = __webpack_require__(/*! ../validations/ExplorerValidations */ 392);
-	var NoticeActions = __webpack_require__(/*! ./NoticeActions */ 395);
-	var AppStateActions = __webpack_require__(/*! ./AppStateActions */ 397);
-	var ProjectActions = __webpack_require__(/*! ./ProjectActions */ 350);
-	var ProjectStore = __webpack_require__(/*! ../stores/ProjectStore */ 341);
+	var AppDispatcher = __webpack_require__(/*! ../dispatcher/AppDispatcher */ 336);
+	var ExplorerConstants = __webpack_require__(/*! ../constants/ExplorerConstants */ 390);
+	var ExplorerStore = __webpack_require__(/*! ../stores/ExplorerStore */ 392);
+	var ExplorerValidations = __webpack_require__(/*! ../validations/ExplorerValidations */ 393);
+	var NoticeActions = __webpack_require__(/*! ./NoticeActions */ 396);
+	var AppStateActions = __webpack_require__(/*! ./AppStateActions */ 398);
+	var ProjectActions = __webpack_require__(/*! ./ProjectActions */ 351);
+	var ProjectStore = __webpack_require__(/*! ../stores/ProjectStore */ 342);
 	var RunValidations = __webpack_require__(/*! ../utils/RunValidations */ 332);
 	var ExplorerUtils = __webpack_require__(/*! ../utils/ExplorerUtils */ 203);
-	var ChartTypeUtils = __webpack_require__(/*! ../utils/ChartTypeUtils */ 387);
+	var ChartTypeUtils = __webpack_require__(/*! ../utils/ChartTypeUtils */ 388);
 	
 	var ExplorerActions = {
 	
@@ -84246,7 +84265,7 @@
 	module.exports = ExplorerActions;
 
 /***/ },
-/* 391 */
+/* 392 */
 /*!***********************************************!*\
   !*** ./client/js/app/stores/ExplorerStore.js ***!
   \***********************************************/
@@ -84256,20 +84275,20 @@
 	
 	/* ExplorerStore */
 	
-	var AppDispatcher = __webpack_require__(/*! ../dispatcher/AppDispatcher */ 335);
-	var EventEmitter = __webpack_require__(/*! events */ 342).EventEmitter;
+	var AppDispatcher = __webpack_require__(/*! ../dispatcher/AppDispatcher */ 336);
+	var EventEmitter = __webpack_require__(/*! events */ 343).EventEmitter;
 	var _ = __webpack_require__(/*! lodash */ 27);
-	var ExplorerConstants = __webpack_require__(/*! ../constants/ExplorerConstants */ 389);
+	var ExplorerConstants = __webpack_require__(/*! ../constants/ExplorerConstants */ 390);
 	var FormatUtils = __webpack_require__(/*! ../utils/FormatUtils */ 327);
 	var ExplorerUtils = __webpack_require__(/*! ../utils/ExplorerUtils */ 203);
 	var FilterUtils = __webpack_require__(/*! ../utils/FilterUtils */ 330);
 	var ProjectUtils = __webpack_require__(/*! ../utils/ProjectUtils */ 334);
-	var ProjectStore = __webpack_require__(/*! ./ProjectStore */ 341);
+	var ProjectStore = __webpack_require__(/*! ./ProjectStore */ 342);
 	
 	var RunValidations = __webpack_require__(/*! ../utils/RunValidations.js */ 332).run;
-	var ExplorerValidations = __webpack_require__(/*! ../validations/ExplorerValidations.js */ 392);
+	var ExplorerValidations = __webpack_require__(/*! ../validations/ExplorerValidations.js */ 393);
 	var FilterValidations = __webpack_require__(/*! ../validations/FilterValidations.js */ 331);
-	var StepValidations = __webpack_require__(/*! ../validations/StepValidations.js */ 394);
+	var StepValidations = __webpack_require__(/*! ../validations/StepValidations.js */ 395);
 	
 	var CHANGE_EVENT = 'change';
 	var SHARED_FUNNEL_STEP_PROPERTIES = ['event_collection', 'time', 'timezone', 'filters'];
@@ -84926,7 +84945,7 @@
 	module.exports = ExplorerStore;
 
 /***/ },
-/* 392 */
+/* 393 */
 /*!**********************************************************!*\
   !*** ./client/js/app/validations/ExplorerValidations.js ***!
   \**********************************************************/
@@ -84936,8 +84955,8 @@
 	
 	var _ = __webpack_require__(/*! lodash */ 27);
 	var ExplorerUtils = __webpack_require__(/*! ../utils/ExplorerUtils */ 203);
-	var SharedValidators = __webpack_require__(/*! ./SharedValidators */ 393);
-	var StepValidations = __webpack_require__(/*! ./StepValidations */ 394);
+	var SharedValidators = __webpack_require__(/*! ./SharedValidators */ 394);
+	var StepValidations = __webpack_require__(/*! ./StepValidations */ 395);
 	var RunValidations = __webpack_require__(/*! ../utils/RunValidations */ 332).run;
 	
 	function isNotFunnel(model) {
@@ -85094,7 +85113,7 @@
 	};
 
 /***/ },
-/* 393 */
+/* 394 */
 /*!*******************************************************!*\
   !*** ./client/js/app/validations/SharedValidators.js ***!
   \*******************************************************/
@@ -85140,7 +85159,7 @@
 	};
 
 /***/ },
-/* 394 */
+/* 395 */
 /*!******************************************************!*\
   !*** ./client/js/app/validations/StepValidations.js ***!
   \******************************************************/
@@ -85150,7 +85169,7 @@
 	
 	var _ = __webpack_require__(/*! lodash */ 27);
 	var FormatUtils = __webpack_require__(/*! ../utils/FormatUtils */ 327);
-	var SharedValidators = __webpack_require__(/*! ./SharedValidators */ 393);
+	var SharedValidators = __webpack_require__(/*! ./SharedValidators */ 394);
 	
 	module.exports = {
 	
@@ -85217,7 +85236,7 @@
 	};
 
 /***/ },
-/* 395 */
+/* 396 */
 /*!************************************************!*\
   !*** ./client/js/app/actions/NoticeActions.js ***!
   \************************************************/
@@ -85225,8 +85244,8 @@
 
 	'use strict';
 	
-	var AppDispatcher = __webpack_require__(/*! ../dispatcher/AppDispatcher */ 335);
-	var NoticeConstants = __webpack_require__(/*! ../constants/NoticeConstants */ 396);
+	var AppDispatcher = __webpack_require__(/*! ../dispatcher/AppDispatcher */ 336);
+	var NoticeConstants = __webpack_require__(/*! ../constants/NoticeConstants */ 397);
 	
 	var NoticeActions = {
 	
@@ -85248,7 +85267,7 @@
 	module.exports = NoticeActions;
 
 /***/ },
-/* 396 */
+/* 397 */
 /*!****************************************************!*\
   !*** ./client/js/app/constants/NoticeConstants.js ***!
   \****************************************************/
@@ -85256,7 +85275,7 @@
 
 	'use strict';
 	
-	var keyMirror = __webpack_require__(/*! keymirror */ 344);
+	var keyMirror = __webpack_require__(/*! keymirror */ 345);
 	
 	module.exports = keyMirror({
 	  NOTICE_CREATE: null,
@@ -85264,7 +85283,7 @@
 	});
 
 /***/ },
-/* 397 */
+/* 398 */
 /*!**************************************************!*\
   !*** ./client/js/app/actions/AppStateActions.js ***!
   \**************************************************/
@@ -85272,8 +85291,8 @@
 
 	'use strict';
 	
-	var AppDispatcher = __webpack_require__(/*! ../dispatcher/AppDispatcher */ 335);
-	var AppStateConstants = __webpack_require__(/*! ../constants/AppStateConstants */ 346);
+	var AppDispatcher = __webpack_require__(/*! ../dispatcher/AppDispatcher */ 336);
+	var AppStateConstants = __webpack_require__(/*! ../constants/AppStateConstants */ 347);
 	
 	var AppStateActions = {
 	
@@ -85295,7 +85314,7 @@
 	module.exports = AppStateActions;
 
 /***/ },
-/* 398 */
+/* 399 */
 /*!******************************************!*\
   !*** ./client/js/app/utils/DataUtils.js ***!
   \******************************************/
@@ -85329,7 +85348,7 @@
 	};
 
 /***/ },
-/* 399 */
+/* 400 */
 /*!**************************************************************!*\
   !*** ./client/js/app/components/explorer/query_pane_tabs.js ***!
   \**************************************************************/
@@ -85338,7 +85357,7 @@
 	'use strict';
 	
 	var React = __webpack_require__(/*! react */ 44);
-	var classNames = __webpack_require__(/*! classnames */ 349);
+	var classNames = __webpack_require__(/*! classnames */ 350);
 	
 	var QueryPaneTabs = React.createClass({
 	  displayName: 'QueryPaneTabs',
@@ -85411,7 +85430,7 @@
 	module.exports = QueryPaneTabs;
 
 /***/ },
-/* 400 */
+/* 401 */
 /*!******************************************************************!*\
   !*** ./client/js/app/components/explorer/query_builder/index.js ***!
   \******************************************************************/
@@ -85423,20 +85442,20 @@
 	var React = __webpack_require__(/*! react */ 44);
 	
 	// Components
-	var FieldsToggle = __webpack_require__(/*! ../../common/fields_toggle.js */ 401);
-	var SelectField = __webpack_require__(/*! ./select_field.js */ 402);
-	var PercentileField = __webpack_require__(/*! ./percentile_field.js */ 404);
-	var GroupByField = __webpack_require__(/*! ./group_by_field.js */ 406);
-	var ExtractionOptions = __webpack_require__(/*! ./extraction_options.js */ 407);
-	var FunnelBuilder = __webpack_require__(/*! ./funnels/funnel_builder.js */ 409);
-	var Timeframe = __webpack_require__(/*! ../../common/timeframe.js */ 411);
-	var Interval = __webpack_require__(/*! ../../common/interval.js */ 425);
-	var Input = __webpack_require__(/*! ../../common/input.js */ 405);
-	var ApiUrl = __webpack_require__(/*! ./api_url.js */ 426);
-	var ExplorerStore = __webpack_require__(/*! ../../../stores/ExplorerStore */ 391);
+	var FieldsToggle = __webpack_require__(/*! ../../common/fields_toggle.js */ 402);
+	var SelectField = __webpack_require__(/*! ./select_field.js */ 403);
+	var PercentileField = __webpack_require__(/*! ./percentile_field.js */ 405);
+	var GroupByField = __webpack_require__(/*! ./group_by_field.js */ 407);
+	var ExtractionOptions = __webpack_require__(/*! ./extraction_options.js */ 408);
+	var FunnelBuilder = __webpack_require__(/*! ./funnels/funnel_builder.js */ 410);
+	var Timeframe = __webpack_require__(/*! ../../common/timeframe.js */ 412);
+	var Interval = __webpack_require__(/*! ../../common/interval.js */ 426);
+	var Input = __webpack_require__(/*! ../../common/input.js */ 406);
+	var ApiUrl = __webpack_require__(/*! ./api_url.js */ 427);
+	var ExplorerStore = __webpack_require__(/*! ../../../stores/ExplorerStore */ 392);
 	var ExplorerUtils = __webpack_require__(/*! ../../../utils/ExplorerUtils */ 203);
 	var FilterUtils = __webpack_require__(/*! ../../../utils/FilterUtils */ 330);
-	var ExplorerActions = __webpack_require__(/*! ../../../actions/ExplorerActions */ 390);
+	var ExplorerActions = __webpack_require__(/*! ../../../actions/ExplorerActions */ 391);
 	
 	var QueryBuilder = React.createClass({
 	  displayName: 'QueryBuilder',
@@ -85646,7 +85665,7 @@
 	module.exports = QueryBuilder;
 
 /***/ },
-/* 401 */
+/* 402 */
 /*!**********************************************************!*\
   !*** ./client/js/app/components/common/fields_toggle.js ***!
   \**********************************************************/
@@ -85655,7 +85674,7 @@
 	'use strict';
 	
 	var React = __webpack_require__(/*! react */ 44);
-	var classNames = __webpack_require__(/*! classnames */ 349);
+	var classNames = __webpack_require__(/*! classnames */ 350);
 	var _ = __webpack_require__(/*! lodash */ 27);
 	
 	var FieldsToggle = React.createClass({
@@ -85774,7 +85793,7 @@
 	module.exports = FieldsToggle;
 
 /***/ },
-/* 402 */
+/* 403 */
 /*!*************************************************************************!*\
   !*** ./client/js/app/components/explorer/query_builder/select_field.js ***!
   \*************************************************************************/
@@ -85786,7 +85805,7 @@
 	var _ = __webpack_require__(/*! lodash */ 27);
 	
 	// Components
-	var ReactSelect = __webpack_require__(/*! ../../common/react_select.js */ 403);
+	var ReactSelect = __webpack_require__(/*! ../../common/react_select.js */ 404);
 	
 	var SelectField = React.createClass({
 	  displayName: 'SelectField',
@@ -85845,7 +85864,7 @@
 	module.exports = SelectField;
 
 /***/ },
-/* 403 */
+/* 404 */
 /*!*********************************************************!*\
   !*** ./client/js/app/components/common/react_select.js ***!
   \*********************************************************/
@@ -86187,7 +86206,7 @@
 	module.exports = ReactSelect;
 
 /***/ },
-/* 404 */
+/* 405 */
 /*!*****************************************************************************!*\
   !*** ./client/js/app/components/explorer/query_builder/percentile_field.js ***!
   \*****************************************************************************/
@@ -86199,7 +86218,7 @@
 	var _ = __webpack_require__(/*! lodash */ 27);
 	
 	// Components
-	var Input = __webpack_require__(/*! ../../common/input.js */ 405);
+	var Input = __webpack_require__(/*! ../../common/input.js */ 406);
 	
 	var PercentileField = React.createClass({
 	  displayName: 'PercentileField',
@@ -86227,7 +86246,7 @@
 	module.exports = PercentileField;
 
 /***/ },
-/* 405 */
+/* 406 */
 /*!**************************************************!*\
   !*** ./client/js/app/components/common/input.js ***!
   \**************************************************/
@@ -86306,7 +86325,7 @@
 	module.exports = InputComponent;
 
 /***/ },
-/* 406 */
+/* 407 */
 /*!***************************************************************************!*\
   !*** ./client/js/app/components/explorer/query_builder/group_by_field.js ***!
   \***************************************************************************/
@@ -86316,10 +86335,10 @@
 	
 	var React = __webpack_require__(/*! react */ 44);
 	var _ = __webpack_require__(/*! lodash */ 27);
-	var FieldsToggle = __webpack_require__(/*! ../../common/fields_toggle.js */ 401);
+	var FieldsToggle = __webpack_require__(/*! ../../common/fields_toggle.js */ 402);
 	
 	// Components
-	var ReactSelect = __webpack_require__(/*! ../../common/react_select.js */ 403);
+	var ReactSelect = __webpack_require__(/*! ../../common/react_select.js */ 404);
 	
 	var GroupByField = React.createClass({
 	  displayName: 'GroupByField',
@@ -86425,7 +86444,7 @@
 	module.exports = GroupByField;
 
 /***/ },
-/* 407 */
+/* 408 */
 /*!*******************************************************************************!*\
   !*** ./client/js/app/components/explorer/query_builder/extraction_options.js ***!
   \*******************************************************************************/
@@ -86435,8 +86454,8 @@
 	
 	var React = __webpack_require__(/*! react */ 44);
 	var ExplorerUtils = __webpack_require__(/*! ../../../utils/ExplorerUtils */ 203);
-	var Input = __webpack_require__(/*! ../../common/input.js */ 405);
-	var LatestField = __webpack_require__(/*! ./latest_field.js */ 408);
+	var Input = __webpack_require__(/*! ../../common/input.js */ 406);
+	var LatestField = __webpack_require__(/*! ./latest_field.js */ 409);
 	
 	var ExtractionOptions = React.createClass({
 	  displayName: 'ExtractionOptions',
@@ -86487,7 +86506,7 @@
 	module.exports = ExtractionOptions;
 
 /***/ },
-/* 408 */
+/* 409 */
 /*!*************************************************************************!*\
   !*** ./client/js/app/components/explorer/query_builder/latest_field.js ***!
   \*************************************************************************/
@@ -86496,7 +86515,7 @@
 	'use strict';
 	
 	var React = __webpack_require__(/*! react */ 44);
-	var Input = __webpack_require__(/*! ../../common/input.js */ 405);
+	var Input = __webpack_require__(/*! ../../common/input.js */ 406);
 	var ExplorerUtils = __webpack_require__(/*! ../../../utils/ExplorerUtils */ 203);
 	
 	var LatestField = React.createClass({
@@ -86531,7 +86550,7 @@
 	module.exports = LatestField;
 
 /***/ },
-/* 409 */
+/* 410 */
 /*!***********************************************************************************!*\
   !*** ./client/js/app/components/explorer/query_builder/funnels/funnel_builder.js ***!
   \***********************************************************************************/
@@ -86541,8 +86560,8 @@
 	
 	var React = __webpack_require__(/*! react */ 44);
 	var _ = __webpack_require__(/*! lodash */ 27);
-	var FunnelStep = __webpack_require__(/*! ./funnel_step.js */ 410);
-	var ExplorerActions = __webpack_require__(/*! ../../../../actions/ExplorerActions.js */ 390);
+	var FunnelStep = __webpack_require__(/*! ./funnel_step.js */ 411);
+	var ExplorerActions = __webpack_require__(/*! ../../../../actions/ExplorerActions.js */ 391);
 	
 	var FunnelsBuilder = React.createClass({
 	  displayName: 'FunnelsBuilder',
@@ -86651,7 +86670,7 @@
 	module.exports = FunnelsBuilder;
 
 /***/ },
-/* 410 */
+/* 411 */
 /*!********************************************************************************!*\
   !*** ./client/js/app/components/explorer/query_builder/funnels/funnel_step.js ***!
   \********************************************************************************/
@@ -86661,13 +86680,13 @@
 	
 	var React = __webpack_require__(/*! react */ 44);
 	var _ = __webpack_require__(/*! lodash */ 27);
-	var SelectField = __webpack_require__(/*! ../select_field.js */ 402);
-	var Timeframe = __webpack_require__(/*! ../../../common/timeframe.js */ 411);
-	var FieldsToggle = __webpack_require__(/*! ../../../common/fields_toggle.js */ 401);
-	var Notice = __webpack_require__(/*! ../../../common/notice.js */ 384);
-	var FilterManager = __webpack_require__(/*! ../../../common/filter_manager.js */ 421);
+	var SelectField = __webpack_require__(/*! ../select_field.js */ 403);
+	var Timeframe = __webpack_require__(/*! ../../../common/timeframe.js */ 412);
+	var FieldsToggle = __webpack_require__(/*! ../../../common/fields_toggle.js */ 402);
+	var Notice = __webpack_require__(/*! ../../../common/notice.js */ 385);
+	var FilterManager = __webpack_require__(/*! ../../../common/filter_manager.js */ 422);
 	var FilterUtils = __webpack_require__(/*! ../../../../utils/FilterUtils.js */ 330);
-	var classNames = __webpack_require__(/*! classnames */ 349);
+	var classNames = __webpack_require__(/*! classnames */ 350);
 	
 	var FunnelStep = React.createClass({
 	  displayName: 'FunnelStep',
@@ -86858,7 +86877,7 @@
 	module.exports = FunnelStep;
 
 /***/ },
-/* 411 */
+/* 412 */
 /*!******************************************************!*\
   !*** ./client/js/app/components/common/timeframe.js ***!
   \******************************************************/
@@ -86869,12 +86888,12 @@
 	var _ = __webpack_require__(/*! lodash */ 27);
 	var moment = __webpack_require__(/*! moment */ 217);
 	var React = __webpack_require__(/*! react */ 44);
-	var AbsolutePicker = __webpack_require__(/*! ./absolute_picker.js */ 412);
-	var RelativePicker = __webpack_require__(/*! ./relative_picker.js */ 419);
-	var FieldsToggle = __webpack_require__(/*! ./fields_toggle.js */ 401);
-	var ReactSelect = __webpack_require__(/*! ./react_select.js */ 403);
-	var Timezone = __webpack_require__(/*! ./timezone.js */ 420);
-	var ExplorerActions = __webpack_require__(/*! ../../actions/ExplorerActions */ 390);
+	var AbsolutePicker = __webpack_require__(/*! ./absolute_picker.js */ 413);
+	var RelativePicker = __webpack_require__(/*! ./relative_picker.js */ 420);
+	var FieldsToggle = __webpack_require__(/*! ./fields_toggle.js */ 402);
+	var ReactSelect = __webpack_require__(/*! ./react_select.js */ 404);
+	var Timezone = __webpack_require__(/*! ./timezone.js */ 421);
+	var ExplorerActions = __webpack_require__(/*! ../../actions/ExplorerActions */ 391);
 	var TimeframeUtils = __webpack_require__(/*! ../../utils/TimeframeUtils */ 333);
 	var ProjectUtils = __webpack_require__(/*! ../../utils/ProjectUtils */ 334);
 	
@@ -86971,7 +86990,7 @@
 	module.exports = Timeframe;
 
 /***/ },
-/* 412 */
+/* 413 */
 /*!************************************************************!*\
   !*** ./client/js/app/components/common/absolute_picker.js ***!
   \************************************************************/
@@ -86985,11 +87004,11 @@
 	var React = __webpack_require__(/*! react */ 44);
 	var _ = __webpack_require__(/*! lodash */ 27);
 	var moment = __webpack_require__(/*! moment */ 217);
-	var Datepicker = __webpack_require__(/*! ./datepicker.js */ 413);
-	var Timepicker = __webpack_require__(/*! ./timepicker.js */ 418);
+	var Datepicker = __webpack_require__(/*! ./datepicker.js */ 414);
+	var Timepicker = __webpack_require__(/*! ./timepicker.js */ 419);
 	
 	var ExplorerUtils = __webpack_require__(/*! ../../utils/ExplorerUtils */ 203);
-	var ExplorerActions = __webpack_require__(/*! ../../actions/ExplorerActions */ 390);
+	var ExplorerActions = __webpack_require__(/*! ../../actions/ExplorerActions */ 391);
 	
 	var dateFormat = 'll';
 	var timeFormat = 'h:mm A';
@@ -87107,7 +87126,7 @@
 
 
 /***/ },
-/* 413 */
+/* 414 */
 /*!*******************************************************!*\
   !*** ./client/js/app/components/common/datepicker.js ***!
   \*******************************************************/
@@ -87122,9 +87141,9 @@
 	var React = __webpack_require__(/*! react */ 44);
 	var moment = __webpack_require__(/*! moment */ 217);
 	
-	var pickadate = __webpack_require__(/*! ../../../vendor/picker.js */ 414);
-	var pickadate = __webpack_require__(/*! ../../../vendor/picker.date.js */ 416);
-	var pickadate = __webpack_require__(/*! ../../../vendor/picker.time.js */ 417);
+	var pickadate = __webpack_require__(/*! ../../../vendor/picker.js */ 415);
+	var pickadate = __webpack_require__(/*! ../../../vendor/picker.date.js */ 417);
+	var pickadate = __webpack_require__(/*! ../../../vendor/picker.time.js */ 418);
 	
 	var Datepicker = React.createClass({
 	  displayName: 'Datepicker',
@@ -87214,7 +87233,7 @@
 
 
 /***/ },
-/* 414 */
+/* 415 */
 /*!************************************!*\
   !*** ./client/js/vendor/picker.js ***!
   \************************************/
@@ -87240,7 +87259,7 @@
 	    if (typeof define == 'function' && define.amd) define('picker', ['jquery'], factory);
 	
 	    // Node.js/browserify.
-	    else if (( false ? 'undefined' : _typeof(exports)) == 'object') module.exports = factory(__webpack_require__(/*! jquery */ 415));
+	    else if (( false ? 'undefined' : _typeof(exports)) == 'object') module.exports = factory(__webpack_require__(/*! jquery */ 416));
 	
 	        // Browser globals.
 	        else this.Picker = factory(jQuery);
@@ -88219,7 +88238,7 @@
 
 
 /***/ },
-/* 415 */
+/* 416 */
 /*!*************************!*\
   !*** external "jQuery" ***!
   \*************************/
@@ -88228,7 +88247,7 @@
 	module.exports = jQuery;
 
 /***/ },
-/* 416 */
+/* 417 */
 /*!*****************************************!*\
   !*** ./client/js/vendor/picker.date.js ***!
   \*****************************************/
@@ -88252,7 +88271,7 @@
 	    if (typeof define == 'function' && define.amd) define(['picker', 'jquery'], factory);
 	
 	    // Node.js/browserify.
-	    else if (( false ? 'undefined' : _typeof(exports)) == 'object') module.exports = factory(__webpack_require__(/*! ./picker.js */ 414), __webpack_require__(/*! jquery */ 415));
+	    else if (( false ? 'undefined' : _typeof(exports)) == 'object') module.exports = factory(__webpack_require__(/*! ./picker.js */ 415), __webpack_require__(/*! jquery */ 416));
 	
 	        // Browser globals.
 	        else factory(Picker, jQuery);
@@ -89429,7 +89448,7 @@
 
 
 /***/ },
-/* 417 */
+/* 418 */
 /*!*****************************************!*\
   !*** ./client/js/vendor/picker.time.js ***!
   \*****************************************/
@@ -89453,7 +89472,7 @@
 	    if (typeof define == 'function' && define.amd) define(['picker', 'jquery'], factory);
 	
 	    // Node.js/browserify.
-	    else if (( false ? 'undefined' : _typeof(exports)) == 'object') module.exports = factory(__webpack_require__(/*! ./picker.js */ 414), __webpack_require__(/*! jquery */ 415));
+	    else if (( false ? 'undefined' : _typeof(exports)) == 'object') module.exports = factory(__webpack_require__(/*! ./picker.js */ 415), __webpack_require__(/*! jquery */ 416));
 	
 	        // Browser globals.
 	        else factory(Picker, jQuery);
@@ -90359,7 +90378,7 @@
 
 
 /***/ },
-/* 418 */
+/* 419 */
 /*!*******************************************************!*\
   !*** ./client/js/app/components/common/timepicker.js ***!
   \*******************************************************/
@@ -90372,7 +90391,7 @@
 	
 	var _ = __webpack_require__(/*! lodash */ 27);
 	var React = __webpack_require__(/*! react */ 44);
-	var ReactSelect = __webpack_require__(/*! ./react_select.js */ 403);
+	var ReactSelect = __webpack_require__(/*! ./react_select.js */ 404);
 	
 	var premadeTimes = ['12:00 AM', '12:15 AM', '12:30 AM', '12:45 AM', '01:00 AM', '01:15 AM', '01:30 AM', '01:45 AM', '02:00 AM', '02:15 AM', '02:30 AM', '02:45 AM', '03:00 AM', '03:15 AM', '03:30 AM', '03:45 AM', '04:00 AM', '04:15 AM', '04:30 AM', '04:45 AM', '05:00 AM', '05:15 AM', '05:30 AM', '05:45 AM', '06:00 AM', '06:15 AM', '06:30 AM', '06:45 AM', '07:00 AM', '07:15 AM', '07:30 AM', '07:45 AM', '08:00 AM', '08:15 AM', '08:30 AM', '08:45 AM', '09:00 AM', '09:15 AM', '09:30 AM', '09:45 AM', '10:00 AM', '10:15 AM', '10:30 AM', '10:45 AM', '11:00 AM', '11:15 AM', '11:30 AM', '11:45 AM', '12:00 PM', '12:15 PM', '12:30 PM', '12:45 PM', '01:00 PM', '01:15 PM', '01:30 PM', '01:45 PM', '02:00 PM', '02:15 PM', '02:30 PM', '02:45 PM', '03:00 PM', '03:15 PM', '03:30 PM', '03:45 PM', '04:00 PM', '04:15 PM', '04:30 PM', '04:45 PM', '05:00 PM', '05:15 PM', '05:30 PM', '05:45 PM', '06:00 PM', '06:15 PM', '06:30 PM', '06:45 PM', '07:00 PM', '07:15 PM', '07:30 PM', '07:45 PM', '08:00 PM', '08:15 PM', '08:30 PM', '08:45 PM', '09:00 PM', '09:15 PM', '09:30 PM', '09:45 PM', '10:00 PM', '10:15 PM', '10:30 PM', '10:45 PM', '11:00 PM', '11:15 PM', '11:30 PM', '11:45 PM'];
 	
@@ -90492,7 +90511,7 @@
 
 
 /***/ },
-/* 419 */
+/* 420 */
 /*!************************************************************!*\
   !*** ./client/js/app/components/common/relative_picker.js ***!
   \************************************************************/
@@ -90505,13 +90524,13 @@
 	
 	var React = __webpack_require__(/*! react */ 44);
 	var _ = __webpack_require__(/*! lodash */ 27);
-	var Input = __webpack_require__(/*! ./input.js */ 405);
-	var Select = __webpack_require__(/*! ./select.js */ 383);
+	var Input = __webpack_require__(/*! ./input.js */ 406);
+	var Select = __webpack_require__(/*! ./select.js */ 384);
 	
 	var RELATIVE_TIMEFRAMES = ['this', 'previous'];
 	
 	var ExplorerUtils = __webpack_require__(/*! ../../utils/ExplorerUtils */ 203);
-	var ExplorerActions = __webpack_require__(/*! ../../actions/ExplorerActions */ 390);
+	var ExplorerActions = __webpack_require__(/*! ../../actions/ExplorerActions */ 391);
 	var FormatUtils = __webpack_require__(/*! ../../utils/FormatUtils */ 327);
 	
 	function hasRelativeTimeframe(time) {
@@ -90621,7 +90640,7 @@
 
 
 /***/ },
-/* 420 */
+/* 421 */
 /*!*****************************************************!*\
   !*** ./client/js/app/components/common/timezone.js ***!
   \*****************************************************/
@@ -90631,9 +90650,9 @@
 	
 	var _ = __webpack_require__(/*! lodash */ 27);
 	var React = __webpack_require__(/*! react */ 44);
-	var ReactSelect = __webpack_require__(/*! ./react_select.js */ 403);
+	var ReactSelect = __webpack_require__(/*! ./react_select.js */ 404);
 	var ProjectUtils = __webpack_require__(/*! ../../utils/ProjectUtils */ 334);
-	var ExplorerActions = __webpack_require__(/*! ../../actions/ExplorerActions */ 390);
+	var ExplorerActions = __webpack_require__(/*! ../../actions/ExplorerActions */ 391);
 	
 	var Timezone = React.createClass({
 	  displayName: 'Timezone',
@@ -90722,7 +90741,7 @@
 	module.exports = Timezone;
 
 /***/ },
-/* 421 */
+/* 422 */
 /*!***********************************************************!*\
   !*** ./client/js/app/components/common/filter_manager.js ***!
   \***********************************************************/
@@ -90732,8 +90751,8 @@
 	
 	var _ = __webpack_require__(/*! lodash */ 27);
 	var React = __webpack_require__(/*! react */ 44);
-	var Filter = __webpack_require__(/*! ./filter.js */ 422);
-	var Modal = __webpack_require__(/*! ./modal.js */ 351);
+	var Filter = __webpack_require__(/*! ./filter.js */ 423);
+	var Modal = __webpack_require__(/*! ./modal.js */ 352);
 	var ProjectUtils = __webpack_require__(/*! ../../utils/ProjectUtils */ 334);
 	var FilterUtils = __webpack_require__(/*! ../../utils/FilterUtils */ 330);
 	
@@ -90857,7 +90876,7 @@
 	module.exports = FilterManager;
 
 /***/ },
-/* 422 */
+/* 423 */
 /*!***************************************************!*\
   !*** ./client/js/app/components/common/filter.js ***!
   \***************************************************/
@@ -90867,10 +90886,10 @@
 	
 	var _ = __webpack_require__(/*! lodash */ 27);
 	var React = __webpack_require__(/*! react */ 44);
-	var Select = __webpack_require__(/*! ./select.js */ 383);
-	var classNames = __webpack_require__(/*! classnames */ 349);
-	var ReactSelect = __webpack_require__(/*! ./react_select.js */ 403);
-	var FilterValueFields = __webpack_require__(/*! ./filter_value_fields.js */ 423);
+	var Select = __webpack_require__(/*! ./select.js */ 384);
+	var classNames = __webpack_require__(/*! classnames */ 350);
+	var ReactSelect = __webpack_require__(/*! ./react_select.js */ 404);
+	var FilterValueFields = __webpack_require__(/*! ./filter_value_fields.js */ 424);
 	var FilterUtils = __webpack_require__(/*! ../../utils/FilterUtils */ 330);
 	
 	var Filter = React.createClass({
@@ -91017,7 +91036,7 @@
 	module.exports = Filter;
 
 /***/ },
-/* 423 */
+/* 424 */
 /*!****************************************************************!*\
   !*** ./client/js/app/components/common/filter_value_fields.js ***!
   \****************************************************************/
@@ -91028,10 +91047,10 @@
 	var _ = __webpack_require__(/*! lodash */ 27);
 	var moment = __webpack_require__(/*! moment */ 217);
 	var React = __webpack_require__(/*! react */ 44);
-	var Select = __webpack_require__(/*! ./select.js */ 383);
-	var Datepicker = __webpack_require__(/*! ./datepicker.js */ 413);
-	var Timepicker = __webpack_require__(/*! ./timepicker.js */ 418);
-	var Geo = __webpack_require__(/*! ./geo.js */ 424);
+	var Select = __webpack_require__(/*! ./select.js */ 384);
+	var Datepicker = __webpack_require__(/*! ./datepicker.js */ 414);
+	var Timepicker = __webpack_require__(/*! ./timepicker.js */ 419);
+	var Geo = __webpack_require__(/*! ./geo.js */ 425);
 	var FormatUtils = __webpack_require__(/*! ../../utils/FormatUtils */ 327);
 	var FilterUtils = __webpack_require__(/*! ../../utils/FilterUtils */ 330);
 	
@@ -91180,7 +91199,7 @@
 	module.exports = FilterValueFields;
 
 /***/ },
-/* 424 */
+/* 425 */
 /*!************************************************!*\
   !*** ./client/js/app/components/common/geo.js ***!
   \************************************************/
@@ -91252,7 +91271,7 @@
 	module.exports = Geo;
 
 /***/ },
-/* 425 */
+/* 426 */
 /*!*****************************************************!*\
   !*** ./client/js/app/components/common/interval.js ***!
   \*****************************************************/
@@ -91263,9 +91282,9 @@
 	var _ = __webpack_require__(/*! lodash */ 27);
 	var moment = __webpack_require__(/*! moment */ 217);
 	var React = __webpack_require__(/*! react */ 44);
-	var Select = __webpack_require__(/*! ./select.js */ 383);
-	var FieldsToggle = __webpack_require__(/*! ./fields_toggle.js */ 401);
-	var ExplorerActions = __webpack_require__(/*! ../../actions/ExplorerActions */ 390);
+	var Select = __webpack_require__(/*! ./select.js */ 384);
+	var FieldsToggle = __webpack_require__(/*! ./fields_toggle.js */ 402);
+	var ExplorerActions = __webpack_require__(/*! ../../actions/ExplorerActions */ 391);
 	var ExplorerUtils = __webpack_require__(/*! ../../utils/ExplorerUtils */ 203);
 	var ProjectUtils = __webpack_require__(/*! ../../utils/ProjectUtils */ 334);
 	
@@ -91326,7 +91345,7 @@
 	module.exports = Interval;
 
 /***/ },
-/* 426 */
+/* 427 */
 /*!********************************************************************!*\
   !*** ./client/js/app/components/explorer/query_builder/api_url.js ***!
   \********************************************************************/
@@ -91395,7 +91414,7 @@
 	module.exports = ApiUrl;
 
 /***/ },
-/* 427 */
+/* 428 */
 /*!***************************************************************************!*\
   !*** ./client/js/app/components/explorer/saved_queries/browse_queries.js ***!
   \***************************************************************************/
@@ -91500,7 +91519,7 @@
 	module.exports = BrowseQueries;
 
 /***/ },
-/* 428 */
+/* 429 */
 /*!***********************************************************!*\
   !*** ./client/js/app/components/explorer/cache_toggle.js ***!
   \***********************************************************/
@@ -91510,10 +91529,10 @@
 	
 	var React = __webpack_require__(/*! react */ 44);
 	var _ = __webpack_require__(/*! lodash */ 27);
-	var classNames = __webpack_require__(/*! classnames */ 349);
+	var classNames = __webpack_require__(/*! classnames */ 350);
 	var moment = __webpack_require__(/*! moment */ 217);
 	
-	var ExplorerActions = __webpack_require__(/*! ../../actions/ExplorerActions */ 390);
+	var ExplorerActions = __webpack_require__(/*! ../../actions/ExplorerActions */ 391);
 	var refreshRateMultiplier = 60 * 60;
 	
 	var CacheToggle = React.createClass({
@@ -91646,7 +91665,7 @@
 	module.exports = CacheToggle;
 
 /***/ },
-/* 429 */
+/* 430 */
 /*!************************************************************!*\
   !*** ./client/js/app/components/explorer/query_actions.js ***!
   \************************************************************/
@@ -91655,7 +91674,7 @@
 	'use strict';
 	
 	var React = __webpack_require__(/*! react */ 44);
-	var classNames = __webpack_require__(/*! classnames */ 349);
+	var classNames = __webpack_require__(/*! classnames */ 350);
 	var _ = __webpack_require__(/*! lodash */ 27);
 	var ExplorerUtils = __webpack_require__(/*! ../../utils/ExplorerUtils */ 203);
 	
@@ -91790,7 +91809,7 @@
 	module.exports = QueryActions;
 
 /***/ },
-/* 430 */
+/* 431 */
 /*!*********************************************!*\
   !*** ./client/js/app/stores/NoticeStore.js ***!
   \*********************************************/
@@ -91799,11 +91818,11 @@
 	'use strict';
 	
 	var _ = __webpack_require__(/*! lodash */ 27);
-	var AppDispatcher = __webpack_require__(/*! ../dispatcher/AppDispatcher */ 335);
-	var EventEmitter = __webpack_require__(/*! events */ 342).EventEmitter;
-	var NoticeConstants = __webpack_require__(/*! ../constants/NoticeConstants */ 396);
-	var ExplorerConstants = __webpack_require__(/*! ../constants/ExplorerConstants */ 389);
-	var ExplorerStore = __webpack_require__(/*! ../stores/ExplorerStore */ 391);
+	var AppDispatcher = __webpack_require__(/*! ../dispatcher/AppDispatcher */ 336);
+	var EventEmitter = __webpack_require__(/*! events */ 343).EventEmitter;
+	var NoticeConstants = __webpack_require__(/*! ../constants/NoticeConstants */ 397);
+	var ExplorerConstants = __webpack_require__(/*! ../constants/ExplorerConstants */ 390);
+	var ExplorerStore = __webpack_require__(/*! ../stores/ExplorerStore */ 392);
 	
 	var CHANGE_EVENT = 'change';
 	
@@ -91988,7 +92007,7 @@
 	module.exports = NoticeStore;
 
 /***/ },
-/* 431 */
+/* 432 */
 /*!*************************************************!*\
   !*** ./client/js/app/utils/QueryStringUtils.js ***!
   \*************************************************/
@@ -92022,35 +92041,13 @@
 	};
 
 /***/ },
-/* 432 */
+/* 433 */
 /*!*********************************!*\
   !*** ./client/styles/base.less ***!
   \*********************************/
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
-
-/***/ },
-/* 433 */,
-/* 434 */,
-/* 435 */,
-/* 436 */
-/*!******************************************!*\
-  !*** ./client/js/app/utils/DateUtils.js ***!
-  \******************************************/
-/***/ function(module, exports) {
-
-	"use strict";
-	
-	module.exports = {
-	  isDST: function isDST() {
-	    var date = new Date();
-	    var jan = new Date(date.getFullYear(), 0, 1);
-	    var jul = new Date(date.getFullYear(), 6, 1);
-	    var stdOffset = Math.max(jan.getTimezoneOffset(), jul.getTimezoneOffset());
-	    return date.getTimezoneOffset() < stdOffset;
-	  }
-	};
 
 /***/ }
 /******/ ]);
