@@ -86393,7 +86393,8 @@
 	    var newVal;
 	    switch (this.props.value.length) {
 	      case 0:
-	        newVal = this.props.value = ['', ''];
+	        // newVal = this.props.value = ['', ''];
+	        newVal = ['', ''];
 	        break;
 	      case 1:
 	        newVal = this.props.value.concat(['']);
