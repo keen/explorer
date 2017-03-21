@@ -41,6 +41,24 @@ describe('utils/FilterUtils', function() {
         assert.strictEqual(FilterUtils.getCoercionType(filter), "Boolean");
       });
 
+      it('Boolean type when string is "true"', function () {
+        var filter = {
+          property_name: "created_at",
+          operator: "equals",
+          property_value: "true"
+        };
+        assert.strictEqual(FilterUtils.getCoercionType(filter), "Boolean");
+      });
+
+      it('Boolean type when string is "false"', function () {
+        var filter = {
+          property_name: "created_at",
+          operator: "equals",
+          property_value: "false"
+        };
+        assert.strictEqual(FilterUtils.getCoercionType(filter), "Boolean");
+      });
+
       describe('Number property_values', function () {
         it('Number type when property_value is a string that can be parsed into an Int number', function () {
           var filter = {
@@ -69,7 +87,7 @@ describe('utils/FilterUtils', function() {
       });
     });
   });
-  
+
   describe('coercionFunctions', function () {
     it('should have coercion functions for all the types', function () {
       assert.sameMembers(_.keys(FilterUtils.coercionFunctions), [
@@ -261,7 +279,7 @@ describe('utils/FilterUtils', function() {
         operator: 'eq',
         property_value: ['a', 'list'],
         coercion_type: 'List'
-      }; 
+      };
       var stub = sinon.stub(FormatUtils, 'parseList');
       FilterUtils.queryJSON(filter);
       assert.isTrue(stub.calledOnce);
@@ -274,7 +292,7 @@ describe('utils/FilterUtils', function() {
         property_value: 'Earthworm Jim',
         coercion_type: 'String',
         some_other_property: 'value'
-      }; 
+      };
       var json = FilterUtils.queryJSON(filter);
       assert.deepEqual(json, {
         property_name: 'name',
