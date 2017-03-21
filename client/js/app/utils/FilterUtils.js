@@ -86,6 +86,7 @@ module.exports = {
         break;
       case 'string':
         if (filter.operator === 'exists') return 'Boolean';
+        if (['false', 'true'].indexOf(filter.property_value) > -1) return 'Boolean';
         if (isNumeric(filter.property_value) && ['contains', 'not_contains'].indexOf(filter.operator) === -1) return 'Number';
         if (FormatUtils.isDateInStrictFormat(filter.property_value.substring(0, filter.property_value.length-6))) return 'Datetime';
         if (FormatUtils.isList(filter.property_value)) return 'List';
