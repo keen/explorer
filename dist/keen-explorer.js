@@ -15347,7 +15347,7 @@
 	/* WEBPACK VAR INJECTION */(function(process, global, setImmediate) {/* @preserve
 	 * The MIT License (MIT)
 	 * 
-	 * Copyright (c) 2013-2015 Petka Antonov
+	 * Copyright (c) 2013-2017 Petka Antonov
 	 * 
 	 * Permission is hereby granted, free of charge, to any person obtaining a copy
 	 * of this software and associated documentation files (the "Software"), to deal
@@ -15369,7 +15369,7 @@
 	 * 
 	 */
 	/**
-	 * bluebird build version 3.4.7
+	 * bluebird build version 3.5.0
 	 * Features enabled: core
 	 * Features disabled: race, call_get, generators, map, nodeify, promisify, props, reduce, settle, some, using, timers, filter, any, each
 	*/
@@ -17032,10 +17032,11 @@
 	
 	},{}],11:[function(_dereq_,module,exports){
 	"use strict";
-	module.exports = function(Promise, tryConvertToPromise) {
+	module.exports = function(Promise, tryConvertToPromise, NEXT_FILTER) {
 	var util = _dereq_("./util");
 	var CancellationError = Promise.CancellationError;
 	var errorObj = util.errorObj;
+	var catchFilter = _dereq_("./catch_filter")(NEXT_FILTER);
 	
 	function PassThroughHandlerContext(promise, type, handler) {
 	    this.promise = promise;
@@ -17087,7 +17088,9 @@
 	        var ret = this.isFinallyHandler()
 	            ? handler.call(promise._boundValue())
 	            : handler.call(promise._boundValue(), reasonOrValue);
-	        if (ret !== undefined) {
+	        if (ret === NEXT_FILTER) {
+	            return ret;
+	        } else if (ret !== undefined) {
 	            promise._setReturnedNonUndefined();
 	            var maybePromise = tryConvertToPromise(ret, promise);
 	            if (maybePromise instanceof Promise) {
@@ -17136,14 +17139,46 @@
 	                             finallyHandler);
 	};
 	
+	
 	Promise.prototype.tap = function (handler) {
 	    return this._passThrough(handler, 1, finallyHandler);
+	};
+	
+	Promise.prototype.tapCatch = function (handlerOrPredicate) {
+	    var len = arguments.length;
+	    if(len === 1) {
+	        return this._passThrough(handlerOrPredicate,
+	                                 1,
+	                                 undefined,
+	                                 finallyHandler);
+	    } else {
+	         var catchInstances = new Array(len - 1),
+	            j = 0, i;
+	        for (i = 0; i < len - 1; ++i) {
+	            var item = arguments[i];
+	            if (util.isObject(item)) {
+	                catchInstances[j++] = item;
+	            } else {
+	                return Promise.reject(new TypeError(
+	                    "tapCatch statement predicate: "
+	                    + "expecting an object but got " + util.classString(item)
+	                ));
+	            }
+	        }
+	        catchInstances.length = j;
+	        var handler = arguments[i];
+	        return this._passThrough(catchFilter(catchInstances, handler, this),
+	                                 1,
+	                                 undefined,
+	                                 finallyHandler);
+	    }
+	
 	};
 	
 	return PassThroughHandlerContext;
 	};
 	
-	},{"./util":21}],12:[function(_dereq_,module,exports){
+	},{"./catch_filter":5,"./util":21}],12:[function(_dereq_,module,exports){
 	"use strict";
 	module.exports =
 	function(Promise, PromiseArray, tryConvertToPromise, INTERNAL, async,
@@ -17478,30 +17513,31 @@
 	var debug = _dereq_("./debuggability")(Promise, Context);
 	var CapturedTrace = debug.CapturedTrace;
 	var PassThroughHandlerContext =
-	    _dereq_("./finally")(Promise, tryConvertToPromise);
+	    _dereq_("./finally")(Promise, tryConvertToPromise, NEXT_FILTER);
 	var catchFilter = _dereq_("./catch_filter")(NEXT_FILTER);
 	var nodebackForPromise = _dereq_("./nodeback");
 	var errorObj = util.errorObj;
 	var tryCatch = util.tryCatch;
 	function check(self, executor) {
+	    if (self == null || self.constructor !== Promise) {
+	        throw new TypeError("the promise constructor cannot be invoked directly\u000a\u000a    See http://goo.gl/MqrFmX\u000a");
+	    }
 	    if (typeof executor !== "function") {
 	        throw new TypeError("expecting a function but got " + util.classString(executor));
 	    }
-	    if (self.constructor !== Promise) {
-	        throw new TypeError("the promise constructor cannot be invoked directly\u000a\u000a    See http://goo.gl/MqrFmX\u000a");
-	    }
+	
 	}
 	
 	function Promise(executor) {
+	    if (executor !== INTERNAL) {
+	        check(this, executor);
+	    }
 	    this._bitField = 0;
 	    this._fulfillmentHandler0 = undefined;
 	    this._rejectionHandler0 = undefined;
 	    this._promise0 = undefined;
 	    this._receiver0 = undefined;
-	    if (executor !== INTERNAL) {
-	        check(this, executor);
-	        this._resolveFromExecutor(executor);
-	    }
+	    this._resolveFromExecutor(executor);
 	    this._promiseCreated();
 	    this._fireEvent("promiseCreated", this);
 	}
@@ -17520,8 +17556,8 @@
 	            if (util.isObject(item)) {
 	                catchInstances[j++] = item;
 	            } else {
-	                return apiRejection("expecting an object but got " +
-	                    "A catch statement predicate " + util.classString(item));
+	                return apiRejection("Catch statement predicate: " +
+	                    "expecting an object but got " + util.classString(item));
 	            }
 	        }
 	        catchInstances.length = j;
@@ -17900,6 +17936,7 @@
 	};
 	
 	Promise.prototype._resolveFromExecutor = function (executor) {
+	    if (executor === INTERNAL) return;
 	    var promise = this;
 	    this._captureStackTrace();
 	    this._pushContext();
@@ -18157,7 +18194,7 @@
 	_dereq_("./join")(
 	    Promise, PromiseArray, tryConvertToPromise, INTERNAL, async, getDomain);
 	Promise.Promise = Promise;
-	Promise.version = "3.4.7";
+	Promise.version = "3.5.0";
 	                                                         
 	    util.toFastProperties(Promise);                                          
 	    util.toFastProperties(Promise.prototype);                                
@@ -18194,6 +18231,7 @@
 	    switch(val) {
 	    case -2: return [];
 	    case -3: return {};
+	    case -6: return new Map();
 	    }
 	}
 	
@@ -18481,11 +18519,11 @@
 	
 	        var scheduleToggle = function() {
 	            if (toggleScheduled) return;
-	                toggleScheduled = true;
-	                div2.classList.toggle("foo");
-	            };
+	            toggleScheduled = true;
+	            div2.classList.toggle("foo");
+	        };
 	
-	            return function schedule(fn) {
+	        return function schedule(fn) {
 	            var o = new MutationObserver(function() {
 	                o.disconnect();
 	                fn();
@@ -85515,6 +85553,7 @@
 	    if (this.props.model.query.analysis_type === 'extraction') {
 	      return React.createElement(ExtractionOptions, { latest: this.props.model.query.latest,
 	        email: this.props.model.query.email,
+	        model: this.props.model,
 	        isEmail: ExplorerUtils.isEmailExtraction(this.props.model),
 	        handleChange: this.handleSelectionWithEvent,
 	        setExtractionType: this.props.setExtractionType });
@@ -86463,7 +86502,7 @@
 	
 	
 	  render: function render() {
-	    var emailField, latestField;
+	    var emailField, latestField, extractionPropertiesFilter;
 	
 	    if (this.props.isEmail) {
 	      emailField = React.createElement(Input, { type: 'text',
@@ -86474,6 +86513,12 @@
 	        value: this.props.email,
 	        onChange: this.props.handleChange });
 	      latestField = React.createElement(LatestField, { latest: this.props.latest, handleChange: this.props.handleChange });
+	    }
+	
+	    if (this.props.model.response) {
+	      extractionPropertiesFilter = React.createElement(ExtractionPropertiesFilter, {
+	        result: this.props.model.response.result[0]
+	      });
 	    }
 	
 	    return React.createElement(
@@ -86496,10 +86541,48 @@
 	          React.createElement('input', { type: 'radio', name: 'extraction_type', value: 'email', onChange: this.props.setExtractionType, checked: this.props.isEmail }),
 	          ' Bulk CSV extraction by email'
 	        ),
+	        React.createElement('br', null),
+	        React.createElement(
+	          'label',
+	          null,
+	          React.createElement('i', { className: 'icon glyphicon glyphicon-plus-sign margin-right-tiny' }),
+	          'Filter extraction properties'
+	        ),
 	        emailField,
-	        latestField
+	        latestField,
+	        extractionPropertiesFilter
 	      )
 	    );
+	  }
+	
+	});
+	
+	var ReactSelect = __webpack_require__(/*! ../../common/react_select.js */ 404);
+	
+	var ExtractionPropertiesFilter = React.createClass({
+	  displayName: 'ExtractionPropertiesFilter',
+	
+	
+	  _getKeys: function _getKeys() {
+	    var keys = _.keys(this.props.result);
+	    var keyList = _.map(keys, function (key) {
+	      return key;
+	    });
+	
+	    return keyList;
+	  },
+	
+	  _onChange: function _onChange(name, value) {
+	    console.log(name, value);
+	  },
+	
+	  render: function render() {
+	    console.log(this._getKeys());
+	    return React.createElement(ReactSelect, {
+	      name: 'filter-properties',
+	      handleChange: this._onChange,
+	      items: this._getKeys()
+	    });
 	  }
 	
 	});

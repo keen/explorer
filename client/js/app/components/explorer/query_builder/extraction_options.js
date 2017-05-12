@@ -7,7 +7,8 @@ var ExtractionOptions = React.createClass({
 
   render: function(){
     var emailField,
-        latestField;
+        latestField,
+        extractionPropertiesFilter;
 
     if (this.props.isEmail) {
       emailField = (
@@ -24,6 +25,12 @@ var ExtractionOptions = React.createClass({
       );
     }
 
+    if (this.props.model.response) {
+      extractionPropertiesFilter = <ExtractionPropertiesFilter
+        result={this.props.model.response.result[0]}
+      />
+    }
+
     return (
       <div className="field-component">
         <div className="extraction-options">
@@ -33,13 +40,49 @@ var ExtractionOptions = React.createClass({
           <label>
             <input type="radio" name="extraction_type" value="email" onChange={this.props.setExtractionType} checked={this.props.isEmail}/> Bulk CSV extraction by email
           </label>
+          <br />
+
+          <label>
+             <i className="icon glyphicon glyphicon-plus-sign margin-right-tiny" />
+             Filter extraction properties
+          </label>
           {emailField}
           {latestField}
+          {extractionPropertiesFilter}
         </div>
       </div>
     );
   }
 
 });
+
+var ReactSelect = require('../../common/react_select.js');
+
+var ExtractionPropertiesFilter = React.createClass({
+
+  _getKeys: function() {
+    var keys = _.keys(this.props.result);
+    var keyList = _.map(keys, function(key) {
+      return key;
+    });
+
+    return keyList;
+  },
+
+  _onChange: function(name, value) {
+    console.log(name, value);
+  },
+
+  render: function() {
+    console.log(this._getKeys());
+    return (<ReactSelect
+      name="filter-properties"
+      handleChange={this._onChange}
+      items={this._getKeys()}
+    />);
+  }
+
+});
+
 
 module.exports = ExtractionOptions;

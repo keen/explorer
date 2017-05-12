@@ -38,4 +38,15 @@ describe('components/explorer/query_builder/extraction_options', function() {
       assert.lengthOf($R(this.component).find('LatestField').components, 1);
     });
   });
+
+  // TODO: find a better name to describe this...
+  // TODO: Spiking for now
+  describe('extraction properties', function() {
+    it('lists available fields to filter', function() {
+      var props = _.assign({}, this.components.props, { });
+
+      $R(this.component).find('name here')
+    });
+
+  });
 });
