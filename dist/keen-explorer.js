@@ -92259,11 +92259,10 @@
 	
 	      return React.createElement(
 	        'div',
-	        { className: 'react-select-box-multi react-select-box-container' },
+	        { className: 'react-select-box-container react-select-box-multi' },
 	        React.createElement(
-	          'div',
-	          null,
-	          React.createElement('button', { id: this.state.id, onClick: this._toggleOpenClose.bind(this), className: 'react-select-box' }),
+	          'button',
+	          { id: this.state.id, onClick: this._toggleOpenClose.bind(this), className: 'react-select-box' },
 	          React.createElement(
 	            'div',
 	            { className: 'react-select-box-label' },
