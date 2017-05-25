@@ -56,7 +56,7 @@ var ExtractionOptions = React.createClass({
 
 });
 
-var ReactSelect = require('../../common/react_select.js');
+var ReactMultiSelect = require('../../common/react_multi_select.js');
 
 var ExtractionPropertiesFilter = React.createClass({
 
@@ -74,8 +74,7 @@ var ExtractionPropertiesFilter = React.createClass({
   },
 
   render: function() {
-    console.log(this._getKeys());
-    return (<ReactSelect
+    return (<ReactMultiSelect
       name="filter-properties"
       handleChange={this._onChange}
       items={this._getKeys()}

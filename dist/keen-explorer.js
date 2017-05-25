@@ -86557,7 +86557,7 @@
 	
 	});
 	
-	var ReactSelect = __webpack_require__(/*! ../../common/react_select.js */ 404);
+	var ReactMultiSelect = __webpack_require__(/*! ../../common/react_multi_select.js */ 437);
 	
 	var ExtractionPropertiesFilter = React.createClass({
 	  displayName: 'ExtractionPropertiesFilter',
@@ -86577,8 +86577,7 @@
 	  },
 	
 	  render: function render() {
-	    console.log(this._getKeys());
-	    return React.createElement(ReactSelect, {
+	    return React.createElement(ReactMultiSelect, {
 	      name: 'filter-properties',
 	      handleChange: this._onChange,
 	      items: this._getKeys()
@@ -92132,6 +92131,154 @@
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
+
+/***/ },
+/* 434 */,
+/* 435 */,
+/* 436 */,
+/* 437 */
+/*!***************************************************************!*\
+  !*** ./client/js/app/components/common/react_multi_select.js ***!
+  \***************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var React = __webpack_require__(/*! react */ 44);
+	
+	var ReactMultiSelect = function (_React$Component) {
+	  _inherits(ReactMultiSelect, _React$Component);
+	
+	  function ReactMultiSelect(props) {
+	    _classCallCheck(this, ReactMultiSelect);
+	
+	    var _this = _possibleConstructorReturn(this, (ReactMultiSelect.__proto__ || Object.getPrototypeOf(ReactMultiSelect)).call(this, props));
+	
+	    _this.state = {
+	      open: false,
+	      id: 'react-multi-select',
+	      focusedIndex: 0,
+	      selected: []
+	    };
+	    return _this;
+	  }
+	
+	  _createClass(ReactMultiSelect, [{
+	    key: 'interceptEvent',
+	    value: function interceptEvent(event) {
+	      if (event) {
+	        event.preventDefault();
+	        event.stopPropagation();
+	      }
+	    }
+	
+	    // Private Event Handler Methods
+	
+	  }, {
+	    key: '_toggleOpenClose',
+	    value: function _toggleOpenClose(event) {
+	      this.interceptEvent(event);
+	
+	      if (this.state.open) {
+	        return this.setState({ open: false });
+	      } else {
+	        this.setState({ open: true });
+	      }
+	    }
+	  }, {
+	    key: '_handleOptionChange',
+	    value: function _handleOptionChange(event) {
+	      this.interceptEvent(event);
+	      var selectedItem = event.target.text;
+	      var selectedIndex = this.state.selected.indexOf(selectedItem);
+	      var selected = this.state.selected;
+	
+	      if (selectedIndex > -1) {
+	        selected.splice(selectedIndex, 1);
+	      } else {
+	        selected.push(selectedItem);
+	      }
+	
+	      this.setState({ selected: selected });
+	    }
+	  }, {
+	    key: '_renderOption',
+	    value: function _renderOption(option, i) {
+	      var className = 'react-select-box-option';
+	      if (i === this.state.focusedIndex) {
+	        className += ' react-select-box-option-focused';
+	      }
+	      if (this.state.selected.indexOf(option.value) > -1) {
+	        className += ' react-select-box-option-selected';
+	      }
+	
+	      return React.createElement(
+	        'a',
+	        {
+	          id: this.state.id + '-' + i,
+	          className: className,
+	          href: '#',
+	          onClick: this._handleOptionChange.bind(this)
+	        },
+	        option.label
+	      );
+	    }
+	
+	    // Private HTML Element methods
+	
+	  }, {
+	    key: '_renderOptionMenu',
+	    value: function _renderOptionMenu() {
+	      var className = 'react-select-box-options';
+	      if (!this.state.open) {
+	        className += ' react-select-box-hidden';
+	      }
+	
+	      var options = React.Children.map(this.props.items, function (item, i) {
+	        return this._renderOption({ value: item, label: item }, i);
+	      }.bind(this));
+	
+	      return React.createElement(
+	        'div',
+	        { className: className, ref: 'menu' },
+	        options
+	      );
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var label = this.state.selected.length > 0 ? this.state.selected.join(', ') : 'Select a field';
+	
+	      return React.createElement(
+	        'div',
+	        { className: 'react-select-box-multi react-select-box-container' },
+	        React.createElement(
+	          'div',
+	          null,
+	          React.createElement('button', { id: this.state.id, onClick: this._toggleOpenClose.bind(this), className: 'react-select-box' }),
+	          React.createElement(
+	            'div',
+	            { className: 'react-select-box-label' },
+	            label
+	          )
+	        ),
+	        this._renderOptionMenu()
+	      );
+	    }
+	  }]);
+	
+	  return ReactMultiSelect;
+	}(React.Component);
+	
+	module.exports = ReactMultiSelect;
 
 /***/ }
 /******/ ]);
