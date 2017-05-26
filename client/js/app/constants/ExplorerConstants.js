@@ -13,6 +13,8 @@ module.exports = keyMirror({
   EXPLORER_FOUND_INVALID: null,
   EXPLORER_QUERY_SUCCESS: null,
   EXPLORER_QUERY_ERROR: null,
+
+  // Filter Actions
   EXPLORER_ADD_FILTER: null,
   EXPLORER_REMOVE_FILTER: null,
   EXPLORER_UPDATE_FILTER: null,
@@ -24,6 +26,8 @@ module.exports = keyMirror({
   EXPLORER_ADD_STEP_FILTER: null,
   EXPLORER_REMOVE_STEP_FILTER: null,
   EXPLORER_UPDATE_STEP_FILTER: null,
+
+  // Saved Query Actions
   EXPLORER_SAVE: null,
   EXPLORER_SAVE_NEW: null,
   EXPLORER_DESTROY: null,
@@ -32,5 +36,7 @@ module.exports = keyMirror({
   EXPLORER_SAVE_FAIL: null,
   EXPLORER_DESTROYING: null,
   EXPLORER_DESTROY_SUCCESS: null,
-  EXPLORER_DESTROY_FAIL: null
+  EXPLORER_DESTROY_FAIL: null,
+
+  EXPLORER_CHANGE_EXTRACTION_FIELDS: null
 });

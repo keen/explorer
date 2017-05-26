@@ -42,10 +42,6 @@ var ExtractionOptions = React.createClass({
           </label>
           <br />
 
-          <label>
-             <i className="icon glyphicon glyphicon-plus-sign margin-right-tiny" />
-             Filter extraction properties
-          </label>
           {emailField}
           {latestField}
           {extractionPropertiesFilter}
@@ -57,6 +53,7 @@ var ExtractionOptions = React.createClass({
 });
 
 var ReactMultiSelect = require('../../common/react_multi_select.js');
+var ExplorerActions = require('../../../actions/ExplorerActions');
 
 var ExtractionPropertiesFilter = React.createClass({
 
@@ -69,14 +66,11 @@ var ExtractionPropertiesFilter = React.createClass({
     return keyList;
   },
 
-  _onChange: function(name, value) {
-    console.log(name, value);
-  },
-
   render: function() {
     return (<ReactMultiSelect
       name="filter-properties"
-      handleChange={this._onChange}
+      label="Filter extraction properties"
+      handleChange={ExplorerActions.changeExtractionFields}
       items={this._getKeys()}
     />);
   }

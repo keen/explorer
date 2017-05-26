@@ -81,7 +81,7 @@ class ReactMultiSelect extends React.Component {
   }
 
   render() {
-    var label = this.state.selected.length > 0 ? this.state.selected.join(', ') : 'Select a field';
+    var label = this.state.selected.length > 0 ? this.state.selected.join(', ') : this.props.label;
 
     return (<div className='react-select-box-container react-select-box-multi'>
       <button id={this.state.id} onClick={this._toggleOpenClose.bind(this)} className='react-select-box'>

@@ -83842,6 +83842,8 @@
 	  EXPLORER_FOUND_INVALID: null,
 	  EXPLORER_QUERY_SUCCESS: null,
 	  EXPLORER_QUERY_ERROR: null,
+	
+	  // Filter Actions
 	  EXPLORER_ADD_FILTER: null,
 	  EXPLORER_REMOVE_FILTER: null,
 	  EXPLORER_UPDATE_FILTER: null,
@@ -83853,6 +83855,8 @@
 	  EXPLORER_ADD_STEP_FILTER: null,
 	  EXPLORER_REMOVE_STEP_FILTER: null,
 	  EXPLORER_UPDATE_STEP_FILTER: null,
+	
+	  // Saved Query Actions
 	  EXPLORER_SAVE: null,
 	  EXPLORER_SAVE_NEW: null,
 	  EXPLORER_DESTROY: null,
@@ -83861,7 +83865,9 @@
 	  EXPLORER_SAVE_FAIL: null,
 	  EXPLORER_DESTROYING: null,
 	  EXPLORER_DESTROY_SUCCESS: null,
-	  EXPLORER_DESTROY_FAIL: null
+	  EXPLORER_DESTROY_FAIL: null,
+	
+	  EXPLORER_CHANGE_EXTRACTION_FIELDS: null
 	});
 
 /***/ },
@@ -84296,6 +84302,13 @@
 	          query: attrs.query
 	        });
 	      }
+	    });
+	  },
+	
+	  changeExtractionFields: function changeExtractionFields(fields, sourceId) {
+	    AppDispatcher.dispatch({
+	      actionType: ExplorerConstants.EXPLORER_CHANGE_EXTRACTION_FIELDS,
+	      fields: fields
 	    });
 	  }
 	
@@ -84971,6 +84984,11 @@
 	    case ExplorerConstants.EXPLORER_FOUND_INVALID:
 	      // Find any invalid steps and mark the first one active to display the notice.
 	      _markFirstInvalidStepActive(action.id);
+	      finishAction();
+	      break;
+	
+	    case ExplorerConstants.EXPLORER_CHANGE_EXTRACTION_FIELDS:
+	      console.log("changing fields");
 	      finishAction();
 	      break;
 	
@@ -86542,12 +86560,6 @@
 	          ' Bulk CSV extraction by email'
 	        ),
 	        React.createElement('br', null),
-	        React.createElement(
-	          'label',
-	          null,
-	          React.createElement('i', { className: 'icon glyphicon glyphicon-plus-sign margin-right-tiny' }),
-	          'Filter extraction properties'
-	        ),
 	        emailField,
 	        latestField,
 	        extractionPropertiesFilter
@@ -86558,6 +86570,7 @@
 	});
 	
 	var ReactMultiSelect = __webpack_require__(/*! ../../common/react_multi_select.js */ 437);
+	var ExplorerActions = __webpack_require__(/*! ../../../actions/ExplorerActions */ 391);
 	
 	var ExtractionPropertiesFilter = React.createClass({
 	  displayName: 'ExtractionPropertiesFilter',
@@ -86572,14 +86585,11 @@
 	    return keyList;
 	  },
 	
-	  _onChange: function _onChange(name, value) {
-	    console.log(name, value);
-	  },
-	
 	  render: function render() {
 	    return React.createElement(ReactMultiSelect, {
 	      name: 'filter-properties',
-	      handleChange: this._onChange,
+	      label: 'Filter extraction properties',
+	      handleChange: ExplorerActions.changeExtractionFields,
 	      items: this._getKeys()
 	    });
 	  }
@@ -92255,7 +92265,7 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var label = this.state.selected.length > 0 ? this.state.selected.join(', ') : 'Select a field';
+	      var label = this.state.selected.length > 0 ? this.state.selected.join(', ') : this.props.label;
 	
 	      return React.createElement(
 	        'div',

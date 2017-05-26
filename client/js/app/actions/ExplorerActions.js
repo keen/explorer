@@ -26,7 +26,7 @@ var ExplorerActions = {
       models: models
     });
   },
-  
+
   clone: function(sourceId) {
     AppDispatcher.dispatch({
       actionType: ExplorerConstants.EXPLORER_CLONE,
@@ -420,6 +420,13 @@ var ExplorerActions = {
           query: attrs.query
         });
       }
+    });
+  },
+
+  changeExtractionFields: function(fields, sourceId) {
+    AppDispatcher.dispatch({
+      actionType: ExplorerConstants.EXPLORER_CHANGE_EXTRACTION_FIELDS,
+      fields: fields
     });
   }
 

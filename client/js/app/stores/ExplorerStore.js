@@ -665,6 +665,11 @@ ExplorerStore.dispatchToken = AppDispatcher.register(function(action) {
       finishAction();
       break;
 
+    case ExplorerConstants.EXPLORER_CHANGE_EXTRACTION_FIELDS:
+      console.log("changing fields");
+      finishAction();
+      break;
+
     default:
       // no op
   }
