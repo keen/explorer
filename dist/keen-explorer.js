@@ -83510,95 +83510,98 @@
 	var FormatUtils = __webpack_require__(/*! ../../../utils/FormatUtils */ 327);
 	
 	var Chart = React.createClass({
-		displayName: 'Chart',
+	  displayName: 'Chart',
 	
 	
-		// ***********************
-		// Content building
-		// ***********************
+	  // ***********************
+	  // Content building
+	  // ***********************
 	
-		buildVizContent: function buildVizContent() {
-			if (!this.props.model.response) {
-				return React.createElement(
-					'div',
-					{ ref: 'notice', className: 'big-notice' },
-					React.createElement(
-						'div',
-						{ className: 'alert alert-info' },
-						'Let\'s go exploring!'
-					)
-				);
-			}
+	  buildVizContent: function buildVizContent() {
+	    if (!this.props.model.response) {
+	      return React.createElement(
+	        'div',
+	        { ref: 'notice', className: 'big-notice' },
+	        React.createElement(
+	          'div',
+	          { className: 'alert alert-info' },
+	          'Let\'s go exploring!'
+	        )
+	      );
+	    }
 	
-			if (ExplorerUtils.isEmailExtraction(this.props.model)) {
-				return React.createElement(
-					'div',
-					{ ref: 'notice', className: 'big-notice' },
-					React.createElement(
-						'div',
-						{ className: 'alert alert-info' },
-						'Email extractions don\'t have visualizations.'
-					)
-				);
-			}
+	    if (ExplorerUtils.isEmailExtraction(this.props.model)) {
+	      return React.createElement(
+	        'div',
+	        { ref: 'notice', className: 'big-notice' },
+	        React.createElement(
+	          'div',
+	          { className: 'alert alert-info' },
+	          'Email extractions don\'t have visualizations.'
+	        )
+	      );
+	    }
 	
-			if (!ExplorerUtils.resultCanBeVisualized(this.props.model)) {
-				return React.createElement(
-					'div',
-					{ ref: 'notice', className: 'big-notice' },
-					React.createElement(
-						'div',
-						{ className: 'alert alert-danger' },
-						React.createElement('span', { className: 'icon glyphicon glyphicon-info-sign error' }),
-						'Your query returned no results.'
-					)
-				);
-			}
+	    if (!ExplorerUtils.resultCanBeVisualized(this.props.model)) {
+	      return React.createElement(
+	        'div',
+	        { ref: 'notice', className: 'big-notice' },
+	        React.createElement(
+	          'div',
+	          { className: 'alert alert-danger' },
+	          React.createElement('span', { className: 'icon glyphicon glyphicon-info-sign error' }),
+	          'Your query returned no results.'
+	        )
+	      );
+	    }
 	
-			if (ExplorerUtils.resultCanBeVisualized(this.props.model)) {
-				return this.buildViz();
-			} else {
-				this.props.dataviz.destroy();
-			}
-		},
+	    if (ExplorerUtils.resultCanBeVisualized(this.props.model)) {
+	      return this.buildViz();
+	    } else {
+	      this.props.dataviz.destroy();
+	    }
+	  },
 	
-		buildViz: function buildViz() {
-			var chartContent;
-			var msgContent;
-			var analysisType = this.props.model.query.analysis_type;
-			var wrapClasses = analysisType + '-viz';
+	  buildExtractionContent: function buildExtractionContent() {},
 	
-			if (ExplorerUtils.isJSONViz(this.props.model)) {
-				var content = FormatUtils.prettyPrintJSON({
-					result: this.props.model.response.result
-				});
-				chartContent = React.createElement('textarea', { ref: 'jsonViz', className: 'json-view', value: content, readOnly: true });
-			} else {
-				chartContent = React.createElement(KeenViz, { model: this.props.model, dataviz: this.props.dataviz,
-					exportToCsv: this.props.exportToCsv });
-			}
+	  buildViz: function buildViz() {
+	    var chartContent;
+	    var msgContent;
+	    var analysisType = this.props.model.query.analysis_type;
+	    var wrapClasses = analysisType + '-viz';
+	    console.log(this.props.model);
 	
-			return React.createElement(
-				'div',
-				{ className: wrapClasses },
-				chartContent
-			);
-		},
+	    if (ExplorerUtils.isJSONViz(this.props.model)) {
+	      var content = FormatUtils.prettyPrintJSON({
+	        result: this.props.model.response.result
+	      });
+	      chartContent = React.createElement('textarea', { ref: 'jsonViz', className: 'json-view', value: content, readOnly: true });
+	    } else {
+	      chartContent = React.createElement(KeenViz, { model: this.props.model, dataviz: this.props.dataviz,
+	        exportToCsv: this.props.exportToCsv });
+	    }
 	
-		// ***********************
-		// Lifecycle hooks
-		// ***********************
+	    return React.createElement(
+	      'div',
+	      { className: wrapClasses },
+	      chartContent
+	    );
+	  },
 	
-		render: function render() {
-			var vizContent = this.buildVizContent();
+	  // ***********************
+	  // Lifecycle hooks
+	  // ***********************
 	
-			return React.createElement(
-				'div',
-				{ className: 'chart-area' },
-				React.createElement(Loader, { visible: this.props.model.loading }),
-				vizContent
-			);
-		}
+	  render: function render() {
+	    var vizContent = this.buildVizContent();
+	
+	    return React.createElement(
+	      'div',
+	      { className: 'chart-area' },
+	      React.createElement(Loader, { visible: this.props.model.loading }),
+	      vizContent
+	    );
+	  }
 	});
 	
 	module.exports = Chart;
@@ -84308,6 +84311,7 @@
 	  changeExtractionFields: function changeExtractionFields(fields, sourceId) {
 	    AppDispatcher.dispatch({
 	      actionType: ExplorerConstants.EXPLORER_CHANGE_EXTRACTION_FIELDS,
+	      id: sourceId,
 	      fields: fields
 	    });
 	  }
@@ -84377,7 +84381,8 @@
 	        sub_timeframe: 'days'
 	      }
 	    },
-	    metadata: _defaultMetadata()
+	    metadata: _defaultMetadata(),
+	    extraction_fields: []
 	  };
 	}
 	
@@ -84988,7 +84993,7 @@
 	      break;
 	
 	    case ExplorerConstants.EXPLORER_CHANGE_EXTRACTION_FIELDS:
-	      console.log("changing fields");
+	      _update(action.id, { extraction_fields: action.fields });
 	      finishAction();
 	      break;
 	
@@ -86535,7 +86540,8 @@
 	
 	    if (this.props.model.response) {
 	      extractionPropertiesFilter = React.createElement(ExtractionPropertiesFilter, {
-	        result: this.props.model.response.result[0]
+	        result: this.props.model.response.result[0],
+	        model: this.props.model
 	      });
 	    }
 	
@@ -86588,6 +86594,7 @@
 	  render: function render() {
 	    return React.createElement(ReactMultiSelect, {
 	      name: 'filter-properties',
+	      model: this.props.model,
 	      label: 'Filter extraction properties',
 	      handleChange: ExplorerActions.changeExtractionFields,
 	      items: this._getKeys()
@@ -92217,6 +92224,7 @@
 	        selected.push(selectedItem);
 	      }
 	
+	      this.props.handleChange(selected, this.props.model.id);
 	      this.setState({ selected: selected });
 	    }
 	  }, {

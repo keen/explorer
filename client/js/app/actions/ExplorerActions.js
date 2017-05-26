@@ -426,6 +426,7 @@ var ExplorerActions = {
   changeExtractionFields: function(fields, sourceId) {
     AppDispatcher.dispatch({
       actionType: ExplorerConstants.EXPLORER_CHANGE_EXTRACTION_FIELDS,
+      id: sourceId,
       fields: fields
     });
   }

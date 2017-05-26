@@ -7,90 +7,94 @@ var FormatUtils = require('../../../utils/FormatUtils');
 
 var Chart = React.createClass({
 
-	// ***********************
-	// Content building
-	// ***********************
+  // ***********************
+  // Content building
+  // ***********************
 
-	buildVizContent: function() {
-	  if (!this.props.model.response) {
-	  	return (
-	  	  <div ref="notice" className="big-notice">
-	  	    <div className="alert alert-info">
-	  	      {'Let\'s go exploring!'}
-	  	    </div>
-	  	  </div>
-	  	);
-	  }
+  buildVizContent: function() {
+    if (!this.props.model.response) {
+      return (
+          <div ref="notice" className="big-notice">
+          <div className="alert alert-info">
+          {'Let\'s go exploring!'}
+          </div>
+          </div>
+          );
+    }
 
-	  if (ExplorerUtils.isEmailExtraction(this.props.model)) {
-	  	return (
-	  	  <div ref="notice" className="big-notice">
-	  	    <div className="alert alert-info">
-	  	      {'Email extractions don\'t have visualizations.'}
-	  	    </div>
-	  	  </div>
-	  	);
-	  }
+    if (ExplorerUtils.isEmailExtraction(this.props.model)) {
+      return (
+          <div ref="notice" className="big-notice">
+          <div className="alert alert-info">
+          {'Email extractions don\'t have visualizations.'}
+          </div>
+          </div>
+          );
+    }
 
-	  if (!ExplorerUtils.resultCanBeVisualized(this.props.model)) {
-	  	return (
-	  	  <div ref="notice" className="big-notice">
-	  	    <div className="alert alert-danger">
-	  	      <span className="icon glyphicon glyphicon-info-sign error"></span>
-	  	      Your query returned no results.
-	  	    </div>
-	  	  </div>
-	  	);
-	  }
+    if (!ExplorerUtils.resultCanBeVisualized(this.props.model)) {
+      return (
+          <div ref="notice" className="big-notice">
+          <div className="alert alert-danger">
+          <span className="icon glyphicon glyphicon-info-sign error"></span>
+          Your query returned no results.
+          </div>
+          </div>
+          );
+    }
 
-	  if (ExplorerUtils.resultCanBeVisualized(this.props.model)) {
-	    return this.buildViz();
-	  } else {
-	  	this.props.dataviz.destroy();
-	  }
-	},
+    if (ExplorerUtils.resultCanBeVisualized(this.props.model)) {
+      return this.buildViz();
+    } else {
+      this.props.dataviz.destroy();
+    }
+  },
 
-	buildViz: function() {
-		var chartContent;
-		var msgContent;
-		var analysisType = this.props.model.query.analysis_type;
-		var wrapClasses = analysisType + '-viz';
+  buildExtractionContent: function() {
+  },
 
-	  if (ExplorerUtils.isJSONViz(this.props.model)) {
-	  	var content = FormatUtils.prettyPrintJSON({
-	  		result: this.props.model.response.result
-	  	});
-	  	chartContent = (
-	  		<textarea ref='jsonViz' className="json-view" value={content} readOnly />
-	  	);
-		}
-		else {
-	  	chartContent = (
-	  		<KeenViz model={this.props.model} dataviz={this.props.dataviz}
-	  				exportToCsv={this.props.exportToCsv}/>
-	  	);
-	  }
+  buildViz: function() {
+    var chartContent;
+    var msgContent;
+    var analysisType = this.props.model.query.analysis_type;
+    var wrapClasses = analysisType + '-viz';
+    console.log(this.props.model);
+
+    if (ExplorerUtils.isJSONViz(this.props.model)) {
+      var content = FormatUtils.prettyPrintJSON({
+        result: this.props.model.response.result
+      });
+      chartContent = (
+          <textarea ref='jsonViz' className="json-view" value={content} readOnly />
+          );
+    }
+    else {
+      chartContent = (
+          <KeenViz model={this.props.model} dataviz={this.props.dataviz}
+          exportToCsv={this.props.exportToCsv}/>
+          );
+    }
 
     return (
-      <div className={wrapClasses}>
+        <div className={wrapClasses}>
         {chartContent}
-      </div>
-    );
-	},
+        </div>
+        );
+  },
 
-	// ***********************
-	// Lifecycle hooks
-	// ***********************
+  // ***********************
+  // Lifecycle hooks
+  // ***********************
 
   render: function() {
-  	var vizContent = this.buildVizContent();
+    var vizContent = this.buildVizContent();
 
     return (
-			<div className="chart-area">
-				<Loader visible={this.props.model.loading} />
-	      {vizContent}
-			</div>
-    );
+        <div className="chart-area">
+        <Loader visible={this.props.model.loading} />
+        {vizContent}
+        </div>
+        );
   }
 });
 

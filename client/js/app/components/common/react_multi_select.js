@@ -43,6 +43,7 @@ class ReactMultiSelect extends React.Component {
       selected.push(selectedItem);
     }
 
+    this.props.handleChange(selected, this.props.model.id);
     this.setState({ selected: selected });
   }
 

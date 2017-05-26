@@ -28,6 +28,7 @@ var ExtractionOptions = React.createClass({
     if (this.props.model.response) {
       extractionPropertiesFilter = <ExtractionPropertiesFilter
         result={this.props.model.response.result[0]}
+        model={this.props.model}
       />
     }
 
@@ -69,6 +70,7 @@ var ExtractionPropertiesFilter = React.createClass({
   render: function() {
     return (<ReactMultiSelect
       name="filter-properties"
+      model={this.props.model}
       label="Filter extraction properties"
       handleChange={ExplorerActions.changeExtractionFields}
       items={this._getKeys()}
