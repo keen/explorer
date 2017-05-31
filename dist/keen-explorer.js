@@ -83502,12 +83502,23 @@
 
 	'use strict';
 	
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
 	var _ = __webpack_require__(/*! lodash */ 27);
 	var React = __webpack_require__(/*! react */ 44);
 	var Loader = __webpack_require__(/*! ../../common/loader.js */ 341);
 	var KeenViz = __webpack_require__(/*! ./keen_viz.js */ 387);
 	var ExplorerUtils = __webpack_require__(/*! ../../../utils/ExplorerUtils */ 203);
 	var FormatUtils = __webpack_require__(/*! ../../../utils/FormatUtils */ 327);
+	
+	var FilteredExtraction = function FilteredExtraction(extractionObj, extractionFields) {
+	  _classCallCheck(this, FilteredExtraction);
+	
+	  this.extractionObj = extractionObj;
+	  this.extractionFields = extractionFields;
+	};
 	
 	var Chart = React.createClass({
 	  displayName: 'Chart',
@@ -83579,16 +83590,26 @@
 	      var modelResponse = _.map(model.response.result, function (row) {
 	        var filteredObjects = {};
 	        _.each(row, function (value, key) {
-	          if (extractionFields.indexOf(key) > -1) {
-	            filteredObjects[key] = value;
-	          };
+	
+	          if ((typeof value === 'undefined' ? 'undefined' : _typeof(value)) === 'object') {
+	            _.each(_.keys(value), function (subKey) {
+	              if (extractionFields.indexOf(key + '.' + subKey) > -1) {
+	                filteredObjects[key] = filteredObjects[key] || {};
+	                filteredObjects[key][subKey] = value[subKey];
+	              }
+	            });
+	          } else {
+	            if (extractionFields.indexOf(key) > -1) {
+	              filteredObjects[key] = value;
+	            };
+	          }
 	        });
 	        return filteredObjects;
 	      });
-	      console.log(modelResponse);
+	
 	      model.response.result = modelResponse;
 	
-	      return React.createElement(KeenViz, { model: model, dataviz: this.props.dataviz,
+	      chartContent = React.createElement(KeenViz, { model: model, dataviz: this.props.dataviz,
 	        exportToCsv: this.props.exportToCsv });
 	    } else {
 	      chartContent = React.createElement(KeenViz, { model: this.props.model, dataviz: this.props.dataviz,
@@ -83663,6 +83684,9 @@
 	  // ***********************
 	
 	  shouldComponentUpdate: function shouldComponentUpdate(nextProps, nextState) {
+	    if (this.props.model.metadata.visualization.chart_type === "table") {
+	      return true;
+	    }
 	    if (this.lastChartType !== nextProps.model.metadata.visualization.chart_type) {
 	      return true;
 	    }
@@ -86533,6 +86557,7 @@
 	var ExplorerUtils = __webpack_require__(/*! ../../../utils/ExplorerUtils */ 203);
 	var Input = __webpack_require__(/*! ../../common/input.js */ 406);
 	var LatestField = __webpack_require__(/*! ./latest_field.js */ 409);
+	var ExtractionPropertiesFilter = __webpack_require__(/*! ./extraction_properties_filter */ 438);
 	
 	var ExtractionOptions = React.createClass({
 	  displayName: 'ExtractionOptions',
@@ -86585,34 +86610,6 @@
 	        extractionPropertiesFilter
 	      )
 	    );
-	  }
-	
-	});
-	
-	var ReactMultiSelect = __webpack_require__(/*! ../../common/react_multi_select.js */ 410);
-	var ExplorerActions = __webpack_require__(/*! ../../../actions/ExplorerActions */ 391);
-	
-	var ExtractionPropertiesFilter = React.createClass({
-	  displayName: 'ExtractionPropertiesFilter',
-	
-	
-	  _getKeys: function _getKeys() {
-	    var keys = _.keys(this.props.result);
-	    var keyList = _.map(keys, function (key) {
-	      return key;
-	    });
-	
-	    return keyList;
-	  },
-	
-	  render: function render() {
-	    return React.createElement(ReactMultiSelect, {
-	      name: 'filter-properties',
-	      model: this.props.model,
-	      label: 'Filter extraction properties',
-	      handleChange: ExplorerActions.changeExtractionFields,
-	      items: this._getKeys()
-	    });
 	  }
 	
 	});
@@ -92307,6 +92304,68 @@
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
+
+/***/ },
+/* 435 */,
+/* 436 */,
+/* 437 */,
+/* 438 */
+/*!*****************************************************************************************!*\
+  !*** ./client/js/app/components/explorer/query_builder/extraction_properties_filter.js ***!
+  \*****************************************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+	
+	var React = __webpack_require__(/*! react */ 44);
+	var ReactMultiSelect = __webpack_require__(/*! ../../common/react_multi_select.js */ 410);
+	var ExplorerActions = __webpack_require__(/*! ../../../actions/ExplorerActions */ 391);
+	
+	var ExtractionPropertiesFilter = React.createClass({
+	  displayName: 'ExtractionPropertiesFilter',
+	
+	
+	  _getKeys: function _getKeys() {
+	    var keys = _.keys(this.props.result);
+	    var keyList = _.map(keys, function (key) {
+	      if (_typeof(this.props.result[key]) === "object") {
+	        return this._getKey(key, this.props.result[key]);
+	      }
+	
+	      return key;
+	    }.bind(this));
+	
+	    return _.flatten(keyList);
+	  },
+	
+	  _getKey: function _getKey(prevKey, obj) {
+	    var keys = _.keys(obj);
+	
+	    return _.map(keys, function (key) {
+	      var keyStr = prevKey + '.' + key;
+	      if (_typeof(obj[key]) === 'object') {
+	        return this._getKey(keyStr, obj[key]);
+	      }
+	
+	      return keyStr;
+	    }.bind(this));
+	  },
+	
+	  render: function render() {
+	    return React.createElement(ReactMultiSelect, {
+	      name: 'filter-properties',
+	      model: this.props.model,
+	      label: 'Filter extraction properties',
+	      handleChange: ExplorerActions.changeExtractionFields,
+	      items: this._getKeys()
+	    });
+	  }
+	
+	});
+	
+	module.exports = ExtractionPropertiesFilter;
 
 /***/ }
 /******/ ]);

@@ -71,10 +71,22 @@ var Chart = React.createClass({
       var modelResponse = _.map(model.response.result, function(row) {
         var filteredObjects = {};
         _.each(row, function(value, key) {
-          if (extractionFields.indexOf(key) > -1) { filteredObjects[key] = value; };
+
+          if (typeof value === 'object') {
+            _.each(_.keys(value), function(subKey) {
+              if (extractionFields.indexOf(key + '.' + subKey) > -1) {
+                filteredObjects[key] = filteredObjects[key] || {};
+                filteredObjects[key][subKey] = value[subKey];
+              }
+            });
+          }
+          else {
+            if (extractionFields.indexOf(key) > -1) { filteredObjects[key] = value; };
+          }
         });
         return filteredObjects;
       });
+
       model.response.result = modelResponse;
 
       chartContent = (

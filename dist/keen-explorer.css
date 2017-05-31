@@ -1662,15 +1662,16 @@
 }
 #keen-explorer .react-select-box-container {
   position: relative;
-  width: 240px;
+  width: 100%;
   display: inline-block;
   background-color: #fff;
   border-radius: 4px;
   text-align: left;
   box-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
+  margin-top: 6px;
 }
 #keen-explorer .react-select-box {
-  padding: 15px 0;
+  padding: 11px 0;
   display: inline-block;
   cursor: pointer;
   border: none;
@@ -1682,7 +1683,7 @@
   content: ' ';
   z-index: 1;
   position: absolute;
-  height: 20px;
+  height: 13px;
   top: 15px;
   right: 34px;
   border-left: 1px solid #CBD2D7;
@@ -1691,7 +1692,7 @@
   content: ' ';
   position: absolute;
   z-index: 1;
-  top: 23px;
+  top: 17px;
   right: 13px;
   border-top: 6px solid #7B8E9B;
   border-left: 5px solid transparent;
@@ -1712,7 +1713,7 @@
   margin: 2px 0 0;
   position: absolute;
   padding: 10px 0;
-  width: 240px;
+  width: 100%;
   top: 100%;
   left: 0;
   z-index: 4;

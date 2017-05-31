@@ -2,6 +2,7 @@ var React = require('react');
 var ExplorerUtils = require('../../../utils/ExplorerUtils');
 var Input = require('../../common/input.js');
 var LatestField = require('./latest_field.js');
+var ExtractionPropertiesFilter = require('./extraction_properties_filter');
 
 var ExtractionOptions = React.createClass({
 
@@ -52,32 +53,5 @@ var ExtractionOptions = React.createClass({
   }
 
 });
-
-var ReactMultiSelect = require('../../common/react_multi_select.js');
-var ExplorerActions = require('../../../actions/ExplorerActions');
-
-var ExtractionPropertiesFilter = React.createClass({
-
-  _getKeys: function() {
-    var keys = _.keys(this.props.result);
-    var keyList = _.map(keys, function(key) {
-      return key;
-    });
-
-    return keyList;
-  },
-
-  render: function() {
-    return (<ReactMultiSelect
-      name="filter-properties"
-      model={this.props.model}
-      label="Filter extraction properties"
-      handleChange={ExplorerActions.changeExtractionFields}
-      items={this._getKeys()}
-    />);
-  }
-
-});
-
 
 module.exports = ExtractionOptions;
