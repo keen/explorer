@@ -65,6 +65,7 @@ var Chart = React.createClass({
           <textarea ref='jsonViz' className="json-view" value={content} readOnly />
           );
     }
+
     else if (ExplorerUtils.isTableViz(this.props.model) && extractionFields.length > 0) {
       var model = _.cloneDeep(this.props.model)
       var modelResponse = _.map(model.response.result, function(row) {
@@ -74,13 +75,12 @@ var Chart = React.createClass({
         });
         return filteredObjects;
       });
-      console.log(modelResponse);
       model.response.result = modelResponse;
 
-      return (
+      chartContent = (
         <KeenViz model={model} dataviz={this.props.dataviz}
           exportToCsv={this.props.exportToCsv} />
-      )
+      );
     }
 
     else {

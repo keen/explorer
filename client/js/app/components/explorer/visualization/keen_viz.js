@@ -35,6 +35,9 @@ var KeenViz = React.createClass({
   // ***********************
 
   shouldComponentUpdate: function(nextProps, nextState) {
+    if (this.props.model.metadata.visualization.chart_type === "table") {
+      return true;
+    }
     if (this.lastChartType !== nextProps.model.metadata.visualization.chart_type) {
       return true;
     }
