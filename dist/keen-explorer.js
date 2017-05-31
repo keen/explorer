@@ -48,7 +48,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	__webpack_require__(/*! ./client/js/app/app.js */26);
-	module.exports = __webpack_require__(/*! ./client/styles/base.less */433);
+	module.exports = __webpack_require__(/*! ./client/styles/base.less */434);
 
 
 /***/ },
@@ -103,7 +103,7 @@
 	var ExplorerValidations = __webpack_require__(/*! ./validations/ExplorerValidations */ 393);
 	var ExplorerStore = __webpack_require__(/*! ./stores/ExplorerStore */ 392);
 	var ProjectStore = __webpack_require__(/*! ./stores/ProjectStore */ 342);
-	var QueryStringUtils = __webpack_require__(/*! ./utils/QueryStringUtils */ 432);
+	var QueryStringUtils = __webpack_require__(/*! ./utils/QueryStringUtils */ 433);
 	
 	function App(el) {
 	  var tempId = FormatUtils.generateTempId();
@@ -61442,22 +61442,22 @@
 	var Visualization = __webpack_require__(/*! ./visualization/index.js */ 353);
 	var QueryPaneTabs = __webpack_require__(/*! ./query_pane_tabs.js */ 400);
 	var QueryBuilder = __webpack_require__(/*! ./query_builder/index.js */ 401);
-	var BrowseQueries = __webpack_require__(/*! ./saved_queries/browse_queries.js */ 428);
-	var CacheToggle = __webpack_require__(/*! ./cache_toggle.js */ 429);
-	var QueryActions = __webpack_require__(/*! ./query_actions.js */ 430);
+	var BrowseQueries = __webpack_require__(/*! ./saved_queries/browse_queries.js */ 429);
+	var CacheToggle = __webpack_require__(/*! ./cache_toggle.js */ 430);
+	var QueryActions = __webpack_require__(/*! ./query_actions.js */ 431);
 	var Notice = __webpack_require__(/*! ../common/notice.js */ 385);
-	var FilterManager = __webpack_require__(/*! ../common/filter_manager.js */ 422);
+	var FilterManager = __webpack_require__(/*! ../common/filter_manager.js */ 423);
 	var ExplorerStore = __webpack_require__(/*! ../../stores/ExplorerStore */ 392);
 	var ExplorerActions = __webpack_require__(/*! ../../actions/ExplorerActions */ 391);
 	var NoticeActions = __webpack_require__(/*! ../../actions/NoticeActions */ 396);
 	var AppStateActions = __webpack_require__(/*! ../../actions/AppStateActions */ 398);
-	var NoticeStore = __webpack_require__(/*! ../../stores/NoticeStore */ 431);
+	var NoticeStore = __webpack_require__(/*! ../../stores/NoticeStore */ 432);
 	var AppStateStore = __webpack_require__(/*! ../../stores/AppStateStore */ 346);
 	var ExplorerUtils = __webpack_require__(/*! ../../utils/ExplorerUtils */ 203);
 	var FilterUtils = __webpack_require__(/*! ../../utils/FilterUtils */ 330);
 	var ProjectUtils = __webpack_require__(/*! ../../utils/ProjectUtils */ 334);
 	var ExplorerActions = __webpack_require__(/*! ../../actions/ExplorerActions */ 391);
-	var QueryStringUtils = __webpack_require__(/*! ../../utils/QueryStringUtils */ 432);
+	var QueryStringUtils = __webpack_require__(/*! ../../utils/QueryStringUtils */ 433);
 	
 	function getStoresState() {
 	  return {
@@ -83562,20 +83562,34 @@
 	    }
 	  },
 	
-	  buildExtractionContent: function buildExtractionContent() {},
-	
 	  buildViz: function buildViz() {
 	    var chartContent;
 	    var msgContent;
 	    var analysisType = this.props.model.query.analysis_type;
 	    var wrapClasses = analysisType + '-viz';
-	    console.log(this.props.model);
+	    var extractionFields = this.props.model.extractionFields;
 	
 	    if (ExplorerUtils.isJSONViz(this.props.model)) {
 	      var content = FormatUtils.prettyPrintJSON({
 	        result: this.props.model.response.result
 	      });
 	      chartContent = React.createElement('textarea', { ref: 'jsonViz', className: 'json-view', value: content, readOnly: true });
+	    } else if (ExplorerUtils.isTableViz(this.props.model) && extractionFields.length > 0) {
+	      var model = _.cloneDeep(this.props.model);
+	      var modelResponse = _.map(model.response.result, function (row) {
+	        var filteredObjects = {};
+	        _.each(row, function (value, key) {
+	          if (extractionFields.indexOf(key) > -1) {
+	            filteredObjects[key] = value;
+	          };
+	        });
+	        return filteredObjects;
+	      });
+	      console.log(modelResponse);
+	      model.response.result = modelResponse;
+	
+	      return React.createElement(KeenViz, { model: model, dataviz: this.props.dataviz,
+	        exportToCsv: this.props.exportToCsv });
 	    } else {
 	      chartContent = React.createElement(KeenViz, { model: this.props.model, dataviz: this.props.dataviz,
 	        exportToCsv: this.props.exportToCsv });
@@ -84382,7 +84396,7 @@
 	      }
 	    },
 	    metadata: _defaultMetadata(),
-	    extraction_fields: []
+	    extractionFields: []
 	  };
 	}
 	
@@ -84993,7 +85007,7 @@
 	      break;
 	
 	    case ExplorerConstants.EXPLORER_CHANGE_EXTRACTION_FIELDS:
-	      _update(action.id, { extraction_fields: action.fields });
+	      _update(action.id, { extractionFields: action.fields });
 	      finishAction();
 	      break;
 	
@@ -85509,11 +85523,11 @@
 	var PercentileField = __webpack_require__(/*! ./percentile_field.js */ 405);
 	var GroupByField = __webpack_require__(/*! ./group_by_field.js */ 407);
 	var ExtractionOptions = __webpack_require__(/*! ./extraction_options.js */ 408);
-	var FunnelBuilder = __webpack_require__(/*! ./funnels/funnel_builder.js */ 410);
-	var Timeframe = __webpack_require__(/*! ../../common/timeframe.js */ 412);
-	var Interval = __webpack_require__(/*! ../../common/interval.js */ 426);
+	var FunnelBuilder = __webpack_require__(/*! ./funnels/funnel_builder.js */ 411);
+	var Timeframe = __webpack_require__(/*! ../../common/timeframe.js */ 413);
+	var Interval = __webpack_require__(/*! ../../common/interval.js */ 427);
 	var Input = __webpack_require__(/*! ../../common/input.js */ 406);
-	var ApiUrl = __webpack_require__(/*! ./api_url.js */ 427);
+	var ApiUrl = __webpack_require__(/*! ./api_url.js */ 428);
 	var ExplorerStore = __webpack_require__(/*! ../../../stores/ExplorerStore */ 392);
 	var ExplorerUtils = __webpack_require__(/*! ../../../utils/ExplorerUtils */ 203);
 	var FilterUtils = __webpack_require__(/*! ../../../utils/FilterUtils */ 330);
@@ -86575,7 +86589,7 @@
 	
 	});
 	
-	var ReactMultiSelect = __webpack_require__(/*! ../../common/react_multi_select.js */ 437);
+	var ReactMultiSelect = __webpack_require__(/*! ../../common/react_multi_select.js */ 410);
 	var ExplorerActions = __webpack_require__(/*! ../../../actions/ExplorerActions */ 391);
 	
 	var ExtractionPropertiesFilter = React.createClass({
@@ -86651,6 +86665,151 @@
 
 /***/ },
 /* 410 */
+/*!***************************************************************!*\
+  !*** ./client/js/app/components/common/react_multi_select.js ***!
+  \***************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var React = __webpack_require__(/*! react */ 44);
+	
+	var ReactMultiSelect = function (_React$Component) {
+	  _inherits(ReactMultiSelect, _React$Component);
+	
+	  function ReactMultiSelect(props) {
+	    _classCallCheck(this, ReactMultiSelect);
+	
+	    var _this = _possibleConstructorReturn(this, (ReactMultiSelect.__proto__ || Object.getPrototypeOf(ReactMultiSelect)).call(this, props));
+	
+	    _this.state = {
+	      open: false,
+	      id: 'react-multi-select',
+	      focusedIndex: 0,
+	      selected: []
+	    };
+	    return _this;
+	  }
+	
+	  _createClass(ReactMultiSelect, [{
+	    key: 'interceptEvent',
+	    value: function interceptEvent(event) {
+	      if (event) {
+	        event.preventDefault();
+	        event.stopPropagation();
+	      }
+	    }
+	
+	    // Private Event Handler Methods
+	
+	  }, {
+	    key: '_toggleOpenClose',
+	    value: function _toggleOpenClose(event) {
+	      this.interceptEvent(event);
+	
+	      if (this.state.open) {
+	        return this.setState({ open: false });
+	      } else {
+	        this.setState({ open: true });
+	      }
+	    }
+	  }, {
+	    key: '_handleOptionChange',
+	    value: function _handleOptionChange(event) {
+	      this.interceptEvent(event);
+	      var selectedItem = event.target.text;
+	      var selectedIndex = this.state.selected.indexOf(selectedItem);
+	      var selected = this.state.selected;
+	
+	      if (selectedIndex > -1) {
+	        selected.splice(selectedIndex, 1);
+	      } else {
+	        selected.push(selectedItem);
+	      }
+	
+	      this.props.handleChange(selected, this.props.model.id);
+	      this.setState({ selected: selected });
+	    }
+	  }, {
+	    key: '_renderOption',
+	    value: function _renderOption(option, i) {
+	      var className = 'react-select-box-option';
+	      if (i === this.state.focusedIndex) {
+	        className += ' react-select-box-option-focused';
+	      }
+	      if (this.state.selected.indexOf(option.value) > -1) {
+	        className += ' react-select-box-option-selected';
+	      }
+	
+	      return React.createElement(
+	        'a',
+	        {
+	          id: this.state.id + '-' + i,
+	          className: className,
+	          href: '#',
+	          onClick: this._handleOptionChange.bind(this)
+	        },
+	        option.label
+	      );
+	    }
+	
+	    // Private HTML Element methods
+	
+	  }, {
+	    key: '_renderOptionMenu',
+	    value: function _renderOptionMenu() {
+	      var className = 'react-select-box-options';
+	      if (!this.state.open) {
+	        className += ' react-select-box-hidden';
+	      }
+	
+	      var options = React.Children.map(this.props.items, function (item, i) {
+	        return this._renderOption({ value: item, label: item }, i);
+	      }.bind(this));
+	
+	      return React.createElement(
+	        'div',
+	        { className: className, ref: 'menu' },
+	        options
+	      );
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var label = this.state.selected.length > 0 ? this.state.selected.join(', ') : this.props.label;
+	
+	      return React.createElement(
+	        'div',
+	        { className: 'react-select-box-container react-select-box-multi' },
+	        React.createElement(
+	          'button',
+	          { id: this.state.id, onClick: this._toggleOpenClose.bind(this), className: 'react-select-box' },
+	          React.createElement(
+	            'div',
+	            { className: 'react-select-box-label' },
+	            label
+	          )
+	        ),
+	        this._renderOptionMenu()
+	      );
+	    }
+	  }]);
+	
+	  return ReactMultiSelect;
+	}(React.Component);
+	
+	module.exports = ReactMultiSelect;
+
+/***/ },
+/* 411 */
 /*!***********************************************************************************!*\
   !*** ./client/js/app/components/explorer/query_builder/funnels/funnel_builder.js ***!
   \***********************************************************************************/
@@ -86660,7 +86819,7 @@
 	
 	var React = __webpack_require__(/*! react */ 44);
 	var _ = __webpack_require__(/*! lodash */ 27);
-	var FunnelStep = __webpack_require__(/*! ./funnel_step.js */ 411);
+	var FunnelStep = __webpack_require__(/*! ./funnel_step.js */ 412);
 	var ExplorerActions = __webpack_require__(/*! ../../../../actions/ExplorerActions.js */ 391);
 	
 	var FunnelsBuilder = React.createClass({
@@ -86770,7 +86929,7 @@
 	module.exports = FunnelsBuilder;
 
 /***/ },
-/* 411 */
+/* 412 */
 /*!********************************************************************************!*\
   !*** ./client/js/app/components/explorer/query_builder/funnels/funnel_step.js ***!
   \********************************************************************************/
@@ -86781,10 +86940,10 @@
 	var React = __webpack_require__(/*! react */ 44);
 	var _ = __webpack_require__(/*! lodash */ 27);
 	var SelectField = __webpack_require__(/*! ../select_field.js */ 403);
-	var Timeframe = __webpack_require__(/*! ../../../common/timeframe.js */ 412);
+	var Timeframe = __webpack_require__(/*! ../../../common/timeframe.js */ 413);
 	var FieldsToggle = __webpack_require__(/*! ../../../common/fields_toggle.js */ 402);
 	var Notice = __webpack_require__(/*! ../../../common/notice.js */ 385);
-	var FilterManager = __webpack_require__(/*! ../../../common/filter_manager.js */ 422);
+	var FilterManager = __webpack_require__(/*! ../../../common/filter_manager.js */ 423);
 	var FilterUtils = __webpack_require__(/*! ../../../../utils/FilterUtils.js */ 330);
 	var classNames = __webpack_require__(/*! classnames */ 350);
 	
@@ -86977,7 +87136,7 @@
 	module.exports = FunnelStep;
 
 /***/ },
-/* 412 */
+/* 413 */
 /*!******************************************************!*\
   !*** ./client/js/app/components/common/timeframe.js ***!
   \******************************************************/
@@ -86988,11 +87147,11 @@
 	var _ = __webpack_require__(/*! lodash */ 27);
 	var moment = __webpack_require__(/*! moment */ 217);
 	var React = __webpack_require__(/*! react */ 44);
-	var AbsolutePicker = __webpack_require__(/*! ./absolute_picker.js */ 413);
-	var RelativePicker = __webpack_require__(/*! ./relative_picker.js */ 420);
+	var AbsolutePicker = __webpack_require__(/*! ./absolute_picker.js */ 414);
+	var RelativePicker = __webpack_require__(/*! ./relative_picker.js */ 421);
 	var FieldsToggle = __webpack_require__(/*! ./fields_toggle.js */ 402);
 	var ReactSelect = __webpack_require__(/*! ./react_select.js */ 404);
-	var Timezone = __webpack_require__(/*! ./timezone.js */ 421);
+	var Timezone = __webpack_require__(/*! ./timezone.js */ 422);
 	var ExplorerActions = __webpack_require__(/*! ../../actions/ExplorerActions */ 391);
 	var TimeframeUtils = __webpack_require__(/*! ../../utils/TimeframeUtils */ 333);
 	var ProjectUtils = __webpack_require__(/*! ../../utils/ProjectUtils */ 334);
@@ -87090,7 +87249,7 @@
 	module.exports = Timeframe;
 
 /***/ },
-/* 413 */
+/* 414 */
 /*!************************************************************!*\
   !*** ./client/js/app/components/common/absolute_picker.js ***!
   \************************************************************/
@@ -87104,8 +87263,8 @@
 	var React = __webpack_require__(/*! react */ 44);
 	var _ = __webpack_require__(/*! lodash */ 27);
 	var moment = __webpack_require__(/*! moment */ 217);
-	var Datepicker = __webpack_require__(/*! ./datepicker.js */ 414);
-	var Timepicker = __webpack_require__(/*! ./timepicker.js */ 419);
+	var Datepicker = __webpack_require__(/*! ./datepicker.js */ 415);
+	var Timepicker = __webpack_require__(/*! ./timepicker.js */ 420);
 	
 	var ExplorerUtils = __webpack_require__(/*! ../../utils/ExplorerUtils */ 203);
 	var ExplorerActions = __webpack_require__(/*! ../../actions/ExplorerActions */ 391);
@@ -87226,7 +87385,7 @@
 
 
 /***/ },
-/* 414 */
+/* 415 */
 /*!*******************************************************!*\
   !*** ./client/js/app/components/common/datepicker.js ***!
   \*******************************************************/
@@ -87241,9 +87400,9 @@
 	var React = __webpack_require__(/*! react */ 44);
 	var moment = __webpack_require__(/*! moment */ 217);
 	
-	var pickadate = __webpack_require__(/*! ../../../vendor/picker.js */ 415);
-	var pickadate = __webpack_require__(/*! ../../../vendor/picker.date.js */ 417);
-	var pickadate = __webpack_require__(/*! ../../../vendor/picker.time.js */ 418);
+	var pickadate = __webpack_require__(/*! ../../../vendor/picker.js */ 416);
+	var pickadate = __webpack_require__(/*! ../../../vendor/picker.date.js */ 418);
+	var pickadate = __webpack_require__(/*! ../../../vendor/picker.time.js */ 419);
 	
 	var Datepicker = React.createClass({
 	  displayName: 'Datepicker',
@@ -87333,7 +87492,7 @@
 
 
 /***/ },
-/* 415 */
+/* 416 */
 /*!************************************!*\
   !*** ./client/js/vendor/picker.js ***!
   \************************************/
@@ -87359,7 +87518,7 @@
 	    if (typeof define == 'function' && define.amd) define('picker', ['jquery'], factory);
 	
 	    // Node.js/browserify.
-	    else if (( false ? 'undefined' : _typeof(exports)) == 'object') module.exports = factory(__webpack_require__(/*! jquery */ 416));
+	    else if (( false ? 'undefined' : _typeof(exports)) == 'object') module.exports = factory(__webpack_require__(/*! jquery */ 417));
 	
 	        // Browser globals.
 	        else this.Picker = factory(jQuery);
@@ -88338,7 +88497,7 @@
 
 
 /***/ },
-/* 416 */
+/* 417 */
 /*!*************************!*\
   !*** external "jQuery" ***!
   \*************************/
@@ -88347,7 +88506,7 @@
 	module.exports = jQuery;
 
 /***/ },
-/* 417 */
+/* 418 */
 /*!*****************************************!*\
   !*** ./client/js/vendor/picker.date.js ***!
   \*****************************************/
@@ -88371,7 +88530,7 @@
 	    if (typeof define == 'function' && define.amd) define(['picker', 'jquery'], factory);
 	
 	    // Node.js/browserify.
-	    else if (( false ? 'undefined' : _typeof(exports)) == 'object') module.exports = factory(__webpack_require__(/*! ./picker.js */ 415), __webpack_require__(/*! jquery */ 416));
+	    else if (( false ? 'undefined' : _typeof(exports)) == 'object') module.exports = factory(__webpack_require__(/*! ./picker.js */ 416), __webpack_require__(/*! jquery */ 417));
 	
 	        // Browser globals.
 	        else factory(Picker, jQuery);
@@ -89548,7 +89707,7 @@
 
 
 /***/ },
-/* 418 */
+/* 419 */
 /*!*****************************************!*\
   !*** ./client/js/vendor/picker.time.js ***!
   \*****************************************/
@@ -89572,7 +89731,7 @@
 	    if (typeof define == 'function' && define.amd) define(['picker', 'jquery'], factory);
 	
 	    // Node.js/browserify.
-	    else if (( false ? 'undefined' : _typeof(exports)) == 'object') module.exports = factory(__webpack_require__(/*! ./picker.js */ 415), __webpack_require__(/*! jquery */ 416));
+	    else if (( false ? 'undefined' : _typeof(exports)) == 'object') module.exports = factory(__webpack_require__(/*! ./picker.js */ 416), __webpack_require__(/*! jquery */ 417));
 	
 	        // Browser globals.
 	        else factory(Picker, jQuery);
@@ -90478,7 +90637,7 @@
 
 
 /***/ },
-/* 419 */
+/* 420 */
 /*!*******************************************************!*\
   !*** ./client/js/app/components/common/timepicker.js ***!
   \*******************************************************/
@@ -90611,7 +90770,7 @@
 
 
 /***/ },
-/* 420 */
+/* 421 */
 /*!************************************************************!*\
   !*** ./client/js/app/components/common/relative_picker.js ***!
   \************************************************************/
@@ -90740,7 +90899,7 @@
 
 
 /***/ },
-/* 421 */
+/* 422 */
 /*!*****************************************************!*\
   !*** ./client/js/app/components/common/timezone.js ***!
   \*****************************************************/
@@ -90841,7 +91000,7 @@
 	module.exports = Timezone;
 
 /***/ },
-/* 422 */
+/* 423 */
 /*!***********************************************************!*\
   !*** ./client/js/app/components/common/filter_manager.js ***!
   \***********************************************************/
@@ -90851,7 +91010,7 @@
 	
 	var _ = __webpack_require__(/*! lodash */ 27);
 	var React = __webpack_require__(/*! react */ 44);
-	var Filter = __webpack_require__(/*! ./filter.js */ 423);
+	var Filter = __webpack_require__(/*! ./filter.js */ 424);
 	var Modal = __webpack_require__(/*! ./modal.js */ 352);
 	var ProjectUtils = __webpack_require__(/*! ../../utils/ProjectUtils */ 334);
 	var FilterUtils = __webpack_require__(/*! ../../utils/FilterUtils */ 330);
@@ -90976,7 +91135,7 @@
 	module.exports = FilterManager;
 
 /***/ },
-/* 423 */
+/* 424 */
 /*!***************************************************!*\
   !*** ./client/js/app/components/common/filter.js ***!
   \***************************************************/
@@ -90989,7 +91148,7 @@
 	var Select = __webpack_require__(/*! ./select.js */ 384);
 	var classNames = __webpack_require__(/*! classnames */ 350);
 	var ReactSelect = __webpack_require__(/*! ./react_select.js */ 404);
-	var FilterValueFields = __webpack_require__(/*! ./filter_value_fields.js */ 424);
+	var FilterValueFields = __webpack_require__(/*! ./filter_value_fields.js */ 425);
 	var FilterUtils = __webpack_require__(/*! ../../utils/FilterUtils */ 330);
 	
 	var Filter = React.createClass({
@@ -91136,7 +91295,7 @@
 	module.exports = Filter;
 
 /***/ },
-/* 424 */
+/* 425 */
 /*!****************************************************************!*\
   !*** ./client/js/app/components/common/filter_value_fields.js ***!
   \****************************************************************/
@@ -91148,9 +91307,9 @@
 	var moment = __webpack_require__(/*! moment */ 217);
 	var React = __webpack_require__(/*! react */ 44);
 	var Select = __webpack_require__(/*! ./select.js */ 384);
-	var Datepicker = __webpack_require__(/*! ./datepicker.js */ 414);
-	var Timepicker = __webpack_require__(/*! ./timepicker.js */ 419);
-	var Geo = __webpack_require__(/*! ./geo.js */ 425);
+	var Datepicker = __webpack_require__(/*! ./datepicker.js */ 415);
+	var Timepicker = __webpack_require__(/*! ./timepicker.js */ 420);
+	var Geo = __webpack_require__(/*! ./geo.js */ 426);
 	var FormatUtils = __webpack_require__(/*! ../../utils/FormatUtils */ 327);
 	var FilterUtils = __webpack_require__(/*! ../../utils/FilterUtils */ 330);
 	
@@ -91299,7 +91458,7 @@
 	module.exports = FilterValueFields;
 
 /***/ },
-/* 425 */
+/* 426 */
 /*!************************************************!*\
   !*** ./client/js/app/components/common/geo.js ***!
   \************************************************/
@@ -91371,7 +91530,7 @@
 	module.exports = Geo;
 
 /***/ },
-/* 426 */
+/* 427 */
 /*!*****************************************************!*\
   !*** ./client/js/app/components/common/interval.js ***!
   \*****************************************************/
@@ -91445,7 +91604,7 @@
 	module.exports = Interval;
 
 /***/ },
-/* 427 */
+/* 428 */
 /*!********************************************************************!*\
   !*** ./client/js/app/components/explorer/query_builder/api_url.js ***!
   \********************************************************************/
@@ -91514,7 +91673,7 @@
 	module.exports = ApiUrl;
 
 /***/ },
-/* 428 */
+/* 429 */
 /*!***************************************************************************!*\
   !*** ./client/js/app/components/explorer/saved_queries/browse_queries.js ***!
   \***************************************************************************/
@@ -91619,7 +91778,7 @@
 	module.exports = BrowseQueries;
 
 /***/ },
-/* 429 */
+/* 430 */
 /*!***********************************************************!*\
   !*** ./client/js/app/components/explorer/cache_toggle.js ***!
   \***********************************************************/
@@ -91765,7 +91924,7 @@
 	module.exports = CacheToggle;
 
 /***/ },
-/* 430 */
+/* 431 */
 /*!************************************************************!*\
   !*** ./client/js/app/components/explorer/query_actions.js ***!
   \************************************************************/
@@ -91909,7 +92068,7 @@
 	module.exports = QueryActions;
 
 /***/ },
-/* 431 */
+/* 432 */
 /*!*********************************************!*\
   !*** ./client/js/app/stores/NoticeStore.js ***!
   \*********************************************/
@@ -92107,7 +92266,7 @@
 	module.exports = NoticeStore;
 
 /***/ },
-/* 432 */
+/* 433 */
 /*!*************************************************!*\
   !*** ./client/js/app/utils/QueryStringUtils.js ***!
   \*************************************************/
@@ -92141,161 +92300,13 @@
 	};
 
 /***/ },
-/* 433 */
+/* 434 */
 /*!*********************************!*\
   !*** ./client/styles/base.less ***!
   \*********************************/
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
-
-/***/ },
-/* 434 */,
-/* 435 */,
-/* 436 */,
-/* 437 */
-/*!***************************************************************!*\
-  !*** ./client/js/app/components/common/react_multi_select.js ***!
-  \***************************************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var React = __webpack_require__(/*! react */ 44);
-	
-	var ReactMultiSelect = function (_React$Component) {
-	  _inherits(ReactMultiSelect, _React$Component);
-	
-	  function ReactMultiSelect(props) {
-	    _classCallCheck(this, ReactMultiSelect);
-	
-	    var _this = _possibleConstructorReturn(this, (ReactMultiSelect.__proto__ || Object.getPrototypeOf(ReactMultiSelect)).call(this, props));
-	
-	    _this.state = {
-	      open: false,
-	      id: 'react-multi-select',
-	      focusedIndex: 0,
-	      selected: []
-	    };
-	    return _this;
-	  }
-	
-	  _createClass(ReactMultiSelect, [{
-	    key: 'interceptEvent',
-	    value: function interceptEvent(event) {
-	      if (event) {
-	        event.preventDefault();
-	        event.stopPropagation();
-	      }
-	    }
-	
-	    // Private Event Handler Methods
-	
-	  }, {
-	    key: '_toggleOpenClose',
-	    value: function _toggleOpenClose(event) {
-	      this.interceptEvent(event);
-	
-	      if (this.state.open) {
-	        return this.setState({ open: false });
-	      } else {
-	        this.setState({ open: true });
-	      }
-	    }
-	  }, {
-	    key: '_handleOptionChange',
-	    value: function _handleOptionChange(event) {
-	      this.interceptEvent(event);
-	      var selectedItem = event.target.text;
-	      var selectedIndex = this.state.selected.indexOf(selectedItem);
-	      var selected = this.state.selected;
-	
-	      if (selectedIndex > -1) {
-	        selected.splice(selectedIndex, 1);
-	      } else {
-	        selected.push(selectedItem);
-	      }
-	
-	      this.props.handleChange(selected, this.props.model.id);
-	      this.setState({ selected: selected });
-	    }
-	  }, {
-	    key: '_renderOption',
-	    value: function _renderOption(option, i) {
-	      var className = 'react-select-box-option';
-	      if (i === this.state.focusedIndex) {
-	        className += ' react-select-box-option-focused';
-	      }
-	      if (this.state.selected.indexOf(option.value) > -1) {
-	        className += ' react-select-box-option-selected';
-	      }
-	
-	      return React.createElement(
-	        'a',
-	        {
-	          id: this.state.id + '-' + i,
-	          className: className,
-	          href: '#',
-	          onClick: this._handleOptionChange.bind(this)
-	        },
-	        option.label
-	      );
-	    }
-	
-	    // Private HTML Element methods
-	
-	  }, {
-	    key: '_renderOptionMenu',
-	    value: function _renderOptionMenu() {
-	      var className = 'react-select-box-options';
-	      if (!this.state.open) {
-	        className += ' react-select-box-hidden';
-	      }
-	
-	      var options = React.Children.map(this.props.items, function (item, i) {
-	        return this._renderOption({ value: item, label: item }, i);
-	      }.bind(this));
-	
-	      return React.createElement(
-	        'div',
-	        { className: className, ref: 'menu' },
-	        options
-	      );
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var label = this.state.selected.length > 0 ? this.state.selected.join(', ') : this.props.label;
-	
-	      return React.createElement(
-	        'div',
-	        { className: 'react-select-box-container react-select-box-multi' },
-	        React.createElement(
-	          'button',
-	          { id: this.state.id, onClick: this._toggleOpenClose.bind(this), className: 'react-select-box' },
-	          React.createElement(
-	            'div',
-	            { className: 'react-select-box-label' },
-	            label
-	          )
-	        ),
-	        this._renderOptionMenu()
-	      );
-	    }
-	  }]);
-	
-	  return ReactMultiSelect;
-	}(React.Component);
-	
-	module.exports = ReactMultiSelect;
 
 /***/ }
 /******/ ]);

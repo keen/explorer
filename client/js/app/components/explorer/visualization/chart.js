@@ -50,15 +50,12 @@ var Chart = React.createClass({
     }
   },
 
-  buildExtractionContent: function() {
-  },
-
   buildViz: function() {
     var chartContent;
     var msgContent;
     var analysisType = this.props.model.query.analysis_type;
     var wrapClasses = analysisType + '-viz';
-    console.log(this.props.model);
+    var extractionFields = this.props.model.extractionFields;
 
     if (ExplorerUtils.isJSONViz(this.props.model)) {
       var content = FormatUtils.prettyPrintJSON({
@@ -68,6 +65,24 @@ var Chart = React.createClass({
           <textarea ref='jsonViz' className="json-view" value={content} readOnly />
           );
     }
+    else if (ExplorerUtils.isTableViz(this.props.model) && extractionFields.length > 0) {
+      var model = _.cloneDeep(this.props.model)
+      var modelResponse = _.map(model.response.result, function(row) {
+        var filteredObjects = {};
+        _.each(row, function(value, key) {
+          if (extractionFields.indexOf(key) > -1) { filteredObjects[key] = value; };
+        });
+        return filteredObjects;
+      });
+      console.log(modelResponse);
+      model.response.result = modelResponse;
+
+      return (
+        <KeenViz model={model} dataviz={this.props.dataviz}
+          exportToCsv={this.props.exportToCsv} />
+      )
+    }
+
     else {
       chartContent = (
           <KeenViz model={this.props.model} dataviz={this.props.dataviz}

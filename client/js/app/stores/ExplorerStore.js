@@ -51,7 +51,7 @@ function _defaultAttrs() {
       }
     },
     metadata: _defaultMetadata(),
-    extraction_fields: []
+    extractionFields: []
   };
 }
 
@@ -667,7 +667,7 @@ ExplorerStore.dispatchToken = AppDispatcher.register(function(action) {
       break;
 
     case ExplorerConstants.EXPLORER_CHANGE_EXTRACTION_FIELDS:
-      _update(action.id, { extraction_fields: action.fields });
+      _update(action.id, { extractionFields: action.fields });
       finishAction();
       break;
 
