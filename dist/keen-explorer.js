@@ -83504,21 +83504,12 @@
 	
 	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
 	var _ = __webpack_require__(/*! lodash */ 27);
 	var React = __webpack_require__(/*! react */ 44);
 	var Loader = __webpack_require__(/*! ../../common/loader.js */ 341);
 	var KeenViz = __webpack_require__(/*! ./keen_viz.js */ 387);
 	var ExplorerUtils = __webpack_require__(/*! ../../../utils/ExplorerUtils */ 203);
 	var FormatUtils = __webpack_require__(/*! ../../../utils/FormatUtils */ 327);
-	
-	var FilteredExtraction = function FilteredExtraction(extractionObj, extractionFields) {
-	  _classCallCheck(this, FilteredExtraction);
-	
-	  this.extractionObj = extractionObj;
-	  this.extractionFields = extractionFields;
-	};
 	
 	var Chart = React.createClass({
 	  displayName: 'Chart',
@@ -92331,26 +92322,16 @@
 	    var keys = _.keys(this.props.result);
 	    var keyList = _.map(keys, function (key) {
 	      if (_typeof(this.props.result[key]) === "object") {
-	        return this._getKey(key, this.props.result[key]);
+	        var subKeys = _.keys(this.props.result[key]);
+	        return _.map(subKeys, function (subKey) {
+	          return key + '.' + subKey;
+	        });
 	      }
 	
 	      return key;
 	    }.bind(this));
 	
 	    return _.flatten(keyList);
-	  },
-	
-	  _getKey: function _getKey(prevKey, obj) {
-	    var keys = _.keys(obj);
-	
-	    return _.map(keys, function (key) {
-	      var keyStr = prevKey + '.' + key;
-	      if (_typeof(obj[key]) === 'object') {
-	        return this._getKey(keyStr, obj[key]);
-	      }
-	
-	      return keyStr;
-	    }.bind(this));
 	  },
 	
 	  render: function render() {
