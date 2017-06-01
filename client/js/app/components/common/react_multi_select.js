@@ -61,6 +61,7 @@ class ReactMultiSelect extends React.Component {
       className={className}
       href='#'
       onClick={this._handleOptionChange.bind(this)}
+      title={option.label}
     >{option.label}</a>
     )
   }

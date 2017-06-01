@@ -42,7 +42,6 @@ var ExtractionOptions = React.createClass({
           <label>
             <input type="radio" name="extraction_type" value="email" onChange={this.props.setExtractionType} checked={this.props.isEmail}/> Bulk CSV extraction by email
           </label>
-          <br />
 
           {emailField}
           {latestField}

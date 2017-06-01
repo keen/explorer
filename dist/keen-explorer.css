@@ -1733,10 +1733,99 @@
   display: block;
   line-height: 1.2;
   text-decoration: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 #keen-explorer .react-select-box-option:hover {
   color: #0493D1;
   background-color: #f4f4f4;
+  position: relative;
+}
+#keen-explorer .react-select-box-option-selected {
+  color: #CBD2D7;
+}
+#keen-explorer .react-select-box-hidden {
+  display: none;
+}
+#keen-explorer .react-select-box-container {
+  position: relative;
+  width: 100%;
+  display: inline-block;
+  background-color: #fff;
+  border-radius: 4px;
+  text-align: left;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
+  margin-top: 6px;
+}
+#keen-explorer .react-select-box {
+  padding: 11px 0;
+  display: inline-block;
+  cursor: pointer;
+  border: none;
+  width: 100%;
+  text-align: left;
+  background-color: transparent;
+}
+#keen-explorer .react-select-box:before {
+  content: ' ';
+  z-index: 1;
+  position: absolute;
+  height: 13px;
+  top: 15px;
+  right: 34px;
+  border-left: 1px solid #CBD2D7;
+}
+#keen-explorer .react-select-box:after {
+  content: ' ';
+  position: absolute;
+  z-index: 1;
+  top: 17px;
+  right: 13px;
+  border-top: 6px solid #7B8E9B;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+}
+#keen-explorer .react-select-box-label,
+#keen-explorer .react-select-box-option {
+  line-height: 16px;
+  font-size: 12px;
+  color: #555;
+}
+#keen-explorer .react-select-box-label {
+  padding: 0 40px 0 20px;
+  font-weight: bold;
+  color: #555;
+  word-break: break-all;
+}
+#keen-explorer .react-select-box-options {
+  margin: 2px 0 0;
+  position: absolute;
+  padding: 10px 0;
+  width: 100%;
+  top: 100%;
+  left: 0;
+  z-index: 4;
+  background-color: #fff;
+  max-height: 250px;
+  overflow-y: scroll;
+}
+#keen-explorer .react-select-box-options-list {
+  list-style: none outside;
+  margin: 0;
+  padding: 0;
+}
+#keen-explorer .react-select-box-option {
+  padding: 10px 20px;
+  margin: 0;
+  cursor: pointer;
+  display: block;
+  line-height: 1.2;
+  text-decoration: none;
+}
+#keen-explorer .react-select-box-option:hover {
+  color: #3E8ACC;
+  background-color: #F2F2F2;
 }
 #keen-explorer .react-select-box-option-selected {
   color: #CBD2D7;

@@ -86604,7 +86604,6 @@
 	          React.createElement('input', { type: 'radio', name: 'extraction_type', value: 'email', onChange: this.props.setExtractionType, checked: this.props.isEmail }),
 	          ' Bulk CSV extraction by email'
 	        ),
-	        React.createElement('br', null),
 	        emailField,
 	        latestField,
 	        extractionPropertiesFilter
@@ -86752,7 +86751,8 @@
 	          id: this.state.id + '-' + i,
 	          className: className,
 	          href: '#',
-	          onClick: this._handleOptionChange.bind(this)
+	          onClick: this._handleOptionChange.bind(this),
+	          title: option.label
 	        },
 	        option.label
 	      );
@@ -92331,16 +92331,26 @@
 	    var keys = _.keys(this.props.result);
 	    var keyList = _.map(keys, function (key) {
 	      if (_typeof(this.props.result[key]) === "object") {
-	        var subKeys = _.keys(this.props.result[key]);
-	        return _.map(subKeys, function (subKey) {
-	          return key + '.' + subKey;
-	        });
+	        return this._getKey(key, this.props.result[key]);
 	      }
 	
 	      return key;
 	    }.bind(this));
 	
 	    return _.flatten(keyList);
+	  },
+	
+	  _getKey: function _getKey(prevKey, obj) {
+	    var keys = _.keys(obj);
+	
+	    return _.map(keys, function (key) {
+	      var keyStr = prevKey + '.' + key;
+	      if (_typeof(obj[key]) === 'object') {
+	        return this._getKey(keyStr, obj[key]);
+	      }
+	
+	      return keyStr;
+	    }.bind(this));
 	  },
 	
 	  render: function render() {
