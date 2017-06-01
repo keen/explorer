@@ -26,7 +26,6 @@ var DataTable = React.createClass({
   // Lifecycle hooks
   // ***********************
   render: function() {
-    console.log("rendering data table");
     var dataset, headerRows, tableRows;
 
     this.props.dataviz.data(this.props.model.response);
