@@ -1,4 +1,4 @@
-var React = require('react');
+const React = require('react');
 
 class ReactMultiSelect extends React.Component {
   constructor(props) {
@@ -32,9 +32,9 @@ class ReactMultiSelect extends React.Component {
 
   _handleOptionChange(event) {
     this.interceptEvent(event);
-    var selectedItem = event.target.text;
-    var selectedIndex = this.state.selected.indexOf(selectedItem);
-    var selected = this.state.selected;
+    const selectedItem = event.target.text;
+    const selectedIndex = this.state.selected.indexOf(selectedItem);
+    let selected = this.state.selected;
 
     if (selectedIndex > -1) {
       selected.splice(selectedIndex, 1);
@@ -48,7 +48,7 @@ class ReactMultiSelect extends React.Component {
   }
 
   _renderOption(option, i) {
-    var className = 'react-select-box-option';
+    let className = 'react-select-box-option';
     if (i === this.state.focusedIndex) {
       className += ' react-select-box-option-focused'
     }
@@ -68,12 +68,12 @@ class ReactMultiSelect extends React.Component {
 
   // Private HTML Element methods
   _renderOptionMenu() {
-    var className = 'react-select-box-options';
+    let className = 'react-select-box-options';
     if (!this.state.open) {
       className += ' react-select-box-hidden';
     }
 
-    var options = React.Children.map(this.props.items, function(item, i) {
+    const options = React.Children.map(this.props.items, function(item, i) {
       return this._renderOption({ value: item, label: item }, i);
     }.bind(this));
 
@@ -83,7 +83,7 @@ class ReactMultiSelect extends React.Component {
   }
 
   render() {
-    var label = this.state.selected.length > 0 ? this.state.selected.join(', ') : this.props.label;
+    const label = this.state.selected.length > 0 ? this.state.selected.join(', ') : this.props.label;
 
     return (<div className='react-select-box-container react-select-box-multi'>
       <button id={this.state.id} onClick={this._toggleOpenClose.bind(this)} className='react-select-box'>
