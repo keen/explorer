@@ -83581,22 +83581,16 @@
 	      var modelResponse = _.map(model.response.result, function (row) {
 	        var filteredObjects = {};
 	        _.each(row, function (value, key) {
-	
 	          if ((typeof value === 'undefined' ? 'undefined' : _typeof(value)) === 'object') {
-	            _.each(_.keys(value), function (subKey) {
-	              if (extractionFields.indexOf(key + '.' + subKey) > -1) {
-	                filteredObjects[key] = filteredObjects[key] || {};
-	                filteredObjects[key][subKey] = value[subKey];
-	              }
-	            });
+	            _.merge(filteredObjects, this.extractionObjectsToDisplay(key, value, extractionFields));
 	          } else {
 	            if (extractionFields.indexOf(key) > -1) {
 	              filteredObjects[key] = value;
 	            };
 	          }
-	        });
+	        }.bind(this));
 	        return filteredObjects;
-	      });
+	      }.bind(this));
 	
 	      model.response.result = modelResponse;
 	
@@ -83612,6 +83606,21 @@
 	      { className: wrapClasses },
 	      chartContent
 	    );
+	  },
+	
+	  extractionObjectsToDisplay: function extractionObjectsToDisplay(prevKey, obj, extractionFields) {
+	    var filteredObjects = {};
+	    _.each(_.keys(obj), function (key) {
+	      if (_typeof(obj[key]) === 'object') {
+	        _.merge(filteredObjects, this.extractionObjectsToDisplay(prevKey + '.' + key, obj[key], extractionFields));
+	      }
+	      if (extractionFields.indexOf(prevKey + '.' + key) > -1) {
+	        filteredObjects[prevKey] = filteredObjects[prevKey] || {};
+	        filteredObjects[prevKey][key] = obj[key];
+	      }
+	    }.bind(this));
+	
+	    return filteredObjects;
 	  },
 	
 	  // ***********************
