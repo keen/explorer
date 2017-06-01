@@ -11,6 +11,21 @@ var Chart = React.createClass({
   // Content building
   // ***********************
 
+  extractionObjectsToDisplay: function(prevKey, obj, extractionFields) {
+    var filteredObjects = {};
+    _.each(_.keys(obj), function(key) {
+      if (typeof obj[key] === 'object') {
+        _.merge(filteredObjects, this.extractionObjectsToDisplay(prevKey + '.' + key, obj[key], extractionFields));
+      }
+      if (extractionFields.indexOf(prevKey + '.' + key) > -1) {
+        filteredObjects[prevKey] = filteredObjects[prevKey] || {};
+        filteredObjects[prevKey][key] = obj[key];
+      }
+    }.bind(this));
+
+    return filteredObjects;
+  },
+
   buildVizContent: function() {
     if (!this.props.model.response) {
       return (
@@ -103,21 +118,6 @@ var Chart = React.createClass({
         );
   },
 
-  extractionObjectsToDisplay: function(prevKey, obj, extractionFields) {
-    var filteredObjects = {};
-    _.each(_.keys(obj), function(key) {
-      if (typeof obj[key] === 'object') {
-        _.merge(filteredObjects, this.extractionObjectsToDisplay(prevKey + '.' + key, obj[key], extractionFields));
-      }
-      if (extractionFields.indexOf(prevKey + '.' + key) > -1) {
-        filteredObjects[prevKey] = filteredObjects[prevKey] || {};
-        filteredObjects[prevKey][key] = obj[key];
-      }
-    }.bind(this));
-
-    return filteredObjects;
-  },
-
   // ***********************
   // Lifecycle hooks
   // ***********************
@@ -131,7 +131,7 @@ var Chart = React.createClass({
         {vizContent}
         </div>
         );
-  }
+    }
 });
 
 module.exports = Chart;
