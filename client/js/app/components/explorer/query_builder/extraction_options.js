@@ -1,15 +1,41 @@
-var React = require('react');
-var ExplorerUtils = require('../../../utils/ExplorerUtils');
-var Input = require('../../common/input.js');
-var LatestField = require('./latest_field.js');
-var ExtractionPropertiesFilter = require('./extraction_properties_filter');
+const React = require('react');
+const ExplorerUtils = require('../../../utils/ExplorerUtils');
+const Input = require('../../common/input.js');
+const ReactMultiSelect = require('../../common/react_multi_select.js');
+const LatestField = require('./latest_field.js');
+const ExplorerActions = require('../../../actions/ExplorerActions');
 
-var ExtractionOptions = React.createClass({
+class ExtractionOptions extends React.Component {
 
-  render: function(){
-    var emailField,
-        latestField,
-        extractionPropertiesFilter;
+  _getExtractionKeys() {
+    const result = this.props.model.response.result[0];
+
+    const keyList = Object.keys(result).map(function(key) {
+      if (typeof result[key] === "object") {
+        return this._getExtractionKeysFromObject(key, result[key]);
+      }
+
+      return key;
+    }.bind(this));
+
+    return [].concat(keyList);
+  }
+
+  _getExtractionKeysFromObject(prevKey, obj) {
+    return _.map(Object.keys(obj), function(key) {
+      const keyStr = prevKey + '.' + key;
+      if (typeof obj[key] === 'object') {
+        return this._getExtractionKeysFromObject(keyStr, obj[key]);
+      }
+
+      return keyStr;
+    }.bind(this));
+  }
+
+  render(){
+    let emailField;
+    let latestField;
+    let extractionPropertiesFilter;
 
     if (this.props.isEmail) {
       emailField = (
@@ -26,10 +52,13 @@ var ExtractionOptions = React.createClass({
       );
     }
 
-    if (this.props.model.response) {
-      extractionPropertiesFilter = <ExtractionPropertiesFilter
-        result={this.props.model.response.result[0]}
-        model={this.props.model}
+    if (this.props.model.response && this.props.model.response.result) {
+      extractionPropertiesFilter = <ReactMultiSelect
+            name="filter-properties"
+            model={this.props.model}
+            label="Filter extraction properties"
+            handleChange={ExplorerActions.changeExtractionFields}
+            items={this._getExtractionKeys()}
       />
     }
 
@@ -50,7 +79,6 @@ var ExtractionOptions = React.createClass({
       </div>
     );
   }
-
-});
+}
 
 module.exports = ExtractionOptions;
