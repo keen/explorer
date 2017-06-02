@@ -68,10 +68,7 @@ gulp.task('test:unit:build', function () {
 
 gulp.task('test:unit:run', function () {
   return gulp.src('./test/unit/index.html')
-    .pipe(mochaPhantomJS())
-    .on('error', function(error) {
-      console.log(error);
-    });
+    .pipe(mochaPhantomJS({mocha: { reporter: 'spec'}}));
 });
 
 // ********************
