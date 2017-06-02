@@ -76,6 +76,6 @@
     "stringify": "~3.0.0",
     "style-loader": "^0.13.1",
     "vinyl-source-stream": "1.0.0",
-    "webpack": "~1.13.2"
+    "webpack": "1.13.2"
   }
 }
