@@ -46,7 +46,6 @@
     "babel-core": "^6.17.0",
     "babel-loader": "^6.2.5",
     "babel-preset-es2015": "^6.16.0",
-    "babel-preset-es2017": "^6.24.1",
     "babel-preset-react": "^6.16.0",
     "browserify": "11.2.0",
     "browserify-shim": "~3.8.0",
@@ -61,7 +60,7 @@
     "gulp-clean": "~0.3.1",
     "gulp-connect": "2.0.6",
     "gulp-less": "3.0.0",
-    "gulp-mocha-phantomjs": "0.12.1",
+    "gulp-mocha-phantomjs": "0.8.1",
     "gulp-mocha-selenium": "^1.0.0",
     "gulp-react": "2.0.0",
     "gulp-rename": "~1.2.0",
@@ -70,13 +69,13 @@
     "keen-js": "^3.3.0",
     "less": "^2.7.1",
     "less-loader": "^2.2.3",
-    "phantomjs-prebuilt": "^2.1.14",
+    "phantomjs": "1.9.7-15",
     "reactify": "~0.15.1",
     "run-sequence": "~1.0.1",
     "sinon": "1.14.1",
     "stringify": "~3.0.0",
     "style-loader": "^0.13.1",
     "vinyl-source-stream": "1.0.0",
-    "webpack": "^1.13.2"
+    "webpack": "~1.13.2"
   }
 }
