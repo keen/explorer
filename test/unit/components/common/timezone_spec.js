@@ -1,7 +1,7 @@
 var assert = require('chai').assert;
 var React = require('react');
 var _ = require('lodash');
-var sinon = require('sinon');
+let sinon = require('sinon/pkg/sinon.js');
 var TestUtils = require('react-addons-test-utils');
 var TestHelpers = require('../../../support/TestHelpers');
 

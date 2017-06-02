@@ -1,5 +1,5 @@
 var assert = require('chai').assert;
-var sinon = require('sinon');
+let sinon = require('sinon/pkg/sinon.js');
 var FilterUtils = require('../../../client/js/app/utils/FilterUtils');
 var FunnelUtils = require('../../../client/js/app/utils/FunnelUtils');
 var TimeframeUtils = require('../../../client/js/app/utils/TimeframeUtils');

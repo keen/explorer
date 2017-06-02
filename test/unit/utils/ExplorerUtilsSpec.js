@@ -1,5 +1,5 @@
 var assert = require('chai').assert;
-var sinon = require('sinon');
+let sinon = require('sinon/pkg/sinon.js');
 var moment = require('moment');
 var KeenAnalysis = require('keen-analysis');
 var _ = require('lodash');

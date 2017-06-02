@@ -1,5 +1,5 @@
 var _ = require('lodash');
-var sinon = require('sinon');
+let sinon = require('sinon/pkg/sinon.js');
 var assert = require('chai').assert;
 var React = require('react');
 var ReactDOM = require('react-dom');

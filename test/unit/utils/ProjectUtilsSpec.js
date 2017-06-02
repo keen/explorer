@@ -1,5 +1,5 @@
 var assert = require('chai').assert;
-var sinon = require('sinon');
+let sinon = require('sinon/pkg/sinon.js');
 var TestHelpers = require('../../support/TestHelpers');
 var ProjectActions = require('../../../client/js/app/actions/ProjectActions');
 var ProjectUtils = require('../../../client/js/app/utils/ProjectUtils');

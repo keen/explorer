@@ -1,6 +1,6 @@
 var assert = require('chai').assert;
 var _ = require('lodash');
-var sinon = require('sinon');
+let sinon = require('sinon/pkg/sinon.js');
 var Validator = require('../../../client/js/app/mixins/validator.js');
 
 describe('models/filter', function(){

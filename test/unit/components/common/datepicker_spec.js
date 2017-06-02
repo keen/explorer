@@ -1,6 +1,5 @@
-/** @jsx React.DOM */
 var assert = require('chai').assert;
-var sinon = require('sinon');
+let sinon = require('sinon/pkg/sinon.js');
 var _ = require('lodash');
 var React = require('react');
 var ReactDOM = require('react-dom');

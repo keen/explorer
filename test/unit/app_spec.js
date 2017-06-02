@@ -4,7 +4,7 @@ var QueryStringUtils =  require('../../client/js/app/utils/QueryStringUtils.js')
 var React = require('react');
 var TestUtils = require('react-addons-test-utils');
 var TestHelpers = require('../support/TestHelpers.js');
-var sinon = require('sinon');
+let sinon = require('sinon/pkg/sinon.js');
 
 describe('App', function() {
   it('runs a query if the querystring has query attrs in it', function () {

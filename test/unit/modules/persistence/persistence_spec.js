@@ -2,7 +2,7 @@ var assert = require('chai').assert;
 var React = require('react');
 var TestUtils = require('react-addons-test-utils');
 var _ = require('lodash');
-var sinon = require('sinon');
+let sinon = require('sinon/pkg/sinon.js');
 var Persistence = require('../../../../client/js/app/modules/persistence/persistence.js');
 var KeenSavedQueries = require('../../../../client/js/app/modules/persistence/KeenSavedQueries.js');
 

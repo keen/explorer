@@ -4,7 +4,7 @@ var KeenAnalysis = require('keen-analysis');
 var TestUtils = require('react-addons-test-utils');
 var ProjectUtils = require('../../client/js/app/utils/ProjectUtils');
 var FormatUtils = require('../../client/js/app/utils/FormatUtils');
-var sinon = require('sinon');
+let sinon = require('sinon/pkg/sinon.js');
 
 module.exports = {
 

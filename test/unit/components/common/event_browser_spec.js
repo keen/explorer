@@ -1,5 +1,4 @@
-/** @jsx React.DOM */
-var sinon = require('sinon');
+let sinon = require('sinon/pkg/sinon.js');
 var assert = require('chai').assert;
 var _ = require('lodash');
 var KeenAnalysis = require('keen-analysis');
@@ -76,7 +75,7 @@ describe('components/common/event_browser', function() {
       this.project.eventCollections = [];
       this.component = TestUtils.renderIntoDocument(<EventBrowser client={this.client} currentEventCollection={this.currentEventCollection} project={this.project} />);
     });
-    
+
     it('does not show UI to browse event collections when they exist', function() {
       assert.lengthOf($R(this.component).find('.event-browser').components, 0);
     });

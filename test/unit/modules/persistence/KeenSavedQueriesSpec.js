@@ -1,5 +1,5 @@
 var assert = require('chai').assert;
-var sinon = require('sinon');
+let sinon = require('sinon/pkg/sinon.js');
 var KeenAnalysis = require('keen-analysis');
 var KeenHelpers = require('../../../support/TestHelpers');
 var KeenSavedQueries = require('../../../../client/js/app/modules/persistence/KeenSavedQueries.js');
