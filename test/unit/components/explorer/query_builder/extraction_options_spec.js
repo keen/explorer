@@ -15,6 +15,7 @@ describe('components/explorer/query_builder/extraction_options', function() {
       handleSelectionWithEvent: function(){},
       latest: model.query.latest,
       email: model.query.email,
+      model: model,
       isEmail: false,
     };
     this.renderComponent = function(props) {
