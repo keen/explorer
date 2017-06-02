@@ -24,7 +24,7 @@ const devModule = {
         loader: 'babel-loader',
         exclude: /node_modules/,
         query: {
-          presets: ['es2015', 'react'],
+          presets: ['latest', 'react'],
         }
       },
 
