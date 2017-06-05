@@ -181,17 +181,17 @@ describe('components/common/filter_value_fields', function() {
     });
     describe('available property value options when Boolean', function () {
       it('is true or false', function () {
-        var props = _.assign({}, this.component.props, {
+        const props = _.assign({}, this.component.props, {
           filter: { operator: 'exists', coercion_type: 'Boolean' }
         });
         this.component = TestHelpers.renderComponent(FilterValueFields, props);
 
-        var boolPropValueSelect = ReactDOM.findDOMNode(this.component.refs['boolean-value-set']).childNodes[0].childNodes[0];
+        const boolPropValueSelect = ReactDOM.findDOMNode(this.component.refs['boolean-value-set']).childNodes[0].childNodes[0];
 
-        var boolPropValueSelectOptions = _.map(boolPropValueSelect.childNodes, function(node){
+        const boolPropValueSelectOptions = _.map(boolPropValueSelect.childNodes, function(node){
           return node.value;
         });
-        propertyValueOptions = _.compact(boolPropValueSelectOptions);
+        const propertyValueOptions = _.compact(boolPropValueSelectOptions);
 
         assert.sameMembers(propertyValueOptions, ['true', 'false']);
       });
