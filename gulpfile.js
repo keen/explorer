@@ -36,36 +36,6 @@ gulp.task('connect', function () {
   });
 });
 
-// ********************
-// Testing
-// ********************
-
-// gulp.task('test:functional', function () {
-//   return gulp.src('test/functional/index.js', {read: false})
-//     .pipe(mochaSelenium({
-//       browserName: 'chrome',
-//       reporter: 'spec',
-//       useChaining: true,
-//       timeout: 30e3
-//     }));
-// });
-
-// gulp.task('test:unit:clean', function() {
-//   return gulp.src('./test/unit/build', { read: false })
-//     .pipe(clean());
-// });
-//
-// gulp.task('test:unit:build', function () {
-//   return browserify('./test/unit/index.js', {
-//       insertGlobals: true,
-//       debug: true
-//     })
-//     .transform(stringify(['.html']))
-//     .bundle()
-//     .pipe(source('browserified_tests.js'))
-//     .pipe(gulp.dest('./test/unit/build'));
-// });
-
 gulp.task('test:unit:run', function () {
   return gulp.src('./test/unit/index.html')
     .pipe(mochaPhantomJS())
@@ -73,16 +43,6 @@ gulp.task('test:unit:run', function () {
       console.log(error);
     });
 });
-
-// ********************
-// Task groups
-// ********************
-
-// gulp.task('test:build', function(callback) {
-//   runSequence('test:unit:clean',
-//               'test:unit:build',
-//               callback);
-// });
 
 gulp.task('test:unit', function(callback) {
   runSequence('test:unit:run',
