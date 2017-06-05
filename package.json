@@ -6,7 +6,7 @@
   "bucket-name": "keen-js",
   "scripts": {
     "dev": "./node_modules/webpack/bin/webpack.js --watch --color -d & gulp connect",
-    "test": "gulp test:unit",
+    "test": "npm run build && gulp test:unit",
     "build": "./node_modules/webpack/bin/webpack.js",
     "minify": "NODE_ENV=production ./node_modules/webpack/bin/webpack.js -p",
     "production": "npm run minify && npm run test"
