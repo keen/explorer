@@ -10,7 +10,7 @@ const devModule = {
   },
 
   output: {
-    filename: `${buildName}.${minExt}js`,
+    filename: buildName + '.' + minExt + '.js',
     path: './dist/'
   },
 
@@ -32,13 +32,13 @@ const devModule = {
 
       {
         test: /\.less$/,
-        loader: ExtractTextPlugin.extract("style-loader", "css!less")
+        loader: ExtractTextPlugin.extract('style-loader', 'css!less')
       }
     ]
   },
 
   plugins: [
-    new ExtractTextPlugin(`${buildName}.${minExt}css`),
+    new ExtractTextPlugin(buildName + "." + minExt + ".css"),
   ],
 
   externals: {
@@ -52,7 +52,7 @@ const testModule = {
   },
 
   output: {
-    filename: `browserified_tests.js`,
+    filename: 'browserified_tests.js',
     path: './test/unit/build/'
   },
 
@@ -74,7 +74,7 @@ const testModule = {
 
       {
         test: /\.less$/,
-        loader: ExtractTextPlugin.extract("style-loader", "css!less")
+        loader: ExtractTextPlugin.extract('style-loader', 'css!less')
       }
     ],
     noParse: [
