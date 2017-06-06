@@ -10,7 +10,7 @@ const devModule = {
   },
 
   output: {
-    filename: buildName + '.' + minExt + '.js',
+    filename: buildName + '.' + minExt + 'js',
     path: './dist/'
   },
 
@@ -38,7 +38,7 @@ const devModule = {
   },
 
   plugins: [
-    new ExtractTextPlugin(buildName + "." + minExt + ".css"),
+    new ExtractTextPlugin(buildName + "." + minExt + "css"),
   ],
 
   externals: {

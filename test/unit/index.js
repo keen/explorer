@@ -81,3 +81,4 @@ require('./components/common/geo_spec.js');
 require('./components/common/modal_spec.js');
 require('./components/common/notice_spec.js');
 require('./components/common/react_select_spec.js')
+require('./components/common/react_multi_select_spec.js')
