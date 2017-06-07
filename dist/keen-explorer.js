@@ -59547,8 +59547,12 @@
 	    return moment(dateString, ISO_DATE_FORMAT, true).isValid();
 	  },
 	
+	  convertDateToUTC: function convertDateToUTC(date) {
+	    return new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds());
+	  },
+	
 	  formatISOTimeNoTimezone: function formatISOTimeNoTimezone(time) {
-	    return moment(new Date(time)).format('YYYY-MM-DDTHH:mm:ss.SSS');
+	    return moment(time).format('YYYY-MM-DDTHH:mm:ss.SSS');
 	  },
 	
 	  generateRandomId: function generateRandomId(prefix) {
@@ -60879,7 +60883,7 @@
 	    }
 	    filter.property_value = module.exports.getCoercedValue(filter);
 	    if (filter.coercion_type === 'Datetime') {
-	      filter.property_value = TimeframeUtils.convertDateToUTC(filter.property_value);
+	      filter.property_value = FormatUtils.convertDateToUTC(filter.property_value);
 	    }
 	    return filter;
 	  },
@@ -60918,10 +60922,6 @@
 	var FormatUtils = __webpack_require__(/*! ./FormatUtils */ 334);
 	
 	module.exports = {
-	
-	  convertDateToUTC: function convertDateToUTC(date) {
-	    return new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds());
-	  },
 	
 	  /**
 	   * Takes a time object and returns a string representing the timeframe type (absolute or relative)
@@ -61010,10 +61010,10 @@
 	    }
 	
 	    var startVal = timeframe.start ? timeframe.start.substring(0, 19) : "";
-	    formattedValue.time.start = FormatUtils.formatISOTimeNoTimezone(module.exports.convertDateToUTC(new Date(startVal)));
+	    formattedValue.time.start = FormatUtils.formatISOTimeNoTimezone(startVal);
 	
 	    var endVal = timeframe.end ? timeframe.end.substring(0, 19) : "";
-	    formattedValue.time.end = FormatUtils.formatISOTimeNoTimezone(module.exports.convertDateToUTC(new Date(endVal)));
+	    formattedValue.time.end = FormatUtils.formatISOTimeNoTimezone(endVal);
 	
 	    return formattedValue;
 	  },
@@ -85337,7 +85337,7 @@
 	      percentile: null,
 	      group_by: [],
 	      interval: null,
-	      timezone: ProjectUtils.getLocalTimezoneOffset(),
+	      timezone: ProjectUtils.getConstant('DEFAULT_TIMEZONE'),
 	      filters: [],
 	      steps: [],
 	      email: null,
@@ -85388,7 +85388,7 @@
 	      amount: 14,
 	      sub_timeframe: 'days'
 	    },
-	    timezone: ProjectUtils.getLocalTimezoneOffset(),
+	    timezone: ProjectUtils.getConstant('DEFAULT_TIMEZONE'),
 	    filters: [],
 	    optional: false,
 	    inverted: false,

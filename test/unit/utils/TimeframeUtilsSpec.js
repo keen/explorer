@@ -69,13 +69,19 @@ describe('utils/TimeframeUtils', function () {
         start: moment(new Date("June 7, 2015 1:00 PM")).format('YYYY-MM-DDTHH:mm:ss.SSS')+"-10:00",
         end: moment(new Date("June 8, 2015 2:00 PM")).format('YYYY-MM-DDTHH:mm:ss.SSS')+"-10:00"
       };
-      assert.deepEqual(TimeframeUtils.unpackTimeframeParam(timeframe, 'US/Hawaii'), {
-        timezone: 'US/Hawaii',
-        time: {
-          start: "2015-06-07T13:00:00.000",
-          end: "2015-06-08T14:00:00.000"
+
+      console.log(timeframe.start);
+
+      assert.deepEqual(
+        TimeframeUtils.unpackTimeframeParam(timeframe, 'US/Hawaii'),
+        {
+          timezone: 'US/Hawaii',
+          time: {
+            start: "2015-06-07T13:00:00.000",
+            end: "2015-06-08T14:00:00.000"
+          }
         }
-      });
+      );
     });
     it('properly unpacks a relative timeframe', function () {
       var unpacked = TimeframeUtils.unpackTimeframeParam('this_8_days', 'Europe/London');

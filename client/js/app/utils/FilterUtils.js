@@ -160,7 +160,7 @@ module.exports = {
     }
     filter.property_value = module.exports.getCoercedValue(filter);
     if (filter.coercion_type === 'Datetime') {
-      filter.property_value = TimeframeUtils.convertDateToUTC(filter.property_value);
+      filter.property_value = FormatUtils.convertDateToUTC(filter.property_value);
     }
     return filter;
   },

@@ -4,10 +4,6 @@ var FormatUtils = require('./FormatUtils');
 
 module.exports = {
 
-  convertDateToUTC: function(date) {
-    return new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds());
-  },
-
   /**
    * Takes a time object and returns a string representing the timeframe type (absolute or relative)
    * @param  {Object} time The time object
@@ -95,10 +91,10 @@ module.exports = {
     }
 
     var startVal = timeframe.start ? timeframe.start.substring(0, 19) : "";
-    formattedValue.time.start = FormatUtils.formatISOTimeNoTimezone(new Date(startVal));
+    formattedValue.time.start = FormatUtils.formatISOTimeNoTimezone(startVal);
 
     var endVal = timeframe.end ? timeframe.end.substring(0, 19) : "";
-    formattedValue.time.end = FormatUtils.formatISOTimeNoTimezone(new Date(endVal));
+    formattedValue.time.end = FormatUtils.formatISOTimeNoTimezone(endVal);
 
     return formattedValue;
   },
