@@ -113,7 +113,7 @@ App.prototype.doneFetchingSavedQuery = function(savedQueryName, err) {
       ExplorerActions.setActive(id);
       AppStateActions.update({ ready: true });
     } else {
-      throw new Error("There was a problem fetching a saved query");
+      console.error("There was a problem fetching a saved query: ", err.stack);
     }
   }
 };

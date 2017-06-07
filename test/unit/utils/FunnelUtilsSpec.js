@@ -8,20 +8,22 @@ describe('utils/FunnelUtils', function() {
   describe('stepJSON', function() {
     it('should remove unnecessary properties', function () {
       var step = {
-        cool: 'dudes'
+        cool: 'dudes',
+        timezone: 'UTC'
       }
 
       var json = FunnelUtils.stepJSON(step);
-      assert.deepEqual(json, {});
+      assert.deepEqual(json, { timezone: 'UTC' });
     });
     it('should remove invalid query values', function () {
       var step = {
         event_collection: null,
-        actor_property: 'user'
+        actor_property: 'user',
+        timezone: 'UTC'
       };
 
       var json = FunnelUtils.stepJSON(step);
-      assert.deepEqual(json, {actor_property: 'user'});
+      assert.deepEqual(json, { actor_property: 'user', timezone: 'UTC' });
     });
     it('should call FilterUtils.queryJSON for every filter', function () {
       var step = { filters: [{}, {}, {}] };
@@ -61,7 +63,7 @@ describe('utils/FunnelUtils', function() {
 
       assert.lengthOf(stub.getCalls(), 3);
 
-      FilterUtils.formatFilterParams.restore(); 
+      FilterUtils.formatFilterParams.restore();
     });
 
     describe('boolean value handling', function () {

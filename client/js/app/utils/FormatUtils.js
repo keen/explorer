@@ -81,12 +81,12 @@ module.exports = {
     return moment(dateString, ISO_DATE_FORMAT, true).isValid();
   },
 
-  formatISOTimeNoTimezone: function(time) {
-    return moment(new Date(time)).format('YYYY-MM-DDTHH:mm:ss.SSS');
+  convertDateToUTC: function(date) {
+    return new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds());
   },
 
-  formatISOTimeAddOffset: function(time, offset) {
-    return module.exports.formatISOTimeNoTimezone(time) + offset;
+  formatISOTimeNoTimezone: function(time) {
+    return moment(time).format('YYYY-MM-DDTHH:mm:ss.SSS');
   },
 
   generateRandomId: function(prefix) {

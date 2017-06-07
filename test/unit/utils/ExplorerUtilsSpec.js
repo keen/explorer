@@ -46,15 +46,17 @@ describe('utils/ExplorerUtils', function() {
           someVal: 'shouldBeRemoved',
           someOtherVal: 'shouldAlsoBeRemoved',
           event_collection: 'sholdRemain',
-          analysis_type: 'shouldRemain'
+          analysis_type: 'shouldRemain',
+          timezone: 'US/Pacific'
         }
       };
       assert.deepEqual(ExplorerUtils.queryJSON(explorer), {
         event_collection: 'sholdRemain',
-        analysis_type: 'shouldRemain'
+        analysis_type: 'shouldRemain',
+        timezone: 'US/Pacific'
       });
     });
-    it('should remove the timezone if the timeframe type is absolute', function () {
+    it('should keep the timezone even if the timeframe type is absolute', function () {
       var explorer = {
         query: {
           timezone: 'US/Mountain',
@@ -64,18 +66,20 @@ describe('utils/ExplorerUtils', function() {
           }
         }
       };
-      assert.notDeepProperty(ExplorerUtils.queryJSON(explorer), 'timezone');
+      assert.deepPropertyVal(ExplorerUtils.queryJSON(explorer), 'timezone', 'US/Mountain');
     });
     it('should remove values that are not valid query values', function () {
       var explorer = {
         query: {
           event_collection: undefined,
           analysis_type: 'shouldRemain',
+          timezone: 'UTC',
           filters: []
         }
       };
       assert.deepEqual(ExplorerUtils.queryJSON(explorer), {
-        analysis_type: 'shouldRemain'
+        analysis_type: 'shouldRemain',
+        timezone: 'UTC'
       });
     });
     it('should call FilterUtils.queryJSON for every filter', function () {
@@ -141,21 +145,24 @@ describe('utils/ExplorerUtils', function() {
       assert.deepEqual(json, {
         event_collection: 'click',
         analysis_type: 'count',
-        timeframe: 'this_1_days'
+        timeframe: 'this_1_days',
+        timezone: 'UTC'
       });
     });
     it('should set the latest property to the EXRACTION_EVENT_LIMIT constant if the query is a synchronous extraction', function () {
       var explorer = {
         query: {
           analysis_type: 'extraction',
-          event_collection: 'click'
+          event_collection: 'click',
+          timezone: 'UTC'
         }
       };
       var json = ExplorerUtils.queryJSON(explorer);
       assert.deepEqual(json, {
         event_collection: 'click',
         analysis_type: 'extraction',
-        latest: ExplorerUtils.EXRACTION_EVENT_LIMIT
+        latest: ExplorerUtils.EXRACTION_EVENT_LIMIT,
+        timezone: 'UTC'
       });
     });
     it('should not call getTimeParameters on the root query if the analysis type is funnel', function () {
@@ -182,7 +189,8 @@ describe('utils/ExplorerUtils', function() {
             relativity: 'this',
             amount: '1',
             sub_timeframe: 'days'
-          }
+          },
+          timezone: 'UTC'
         }
       };
       assert.deepEqual(ExplorerUtils.toJSON(explorer), {
@@ -190,38 +198,13 @@ describe('utils/ExplorerUtils', function() {
           event_collection: 'click',
           analysis_type: 'extraction',
           timeframe: 'this_1_days',
+          timezone: 'UTC',
           latest: 100
         },
         refresh_rate: 0
       });
     });
   });
-
-  // describe('runQuery', function () {
-  //   it('should create a Keen.Query', function () {
-  //     var client = new KeenAnalysis(TestHelpers.createClient());
-  //     var query = {
-  //       analysis_type: 'count',
-  //       event_collection: 'click'
-  //     };
-  //     // var spy1 = sinon.spy();
-  //     // var spy2 = sinon.spy();
-  //     // var spy3 = sinon.spy();
-  //     ExplorerUtils.runQuery({
-  //       client: client,
-  //       query: query,
-  //       success: function(){},
-  //       error: function(){},
-  //       complete: function(){}
-  //     });
-  //     // assert.
-  //     // assert.strictEqual(client.run.getCall(0).args[0].analysis, 'count');
-  //     // assert.deepEqual(client.run.getCall(0).args[0].params, {
-  //     //   event_collection: 'click',
-  //     //   timezone: (((new Date().getTimezoneOffset())/60)*60*60)*-1
-  //     // });
-  //   });
-  // });
 
   describe('resultCanBeVisualized', function () {
     it('should return true if the value is the number 0', function () {
