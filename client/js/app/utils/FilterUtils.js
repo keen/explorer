@@ -26,7 +26,7 @@ module.exports = {
       if (typeof filter.property_value === 'string') {
         var coercedDate = new Date(filter.property_value);
         if (coercedDate !== null && coercedDate.toString() !== 'Invalid Date') return coercedDate.toString();
-      } 
+      }
       return module.exports.defaultDate();
     },
 
@@ -159,7 +159,6 @@ module.exports = {
       filter = _.assign({}, filter, module.exports.initList(filter));
     }
     filter.property_value = module.exports.getCoercedValue(filter);
-    // Add the local offset back to the datetime to get it back to UTC.
     if (filter.coercion_type === 'Datetime') {
       filter.property_value = TimeframeUtils.convertDateToUTC(filter.property_value);
     }
