@@ -61010,10 +61010,10 @@
 	    }
 	
 	    var startVal = timeframe.start ? timeframe.start.substring(0, 19) : "";
-	    formattedValue.time.start = FormatUtils.formatISOTimeNoTimezone(startVal);
+	    formattedValue.time.start = FormatUtils.formatISOTimeNoTimezone(module.exports.convertDateToUTC(new Date(startVal)));
 	
 	    var endVal = timeframe.end ? timeframe.end.substring(0, 19) : "";
-	    formattedValue.time.end = FormatUtils.formatISOTimeNoTimezone(endVal);
+	    formattedValue.time.end = FormatUtils.formatISOTimeNoTimezone(module.exports.convertDateToUTC(new Date(endVal)));
 	
 	    return formattedValue;
 	  },

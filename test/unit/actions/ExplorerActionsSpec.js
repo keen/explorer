@@ -35,7 +35,7 @@ describe('actions/ExplorerActions', function() {
       this.getStub = sinon.stub(ExplorerStore, 'get');
       this.runQueryStub = sinon.stub(ExplorerUtils, 'runQuery');
     });
-  
+
     after(function () {
       ExplorerStore.get.restore();
       ExplorerUtils.runQuery.restore();
@@ -44,7 +44,7 @@ describe('actions/ExplorerActions', function() {
     beforeEach(function () {
       this.runQueryStub.reset();
     });
-  
+
     it('should throw an error if the model is currently loading', function () {
       var explorer = { id: 5, loading: true };
       this.getStub.returns(explorer);
@@ -112,13 +112,13 @@ describe('actions/ExplorerActions', function() {
       };
       this.getStub = sinon.stub(ExplorerStore, 'get').returns(this.explorer);
     });
-  
+
     afterEach(function () {
       ExplorerActions.validate.restore();
       ExplorerUtils.runQuery.restore();
       ExplorerStore.get.restore();
     });
-  
+
     it('should run validations', function () {
       ExplorerActions.runEmailExtraction(this.client, this.explorer.id);
       assert.isTrue(this.validateStub.calledOnce);
@@ -318,7 +318,7 @@ describe('actions/ExplorerActions', function() {
     it('should add a query object on the response if one is not there', function () {
       ExplorerActions.execSuccess(this.explorer, this.response);
       assert.deepPropertyVal(this.dispatchStub.getCall(2).args[0].updates.response, 'query');
-      assert.deepEqual(this.dispatchStub.getCall(2).args[0].updates.response.query, { analysis_type: 'count' });
+      assert.deepEqual(this.dispatchStub.getCall(2).args[0].updates.response.query, { analysis_type: 'count', timezone: 'UTC' });
     });
     it('should not add a query object on the response if one is not there', function () {
       ExplorerActions.execSuccess(this.explorer, _.assign({}, this.response, { query: { analysis_type: 'not_count' } }));
@@ -468,7 +468,7 @@ describe('actions/ExplorerActions', function() {
 
       });
     });
-    
+
     describe('clone a saved query', function () {
         it('should dispatch an EXPLORER_CLONE event', function () {
           ExplorerActions.clone('ABC');
