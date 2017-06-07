@@ -38,4 +38,22 @@ describe('components/explorer/query_builder/extraction_options', function() {
       assert.lengthOf($R(this.component).find('LatestField').components, 1);
     });
   });
+
+  describe('extraction properties filter', function() {
+    it('shows when an extraction model is loaded', function() {
+      let model = TestHelpers.createExplorerModel();
+      model.query.analysis_type = 'extraction';
+      model.response = { result: [{'test': 12 }] };
+      const props = _.assign({}, this.component.props, { model: model });
+      this.component = TestHelpers.renderComponent(ExtractionOptions, props);
+
+      this.component = TestHelpers.renderComponent(ExtractionOptions, props);
+
+      assert.lengthOf($R(this.component).find('ReactMultiSelect').components, 1);
+    });
+
+    it('is hidden when with all other types of models', function() {
+      assert.lengthOf($R(this.component).find('ReactMultiSelect').components, 0);
+    });
+  });
 });
