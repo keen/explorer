@@ -39,7 +39,7 @@ function _defaultAttrs() {
       percentile: null,
       group_by: [],
       interval: null,
-      timezone: ProjectUtils.getLocalTimezoneOffset(),
+      timezone: ProjectUtils.getConstant('DEFAULT_TIMEZONE'),
       filters: [],
       steps: [],
       email: null,
@@ -90,7 +90,7 @@ function _defaultStep() {
       amount: 14,
       sub_timeframe: 'days'
     },
-    timezone: ProjectUtils.getLocalTimezoneOffset(),
+    timezone: ProjectUtils.getConstant('DEFAULT_TIMEZONE'),
     filters: [],
     optional: false,
     inverted: false,
