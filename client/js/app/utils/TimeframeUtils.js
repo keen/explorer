@@ -95,10 +95,10 @@ module.exports = {
     }
 
     var startVal = timeframe.start ? timeframe.start.substring(0, 19) : "";
-    formattedValue.time.start = FormatUtils.formatISOTimeNoTimezone(module.exports.convertDateToUTC(new Date(startVal)));
+    formattedValue.time.start = FormatUtils.formatISOTimeNoTimezone(new Date(startVal));
 
     var endVal = timeframe.end ? timeframe.end.substring(0, 19) : "";
-    formattedValue.time.end = FormatUtils.formatISOTimeNoTimezone(module.exports.convertDateToUTC(new Date(endVal)));
+    formattedValue.time.end = FormatUtils.formatISOTimeNoTimezone(new Date(endVal));
 
     return formattedValue;
   },
