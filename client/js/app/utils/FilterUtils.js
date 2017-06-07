@@ -1,6 +1,7 @@
 var _ = require('lodash');
 var moment = require('moment');
 var S = require('string');
+var TimeframeUtils = require('./TimeframeUtils');
 var FormatUtils = require('./FormatUtils');
 var FilterValidations = require('../validations/FilterValidations');
 var RunValidations = require('./RunValidations');
@@ -75,7 +76,7 @@ module.exports = {
   /**
    * Gets the type for the given filter's property_value. This value should be raw, as in it should not have
    * been put through getCoercedValue yet. So for example, if it's a list type, it should be a string with the
-   * expected list format: "\a word\"", '1', '56', \""another word\"" 
+   * expected list format: "\a word\"", '1', '56', \""another word\""
    * @param  {Object} filter The filter to get the property value coercion type for.
    * @return {String}        The determined type for the given property value.
    */
@@ -124,7 +125,7 @@ module.exports = {
     return complete;
   },
 
-  queryJSON: function(filter, timezoneOffset) {
+  queryJSON: function(filter) {
     RunValidations.run(FilterValidations, filter);
     if (!filter.isValid) return {};
 
@@ -132,7 +133,7 @@ module.exports = {
     attrs.property_value = module.exports.getCoercedValue(filter);
 
     if (attrs.coercion_type === 'Datetime') {
-      attrs.property_value = FormatUtils.formatISOTimeAddOffset(attrs.property_value, timezoneOffset);
+      attrs.property_value = FormatUtils.formatISOTimeNoTimezone(attrs.property_value);
     }
     if (attrs.coercion_type === 'List') {
       attrs.property_value = FormatUtils.parseList(attrs.property_value);
@@ -160,8 +161,7 @@ module.exports = {
     filter.property_value = module.exports.getCoercedValue(filter);
     // Add the local offset back to the datetime to get it back to UTC.
     if (filter.coercion_type === 'Datetime') {
-      var offset = new Date(filter.property_value).getTimezoneOffset();
-      filter.property_value = new Date(moment(new Date(filter.property_value)).add(offset, 'minutes').format()).toString();
+      filter.property_value = TimeframeUtils.convertDateToUTC(filter.property_value);
     }
     return filter;
   },

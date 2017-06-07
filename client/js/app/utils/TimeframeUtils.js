@@ -14,18 +14,16 @@ module.exports = {
    * @return {String} The type of timeframe, 'absolute' or 'relative'
    */
    timeframeType: function(time) {
-      var badTimeTypeError = new Error('Invalid time value');
-
       if (_.isUndefined(time)) {
         return null;
       } else if (!_.isPlainObject(time)) {
-        throw badTimeTypeError;
-      } else if (_.has(time, 'start') && _.has(time, 'end')) {
+        throw new Error('Invalid timeframe type: not a plain object.');
+      } else if (_.has(time, 'start') || _.has(time, 'end')) {
         return 'absolute';
       } else if (_.has(time, 'relativity') && _.has(time, 'amount') && _.has(time, 'sub_timeframe')) {
         return 'relative';
       } else {
-        throw badTimeTypeError;
+        throw new Error('Invalid timeframe type: invalid time value.');
       }
    },
 
@@ -36,17 +34,16 @@ module.exports = {
 
   timeframeBuilders: {
 
-    absolute_timeframe: function(time, timezone) {
+    absolute: function(time) {
       if (time && time.start && time.end) {
-        var offset = module.exports.getTimezoneOffset(timezone)
         return {
-          start: FormatUtils.formatISOTimeNoTimezone(time.start) + offset,
-          end: FormatUtils.formatISOTimeNoTimezone(time.end) + offset
+          start: FormatUtils.formatISOTimeNoTimezone(time.start),
+          end: FormatUtils.formatISOTimeNoTimezone(time.end)
         };
       }
     },
 
-    relative_timeframe: function(time) {
+    relative: function(time) {
       if (time && time.relativity && time.amount && time.sub_timeframe) {
         return [time.relativity, time.amount, time.sub_timeframe].join('_');
       }
@@ -54,21 +51,16 @@ module.exports = {
 
   },
 
-  getTimeframe: function(time, timezone) {
-    var timeframeType = module.exports.timeframeType(time);
-    var timeframeBuilder = module.exports.timeframeBuilders[timeframeType + '_timeframe'];
-
-    if (typeof(timeframeBuilder) === 'undefined') {
-      return "";
-    } else {
-      return timeframeBuilder(time, timezone);
-    }
+  getTimeframe: function(time) {
+    var timeframeBuilder = module.exports.timeframeBuilders[module.exports.timeframeType(time)];
+    if (typeof(timeframeBuilder) === 'undefined') return "";
+    return timeframeBuilder(time);
   },
 
-  getTimeParameters: function(time, timezone) {
+  getTimeParameters: function(timeframe, timezone) {
     return {
-      timeframe: time ? module.exports.getTimeframe(time, timezone) : null,
-      timezone: module.exports.timeframeType(time) === 'relative' ? timezone : null
+      timeframe: timeframe ? module.exports.getTimeframe(timeframe) : null,
+      timezone: timezone || ProjectUtils.getConstant('DEFAULT_TIMEZONE')
     };
   },
 
@@ -83,48 +75,44 @@ module.exports = {
    * }
    */
   unpackTimeframeParam: function(timeframe, timezone) {
-    var timeFormat = 'h:mm A';
-    var dateFormat = 'MMM D, YYYY';
-
     if (typeof timeframe === 'object') {
-      var offset = timeframe.start.substring(timeframe.start.length, timeframe.start.length-6);
-
-      if (timeframe.start) {
-        timeframe.start = timeframe.start.substring(0, timeframe.start.length-6);
-      } else {
-        timeframe.start = Date.now();
-      }
-
-      if (timeframe.end) {
-        timeframe.end = timeframe.end.substring(0, timeframe.end.length-6);
-      } else {
-       timeframe.end = Date.now();
-      }
-
-      var zone = _.find(ProjectUtils.getConstant('TIMEZONES'), { offset: offset });
-      if (zone) {
-        timezone = zone.value;
-      } else if (!zone && !timezone) {
-        throw new Error("A timezone was not part of the datestring for the timeframe with a start of: " + timeframe.start + ". There also was no timezone parameter provided. You must provide one or the other.");
-      }
-      return {
-        time: {
-          start: module.exports.convertDateToUTC(new Date(timeframe.start)),
-          end: module.exports.convertDateToUTC(new Date(timeframe.end))
-        },
-        timezone: timezone
-      };
+      return module.exports.unpackAbsoluteTimeframe(timeframe, timezone);
     } else if (typeof timeframe === 'string') {
-      var split = timeframe.split('_');
-      return {
-        time: {
-          relativity: split[0],
-          amount: split[1],
-          sub_timeframe: split[2]
-        },
-        timezone: timezone
-      };
+      return module.exports.unpackRelativeTimeframe(timeframe, timezone);
     }
   },
+
+  unpackAbsoluteTimeframe: function (timeframe, timezone) {
+    var formattedValue = {
+      time: {},
+      timezone: null
+    };
+
+    if (!timezone || ProjectUtils.getConstant('TIMEZONES').indexOf(timezone) === -1) {
+      formattedValue.timezone = 'UTC';
+    } else {
+      formattedValue.timezone = timezone;
+    }
+
+    var startVal = timeframe.start ? timeframe.start.substring(0, 19) : "";
+    formattedValue.time.start = FormatUtils.formatISOTimeNoTimezone(startVal);
+
+    var endVal = timeframe.end ? timeframe.end.substring(0, 19) : "";
+    formattedValue.time.end = FormatUtils.formatISOTimeNoTimezone(endVal);
+
+    return formattedValue;
+  },
+
+  unpackRelativeTimeframe: function (timeframe, timezone) {
+    var split = timeframe.split('_');
+    return {
+      time: {
+        relativity: split[0],
+        amount: split[1],
+        sub_timeframe: split[2]
+      },
+      timezone: timezone
+    };
+  }
 
 }

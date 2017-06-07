@@ -85,10 +85,6 @@ module.exports = {
     return moment(new Date(time)).format('YYYY-MM-DDTHH:mm:ss.SSS');
   },
 
-  formatISOTimeAddOffset: function(time, offset) {
-    return module.exports.formatISOTimeNoTimezone(time) + offset;
-  },
-
   generateRandomId: function(prefix) {
     return (prefix || '') + (+new Date() + Math.floor(Math.random() * 999999)).toString(36);
   },
