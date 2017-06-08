@@ -1280,6 +1280,7 @@ describe('stores/ExplorerStore', function() {
           filters: [],
           optional: false,
           inverted: false,
+          with_actors: false,
           active: true,
           isValid: false,
           errors: [

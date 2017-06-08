@@ -92,6 +92,7 @@ module.exports = {
       filters: [],
       optional: false,
       inverted: false,
+      with_actors: false,
       active: false,
       isValid: true,
       errors: []

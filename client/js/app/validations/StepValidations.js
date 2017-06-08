@@ -70,8 +70,8 @@ module.exports = {
     msg: '"with_actors" must be set to either true or false',
 
     validate: function(model) {
-      if (FormatUtils.isNullOrUndefined(model.inverted)) return false;
-      return typeof model.inverted === 'boolean';
+      if (FormatUtils.isNullOrUndefined(model.with_actors)) return false;
+      return typeof model.with_actors === 'boolean';
     }
 
   },
