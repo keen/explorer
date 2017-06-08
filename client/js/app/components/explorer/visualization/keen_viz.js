@@ -28,6 +28,7 @@ var KeenViz = React.createClass({
 
     this.lastDataTimestamp = this.props.model.dataTimestamp;
     this.lastChartType = this.props.model.metadata.visualization.chart_type;
+    this.lastExtractionFields = this.props.model.extractionFields;
   },
 
   // ***********************
@@ -35,7 +36,7 @@ var KeenViz = React.createClass({
   // ***********************
 
   shouldComponentUpdate: function(nextProps, nextState) {
-    if (this.props.model.metadata.visualization.chart_type === "table") {
+    if (this.lastExtractionFields !== nextProps.props.model.extractionFields && nextProps.model.metadata.visualization.chart_type === 'table') {
       return true;
     }
     if (this.lastChartType !== nextProps.model.metadata.visualization.chart_type) {

@@ -84681,6 +84681,7 @@
 	
 	    this.lastDataTimestamp = this.props.model.dataTimestamp;
 	    this.lastChartType = this.props.model.metadata.visualization.chart_type;
+	    this.lastExtractionFields = this.props.model.extractionFields;
 	  },
 	
 	  // ***********************
@@ -84688,7 +84689,7 @@
 	  // ***********************
 	
 	  shouldComponentUpdate: function shouldComponentUpdate(nextProps, nextState) {
-	    if (this.props.model.metadata.visualization.chart_type === "table") {
+	    if (this.lastExtractionFields !== nextProps.props.model.extractionFields && nextProps.model.metadata.visualization.chart_type === 'table') {
 	      return true;
 	    }
 	    if (this.lastChartType !== nextProps.model.metadata.visualization.chart_type) {
@@ -87589,7 +87590,7 @@
 	      var result = this.props.model.response.result[0];
 	
 	      var keyList = Object.keys(result).map(function (key) {
-	        if (_typeof(result[key]) === "object") {
+	        if (result[key] && _typeof(result[key]) === "object") {
 	          return this._getExtractionKeysFromObject(key, result[key]);
 	        }
 	
@@ -87601,9 +87602,9 @@
 	  }, {
 	    key: '_getExtractionKeysFromObject',
 	    value: function _getExtractionKeysFromObject(prevKey, obj) {
-	      return _.map(Object.keys(obj), function (key) {
+	      return Object.keys(obj).map(function (key) {
 	        var keyStr = prevKey + '.' + key;
-	        if (_typeof(obj[key]) === 'object') {
+	        if (obj[key] && _typeof(obj[key]) === 'object') {
 	          return this._getExtractionKeysFromObject(keyStr, obj[key]);
 	        }
 	

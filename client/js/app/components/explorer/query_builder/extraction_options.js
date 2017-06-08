@@ -11,7 +11,7 @@ class ExtractionOptions extends React.Component {
     const result = this.props.model.response.result[0];
 
     const keyList = Object.keys(result).map(function(key) {
-      if (typeof result[key] === "object") {
+      if (result[key] && typeof result[key] === "object") {
         return this._getExtractionKeysFromObject(key, result[key]);
       }
 
@@ -22,9 +22,9 @@ class ExtractionOptions extends React.Component {
   }
 
   _getExtractionKeysFromObject(prevKey, obj) {
-    return _.map(Object.keys(obj), function(key) {
+    return Object.keys(obj).map(function(key) {
       const keyStr = prevKey + '.' + key;
-      if (typeof obj[key] === 'object') {
+      if (obj[key] && typeof obj[key] === 'object') {
         return this._getExtractionKeysFromObject(keyStr, obj[key]);
       }
 
