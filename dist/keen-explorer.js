@@ -84681,7 +84681,6 @@
 	
 	    this.lastDataTimestamp = this.props.model.dataTimestamp;
 	    this.lastChartType = this.props.model.metadata.visualization.chart_type;
-	    this.lastExtractionFields = this.props.model.extractionFields;
 	  },
 	
 	  // ***********************
@@ -84689,7 +84688,7 @@
 	  // ***********************
 	
 	  shouldComponentUpdate: function shouldComponentUpdate(nextProps, nextState) {
-	    if (this.lastExtractionFields !== nextProps.props.model.extractionFields && nextProps.model.metadata.visualization.chart_type === 'table') {
+	    if (this.props.model.extractionFields !== nextProps.model.extractionFields && nextProps.model.metadata.visualization.chart_type === 'table') {
 	      return true;
 	    }
 	    if (this.lastChartType !== nextProps.model.metadata.visualization.chart_type) {
