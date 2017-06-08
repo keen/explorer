@@ -65,4 +65,15 @@ module.exports = {
 
   },
 
+  with_actors: {
+
+    msg: '"with_actors" must be set to either true or false',
+
+    validate: function(model) {
+      if (FormatUtils.isNullOrUndefined(model.inverted)) return false;
+      return typeof model.inverted === 'boolean';
+    }
+
+  },
+
 };

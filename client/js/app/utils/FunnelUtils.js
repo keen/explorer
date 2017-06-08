@@ -11,7 +11,8 @@ var STEP_PARAMS = [
   'timezone',
   'filters',
   'optional',
-  'inverted'
+  'inverted',
+  'with_actors'
 ];
 module.exports = {
 
