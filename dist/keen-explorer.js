@@ -60673,7 +60673,7 @@
 	var FilterUtils = __webpack_require__(/*! ./FilterUtils */ 338);
 	var TimeframeUtils = __webpack_require__(/*! ./TimeframeUtils */ 341);
 	
-	var STEP_PARAMS = ['event_collection', 'actor_property', 'timeframe', 'interval', 'timezone', 'filters', 'optional', 'inverted'];
+	var STEP_PARAMS = ['event_collection', 'actor_property', 'timeframe', 'interval', 'timezone', 'filters', 'optional', 'inverted', 'with_actors'];
 	module.exports = {
 	
 	  stepJSON: function stepJSON(step) {
@@ -84592,9 +84592,7 @@
 	    var extractionFields = this.props.model.extractionFields;
 	
 	    if (ExplorerUtils.isJSONViz(this.props.model)) {
-	      var content = FormatUtils.prettyPrintJSON({
-	        result: this.props.model.response.result
-	      });
+	      var content = FormatUtils.prettyPrintJSON(this.props.model.response);
 	      chartContent = React.createElement('textarea', { ref: 'jsonViz', className: 'json-view', value: content, readOnly: true });
 	    } else if (ExplorerUtils.isTableViz(this.props.model) && extractionFields.length > 0) {
 	      var model = _.cloneDeep(this.props.model);
@@ -86331,6 +86329,17 @@
 	  inverted: {
 	
 	    msg: 'You must select whether this step is inverted.',
+	
+	    validate: function validate(model) {
+	      if (FormatUtils.isNullOrUndefined(model.inverted)) return false;
+	      return typeof model.inverted === 'boolean';
+	    }
+	
+	  },
+	
+	  with_actors: {
+	
+	    msg: '"with_actors" must be set to either true or false',
 	
 	    validate: function validate(model) {
 	      if (FormatUtils.isNullOrUndefined(model.inverted)) return false;

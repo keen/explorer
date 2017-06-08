@@ -73,9 +73,7 @@ var Chart = React.createClass({
     var extractionFields = this.props.model.extractionFields;
 
     if (ExplorerUtils.isJSONViz(this.props.model)) {
-      var content = FormatUtils.prettyPrintJSON({
-        result: this.props.model.response.result
-      });
+      var content = FormatUtils.prettyPrintJSON(this.props.model.response);
       chartContent = (
           <textarea ref='jsonViz' className="json-view" value={content} readOnly />
           );
