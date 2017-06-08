@@ -60712,6 +60712,7 @@
 	
 	    step.inverted = step.inverted === true || step.inverted === "true";
 	    step.optional = step.optional === true || step.optional === "true";
+	    step.with_actors = step.with_actors === true || step.with_actors === "true";
 	
 	    return step;
 	  }
@@ -85468,6 +85469,7 @@
 	    filters: [],
 	    optional: false,
 	    inverted: false,
+	    with_actors: false,
 	    active: false,
 	    isValid: true,
 	    errors: []
@@ -88136,6 +88138,12 @@
 	          { className: 'block-label' },
 	          React.createElement('input', { name: 'inverted', type: 'checkbox', checked: this.props.step.inverted, onChange: this.handleCheckboxChange }),
 	          ' Inverted Step'
+	        ),
+	        React.createElement(
+	          'label',
+	          { className: 'block-label' },
+	          React.createElement('input', { name: 'with_actors', type: 'checkbox', checked: this.props.step.with_actors, onChange: this.handleCheckboxChange }),
+	          ' With actors'
 	        ),
 	        React.createElement('hr', null),
 	        remove
