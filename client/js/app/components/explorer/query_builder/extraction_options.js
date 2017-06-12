@@ -8,7 +8,13 @@ const ExplorerActions = require('../../../actions/ExplorerActions');
 class ExtractionOptions extends React.Component {
 
   _getExtractionKeys() {
-    const schema = this.props.projectSchema[this.props.model.query.event_collection]
+    if (typeof this.props.projectSchema === "undefined") {
+      return false;
+    }
+    const schema = this.props.projectSchema[this.props.model.query.event_collection];
+    if (typeof schema === "undefined") {
+      return false;
+    }
 
     return schema.sortedProperties;
   }
@@ -33,7 +39,7 @@ class ExtractionOptions extends React.Component {
       );
     }
 
-    if (this.props.model.response && this.props.model.response.result && this.props.projectSchema) {
+    if (this._getExtractionKeys()) {
       extractionPropertiesFilter = <ReactMultiSelect
             name="filter-properties"
             model={this.props.model}

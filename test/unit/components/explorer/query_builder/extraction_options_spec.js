@@ -16,6 +16,7 @@ describe('components/explorer/query_builder/extraction_options', function() {
       email: model.query.email,
       model: model,
       isEmail: false,
+      projectSchema: {}
     };
     this.renderComponent = function(props) {
       var props = _.assign({}, this.defaultProps, props);
@@ -45,7 +46,7 @@ describe('components/explorer/query_builder/extraction_options', function() {
       model.query.analysis_type = 'extraction';
       model.query.event_collection = 'test collection';
       model.response = { result: [{'test_name': 12 }] };
-      const projectSchema = { 'test_collection': { sortedProperties: ["test_name"] } };
+      const projectSchema = { 'test collection': { sortedProperties: ["test_name"] } };
       const props = _.assign({}, this.component.props, { model: model, projectSchema: projectSchema });
 
       this.component = TestHelpers.renderComponent(ExtractionOptions, props);

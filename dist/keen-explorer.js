@@ -87566,7 +87566,13 @@
 	  _createClass(ExtractionOptions, [{
 	    key: '_getExtractionKeys',
 	    value: function _getExtractionKeys() {
+	      if (typeof this.props.projectSchema === "undefined") {
+	        return false;
+	      }
 	      var schema = this.props.projectSchema[this.props.model.query.event_collection];
+	      if (typeof schema === "undefined") {
+	        return false;
+	      }
 	
 	      return schema.sortedProperties;
 	    }
@@ -87588,7 +87594,7 @@
 	        latestField = React.createElement(LatestField, { latest: this.props.latest, handleChange: this.props.handleChange });
 	      }
 	
-	      if (this.props.model.response && this.props.model.response.result && this.props.projectSchema) {
+	      if (this._getExtractionKeys()) {
 	        extractionPropertiesFilter = React.createElement(ReactMultiSelect, {
 	          name: 'filter-properties',
 	          model: this.props.model,
