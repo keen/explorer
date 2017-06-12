@@ -8,28 +8,9 @@ const ExplorerActions = require('../../../actions/ExplorerActions');
 class ExtractionOptions extends React.Component {
 
   _getExtractionKeys() {
-    const result = this.props.model.response.result[0];
+    const schema = this.props.projectSchema[this.props.model.query.event_collection]
 
-    const keyList = Object.keys(result).map(function(key) {
-      if (result[key] && typeof result[key] === "object") {
-        return this._getExtractionKeysFromObject(key, result[key]);
-      }
-
-      return key;
-    }.bind(this));
-
-    return [].concat(keyList);
-  }
-
-  _getExtractionKeysFromObject(prevKey, obj) {
-    return Object.keys(obj).map(function(key) {
-      const keyStr = prevKey + '.' + key;
-      if (obj[key] && typeof obj[key] === 'object') {
-        return this._getExtractionKeysFromObject(keyStr, obj[key]);
-      }
-
-      return keyStr;
-    }.bind(this));
+    return schema.sortedProperties;
   }
 
   render(){
@@ -52,7 +33,7 @@ class ExtractionOptions extends React.Component {
       );
     }
 
-    if (this.props.model.response && this.props.model.response.result) {
+    if (this.props.model.response && this.props.model.response.result && this.props.projectSchema) {
       extractionPropertiesFilter = <ReactMultiSelect
             name="filter-properties"
             model={this.props.model}

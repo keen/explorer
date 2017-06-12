@@ -43,9 +43,10 @@ describe('components/explorer/query_builder/extraction_options', function() {
     it('shows when an extraction model is loaded', function() {
       let model = TestHelpers.createExplorerModel();
       model.query.analysis_type = 'extraction';
-      model.response = { result: [{'test': 12 }] };
-      const props = _.assign({}, this.component.props, { model: model });
-      this.component = TestHelpers.renderComponent(ExtractionOptions, props);
+      model.query.event_collection = 'test collection';
+      model.response = { result: [{'test_name': 12 }] };
+      const projectSchema = { 'test_collection': { sortedProperties: ["test_name"] } };
+      const props = _.assign({}, this.component.props, { model: model, projectSchema: projectSchema });
 
       this.component = TestHelpers.renderComponent(ExtractionOptions, props);
 

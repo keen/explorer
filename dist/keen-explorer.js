@@ -86619,6 +86619,7 @@
 	      return React.createElement(ExtractionOptions, { latest: this.props.model.query.latest,
 	        email: this.props.model.query.email,
 	        model: this.props.model,
+	        projectSchema: this.props.project.schema,
 	        isEmail: ExplorerUtils.isEmailExtraction(this.props.model),
 	        handleChange: this.handleSelectionWithEvent,
 	        setExtractionType: this.props.setExtractionType });
@@ -87557,8 +87558,6 @@
 
 	'use strict';
 	
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -87586,29 +87585,9 @@
 	  _createClass(ExtractionOptions, [{
 	    key: '_getExtractionKeys',
 	    value: function _getExtractionKeys() {
-	      var result = this.props.model.response.result[0];
+	      var schema = this.props.projectSchema[this.props.model.query.event_collection];
 	
-	      var keyList = Object.keys(result).map(function (key) {
-	        if (result[key] && _typeof(result[key]) === "object") {
-	          return this._getExtractionKeysFromObject(key, result[key]);
-	        }
-	
-	        return key;
-	      }.bind(this));
-	
-	      return [].concat(keyList);
-	    }
-	  }, {
-	    key: '_getExtractionKeysFromObject',
-	    value: function _getExtractionKeysFromObject(prevKey, obj) {
-	      return Object.keys(obj).map(function (key) {
-	        var keyStr = prevKey + '.' + key;
-	        if (obj[key] && _typeof(obj[key]) === 'object') {
-	          return this._getExtractionKeysFromObject(keyStr, obj[key]);
-	        }
-	
-	        return keyStr;
-	      }.bind(this));
+	      return schema.sortedProperties;
 	    }
 	  }, {
 	    key: 'render',
@@ -87628,7 +87607,7 @@
 	        latestField = React.createElement(LatestField, { latest: this.props.latest, handleChange: this.props.handleChange });
 	      }
 	
-	      if (this.props.model.response && this.props.model.response.result) {
+	      if (this.props.model.response && this.props.model.response.result && this.props.projectSchema) {
 	        extractionPropertiesFilter = React.createElement(ReactMultiSelect, {
 	          name: 'filter-properties',
 	          model: this.props.model,
