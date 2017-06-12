@@ -12,11 +12,11 @@ describe('utils/TimeframeUtils', function () {
         start: new Date(moment().subtract(1, 'days').startOf('day').format()),
         end: new Date(moment().startOf('day').format())
       };
-      var stub = sinon.stub(TimeframeUtils.timeframeBuilders, 'absolute_timeframe');
-      
+      var stub = sinon.stub(TimeframeUtils.timeframeBuilders, 'absolute');
+
       TimeframeUtils.getTimeframe(time, 'US/Hawaii');
       assert.isTrue(stub.calledOnce);
-      TimeframeUtils.timeframeBuilders.absolute_timeframe.restore();
+      TimeframeUtils.timeframeBuilders.absolute.restore();
     });
     it('should call the right timeframe builder for relative timeframes', function () {
       var time = {
@@ -24,16 +24,16 @@ describe('utils/TimeframeUtils', function () {
         amount: '1',
         sub_timeframe: 'days'
       };
-      var stub = sinon.stub(TimeframeUtils.timeframeBuilders, 'relative_timeframe');
+      var stub = sinon.stub(TimeframeUtils.timeframeBuilders, 'relative');
 
       TimeframeUtils.getTimeframe(time);
       assert.isTrue(stub.calledOnce);
-      TimeframeUtils.timeframeBuilders.relative_timeframe.restore();
+      TimeframeUtils.timeframeBuilders.relative.restore();
     });
   });
 
   describe('timeframeBuilders', function () {
-    describe('absolute_timeframe', function () {
+    describe('absolute', function () {
       it('should properly build a timeframe object', function () {
         var time = {
           start: new Date(moment().subtract(1, 'days').startOf('day').format()),
@@ -42,17 +42,16 @@ describe('utils/TimeframeUtils', function () {
         var timeframe = TimeframeUtils.getTimeframe(time, 'US/Hawaii');
 
         var expectedFormat = 'YYYY-MM-DDTHH:mm:ss.SSS';
-        var expectedTimezone = '-10:00'
-        var expectedStart = moment(new Date(time.start)).format(expectedFormat) + expectedTimezone;
-        var expectedEnd = moment(new Date(time.end)).format(expectedFormat) + expectedTimezone;
-        
+        var expectedStart = moment(new Date(time.start)).format(expectedFormat);
+        var expectedEnd = moment(new Date(time.end)).format(expectedFormat);
+
         assert.deepEqual(timeframe, {
           start: expectedStart,
           end: expectedEnd
         });
       });
     });
-    describe('relative_timeframe', function () {
+    describe('relative', function () {
       var time = {
         relativity: 'this',
         amount: '1',
@@ -70,13 +69,19 @@ describe('utils/TimeframeUtils', function () {
         start: moment(new Date("June 7, 2015 1:00 PM")).format('YYYY-MM-DDTHH:mm:ss.SSS')+"-10:00",
         end: moment(new Date("June 8, 2015 2:00 PM")).format('YYYY-MM-DDTHH:mm:ss.SSS')+"-10:00"
       };
-      assert.deepEqual(TimeframeUtils.unpackTimeframeParam(timeframe), {
-        timezone: 'US/Hawaii',
-        time: {
-          start: TimeframeUtils.convertDateToUTC(new Date(moment(new Date("June 7, 2015 1:00 PM")).format('YYYY-MM-DDTHH:mm:ss.SSS'))),
-          end: TimeframeUtils.convertDateToUTC(new Date(moment(new Date("June 8, 2015 2:00 PM")).format('YYYY-MM-DDTHH:mm:ss.SSS')))
+
+      console.log(timeframe.start);
+
+      assert.deepEqual(
+        TimeframeUtils.unpackTimeframeParam(timeframe, 'US/Hawaii'),
+        {
+          timezone: 'US/Hawaii',
+          time: {
+            start: "2015-06-07T13:00:00.000",
+            end: "2015-06-08T14:00:00.000"
+          }
         }
-      });
+      );
     });
     it('properly unpacks a relative timeframe', function () {
       var unpacked = TimeframeUtils.unpackTimeframeParam('this_8_days', 'Europe/London');
@@ -114,11 +119,11 @@ describe('utils/TimeframeUtils', function () {
 
     describe('invalid timeframes', function() {
       it('throws error for invalid time object', function() {
-        expect(TimeframeUtils.timeframeType.bind(window, {bee: 'boop'})).to.throw("Invalid time value");
+        expect(TimeframeUtils.timeframeType.bind(window, {bee: 'boop'})).to.throw("Invalid timeframe type: invalid time value.");
       });
 
       it('throws errors for non-object time objects', function() {
-        expect(TimeframeUtils.timeframeType.bind(window, 'this_3_days')).to.throw("Invalid time value");
+        expect(TimeframeUtils.timeframeType.bind(window, 'this_3_days')).to.throw("Invalid timeframe type: not a plain object.");
       })
     });
   });
@@ -148,21 +153,10 @@ describe('utils/TimeframeUtils', function () {
       TimeframeUtils.timeframeType.restore();
     });
 
-    it('returns a null timezone for absolute timeframe', function () {
-      var stub = sinon.stub(TimeframeUtils, 'timeframeType').returns('absolute');
-
-      assert.deepPropertyVal(TimeframeUtils.getTimeParameters({
-        relativity: 'this',
-        amount: 1,
-        sub_timeframe: 'days'
-      }, 'US/Hawaii'), 'timezone', null);
-
-      TimeframeUtils.timeframeType.restore();
-    });
-    it('returns nulls if passed undefined values', function () {
+    it('returns null timeframe with default timezone if passed undefined values', function () {
       assert.deepEqual(TimeframeUtils.getTimeParameters(), {
         timeframe: null,
-        timezone: null
+        timezone: 'UTC'
       });
     });
   });

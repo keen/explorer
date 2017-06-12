@@ -100,7 +100,7 @@
 	var NoticeActions = __webpack_require__(/*! ./actions/NoticeActions */ 404);
 	var ExplorerUtils = __webpack_require__(/*! ./utils/ExplorerUtils */ 204);
 	var FormatUtils = __webpack_require__(/*! ./utils/FormatUtils */ 335);
-	var RunValidations = __webpack_require__(/*! ./utils/RunValidations */ 340).run;
+	var RunValidations = __webpack_require__(/*! ./utils/RunValidations */ 343).run;
 	var ExplorerValidations = __webpack_require__(/*! ./validations/ExplorerValidations */ 401);
 	var ExplorerStore = __webpack_require__(/*! ./stores/ExplorerStore */ 400);
 	var ProjectStore = __webpack_require__(/*! ./stores/ProjectStore */ 350);
@@ -198,7 +198,7 @@
 	      ExplorerActions.setActive(id);
 	      AppStateActions.update({ ready: true });
 	    } else {
-	      throw new Error("There was a problem fetching a saved query");
+	      console.error("There was a problem fetching a saved query: ", err.stack);
 	    }
 	  }
 	};
@@ -40018,9 +40018,9 @@
 	var moment = __webpack_require__(/*! moment */ 218);
 	var FormatUtils = __webpack_require__(/*! ./FormatUtils */ 335);
 	var FunnelUtils = __webpack_require__(/*! ./FunnelUtils */ 337);
-	var ProjectUtils = __webpack_require__(/*! ./ProjectUtils */ 342);
+	var ProjectUtils = __webpack_require__(/*! ./ProjectUtils */ 340);
 	var FilterUtils = __webpack_require__(/*! ./FilterUtils */ 338);
-	var TimeframeUtils = __webpack_require__(/*! ./TimeframeUtils */ 341);
+	var TimeframeUtils = __webpack_require__(/*! ./TimeframeUtils */ 339);
 	
 	var QUERY_PARAMS = ['event_collection', 'analysis_type', 'target_property', 'percentile', 'group_by', 'timeframe', 'interval', 'timezone', 'filters', 'steps', 'email', 'latest', 'property_names'];
 	
@@ -40099,7 +40099,7 @@
 	    // Add filters
 	    if (params.filters) {
 	      params.filters = _.map(params.filters, function (filter) {
-	        return FilterUtils.queryJSON(filter, TimeframeUtils.getTimezoneOffset(params.timezone));
+	        return FilterUtils.queryJSON(filter);
 	      });
 	    }
 	
@@ -59548,12 +59548,12 @@
 	    return moment(dateString, ISO_DATE_FORMAT, true).isValid();
 	  },
 	
-	  formatISOTimeNoTimezone: function formatISOTimeNoTimezone(time) {
-	    return moment(new Date(time)).format('YYYY-MM-DDTHH:mm:ss.SSS');
+	  convertDateToUTC: function convertDateToUTC(date) {
+	    return new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds());
 	  },
 	
-	  formatISOTimeAddOffset: function formatISOTimeAddOffset(time, offset) {
-	    return module.exports.formatISOTimeNoTimezone(time) + offset;
+	  formatISOTimeNoTimezone: function formatISOTimeNoTimezone(time) {
+	    return moment(time).format('YYYY-MM-DDTHH:mm:ss.SSS');
 	  },
 	
 	  generateRandomId: function generateRandomId(prefix) {
@@ -60671,7 +60671,7 @@
 	var _ = __webpack_require__(/*! lodash */ 28);
 	var FormatUtils = __webpack_require__(/*! ./FormatUtils */ 335);
 	var FilterUtils = __webpack_require__(/*! ./FilterUtils */ 338);
-	var TimeframeUtils = __webpack_require__(/*! ./TimeframeUtils */ 341);
+	var TimeframeUtils = __webpack_require__(/*! ./TimeframeUtils */ 339);
 	
 	var STEP_PARAMS = ['event_collection', 'actor_property', 'timeframe', 'interval', 'timezone', 'filters', 'optional', 'inverted'];
 	module.exports = {
@@ -60730,9 +60730,10 @@
 	var _ = __webpack_require__(/*! lodash */ 28);
 	var moment = __webpack_require__(/*! moment */ 218);
 	var S = __webpack_require__(/*! string */ 336);
+	var TimeframeUtils = __webpack_require__(/*! ./TimeframeUtils */ 339);
 	var FormatUtils = __webpack_require__(/*! ./FormatUtils */ 335);
-	var FilterValidations = __webpack_require__(/*! ../validations/FilterValidations */ 339);
-	var RunValidations = __webpack_require__(/*! ./RunValidations */ 340);
+	var FilterValidations = __webpack_require__(/*! ../validations/FilterValidations */ 342);
+	var RunValidations = __webpack_require__(/*! ./RunValidations */ 343);
 	
 	function exists(value) {
 	  return !_.isNull(value) && !_.isUndefined(value);
@@ -60804,7 +60805,7 @@
 	  /**
 	   * Gets the type for the given filter's property_value. This value should be raw, as in it should not have
 	   * been put through getCoercedValue yet. So for example, if it's a list type, it should be a string with the
-	   * expected list format: "\a word\"", '1', '56', \""another word\"" 
+	   * expected list format: "\a word\"", '1', '56', \""another word\""
 	   * @param  {Object} filter The filter to get the property value coercion type for.
 	   * @return {String}        The determined type for the given property value.
 	   */
@@ -60848,7 +60849,7 @@
 	    return complete;
 	  },
 	
-	  queryJSON: function queryJSON(filter, timezoneOffset) {
+	  queryJSON: function queryJSON(filter) {
 	    RunValidations.run(FilterValidations, filter);
 	    if (!filter.isValid) return {};
 	
@@ -60856,7 +60857,7 @@
 	    attrs.property_value = module.exports.getCoercedValue(filter);
 	
 	    if (attrs.coercion_type === 'Datetime') {
-	      attrs.property_value = FormatUtils.formatISOTimeAddOffset(attrs.property_value, timezoneOffset);
+	      attrs.property_value = FormatUtils.formatISOTimeNoTimezone(attrs.property_value);
 	    }
 	    if (attrs.coercion_type === 'List') {
 	      attrs.property_value = FormatUtils.parseList(attrs.property_value);
@@ -60882,10 +60883,8 @@
 	      filter = _.assign({}, filter, module.exports.initList(filter));
 	    }
 	    filter.property_value = module.exports.getCoercedValue(filter);
-	    // Add the local offset back to the datetime to get it back to UTC.
 	    if (filter.coercion_type === 'Datetime') {
-	      var offset = new Date(filter.property_value).getTimezoneOffset();
-	      filter.property_value = new Date(moment(new Date(filter.property_value)).add(offset, 'minutes').format()).toString();
+	      filter.property_value = FormatUtils.convertDateToUTC(filter.property_value);
 	    }
 	    return filter;
 	  },
@@ -60910,6 +60909,253 @@
 
 /***/ }),
 /* 339 */
+/*!***********************************************!*\
+  !*** ./client/js/app/utils/TimeframeUtils.js ***!
+  \***********************************************/
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+	
+	var _ = __webpack_require__(/*! lodash */ 28);
+	var ProjectUtils = __webpack_require__(/*! ./ProjectUtils */ 340);
+	var FormatUtils = __webpack_require__(/*! ./FormatUtils */ 335);
+	
+	module.exports = {
+	
+	  /**
+	   * Takes a time object and returns a string representing the timeframe type (absolute or relative)
+	   * @param  {Object} time The time object
+	   * @return {String} The type of timeframe, 'absolute' or 'relative'
+	   */
+	  timeframeType: function timeframeType(time) {
+	    if (_.isUndefined(time)) {
+	      return null;
+	    } else if (!_.isPlainObject(time)) {
+	      throw new Error('Invalid timeframe type: not a plain object.');
+	    } else if (_.has(time, 'start') || _.has(time, 'end')) {
+	      return 'absolute';
+	    } else if (_.has(time, 'relativity') && _.has(time, 'amount') && _.has(time, 'sub_timeframe')) {
+	      return 'relative';
+	    } else {
+	      throw new Error('Invalid timeframe type: invalid time value.');
+	    }
+	  },
+	
+	  getTimezoneOffset: function getTimezoneOffset(timezone) {
+	    var zone = _.find(ProjectUtils.getConstant('TIMEZONES'), { value: timezone });
+	    return zone ? zone.offset : '+00:00';
+	  },
+	
+	  timeframeBuilders: {
+	
+	    absolute: function absolute(time) {
+	      if (time && time.start && time.end) {
+	        return {
+	          start: FormatUtils.formatISOTimeNoTimezone(time.start),
+	          end: FormatUtils.formatISOTimeNoTimezone(time.end)
+	        };
+	      }
+	    },
+	
+	    relative: function relative(time) {
+	      if (time && time.relativity && time.amount && time.sub_timeframe) {
+	        return [time.relativity, time.amount, time.sub_timeframe].join('_');
+	      }
+	    }
+	
+	  },
+	
+	  getTimeframe: function getTimeframe(time) {
+	    var timeframeBuilder = module.exports.timeframeBuilders[module.exports.timeframeType(time)];
+	    if (typeof timeframeBuilder === 'undefined') return "";
+	    return timeframeBuilder(time);
+	  },
+	
+	  getTimeParameters: function getTimeParameters(timeframe, timezone) {
+	    return {
+	      timeframe: timeframe ? module.exports.getTimeframe(timeframe) : null,
+	      timezone: timezone || ProjectUtils.getConstant('DEFAULT_TIMEZONE')
+	    };
+	  },
+	
+	  /**
+	   * Takes a URL encoded timerame string or object and returns a time object that looks how the Explorer store wants
+	   * it to
+	   * @param  {String} timeframe
+	   * @return {Object}
+	   * Return structure:
+	   * {
+	   *  time: {an Object, either containing a deconstructed absolute or relative timeframe}
+	   * }
+	   */
+	  unpackTimeframeParam: function unpackTimeframeParam(timeframe, timezone) {
+	    if ((typeof timeframe === 'undefined' ? 'undefined' : _typeof(timeframe)) === 'object') {
+	      return module.exports.unpackAbsoluteTimeframe(timeframe, timezone);
+	    } else if (typeof timeframe === 'string') {
+	      return module.exports.unpackRelativeTimeframe(timeframe, timezone);
+	    }
+	  },
+	
+	  unpackAbsoluteTimeframe: function unpackAbsoluteTimeframe(timeframe, timezone) {
+	    var formattedValue = {
+	      time: {},
+	      timezone: null
+	    };
+	
+	    if (!timezone || ProjectUtils.getConstant('TIMEZONES').indexOf(timezone) === -1) {
+	      formattedValue.timezone = 'UTC';
+	    } else {
+	      formattedValue.timezone = timezone;
+	    }
+	
+	    var startVal = timeframe.start ? timeframe.start.substring(0, 19) : "";
+	    formattedValue.time.start = FormatUtils.formatISOTimeNoTimezone(startVal);
+	
+	    var endVal = timeframe.end ? timeframe.end.substring(0, 19) : "";
+	    formattedValue.time.end = FormatUtils.formatISOTimeNoTimezone(endVal);
+	
+	    return formattedValue;
+	  },
+	
+	  unpackRelativeTimeframe: function unpackRelativeTimeframe(timeframe, timezone) {
+	    var split = timeframe.split('_');
+	    return {
+	      time: {
+	        relativity: split[0],
+	        amount: split[1],
+	        sub_timeframe: split[2]
+	      },
+	      timezone: timezone
+	    };
+	  }
+	
+	};
+
+/***/ }),
+/* 340 */
+/*!*********************************************!*\
+  !*** ./client/js/app/utils/ProjectUtils.js ***!
+  \*********************************************/
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var _ = __webpack_require__(/*! lodash */ 28);
+	var DateUtils = __webpack_require__(/*! ./DateUtils */ 341);
+	var FormatUtils = __webpack_require__(/*! ./FormatUtils.js */ 335);
+	
+	// ***********************
+	// ** Project Constants
+	// ***********************
+	
+	var CONSTANTS = {
+	
+	  DEFAULT_TIMEZONE: 'UTC',
+	
+	  ANALYSIS_TYPES: ['sum', 'count', 'count_unique', 'minimum', 'maximum', 'average', 'select_unique', 'extraction', 'percentile', 'median', 'funnel'],
+	
+	  ABSOLUTE_INTERVAL_TYPES: [{ name: 'minutely', value: 'minutely' }, { name: 'hourly', value: 'hourly' }, { name: 'daily', value: 'daily' }, { name: 'weekly', value: 'weekly' }, { name: 'monthly', value: 'monthly' }, { name: 'yearly', value: 'yearly' }],
+	
+	  RELATIVE_INTERVAL_TYPES: [{ name: 'minutes', value: 'minutes' }, { name: 'hours', value: 'hours' }, { name: 'days', value: 'days' }, { name: 'weeks', value: 'weeks' }, { name: 'months', value: 'months' }, { name: 'years', value: 'years' }],
+	
+	  TIMEZONES: ['UTC', 'Europe/London', 'Africa/Casablanca', 'Africa/Nairobi', 'Asia/Dubai', 'America/Sao_Paulo', 'US/Eastern', 'US/Central', 'US/Mountain', 'US/Pacific', 'US/Alaska', 'US/Hawaii', 'Europe/Paris', 'Europe/Amsterdam', 'Europe/Stockholm', 'Europe/Prague', 'Asia/Istanbul', 'Europe/Istanbul', 'Europe/Copenhagen', 'Asia/Jakarta', 'Asia/Singapore', 'Australia/Perth', 'Asia/Tokyo', 'Australia/Sydney', 'Pacific/Auckland'],
+	
+	  FILTER_OPERATORS: [{ name: '= Equal to',
+	    value: 'eq',
+	    canBeCoeredTo: ['String', 'Number', 'Null', 'List', 'Boolean', 'Datetime']
+	  }, { name: '\u2260 Not equal to',
+	    value: 'ne',
+	    canBeCoeredTo: ['String', 'Number', 'Null', 'List', 'Boolean', 'Datetime']
+	  }, { name: '> Greater than',
+	    value: 'gt',
+	    canBeCoeredTo: ['Number', 'Null', 'Datetime', 'String']
+	  }, { name: '\u2265 Greater than or equal to',
+	    value: 'gte',
+	    canBeCoeredTo: ['Number', 'Null', 'Datetime', 'String']
+	  }, { name: '< Less than',
+	    value: 'lt',
+	    canBeCoeredTo: ['Number', 'Null', 'Datetime', 'String']
+	  }, { name: '\u2264 Less than or equal to',
+	    value: 'lte',
+	    canBeCoeredTo: ['Number', 'Null', 'Datetime', 'String']
+	  }, { name: '\u2203 Property exists',
+	    value: 'exists',
+	    canBeCoeredTo: ['Boolean']
+	  }, { name: '\u229A String contains',
+	    value: 'contains',
+	    canBeCoeredTo: ['String', 'Null']
+	  }, { name: '\u2349 String does not contain',
+	    value: 'not_contains',
+	    canBeCoeredTo: ['String', 'Null']
+	  }, { name: '\u29C7 Matches any value in a list',
+	    value: 'in',
+	    canBeCoeredTo: ['List']
+	  }, { name: '\u2690 Within a given radius (geo)',
+	    value: 'within',
+	    canBeCoeredTo: ['Geo']
+	  }]
+	};
+	
+	module.exports = {
+	
+	  getConstant: function getConstant(name) {
+	    return CONSTANTS[name];
+	  },
+	
+	  eventsUrl: function eventsUrl(client) {
+	    return client.url('events', {
+	      api_key: client.config.masterKey
+	    });
+	  },
+	
+	  getEventCollectionPropertyNames: function getEventCollectionPropertyNames(project, collection) {
+	    return project.schema[collection] ? project.schema[collection].sortedProperties : [];
+	  },
+	
+	  getPropertyType: function getPropertyType(project, collection, propertyName) {
+	    var collection = project.schema[collection];
+	    return collection ? collection.properties[propertyName] : null;
+	  },
+	
+	  getLocalTimezoneOffset: function getLocalTimezoneOffset(date) {
+	    var offset = new Date().getTimezoneOffset();
+	    if (DateUtils.isDST()) {
+	      offset += 60;
+	    }
+	    var strSign = offset > 0 ? '-' : '+';
+	    var strHours = FormatUtils.padLeft(Math.floor(offset / 60));
+	    var strMinutes = FormatUtils.padLeft(offset % 60);
+	    var found = _.find(CONSTANTS.TIMEZONES, function (timezone) {
+	      return timezone.offset === strSign + strHours + ':' + strMinutes;
+	    });
+	    return found ? found.value : offset * -60;
+	  }
+	
+	};
+
+/***/ }),
+/* 341 */
+/*!******************************************!*\
+  !*** ./client/js/app/utils/DateUtils.js ***!
+  \******************************************/
+/***/ (function(module, exports) {
+
+	"use strict";
+	
+	module.exports = {
+	  isDST: function isDST() {
+	    var date = new Date();
+	    var jan = new Date(date.getFullYear(), 0, 1);
+	    var jul = new Date(date.getFullYear(), 6, 1);
+	    var stdOffset = Math.max(jan.getTimezoneOffset(), jul.getTimezoneOffset());
+	    return date.getTimezoneOffset() < stdOffset;
+	  }
+	};
+
+/***/ }),
+/* 342 */
 /*!********************************************************!*\
   !*** ./client/js/app/validations/FilterValidations.js ***!
   \********************************************************/
@@ -60918,7 +61164,7 @@
 	'use strict';
 	
 	var _ = __webpack_require__(/*! lodash */ 28);
-	var RunValidations = __webpack_require__(/*! ../utils/RunValidations */ 340).run;
+	var RunValidations = __webpack_require__(/*! ../utils/RunValidations */ 343).run;
 	var FormatUtils = __webpack_require__(/*! ../utils/FormatUtils */ 335);
 	
 	function isGeoCoercionType(model) {
@@ -61020,7 +61266,7 @@
 	};
 
 /***/ }),
-/* 340 */
+/* 343 */
 /*!***********************************************!*\
   !*** ./client/js/app/utils/RunValidations.js ***!
   \***********************************************/
@@ -61055,271 +61301,6 @@
 	    }
 	  }
 	
-	};
-
-/***/ }),
-/* 341 */
-/*!***********************************************!*\
-  !*** ./client/js/app/utils/TimeframeUtils.js ***!
-  \***********************************************/
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-	
-	var _ = __webpack_require__(/*! lodash */ 28);
-	var ProjectUtils = __webpack_require__(/*! ./ProjectUtils */ 342);
-	var FormatUtils = __webpack_require__(/*! ./FormatUtils */ 335);
-	
-	module.exports = {
-	
-	  convertDateToUTC: function convertDateToUTC(date) {
-	    return new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds());
-	  },
-	
-	  /**
-	   * Takes a time object and returns a string representing the timeframe type (absolute or relative)
-	   * @param  {Object} time The time object
-	   * @return {String} The type of timeframe, 'absolute' or 'relative'
-	   */
-	  timeframeType: function timeframeType(time) {
-	    var badTimeTypeError = new Error('Invalid time value');
-	
-	    if (_.isUndefined(time)) {
-	      return null;
-	    } else if (!_.isPlainObject(time)) {
-	      throw badTimeTypeError;
-	    } else if (_.has(time, 'start') && _.has(time, 'end')) {
-	      return 'absolute';
-	    } else if (_.has(time, 'relativity') && _.has(time, 'amount') && _.has(time, 'sub_timeframe')) {
-	      return 'relative';
-	    } else {
-	      throw badTimeTypeError;
-	    }
-	  },
-	
-	  getTimezoneOffset: function getTimezoneOffset(timezone) {
-	    var zone = _.find(ProjectUtils.getConstant('TIMEZONES'), { value: timezone });
-	    return zone ? zone.offset : '+00:00';
-	  },
-	
-	  timeframeBuilders: {
-	
-	    absolute_timeframe: function absolute_timeframe(time, timezone) {
-	      if (time && time.start && time.end) {
-	        var offset = module.exports.getTimezoneOffset(timezone);
-	        return {
-	          start: FormatUtils.formatISOTimeNoTimezone(time.start) + offset,
-	          end: FormatUtils.formatISOTimeNoTimezone(time.end) + offset
-	        };
-	      }
-	    },
-	
-	    relative_timeframe: function relative_timeframe(time) {
-	      if (time && time.relativity && time.amount && time.sub_timeframe) {
-	        return [time.relativity, time.amount, time.sub_timeframe].join('_');
-	      }
-	    }
-	
-	  },
-	
-	  getTimeframe: function getTimeframe(time, timezone) {
-	    var timeframeType = module.exports.timeframeType(time);
-	    var timeframeBuilder = module.exports.timeframeBuilders[timeframeType + '_timeframe'];
-	
-	    if (typeof timeframeBuilder === 'undefined') {
-	      return "";
-	    } else {
-	      return timeframeBuilder(time, timezone);
-	    }
-	  },
-	
-	  getTimeParameters: function getTimeParameters(time, timezone) {
-	    return {
-	      timeframe: time ? module.exports.getTimeframe(time, timezone) : null,
-	      timezone: module.exports.timeframeType(time) === 'relative' ? timezone : null
-	    };
-	  },
-	
-	  /**
-	   * Takes a URL encoded timerame string or object and returns a time object that looks how the Explorer store wants
-	   * it to
-	   * @param  {String} timeframe
-	   * @return {Object}
-	   * Return structure:
-	   * {
-	   *  time: {an Object, either containing a deconstructed absolute or relative timeframe}
-	   * }
-	   */
-	  unpackTimeframeParam: function unpackTimeframeParam(timeframe, timezone) {
-	    var timeFormat = 'h:mm A';
-	    var dateFormat = 'MMM D, YYYY';
-	
-	    if ((typeof timeframe === 'undefined' ? 'undefined' : _typeof(timeframe)) === 'object') {
-	      var offset = timeframe.start.substring(timeframe.start.length, timeframe.start.length - 6);
-	
-	      if (timeframe.start) {
-	        timeframe.start = timeframe.start.substring(0, timeframe.start.length - 6);
-	      } else {
-	        timeframe.start = Date.now();
-	      }
-	
-	      if (timeframe.end) {
-	        timeframe.end = timeframe.end.substring(0, timeframe.end.length - 6);
-	      } else {
-	        timeframe.end = Date.now();
-	      }
-	
-	      var zone = _.find(ProjectUtils.getConstant('TIMEZONES'), { offset: offset });
-	      if (zone) {
-	        timezone = zone.value;
-	      } else if (!zone && !timezone) {
-	        throw new Error("A timezone was not part of the datestring for the timeframe with a start of: " + timeframe.start + ". There also was no timezone parameter provided. You must provide one or the other.");
-	      }
-	      return {
-	        time: {
-	          start: module.exports.convertDateToUTC(new Date(timeframe.start)),
-	          end: module.exports.convertDateToUTC(new Date(timeframe.end))
-	        },
-	        timezone: timezone
-	      };
-	    } else if (typeof timeframe === 'string') {
-	      var split = timeframe.split('_');
-	      return {
-	        time: {
-	          relativity: split[0],
-	          amount: split[1],
-	          sub_timeframe: split[2]
-	        },
-	        timezone: timezone
-	      };
-	    }
-	  }
-	
-	};
-
-/***/ }),
-/* 342 */
-/*!*********************************************!*\
-  !*** ./client/js/app/utils/ProjectUtils.js ***!
-  \*********************************************/
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var _ = __webpack_require__(/*! lodash */ 28);
-	var DateUtils = __webpack_require__(/*! ./DateUtils */ 343);
-	var FormatUtils = __webpack_require__(/*! ./FormatUtils.js */ 335);
-	
-	// ***********************
-	// ** Project Constants
-	// ***********************
-	
-	var CONSTANTS = {
-	
-	  DEFAULT_TIMEZONE: 'UTC',
-	
-	  ANALYSIS_TYPES: ['sum', 'count', 'count_unique', 'minimum', 'maximum', 'average', 'select_unique', 'extraction', 'percentile', 'median', 'funnel'],
-	
-	  ABSOLUTE_INTERVAL_TYPES: [{ name: 'minutely', value: 'minutely' }, { name: 'hourly', value: 'hourly' }, { name: 'daily', value: 'daily' }, { name: 'weekly', value: 'weekly' }, { name: 'monthly', value: 'monthly' }, { name: 'yearly', value: 'yearly' }],
-	
-	  RELATIVE_INTERVAL_TYPES: [{ name: 'minutes', value: 'minutes' }, { name: 'hours', value: 'hours' }, { name: 'days', value: 'days' }, { name: 'weeks', value: 'weeks' }, { name: 'months', value: 'months' }, { name: 'years', value: 'years' }],
-	
-	  TIMEZONES: [{ name: 'UTC Time (GMT+00:00)', value: 'UTC', offset: '+00:00' }, { name: 'Europe/London (GMT+00:00)', value: 'Europe/London', offset: '+00:00' }, { name: 'Africa/Casablanca (GMT+00:00)', value: 'Africa/Casablanca', offset: '+00:00' }, { name: 'Africa/Nairobi (GMT+03:00)', value: 'Africa/Nairobi', offset: '+03:00' }, { name: 'Asia/Dubai (GMT+04:00)', value: 'Asia/Dubai', offset: '+04:00' }, { name: 'America/Sao Paulo (GMT-03:00)', value: 'America/Sao_Paulo', offset: '-03:00' }, { name: 'US/Eastern (GMT-05:00)', value: 'US/Eastern', offset: '-05:00' }, { name: 'US/Central (GMT-06:00)', value: 'US/Central', offset: '-06:00' }, { name: 'US/Mountain (GMT-07:00)', value: 'US/Mountain', offset: '-07:00' }, { name: 'US/Pacific (GMT-08:00)', value: 'US/Pacific', offset: '-08:00' }, { name: 'US/Alaska (GMT-09:00)', value: 'US/Alaska', offset: '-09:00' }, { name: 'US/Hawaii (GMT-10:00)', value: 'US/Hawaii', offset: '-10:00' }, { name: 'Europe/Paris (GMT+01:00)', value: 'Europe/Paris', offset: '+01:00' }, { name: 'Europe/Amsterdam (GMT+01:00)', value: 'Europe/Amsterdam', offset: '+01:00' }, { name: 'Europe/Stockholm (GMT+01:00)', value: 'Europe/Stockholm', offset: '+01:00' }, { name: 'Europe/Prague (GMT+02:00)', value: 'Europe/Prague', offset: '+02:00' }, { name: "Asia/Istanbul (GMT+02:00)", value: 'Asia/Istanbul', offset: '+02:00' }, { name: "Europe/Istanbul (GMT+02:00)", value: 'Europe/Istanbul', offset: '+02:00' }, { name: 'Europe/Copenhagen (GMT+02:00)', value: 'Europe/Copenhagen', offset: '+02:00' }, { name: 'Asia/Jakarta (GMT+07:00)', value: 'Asia/Jakarta', offset: '+07:00' }, { name: 'Asia/Singapore (GMT+08:00)', value: 'Asia/Singapore', offset: '+08:00' }, { name: 'Australia/Perth (GMT+08:00)', value: 'Australia/Perth', offset: '+08:00' }, { name: "Asia/Tokyo (GMT+09:00)", value: 'Asia/Tokyo', offset: '+09:00' }, { name: 'Australia/Sydney (GMT+10:00)', value: 'Australia/Sydney', offset: '+10:00' }, { name: "Pacific/Auckland (GMT+12:00)", value: 'Pacific/Auckland', offset: '+12:00' }],
-	
-	  FILTER_OPERATORS: [{ name: '= Equal to',
-	    value: 'eq',
-	    canBeCoeredTo: ['String', 'Number', 'Null', 'List', 'Boolean', 'Datetime']
-	  }, { name: '\u2260 Not equal to',
-	    value: 'ne',
-	    canBeCoeredTo: ['String', 'Number', 'Null', 'List', 'Boolean', 'Datetime']
-	  }, { name: '> Greater than',
-	    value: 'gt',
-	    canBeCoeredTo: ['Number', 'Null', 'Datetime', 'String']
-	  }, { name: '\u2265 Greater than or equal to',
-	    value: 'gte',
-	    canBeCoeredTo: ['Number', 'Null', 'Datetime', 'String']
-	  }, { name: '< Less than',
-	    value: 'lt',
-	    canBeCoeredTo: ['Number', 'Null', 'Datetime', 'String']
-	  }, { name: '\u2264 Less than or equal to',
-	    value: 'lte',
-	    canBeCoeredTo: ['Number', 'Null', 'Datetime', 'String']
-	  }, { name: '\u2203 Property exists',
-	    value: 'exists',
-	    canBeCoeredTo: ['Boolean']
-	  }, { name: '\u229A String contains',
-	    value: 'contains',
-	    canBeCoeredTo: ['String', 'Null']
-	  }, { name: '\u2349 String does not contain',
-	    value: 'not_contains',
-	    canBeCoeredTo: ['String', 'Null']
-	  }, { name: '\u29C7 Matches any value in a list',
-	    value: 'in',
-	    canBeCoeredTo: ['List']
-	  }, { name: '\u2690 Within a given radius (geo)',
-	    value: 'within',
-	    canBeCoeredTo: ['Geo']
-	  }]
-	};
-	
-	CONSTANTS.TIMEZONE_NAMES = _.map(CONSTANTS.TIMEZONES, 'name');
-	
-	module.exports = {
-	
-	  getConstant: function getConstant(name) {
-	    return CONSTANTS[name];
-	  },
-	
-	  eventsUrl: function eventsUrl(client) {
-	    return client.url('events', {
-	      api_key: client.config.masterKey
-	    });
-	  },
-	
-	  getEventCollectionPropertyNames: function getEventCollectionPropertyNames(project, collection) {
-	    return project.schema[collection] ? project.schema[collection].sortedProperties : [];
-	  },
-	
-	  getPropertyType: function getPropertyType(project, collection, propertyName) {
-	    var collection = project.schema[collection];
-	    return collection ? collection.properties[propertyName] : null;
-	  },
-	
-	  getLocalTimezoneOffset: function getLocalTimezoneOffset(date) {
-	    var offset = new Date().getTimezoneOffset();
-	    if (DateUtils.isDST()) {
-	      offset += 60;
-	    }
-	    var strSign = offset > 0 ? '-' : '+';
-	    var strHours = FormatUtils.padLeft(Math.floor(offset / 60));
-	    var strMinutes = FormatUtils.padLeft(offset % 60);
-	    var found = _.find(CONSTANTS.TIMEZONES, function (timezone) {
-	      return timezone.offset === strSign + strHours + ':' + strMinutes;
-	    });
-	    return found ? found.value : offset * -60;
-	  }
-	
-	};
-
-/***/ }),
-/* 343 */
-/*!******************************************!*\
-  !*** ./client/js/app/utils/DateUtils.js ***!
-  \******************************************/
-/***/ (function(module, exports) {
-
-	"use strict";
-	
-	module.exports = {
-	  isDST: function isDST() {
-	    var date = new Date();
-	    var jan = new Date(date.getFullYear(), 0, 1);
-	    var jul = new Date(date.getFullYear(), 6, 1);
-	    var stdOffset = Math.max(jan.getTimezoneOffset(), jul.getTimezoneOffset());
-	    return date.getTimezoneOffset() < stdOffset;
-	  }
 	};
 
 /***/ }),
@@ -61785,7 +61766,7 @@
 	var EventEmitter = __webpack_require__(/*! events */ 351).EventEmitter;
 	var _ = __webpack_require__(/*! lodash */ 28);
 	var ProjectConstants = __webpack_require__(/*! ../constants/ProjectConstants */ 352);
-	var ProjectUtils = __webpack_require__(/*! ../utils/ProjectUtils */ 342);
+	var ProjectUtils = __webpack_require__(/*! ../utils/ProjectUtils */ 340);
 	var FormatUtils = __webpack_require__(/*! ../utils/FormatUtils */ 335);
 	
 	var CHANGE_EVENT = 'change';
@@ -62397,7 +62378,7 @@
 	var AppStateStore = __webpack_require__(/*! ../../stores/AppStateStore */ 354);
 	var ExplorerUtils = __webpack_require__(/*! ../../utils/ExplorerUtils */ 204);
 	var FilterUtils = __webpack_require__(/*! ../../utils/FilterUtils */ 338);
-	var ProjectUtils = __webpack_require__(/*! ../../utils/ProjectUtils */ 342);
+	var ProjectUtils = __webpack_require__(/*! ../../utils/ProjectUtils */ 340);
 	var ExplorerActions = __webpack_require__(/*! ../../actions/ExplorerActions */ 399);
 	var QueryStringUtils = __webpack_require__(/*! ../../utils/QueryStringUtils */ 441);
 	
@@ -62728,7 +62709,7 @@
 	var classNames = __webpack_require__(/*! classnames */ 358);
 	var Loader = __webpack_require__(/*! ../common/loader.js */ 349);
 	var FormatUtils = __webpack_require__(/*! ../../utils/FormatUtils */ 335);
-	var ProjectUtils = __webpack_require__(/*! ../../utils/ProjectUtils */ 342);
+	var ProjectUtils = __webpack_require__(/*! ../../utils/ProjectUtils */ 340);
 	var ProjectActions = __webpack_require__(/*! ../../actions/ProjectActions */ 359);
 	var Modal = __webpack_require__(/*! ./modal.js */ 360);
 	
@@ -63035,7 +63016,7 @@
 	var AppDispatcher = __webpack_require__(/*! ../dispatcher/AppDispatcher */ 344);
 	var ProjectConstants = __webpack_require__(/*! ../constants/ProjectConstants */ 352);
 	var ProjectStore = __webpack_require__(/*! ../stores/ProjectStore */ 350);
-	var ProjectUtils = __webpack_require__(/*! ../utils/ProjectUtils */ 342);
+	var ProjectUtils = __webpack_require__(/*! ../utils/ProjectUtils */ 340);
 	var ExplorerUtils = __webpack_require__(/*! ../utils/ExplorerUtils */ 204);
 	var FormatUtils = __webpack_require__(/*! ../utils/FormatUtils */ 335);
 	
@@ -84933,7 +84914,7 @@
 	var AppStateActions = __webpack_require__(/*! ./AppStateActions */ 406);
 	var ProjectActions = __webpack_require__(/*! ./ProjectActions */ 359);
 	var ProjectStore = __webpack_require__(/*! ../stores/ProjectStore */ 350);
-	var RunValidations = __webpack_require__(/*! ../utils/RunValidations */ 340);
+	var RunValidations = __webpack_require__(/*! ../utils/RunValidations */ 343);
 	var ExplorerUtils = __webpack_require__(/*! ../utils/ExplorerUtils */ 204);
 	var ChartTypeUtils = __webpack_require__(/*! ../utils/ChartTypeUtils */ 396);
 	
@@ -85380,12 +85361,12 @@
 	var FormatUtils = __webpack_require__(/*! ../utils/FormatUtils */ 335);
 	var ExplorerUtils = __webpack_require__(/*! ../utils/ExplorerUtils */ 204);
 	var FilterUtils = __webpack_require__(/*! ../utils/FilterUtils */ 338);
-	var ProjectUtils = __webpack_require__(/*! ../utils/ProjectUtils */ 342);
+	var ProjectUtils = __webpack_require__(/*! ../utils/ProjectUtils */ 340);
 	var ProjectStore = __webpack_require__(/*! ./ProjectStore */ 350);
 	
-	var RunValidations = __webpack_require__(/*! ../utils/RunValidations.js */ 340).run;
+	var RunValidations = __webpack_require__(/*! ../utils/RunValidations.js */ 343).run;
 	var ExplorerValidations = __webpack_require__(/*! ../validations/ExplorerValidations.js */ 401);
-	var FilterValidations = __webpack_require__(/*! ../validations/FilterValidations.js */ 339);
+	var FilterValidations = __webpack_require__(/*! ../validations/FilterValidations.js */ 342);
 	var StepValidations = __webpack_require__(/*! ../validations/StepValidations.js */ 403);
 	
 	var CHANGE_EVENT = 'change';
@@ -85412,7 +85393,7 @@
 	      percentile: null,
 	      group_by: [],
 	      interval: null,
-	      timezone: ProjectUtils.getLocalTimezoneOffset(),
+	      timezone: ProjectUtils.getConstant('DEFAULT_TIMEZONE'),
 	      filters: [],
 	      steps: [],
 	      email: null,
@@ -85464,7 +85445,7 @@
 	      amount: 14,
 	      sub_timeframe: 'days'
 	    },
-	    timezone: ProjectUtils.getLocalTimezoneOffset(),
+	    timezone: ProjectUtils.getConstant('DEFAULT_TIMEZONE'),
 	    filters: [],
 	    optional: false,
 	    inverted: false,
@@ -86061,7 +86042,7 @@
 	var ExplorerUtils = __webpack_require__(/*! ../utils/ExplorerUtils */ 204);
 	var SharedValidators = __webpack_require__(/*! ./SharedValidators */ 402);
 	var StepValidations = __webpack_require__(/*! ./StepValidations */ 403);
-	var RunValidations = __webpack_require__(/*! ../utils/RunValidations */ 340).run;
+	var RunValidations = __webpack_require__(/*! ../utils/RunValidations */ 343).run;
 	
 	function isNotFunnel(model) {
 	  return model.query.analysis_type !== 'funnel';
@@ -86226,9 +86207,9 @@
 	'use strict';
 	
 	var _ = __webpack_require__(/*! lodash */ 28);
-	var RunValidations = __webpack_require__(/*! ../utils/RunValidations */ 340).run;
-	var FilterValidations = __webpack_require__(/*! ../validations/FilterValidations */ 339);
-	var TimeframeUtils = __webpack_require__(/*! ../utils/TimeframeUtils */ 341);
+	var RunValidations = __webpack_require__(/*! ../utils/RunValidations */ 343).run;
+	var FilterValidations = __webpack_require__(/*! ../validations/FilterValidations */ 342);
+	var TimeframeUtils = __webpack_require__(/*! ../utils/TimeframeUtils */ 339);
 	var FilterUtils = __webpack_require__(/*! ../utils/FilterUtils */ 338);
 	
 	module.exports = {
@@ -88185,8 +88166,8 @@
 	var ReactSelect = __webpack_require__(/*! ./react_select.js */ 412);
 	var Timezone = __webpack_require__(/*! ./timezone.js */ 430);
 	var ExplorerActions = __webpack_require__(/*! ../../actions/ExplorerActions */ 399);
-	var TimeframeUtils = __webpack_require__(/*! ../../utils/TimeframeUtils */ 341);
-	var ProjectUtils = __webpack_require__(/*! ../../utils/ProjectUtils */ 342);
+	var TimeframeUtils = __webpack_require__(/*! ../../utils/TimeframeUtils */ 339);
+	var ProjectUtils = __webpack_require__(/*! ../../utils/ProjectUtils */ 340);
 	
 	function relativeDefaults() {
 	  return {
@@ -91940,7 +91921,7 @@
 	var _ = __webpack_require__(/*! lodash */ 28);
 	var React = __webpack_require__(/*! react */ 45);
 	var ReactSelect = __webpack_require__(/*! ./react_select.js */ 412);
-	var ProjectUtils = __webpack_require__(/*! ../../utils/ProjectUtils */ 342);
+	var ProjectUtils = __webpack_require__(/*! ../../utils/ProjectUtils */ 340);
 	var ExplorerActions = __webpack_require__(/*! ../../actions/ExplorerActions */ 399);
 	
 	var Timezone = React.createClass({
@@ -91983,16 +91964,6 @@
 	  },
 	
 	  render: function render() {
-	    var timezone = this.props.timezone;
-	    var zones;
-	    if (this.props.timeframe_type === 'relative') {
-	      zones = _.map(ProjectUtils.getConstant('TIMEZONES'), function (item) {
-	        return item.value;
-	      });
-	    } else {
-	      zones = ProjectUtils.getConstant('TIMEZONE_NAMES');
-	    }
-	
 	    return React.createElement(
 	      'div',
 	      { className: "timezone-toggle" + (this.state.active ? " active" : "") },
@@ -92003,12 +91974,12 @@
 	          'button',
 	          { ref: 'timezone-display',
 	            className: 'btn btn-link field-secondary-control',
-	            title: "Selectd timezone: " + timezone,
+	            title: "Selectd timezone: " + this.props.timezone,
 	            type: 'button',
 	            onClick: this.handleTimezoneActivated },
 	          React.createElement('span', { className: 'icon glyphicon glyphicon-globe' }),
 	          ' Timezone: ',
-	          timezone
+	          this.props.timezone
 	        )
 	      ),
 	      React.createElement(
@@ -92018,7 +91989,7 @@
 	          name: 'timezone',
 	          classes: 'timezone form-control',
 	          value: this.props.timezone,
-	          items: zones,
+	          items: ProjectUtils.getConstant('TIMEZONES'),
 	          handleChange: this.handleTimezoneChange,
 	          handleBlur: this.handleTimezoneBlur })
 	      )
@@ -92042,7 +92013,7 @@
 	var React = __webpack_require__(/*! react */ 45);
 	var Filter = __webpack_require__(/*! ./filter.js */ 432);
 	var Modal = __webpack_require__(/*! ./modal.js */ 360);
-	var ProjectUtils = __webpack_require__(/*! ../../utils/ProjectUtils */ 342);
+	var ProjectUtils = __webpack_require__(/*! ../../utils/ProjectUtils */ 340);
 	var FilterUtils = __webpack_require__(/*! ../../utils/FilterUtils */ 338);
 	
 	var FilterManager = React.createClass({
@@ -92575,7 +92546,7 @@
 	var FieldsToggle = __webpack_require__(/*! ./fields_toggle.js */ 410);
 	var ExplorerActions = __webpack_require__(/*! ../../actions/ExplorerActions */ 399);
 	var ExplorerUtils = __webpack_require__(/*! ../../utils/ExplorerUtils */ 204);
-	var ProjectUtils = __webpack_require__(/*! ../../utils/ProjectUtils */ 342);
+	var ProjectUtils = __webpack_require__(/*! ../../utils/ProjectUtils */ 340);
 	
 	var Interval = React.createClass({
 	  displayName: 'Interval',

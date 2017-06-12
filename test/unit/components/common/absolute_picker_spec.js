@@ -39,8 +39,8 @@ describe('components/common/absolute_picker', function() {
     beforeEach(function(){
       this.model = TestHelpers.createExplorerModel();
       this.model.query.time = {
-        start: TimeframeUtils.convertDateToUTC(new Date(FormatUtils.formatISOTimeNoTimezone("June 7 2015 1:00 PM"))),
-        end: TimeframeUtils.convertDateToUTC(new Date(FormatUtils.formatISOTimeNoTimezone("June 8 2015 3:37 PM")))
+        start: FormatUtils.convertDateToUTC(new Date(FormatUtils.formatISOTimeNoTimezone("June 7 2015 1:00 PM"))),
+        end: FormatUtils.convertDateToUTC(new Date(FormatUtils.formatISOTimeNoTimezone("June 8 2015 3:37 PM")))
       };
       this.component = TestUtils.renderIntoDocument(<AbsolutePicker time={this.model.query.time}/>);
     });

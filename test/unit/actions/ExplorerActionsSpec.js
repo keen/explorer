@@ -112,13 +112,13 @@ describe('actions/ExplorerActions', function() {
       };
       this.getStub = sinon.stub(ExplorerStore, 'get').returns(this.explorer);
     });
-  
+
     afterEach(function () {
       ExplorerActions.validate.restore();
       ExplorerUtils.runQuery.restore();
       ExplorerStore.get.restore();
     });
-  
+
     it('should run validations', function () {
       ExplorerActions.runEmailExtraction(this.client, this.explorer.id);
       assert.isTrue(this.validateStub.calledOnce);
@@ -317,7 +317,7 @@ describe('actions/ExplorerActions', function() {
     it('should add a query object on the response if one is not there', function () {
       ExplorerActions.execSuccess(this.explorer, this.response);
       assert.deepPropertyVal(this.dispatchStub.getCall(2).args[0].updates.response, 'query');
-      assert.deepEqual(this.dispatchStub.getCall(2).args[0].updates.response.query, { analysis_type: 'count' });
+      assert.deepEqual(this.dispatchStub.getCall(2).args[0].updates.response.query, { analysis_type: 'count', timezone: 'UTC' });
     });
     it('should not add a query object on the response if one is not there', function () {
       ExplorerActions.execSuccess(this.explorer, _.assign({}, this.response, { query: { analysis_type: 'not_count' } }));

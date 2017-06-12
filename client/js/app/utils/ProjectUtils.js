@@ -43,31 +43,31 @@ var CONSTANTS = {
   ],
 
   TIMEZONES: [
-    { name: 'UTC Time (GMT+00:00)',           value: 'UTC',                  offset: '+00:00' },
-    { name: 'Europe/London (GMT+00:00)',      value: 'Europe/London',        offset: '+00:00' },
-    { name: 'Africa/Casablanca (GMT+00:00)',  value: 'Africa/Casablanca',    offset: '+00:00' },
-    { name: 'Africa/Nairobi (GMT+03:00)',     value: 'Africa/Nairobi',       offset: '+03:00' },
-    { name: 'Asia/Dubai (GMT+04:00)',         value: 'Asia/Dubai',           offset: '+04:00' },
-    { name: 'America/Sao Paulo (GMT-03:00)',  value: 'America/Sao_Paulo',    offset: '-03:00' },
-    { name: 'US/Eastern (GMT-05:00)',         value: 'US/Eastern',           offset: '-05:00' },
-    { name: 'US/Central (GMT-06:00)',         value: 'US/Central',           offset: '-06:00' },
-    { name: 'US/Mountain (GMT-07:00)',        value: 'US/Mountain',          offset: '-07:00' },
-    { name: 'US/Pacific (GMT-08:00)',         value: 'US/Pacific',           offset: '-08:00' },
-    { name: 'US/Alaska (GMT-09:00)',          value: 'US/Alaska',            offset: '-09:00' },
-    { name: 'US/Hawaii (GMT-10:00)',          value: 'US/Hawaii',            offset: '-10:00' },
-    { name: 'Europe/Paris (GMT+01:00)',       value: 'Europe/Paris',         offset: '+01:00' },
-    { name: 'Europe/Amsterdam (GMT+01:00)',   value: 'Europe/Amsterdam',     offset: '+01:00' },
-    { name: 'Europe/Stockholm (GMT+01:00)',   value: 'Europe/Stockholm',     offset: '+01:00' },
-    { name: 'Europe/Prague (GMT+02:00)',      value: 'Europe/Prague',        offset: '+02:00' },
-    { name: "Asia/Istanbul (GMT+02:00)",      value: 'Asia/Istanbul',        offset: '+02:00' },
-    { name: "Europe/Istanbul (GMT+02:00)",    value: 'Europe/Istanbul',      offset: '+02:00' },
-    { name: 'Europe/Copenhagen (GMT+02:00)',  value: 'Europe/Copenhagen',    offset: '+02:00' },
-    { name: 'Asia/Jakarta (GMT+07:00)',       value: 'Asia/Jakarta',         offset: '+07:00' },
-    { name: 'Asia/Singapore (GMT+08:00)',     value: 'Asia/Singapore',       offset: '+08:00' },
-    { name: 'Australia/Perth (GMT+08:00)',    value: 'Australia/Perth',      offset: '+08:00' },
-    { name: "Asia/Tokyo (GMT+09:00)",         value: 'Asia/Tokyo',           offset: '+09:00' },
-    { name: 'Australia/Sydney (GMT+10:00)',   value: 'Australia/Sydney',     offset: '+10:00' },
-    { name: "Pacific/Auckland (GMT+12:00)",   value: 'Pacific/Auckland',     offset: '+12:00' }
+    'UTC',
+    'Europe/London',
+    'Africa/Casablanca',
+    'Africa/Nairobi',
+    'Asia/Dubai',
+    'America/Sao_Paulo',
+    'US/Eastern',
+    'US/Central',
+    'US/Mountain',
+    'US/Pacific',
+    'US/Alaska',
+    'US/Hawaii',
+    'Europe/Paris',
+    'Europe/Amsterdam',
+    'Europe/Stockholm',
+    'Europe/Prague',
+    'Asia/Istanbul',
+    'Europe/Istanbul',
+    'Europe/Copenhagen',
+    'Asia/Jakarta',
+    'Asia/Singapore',
+    'Australia/Perth',
+    'Asia/Tokyo',
+    'Australia/Sydney',
+    'Pacific/Auckland'
   ],
 
   FILTER_OPERATORS: [
@@ -117,8 +117,6 @@ var CONSTANTS = {
     }
   ]
 };
-
-CONSTANTS.TIMEZONE_NAMES = _.map(CONSTANTS.TIMEZONES, 'name');
 
 module.exports = {
 

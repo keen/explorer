@@ -25,13 +25,6 @@ describe('components/common/timezone', function() {
                                                             handleChange={this.handleChangeStub} />);
   });
 
-  it('should use the value from the project config if it matches the name', function(){
-    var timezoneInput = this.component.refs.timezone.refs.input;
-    timezoneInput.value = 'US/Hawaii (GMT-10:00)';
-    TestUtils.Simulate.change(timezoneInput);
-    assert.strictEqual(this.handleChangeStub.getCall(0).args[1], 'US/Hawaii');
-  });
-
   it('should use the value from the project config if it matches the value', function(){
     var timezoneInput = this.component.refs.timezone.refs.input;
     timezoneInput.value = 'US/Hawaii';
