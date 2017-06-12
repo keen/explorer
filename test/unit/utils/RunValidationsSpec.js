@@ -1,16 +1,16 @@
-var assert = require('chai').assert;
-var _ = require('lodash');
-var sinon = require('sinon');
-var moment = require('moment');
-var TestHelpers = require('../../support/TestHelpers');
-var RunValidations = require('../../../client/js/app/utils/RunValidations');
+const assert = require('chai').assert;
+const _ = require('lodash');
+const sinon = require('sinon/pkg/sinon.js');
+const moment = require('moment');
+const TestHelpers = require('../../support/TestHelpers');
+const RunValidations = require('../../../client/js/app/utils/RunValidations');
 
 describe('utils/RunValidations', function() {
   it('should run each validator', function () {
-    var spyOne = sinon.spy();
-    var spyTwo = sinon.spy();
+    const spyOne = sinon.spy();
+    const spyTwo = sinon.spy();
 
-    var validations = {
+    const validations = {
       one: {
         msg: 'validator one',
         validate: spyOne
@@ -20,14 +20,14 @@ describe('utils/RunValidations', function() {
         validate: spyTwo
       }
     };
-    var model = TestHelpers.createExplorerModel();
+    const model = TestHelpers.createExplorerModel();
     RunValidations.run(validations, model);
     assert.isTrue(spyOne.calledWith(model));
     assert.isTrue(spyTwo.calledWith(model));
   });
 
   it('should properly set the errors on the model if a validator fails', function () {
-    validations = {
+    const validations = {
       arrayVal: {
         msg: 'is not array',
         validate: function(model, value) {
@@ -41,7 +41,7 @@ describe('utils/RunValidations', function() {
         }
       }
     };
-    model = {
+    const model = {
       arrayVal: 'not an array',
       stringVal: ['not', 'a', 'string']
     };
@@ -60,29 +60,29 @@ describe('utils/RunValidations', function() {
   });
 
   it('should not run validations if the shouldRun function returns false', function () {
-    var stub = sinon.stub();
-    validations = {
+    const stub = sinon.stub();
+    const validations = {
       attribute: {
         msg: 'is not valid',
         shouldRun: function() { return false; },
         validate: stub
       }
     };
-    model = { attribute: 'not valid' };
+    const model = { attribute: 'not valid' };
     RunValidations.run(validations, model);
     assert.isFalse(stub.getCalls().length > 0);
   });
 
   it('should run validations if the shouldRun function returns true', function () {
-    var stub = sinon.stub().returns(false);
-    validations = {
+    const stub = sinon.stub().returns(false);
+    const validations = {
       arrayVal: {
         msg: 'is not array',
         shouldRun: function() { return true; },
         validate: stub
       }
     };
-    model = {
+    const model = {
       arrayVal: 'not an array',
     };
     RunValidations.run(validations, model);

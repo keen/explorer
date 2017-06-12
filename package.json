@@ -6,7 +6,7 @@
   "bucket-name": "keen-js",
   "scripts": {
     "dev": "./node_modules/webpack/bin/webpack.js --watch --color -d & gulp connect",
-    "test": "gulp test:unit",
+    "test": "npm run build && gulp test:unit",
     "build": "./node_modules/webpack/bin/webpack.js",
     "minify": "NODE_ENV=production ./node_modules/webpack/bin/webpack.js -p",
     "production": "npm run minify && npm run test"
@@ -46,7 +46,8 @@
     "babel-core": "^6.17.0",
     "babel-loader": "^6.2.5",
     "babel-preset-es2015": "^6.16.0",
-    "babel-preset-react": "^6.16.0",
+    "babel-preset-latest": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
     "browserify": "11.2.0",
     "browserify-shim": "~3.8.0",
     "chai": "^2.3.0",

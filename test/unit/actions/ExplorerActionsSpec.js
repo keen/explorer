@@ -1,20 +1,20 @@
-var assert = require('chai').assert;
-var expect = require('chai').expect;
-var sinon = require('sinon');
-var moment = require('moment');
-var _ = require('lodash');
-var KeenAnalysis = require('keen-analysis');
-var Qs = require('qs');
-var TestHelpers = require('../../support/TestHelpers');
-var AppDispatcher = require('../../../client/js/app/dispatcher/AppDispatcher');
-var ExplorerActions = require('../../../client/js/app/actions/ExplorerActions');
-var AppStateActions = require('../../../client/js/app/actions/AppStateActions');
-var FilterUtils = require('../../../client/js/app/utils/FilterUtils');
-var RunValidations = require('../../../client/js/app/utils/RunValidations');
-var ExplorerValidations = require('../../../client/js/app/validations/ExplorerValidations');
-var ExplorerUtils = require('../../../client/js/app/utils/ExplorerUtils');
-var ChartTypeUtils = require('../../../client/js/app/utils/ChartTypeUtils');
-var ExplorerStore = require('../../../client/js/app/stores/ExplorerStore');
+const assert = require('chai').assert;
+const expect = require('chai').expect;
+const sinon = require('sinon/pkg/sinon.js');
+const moment = require('moment');
+const _ = require('lodash');
+const KeenAnalysis = require('keen-analysis');
+const Qs = require('qs');
+const TestHelpers = require('../../support/TestHelpers');
+const AppDispatcher = require('../../../client/js/app/dispatcher/AppDispatcher');
+const ExplorerActions = require('../../../client/js/app/actions/ExplorerActions');
+const AppStateActions = require('../../../client/js/app/actions/AppStateActions');
+const FilterUtils = require('../../../client/js/app/utils/FilterUtils');
+const RunValidations = require('../../../client/js/app/utils/RunValidations');
+const ExplorerValidations = require('../../../client/js/app/validations/ExplorerValidations');
+const ExplorerUtils = require('../../../client/js/app/utils/ExplorerUtils');
+const ChartTypeUtils = require('../../../client/js/app/utils/ChartTypeUtils');
+const ExplorerStore = require('../../../client/js/app/stores/ExplorerStore');
 
 describe('actions/ExplorerActions', function() {
   before(function () {
@@ -284,8 +284,7 @@ describe('actions/ExplorerActions', function() {
     });
 
     it('should call the dispatcher to update with the right arguments', function () {
-      // var expectedUpdates = _.cloneDeep(this.explorer);
-      expectedUpdates = {
+      let expectedUpdates = {
         loading: false,
         response: this.response,
         metadata: _.cloneDeep(this.explorer.metadata)
@@ -301,10 +300,10 @@ describe('actions/ExplorerActions', function() {
       // as they will be off by a few milliseconds.
       assert.deepEqual(_.omit(this.dispatchStub.getCall(2).args[0].updates, 'dataTimestamp'), expectedUpdates);
 
-      var actualTimestamp = this.dispatchStub.getCall(2).args[0].updates.dataTimestamp;
+      let actualTimestamp = this.dispatchStub.getCall(2).args[0].updates.dataTimestamp;
       actualTimestamp = actualTimestamp.toString().substring(0, actualTimestamp.length-5);
 
-      var expectedTimestamp = Date.now();
+      let expectedTimestamp = Date.now();
       expectedTimestamp = expectedTimestamp.toString().substring(0, expectedTimestamp.length-5);
 
       assert.strictEqual(actualTimestamp, expectedTimestamp);

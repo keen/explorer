@@ -35,6 +35,9 @@ var KeenViz = React.createClass({
   // ***********************
 
   shouldComponentUpdate: function(nextProps, nextState) {
+    if (this.props.model.extractionFields !== nextProps.model.extractionFields && nextProps.model.metadata.visualization.chart_type === 'table') {
+      return true;
+    }
     if (this.lastChartType !== nextProps.model.metadata.visualization.chart_type) {
       return true;
     }
@@ -53,8 +56,8 @@ var KeenViz = React.createClass({
   },
 
   render: function() {
-  	var exportBtn;
-  	if (ChartTypeUtils.isTableChartType(this.props.model.metadata.visualization.chart_type)) {
+    var exportBtn;
+    if (ChartTypeUtils.isTableChartType(this.props.model.metadata.visualization.chart_type)) {
       exportBtn = (
         <button className="btn btn-default btn-download-csv"
                 role="export-table"

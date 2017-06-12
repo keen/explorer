@@ -6,6 +6,6 @@
 dist/*
 demo/index.html
 node_modules
-test/unit/build/browserified_tests.js
+test/unit/build/browserified_tests.*
 
 .idea/

@@ -1,7 +1,7 @@
 var assert = require('chai').assert;
 var expect = require('chai').expect;
 var moment = require('moment');
-var sinon = require('sinon');
+let sinon = require('sinon/pkg/sinon.js');
 var TimeframeUtils = require('../../../client/js/app/utils/TimeframeUtils');
 
 describe('utils/TimeframeUtils', function () {

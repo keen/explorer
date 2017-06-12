@@ -1,5 +1,5 @@
 var assert = require('chai').assert;
-var sinon = require('sinon');
+let sinon = require('sinon/pkg/sinon.js');
 var QueryStringUtils = require('../../../client/js/app/utils/QueryStringUtils');
 
 describe('utils/QueryStringUtils', function() {

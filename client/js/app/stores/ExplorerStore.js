@@ -50,7 +50,8 @@ function _defaultAttrs() {
         sub_timeframe: 'days'
       }
     },
-    metadata: _defaultMetadata()
+    metadata: _defaultMetadata(),
+    extractionFields: []
   };
 }
 
@@ -94,6 +95,7 @@ function _defaultStep() {
     filters: [],
     optional: false,
     inverted: false,
+    with_actors: false,
     active: false,
     isValid: true,
     errors: []
@@ -662,6 +664,11 @@ ExplorerStore.dispatchToken = AppDispatcher.register(function(action) {
     case ExplorerConstants.EXPLORER_FOUND_INVALID:
       // Find any invalid steps and mark the first one active to display the notice.
       _markFirstInvalidStepActive(action.id);
+      finishAction();
+      break;
+
+    case ExplorerConstants.EXPLORER_CHANGE_EXTRACTION_FIELDS:
+      _update(action.id, { extractionFields: action.fields });
       finishAction();
       break;
 

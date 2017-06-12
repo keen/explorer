@@ -1,5 +1,5 @@
 var assert = require('chai').assert;
-var sinon = require('sinon');
+let sinon = require('sinon/pkg/sinon.js');
 var FilterUtils = require('../../../client/js/app/utils/FilterUtils');
 var FunnelUtils = require('../../../client/js/app/utils/FunnelUtils');
 var TimeframeUtils = require('../../../client/js/app/utils/TimeframeUtils');
@@ -121,6 +121,34 @@ describe('utils/FunnelUtils', function() {
           optional: "false"
         });
         assert.strictEqual(result.optional, false);
+      });
+
+      it('should properly format true boolean values from API for the "with_actors" property', function () {
+        var result = FunnelUtils.formatQueryParams({
+          with_actors: true
+        });
+        assert.strictEqual(result.with_actors, true);
+      });
+
+      it('should properly format string true as boolean values from API for the "with_actors" property', function () {
+        var result = FunnelUtils.formatQueryParams({
+          with_actors: "true"
+        });
+        assert.strictEqual(result.with_actors, true);
+      });
+
+      it('should properly format false boolean values from API for the "with_actors" property', function () {
+        var result = FunnelUtils.formatQueryParams({
+          with_actors: false
+        });
+        assert.strictEqual(result.with_actors, false);
+      });
+
+      it('should properly format string false as boolean values from API for the "with_actors" property', function () {
+        var result = FunnelUtils.formatQueryParams({
+          with_actors: "false"
+        });
+        assert.strictEqual(result.with_actors, false);
       });
     });
   });

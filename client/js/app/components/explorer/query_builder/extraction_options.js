@@ -1,13 +1,28 @@
-var React = require('react');
-var ExplorerUtils = require('../../../utils/ExplorerUtils');
-var Input = require('../../common/input.js');
-var LatestField = require('./latest_field.js');
+const React = require('react');
+const ExplorerUtils = require('../../../utils/ExplorerUtils');
+const Input = require('../../common/input.js');
+const ReactMultiSelect = require('../../common/react_multi_select.js');
+const LatestField = require('./latest_field.js');
+const ExplorerActions = require('../../../actions/ExplorerActions');
 
-var ExtractionOptions = React.createClass({
+class ExtractionOptions extends React.Component {
 
-  render: function(){
-    var emailField,
-        latestField;
+  _getExtractionKeys() {
+    if (typeof this.props.projectSchema === "undefined") {
+      return false;
+    }
+    const schema = this.props.projectSchema[this.props.model.query.event_collection];
+    if (typeof schema === "undefined") {
+      return false;
+    }
+
+    return schema.sortedProperties;
+  }
+
+  render(){
+    let emailField;
+    let latestField;
+    let extractionPropertiesFilter;
 
     if (this.props.isEmail) {
       emailField = (
@@ -24,6 +39,16 @@ var ExtractionOptions = React.createClass({
       );
     }
 
+    if (this._getExtractionKeys()) {
+      extractionPropertiesFilter = <ReactMultiSelect
+            name="filter-properties"
+            model={this.props.model}
+            label="Filter extraction properties"
+            handleChange={ExplorerActions.changeExtractionFields}
+            items={this._getExtractionKeys()}
+      />
+    }
+
     return (
       <div className="field-component">
         <div className="extraction-options">
@@ -33,13 +58,14 @@ var ExtractionOptions = React.createClass({
           <label>
             <input type="radio" name="extraction_type" value="email" onChange={this.props.setExtractionType} checked={this.props.isEmail}/> Bulk CSV extraction by email
           </label>
+
           {emailField}
           {latestField}
+          {extractionPropertiesFilter}
         </div>
       </div>
     );
   }
-
-});
+}
 
 module.exports = ExtractionOptions;

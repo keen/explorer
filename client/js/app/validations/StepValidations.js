@@ -5,9 +5,9 @@ var SharedValidators = require('./SharedValidators');
 module.exports = {
 
   event_collection: {
-    
+
     msg: 'Choose an Event Collection.',
-    
+
     validate: function(model) {
       return (typeof model.event_collection ==='string' && model.event_collection.length > 0);
     }
@@ -61,6 +61,17 @@ module.exports = {
     validate: function(model) {
       if (FormatUtils.isNullOrUndefined(model.inverted)) return false;
       return typeof model.inverted === 'boolean';
+    }
+
+  },
+
+  with_actors: {
+
+    msg: '"with_actors" must be set to either true or false',
+
+    validate: function(model) {
+      if (FormatUtils.isNullOrUndefined(model.with_actors)) return false;
+      return typeof model.with_actors === 'boolean';
     }
 
   },

@@ -1,11 +1,10 @@
-/** @jsx React.DOM */
 var assert = require('chai').assert;
 var _ = require('lodash');
 var React = require('react');
 var ReactDOM = require('react-dom');
 var TestUtils = require('react-addons-test-utils');
 var TestHelpers = require('../../../support/TestHelpers.js');
-var sinon = require('sinon');
+let sinon = require('sinon/pkg/sinon.js');
 var KeenAnalysis = require('keen-analysis');
 var Explorer = require('../../../../client/js/app/components/explorer/index.js');
 var Visualization = require('../../../../client/js/app/components/explorer/visualization/index.js');
@@ -262,7 +261,7 @@ describe('components/explorer/index', function() {
       });
 
     });
-      
+
     describe('cloneQueryClick', function () {
       beforeEach(function() {
         ExplorerStore.clearAll();

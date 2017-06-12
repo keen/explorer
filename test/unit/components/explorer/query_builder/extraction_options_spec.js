@@ -1,4 +1,3 @@
-/** @jsx React.DOM */
 var assert = require('chai').assert;
 var _ = require('lodash');
 var React = require('react');
@@ -15,7 +14,9 @@ describe('components/explorer/query_builder/extraction_options', function() {
       handleSelectionWithEvent: function(){},
       latest: model.query.latest,
       email: model.query.email,
+      model: model,
       isEmail: false,
+      projectSchema: {}
     };
     this.renderComponent = function(props) {
       var props = _.assign({}, this.defaultProps, props);
@@ -36,6 +37,25 @@ describe('components/explorer/query_builder/extraction_options', function() {
       this.component = TestHelpers.renderComponent(ExtractionOptions, props);
 
       assert.lengthOf($R(this.component).find('LatestField').components, 1);
+    });
+  });
+
+  describe('extraction properties filter', function() {
+    it('shows when an extraction model is loaded', function() {
+      let model = TestHelpers.createExplorerModel();
+      model.query.analysis_type = 'extraction';
+      model.query.event_collection = 'test collection';
+      model.response = { result: [{'test_name': 12 }] };
+      const projectSchema = { 'test collection': { sortedProperties: ["test_name"] } };
+      const props = _.assign({}, this.component.props, { model: model, projectSchema: projectSchema });
+
+      this.component = TestHelpers.renderComponent(ExtractionOptions, props);
+
+      assert.lengthOf($R(this.component).find('ReactMultiSelect').components, 1);
+    });
+
+    it('is hidden when with all other types of models', function() {
+      assert.lengthOf($R(this.component).find('ReactMultiSelect').components, 0);
     });
   });
 });

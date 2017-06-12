@@ -53,8 +53,8 @@ require('./modules/persistence/KeenSavedQueriesSpec.js');
 // ***********************
 
 // Explorer
-require('./components/explorer/cache_toggle_spec.js');
 require('./components/explorer/index_spec.js');
+require('./components/explorer/cache_toggle_spec.js');
 require('./components/explorer/query_actions_spec.js');
 require('./components/explorer/query_builder/extraction_options_spec.js');
 require('./components/explorer/query_builder/group_by_field_spec.js');
@@ -81,3 +81,4 @@ require('./components/common/geo_spec.js');
 require('./components/common/modal_spec.js');
 require('./components/common/notice_spec.js');
 require('./components/common/react_select_spec.js')
+require('./components/common/react_multi_select_spec.js')

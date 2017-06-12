@@ -1,7 +1,7 @@
 var assert = require('chai').assert;
 var expect = require('chai').expect;
 var _ = require('lodash');
-var sinon = require('sinon');
+let sinon = require('sinon/pkg/sinon.js');
 var moment = require('moment');
 var TestHelpers = require('../../support/TestHelpers');
 var ProjectStore = require('../../../client/js/app/stores/ProjectStore');
@@ -59,7 +59,8 @@ describe('stores/ExplorerStore', function() {
           visualization: {
             chart_type: null
           }
-        }
+        },
+        extractionFields: []
       };
 
       var keys = Object.keys(ExplorerStore.getAll());
@@ -1050,6 +1051,7 @@ describe('stores/ExplorerStore', function() {
               chart_type: 'metric'
             }
           },
+          extractionFields: [],
           originalModel: originalModel
         };
 
@@ -1278,6 +1280,7 @@ describe('stores/ExplorerStore', function() {
           filters: [],
           optional: false,
           inverted: false,
+          with_actors: false,
           active: true,
           isValid: false,
           errors: [

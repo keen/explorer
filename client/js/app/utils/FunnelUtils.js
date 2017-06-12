@@ -11,7 +11,8 @@ var STEP_PARAMS = [
   'timezone',
   'filters',
   'optional',
-  'inverted'
+  'inverted',
+  'with_actors'
 ];
 module.exports = {
 
@@ -24,7 +25,7 @@ module.exports = {
       params.filters = _.map(params.filters, function(filter) {
         return FilterUtils.queryJSON(filter, TimeframeUtils.getTimezoneOffset(params.timezone)); 
       });
-     
+
       _.remove(params.filters, _.isEmpty);
     }
 
@@ -51,7 +52,8 @@ module.exports = {
 
     step.inverted = (step.inverted === true || step.inverted === "true");
     step.optional = (step.optional === true || step.optional === "true");
-    
+    step.with_actors = (step.with_actors === true || step.with_actors === "true");
+
     return step;
   }
   
