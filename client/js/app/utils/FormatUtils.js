@@ -82,6 +82,7 @@ module.exports = {
   },
 
   convertDateToUTC: function(date) {
+    if (typeof date === 'string') date = new Date(date);
     return new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds());
   },
 

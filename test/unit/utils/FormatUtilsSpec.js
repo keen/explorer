@@ -1,4 +1,5 @@
 var assert = require('chai').assert;
+var expect = require('chai').expect;
 var _ = require('lodash');
 let sinon = require('sinon/pkg/sinon.js');
 var moment = require('moment');
@@ -181,6 +182,13 @@ describe('utils/FormatUtils', function() {
     });
     it('returns false for a string that is not in expected list format', function () {
       assert.isFalse(FormatUtils.isList("a thing"));
+    });
+  });
+
+  describe('convertDateToUTC', function () {
+    it('should convert an argument of type string into a date', function () {
+      var run = function(){ FormatUtils.convertDateToUTC('January 1, 2000'); }
+      expect(run).to.not.throw();
     });
   });
 
