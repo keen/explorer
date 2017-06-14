@@ -27,7 +27,7 @@ var ProjectActions = {
 
   fetchProjectCollections: function(client) {
     var project = ProjectStore.getProject();
-    if (!project) throw new Error("Cannot fetchProjectCollections: No project model has been created yet.");
+    if (!project) console.error("Cannot fetchProjectCollections: No project model has been created yet.");
 
     return client
       .get(client.url('projectId'))
@@ -50,7 +50,7 @@ var ProjectActions = {
         });
       })
       .catch(function(err){
-        throw new Error('Error fetching project collections: ' + err);
+        console.error('Error fetching project collections: ', err.stack);
       });
   },
 
@@ -74,7 +74,7 @@ var ProjectActions = {
         });
       })
       .catch(function(err){
-        throw new Error('Error fetching project collections: ' + err);
+        console.error('Error fetching project collections: ', err.stack);
       });
   },
 
@@ -106,7 +106,7 @@ var ProjectActions = {
         });
       },
       error: function(err) {
-        throw new Error("Error requesting latest events for event collection: " + eventCollection);
+        console.error("Error requesting latest events for event collection: " + eventCollection, err.stack);
       },
       complete: function() {
         ProjectActions.updateEventCollection(eventCollection, {

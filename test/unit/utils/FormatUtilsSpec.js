@@ -1,4 +1,5 @@
 var assert = require('chai').assert;
+var expect = require('chai').expect;
 var _ = require('lodash');
 let sinon = require('sinon/pkg/sinon.js');
 var moment = require('moment');
