@@ -58619,7 +58619,6 @@
 	  },
 
 	  convertDateToUTC: function convertDateToUTC(date) {
-	    if (typeof date === 'string') date = new Date(date);
 	    return new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds());
 	  },
 
@@ -59947,7 +59946,7 @@
 	    }
 	    filter.property_value = module.exports.getCoercedValue(filter);
 	    if (filter.coercion_type === 'Datetime') {
-	      filter.property_value = FormatUtils.convertDateToUTC(filter.property_value);
+	      filter.property_value = FormatUtils.convertDateToUTC(new Date(filter.property_value));
 	    }
 	    return filter;
 	  },

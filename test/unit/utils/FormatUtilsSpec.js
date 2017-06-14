@@ -185,11 +185,4 @@ describe('utils/FormatUtils', function() {
     });
   });
 
-  describe('convertDateToUTC', function () {
-    it('should convert an argument of type string into a date', function () {
-      var run = function(){ FormatUtils.convertDateToUTC('January 1, 2000'); }
-      expect(run).to.not.throw();
-    });
-  });
-
 });
