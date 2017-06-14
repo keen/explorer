@@ -60287,7 +60287,7 @@
 	    return new Date().getTimezoneOffset() * -1 * 60;
 	  },
 
-	  getLocalTimezoneName: function getLocalTimezoneName(date) {
+	  getLocalTimezone: function getLocalTimezone(date) {
 	    var isDST = DateUtils.isDST();
 	    var localOffset = module.exports.getLocalTimezoneOffset();
 	    var zones = CONSTANTS.TIMEZONES.filter(function (zone) {
@@ -60297,6 +60297,7 @@
 	        return zone.offset === localOffset;
 	      }
 	    });
+	    if (!zones.length) return localOffset;
 	    return zones[0].name;
 	  }
 
@@ -84378,7 +84379,7 @@
 	      percentile: null,
 	      group_by: [],
 	      interval: null,
-	      timezone: ProjectUtils.getLocalTimezoneName(),
+	      timezone: ProjectUtils.getLocalTimezone(),
 	      filters: [],
 	      steps: [],
 	      email: null,
@@ -84430,7 +84431,7 @@
 	      amount: 14,
 	      sub_timeframe: 'days'
 	    },
-	    timezone: ProjectUtils.getLocalTimezoneName(),
+	    timezone: ProjectUtils.getLocalTimezone(),
 	    filters: [],
 	    optional: false,
 	    inverted: false,

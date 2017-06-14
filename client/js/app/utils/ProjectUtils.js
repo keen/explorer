@@ -249,7 +249,7 @@ module.exports = {
     return (new Date().getTimezoneOffset() * -1) * 60;
   },
 
-  getLocalTimezoneName: function(date){
+  getLocalTimezone: function(date){
     var isDST = DateUtils.isDST();
     var localOffset = module.exports.getLocalTimezoneOffset();
     var zones = CONSTANTS.TIMEZONES.filter((zone) => {
@@ -259,6 +259,7 @@ module.exports = {
         return zone.offset === localOffset;
       }
     });
+    if (!zones.length) return localOffset;
     return zones[0].name;
   },
 
