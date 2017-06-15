@@ -84,7 +84,7 @@ module.exports = {
       timezone: null
     };
 
-    if (!timezone || ProjectUtils.getConstant('TIMEZONES').indexOf(timezone) === -1) {
+    if (!timezone || !ProjectUtils.getConstant('TIMEZONES').filter(z => z.name === timezone).length) {
       formattedValue.timezone = 'UTC';
     } else {
       formattedValue.timezone = timezone;

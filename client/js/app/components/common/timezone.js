@@ -22,10 +22,8 @@ var Timezone = React.createClass({
 
   handleTimezoneChange: function(name, value) {
     var timezones = ProjectUtils.getConstant('TIMEZONES');
-    var timezone = _.find(timezones, { name: value }) || _.find(timezones, { value: value });
-    value = timezone ? timezone.value : value;
-
-    this.props.handleChange('timezone', value);
+    var timezone = timezones.filter(z => z.name === value)[0];
+    this.props.handleChange('timezone', timezone ? timezone.name : value);
   },
 
   // React methods
@@ -58,7 +56,7 @@ var Timezone = React.createClass({
                        name="timezone"
                        classes="timezone form-control"
                        value={this.props.timezone}
-                       items={ProjectUtils.getConstant('TIMEZONES')}
+                       items={ProjectUtils.getConstant('TIMEZONES').map((z) => z.name)}
                        handleChange={this.handleTimezoneChange}
                        handleBlur={this.handleTimezoneBlur} />
         </div>

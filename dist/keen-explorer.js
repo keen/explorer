@@ -60063,7 +60063,9 @@
 	      timezone: null
 	    };
 
-	    if (!timezone || ProjectUtils.getConstant('TIMEZONES').indexOf(timezone) === -1) {
+	    if (!timezone || !ProjectUtils.getConstant('TIMEZONES').filter(function (z) {
+	      return z.name === timezone;
+	    }).length) {
 	      formattedValue.timezone = 'UTC';
 	    } else {
 	      formattedValue.timezone = timezone;
@@ -60116,7 +60118,107 @@
 
 	  RELATIVE_INTERVAL_TYPES: [{ name: 'minutes', value: 'minutes' }, { name: 'hours', value: 'hours' }, { name: 'days', value: 'days' }, { name: 'weeks', value: 'weeks' }, { name: 'months', value: 'months' }, { name: 'years', value: 'years' }],
 
-	  TIMEZONES: ['UTC', 'Europe/London', 'Africa/Casablanca', 'Africa/Nairobi', 'Asia/Dubai', 'America/Sao_Paulo', 'US/Eastern', 'US/Central', 'US/Mountain', 'US/Pacific', 'US/Alaska', 'US/Hawaii', 'Europe/Paris', 'Europe/Amsterdam', 'Europe/Stockholm', 'Europe/Prague', 'Asia/Istanbul', 'Europe/Istanbul', 'Europe/Copenhagen', 'Asia/Jakarta', 'Asia/Singapore', 'Australia/Perth', 'Asia/Tokyo', 'Australia/Sydney', 'Pacific/Auckland'],
+	  TIMEZONES: [{
+	    name: 'UTC',
+	    offset: 0,
+	    dst_offset: 0
+	  }, {
+	    name: 'Europe/London',
+	    offset: 0,
+	    dst_offset: 3600
+	  }, {
+	    name: 'Africa/Casablanca',
+	    offset: 0,
+	    dst_offset: 0
+	  }, {
+	    name: 'Africa/Nairobi',
+	    offset: 10800,
+	    dst_offset: 0
+	  }, {
+	    name: 'Asia/Dubai',
+	    offset: 14400,
+	    dst_offset: 0
+	  }, {
+	    name: 'America/Sao_Paulo',
+	    offset: -10800,
+	    dst_offset: -7200
+	  }, {
+	    name: 'US/Eastern',
+	    offset: -18000,
+	    dst_offset: -14400
+	  }, {
+	    name: 'US/Central',
+	    offset: -21600,
+	    dst_offset: -18000
+	  }, {
+	    name: 'US/Mountain',
+	    offset: -25200,
+	    dst_offset: -21600
+	  }, {
+	    name: 'US/Pacific',
+	    offset: -28800,
+	    dst_offset: -25200
+	  }, {
+	    name: 'US/Alaska',
+	    offset: -32400,
+	    dst_offset: -28800
+	  }, {
+	    name: 'US/Hawaii',
+	    offset: -36000,
+	    dst_offset: -32400
+	  }, {
+	    name: 'Europe/Paris',
+	    offset: 3600,
+	    dst_offset: 7200
+	  }, {
+	    name: 'Europe/Amsterdam',
+	    offset: 3600,
+	    dst_offset: 7200
+	  }, {
+	    name: 'Europe/Stockholm',
+	    offset: 3600,
+	    dst_offset: 7200
+	  }, {
+	    name: 'Europe/Prague',
+	    offset: 3600,
+	    dst_offset: 7200
+	  }, {
+	    name: 'Asia/Istanbul',
+	    offset: 7200,
+	    dst_offset: 10800
+	  }, {
+	    name: 'Europe/Istanbul',
+	    offset: 7200,
+	    dst_offset: 10800
+	  }, {
+	    name: 'Europe/Copenhagen',
+	    offset: 3600,
+	    dst_offset: 7200
+	  }, {
+	    name: 'Asia/Jakarta',
+	    offset: 25200,
+	    dst_offset: 25200
+	  }, {
+	    name: 'Asia/Singapore',
+	    offset: 28800,
+	    dst_offset: 28800
+	  }, {
+	    name: 'Australia/Perth',
+	    offset: 28800,
+	    dst_offset: 28800
+	  }, {
+	    name: 'Asia/Tokyo',
+	    offset: 32400,
+	    dst_offset: 32400
+	  }, {
+	    name: 'Australia/Sydney',
+	    offset: 36000,
+	    dst_offset: 39600
+	  }, {
+	    name: 'Pacific/Auckland',
+	    offset: 43200,
+	    dst_offset: 46800
+	  }],
 
 	  FILTER_OPERATORS: [{ name: '= Equal to',
 	    value: 'eq',
@@ -60175,18 +60277,28 @@
 	    return collection ? collection.properties[propertyName] : null;
 	  },
 
+	  /*
+	    Returns the local timezone offset in seconds offset from UTC.
+	    This is how the Keen API wants the offset to look. This is also
+	    opposite in negative/positive numbers from how Javascript
+	    handles it.
+	   */
 	  getLocalTimezoneOffset: function getLocalTimezoneOffset(date) {
-	    var offset = new Date().getTimezoneOffset();
-	    if (DateUtils.isDST()) {
-	      offset += 60;
-	    }
-	    var strSign = offset > 0 ? '-' : '+';
-	    var strHours = FormatUtils.padLeft(Math.floor(offset / 60));
-	    var strMinutes = FormatUtils.padLeft(offset % 60);
-	    var found = _.find(CONSTANTS.TIMEZONES, function (timezone) {
-	      return timezone.offset === strSign + strHours + ':' + strMinutes;
+	    return new Date().getTimezoneOffset() * -1 * 60;
+	  },
+
+	  getLocalTimezone: function getLocalTimezone(date) {
+	    var isDST = DateUtils.isDST();
+	    var localOffset = module.exports.getLocalTimezoneOffset();
+	    var zones = CONSTANTS.TIMEZONES.filter(function (zone) {
+	      if (isDST) {
+	        return zone.dst_offset === localOffset;
+	      } else {
+	        return zone.offset === localOffset;
+	      }
 	    });
-	    return found ? found.value : offset * -60;
+	    if (!zones.length) return localOffset;
+	    return zones[0].name;
 	  }
 
 	};
@@ -84267,7 +84379,7 @@
 	      percentile: null,
 	      group_by: [],
 	      interval: null,
-	      timezone: ProjectUtils.getConstant('DEFAULT_TIMEZONE'),
+	      timezone: ProjectUtils.getLocalTimezone(),
 	      filters: [],
 	      steps: [],
 	      email: null,
@@ -84319,7 +84431,7 @@
 	      amount: 14,
 	      sub_timeframe: 'days'
 	    },
-	    timezone: ProjectUtils.getConstant('DEFAULT_TIMEZONE'),
+	    timezone: ProjectUtils.getLocalTimezone(),
 	    filters: [],
 	    optional: false,
 	    inverted: false,
@@ -90752,10 +90864,10 @@
 
 	  handleTimezoneChange: function handleTimezoneChange(name, value) {
 	    var timezones = ProjectUtils.getConstant('TIMEZONES');
-	    var timezone = _.find(timezones, { name: value }) || _.find(timezones, { value: value });
-	    value = timezone ? timezone.value : value;
-
-	    this.props.handleChange('timezone', value);
+	    var timezone = timezones.filter(function (z) {
+	      return z.name === value;
+	    })[0];
+	    this.props.handleChange('timezone', timezone ? timezone.name : value);
 	  },
 
 	  // React methods
@@ -90797,7 +90909,9 @@
 	          name: 'timezone',
 	          classes: 'timezone form-control',
 	          value: this.props.timezone,
-	          items: ProjectUtils.getConstant('TIMEZONES'),
+	          items: ProjectUtils.getConstant('TIMEZONES').map(function (z) {
+	            return z.name;
+	          }),
 	          handleChange: this.handleTimezoneChange,
 	          handleBlur: this.handleTimezoneBlur })
 	      )
