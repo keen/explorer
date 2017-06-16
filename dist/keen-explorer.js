@@ -39551,8 +39551,14 @@
 	    if (!explorer || !explorer.query) return;
 	    var params = _.cloneDeep(explorer.query);
 
-	    if (params.analysis_type === 'extraction' && FormatUtils.isNullOrUndefined(params.email)) {
-	      params.latest = EXRACTION_EVENT_LIMIT;
+	    if (params.analysis_type === 'extraction') {
+	      if (FormatUtils.isNullOrUndefined(params.email)) {
+	        params.latest = EXRACTION_EVENT_LIMIT;
+	      }
+	    } else {
+	      delete params.latest;
+	      delete params.email;
+	      delete params.property_names;
 	    }
 
 	    if (params.analysis_type !== 'funnel') {
@@ -83493,8 +83499,6 @@
 
 	'use strict';
 
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
 	var _ = __webpack_require__(28);
 	var React = __webpack_require__(45);
 	var Loader = __webpack_require__(349);
@@ -83509,21 +83513,6 @@
 	  // ***********************
 	  // Content building
 	  // ***********************
-
-	  extractionObjectsToDisplay: function extractionObjectsToDisplay(prevKey, obj, extractionFields) {
-	    var filteredObjects = {};
-	    _.each(_.keys(obj), function (key) {
-	      if (_typeof(obj[key]) === 'object') {
-	        _.merge(filteredObjects, this.extractionObjectsToDisplay(prevKey + '.' + key, obj[key], extractionFields));
-	      }
-	      if (extractionFields.indexOf(prevKey + '.' + key) > -1) {
-	        filteredObjects[prevKey] = filteredObjects[prevKey] || {};
-	        filteredObjects[prevKey][key] = obj[key];
-	      }
-	    }.bind(this));
-
-	    return filteredObjects;
-	  },
 
 	  buildVizContent: function buildVizContent() {
 	    if (!this.props.model.response) {
@@ -83575,31 +83564,10 @@
 	    var msgContent;
 	    var analysisType = this.props.model.query.analysis_type;
 	    var wrapClasses = analysisType + '-viz';
-	    var extractionFields = this.props.model.extractionFields;
 
 	    if (ExplorerUtils.isJSONViz(this.props.model)) {
 	      var content = FormatUtils.prettyPrintJSON(this.props.model.response);
 	      chartContent = React.createElement('textarea', { ref: 'jsonViz', className: 'json-view', value: content, readOnly: true });
-	    } else if (ExplorerUtils.isTableViz(this.props.model) && extractionFields.length > 0) {
-	      var model = _.cloneDeep(this.props.model);
-	      var modelResponse = _.map(model.response.result, function (row) {
-	        var filteredObjects = {};
-	        _.each(row, function (value, key) {
-	          if ((typeof value === 'undefined' ? 'undefined' : _typeof(value)) === 'object') {
-	            _.merge(filteredObjects, this.extractionObjectsToDisplay(key, value, extractionFields));
-	          } else {
-	            if (extractionFields.indexOf(key) > -1) {
-	              filteredObjects[key] = value;
-	            };
-	          }
-	        }.bind(this));
-	        return filteredObjects;
-	      }.bind(this));
-
-	      model.response.result = modelResponse;
-
-	      chartContent = React.createElement(KeenViz, { model: model, dataviz: this.props.dataviz,
-	        exportToCsv: this.props.exportToCsv });
 	    } else {
 	      chartContent = React.createElement(KeenViz, { model: this.props.model, dataviz: this.props.dataviz,
 	        exportToCsv: this.props.exportToCsv });
@@ -83638,6 +83606,7 @@
 
 	var React = __webpack_require__(45);
 	var ChartTypeUtils = __webpack_require__(396);
+	var FormatUtils = __webpack_require__(335);
 
 	var KeenViz = React.createClass({
 	  displayName: 'KeenViz',
@@ -83670,9 +83639,6 @@
 	  // ***********************
 
 	  shouldComponentUpdate: function shouldComponentUpdate(nextProps, nextState) {
-	    if (this.props.model.extractionFields !== nextProps.model.extractionFields && nextProps.model.metadata.visualization.chart_type === 'table') {
-	      return true;
-	    }
 	    if (this.lastChartType !== nextProps.model.metadata.visualization.chart_type) {
 	      return true;
 	    }
@@ -83883,9 +83849,7 @@
 	  EXPLORER_SAVE_FAIL: null,
 	  EXPLORER_DESTROYING: null,
 	  EXPLORER_DESTROY_SUCCESS: null,
-	  EXPLORER_DESTROY_FAIL: null,
-
-	  EXPLORER_CHANGE_EXTRACTION_FIELDS: null
+	  EXPLORER_DESTROY_FAIL: null
 	});
 
 /***/ }),
@@ -84318,14 +84282,6 @@
 	        });
 	      }
 	    });
-	  },
-
-	  changeExtractionFields: function changeExtractionFields(fields, sourceId) {
-	    AppDispatcher.dispatch({
-	      actionType: ExplorerConstants.EXPLORER_CHANGE_EXTRACTION_FIELDS,
-	      id: sourceId,
-	      fields: fields
-	    });
 	  }
 
 	};
@@ -84384,14 +84340,14 @@
 	      steps: [],
 	      email: null,
 	      latest: null,
+	      property_names: [],
 	      time: {
 	        relativity: 'this',
 	        amount: 14,
 	        sub_timeframe: 'days'
 	      }
 	    },
-	    metadata: _defaultMetadata(),
-	    extractionFields: []
+	    metadata: _defaultMetadata()
 	  };
 	}
 
@@ -84477,6 +84433,11 @@
 	  }
 	  var newModel = _.mergeWith({}, explorer, _.omit(updates, 'response'), customizer);
 	  if (updates.response) newModel.response = updates.response;
+
+	  // Check if the event collection has changed. Clear the property names if so.
+	  if (updates.query && updates.query.event_collection && updates.query.event_collection !== explorer.query.event_collection) {
+	    newModel.query.property_names = [];
+	  }
 
 	  if (newModel.query.analysis_type === 'funnel' && explorer.query.analysis_type !== 'funnel') {
 	    newModel = _migrateToFunnel(explorer, newModel);
@@ -84999,11 +84960,6 @@
 	    case ExplorerConstants.EXPLORER_FOUND_INVALID:
 	      // Find any invalid steps and mark the first one active to display the notice.
 	      _markFirstInvalidStepActive(action.id);
-	      finishAction();
-	      break;
-
-	    case ExplorerConstants.EXPLORER_CHANGE_EXTRACTION_FIELDS:
-	      _update(action.id, { extractionFields: action.fields });
 	      finishAction();
 	      break;
 
@@ -85570,10 +85526,12 @@
 	    if (this.props.model.query.analysis_type === 'extraction') {
 	      return React.createElement(ExtractionOptions, { latest: this.props.model.query.latest,
 	        email: this.props.model.query.email,
-	        model: this.props.model,
+	        property_names: this.props.model.query.property_names,
+	        event_collection: this.props.model.query.event_collection,
 	        projectSchema: this.props.project.schema,
 	        isEmail: ExplorerUtils.isEmailExtraction(this.props.model),
-	        handleChange: this.handleSelectionWithEvent,
+	        handleChangeWithEvent: this.handleSelectionWithEvent,
+	        handleChange: this.handleChange,
 	        setExtractionType: this.props.setExtractionType });
 	    }
 	  },
@@ -86502,7 +86460,6 @@
 	var Input = __webpack_require__(414);
 	var ReactMultiSelect = __webpack_require__(417);
 	var LatestField = __webpack_require__(418);
-	var ExplorerActions = __webpack_require__(399);
 
 	var ExtractionOptions = function (_React$Component) {
 	  _inherits(ExtractionOptions, _React$Component);
@@ -86516,15 +86473,40 @@
 	  _createClass(ExtractionOptions, [{
 	    key: '_getExtractionKeys',
 	    value: function _getExtractionKeys() {
+	      var _this2 = this;
+
 	      if (typeof this.props.projectSchema === "undefined") {
 	        return false;
 	      }
-	      var schema = this.props.projectSchema[this.props.model.query.event_collection];
+
+	      var schema = this.props.projectSchema[this.props.event_collection];
 	      if (typeof schema === "undefined") {
 	        return false;
 	      }
 
-	      return schema.sortedProperties;
+	      if (!schema.sortedProperties || !schema.sortedProperties.length) {
+	        return false;
+	      }
+
+	      return schema.sortedProperties.map(function (property) {
+	        return {
+	          value: property,
+	          selected: _this2.props.property_names.indexOf(property) > -1
+	        };
+	      });
+	    }
+	  }, {
+	    key: '_handlePropertyNamesChange',
+	    value: function _handlePropertyNamesChange(name, propertyName, shouldBeSelected) {
+	      var newPropertyNames = this.props.property_names.slice(0);
+	      if (shouldBeSelected) {
+	        newPropertyNames.push(propertyName);
+	      } else {
+	        newPropertyNames = newPropertyNames.filter(function (name) {
+	          return name !== propertyName;
+	        });
+	      }
+	      this.props.handleChange(name, newPropertyNames);
 	    }
 	  }, {
 	    key: 'render',
@@ -86540,16 +86522,15 @@
 	          placeholder: 'your@email.com',
 	          required: 'true',
 	          value: this.props.email,
-	          onChange: this.props.handleChange });
-	        latestField = React.createElement(LatestField, { latest: this.props.latest, handleChange: this.props.handleChange });
+	          onChange: this.props.handleChangeWithEvent });
+	        latestField = React.createElement(LatestField, { latest: this.props.latest, handleChange: this.props.handleChangeWithEvent });
 	      }
 
 	      if (this._getExtractionKeys()) {
 	        extractionPropertiesFilter = React.createElement(ReactMultiSelect, {
-	          name: 'filter-properties',
-	          model: this.props.model,
+	          name: 'property_names',
 	          label: 'Filter extraction properties',
-	          handleChange: ExplorerActions.changeExtractionFields,
+	          handleChange: this._handlePropertyNamesChange.bind(this),
 	          items: this._getExtractionKeys()
 	        });
 	      }
@@ -86614,8 +86595,7 @@
 	    _this.state = {
 	      open: false,
 	      id: 'react-multi-select',
-	      focusedIndex: 0,
-	      selected: []
+	      focusedIndex: 0
 	    };
 	    return _this;
 	  }
@@ -86643,21 +86623,18 @@
 	      }
 	    }
 	  }, {
+	    key: '_isSelected',
+	    value: function _isSelected(itemVal) {
+	      return this.props.items.filter(function (item) {
+	        if (item.value === itemVal && item.selected) return true;
+	        return false;
+	      }).length > 0;
+	    }
+	  }, {
 	    key: '_handleOptionChange',
 	    value: function _handleOptionChange(event) {
 	      this.interceptEvent(event);
-	      var selectedItem = event.target.text;
-	      var selectedIndex = this.state.selected.indexOf(selectedItem);
-	      var selected = this.state.selected;
-
-	      if (selectedIndex > -1) {
-	        selected.splice(selectedIndex, 1);
-	      } else {
-	        selected.push(selectedItem);
-	      }
-
-	      this.props.handleChange(selected, this.props.model.id);
-	      this.setState({ selected: selected });
+	      this.props.handleChange(this.props.name, event.target.text, !this._isSelected(event.target.text));
 	    }
 	  }, {
 	    key: '_renderOption',
@@ -86666,7 +86643,7 @@
 	      if (i === this.state.focusedIndex) {
 	        className += ' react-select-box-option-focused';
 	      }
-	      if (this.state.selected.indexOf(option.value) > -1) {
+	      if (option.selected) {
 	        className += ' react-select-box-option-selected';
 	      }
 
@@ -86677,7 +86654,8 @@
 	          className: className,
 	          href: '#',
 	          onClick: this._handleOptionChange.bind(this),
-	          title: option.label
+	          title: option.label,
+	          key: i + '_' + option.label
 	        },
 	        option.label
 	      );
@@ -86688,14 +86666,16 @@
 	  }, {
 	    key: '_renderOptionMenu',
 	    value: function _renderOptionMenu() {
+	      var _this2 = this;
+
 	      var className = 'react-select-box-options';
 	      if (!this.state.open) {
 	        className += ' react-select-box-hidden';
 	      }
 
-	      var options = React.Children.map(this.props.items, function (item, i) {
-	        return this._renderOption({ value: item, label: item }, i);
-	      }.bind(this));
+	      var options = this.props.items.map(function (item, i) {
+	        return _this2._renderOption({ value: item.value, selected: item.selected, label: item.value }, i);
+	      });
 
 	      return React.createElement(
 	        'div',
@@ -86706,7 +86686,12 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var label = this.state.selected.length > 0 ? this.state.selected.join(', ') : this.props.label;
+	      var selectedItems = this.props.items.filter(function (i) {
+	        return i.selected;
+	      });
+	      var label = selectedItems.length > 0 ? selectedItems.map(function (i) {
+	        return i.value;
+	      }).join(', ') : this.props.label;
 
 	      return React.createElement(
 	        'div',

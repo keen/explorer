@@ -44,14 +44,14 @@ function _defaultAttrs() {
       steps: [],
       email: null,
       latest: null,
+      property_names: [],
       time: {
         relativity: 'this',
         amount: 14,
         sub_timeframe: 'days'
       }
     },
-    metadata: _defaultMetadata(),
-    extractionFields: []
+    metadata: _defaultMetadata()
   };
 }
 
@@ -141,6 +141,11 @@ function _prepareUpdates(explorer, updates) {
   }
   var newModel = _.mergeWith({}, explorer, _.omit(updates, 'response'), customizer);
   if (updates.response) newModel.response = updates.response;
+
+  // Check if the event collection has changed. Clear the property names if so.
+  if (updates.query && updates.query.event_collection && updates.query.event_collection !== explorer.query.event_collection) {
+    newModel.query.property_names = [];
+  }
 
   if(newModel.query.analysis_type === 'funnel' && explorer.query.analysis_type !== 'funnel') {
     newModel = _migrateToFunnel(explorer, newModel);
@@ -664,11 +669,6 @@ ExplorerStore.dispatchToken = AppDispatcher.register(function(action) {
     case ExplorerConstants.EXPLORER_FOUND_INVALID:
       // Find any invalid steps and mark the first one active to display the notice.
       _markFirstInvalidStepActive(action.id);
-      finishAction();
-      break;
-
-    case ExplorerConstants.EXPLORER_CHANGE_EXTRACTION_FIELDS:
-      _update(action.id, { extractionFields: action.fields });
       finishAction();
       break;
 

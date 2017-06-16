@@ -1,5 +1,6 @@
 var React = require('react');
 var ChartTypeUtils = require('../../../utils/ChartTypeUtils');
+var FormatUtils = require('../../../utils/FormatUtils');
 
 var KeenViz = React.createClass({
 
@@ -35,9 +36,6 @@ var KeenViz = React.createClass({
   // ***********************
 
   shouldComponentUpdate: function(nextProps, nextState) {
-    if (this.props.model.extractionFields !== nextProps.model.extractionFields && nextProps.model.metadata.visualization.chart_type === 'table') {
-      return true;
-    }
     if (this.lastChartType !== nextProps.model.metadata.visualization.chart_type) {
       return true;
     }
