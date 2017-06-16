@@ -147,6 +147,15 @@ module.exports = {
     return json;
   },
 
+  cleanJSONforSave: function(explorer) {
+    if (explorer.query.analysis_type === 'extraction') {
+      explorer.query.latest = EXRACTION_EVENT_LIMIT;
+      delete explorer.query.email;
+      delete explorer.query.property_names;
+    }
+    return explorer;
+  },
+
   paramsForURL: function(explorer) {
     var attrs = module.exports.toJSON(explorer);
     return _.omit(attrs, [

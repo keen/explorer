@@ -206,6 +206,45 @@ describe('utils/ExplorerUtils', function() {
     });
   });
 
+  describe('cleanJSONforSave', function () {
+    it('should remove the email field from extraction queries', function () {
+      var explorer = {
+        query: {
+          analysis_type: 'extraction',
+          property_names: ['a', 'b', 'c'],
+          latest: 500,
+          email: 'eric@keen.io'
+        }
+      };
+      var result = ExplorerUtils.cleanJSONforSave(explorer);
+      assert.strictEqual(result.query.email, undefined);
+    });
+    it('should remove the property_names field from extraction queries', function () {
+      var explorer = {
+        query: {
+          analysis_type: 'extraction',
+          property_names: ['a', 'b', 'c'],
+          latest: 500,
+          email: 'eric@keen.io'
+        }
+      };
+      var result = ExplorerUtils.cleanJSONforSave(explorer);
+      assert.strictEqual(result.query.property_names, undefined);
+    });
+    it('should set the latest field to the right value for extraction queries', function () {
+      var explorer = {
+        query: {
+          analysis_type: 'extraction',
+          property_names: ['a', 'b', 'c'],
+          latest: 500,
+          email: 'eric@keen.io'
+        }
+      };
+      var result = ExplorerUtils.cleanJSONforSave(explorer);
+      assert.strictEqual(result.query.latest, 100);
+    });
+  });
+
   describe('resultCanBeVisualized', function () {
     it('should return true if the value is the number 0', function () {
       var explorer = {

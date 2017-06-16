@@ -39601,6 +39601,15 @@
 	    return json;
 	  },
 
+	  cleanJSONforSave: function cleanJSONforSave(explorer) {
+	    if (explorer.query.analysis_type === 'extraction') {
+	      explorer.query.latest = EXRACTION_EVENT_LIMIT;
+	      delete explorer.query.email;
+	      delete explorer.query.property_names;
+	    }
+	    return explorer;
+	  },
+
 	  paramsForURL: function paramsForURL(explorer) {
 	    var attrs = module.exports.toJSON(explorer);
 	    return _.omit(attrs, ['id', 'query_name', 'refresh_rate', 'metadata']);
@@ -84226,7 +84235,7 @@
 	    }
 	    NoticeActions.clearAll();
 
-	    var explorerJSON = ExplorerUtils.toJSON(ExplorerStore.get(sourceId));
+	    var explorerJSON = ExplorerUtils.cleanJSONforSave(ExplorerUtils.toJSON(ExplorerStore.get(sourceId)));
 	    persistence[persistenceFunction](explorerJSON, function (err, res) {
 	      if (err) {
 	        AppDispatcher.dispatch({
