@@ -365,7 +365,9 @@ var ExplorerActions = {
     }
     NoticeActions.clearAll();
 
-    var explorerJSON = ExplorerUtils.toJSON(ExplorerStore.get(sourceId));
+    var explorerJSON = ExplorerUtils.cleanJSONforSave(
+      ExplorerUtils.toJSON(ExplorerStore.get(sourceId))
+    );
     persistence[persistenceFunction](explorerJSON, function(err, res) {
       if (err) {
         AppDispatcher.dispatch({
