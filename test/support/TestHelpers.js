@@ -51,6 +51,7 @@ module.exports = {
         filters: null,
         email: null,
         latest: null,
+        property_names: [],
         filters: [],
         steps: [],
         time: {

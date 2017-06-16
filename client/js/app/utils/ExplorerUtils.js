@@ -92,8 +92,14 @@ module.exports = {
     if (!explorer || !explorer.query) return;
     var params = _.cloneDeep(explorer.query);
 
-    if (params.analysis_type === 'extraction' && FormatUtils.isNullOrUndefined(params.email)) {
-      params.latest = EXRACTION_EVENT_LIMIT;
+    if (params.analysis_type === 'extraction') {
+      if (FormatUtils.isNullOrUndefined(params.email)) {
+        params.latest = EXRACTION_EVENT_LIMIT;
+      }
+    } else {
+      delete params.latest;
+      delete params.email;
+      delete params.property_names;
     }
 
     if (params.analysis_type !== 'funnel') {

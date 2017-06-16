@@ -6,8 +6,7 @@ class ReactMultiSelect extends React.Component {
     this.state = {
       open: false,
       id: 'react-multi-select',
-      focusedIndex: 0,
-      selected: []
+      focusedIndex: 0
     }
   }
 
@@ -30,21 +29,16 @@ class ReactMultiSelect extends React.Component {
     }
   }
 
+  _isSelected(itemVal) {
+    return this.props.items.filter((item) => {
+      if (item.value === itemVal && item.selected) return true;
+      return false;
+    }).length > 0;
+  }
+
   _handleOptionChange(event) {
     this.interceptEvent(event);
-    const selectedItem = event.target.text;
-    const selectedIndex = this.state.selected.indexOf(selectedItem);
-    let selected = this.state.selected;
-
-    if (selectedIndex > -1) {
-      selected.splice(selectedIndex, 1);
-    }
-    else {
-      selected.push(selectedItem);
-    }
-
-    this.props.handleChange(selected, this.props.model.id);
-    this.setState({ selected: selected });
+    this.props.handleChange(this.props.name, event.target.text, !this._isSelected(event.target.text));
   }
 
   _renderOption(option, i) {
@@ -52,7 +46,7 @@ class ReactMultiSelect extends React.Component {
     if (i === this.state.focusedIndex) {
       className += ' react-select-box-option-focused'
     }
-    if (this.state.selected.indexOf(option.value) > -1) {
+    if (option.selected) {
       className += ' react-select-box-option-selected'
     }
 
@@ -62,6 +56,7 @@ class ReactMultiSelect extends React.Component {
       href='#'
       onClick={this._handleOptionChange.bind(this)}
       title={option.label}
+      key={`${i}_${option.label}`}
     >{option.label}</a>
     )
   }
@@ -73,9 +68,9 @@ class ReactMultiSelect extends React.Component {
       className += ' react-select-box-hidden';
     }
 
-    const options = React.Children.map(this.props.items, function(item, i) {
-      return this._renderOption({ value: item, label: item }, i);
-    }.bind(this));
+    const options = this.props.items.map((item, i) => {
+      return this._renderOption({ value: item.value, selected: item.selected, label: item.value }, i);
+    });
 
     return (<div className={className} ref='menu'>
       {options}
@@ -83,7 +78,8 @@ class ReactMultiSelect extends React.Component {
   }
 
   render() {
-    const label = this.state.selected.length > 0 ? this.state.selected.join(', ') : this.props.label;
+    const selectedItems = this.props.items.filter(i => i.selected);
+    const label = selectedItems.length > 0 ? selectedItems.map(i => i.value).join(', ') : this.props.label;
 
     return (<div className='react-select-box-container react-select-box-multi'>
       <button id={this.state.id} onClick={this._toggleOpenClose.bind(this)} className='react-select-box'>

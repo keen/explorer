@@ -11,21 +11,6 @@ var Chart = React.createClass({
   // Content building
   // ***********************
 
-  extractionObjectsToDisplay: function(prevKey, obj, extractionFields) {
-    var filteredObjects = {};
-    _.each(_.keys(obj), function(key) {
-      if (typeof obj[key] === 'object') {
-        _.merge(filteredObjects, this.extractionObjectsToDisplay(prevKey + '.' + key, obj[key], extractionFields));
-      }
-      if (extractionFields.indexOf(prevKey + '.' + key) > -1) {
-        filteredObjects[prevKey] = filteredObjects[prevKey] || {};
-        filteredObjects[prevKey][key] = obj[key];
-      }
-    }.bind(this));
-
-    return filteredObjects;
-  },
-
   buildVizContent: function() {
     if (!this.props.model.response) {
       return (
@@ -70,36 +55,12 @@ var Chart = React.createClass({
     var msgContent;
     var analysisType = this.props.model.query.analysis_type;
     var wrapClasses = analysisType + '-viz';
-    var extractionFields = this.props.model.extractionFields;
 
     if (ExplorerUtils.isJSONViz(this.props.model)) {
       var content = FormatUtils.prettyPrintJSON(this.props.model.response);
       chartContent = (
           <textarea ref='jsonViz' className="json-view" value={content} readOnly />
           );
-    }
-
-    else if (ExplorerUtils.isTableViz(this.props.model) && extractionFields.length > 0) {
-      var model = _.cloneDeep(this.props.model)
-      var modelResponse = _.map(model.response.result, function(row) {
-        var filteredObjects = {};
-        _.each(row, function(value, key) {
-          if (typeof value === 'object') {
-            _.merge(filteredObjects, this.extractionObjectsToDisplay(key, value, extractionFields));
-          }
-          else {
-            if (extractionFields.indexOf(key) > -1) { filteredObjects[key] = value; };
-          }
-        }.bind(this));
-        return filteredObjects;
-      }.bind(this));
-
-      model.response.result = modelResponse;
-
-      chartContent = (
-        <KeenViz model={model} dataviz={this.props.dataviz}
-          exportToCsv={this.props.exportToCsv} />
-      );
     }
 
     else {

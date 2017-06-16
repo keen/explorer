@@ -75,10 +75,12 @@ var QueryBuilder = React.createClass({
       return (
         <ExtractionOptions latest={this.props.model.query.latest}
                            email={this.props.model.query.email}
-                           model={this.props.model}
+                           property_names={this.props.model.query.property_names}
+                           event_collection={this.props.model.query.event_collection}
                            projectSchema={this.props.project.schema}
                            isEmail={ExplorerUtils.isEmailExtraction(this.props.model)}
-                           handleChange={this.handleSelectionWithEvent}
+                           handleChangeWithEvent={this.handleSelectionWithEvent}
+                           handleChange={this.handleChange}
                            setExtractionType={this.props.setExtractionType} />
       );
     }

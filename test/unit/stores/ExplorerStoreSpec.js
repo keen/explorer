@@ -46,6 +46,7 @@ describe('stores/ExplorerStore', function() {
           filters: null,
           email: null,
           latest: null,
+          property_names: [],
           filters: [],
           steps: [],
           time: {
@@ -59,8 +60,7 @@ describe('stores/ExplorerStore', function() {
           visualization: {
             chart_type: null
           }
-        },
-        extractionFields: []
+        }
       };
 
       var keys = Object.keys(ExplorerStore.getAll());
@@ -1037,6 +1037,7 @@ describe('stores/ExplorerStore', function() {
             filters: null,
             email: null,
             latest: null,
+            property_names: [],
             filters: [],
             steps: [],
             time: {
@@ -1051,7 +1052,6 @@ describe('stores/ExplorerStore', function() {
               chart_type: 'metric'
             }
           },
-          extractionFields: [],
           originalModel: originalModel
         };
 

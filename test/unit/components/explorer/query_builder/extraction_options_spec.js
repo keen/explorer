@@ -12,9 +12,12 @@ describe('components/explorer/query_builder/extraction_options', function() {
     var model = TestHelpers.createExplorerModel();
     this.defaultProps = {
       handleSelectionWithEvent: function(){},
+      handleChange: function(){},
+      setExtractionType: function(){},
       latest: model.query.latest,
       email: model.query.email,
-      model: model,
+      event_collection: model.query.event_collection,
+      property_names: model.query.property_names,
       isEmail: false,
       projectSchema: {}
     };
@@ -42,13 +45,8 @@ describe('components/explorer/query_builder/extraction_options', function() {
 
   describe('extraction properties filter', function() {
     it('shows when an extraction model is loaded', function() {
-      let model = TestHelpers.createExplorerModel();
-      model.query.analysis_type = 'extraction';
-      model.query.event_collection = 'test collection';
-      model.response = { result: [{'test_name': 12 }] };
-      const projectSchema = { 'test collection': { sortedProperties: ["test_name"] } };
-      const props = _.assign({}, this.component.props, { model: model, projectSchema: projectSchema });
-
+      const projectSchema = { 'test_collection': { sortedProperties: ["test_name"] } };
+      const props = _.assign({}, this.component.props, { event_collection: 'test_collection', projectSchema: projectSchema });
       this.component = TestHelpers.renderComponent(ExtractionOptions, props);
 
       assert.lengthOf($R(this.component).find('ReactMultiSelect').components, 1);

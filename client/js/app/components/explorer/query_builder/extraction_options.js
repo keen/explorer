@@ -3,7 +3,6 @@ const ExplorerUtils = require('../../../utils/ExplorerUtils');
 const Input = require('../../common/input.js');
 const ReactMultiSelect = require('../../common/react_multi_select.js');
 const LatestField = require('./latest_field.js');
-const ExplorerActions = require('../../../actions/ExplorerActions');
 
 class ExtractionOptions extends React.Component {
 
@@ -11,12 +10,34 @@ class ExtractionOptions extends React.Component {
     if (typeof this.props.projectSchema === "undefined") {
       return false;
     }
-    const schema = this.props.projectSchema[this.props.model.query.event_collection];
+
+    const schema = this.props.projectSchema[this.props.event_collection];
     if (typeof schema === "undefined") {
       return false;
     }
 
-    return schema.sortedProperties;
+    if (!schema.sortedProperties || !schema.sortedProperties.length) {
+      return false;
+    }
+
+    return schema.sortedProperties.map((property) => {
+      return {
+        value: property,
+        selected: this.props.property_names.indexOf(property) > -1
+      }
+    });
+  }
+
+  _handlePropertyNamesChange(name, propertyName, shouldBeSelected) {
+    let newPropertyNames = this.props.property_names.slice(0);
+    if (shouldBeSelected) {
+      newPropertyNames.push(propertyName);
+    } else {
+      newPropertyNames = newPropertyNames.filter((name) => {
+        return name !== propertyName;
+      });
+    }
+    this.props.handleChange(name, newPropertyNames);
   }
 
   render(){
@@ -32,19 +53,18 @@ class ExtractionOptions extends React.Component {
                placeholder="your@email.com"
                required="true"
                value={this.props.email}
-               onChange={this.props.handleChange} />
+               onChange={this.props.handleChangeWithEvent} />
       );
       latestField = (
-        <LatestField latest={this.props.latest} handleChange={this.props.handleChange} />
+        <LatestField latest={this.props.latest} handleChange={this.props.handleChangeWithEvent} />
       );
     }
 
     if (this._getExtractionKeys()) {
       extractionPropertiesFilter = <ReactMultiSelect
-            name="filter-properties"
-            model={this.props.model}
+            name="property_names"
             label="Filter extraction properties"
-            handleChange={ExplorerActions.changeExtractionFields}
+            handleChange={this._handlePropertyNamesChange.bind(this)}
             items={this._getExtractionKeys()}
       />
     }
