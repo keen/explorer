@@ -3,7 +3,7 @@ var React = require('react');
 var Loader = require('../../common/loader.js');
 var KeenViz = require('./keen_viz.js');
 var ExplorerUtils = require('../../../utils/ExplorerUtils');
-var FormatUtils = require('../../../utils/FormatUtils');
+var prettyPrintJSON = require('../../../utils/FormatUtils').prettyPrintJSON;
 
 var Chart = React.createClass({
 
@@ -57,10 +57,12 @@ var Chart = React.createClass({
     var wrapClasses = analysisType + '-viz';
 
     if (ExplorerUtils.isJSONViz(this.props.model)) {
-      var content = FormatUtils.prettyPrintJSON(this.props.model.response);
+      var content = prettyPrintJSON({
+        result: this.props.model.response.result
+      });
       chartContent = (
-          <textarea ref='jsonViz' className="json-view" value={content} readOnly />
-          );
+        <textarea ref='jsonViz' className="json-view" value={content} readOnly />
+      );
     }
 
     else {

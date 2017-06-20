@@ -83513,7 +83513,7 @@
 	var Loader = __webpack_require__(349);
 	var KeenViz = __webpack_require__(395);
 	var ExplorerUtils = __webpack_require__(204);
-	var FormatUtils = __webpack_require__(335);
+	var prettyPrintJSON = __webpack_require__(335).prettyPrintJSON;
 
 	var Chart = React.createClass({
 	  displayName: 'Chart',
@@ -83575,7 +83575,9 @@
 	    var wrapClasses = analysisType + '-viz';
 
 	    if (ExplorerUtils.isJSONViz(this.props.model)) {
-	      var content = FormatUtils.prettyPrintJSON(this.props.model.response);
+	      var content = prettyPrintJSON({
+	        result: this.props.model.response.result
+	      });
 	      chartContent = React.createElement('textarea', { ref: 'jsonViz', className: 'json-view', value: content, readOnly: true });
 	    } else {
 	      chartContent = React.createElement(KeenViz, { model: this.props.model, dataviz: this.props.dataviz,
