@@ -5,6 +5,7 @@ var Chart = require('../../../../../client/js/app/components/explorer/visualizat
 var React = require('react');
 var TestUtils = require('react-addons-test-utils');
 var ExplorerUtils = require('../../../../../client/js/app/utils/ExplorerUtils');
+var FormatUtils = require('../../../../../client/js/app/utils/FormatUtils');
 var TestHelpers = require('../../../../support/TestHelpers');
 
 describe('components/explorer/visualization/chart', function() {
@@ -30,6 +31,18 @@ describe('components/explorer/visualization/chart', function() {
       this.component = TestUtils.renderIntoDocument(<Chart model={this.model} dataviz={this.dataviz} />);
       var message = "Email extractions don't have visualizations.";
       assert.equal(this.component.refs.notice.textContent, message);
+    });
+  });
+
+  describe('JSON viz', function() {
+    it('should only how the query result', function(){
+      this.model.response = {
+        query: { do_not: 'show_me' },
+        result: 100
+      };
+      this.model.metadata.visualization.chart_type = 'json';
+      this.component = TestUtils.renderIntoDocument(<Chart model={this.model} dataviz={this.dataviz} />);
+      assert.strictEqual(this.component.refs.jsonViz.textContent, FormatUtils.prettyPrintJSON({ result: 100}));
     });
   });
 });
