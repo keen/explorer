@@ -35,14 +35,24 @@ describe('components/explorer/visualization/chart', function() {
   });
 
   describe('JSON viz', function() {
-    it('should only how the query result', function(){
+    it('should only show the query result', function(){
       this.model.response = {
         query: { do_not: 'show_me' },
         result: 100
       };
       this.model.metadata.visualization.chart_type = 'json';
       this.component = TestUtils.renderIntoDocument(<Chart model={this.model} dataviz={this.dataviz} />);
-      assert.strictEqual(this.component.refs.jsonViz.textContent, FormatUtils.prettyPrintJSON({ result: 100}));
+      assert.strictEqual(this.component.refs.jsonViz.textContent, FormatUtils.prettyPrintJSON({ result: 100 }));
+    });
+    it('should also show the actors property if present in the response', function(){
+      this.model.response = {
+        query: { do_not: 'show_me' },
+        result: 100,
+        actors: ['a', 'b', 'c']
+      };
+      this.model.metadata.visualization.chart_type = 'json';
+      this.component = TestUtils.renderIntoDocument(<Chart model={this.model} dataviz={this.dataviz} />);
+      assert.strictEqual(this.component.refs.jsonViz.textContent, FormatUtils.prettyPrintJSON({ result: 100, actors: ['a', 'b', 'c'] }));
     });
   });
 });
