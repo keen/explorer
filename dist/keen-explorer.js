@@ -83575,10 +83575,16 @@
 	    var wrapClasses = analysisType + '-viz';
 
 	    if (ExplorerUtils.isJSONViz(this.props.model)) {
-	      var content = prettyPrintJSON({
+	      var content = {
 	        result: this.props.model.response.result
-	      });
-	      chartContent = React.createElement('textarea', { ref: 'jsonViz', className: 'json-view', value: content, readOnly: true });
+	      };
+	      if (this.props.model.response.actors) {
+	        content.actors = this.props.model.response.actors;
+	      }
+	      chartContent = React.createElement('textarea', { ref: 'jsonViz',
+	        className: 'json-view',
+	        value: prettyPrintJSON(content),
+	        readOnly: true });
 	    } else {
 	      chartContent = React.createElement(KeenViz, { model: this.props.model, dataviz: this.props.dataviz,
 	        exportToCsv: this.props.exportToCsv });
@@ -87041,7 +87047,7 @@
 	          'label',
 	          { className: 'block-label' },
 	          React.createElement('input', { name: 'with_actors', type: 'checkbox', checked: this.props.step.with_actors, onChange: this.handleCheckboxChange }),
-	          ' With actors'
+	          ' With Actors'
 	        ),
 	        React.createElement('hr', null),
 	        remove

@@ -57,11 +57,17 @@ var Chart = React.createClass({
     var wrapClasses = analysisType + '-viz';
 
     if (ExplorerUtils.isJSONViz(this.props.model)) {
-      var content = prettyPrintJSON({
+      var content = {
         result: this.props.model.response.result
-      });
+      };
+      if (this.props.model.response.actors) {
+        content.actors = this.props.model.response.actors;
+      }
       chartContent = (
-        <textarea ref='jsonViz' className="json-view" value={content} readOnly />
+        <textarea ref='jsonViz'
+                  className="json-view"
+                  value={prettyPrintJSON(content)}
+                  readOnly />
       );
     }
 

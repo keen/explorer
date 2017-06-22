@@ -135,7 +135,7 @@ var FunnelStep = React.createClass({
             <input name="inverted" type="checkbox" checked={this.props.step.inverted} onChange={this.handleCheckboxChange} /> Inverted Step
           </label>
           <label className="block-label">
-            <input name="with_actors" type="checkbox" checked={this.props.step.with_actors} onChange={this.handleCheckboxChange} /> With actors
+            <input name="with_actors" type="checkbox" checked={this.props.step.with_actors} onChange={this.handleCheckboxChange} /> With Actors
           </label>
 
           <hr />
