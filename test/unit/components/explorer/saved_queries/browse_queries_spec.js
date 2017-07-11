@@ -61,7 +61,7 @@ describe('components/explorer/saved_queries/browse_queries', function() {
       assert.equal(this.component.refs.list.childNodes.length, 3);
     });
 
-    it("uses metadata.display_name as the default query name displayed in the browse tab", function() {
+    it("should use metadata.display_name as the default query name displayed in the browse tab", function() {
       this.component = this.renderComponent({
         listItems: [
           {
@@ -81,7 +81,7 @@ describe('components/explorer/saved_queries/browse_queries', function() {
       assert.equal($R(this.component).find('h5')[0].textContent, 'Test Display Name');
     });
 
-    it("uses query_name as query name displayed in the browse tab when there's no metadata.display_name", function() {
+    it("should use query_name as query name displayed in the browse tab when there's no metadata.display_name", function() {
       this.component = this.renderComponent({
         listItems: [
           {
@@ -101,7 +101,7 @@ describe('components/explorer/saved_queries/browse_queries', function() {
       assert.equal($R(this.component).find('h5')[0].textContent, 'test-query-name');
     });
 
-    it("uses placeholder text for queries that do not have a query_name or metadata.display_name", function() {
+    it("should use placeholder text for queries that do not have a query_name or metadata.display_name", function() {
       this.component = this.renderComponent({
         listItems: [
           {
