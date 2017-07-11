@@ -32,9 +32,18 @@ var BrowseQueries = React.createClass({
       }
       var isCachedText = listItem.refresh_rate > 0 ? 'Cached' : '';
 
+      var displayName = null;
+      if (listItem.metadata.display_name) {
+        displayName = listItem.metadata.display_name;
+      } else if (listItem.query_name) {
+        displayName = listItem.query_name;
+      } else {
+        displayName = 'Query not named';
+      }
+
       return (
         <li className={classes} key={index} data-id={listItem.id} onClick={this.clickCallback}>
-          <h5 className="name">{listItem.metadata.display_name ? listItem.metadata.display_name : 'Query not named'}</h5>
+          <h5 className="name">{displayName}</h5>
           <div className="metadata clearfix">
             <p className="date pull-left">{isCachedText}</p>
             {createdAt}
