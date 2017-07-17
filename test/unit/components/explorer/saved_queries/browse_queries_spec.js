@@ -61,12 +61,52 @@ describe('components/explorer/saved_queries/browse_queries', function() {
       assert.equal(this.component.refs.list.childNodes.length, 3);
     });
 
-    it("uses placeholder text for queries that do not have metadata or display_name", function() {
+    it("should use metadata.display_name as the default query name displayed in the browse tab", function() {
       this.component = this.renderComponent({
         listItems: [
           {
             id: 1,
-            query_name: 'logins-over-last-30-days',
+            query_name: 'test-query-name',
+            created_at: '2015-06-07 11:15:37.000000',
+            metadata: {
+              display_name: 'Test Display Name',
+              visualization: {
+                chart_type: null
+              }
+            }
+          }
+        ]
+      });
+      console.log($R(this.component).find('h5')[0]);
+      assert.equal($R(this.component).find('h5')[0].textContent, 'Test Display Name');
+    });
+
+    it("should use query_name as query name displayed in the browse tab when there's no metadata.display_name", function() {
+      this.component = this.renderComponent({
+        listItems: [
+          {
+            id: 1,
+            query_name: 'test-query-name',
+            created_at: '2015-06-07 11:15:37.000000',
+            metadata: {
+              display_name: null,
+              visualization: {
+                chart_type: null
+              }
+            }
+          }
+        ]
+      });
+      console.log($R(this.component).find('h5')[0]);
+      assert.equal($R(this.component).find('h5')[0].textContent, 'test-query-name');
+    });
+
+    it("should use placeholder text for queries that do not have a query_name or metadata.display_name", function() {
+      this.component = this.renderComponent({
+        listItems: [
+          {
+            id: 1,
+            query_name: null,
             created_at: '2015-06-07 11:15:37.000000',
             metadata: {
               display_name: null,

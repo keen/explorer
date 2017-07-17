@@ -91557,13 +91557,22 @@
 	      }
 	      var isCachedText = listItem.refresh_rate > 0 ? 'Cached' : '';
 
+	      var displayName = null;
+	      if (listItem.metadata.display_name) {
+	        displayName = listItem.metadata.display_name;
+	      } else if (listItem.query_name) {
+	        displayName = listItem.query_name;
+	      } else {
+	        displayName = 'Query not named';
+	      }
+
 	      return React.createElement(
 	        'li',
 	        { className: classes, key: index, 'data-id': listItem.id, onClick: this.clickCallback },
 	        React.createElement(
 	          'h5',
 	          { className: 'name' },
-	          listItem.metadata.display_name ? listItem.metadata.display_name : 'Query not named'
+	          displayName
 	        ),
 	        React.createElement(
 	          'div',
