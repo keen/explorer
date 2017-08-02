@@ -219,6 +219,13 @@ module.exports = {
       params.query.steps[params.query.steps.length - 1].active = true
     }
     if (!params.id && params.query_name) params.id = params.query_name;
+
+    if (!params.metadata) {
+      params.metadata = {};
+    }
+
+    if (!params.metadata.display_name) params.metadata.display_name = params.query_name;
+    if (!params.metadata.visualization) params.metadata.visualization = {"chart_type": "metric"};
     return params;
   },
 
