@@ -289,7 +289,6 @@ module.exports = {
   },
 
   getSdkExample: function(explorer, client) {
-
     var defaultKeenAnalysisOpts = {
           host: 'api.keen.io',
           protocol: 'https',
@@ -306,6 +305,18 @@ module.exports = {
           'event_collection', 'steps'
         ],
         dynamicConstructorValues;
+
+    var chartTitle = 'Untitled Chart';
+    if (explorer.metadata && explorer.metadata.display_name) {
+      chartTitle = explorer.metadata.display_name;
+    }
+
+    var chartType = '';
+    if (explorer.metadata && explorer.metadata.visualization
+        && explorer.metadata.visualization.chart_type
+          && explorer.metadata.visualization.chart_type !== 'JSON') {
+            chartType = explorer.metadata.visualization.chart_type;
+    }
 
     switch(params.analysis_type) {
       case 'funnel':
@@ -334,27 +345,50 @@ module.exports = {
       if (!params[param]) {
         return SKIP
       }
-      return '    ' + param + ': ' + s(params[param], {space: 4})
+      return '        ' + param + ': ' + s(params[param], { space: 0 })
     }).join(',\n');
 
     var value = [
-      'var client = new Keen({',
-      '  projectId: ' + s(client.config.projectId) + ',',
-      '  readKey: ' + s(client.config.readKey) + echoIf(dynamicConstructorValues, ','),
+      '<!DOCTYPE html>',
+      '<html>',
+      '<head>',
+      '  <meta charset="utf-8">',
+      '  <link href="https://d26b395fwzu5fz.cloudfront.net/keen-dataviz-1.1.3.css" rel="stylesheet" />',
+      '</head>',
+      '<body>',
+      '  <!-- Target DOM Node -->',
+      '  <div id="keen-example-chart"></div>',
+      '  ',
+      '  <script src="https://d26b395fwzu5fz.cloudfront.net/keen-analysis-1.2.2.js" type="text/javascript"></script>',
+      '  <script src="https://d26b395fwzu5fz.cloudfront.net/keen-dataviz-1.1.3.js" type="text/javascript"></script>',
+      '  <script type="text/javascript">',
+      '    var client = new Keen({',
+      '      projectId: ' + s(client.config.projectId) + ',',
+      '      readKey: ' + s(client.config.readKey) + echoIf(dynamicConstructorValues, ','),
       dynamicConstructorValues,
-      '});',
-      '  ',
-      'Keen.ready(function(){',
-      '  ',
-      '  var query = new Keen.Query(' + s(params.analysis_type) + ', {',
-      dynamicCriteria,
-      '  });',
-      '  ',
-      '  client.draw(query, document.getElementById("my_chart"), {',
-      '    // Custom configuration here',
-      '  });',
-      '  ',
-      '});'
+      '    });',
+      '    ',
+      '    var chart = new Keen.Dataviz()',
+      '      .el("#keen-example-chart")',
+      '      .height(240)',
+      '      .title("' + chartTitle + '")',
+      '' + chartType ? '      .type("' + chartType + '")' : '',
+      '      .prepare();',
+      '    ',
+      '    client',
+      '      .query(' + s(params.analysis_type) + ', {',
+               dynamicCriteria,
+      '      })',
+      '      .then(function(res) {',
+      '        chart.data(res).render();',
+      '      })',
+      '      .catch(function(err) {',
+      '        chart.message(err.message);',
+      '      });',
+      '    ',
+      '  </script>',
+      '</body>',
+      '</html>'
     ]
     return _.filter(value, function(val) { return val !== ""; }).join('\n');
   },
