@@ -1,6 +1,7 @@
 var _ = require('lodash');
 var React = require('react');
 var classNames = require('classnames');
+var Highlight = require('react-highlight');
 
 var CodeSample = React.createClass({
   render: function() {
@@ -21,7 +22,11 @@ var CodeSample = React.createClass({
         <a href="#" className="close-btn" onClick={this.props.onCloseClick}>
           <span className="icon glyphicon glyphicon glyphicon-remove-circle no-margin"></span>
         </a>
-        <div className="sample"><pre>{text}</pre></div>
+        <div className="sample">
+          <Highlight className="html">
+            {text}
+          </Highlight>
+        </div>
       </div>
     );
   }

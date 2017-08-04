@@ -27,8 +27,8 @@ You have three options for including the necessary Explorer files:
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
 <!-- Explorer Assets -->
-<link rel="stylesheet" href="https://d26b395fwzu5fz.cloudfront.net/apps/keen-explorer-3.1.2.min.css">
-<script src="https://d26b395fwzu5fz.cloudfront.net/apps/keen-explorer-3.1.2.min.js"></script>
+<link rel="stylesheet" href="https://d26b395fwzu5fz.cloudfront.net/apps/keen-explorer-3.2.0.min.css">
+<script src="https://d26b395fwzu5fz.cloudfront.net/apps/keen-explorer-3.2.0.min.js"></script>
 ```
 
 ##### Option 2: Include the files yourself
