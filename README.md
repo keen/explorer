@@ -2,6 +2,8 @@
 
 ![](https://s3.amazonaws.com/keen_web_static/assets/img/keen-explorer-v2.0.0.png)
 
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bhttps%3A%2F%2Fgithub.com%2Fkeen%2Fexplorer.svg?type=shield)](https://app.fossa.io/projects/git%2Bhttps%3A%2F%2Fgithub.com%2Fkeen%2Fexplorer?ref=badge_shield)
+
 The Keen IO Explorer is an open source point-and-click interface for querying and visualizing your event data. It's maintained by the team at [Keen IO](https://keen.io/).
 
 Read on for instructions on how to use the Explorer on your website or in your web app and how to get set up to develop with the Explorer.
@@ -140,3 +142,7 @@ These are the major technologies used in the project.
 * [NPM](https://www.npmjs.org/) for dependency management.
 * [Browserify](http://browserify.org/) to compile modules for use in the browser.
 * [GulpJS](http://gulpjs.com/) for a task/build runner.
+
+## License
+
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bhttps%3A%2F%2Fgithub.com%2Fkeen%2Fexplorer.svg?type=large)](https://app.fossa.io/projects/git%2Bhttps%3A%2F%2Fgithub.com%2Fkeen%2Fexplorer?ref=badge_large)
