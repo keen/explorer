@@ -66,37 +66,10 @@
 
       <h1 class="text-center">Open Source Data Explorer</h1>
       <p class="lead text-center">Explore and visualize your event data</p>
-      <a class="btn cta-btn" id="try-it-now" href="#demo" target="_blank">Take it for a drive!</a>
+      <a class="btn cta-btn" id="try-it-now" href="#demo" target="_blank">Take it for a test drive!</a>
     </div>
   </div>
   <section class="explorer-demo">
-    <div class="container text-center" id="explorer-presets">
-      <div class="row">
-        <div class="col-sm-12">
-        <h2>What would you explore? Try some examples below.</h2>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-sm-4">
-          <a name="preset-pageviews" class="explorer-preset" href="?query%5Bevent_collection%5D=page_load&query%5Banalysis_type%5D=count&query%5Btimezone%5D=UTC&query%5Btimeframe%5D=this_1_weeks&visualization%5Bchart_type%5D=metric#demo">
-            <h3>Pageviews</h3>
-            <span class="preset-description">See how many web pages have been viewed so far this week.</span>
-          </a>
-        </div>
-        <div class="col-sm-4">
-          <a name="preset-visit-duration" class="explorer-preset" href="?query%5Bevent_collection%5D=leave&query%5Banalysis_type%5D=average&query%5Btarget_property%5D=sinceLoad&query%5Bgroup_by%5D=page.path&query%5Btimezone%5D=UTC&query%5Bfilters%5D%5B0%5D%5Bproperty_name%5D=page.path&query%5Bfilters%5D%5B0%5D%5Boperator%5D=contains&query%5Bfilters%5D%5B0%5D%5Bproperty_value%5D=%2Fblog&query%5Bfilters%5D%5B0%5D%5Bcoercion_type%5D=String&query%5Btimeframe%5D=this_1_weeks&visualization%5Bchart_type%5D=barchart#demo">
-            <h3>Visit duration</h3>
-            <span class="preset-description">Discover the average time visitors spend on the website.</span>
-          </a>
-        </div>
-        <div class="col-sm-4">
-          <a name="preset-site-referrers" class="explorer-preset" href="?query%5Bevent_collection%5D=page_load&query%5Banalysis_type%5D=count_unique&query%5Btarget_property%5D=guid&query%5Bgroup_by%5D=referrer&query%5Binterval%5D=daily&query%5Btimezone%5D=UTC&query%5Btimeframe%5D=previous_1_weeks&visualization%5Bchart_type%5D=linechart#demo">
-            <h3>Site referrers</h3>
-            <span class="preset-description">Find out where visitors come from when they visit.</span>
-          </a>
-        </div>
-      </div>
-    </div>
     <div id="keen-data-explorer-wrapper" class="container"></div>
   </section>
 
@@ -197,9 +170,9 @@
 
     Keen.ready(function() {
       var client = new Keen({
-        projectId: '51cee1b7897a2c5a74000001',
-        readKey: 'd26495906529de8ee6f9ad9cdee37505b3eaf4d6f5b5c8c072eef9fc61db01011e7bff3a0ea98055239921986b15118480463aa1b2b6f89ef6328fa8ee84a43cb4927886657cdaab402dd36f0eca7a4a23761d5df3e50ac787803bd607272a719936261fa61b43458ec51de250fd8cf5',
-        masterKey: '9E1FFDC560020A7C0538AE64D96D34ED'
+        projectId: '5557fe1c2fd4b1326f14444e',
+        readKey: 'd6cc507cf72af7dd0746b630edc51179355e2c074ab46d4545d3bfcecb02dabcbc46a78b8df5dd4b4b6ba2a7dff8fd5b3e3adbdf05cfeb42538205d2b528a357b0ab010e8c7efab939a01bce5be678a5dc3a7fa949db33cbee815a00dca93848d0b96908269a8be2bf70e40a9e213fb0',
+        masterKey: '9939A68B095F2279DAF3EFA29A8A79B3'
       });
       var app = new Keen.Explorer.App({
         client: client,
