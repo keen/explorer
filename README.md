@@ -4,7 +4,7 @@
 
 The Keen IO Explorer is an open source point-and-click interface for querying and visualizing your event data. It's maintained by the team at [Keen IO](https://keen.io/).
 
-[Check out the demo here.](http://keen.github.io/explorer/). Read on for instructions on how to use the Explorer on your website or in your web app and how to get set up to develop with the Explorer.
+Read on for instructions on how to use the Explorer on your website or in your web app and how to get set up to develop with the Explorer.
 
 ## Table of Contents
 1. [How to use Explorer on your site or in your app](#how-to-use-explorer-on-your-site-or-in-your-app)
