@@ -1,6 +1,0 @@
-machine:
-  node:
-    version: 7.8.0
-test:
-  override:
-    - npm run test

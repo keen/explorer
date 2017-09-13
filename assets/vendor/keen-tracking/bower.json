@@ -1,0 +1,23 @@
+{
+  "name": "keen-tracking",
+  "main": "./dist/keen-tracking.min.js",
+  "homepage": "https://github.com/keen/keen-tracking.js",
+  "authors": [
+    "Dustin Larimer <dustin@keen.io>",
+    "Joe Wegner <joe@keen.io>",
+    "Eric Anderson <eric@keen.io>",
+    "Alex Kleissner <alex@keen.io>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "gulpfile.js",
+    "karma.conf.js",
+    ".travis.yml",
+    ".gitignore",
+    ".npmignore",
+    "lib",
+    "node_modules",
+    "test"
+  ]
+}
