@@ -75,7 +75,7 @@ And that's it. You're done!
 
 #### Building the project:
 
-The project is built with [Gulp.js](https://github.com/gulpjs/gulp).
+The project is built with [Webpack](https://github.com/webpack/webpack).
 
 * Run `npm run production` from the root directory of the project to build ALL files, including the minified versions for production use.
 
