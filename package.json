@@ -75,6 +75,7 @@
     "phantomjs": "1.9.7-15",
     "reactify": "~0.15.1",
     "run-sequence": "~1.0.1",
+    "selenium-launcher": "^1.1.12",
     "sinon": "1.14.1",
     "stringify": "~3.0.0",
     "style-loader": "^0.13.1",
