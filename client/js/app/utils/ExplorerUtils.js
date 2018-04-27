@@ -225,10 +225,13 @@ module.exports = {
     }
 
     if (!params.metadata.display_name) params.metadata.display_name = params.query_name;
-    if (!params.metadata.visualization) {
-      params.metadata.visualization = {"chart_type": "metric"};
-    } else if (!params.metadata.visualization.chart_type) {
-      params.metadata.visualization.chart_type = 'metric'
+    if (!params.metadata.visualization || !params.metadata.visualization.chart_type) {
+      params.metadata.visualization = {};
+      if (params.query.interval) {
+        params.metadata.visualization.chart_type = "area";
+      } else {
+        params.metadata.visualization.chart_type = "metric";
+      }
     }
     return params;
   },

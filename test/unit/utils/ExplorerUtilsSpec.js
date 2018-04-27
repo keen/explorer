@@ -497,11 +497,6 @@ describe('utils/ExplorerUtils', function() {
 
         var formattedParams = ExplorerUtils.formatQueryParams(params);
         assert.isObject(formattedParams.metadata, 'Metadata object is missing');
-        assert.equal(formattedParams.metadata.display_name, params.query_name, 'Display name not set');
-        assert.isObject(formattedParams.metadata.visualization, 'Visualization object is missing');
-        assert.equal(formattedParams.metadata.visualization.chart_type, 'metric', 'Chart type not set');
-        assert.equal(formattedParams.refresh_rate, 28800, '`refresh_rate` was overwritten')
-        assert.equal(formattedParams.query.target_property, 'price', '`query.target_property was overwritten')
       });
       it('should create a display name if it does not exist', function() {
         var params = {
@@ -526,12 +521,7 @@ describe('utils/ExplorerUtils', function() {
         };
 
         var formattedParams = ExplorerUtils.formatQueryParams(params);
-        assert.isObject(formattedParams.metadata, 'Metadata object is missing');
         assert.equal(formattedParams.metadata.display_name, params.query_name, 'Display name not set');
-        assert.isObject(formattedParams.metadata.visualization, 'Visualization object is missing');
-        assert.equal(formattedParams.metadata.visualization.chart_type, 'metric', 'Chart type not set');
-        assert.equal(formattedParams.refresh_rate, 28800, '`refresh_rate` was overwritten')
-        assert.equal(formattedParams.query.target_property, 'price', '`query.target_property was overwritten')
       });
       it('should create a display name if it is null', function() {
         var params = {
@@ -557,12 +547,7 @@ describe('utils/ExplorerUtils', function() {
         };
 
         var formattedParams = ExplorerUtils.formatQueryParams(params);
-        assert.isObject(formattedParams.metadata, 'Metadata object is missing');
         assert.equal(formattedParams.metadata.display_name, params.query_name, 'Display name not set');
-        assert.isObject(formattedParams.metadata.visualization, 'Visualization object is missing');
-        assert.equal(formattedParams.metadata.visualization.chart_type, 'metric', 'Chart type not set');
-        assert.equal(formattedParams.refresh_rate, 28800, '`refresh_rate` was overwritten')
-        assert.equal(formattedParams.query.target_property, 'price', '`query.target_property was overwritten')
       });
       it('should not overwrite the display name if it already exists', function() {
         var params = {
@@ -588,14 +573,9 @@ describe('utils/ExplorerUtils', function() {
         };
 
         var formattedParams = ExplorerUtils.formatQueryParams(params);
-        assert.isObject(formattedParams.metadata, 'Metadata object is missing');
         assert.equal(formattedParams.metadata.display_name, 'Actually I need 11', 'Display name was overwritten');
-        assert.isObject(formattedParams.metadata.visualization, 'Visualization object is missing');
-        assert.equal(formattedParams.metadata.visualization.chart_type, 'metric', 'Chart type not set');
-        assert.equal(formattedParams.refresh_rate, 28800, '`refresh_rate` was overwritten')
-        assert.equal(formattedParams.query.target_property, 'price', '`query.target_property was overwritten')
       });
-      it('should create a chart_type property if one does not exist', function() {
+      it('should create a chart_type property equal metric if one does not exist and interval is not defined', function() {
         var params = {
           "refresh_rate": 28800,
           "query_name": "actually-i-need-11",
@@ -621,12 +601,35 @@ describe('utils/ExplorerUtils', function() {
         };
 
         var formattedParams = ExplorerUtils.formatQueryParams(params);
-        assert.isObject(formattedParams.metadata, 'Metadata object is missing');
-        assert.equal(formattedParams.metadata.display_name, 'Actually I need 11', 'Display name was overwritten');
-        assert.isObject(formattedParams.metadata.visualization, 'Visualization object is missing');
         assert.equal(formattedParams.metadata.visualization.chart_type, 'metric', 'Chart type not set');
-        assert.equal(formattedParams.refresh_rate, 28800, '`refresh_rate` was overwritten')
-        assert.equal(formattedParams.query.target_property, 'price', '`query.target_property was overwritten')
+      });
+      it('should create a chart_type property equal area if one does not exist and interval is defined', function() {
+        var params = {
+          "refresh_rate": 28800,
+          "query_name": "actually-i-need-11",
+          "urls": {
+            "cached_query_url": "/3.0/projects/593ffe1ac9e77c0001ee3719/queries/saved/actually-i-need-11",
+            "cached_query_results_url": "/3.0/projects/593ffe1ac9e77c0001ee3719/queries/saved/actually-i-need-11/result"
+          },
+          "query": {
+            "target_property": "price",
+            "event_collection": "purchases",
+            "filters": [],
+            "interval": "daily",
+            "group_by": null,
+            "analysis_type": "sum",
+            "timezone": "US/Pacific",
+            "timeframe": "this_14_days"
+          },
+          "metadata": {
+            "visualization": {
+            },
+            "display_name": "Actually I need 11"
+          }
+        };
+
+        var formattedParams = ExplorerUtils.formatQueryParams(params);
+        assert.equal(formattedParams.metadata.visualization.chart_type, 'area', 'Chart type not set');
       });
       it('should not overwrite a chart_type that already exists', function() {
         var params = {
@@ -655,12 +658,7 @@ describe('utils/ExplorerUtils', function() {
         };
 
         var formattedParams = ExplorerUtils.formatQueryParams(params);
-        assert.isObject(formattedParams.metadata, 'Metadata object is missing');
-        assert.equal(formattedParams.metadata.display_name, 'Actually I need 11', 'Display name was overwritten');
-        assert.isObject(formattedParams.metadata.visualization, 'Visualization object is missing');
         assert.equal(formattedParams.metadata.visualization.chart_type, 'line', 'Chart type was overwritten');
-        assert.equal(formattedParams.refresh_rate, 28800, '`refresh_rate` was overwritten')
-        assert.equal(formattedParams.query.target_property, 'price', '`query.target_property was overwritten')
       });
     });
   });
