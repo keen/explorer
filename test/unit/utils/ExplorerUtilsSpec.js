@@ -335,7 +335,7 @@ describe('utils/ExplorerUtils', function() {
           }
         },
         metadata: {
-          display_name: null,
+          display_name: 'some-query-name',
           visualization: {
             chart_type: 'metric'
           }
@@ -421,7 +421,7 @@ describe('utils/ExplorerUtils', function() {
             filters: [{
               property_name: 'is_admin',
               operator: 'eq',
-              property_value: [1,2,3]
+              property_value: [1, 2, 3]
             }]
           }
         };
@@ -475,6 +475,190 @@ describe('utils/ExplorerUtils', function() {
         };
         var formattedParams = ExplorerUtils.formatQueryParams(params);
         assert.sameMembers(formattedParams.query.group_by, ['string value']);
+      });
+    });
+    describe('opening a query created via API', function () {
+      it('should create a metadata object if it is null', function() {
+        var params = {
+          "refresh_rate": 28800,
+          "query_name": "actually-i-need-11",
+          "query": {
+            "target_property": "price",
+            "event_collection": "purchases",
+            "filters": [],
+            "interval": null,
+            "group_by": null,
+            "analysis_type": "sum",
+            "timezone": "US/Pacific",
+            "timeframe": "this_14_days"
+          },
+          "metadata": null
+        };
+
+        var formattedParams = ExplorerUtils.formatQueryParams(params);
+        assert.isObject(formattedParams.metadata, 'Metadata object is missing');
+      });
+      it('should create a display name if it does not exist', function() {
+        var params = {
+          "refresh_rate": 28800,
+          "query_name": "actually-i-need-11",
+          "urls": {
+            "cached_query_url": "/3.0/projects/593ffe1ac9e77c0001ee3719/queries/saved/actually-i-need-11",
+            "cached_query_results_url": "/3.0/projects/593ffe1ac9e77c0001ee3719/queries/saved/actually-i-need-11/result"
+          },
+          "query": {
+            "target_property": "price",
+            "event_collection": "purchases",
+            "filters": [],
+            "interval": null,
+            "group_by": null,
+            "analysis_type": "sum",
+            "timezone": "US/Pacific",
+            "timeframe": "this_14_days"
+          },
+          "metadata": {
+          }
+        };
+
+        var formattedParams = ExplorerUtils.formatQueryParams(params);
+        assert.equal(formattedParams.metadata.display_name, params.query_name, 'Display name not set');
+      });
+      it('should create a display name if it is null', function() {
+        var params = {
+          "refresh_rate": 28800,
+          "query_name": "actually-i-need-11",
+          "urls": {
+            "cached_query_url": "/3.0/projects/593ffe1ac9e77c0001ee3719/queries/saved/actually-i-need-11",
+            "cached_query_results_url": "/3.0/projects/593ffe1ac9e77c0001ee3719/queries/saved/actually-i-need-11/result"
+          },
+          "query": {
+            "target_property": "price",
+            "event_collection": "purchases",
+            "filters": [],
+            "interval": null,
+            "group_by": null,
+            "analysis_type": "sum",
+            "timezone": "US/Pacific",
+            "timeframe": "this_14_days"
+          },
+          "metadata": {
+            "display_name": null
+          }
+        };
+
+        var formattedParams = ExplorerUtils.formatQueryParams(params);
+        assert.equal(formattedParams.metadata.display_name, params.query_name, 'Display name not set');
+      });
+      it('should not overwrite the display name if it already exists', function() {
+        var params = {
+          "refresh_rate": 28800,
+          "query_name": "actually-i-need-11",
+          "urls": {
+            "cached_query_url": "/3.0/projects/593ffe1ac9e77c0001ee3719/queries/saved/actually-i-need-11",
+            "cached_query_results_url": "/3.0/projects/593ffe1ac9e77c0001ee3719/queries/saved/actually-i-need-11/result"
+          },
+          "query": {
+            "target_property": "price",
+            "event_collection": "purchases",
+            "filters": [],
+            "interval": null,
+            "group_by": null,
+            "analysis_type": "sum",
+            "timezone": "US/Pacific",
+            "timeframe": "this_14_days"
+          },
+          "metadata": {
+            "display_name": "Actually I need 11"
+          }
+        };
+
+        var formattedParams = ExplorerUtils.formatQueryParams(params);
+        assert.equal(formattedParams.metadata.display_name, 'Actually I need 11', 'Display name was overwritten');
+      });
+      it('should create a chart_type property equal metric if one does not exist and interval is not defined', function() {
+        var params = {
+          "refresh_rate": 28800,
+          "query_name": "actually-i-need-11",
+          "urls": {
+            "cached_query_url": "/3.0/projects/593ffe1ac9e77c0001ee3719/queries/saved/actually-i-need-11",
+            "cached_query_results_url": "/3.0/projects/593ffe1ac9e77c0001ee3719/queries/saved/actually-i-need-11/result"
+          },
+          "query": {
+            "target_property": "price",
+            "event_collection": "purchases",
+            "filters": [],
+            "interval": null,
+            "group_by": null,
+            "analysis_type": "sum",
+            "timezone": "US/Pacific",
+            "timeframe": "this_14_days"
+          },
+          "metadata": {
+            "visualization": {
+            },
+            "display_name": "Actually I need 11"
+          }
+        };
+
+        var formattedParams = ExplorerUtils.formatQueryParams(params);
+        assert.equal(formattedParams.metadata.visualization.chart_type, 'metric', 'Chart type not set');
+      });
+      it('should create a chart_type property equal area if one does not exist and interval is defined', function() {
+        var params = {
+          "refresh_rate": 28800,
+          "query_name": "actually-i-need-11",
+          "urls": {
+            "cached_query_url": "/3.0/projects/593ffe1ac9e77c0001ee3719/queries/saved/actually-i-need-11",
+            "cached_query_results_url": "/3.0/projects/593ffe1ac9e77c0001ee3719/queries/saved/actually-i-need-11/result"
+          },
+          "query": {
+            "target_property": "price",
+            "event_collection": "purchases",
+            "filters": [],
+            "interval": "daily",
+            "group_by": null,
+            "analysis_type": "sum",
+            "timezone": "US/Pacific",
+            "timeframe": "this_14_days"
+          },
+          "metadata": {
+            "visualization": {
+            },
+            "display_name": "Actually I need 11"
+          }
+        };
+
+        var formattedParams = ExplorerUtils.formatQueryParams(params);
+        assert.equal(formattedParams.metadata.visualization.chart_type, 'area', 'Chart type not set');
+      });
+      it('should not overwrite a chart_type that already exists', function() {
+        var params = {
+          "refresh_rate": 28800,
+          "query_name": "actually-i-need-11",
+          "urls": {
+            "cached_query_url": "/3.0/projects/593ffe1ac9e77c0001ee3719/queries/saved/actually-i-need-11",
+            "cached_query_results_url": "/3.0/projects/593ffe1ac9e77c0001ee3719/queries/saved/actually-i-need-11/result"
+          },
+          "query": {
+            "target_property": "price",
+            "event_collection": "purchases",
+            "filters": [],
+            "interval": null,
+            "group_by": null,
+            "analysis_type": "sum",
+            "timezone": "US/Pacific",
+            "timeframe": "this_14_days"
+          },
+          "metadata": {
+            "visualization": {
+              "chart_type": "line"
+            },
+            "display_name": "Actually I need 11"
+          }
+        };
+
+        var formattedParams = ExplorerUtils.formatQueryParams(params);
+        assert.equal(formattedParams.metadata.visualization.chart_type, 'line', 'Chart type was overwritten');
       });
     });
   });

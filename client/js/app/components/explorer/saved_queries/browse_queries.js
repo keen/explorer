@@ -33,7 +33,7 @@ var BrowseQueries = React.createClass({
       var isCachedText = listItem.refresh_rate > 0 ? 'Cached' : '';
 
       var displayName = null;
-      if (listItem.metadata.display_name) {
+      if (listItem.metadata && listItem.metadata.display_name) {
         displayName = listItem.metadata.display_name;
       } else if (listItem.query_name) {
         displayName = listItem.query_name;
