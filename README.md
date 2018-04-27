@@ -2,9 +2,9 @@
 
 ![](https://s3.amazonaws.com/keen_web_static/assets/img/keen-explorer-v2.0.0.png)
 
-The Keen IO Explorer is an open source point-and-click interface for querying and visualizing your event data. It's maintained by the team at [Keen IO](https://keen.io/).
+[Check out the demo here.](http://keen.github.io/explorer/) The Keen IO Explorer is an open source point-and-click interface for querying and visualizing your event data. It's maintained by the team at [Keen IO](https://keen.io/).
 
-[Check out the demo here.](http://keen.github.io/explorer/). Read on for instructions on how to use the Explorer on your website or in your web app and how to get set up to develop with the Explorer.
+Read on for instructions on how to use the Explorer on your website or in your web app and how to get set up to develop with the Explorer.
 
 ## Table of Contents
 1. [How to use Explorer on your site or in your app](#how-to-use-explorer-on-your-site-or-in-your-app)
@@ -27,8 +27,8 @@ You have three options for including the necessary Explorer files:
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
 <!-- Explorer Assets -->
-<link rel="stylesheet" href="https://d26b395fwzu5fz.cloudfront.net/apps/keen-explorer-3.1.2.min.css">
-<script src="https://d26b395fwzu5fz.cloudfront.net/apps/keen-explorer-3.1.2.min.js"></script>
+<link rel="stylesheet" href="https://d26b395fwzu5fz.cloudfront.net/apps/keen-explorer-3.2.0.min.css">
+<script src="https://d26b395fwzu5fz.cloudfront.net/apps/keen-explorer-3.2.0.min.js"></script>
 ```
 
 ##### Option 2: Include the files yourself
@@ -75,7 +75,7 @@ And that's it. You're done!
 
 #### Building the project:
 
-The project is built with [Gulp.js](https://github.com/gulpjs/gulp).
+The project is built with [Webpack](https://github.com/webpack/webpack).
 
 * Run `npm run production` from the root directory of the project to build ALL files, including the minified versions for production use.
 
