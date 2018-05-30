@@ -1,53 +1,53 @@
-let sinon = require('sinon/pkg/sinon.js');
-var assert = require('chai').assert;
-var _ = require('lodash');
-var React = require('react');
-var ReactDOM = require('react-dom');
-var TestUtils = require('react-addons-test-utils');
-var FieldsToggle = require('../../../../client/js/app/components/common/fields_toggle.js');
-var TestHelpers = require('../../../support/TestHelpers');
+let sinon from 'sinon/pkg/sinon.js');
 
-describe('components/common/fields_toggle', function() {
+var _ from 'lodash');
+import React from 'react';
+var ReactDOM from 'react-dom');
+var TestUtils from 'react-addons-test-utils');
+var FieldsToggle from '../../../../lib/js/app/components/common/fields_toggle.js');
+var TestHelpers from '../../../support/TestHelpers');
 
-  before(function () {
+describe('components/common/fields_toggle', () => {
+
+  before(() => {
     this.getFn = sinon.stub();
     this.updateFn = sinon.stub();
   });
 
-  beforeEach(function() {
+  beforeEach(() => {
     this.getFn.reset();
     this.updateFn.reset();
     this.model = TestHelpers.createExplorerModel();
     this.component = null;
   });
 
-  describe('setup', function(){
-    beforeEach(function(){
+  describe('setup', () => {
+    beforeEach(() => {
       this.component = TestUtils.renderIntoDocument(<FieldsToggle model={this.model}
                                                                   name="Some Field"
                                                                   initialOpenState={true}
                                                                   attrsToStore={'analysis_type'}
                                                                   getFn={this.getFn} />);
     });
-    it('displays the name prop', function(){
+    it('displays the name prop', () => {
       var nameDisplayed = this.component.refs['name'].textContent;
       assert.strictEqual(nameDisplayed, 'Some Field');
     });
   });
 
-  describe('with fieldsCount prop', function(){
-    beforeEach(function(){
+  describe('with fieldsCount prop', () => {
+    beforeEach(() => {
       this.component = TestUtils.renderIntoDocument(<FieldsToggle model={this.model}
                                                                   name="Some Field"
                                                                   initialOpenState={true}
                                                                   fieldsCount={5}
                                                                   getFn={this.getFn} />);
     });
-    it('displays the fields count prop', function(){
+    it('displays the fields count prop', () => {
       var nameDisplayed = this.component.refs['icon'].textContent;
       assert.strictEqual(nameDisplayed, '5');
     });
-    it('doesnt call handleFieldsToggle when toggled', function(){
+    it('doesnt call handleFieldsToggle when toggled', () => {
       var spy = sinon.spy(this.component, 'handleFieldsToggle');
       TestUtils.Simulate.click(this.component.refs['toggle-label']);
       assert.isFalse(spy.called);
@@ -55,8 +55,8 @@ describe('components/common/fields_toggle', function() {
     });
   });
 
-  describe('basic interactions', function(){
-    it('calls the toggle function when the toggle-label is clicked', function(){
+  describe('basic interactions', () => {
+    it('calls the toggle function when the toggle-label is clicked', () => {
       this.component = TestUtils.renderIntoDocument(<FieldsToggle model={this.model}
                                                                   name="Some Field"
                                                                   initialOpenState={true}
@@ -69,7 +69,7 @@ describe('components/common/fields_toggle', function() {
       this.component.toggle.restore();
     });
 
-    it('calls the toggle callback when the toggle-label is clicked', function(){
+    it('calls the toggle callback when the toggle-label is clicked', () => {
       var spy = sinon.spy();
       this.component = TestUtils.renderIntoDocument(<FieldsToggle model={this.model}
                                                                   name="Some Field"
@@ -84,8 +84,8 @@ describe('components/common/fields_toggle', function() {
       assert.isTrue(spy.calledOnce);
     });
 
-    describe('toggles the open class when the toggle-label is clicked', function(){
-      it('opening', function(){
+    describe('toggles the open class when the toggle-label is clicked', () => {
+      it('opening', () => {
         this.component = TestUtils.renderIntoDocument(<FieldsToggle model={this.model}
                                                                     name="Some Field"
                                                                     initialOpenState={true}
@@ -96,7 +96,7 @@ describe('components/common/fields_toggle', function() {
         TestUtils.Simulate.click(this.component.refs['toggle-label']);
         assert.isFalse(ReactDOM.findDOMNode(this.component).classList.contains('open'));
       });
-      it('closing', function(){
+      it('closing', () => {
         this.component = TestUtils.renderIntoDocument(<FieldsToggle model={this.model}
                                                                     name="Some Field"
                                                                     initialOpenState={false}
@@ -110,15 +110,15 @@ describe('components/common/fields_toggle', function() {
     });
   });
 
-  describe('attribute management', function(){
-    describe('storing attributes from the model', function(){
+  describe('attribute management', () => {
+    describe('storing attributes from the model', () => {
 
-      it('properly stores a single attribute', function(){
+      it('properly stores a single attribute', () => {
         this.component = TestUtils.renderIntoDocument(<FieldsToggle model={this.model}
                                                                     name="Some Field"
                                                                     initialOpenState={true}
                                                                     attrsToStore={'some_attr'}
-                                                                    getFn={function(){
+                                                                    getFn={() => {
                                                                       return 'something to be stored';
                                                                     }}
                                                                     updateFn={this.updateFn} />);
@@ -128,7 +128,7 @@ describe('components/common/fields_toggle', function() {
         });
       });
 
-      it('properly stores multiple attributes', function(){
+      it('properly stores multiple attributes', () => {
         this.model.analysis_type = 'something to be stored';
         this.model.event_collection = 'some kind of collection';
 
@@ -151,15 +151,15 @@ describe('components/common/fields_toggle', function() {
 
     });
 
-    describe('restoring attributes to the model', function(){
+    describe('restoring attributes to the model', () => {
 
-      it('properly restores a single attribute', function(){
+      it('properly restores a single attribute', () => {
         this.component = TestUtils.renderIntoDocument(<FieldsToggle model={this.model}
                                                                     name="Some Field"
                                                                     initialOpenState={false}
                                                                     attrsToStore={'analysis_type'}
                                                                     updateFn={this.updateFn}
-                                                                    getFn={function(){
+                                                                    getFn={() => {
                                                                       return this.model.analysis_type;
                                                                     }}
                                                                     updateFn={this.updateFn} />);
@@ -169,7 +169,7 @@ describe('components/common/fields_toggle', function() {
         assert.deepPropertyVal(this.updateFn.getCall(0).args[0], 'analysis_type', 'something to be stored');
       });
 
-      it('properly restores multiple attributes', function(){
+      it('properly restores multiple attributes', () => {
         this.component = TestUtils.renderIntoDocument(<FieldsToggle model={this.model}
                                                                     name="Some Field"
                                                                     initialOpenState={false}
@@ -191,9 +191,9 @@ describe('components/common/fields_toggle', function() {
 
     });
 
-    describe('resetting attributes from the model', function(){
+    describe('resetting attributes from the model', () => {
 
-      it('properly resets a single attribute', function(){
+      it('properly resets a single attribute', () => {
         this.component = TestUtils.renderIntoDocument(<FieldsToggle model={this.model}
                                                                     name="Some Field"
                                                                     initialOpenState={true}
@@ -207,7 +207,7 @@ describe('components/common/fields_toggle', function() {
         assert.deepPropertyVal(this.updateFn.getCall(0).args[0], 'analysis_type', 'a reset value');
       });
 
-      it('properly resets a multiple attributes', function(){
+      it('properly resets a multiple attributes', () => {
         this.component = TestUtils.renderIntoDocument(<FieldsToggle model={this.model}
                                                                     name="Some Field"
                                                                     initialOpenState={true}

@@ -1,22 +1,22 @@
-var assert = require('chai').assert;
-var React = require('react');
-var TestUtils = require('react-addons-test-utils');
-var _ = require('lodash');
-let sinon = require('sinon/pkg/sinon.js');
-var Persistence = require('../../../../client/js/app/modules/persistence/persistence.js');
-var KeenSavedQueries = require('../../../../client/js/app/modules/persistence/KeenSavedQueries.js');
 
-describe('modules/persistence/persistence', function(){
+import React from 'react';
+var TestUtils from 'react-addons-test-utils');
+var _ from 'lodash');
+let sinon from 'sinon/pkg/sinon.js');
+var Persistence from '../../../../lib/js/app/modules/persistence/persistence.js');
+var KeenSavedQueries from '../../../../lib/js/app/modules/persistence/KeenSavedQueries.js');
 
-  before(function () {
+describe('modules/persistence/persistence', () => {
+
+  before(() => {
     this.persistence = Persistence;
   });
 
-  it('exists', function(){
+  it('exists', () => {
     assert.isDefined(Persistence);
   });
 
-  it('has a KeenSavedQueries key equal to the KeenSavedQueries class', function(){
+  it('has a KeenSavedQueries key equal to the KeenSavedQueries class', () => {
     assert.equal(Persistence.KeenSavedQueries, KeenSavedQueries);
   });
 });

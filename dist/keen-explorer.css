@@ -1278,7 +1278,6 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
 
 #keen-explorer .form-collapse-left {
   padding-left: 0;
-  // margin-left: -1px;
 }
 
 #keen-explorer label {
@@ -1589,8 +1588,7 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
     width: 200px;
   }
 
-#keen-explorer // CSS3 spinner
-.explorer-spinner {
+#keen-explorer .explorer-spinner {
   position: absolute;
   left: -30px;
   top: -4px;
@@ -1600,8 +1598,7 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
   font-size: 10px;
 }
 
-#keen-explorer // CSS3 spinner
-.explorer-spinner > div {
+#keen-explorer .explorer-spinner > div {
     background-color: #00BBDE;
     height: 100%;
     width: 4px;
@@ -2048,11 +2045,7 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
   display: none;
 }
 
-#keen-explorer // React Multi Select
-// http://instructure-react.github.io/react-select-box/
-// https://github.com/instructure-react/react-select-box/blob/master/example/select-box.css
-
-.react-select-box-container {
+#keen-explorer .react-select-box-container {
   position: relative;
   width: 100%;
   display: inline-block;
@@ -2570,7 +2563,6 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
   }
 
 #keen-explorer .double-groupby-toggle {
-  // color: #A7A7A7;
   font-size: 12px;
   padding: 0 5px;
 }
@@ -2826,32 +2818,20 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
     top: 15px;
   }
 
-#keen-explorer // Filters
-// *******
-
-.filters .filter-property-col {
+#keen-explorer .filters .filter-property-col {
     padding-right: 0;
   }
 
-#keen-explorer // Filters
-// *******
-
-.filters .filter-value-col {
+#keen-explorer .filters .filter-value-col {
     padding-left: 0;
     padding-right: 0;
   }
 
-#keen-explorer // Filters
-// *******
-
-.filters .coercion_type select {
+#keen-explorer .filters .coercion_type select {
     padding: 6px 9px;
   }
 
-#keen-explorer // Filters
-// *******
-
-.filters p.invalid {
+#keen-explorer .filters p.invalid {
     margin: 0;
     color: #A94442;
   }
@@ -3042,31 +3022,19 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
       padding: 0 15px;
     }
 
-#keen-explorer // Timeframe
-// *********
-
-.timeframe {
+#keen-explorer .timeframe {
   margin: 20px 0 10px;
 }
 
-#keen-explorer // Timeframe
-// *********
-
-.timeframe .nav {
+#keen-explorer .timeframe .nav {
     margin-bottom: 10px;
   }
 
-#keen-explorer // Timeframe
-// *********
-
-.timeframe .nav li {
+#keen-explorer .timeframe .nav li {
       width: 50%;
     }
 
-#keen-explorer // Timeframe
-// *********
-
-.timeframe .nav li a {
+#keen-explorer .timeframe .nav li a {
         border-radius: 2px 0 0 2px;
         color: #4d4d4d;
         font-size: 13px;
@@ -3075,32 +3043,20 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
         text-align: center;
       }
 
-#keen-explorer // Timeframe
-// *********
-
-.timeframe .nav li.active a {
+#keen-explorer .timeframe .nav li.active a {
   background-color: #808080;
   color: #fff;
 }
 
-#keen-explorer // Timeframe
-// *********
-
-.timeframe .nav li + li {
+#keen-explorer .timeframe .nav li + li {
       margin-left: 0;
     }
 
-#keen-explorer // Timeframe
-// *********
-
-.timeframe .nav li + li a {
+#keen-explorer .timeframe .nav li + li a {
         border-radius: 0 2px 2px 0;
       }
 
-#keen-explorer // Timeframe
-// *********
-
-.timeframe .form-group {
+#keen-explorer .timeframe .form-group {
     margin-bottom: 0;
   }
 

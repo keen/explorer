@@ -1,12 +1,12 @@
-var _ = require('lodash');
-let sinon = require('sinon/pkg/sinon.js');
-var assert = require('chai').assert;
-var React = require('react');
-var ReactDOM = require('react-dom');
-var TestUtils = require('react-addons-test-utils');
-var $R = require('rquery')(_, React, ReactDOM, TestUtils);
-var TestHelpers = require('../../../../../support/TestHelpers');
-var FunnelStep = require('../../../../../../client/js/app/components/explorer/query_builder/funnels/funnel_step.js');
+var _ from 'lodash');
+let sinon from 'sinon/pkg/sinon.js');
+
+import React from 'react';
+var ReactDOM from 'react-dom');
+var TestUtils from 'react-addons-test-utils');
+var $R from 'rquery')(_, React, ReactDOM, TestUtils);
+var TestHelpers from '../../../../../support/TestHelpers');
+var FunnelStep from '../../../../../../lib/js/app/components/explorer/query_builder/funnels/funnel_step.js');
 
 function getProps(props) {
   var props = props || {};
@@ -29,30 +29,30 @@ function getProps(props) {
   return _.assign({}, defaults, props);
 }
 
-describe('components/explorer/query_builder/funnels/funnel_step', function() {
+describe('components/explorer/query_builder/funnels/funnel_step', () => {
 
-  it('should ONLY call moveStepUp if the up button is clicked', function () {
+  it('should ONLY call moveStepUp if the up button is clicked', () => {
     this.component = TestHelpers.renderComponent(FunnelStep, getProps());
     TestUtils.Simulate.click($R(this.component).find('.step-move-btns .up').components[0]);
     assert.isTrue(this.component.props.moveStep.calledWith(0, 'up'));
     assert.isFalse(this.component.props.toggleStepActive.called);
   });
 
-  it('should ONLY call moveStepDown if the down button is clicked', function () {
+  it('should ONLY call moveStepDown if the down button is clicked', () => {
     this.component = TestHelpers.renderComponent(FunnelStep, getProps());
     TestUtils.Simulate.click($R(this.component).find('.step-move-btns .down').components[0]);
     assert.isTrue(this.component.props.moveStep.calledWith(0, 'down'));
     assert.isFalse(this.component.props.toggleStepActive.called);
   });
 
-  it('should ONLY call toggleStepActive if the header is clicked', function () {
+  it('should ONLY call toggleStepActive if the header is clicked', () => {
     this.component = TestHelpers.renderComponent(FunnelStep, getProps());
     TestUtils.Simulate.click($R(this.component).find('.step-header').components[0]);
     assert.isTrue(this.component.props.toggleStepActive.calledWith(0, true));
     assert.isFalse(this.component.props.moveStep.called);
   });
 
-  it('should call removeStep if the user confirms they want to delete the step', function () {
+  it('should call removeStep if the user confirms they want to delete the step', () => {
     this.component = TestHelpers.renderComponent(FunnelStep, getProps({
       step: _.assign(TestHelpers.createStep(), { active: true })
     }));
@@ -62,7 +62,7 @@ describe('components/explorer/query_builder/funnels/funnel_step', function() {
     window.confirm.restore();
   });
 
-  it('should NOT show the removeStep button if canRemove is false', function () {
+  it('should NOT show the removeStep button if canRemove is false', () => {
     this.component = TestHelpers.renderComponent(FunnelStep, getProps({
       canRemove: false,
       step: _.assign(TestHelpers.createStep(), { active: true })
@@ -70,7 +70,7 @@ describe('components/explorer/query_builder/funnels/funnel_step', function() {
     assert.lengthOf($R(this.component).find('.remove-step').components, 0);
   });
 
-  it('calls handleChange when the event collection field is changed', function () {
+  it('calls handleChange when the event collection field is changed', () => {
     this.component = TestHelpers.renderComponent(FunnelStep, getProps({
       step: _.assign(TestHelpers.createStep(), { active: true })
     }));
@@ -80,7 +80,7 @@ describe('components/explorer/query_builder/funnels/funnel_step', function() {
     assert.isTrue(this.component.props.handleChange.calledWith(0, 'event_collection', 'test'));
   });
 
-  it('calls handleChange when the actor property collection field is changed', function () {
+  it('calls handleChange when the actor property collection field is changed', () => {
     this.component = TestHelpers.renderComponent(FunnelStep, getProps({
       step: _.assign(TestHelpers.createStep(), { active: true })
     }));

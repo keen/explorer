@@ -1,19 +1,19 @@
-var assert = require('chai').assert;
-let sinon = require('sinon/pkg/sinon.js');
-var moment = require('moment');
-var _ = require('lodash');
-var TestHelpers = require('../../support/TestHelpers');
-var ExplorerActions = require('../../../client/js/app/actions/ExplorerActions');
-var FilterValidations = require('../../../client/js/app/validations/FilterValidations');
-var RunValidations = require('../../../client/js/app/utils/RunValidations');
-var FormatUtils = require('../../../client/js/app/utils/FormatUtils');
-var FilterUtils = require('../../../client/js/app/utils/FilterUtils');
 
-describe('utils/FilterUtils', function() {
+let sinon from 'sinon/pkg/sinon.js');
+var moment from 'moment');
+var _ from 'lodash');
+var TestHelpers from '../../support/TestHelpers');
+var ExplorerActions from '../../../lib/js/app/actions/ExplorerActions');
+var FilterValidations from '../../../lib/js/app/validations/FilterValidations');
+var RunValidations from '../../../lib/js/app/utils/RunValidations');
+var FormatUtils from '../../../lib/js/app/utils/FormatUtils');
+var FilterUtils from '../../../lib/js/app/utils/FilterUtils');
 
-  describe('getCoercionType', function () {
-    describe('properly determining coercion types when none is set', function () {
-      it('String when the property_value is a numeric string but operator is "contains"', function () {
+describe('utils/FilterUtils', () => {
+
+  describe('getCoercionType', () => {
+    describe('properly determining coercion types when none is set', () => {
+      it('String when the property_value is a numeric string but operator is "contains"', () => {
         var filter = {
           property_name: "some_name",
           operator: "contains",
@@ -22,7 +22,7 @@ describe('utils/FilterUtils', function() {
         };
         assert.strictEqual(FilterUtils.getCoercionType(filter), "String");
       });
-      it('String type when property_value can be parsed into a date', function () {
+      it('String type when property_value can be parsed into a date', () => {
         var filter = {
           property_name: "created_at",
           operator: "gt",
@@ -32,7 +32,7 @@ describe('utils/FilterUtils', function() {
         assert.strictEqual(FilterUtils.getCoercionType(filter), "String");
       });
 
-      it('Boolean type when operator is exists', function () {
+      it('Boolean type when operator is exists', () => {
         var filter = {
           property_name: "created_at",
           operator: "exists",
@@ -41,7 +41,7 @@ describe('utils/FilterUtils', function() {
         assert.strictEqual(FilterUtils.getCoercionType(filter), "Boolean");
       });
 
-      it('Boolean type when string is "true"', function () {
+      it('Boolean type when string is "true"', () => {
         var filter = {
           property_name: "created_at",
           operator: "equals",
@@ -50,7 +50,7 @@ describe('utils/FilterUtils', function() {
         assert.strictEqual(FilterUtils.getCoercionType(filter), "Boolean");
       });
 
-      it('Boolean type when string is "false"', function () {
+      it('Boolean type when string is "false"', () => {
         var filter = {
           property_name: "created_at",
           operator: "equals",
@@ -59,8 +59,8 @@ describe('utils/FilterUtils', function() {
         assert.strictEqual(FilterUtils.getCoercionType(filter), "Boolean");
       });
 
-      describe('Number property_values', function () {
-        it('Number type when property_value is a string that can be parsed into an Int number', function () {
+      describe('Number property_values', () => {
+        it('Number type when property_value is a string that can be parsed into an Int number', () => {
           var filter = {
             property_name: "num_projects",
             operator: "eq",
@@ -68,7 +68,7 @@ describe('utils/FilterUtils', function() {
           };
           assert.strictEqual(FilterUtils.getCoercionType(filter), "Number");
         });
-        it('Number type when property_value is a string that can be parsed into the number 0', function () {
+        it('Number type when property_value is a string that can be parsed into the number 0', () => {
           var filter = {
             property_name: "num_projects",
             operator: "eq",
@@ -76,7 +76,7 @@ describe('utils/FilterUtils', function() {
           };
           assert.strictEqual(FilterUtils.getCoercionType(filter), "Number");
         });
-        it('Number type when property_value is a string that can be parsed into a double number', function () {
+        it('Number type when property_value is a string that can be parsed into a double number', () => {
           var filter = {
             property_name: "num_projects",
             operator: "eq",
@@ -88,8 +88,8 @@ describe('utils/FilterUtils', function() {
     });
   });
 
-  describe('coercionFunctions', function () {
-    it('should have coercion functions for all the types', function () {
+  describe('coercionFunctions', () => {
+    it('should have coercion functions for all the types', () => {
       assert.sameMembers(_.keys(FilterUtils.coercionFunctions), [
         'Datetime',
         'String',
@@ -101,8 +101,8 @@ describe('utils/FilterUtils', function() {
       ]);
     });
 
-    describe('Datetime', function () {
-      it('should coerce a properly formatted set of date and time values into a formatted date', function () {
+    describe('Datetime', () => {
+      it('should coerce a properly formatted set of date and time values into a formatted date', () => {
         var filter = {
           property_name: "created_at",
           property_value: "",
@@ -112,7 +112,7 @@ describe('utils/FilterUtils', function() {
         };
         assert.strictEqual(FilterUtils.getCoercedValue(filter), new Date(filter.property_value).toString());
       });
-      it('should return a datetime for yesterday if the value is not parsable into a date time: true as a boolean', function () {
+      it('should return a datetime for yesterday if the value is not parsable into a date time: true as a boolean', () => {
         var filter = {
           property_name: "created_at",
           property_value: "",
@@ -122,7 +122,7 @@ describe('utils/FilterUtils', function() {
         };
         assert.strictEqual(FilterUtils.getCoercedValue(filter).toString(), FilterUtils.defaultDate().toString());
       });
-      it('should return a datetime for yesterday if the value is not parsable into a date time: true as a string', function () {
+      it('should return a datetime for yesterday if the value is not parsable into a date time: true as a string', () => {
         var filter = {
           property_name: "created_at",
           property_value: "",
@@ -134,8 +134,8 @@ describe('utils/FilterUtils', function() {
       });
     });
 
-    describe('String', function () {
-      it('coerces a number to a string', function () {
+    describe('String', () => {
+      it('coerces a number to a string', () => {
         var filter = {
           property_name: 'propType1',
           operator: 'eq',
@@ -147,8 +147,8 @@ describe('utils/FilterUtils', function() {
       });
     });
 
-    describe('Number', function () {
-      before(function () {
+    describe('Number', () => {
+      before(() => {
         this.filter = {
           property_name: 'propType1',
           operator: 'eq',
@@ -156,42 +156,42 @@ describe('utils/FilterUtils', function() {
           property_value: "123"
         };
       });
-      it('coerces a string to a number', function () {
+      it('coerces a string to a number', () => {
         this.filter.property_value = "123";
         var coerced = FilterUtils.coercionFunctions['Number'](this.filter);
         assert.strictEqual(coerced, 123);
       });
-      it('does not coerce a mixed type string to a number', function () {
+      it('does not coerce a mixed type string to a number', () => {
         this.filter.property_value = "asdas123asd";
         var coerced = FilterUtils.coercionFunctions['Number'](this.filter);
         assert.strictEqual(coerced, '');
       });
-      it('coerces a parseable string into a number', function () {
+      it('coerces a parseable string into a number', () => {
         this.filter.property_value = "123asd";
         var coerced = FilterUtils.coercionFunctions['Number'](this.filter);
         assert.strictEqual(coerced, 123);
       });
-      it('coerces a 0 correctly', function () {
+      it('coerces a 0 correctly', () => {
         this.filter.property_value = "0";
         var coerced = FilterUtils.coercionFunctions['Number'](this.filter);
         assert.strictEqual(coerced, 0);
       });
     });
 
-    describe('Boolean', function () {
-      before(function () {
+    describe('Boolean', () => {
+      before(() => {
         this.filter = {
           property_name: 'propType1',
           operator: 'eq',
           coercion_type: 'Boolean'
         };
       });
-      it('coerces a "false" string to a false boolean', function () {
+      it('coerces a "false" string to a false boolean', () => {
         this.filter.property_value = 'false';
         var coerced = FilterUtils.coercionFunctions['Boolean'](this.filter);
         assert.strictEqual(coerced, false);
       });
-      it('coerces any string other than "false" to a true boolean', function () {
+      it('coerces any string other than "false" to a true boolean', () => {
         this.filter.property_value = "pizza";
         var coerced = FilterUtils.coercionFunctions['Boolean'](this.filter);
         assert.strictEqual(coerced, true);
@@ -199,8 +199,8 @@ describe('utils/FilterUtils', function() {
     });
   });
 
-  describe('getCoercedValue', function () {
-    it('should properly coerce a boolean value', function () {
+  describe('getCoercedValue', () => {
+    it('should properly coerce a boolean value', () => {
       var filter = {
         property_name: 'boolean filter',
         operator: 'eq',
@@ -211,8 +211,8 @@ describe('utils/FilterUtils', function() {
     });
   });
 
-  describe('isComplete', function(){
-    it('returns true when all of the attributes have values', function(){
+  describe('isComplete', () => {
+    it('returns true when all of the attributes have values', () => {
       var filter = {
         property_name: 'test',
         property_value: 'test',
@@ -221,7 +221,7 @@ describe('utils/FilterUtils', function() {
       };
       assert.isTrue(FilterUtils.isComplete(filter));
     });
-    it('returns false when any one of the attributes does not have a value', function(){
+    it('returns false when any one of the attributes does not have a value', () => {
       var filter = {
         property_name: 'test',
         property_value: 'test',
@@ -232,8 +232,8 @@ describe('utils/FilterUtils', function() {
     });
   });
 
-  describe('initList', function () {
-    it('properly creates a string with the right structure', function(){
+  describe('initList', () => {
+    it('properly creates a string with the right structure', () => {
       var filter = {
         property_value: [
           "Keen",
@@ -250,8 +250,8 @@ describe('utils/FilterUtils', function() {
     });
   });
 
-  describe('queryJSON', function () {
-    it('should return an empty object if the filter is not valid', function () {
+  describe('queryJSON', () => {
+    it('should return an empty object if the filter is not valid', () => {
        var filter = {
          property_name: null,
          operator: 'eq',
@@ -261,7 +261,7 @@ describe('utils/FilterUtils', function() {
        var json = FilterUtils.queryJSON(filter);
        assert.deepEqual(json, {});
     });
-    it('should run the right validations', function () {
+    it('should run the right validations', () => {
       var filter = {
         property_name: 'name',
         operator: 'eq',
@@ -273,7 +273,7 @@ describe('utils/FilterUtils', function() {
       assert.isTrue(spy.calledWith(FilterValidations, filter));
       RunValidations.run.restore();
     });
-    it('should parse the list if the coercion type is List', function () {
+    it('should parse the list if the coercion type is List', () => {
       var filter = {
         property_name: 'list',
         operator: 'eq',
@@ -285,7 +285,7 @@ describe('utils/FilterUtils', function() {
       assert.isTrue(stub.calledOnce);
       FormatUtils.parseList.restore();
     });
-    it('should only return the right attributes form the query request', function () {
+    it('should only return the right attributes form the query request', () => {
       var filter = {
         property_name: 'name',
         operator: 'eq',

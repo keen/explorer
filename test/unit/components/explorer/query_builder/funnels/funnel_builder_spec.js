@@ -1,14 +1,14 @@
-var _ = require('lodash');
-var assert = require('chai').assert;
-var React = require('react');
-var ReactDOM = require('react-dom');
-var TestUtils = require('react-addons-test-utils');
-let sinon = require('sinon/pkg/sinon.js');
-var $R = require('rquery')(_, React, ReactDOM, TestUtils);
-var TestHelpers = require('../../../../../support/TestHelpers');
-var ExplorerActions = require('../../../../../../client/js/app/actions/ExplorerActions.js');
-var FunnelStep = require('../../../../../../client/js/app/components/explorer/query_builder/funnels/funnel_step.js');
-var FunnelBuilder = require('../../../../../../client/js/app/components/explorer/query_builder/funnels/funnel_builder.js');
+var _ from 'lodash');
+
+import React from 'react';
+var ReactDOM from 'react-dom');
+var TestUtils from 'react-addons-test-utils');
+let sinon from 'sinon/pkg/sinon.js');
+var $R from 'rquery')(_, React, ReactDOM, TestUtils);
+var TestHelpers from '../../../../../support/TestHelpers');
+var ExplorerActions from '../../../../../../lib/js/app/actions/ExplorerActions.js');
+var FunnelStep from '../../../../../../lib/js/app/components/explorer/query_builder/funnels/funnel_step.js');
+var FunnelBuilder from '../../../../../../lib/js/app/components/explorer/query_builder/funnels/funnel_builder.js');
 
 function getProps(props) {
   var props = props || {};
@@ -24,9 +24,9 @@ function getProps(props) {
   return _.assign({}, defaults, props);
 }
 
-describe('components/explorer/query_builder/funnels/funnel_builder', function() {
+describe('components/explorer/query_builder/funnels/funnel_builder', () => {
 
-  it('should render as many FunnelStep child components as there are steps', function () {
+  it('should render as many FunnelStep child components as there are steps', () => {
     this.component = TestHelpers.renderComponent(FunnelBuilder, getProps({
       steps: [
         TestHelpers.createStep(),
@@ -37,7 +37,7 @@ describe('components/explorer/query_builder/funnels/funnel_builder', function() 
     assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, FunnelStep), 3);
   });
 
-  it('should call ExplorerActions.addStep when the add step link is clicked', function () {
+  it('should call ExplorerActions.addStep when the add step link is clicked', () => {
     this.component = TestHelpers.renderComponent(FunnelBuilder, getProps({
       steps: [ TestHelpers.createStep() ]
     }));
@@ -47,7 +47,7 @@ describe('components/explorer/query_builder/funnels/funnel_builder', function() 
     ExplorerActions.addStep.restore();
   });
 
-  it('should toggle a step active if it is inactive and the header is clicked', function () {
+  it('should toggle a step active if it is inactive and the header is clicked', () => {
     this.component = TestHelpers.renderComponent(FunnelBuilder, getProps({
       steps: [ TestHelpers.createStep() ]
     }));
@@ -57,7 +57,7 @@ describe('components/explorer/query_builder/funnels/funnel_builder', function() 
     ExplorerActions.setStepActive.restore();
   });
 
-  it('should toggle a step inactive if it is active and the header is clicked', function () {
+  it('should toggle a step inactive if it is active and the header is clicked', () => {
     this.component = TestHelpers.renderComponent(FunnelBuilder, getProps({
       steps: [ _.assign(TestHelpers.createStep(), { active: true }) ]
     }));

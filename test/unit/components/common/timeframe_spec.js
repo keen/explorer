@@ -1,24 +1,24 @@
-var assert = require('chai').assert;
-var _ = require('lodash');
-var moment = require('moment');
-let sinon = require('sinon/pkg/sinon.js');
-var Timeframe = require('../../../../client/js/app/components/common/timeframe.js');
-var Timezone = require('../../../../client/js/app/components/common/timezone.js');
-var RelativePicker = require('../../../../client/js/app/components/common/relative_picker.js');
-var AbsolutePicker = require('../../../../client/js/app/components/common/absolute_picker.js');
-var ReactSelect = require('../../../../client/js/app/components/common/react_select.js');
-var FieldsToggle = require('../../../../client/js/app/components/common/fields_toggle.js');
-var ExplorerActions = require('../../../../client/js/app/actions/ExplorerActions');
-var React = require('react');
-var TestUtils = require('react-addons-test-utils');
-var TestHelpers = require('../../../support/TestHelpers');
 
-describe('components/common/timeframe', function() {
-  before(function () {
+var _ from 'lodash');
+var moment from 'moment');
+let sinon from 'sinon/pkg/sinon.js');
+var Timeframe from '../../../../lib/js/app/components/common/timeframe.js');
+var Timezone from '../../../../lib/js/app/components/common/timezone.js');
+var RelativePicker from '../../../../lib/js/app/components/common/relative_picker.js');
+var AbsolutePicker from '../../../../lib/js/app/components/common/absolute_picker.js');
+var ReactSelect from '../../../../lib/js/app/components/common/react_select.js');
+var FieldsToggle from '../../../../lib/js/app/components/common/fields_toggle.js');
+var ExplorerActions from '../../../../lib/js/app/actions/ExplorerActions');
+import React from 'react';
+var TestUtils from 'react-addons-test-utils');
+var TestHelpers from '../../../support/TestHelpers');
+
+describe('components/common/timeframe', () => {
+  before(() => {
     this.handleChangeStub = sinon.stub();
   });
 
-  beforeEach(function() {
+  beforeEach(() => {
     this.handleChangeStub.reset();
 
     this.model = TestHelpers.createExplorerModel();
@@ -30,30 +30,30 @@ describe('components/common/timeframe', function() {
    )
   });
 
-  describe('setup', function() {
-    it('is of the right type', function() {
+  describe('setup', () => {
+    it('is of the right type', () => {
       assert.isTrue(TestUtils.isCompositeComponentWithType(this.component, Timeframe));
     });
 
-    it('has the relative tab selected by default', function(){
+    it('has the relative tab selected by default', () => {
       var relativeTab = TestUtils.findRenderedDOMComponentWithTag(this.component, 'ul').childNodes[0];
       assert.isTrue(relativeTab.classList.contains('active'));
     });
 
-    it('has the relative picker shown by default', function(){
+    it('has the relative picker shown by default', () => {
       assert.lengthOf(TestUtils.scryRenderedDOMComponentsWithClass(this.component, 'relative-timeframe-picker'), 1);
       assert.lengthOf(TestUtils.scryRenderedDOMComponentsWithClass(this.component, 'absolute-timeframe-picker'), 0);
     });
 
-    it('has one Timezone component', function(){
+    it('has one Timezone component', () => {
       assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, Timezone), 1);
     });
   });
 
-  describe('interactions', function() {
+  describe('interactions', () => {
 
-    describe('absolute_picker', function () {
-      it('clicking the absolute tab updates the model to an absolute timeframe', function () {
+    describe('absolute_picker', () => {
+      it('clicking the absolute tab updates the model to an absolute timeframe', () => {
         this.absoluteTimeframeLink = TestUtils.findRenderedDOMComponentWithClass(this.component, 'absolute-tab');
         TestUtils.Simulate.click(this.absoluteTimeframeLink);
         assert.strictEqual(this.handleChangeStub.getCall(0).args[0], 'time')
@@ -64,8 +64,8 @@ describe('components/common/timeframe', function() {
       });
     });
 
-    describe('relative_picker', function () {
-      it('clicking the relative tab updates the model to a relative timeframe', function () {
+    describe('relative_picker', () => {
+      it('clicking the relative tab updates the model to a relative timeframe', () => {
         this.relativeTimeframeLink = TestUtils.findRenderedDOMComponentWithClass(this.component, 'relative-tab');
         TestUtils.Simulate.click(this.relativeTimeframeLink);
         assert.strictEqual(this.handleChangeStub.getCall(0).args[0], 'time')

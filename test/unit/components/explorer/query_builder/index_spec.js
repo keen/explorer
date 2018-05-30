@@ -1,25 +1,25 @@
-var assert = require('chai').assert;
-var _ = require('lodash');
-var KeenAnalysis = require('keen-analysis');
-let sinon = require('sinon/pkg/sinon.js');
-var QueryBuilder = require('../../../../../client/js/app/components/explorer/query_builder/index.js');
-var GroupByField = require('../../../../../client/js/app/components/explorer/query_builder/group_by_field.js');
-var SelectField = require('../../../../../client/js/app/components/explorer/query_builder/select_field.js');
-var Timeframe = require('../../../../../client/js/app/components/common/timeframe.js')
-var Interval = require('../../../../../client/js/app/components/common/interval.js')
-var ExplorerActions = require('../../../../../client/js/app/actions/ExplorerActions');
-var Input = require('../../../../../client/js/app/components/common/select.js');
-var ExtractionOptions = require('../../../../../client/js/app/components/explorer/query_builder/extraction_options.js');
-var ReactSelect = require('../../../../../client/js/app/components/common/react_select.js');
-var React = require('react');
-var ReactDOM = require('react-dom');
-var TestUtils = require('react-addons-test-utils');
-var TestHelpers = require('../../../../support/TestHelpers');
 
-var $R = require('rquery')(_, React, ReactDOM, TestUtils);
+var _ from 'lodash');
+var KeenAnalysis from 'keen-analysis');
+let sinon from 'sinon/pkg/sinon.js');
+var QueryBuilder from '../../../../../lib/js/app/components/explorer/query_builder/index.js');
+var GroupByField from '../../../../../lib/js/app/components/explorer/query_builder/group_by_field.js');
+var SelectField from '../../../../../lib/js/app/components/explorer/query_builder/select_field.js');
+var Timeframe from '../../../../../lib/js/app/components/common/timeframe.js')
+var Interval from '../../../../../lib/js/app/components/common/interval.js')
+var ExplorerActions from '../../../../../lib/js/app/actions/ExplorerActions');
+var Input from '../../../../../lib/js/app/components/common/select.js');
+var ExtractionOptions from '../../../../../lib/js/app/components/explorer/query_builder/extraction_options.js');
+var ReactSelect from '../../../../../lib/js/app/components/common/react_select.js');
+import React from 'react';
+var ReactDOM from 'react-dom');
+var TestUtils from 'react-addons-test-utils');
+var TestHelpers from '../../../../support/TestHelpers');
 
-describe('components/explorer/query_builder/index', function() {
-  beforeEach(function() {
+var $R from 'rquery')(_, React, ReactDOM, TestUtils);
+
+describe('components/explorer/query_builder/index', () => {
+  beforeEach(() => {
     this.model = TestHelpers.createExplorerModel();
     this.model.id = 10;
     this.model.active = true;
@@ -31,7 +31,7 @@ describe('components/explorer/query_builder/index', function() {
         project: this.project,
         model: this.model,
         client: this.client,
-        getEventPropertyNames: function() {}
+        getEventPropertyNames: () => {}
       };
       var props = _.assign({}, defaults, props);
       return TestUtils.renderIntoDocument(<QueryBuilder {...props} />);
@@ -40,20 +40,20 @@ describe('components/explorer/query_builder/index', function() {
     this.component = this.renderComponent();
   });
 
-  describe('setup', function() {
-    it('is of the right type', function() {
+  describe('setup', () => {
+    it('is of the right type', () => {
       assert.isTrue(TestUtils.isCompositeComponentWithType(this.component, QueryBuilder));
     });
 
-    it('has a single Timeframe child component', function(){
+    it('has a single Timeframe child component', () => {
       assert.isNotNull(TestUtils.findRenderedComponentWithType(this.component, Timeframe));
     });
 
-    it('has one Interval component', function(){
+    it('has one Interval component', () => {
       assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, Interval), 1);
     });
 
-    it('has zero Interval components if the analysis_type is extraction', function(){
+    it('has zero Interval components if the analysis_type is extraction', () => {
       this.model.query.analysis_type = 'extraction';
       var props = _.assign({}, this.component.props, { model: this.model });
       this.component = TestHelpers.renderComponent(QueryBuilder, props);
@@ -61,22 +61,22 @@ describe('components/explorer/query_builder/index', function() {
       assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, Interval), 0);
     });
 
-    it('has the right number of ReactSelect child components', function(){
+    it('has the right number of ReactSelect child components', () => {
       assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, ReactSelect), 4);
     });
 
-    it('has the right number of ReactSelect child components when the analysis type is extraction', function(){
+    it('has the right number of ReactSelect child components when the analysis type is extraction', () => {
       this.model.query.analysis_type = 'extraction';
       this.component.forceUpdate();
       assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, ReactSelect), 3);
     });
 
-    it('has the clear button button', function () {
+    it('has the clear button button', () => {
       assert.lengthOf($R(this.component).find('[role="clear-query"]').components, 1);
     });
 
-    describe('button event bindings', function () {
-      it('calls clearQuery when the clear query button is clicked', function () {
+    describe('button event bindings', () => {
+      it('calls clearQuery when the clear query button is clicked', () => {
         var stub = sinon.stub();
         this.component = this.renderComponent({ handleClearQuery: stub });
         TestUtils.Simulate.click($R(this.component).find('[role="clear-query"]').components[0]);
@@ -85,42 +85,42 @@ describe('components/explorer/query_builder/index', function() {
     });
   });
 
-  describe('field change reactions', function () {
-    describe('analysis-type', function () {
-      describe('set to count', function () {
-        it('does not show the target_property field', function() {
+  describe('field change reactions', () => {
+    describe('analysis-type', () => {
+      describe('set to count', () => {
+        it('does not show the target_property field', () => {
           this.model.query.event_collection = 'click';
           this.model.query.analysis_type = 'count';
           this.component.forceUpdate();
           assert.lengthOf(TestUtils.scryRenderedDOMComponentsWithClass(this.component, 'target-property'), 0);
         });
       });
-      describe('set to anything but count', function () {
-        it('shows the target_property field', function() {
+      describe('set to anything but count', () => {
+        it('shows the target_property field', () => {
           this.model.query.event_collection = 'click';
           this.model.query.analysis_type = 'sum';
           this.component.forceUpdate();
           assert.lengthOf(TestUtils.scryRenderedDOMComponentsWithClass(this.component, 'target-property'), 1);
         });
       });
-      describe('analysis type is set to percentile', function () {
-        it('shows the percentile input field', function() {
+      describe('analysis type is set to percentile', () => {
+        it('shows the percentile input field', () => {
           this.model.query.event_collection = 'click';
           this.model.query.analysis_type = 'percentile';
           this.component.forceUpdate();
           assert.lengthOf(TestUtils.scryRenderedDOMComponentsWithClass(this.component, 'percentile'), 1);
         });
       });
-      describe('analysis type is set to extraction', function () {
-        it('shows the extraction options component', function() {
+      describe('analysis type is set to extraction', () => {
+        it('shows the extraction options component', () => {
           this.model.query.event_collection = 'click';
           this.model.query.analysis_type = 'extraction';
           this.component.forceUpdate();
           assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, ExtractionOptions), 1);
         });
       });
-      describe('analysis type is not extraction', function () {
-        it('does not show the extraction options component', function() {
+      describe('analysis type is not extraction', () => {
+        it('does not show the extraction options component', () => {
           this.model.query.event_collection = 'click';
           this.model.query.analysis_type = 'count';
           this.component.forceUpdate();
@@ -129,15 +129,15 @@ describe('components/explorer/query_builder/index', function() {
       });
     });
 
-    describe('group_by', function () {
+    describe('group_by', () => {
 
-      describe('when event_collection is set', function () {
+      describe('when event_collection is set', () => {
 
-        it('there are group_by options', function () {
+        it('there are group_by options', () => {
           var expectedOptions = ['one', 'two', 'three'];
           var props = _.extend({},
               this.component.props,
-              { getEventPropertyNames: function() { return expectedOptions } }
+              { getEventPropertyNames: () => { return expectedOptions } }
           );
           this.model.query.event_collection = 'click';
           this.model.query.analysis_type = 'count';
@@ -155,7 +155,7 @@ describe('components/explorer/query_builder/index', function() {
           assert.sameMembers(groupByOptions, expectedOptions);
         });
 
-        it('when event_collection is set group_by has the options returned getEventPropertyNames', function () {
+        it('when event_collection is set group_by has the options returned getEventPropertyNames', () => {
           var model = TestHelpers.createExplorerModel();
           model.query.event_collection = 'click';
           model.query.analysis_type = 'count';
@@ -175,8 +175,8 @@ describe('components/explorer/query_builder/index', function() {
       });
     });
 
-    describe('form submission', function () {
-      it('calls handleQuerySubmit prop function when the form is submitted', function () {
+    describe('form submission', () => {
+      it('calls handleQuerySubmit prop function when the form is submitted', () => {
         var submitStub = sinon.stub();
         this.component = this.renderComponent({ handleQuerySubmit: submitStub });
         var formSubmitNode = TestUtils.findRenderedDOMComponentWithTag(this.component, 'form');
@@ -186,19 +186,19 @@ describe('components/explorer/query_builder/index', function() {
     });
   });
 
-  describe('field change bindings', function() {
-    before(function () {
+  describe('field change bindings', () => {
+    before(() => {
       this.stub = sinon.stub(ExplorerActions, 'update');
     });
-    after(function () {
+    after(() => {
       ExplorerActions.update.restore();
     });
-    beforeEach(function () {
+    beforeEach(() => {
       this.stub.reset();
     });
 
-    describe('event_collection', function () {
-      it('tries to update the attribute when the field changes', function() {
+    describe('event_collection', () => {
+      it('tries to update the attribute when the field changes', () => {
         var node = $R(this.component).find('input[name="event_collection"]').components[0];
         node.value = 'clicks';
         TestUtils.Simulate.change(node);
@@ -207,8 +207,8 @@ describe('components/explorer/query_builder/index', function() {
         assert.deepPropertyVal(this.stub.getCall(0).args[1], 'query.event_collection', 'clicks');
       });
     });
-    describe('analysis_type', function () {
-      it('tries to update the attribute when the field changes', function() {
+    describe('analysis_type', () => {
+      it('tries to update the attribute when the field changes', () => {
         var node = $R(this.component).find('input[name="analysis_type"]').components[0];
         node.value = 'count';
         TestUtils.Simulate.change(node);
@@ -217,8 +217,8 @@ describe('components/explorer/query_builder/index', function() {
         assert.deepPropertyVal(this.stub.getCall(0).args[1], 'query.analysis_type', 'count');
       });
     });
-    describe('target_property', function () {
-      it('tries to update the attribute when the field changes', function() {
+    describe('target_property', () => {
+      it('tries to update the attribute when the field changes', () => {
         this.model.query.event_collection = 'clicks';
         this.model.query.analysis_type = 'sum';
         this.component.forceUpdate();
@@ -231,8 +231,8 @@ describe('components/explorer/query_builder/index', function() {
         assert.deepPropertyVal(this.stub.getCall(0).args[1], 'query.target_property', 'target');
       });
     });
-    describe('percentile', function () {
-      it('tries to update the attribute when the field changes', function() {
+    describe('percentile', () => {
+      it('tries to update the attribute when the field changes', () => {
         this.model.query.event_collection = 'clicks';
         this.model.query.analysis_type = 'percentile';
         this.component.forceUpdate();
@@ -245,8 +245,8 @@ describe('components/explorer/query_builder/index', function() {
         assert.deepPropertyVal(this.stub.getCall(0).args[1], 'query.percentile', '10');
       });
     });
-    describe('group_by', function () {
-      it('tries to update the attribute when the field changes', function() {
+    describe('group_by', () => {
+      it('tries to update the attribute when the field changes', () => {
         this.model.query.event_collection = 'clicks';
         this.model.query.analysis_type = 'percentile';
         this.model.query.group_by = ['old_group_by_value'];
@@ -262,8 +262,8 @@ describe('components/explorer/query_builder/index', function() {
     });
   });
 
-  describe('event_collection', function () {
-    it('has the project events as dropdown options', function () {
+  describe('event_collection', () => {
+    it('has the project events as dropdown options', () => {
       var project = TestHelpers.createProject();
       project.eventCollections = ['one', 'two'];
       this.component = this.renderComponent({ project: project });
@@ -273,9 +273,9 @@ describe('components/explorer/query_builder/index', function() {
     });
   });
 
-  describe('helper functions', function () {
-    describe('shouldShowRevertButton', function () {
-      it('should return true if the model and its original are different', function () {
+  describe('helper functions', () => {
+    describe('shouldShowRevertButton', () => {
+      it('should return true if the model and its original are different', () => {
         var model = TestHelpers.createExplorerModel();
         model.id = 'abc-123';
         model.query.event_collection = 'clicks';
@@ -285,7 +285,7 @@ describe('components/explorer/query_builder/index', function() {
         this.component = this.renderComponent({ model: model });
         assert.isTrue(this.component.shouldShowRevertButton());
       });
-      it('should return false if the model and its original are the same', function () {
+      it('should return false if the model and its original are the same', () => {
         var model = TestHelpers.createExplorerModel();
         model.id = 'abc-123';
         model.query.event_collection = 'clicks';

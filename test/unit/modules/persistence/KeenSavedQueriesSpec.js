@@ -1,12 +1,12 @@
-var assert = require('chai').assert;
-let sinon = require('sinon/pkg/sinon.js');
-var KeenAnalysis = require('keen-analysis');
-var KeenHelpers = require('../../../support/TestHelpers');
-var KeenSavedQueries = require('../../../../client/js/app/modules/persistence/KeenSavedQueries.js');
 
-describe('modules/persistence/KeenSavedQueries', function(){
+let sinon from 'sinon/pkg/sinon.js');
+var KeenAnalysis from 'keen-analysis');
+var KeenHelpers from '../../../support/TestHelpers');
+var KeenSavedQueries from '../../../../lib/js/app/modules/persistence/KeenSavedQueries.js');
 
-  beforeEach(function () {
+describe('modules/persistence/KeenSavedQueries', () => {
+
+  beforeEach(() => {
     this.config = {
       masterKey: 'fakeKey',
       baseUrl: 'https://test-bookmarks-keen.io/projects/123/queries/saved',
@@ -27,30 +27,30 @@ describe('modules/persistence/KeenSavedQueries', function(){
     };
   });
 
-  it('exists', function(){
+  it('exists', () => {
     assert.isDefined(KeenSavedQueries);
   });
 
-  describe('Constructor', function(){
-    it('configures itself with a proper baseUrl', function(){
+  describe('Constructor', () => {
+    it('configures itself with a proper baseUrl', () => {
       assert.equal(this.KeenSavedQueries.config.baseUrl, this.config.baseUrl);
     });
   });
 
-  describe('Basic CRUD methods', function(){
+  describe('Basic CRUD methods', () => {
 
-    beforeEach(function(){
+    beforeEach(() => {
       this.xhrOpenSpy = sinon.spy(XMLHttpRequest.prototype, 'open');
       this.xhrSendStub = sinon.stub(XMLHttpRequest.prototype, 'send');
     });
 
-    afterEach(function(){
+    afterEach(() => {
       this.xhrOpenSpy.restore();
       this.xhrSendStub.restore();
     });
 
-    describe('create function', function(){
-      it('makes a PUT request with the right url and body', function(){
+    describe('create function', () => {
+      it('makes a PUT request with the right url and body', () => {
         var expectedURL = this.config.client.url('queries', 'saved', 'some-name');
         var expectedRequestBody = {
           query_name: 'some-name',
@@ -69,8 +69,8 @@ describe('modules/persistence/KeenSavedQueries', function(){
       });
     });
 
-    describe('update function', function(){
-      it('makes a PUT request with the right url and body', function(){
+    describe('update function', () => {
+      it('makes a PUT request with the right url and body', () => {
         var expectedURL = this.config.client.url('queries', 'saved', 'some-name-original');
         var expectedRequestBody = {
           query_name: 'some-name',
@@ -89,8 +89,8 @@ describe('modules/persistence/KeenSavedQueries', function(){
       });
     });
 
-    describe('get function', function(){
-      it('for a single bookmark it makes a GET request with the right url and body', function(){
+    describe('get function', () => {
+      it('for a single bookmark it makes a GET request with the right url and body', () => {
         var expectedURL = this.config.client.url('queries', 'saved', 'some-name-original', {
           api_key: this.config.client.masterKey()
         });
@@ -100,7 +100,7 @@ describe('modules/persistence/KeenSavedQueries', function(){
         assert.isUndefined(this.xhrSendStub.getCall(0).args[0]);
       });
 
-      it('for all bookmarks it makes a GET request with the right url and body', function(){
+      it('for all bookmarks it makes a GET request with the right url and body', () => {
         var expectedURL = this.config.client.url('queries', 'saved', {
           api_key: this.config.client.masterKey(),
           analysis_type: 'saved'
@@ -111,8 +111,8 @@ describe('modules/persistence/KeenSavedQueries', function(){
       });
     });
 
-    describe('destroy function', function(){
-      it('makes a DELETE request with the right url and body', function(){
+    describe('destroy function', () => {
+      it('makes a DELETE request with the right url and body', () => {
         var expectedURL = this.config.client.url('queries', 'saved', 'some-name-original');
         this.KeenSavedQueries.destroy(this.bookmarkObj);
         assert.isTrue(this.xhrOpenSpy.calledWith('DELETE', expectedURL, true));

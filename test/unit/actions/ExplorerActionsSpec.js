@@ -1,56 +1,56 @@
-const assert = require('chai').assert;
-const expect = require('chai').expect;
-const sinon = require('sinon/pkg/sinon.js');
-const moment = require('moment');
-const _ = require('lodash');
-const KeenAnalysis = require('keen-analysis');
-const Qs = require('qs');
-const TestHelpers = require('../../support/TestHelpers');
-const AppDispatcher = require('../../../client/js/app/dispatcher/AppDispatcher');
-const ExplorerActions = require('../../../client/js/app/actions/ExplorerActions');
-const AppStateActions = require('../../../client/js/app/actions/AppStateActions');
-const FilterUtils = require('../../../client/js/app/utils/FilterUtils');
-const RunValidations = require('../../../client/js/app/utils/RunValidations');
-const ExplorerValidations = require('../../../client/js/app/validations/ExplorerValidations');
-const ExplorerUtils = require('../../../client/js/app/utils/ExplorerUtils');
-const ChartTypeUtils = require('../../../client/js/app/utils/ChartTypeUtils');
-const ExplorerStore = require('../../../client/js/app/stores/ExplorerStore');
+const assert from 'chai').assert;
+const expect from 'chai').expect;
+const sinon from 'sinon/pkg/sinon.js');
+const moment from 'moment');
+const _ from 'lodash');
+const KeenAnalysis from 'keen-analysis');
+const Qs from 'qs');
+const TestHelpers from '../../support/TestHelpers');
+const AppDispatcher from '../../../lib/js/app/dispatcher/AppDispatcher');
+const ExplorerActions from '../../../lib/js/app/actions/ExplorerActions');
+const AppStateActions from '../../../lib/js/app/actions/AppStateActions');
+const FilterUtils from '../../../lib/js/app/utils/FilterUtils');
+const RunValidations from '../../../lib/js/app/utils/RunValidations');
+const ExplorerValidations from '../../../lib/js/app/validations/ExplorerValidations');
+const ExplorerUtils from '../../../lib/js/app/utils/ExplorerUtils');
+const ChartTypeUtils from '../../../lib/js/app/utils/ChartTypeUtils');
+const ExplorerStore from '../../../lib/js/app/stores/ExplorerStore');
 
-describe('actions/ExplorerActions', function() {
-  before(function () {
+describe('actions/ExplorerActions', () => {
+  before(() => {
     this.dispatchStub = sinon.stub(AppDispatcher, 'dispatch');
   });
 
-  after(function () {
+  after(() => {
     AppDispatcher.dispatch.restore();
   });
 
-  beforeEach(function () {
+  beforeEach(() => {
     this.dispatchStub.reset();
   });
 
-  describe('exec', function () {
-    before(function () {
+  describe('exec', () => {
+    before(() => {
       this.client = new KeenAnalysis(TestHelpers.createClient());
       this.getStub = sinon.stub(ExplorerStore, 'get');
       this.runQueryStub = sinon.stub(ExplorerUtils, 'runQuery');
     });
 
-    after(function () {
+    after(() => {
       ExplorerStore.get.restore();
       ExplorerUtils.runQuery.restore();
     });
 
-    beforeEach(function () {
+    beforeEach(() => {
       this.runQueryStub.reset();
     });
 
-    it('should throw an error if the model is currently loading', function () {
+    it('should throw an error if the model is currently loading', () => {
       var explorer = { id: 5, loading: true };
       this.getStub.returns(explorer);
       expect(ExplorerActions.exec.bind(null, this.client, explorer.id)).to.throw("Warning: calling exec when model loading is true. Explorer id: 5");
     });
-    it('should run the validations with the right arguments', function () {
+    it('should run the validations with the right arguments', () => {
       var explorer = TestHelpers.createExplorerModel();
       explorer.query.analysis_type = 'count';
       this.getStub.returns(explorer);
@@ -59,7 +59,7 @@ describe('actions/ExplorerActions', function() {
       assert.isTrue(stub.calledOnce);
       ExplorerActions.validate.restore();
     });
-    it('should call the dispatcher to update the store and set loading to true', function () {
+    it('should call the dispatcher to update the store and set loading to true', () => {
       var explorer = {
         id: 5,
         loading: false,
@@ -74,7 +74,7 @@ describe('actions/ExplorerActions', function() {
         updates: { loading: true }
       }));
     });
-    it('should add the latest attribute with a limit for extractions', function () {
+    it('should add the latest attribute with a limit for extractions', () => {
       var explorer = {
         id: 5,
         loading: false,
@@ -93,8 +93,8 @@ describe('actions/ExplorerActions', function() {
     });
   });
 
-  describe('runEmailExtraction', function () {
-    beforeEach(function () {
+  describe('runEmailExtraction', () => {
+    beforeEach(() => {
       this.validateStub = sinon.stub(ExplorerActions, 'validate');
       this.runQueryStub = sinon.stub(ExplorerUtils, 'runQuery');
       this.client = { run: sinon.stub() };
@@ -113,25 +113,25 @@ describe('actions/ExplorerActions', function() {
       this.getStub = sinon.stub(ExplorerStore, 'get').returns(this.explorer);
     });
 
-    afterEach(function () {
+    afterEach(() => {
       ExplorerActions.validate.restore();
       ExplorerUtils.runQuery.restore();
       ExplorerStore.get.restore();
     });
 
-    it('should run validations', function () {
+    it('should run validations', () => {
       ExplorerActions.runEmailExtraction(this.client, this.explorer.id);
       assert.isTrue(this.validateStub.calledOnce);
     });
-    it('should NOT run the query if validaton fails', function () {
+    it('should NOT run the query if validaton fails', () => {
       this.validateStub.returns([{ msg: 'invalid' }]);
       ExplorerActions.runEmailExtraction(this.client, this.explorer.id);
       assert.isFalse(this.runQueryStub.called);
     });
   });
 
-  describe('fetchAllPersisted', function () {
-    beforeEach(function () {
+  describe('fetchAllPersisted', () => {
+    beforeEach(() => {
       this.models = [
         {
           id: '1',
@@ -202,26 +202,26 @@ describe('actions/ExplorerActions', function() {
       this.callback = sinon.stub();
     });
 
-    it('should format the params for each model', function () {
+    it('should format the params for each model', () => {
       var spy = sinon.spy(ExplorerUtils, 'formatQueryParams');
       ExplorerActions.fetchAllPersisted(this.persistence, this.callback);
       assert.strictEqual(spy.getCalls().length, 3);
       ExplorerUtils.formatQueryParams.restore();
     });
-    it('should run validations for each model', function () {
+    it('should run validations for each model', () => {
       var stub = sinon.stub(RunValidations, 'run').returns([]);
       ExplorerActions.fetchAllPersisted(this.persistence, this.callback);
       assert.strictEqual(stub.getCalls().length, 3);
       RunValidations.run.restore();
     });
-    it('should include invalid models', function () {
+    it('should include invalid models', () => {
       this.models[2].query = {};
       var stub = sinon.stub(ExplorerActions, 'createBatch');
       ExplorerActions.fetchAllPersisted(this.persistence, this.callback);
       assert.strictEqual(stub.getCall(0).args[0].length, 3);
       ExplorerActions.createBatch.restore();
     });
-    it('should log a warning for invalid models', function () {
+    it('should log a warning for invalid models', () => {
       this.models[2].query = {};
       var stub = sinon.stub(window.console, 'warn');
       ExplorerActions.fetchAllPersisted(this.persistence, this.callback);
@@ -229,7 +229,7 @@ describe('actions/ExplorerActions', function() {
       assert.deepPropertyVal(stub.getCall(0).args[1], 'id', '3');
       window.console.warn.restore();
     });
-    it('should call update app state when done and set fetchingPersistedExplorers to false', function () {
+    it('should call update app state when done and set fetchingPersistedExplorers to false', () => {
       var stub = sinon.stub(AppStateActions, 'update');
       ExplorerActions.fetchAllPersisted(this.persistence, this.callback);
       assert.isTrue(stub.calledWith({ fetchingPersistedExplorers: false }));
@@ -237,20 +237,20 @@ describe('actions/ExplorerActions', function() {
     });
   });
 
-  describe('execError', function () {
-    beforeEach(function () {
+  describe('execError', () => {
+    beforeEach(() => {
       var explorer = { id: 5 };
       ExplorerActions.execError(explorer, { message: 'NOPE' });
     });
 
-    it('should call the dispatcher to update with the right argments', function () {
+    it('should call the dispatcher to update with the right argments', () => {
       assert.isTrue(this.dispatchStub.calledWith({
         actionType: 'EXPLORER_UPDATE',
         id: 5,
         updates: { loading: false }
       }));
     });
-    it('should create a notice with the error message', function () {
+    it('should create a notice with the error message', () => {
       assert.isTrue(this.dispatchStub.calledWith({
         actionType: 'NOTICE_CREATE',
         attrs: {
@@ -261,8 +261,8 @@ describe('actions/ExplorerActions', function() {
     });
   });
 
-  describe('execSuccess', function () {
-    beforeEach(function () {
+  describe('execSuccess', () => {
+    beforeEach(() => {
       this.explorer = {
         id: 5,
         query: {
@@ -278,12 +278,12 @@ describe('actions/ExplorerActions', function() {
       sinon.stub(ChartTypeUtils, 'getChartTypeOptions').returns(['metric']);
       this.responseSupportsChartTypeStub = sinon.stub(ChartTypeUtils, 'responseSupportsChartType').returns(false);
     });
-    afterEach(function () {
+    afterEach(() => {
       ChartTypeUtils.getChartTypeOptions.restore();
       ChartTypeUtils.responseSupportsChartType.restore();
     });
 
-    it('should call the dispatcher to update with the right arguments', function () {
+    it('should call the dispatcher to update with the right arguments', () => {
       let expectedUpdates = {
         loading: false,
         response: this.response,
@@ -308,39 +308,39 @@ describe('actions/ExplorerActions', function() {
 
       assert.strictEqual(actualTimestamp, expectedTimestamp);
     });
-    it('should clear all notices', function () {
+    it('should clear all notices', () => {
       ExplorerActions.execSuccess(this.explorer, this.response);
       assert.isTrue(this.dispatchStub.calledWith({
         actionType: 'NOTICE_CLEAR_ALL'
       }));
     });
-    it('should add a query object on the response if one is not there', function () {
+    it('should add a query object on the response if one is not there', () => {
       ExplorerActions.execSuccess(this.explorer, this.response);
       assert.deepPropertyVal(this.dispatchStub.getCall(2).args[0].updates.response, 'query');
       assert.deepEqual(this.dispatchStub.getCall(2).args[0].updates.response.query, { analysis_type: 'count', timezone: 'UTC' });
     });
-    it('should not add a query object on the response if one is not there', function () {
+    it('should not add a query object on the response if one is not there', () => {
       ExplorerActions.execSuccess(this.explorer, _.assign({}, this.response, { query: { analysis_type: 'not_count' } }));
       assert.deepPropertyVal(this.dispatchStub.getCall(2).args[0].updates.response, 'query');
       assert.deepEqual(this.dispatchStub.getCall(2).args[0].updates.response.query, { analysis_type: 'not_count' });
     });
-    it('should call ExplorerUtils.responseSupportsChartType with the right arguments', function () {
+    it('should call ExplorerUtils.responseSupportsChartType with the right arguments', () => {
       var response = _.assign({}, this.response, { query: { analysis_type: 'not_count' } });
       ExplorerActions.execSuccess(this.explorer, response);
       assert.isTrue(this.responseSupportsChartTypeStub.calledWith(response.query, this.explorer.metadata.visualization.chart_type));
     });
   });
 
-  describe('async functions', function () {
-    before(function () {
+  describe('async functions', () => {
+    before(() => {
       this.getStub = sinon.stub(ExplorerStore, 'get')
     });
-    after(function () {
+    after(() => {
       ExplorerStore.get.restore();
     });
 
-    describe('save with unpersisted explorer', function () {
-      beforeEach(function () {
+    describe('save with unpersisted explorer', () => {
+      beforeEach(() => {
         this.persistence = {
           create: function(model, callback) {
             callback(null, _.assign({}, ExplorerUtils.formatQueryParams(ExplorerUtils.toJSON(model)), { query_name: 'abc123' }));
@@ -355,11 +355,11 @@ describe('actions/ExplorerActions', function() {
         sinon.stub(ExplorerUtils, 'mergeResponseWithExplorer').returns({ testKey: 'some updates' });
       });
 
-      afterEach(function(){
+      afterEach(() => {
         ExplorerUtils.mergeResponseWithExplorer.restore();
       });
 
-      it('should dispatch an EXPLORER_SAVING event', function () {
+      it('should dispatch an EXPLORER_SAVING event', () => {
         ExplorerActions.save(this.persistence, 'TEMP-ABC');
         assert.isTrue(this.dispatchStub.calledWith({
           actionType: 'EXPLORER_SAVING',
@@ -367,7 +367,7 @@ describe('actions/ExplorerActions', function() {
           saveType: 'save'
         }));
       });
-      it('should dispatch to update the right model with params from mergeResponseWithExplorer if successful', function () {
+      it('should dispatch to update the right model with params from mergeResponseWithExplorer if successful', () => {
         ExplorerActions.save(this.persistence, 'TEMP-ABC');
         assert.isTrue(this.dispatchStub.calledWith({
           actionType: 'EXPLORER_UPDATE',
@@ -375,7 +375,7 @@ describe('actions/ExplorerActions', function() {
           updates: { testKey: 'some updates' }
         }));
       });
-      it('should dispatch a fail event if there is a failure', function () {
+      it('should dispatch a fail event if there is a failure', () => {
         var errorResp = { text: 'an error' };
         this.persistence.create = function(model, callback) {
           callback(errorResp);
@@ -389,7 +389,7 @@ describe('actions/ExplorerActions', function() {
           query: this.explorer.query
         }));
       });
-      it('should set the "saving" property back to false if found invalid', function () {
+      it('should set the "saving" property back to false if found invalid', () => {
         this.explorer.query.query_name = '';
         this.explorer.isValid = false;
         ExplorerActions.save(this.persistence, 'TEMP-ABC');
@@ -401,8 +401,8 @@ describe('actions/ExplorerActions', function() {
       });
     });
 
-    describe('save with an already persisted explorer', function () {
-      beforeEach(function () {
+    describe('save with an already persisted explorer', () => {
+      beforeEach(() => {
         this.persistence = {
           update: function(model, callback) {
             callback(null, _.assign({}, ExplorerUtils.formatQueryParams(ExplorerUtils.toJSON(model)), { query_name: 'abc123' }));
@@ -417,11 +417,11 @@ describe('actions/ExplorerActions', function() {
         sinon.stub(ExplorerUtils, 'mergeResponseWithExplorer').returns({ testKey: 'some updates' });
       });
 
-      afterEach(function(){
+      afterEach(() => {
         ExplorerUtils.mergeResponseWithExplorer.restore();
       });
 
-      it('should dispatch an EXPLORER_SAVING event', function () {
+      it('should dispatch an EXPLORER_SAVING event', () => {
         ExplorerActions.save(this.persistence, 'ABC');
         assert.isTrue(this.dispatchStub.calledWith({
           actionType: 'EXPLORER_SAVING',
@@ -429,7 +429,7 @@ describe('actions/ExplorerActions', function() {
           saveType: 'update'
         }));
       });
-      it('should dispatch to update the right model with params from mergeResponseWithExplorer if successful', function () {
+      it('should dispatch to update the right model with params from mergeResponseWithExplorer if successful', () => {
         ExplorerActions.save(this.persistence, 'ABC');
         assert.isTrue(this.dispatchStub.calledWith({
           actionType: 'EXPLORER_UPDATE',
@@ -437,7 +437,7 @@ describe('actions/ExplorerActions', function() {
           updates: { testKey: 'some updates' }
         }));
       });
-      it('should dispatch a fail event if there is a failure', function () {
+      it('should dispatch a fail event if there is a failure', () => {
         var errorResp = { text: 'an error' };
         this.persistence.update = function(model, callback) {
           callback(errorResp);
@@ -453,23 +453,23 @@ describe('actions/ExplorerActions', function() {
       });
     });
 
-    describe('destroy', function () {
-      xit('should dispatch a EXPLORER_DESTROYING message', function () {
+    describe('destroy', () => {
+      xit('should dispatch a EXPLORER_DESTROYING message', () => {
 
       });
-      xit('should dispatch a EXPLORER_DESTROY_FAIL message if destroy call fails', function () {
+      xit('should dispatch a EXPLORER_DESTROY_FAIL message if destroy call fails', () => {
 
       });
-      xit('should dispatch a EXPLORER_DESTROY_SUCCESS message if destroy call succeeds', function () {
+      xit('should dispatch a EXPLORER_DESTROY_SUCCESS message if destroy call succeeds', () => {
 
       });
-      xit('should remove the model if destroy call succeeds', function () {
+      xit('should remove the model if destroy call succeeds', () => {
 
       });
     });
 
-    describe('clone a saved query', function () {
-        it('should dispatch an EXPLORER_CLONE event', function () {
+    describe('clone a saved query', () => {
+        it('should dispatch an EXPLORER_CLONE event', () => {
           ExplorerActions.clone('ABC');
           assert.isTrue(this.dispatchStub.calledWith({
             actionType: 'EXPLORER_CLONE',

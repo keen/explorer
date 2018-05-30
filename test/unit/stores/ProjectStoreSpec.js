@@ -1,21 +1,21 @@
-var assert = require('chai').assert;
-var _ = require('lodash');
-let sinon = require('sinon/pkg/sinon.js');
-var moment = require('moment');
-var TestHelpers = require('../../support/TestHelpers');
-var ProjectUtils = require('../../../client/js/app/utils/ProjectUtils');
-var FormatUtils = require('../../../client/js/app/utils/FormatUtils');
-var ProjectStore = require('../../../client/js/app/stores/ProjectStore');
-var ProjectActions = require('../../../client/js/app/actions/ProjectActions');
 
-describe('stores/ProjectStore', function() {
+var _ from 'lodash');
+let sinon from 'sinon/pkg/sinon.js');
+var moment from 'moment');
+var TestHelpers from '../../support/TestHelpers');
+var ProjectUtils from '../../../lib/js/app/utils/ProjectUtils');
+var FormatUtils from '../../../lib/js/app/utils/FormatUtils');
+var ProjectStore from '../../../lib/js/app/stores/ProjectStore');
+var ProjectActions from '../../../lib/js/app/actions/ProjectActions');
 
-  beforeEach(function () {
+describe('stores/ProjectStore', () => {
+
+  beforeEach(() => {
     ProjectStore.clearAll();
   });
 
-  describe('_create', function () {
-    it('should create a new project with the default attributes', function () {
+  describe('_create', () => {
+    it('should create a new project with the default attributes', () => {
       ProjectActions.create();
       var keys = Object.keys(ProjectStore.getAll());
       assert.deepEqual(
@@ -28,7 +28,7 @@ describe('stores/ProjectStore', function() {
         }
       );
     });
-    it('should create a new project with the provided attributes', function () {
+    it('should create a new project with the provided attributes', () => {
       ProjectActions.create({
         loading: false,
         schema: {
@@ -50,8 +50,8 @@ describe('stores/ProjectStore', function() {
     });
   });
 
-  describe('_update', function () {
-    it('should update the expected project with the provided attributes', function () {
+  describe('_update', () => {
+    it('should update the expected project with the provided attributes', () => {
       ProjectActions.create();
       var keys = Object.keys(ProjectStore.getAll());
       ProjectActions.update(keys[0], {
@@ -74,8 +74,8 @@ describe('stores/ProjectStore', function() {
     });
   });
 
-  describe('getProject', function () {
-    it('should return the first project', function () {
+  describe('getProject', () => {
+    it('should return the first project', () => {
       ProjectActions.create();
       var keys = Object.keys(ProjectStore.getAll());
       assert.deepEqual(ProjectStore.getProject(), ProjectStore.getAll()[keys[0]]);

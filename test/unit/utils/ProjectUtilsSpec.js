@@ -1,17 +1,17 @@
-var assert = require('chai').assert;
-let sinon = require('sinon/pkg/sinon.js');
-var TestHelpers = require('../../support/TestHelpers');
-var ProjectActions = require('../../../client/js/app/actions/ProjectActions');
-var ProjectUtils = require('../../../client/js/app/utils/ProjectUtils');
 
-describe('utils/ProjectUtils', function() {
+let sinon from 'sinon/pkg/sinon.js');
+var TestHelpers from '../../support/TestHelpers');
+var ProjectActions from '../../../lib/js/app/actions/ProjectActions');
+var ProjectUtils from '../../../lib/js/app/utils/ProjectUtils');
 
-  it('exists', function(){
+describe('utils/ProjectUtils', () => {
+
+  it('exists', () => {
     assert.isDefined(ProjectUtils);
   });
 
-  describe('getConstant', function() {
-    it('should return the a project constant', function(){
+  describe('getConstant', () => {
+    it('should return the a project constant', () => {
       var expectedAnalyisTypes = [
         'sum',
         'count',
@@ -29,22 +29,22 @@ describe('utils/ProjectUtils', function() {
     });
   });
 
-  describe('constants', function () {
-    describe('filter operators', function () {
-      describe('eq', function () {
-        xit('should return the right coercion types', function () {
+  describe('constants', () => {
+    describe('filter operators', () => {
+      describe('eq', () => {
+        xit('should return the right coercion types', () => {
           
         });
       });
     });
   });
 
-  describe('getPropertyType', function () {
-    before(function () {
+  describe('getPropertyType', () => {
+    before(() => {
       this.project = { schema: TestHelpers.buildProjectSchema() };
     });
 
-    it('should return the right type of property if it exists ', function () {
+    it('should return the right type of property if it exists ', () => {
       assert.strictEqual(ProjectUtils.getPropertyType(this.project, 'click', 'numProp'), 'num');
       assert.strictEqual(ProjectUtils.getPropertyType(this.project, 'click', 'geoProp'), 'geo');
       assert.strictEqual(ProjectUtils.getPropertyType(this.project, 'click', 'listProp'), 'list');

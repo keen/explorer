@@ -1,16 +1,16 @@
-var assert = require('chai').assert;
-var expect = require('chai').expect;
-let sinon = require('sinon/pkg/sinon.js');
-var _ = require('lodash');
-var React = require('react');
-var ReactDOM = require('react-dom');
-var TestUtils = require('react-addons-test-utils');
-var GroupByField = require('../../../../../client/js/app/components/explorer/query_builder/group_by_field.js');
-var TestHelpers = require('../../../../../test/support/TestHelpers');
-var $R = require('rquery')(_, React, ReactDOM, TestUtils);
 
-describe('components/explorer/query_builder/group_by_field', function() {
-  beforeEach(function() {
+var expect from 'chai').expect;
+let sinon from 'sinon/pkg/sinon.js');
+var _ from 'lodash');
+import React from 'react';
+var ReactDOM from 'react-dom');
+var TestUtils from 'react-addons-test-utils');
+var GroupByField from '../../../../../lib/js/app/components/explorer/query_builder/group_by_field.js');
+var TestHelpers from '../../../../../test/support/TestHelpers');
+var $R from 'rquery')(_, React, ReactDOM, TestUtils);
+
+describe('components/explorer/query_builder/group_by_field', () => {
+  beforeEach(() => {
     this.handleChangeStub = sinon.stub();
     this.defaultProps = {
       handleChange: this.handleChangeStub,
@@ -23,43 +23,43 @@ describe('components/explorer/query_builder/group_by_field', function() {
     this.component = this.renderComponent();
   });
 
-  describe('with a single group by', function () {
-    it('shows one input', function() {
+  describe('with a single group by', () => {
+    it('shows one input', () => {
       assert.lengthOf($R(this.component).find('.group-by').components, 1);
     });
-    it('shows the correct toggle button text', function() {
+    it('shows the correct toggle button text', () => {
       assert.strictEqual($R(this.component).find('a').components[1].innerText, "Group by a second property");
     });
   });
-  describe('with a double group by', function () {
-    beforeEach(function(){
+  describe('with a double group by', () => {
+    beforeEach(() => {
       this.component = this.renderComponent({
         value: ['one', 'two']
       });
     })
-    it('shows two inputs', function() {
+    it('shows two inputs', () => {
       assert.lengthOf($R(this.component).find('.group-by').components, 2);
     });
-    it('shows the correct toggle button text', function() {
+    it('shows the correct toggle button text', () => {
       assert.strictEqual($R(this.component).find('a').components[1].innerText, "Remove second property");
     });
   });
-  describe('toggle link', function () {
-    it('should call props.handleChange with an empty string array value at index 1 if the value is an empty array', function () {
+  describe('toggle link', () => {
+    it('should call props.handleChange with an empty string array value at index 1 if the value is an empty array', () => {
       this.component = this.renderComponent({
         value: []
       });
       TestUtils.Simulate.click($R(this.component).find('a').components[1]);
       assert.sameMembers(this.handleChangeStub.getCall(0).args[1], ['', '']);
     });
-    it('should call props.handleChange with an empty string array value at index 1 if there is only one group by', function () {
+    it('should call props.handleChange with an empty string array value at index 1 if there is only one group by', () => {
       this.component = this.renderComponent({
         value: ['one']
       });
       TestUtils.Simulate.click($R(this.component).find('a').components[1]);
       assert.sameMembers(this.handleChangeStub.getCall(0).args[1], ['one', '']);
     });
-    it('should call props.handleChange with a single item array if there is two values', function () {
+    it('should call props.handleChange with a single item array if there is two values', () => {
       this.component = this.renderComponent({
         value: ['one', 'two']
       });

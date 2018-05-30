@@ -1,54 +1,54 @@
-var assert = require('chai').assert;
-var _ = require('lodash');
-let sinon = require('sinon/pkg/sinon.js');
-var Validator = require('../../../client/js/app/mixins/validator.js');
 
-describe('models/filter', function(){
-  beforeEach(function () {
+var _ from 'lodash');
+let sinon from 'sinon/pkg/sinon.js');
+var Validator from '../../../lib/js/app/mixins/validator.js');
+
+describe('models/filter', () => {
+  beforeEach(() => {
     this.object = {};
 
     Validator(this.object);
   });
-  it('exists', function(){
+  it('exists', () => {
     assert.isDefined(Validator);
   });
-  describe('mixin', function () {
-    it('extends Validator\'s isValid', function () {
+  describe('mixin', () => {
+    it('extends Validator\'s isValid', () => {
       assert.isDefined(this.object.isValid);
     });
-    it('extends Validator\'s runValidations()', function () {
+    it('extends Validator\'s runValidations()', () => {
       assert.isFunction(this.object.runValidations);
     });
   });
-  describe('isValid', function () {
-    it('returns true by default', function () {
+  describe('isValid', () => {
+    it('returns true by default', () => {
       assert.isTrue(this.object.isValid);
     });
   });
-  describe('runValidations', function () {
-    beforeEach(function () {
+  describe('runValidations', () => {
+    beforeEach(() => {
       this.emitSpy = sinon.spy(this.object, 'emit');
     });
-    afterEach(function () {
+    afterEach(() => {
       this.emitSpy.restore();
     });
 
-    describe('isValid', function () {
-      beforeEach(function () {
+    describe('isValid', () => {
+      beforeEach(() => {
         this.object.validations = [];
       });
 
-      it('returns true', function () {
+      it('returns true', () => {
         assert.isTrue(this.object.runValidations());
       });
-      it('emits a validation:valid event', function () {
+      it('emits a validation:valid event', () => {
         this.object.runValidations();
 
         assert.isTrue(this.emitSpy.calledWith('validation:valid'));
       });
     });
-    describe('isInvalid', function () {
-      beforeEach(function () {
+    describe('isInvalid', () => {
+      beforeEach(() => {
         this.object.validations = {
           property_name: {
             msg: 'Error Message',
@@ -61,10 +61,10 @@ describe('models/filter', function(){
           return false;
         };
       });
-      it('sets isValid to false', function () {
+      it('sets isValid to false', () => {
         assert.isFalse(this.object.runValidations());
       });
-      it('emits a validation:invalid event with error message', function () {
+      it('emits a validation:invalid event with error message', () => {
         this.object.runValidations();
 
         assert.isTrue(this.emitSpy.calledWith('validation:invalid', 'Error Message'));

@@ -1,15 +1,15 @@
-var assert = require('chai').assert;
-let sinon = require('sinon/pkg/sinon.js');
-var TestHelpers = require('../../support/TestHelpers');
-var ProjectActions = require('../../../client/js/app/actions/ProjectActions');
-var ProjectUtils = require('../../../client/js/app/utils/ProjectUtils');
-var KeenAnalysis = require('keen-analysis');
 
-describe('actions/ProjectActions', function() {
+let sinon from 'sinon/pkg/sinon.js');
+var TestHelpers from '../../support/TestHelpers');
+var ProjectActions from '../../../lib/js/app/actions/ProjectActions');
+var ProjectUtils from '../../../lib/js/app/utils/ProjectUtils');
+var KeenAnalysis from 'keen-analysis');
 
-  describe('fetchCollectionSchema', function() {
+describe('actions/ProjectActions', () => {
 
-    before(function() {
+  describe('fetchCollectionSchema', () => {
+
+    before(() => {
       this.xhrOpenStub = sinon.stub(XMLHttpRequest.prototype, 'open');
       this.xhrSendStub = sinon.stub(XMLHttpRequest.prototype, 'send');
       this.client = new KeenAnalysis(TestHelpers.createClient());
@@ -19,12 +19,12 @@ describe('actions/ProjectActions', function() {
       })
     });
 
-    after(function(){
+    after(() => {
       this.xhrOpenStub.restore();
       this.xhrSendStub.restore();
     });
 
-    it('should make a request to the right URL', function () {
+    it('should make a request to the right URL', () => {
       var expectedURL = this.client.config.protocol +
                         "://" +
                         this.client.config.host +
@@ -36,7 +36,7 @@ describe('actions/ProjectActions', function() {
       this.xhrOpenStub.calledWith('GET', expectedURL, true);
     });
 
-    it('should encode a / in the collection name', function() {
+    it('should encode a / in the collection name', () => {
       var expectedURL = this.client.config.protocol +
         "://" +
         this.client.config.host +
@@ -48,7 +48,7 @@ describe('actions/ProjectActions', function() {
       this.xhrOpenStub.calledWith('GET', expectedURL, true);
     });
 
-    it('should encode a [space] in the collection name', function() {
+    it('should encode a [space] in the collection name', () => {
       var expectedURL = this.client.config.protocol +
         "://" +
         this.client.config.host +
@@ -60,7 +60,7 @@ describe('actions/ProjectActions', function() {
       this.xhrOpenStub.calledWith('GET', expectedURL, true);
     });
 
-    it('should encode a hash in the collection name', function() {
+    it('should encode a hash in the collection name', () => {
       var expectedURL = this.client.config.protocol +
           "://" +
           this.client.config.host +
@@ -72,7 +72,7 @@ describe('actions/ProjectActions', function() {
       this.xhrOpenStub.calledWith('GET', expectedURL, true);
     });
 
-    it('should encode a question mark in the collection name', function() {
+    it('should encode a question mark in the collection name', () => {
       var expectedURL = this.client.config.protocol +
           "://" +
           this.client.config.host +
@@ -84,7 +84,7 @@ describe('actions/ProjectActions', function() {
       this.xhrOpenStub.calledWith('GET', expectedURL, true);
     });
 
-    it('should encode a colon in the collection name', function() {
+    it('should encode a colon in the collection name', () => {
       var expectedURL = this.client.config.protocol +
           "://" +
           this.client.config.host +
@@ -96,7 +96,7 @@ describe('actions/ProjectActions', function() {
       this.xhrOpenStub.calledWith('GET', expectedURL, true);
     });
 
-    it('should encode an ampersand in the collection name', function() {
+    it('should encode an ampersand in the collection name', () => {
       var expectedURL = this.client.config.protocol +
           "://" +
           this.client.config.host +

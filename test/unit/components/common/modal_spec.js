@@ -1,44 +1,44 @@
-let sinon = require('sinon/pkg/sinon.js');
-var assert = require('chai').assert;
-var _ = require('lodash');
-var React = require('react');
-var ReactDOM = require('react-dom');
-var TestUtils = require('react-addons-test-utils');
-var Modal = require('../../../../client/js/app/components/common/modal.js');
+let sinon from 'sinon/pkg/sinon.js');
 
-describe('components/common/modal', function() {
+var _ from 'lodash');
+import React from 'react';
+var ReactDOM from 'react-dom');
+var TestUtils from 'react-addons-test-utils');
+var Modal from '../../../../lib/js/app/components/common/modal.js');
 
-  describe('setup', function() {
+describe('components/common/modal', () => {
 
-    it('is of the right type', function() {
+  describe('setup', () => {
+
+    it('is of the right type', () => {
       var modal = TestUtils.renderIntoDocument(<Modal title="Test Modal" />);
       assert.isTrue(TestUtils.isCompositeComponentWithType(modal, Modal));
     });
 
-    it('it adds the modal classes', function() {
+    it('it adds the modal classes', () => {
       var modal = TestUtils.renderIntoDocument(<Modal title="Test Modal" modalClasses="a-test-class some-other-class" />);
       var classes = 'a-test-class some-other-class modal';
       assert.equal(ReactDOM.findDOMNode(modal).className, classes);
     });
 
-    it('it adds the large class', function() {
+    it('it adds the large class', () => {
       var modal = TestUtils.renderIntoDocument(<Modal title="Test Modal" size="large" />);
       var classes = 'modal-dialog modal-lg';
       assert.equal(ReactDOM.findDOMNode(modal).childNodes[0].className, classes);
     });
 
-    it('it sets the title', function() {
+    it('it sets the title', () => {
       var modal = TestUtils.renderIntoDocument(<Modal title="Test Modal" />);
       var headerText = $(ReactDOM.findDOMNode(modal)).find('.modal-title').text();
       assert.strictEqual(headerText, 'Test Modal');
     });
 
-    it("it doesn't have a footer by default", function() {
+    it("it doesn't have a footer by default", () => {
       var modal = TestUtils.renderIntoDocument(<Modal title="Test Modal" />);
       assert.lengthOf($(ReactDOM.findDOMNode(modal)).find('.modal-footer'), 0);
     });
 
-    it("it sets up the footer properly", function() {
+    it("it sets up the footer properly", () => {
       var onClickSpy = sinon.spy();
       var modal = TestUtils.renderIntoDocument(<Modal title="Test Modal" useFooter={true} footerBtns={[{
         text: 'Done'
@@ -61,27 +61,27 @@ describe('components/common/modal', function() {
 
   });
 
-  describe('component functions', function() {
+  describe('component functions', () => {
 
-    beforeEach(function(){
+    beforeEach(() => {
       this.modal = TestUtils.renderIntoDocument(<Modal title="Test Modal" />);
     });
 
-    describe('opening', function(){
+    describe('opening', () => {
 
-      it('open calls addBackdrop', function(){
+      it('open calls addBackdrop', () => {
         var addBackdropSpy = sinon.spy(this.modal, 'addBackdrop');
         this.modal.open();
         assert.isTrue(addBackdropSpy.calledOnce);
         this.modal.addBackdrop.restore();
       });
 
-      it('open sets the state attr open to true', function(){
+      it('open sets the state attr open to true', () => {
         this.modal.open();
         assert.isTrue(this.modal.state.open);
       });
 
-      it('addBackdrop properly adds the backdrop', function(){
+      it('addBackdrop properly adds the backdrop', () => {
         this.modal.open();
         assert.isTrue($('body').hasClass('modal-open'));
         assert.lengthOf($('body').find('#modal-backdrop'), 1);
@@ -89,9 +89,9 @@ describe('components/common/modal', function() {
 
     });
 
-    describe('closing', function(){
+    describe('closing', () => {
 
-      it('close calls removeBackdrop', function(){
+      it('close calls removeBackdrop', () => {
         var removeBackdropSpy = sinon.spy(this.modal, 'removeBackdrop');
         this.modal.open();
         this.modal.close();
@@ -99,13 +99,13 @@ describe('components/common/modal', function() {
         this.modal.removeBackdrop.restore();
       });
 
-      it('open sets the state attr open to true', function(){
+      it('open sets the state attr open to true', () => {
         this.modal.open(); // Open first, because "false" is the default value for the 'open' state attr.
         this.modal.close();
         assert.isFalse(this.modal.state.open);
       });
 
-      it('removeBackdrop removes the backdrop properly', function(){
+      it('removeBackdrop removes the backdrop properly', () => {
         this.modal.open();
         this.modal.close();
         assert.isFalse($('body').hasClass('modal-open'));

@@ -1,23 +1,23 @@
-const assert = require('chai').assert;
-const sinon = require('sinon/pkg/sinon.js');
-const _ = require('lodash');
-const React = require('react');
-const ReactDOM = require('react-dom');
-const TestUtils = require('react-addons-test-utils');
-const Notice = require('../../../../client/js/app/components/common/notice.js');
-const TestHelpers = require('../../../support/TestHelpers');
+const assert from 'chai').assert;
+const sinon from 'sinon/pkg/sinon.js');
+const _ from 'lodash');
+const React from 'react');
+const ReactDOM from 'react-dom');
+const TestUtils from 'react-addons-test-utils');
+const Notice from '../../../../lib/js/app/components/common/notice.js');
+const TestHelpers from '../../../support/TestHelpers');
 
-describe('components/common/notice', function() {
-  describe('setup', function() {
-    it('is of the right type', function() {
+describe('components/common/notice', () => {
+  describe('setup', () => {
+    it('is of the right type', () => {
       const notice = {};
       const component = TestUtils.renderIntoDocument(<Notice notice={notice} />);
       assert.isTrue(TestUtils.isCompositeComponentWithType(component, Notice));
     });
   });
-  describe('text', function () {
-    it('shows the passed in text', function () {
-      it('it has the right class for anything other than error', function () {
+  describe('text', () => {
+    it('shows the passed in text', () => {
+      it('it has the right class for anything other than error', () => {
         const notice = {
           type: 'success',
           text: 'A very important message'
@@ -27,8 +27,8 @@ describe('components/common/notice', function() {
       });
     });
   });
-  describe('alert classes', function () {
-    it('it has the right class for any type other than error', function () {
+  describe('alert classes', () => {
+    it('it has the right class for any type other than error', () => {
       const notice = {
         type: 'success',
         text: 'Some text'
@@ -36,7 +36,7 @@ describe('components/common/notice', function() {
       const component = TestUtils.renderIntoDocument(<Notice notice={notice} />);
       assert.match(ReactDOM.findDOMNode(component).className, /alert-success/);
     });
-    it('it has the danger class for a type of error', function () {
+    it('it has the danger class for a type of error', () => {
       const notice = {
         type: 'error',
         text: 'Some text'
@@ -45,9 +45,9 @@ describe('components/common/notice', function() {
       assert.match(ReactDOM.findDOMNode(component).className, /alert-danger/);
     });
   });
-  describe('icons', function () {
-    it('adds an icon if the icon property is present on the notice prop', function () {
-      it('it has the right class for anything other than error', function () {
+  describe('icons', () => {
+    it('adds an icon if the icon property is present on the notice prop', () => {
+      it('it has the right class for anything other than error', () => {
         const notice = {
           type: 'success',
           text: 'Some text',
@@ -60,21 +60,21 @@ describe('components/common/notice', function() {
     });
   });
 
-  describe('closing', function () {
+  describe('closing', () => {
     let notice, component;
 
-    beforeEach(function() {
+    beforeEach(() => {
       notice = { type: 'error', text: 'some error' };
       component = TestUtils.renderIntoDocument(<Notice notice={notice} />);
     });
 
-    it('can be closed', function () {
+    it('can be closed', () => {
       TestUtils.Simulate.click(TestUtils.findRenderedDOMComponentWithClass(component, 'close'));
 
       assert.include(ReactDOM.findDOMNode(component).className, 'hide');
     });
 
-    it('shows itself again after new props are passed in', function () {
+    it('shows itself again after new props are passed in', () => {
       TestUtils.Simulate.click(TestUtils.findRenderedDOMComponentWithClass(component, 'close'));
       assert.include(ReactDOM.findDOMNode(component).className, 'hide');
 
@@ -84,7 +84,7 @@ describe('components/common/notice', function() {
       assert.notInclude(ReactDOM.findDOMNode(component).className, 'hide');
     });
 
-    it('calls the closeCallback', function () {
+    it('calls the closeCallback', () => {
       const closeCallback = sinon.stub();
       component = TestUtils.renderIntoDocument(<Notice notice={notice} closeCallback={closeCallback} />);
       TestUtils.Simulate.click(TestUtils.findRenderedDOMComponentWithClass(component, 'close'));

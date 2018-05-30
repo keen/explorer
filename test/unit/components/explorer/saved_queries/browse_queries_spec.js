@@ -1,17 +1,17 @@
-let sinon = require('sinon/pkg/sinon.js');
-var assert = require('chai').assert;
-var _ = require('lodash');
-var React = require('react');
-var ReactDOM = require('react-dom');
-var TestUtils = require('react-addons-test-utils');
-var BrowseQueries = require('../../../../../client/js/app/components/explorer/saved_queries/browse_queries.js');
-var ExplorerUtils = require('../../../../../client/js/app/utils/ExplorerUtils');
-var ExplorerActions = require('../../../../../client/js/app/actions/ExplorerActions');
-var TestHelpers = require('../../../../support/TestHelpers');
-var $R = require('rquery')(_, React, ReactDOM, TestUtils);
+let sinon from 'sinon/pkg/sinon.js');
 
-describe('components/explorer/saved_queries/browse_queries', function() {
-  beforeEach(function() {
+var _ from 'lodash');
+import React from 'react';
+var ReactDOM from 'react-dom');
+var TestUtils from 'react-addons-test-utils');
+var BrowseQueries from '../../../../../lib/js/app/components/explorer/saved_queries/browse_queries.js');
+var ExplorerUtils from '../../../../../lib/js/app/utils/ExplorerUtils');
+var ExplorerActions from '../../../../../lib/js/app/actions/ExplorerActions');
+var TestHelpers from '../../../../support/TestHelpers');
+var $R from 'rquery')(_, React, ReactDOM, TestUtils);
+
+describe('components/explorer/saved_queries/browse_queries', () => {
+  beforeEach(() => {
     var defaultProps = {
       listItems: [
         {
@@ -52,16 +52,16 @@ describe('components/explorer/saved_queries/browse_queries', function() {
     this.component = this.renderComponent();
   });
 
-  describe('setup', function() {
-    it('is of the right type', function() {
+  describe('setup', () => {
+    it('is of the right type', () => {
       assert.isTrue(TestUtils.isCompositeComponentWithType(this.component, BrowseQueries));
     });
 
-    it("creates a list item for each listItem prop", function() {
+    it("creates a list item for each listItem prop", () => {
       assert.equal(this.component.refs.list.childNodes.length, 3);
     });
 
-    it("should use metadata.display_name as the default query name displayed in the browse tab", function() {
+    it("should use metadata.display_name as the default query name displayed in the browse tab", () => {
       this.component = this.renderComponent({
         listItems: [
           {
@@ -81,7 +81,7 @@ describe('components/explorer/saved_queries/browse_queries', function() {
       assert.equal($R(this.component).find('h5')[0].textContent, 'Test Display Name');
     });
 
-    it("should use query_name as query name displayed in the browse tab when there's no metadata.display_name", function() {
+    it("should use query_name as query name displayed in the browse tab when there's no metadata.display_name", () => {
       this.component = this.renderComponent({
         listItems: [
           {
@@ -101,7 +101,7 @@ describe('components/explorer/saved_queries/browse_queries', function() {
       assert.equal($R(this.component).find('h5')[0].textContent, 'test-query-name');
     });
 
-    it("should use placeholder text for queries that do not have a query_name or metadata.display_name", function() {
+    it("should use placeholder text for queries that do not have a query_name or metadata.display_name", () => {
       this.component = this.renderComponent({
         listItems: [
           {
@@ -122,9 +122,9 @@ describe('components/explorer/saved_queries/browse_queries', function() {
     });
   });
 
-  describe('Interactions', function () {
-    describe('click callback', function () {
-      it('should call the callback if a list element is clicked', function () {
+  describe('Interactions', () => {
+    describe('click callback', () => {
+      it('should call the callback if a list element is clicked', () => {
         var stub = sinon.stub();
         this.component = this.renderComponent({ clickCallback: stub });
         var firstListItem = this.component.refs.list.childNodes[0];

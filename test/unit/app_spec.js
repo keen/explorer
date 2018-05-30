@@ -1,13 +1,13 @@
-var assert = require('chai').assert;
-var App = require('../../client/js/app/app.js');
-var QueryStringUtils =  require('../../client/js/app/utils/QueryStringUtils.js');
-var React = require('react');
-var TestUtils = require('react-addons-test-utils');
-var TestHelpers = require('../support/TestHelpers.js');
-let sinon = require('sinon/pkg/sinon.js');
 
-describe('App', function() {
-  it('runs a query if the querystring has query attrs in it', function () {
+import KeenExplorer from '../../lib/js/app/app';
+import QueryStringUtils from '../../lib/js/app/utils/QueryStringUtils.js';
+import React from 'react';
+import TestUtils from 'react-addons-test-utils';
+import TestHelpers from '../support/TestHelpers.js';
+import sinon from 'sinon/pkg/sinon.js';
+
+describe('KeenExplorer App', () => {
+  it('runs a query if the querystring has query attrs in it', () => {
     var queryAttributesStub = sinon.stub(QueryStringUtils, 'getQueryAttributes').returns({
       query: {
         event_collection: 'pageview',
@@ -23,9 +23,9 @@ describe('App', function() {
     var xhrSendStub = sinon.stub(XMLHttpRequest.prototype, 'send');
 
     var clientConfig = TestHelpers.createClient();
-    var app = new App('#explorer').client(clientConfig);
+    var app = new KeenExplorer('#explorer').client(clientConfig);
 
-    assert.isTrue(queryAttributesStub.calledOnce);
+    expect(queryAttributesStub.calledOnce).toBe(true);
 
     QueryStringUtils.getQueryAttributes.restore();
     xhrOpenStub.restore();

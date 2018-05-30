@@ -1,25 +1,25 @@
-var assert = require('chai').assert;
-var _ = require('lodash');
-let sinon = require('sinon/pkg/sinon.js');
-var moment = require('moment');
-var TestHelpers = require('../../support/TestHelpers');
-var AppDispatcher = require('../../../client/js/app/dispatcher/AppDispatcher');
-var ExplorerConstants = require('../../../client/js/app/constants/ExplorerConstants');
-var NoticeStore = require('../../../client/js/app/stores/NoticeStore');
-var ExplorerStore = require('../../../client/js/app/stores/ExplorerStore');
-var ExplorerActions = require('../../../client/js/app/actions/ExplorerActions');
 
-describe('stores/NoticeStore', function() {
+var _ from 'lodash');
+let sinon from 'sinon/pkg/sinon.js');
+var moment from 'moment');
+var TestHelpers from '../../support/TestHelpers');
+var AppDispatcher from '../../../lib/js/app/dispatcher/AppDispatcher');
+var ExplorerConstants from '../../../lib/js/app/constants/ExplorerConstants');
+var NoticeStore from '../../../lib/js/app/stores/NoticeStore');
+var ExplorerStore from '../../../lib/js/app/stores/ExplorerStore');
+var ExplorerActions from '../../../lib/js/app/actions/ExplorerActions');
 
-  describe('dispatcher callback', function () {
-    beforeEach(function () {
+describe('stores/NoticeStore', () => {
+
+  describe('dispatcher callback', () => {
+    beforeEach(() => {
       NoticeStore.clearAll();
       ExplorerStore.clearAll();
       ExplorerActions.create({ id: 1 });
     });
 
-    describe('EXPLORER_SAVING actionType', function () {
-      it('should create the right notice with the "save" saveType', function () { 
+    describe('EXPLORER_SAVING actionType', () => {
+      it('should create the right notice with the "save" saveType', () => { 
         AppDispatcher.dispatch({
           actionType: ExplorerConstants.EXPLORER_SAVING,
           saveType: 'save',
@@ -32,7 +32,7 @@ describe('stores/NoticeStore', function() {
           location: 'global'
         });
       });
-      it('should create the right notice with the "update" saveType', function () {
+      it('should create the right notice with the "update" saveType', () => {
         AppDispatcher.dispatch({
           actionType: ExplorerConstants.EXPLORER_SAVING,
           saveType: 'update',
@@ -47,8 +47,8 @@ describe('stores/NoticeStore', function() {
       });
     });
 
-    describe('EXPLORER_SAVE_SUCCESS actionType', function () {
-      it('should create the right notice with the "save" saveType', function () {
+    describe('EXPLORER_SAVE_SUCCESS actionType', () => {
+      it('should create the right notice with the "save" saveType', () => {
         AppDispatcher.dispatch({
           actionType: ExplorerConstants.EXPLORER_SAVE_SUCCESS,
           saveType: 'save',
@@ -61,7 +61,7 @@ describe('stores/NoticeStore', function() {
           location: 'global'
         });
       });
-      it('should create the right notice with the "update" saveType', function () {
+      it('should create the right notice with the "update" saveType', () => {
         AppDispatcher.dispatch({
           actionType: ExplorerConstants.EXPLORER_SAVE_SUCCESS,
           saveType: 'update',
@@ -76,8 +76,8 @@ describe('stores/NoticeStore', function() {
       });
     });
 
-    describe('EXPLORER_SAVE_FAIL actionType', function () {
-      it('should create the right notice with the "save" saveType', function () {
+    describe('EXPLORER_SAVE_FAIL actionType', () => {
+      it('should create the right notice with the "save" saveType', () => {
         var errorMessage = 'there was an error with saving'
         AppDispatcher.dispatch({
           actionType: ExplorerConstants.EXPLORER_SAVE_FAIL,
@@ -92,7 +92,7 @@ describe('stores/NoticeStore', function() {
           location: 'global'
         });
       });
-      it('should create the right notice with the "update" saveType', function () {
+      it('should create the right notice with the "update" saveType', () => {
         var errorMessage = 'there was an error with updating'
         AppDispatcher.dispatch({
           actionType: ExplorerConstants.EXPLORER_SAVE_FAIL,
@@ -109,8 +109,8 @@ describe('stores/NoticeStore', function() {
       });
     });
 
-    describe('EXPLORER_DESTROYING actionType', function () {
-      it('should create the right notice', function () {
+    describe('EXPLORER_DESTROYING actionType', () => {
+      it('should create the right notice', () => {
         AppDispatcher.dispatch({
           actionType: ExplorerConstants.EXPLORER_DESTROYING,
           id: 1
@@ -124,8 +124,8 @@ describe('stores/NoticeStore', function() {
       });
     });
 
-    describe('EXPLORER_DESTROY_SUCCESS actionType', function () {
-      it('should create the right notice', function () {
+    describe('EXPLORER_DESTROY_SUCCESS actionType', () => {
+      it('should create the right notice', () => {
         AppDispatcher.dispatch({
           actionType: ExplorerConstants.EXPLORER_DESTROY_SUCCESS
         });
@@ -138,8 +138,8 @@ describe('stores/NoticeStore', function() {
       });
     });
 
-    describe('EXPLORER_DESTROY_FAIL actionType', function () {
-      it('should create the right notice', function () {
+    describe('EXPLORER_DESTROY_FAIL actionType', () => {
+      it('should create the right notice', () => {
         var errorMsg = 'there was a destroy error';
         AppDispatcher.dispatch({
           actionType: ExplorerConstants.EXPLORER_DESTROY_FAIL,
@@ -155,8 +155,8 @@ describe('stores/NoticeStore', function() {
       });
     });
 
-    describe('EXPLORER_FOUND_INVALID actionType', function () {
-      it('should create one notice for each invalid step of a funnel query', function () {
+    describe('EXPLORER_FOUND_INVALID actionType', () => {
+      it('should create one notice for each invalid step of a funnel query', () => {
         ExplorerActions.create({
           id: 'abc123',
           errors: [{ msg: 'An error' }],

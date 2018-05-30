@@ -96,12 +96,6 @@ The project is built with [Webpack](https://github.com/webpack/webpack).
 **Run Unit Tests**
 * Run `npm run test` to run all the tests. Currently there are only unit tests.
 
-**Run In Browser Mocha Unit Tests**
-This isn't normally required, but if you need to, you can run the tests in the browser.
-
-* Run a server on another port, we use [http-server](https://www.npmjs.org/package/http-server) on port `8082`
-* See the mocha unit test suite run on `http://localhost:8082/test/unit/`
-
 ### FAQ
 
 **Is this open source Keen Explorer different than the one on keen.io?**

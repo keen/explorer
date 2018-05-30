@@ -1,19 +1,19 @@
-var assert = require('chai').assert;
-var _ = require('lodash');
-let sinon = require('sinon/pkg/sinon.js');
-var ProjectUtils = require('../../../../client/js/app/utils/ProjectUtils.js');
-var Filter = require('../../../../client/js/app/components/common/filter.js');
-var Geo = require('../../../../client/js/app/components/common/geo.js');
-var Select = require('../../../../client/js/app/components/common/select.js');
-var ReactSelect = require('../../../../client/js/app/components/common/react_select.js');
-var React = require('react');
-var ReactDOM = require('react-dom');
-var TestUtils = require('react-addons-test-utils');
-var TestHelpers = require('../../../support/TestHelpers');
-var $R = require('rquery')(_, React, ReactDOM, TestUtils);
 
-describe('components/common/filter', function() {
-  beforeEach(function() {
+var _ from 'lodash');
+let sinon from 'sinon/pkg/sinon.js');
+var ProjectUtils from '../../../../lib/js/app/utils/ProjectUtils.js');
+var Filter from '../../../../lib/js/app/components/common/filter.js');
+var Geo from '../../../../lib/js/app/components/common/geo.js');
+var Select from '../../../../lib/js/app/components/common/select.js');
+var ReactSelect from '../../../../lib/js/app/components/common/react_select.js');
+import React from 'react';
+var ReactDOM from 'react-dom');
+var TestUtils from 'react-addons-test-utils');
+var TestHelpers from '../../../support/TestHelpers');
+var $R from 'rquery')(_, React, ReactDOM, TestUtils);
+
+describe('components/common/filter', () => {
+  beforeEach(() => {
     this.handleChangeStub = sinon.stub();
     this.removeFilterStub = sinon.stub();
 
@@ -61,27 +61,27 @@ describe('components/common/filter', function() {
     };
   });
 
-  describe('setup', function() {
-    it('is of the right type', function() {
+  describe('setup', () => {
+    it('is of the right type', () => {
       assert.isTrue(TestUtils.isCompositeComponentWithType(this.component, Filter));
     });
 
-    describe('has the right empty form fields by default', function(){
-      it ('has the right number of typeaheads', function(){
+    describe('has the right empty form fields by default', () => {
+      it ('has the right number of typeaheads', () => {
         assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, ReactSelect), 1);
       });
 
-      it ('has the right number of inputs', function(){
+      it ('has the right number of inputs', () => {
         assert.lengthOf(TestUtils.scryRenderedDOMComponentsWithClass(this.component, 'property-value'), 1);
       });
 
-      it ('has the right number of selects', function(){
+      it ('has the right number of selects', () => {
         assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, Select), 2);
       });
     });
   });
 
-  it('only shows "Boolean" coercion type when the operator is "exists"', function () {
+  it('only shows "Boolean" coercion type when the operator is "exists"', () => {
     var props = {
       filter: {
         property_name: 'name',

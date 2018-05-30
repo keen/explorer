@@ -109836,6 +109836,9 @@ module.exports = KeenLibrary;
 "use strict";
 
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 var _ = __webpack_require__(1);
 var KeenAnalysis = __webpack_require__(596);
 var React = __webpack_require__(2);
@@ -109856,7 +109859,7 @@ var ExplorerStore = __webpack_require__(28);
 var ProjectStore = __webpack_require__(37);
 var QueryStringUtils = __webpack_require__(91);
 
-function App(el) {
+var KeenExplorer = exports.KeenExplorer = function KeenExplorer(el) {
   var tempId = FormatUtils.generateTempId();
   this.appDispatcher = AppDispatcher;
   this.config = {
@@ -109867,9 +109870,9 @@ function App(el) {
   ExplorerActions.create(_.assign(ExplorerUtils.formatQueryParams(this.config.params) || {}, { 'id': tempId }));
   ExplorerActions.setActive(tempId);
   ExplorerActions.validate(tempId);
-}
+};
 
-App.prototype.client = function (obj) {
+KeenExplorer.prototype.client = function (obj) {
   if (!arguments.length) return this.config.client;
   this.config.client = new KeenAnalysis(obj);
   this.config.client.resources({
@@ -109880,7 +109883,7 @@ App.prototype.client = function (obj) {
   return this;
 };
 
-App.prototype.el = function (target) {
+KeenExplorer.prototype.el = function (target) {
   if (!arguments.length) return this.config.el;
   if (target.nodeName) {
     this.config.el = target;
@@ -109892,7 +109895,7 @@ App.prototype.el = function (target) {
   return this;
 };
 
-App.prototype.fetch = function () {
+KeenExplorer.prototype.fetch = function () {
   if (this.config.persistence) {
     ExplorerActions.fetchAllPersisted(this.config.persistence, function (err) {
       if (err) console.error('There was an error fetching the persisted explorers: ', err.stack);
@@ -109915,13 +109918,13 @@ App.prototype.fetch = function () {
   return this;
 };
 
-App.prototype.persistence = function (bool) {
+KeenExplorer.prototype.persistence = function (bool) {
   if (!arguments.length) return this.config.persistence;
   if (typeof bool === 'boolean' && bool) {
     if (!this.config.client || !this.config.client.masterKey()) {
       console.error('This feature requires a client instance with a masterKey value');
     }
-    this.config.persistence = new Keen.Explorer.Persistence.KeenSavedQueries({
+    this.config.persistence = new Persistence.KeenSavedQueries({
       baseUrl: this.config.client.url('queries', 'saved'),
       client: this.config.client
     });
@@ -109930,7 +109933,7 @@ App.prototype.persistence = function (bool) {
   return this;
 };
 
-App.prototype.doneFetchingSavedQuery = function (savedQueryName, err) {
+KeenExplorer.prototype.doneFetchingSavedQuery = function (savedQueryName, err) {
   if (!err) {
     ExplorerActions.setActive(savedQueryName);
     ExplorerActions.exec(this.config.client, savedQueryName);
@@ -109953,7 +109956,7 @@ App.prototype.doneFetchingSavedQuery = function (savedQueryName, err) {
   }
 };
 
-App.prototype.render = function () {
+KeenExplorer.prototype.render = function () {
   var Component = React.createFactory(AppComponent);
   ReactDOM.render(Component({
     persistence: this.config.persistence,
@@ -109961,10 +109964,8 @@ App.prototype.render = function () {
   }), this.config.el);
 };
 
-window.Keen = window.Keen || {};
-window.Keen.Explorer = window.Keen.Explorer || {};
-window.Keen.Explorer.Persistence = Persistence;
-window.Keen.Explorer.App = module.exports = App;
+KeenExplorer.Persistence = Persistence;
+exports.default = KeenExplorer;
 
 /***/ }),
 /* 599 */

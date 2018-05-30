@@ -1,28 +1,28 @@
-var assert = require('chai').assert;
-var _ = require('lodash');
-let sinon = require('sinon/pkg/sinon.js');
-var moment = require('moment');
-var TestHelpers = require('../../support/TestHelpers');
-var FormatUtils = require('../../../client/js/app/utils/FormatUtils');
-var RunValidations = require('../../../client/js/app/utils/RunValidations');
-var FilterValidations = require('../../../client/js/app/validations/FilterValidations');
 
-describe('validations/FilterValidations', function() {
+var _ from 'lodash');
+let sinon from 'sinon/pkg/sinon.js');
+var moment from 'moment');
+var TestHelpers from '../../support/TestHelpers');
+var FormatUtils from '../../../lib/js/app/utils/FormatUtils');
+var RunValidations from '../../../lib/js/app/utils/RunValidations');
+var FilterValidations from '../../../lib/js/app/validations/FilterValidations');
 
-  describe('filter (non-geo) validations', function () {
-    describe('property_name', function () {
-      it('should have the proper error message', function () {
+describe('validations/FilterValidations', () => {
+
+  describe('filter (non-geo) validations', () => {
+    describe('property_name', () => {
+      it('should have the proper error message', () => {
         assert.strictEqual(FilterValidations.property_name.msg, 'Choose a property name');
       });
-      it('should return true if the value is present', function () {
+      it('should return true if the value is present', () => {
         assert.isTrue(FilterValidations.property_name.validate({ property_name: 'value is here' }));
       });
-      it('should return false if the value is not present', function () {
+      it('should return false if the value is not present', () => {
         assert.isFalse(FilterValidations.property_name.validate({ property_name: null }));
       });
     });
-    describe('property_value', function () {
-      it('should call parseList if the coercion_type is List', function () {
+    describe('property_value', () => {
+      it('should call parseList if the coercion_type is List', () => {
         var filter = {
           coercion_type: 'List',
           property_value: ['a list']
@@ -32,7 +32,7 @@ describe('validations/FilterValidations', function() {
         assert.isTrue(stub.calledWith(filter.property_value));
         FormatUtils.parseList.restore();
       });
-      it('should run the geo validations if the coercion_type is Geo', function () {
+      it('should run the geo validations if the coercion_type is Geo', () => {
         var filter = {
           coercion_type: 'Geo',
           property_value: {
@@ -51,19 +51,19 @@ describe('validations/FilterValidations', function() {
         FilterValidations.max_distance_miles.validate.restore();
       });
     });
-    describe('operator', function () {
-      it('should have the proper error message', function () {
+    describe('operator', () => {
+      it('should have the proper error message', () => {
         assert.strictEqual(FilterValidations.operator.msg, 'Choose an operator');
       });
-      it('should return false if the value is not present', function () {
+      it('should return false if the value is not present', () => {
         assert.isFalse(FilterValidations.operator.validate({ operator: null }));
       });
     });
-    describe('coercion_type', function () {
-      it('should have the proper error message', function () {
+    describe('coercion_type', () => {
+      it('should have the proper error message', () => {
         assert.strictEqual(FilterValidations.coercion_type.msg, 'Choose a coercion type');
       });
-      it('should return false if the value is not present', function () {
+      it('should return false if the value is not present', () => {
         assert.isFalse(FilterValidations.coercion_type.validate({ coercion_type: null }));
       });
     });

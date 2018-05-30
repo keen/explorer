@@ -1,14 +1,14 @@
-var assert = require('chai').assert;
-let sinon = require('sinon/pkg/sinon.js');
-var _ = require('lodash');
-var React = require('react');
-var ReactDOM = require('react-dom');
-var TestUtils = require('react-addons-test-utils');
-var ReactSelect = require('../../../../client/js/app/components/common/react_select.js');
-var TestHelpers = require('../../../support/TestHelpers');
 
-describe('components/common/react_select', function() {
-  before(function() {
+let sinon from 'sinon/pkg/sinon.js');
+var _ from 'lodash');
+import React from 'react';
+var ReactDOM from 'react-dom');
+var TestUtils from 'react-addons-test-utils');
+var ReactSelect from '../../../../lib/js/app/components/common/react_select.js');
+var TestHelpers from '../../../support/TestHelpers');
+
+describe('components/common/react_select', () => {
+  before(() => {
     this.handleBlurStub = sinon.stub();
     this.handleChangeStub = sinon.stub();
     this.handleSelectionStub = sinon.stub();
@@ -25,17 +25,17 @@ describe('components/common/react_select', function() {
     this.component = TestUtils.renderIntoDocument(<ReactSelect {...props} />);
   });
 
-  describe('setup', function() {
-    it('is of the right type', function() {
+  describe('setup', () => {
+    it('is of the right type', () => {
       assert.isTrue(TestUtils.isCompositeComponentWithType(this.component, ReactSelect));
     });
-    it('has one input', function(){
+    it('has one input', () => {
       assert.lengthOf(TestUtils.scryRenderedDOMComponentsWithTag(this.component, 'input'), 1);
     });
   });
 
-  describe('search', function () {
-    before(function() {
+  describe('search', () => {
+    before(() => {
       this.searchTest = function(selectOptions, searchValue, expectedListItems) {
         var propsStep1 = _.assign({}, this.component.props, { items: selectOptions, value: searchValue });
         this.component = TestHelpers.renderComponent(ReactSelect, propsStep1);
@@ -51,7 +51,7 @@ describe('components/common/react_select', function() {
       };
     });
 
-    it('searches for items case insensitive', function () {
+    it('searches for items case insensitive', () => {
       var propsStep1 = _.assign({}, this.component.props, { items: ['ONE', 'TWO', 'THREE'], value: 'one' });
       this.component = TestHelpers.renderComponent(ReactSelect, propsStep1);
       this.component.setState({ initialFocus: false });
@@ -65,7 +65,7 @@ describe('components/common/react_select', function() {
       assert.sameMembers(listItems, ['ONE']);
     });
 
-    it('should display items with opening square bracket (RegExp reserved char)', function() {
+    it('should display items with opening square bracket (RegExp reserved char)', () => {
       var selectOptions = ['ONE', 'TWO[2]', 'THREE'];
       var searchValue = 'two[';
       var expectedListItems = ['TWO[2]'];
@@ -73,7 +73,7 @@ describe('components/common/react_select', function() {
       this.searchTest(selectOptions, searchValue, expectedListItems);
     });
 
-    it('should display items with opening curly brace (RegExp reserved char)', function() {
+    it('should display items with opening curly brace (RegExp reserved char)', () => {
       var selectOptions = ['ONE', 'TWO', 'THREE{tres}'];
       var searchValue = 'three{';
       var expectedListItems = ['THREE{tres}'];
@@ -81,7 +81,7 @@ describe('components/common/react_select', function() {
       this.searchTest(selectOptions, searchValue, expectedListItems);
     });
 
-    it('should display items with opening parenthesis (RegExp reserved char)', function() {
+    it('should display items with opening parenthesis (RegExp reserved char)', () => {
       var selectOptions = ['ONE', 'TWO', 'THREE(3)'];
       var searchValue = 'three(';
       var expectedListItems = ['THREE(3)'];
@@ -89,7 +89,7 @@ describe('components/common/react_select', function() {
       this.searchTest(selectOptions, searchValue, expectedListItems);
     });
 
-    it('should display items with closing square bracket (RegExp reserved char)', function() {
+    it('should display items with closing square bracket (RegExp reserved char)', () => {
       var selectOptions = ['ONE', 'TWO]xxx[', 'THREE'];
       var searchValue = 'two]';
       var expectedListItems = ['TWO]xxx['];
@@ -97,7 +97,7 @@ describe('components/common/react_select', function() {
       this.searchTest(selectOptions, searchValue, expectedListItems);
     });
 
-    it('should display items with closing curly brace (RegExp reserved char)', function() {
+    it('should display items with closing curly brace (RegExp reserved char)', () => {
       var selectOptions = ['ONE', 'TWO', 'THREE}tres'];
       var searchValue = 'three}';
       var expectedListItems = ['THREE}tres'];
@@ -105,7 +105,7 @@ describe('components/common/react_select', function() {
       this.searchTest(selectOptions, searchValue, expectedListItems);
     });
 
-    it('should display items with closing parenthesis (RegExp reserved char)', function() {
+    it('should display items with closing parenthesis (RegExp reserved char)', () => {
       var selectOptions = ['ONE', 'TWO', 'THREE)yyy'];
       var searchValue = 'three)';
       var expectedListItems = ['THREE)yyy'];
@@ -113,7 +113,7 @@ describe('components/common/react_select', function() {
       this.searchTest(selectOptions, searchValue, expectedListItems);
     });
 
-    it('should display items with both square brackets (RegExp reserved char)', function() {
+    it('should display items with both square brackets (RegExp reserved char)', () => {
       var selectOptions = ['ONE', 'TWO[2]', 'THREE'];
       var searchValue = 'two[2]';
       var expectedListItems = ['TWO[2]'];
@@ -121,7 +121,7 @@ describe('components/common/react_select', function() {
       this.searchTest(selectOptions, searchValue, expectedListItems);
     });
 
-    it('should display items with both curly braces (RegExp reserved char)', function() {
+    it('should display items with both curly braces (RegExp reserved char)', () => {
       var selectOptions = ['ONE', 'TWO', 'THREE{tres}'];
       var searchValue = 'three{tres}';
       var expectedListItems = ['THREE{tres}'];
@@ -129,7 +129,7 @@ describe('components/common/react_select', function() {
       this.searchTest(selectOptions, searchValue, expectedListItems);
     });
 
-    it('should display items with both parentheses (RegExp reserved char)', function() {
+    it('should display items with both parentheses (RegExp reserved char)', () => {
       var selectOptions = ['ONE', 'TWO', 'THREE(yyy)'];
       var searchValue = 'three(yyy)';
       var expectedListItems = ['THREE(yyy)'];

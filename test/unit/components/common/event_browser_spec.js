@@ -1,33 +1,33 @@
-let sinon = require('sinon/pkg/sinon.js');
-var assert = require('chai').assert;
-var _ = require('lodash');
-var KeenAnalysis = require('keen-analysis');
-var React = require('react');
-var ReactDOM = require('react-dom');
-var TestUtils = require('react-addons-test-utils');
-var TestHelpers = require('../../../support/TestHelpers');
-var EventBrowser = require('../../../../client/js/app/components/common/event_browser.js');
-var Loader = require('../../../../client/js/app/components/common/loader.js');
-var ExplorerActions = require('../../../../client/js/app/actions/ExplorerActions');
-var ExplorerUtils = require('../../../../client/js/app/utils/ExplorerUtils');
-var ProjectUtils = require('../../../../client/js/app/utils/ProjectUtils');
-var FormatUtils = require('../../../../client/js/app/utils/FormatUtils');
-var ProjectActions = require('../../../../client/js/app/actions/ProjectActions');
-var $R = require('rquery')(_, React, ReactDOM, TestUtils);
+let sinon from 'sinon/pkg/sinon.js');
 
-describe('components/common/event_browser', function() {
+var _ from 'lodash');
+var KeenAnalysis from 'keen-analysis');
+import React from 'react';
+var ReactDOM from 'react-dom');
+var TestUtils from 'react-addons-test-utils');
+var TestHelpers from '../../../support/TestHelpers');
+var EventBrowser from '../../../../lib/js/app/components/common/event_browser.js');
+var Loader from '../../../../lib/js/app/components/common/loader.js');
+var ExplorerActions from '../../../../lib/js/app/actions/ExplorerActions');
+var ExplorerUtils from '../../../../lib/js/app/utils/ExplorerUtils');
+var ProjectUtils from '../../../../lib/js/app/utils/ProjectUtils');
+var FormatUtils from '../../../../lib/js/app/utils/FormatUtils');
+var ProjectActions from '../../../../lib/js/app/actions/ProjectActions');
+var $R from 'rquery')(_, React, ReactDOM, TestUtils);
 
-  before(function(){
+describe('components/common/event_browser', () => {
+
+  before(() => {
     this.runQueryStub = sinon.stub(ExplorerUtils, 'runQuery');
     sinon.stub(ProjectActions, 'fetchCollectionSchema');
   });
 
-  after(function(){
+  after(() => {
     ExplorerUtils.runQuery.restore();
     ProjectActions.fetchCollectionSchema.restore();
   });
 
-  beforeEach(function() {
+  beforeEach(() => {
     this.runQueryStub.reset();
 
     this.project = TestHelpers.createProject();
@@ -50,47 +50,47 @@ describe('components/common/event_browser', function() {
     this.component = this.renderComponent();
   });
 
-  describe('setup', function() {
-    it('is of the right type', function() {
+  describe('setup', () => {
+    it('is of the right type', () => {
       assert.isTrue(TestUtils.isCompositeComponentWithType(this.component, EventBrowser));
     });
 
-    it('has a single a Loader component', function(){
+    it('has a single a Loader component', () => {
       assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, Loader), 1);
     });
   });
 
-  describe('handling content when event collections exist', function() {
-    it('shows UI to browse event collections when they exist', function() {
+  describe('handling content when event collections exist', () => {
+    it('shows UI to browse event collections when they exist', () => {
       assert.lengthOf($R(this.component).find('.event-browser').components, 1);
     });
 
-    it('does not show UI alert when no event collections exist', function() {
+    it('does not show UI alert when no event collections exist', () => {
       assert.lengthOf($R(this.component).find('.no-collections-alert').components, 0);
     });
   });
 
-  describe('handling content when event collections do not exist', function() {
-    beforeEach(function(){
+  describe('handling content when event collections do not exist', () => {
+    beforeEach(() => {
       this.project.eventCollections = [];
       this.component = TestUtils.renderIntoDocument(<EventBrowser client={this.client} currentEventCollection={this.currentEventCollection} project={this.project} />);
     });
 
-    it('does not show UI to browse event collections when they exist', function() {
+    it('does not show UI to browse event collections when they exist', () => {
       assert.lengthOf($R(this.component).find('.event-browser').components, 0);
     });
 
-    it('shows UI alert when no event collections exist', function() {
+    it('shows UI alert when no event collections exist', () => {
       assert.lengthOf($R(this.component).find('.no-collections-alert').components, 1);
     });
   });
 
-  describe('handling the active event collection', function () {
-    it('does not try to access recent events when activeEventCollection is a string that does not match a collection', function () {
+  describe('handling the active event collection', () => {
+    it('does not try to access recent events when activeEventCollection is a string that does not match a collection', () => {
       this.component = this.renderComponent({ currentEventCollection: 'some string that does not match an event collection' });
       assert.strictEqual(this.component.getRecentEvents(), "");
     });
-    it('properly returns the recent events when activeEventCollection is a string that matches a collection', function () {
+    it('properly returns the recent events when activeEventCollection is a string that matches a collection', () => {
       this.component = this.renderComponent({ currentEventCollection: 'click' });
       assert.strictEqual(this.component.getRecentEvents(), FormatUtils.prettyPrintJSON([{ name: 'first recent event' }]));
     });

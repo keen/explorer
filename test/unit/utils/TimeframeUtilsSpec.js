@@ -1,13 +1,13 @@
-var assert = require('chai').assert;
-var expect = require('chai').expect;
-var moment = require('moment');
-let sinon = require('sinon/pkg/sinon.js');
-var TimeframeUtils = require('../../../client/js/app/utils/TimeframeUtils');
 
-describe('utils/TimeframeUtils', function () {
+var expect from 'chai').expect;
+var moment from 'moment');
+let sinon from 'sinon/pkg/sinon.js');
+var TimeframeUtils from '../../../lib/js/app/utils/TimeframeUtils');
 
-  describe('getTimeframe', function () {
-    it('should call the right timeframe builder for absolute timeframes', function () {
+describe('utils/TimeframeUtils', () => {
+
+  describe('getTimeframe', () => {
+    it('should call the right timeframe builder for absolute timeframes', () => {
       var time = {
         start: new Date(moment().subtract(1, 'days').startOf('day').format()),
         end: new Date(moment().startOf('day').format())
@@ -18,7 +18,7 @@ describe('utils/TimeframeUtils', function () {
       assert.isTrue(stub.calledOnce);
       TimeframeUtils.timeframeBuilders.absolute.restore();
     });
-    it('should call the right timeframe builder for relative timeframes', function () {
+    it('should call the right timeframe builder for relative timeframes', () => {
       var time = {
         relativity: 'this',
         amount: '1',
@@ -32,9 +32,9 @@ describe('utils/TimeframeUtils', function () {
     });
   });
 
-  describe('timeframeBuilders', function () {
-    describe('absolute', function () {
-      it('should properly build a timeframe object', function () {
+  describe('timeframeBuilders', () => {
+    describe('absolute', () => {
+      it('should properly build a timeframe object', () => {
         var time = {
           start: new Date(moment().subtract(1, 'days').startOf('day').format()),
           end: new Date(moment().startOf('day').format())
@@ -51,7 +51,7 @@ describe('utils/TimeframeUtils', function () {
         });
       });
     });
-    describe('relative', function () {
+    describe('relative', () => {
       var time = {
         relativity: 'this',
         amount: '1',
@@ -63,8 +63,8 @@ describe('utils/TimeframeUtils', function () {
     });
   });
 
-  describe('unpackTimeframeParam', function () {
-    it('properly unpacks an absolute timeframe', function () {
+  describe('unpackTimeframeParam', () => {
+    it('properly unpacks an absolute timeframe', () => {
       var timeframe = {
         start: moment(new Date("June 7, 2015 1:00 PM")).format('YYYY-MM-DDTHH:mm:ss.SSS')+"-10:00",
         end: moment(new Date("June 8, 2015 2:00 PM")).format('YYYY-MM-DDTHH:mm:ss.SSS')+"-10:00"
@@ -83,7 +83,7 @@ describe('utils/TimeframeUtils', function () {
         }
       );
     });
-    it('properly unpacks a relative timeframe', function () {
+    it('properly unpacks a relative timeframe', () => {
       var unpacked = TimeframeUtils.unpackTimeframeParam('this_8_days', 'Europe/London');
 
       assert.deepEqual(unpacked, {
@@ -97,8 +97,8 @@ describe('utils/TimeframeUtils', function () {
     });
   });
 
-  describe('timeframeType', function() {
-    it('recognizes relative timeframes', function() {
+  describe('timeframeType', () => {
+    it('recognizes relative timeframes', () => {
       var relative_timeframe = {
         relativity: 'this',
         amount: '8',
@@ -108,7 +108,7 @@ describe('utils/TimeframeUtils', function () {
       assert.equal(TimeframeUtils.timeframeType(relative_timeframe), 'relative');
     });
 
-    it('recognizes absolute timeframes', function() {
+    it('recognizes absolute timeframes', () => {
       var absolute_timeframe = {
         start: moment().subtract(2, 'days').format(),
         end: moment().subtract(1, 'days').format()
@@ -117,19 +117,19 @@ describe('utils/TimeframeUtils', function () {
       assert.equal(TimeframeUtils.timeframeType(absolute_timeframe), 'absolute');
     });
 
-    describe('invalid timeframes', function() {
-      it('throws error for invalid time object', function() {
+    describe('invalid timeframes', () => {
+      it('throws error for invalid time object', () => {
         expect(TimeframeUtils.timeframeType.bind(window, {bee: 'boop'})).to.throw("Invalid timeframe type: invalid time value.");
       });
 
-      it('throws errors for non-object time objects', function() {
+      it('throws errors for non-object time objects', () => {
         expect(TimeframeUtils.timeframeType.bind(window, 'this_3_days')).to.throw("Invalid timeframe type: not a plain object.");
       })
     });
   });
 
-  describe('getTimeParameters', function () {
-    it('returns whatever getTimeframe responds with', function () {
+  describe('getTimeParameters', () => {
+    it('returns whatever getTimeframe responds with', () => {
       var expectedResult = {cool: 'dude'};
 
       var stub = sinon.stub(TimeframeUtils, 'getTimeframe').returns(expectedResult);
@@ -141,7 +141,7 @@ describe('utils/TimeframeUtils', function () {
       TimeframeUtils.timeframeType.restore();
     });
 
-    it('returns the same timezone if the timeframeType is relative', function () {
+    it('returns the same timezone if the timeframeType is relative', () => {
       var stub = sinon.stub(TimeframeUtils, 'timeframeType').returns('relative');
 
       assert.deepPropertyVal(TimeframeUtils.getTimeParameters({
@@ -153,7 +153,7 @@ describe('utils/TimeframeUtils', function () {
       TimeframeUtils.timeframeType.restore();
     });
 
-    it('returns null timeframe with default timezone if passed undefined values', function () {
+    it('returns null timeframe with default timezone if passed undefined values', () => {
       assert.deepEqual(TimeframeUtils.getTimeParameters(), {
         timeframe: null,
         timezone: 'UTC'

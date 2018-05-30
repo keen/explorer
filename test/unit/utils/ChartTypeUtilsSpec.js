@@ -1,9 +1,9 @@
-var assert = require('chai').assert;
-var ChartTypeUtils = require('../../../client/js/app/utils/ChartTypeUtils');
 
-describe('utils/ChartTypeUtils', function() {
-  describe('getQueryDataType', function () {
-    it('returns "categorical" if there is a single item group_by array and no interval', function () {
+var ChartTypeUtils from '../../../lib/js/app/utils/ChartTypeUtils');
+
+describe('utils/ChartTypeUtils', () => {
+  describe('getQueryDataType', () => {
+    it('returns "categorical" if there is a single item group_by array and no interval', () => {
       var query = {
         analysis_type: 'count',
         group_by: ['single.group_by']
@@ -11,7 +11,7 @@ describe('utils/ChartTypeUtils', function() {
       assert.strictEqual(ChartTypeUtils.getQueryDataType(query), 'categorical');
     });
 
-    it('returns "extraction" if query.analysis_type is extraction', function() {
+    it('returns "extraction" if query.analysis_type is extraction', () => {
       var query = {
         analysis_type: 'extraction'
       };
@@ -19,7 +19,7 @@ describe('utils/ChartTypeUtils', function() {
       assert.strictEqual(ChartTypeUtils.getQueryDataType(query), 'extraction');
     });
 
-    it('returns "categorical" if is 2xGroupBy and no interval', function() {
+    it('returns "categorical" if is 2xGroupBy and no interval', () => {
       var query = {
         analysis_type: 'count',
         group_by: [
@@ -31,7 +31,7 @@ describe('utils/ChartTypeUtils', function() {
       assert.strictEqual(ChartTypeUtils.getQueryDataType(query), 'categorical');
     });
 
-    it('returns "cat-chronological" if is 2xGroupBy and there is an interval', function() {
+    it('returns "cat-chronological" if is 2xGroupBy and there is an interval', () => {
       var query = {
         analysis_type: 'count',
         interval: 'daily',
@@ -45,8 +45,8 @@ describe('utils/ChartTypeUtils', function() {
     });
   });
 
-  describe('getChartTypeOptions', function () {
-    it('returns table as an option for cat-chronological types', function () {
+  describe('getChartTypeOptions', () => {
+    it('returns table as an option for cat-chronological types', () => {
       var query = {
         analysis_type: 'count',
         interval: 'daily'
