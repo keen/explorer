@@ -1,0 +1,38 @@
+.cache-toggle {
+  background: #FFF;
+  border: 1px solid rgba(0, 0, 0, 0.07);
+  border-top: 0;
+  padding: 5px 10px;
+  height: 32px;
+
+  label,
+  span.cache-details,
+  span.cache-settings {
+    color: #808080;
+    font-size: 12px;
+    margin: 0;
+    padding-right: 10px;
+    a {
+      padding: 0 5px;
+    }
+  }
+  input[name="cache"] {
+    margin-right: 5px;
+  }
+}
+.cache-toggle.inactive {
+  label {
+    color: #A2A2A2;
+  }
+}
+.cache-settings {
+  white-space: nowrap;
+
+  input[name="refresh_rate"] {
+    display: inline-block;
+    font-size: 12px;
+    height: 21px;
+    text-align: center;
+    width: 56px;
+  }
+}

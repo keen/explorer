@@ -1,0 +1,19 @@
+.query-actions {
+  background: #FFF;
+  border: 1px solid rgba(0, 0, 0, 0.07);
+  border-top: medium none;
+  padding: 10px;
+
+  .manage-group {
+    border-left: 1px solid #D7D7D7;
+    margin-left: 10px;
+    .btn {
+      margin-left: 10px;
+    }
+  }
+
+  .btn-link {
+    color: #808080;
+    font-size: 12px;
+  }
+}

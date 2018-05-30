@@ -1,94 +1,104 @@
+const path = require('path');
 const webpack = require('webpack');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-const buildName = 'keen-explorer';
-const minExt = (process.env.NODE_ENV === 'production' ? 'min.' : '');
+const fileName = 'keen-explorer';
 
-const devModule = {
-  entry: {
-    'app': ['./client/js/app/app.js', './client/styles/base.less']
-  },
+module.exports = {
+  entry: ['./lib/js/app/app.js'],
+
+  target: 'web',
 
   output: {
-    filename: buildName + '.' + minExt + 'js',
-    path: './dist/'
+    path: path.resolve(__dirname, 'dist'),
+    filename: `${
+      fileName
+    }${
+      process.env.BUNDLE ? '.bundle' : '.umd'
+    }${
+      process.env.OPTIMIZE_MINIMIZE ? '.min' : ''
+    }.js`,
+    library: `${!process.env.LIBRARY ? '' : process.env.LIBRARY}`,
+    libraryTarget: 'umd',
   },
 
   module: {
-    loaders: [
+
+    rules: [
       {
         test: /picker/,
-        loader: 'imports?define=>false'
+        loader: 'imports-loader?define=>false'
       },
 
       {
-        test: /\.js$/,
-        loader: 'babel-loader',
-        exclude: /node_modules/,
-        query: {
-          presets: ['latest', 'react'],
-        }
+        test: /\.js?$/,
+        include: [
+          path.resolve(__dirname, 'lib'),
+        ],
+        exclude: [
+          path.resolve(__dirname, 'node_modules'),
+        ],
+        loader: 'babel-loader'
+
       },
 
       {
-        test: /\.less$/,
-        loader: ExtractTextPlugin.extract('style-loader', 'css!less')
-      }
-    ]
+        test: /\.html$/,
+        loader: 'html-loader',
+      },
+    ],
+
   },
+
+  resolve: {
+    modules: [
+      'node_modules',
+    ],
+    extensions: ['.js', '.json', '.jsx'],
+  },
+
+  optimization: {
+    minimize: !!process.env.OPTIMIZE_MINIMIZE,
+  },
+
+  devtool: 'source-map',
+
+  context: __dirname,
+
+  // stats: 'verbose',
 
   plugins: [
-    new ExtractTextPlugin(buildName + "." + minExt + "css"),
-    new webpack.DefinePlugin({ 'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV) })
+    new webpack.DefinePlugin({}),
   ],
 
-  externals: {
-    jquery: 'jQuery',
-  }
-}
+  mode: process.env.NODE_ENV,
 
-const testModule = {
-  entry: {
-    'tests': './test/unit/index.js'
+  devServer: {
+    contentBase: path.join(__dirname, 'test/demo'),
+    open: true,
+    inline: true,
+    hot: false,
+    watchContentBase: true,
   },
 
-  output: {
-    filename: 'browserified_tests.js',
-    path: './test/unit/build/'
+  externals: !process.env.BUNDLE && process.env.NODE_ENV !== 'development' ? {
+      classnames: true,
+      flux: true,
+      'json-stable-stringify': true,
+      'keen-analysis': true,
+      'keen-dataviz': true,
+      keymirror: true,
+      lodash: true,
+      moment: true,
+      qs: true,
+      react: true,
+      'react-addons-test-utils': true,
+      'react-dom': true,
+      'react-highlight': true,
+      rquery: true,
+      string: true,
+      jquery: 'jQuery',
+    } : {
+      jquery: 'jQuery',
   },
 
-  module: {
-    loaders: [
-      {
-        test: /picker/,
-        loader: 'imports?define=>false'
-      },
-
-      {
-        test: /\.js$/,
-        loader: 'babel-loader',
-        exclude: /node_modules/,
-        query: {
-          presets: ['latest', 'react'],
-        }
-      },
-
-      {
-        test: /\.less$/,
-        loader: ExtractTextPlugin.extract('style-loader', 'css!less')
-      }
-    ],
-    noParse: [
-      /\/sinon\.js/
-    ]
-  },
-
-  externals: {
-    jquery: 'jQuery',
-  }
-}
-
-module.exports = [
-  devModule,
-  testModule
-];
+};
