@@ -1,79 +1,102 @@
-const assert from 'chai').assert;
-const expect from 'chai').expect;
-const sinon from 'sinon/pkg/sinon.js');
-const moment from 'moment');
-const _ from 'lodash');
-const KeenAnalysis from 'keen-analysis');
-const Qs from 'qs');
-const TestHelpers from '../../support/TestHelpers');
-const AppDispatcher from '../../../lib/js/app/dispatcher/AppDispatcher');
-const ExplorerActions from '../../../lib/js/app/actions/ExplorerActions');
-const AppStateActions from '../../../lib/js/app/actions/AppStateActions');
-const FilterUtils from '../../../lib/js/app/utils/FilterUtils');
-const RunValidations from '../../../lib/js/app/utils/RunValidations');
-const ExplorerValidations from '../../../lib/js/app/validations/ExplorerValidations');
-const ExplorerUtils from '../../../lib/js/app/utils/ExplorerUtils');
-const ChartTypeUtils from '../../../lib/js/app/utils/ChartTypeUtils');
-const ExplorerStore from '../../../lib/js/app/stores/ExplorerStore');
+import moment from 'moment';
+import _ from 'lodash';
+import KeenAnalysis from 'keen-analysis';
+import Qs from 'qs';
+import XHRmock from 'xhr-mock';
+
+import TestHelpers from '../../support/TestHelpers';
+import AppDispatcher from '../../../lib/js/app/dispatcher/AppDispatcher';
+import ExplorerActions from '../../../lib/js/app/actions/ExplorerActions';
+import AppStateActions from '../../../lib/js/app/actions/AppStateActions';
+import FilterUtils from '../../../lib/js/app/utils/FilterUtils';
+import RunValidations from '../../../lib/js/app/utils/RunValidations';
+import ExplorerValidations from '../../../lib/js/app/validations/ExplorerValidations';
+import ExplorerUtils from '../../../lib/js/app/utils/ExplorerUtils';
+import ChartTypeUtils from '../../../lib/js/app/utils/ChartTypeUtils';
+import ExplorerStore from '../../../lib/js/app/stores/ExplorerStore';
 
 describe('actions/ExplorerActions', () => {
-  before(() => {
-    this.dispatchStub = sinon.stub(AppDispatcher, 'dispatch');
+  const analysisClient = new KeenAnalysis(TestHelpers.createClient());
+  const mockDispatch = jest.fn();
+  let getStub;
+  let client;
+  let runQueryStub;
+  let spyDispatch;
+
+  beforeAll(() => {
+    XHRmock.setup();
+    spyDispatch = jest.spyOn(AppDispatcher, 'dispatch');
   });
 
-  after(() => {
-    AppDispatcher.dispatch.restore();
+  afterAll(() => {
+    spyDispatch.mockRestore();
   });
 
   beforeEach(() => {
-    this.dispatchStub.reset();
+//    XHRmock.setup();
+    client = new KeenAnalysis(TestHelpers.createClient());
+    spyDispatch.mockReset();
   });
 
+  afterEach(() => {
+  //  XHRmock.teardown();
+  })
+
   describe('exec', () => {
-    before(() => {
-      this.client = new KeenAnalysis(TestHelpers.createClient());
-      this.getStub = sinon.stub(ExplorerStore, 'get');
-      this.runQueryStub = sinon.stub(ExplorerUtils, 'runQuery');
+    beforeAll(() => {
+      getStub = jest.spyOn(ExplorerStore, 'get');
+      runQueryStub = jest.spyOn(ExplorerUtils, 'runQuery');
     });
 
-    after(() => {
-      ExplorerStore.get.restore();
-      ExplorerUtils.runQuery.restore();
+    afterAll(() => {
+    //  ExplorerStore.get.restore();
+    //  ExplorerUtils.runQuery.restore();
     });
 
     beforeEach(() => {
-      this.runQueryStub.reset();
+      runQueryStub.mockClear();
     });
 
     it('should throw an error if the model is currently loading', () => {
-      var explorer = { id: 5, loading: true };
-      this.getStub.returns(explorer);
-      expect(ExplorerActions.exec.bind(null, this.client, explorer.id)).to.throw("Warning: calling exec when model loading is true. Explorer id: 5");
+      const explorer = { id: 5, loading: true };
+      ExplorerStore.set(explorer);
+      expect(ExplorerActions.exec.bind(null, client, explorer.id)).toThrow("Warning: calling exec when model loading is true. Explorer id: 5");
     });
+
     it('should run the validations with the right arguments', () => {
-      var explorer = TestHelpers.createExplorerModel();
+      const explorer = TestHelpers.createExplorerModel();
       explorer.query.analysis_type = 'count';
-      this.getStub.returns(explorer);
-      var stub = sinon.stub(ExplorerActions, 'validate');
-      ExplorerActions.exec(this.client, explorer.id);
-      assert.isTrue(stub.calledOnce);
-      ExplorerActions.validate.restore();
+      ExplorerStore.set(explorer);
+      const spyValidate = jest.spyOn(ExplorerActions, 'validate');
+      ExplorerActions.exec(client, explorer.id);
+      expect(spyValidate).toHaveBeenCalledTimes(1);
+      spyValidate.mockRestore();
     });
-    it('should call the dispatcher to update the store and set loading to true', () => {
-      var explorer = {
+
+    it('should call the dispatcher to update the store and set loading to true', (done) => {
+      XHRmock.post(
+        new RegExp(analysisClient.url('projectId', 'queries')),
+        (req, res) => {
+          expect(spyDispatch).hasBeenCalledWith({
+            actionType: 'EXPLORER_UPDATE',
+            id: 5,
+            updates: { loading: true }
+          });
+          done();
+          return res.status(200).body('[]');
+        }
+      );
+      const explorer = {
         id: 5,
         loading: false,
         query: {},
         isValid: true
       };
-      this.getStub.returns(explorer);
-      ExplorerActions.exec(this.client, explorer.id);
-      assert.isTrue(this.dispatchStub.calledWith({
-        actionType: 'EXPLORER_UPDATE',
-        id: 5,
-        updates: { loading: true }
-      }));
+      ExplorerStore.set(explorer);
+      ExplorerActions.exec(client, explorer.id);
     });
+/*
+
     it('should add the latest attribute with a limit for extractions', () => {
       var explorer = {
         id: 5,
@@ -85,19 +108,20 @@ describe('actions/ExplorerActions', () => {
         }
       };
       this.getStub.returns(explorer);
-      ExplorerActions.exec(this.client, explorer.id);
+      ExplorerActions.exec(client, explorer.id);
       assert.strictEqual(
         this.runQueryStub.getCall(0).args[0].query.latest,
         100
       );
     });
+    */
   });
-
+/*
   describe('runEmailExtraction', () => {
     beforeEach(() => {
-      this.validateStub = sinon.stub(ExplorerActions, 'validate');
-      this.runQueryStub = sinon.stub(ExplorerUtils, 'runQuery');
-      this.client = { run: sinon.stub() };
+      this.validateStub = jest.spyOn(ExplorerActions, 'validate');
+      this.runQueryStub = jest.spyOn(ExplorerUtils, 'runQuery');
+      client = { run: jest.spyOn() };
       this.explorer = {
         isValid: false,
         errors: [{
@@ -110,7 +134,7 @@ describe('actions/ExplorerActions', () => {
           latest: '100'
         }
       };
-      this.getStub = sinon.stub(ExplorerStore, 'get').returns(this.explorer);
+      this.getStub = jest.spyOn(ExplorerStore, 'get').returns(this.explorer);
     });
 
     afterEach(() => {
@@ -120,12 +144,12 @@ describe('actions/ExplorerActions', () => {
     });
 
     it('should run validations', () => {
-      ExplorerActions.runEmailExtraction(this.client, this.explorer.id);
+      ExplorerActions.runEmailExtraction(client, this.explorer.id);
       assert.isTrue(this.validateStub.calledOnce);
     });
     it('should NOT run the query if validaton fails', () => {
       this.validateStub.returns([{ msg: 'invalid' }]);
-      ExplorerActions.runEmailExtraction(this.client, this.explorer.id);
+      ExplorerActions.runEmailExtraction(client, this.explorer.id);
       assert.isFalse(this.runQueryStub.called);
     });
   });
@@ -199,7 +223,7 @@ describe('actions/ExplorerActions', () => {
       this.persistence = {
         get: getFn.bind(this)
       };
-      this.callback = sinon.stub();
+      this.callback = jest.spyOn();
     });
 
     it('should format the params for each model', () => {
@@ -209,28 +233,28 @@ describe('actions/ExplorerActions', () => {
       ExplorerUtils.formatQueryParams.restore();
     });
     it('should run validations for each model', () => {
-      var stub = sinon.stub(RunValidations, 'run').returns([]);
+      var stub = jest.spyOn(RunValidations, 'run').returns([]);
       ExplorerActions.fetchAllPersisted(this.persistence, this.callback);
       assert.strictEqual(stub.getCalls().length, 3);
       RunValidations.run.restore();
     });
     it('should include invalid models', () => {
       this.models[2].query = {};
-      var stub = sinon.stub(ExplorerActions, 'createBatch');
+      var stub = jest.spyOn(ExplorerActions, 'createBatch');
       ExplorerActions.fetchAllPersisted(this.persistence, this.callback);
       assert.strictEqual(stub.getCall(0).args[0].length, 3);
       ExplorerActions.createBatch.restore();
     });
     it('should log a warning for invalid models', () => {
       this.models[2].query = {};
-      var stub = sinon.stub(window.console, 'warn');
+      var stub = jest.spyOn(window.console, 'warn');
       ExplorerActions.fetchAllPersisted(this.persistence, this.callback);
       assert.strictEqual(stub.getCall(0).args[0], 'A persisted explorer model is invalid: ');
       assert.deepPropertyVal(stub.getCall(0).args[1], 'id', '3');
       window.console.warn.restore();
     });
     it('should call update app state when done and set fetchingPersistedExplorers to false', () => {
-      var stub = sinon.stub(AppStateActions, 'update');
+      var stub = jest.spyOn(AppStateActions, 'update');
       ExplorerActions.fetchAllPersisted(this.persistence, this.callback);
       assert.isTrue(stub.calledWith({ fetchingPersistedExplorers: false }));
       AppStateActions.update.restore();
@@ -275,8 +299,8 @@ describe('actions/ExplorerActions', () => {
         }
       };
       this.response = { result: 100 };
-      sinon.stub(ChartTypeUtils, 'getChartTypeOptions').returns(['metric']);
-      this.responseSupportsChartTypeStub = sinon.stub(ChartTypeUtils, 'responseSupportsChartType').returns(false);
+      jest.spyOn(ChartTypeUtils, 'getChartTypeOptions').returns(['metric']);
+      this.responseSupportsChartTypeStub = jest.spyOn(ChartTypeUtils, 'responseSupportsChartType').returns(false);
     });
     afterEach(() => {
       ChartTypeUtils.getChartTypeOptions.restore();
@@ -332,10 +356,10 @@ describe('actions/ExplorerActions', () => {
   });
 
   describe('async functions', () => {
-    before(() => {
-      this.getStub = sinon.stub(ExplorerStore, 'get')
+    beforeAll(() => {
+      this.getStub = jest.spyOn(ExplorerStore, 'get')
     });
-    after(() => {
+    afterAll(() => {
       ExplorerStore.get.restore();
     });
 
@@ -352,7 +376,7 @@ describe('actions/ExplorerActions', () => {
         this.explorer.query.event_collection = 'clicks';
         this.explorer.query.analysis_type = 'count';
         this.getStub.returns(this.explorer);
-        sinon.stub(ExplorerUtils, 'mergeResponseWithExplorer').returns({ testKey: 'some updates' });
+        jest.spyOn(ExplorerUtils, 'mergeResponseWithExplorer').returns({ testKey: 'some updates' });
       });
 
       afterEach(() => {
@@ -414,7 +438,7 @@ describe('actions/ExplorerActions', () => {
         this.explorer.query.event_collection = 'clicks';
         this.explorer.query.analysis_type = 'count';
         this.getStub.returns(this.explorer);
-        sinon.stub(ExplorerUtils, 'mergeResponseWithExplorer').returns({ testKey: 'some updates' });
+        jest.spyOn(ExplorerUtils, 'mergeResponseWithExplorer').returns({ testKey: 'some updates' });
       });
 
       afterEach(() => {
@@ -453,21 +477,6 @@ describe('actions/ExplorerActions', () => {
       });
     });
 
-    describe('destroy', () => {
-      xit('should dispatch a EXPLORER_DESTROYING message', () => {
-
-      });
-      xit('should dispatch a EXPLORER_DESTROY_FAIL message if destroy call fails', () => {
-
-      });
-      xit('should dispatch a EXPLORER_DESTROY_SUCCESS message if destroy call succeeds', () => {
-
-      });
-      xit('should remove the model if destroy call succeeds', () => {
-
-      });
-    });
-
     describe('clone a saved query', () => {
         it('should dispatch an EXPLORER_CLONE event', () => {
           ExplorerActions.clone('ABC');
@@ -478,4 +487,5 @@ describe('actions/ExplorerActions', () => {
         });
     });
   });
+  */
 });

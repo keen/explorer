@@ -2,9 +2,11 @@
 import React from 'react';
 import XHRmock from 'xhr-mock';
 import KeenAnalysis from 'keen-analysis';
-import KeenExplorer from '../../lib/js/app/app';
+
 import mockQs from 'qs';
 import mock_ from 'lodash';
+
+import KeenExplorer from '../../lib/js/app/app';
 
 jest.mock('../../lib/js/app/utils/QueryStringUtils', () => {
   return {
