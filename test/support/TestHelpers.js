@@ -1,10 +1,9 @@
 var _ = require('lodash');
 var React = require('react');
-var KeenAnalysis = require('keen-analysis');
+import KeenAnalysis from 'keen-analysis';
 var TestUtils = require('react-addons-test-utils');
-var ProjectUtils = require('../../client/js/app/utils/ProjectUtils');
-var FormatUtils = require('../../client/js/app/utils/FormatUtils');
-let sinon = require('sinon/pkg/sinon.js');
+var ProjectUtils = require('../../lib/js/app/utils/ProjectUtils');
+var FormatUtils = require('../../lib/js/app/utils/FormatUtils');
 
 module.exports = {
 

@@ -1,34 +1,92 @@
 
-import KeenExplorer from '../../lib/js/app/app';
-import QueryStringUtils from '../../lib/js/app/utils/QueryStringUtils.js';
 import React from 'react';
-import TestUtils from 'react-addons-test-utils';
-import TestHelpers from '../support/TestHelpers.js';
-import sinon from 'sinon/pkg/sinon.js';
+import XHRmock from 'xhr-mock';
+import KeenAnalysis from 'keen-analysis';
+import KeenExplorer from '../../lib/js/app/app';
+import mockQs from 'qs';
+import mock_ from 'lodash';
+
+jest.mock('../../lib/js/app/utils/QueryStringUtils', () => {
+  return {
+    getSearchString: () => {
+      return;
+    },
+
+    updateSearchString: (queryStringData) => {
+      let urlPath;
+      if (mock_.keys(queryStringData).length) {
+        urlPath = '?' + mockQs.stringify(queryStringData);
+      } else {
+        // urlPath = window.location.origin + window.location.pathname
+      }
+      // window.history.pushState({ model: queryStringData }, "", urlPath);
+    },
+
+    getQueryAttributes: () => {
+      const windowSearchString = '?query%5Bevent_collection%5D=pageviews&query%5Banalysis_type%5D=count&query%5Btimezone%5D=Europe%2FParis&query%5Btimeframe%5D=this_14_days';
+      return mockQs.parse(windowSearchString.replace('?', ''), { depth: 7 });
+    }
+  };
+});
 
 describe('KeenExplorer App', () => {
-  it('runs a query if the querystring has query attrs in it', () => {
-    var queryAttributesStub = sinon.stub(QueryStringUtils, 'getQueryAttributes').returns({
-      query: {
-        event_collection: 'pageview',
-        analysis_type: 'count',
-        time: {
-          relativity: 'this',
-          amount: 14,
-          sub_timeframe: 'days'
-        }
-      }
-    });
-    var xhrOpenStub = sinon.stub(XMLHttpRequest.prototype, 'open');
-    var xhrSendStub = sinon.stub(XMLHttpRequest.prototype, 'send');
+  const mockFn1 = jest.fn();
+  const clientConfig = {
+    projectId: 'proj111',
+    readKey: 'read222',
+    writeKey: 'write444',
+    masterKey: 'master333',
+    protocol: 'https',
+    requestType: 'xhr'
+  };
+  const analysisClient = new KeenAnalysis(clientConfig);
 
-    var clientConfig = TestHelpers.createClient();
-    var app = new KeenExplorer('#explorer').client(clientConfig);
-
-    expect(queryAttributesStub.calledOnce).toBe(true);
-
-    QueryStringUtils.getQueryAttributes.restore();
-    xhrOpenStub.restore();
-    xhrSendStub.restore();
+  beforeEach(() => {
+    XHRmock.setup();
+    document.body.innerHTML = '<div id="explorer"></div>';
   });
+
+  afterEach(() => {
+    XHRmock.teardown();
+  });
+
+  it('runs a query to detect project resources', (done) => {
+    XHRmock.get(
+      new RegExp(analysisClient.url('projectId')),
+      (req, res) => {
+        expect(req.header('Content-Type')).toEqual('application/json');
+        expect(req.header('Authorization')).toEqual(clientConfig.masterKey);
+        done();
+        return res.status(200).body('{}');
+      }
+    );
+
+    const explorerApp = new KeenExplorer('#explorer').client(clientConfig);
+  });
+
+  it('runs a query if the querystring has query attrs in it', (done) => {
+    XHRmock.get(
+      new RegExp(analysisClient.url('projectId')),
+      (req, res) => {
+        return res.status(200).body(JSON.stringify([]));
+      }
+    );
+
+    XHRmock.post(
+      new RegExp(analysisClient.url('projectId', 'queries')),
+      (req, res) => {
+        expect(req.header('Content-Type')).toEqual('application/json');
+        expect(req.header('Authorization')).toEqual(clientConfig.readKey);
+        done();
+        return res.status(200).body('[]');
+      }
+    );
+
+    const explorerApp = new KeenExplorer('#explorer')
+      .client(clientConfig)
+      .persistence(true)
+      .fetch();
+
+  });
+
 });
