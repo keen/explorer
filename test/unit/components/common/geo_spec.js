@@ -1,23 +1,24 @@
 
-let sinon from 'sinon/pkg/sinon.js');
-var _ from 'lodash');
+import _ from 'lodash';
 import React from 'react';
-var TestUtils from 'react-addons-test-utils');
-var Geo from '../../../../lib/js/app/components/common/geo.js');
-var TestHelpers from '../../../support/TestHelpers');
+import TestUtils from 'react-addons-test-utils';
+import Geo from '../../../../lib/js/app/components/common/geo.js';
+import TestHelpers from '../../../support/TestHelpers';
 
 describe('components/common/geo', () => {
-  before(() => {
-    this.filter = TestHelpers.createFilters().geo;
-    this.component = TestUtils.renderIntoDocument(<Geo filter={this.filter} handleGeoSelection={sinon.stub} />);
+  let filter;
+  let component;
+  beforeAll(() => {
+    filter = TestHelpers.createFilters().geo;
+    component = TestUtils.renderIntoDocument(<Geo filter={filter} handleGeoSelection={jest.fn()} />);
   });
 
   describe('setup', () => {
     it('is of the right type', () => {
-      assert.isTrue(TestUtils.isCompositeComponentWithType(this.component, Geo));
+      expect(TestUtils.isCompositeComponentWithType(component, Geo)).toBe(true);
     });
   });
   it('has three inputs', () => {
-    assert.lengthOf(TestUtils.scryRenderedDOMComponentsWithTag(this.component, 'input'), 3);
+    expect(TestUtils.scryRenderedDOMComponentsWithTag(component, 'input')).toHaveLength(3);
   });
 });
