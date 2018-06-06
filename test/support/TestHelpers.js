@@ -118,7 +118,64 @@ module.exports = {
         url: 'https://api.keen.io/3.0/projects/projectId/',
         loading: false,
         recentEvents: null
-      }
+      },
+      'test/test': {
+        name: 'test/test',
+        properties: {
+          'stringProp': 'string',
+          'datetimeProp': 'datetime',
+          'numProp': 'num',
+          'nullProp': 'null',
+          'boolProp': 'bool',
+          'listProp': 'list',
+          'geoProp': 'geo'
+        },
+        url: 'https://api.keen.io/3.0/projects/projectId/',
+        loading: false,
+        recentEvents: null
+      },
+      'test test': {
+        name: 'test test',
+        properties: {
+          'stringProp': 'string',
+          'datetimeProp': 'datetime',
+          'numProp': 'num',
+          'nullProp': 'null',
+          'boolProp': 'bool',
+          'listProp': 'list',
+          'geoProp': 'geo'
+        },
+        url: 'https://api.keen.io/3.0/projects/projectId/',
+        loading: false,
+        recentEvents: null
+      },
+      'test#test': {
+        name: 'test#test',
+        properties: {
+          'stringProp': 'string',
+        },
+        url: 'https://api.keen.io/3.0/projects/projectId/',
+        loading: false,
+        recentEvents: null
+      },
+      'test?test': {
+        name: 'test?test',
+        properties: {
+          'stringProp': 'string',
+        },
+      },
+      'test:test': {
+        name: 'test:test',
+        properties: {
+          'stringProp': 'string',
+        },
+      },
+      'test&test': {
+        name: 'test&test',
+        properties: {
+          'stringProp': 'string',
+        },
+      },
     };
   },
 
@@ -128,8 +185,9 @@ module.exports = {
       client: new KeenAnalysis({
         projectId: 'projectId',
         protocol: 'https',
-        host: 'api.keen.io/3.0',
-        masterKey: 'masterKey'
+        host: 'api.keen.io',
+        masterKey: 'masterKey',
+        apiVersion: '3.0'
       }),
       loading: false,
       eventCollections: FormatUtils.sortItems(_.map(schema, 'name')),
