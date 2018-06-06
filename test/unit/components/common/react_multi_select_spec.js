@@ -1,42 +1,45 @@
-const assert from 'chai').assert;
-const sinon from 'sinon/pkg/sinon.js');
-const React from 'react');
-const ReactDOM from 'react-dom');
-const $R from 'rquery')(_, React, ReactDOM, TestUtils);
-const TestUtils from 'react-addons-test-utils');
-
-const ReactMultiSelect from '../../../../lib/js/app/components/common/react_multi_select.js');
-const TestHelpers from '../../../support/TestHelpers');
+import  _ from 'lodash';
+import ProjectUtils from '../../../../lib/js/app/utils/ProjectUtils.js';
+import ReactSelect from '../../../../lib/js/app/components/common/react_select.js';
+import ReactMultiSelect from '../../../../lib/js/app/components/common/react_multi_select.js';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import TestUtils from 'react-addons-test-utils';
+import TestHelpers from '../../../support/TestHelpers';
+import rquery from 'rquery';
+const $R = rquery(_, React, ReactDOM, TestUtils);
 
 describe('components/common/react_multi_select', () => {
-  before(() => {
-    this.handleChangeStub = sinon.stub();
+  let handleChangeStub;
+  let component;
+  beforeAll(() => {
+    handleChangeStub = jest.fn();
     const props = {
       name: 'filter-properties',
       model: TestHelpers.createExplorerModel(),
       label: "Filter extraction properties",
-      handleChange: this.handleChangeStub,
+      handleChange: handleChangeStub,
       items: ['name', 'email', 'user.id']
     }
 
-    this.component = TestUtils.renderIntoDocument(<ReactMultiSelect {...props} />);
+    component = TestUtils.renderIntoDocument(<ReactMultiSelect {...props} />);
   });
 
   it('is of right type', () => {
-    assert.isTrue(TestUtils.isCompositeComponentWithType(this.component, ReactMultiSelect));
+    expect(TestUtils.isCompositeComponentWithType(component, ReactMultiSelect)).toBe(true);
   });
 
   it('displays correct number of options', () => {
-    const options = ReactDOM.findDOMNode(this.component.refs.menu).childNodes;
+    const options = ReactDOM.findDOMNode(component.refs.menu).childNodes;
 
-    assert.equal(options.length, 3);
+    expect(options.length).toBe(3);
   });
 
   it('calls handleChange function when selection is made', () => {
-    const options = ReactDOM.findDOMNode(this.component.refs.menu).childNodes;
+    const options = ReactDOM.findDOMNode(component.refs.menu).childNodes;
     TestUtils.Simulate.click(options[0]);
 
-    assert.isTrue(this.handleChangeStub.called);
+    expect(handleChangeStub).toHaveBeenCalled();
   });
 
 });
