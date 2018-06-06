@@ -1,23 +1,30 @@
 
-var _ from 'lodash');
-let sinon from 'sinon/pkg/sinon.js');
-var ProjectUtils from '../../../../lib/js/app/utils/ProjectUtils.js');
-var Filter from '../../../../lib/js/app/components/common/filter.js');
-var Geo from '../../../../lib/js/app/components/common/geo.js');
-var Select from '../../../../lib/js/app/components/common/select.js');
-var ReactSelect from '../../../../lib/js/app/components/common/react_select.js');
+import  _ from 'lodash';
+import ProjectUtils from '../../../../lib/js/app/utils/ProjectUtils.js';
+import Filter from '../../../../lib/js/app/components/common/filter.js';
+import Geo from '../../../../lib/js/app/components/common/geo.js';
+import Select from '../../../../lib/js/app/components/common/select.js';
+import ReactSelect from '../../../../lib/js/app/components/common/react_select.js';
 import React from 'react';
-var ReactDOM from 'react-dom');
-var TestUtils from 'react-addons-test-utils');
-var TestHelpers from '../../../support/TestHelpers');
-var $R from 'rquery')(_, React, ReactDOM, TestUtils);
+import ReactDOM from 'react-dom';
+import TestUtils from 'react-addons-test-utils';
+import TestHelpers from '../../../support/TestHelpers';
+import rquery from 'rquery';
+const $R = rquery(_, React, ReactDOM, TestUtils);
 
 describe('components/common/filter', () => {
-  beforeEach(() => {
-    this.handleChangeStub = sinon.stub();
-    this.removeFilterStub = sinon.stub();
+  let handleChangeStub;
+  let removeFilterStub;
+  let defaultProps;
+  let renderComponent;
+  let getSelectOptions;
+  let component;
 
-    this.defaultProps = {
+  beforeEach(() => {
+    handleChangeStub = jest.fn();
+    removeFilterStub = jest.fn();
+
+    defaultProps = {
       key: 0,
       index: 0,
       filter: {
@@ -34,23 +41,22 @@ describe('components/common/filter', () => {
         'one',
         'two'
       ],
-      handleChange: this.handleChangeStub,
-      removeFilter: this.removeFilterStub,
+      handleChange: handleChangeStub,
+      removeFilter: removeFilterStub,
       filterOperators: ProjectUtils.getConstant('FILTER_OPERATORS')
     };
 
-    this.renderComponent = function(props) {
-      var props = _.assign({}, this.defaultProps, props);
-      return TestUtils.renderIntoDocument(<Filter {...props} />);
+    renderComponent = (props) => {
+      const propsExtended = _.assign({}, defaultProps, props);
+      return TestUtils.renderIntoDocument(<Filter {...propsExtended} />);
     }
 
-    this.component = this.renderComponent();
+    component = renderComponent();
 
     // TODO: Remove
-    this.getSelectOptions = function(selectClass, activeOnly) {
-      activeOnly = activeOnly || false;
-      var operatorSelect = TestUtils.findRenderedDOMComponentWithClass(this.component, selectClass).childNodes[0];
-      var operators = _.map(operatorSelect.childNodes[0].childNodes, function(node){
+    getSelectOptions = (selectClass, activeOnly = false) => {
+      const operatorSelect = TestUtils.findRenderedDOMComponentWithClass(component, selectClass).childNodes[0];
+      const operators = _.map(operatorSelect.childNodes[0].childNodes, function(node){
         if (!activeOnly) {
           return node.value;
         } else if (activeOnly && !node.disabled) {
@@ -63,26 +69,26 @@ describe('components/common/filter', () => {
 
   describe('setup', () => {
     it('is of the right type', () => {
-      assert.isTrue(TestUtils.isCompositeComponentWithType(this.component, Filter));
+      expect(TestUtils.isCompositeComponentWithType(component, Filter)).toBe(true);
     });
 
     describe('has the right empty form fields by default', () => {
       it ('has the right number of typeaheads', () => {
-        assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, ReactSelect), 1);
+        expect(TestUtils.scryRenderedComponentsWithType(component, ReactSelect).length).toBe(1);
       });
 
       it ('has the right number of inputs', () => {
-        assert.lengthOf(TestUtils.scryRenderedDOMComponentsWithClass(this.component, 'property-value'), 1);
+        expect(TestUtils.scryRenderedDOMComponentsWithClass(component, 'property-value').length).toBe(1);
       });
 
       it ('has the right number of selects', () => {
-        assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, Select), 2);
+        expect(TestUtils.scryRenderedComponentsWithType(component, Select).length).toBe(2);
       });
     });
   });
 
   it('only shows "Boolean" coercion type when the operator is "exists"', () => {
-    var props = {
+    const props = {
       filter: {
         property_name: 'name',
         operator: 'exists',
@@ -92,13 +98,16 @@ describe('components/common/filter', () => {
         errors: []
       }
     };
-    this.component = this.renderComponent(props);
-    var selectNode = $R(this.component).find('select').components[1];
-    var options = _.map(selectNode.childNodes, function(node) {
+    component = renderComponent(props);
+    const selectNode = $R(component).find('select').components[1];
+    let options = _.map(selectNode.childNodes, function(node) {
       return node.value;
     });
     options = _.compact(options);
 
-    assert.sameMembers(options, ['Boolean']);
+    options.forEach(option => {
+      expect(option).toBe('Boolean');
+    });
+
   });
 });
