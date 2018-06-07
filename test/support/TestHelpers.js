@@ -5,6 +5,83 @@ import TestUtils from 'react-addons-test-utils';
 import ProjectUtils from '../../lib/js/app/utils/ProjectUtils';
 import FormatUtils from '../../lib/js/app/utils/FormatUtils';
 
+const buildProjectSchema = () => {
+  return {
+    'click': {
+      name: 'click',
+      properties: {
+        'stringProp': 'string',
+        'datetimeProp': 'datetime',
+        'numProp': 'num',
+        'nullProp': 'null',
+        'boolProp': 'bool',
+        'listProp': 'list',
+        'geoProp': 'geo'
+      },
+      url: 'https://api.keen.io/3.0/projects/projectId/',
+      loading: false,
+      recentEvents: null
+    },
+    'test/test': {
+      name: 'test/test',
+      properties: {
+        'stringProp': 'string',
+        'datetimeProp': 'datetime',
+        'numProp': 'num',
+        'nullProp': 'null',
+        'boolProp': 'bool',
+        'listProp': 'list',
+        'geoProp': 'geo'
+      },
+      url: 'https://api.keen.io/3.0/projects/projectId/',
+      loading: false,
+      recentEvents: null
+    },
+    'test test': {
+      name: 'test test',
+      properties: {
+        'stringProp': 'string',
+        'datetimeProp': 'datetime',
+        'numProp': 'num',
+        'nullProp': 'null',
+        'boolProp': 'bool',
+        'listProp': 'list',
+        'geoProp': 'geo'
+      },
+      url: 'https://api.keen.io/3.0/projects/projectId/',
+      loading: false,
+      recentEvents: null
+    },
+    'test#test': {
+      name: 'test#test',
+      properties: {
+        'stringProp': 'string',
+      },
+      url: 'https://api.keen.io/3.0/projects/projectId/',
+      loading: false,
+      recentEvents: null
+    },
+    'test?test': {
+      name: 'test?test',
+      properties: {
+        'stringProp': 'string',
+      },
+    },
+    'test:test': {
+      name: 'test:test',
+      properties: {
+        'stringProp': 'string',
+      },
+    },
+    'test&test': {
+      name: 'test&test',
+      properties: {
+        'stringProp': 'string',
+      },
+    },
+  };
+};
+
 module.exports = {
 
   renderComponent: (componentClass, props) => {
@@ -102,85 +179,10 @@ module.exports = {
     };
   },
 
-  buildProjectSchema: () => {
-    return {
-      'click': {
-        name: 'click',
-        properties: {
-          'stringProp': 'string',
-          'datetimeProp': 'datetime',
-          'numProp': 'num',
-          'nullProp': 'null',
-          'boolProp': 'bool',
-          'listProp': 'list',
-          'geoProp': 'geo'
-        },
-        url: 'https://api.keen.io/3.0/projects/projectId/',
-        loading: false,
-        recentEvents: null
-      },
-      'test/test': {
-        name: 'test/test',
-        properties: {
-          'stringProp': 'string',
-          'datetimeProp': 'datetime',
-          'numProp': 'num',
-          'nullProp': 'null',
-          'boolProp': 'bool',
-          'listProp': 'list',
-          'geoProp': 'geo'
-        },
-        url: 'https://api.keen.io/3.0/projects/projectId/',
-        loading: false,
-        recentEvents: null
-      },
-      'test test': {
-        name: 'test test',
-        properties: {
-          'stringProp': 'string',
-          'datetimeProp': 'datetime',
-          'numProp': 'num',
-          'nullProp': 'null',
-          'boolProp': 'bool',
-          'listProp': 'list',
-          'geoProp': 'geo'
-        },
-        url: 'https://api.keen.io/3.0/projects/projectId/',
-        loading: false,
-        recentEvents: null
-      },
-      'test#test': {
-        name: 'test#test',
-        properties: {
-          'stringProp': 'string',
-        },
-        url: 'https://api.keen.io/3.0/projects/projectId/',
-        loading: false,
-        recentEvents: null
-      },
-      'test?test': {
-        name: 'test?test',
-        properties: {
-          'stringProp': 'string',
-        },
-      },
-      'test:test': {
-        name: 'test:test',
-        properties: {
-          'stringProp': 'string',
-        },
-      },
-      'test&test': {
-        name: 'test&test',
-        properties: {
-          'stringProp': 'string',
-        },
-      },
-    };
-  },
+  buildProjectSchema,
 
   createProject: () => {
-    const schema = this.buildProjectSchema();
+    const schema = buildProjectSchema();
     return {
       client: new KeenAnalysis({
         projectId: 'projectId',

@@ -23,6 +23,7 @@ describe('components/explorer/visualization/index', () => {
   let client;
   let model;
   let project;
+  let datavizStub;
   let chartOptionsStub;
   let exportToCsvStub;
   let renderComponent;
@@ -34,7 +35,7 @@ describe('components/explorer/visualization/index', () => {
     model = TestHelpers.createExplorerModel();
     model.id = 10;
     project = TestHelpers.createProject();
-    const datavizStub = jest.spyOn(KeenDataviz, 'Dataviz').mockImplementation(()=>{}).mockReturnValue(TestHelpers.createDataviz());
+    datavizStub = jest.spyOn(KeenDataviz, 'Dataviz').mockImplementation(()=>{}).mockReturnValue(TestHelpers.createDataviz());
     chartOptionsStub = jest.spyOn(ChartTypeUtils, 'getChartTypeOptions').mockImplementation(()=>{}).mockReturnValue([]);
     exportToCsvStub = jest.spyOn(DataUtils, 'exportToCsv').mockImplementation(()=>{}).mockReturnValue([]);
 
@@ -62,9 +63,9 @@ describe('components/explorer/visualization/index', () => {
   });
 
   afterEach(() => {
-    Keen.Dataviz.restore();
-    ChartTypeUtils.getChartTypeOptions.restore();
-    DataUtils.exportToCsv.restore();
+    datavizStub.mockRestore();
+    chartOptionsStub.mockRestore();
+    exportToCsvStub.mockRestore();
   });
 
   describe('setup', () => {
