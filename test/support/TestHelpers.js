@@ -1,18 +1,18 @@
-var _ = require('lodash');
-var React = require('react');
+import _ from 'lodash';
+import React from 'react';
 import KeenAnalysis from 'keen-analysis';
-var TestUtils = require('react-addons-test-utils');
-var ProjectUtils = require('../../lib/js/app/utils/ProjectUtils');
-var FormatUtils = require('../../lib/js/app/utils/FormatUtils');
+import TestUtils from 'react-addons-test-utils';
+import ProjectUtils from '../../lib/js/app/utils/ProjectUtils';
+import FormatUtils from '../../lib/js/app/utils/FormatUtils';
 
 module.exports = {
 
-  renderComponent: function(componentClass, props) {
-    var Component = React.createFactory(componentClass);
+  renderComponent: (componentClass, props) => {
+    const Component = React.createFactory(componentClass);
     return TestUtils.renderIntoDocument(Component(props));
   },
 
-  createClient: function() {
+  createClient: () => {
     return {
       projectId: 'projectId',
       protocol: 'https',
@@ -24,13 +24,13 @@ module.exports = {
     };
   },
 
-  fakeEvent: function(){
+  fakeEvent: () => {
     return {
-      preventDefault: function(){}
+      preventDefault: () => {}
     }
   },
 
-  createExplorerModel: function() {
+  createExplorerModel: () => {
     return {
       id: 'some_id',
       active: false,
@@ -71,7 +71,7 @@ module.exports = {
     };
   },
 
-  createFilter: function() {
+  createFilter: () => {
     return {
       property_name: null,
       property_value: null,
@@ -82,7 +82,7 @@ module.exports = {
     };
   },
 
-  createStep: function() {
+  createStep: () => {
     return {
       event_collection: null,
       actor_property: null,
@@ -102,7 +102,7 @@ module.exports = {
     };
   },
 
-  buildProjectSchema: function() {
+  buildProjectSchema: () => {
     return {
       'click': {
         name: 'click',
@@ -179,8 +179,8 @@ module.exports = {
     };
   },
 
-  createProject: function() {
-    var schema = this.buildProjectSchema();
+  createProject: () => {
+    const schema = this.buildProjectSchema();
     return {
       client: new KeenAnalysis({
         projectId: 'projectId',
@@ -195,7 +195,7 @@ module.exports = {
     };
   },
 
-  createDataviz: function() {
+  createDataviz: () => {
     return {
       chartType: function(){ return this; },
       data: 		 function(){ return this; },
@@ -213,15 +213,15 @@ module.exports = {
     };
   },
 
-  createFilters: function() {
-    var standardFilter = {
+  createFilters: () => {
+    const standardFilter = {
       property_name: 'propOne',
       operator: 'eq',
       property_value: 'abc',
       coercion_type: 'String',
     };
 
-    var geoFilter = {
+    const geoFilter = {
       property_name: 'keen.location.coordinates',
       operator: 'within',
       property_value: {
@@ -231,7 +231,7 @@ module.exports = {
       coercion_type: 'Geo'
     };
 
-    var listFilter = {
+    const listFilter = {
       property_name: 'propOne',
       operator: 'in',
       property_value: ["one", "two"],
