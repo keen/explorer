@@ -1,41 +1,49 @@
 
-var _ from 'lodash');
+import _ from 'lodash';
 import React from 'react';
-var ReactDOM from 'react-dom');
-var TestUtils from 'react-addons-test-utils');
-var TestHelpers from '../../../support/TestHelpers.js');
-let sinon from 'sinon/pkg/sinon.js');
-var KeenAnalysis from 'keen-analysis');
-var Explorer from '../../../../lib/js/app/components/explorer/index.js');
-var Visualization from '../../../../lib/js/app/components/explorer/visualization/index.js');
-var QueryBuilder from '../../../../lib/js/app/components/explorer/query_builder/index.js');
-var QueryPaneTabs from '../../../../lib/js/app/components/explorer/query_pane_tabs.js');
-var BrowseQueries from '../../../../lib/js/app/components/explorer/saved_queries/browse_queries.js');
-var Notice from '../../../../lib/js/app/components/common/notice.js');
-var EventBrowser from '../../../../lib/js/app/components/common/event_browser.js');
-var CacheToggle from '../../../../lib/js/app/components/explorer/cache_toggle.js');
-var Persistence from '../../../../lib/js/app/modules/persistence/persistence.js');
-var ExplorerStore from '../../../../lib/js/app/stores/ExplorerStore');
-var NoticeStore from '../../../../lib/js/app/stores/NoticeStore');
-var AppStateStore from '../../../../lib/js/app/stores/AppStateStore');
-var ExplorerActions from '../../../../lib/js/app/actions/ExplorerActions');
-var RunValidations from '../../../../lib/js/app/utils/RunValidations');
-var NoticeActions from '../../../../lib/js/app/actions/NoticeActions');
-var ExplorerUtils from '../../../../lib/js/app/utils/ExplorerUtils');
-var Modal from '../../../../lib/js/app/components/common/modal.js');
+import ReactDOM from 'react-dom';
+import TestUtils from 'react-addons-test-utils';
+import TestHelpers from '../../../support/TestHelpers.js';
+import KeenAnalysis from 'keen-analysis';
+import Explorer from '../../../../lib/js/app/components/explorer/index.js';
+import Visualization from '../../../../lib/js/app/components/explorer/visualization/index.js';
+import QueryBuilder from '../../../../lib/js/app/components/explorer/query_builder/index.js';
+import QueryPaneTabs from '../../../../lib/js/app/components/explorer/query_pane_tabs.js';
+import BrowseQueries from '../../../../lib/js/app/components/explorer/saved_queries/browse_queries.js';
+import Notice from '../../../../lib/js/app/components/common/notice.js';
+import EventBrowser from '../../../../lib/js/app/components/common/event_browser.js';
+import CacheToggle from '../../../../lib/js/app/components/explorer/cache_toggle.js';
+import Persistence from '../../../../lib/js/app/modules/persistence/persistence.js';
+import ExplorerStore from '../../../../lib/js/app/stores/ExplorerStore';
+import NoticeStore from '../../../../lib/js/app/stores/NoticeStore';
+import AppStateStore from '../../../../lib/js/app/stores/AppStateStore';
+import ExplorerActions from '../../../../lib/js/app/actions/ExplorerActions';
+import RunValidations from '../../../../lib/js/app/utils/RunValidations';
+import NoticeActions from '../../../../lib/js/app/actions/NoticeActions';
+import ExplorerUtils from '../../../../lib/js/app/utils/ExplorerUtils';
+import Modal from '../../../../lib/js/app/components/common/modal.js';
 
 describe('components/explorer/index', () => {
+  let ExplorerStoreSpy;
+  let NoticeStoreSpy;
+  let AppStateStoreSpy;
+  let project;
+  let config;
+  let explorer;
+  let component;
+  let client;
+  let persistence;
 
-  before(() => {
-    sinon.stub(ExplorerStore, 'addChangeListener');
-    sinon.stub(NoticeStore, 'addChangeListener');
-    sinon.stub(AppStateStore, 'addChangeListener');
+  beforeAll(() => {
+    ExplorerStoreSpy = jest.spyOn(ExplorerStore, 'addChangeListener').mockImplementation(()=>{});
+    NoticeStoreSpy = jest.spyOn(NoticeStore, 'addChangeListener').mockImplementation(()=>{});
+    AppStateStoreSpy = jest.spyOn(AppStateStore, 'addChangeListener').mockImplementation(()=>{});
   });
 
-  after(() => {
-    ExplorerStore.addChangeListener.restore();
-    NoticeStore.addChangeListener.restore();
-    AppStateStore.addChangeListener.restore();
+  afterAll(() => {
+    ExplorerStoreSpy.mockRestore();
+    NoticeStoreSpy.mockRestore();
+    AppStateStoreSpy.mockRestore();
   });
 
   beforeEach(() => {
@@ -43,102 +51,102 @@ describe('components/explorer/index', () => {
     ExplorerActions.create({ id: '1', query_name: 'A persisted query', metadata: { display_name: 'some name' } });
     ExplorerActions.setActive('1');
 
-    this.project = TestHelpers.createProject();
-    this.project.client = this.client = new KeenAnalysis(TestHelpers.createClient());
-    this.project.client.resources({
+    project = TestHelpers.createProject();
+    project.client = client = new KeenAnalysis(TestHelpers.createClient());
+    project.client.resources({
       'events': '{protocol}://{host}/3.0/projects/{projectId}/events'
     });
 
-    this.config = { persistence: null };
-    this.explorer = ExplorerStore.get('1');
-    this.component = TestUtils.renderIntoDocument(<Explorer client={this.client} project={this.project} persistence={null} />);
+    config = { persistence: null };
+    explorer = ExplorerStore.get('1');
+    component = TestUtils.renderIntoDocument(<Explorer client={client} project={project} persistence={null} />);
   });
 
   describe('setup', () => {
 
     it('is of the right type', () => {
-      assert.isTrue(TestUtils.isCompositeComponentWithType(this.component, Explorer));
+      expect(TestUtils.isCompositeComponentWithType(component, Explorer)).toBe(true);
     });
 
     it('has a single Visualization child component', () => {
-      assert.isNotNull(TestUtils.findRenderedComponentWithType(this.component, Visualization));
+      expect(TestUtils.findRenderedComponentWithType(component, Visualization)).not.toBe(null);
     });
 
     it('has a single QueryBuilder child component', () => {
-      assert.isNotNull(TestUtils.findRenderedComponentWithType(this.component, QueryBuilder));
+      expect(TestUtils.findRenderedComponentWithType(component, QueryBuilder)).not.toBe(null);
     });
 
     it('has a single EventBrowser child component', () => {
-      assert.isNotNull(TestUtils.findRenderedComponentWithType(this.component, EventBrowser));
+      expect(TestUtils.findRenderedComponentWithType(component, EventBrowser)).not.toBe(null);
     });
 
     it('has the right number of Modal child components', () => {
-      assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, Modal), 2);
+      expect(TestUtils.scryRenderedComponentsWithType(component, Modal)).toHaveLength(2);
     });
 
     describe('persistence', () => {
 
       describe('with persistence', () => {
         beforeEach(() => {
-          this.persistence = { get: sinon.stub() };
-          this.component = TestUtils.renderIntoDocument(<Explorer persistence={this.persistence} client={this.client} project={this.project} config={this.config} />);
+          persistence = { get: jest.fn() };
+          component = TestUtils.renderIntoDocument(<Explorer persistence={persistence} client={client} project={project} config={config} />);
         });
 
         it('has the QueryPaneTabs if persistence has been passed in', () => {
-          assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, QueryPaneTabs), 1);
+          expect(TestUtils.scryRenderedComponentsWithType(component, QueryPaneTabs)).toHaveLength(1);
         });
 
         it('has the QueryBuilder component if persistence has not been passed in', () => {
-          assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, QueryBuilder), 1);
+          expect(TestUtils.scryRenderedComponentsWithType(component, QueryBuilder)).toHaveLength(1);
         });
 
         it('can show BrowseQueries if persistence has been passed in', () => {
-          TestUtils.Simulate.click(this.component.refs['query-pane-tabs'].refs['browse-tab']);
-          assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, BrowseQueries), 1);
+          TestUtils.Simulate.click(component.refs['query-pane-tabs'].refs['browse-tab']);
+          expect(TestUtils.scryRenderedComponentsWithType(component, BrowseQueries)).toHaveLength(1);
         });
 
         it('has the right number of Modal child components', () => {
-          assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, Modal), 2);
+          expect(TestUtils.scryRenderedComponentsWithType(component, Modal)).toHaveLength(2);
         });
 
         describe('New query button', () => {
           it('has the "create new query" button if the currently active explorer is persisted', () => {
-            this.explorer.id = 'abc-123';
-            this.component.forceUpdate();
-            assert.isDefined(this.component.refs['query-pane-tabs'].refs['new-query']);
+            explorer.id = 'abc-123';
+            component.forceUpdate();
+            expect(component.refs['query-pane-tabs'].refs['new-query']).not.toBe(undefined);
           });
 
           it('does not have the "create new query" button if the currently active explorer is persisted', () => {
-            this.explorer.id = 'TEMP-';
-            this.component.forceUpdate();
-            assert.isUndefined(this.component.refs['query-pane-tabs'].refs['new-query']);
+            explorer.id = 'TEMP-';
+            component.forceUpdate();
+            expect(component.refs['query-pane-tabs'].refs['new-query']).toBe(undefined);
           });
         });
 
         it('has the cache toggle if the analysis_type is not extraction', () => {
-          this.explorer.query.analysis_type = 'count';
-          this.component.forceUpdate();
-          assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, CacheToggle), 1);
+          explorer.query.analysis_type = 'count';
+          component.forceUpdate();
+          expect(TestUtils.scryRenderedComponentsWithType(component, CacheToggle)).toHaveLength(1);
         });
 
         it('does not have the cache toggle if the analysis_type is extraction', () => {
-          this.explorer.query.analysis_type = 'extraction';
-          this.component.forceUpdate();
-          assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, CacheToggle), 0);
+          explorer.query.analysis_type = 'extraction';
+          component.forceUpdate();
+          expect(TestUtils.scryRenderedComponentsWithType(component, CacheToggle)).toHaveLength(0);
         });
       });
 
       describe('without persistence', () => {
         beforeEach(() => {
-          this.component = TestUtils.renderIntoDocument(<Explorer persistence={null} client={this.client} project={this.project} config={this.config} />);
+          component = TestUtils.renderIntoDocument(<Explorer persistence={null} client={client} project={project} config={config} />);
         });
 
         it('does not have the QueryPaneTabs if persistence has not been passed in', () => {
-          assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, QueryPaneTabs), 0);
+          expect(TestUtils.scryRenderedComponentsWithType(component, QueryPaneTabs)).toHaveLength(0);
         });
 
         it('does not have the BrowseQueries if persistence has not been passed in', () => {
-          assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, BrowseQueries), 0);
+          expect(TestUtils.scryRenderedComponentsWithType(component, BrowseQueries)).toHaveLength(0);
         });
       });
 
@@ -149,31 +157,31 @@ describe('components/explorer/index', () => {
 
     describe('tabbing between panes', () => {
       it('properly tabs from the query builder to browsing favorites', () => {
-        var props = _.assign({}, this.component.props, { persistence: {} });
-        this.component = TestHelpers.renderComponent(Explorer, props);
+        const props = _.assign({}, component.props, { persistence: {} });
+        component = TestHelpers.renderComponent(Explorer, props);
 
-        TestUtils.Simulate.click(this.component.refs['query-pane-tabs'].refs['browse-tab']);
+        TestUtils.Simulate.click(component.refs['query-pane-tabs'].refs['browse-tab']);
 
-        assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, BrowseQueries), 1);
-        assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, QueryBuilder), 0);
+        expect(TestUtils.scryRenderedComponentsWithType(component, BrowseQueries)).toHaveLength(1);
+        expect(TestUtils.scryRenderedComponentsWithType(component, QueryBuilder)).toHaveLength(0);
       });
 
       it('properly tabs from the query builder to browsing favorites', () => {
-        var props = _.assign({}, this.component.props, { persistence: {} });
-        this.component.setState({ activeQueryPane: 'browse' });
-        this.component = TestHelpers.renderComponent(Explorer, props);
+        const props = _.assign({}, component.props, { persistence: {} });
+        component.setState({ activeQueryPane: 'browse' });
+        component = TestHelpers.renderComponent(Explorer, props);
 
-        TestUtils.Simulate.click(this.component.refs['query-pane-tabs'].refs['build-tab']);
+        TestUtils.Simulate.click(component.refs['query-pane-tabs'].refs['build-tab']);
 
-        assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, QueryBuilder), 1);
-        assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, BrowseQueries), 0);
+        expect(TestUtils.scryRenderedComponentsWithType(component, QueryBuilder)).toHaveLength(1);
+        expect(TestUtils.scryRenderedComponentsWithType(component, BrowseQueries)).toHaveLength(0);
       });
     });
 
     it('can launch the filter modal', () => {
-      var filtersFieldsToggleNode = this.component.refs['query-builder'].refs['filters-fields-toggle'].refs['toggle-label'];
+      const filtersFieldsToggleNode = component.refs['query-builder'].refs['filters-fields-toggle'].refs['toggle-label'];
       TestUtils.Simulate.click(filtersFieldsToggleNode);
-      assert.match(ReactDOM.findDOMNode(this.component.refs['filter-manager'].refs.modal).className, /block/);
+      expect(ReactDOM.findDOMNode(component.refs['filter-manager'].refs.modal).className).toContain('block');
     });
 
   });
@@ -181,41 +189,41 @@ describe('components/explorer/index', () => {
   describe('Persisting', () => {
 
     beforeEach(() => {
-      this.persistence = {
+      persistence = {
         create: () => {}
       };
-      this.component = TestUtils.renderIntoDocument(<Explorer client={this.client}
+      component = TestUtils.renderIntoDocument(<Explorer client={client}
                                                               config={{}}
-                                                              project={this.project}
-                                                              persistence={this.persistence} />);
+                                                              project={project}
+                                                              persistence={persistence} />);
     });
 
     describe('saveQueryClick', () => {
       it('should call ExplorerActions.save', () => {
-        var saveStub = sinon.stub(ExplorerActions, 'save');
-        sinon.stub(RunValidations, 'run').returns([]);
+        const saveStub = jest.spyOn(ExplorerActions, 'save').mockImplementation(()=>{});
+        const runValidationsStub = jest.spyOn(RunValidations, 'run').mockImplementation(()=>{}).mockReturnValue([]);
 
-        this.explorer.id = 'TEMP-ABC';
-        this.component.forceUpdate();
+        explorer.id = 'TEMP-ABC';
+        component.forceUpdate();
 
-        this.component.saveQueryClick(TestHelpers.fakeEvent());
+        component.saveQueryClick(TestHelpers.fakeEvent());
 
-        assert.isTrue(saveStub.calledOnce);
+        expect(saveStub).toHaveBeenCalledTimes(1);
 
-        RunValidations.run.restore();
-        ExplorerActions.save.restore();
+        runValidationsStub.mockRestore();
+        saveStub.mockRestore();
       });
     });
 
     describe('removeSavedQueryClicked', () => {
       it('should call the destroy ExplorerAction with the right arguments', () => {
-        this.explorer.id = 'ABC';
-        var destroyStub = sinon.stub(ExplorerActions, 'destroy');
-        sinon.stub(window, 'confirm').returns(true);
-        this.component.removeSavedQueryClicked();
-        assert.isTrue(destroyStub.calledWith(this.persistence, 'ABC'));
-        ExplorerActions.destroy.restore();
-        window.confirm.restore();
+        explorer.id = 'ABC';
+        const destroyStub = jest.spyOn(ExplorerActions, 'destroy').mockImplementation(()=>{});
+        const confirmStub = jest.spyOn(window, 'confirm').mockImplementation(()=>{}).mockReturnValue(true);
+        component.removeSavedQueryClicked();
+        expect(destroyStub).toBeCalledWith(persistence, 'ABC');
+        destroyStub.mockRestore();
+        confirmStub.mockRestore();
       });
     });
 
@@ -226,37 +234,37 @@ describe('components/explorer/index', () => {
     describe('saved queries', () => {
 
       beforeEach(() => {
-        this.explorer.query.analysis_type = 'count';
+        explorer.query.analysis_type = 'count';
         ExplorerStore.emit('CHANGE');
-        this.persistence = {};
-        this.component = TestUtils.renderIntoDocument(<Explorer persistence={this.persistence} client={this.client} project={this.project} config={this.config} />);
+        persistence = {};
+        component = TestUtils.renderIntoDocument(<Explorer persistence={persistence} client={client} project={project} config={config} />);
       });
 
       describe('clicking a saved query', () => {
         it('should not load the saved query and show a notice if there is already a query in-flight', () => {
-          var setActiveStub = sinon.stub(ExplorerActions, 'setActive');
-          var execStub = sinon.stub(ExplorerActions, 'exec');
-          var noticeCreateStub = sinon.stub(NoticeActions, 'create');
+          const setActiveStub = jest.spyOn(ExplorerActions, 'setActive').mockImplementation(()=>{});
+          const execStub = jest.spyOn(ExplorerActions, 'exec').mockImplementation(()=>{});
+          const noticeCreateStub = jest.spyOn(NoticeActions, 'create').mockImplementation(()=>{});
 
-          var newExplorer = _.cloneDeep(this.component.state.activeExplorer);
+          const newExplorer = _.cloneDeep(component.state.activeExplorer);
           newExplorer.loading = true;
-          this.component.setState({
+          component.setState({
             activeExplorer: newExplorer
           });
-          var fakeEvent = TestHelpers.fakeEvent();
-          this.component.savedQueryClicked(fakeEvent);
+          const fakeEvent = TestHelpers.fakeEvent();
+          component.savedQueryClicked(fakeEvent);
 
-          assert.isFalse(setActiveStub.called);
-          assert.isFalse(execStub.called);
-          assert.isTrue(noticeCreateStub.calledWith({
+          expect(setActiveStub).not.toHaveBeenCalled();
+          expect(execStub).not.toHaveBeenCalled();
+          expect(noticeCreateStub.mock.calls[0][0]).toEqual({
             icon: 'info-sign',
             type: 'warning',
             text: "There is already a query in progress. Wait for it to finish loading before selecting a query."
-          }));
+          });
 
-          ExplorerActions.setActive.restore();
-          ExplorerActions.exec.restore();
-          NoticeActions.create.restore();
+          setActiveStub.mockRestore();
+          execStub.mockRestore();
+          noticeCreateStub.mockRestore();
         });
       });
 
@@ -270,41 +278,41 @@ describe('components/explorer/index', () => {
         ExplorerActions.create(_.assign({}, TestHelpers.createExplorerModel(), { id: 'def', metadata: { display_name: 'def' } }));
         ExplorerActions.create(_.assign({}, TestHelpers.createExplorerModel(), { id: 'ghi', metadata: { display_name: 'ghi' } }));
 
-        var props = _.assign({}, this.component.props, { persistence: {} });
-        this.component = TestHelpers.renderComponent(Explorer, props);
+        let props = _.assign({}, component.props, { persistence: {} });
+        component = TestHelpers.renderComponent(Explorer, props);
       });
 
       it('should add a new explorer in the store', () => {
-        this.component.cloneQueryClick(TestHelpers.fakeEvent());
-        assert.strictEqual(_.keys(ExplorerStore.getAll()).length, 4);
+        component.cloneQueryClick(TestHelpers.fakeEvent());
+        expect(_.keys(ExplorerStore.getAll())).toHaveLength(4);
       });
 
       it('should set the newly created explorer as active', () => {
-        var stub = sinon.stub(ExplorerActions, 'setActive');
-        this.component.cloneQueryClick(TestHelpers.fakeEvent());
-        var keys = _.keys(ExplorerStore.getAll());
-        var lastExplorer = ExplorerStore.getAll()[keys[keys.length-1]];
-        assert.isTrue(stub.calledWith(lastExplorer.id));
-        ExplorerActions.setActive.restore();
+        const stub = jest.spyOn(ExplorerActions, 'setActive');
+        component.cloneQueryClick(TestHelpers.fakeEvent());
+        const keys = _.keys(ExplorerStore.getAll());
+        const lastExplorer = ExplorerStore.getAll()[keys[keys.length-1]];
+        expect(stub).toHaveBeenCalledWith(lastExplorer.id);
+        stub.mockRestore();
       });
 
       it('should change the text on the query builder tab to "Create a new query"', () => {
-        assert.strictEqual(this.component.refs['query-pane-tabs'].refs['build-tab'].textContent, 'Edit query');
-        this.component.cloneQueryClick(TestHelpers.fakeEvent());
-        this.component._onChange();
-        assert.strictEqual(this.component.refs['query-pane-tabs'].refs['build-tab'].textContent, 'Create a new query');
+        expect(component.refs['query-pane-tabs'].refs['build-tab'].textContent).toEqual('Edit query');
+        component.cloneQueryClick(TestHelpers.fakeEvent());
+        component._onChange();
+        expect(component.refs['query-pane-tabs'].refs['build-tab'].textContent).toEqual('Create a new query');
       });
 
       it('should update component state to show the build tab', () => {
-        this.component.setState({ activeQueryPane: 'browse' });
-        this.component.cloneQueryClick(TestHelpers.fakeEvent());
-        assert.strictEqual(this.component.state.activeQueryPane, 'build');
+        component.setState({ activeQueryPane: 'browse' });
+        component.cloneQueryClick(TestHelpers.fakeEvent());
+        expect(component.state.activeQueryPane).toEqual('build');
       });
 
       it('should call clone method passing current or active explorer', () => {
-    	  var cloneStub = sinon.stub(ExplorerActions, 'clone');
-    	  this.component.cloneQueryClick(TestHelpers.fakeEvent());
-    	  assert.isTrue(cloneStub.calledWith('abc'));
+    	  const cloneStub = jest.spyOn(ExplorerActions, 'clone');
+    	  component.cloneQueryClick(TestHelpers.fakeEvent());
+    	  expect(cloneStub).toHaveBeenCalledWith('abc');
       });
     });
 
@@ -316,31 +324,31 @@ describe('components/explorer/index', () => {
         ExplorerActions.create(_.assign({}, TestHelpers.createExplorerModel(), { id: 'def', metadata: { display_name: 'def' } }));
         ExplorerActions.create(_.assign({}, TestHelpers.createExplorerModel(), { id: 'ghi', metadata: { display_name: 'ghi' } }));
 
-        var props = _.assign({}, this.component.props, { persistence: {} });
-        this.component = TestHelpers.renderComponent(Explorer, props);
+        let props = _.assign({}, component.props, { persistence: {} });
+        component = TestHelpers.renderComponent(Explorer, props);
       });
       it('should add a new explorer in the store', () => {
-        this.component.createNewQuery(TestHelpers.fakeEvent());
-        assert.strictEqual(_.keys(ExplorerStore.getAll()).length, 4);
+        component.createNewQuery(TestHelpers.fakeEvent());
+        expect(_.keys(ExplorerStore.getAll())).toHaveLength(4);
       });
       it('should set the newly created explorer as active', () => {
-        var stub = sinon.stub(ExplorerActions, 'setActive');
-        this.component.createNewQuery(TestHelpers.fakeEvent());
-        var keys = _.keys(ExplorerStore.getAll());
-        var lastExplorer = ExplorerStore.getAll()[keys[keys.length-1]];
-        assert.isTrue(stub.calledWith(lastExplorer.id));
-        ExplorerActions.setActive.restore();
+        const stub = jest.spyOn(ExplorerActions, 'setActive');
+        component.createNewQuery(TestHelpers.fakeEvent());
+        const keys = _.keys(ExplorerStore.getAll());
+        const lastExplorer = ExplorerStore.getAll()[keys[keys.length-1]];
+        expect(stub).toBeCalledWith(lastExplorer.id);
+        stub.mockRestore();
       });
       it('should change the text on the query builder tab to "Create a new query"', () => {
-        assert.strictEqual(this.component.refs['query-pane-tabs'].refs['build-tab'].textContent, 'Edit query');
-        this.component.createNewQuery(TestHelpers.fakeEvent());
-        this.component._onChange();
-        assert.strictEqual(this.component.refs['query-pane-tabs'].refs['build-tab'].textContent, 'Create a new query');
+        expect(component.refs['query-pane-tabs'].refs['build-tab'].textContent).toEqual('Edit query');
+        component.createNewQuery(TestHelpers.fakeEvent());
+        component._onChange();
+        expect(component.refs['query-pane-tabs'].refs['build-tab'].textContent).toEqual('Create a new query');
       });
       it('should update component state to show the build tab', () => {
-        this.component.setState({ activeQueryPane: 'browse' });
-        this.component.createNewQuery(TestHelpers.fakeEvent());
-        assert.strictEqual(this.component.state.activeQueryPane, 'build');
+        component.setState({ activeQueryPane: 'browse' });
+        component.createNewQuery(TestHelpers.fakeEvent());
+        expect(component.state.activeQueryPane).toEqual('build');
       });
     });
 
