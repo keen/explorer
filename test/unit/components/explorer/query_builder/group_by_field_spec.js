@@ -1,70 +1,74 @@
-
-var expect from 'chai').expect;
-let sinon from 'sinon/pkg/sinon.js');
-var _ from 'lodash');
+import _ from 'lodash';
 import React from 'react';
-var ReactDOM from 'react-dom');
-var TestUtils from 'react-addons-test-utils');
-var GroupByField from '../../../../../lib/js/app/components/explorer/query_builder/group_by_field.js');
-var TestHelpers from '../../../../../test/support/TestHelpers');
-var $R from 'rquery')(_, React, ReactDOM, TestUtils);
+import ReactDOM from 'react-dom';
+import TestUtils from 'react-addons-test-utils';
+import GroupByField from '../../../../../lib/js/app/components/explorer/query_builder/group_by_field.js';
+import TestHelpers from '../../../../../test/support/TestHelpers';
+import rquery from 'rquery';
+
+const $R = rquery(_, React, ReactDOM, TestUtils);
 
 describe('components/explorer/query_builder/group_by_field', () => {
+  let handleChangeStub;
+  let defaultProps;
+  let renderComponent;
+  let component;
+
   beforeEach(() => {
-    this.handleChangeStub = sinon.stub();
-    this.defaultProps = {
-      handleChange: this.handleChangeStub,
+    handleChangeStub = jest.fn();
+    defaultProps = {
+      handleChange: handleChangeStub,
       value: ['one']
     };
-    this.renderComponent = function(props) {
-      var props = _.assign({}, this.defaultProps, props);
-      return TestUtils.renderIntoDocument(<GroupByField {...props} />);
+    renderComponent = function(props) {
+      let propsExt = _.assign({}, defaultProps, props);
+      return TestUtils.renderIntoDocument(<GroupByField {...propsExt} />);
     };
-    this.component = this.renderComponent();
+    component = renderComponent();
   });
 
   describe('with a single group by', () => {
     it('shows one input', () => {
-      assert.lengthOf($R(this.component).find('.group-by').components, 1);
+      expect($R(component).find('.group-by').components).toHaveLength(1);
     });
     it('shows the correct toggle button text', () => {
-      assert.strictEqual($R(this.component).find('a').components[1].innerText, "Group by a second property");
+      expect($R(component).find('a').components[1].text).toEqual("Group by a second property");
     });
   });
   describe('with a double group by', () => {
     beforeEach(() => {
-      this.component = this.renderComponent({
+      component = renderComponent({
         value: ['one', 'two']
       });
     })
     it('shows two inputs', () => {
-      assert.lengthOf($R(this.component).find('.group-by').components, 2);
+      expect($R(component).find('.group-by').components).toHaveLength(2);
     });
     it('shows the correct toggle button text', () => {
-      assert.strictEqual($R(this.component).find('a').components[1].innerText, "Remove second property");
+      expect($R(component).find('a').components[1].text).toEqual("Remove second property");
     });
   });
   describe('toggle link', () => {
     it('should call props.handleChange with an empty string array value at index 1 if the value is an empty array', () => {
-      this.component = this.renderComponent({
+      component = renderComponent({
         value: []
       });
-      TestUtils.Simulate.click($R(this.component).find('a').components[1]);
-      assert.sameMembers(this.handleChangeStub.getCall(0).args[1], ['', '']);
+      TestUtils.Simulate.click($R(component).find('a').components[1]);
+      expect(handleChangeStub.mock.calls[0][1]).toEqual(['', '']);
     });
     it('should call props.handleChange with an empty string array value at index 1 if there is only one group by', () => {
-      this.component = this.renderComponent({
+      component = renderComponent({
         value: ['one']
       });
-      TestUtils.Simulate.click($R(this.component).find('a').components[1]);
-      assert.sameMembers(this.handleChangeStub.getCall(0).args[1], ['one', '']);
+      TestUtils.Simulate.click($R(component).find('a').components[1]);
+      expect(handleChangeStub.mock.calls[0][1]).toEqual(['one', '']);
     });
     it('should call props.handleChange with a single item array if there is two values', () => {
-      this.component = this.renderComponent({
+      component = renderComponent({
         value: ['one', 'two']
       });
-      TestUtils.Simulate.click($R(this.component).find('a').components[1]);
-      assert.sameMembers(this.handleChangeStub.getCall(0).args[1], ['one']);
+      TestUtils.Simulate.click($R(component).find('a').components[1]);
+      expect(handleChangeStub.mock.calls[0][1]).toEqual(['one']);
     });
   });
 });
