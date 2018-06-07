@@ -1,18 +1,22 @@
-let sinon from 'sinon/pkg/sinon.js');
+import BrowseQueries from '../../../../../lib/js/app/components/explorer/saved_queries/browse_queries.js';
+import ExplorerUtils from '../../../../../lib/js/app/utils/ExplorerUtils';
+import ExplorerActions from '../../../../../lib/js/app/actions/ExplorerActions';
 
-var _ from 'lodash');
+import _ from 'lodash';
 import React from 'react';
-var ReactDOM from 'react-dom');
-var TestUtils from 'react-addons-test-utils');
-var BrowseQueries from '../../../../../lib/js/app/components/explorer/saved_queries/browse_queries.js');
-var ExplorerUtils from '../../../../../lib/js/app/utils/ExplorerUtils');
-var ExplorerActions from '../../../../../lib/js/app/actions/ExplorerActions');
-var TestHelpers from '../../../../support/TestHelpers');
-var $R from 'rquery')(_, React, ReactDOM, TestUtils);
+import ReactDOM from 'react-dom';
+import TestUtils from 'react-addons-test-utils';
+import TestHelpers from '../../../../../test/support/TestHelpers';
+import rquery from 'rquery';
+
+const $R = rquery(_, React, ReactDOM, TestUtils);
 
 describe('components/explorer/saved_queries/browse_queries', () => {
+  let renderComponent;
+  let component;
+
   beforeEach(() => {
-    var defaultProps = {
+    const defaultProps = {
       listItems: [
         {
           id: 1,
@@ -45,24 +49,24 @@ describe('components/explorer/saved_queries/browse_queries', () => {
       notice: null,
       emptyContent: null
     };
-    this.renderComponent = function(props) {
-      var props = _.assign({}, defaultProps, props);
-      return TestUtils.renderIntoDocument(<BrowseQueries {...props} />);
+    renderComponent = function(props) {
+      let propsExt = _.assign({}, defaultProps, props);
+      return TestUtils.renderIntoDocument(<BrowseQueries {...propsExt} />);
     };
-    this.component = this.renderComponent();
+    component = renderComponent();
   });
 
   describe('setup', () => {
     it('is of the right type', () => {
-      assert.isTrue(TestUtils.isCompositeComponentWithType(this.component, BrowseQueries));
+      expect(TestUtils.isCompositeComponentWithType(component, BrowseQueries)).toBe(true);
     });
 
     it("creates a list item for each listItem prop", () => {
-      assert.equal(this.component.refs.list.childNodes.length, 3);
+      expect(component.refs.list.childNodes).toHaveLength(3);
     });
 
     it("should use metadata.display_name as the default query name displayed in the browse tab", () => {
-      this.component = this.renderComponent({
+      component = renderComponent({
         listItems: [
           {
             id: 1,
@@ -77,12 +81,11 @@ describe('components/explorer/saved_queries/browse_queries', () => {
           }
         ]
       });
-      console.log($R(this.component).find('h5')[0]);
-      assert.equal($R(this.component).find('h5')[0].textContent, 'Test Display Name');
+      expect($R(component).find('h5')[0].textContent).toEqual('Test Display Name');
     });
 
     it("should use query_name as query name displayed in the browse tab when there's no metadata.display_name", () => {
-      this.component = this.renderComponent({
+      component = renderComponent({
         listItems: [
           {
             id: 1,
@@ -97,12 +100,11 @@ describe('components/explorer/saved_queries/browse_queries', () => {
           }
         ]
       });
-      console.log($R(this.component).find('h5')[0]);
-      assert.equal($R(this.component).find('h5')[0].textContent, 'test-query-name');
+      expect($R(component).find('h5')[0].textContent).toEqual('test-query-name');
     });
 
     it("should use placeholder text for queries that do not have a query_name or metadata.display_name", () => {
-      this.component = this.renderComponent({
+      component = renderComponent({
         listItems: [
           {
             id: 1,
@@ -117,19 +119,18 @@ describe('components/explorer/saved_queries/browse_queries', () => {
           }
         ]
       });
-      console.log($R(this.component).find('h5')[0]);
-      assert.equal($R(this.component).find('h5')[0].textContent, 'Query not named');
+      expect($R(component).find('h5')[0].textContent).toEqual('Query not named');
     });
   });
 
   describe('Interactions', () => {
     describe('click callback', () => {
       it('should call the callback if a list element is clicked', () => {
-        var stub = sinon.stub();
-        this.component = this.renderComponent({ clickCallback: stub });
-        var firstListItem = this.component.refs.list.childNodes[0];
+        const stub = jest.fn();
+        component = renderComponent({ clickCallback: stub });
+        const firstListItem = component.refs.list.childNodes[0];
         TestUtils.Simulate.click(firstListItem);
-        assert.isTrue(stub.calledOnce);
+        expect(stub).toBeCalled();
       });
     });
   });
