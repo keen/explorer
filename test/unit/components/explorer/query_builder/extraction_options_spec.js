@@ -1,16 +1,21 @@
 
-var _ from 'lodash');
+import _ from 'lodash';
 import React from 'react';
-var ReactDOM from 'react-dom');
-var TestUtils from 'react-addons-test-utils');
-var ExtractionOptions from '../../../../../lib/js/app/components/explorer/query_builder/extraction_options.js');
-var TestHelpers from '../../../../../test/support/TestHelpers');
-var $R from 'rquery')(_, React, ReactDOM, TestUtils);
+import ReactDOM from 'react-dom';
+import TestUtils from 'react-addons-test-utils';
+import ExtractionOptions from '../../../../../lib/js/app/components/explorer/query_builder/extraction_options.js';
+import TestHelpers from '../../../../../test/support/TestHelpers';
+import rquery from 'rquery';
+
+const $R = rquery(_, React, ReactDOM, TestUtils);
 
 describe('components/explorer/query_builder/extraction_options', () => {
+  let defaultProps;
+  let renderComponent;
+  let component;
   beforeEach(() => {
-    var model = TestHelpers.createExplorerModel();
-    this.defaultProps = {
+    const model = TestHelpers.createExplorerModel();
+    defaultProps = {
       handleSelectionWithEvent: () => {},
       handleChange: () => {},
       setExtractionType: () => {},
@@ -21,39 +26,39 @@ describe('components/explorer/query_builder/extraction_options', () => {
       isEmail: false,
       projectSchema: {}
     };
-    this.renderComponent = function(props) {
-      var props = _.assign({}, this.defaultProps, props);
-      return TestUtils.renderIntoDocument(<ExtractionOptions {...props} />);
+    renderComponent = function(props) {
+      let propsExt = _.assign({}, defaultProps, props);
+      return TestUtils.renderIntoDocument(<ExtractionOptions {...propsExt} />);
     };
-    this.component = this.renderComponent();
+    component = renderComponent();
   });
 
   describe('an email extraction', () => {
     it('shows the email field', () => {
-      var props = _.assign({}, this.component.props, { isEmail: true });
-      this.component = TestHelpers.renderComponent(ExtractionOptions, props);
+      let props = _.assign({}, component.props, { isEmail: true });
+      component = TestHelpers.renderComponent(ExtractionOptions, props);
 
-      assert.lengthOf($R(this.component).find('input[name="email"]').components, 1);
+      expect($R(component).find('input[name="email"]').components).toHaveLength(1);
     });
     it('shows the latest field', () => {
-      var props = _.assign({}, this.component.props, { isEmail: true });
-      this.component = TestHelpers.renderComponent(ExtractionOptions, props);
+      let props = _.assign({}, component.props, { isEmail: true });
+      component = TestHelpers.renderComponent(ExtractionOptions, props);
 
-      assert.lengthOf($R(this.component).find('LatestField').components, 1);
+      expect($R(component).find('LatestField').components).toHaveLength(1);
     });
   });
 
   describe('extraction properties filter', () => {
     it('shows when an extraction model is loaded', () => {
       const projectSchema = { 'test_collection': { sortedProperties: ["test_name"] } };
-      const props = _.assign({}, this.component.props, { event_collection: 'test_collection', projectSchema: projectSchema });
-      this.component = TestHelpers.renderComponent(ExtractionOptions, props);
+      const props = _.assign({}, component.props, { event_collection: 'test_collection', projectSchema: projectSchema });
+      component = TestHelpers.renderComponent(ExtractionOptions, props);
 
-      assert.lengthOf($R(this.component).find('ReactMultiSelect').components, 1);
+      expect($R(component).find('ReactMultiSelect').components).toHaveLength(1);
     });
 
     it('is hidden when with all other types of models', () => {
-      assert.lengthOf($R(this.component).find('ReactMultiSelect').components, 0);
+      expect($R(component).find('ReactMultiSelect').components).toHaveLength(0);
     });
   });
 });
