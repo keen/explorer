@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import KeenAnalysis from 'keen-analysis';
-import KeenDataviz from 'keen-dataviz';
+import KeenDatavizCore from 'keen-dataviz';
 import Visualization from '../../../../../lib/js/app/components/explorer/visualization/index.js';
 import Chart from '../../../../../lib/js/app/components/explorer/visualization/chart.js';
 import AppDispatcher from '../../../../../lib/js/app/dispatcher/AppDispatcher';
@@ -18,6 +18,7 @@ import TestUtils from 'react-addons-test-utils';
 import rquery from 'rquery';
 
 const $R = rquery(_, React, ReactDOM, TestUtils);
+const KeenDataviz = new KeenDatavizCore();
 
 describe('components/explorer/visualization/index', () => {
   let client;
@@ -35,7 +36,7 @@ describe('components/explorer/visualization/index', () => {
     model = TestHelpers.createExplorerModel();
     model.id = 10;
     project = TestHelpers.createProject();
-    datavizStub = jest.spyOn(KeenDataviz, 'Dataviz').mockImplementation(()=>{}).mockReturnValue(TestHelpers.createDataviz());
+
     chartOptionsStub = jest.spyOn(ChartTypeUtils, 'getChartTypeOptions').mockImplementation(()=>{}).mockReturnValue([]);
     exportToCsvStub = jest.spyOn(DataUtils, 'exportToCsv').mockImplementation(()=>{}).mockReturnValue([]);
 
@@ -63,7 +64,6 @@ describe('components/explorer/visualization/index', () => {
   });
 
   afterEach(() => {
-    datavizStub.mockRestore();
     chartOptionsStub.mockRestore();
     exportToCsvStub.mockRestore();
   });
@@ -87,13 +87,13 @@ describe('components/explorer/visualization/index', () => {
     describe('populates with the right chart types based on the dataviz capabilities', () => {
       it('basic options', () => {
         model.result = 50;
-        chartOptionsStub.returns([
+        chartOptionsStub.mockReturnValue([
           'metric',
           'JSON'
         ]);
         component.forceUpdate();
         const options = getOptionsFromComponent(component);
-        expect().sameMembers(options, ['JSON', 'Metric']);
+        expect(options).toEqual(expect.arrayContaining(['JSON', 'Metric']));
       });
     });
 
@@ -101,20 +101,20 @@ describe('components/explorer/visualization/index', () => {
       model.result = 50;
       model.loading = false;
       component.forceUpdate();
-      expect().isFalse(component.refs['chart-type'].refs.select.disabled);
+      expect(component.refs['chart-type'].refs.select.disabled).toBe(false);
     });
 
     it('is disabled when the model is actively loading', () => {
       model.loading = true;
       component.forceUpdate();
-      expect().isTrue(component.refs['chart-type'].refs.select.disabled);
+      expect(component.refs['chart-type'].refs.select.disabled).toBe(true);
     });
 
   });
 
   describe('default chart type', () => {
     it('renders a default chart type if there is no metadata.visualization object', () => {
-      chartOptionsStub.returns([
+      chartOptionsStub.mockReturnValue([
           'metric',
           'JSON'
       ]);
@@ -122,14 +122,14 @@ describe('components/explorer/visualization/index', () => {
       component.forceUpdate();
       const selectField = component.refs['chart-type'].refs.select;
 
-      expect().equal(selectField.value, 'metric');
+      expect(selectField.value).toEqual('metric');
     });
   });
 
   describe('export to csv', () => {
     it('exports to csv chart data', () => {
       component.exportToCsv([['column1', 'column2'], ['row1 value 1', 'row2 value2']]);
-      sinon.expect().called(exportToCsvStub);
+      expect(exportToCsvStub).toBeCalledWith([["Index"]], "untitled-query");
     });
   });
 
