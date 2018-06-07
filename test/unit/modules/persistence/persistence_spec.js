@@ -1,22 +1,22 @@
 
 import React from 'react';
-var TestUtils from 'react-addons-test-utils');
-var _ from 'lodash');
-let sinon from 'sinon/pkg/sinon.js');
-var Persistence from '../../../../lib/js/app/modules/persistence/persistence.js');
-var KeenSavedQueries from '../../../../lib/js/app/modules/persistence/KeenSavedQueries.js');
+import TestUtils from 'react-addons-test-utils';
+import _ from 'lodash';
+import Persistence from '../../../../lib/js/app/modules/persistence/persistence.js';
+import KeenSavedQueries from '../../../../lib/js/app/modules/persistence/KeenSavedQueries.js';
 
 describe('modules/persistence/persistence', () => {
+  let persistanceObj;
 
-  before(() => {
-    this.persistence = Persistence;
+  beforeAll(() => {
+    persistanceObj = Persistence;
   });
 
   it('exists', () => {
-    assert.isDefined(Persistence);
+    expect(persistanceObj).not.toBe(undefined);
   });
 
   it('has a KeenSavedQueries key equal to the KeenSavedQueries class', () => {
-    assert.equal(Persistence.KeenSavedQueries, KeenSavedQueries);
+    expect(Persistence.KeenSavedQueries).toEqual(KeenSavedQueries);
   });
 });
