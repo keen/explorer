@@ -113,9 +113,20 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__1__;
 "use strict";
 
 
-var _ = __webpack_require__(0);
-var S = __webpack_require__(44);
-var moment = __webpack_require__(9);
+var _lodash = __webpack_require__(0);
+
+var _lodash2 = _interopRequireDefault(_lodash);
+
+var _string = __webpack_require__(44);
+
+var _string2 = _interopRequireDefault(_string);
+
+var _moment = __webpack_require__(9);
+
+var _moment2 = _interopRequireDefault(_moment);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 var ISO_DATE_FORMAT = 'YYYY-MM-DDTHH:mm:ss.SSS';
 
 function _isWrappedInSingleQuotes(value) {
@@ -193,7 +204,7 @@ module.exports = {
    * @return {Boolean} Whether or not the string is in the expected format.
    */
   isDateInStrictFormat: function isDateInStrictFormat(dateString) {
-    return moment(dateString, ISO_DATE_FORMAT, true).isValid();
+    return (0, _moment2.default)(dateString, ISO_DATE_FORMAT, true).isValid();
   },
 
   convertDateToUTC: function convertDateToUTC(date) {
@@ -201,7 +212,7 @@ module.exports = {
   },
 
   formatISOTimeNoTimezone: function formatISOTimeNoTimezone(time) {
-    return moment(time).format('YYYY-MM-DDTHH:mm:ss.SSS');
+    return (0, _moment2.default)(time).format('YYYY-MM-DDTHH:mm:ss.SSS');
   },
 
   generateRandomId: function generateRandomId(prefix) {
@@ -213,19 +224,19 @@ module.exports = {
   },
 
   isValidQueryValue: function isValidQueryValue(value) {
-    if (_.isArray(value)) return value.length > 0;
+    if (_lodash2.default.isArray(value)) return value.length > 0;
     if (value === false) return true;
     if (value === 0) return true;
-    if (_.isPlainObject(value)) return !_.isEmpty(value);
+    if (_lodash2.default.isPlainObject(value)) return !_lodash2.default.isEmpty(value);
     return !module.exports.isNullOrUndefined(value);
   },
 
   parseList: function parseList(value) {
     if (value) {
       if (!module.exports.isList(value)) return '';
-      var parsedList = S(value).parseCSV();
+      var parsedList = (0, _string2.default)(value).parseCSV();
 
-      parsedList = _.map(parsedList, function (val) {
+      parsedList = _lodash2.default.map(parsedList, function (val) {
         if (_isWrappedInSingleQuotes(val)) {
           var quotelessVal = val.replace("'", "");
           if (parseFloat(quotelessVal)) {
@@ -257,7 +268,7 @@ module.exports = {
   },
 
   isNullOrUndefined: function isNullOrUndefined(value) {
-    return _.isNull(value) || _.isUndefined(value);
+    return _lodash2.default.isNull(value) || _lodash2.default.isUndefined(value);
   },
 
   padLeft: function padLeft(value) {
@@ -273,15 +284,43 @@ module.exports = {
 "use strict";
 
 
-var _ = __webpack_require__(0);
-var Qs = __webpack_require__(45);
-var stringify = __webpack_require__(82);
-var moment = __webpack_require__(9);
-var FormatUtils = __webpack_require__(2);
-var FunnelUtils = __webpack_require__(81);
-var ProjectUtils = __webpack_require__(5);
-var FilterUtils = __webpack_require__(8);
-var TimeframeUtils = __webpack_require__(17);
+var _lodash = __webpack_require__(0);
+
+var _lodash2 = _interopRequireDefault(_lodash);
+
+var _qs = __webpack_require__(45);
+
+var _qs2 = _interopRequireDefault(_qs);
+
+var _jsonStableStringify = __webpack_require__(82);
+
+var _jsonStableStringify2 = _interopRequireDefault(_jsonStableStringify);
+
+var _moment = __webpack_require__(9);
+
+var _moment2 = _interopRequireDefault(_moment);
+
+var _FormatUtils = __webpack_require__(2);
+
+var _FormatUtils2 = _interopRequireDefault(_FormatUtils);
+
+var _FunnelUtils = __webpack_require__(81);
+
+var _FunnelUtils2 = _interopRequireDefault(_FunnelUtils);
+
+var _ProjectUtils = __webpack_require__(5);
+
+var _ProjectUtils2 = _interopRequireDefault(_ProjectUtils);
+
+var _FilterUtils = __webpack_require__(8);
+
+var _FilterUtils2 = _interopRequireDefault(_FilterUtils);
+
+var _TimeframeUtils = __webpack_require__(17);
+
+var _TimeframeUtils2 = _interopRequireDefault(_TimeframeUtils);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var QUERY_PARAMS = ['event_collection', 'analysis_type', 'target_property', 'percentile', 'group_by', 'timeframe', 'interval', 'timezone', 'filters', 'steps', 'email', 'latest', 'property_names'];
 
@@ -303,7 +342,7 @@ function toUnderscoreName(name) {
 
 var SKIP = {};
 function mapSkip(collection, fn) {
-  return _.without(_.map(collection, fn), SKIP);
+  return _lodash2.default.without(_lodash2.default.map(collection, fn), SKIP);
 }
 
 function echoIf(valueMaybe, append) {
@@ -326,31 +365,31 @@ module.exports = {
   },
 
   shouldHaveTarget: function shouldHaveTarget(explorer) {
-    return !FormatUtils.isNullOrUndefined(explorer.query.analysis_type) && ANALYSIS_TYPES_WITHOUT_TARGET.indexOf(explorer.query.analysis_type) === -1;
+    return !_FormatUtils2.default.isNullOrUndefined(explorer.query.analysis_type) && ANALYSIS_TYPES_WITHOUT_TARGET.indexOf(explorer.query.analysis_type) === -1;
   },
 
   isEmailExtraction: function isEmailExtraction(explorer) {
-    return explorer.query.analysis_type === 'extraction' && !_.isNull(explorer.query.email);
+    return explorer.query.analysis_type === 'extraction' && !_lodash2.default.isNull(explorer.query.email);
   },
 
   isImmediateExtraction: function isImmediateExtraction(explorer) {
-    return explorer.query.analysis_type === 'extraction' && _.isNull(explorer.query.email);
+    return explorer.query.analysis_type === 'extraction' && _lodash2.default.isNull(explorer.query.email);
   },
 
   mergeResponseWithExplorer: function mergeResponseWithExplorer(explorer, response) {
-    var newModel = _.defaultsDeep(module.exports.formatQueryParams(response), explorer);
+    var newModel = _lodash2.default.defaultsDeep(module.exports.formatQueryParams(response), explorer);
     delete newModel.originalModel; // Remove the original model.
     newModel.id = response.query_name; // Set the ID to the query_name (it's now persisted.)
-    newModel.originalModel = _.cloneDeep(newModel);
+    newModel.originalModel = _lodash2.default.cloneDeep(newModel);
     return newModel;
   },
 
   queryJSON: function queryJSON(explorer) {
     if (!explorer || !explorer.query) return;
-    var params = _.cloneDeep(explorer.query);
+    var params = _lodash2.default.cloneDeep(explorer.query);
 
     if (params.analysis_type === 'extraction') {
-      if (FormatUtils.isNullOrUndefined(params.email)) {
+      if (_FormatUtils2.default.isNullOrUndefined(params.email)) {
         params.latest = EXRACTION_EVENT_LIMIT;
       }
     } else {
@@ -360,31 +399,31 @@ module.exports = {
     }
 
     if (params.analysis_type !== 'funnel') {
-      _.assign(params, TimeframeUtils.getTimeParameters(params.time, params.timezone));
+      _lodash2.default.assign(params, _TimeframeUtils2.default.getTimeParameters(params.time, params.timezone));
     }
 
     // Add filters
     if (params.filters) {
-      params.filters = _.map(params.filters, function (filter) {
-        return FilterUtils.queryJSON(filter);
+      params.filters = _lodash2.default.map(params.filters, function (filter) {
+        return _FilterUtils2.default.queryJSON(filter);
       });
     }
 
     if (params.steps) {
-      params.steps = _.map(params.steps, FunnelUtils.stepJSON);
+      params.steps = _lodash2.default.map(params.steps, _FunnelUtils2.default.stepJSON);
     }
 
-    _.each(params, function (value, key) {
+    _lodash2.default.each(params, function (value, key) {
       // If it's an array, clean out any empty elements
-      if (_.isArray(value)) {
-        _.remove(value, function (element) {
-          return !_.isNumber(element) && _.isEmpty(element);
+      if (_lodash2.default.isArray(value)) {
+        _lodash2.default.remove(value, function (element) {
+          return !_lodash2.default.isNumber(element) && _lodash2.default.isEmpty(element);
         });
       }
 
       // Remove any empty properties or ones that shouldn't be
       // part of the query request.
-      if (!FormatUtils.isValidQueryValue(value) || !_.includes(QUERY_PARAMS, key)) {
+      if (!_FormatUtils2.default.isValidQueryValue(value) || !_lodash2.default.includes(QUERY_PARAMS, key)) {
         delete params[key];
       }
     });
@@ -393,7 +432,7 @@ module.exports = {
   },
 
   toJSON: function toJSON(explorer) {
-    var json = _.pick(explorer, ['id', 'query_name', 'refresh_rate', 'metadata']);
+    var json = _lodash2.default.pick(explorer, ['id', 'query_name', 'refresh_rate', 'metadata']);
     json.query = module.exports.queryJSON(explorer);
     if (json.query.analysis_type === 'extraction') json.refresh_rate = 0;
     return json;
@@ -410,7 +449,7 @@ module.exports = {
 
   paramsForURL: function paramsForURL(explorer) {
     var attrs = module.exports.toJSON(explorer);
-    return _.omit(attrs, ['id', 'query_name', 'refresh_rate', 'metadata']);
+    return _lodash2.default.omit(attrs, ['id', 'query_name', 'refresh_rate', 'metadata']);
   },
 
   /**
@@ -428,7 +467,7 @@ module.exports = {
    * @return {undefined}
    */
   runQuery: function runQuery(config) {
-    config.client.query(config.query.analysis_type, _.omit(config.query, 'analysis_type')).then(function (res, err) {
+    config.client.query(config.query.analysis_type, _lodash2.default.omit(config.query, 'analysis_type')).then(function (res, err) {
       if (err) {
         config.error(err);
       } else {
@@ -447,18 +486,18 @@ module.exports = {
   formatQueryParams: function formatQueryParams(params) {
     if (!params || !params.query) return;
     if (params.query && params.query.timeframe) {
-      var unpackedTime = TimeframeUtils.unpackTimeframeParam(params.query.timeframe, params.query.timezone);
+      var unpackedTime = _TimeframeUtils2.default.unpackTimeframeParam(params.query.timeframe, params.query.timezone);
       params.query.time = unpackedTime.time;
       params.query.timezone = unpackedTime.timezone;
     }
-    if (params.query.group_by && !_.isArray(params.query.group_by)) {
+    if (params.query.group_by && !_lodash2.default.isArray(params.query.group_by)) {
       params.query.group_by = [params.query.group_by];
     }
     if (params.query.filters) {
-      params.query.filters = _.compact(_.map(params.query.filters, FilterUtils.formatFilterParams));
+      params.query.filters = _lodash2.default.compact(_lodash2.default.map(params.query.filters, _FilterUtils2.default.formatFilterParams));
     }
     if (params.query.steps) {
-      params.query.steps = _.compact(_.map(params.query.steps, FunnelUtils.formatQueryParams));
+      params.query.steps = _lodash2.default.compact(_lodash2.default.map(params.query.steps, _FunnelUtils2.default.formatQueryParams));
       params.query.steps[params.query.steps.length - 1].active = true;
     }
     if (!params.id && params.query_name) params.id = params.query_name;
@@ -490,11 +529,11 @@ module.exports = {
     var analysisType = attrs.analysis_type;
     delete attrs.analysis_type;
 
-    var timeframe = _.cloneDeep(attrs.timeframe);
+    var timeframe = _lodash2.default.cloneDeep(attrs.timeframe);
     delete attrs.timeframe;
 
-    var filters = _.map(attrs.filters, function (filter) {
-      return _.omit(_.cloneDeep(filter), 'coercion_type');
+    var filters = _lodash2.default.map(attrs.filters, function (filter) {
+      return _lodash2.default.omit(_lodash2.default.cloneDeep(filter), 'coercion_type');
     });
     delete attrs.filters;
 
@@ -504,15 +543,15 @@ module.exports = {
       delete attrs.steps;
     }
 
-    if (attrs.group_by && _.isArray(attrs.group_by) && attrs.group_by.length) {
+    if (attrs.group_by && _lodash2.default.isArray(attrs.group_by) && attrs.group_by.length) {
       attrs.group_by = attrs.group_by.length > 1 ? JSON.stringify(attrs.group_by) : attrs.group_by[0];
     }
 
-    var queryAttrs = Qs.stringify(attrs);
+    var queryAttrs = _qs2.default.stringify(attrs);
 
-    if (timeframe && TimeframeUtils.timeframeType(explorer.query.time) === 'relative') {
+    if (timeframe && _TimeframeUtils2.default.timeframeType(explorer.query.time) === 'relative') {
       queryAttrs += '&timeframe=' + timeframe;
-    } else if (timeframe && TimeframeUtils.timeframeType(explorer.query.time) === 'absolute') {
+    } else if (timeframe && _TimeframeUtils2.default.timeframeType(explorer.query.time) === 'absolute') {
       // This is an absolute timeframe, so we need to encode the object in a specific way before sending it, as per keen docs => https://keen.io/docs/data-analysis/timeframe/#absolute-timeframes
       timeframe = module.exports.encodeAttribute(timeframe);
       queryAttrs += '&timeframe=' + timeframe;
@@ -533,7 +572,7 @@ module.exports = {
   },
 
   resultCanBeVisualized: function resultCanBeVisualized(explorer) {
-    return explorer.response && !FormatUtils.isNullOrUndefined(explorer.response.result) && (_.isNumber(explorer.response.result) || _.isArray(explorer.response.result) && explorer.response.result.length);
+    return explorer.response && !_FormatUtils2.default.isNullOrUndefined(explorer.response.result) && (_lodash2.default.isNumber(explorer.response.result) || _lodash2.default.isArray(explorer.response.result) && explorer.response.result.length);
   },
 
   isJSONViz: function isJSONViz(explorer) {
@@ -551,7 +590,7 @@ module.exports = {
       requestType: 'jsonp'
     },
         params = module.exports.queryJSON(explorer),
-        s = stringify,
+        s = _jsonStableStringify2.default,
         dynamicCriteria,
         paramNames,
         dynamicConstructorNames = ['host', 'protocol', 'requestType'],
@@ -579,8 +618,8 @@ module.exports = {
     }
 
     if (params.steps) {
-      params.steps = _.map(params.steps, function (step) {
-        return _.omit(step, 'active');
+      params.steps = _lodash2.default.map(params.steps, function (step) {
+        return _lodash2.default.omit(step, 'active');
       });
     }
 
@@ -591,7 +630,7 @@ module.exports = {
       return '  ' + name + ': ' + s(client.config[name]);
     }).join(',\n');
     // remove coercion from example; it's already been handled elsewhere.
-    _.each(params['filters'], function (filter) {
+    _lodash2.default.each(params['filters'], function (filter) {
       delete filter['coercion_type'];
     });
 
@@ -603,7 +642,7 @@ module.exports = {
     }).join(',\n');
 
     var value = ['<!DOCTYPE html>', '<html>', '<head>', '  <meta charset="utf-8">', '  <link href="https://d26b395fwzu5fz.cloudfront.net/keen-dataviz-1.1.3.css" rel="stylesheet" />', '</head>', '<body>', '  <!-- Target DOM Node -->', '  <div id="keen-example-chart"></div>', '  ', '  <script src="https://d26b395fwzu5fz.cloudfront.net/keen-analysis-1.2.2.js" type="text/javascript"></script>', '  <script src="https://d26b395fwzu5fz.cloudfront.net/keen-dataviz-1.1.3.js" type="text/javascript"></script>', '  <script type="text/javascript">', '    var client = new Keen({', '      projectId: ' + s(client.config.projectId) + ',', '      readKey: ' + s(client.config.readKey) + echoIf(dynamicConstructorValues, ','), dynamicConstructorValues, '    });', '    ', '    var chart = new Keen.Dataviz()', '      .el("#keen-example-chart")', '      .height(240)', '      .title("' + chartTitle + '")', '' + chartType ? '      .type("' + chartType + '")' : '', '      .prepare();', '    ', '    client', '      .query(' + s(params.analysis_type) + ', {', dynamicCriteria, '      })', '      .then(function(res) {', '        chart.data(res).render();', '      })', '      .catch(function(err) {', '        chart.message(err.message);', '      });', '    ', '  </script>', '</body>', '</html>'];
-    return _.filter(value, function (val) {
+    return _lodash2.default.filter(value, function (val) {
       return val !== "";
     }).join('\n');
   },
@@ -621,41 +660,78 @@ module.exports = {
 "use strict";
 
 
-var _ = __webpack_require__(0);
-var AppDispatcher = __webpack_require__(7);
-var ExplorerConstants = __webpack_require__(19);
-var ExplorerStore = __webpack_require__(12);
-var ExplorerValidations = __webpack_require__(25);
-var NoticeActions = __webpack_require__(18);
-var AppStateActions = __webpack_require__(24);
-var ProjectActions = __webpack_require__(28);
-var ProjectStore = __webpack_require__(16);
-var RunValidations = __webpack_require__(10);
-var ExplorerUtils = __webpack_require__(3);
-var ChartTypeUtils = __webpack_require__(26);
+var _lodash = __webpack_require__(0);
+
+var _lodash2 = _interopRequireDefault(_lodash);
+
+var _AppDispatcher = __webpack_require__(7);
+
+var _AppDispatcher2 = _interopRequireDefault(_AppDispatcher);
+
+var _ExplorerConstants = __webpack_require__(19);
+
+var _ExplorerConstants2 = _interopRequireDefault(_ExplorerConstants);
+
+var _ExplorerStore = __webpack_require__(12);
+
+var _ExplorerStore2 = _interopRequireDefault(_ExplorerStore);
+
+var _ExplorerValidations = __webpack_require__(25);
+
+var _ExplorerValidations2 = _interopRequireDefault(_ExplorerValidations);
+
+var _NoticeActions = __webpack_require__(18);
+
+var _NoticeActions2 = _interopRequireDefault(_NoticeActions);
+
+var _AppStateActions = __webpack_require__(24);
+
+var _AppStateActions2 = _interopRequireDefault(_AppStateActions);
+
+var _ProjectActions = __webpack_require__(28);
+
+var _ProjectActions2 = _interopRequireDefault(_ProjectActions);
+
+var _ProjectStore = __webpack_require__(16);
+
+var _ProjectStore2 = _interopRequireDefault(_ProjectStore);
+
+var _RunValidations = __webpack_require__(10);
+
+var _RunValidations2 = _interopRequireDefault(_RunValidations);
+
+var _ExplorerUtils = __webpack_require__(3);
+
+var _ExplorerUtils2 = _interopRequireDefault(_ExplorerUtils);
+
+var _ChartTypeUtils = __webpack_require__(26);
+
+var _ChartTypeUtils2 = _interopRequireDefault(_ChartTypeUtils);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var ExplorerActions = {
 
   create: function create(attrs) {
-    AppDispatcher.dispatch({
-      actionType: ExplorerConstants.EXPLORER_CREATE,
+    _AppDispatcher2.default.dispatch({
+      actionType: _ExplorerConstants2.default.EXPLORER_CREATE,
       attrs: attrs
     });
   },
 
   createBatch: function createBatch(models) {
-    AppDispatcher.dispatch({
-      actionType: ExplorerConstants.EXPLORER_CREATE_BATCH,
+    _AppDispatcher2.default.dispatch({
+      actionType: _ExplorerConstants2.default.EXPLORER_CREATE_BATCH,
       models: models
     });
   },
 
   clone: function clone(sourceId) {
-    AppDispatcher.dispatch({
-      actionType: ExplorerConstants.EXPLORER_CLONE,
+    _AppDispatcher2.default.dispatch({
+      actionType: _ExplorerConstants2.default.EXPLORER_CLONE,
       id: sourceId
     });
-    NoticeActions.create({
+    _NoticeActions2.default.create({
       text: "Query cloned! Add a name for this cloned query and save it.",
       type: 'success',
       icon: 'check'
@@ -664,77 +740,77 @@ var ExplorerActions = {
 
   update: function update(id, updates) {
     var updated_query,
-        project = ProjectStore.getProject();
-    AppDispatcher.dispatch({
-      actionType: ExplorerConstants.EXPLORER_UPDATE,
+        project = _ProjectStore2.default.getProject();
+    _AppDispatcher2.default.dispatch({
+      actionType: _ExplorerConstants2.default.EXPLORER_UPDATE,
       id: id,
       updates: updates
     });
     // Fetch schema for selected event collection
     updated_query = updates.query ? updates.query : updates.response && updates.response.query ? updates.response.query : {};
     if (updated_query.event_collection) {
-      ProjectActions.fetchCollectionSchema(project.client, updated_query.event_collection);
+      _ProjectActions2.default.fetchCollectionSchema(project.client, updated_query.event_collection);
     }
     if (updated_query.steps && updated_query.steps.length) {
-      _.each(updated_query.steps, function (step, i) {
-        ProjectActions.fetchCollectionSchema(project.client, step.event_collection);
+      _lodash2.default.each(updated_query.steps, function (step, i) {
+        _ProjectActions2.default.fetchCollectionSchema(project.client, step.event_collection);
       });
     }
   },
 
   remove: function remove(id) {
-    AppDispatcher.dispatch({
-      actionType: ExplorerConstants.EXPLORER_REMOVE,
+    _AppDispatcher2.default.dispatch({
+      actionType: _ExplorerConstants2.default.EXPLORER_REMOVE,
       id: id
     });
   },
 
   setActive: function setActive(id) {
-    AppDispatcher.dispatch({
-      actionType: ExplorerConstants.EXPLORER_SET_ACTIVE,
+    _AppDispatcher2.default.dispatch({
+      actionType: _ExplorerConstants2.default.EXPLORER_SET_ACTIVE,
       id: id
     });
   },
 
   revertActiveChanges: function revertActiveChanges() {
-    AppDispatcher.dispatch({
-      actionType: ExplorerConstants.EXPLORER_REVERT_ACTIVE_CHANGES
+    _AppDispatcher2.default.dispatch({
+      actionType: _ExplorerConstants2.default.EXPLORER_REVERT_ACTIVE_CHANGES
     });
   },
 
   clear: function clear(id) {
-    AppDispatcher.dispatch({
-      actionType: ExplorerConstants.EXPLORER_CLEAR,
+    _AppDispatcher2.default.dispatch({
+      actionType: _ExplorerConstants2.default.EXPLORER_CLEAR,
       id: id
     });
   },
 
   validate: function validate(id) {
-    AppDispatcher.dispatch({
-      actionType: ExplorerConstants.EXPLORER_VALIDATE,
+    _AppDispatcher2.default.dispatch({
+      actionType: _ExplorerConstants2.default.EXPLORER_VALIDATE,
       id: id
     });
   },
 
   addFilter: function addFilter(id, attrs) {
-    AppDispatcher.dispatch({
-      actionType: ExplorerConstants.EXPLORER_ADD_FILTER,
+    _AppDispatcher2.default.dispatch({
+      actionType: _ExplorerConstants2.default.EXPLORER_ADD_FILTER,
       id: id,
       attrs: attrs
     });
   },
 
   removeFilter: function removeFilter(id, index) {
-    AppDispatcher.dispatch({
-      actionType: ExplorerConstants.EXPLORER_REMOVE_FILTER,
+    _AppDispatcher2.default.dispatch({
+      actionType: _ExplorerConstants2.default.EXPLORER_REMOVE_FILTER,
       id: id,
       index: index
     });
   },
 
   updateFilter: function updateFilter(id, index, attrs) {
-    AppDispatcher.dispatch({
-      actionType: ExplorerConstants.EXPLORER_UPDATE_FILTER,
+    _AppDispatcher2.default.dispatch({
+      actionType: _ExplorerConstants2.default.EXPLORER_UPDATE_FILTER,
       id: id,
       index: index,
       attrs: attrs
@@ -742,33 +818,33 @@ var ExplorerActions = {
   },
 
   addStep: function addStep(id, attrs) {
-    AppDispatcher.dispatch({
-      actionType: ExplorerConstants.EXPLORER_ADD_STEP,
+    _AppDispatcher2.default.dispatch({
+      actionType: _ExplorerConstants2.default.EXPLORER_ADD_STEP,
       id: id,
       attrs: attrs
     });
   },
 
   removeStep: function removeStep(id, index) {
-    AppDispatcher.dispatch({
-      actionType: ExplorerConstants.EXPLORER_REMOVE_STEP,
+    _AppDispatcher2.default.dispatch({
+      actionType: _ExplorerConstants2.default.EXPLORER_REMOVE_STEP,
       id: id,
       index: index
     });
   },
 
   setStepActive: function setStepActive(id, index) {
-    AppDispatcher.dispatch({
-      actionType: ExplorerConstants.EXPLORER_SET_STEP_ACTIVE,
+    _AppDispatcher2.default.dispatch({
+      actionType: _ExplorerConstants2.default.EXPLORER_SET_STEP_ACTIVE,
       id: id,
       index: index
     });
   },
 
   updateStep: function updateStep(id, index, attrs) {
-    var project = ProjectStore.getProject();
-    AppDispatcher.dispatch({
-      actionType: ExplorerConstants.EXPLORER_UPDATE_STEP,
+    var project = _ProjectStore2.default.getProject();
+    _AppDispatcher2.default.dispatch({
+      actionType: _ExplorerConstants2.default.EXPLORER_UPDATE_STEP,
       id: id,
       index: index,
       attrs: attrs
@@ -776,13 +852,13 @@ var ExplorerActions = {
 
     // Fetch schema for selected event collection
     if (attrs.event_collection) {
-      ProjectActions.fetchCollectionSchema(project.client, attrs.event_collection);
+      _ProjectActions2.default.fetchCollectionSchema(project.client, attrs.event_collection);
     }
   },
 
   moveStep: function moveStep(id, index, direction) {
-    AppDispatcher.dispatch({
-      actionType: ExplorerConstants.EXPLORER_MOVE_STEP,
+    _AppDispatcher2.default.dispatch({
+      actionType: _ExplorerConstants2.default.EXPLORER_MOVE_STEP,
       id: id,
       index: index,
       direction: direction
@@ -790,8 +866,8 @@ var ExplorerActions = {
   },
 
   addStepFilter: function addStepFilter(id, stepIndex, attrs) {
-    AppDispatcher.dispatch({
-      actionType: ExplorerConstants.EXPLORER_ADD_STEP_FILTER,
+    _AppDispatcher2.default.dispatch({
+      actionType: _ExplorerConstants2.default.EXPLORER_ADD_STEP_FILTER,
       id: id,
       stepIndex: stepIndex,
       attrs: attrs
@@ -799,8 +875,8 @@ var ExplorerActions = {
   },
 
   removeStepFilter: function removeStepFilter(id, stepIndex, filterIndex) {
-    AppDispatcher.dispatch({
-      actionType: ExplorerConstants.EXPLORER_REMOVE_STEP_FILTER,
+    _AppDispatcher2.default.dispatch({
+      actionType: _ExplorerConstants2.default.EXPLORER_REMOVE_STEP_FILTER,
       id: id,
       stepIndex: stepIndex,
       filterIndex: filterIndex
@@ -808,8 +884,8 @@ var ExplorerActions = {
   },
 
   updateStepFilter: function updateStepFilter(id, stepIndex, filterIndex, attrs) {
-    AppDispatcher.dispatch({
-      actionType: ExplorerConstants.EXPLORER_UPDATE_STEP_FILTER,
+    _AppDispatcher2.default.dispatch({
+      actionType: _ExplorerConstants2.default.EXPLORER_UPDATE_STEP_FILTER,
       id: id,
       stepIndex: stepIndex,
       filterIndex: filterIndex,
@@ -818,63 +894,63 @@ var ExplorerActions = {
   },
 
   exec: function exec(client, id) {
-    var explorer = ExplorerStore.get(id);
+    var explorer = _ExplorerStore2.default.get(id);
     if (explorer.loading) {
       throw new Error("Warning: calling exec when model loading is true. Explorer id: " + explorer.id);
     }
     ExplorerActions.validate(explorer.id);
-    explorer = ExplorerStore.get(id);
+    explorer = _ExplorerStore2.default.get(id);
     if (!explorer.isValid) {
-      AppDispatcher.dispatch({
-        actionType: ExplorerConstants.EXPLORER_FOUND_INVALID,
+      _AppDispatcher2.default.dispatch({
+        actionType: _ExplorerConstants2.default.EXPLORER_FOUND_INVALID,
         id: explorer.id
       });
       return;
     }
-    NoticeActions.clearAll();
+    _NoticeActions2.default.clearAll();
 
-    AppDispatcher.dispatch({
-      actionType: ExplorerConstants.EXPLORER_UPDATE,
+    _AppDispatcher2.default.dispatch({
+      actionType: _ExplorerConstants2.default.EXPLORER_UPDATE,
       id: explorer.id,
       updates: { loading: true }
     });
 
-    ExplorerUtils.runQuery({
+    _ExplorerUtils2.default.runQuery({
       client: client,
-      query: ExplorerUtils.queryJSON(explorer),
+      query: _ExplorerUtils2.default.queryJSON(explorer),
       error: module.exports.execError.bind(this, explorer),
       success: module.exports.execSuccess.bind(this, explorer)
     });
   },
 
   execError: function execError(explorer, err) {
-    AppDispatcher.dispatch({
-      actionType: ExplorerConstants.EXPLORER_QUERY_ERROR,
+    _AppDispatcher2.default.dispatch({
+      actionType: _ExplorerConstants2.default.EXPLORER_QUERY_ERROR,
       query: explorer.query,
       error: err.message
     });
     ExplorerActions.update(explorer.id, { loading: false });
-    NoticeActions.create({ text: err.message, type: 'error' });
+    _NoticeActions2.default.create({ text: err.message, type: 'error' });
   },
 
   execSuccess: function execSuccess(explorer, response) {
-    AppDispatcher.dispatch({
-      actionType: ExplorerConstants.EXPLORER_QUERY_SUCCESS,
+    _AppDispatcher2.default.dispatch({
+      actionType: _ExplorerConstants2.default.EXPLORER_QUERY_SUCCESS,
       query: explorer.query,
-      isSaved: ExplorerUtils.isPersisted(explorer)
+      isSaved: _ExplorerUtils2.default.isPersisted(explorer)
     });
-    NoticeActions.clearAll();
+    _NoticeActions2.default.clearAll();
 
     var updates = {};
     updates.response = response;
     // If there is no query object on the response, add one. This is required for Dataviz to properly auto-parse
     // the result + the query to correctly choose a chart type.
-    if (!response.query) response.query = ExplorerUtils.queryJSON(explorer);
+    if (!response.query) response.query = _ExplorerUtils2.default.queryJSON(explorer);
     updates.loading = false;
 
-    if (!ChartTypeUtils.responseSupportsChartType(response.query, explorer.metadata.visualization.chart_type)) {
-      updates.metadata = _.cloneDeep(explorer.metadata);
-      updates.metadata.visualization.chart_type = ChartTypeUtils.getChartTypeOptions(response.query)[0];
+    if (!_ChartTypeUtils2.default.responseSupportsChartType(response.query, explorer.metadata.visualization.chart_type)) {
+      updates.metadata = _lodash2.default.cloneDeep(explorer.metadata);
+      updates.metadata.visualization.chart_type = _ChartTypeUtils2.default.getChartTypeOptions(response.query)[0];
     }
 
     updates.dataTimestamp = Date.now();
@@ -883,39 +959,39 @@ var ExplorerActions = {
 
   runEmailExtraction: function runEmailExtraction(client, id) {
     ExplorerActions.validate(id);
-    var explorer = ExplorerStore.get(id);
+    var explorer = _ExplorerStore2.default.get(id);
 
     if (!explorer.isValid) {
-      AppDispatcher.dispatch({
-        actionType: ExplorerConstants.EXPLORER_FOUND_INVALID,
+      _AppDispatcher2.default.dispatch({
+        actionType: _ExplorerConstants2.default.EXPLORER_FOUND_INVALID,
         id: explorer.id
       });
       return;
     }
-    NoticeActions.clearAll();
+    _NoticeActions2.default.clearAll();
 
-    AppDispatcher.dispatch({
-      actionType: ExplorerConstants.EXPLORER_UPDATE,
+    _AppDispatcher2.default.dispatch({
+      actionType: _ExplorerConstants2.default.EXPLORER_UPDATE,
       id: explorer.id,
       updates: { loading: true }
     });
 
-    ExplorerUtils.runQuery({
+    _ExplorerUtils2.default.runQuery({
       client: client,
-      query: ExplorerUtils.queryJSON(explorer),
+      query: _ExplorerUtils2.default.queryJSON(explorer),
       success: module.exports.runEmailExtractionSuccess.bind(this, explorer),
       error: module.exports.runEmailExtractionError
     });
   },
 
   runEmailExtractionSuccess: function runEmailExtractionSuccess(explorer, res) {
-    AppDispatcher.dispatch({
-      actionType: ExplorerConstants.EXPLORER_QUERY_SUCCESS,
+    _AppDispatcher2.default.dispatch({
+      actionType: _ExplorerConstants2.default.EXPLORER_QUERY_SUCCESS,
       query: explorer.query,
-      isSaved: ExplorerUtils.isPersisted(explorer)
+      isSaved: _ExplorerUtils2.default.isPersisted(explorer)
     });
-    NoticeActions.clearAll();
-    NoticeActions.create({
+    _NoticeActions2.default.clearAll();
+    _NoticeActions2.default.create({
       text: "Email extraction successfully requested. Check your email (" + explorer.query.email + ").",
       type: 'success',
       icon: 'check'
@@ -927,11 +1003,11 @@ var ExplorerActions = {
   },
 
   runEmailExtractionError: function runEmailExtractionError(err) {
-    NoticeActions.create({ text: err.message, type: 'error', icon: 'remove-sign' });
+    _NoticeActions2.default.create({ text: err.message, type: 'error', icon: 'remove-sign' });
   },
 
   fetchAllPersisted: function fetchAllPersisted(persistence, callback) {
-    AppStateActions.update({ fetchingPersistedExplorers: true });
+    _AppStateActions2.default.update({ fetchingPersistedExplorers: true });
     persistence.get(null, function (err, resp) {
       if (err) {
         callback(err);
@@ -939,8 +1015,8 @@ var ExplorerActions = {
       }
       var models = [];
       resp.forEach(function (model) {
-        var formattedModel = ExplorerUtils.formatQueryParams(model);
-        RunValidations.run(ExplorerValidations, formattedModel);
+        var formattedModel = _ExplorerUtils2.default.formatQueryParams(model);
+        _RunValidations2.default.run(_ExplorerValidations2.default, formattedModel);
         if (!formattedModel.isValid) {
           console.warn('A persisted explorer model is invalid: ', formattedModel);
           console.log('Errors: ', formattedModel.errors);
@@ -948,7 +1024,7 @@ var ExplorerActions = {
         models.push(formattedModel);
       });
       ExplorerActions.createBatch(models);
-      AppStateActions.update({ fetchingPersistedExplorers: false });
+      _AppStateActions2.default.update({ fetchingPersistedExplorers: false });
       callback(null);
     });
   },
@@ -959,8 +1035,8 @@ var ExplorerActions = {
         callback(err);
         return;
       }
-      var model = ExplorerUtils.formatQueryParams(resp);
-      RunValidations.run(ExplorerValidations, model);
+      var model = _ExplorerUtils2.default.formatQueryParams(resp);
+      _RunValidations2.default.run(_ExplorerValidations2.default, model);
       if (!model.isValid) {
         console.warn('A persisted explorer model is invalid: ', model);
       }
@@ -970,34 +1046,34 @@ var ExplorerActions = {
   },
 
   save: function save(persistence, sourceId) {
-    var saveType = ExplorerUtils.saveType(ExplorerStore.get(sourceId));
+    var saveType = _ExplorerUtils2.default.saveType(_ExplorerStore2.default.get(sourceId));
     var persistenceFunction = saveType === 'save' ? 'create' : 'update';
-    AppDispatcher.dispatch({
-      actionType: ExplorerConstants.EXPLORER_SAVING,
+    _AppDispatcher2.default.dispatch({
+      actionType: _ExplorerConstants2.default.EXPLORER_SAVING,
       id: sourceId,
       saveType: saveType
     });
 
-    var explorer = ExplorerStore.get(sourceId);
+    var explorer = _ExplorerStore2.default.get(sourceId);
     if (!explorer.isValid) {
-      AppDispatcher.dispatch({
-        actionType: ExplorerConstants.EXPLORER_FOUND_INVALID,
+      _AppDispatcher2.default.dispatch({
+        actionType: _ExplorerConstants2.default.EXPLORER_FOUND_INVALID,
         id: explorer.id
       });
       module.exports.update(sourceId, { saving: false });
       return;
     }
-    NoticeActions.clearAll();
+    _NoticeActions2.default.clearAll();
 
-    var explorerJSON = ExplorerUtils.cleanJSONforSave(ExplorerUtils.toJSON(ExplorerStore.get(sourceId)));
+    var explorerJSON = _ExplorerUtils2.default.cleanJSONforSave(_ExplorerUtils2.default.toJSON(_ExplorerStore2.default.get(sourceId)));
     persistence[persistenceFunction](explorerJSON, function (err, res) {
       if (err) {
-        AppDispatcher.dispatch({
-          actionType: ExplorerConstants.EXPLORER_SAVE_FAIL,
+        _AppDispatcher2.default.dispatch({
+          actionType: _ExplorerConstants2.default.EXPLORER_SAVE_FAIL,
           saveType: saveType,
           id: sourceId,
           errorResp: err,
-          query: ExplorerStore.get(sourceId).query
+          query: _ExplorerStore2.default.get(sourceId).query
         });
         return;
       }
@@ -1006,16 +1082,16 @@ var ExplorerActions = {
   },
 
   saveSuccess: function saveSuccess(sourceId, res) {
-    var saveType = ExplorerUtils.saveType(ExplorerStore.get(sourceId));
-    var updatedModel = ExplorerUtils.mergeResponseWithExplorer(ExplorerStore.get(sourceId), res);
-    AppDispatcher.dispatch({
-      actionType: ExplorerConstants.EXPLORER_UPDATE,
+    var saveType = _ExplorerUtils2.default.saveType(_ExplorerStore2.default.get(sourceId));
+    var updatedModel = _ExplorerUtils2.default.mergeResponseWithExplorer(_ExplorerStore2.default.get(sourceId), res);
+    _AppDispatcher2.default.dispatch({
+      actionType: _ExplorerConstants2.default.EXPLORER_UPDATE,
       id: sourceId,
       updates: updatedModel
     });
     // We need to use the new model id below, not the old sourceId passed in.
-    AppDispatcher.dispatch({
-      actionType: ExplorerConstants.EXPLORER_SAVE_SUCCESS,
+    _AppDispatcher2.default.dispatch({
+      actionType: _ExplorerConstants2.default.EXPLORER_SAVE_SUCCESS,
       id: updatedModel.id,
       saveType: saveType,
       query: updatedModel.query
@@ -1023,24 +1099,24 @@ var ExplorerActions = {
   },
 
   destroy: function destroy(persistence, sourceId) {
-    AppDispatcher.dispatch({
-      actionType: ExplorerConstants.EXPLORER_DESTROYING
+    _AppDispatcher2.default.dispatch({
+      actionType: _ExplorerConstants2.default.EXPLORER_DESTROYING
     });
-    var attrs = _.clone(ExplorerUtils.toJSON(ExplorerStore.get(sourceId)));
+    var attrs = _lodash2.default.clone(_ExplorerUtils2.default.toJSON(_ExplorerStore2.default.get(sourceId)));
     persistence.destroy(attrs, function (err, res) {
       if (err) {
-        AppDispatcher.dispatch({
-          actionType: ExplorerConstants.EXPLORER_DESTROY_FAIL,
+        _AppDispatcher2.default.dispatch({
+          actionType: _ExplorerConstants2.default.EXPLORER_DESTROY_FAIL,
           errorMsg: err,
-          query: ExplorerStore.get(sourceId).query
+          query: _ExplorerStore2.default.get(sourceId).query
         });
       } else {
-        AppDispatcher.dispatch({
-          actionType: ExplorerConstants.EXPLORER_REMOVE,
+        _AppDispatcher2.default.dispatch({
+          actionType: _ExplorerConstants2.default.EXPLORER_REMOVE,
           id: sourceId
         });
-        AppDispatcher.dispatch({
-          actionType: ExplorerConstants.EXPLORER_DESTROY_SUCCESS,
+        _AppDispatcher2.default.dispatch({
+          actionType: _ExplorerConstants2.default.EXPLORER_DESTROY_SUCCESS,
           query: attrs.query
         });
       }
@@ -1058,9 +1134,19 @@ module.exports = ExplorerActions;
 "use strict";
 
 
-var _ = __webpack_require__(0);
-var DateUtils = __webpack_require__(80);
-var FormatUtils = __webpack_require__(2);
+var _lodash = __webpack_require__(0);
+
+var _lodash2 = _interopRequireDefault(_lodash);
+
+var _DateUtils = __webpack_require__(80);
+
+var _DateUtils2 = _interopRequireDefault(_DateUtils);
+
+var _FormatUtils = __webpack_require__(2);
+
+var _FormatUtils2 = _interopRequireDefault(_FormatUtils);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // ***********************
 // ** Project Constants
@@ -1246,7 +1332,7 @@ module.exports = {
   },
 
   getLocalTimezone: function getLocalTimezone(date) {
-    var isDST = DateUtils.isDST();
+    var isDST = _DateUtils2.default.isDST();
     var localOffset = module.exports.getLocalTimezoneOffset();
     var zones = CONSTANTS.TIMEZONES.filter(function (zone) {
       if (isDST) {
@@ -1274,9 +1360,9 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__6__;
 "use strict";
 
 
-var Dispatcher = __webpack_require__(79).Dispatcher;
+var _flux = __webpack_require__(79);
 
-module.exports = new Dispatcher();
+module.exports = new _flux.Dispatcher();
 
 /***/ }),
 /* 8 */
@@ -1285,16 +1371,38 @@ module.exports = new Dispatcher();
 "use strict";
 
 
-var _ = __webpack_require__(0);
-var moment = __webpack_require__(9);
-var S = __webpack_require__(44);
-var TimeframeUtils = __webpack_require__(17);
-var FormatUtils = __webpack_require__(2);
-var FilterValidations = __webpack_require__(30);
-var RunValidations = __webpack_require__(10);
+var _lodash = __webpack_require__(0);
+
+var _lodash2 = _interopRequireDefault(_lodash);
+
+var _moment = __webpack_require__(9);
+
+var _moment2 = _interopRequireDefault(_moment);
+
+var _string = __webpack_require__(44);
+
+var _string2 = _interopRequireDefault(_string);
+
+var _TimeframeUtils = __webpack_require__(17);
+
+var _TimeframeUtils2 = _interopRequireDefault(_TimeframeUtils);
+
+var _FormatUtils = __webpack_require__(2);
+
+var _FormatUtils2 = _interopRequireDefault(_FormatUtils);
+
+var _FilterValidations = __webpack_require__(30);
+
+var _FilterValidations2 = _interopRequireDefault(_FilterValidations);
+
+var _RunValidations = __webpack_require__(10);
+
+var _RunValidations2 = _interopRequireDefault(_RunValidations);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function exists(value) {
-  return !_.isNull(value) && !_.isUndefined(value);
+  return !_lodash2.default.isNull(value) && !_lodash2.default.isUndefined(value);
 }
 
 function toType(obj) {
@@ -1351,7 +1459,7 @@ module.exports = {
   },
 
   defaultDate: function defaultDate() {
-    var yesterday = moment().subtract(1, 'days').startOf('day').format('x');
+    var yesterday = (0, _moment2.default)().subtract(1, 'days').startOf('day').format('x');
     return new Date(Number(yesterday));
   },
 
@@ -1376,8 +1484,8 @@ module.exports = {
         if (filter.operator === 'exists') return 'Boolean';
         if (['false', 'true'].indexOf(filter.property_value) > -1) return 'Boolean';
         if (isNumeric(filter.property_value) && ['contains', 'not_contains'].indexOf(filter.operator) === -1) return 'Number';
-        if (FormatUtils.isDateInStrictFormat(filter.property_value.substring(0, filter.property_value.length - 6))) return 'Datetime';
-        if (FormatUtils.isList(filter.property_value)) return 'List';
+        if (_FormatUtils2.default.isDateInStrictFormat(filter.property_value.substring(0, filter.property_value.length - 6))) return 'Datetime';
+        if (_FormatUtils2.default.isList(filter.property_value)) return 'List';
         return 'String';
         break;
       case 'array':
@@ -1400,35 +1508,35 @@ module.exports = {
     var complete = true;
     for (var i = 0; i < attrs.length; i++) {
       var val = filter[attrs[i]];
-      complete = !_.isUndefined(val) && !_.isNull(val);
-      if (_.isObject(val)) complete = !_.isEmpty(val);
+      complete = !_lodash2.default.isUndefined(val) && !_lodash2.default.isNull(val);
+      if (_lodash2.default.isObject(val)) complete = !_lodash2.default.isEmpty(val);
       if (!complete) break;
     }
     return complete;
   },
 
   queryJSON: function queryJSON(filter) {
-    RunValidations.run(FilterValidations, filter);
+    _RunValidations2.default.run(_FilterValidations2.default, filter);
     if (!filter.isValid) return {};
 
-    var attrs = _.cloneDeep(filter);
+    var attrs = _lodash2.default.cloneDeep(filter);
     attrs.property_value = module.exports.getCoercedValue(filter);
 
     if (attrs.coercion_type === 'Datetime') {
-      attrs.property_value = FormatUtils.formatISOTimeNoTimezone(attrs.property_value);
+      attrs.property_value = _FormatUtils2.default.formatISOTimeNoTimezone(attrs.property_value);
     }
     if (attrs.coercion_type === 'List') {
-      attrs.property_value = FormatUtils.parseList(attrs.property_value);
+      attrs.property_value = _FormatUtils2.default.parseList(attrs.property_value);
     }
 
-    return _.pick(attrs, ['property_name', 'operator', 'property_value']);
+    return _lodash2.default.pick(attrs, ['property_name', 'operator', 'property_value']);
   },
 
   initList: function initList(filter) {
     var newVal = "";
-    _.each(filter.property_value, function (item, index) {
-      if (_.isString(item)) newVal += '"' + item + '"';
-      if (_.isNumber(item)) newVal += "'" + item + "'";
+    _lodash2.default.each(filter.property_value, function (item, index) {
+      if (_lodash2.default.isString(item)) newVal += '"' + item + '"';
+      if (_lodash2.default.isNumber(item)) newVal += "'" + item + "'";
       if (index !== filter.property_value.length - 1) newVal += ', ';
     });
     filter.property_value = newVal;
@@ -1438,11 +1546,11 @@ module.exports = {
   formatFilterParams: function formatFilterParams(filter) {
     filter.coercion_type = module.exports.getCoercionType(filter);
     if (filter.coercion_type === 'List') {
-      filter = _.assign({}, filter, module.exports.initList(filter));
+      filter = _lodash2.default.assign({}, filter, module.exports.initList(filter));
     }
     filter.property_value = module.exports.getCoercedValue(filter);
     if (filter.coercion_type === 'Datetime') {
-      filter.property_value = FormatUtils.convertDateToUTC(new Date(filter.property_value));
+      filter.property_value = _FormatUtils2.default.convertDateToUTC(new Date(filter.property_value));
     }
     return filter;
   },
@@ -1457,8 +1565,8 @@ module.exports = {
   },
 
   validFilters: function validFilters(filters) {
-    return _.filter(filters, function (filter) {
-      RunValidations.run(FilterValidations, filter);
+    return _lodash2.default.filter(filters, function (filter) {
+      _RunValidations2.default.run(_FilterValidations2.default, filter);
       return filter.isValid;
     });
   }
@@ -1516,7 +1624,15 @@ module.exports = {
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var React = __webpack_require__(1);
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _lodash = __webpack_require__(0);
+
+var _lodash2 = _interopRequireDefault(_lodash);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /* TODO:
 [ ] resting state (selection/empty)
@@ -1537,7 +1653,7 @@ var React = __webpack_require__(1);
 [ ] bug: With breaks on selects inside filter manager modal.
 */
 
-var ReactSelect = React.createClass({
+var ReactSelect = _react2.default.createClass({
   displayName: 'ReactSelect',
 
 
@@ -1751,12 +1867,12 @@ var ReactSelect = React.createClass({
     var inputString = this.state.initialFocus ? '' : this.props.value || '';
     return this.props.items.map(function (item, index) {
       // If input is present, skip items that don't match
-      if (inputString.length > 0 && String(item).toLowerCase().search(_.escapeRegExp(inputString).toLowerCase()) < 0) return;
+      if (inputString.length > 0 && String(item).toLowerCase().search(_lodash2.default.escapeRegExp(inputString).toLowerCase()) < 0) return;
 
       // Simple result limiting
       count++;if (count > self.state.limit) return;
       self.visibleItems = self.visibleItems + 1;
-      return React.createElement(
+      return _react2.default.createElement(
         'li',
         { className: self.state.selectedItem === count - 1 ? "react-select-item active" : "react-select-item",
           key: index,
@@ -1773,7 +1889,7 @@ var ReactSelect = React.createClass({
   getScrollPane: function getScrollPane(items) {
     // Hide scrollpane unless active
     if (this.state.visible) {
-      return React.createElement(
+      return _react2.default.createElement(
         'div',
         {
           ref: 'scrollpane',
@@ -1781,12 +1897,12 @@ var ReactSelect = React.createClass({
           onScroll: this.handleScroll,
           tabIndex: '-1',
           'aria-hidden': 'false' },
-        React.createElement(
+        _react2.default.createElement(
           'div',
           { className: 'react-select-aria-notice', 'aria-live': 'assertive' },
           this.state.focusedItem || ''
         ),
-        React.createElement(
+        _react2.default.createElement(
           'ul',
           { ref: 'list', className: 'react-select-list',
             'aria-atomic': 'false',
@@ -1820,10 +1936,10 @@ var ReactSelect = React.createClass({
       inputClasses = inputClasses + ' ' + this.props.inputClasses;
     }
 
-    return React.createElement(
+    return _react2.default.createElement(
       'div',
       { ref: 'wrapper', className: wrapClasses },
-      React.createElement('input', { ref: 'input',
+      _react2.default.createElement('input', { ref: 'input',
         name: this.props.name,
         className: inputClasses,
         value: this.props.value || "",
@@ -1854,31 +1970,65 @@ module.exports = ReactSelect;
 "use strict";
 
 
-/* ExplorerStore */
+var _AppDispatcher = __webpack_require__(7);
 
-var AppDispatcher = __webpack_require__(7);
-var EventEmitter = __webpack_require__(21).EventEmitter;
-var _ = __webpack_require__(0);
-var ExplorerConstants = __webpack_require__(19);
-var FormatUtils = __webpack_require__(2);
-var ExplorerUtils = __webpack_require__(3);
-var FilterUtils = __webpack_require__(8);
-var ProjectUtils = __webpack_require__(5);
-var ProjectStore = __webpack_require__(16);
+var _AppDispatcher2 = _interopRequireDefault(_AppDispatcher);
 
-var RunValidations = __webpack_require__(10).run;
-var ExplorerValidations = __webpack_require__(25);
-var FilterValidations = __webpack_require__(30);
-var StepValidations = __webpack_require__(38);
+var _events = __webpack_require__(21);
 
-var CHANGE_EVENT = 'change';
+var _lodash = __webpack_require__(0);
+
+var _lodash2 = _interopRequireDefault(_lodash);
+
+var _ExplorerConstants = __webpack_require__(19);
+
+var _ExplorerConstants2 = _interopRequireDefault(_ExplorerConstants);
+
+var _FormatUtils = __webpack_require__(2);
+
+var _FormatUtils2 = _interopRequireDefault(_FormatUtils);
+
+var _ExplorerUtils = __webpack_require__(3);
+
+var _ExplorerUtils2 = _interopRequireDefault(_ExplorerUtils);
+
+var _FilterUtils = __webpack_require__(8);
+
+var _FilterUtils2 = _interopRequireDefault(_FilterUtils);
+
+var _ProjectUtils = __webpack_require__(5);
+
+var _ProjectUtils2 = _interopRequireDefault(_ProjectUtils);
+
+var _ProjectStore = __webpack_require__(16);
+
+var _ProjectStore2 = _interopRequireDefault(_ProjectStore);
+
+var _RunValidations = __webpack_require__(10);
+
+var _ExplorerValidations = __webpack_require__(25);
+
+var _ExplorerValidations2 = _interopRequireDefault(_ExplorerValidations);
+
+var _FilterValidations = __webpack_require__(30);
+
+var _FilterValidations2 = _interopRequireDefault(_FilterValidations);
+
+var _StepValidations = __webpack_require__(38);
+
+var _StepValidations2 = _interopRequireDefault(_StepValidations);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var CHANGE_EVENT = 'change'; /* ExplorerStore */
+
 var SHARED_FUNNEL_STEP_PROPERTIES = ['event_collection', 'time', 'timezone', 'filters'];
 
 var _explorers = {};
 
 function _defaultAttrs() {
   return {
-    id: FormatUtils.generateTempId(),
+    id: _FormatUtils2.default.generateTempId(),
     query_name: null,
     active: false,
     saving: false,
@@ -1895,7 +2045,7 @@ function _defaultAttrs() {
       percentile: null,
       group_by: [],
       interval: null,
-      timezone: ProjectUtils.getLocalTimezone(),
+      timezone: _ProjectUtils2.default.getLocalTimezone(),
       filters: [],
       steps: [],
       email: null,
@@ -1947,7 +2097,7 @@ function _defaultStep() {
       amount: 14,
       sub_timeframe: 'days'
     },
-    timezone: ProjectUtils.getLocalTimezone(),
+    timezone: _ProjectUtils2.default.getLocalTimezone(),
     filters: [],
     optional: false,
     inverted: false,
@@ -1959,7 +2109,7 @@ function _defaultStep() {
 }
 
 function _validate(id) {
-  RunValidations(ExplorerValidations, _explorers[id]);
+  (0, _RunValidations.run)(_ExplorerValidations2.default, _explorers[id]);
 }
 
 /**
@@ -1970,8 +2120,8 @@ function _validate(id) {
  * @return {String}           The default coercion type
  */
 function _getDefaultFilterCoercionType(explorer, filter) {
-  var propertyType = ProjectUtils.getPropertyType(ProjectStore.getProject(), explorer.query.event_collection, filter.property_name);
-  var targetCoercionType = FormatUtils.coercionTypeForPropertyType(propertyType);
+  var propertyType = _ProjectUtils2.default.getPropertyType(_ProjectStore2.default.getProject(), explorer.query.event_collection, filter.property_name);
+  var targetCoercionType = _FormatUtils2.default.coercionTypeForPropertyType(propertyType);
   return targetCoercionType;
 }
 
@@ -1985,13 +2135,13 @@ function _prepareUpdates(explorer, updates) {
   // TODO: We're assigning the response object directly onto the model so we
   // don't have to loop through the (sometimes) massive response object.
   function customizer(objValue, srcValue, key) {
-    if (_.isArray(objValue)) {
+    if (_lodash2.default.isArray(objValue)) {
       return srcValue;
-    } else if (key === 'time' && _.isPlainObject(objValue)) {
+    } else if (key === 'time' && _lodash2.default.isPlainObject(objValue)) {
       return srcValue;
     }
   }
-  var newModel = _.mergeWith({}, explorer, _.omit(updates, 'response'), customizer);
+  var newModel = _lodash2.default.mergeWith({}, explorer, _lodash2.default.omit(updates, 'response'), customizer);
   if (updates.response) newModel.response = updates.response;
 
   // Check if the event collection has changed. Clear the property names if so.
@@ -2019,15 +2169,15 @@ function _migrateToFunnel(explorer, newModel) {
   var firstStep = _defaultStep();
   firstStep.active = true;
 
-  _.each(SHARED_FUNNEL_STEP_PROPERTIES, function (key) {
-    if (!_.isUndefined(explorer.query[key]) && !_.isNull(explorer.query[key])) {
+  _lodash2.default.each(SHARED_FUNNEL_STEP_PROPERTIES, function (key) {
+    if (!_lodash2.default.isUndefined(explorer.query[key]) && !_lodash2.default.isNull(explorer.query[key])) {
       firstStep[key] = explorer.query[key];
     }
 
     newModel.query[key] = key === 'filters' ? [] : null;
   });
 
-  if (!_.isUndefined(explorer.query.target_property) && !_.isNull(explorer.query.target_property)) {
+  if (!_lodash2.default.isUndefined(explorer.query.target_property) && !_lodash2.default.isNull(explorer.query.target_property)) {
     firstStep.actor_property = explorer.query.target_property;
     explorer.query.target_property = null;
   }
@@ -2045,15 +2195,15 @@ function _migrateToFunnel(explorer, newModel) {
  */
 function _migrateFromFunnel(explorer, newModel) {
   if (explorer.query.steps.length < 1) return newModel;
-  var activeStep = _.find(explorer.query.steps, { active: true }) || explorer.query.steps[0];
+  var activeStep = _lodash2.default.find(explorer.query.steps, { active: true }) || explorer.query.steps[0];
 
-  _.each(SHARED_FUNNEL_STEP_PROPERTIES, function (key) {
-    if (!_.isUndefined(activeStep[key])) {
+  _lodash2.default.each(SHARED_FUNNEL_STEP_PROPERTIES, function (key) {
+    if (!_lodash2.default.isUndefined(activeStep[key])) {
       newModel.query[key] = activeStep[key];
     }
   });
 
-  if (!_.isNull(activeStep.actor_property) && ExplorerUtils.shouldHaveTarget(newModel)) {
+  if (!_lodash2.default.isNull(activeStep.actor_property) && _ExplorerUtils2.default.shouldHaveTarget(newModel)) {
     newModel.query.target_property = activeStep.actor_property;
   }
 
@@ -2068,7 +2218,7 @@ function _migrateFromFunnel(explorer, newModel) {
  * @return {Object}           The new set of updates
  */
 function _removeInvalidFields(newModel) {
-  if (!ExplorerUtils.isEmailExtraction(newModel)) {
+  if (!_ExplorerUtils2.default.isEmailExtraction(newModel)) {
     newModel.query.latest = null;
     newModel.query.email = null;
   }
@@ -2082,7 +2232,7 @@ function _removeInvalidFields(newModel) {
   if (newModel.query.analysis_type !== 'percentile') {
     newModel.query.percentile = null;
   }
-  if (_.includes(['count', 'extraction', 'funnel'], newModel.query.analysis_type)) {
+  if (_lodash2.default.includes(['count', 'extraction', 'funnel'], newModel.query.analysis_type)) {
     newModel.query.target_property = null;
   }
   if (newModel.query.analysis_type !== 'funnel') {
@@ -2113,7 +2263,7 @@ function _prepareFilterUpdates(explorer, filter, updates) {
       updates.coercion_type = 'Boolean';
     } else {
       // No need to update the operator - we allow any operator for any property type right now.
-      updates.coercion_type = _getDefaultFilterCoercionType(explorer, _.merge({}, filter, updates));
+      updates.coercion_type = _getDefaultFilterCoercionType(explorer, _lodash2.default.merge({}, filter, updates));
     }
   } else if (updates.operator && updates.operator !== filter.operator) {
     var newOp = updates.operator;
@@ -2123,9 +2273,9 @@ function _prepareFilterUpdates(explorer, filter, updates) {
 
     // If it's not any of these operators, we still need to make sure that the current coercion_type is available
     // as an option for this new operator.
-    var coercionOptions = _.find(ProjectUtils.getConstant('FILTER_OPERATORS'), { value: updates.operator }).canBeCoeredTo;
+    var coercionOptions = _lodash2.default.find(_ProjectUtils2.default.getConstant('FILTER_OPERATORS'), { value: updates.operator }).canBeCoeredTo;
     var coercion_type = updates.coercion_type || filter.coercion_type;
-    if (!_.includes(coercionOptions, coercion_type)) {
+    if (!_lodash2.default.includes(coercionOptions, coercion_type)) {
       updates.coercion_type = coercionOptions[0];
     }
   }
@@ -2134,14 +2284,14 @@ function _prepareFilterUpdates(explorer, filter, updates) {
     updates.property_value = _defaultGeoFilter();
   }
 
-  updates.property_value = FilterUtils.getCoercedValue(_.merge({}, filter, updates));
+  updates.property_value = _FilterUtils2.default.getCoercedValue(_lodash2.default.merge({}, filter, updates));
 
   return updates;
 }
 
 function _wrapGroupBy(group_by) {
-  if (!_.isArray(group_by)) group_by = [group_by];
-  return _.pull(group_by, null);
+  if (!_lodash2.default.isArray(group_by)) group_by = [group_by];
+  return _lodash2.default.pull(group_by, null);
 }
 
 function _create(attrs) {
@@ -2151,11 +2301,11 @@ function _create(attrs) {
   }
 
   attrs = attrs || {};
-  var newAttrs = _.merge(_defaultAttrs(), attrs);
+  var newAttrs = _lodash2.default.merge(_defaultAttrs(), attrs);
 
   if (newAttrs.query.steps) {
-    newAttrs.query.steps = _.map(newAttrs.query.steps, function (step) {
-      return _.merge(_defaultStep(), step);
+    newAttrs.query.steps = _lodash2.default.map(newAttrs.query.steps, function (step) {
+      return _lodash2.default.merge(_defaultStep(), step);
     });
   }
   if (!newAttrs.metadata) newAttrs.metadata = _defaultMetadata();
@@ -2199,24 +2349,24 @@ function _remove(id) {
 }
 
 function _setActive(id) {
-  _.each(_explorers, function (explorer, key) {
+  _lodash2.default.each(_explorers, function (explorer, key) {
     explorer.active = false;
     delete explorer.originalModel;
   });
   _explorers[id].active = true;
-  _explorers[id].originalModel = _.cloneDeep(_explorers[id]);
+  _explorers[id].originalModel = _lodash2.default.cloneDeep(_explorers[id]);
 }
 
 function _revertActiveChanges() {
-  var active = _.find(_explorers, { active: true });
+  var active = _lodash2.default.find(_explorers, { active: true });
   var original = _explorers[active.id].originalModel;
-  _explorers[active.id] = _.assign({}, original, { originalModel: original, response: active.response });
+  _explorers[active.id] = _lodash2.default.assign({}, original, { originalModel: original, response: active.response });
   return active.id;
 }
 
 function _addFilter(id, attrs) {
   attrs = attrs || {};
-  _explorers[id].query.filters.push(_.assign(_defaultFilter(), attrs));
+  _explorers[id].query.filters.push(_lodash2.default.assign(_defaultFilter(), attrs));
 }
 
 function _removeFilter(id, index) {
@@ -2227,7 +2377,7 @@ function _updateFilter(id, index, updates) {
   var filter = _explorers[id].query.filters[index];
   var updates = _prepareFilterUpdates(_explorers[id], filter, updates);
 
-  _explorers[id].query.filters[index] = _.assign({}, filter, updates);
+  _explorers[id].query.filters[index] = _lodash2.default.assign({}, filter, updates);
 
   // Hack around the fact that _.assign doesn't assign null values. But we
   // actually WANT a null value if the coercion_type is null.
@@ -2241,7 +2391,7 @@ function _addStep(id, attrs) {
   if (explorer.query.analysis_type !== 'funnel') {
     throw new Error('Error: Attempting to add a step to a non-funnel query. Explorer id: ' + explorer.id);
   }
-  var step = _.assign(_defaultStep(), attrs || {});
+  var step = _lodash2.default.assign(_defaultStep(), attrs || {});
   step.active = true;
 
   // This is likely always true, but I like being defensive
@@ -2268,7 +2418,7 @@ function _removeStep(id, index) {
 
 function _updateStep(id, index, updates) {
   var step = _explorers[id].query.steps[index];
-  _explorers[id].query.steps[index] = _.assign({}, step, updates);
+  _explorers[id].query.steps[index] = _lodash2.default.assign({}, step, updates);
 }
 
 function _setStepActive(id, index) {
@@ -2279,7 +2429,7 @@ function _setStepActive(id, index) {
 }
 
 function _moveStep(id, index, direction) {
-  var steps = _.cloneDeep(_explorers[id].query.steps);
+  var steps = _lodash2.default.cloneDeep(_explorers[id].query.steps);
 
   if (direction === 'up') {
     if (index === 0) return;
@@ -2303,7 +2453,7 @@ function _moveStep(id, index, direction) {
 
 function _addStepFilter(id, stepIndex, attrs) {
   attrs = attrs || {};
-  _explorers[id].query.steps[stepIndex].filters.push(_.assign(_defaultFilter(), attrs));
+  _explorers[id].query.steps[stepIndex].filters.push(_lodash2.default.assign(_defaultFilter(), attrs));
 }
 
 function _removeStepFilter(id, stepIndex, filterIndex) {
@@ -2313,7 +2463,7 @@ function _removeStepFilter(id, stepIndex, filterIndex) {
 function _updateStepFilter(id, stepIndex, filterIndex, updates) {
   var filter = _explorers[id].query.steps[stepIndex].filters[filterIndex];
   var updates = _prepareFilterUpdates(_explorers[id], filter, updates);
-  _explorers[id].query.steps[stepIndex].filters[filterIndex] = _.assign({}, filter, updates);
+  _explorers[id].query.steps[stepIndex].filters[filterIndex] = _lodash2.default.assign({}, filter, updates);
 
   // Hack around the fact that _.assign doesn't assign null values. But we
   // actually WANT a null value if the coercion_type is null.
@@ -2324,13 +2474,13 @@ function _updateStepFilter(id, stepIndex, filterIndex, updates) {
 
 function _clear(id) {
   var model = _explorers[id];
-  _explorers[id] = _.assign({}, _defaultAttrs(), _.pick(model, ['id', 'query_name', 'active', 'metadata', 'originalModel']));
+  _explorers[id] = _lodash2.default.assign({}, _defaultAttrs(), _lodash2.default.pick(model, ['id', 'query_name', 'active', 'metadata', 'originalModel']));
 }
 
-var ExplorerStore = _.assign({}, EventEmitter.prototype, {
+var ExplorerStore = _lodash2.default.assign({}, _events.EventEmitter.prototype, {
 
   unregisterWithDispatcher: function unregisterWithDispatcher() {
-    AppDispatcher.unregister(this.dispatchToken);
+    _AppDispatcher2.default.unregister(this.dispatchToken);
   },
 
   clearAll: function clearAll() {
@@ -2346,7 +2496,7 @@ var ExplorerStore = _.assign({}, EventEmitter.prototype, {
   },
 
   getActive: function getActive() {
-    return _.find(_explorers, { active: true });
+    return _lodash2.default.find(_explorers, { active: true });
   },
 
   getAll: function getAll() {
@@ -2354,13 +2504,13 @@ var ExplorerStore = _.assign({}, EventEmitter.prototype, {
   },
 
   getLast: function getLast() {
-    var keys = _.keys(_explorers);
+    var keys = _lodash2.default.keys(_explorers);
     return _explorers[keys[keys.length - 1]];
   },
 
   getAllPersisted: function getAllPersisted() {
-    return _.filter(_explorers, function (explorer) {
-      return ExplorerUtils.isPersisted(explorer);
+    return _lodash2.default.filter(_explorers, function (explorer) {
+      return _ExplorerUtils2.default.isPersisted(explorer);
     });
   },
 
@@ -2379,7 +2529,7 @@ var ExplorerStore = _.assign({}, EventEmitter.prototype, {
 });
 
 // Register callback to handle all updates
-ExplorerStore.dispatchToken = AppDispatcher.register(function (action) {
+ExplorerStore.dispatchToken = _AppDispatcher2.default.register(function (action) {
 
   function finishAction(id) {
     // Validate the model
@@ -2390,37 +2540,37 @@ ExplorerStore.dispatchToken = AppDispatcher.register(function (action) {
   }
 
   switch (action.actionType) {
-    case ExplorerConstants.EXPLORER_CREATE:
+    case _ExplorerConstants2.default.EXPLORER_CREATE:
       _create(action.attrs);
       finishAction();
       break;
 
-    case ExplorerConstants.EXPLORER_CREATE_BATCH:
+    case _ExplorerConstants2.default.EXPLORER_CREATE_BATCH:
       action.models.forEach(function (model) {
         _explorers[model.id] ? _update(model.id, model) : _create(model);
       });
       finishAction();
       break;
 
-    case ExplorerConstants.EXPLORER_CLONE:
+    case _ExplorerConstants2.default.EXPLORER_CLONE:
       var source = ExplorerStore.get(action.id);
-      _create({ query: _.cloneDeep(source.query),
+      _create({ query: _lodash2.default.cloneDeep(source.query),
         metadata: {
           display_name: null,
           visualization: {
-            chart_type: _.cloneDeep(source.metadata.visualization.chart_type)
+            chart_type: _lodash2.default.cloneDeep(source.metadata.visualization.chart_type)
           }
         }
       });
       finishAction();
       break;
 
-    case ExplorerConstants.EXPLORER_UPDATE:
+    case _ExplorerConstants2.default.EXPLORER_UPDATE:
       var id = _update(action.id, action.updates);
       finishAction(id);
       break;
 
-    case ExplorerConstants.EXPLORER_REMOVE:
+    case _ExplorerConstants2.default.EXPLORER_REMOVE:
       var wasActive = _explorers[action.id].active === true;
       _remove(action.id);
       // Create a new active explorer to replace the previously active one.
@@ -2431,97 +2581,97 @@ ExplorerStore.dispatchToken = AppDispatcher.register(function (action) {
       finishAction();
       break;
 
-    case ExplorerConstants.EXPLORER_SET_ACTIVE:
+    case _ExplorerConstants2.default.EXPLORER_SET_ACTIVE:
       _setActive(action.id);
       finishAction(action.id);
       break;
 
-    case ExplorerConstants.EXPLORER_REVERT_ACTIVE_CHANGES:
+    case _ExplorerConstants2.default.EXPLORER_REVERT_ACTIVE_CHANGES:
       var id = _revertActiveChanges();
       finishAction(id);
       break;
 
-    case ExplorerConstants.EXPLORER_CLEAR:
+    case _ExplorerConstants2.default.EXPLORER_CLEAR:
       _clear(action.id);
       finishAction();
       break;
 
-    case ExplorerConstants.EXPLORER_SAVING:
+    case _ExplorerConstants2.default.EXPLORER_SAVING:
       _update(action.id, { saving: true });
       finishAction(action.id);
       break;
 
-    case ExplorerConstants.EXPLORER_SAVE_SUCCESS:
+    case _ExplorerConstants2.default.EXPLORER_SAVE_SUCCESS:
       _update(action.id, { saving: false });
       finishAction(action.id);
       break;
 
-    case ExplorerConstants.EXPLORER_SAVE_FAIL:
+    case _ExplorerConstants2.default.EXPLORER_SAVE_FAIL:
       _update(action.id, { saving: false });
       finishAction(action.id);
       break;
 
-    case ExplorerConstants.EXPLORER_ADD_FILTER:
+    case _ExplorerConstants2.default.EXPLORER_ADD_FILTER:
       _addFilter(action.id, action.attrs);
       finishAction(action.id);
       break;
 
-    case ExplorerConstants.EXPLORER_REMOVE_FILTER:
+    case _ExplorerConstants2.default.EXPLORER_REMOVE_FILTER:
       _removeFilter(action.id, action.index);
       finishAction(action.id);
       break;
 
-    case ExplorerConstants.EXPLORER_UPDATE_FILTER:
+    case _ExplorerConstants2.default.EXPLORER_UPDATE_FILTER:
       _updateFilter(action.id, action.index, action.attrs);
       finishAction(action.id);
       break;
 
-    case ExplorerConstants.EXPLORER_ADD_STEP:
+    case _ExplorerConstants2.default.EXPLORER_ADD_STEP:
       _addStep(action.id, action.attrs);
       finishAction(action.id);
       break;
 
-    case ExplorerConstants.EXPLORER_REMOVE_STEP:
+    case _ExplorerConstants2.default.EXPLORER_REMOVE_STEP:
       _removeStep(action.id, action.index);
       finishAction(action.id);
       break;
 
-    case ExplorerConstants.EXPLORER_UPDATE_STEP:
+    case _ExplorerConstants2.default.EXPLORER_UPDATE_STEP:
       _updateStep(action.id, action.index, action.attrs);
       finishAction(action.id);
       break;
 
-    case ExplorerConstants.EXPLORER_SET_STEP_ACTIVE:
+    case _ExplorerConstants2.default.EXPLORER_SET_STEP_ACTIVE:
       _setStepActive(action.id, action.index);
       finishAction(action.id);
       break;
 
-    case ExplorerConstants.EXPLORER_MOVE_STEP:
+    case _ExplorerConstants2.default.EXPLORER_MOVE_STEP:
       _moveStep(action.id, action.index, action.direction);
       finishAction(action.id);
       break;
 
-    case ExplorerConstants.EXPLORER_ADD_STEP_FILTER:
+    case _ExplorerConstants2.default.EXPLORER_ADD_STEP_FILTER:
       _addStepFilter(action.id, action.stepIndex, action.attrs);
       finishAction(action.id);
       break;
 
-    case ExplorerConstants.EXPLORER_REMOVE_STEP_FILTER:
+    case _ExplorerConstants2.default.EXPLORER_REMOVE_STEP_FILTER:
       _removeStepFilter(action.id, action.stepIndex, action.filterIndex);
       finishAction(action.id);
       break;
 
-    case ExplorerConstants.EXPLORER_UPDATE_STEP_FILTER:
+    case _ExplorerConstants2.default.EXPLORER_UPDATE_STEP_FILTER:
       _updateStepFilter(action.id, action.stepIndex, action.filterIndex, action.attrs);
       finishAction(action.id);
       break;
 
-    case ExplorerConstants.EXPLORER_VALIDATE:
+    case _ExplorerConstants2.default.EXPLORER_VALIDATE:
       _validate(action.id);
       finishAction();
       break;
 
-    case ExplorerConstants.EXPLORER_FOUND_INVALID:
+    case _ExplorerConstants2.default.EXPLORER_FOUND_INVALID:
       // Find any invalid steps and mark the first one active to display the notice.
       _markFirstInvalidStepActive(action.id);
       finishAction();
@@ -2543,10 +2693,17 @@ module.exports = ExplorerStore;
 "use strict";
 
 
-var React = __webpack_require__(1);
-var _ = __webpack_require__(0);
+var _react = __webpack_require__(1);
 
-var InputComponent = React.createClass({
+var _react2 = _interopRequireDefault(_react);
+
+var _lodash = __webpack_require__(0);
+
+var _lodash2 = _interopRequireDefault(_lodash);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var InputComponent = _react2.default.createClass({
   displayName: 'InputComponent',
 
 
@@ -2577,12 +2734,12 @@ var InputComponent = React.createClass({
   },
 
   render: function render() {
-    var required = this.props.required ? React.createElement(
+    var required = this.props.required ? _react2.default.createElement(
       'small',
       null,
       '(required)'
     ) : null;
-    var label = this.props.label ? React.createElement(
+    var label = this.props.label ? _react2.default.createElement(
       'label',
       { htmlFor: this.props.name },
       this.props.label,
@@ -2592,11 +2749,11 @@ var InputComponent = React.createClass({
     var inputClasses = "form-control";
     if (this.props.inputClasses) inputClasses = inputClasses + " " + this.props.inputClasses;
 
-    return React.createElement(
+    return _react2.default.createElement(
       'div',
       { className: this.props.classes },
       label,
-      React.createElement('input', { ref: 'input',
+      _react2.default.createElement('input', { ref: 'input',
         type: this.props.type,
         name: this.props.name,
         className: inputClasses,
@@ -2620,11 +2777,21 @@ module.exports = InputComponent;
 "use strict";
 
 
-var React = __webpack_require__(1);
-var classNames = __webpack_require__(6);
-var _ = __webpack_require__(0);
+var _react = __webpack_require__(1);
 
-var FieldsToggle = React.createClass({
+var _react2 = _interopRequireDefault(_react);
+
+var _classnames = __webpack_require__(6);
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
+var _lodash = __webpack_require__(0);
+
+var _lodash2 = _interopRequireDefault(_lodash);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var FieldsToggle = _react2.default.createClass({
   displayName: 'FieldsToggle',
 
 
@@ -2632,10 +2799,10 @@ var FieldsToggle = React.createClass({
     var attrNames = this.props.attrsToStore;
     var updates = {};
 
-    if (!_.isArray(attrNames)) {
+    if (!_lodash2.default.isArray(attrNames)) {
       attrNames = [attrNames];
     }
-    _.each(attrNames, function (attrName) {
+    _lodash2.default.each(attrNames, function (attrName) {
       if (toggledState) {
         if (this._storedAttrs[attrName]) {
           updates[attrName] = this._storedAttrs[attrName];
@@ -2695,7 +2862,7 @@ var FieldsToggle = React.createClass({
   render: function render() {
     var fieldsCount = this.props.fieldsCount ? this.props.fieldsCount : null;
 
-    var classes = classNames({
+    var classes = (0, _classnames2.default)({
       'has-fields-count': fieldsCount,
       'open': this.state.open && fieldsCount === null,
       'fields-toggle': true
@@ -2703,28 +2870,28 @@ var FieldsToggle = React.createClass({
 
     var bodyContent;
     if (this.props.children) {
-      bodyContent = React.createElement(
+      bodyContent = _react2.default.createElement(
         'div',
         { className: 'toggle-body' },
         this.props.children
       );
     }
 
-    return React.createElement(
+    return _react2.default.createElement(
       'div',
       { className: classes },
-      React.createElement(
+      _react2.default.createElement(
         'a',
         { href: '#', className: 'toggle-label', onClick: this.toggleButtonClick, ref: 'toggle-label' },
-        React.createElement(
+        _react2.default.createElement(
           'h5',
           { ref: 'name' },
           this.props.name
         ),
-        React.createElement(
+        _react2.default.createElement(
           'button',
           { type: 'button', className: 'toggle-button' },
-          React.createElement(
+          _react2.default.createElement(
             'span',
             { className: 'icon', ref: 'icon' },
             fieldsCount
@@ -2746,10 +2913,17 @@ module.exports = FieldsToggle;
 "use strict";
 
 
-var React = __webpack_require__(1);
-var _ = __webpack_require__(0);
+var _react = __webpack_require__(1);
 
-var SelectComponent = React.createClass({
+var _react2 = _interopRequireDefault(_react);
+
+var _lodash = __webpack_require__(0);
+
+var _lodash2 = _interopRequireDefault(_lodash);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var SelectComponent = _react2.default.createClass({
   displayName: 'SelectComponent',
 
 
@@ -2757,7 +2931,7 @@ var SelectComponent = React.createClass({
     if (this.state.options.length) {
 
       return this.state.options.map(function (option) {
-        return React.createElement(
+        return _react2.default.createElement(
           'option',
           { value: option.value, key: option.value, disabled: option.disabled || false },
           option.name
@@ -2769,8 +2943,8 @@ var SelectComponent = React.createClass({
   },
 
   wrapValuesInObjects: function wrapValuesInObjects(options) {
-    if (!_.isObject(options[0])) {
-      return _.map(options, function (option) {
+    if (!_lodash2.default.isObject(options[0])) {
+      return _lodash2.default.map(options, function (option) {
         return { name: option, value: option };
       });
     }
@@ -2796,9 +2970,9 @@ var SelectComponent = React.createClass({
     var emptyOption = this.props.emptyOption;
 
     if (emptyOption === true) {
-      return React.createElement('option', { value: '' });
+      return _react2.default.createElement('option', { value: '' });
     } else if (emptyOption) {
-      return React.createElement(
+      return _react2.default.createElement(
         'option',
         { value: '' },
         emptyOption
@@ -2840,7 +3014,7 @@ var SelectComponent = React.createClass({
 
   render: function render() {
     var optionNodes = this.buildOptions();
-    var label = this.props.label ? React.createElement(
+    var label = this.props.label ? _react2.default.createElement(
       'label',
       { htmlFor: this.props.name },
       this.props.label
@@ -2849,14 +3023,14 @@ var SelectComponent = React.createClass({
     var emptyVal = this.props.multiple ? [] : '';
     var selectedValue = this.props.selectedOption ? this.props.selectedOption : emptyVal;
 
-    return React.createElement(
+    return _react2.default.createElement(
       'div',
       { className: this.props.classes },
       label,
-      React.createElement(
+      _react2.default.createElement(
         'div',
         { className: 'select-element' },
-        React.createElement(
+        _react2.default.createElement(
           'select',
           { ref: this.props.reference,
             name: this.props.name,
@@ -2884,14 +3058,31 @@ module.exports = SelectComponent;
 "use strict";
 
 
-/* ExplorerStore */
+var _AppDispatcher = __webpack_require__(7);
 
-var AppDispatcher = __webpack_require__(7);
-var EventEmitter = __webpack_require__(21).EventEmitter;
-var _ = __webpack_require__(0);
-var ProjectConstants = __webpack_require__(43);
-var ProjectUtils = __webpack_require__(5);
-var FormatUtils = __webpack_require__(2);
+var _AppDispatcher2 = _interopRequireDefault(_AppDispatcher);
+
+var _events = __webpack_require__(21);
+
+var _lodash = __webpack_require__(0);
+
+var _lodash2 = _interopRequireDefault(_lodash);
+
+var _ProjectConstants = __webpack_require__(43);
+
+var _ProjectConstants2 = _interopRequireDefault(_ProjectConstants);
+
+var _ProjectUtils = __webpack_require__(5);
+
+var _ProjectUtils2 = _interopRequireDefault(_ProjectUtils);
+
+var _FormatUtils = __webpack_require__(2);
+
+var _FormatUtils2 = _interopRequireDefault(_FormatUtils);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/* ExplorerStore */
 
 var CHANGE_EVENT = 'change';
 
@@ -2908,22 +3099,22 @@ function defaultAttrs() {
 }
 
 function _create(attrs) {
-  var id = FormatUtils.generateTempId();
-  _projects[id] = _.assign(defaultAttrs(), { id: id }, attrs);
+  var id = _FormatUtils2.default.generateTempId();
+  _projects[id] = _lodash2.default.assign(defaultAttrs(), { id: id }, attrs);
 }
 
 function _update(id, updates) {
-  _projects[id] = _.assign({}, _projects[id], updates);
+  _projects[id] = _lodash2.default.assign({}, _projects[id], updates);
 }
 
 function _updateEventCollection(id, collectionName, updates) {
-  var newCollection = _.assign({}, _projects[id].schema[collectionName], updates);
+  var newCollection = _lodash2.default.assign({}, _projects[id].schema[collectionName], updates);
   _projects[id].schema[collectionName] = newCollection;
 }
 
-var ProjectStore = _.assign({}, EventEmitter.prototype, {
+var ProjectStore = _lodash2.default.assign({}, _events.EventEmitter.prototype, {
   unregisterWithDispatcher: function unregisterWithDispatcher() {
-    AppDispatcher.unregister(_dispatcherToken);
+    _AppDispatcher2.default.unregister(_dispatcherToken);
   },
 
   clearAll: function clearAll() {
@@ -2955,21 +3146,21 @@ var ProjectStore = _.assign({}, EventEmitter.prototype, {
 });
 
 // Register callback to handle all updates
-var _dispatcherToken = AppDispatcher.register(function (action) {
+var _dispatcherToken = _AppDispatcher2.default.register(function (action) {
   var attrs;
 
   switch (action.actionType) {
-    case ProjectConstants.PROJECT_CREATE:
+    case _ProjectConstants2.default.PROJECT_CREATE:
       _create(action.attrs);
       ProjectStore.emitChange();
       break;
 
-    case ProjectConstants.PROJECT_UPDATE:
+    case _ProjectConstants2.default.PROJECT_UPDATE:
       _update(action.id, action.updates);
       ProjectStore.emitChange();
       break;
 
-    case ProjectConstants.PROJECT_UPDATE_EVENT_COLLECTION:
+    case _ProjectConstants2.default.PROJECT_UPDATE_EVENT_COLLECTION:
       _updateEventCollection(action.id, action.collectionName, action.updates);
       ProjectStore.emitChange();
       break;
@@ -2992,9 +3183,19 @@ module.exports = ProjectStore;
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var _ = __webpack_require__(0);
-var ProjectUtils = __webpack_require__(5);
-var FormatUtils = __webpack_require__(2);
+var _lodash = __webpack_require__(0);
+
+var _lodash2 = _interopRequireDefault(_lodash);
+
+var _ProjectUtils = __webpack_require__(5);
+
+var _ProjectUtils2 = _interopRequireDefault(_ProjectUtils);
+
+var _FormatUtils = __webpack_require__(2);
+
+var _FormatUtils2 = _interopRequireDefault(_FormatUtils);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 module.exports = {
 
@@ -3004,13 +3205,13 @@ module.exports = {
    * @return {String} The type of timeframe, 'absolute' or 'relative'
    */
   timeframeType: function timeframeType(time) {
-    if (_.isUndefined(time)) {
+    if (_lodash2.default.isUndefined(time)) {
       return null;
-    } else if (!_.isPlainObject(time)) {
+    } else if (!_lodash2.default.isPlainObject(time)) {
       throw new Error('Invalid timeframe type: not a plain object.');
-    } else if (_.has(time, 'start') || _.has(time, 'end')) {
+    } else if (_lodash2.default.has(time, 'start') || _lodash2.default.has(time, 'end')) {
       return 'absolute';
-    } else if (_.has(time, 'relativity') && _.has(time, 'amount') && _.has(time, 'sub_timeframe')) {
+    } else if (_lodash2.default.has(time, 'relativity') && _lodash2.default.has(time, 'amount') && _lodash2.default.has(time, 'sub_timeframe')) {
       return 'relative';
     } else {
       throw new Error('Invalid timeframe type: invalid time value.');
@@ -3018,7 +3219,7 @@ module.exports = {
   },
 
   getTimezoneOffset: function getTimezoneOffset(timezone) {
-    var zone = _.find(ProjectUtils.getConstant('TIMEZONES'), { value: timezone });
+    var zone = _lodash2.default.find(_ProjectUtils2.default.getConstant('TIMEZONES'), { value: timezone });
     return zone ? zone.offset : '+00:00';
   },
 
@@ -3027,8 +3228,8 @@ module.exports = {
     absolute: function absolute(time) {
       if (time && time.start && time.end) {
         return {
-          start: FormatUtils.formatISOTimeNoTimezone(time.start),
-          end: FormatUtils.formatISOTimeNoTimezone(time.end)
+          start: _FormatUtils2.default.formatISOTimeNoTimezone(time.start),
+          end: _FormatUtils2.default.formatISOTimeNoTimezone(time.end)
         };
       }
     },
@@ -3050,7 +3251,7 @@ module.exports = {
   getTimeParameters: function getTimeParameters(timeframe, timezone) {
     return {
       timeframe: timeframe ? module.exports.getTimeframe(timeframe) : null,
-      timezone: timezone || ProjectUtils.getConstant('DEFAULT_TIMEZONE')
+      timezone: timezone || _ProjectUtils2.default.getConstant('DEFAULT_TIMEZONE')
     };
   },
 
@@ -3078,7 +3279,7 @@ module.exports = {
       timezone: null
     };
 
-    if (!timezone || !ProjectUtils.getConstant('TIMEZONES').filter(function (z) {
+    if (!timezone || !_ProjectUtils2.default.getConstant('TIMEZONES').filter(function (z) {
       return z.name === timezone;
     }).length) {
       formattedValue.timezone = 'UTC';
@@ -3087,10 +3288,10 @@ module.exports = {
     }
 
     var startVal = timeframe.start ? timeframe.start.substring(0, 19) : "";
-    formattedValue.time.start = FormatUtils.formatISOTimeNoTimezone(startVal);
+    formattedValue.time.start = _FormatUtils2.default.formatISOTimeNoTimezone(startVal);
 
     var endVal = timeframe.end ? timeframe.end.substring(0, 19) : "";
-    formattedValue.time.end = FormatUtils.formatISOTimeNoTimezone(endVal);
+    formattedValue.time.end = _FormatUtils2.default.formatISOTimeNoTimezone(endVal);
 
     return formattedValue;
   },
@@ -3116,21 +3317,28 @@ module.exports = {
 "use strict";
 
 
-var AppDispatcher = __webpack_require__(7);
-var NoticeConstants = __webpack_require__(37);
+var _AppDispatcher = __webpack_require__(7);
+
+var _AppDispatcher2 = _interopRequireDefault(_AppDispatcher);
+
+var _NoticeConstants = __webpack_require__(37);
+
+var _NoticeConstants2 = _interopRequireDefault(_NoticeConstants);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var NoticeActions = {
 
   create: function create(attrs) {
-    AppDispatcher.dispatch({
-      actionType: NoticeConstants.NOTICE_CREATE,
+    _AppDispatcher2.default.dispatch({
+      actionType: _NoticeConstants2.default.NOTICE_CREATE,
       attrs: attrs
     });
   },
 
   clearAll: function clearAll() {
-    AppDispatcher.dispatch({
-      actionType: NoticeConstants.NOTICE_CLEAR_ALL
+    _AppDispatcher2.default.dispatch({
+      actionType: _NoticeConstants2.default.NOTICE_CLEAR_ALL
     });
   }
 
@@ -3145,9 +3353,13 @@ module.exports = NoticeActions;
 "use strict";
 
 
-var keyMirror = __webpack_require__(20);
+var _keymirror = __webpack_require__(20);
 
-module.exports = keyMirror({
+var _keymirror2 = _interopRequireDefault(_keymirror);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+module.exports = (0, _keymirror2.default)({
   EXPLORER_CREATE: null,
   EXPLORER_CREATE_BATCH: null,
   EXPLORER_CLONE: null,
@@ -4514,21 +4726,28 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 "use strict";
 
 
-var AppDispatcher = __webpack_require__(7);
-var AppStateConstants = __webpack_require__(41);
+var _AppDispatcher = __webpack_require__(7);
+
+var _AppDispatcher2 = _interopRequireDefault(_AppDispatcher);
+
+var _AppStateConstants = __webpack_require__(41);
+
+var _AppStateConstants2 = _interopRequireDefault(_AppStateConstants);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var AppStateActions = {
 
   update: function update(updates) {
-    AppDispatcher.dispatch({
-      actionType: AppStateConstants.APP_STATE_UPDATE,
+    _AppDispatcher2.default.dispatch({
+      actionType: _AppStateConstants2.default.APP_STATE_UPDATE,
       updates: updates
     });
   },
 
   reset: function reset() {
-    AppDispatcher.dispatch({
-      actionType: AppStateConstants.APP_STATE_RESET
+    _AppDispatcher2.default.dispatch({
+      actionType: _AppStateConstants2.default.APP_STATE_RESET
     });
   }
 
@@ -4543,11 +4762,25 @@ module.exports = AppStateActions;
 "use strict";
 
 
-var _ = __webpack_require__(0);
-var ExplorerUtils = __webpack_require__(3);
-var SharedValidators = __webpack_require__(39);
-var StepValidations = __webpack_require__(38);
-var RunValidations = __webpack_require__(10).run;
+var _lodash = __webpack_require__(0);
+
+var _lodash2 = _interopRequireDefault(_lodash);
+
+var _ExplorerUtils = __webpack_require__(3);
+
+var _ExplorerUtils2 = _interopRequireDefault(_ExplorerUtils);
+
+var _SharedValidators = __webpack_require__(39);
+
+var _SharedValidators2 = _interopRequireDefault(_SharedValidators);
+
+var _StepValidations = __webpack_require__(38);
+
+var _StepValidations2 = _interopRequireDefault(_StepValidations);
+
+var _RunValidations = __webpack_require__(10);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function isNotFunnel(model) {
   return model.query.analysis_type !== 'funnel';
@@ -4582,7 +4815,7 @@ module.exports = {
     msg: 'Choose a Target Property.',
 
     shouldRun: function shouldRun(model) {
-      return ExplorerUtils.shouldHaveTarget(model);
+      return _ExplorerUtils2.default.shouldHaveTarget(model);
     },
 
     validate: function validate(model) {
@@ -4612,7 +4845,7 @@ module.exports = {
     msg: 'One of your filters is invalid.',
 
     validate: function validate(model) {
-      return SharedValidators.filters(model.query.filters);
+      return _SharedValidators2.default.filters(model.query.filters);
     }
 
   },
@@ -4629,7 +4862,7 @@ module.exports = {
       if (!model.query.steps) return false;
       var isValid = true;
       for (var i = 0; i < model.query.steps.length; i++) {
-        RunValidations(StepValidations, model.query.steps[i]);
+        (0, _RunValidations.run)(_StepValidations2.default, model.query.steps[i]);
         if (!model.query.steps[i].isValid) isValid = false;
       }
       return isValid;
@@ -4642,7 +4875,7 @@ module.exports = {
     shouldRun: isNotFunnel,
 
     validate: function validate(model) {
-      return SharedValidators.time(model.query.time);
+      return _SharedValidators2.default.time(model.query.time);
     }
 
   },
@@ -4677,7 +4910,7 @@ module.exports = {
 
     msg: 'A valid email address is required.',
 
-    shouldRun: ExplorerUtils.isEmailExtraction,
+    shouldRun: _ExplorerUtils2.default.isEmailExtraction,
 
     validate: function validate(model) {
       return new RegExp(/.+@.+\..+/i).test(model.query.email);
@@ -4689,7 +4922,7 @@ module.exports = {
 
     msg: 'Latest must be a number.',
 
-    shouldRun: ExplorerUtils.isEmailExtraction,
+    shouldRun: _ExplorerUtils2.default.isEmailExtraction,
 
     validate: function validate(model) {
       var value = model.query.latest;
@@ -4709,7 +4942,11 @@ module.exports = {
 "use strict";
 
 
-var _ = __webpack_require__(0);
+var _lodash = __webpack_require__(0);
+
+var _lodash2 = _interopRequireDefault(_lodash);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 module.exports = {
   getQueryDataType: function getQueryDataType(query) {
@@ -4771,7 +5008,7 @@ module.exports = {
   },
 
   responseSupportsChartType: function responseSupportsChartType(query, chartType) {
-    return _.includes(module.exports.getChartTypeOptions(query), chartType);
+    return _lodash2.default.includes(module.exports.getChartTypeOptions(query), chartType);
   },
 
   isTableChartType: function isTableChartType(chartType) {
@@ -4786,14 +5023,21 @@ module.exports = {
 "use strict";
 
 
-var React = __webpack_require__(1);
-var _ = __webpack_require__(0);
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _lodash = __webpack_require__(0);
+
+var _lodash2 = _interopRequireDefault(_lodash);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function noticeExists(notice) {
-  return notice && !_.isEmpty(notice);
+  return notice && !_lodash2.default.isEmpty(notice);
 }
 
-var NoticeComponent = React.createClass({
+var NoticeComponent = _react2.default.createClass({
   displayName: 'NoticeComponent',
 
 
@@ -4836,28 +5080,28 @@ var NoticeComponent = React.createClass({
 
     var icon;
     if (this.props.notice.icon) {
-      icon = React.createElement('span', { className: "icon glyphicon glyphicon-" + this.props.notice.icon });
+      icon = _react2.default.createElement('span', { className: "icon glyphicon glyphicon-" + this.props.notice.icon });
     }
 
     var closeBtn;
     if (this.props.closable) {
-      closeBtn = React.createElement(
+      closeBtn = _react2.default.createElement(
         'button',
         { className: 'close', onClick: this.close },
         '\xD7'
       );
     }
 
-    return React.createElement(
+    return _react2.default.createElement(
       'div',
       { className: classes, key: 'notice', ref: 'notice' },
       closeBtn,
-      React.createElement(
+      _react2.default.createElement(
         'p',
         null,
         icon,
         ' ',
-        React.createElement(
+        _react2.default.createElement(
           'strong',
           null,
           this.props.notice.text || ''
@@ -4877,41 +5121,63 @@ module.exports = NoticeComponent;
 "use strict";
 
 
-var _ = __webpack_require__(0);
-var AppDispatcher = __webpack_require__(7);
-var ProjectConstants = __webpack_require__(43);
-var ProjectStore = __webpack_require__(16);
-var ProjectUtils = __webpack_require__(5);
-var ExplorerUtils = __webpack_require__(3);
-var FormatUtils = __webpack_require__(2);
+var _lodash = __webpack_require__(0);
+
+var _lodash2 = _interopRequireDefault(_lodash);
+
+var _AppDispatcher = __webpack_require__(7);
+
+var _AppDispatcher2 = _interopRequireDefault(_AppDispatcher);
+
+var _ProjectConstants = __webpack_require__(43);
+
+var _ProjectConstants2 = _interopRequireDefault(_ProjectConstants);
+
+var _ProjectStore = __webpack_require__(16);
+
+var _ProjectStore2 = _interopRequireDefault(_ProjectStore);
+
+var _ProjectUtils = __webpack_require__(5);
+
+var _ProjectUtils2 = _interopRequireDefault(_ProjectUtils);
+
+var _ExplorerUtils = __webpack_require__(3);
+
+var _ExplorerUtils2 = _interopRequireDefault(_ExplorerUtils);
+
+var _FormatUtils = __webpack_require__(2);
+
+var _FormatUtils2 = _interopRequireDefault(_FormatUtils);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var ProjectActions = {
 
   create: function create(attrs) {
-    AppDispatcher.dispatch({
-      actionType: ProjectConstants.PROJECT_CREATE,
+    _AppDispatcher2.default.dispatch({
+      actionType: _ProjectConstants2.default.PROJECT_CREATE,
       attrs: attrs
     });
   },
 
   update: function update(id, updates) {
-    var project = ProjectStore.getProject();
+    var project = _ProjectStore2.default.getProject();
 
-    AppDispatcher.dispatch({
-      actionType: ProjectConstants.PROJECT_UPDATE,
+    _AppDispatcher2.default.dispatch({
+      actionType: _ProjectConstants2.default.PROJECT_UPDATE,
       id: project.id,
       updates: updates
     });
   },
 
   fetchProjectCollections: function fetchProjectCollections(client) {
-    var project = ProjectStore.getProject();
+    var project = _ProjectStore2.default.getProject();
     if (!project) console.error("Cannot fetchProjectCollections: No project model has been created yet.");
 
     return client.get(client.url('projectId')).auth(client.masterKey()).send().then(function (res) {
-      var schema = _.assign({}, project.schema);
-      _.each(res.events, function (collection) {
-        schema[collection.name] = _.assign(collection, {
+      var schema = _lodash2.default.assign({}, project.schema);
+      _lodash2.default.each(res.events, function (collection) {
+        schema[collection.name] = _lodash2.default.assign(collection, {
           properties: {},
           sortedProperties: [],
           loading: false,
@@ -4920,7 +5186,7 @@ var ProjectActions = {
       });
       ProjectActions.update(project.id, {
         schema: schema,
-        eventCollections: FormatUtils.sortItems(_.keys(schema)),
+        eventCollections: _FormatUtils2.default.sortItems(_lodash2.default.keys(schema)),
         loading: false
       });
     }).catch(function (err) {
@@ -4929,7 +5195,7 @@ var ProjectActions = {
   },
 
   fetchCollectionSchema: function fetchCollectionSchema(client, collectionName) {
-    var project = ProjectStore.getProject();
+    var project = _ProjectStore2.default.getProject();
     if (project.eventCollections.indexOf(collectionName) < 0) {
       return false;
     }
@@ -4939,7 +5205,7 @@ var ProjectActions = {
     return client.get(client.url('events', encodeURIComponent(collectionName))).auth(client.masterKey()).send().then(function (res) {
       ProjectActions.updateEventCollection(collectionName, {
         properties: res.properties,
-        sortedProperties: FormatUtils.sortItems(_.keys(res.properties)),
+        sortedProperties: _FormatUtils2.default.sortItems(_lodash2.default.keys(res.properties)),
         loading: false
       });
     }).catch(function (err) {
@@ -4948,9 +5214,9 @@ var ProjectActions = {
   },
 
   updateEventCollection: function updateEventCollection(collectionName, updates) {
-    var project = ProjectStore.getProject();
-    AppDispatcher.dispatch({
-      actionType: ProjectConstants.PROJECT_UPDATE_EVENT_COLLECTION,
+    var project = _ProjectStore2.default.getProject();
+    _AppDispatcher2.default.dispatch({
+      actionType: _ProjectConstants2.default.PROJECT_UPDATE_EVENT_COLLECTION,
       id: project.id,
       collectionName: collectionName,
       updates: updates
@@ -4958,11 +5224,11 @@ var ProjectActions = {
   },
 
   fetchRecentEventsForCollection: function fetchRecentEventsForCollection(client, eventCollection) {
-    var project = ProjectStore.getProject();
+    var project = _ProjectStore2.default.getProject();
     ProjectActions.updateEventCollection(eventCollection, {
       loading: true
     });
-    ExplorerUtils.runQuery({
+    _ExplorerUtils2.default.runQuery({
       client: client,
       query: {
         event_collection: eventCollection,
@@ -4996,10 +5262,17 @@ module.exports = ProjectActions;
 "use strict";
 
 
-var React = __webpack_require__(1);
-var _ = __webpack_require__(0);
+var _react = __webpack_require__(1);
 
-var LoaderComponent = React.createClass({
+var _react2 = _interopRequireDefault(_react);
+
+var _lodash = __webpack_require__(0);
+
+var _lodash2 = _interopRequireDefault(_lodash);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var LoaderComponent = _react2.default.createClass({
   displayName: 'LoaderComponent',
 
 
@@ -5022,20 +5295,20 @@ var LoaderComponent = React.createClass({
     if (!this.props.visible) classes += " hide";
     if (this.props.additionalClasses) classes += " " + this.props.additionalClasses;
 
-    return React.createElement(
+    return _react2.default.createElement(
       'div',
       { className: classes },
-      React.createElement(
+      _react2.default.createElement(
         'div',
         { className: 'msg' },
-        React.createElement(
+        _react2.default.createElement(
           'div',
           { className: 'explorer-spinner' },
-          React.createElement('div', { className: 'rect1' }),
-          React.createElement('div', { className: 'rect2' }),
-          React.createElement('div', { className: 'rect3' }),
-          React.createElement('div', { className: 'rect4' }),
-          React.createElement('div', { className: 'rect5' })
+          _react2.default.createElement('div', { className: 'rect1' }),
+          _react2.default.createElement('div', { className: 'rect2' }),
+          _react2.default.createElement('div', { className: 'rect3' }),
+          _react2.default.createElement('div', { className: 'rect4' }),
+          _react2.default.createElement('div', { className: 'rect5' })
         ),
         'Loading...'
       )
@@ -5053,9 +5326,17 @@ module.exports = LoaderComponent;
 "use strict";
 
 
-var _ = __webpack_require__(0);
-var RunValidations = __webpack_require__(10).run;
-var FormatUtils = __webpack_require__(2);
+var _lodash = __webpack_require__(0);
+
+var _lodash2 = _interopRequireDefault(_lodash);
+
+var _RunValidations = __webpack_require__(10);
+
+var _FormatUtils = __webpack_require__(2);
+
+var _FormatUtils2 = _interopRequireDefault(_FormatUtils);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function isGeoCoercionType(model) {
   return model.coercion_type === 'Geo';
@@ -5096,11 +5377,11 @@ module.exports = {
       var coercionType = model.coercion_type;
 
       if (coercionType == 'List') {
-        return FormatUtils.parseList(value) ? true : false;
+        return _FormatUtils2.default.parseList(value) ? true : false;
       } else if (coercionType === 'Null' || coercionType === 'Boolean') {
         return true;
       } else if (coercionType === 'Number') {
-        return _.isNumber(value);
+        return _lodash2.default.isNumber(value);
       } else if (coercionType === 'String') {
         return true;
       } else {
@@ -5128,12 +5409,12 @@ module.exports = {
 
     validate: function validate(model) {
       var value = model.property_value.coordinates;
-      var valid = _.isArray(value) && value.length === 2;
+      var valid = _lodash2.default.isArray(value) && value.length === 2;
       if (!valid) return valid;
 
       for (var i = 0; i < value.length; i++) {
         if (!valid) break;
-        valid = _.isNumber(value[i]);
+        valid = _lodash2.default.isNumber(value[i]);
       }
       return valid;
     }
@@ -5148,7 +5429,7 @@ module.exports = {
 
     validate: function validate(model) {
       var value = model.property_value.max_distance_miles;
-      return value && _.isNumber(value);
+      return value && _lodash2.default.isNumber(value);
     }
 
   }
@@ -5162,8 +5443,15 @@ module.exports = {
 "use strict";
 
 
-var Qs = __webpack_require__(45);
-var _ = __webpack_require__(0);
+var _qs = __webpack_require__(45);
+
+var _qs2 = _interopRequireDefault(_qs);
+
+var _lodash = __webpack_require__(0);
+
+var _lodash2 = _interopRequireDefault(_lodash);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 module.exports = {
 
@@ -5173,8 +5461,8 @@ module.exports = {
 
   updateSearchString: function updateSearchString(queryStringData) {
     var urlPath;
-    if (_.keys(queryStringData).length) {
-      urlPath = '?' + Qs.stringify(queryStringData);
+    if (_lodash2.default.keys(queryStringData).length) {
+      urlPath = '?' + _qs2.default.stringify(queryStringData);
     } else {
       urlPath = window.location.origin + window.location.pathname;
     }
@@ -5182,7 +5470,7 @@ module.exports = {
   },
 
   getQueryAttributes: function getQueryAttributes() {
-    return Qs.parse(this.getSearchString().replace('?', ''), { depth: 7 });
+    return _qs2.default.parse(this.getSearchString().replace('?', ''), { depth: 7 });
   }
 
 };
@@ -5194,25 +5482,44 @@ module.exports = {
 "use strict";
 
 
-var _ = __webpack_require__(0);
-var React = __webpack_require__(1);
-var Filter = __webpack_require__(54);
-var Modal = __webpack_require__(40);
-var ProjectUtils = __webpack_require__(5);
-var FilterUtils = __webpack_require__(8);
+var _lodash = __webpack_require__(0);
 
-var FilterManager = React.createClass({
+var _lodash2 = _interopRequireDefault(_lodash);
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _filter = __webpack_require__(54);
+
+var _filter2 = _interopRequireDefault(_filter);
+
+var _modal = __webpack_require__(40);
+
+var _modal2 = _interopRequireDefault(_modal);
+
+var _ProjectUtils = __webpack_require__(5);
+
+var _ProjectUtils2 = _interopRequireDefault(_ProjectUtils);
+
+var _FilterUtils = __webpack_require__(8);
+
+var _FilterUtils2 = _interopRequireDefault(_FilterUtils);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var FilterManager = _react2.default.createClass({
   displayName: 'FilterManager',
 
 
   propTypes: {
-    eventCollection: React.PropTypes.string,
-    propertyNames: React.PropTypes.array,
-    filters: React.PropTypes.array,
-    addFilter: React.PropTypes.func.isRequired,
-    removeFilter: React.PropTypes.func.isRequired,
-    handleChange: React.PropTypes.func.isRequired,
-    getPropertyType: React.PropTypes.func.isRequired
+    eventCollection: _react2.default.PropTypes.string,
+    propertyNames: _react2.default.PropTypes.array,
+    filters: _react2.default.PropTypes.array,
+    addFilter: _react2.default.PropTypes.func.isRequired,
+    removeFilter: _react2.default.PropTypes.func.isRequired,
+    handleChange: _react2.default.PropTypes.func.isRequired,
+    getPropertyType: _react2.default.PropTypes.func.isRequired
   },
 
   open: function open() {
@@ -5229,13 +5536,13 @@ var FilterManager = React.createClass({
   },
 
   handleChange: function handleChange(index, name, value) {
-    var updates = _.cloneDeep(this.props.filters[index]);
+    var updates = _lodash2.default.cloneDeep(this.props.filters[index]);
 
-    if (!_.isNull(name.match('coordinates'))) {
+    if (!_lodash2.default.isNull(name.match('coordinates'))) {
       var coordinateIndex = parseInt(name.split('.')[1]);
-      updates.property_value.coordinates[coordinateIndex] = FilterUtils.coerceGeoValue(value);
+      updates.property_value.coordinates[coordinateIndex] = _FilterUtils2.default.coerceGeoValue(value);
     } else if (name === 'max_distance_miles' && updates.coercion_type === 'Geo') {
-      updates.property_value[name] = FilterUtils.coerceGeoValue(value);
+      updates.property_value[name] = _FilterUtils2.default.coerceGeoValue(value);
     } else {
       updates[name] = value;
     }
@@ -5245,7 +5552,7 @@ var FilterManager = React.createClass({
 
   buildFilterNodes: function buildFilterNodes() {
     var filterNodes = this.props.filters.map(function (filter, index) {
-      return React.createElement(Filter, { key: index,
+      return _react2.default.createElement(_filter2.default, { key: index,
         index: index,
         filter: filter,
         propertyType: this.props.getPropertyType(this.props.eventCollection, filter.property_name),
@@ -5253,20 +5560,20 @@ var FilterManager = React.createClass({
         propertyNames: this.props.propertyNames,
         handleChange: this.handleChange,
         removeFilter: this.removeFilter,
-        filterOperators: ProjectUtils.getConstant('FILTER_OPERATORS') });
+        filterOperators: _ProjectUtils2.default.getConstant('FILTER_OPERATORS') });
     }.bind(this));
 
-    return React.createElement(
+    return _react2.default.createElement(
       'div',
       null,
       filterNodes,
-      React.createElement(
+      _react2.default.createElement(
         'div',
         { className: 'filter-buttons' },
-        React.createElement(
+        _react2.default.createElement(
           'a',
           { href: '#', className: 'add-filter btn btn-primary', onClick: this.addFilter },
-          React.createElement('i', { className: 'icon glyphicon glyphicon-plus margin-right-tiny' }),
+          _react2.default.createElement('i', { className: 'icon glyphicon glyphicon-plus margin-right-tiny' }),
           'Add another filter'
         )
       )
@@ -5274,19 +5581,19 @@ var FilterManager = React.createClass({
   },
 
   noFiltersMarkup: function noFiltersMarkup() {
-    return React.createElement(
+    return _react2.default.createElement(
       'div',
       { className: 'row' },
-      React.createElement(
+      _react2.default.createElement(
         'div',
         { className: 'col-md-10 col-md-offset-1' },
-        React.createElement(
+        _react2.default.createElement(
           'div',
           { className: 'no-filters-msg callout' },
-          React.createElement(
+          _react2.default.createElement(
             'p',
             { className: 'lead' },
-            React.createElement('i', { className: 'icon glyphicon glyphicon-info-sign margin-right-tiny' }),
+            _react2.default.createElement('i', { className: 'icon glyphicon glyphicon-info-sign margin-right-tiny' }),
             'Please select an Event Collection before making a filter.'
           )
         )
@@ -5297,8 +5604,8 @@ var FilterManager = React.createClass({
   render: function render() {
     var filterContent = this.props.eventCollection ? this.buildFilterNodes() : this.noFiltersMarkup();
 
-    return React.createElement(
-      Modal,
+    return _react2.default.createElement(
+      _modal2.default,
       { ref: 'modal',
         title: 'Filters',
         size: 'large',
@@ -5309,7 +5616,7 @@ var FilterManager = React.createClass({
           classes: 'btn-success',
           iconName: 'ok-circle'
         }] },
-      React.createElement(
+      _react2.default.createElement(
         'div',
         { className: 'filters' },
         filterContent
@@ -5329,9 +5636,19 @@ var define = false;
 
 'use strict';
 
-var _ = __webpack_require__(0);
-var React = __webpack_require__(1);
-var ReactSelect = __webpack_require__(11);
+var _lodash = __webpack_require__(0);
+
+var _lodash2 = _interopRequireDefault(_lodash);
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _react_select = __webpack_require__(11);
+
+var _react_select2 = _interopRequireDefault(_react_select);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var premadeTimes = ['12:00 AM', '12:15 AM', '12:30 AM', '12:45 AM', '01:00 AM', '01:15 AM', '01:30 AM', '01:45 AM', '02:00 AM', '02:15 AM', '02:30 AM', '02:45 AM', '03:00 AM', '03:15 AM', '03:30 AM', '03:45 AM', '04:00 AM', '04:15 AM', '04:30 AM', '04:45 AM', '05:00 AM', '05:15 AM', '05:30 AM', '05:45 AM', '06:00 AM', '06:15 AM', '06:30 AM', '06:45 AM', '07:00 AM', '07:15 AM', '07:30 AM', '07:45 AM', '08:00 AM', '08:15 AM', '08:30 AM', '08:45 AM', '09:00 AM', '09:15 AM', '09:30 AM', '09:45 AM', '10:00 AM', '10:15 AM', '10:30 AM', '10:45 AM', '11:00 AM', '11:15 AM', '11:30 AM', '11:45 AM', '12:00 PM', '12:15 PM', '12:30 PM', '12:45 PM', '01:00 PM', '01:15 PM', '01:30 PM', '01:45 PM', '02:00 PM', '02:15 PM', '02:30 PM', '02:45 PM', '03:00 PM', '03:15 PM', '03:30 PM', '03:45 PM', '04:00 PM', '04:15 PM', '04:30 PM', '04:45 PM', '05:00 PM', '05:15 PM', '05:30 PM', '05:45 PM', '06:00 PM', '06:15 PM', '06:30 PM', '06:45 PM', '07:00 PM', '07:15 PM', '07:30 PM', '07:45 PM', '08:00 PM', '08:15 PM', '08:30 PM', '08:45 PM', '09:00 PM', '09:15 PM', '09:30 PM', '09:45 PM', '10:00 PM', '10:15 PM', '10:30 PM', '10:45 PM', '11:00 PM', '11:15 PM', '11:30 PM', '11:45 PM'];
 
@@ -5357,7 +5674,7 @@ function parseTime(timeStr, dt) {
   return dt;
 }
 
-var Timepicker = React.createClass({
+var Timepicker = _react2.default.createClass({
   displayName: 'Timepicker',
 
 
@@ -5417,22 +5734,22 @@ var Timepicker = React.createClass({
   },
 
   render: function render() {
-    var label = this.props.label ? React.createElement(
+    var label = this.props.label ? _react2.default.createElement(
       'label',
       { htmlFor: this.props.name },
       this.props.label
     ) : null;
-    var errorMsg = this.state.errorMsg ? React.createElement(
+    var errorMsg = this.state.errorMsg ? _react2.default.createElement(
       'p',
       null,
       this.state.errorMsg
     ) : null;
 
-    return React.createElement(
+    return _react2.default.createElement(
       'div',
       { className: this.props.classes },
       label,
-      React.createElement(ReactSelect, { ref: this.props.refValue,
+      _react2.default.createElement(_react_select2.default, { ref: this.props.refValue,
         name: this.props.name,
         inputClasses: 'form-control',
         items: premadeTimes,
@@ -5459,22 +5776,36 @@ var define = false;
 
 'use strict';
 
-var _ = __webpack_require__(0);
-var React = __webpack_require__(1);
-var moment = __webpack_require__(9);
+var _lodash = __webpack_require__(0);
 
-var pickadate = __webpack_require__(23);
-var pickadate = __webpack_require__(58);
-var pickadate = __webpack_require__(57);
+var _lodash2 = _interopRequireDefault(_lodash);
 
-var Datepicker = React.createClass({
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _moment = __webpack_require__(9);
+
+var _moment2 = _interopRequireDefault(_moment);
+
+var _picker = __webpack_require__(23);
+
+var _picker2 = _interopRequireDefault(_picker);
+
+__webpack_require__(58);
+
+__webpack_require__(57);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Datepicker = _react2.default.createClass({
   displayName: 'Datepicker',
 
 
   handleOnBlur: function handleOnBlur(event) {
     this.destroyPicker();
     var value = event.target.value;
-    var isValid = moment(new Date(value)).isValid();
+    var isValid = (0, _moment2.default)(new Date(value)).isValid();
 
     if (isValid) {
       this.props.onBlur(event);
@@ -5490,7 +5821,7 @@ var Datepicker = React.createClass({
       format: 'mmm d, yyyy',
       editable: true,
       min: minimum,
-      onSet: _.bind(function (args) {
+      onSet: _lodash2.default.bind(function (args) {
         this.props.onSet(this.props.name, new Date(this.refs.datepicker.value));
       }, this)
     });
@@ -5521,22 +5852,22 @@ var Datepicker = React.createClass({
   },
 
   render: function render() {
-    var label = this.props.label ? React.createElement(
+    var label = this.props.label ? _react2.default.createElement(
       'label',
       { htmlFor: this.props.name },
       this.props.label
     ) : null;
-    var errorMsg = this.state.errorMsg ? React.createElement(
+    var errorMsg = this.state.errorMsg ? _react2.default.createElement(
       'p',
       null,
       this.state.errorMsg
     ) : '';
 
-    return React.createElement(
+    return _react2.default.createElement(
       'div',
       { className: this.props.classes },
       label,
-      React.createElement('input', { type: 'text',
+      _react2.default.createElement('input', { type: 'text',
         ref: this.props.refValue,
         name: this.props.name,
         className: 'form-control',
@@ -5561,17 +5892,51 @@ module.exports = Datepicker;
 "use strict";
 
 
-var _ = __webpack_require__(0);
-var moment = __webpack_require__(9);
-var React = __webpack_require__(1);
-var AbsolutePicker = __webpack_require__(59);
-var RelativePicker = __webpack_require__(56);
-var FieldsToggle = __webpack_require__(14);
-var ReactSelect = __webpack_require__(11);
-var Timezone = __webpack_require__(55);
-var ExplorerActions = __webpack_require__(4);
-var TimeframeUtils = __webpack_require__(17);
-var ProjectUtils = __webpack_require__(5);
+var _lodash = __webpack_require__(0);
+
+var _lodash2 = _interopRequireDefault(_lodash);
+
+var _moment = __webpack_require__(9);
+
+var _moment2 = _interopRequireDefault(_moment);
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _absolute_picker = __webpack_require__(59);
+
+var _absolute_picker2 = _interopRequireDefault(_absolute_picker);
+
+var _relative_picker = __webpack_require__(56);
+
+var _relative_picker2 = _interopRequireDefault(_relative_picker);
+
+var _fields_toggle = __webpack_require__(14);
+
+var _fields_toggle2 = _interopRequireDefault(_fields_toggle);
+
+var _react_select = __webpack_require__(11);
+
+var _react_select2 = _interopRequireDefault(_react_select);
+
+var _timezone = __webpack_require__(55);
+
+var _timezone2 = _interopRequireDefault(_timezone);
+
+var _ExplorerActions = __webpack_require__(4);
+
+var _ExplorerActions2 = _interopRequireDefault(_ExplorerActions);
+
+var _TimeframeUtils = __webpack_require__(17);
+
+var _TimeframeUtils2 = _interopRequireDefault(_TimeframeUtils);
+
+var _ProjectUtils = __webpack_require__(5);
+
+var _ProjectUtils2 = _interopRequireDefault(_ProjectUtils);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function relativeDefaults() {
   return {
@@ -5583,12 +5948,12 @@ function relativeDefaults() {
 
 function absoluteDefaults() {
   return {
-    start: new Date(moment().subtract(1, 'days').startOf('day').format()),
-    end: new Date(moment().startOf('day').format())
+    start: new Date((0, _moment2.default)().subtract(1, 'days').startOf('day').format()),
+    end: new Date((0, _moment2.default)().startOf('day').format())
   };
 }
 
-var Timeframe = React.createClass({
+var Timeframe = _react2.default.createClass({
   displayName: 'Timeframe',
 
 
@@ -5600,54 +5965,54 @@ var Timeframe = React.createClass({
   },
 
   isAbsolute: function isAbsolute() {
-    return TimeframeUtils.timeframeType(this.props.time) === 'absolute';
+    return _TimeframeUtils2.default.timeframeType(this.props.time) === 'absolute';
   },
 
   isRelative: function isRelative() {
-    return TimeframeUtils.timeframeType(this.props.time) === 'relative';
+    return _TimeframeUtils2.default.timeframeType(this.props.time) === 'relative';
   },
 
   // React Methods
 
   render: function render() {
-    var timezone = this.props.timezone || ProjectUtils.getConstant('DEFAULT_TIMEZONE');
+    var timezone = this.props.timezone || _ProjectUtils2.default.getConstant('DEFAULT_TIMEZONE');
 
     if (this.isAbsolute()) {
-      var timeframePicker = React.createElement(AbsolutePicker, { time: this.props.time,
+      var timeframePicker = _react2.default.createElement(_absolute_picker2.default, { time: this.props.time,
         handleChange: this.props.handleChange });
     } else {
-      var timeframePicker = React.createElement(RelativePicker, { relativeIntervalTypes: ProjectUtils.getConstant('RELATIVE_INTERVAL_TYPES'),
+      var timeframePicker = _react2.default.createElement(_relative_picker2.default, { relativeIntervalTypes: _ProjectUtils2.default.getConstant('RELATIVE_INTERVAL_TYPES'),
         time: this.props.time,
         handleChange: this.props.handleChange });
     }
 
-    return React.createElement(
+    return _react2.default.createElement(
       'div',
       { className: 'timeframe' },
-      React.createElement(
+      _react2.default.createElement(
         'div',
         { className: 'field-component' },
-        React.createElement(
+        _react2.default.createElement(
           'label',
           null,
           'Timeframe'
         ),
-        React.createElement(
+        _react2.default.createElement(
           'ul',
           { className: 'nav nav-pills', role: 'tablist' },
-          React.createElement(
+          _react2.default.createElement(
             'li',
             { className: this.isRelative() ? 'active' : '' },
-            React.createElement(
+            _react2.default.createElement(
               'a',
               { href: '#', className: 'relative-tab', 'data-type': 'relative', onClick: this.toggleTimeframeType },
               'Relative'
             )
           ),
-          React.createElement(
+          _react2.default.createElement(
             'li',
             { className: this.isAbsolute() ? 'active' : '' },
-            React.createElement(
+            _react2.default.createElement(
               'a',
               { href: '#', className: 'absolute-tab', 'data-type': 'absolute', onClick: this.toggleTimeframeType },
               'Absolute'
@@ -5655,8 +6020,8 @@ var Timeframe = React.createClass({
           )
         ),
         timeframePicker,
-        React.createElement(Timezone, { timezone: this.props.timezone,
-          timeframe_type: TimeframeUtils.timeframeType(this.props.time),
+        _react2.default.createElement(_timezone2.default, { timezone: this.props.timezone,
+          timeframe_type: _TimeframeUtils2.default.timeframeType(this.props.time),
           handleChange: this.props.handleChange })
       )
     );
@@ -5672,13 +6037,21 @@ module.exports = Timeframe;
 "use strict";
 
 
-var React = __webpack_require__(1);
-var _ = __webpack_require__(0);
+var _react = __webpack_require__(1);
 
-// Components
-var ReactSelect = __webpack_require__(11);
+var _react2 = _interopRequireDefault(_react);
 
-var SelectField = React.createClass({
+var _lodash = __webpack_require__(0);
+
+var _lodash2 = _interopRequireDefault(_lodash);
+
+var _react_select = __webpack_require__(11);
+
+var _react_select2 = _interopRequireDefault(_react_select);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var SelectField = _react2.default.createClass({
   displayName: 'SelectField',
 
 
@@ -5691,10 +6064,10 @@ var SelectField = React.createClass({
 
   buildBrowseEventsLink: function buildBrowseEventsLink() {
     if (this.props.onBrowseEvents) {
-      return React.createElement(
+      return _react2.default.createElement(
         'button',
         { className: 'btn btn-link field-secondary-control', title: 'Browse event collections', type: 'button', onClick: this.props.onBrowseEvents, id: 'browse-event-collections' },
-        React.createElement('span', { className: 'icon glyphicon glyphicon-search' }),
+        _react2.default.createElement('span', { className: 'icon glyphicon glyphicon-search' }),
         ' Preview collections'
       );
     }
@@ -5703,23 +6076,23 @@ var SelectField = React.createClass({
   // React methods
 
   render: function render() {
-    var requiredNote = this.props.requiredLabel ? React.createElement(
+    var requiredNote = this.props.requiredLabel ? _react2.default.createElement(
       'small',
       null,
       '(required)'
     ) : null;
 
-    return React.createElement(
+    return _react2.default.createElement(
       'div',
       { className: 'field-component' },
-      React.createElement(
+      _react2.default.createElement(
         'label',
         { htmlFor: this.props.name },
         this.props.label,
         ' ',
         requiredNote
       ),
-      React.createElement(ReactSelect, { ref: 'select',
+      _react2.default.createElement(_react_select2.default, { ref: 'select',
         name: this.props.name,
         inputClasses: this.props.inputClasses.join(' ') + ' form-control',
         items: this.props.options,
@@ -5732,6 +6105,9 @@ var SelectField = React.createClass({
 
 });
 
+// Components
+
+
 module.exports = SelectField;
 
 /***/ }),
@@ -5741,9 +6117,13 @@ module.exports = SelectField;
 "use strict";
 
 
-var keyMirror = __webpack_require__(20);
+var _keymirror = __webpack_require__(20);
 
-module.exports = keyMirror({
+var _keymirror2 = _interopRequireDefault(_keymirror);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+module.exports = (0, _keymirror2.default)({
   NOTICE_CREATE: null,
   NOTICE_CLEAR_ALL: null
 });
@@ -5755,9 +6135,19 @@ module.exports = keyMirror({
 "use strict";
 
 
-var _ = __webpack_require__(0);
-var FormatUtils = __webpack_require__(2);
-var SharedValidators = __webpack_require__(39);
+var _lodash = __webpack_require__(0);
+
+var _lodash2 = _interopRequireDefault(_lodash);
+
+var _FormatUtils = __webpack_require__(2);
+
+var _FormatUtils2 = _interopRequireDefault(_FormatUtils);
+
+var _SharedValidators = __webpack_require__(39);
+
+var _SharedValidators2 = _interopRequireDefault(_SharedValidators);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 module.exports = {
 
@@ -5784,7 +6174,7 @@ module.exports = {
   time: {
 
     validate: function validate(model) {
-      return SharedValidators.time(model.time);
+      return _SharedValidators2.default.time(model.time);
     }
 
   },
@@ -5794,7 +6184,7 @@ module.exports = {
     msg: 'One of your filters is invalid.',
 
     validate: function validate(model) {
-      return SharedValidators.filters(model.filters);
+      return _SharedValidators2.default.filters(model.filters);
     }
 
   },
@@ -5804,7 +6194,7 @@ module.exports = {
     msg: 'You must select whether this step is optional.',
 
     validate: function validate(model) {
-      if (FormatUtils.isNullOrUndefined(model.optional)) return false;
+      if (_FormatUtils2.default.isNullOrUndefined(model.optional)) return false;
       return typeof model.optional === 'boolean';
     }
 
@@ -5815,7 +6205,7 @@ module.exports = {
     msg: 'You must select whether this step is inverted.',
 
     validate: function validate(model) {
-      if (FormatUtils.isNullOrUndefined(model.inverted)) return false;
+      if (_FormatUtils2.default.isNullOrUndefined(model.inverted)) return false;
       return typeof model.inverted === 'boolean';
     }
 
@@ -5826,7 +6216,7 @@ module.exports = {
     msg: '"with_actors" must be set to either true or false',
 
     validate: function validate(model) {
-      if (FormatUtils.isNullOrUndefined(model.with_actors)) return false;
+      if (_FormatUtils2.default.isNullOrUndefined(model.with_actors)) return false;
       return typeof model.with_actors === 'boolean';
     }
 
@@ -5841,20 +6231,34 @@ module.exports = {
 "use strict";
 
 
-var _ = __webpack_require__(0);
-var RunValidations = __webpack_require__(10).run;
-var FilterValidations = __webpack_require__(30);
-var TimeframeUtils = __webpack_require__(17);
-var FilterUtils = __webpack_require__(8);
+var _lodash = __webpack_require__(0);
+
+var _lodash2 = _interopRequireDefault(_lodash);
+
+var _RunValidations = __webpack_require__(10);
+
+var _FilterValidations = __webpack_require__(30);
+
+var _FilterValidations2 = _interopRequireDefault(_FilterValidations);
+
+var _TimeframeUtils = __webpack_require__(17);
+
+var _TimeframeUtils2 = _interopRequireDefault(_TimeframeUtils);
+
+var _FilterUtils = __webpack_require__(8);
+
+var _FilterUtils2 = _interopRequireDefault(_FilterUtils);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 module.exports = {
 
   filters: function filters(_filters) {
-    if (!_filters || _.isArray(_filters) && !_filters.length) return true;
+    if (!_filters || _lodash2.default.isArray(_filters) && !_filters.length) return true;
     var isValid = true;
     for (var i = 0; i < _filters.length; i++) {
-      if (!FilterUtils.isComplete(_filters[i])) continue;
-      RunValidations(FilterValidations, _filters[i]);
+      if (!_FilterUtils2.default.isComplete(_filters[i])) continue;
+      (0, _RunValidations.run)(_FilterValidations2.default, _filters[i]);
       if (!_filters[i].isValid) isValid = false;
     }
     return isValid;
@@ -5864,11 +6268,11 @@ module.exports = {
     var defaultError = "You must provide a timeframe.";
 
     if (!_time) return defaultError;
-    if (TimeframeUtils.timeframeType(_time) === 'relative') {
+    if (_TimeframeUtils2.default.timeframeType(_time) === 'relative') {
       if (_time.relativity && _time.amount && _time.sub_timeframe) return true;
       return "You must choose all 3 options for relative timeframes.";
     }
-    if (TimeframeUtils.timeframeType(_time) === 'absolute') {
+    if (_TimeframeUtils2.default.timeframeType(_time) === 'absolute') {
       if (_time.start && _time.end) return true;
       return "You must provide a start and end time for absolute timeframes.";
     }
@@ -5885,11 +6289,21 @@ module.exports = {
 "use strict";
 
 
-var React = __webpack_require__(1);
-var _ = __webpack_require__(0);
-var classNames = __webpack_require__(6);
+var _react = __webpack_require__(1);
 
-var Modal = React.createClass({
+var _react2 = _interopRequireDefault(_react);
+
+var _lodash = __webpack_require__(0);
+
+var _lodash2 = _interopRequireDefault(_lodash);
+
+var _classnames = __webpack_require__(6);
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Modal = _react2.default.createClass({
   displayName: 'Modal',
 
 
@@ -5942,7 +6356,7 @@ var Modal = React.createClass({
 
   buildFooter: function buildFooter() {
     if (this.props.footerBtns.length) {
-      var footerBtns = _.map(this.props.footerBtns, _.bind(function (btnConfig, index) {
+      var footerBtns = _lodash2.default.map(this.props.footerBtns, _lodash2.default.bind(function (btnConfig, index) {
         var text = btnConfig.text;
 
         var classes = 'btn';
@@ -5955,10 +6369,10 @@ var Modal = React.createClass({
         var icon;
         if (btnConfig.iconName) {
           var iconClass = 'icon glyphicon glyphicon-' + btnConfig.iconName;
-          var icon = React.createElement('span', { className: iconClass });
+          var icon = _react2.default.createElement('span', { className: iconClass });
         }
 
-        return React.createElement(
+        return _react2.default.createElement(
           'button',
           { type: 'button', ref: btnConfig.ref || '', className: classes, onClick: btnConfig.onClick || this.close, key: index },
           icon,
@@ -5966,7 +6380,7 @@ var Modal = React.createClass({
         );
       }, this));
 
-      return React.createElement(
+      return _react2.default.createElement(
         'div',
         { className: 'modal-footer' },
         footerBtns
@@ -5994,8 +6408,8 @@ var Modal = React.createClass({
   },
 
   componentDidMount: function componentDidMount() {
-    $(document).on('click', '.modal.block', _.bind(this.backdropClick, this));
-    $(document).on('keyup', _.bind(function (e) {
+    $(document).on('click', '.modal.block', _lodash2.default.bind(this.backdropClick, this));
+    $(document).on('keyup', _lodash2.default.bind(function (e) {
       // Escapism?
       if (e.keyCode === 27 && e.target.className.indexOf('react-select-input') < 0) {
         this.close();
@@ -6012,7 +6426,7 @@ var Modal = React.createClass({
     if (this.state.open) {
       modalClasses += ' block';
     }
-    var modalDialogClasses = classNames({
+    var modalDialogClasses = (0, _classnames2.default)({
       'modal-dialog': true,
       'modal-lg': this.props.size === 'large'
     });
@@ -6022,43 +6436,43 @@ var Modal = React.createClass({
       var titleIconClasses = "icon glyphicon glyphicon-" + this.props.titleIcon;
       if (!this.props.title) titleIconClasses += " big no-margin";
       if (this.props.iconClasses) titleIconClasses = titleIconClasses + " " + this.props.iconClasses;
-      titleIcon = React.createElement('span', { className: titleIconClasses });
+      titleIcon = _react2.default.createElement('span', { className: titleIconClasses });
     }
 
-    return React.createElement(
+    return _react2.default.createElement(
       'div',
       { className: modalClasses },
-      React.createElement(
+      _react2.default.createElement(
         'div',
         { className: modalDialogClasses },
-        React.createElement(
+        _react2.default.createElement(
           'div',
           { className: 'modal-content' },
-          React.createElement(
+          _react2.default.createElement(
             'div',
             { className: 'modal-header' },
-            React.createElement(
+            _react2.default.createElement(
               'button',
               { type: 'button', className: 'close', onClick: this.closeClick },
-              React.createElement(
+              _react2.default.createElement(
                 'span',
                 { 'aria-hidden': 'true' },
                 '\xD7'
               ),
-              React.createElement(
+              _react2.default.createElement(
                 'span',
                 { className: 'sr-only' },
                 'Close'
               )
             ),
-            React.createElement(
+            _react2.default.createElement(
               'h3',
               { className: 'modal-title' },
               titleIcon,
               this.props.title
             )
           ),
-          React.createElement(
+          _react2.default.createElement(
             'div',
             { className: 'modal-body' },
             this.props.children
@@ -6079,9 +6493,13 @@ module.exports = Modal;
 "use strict";
 
 
-var keyMirror = __webpack_require__(20);
+var _keymirror = __webpack_require__(20);
 
-module.exports = keyMirror({
+var _keymirror2 = _interopRequireDefault(_keymirror);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+module.exports = (0, _keymirror2.default)({
   APP_STATE_UPDATE: null,
   APP_STATE_RESET: null
 });
@@ -6093,10 +6511,21 @@ module.exports = keyMirror({
 "use strict";
 
 
-var _ = __webpack_require__(0);
-var AppDispatcher = __webpack_require__(7);
-var EventEmitter = __webpack_require__(21).EventEmitter;
-var AppStateConstants = __webpack_require__(41);
+var _lodash = __webpack_require__(0);
+
+var _lodash2 = _interopRequireDefault(_lodash);
+
+var _AppDispatcher = __webpack_require__(7);
+
+var _AppDispatcher2 = _interopRequireDefault(_AppDispatcher);
+
+var _events = __webpack_require__(21);
+
+var _AppStateConstants = __webpack_require__(41);
+
+var _AppStateConstants2 = _interopRequireDefault(_AppStateConstants);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var CHANGE_EVENT = 'change';
 
@@ -6111,16 +6540,16 @@ function defaultState() {
 var _appState = defaultState();
 
 function _update(updates) {
-  _appState = _.assign({}, _appState, updates);
+  _appState = _lodash2.default.assign({}, _appState, updates);
 }
 
 function _reset() {
   _appState = defaultState();
 }
 
-var AppStateStore = _.assign({}, EventEmitter.prototype, {
+var AppStateStore = _lodash2.default.assign({}, _events.EventEmitter.prototype, {
   unregisterWithDispatcher: function unregisterWithDispatcher() {
-    AppDispatcher.unregister(this.dispatchToken);
+    _AppDispatcher2.default.unregister(this.dispatchToken);
   },
 
   getState: function getState() {
@@ -6145,14 +6574,14 @@ var AppStateStore = _.assign({}, EventEmitter.prototype, {
 });
 
 // Register callback to handle all updates
-AppStateStore.dispatchToken = AppDispatcher.register(function (action) {
+AppStateStore.dispatchToken = _AppDispatcher2.default.register(function (action) {
   switch (action.actionType) {
-    case AppStateConstants.APP_STATE_UPDATE:
+    case _AppStateConstants2.default.APP_STATE_UPDATE:
       _update(action.updates);
       AppStateStore.emitChange();
       break;
 
-    case AppStateConstants.APP_STATE_RESET:
+    case _AppStateConstants2.default.APP_STATE_RESET:
       _reset();
       AppStateStore.emitChange();
       break;
@@ -6173,9 +6602,13 @@ module.exports = AppStateStore;
 "use strict";
 
 
-var keyMirror = __webpack_require__(20);
+var _keymirror = __webpack_require__(20);
 
-module.exports = keyMirror({
+var _keymirror2 = _interopRequireDefault(_keymirror);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+module.exports = (0, _keymirror2.default)({
   PROJECT_CREATE: null,
   PROJECT_UPDATE: null,
   PROJECT_UPDATE_EVENT_COLLECTION: null
@@ -6200,12 +6633,29 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__45__;
 "use strict";
 
 
-var _ = __webpack_require__(0);
-var AppDispatcher = __webpack_require__(7);
-var EventEmitter = __webpack_require__(21).EventEmitter;
-var NoticeConstants = __webpack_require__(37);
-var ExplorerConstants = __webpack_require__(19);
-var ExplorerStore = __webpack_require__(12);
+var _lodash = __webpack_require__(0);
+
+var _lodash2 = _interopRequireDefault(_lodash);
+
+var _AppDispatcher = __webpack_require__(7);
+
+var _AppDispatcher2 = _interopRequireDefault(_AppDispatcher);
+
+var _events = __webpack_require__(21);
+
+var _NoticeConstants = __webpack_require__(37);
+
+var _NoticeConstants2 = _interopRequireDefault(_NoticeConstants);
+
+var _ExplorerConstants = __webpack_require__(19);
+
+var _ExplorerConstants2 = _interopRequireDefault(_ExplorerConstants);
+
+var _ExplorerStore = __webpack_require__(12);
+
+var _ExplorerStore2 = _interopRequireDefault(_ExplorerStore);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var CHANGE_EVENT = 'change';
 
@@ -6220,13 +6670,13 @@ function defaultAttrs() {
 }
 
 function _removeGlobalNotices() {
-  _.each(_notices, function (val, key) {
+  _lodash2.default.each(_notices, function (val, key) {
     if (val.location === 'global') delete _notices[key];
   });
 }
 
 function _removeStepNotices() {
-  _.each(_notices, function (val, key) {
+  _lodash2.default.each(_notices, function (val, key) {
     if (val.location === 'step') delete _notices[key];
   });
 }
@@ -6236,24 +6686,24 @@ function _create(attrs) {
     _removeGlobalNotices();
   }
   var tempId = "TEMP-" + (+new Date() + Math.floor(Math.random() * 999999)).toString(36);
-  _notices[tempId] = _.assign(defaultAttrs(), attrs);
+  _notices[tempId] = _lodash2.default.assign(defaultAttrs(), attrs);
 }
 
 function _clearAll() {
   _notices = {};
 }
 
-var NoticeStore = _.assign({}, EventEmitter.prototype, {
+var NoticeStore = _lodash2.default.assign({}, _events.EventEmitter.prototype, {
   unregisterWithDispatcher: function unregisterWithDispatcher() {
-    AppDispatcher.unregister(this.dispatchToken);
+    _AppDispatcher2.default.unregister(this.dispatchToken);
   },
 
   getGlobalNotice: function getGlobalNotice() {
-    return _.find(_notices, { location: 'global' });
+    return _lodash2.default.find(_notices, { location: 'global' });
   },
 
   getStepNotices: function getStepNotices() {
-    return _.filter(_notices, function (notice) {
+    return _lodash2.default.filter(_notices, function (notice) {
       if (notice.location === 'step') return notice;
     });
   },
@@ -6276,21 +6726,21 @@ var NoticeStore = _.assign({}, EventEmitter.prototype, {
 });
 
 // Register callback to handle all updates
-NoticeStore.dispatchToken = AppDispatcher.register(function (action) {
-  AppDispatcher.waitFor([ExplorerStore.dispatchToken]);
+NoticeStore.dispatchToken = _AppDispatcher2.default.register(function (action) {
+  _AppDispatcher2.default.waitFor([_ExplorerStore2.default.dispatchToken]);
 
   switch (action.actionType) {
-    case NoticeConstants.NOTICE_CREATE:
+    case _NoticeConstants2.default.NOTICE_CREATE:
       _create(action.attrs);
       NoticeStore.emitChange();
       break;
 
-    case NoticeConstants.NOTICE_CLEAR_ALL:
+    case _NoticeConstants2.default.NOTICE_CLEAR_ALL:
       _clearAll();
       NoticeStore.emitChange();
       break;
 
-    case ExplorerConstants.EXPLORER_SAVING:
+    case _ExplorerConstants2.default.EXPLORER_SAVING:
       var text = action.saveType === 'save' ? 'Saving query...' : 'Updating query...';
       _create({
         type: 'info',
@@ -6300,7 +6750,7 @@ NoticeStore.dispatchToken = AppDispatcher.register(function (action) {
       NoticeStore.emitChange();
       break;
 
-    case ExplorerConstants.EXPLORER_SAVE_SUCCESS:
+    case _ExplorerConstants2.default.EXPLORER_SAVE_SUCCESS:
       var text = action.saveType === 'save' ? 'Query saved' : 'Query updated';
       _create({
         type: 'success',
@@ -6310,7 +6760,7 @@ NoticeStore.dispatchToken = AppDispatcher.register(function (action) {
       NoticeStore.emitChange();
       break;
 
-    case ExplorerConstants.EXPLORER_SAVE_FAIL:
+    case _ExplorerConstants2.default.EXPLORER_SAVE_FAIL:
       var msg;
       var text = action.saveType === 'save' ? 'saving' : 'updating';
       if (action.errorMsg) {
@@ -6328,7 +6778,7 @@ NoticeStore.dispatchToken = AppDispatcher.register(function (action) {
       NoticeStore.emitChange();
       break;
 
-    case ExplorerConstants.EXPLORER_DESTROYING:
+    case _ExplorerConstants2.default.EXPLORER_DESTROYING:
       _create({
         type: 'info',
         text: 'Deleting query...',
@@ -6337,7 +6787,7 @@ NoticeStore.dispatchToken = AppDispatcher.register(function (action) {
       NoticeStore.emitChange();
       break;
 
-    case ExplorerConstants.EXPLORER_DESTROY_SUCCESS:
+    case _ExplorerConstants2.default.EXPLORER_DESTROY_SUCCESS:
       _create({
         type: 'success',
         text: 'Query deleted.',
@@ -6346,7 +6796,7 @@ NoticeStore.dispatchToken = AppDispatcher.register(function (action) {
       NoticeStore.emitChange();
       break;
 
-    case ExplorerConstants.EXPLORER_DESTROY_FAIL:
+    case _ExplorerConstants2.default.EXPLORER_DESTROY_FAIL:
       _create({
         type: 'error',
         text: 'There was a problem deleting your query: ' + action.errorMsg,
@@ -6355,8 +6805,8 @@ NoticeStore.dispatchToken = AppDispatcher.register(function (action) {
       NoticeStore.emitChange();
       break;
 
-    case ExplorerConstants.EXPLORER_FOUND_INVALID:
-      var explorer = ExplorerStore.get(action.id);
+    case _ExplorerConstants2.default.EXPLORER_FOUND_INVALID:
+      var explorer = _ExplorerStore2.default.get(action.id);
       _create({
         text: 'There was a problem: ' + explorer.errors[0].msg,
         type: 'error',
@@ -6396,12 +6846,25 @@ module.exports = NoticeStore;
 "use strict";
 
 
-var React = __webpack_require__(1);
-var classNames = __webpack_require__(6);
-var _ = __webpack_require__(0);
-var ExplorerUtils = __webpack_require__(3);
+var _react = __webpack_require__(1);
 
-var QueryActions = React.createClass({
+var _react2 = _interopRequireDefault(_react);
+
+var _classnames = __webpack_require__(6);
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
+var _lodash = __webpack_require__(0);
+
+var _lodash2 = _interopRequireDefault(_lodash);
+
+var _ExplorerUtils = __webpack_require__(3);
+
+var _ExplorerUtils2 = _interopRequireDefault(_ExplorerUtils);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var QueryActions = _react2.default.createClass({
   displayName: 'QueryActions',
 
 
@@ -6423,9 +6886,9 @@ var QueryActions = React.createClass({
   runButtonText: function runButtonText() {
     var btnStates = this.runBtnStates.default;
 
-    if (ExplorerUtils.isEmailExtraction(this.props.model)) {
+    if (_ExplorerUtils2.default.isEmailExtraction(this.props.model)) {
       btnStates = this.runBtnStates.emailExtraction;
-    } else if (ExplorerUtils.isImmediateExtraction(this.props.model)) {
+    } else if (_ExplorerUtils2.default.isImmediateExtraction(this.props.model)) {
       btnStates = this.runBtnStates.immediateExtraction;
     }
 
@@ -6438,44 +6901,44 @@ var QueryActions = React.createClass({
         cloneBtn,
         deleteBtn,
         actionsSupported = true,
-        runButtonClasses = classNames({
+        runButtonClasses = (0, _classnames2.default)({
       'disabled': this.props.model.loading,
       'btn btn-primary run-query': true
     }),
-        codeSampleBtnClasses = classNames({
+        codeSampleBtnClasses = (0, _classnames2.default)({
       'btn btn-default code-sample-toggle pull-right': true,
       'open': !this.props.codeSampleHidden
     });
 
-    var isEmailExtraction = ExplorerUtils.isEmailExtraction(this.props.model);
-    var isPersisted = ExplorerUtils.isPersisted(this.props.model);
+    var isEmailExtraction = _ExplorerUtils2.default.isEmailExtraction(this.props.model);
+    var isPersisted = _ExplorerUtils2.default.isPersisted(this.props.model);
     var isFunnel = this.props.model.query.analysis_type === 'funnel';
 
     if (this.props.persistence) {
       if (isEmailExtraction) {
         actionsSupported = false;
-        saveMsg = React.createElement(
+        saveMsg = _react2.default.createElement(
           'p',
           { className: 'no-margin margin-top-tiny' },
-          React.createElement(
+          _react2.default.createElement(
             'small',
             null,
             'The Keen IO API currently does not support saving email extraction.'
           )
         );
       }
-      saveBtn = React.createElement(
+      saveBtn = _react2.default.createElement(
         'button',
         { type: 'button', className: 'btn btn-success save-query', onClick: actionsSupported ? this.props.saveQueryClick : function () {}, role: 'save-query', disabled: this.props.model.loading || !actionsSupported },
         isPersisted ? 'Update' : 'Save'
       );
-      deleteBtn = React.createElement(
+      deleteBtn = _react2.default.createElement(
         'button',
         { type: 'button', role: 'delete-query', className: 'btn btn-link', onClick: actionsSupported ? this.props.removeClick : function () {}, disabled: !actionsSupported },
         'Delete'
       );
       if (isPersisted) {
-        cloneBtn = React.createElement(
+        cloneBtn = _react2.default.createElement(
           'button',
           { type: 'button', className: 'btn btn-default', onClick: actionsSupported ? this.props.cloneQueryClick : function () {}, role: 'clone-query', disabled: this.props.model.loading || !actionsSupported },
           'Clone'
@@ -6483,25 +6946,25 @@ var QueryActions = React.createClass({
       }
     }
 
-    return React.createElement(
+    return _react2.default.createElement(
       'div',
       { className: 'query-actions clearfix' },
-      React.createElement(
+      _react2.default.createElement(
         'div',
         { className: 'row' },
-        React.createElement(
+        _react2.default.createElement(
           'div',
           { className: 'col-md-10 clearfix' },
-          React.createElement(
+          _react2.default.createElement(
             'div',
             { className: 'run-group pull-left' },
-            React.createElement(
+            _react2.default.createElement(
               'button',
               { type: 'submit', role: 'run-query', className: runButtonClasses, id: 'run-query', onClick: this.props.handleQuerySubmit },
               this.runButtonText()
             )
           ),
-          React.createElement(
+          _react2.default.createElement(
             'div',
             { className: 'manage-group pull-left' },
             saveBtn,
@@ -6509,13 +6972,13 @@ var QueryActions = React.createClass({
             deleteBtn
           )
         ),
-        React.createElement(
+        _react2.default.createElement(
           'div',
           { className: 'col-md-2' },
-          React.createElement(
+          _react2.default.createElement(
             'button',
             { className: codeSampleBtnClasses, role: 'toggle-code-sample', onClick: this.props.toggleCodeSample },
-            React.createElement(
+            _react2.default.createElement(
               'span',
               null,
               '</> Embed'
@@ -6538,27 +7001,43 @@ module.exports = QueryActions;
 "use strict";
 
 
-var React = __webpack_require__(1);
-var _ = __webpack_require__(0);
-var classNames = __webpack_require__(6);
-var moment = __webpack_require__(9);
+var _react = __webpack_require__(1);
 
-var ExplorerActions = __webpack_require__(4);
+var _react2 = _interopRequireDefault(_react);
+
+var _lodash = __webpack_require__(0);
+
+var _lodash2 = _interopRequireDefault(_lodash);
+
+var _classnames = __webpack_require__(6);
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
+var _moment = __webpack_require__(9);
+
+var _moment2 = _interopRequireDefault(_moment);
+
+var _ExplorerActions = __webpack_require__(4);
+
+var _ExplorerActions2 = _interopRequireDefault(_ExplorerActions);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 var refreshRateMultiplier = 60 * 60;
 
-var CacheToggle = React.createClass({
+var CacheToggle = _react2.default.createClass({
   displayName: 'CacheToggle',
 
 
   setCached: function setCached(event) {
-    var updates = _.clone(this.props.model);
+    var updates = _lodash2.default.clone(this.props.model);
     if (this._isCached()) {
       updates.refresh_rate = 0;
     } else {
       updates.refresh_rate = 14400;
     }
 
-    ExplorerActions.update(this.props.model.id, updates);
+    _ExplorerActions2.default.update(this.props.model.id, updates);
     this.setState({
       settingsOpen: updates.refresh_rate == 0 ? false : this.state.settingsOpen
     });
@@ -6575,10 +7054,10 @@ var CacheToggle = React.createClass({
 
   setRefreshRateBlur: function setRefreshRateBlur(event) {
     var refresh_rate = Math.round(event.target.value * refreshRateMultiplier);
-    var updates = _.clone(this.props.model);
+    var updates = _lodash2.default.clone(this.props.model);
     updates.refresh_rate = refresh_rate;
 
-    ExplorerActions.update(this.props.model.id, updates);
+    _ExplorerActions2.default.update(this.props.model.id, updates);
     this.forceUpdate();
   },
 
@@ -6596,51 +7075,51 @@ var CacheToggle = React.createClass({
 
   render: function render() {
     var isCached = this._isCached();
-    var parentClasses = classNames({
+    var parentClasses = (0, _classnames2.default)({
       'cache-toggle': true,
       'inactive': !isCached
     });
-    var cacheDetailsClasses = classNames({
+    var cacheDetailsClasses = (0, _classnames2.default)({
       "cache-details": true,
       "hide": !isCached
     });
-    var cacheSettingsClasses = classNames({
+    var cacheSettingsClasses = (0, _classnames2.default)({
       "cache-settings": true,
       "hide": !this.state.settingsOpen
     });
 
     var cacheToggleLabel = isCached ? 'Caching enabled' : 'Enable caching';
 
-    return React.createElement(
+    return _react2.default.createElement(
       'div',
       { className: parentClasses },
-      React.createElement(
+      _react2.default.createElement(
         'label',
         { htmlFor: 'cache' },
-        React.createElement('input', { type: 'checkbox', name: 'cache', id: 'cache',
+        _react2.default.createElement('input', { type: 'checkbox', name: 'cache', id: 'cache',
           onChange: this.setCached, checked: isCached }),
         cacheToggleLabel,
-        React.createElement(
+        _react2.default.createElement(
           'a',
           { href: 'https://keen.io/docs/api/#saved-queries', target: '_blank' },
-          React.createElement('i', { className: 'icon glyphicon glyphicon-question-sign' })
+          _react2.default.createElement('i', { className: 'icon glyphicon glyphicon-question-sign' })
         )
       ),
-      React.createElement(
+      _react2.default.createElement(
         'span',
         { className: cacheDetailsClasses },
         this._minutesAgo(),
-        React.createElement(
+        _react2.default.createElement(
           'a',
           { href: '#', onClick: this.setSettingsOpen, className: 'margin-left-tiny' },
-          React.createElement('span', { className: 'icon icon-cog glyphicon-cog glyphicon' })
+          _react2.default.createElement('span', { className: 'icon icon-cog glyphicon-cog glyphicon' })
         )
       ),
-      React.createElement(
+      _react2.default.createElement(
         'span',
         { className: cacheSettingsClasses },
         'Refresh every ',
-        React.createElement('input', { type: 'text',
+        _react2.default.createElement('input', { type: 'text',
           name: 'refresh_rate',
           value: this.state.refresh_rate,
           className: 'form-control',
@@ -6661,8 +7140,8 @@ var CacheToggle = React.createClass({
     var runInformation = this.props.model.run_information;
 
     if (runInformation != null && runInformation.last_run_status == 200) {
-      var lastRun = moment(runInformation.last_run_date).utcOffset(0);
-      var duration = moment.duration(lastRun.diff(moment())).humanize();
+      var lastRun = (0, _moment2.default)(runInformation.last_run_date).utcOffset(0);
+      var duration = _moment2.default.duration(lastRun.diff((0, _moment2.default)())).humanize();
       return 'Last updated ' + duration + ' ago.';
     }
   },
@@ -6682,18 +7161,28 @@ module.exports = CacheToggle;
 "use strict";
 
 
-var React = __webpack_require__(1);
-var _ = __webpack_require__(0);
-var moment = __webpack_require__(9);
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _lodash = __webpack_require__(0);
+
+var _lodash2 = _interopRequireDefault(_lodash);
+
+var _moment = __webpack_require__(9);
+
+var _moment2 = _interopRequireDefault(_moment);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function dateForItem(item) {
   if (item.created_date) {
-    var datetime = moment(new Date(item.created_date.replace(' ', 'T')));
+    var datetime = (0, _moment2.default)(new Date(item.created_date.replace(' ', 'T')));
     return datetime.isValid() ? datetime.format('ll h:mm A') : null;
   }
 }
 
-var BrowseQueries = React.createClass({
+var BrowseQueries = _react2.default.createClass({
   displayName: 'BrowseQueries',
 
 
@@ -6702,17 +7191,17 @@ var BrowseQueries = React.createClass({
   },
 
   buildList: function buildList() {
-    var listElements = this.props.listItems.map(_.bind(function (listItem, index) {
+    var listElements = this.props.listItems.map(_lodash2.default.bind(function (listItem, index) {
       var isSelected = this.props.selectedIndex === index ? true : false;
       var classes;
       if (isSelected) classes = 'active';
       var createdAt;
       var datetime = dateForItem(listItem);
       if (datetime) {
-        createdAt = React.createElement(
+        createdAt = _react2.default.createElement(
           'p',
           { className: 'date pull-right' },
-          React.createElement('span', { className: 'icon glyphicon glyphicon-time' }),
+          _react2.default.createElement('span', { className: 'icon glyphicon glyphicon-time' }),
           datetime
         );
       }
@@ -6727,18 +7216,18 @@ var BrowseQueries = React.createClass({
         displayName = 'Query not named';
       }
 
-      return React.createElement(
+      return _react2.default.createElement(
         'li',
         { className: classes, key: index, 'data-id': listItem.id, onClick: this.clickCallback },
-        React.createElement(
+        _react2.default.createElement(
           'h5',
           { className: 'name' },
           displayName
         ),
-        React.createElement(
+        _react2.default.createElement(
           'div',
           { className: 'metadata clearfix' },
-          React.createElement(
+          _react2.default.createElement(
             'p',
             { className: 'date pull-left' },
             isCachedText
@@ -6747,7 +7236,7 @@ var BrowseQueries = React.createClass({
         )
       );
     }, this));
-    return React.createElement(
+    return _react2.default.createElement(
       'ul',
       { ref: 'list', className: 'interactive-list' },
       listElements
@@ -6774,7 +7263,7 @@ var BrowseQueries = React.createClass({
     var emptyContent = this.props.listItems.length ? null : this.props.emptyContent;
     var listItems = this.buildList();
 
-    return React.createElement(
+    return _react2.default.createElement(
       'section',
       { className: 'query-pane-section browse-queries' },
       this.props.notice,
@@ -6794,9 +7283,13 @@ module.exports = BrowseQueries;
 "use strict";
 
 
-var React = __webpack_require__(1);
+var _react = __webpack_require__(1);
 
-var ApiUrl = React.createClass({
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var ApiUrl = _react2.default.createClass({
   displayName: 'ApiUrl',
 
 
@@ -6825,19 +7318,19 @@ var ApiUrl = React.createClass({
   },
 
   render: function render() {
-    return React.createElement(
+    return _react2.default.createElement(
       'div',
       { className: 'explorer-api-url' },
-      React.createElement(
+      _react2.default.createElement(
         'button',
         { className: 'btn btn-link field-secondary-control', title: 'API URL', type: 'button', onClick: this.handleClick },
-        React.createElement('span', { className: "icon glyphicon glyphicon-chevron-" + (this.state.active ? "down" : "right") + " icon-chevron-" + (this.state.active ? "down" : "right") }),
+        _react2.default.createElement('span', { className: "icon glyphicon glyphicon-chevron-" + (this.state.active ? "down" : "right") + " icon-chevron-" + (this.state.active ? "down" : "right") }),
         ' API Query URL'
       ),
-      React.createElement(
+      _react2.default.createElement(
         'div',
         { className: this.state.active ? "show" : "hide" },
-        React.createElement('input', {
+        _react2.default.createElement('input', {
           ref: 'input',
           name: 'api-query',
           className: 'form-control input-sm',
@@ -6861,16 +7354,41 @@ module.exports = ApiUrl;
 "use strict";
 
 
-var _ = __webpack_require__(0);
-var moment = __webpack_require__(9);
-var React = __webpack_require__(1);
-var Select = __webpack_require__(15);
-var FieldsToggle = __webpack_require__(14);
-var ExplorerActions = __webpack_require__(4);
-var ExplorerUtils = __webpack_require__(3);
-var ProjectUtils = __webpack_require__(5);
+var _lodash = __webpack_require__(0);
 
-var Interval = React.createClass({
+var _lodash2 = _interopRequireDefault(_lodash);
+
+var _moment = __webpack_require__(9);
+
+var _moment2 = _interopRequireDefault(_moment);
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _select = __webpack_require__(15);
+
+var _select2 = _interopRequireDefault(_select);
+
+var _fields_toggle = __webpack_require__(14);
+
+var _fields_toggle2 = _interopRequireDefault(_fields_toggle);
+
+var _ExplorerActions = __webpack_require__(4);
+
+var _ExplorerActions2 = _interopRequireDefault(_ExplorerActions);
+
+var _ExplorerUtils = __webpack_require__(3);
+
+var _ExplorerUtils2 = _interopRequireDefault(_ExplorerUtils);
+
+var _ProjectUtils = __webpack_require__(5);
+
+var _ProjectUtils2 = _interopRequireDefault(_ProjectUtils);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Interval = _react2.default.createClass({
   displayName: 'Interval',
 
 
@@ -6899,11 +7417,11 @@ var Interval = React.createClass({
   // React Methods
 
   render: function render() {
-    return React.createElement(
+    return _react2.default.createElement(
       'div',
       { className: 'field-component' },
-      React.createElement(
-        FieldsToggle,
+      _react2.default.createElement(
+        _fields_toggle2.default,
         { ref: 'interval-toggle',
           name: 'Interval',
           initialOpenState: this.props.interval,
@@ -6911,10 +7429,10 @@ var Interval = React.createClass({
           getFn: this.intervalGetFn,
           updateFn: this.intervalUpdateFn,
           toggleCallback: this.intervalFieldsToggled },
-        React.createElement(Select, { label: false,
+        _react2.default.createElement(_select2.default, { label: false,
           name: 'interval',
           classes: 'interval-type',
-          options: ProjectUtils.getConstant('ABSOLUTE_INTERVAL_TYPES'),
+          options: _ProjectUtils2.default.getConstant('ABSOLUTE_INTERVAL_TYPES'),
           emptyOption: false,
           handleSelection: this.setInterval,
           selectedOption: this.props.interval,
@@ -6933,57 +7451,64 @@ module.exports = Interval;
 "use strict";
 
 
-var _ = __webpack_require__(0);
-var React = __webpack_require__(1);
+var _lodash = __webpack_require__(0);
 
-var Geo = React.createClass({
+var _lodash2 = _interopRequireDefault(_lodash);
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Geo = _react2.default.createClass({
   displayName: 'Geo',
 
 
   // Note: Keen API standard is Longitude followed by Latitude.
   render: function render() {
-    return React.createElement(
+    return _react2.default.createElement(
       'div',
       null,
-      React.createElement(
+      _react2.default.createElement(
         'div',
         { className: 'col-md-12' },
-        React.createElement(
+        _react2.default.createElement(
           'label',
           { htmlFor: 'amount' },
           'Longitude'
         ),
-        React.createElement('input', { type: 'text',
+        _react2.default.createElement('input', { type: 'text',
           name: 'coordinates.0',
           className: 'form-control',
           value: this.props.filter.property_value.coordinates[0] || "",
           onChange: this.props.handleChange,
           autoComplete: 'off' })
       ),
-      React.createElement(
+      _react2.default.createElement(
         'div',
         { className: 'col-md-12' },
-        React.createElement(
+        _react2.default.createElement(
           'label',
           { htmlFor: 'amount' },
           'Latitude'
         ),
-        React.createElement('input', { type: 'text',
+        _react2.default.createElement('input', { type: 'text',
           name: 'coordinates.1',
           className: 'form-control',
           value: this.props.filter.property_value.coordinates[1] || "",
           onChange: this.props.handleChange,
           autoComplete: 'off' })
       ),
-      React.createElement(
+      _react2.default.createElement(
         'div',
         { className: 'col-md-12' },
-        React.createElement(
+        _react2.default.createElement(
           'label',
           { htmlFor: 'amount' },
           'Radius in Miles'
         ),
-        React.createElement('input', { type: 'text',
+        _react2.default.createElement('input', { type: 'text',
           name: 'max_distance_miles',
           className: 'form-control',
           value: this.props.filter.property_value.max_distance_miles || "",
@@ -7003,26 +7528,54 @@ module.exports = Geo;
 "use strict";
 
 
-var _ = __webpack_require__(0);
-var moment = __webpack_require__(9);
-var React = __webpack_require__(1);
-var Select = __webpack_require__(15);
-var Datepicker = __webpack_require__(34);
-var Timepicker = __webpack_require__(33);
-var Geo = __webpack_require__(52);
-var FormatUtils = __webpack_require__(2);
-var FilterUtils = __webpack_require__(8);
+var _lodash = __webpack_require__(0);
+
+var _lodash2 = _interopRequireDefault(_lodash);
+
+var _moment = __webpack_require__(9);
+
+var _moment2 = _interopRequireDefault(_moment);
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _select = __webpack_require__(15);
+
+var _select2 = _interopRequireDefault(_select);
+
+var _datepicker = __webpack_require__(34);
+
+var _datepicker2 = _interopRequireDefault(_datepicker);
+
+var _timepicker = __webpack_require__(33);
+
+var _timepicker2 = _interopRequireDefault(_timepicker);
+
+var _geo = __webpack_require__(52);
+
+var _geo2 = _interopRequireDefault(_geo);
+
+var _FormatUtils = __webpack_require__(2);
+
+var _FormatUtils2 = _interopRequireDefault(_FormatUtils);
+
+var _FilterUtils = __webpack_require__(8);
+
+var _FilterUtils2 = _interopRequireDefault(_FilterUtils);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var dateFormat = 'll';
 var timeFormat = 'h:mm A';
 
 function pasrseIntoDate(dateString, timeString) {
-  var date = moment(new Date(dateString)).format(dateFormat);
-  var time = moment(new Date(timeString)).format(timeFormat);
+  var date = (0, _moment2.default)(new Date(dateString)).format(dateFormat);
+  var time = (0, _moment2.default)(new Date(timeString)).format(timeFormat);
   return new Date(date + " " + time).toString();
 }
 
-var FilterValueFields = React.createClass({
+var FilterValueFields = _react2.default.createClass({
   displayName: 'FilterValueFields',
 
 
@@ -7054,7 +7607,7 @@ var FilterValueFields = React.createClass({
 
   getCoercionOptions: function getCoercionOptions() {
     var operator = this.props.filter.operator;
-    return operator ? _.find(this.props.filterOperators, { value: operator }).canBeCoeredTo : [];
+    return operator ? _lodash2.default.find(this.props.filterOperators, { value: operator }).canBeCoeredTo : [];
   },
 
   getInputPlaceholder: function getInputPlaceholder() {
@@ -7077,26 +7630,26 @@ var FilterValueFields = React.createClass({
   render: function render() {
     var valueInput;
     if (this.propertyType === 'geo' || this.props.filter.operator === 'within') {
-      valueInput = React.createElement(Geo, { handleChange: this.handleChangeWithEvent,
+      valueInput = _react2.default.createElement(_geo2.default, { handleChange: this.handleChangeWithEvent,
         filter: this.props.filter });
     } else if (this.props.filter.operator === 'exists' || this.props.filter.coercion_type === 'Boolean') {
-      valueInput = React.createElement(Select, { name: 'property_value',
+      valueInput = _react2.default.createElement(_select2.default, { name: 'property_value',
         classes: 'property-value',
         ref: 'boolean-value-set',
         options: ['true', 'false'],
         handleBlur: this.handleChangeWithEvent,
         handleSelection: this.setValueState,
-        selectedOption: FormatUtils.booleanMap(this.state.property_value) || 'true',
+        selectedOption: _FormatUtils2.default.booleanMap(this.state.property_value) || 'true',
         emptyOption: false });
     } else if (this.props.filter.coercion_type === 'Datetime') {
-      valueInput = React.createElement(
+      valueInput = _react2.default.createElement(
         'div',
         { className: 'row property-value' },
-        React.createElement(
+        _react2.default.createElement(
           'div',
           { className: 'col-md-6 form-collapse-right' },
-          React.createElement(Datepicker, { ref: 'date-value-input',
-            value: moment(new Date(this.state.property_value)).format(dateFormat),
+          _react2.default.createElement(_datepicker2.default, { ref: 'date-value-input',
+            value: (0, _moment2.default)(new Date(this.state.property_value)).format(dateFormat),
             label: false,
             name: 'property_value',
             placeholder: 'Date',
@@ -7104,11 +7657,11 @@ var FilterValueFields = React.createClass({
             onSet: this.setDate,
             onBlur: this.handleDateBlur })
         ),
-        React.createElement(
+        _react2.default.createElement(
           'div',
           { className: 'col-md-6 form-collapse-left' },
-          React.createElement(Timepicker, { ref: 'time-value-input',
-            value: moment(new Date(this.state.property_value)).format(timeFormat),
+          _react2.default.createElement(_timepicker2.default, { ref: 'time-value-input',
+            value: (0, _moment2.default)(new Date(this.state.property_value)).format(timeFormat),
             label: false,
             name: 'property_value',
             placeholder: 'Time',
@@ -7118,7 +7671,7 @@ var FilterValueFields = React.createClass({
         )
       );
     } else {
-      valueInput = React.createElement('input', { type: 'text',
+      valueInput = _react2.default.createElement('input', { type: 'text',
         ref: 'value-input',
         name: 'property_value',
         className: 'form-control property-value',
@@ -7130,13 +7683,13 @@ var FilterValueFields = React.createClass({
         autoComplete: 'off' });
     }
 
-    return React.createElement(
+    return _react2.default.createElement(
       'div',
       { className: 'row' },
-      React.createElement(
+      _react2.default.createElement(
         'div',
         { className: 'col-md-3 form-collapse-right' },
-        React.createElement(Select, { label: false,
+        _react2.default.createElement(_select2.default, { label: false,
           ref: 'type-set',
           name: 'coercion_type',
           classes: 'coercion-type',
@@ -7146,7 +7699,7 @@ var FilterValueFields = React.createClass({
           selectedOption: this.props.filter.coercion_type,
           emptyOption: false })
       ),
-      React.createElement(
+      _react2.default.createElement(
         'div',
         { className: 'col-md-9 form-collapse-left' },
         valueInput
@@ -7164,15 +7717,37 @@ module.exports = FilterValueFields;
 "use strict";
 
 
-var _ = __webpack_require__(0);
-var React = __webpack_require__(1);
-var Select = __webpack_require__(15);
-var classNames = __webpack_require__(6);
-var ReactSelect = __webpack_require__(11);
-var FilterValueFields = __webpack_require__(53);
-var FilterUtils = __webpack_require__(8);
+var _lodash = __webpack_require__(0);
 
-var Filter = React.createClass({
+var _lodash2 = _interopRequireDefault(_lodash);
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _select = __webpack_require__(15);
+
+var _select2 = _interopRequireDefault(_select);
+
+var _classnames = __webpack_require__(6);
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
+var _react_select = __webpack_require__(11);
+
+var _react_select2 = _interopRequireDefault(_react_select);
+
+var _filter_value_fields = __webpack_require__(53);
+
+var _filter_value_fields2 = _interopRequireDefault(_filter_value_fields);
+
+var _FilterUtils = __webpack_require__(8);
+
+var _FilterUtils2 = _interopRequireDefault(_FilterUtils);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Filter = _react2.default.createClass({
   displayName: 'Filter',
 
 
@@ -7190,13 +7765,13 @@ var Filter = React.createClass({
   },
 
   buildValueFormGroup: function buildValueFormGroup() {
-    return React.createElement(FilterValueFields, { filter: this.props.filter,
+    return _react2.default.createElement(_filter_value_fields2.default, { filter: this.props.filter,
       filterOperators: this.props.filterOperators,
       handleChange: this.handleChange });
   },
 
   buildOperatorSelect: function buildOperatorSelect() {
-    return React.createElement(Select, { label: false,
+    return _react2.default.createElement(_select2.default, { label: false,
       name: 'operator',
       classes: 'operator',
       options: this.props.filterOperators,
@@ -7207,7 +7782,7 @@ var Filter = React.createClass({
   },
 
   buildPropertyNameSelect: function buildPropertyNameSelect() {
-    return React.createElement(ReactSelect, { name: 'property_name',
+    return _react2.default.createElement(_react_select2.default, { name: 'property_name',
       inputClasses: 'property-name form-control',
       items: this.props.propertyNames,
       handleChange: this.handleChange,
@@ -7218,17 +7793,17 @@ var Filter = React.createClass({
 
   getListSyntaxInfo: function getListSyntaxInfo() {
     if (this.props.filter.coercion_type === 'List') {
-      return React.createElement(
+      return _react2.default.createElement(
         'p',
         { className: 'filter-instructions help-block' },
         'Wrap strings in ',
-        React.createElement(
+        _react2.default.createElement(
           'b',
           null,
           'double'
         ),
         ' quotes & numbers in ',
-        React.createElement(
+        _react2.default.createElement(
           'b',
           null,
           'single'
@@ -7240,13 +7815,13 @@ var Filter = React.createClass({
 
   buildValidationError: function buildValidationError() {
     if (this.filterCompleteAndInvalid()) {
-      return React.createElement(
+      return _react2.default.createElement(
         'div',
         { className: 'row' },
-        React.createElement(
+        _react2.default.createElement(
           'div',
           { className: 'col-md-12' },
-          React.createElement(
+          _react2.default.createElement(
             'p',
             { className: 'invalid' },
             'Invalid: ',
@@ -7258,7 +7833,7 @@ var Filter = React.createClass({
   },
 
   filterCompleteAndInvalid: function filterCompleteAndInvalid() {
-    var complete = FilterUtils.isComplete(this.props.filter);
+    var complete = _FilterUtils2.default.isComplete(this.props.filter);
     var valid = this.props.filter.isValid;
     return complete && !valid;
   },
@@ -7266,41 +7841,41 @@ var Filter = React.createClass({
   // React functions
 
   render: function render() {
-    var filterClasses = classNames({
+    var filterClasses = (0, _classnames2.default)({
       'filter-row': true,
-      'filter-complete': !FilterUtils.isComplete(this.props.filter) || this.props.filter.isValid,
+      'filter-complete': !_FilterUtils2.default.isComplete(this.props.filter) || this.props.filter.isValid,
       'filter-incomplete': this.filterCompleteAndInvalid()
     });
 
-    return React.createElement(
+    return _react2.default.createElement(
       'div',
       { className: filterClasses },
-      React.createElement(
+      _react2.default.createElement(
         'div',
         { className: 'row' },
-        React.createElement(
+        _react2.default.createElement(
           'div',
           { className: 'col-md-4 filter-property-col' },
           this.buildPropertyNameSelect()
         ),
-        React.createElement(
+        _react2.default.createElement(
           'div',
           { className: 'col-md-2 filter-operator-col' },
           this.buildOperatorSelect()
         ),
-        React.createElement(
+        _react2.default.createElement(
           'div',
           { className: 'col-md-5 filter-value-col' },
           this.buildValueFormGroup(),
           this.getListSyntaxInfo()
         ),
-        React.createElement(
+        _react2.default.createElement(
           'div',
           { className: 'col-md-1 filter-close-col' },
-          React.createElement(
+          _react2.default.createElement(
             'a',
             { href: '#', className: 'remove-filter', onClick: this.removeFilter, 'data-index': this.props.index },
-            React.createElement(
+            _react2.default.createElement(
               'span',
               { className: 'icon no-margin' },
               '\xD7'
@@ -7322,13 +7897,29 @@ module.exports = Filter;
 "use strict";
 
 
-var _ = __webpack_require__(0);
-var React = __webpack_require__(1);
-var ReactSelect = __webpack_require__(11);
-var ProjectUtils = __webpack_require__(5);
-var ExplorerActions = __webpack_require__(4);
+var _lodash = __webpack_require__(0);
 
-var Timezone = React.createClass({
+var _lodash2 = _interopRequireDefault(_lodash);
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _react_select = __webpack_require__(11);
+
+var _react_select2 = _interopRequireDefault(_react_select);
+
+var _ProjectUtils = __webpack_require__(5);
+
+var _ProjectUtils2 = _interopRequireDefault(_ProjectUtils);
+
+var _ExplorerActions = __webpack_require__(4);
+
+var _ExplorerActions2 = _interopRequireDefault(_ExplorerActions);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Timezone = _react2.default.createClass({
   displayName: 'Timezone',
 
 
@@ -7347,7 +7938,7 @@ var Timezone = React.createClass({
   },
 
   handleTimezoneChange: function handleTimezoneChange(name, value) {
-    var timezones = ProjectUtils.getConstant('TIMEZONES');
+    var timezones = _ProjectUtils2.default.getConstant('TIMEZONES');
     var timezone = timezones.filter(function (z) {
       return z.name === value;
     })[0];
@@ -7362,38 +7953,38 @@ var Timezone = React.createClass({
 
   componentDidMount: function componentDidMount() {
     if (!this.props.timezone) {
-      this.props.handleChange('timezone', ProjectUtils.getConstant('DEFAULT_TIMEZONE'));
+      this.props.handleChange('timezone', _ProjectUtils2.default.getConstant('DEFAULT_TIMEZONE'));
     }
     this.refs['timezone'].setState({ visible: false });
   },
 
   render: function render() {
-    return React.createElement(
+    return _react2.default.createElement(
       'div',
       { className: "timezone-toggle" + (this.state.active ? " active" : "") },
-      React.createElement(
+      _react2.default.createElement(
         'div',
         { className: 'toggle-display' },
-        React.createElement(
+        _react2.default.createElement(
           'button',
           { ref: 'timezone-display',
             className: 'btn btn-link field-secondary-control',
             title: "Selectd timezone: " + this.props.timezone,
             type: 'button',
             onClick: this.handleTimezoneActivated },
-          React.createElement('span', { className: 'icon glyphicon glyphicon-globe' }),
+          _react2.default.createElement('span', { className: 'icon glyphicon glyphicon-globe' }),
           ' Timezone: ',
           this.props.timezone
         )
       ),
-      React.createElement(
+      _react2.default.createElement(
         'div',
         { className: 'toggle-options' },
-        React.createElement(ReactSelect, { ref: 'timezone',
+        _react2.default.createElement(_react_select2.default, { ref: 'timezone',
           name: 'timezone',
           classes: 'timezone form-control',
           value: this.props.timezone,
-          items: ProjectUtils.getConstant('TIMEZONES').map(function (z) {
+          items: _ProjectUtils2.default.getConstant('TIMEZONES').map(function (z) {
             return z.name;
           }),
           handleChange: this.handleTimezoneChange,
@@ -7415,23 +8006,44 @@ var define = false;
 
 'use strict';
 
-var React = __webpack_require__(1);
-var _ = __webpack_require__(0);
-var Input = __webpack_require__(13);
-var Select = __webpack_require__(15);
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _lodash = __webpack_require__(0);
+
+var _lodash2 = _interopRequireDefault(_lodash);
+
+var _input = __webpack_require__(13);
+
+var _input2 = _interopRequireDefault(_input);
+
+var _select = __webpack_require__(15);
+
+var _select2 = _interopRequireDefault(_select);
+
+var _ExplorerUtils = __webpack_require__(3);
+
+var _ExplorerUtils2 = _interopRequireDefault(_ExplorerUtils);
+
+var _ExplorerActions = __webpack_require__(4);
+
+var _ExplorerActions2 = _interopRequireDefault(_ExplorerActions);
+
+var _FormatUtils = __webpack_require__(2);
+
+var _FormatUtils2 = _interopRequireDefault(_FormatUtils);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var RELATIVE_TIMEFRAMES = ['this', 'previous'];
-
-var ExplorerUtils = __webpack_require__(3);
-var ExplorerActions = __webpack_require__(4);
-var FormatUtils = __webpack_require__(2);
 
 function hasRelativeTimeframe(time) {
   time = time || {};
   return time.relativity && time.amount && time.sub_timeframe;
 }
 
-var RelativePicker = React.createClass({
+var RelativePicker = _react2.default.createClass({
   displayName: 'RelativePicker',
 
 
@@ -7439,7 +8051,7 @@ var RelativePicker = React.createClass({
     var name = event.target.name;
     var value = event.target.value;
 
-    var updates = _.cloneDeep(this.props.time);
+    var updates = _lodash2.default.cloneDeep(this.props.time);
     updates[name] = value;
     this.props.handleChange('time', updates);
   },
@@ -7448,12 +8060,12 @@ var RelativePicker = React.createClass({
     var time = this.props.time;
 
     if (hasRelativeTimeframe(this.props.time)) {
-      var subIntervalCopy = FormatUtils.singularize(time.sub_timeframe, time.amount);
+      var subIntervalCopy = _FormatUtils2.default.singularize(time.sub_timeframe, time.amount);
       var timeAmountPluralSuffix = time.amount > 1 ? 's' : '';
       var relativityCopy = time.relativity == 'this' ? 'including' : 'excluding';
-      var singularCurrentInterval = FormatUtils.singularize(subIntervalCopy);
+      var singularCurrentInterval = _FormatUtils2.default.singularize(subIntervalCopy);
 
-      return React.createElement(
+      return _react2.default.createElement(
         'p',
         { className: 'help-block' },
         'The last ',
@@ -7462,7 +8074,7 @@ var RelativePicker = React.createClass({
         subIntervalCopy,
         timeAmountPluralSuffix,
         ' ',
-        React.createElement(
+        _react2.default.createElement(
           'b',
           null,
           relativityCopy
@@ -7479,19 +8091,19 @@ var RelativePicker = React.createClass({
   render: function render() {
     var descriptionCopy = this.buildDescriptionCopy();
 
-    return React.createElement(
+    return _react2.default.createElement(
       'div',
       { className: 'relative-timeframe-picker' },
-      React.createElement(
+      _react2.default.createElement(
         'div',
         { className: 'row' },
-        React.createElement(
+        _react2.default.createElement(
           'div',
           { className: 'col-xs-4 form-collapse-right', id: 'relative-type' },
-          React.createElement(
+          _react2.default.createElement(
             'div',
             { className: 'btn-group' },
-            React.createElement(Select, { label: false,
+            _react2.default.createElement(_select2.default, { label: false,
               name: 'relativity',
               classes: 'relativity',
               options: RELATIVE_TIMEFRAMES,
@@ -7500,10 +8112,10 @@ var RelativePicker = React.createClass({
               selectedOption: this.props.time.relativity })
           )
         ),
-        React.createElement(
+        _react2.default.createElement(
           'div',
           { className: 'col-xs-3 form-collapse-left form-collapse-right', id: 'interval-amount' },
-          React.createElement(Input, { label: false,
+          _react2.default.createElement(_input2.default, { label: false,
             name: 'amount',
             classes: 'amount',
             onChange: this.setRelativeTime,
@@ -7511,10 +8123,10 @@ var RelativePicker = React.createClass({
             value: this.props.time.amount || "",
             autoComplete: 'off' })
         ),
-        React.createElement(
+        _react2.default.createElement(
           'div',
           { className: 'col-xs-5 form-collapse-left', id: 'sub-interval-type' },
-          React.createElement(Select, { label: false,
+          _react2.default.createElement(_select2.default, { label: false,
             name: 'sub_timeframe',
             classes: 'sub-timeframe',
             options: this.props.relativeIntervalTypes,
@@ -9661,19 +10273,40 @@ var define = false;
 
 'use strict';
 
-var React = __webpack_require__(1);
-var _ = __webpack_require__(0);
-var moment = __webpack_require__(9);
-var Datepicker = __webpack_require__(34);
-var Timepicker = __webpack_require__(33);
+var _react = __webpack_require__(1);
 
-var ExplorerUtils = __webpack_require__(3);
-var ExplorerActions = __webpack_require__(4);
+var _react2 = _interopRequireDefault(_react);
+
+var _lodash = __webpack_require__(0);
+
+var _lodash2 = _interopRequireDefault(_lodash);
+
+var _moment = __webpack_require__(9);
+
+var _moment2 = _interopRequireDefault(_moment);
+
+var _datepicker = __webpack_require__(34);
+
+var _datepicker2 = _interopRequireDefault(_datepicker);
+
+var _timepicker = __webpack_require__(33);
+
+var _timepicker2 = _interopRequireDefault(_timepicker);
+
+var _ExplorerUtils = __webpack_require__(3);
+
+var _ExplorerUtils2 = _interopRequireDefault(_ExplorerUtils);
+
+var _ExplorerActions = __webpack_require__(4);
+
+var _ExplorerActions2 = _interopRequireDefault(_ExplorerActions);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var dateFormat = 'll';
 var timeFormat = 'h:mm A';
 
-var AbsolutePicker = React.createClass({
+var AbsolutePicker = _react2.default.createClass({
   displayName: 'AbsolutePicker',
 
 
@@ -9681,11 +10314,11 @@ var AbsolutePicker = React.createClass({
     var time = this.props.time;
     var endValue = new Date(time.end);
 
-    var updates = _.cloneDeep(time);
+    var updates = _lodash2.default.cloneDeep(time);
     if (name === 'start_date' && value > endValue) {
       updates.end = '';
     }
-    updates[name] = new Date(moment(new Date(value)).format(dateFormat) + " " + moment(time[name]).format(timeFormat));
+    updates[name] = new Date((0, _moment2.default)(new Date(value)).format(dateFormat) + " " + (0, _moment2.default)(time[name]).format(timeFormat));
     this.props.handleChange('time', updates);
   },
 
@@ -9697,8 +10330,8 @@ var AbsolutePicker = React.createClass({
 
   setTime: function setTime(name, value) {
     var time = this.props.time;
-    var updates = _.cloneDeep(time);
-    updates[name] = new Date(moment(time[name]).format(dateFormat) + " " + moment(new Date(value)).format(timeFormat));
+    var updates = _lodash2.default.cloneDeep(time);
+    updates[name] = new Date((0, _moment2.default)(time[name]).format(dateFormat) + " " + (0, _moment2.default)(new Date(value)).format(timeFormat));
     this.props.handleChange('time', updates);
   },
 
@@ -9707,70 +10340,70 @@ var AbsolutePicker = React.createClass({
   render: function render() {
     var time = this.props.time;
 
-    return React.createElement(
+    return _react2.default.createElement(
       'div',
       { className: 'absolute-timeframe-picker' },
-      React.createElement(
+      _react2.default.createElement(
         'div',
         { className: 'row' },
-        React.createElement(
+        _react2.default.createElement(
           'div',
           { className: 'col-xs-2' },
-          React.createElement(
+          _react2.default.createElement(
             'label',
             null,
             'Start'
           )
         ),
-        React.createElement(
+        _react2.default.createElement(
           'div',
           { className: 'col-xs-5 form-collapse-right' },
-          React.createElement(Datepicker, { ref: 'start-date',
-            value: moment(time.start).format(dateFormat),
+          _react2.default.createElement(_datepicker2.default, { ref: 'start-date',
+            value: (0, _moment2.default)(time.start).format(dateFormat),
             name: 'start',
             placeholder: 'Date',
             onBlur: this.handleDateBlur,
             onSet: this.setDate })
         ),
-        React.createElement(
+        _react2.default.createElement(
           'div',
           { className: 'col-xs-5 form-collapse-left' },
-          React.createElement(Timepicker, { ref: 'start-time',
-            value: moment(time.start).format(timeFormat),
+          _react2.default.createElement(_timepicker2.default, { ref: 'start-time',
+            value: (0, _moment2.default)(time.start).format(timeFormat),
             name: 'start',
             placeholder: 'Time',
             handleBlur: this.setTime,
             handleSelection: this.setTime })
         )
       ),
-      React.createElement(
+      _react2.default.createElement(
         'div',
         { className: 'row' },
-        React.createElement(
+        _react2.default.createElement(
           'div',
           { className: 'col-xs-2' },
-          React.createElement(
+          _react2.default.createElement(
             'label',
             null,
             'End'
           )
         ),
-        React.createElement(
+        _react2.default.createElement(
           'div',
           { className: 'col-xs-5 form-collapse-right' },
-          React.createElement(Datepicker, { ref: 'end-date',
-            value: moment(time.end).format(dateFormat),
-            minimum: moment(time.start).format(dateFormat),
+          _react2.default.createElement(_datepicker2.default, { ref: 'end-date',
+            value: (0, _moment2.default)(time.end).format(dateFormat),
+            minimum: (0, _moment2.default)(time.start).format(dateFormat),
             name: 'end',
             placeholder: 'Date',
             onBlur: this.handleDateBlur,
             onSet: this.setDate })
         ),
-        React.createElement(
+        _react2.default.createElement(
           'div',
           { className: 'col-xs-5 form-collapse-left' },
-          React.createElement(Timepicker, { ref: 'end-time',
-            value: moment(time.end).format(timeFormat),
+          _react2.default.createElement(_timepicker2.default, { ref: 'end-time',
+            value: (0, _moment2.default)(time.end).format(timeFormat),
             name: 'end',
             placeholder: 'Time',
             handleBlur: this.setTime,
@@ -9792,34 +10425,62 @@ module.exports = AbsolutePicker;
 "use strict";
 
 
-var React = __webpack_require__(1);
-var _ = __webpack_require__(0);
-var SelectField = __webpack_require__(36);
-var Timeframe = __webpack_require__(35);
-var FieldsToggle = __webpack_require__(14);
-var Notice = __webpack_require__(27);
-var FilterManager = __webpack_require__(32);
-var FilterUtils = __webpack_require__(8);
-var classNames = __webpack_require__(6);
+var _react = __webpack_require__(1);
 
-var FunnelStep = React.createClass({
+var _react2 = _interopRequireDefault(_react);
+
+var _lodash = __webpack_require__(0);
+
+var _lodash2 = _interopRequireDefault(_lodash);
+
+var _select_field = __webpack_require__(36);
+
+var _select_field2 = _interopRequireDefault(_select_field);
+
+var _timeframe = __webpack_require__(35);
+
+var _timeframe2 = _interopRequireDefault(_timeframe);
+
+var _fields_toggle = __webpack_require__(14);
+
+var _fields_toggle2 = _interopRequireDefault(_fields_toggle);
+
+var _notice = __webpack_require__(27);
+
+var _notice2 = _interopRequireDefault(_notice);
+
+var _filter_manager = __webpack_require__(32);
+
+var _filter_manager2 = _interopRequireDefault(_filter_manager);
+
+var _FilterUtils = __webpack_require__(8);
+
+var _FilterUtils2 = _interopRequireDefault(_FilterUtils);
+
+var _classnames = __webpack_require__(6);
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var FunnelStep = _react2.default.createClass({
   displayName: 'FunnelStep',
 
 
   propTypes: {
-    index: React.PropTypes.number.isRequired,
-    step: React.PropTypes.object.isRequired,
-    eventCollections: React.PropTypes.array.isRequired,
-    propertyNames: React.PropTypes.array.isRequired,
-    onBrowseEvents: React.PropTypes.func.isRequired,
-    getPropertyType: React.PropTypes.func.isRequired,
-    moveStep: React.PropTypes.func.isRequired,
-    removeStep: React.PropTypes.func.isRequired,
-    handleChange: React.PropTypes.func.isRequired,
-    toggleStepActive: React.PropTypes.func.isRequired,
-    handleFilterChange: React.PropTypes.func.isRequired,
-    handleAddFilter: React.PropTypes.func.isRequired,
-    handleRemoveFilter: React.PropTypes.func.isRequired
+    index: _react2.default.PropTypes.number.isRequired,
+    step: _react2.default.PropTypes.object.isRequired,
+    eventCollections: _react2.default.PropTypes.array.isRequired,
+    propertyNames: _react2.default.PropTypes.array.isRequired,
+    onBrowseEvents: _react2.default.PropTypes.func.isRequired,
+    getPropertyType: _react2.default.PropTypes.func.isRequired,
+    moveStep: _react2.default.PropTypes.func.isRequired,
+    removeStep: _react2.default.PropTypes.func.isRequired,
+    handleChange: _react2.default.PropTypes.func.isRequired,
+    toggleStepActive: _react2.default.PropTypes.func.isRequired,
+    handleFilterChange: _react2.default.PropTypes.func.isRequired,
+    handleAddFilter: _react2.default.PropTypes.func.isRequired,
+    handleRemoveFilter: _react2.default.PropTypes.func.isRequired
   },
 
   removeStep: function removeStep(e) {
@@ -9878,48 +10539,48 @@ var FunnelStep = React.createClass({
     var remove, notice;
 
     if (this.props.canRemove) {
-      remove = React.createElement(
+      remove = _react2.default.createElement(
         'a',
         { href: '#', className: 'remove-step', onClick: this.removeStep },
-        React.createElement('i', { className: 'icon glyphicon glyphicon-remove-circle margin-right-tiny' }),
+        _react2.default.createElement('i', { className: 'icon glyphicon glyphicon-remove-circle margin-right-tiny' }),
         'Remove Step'
       );
     }
     if (this.props.notice) {
-      notice = React.createElement(Notice, { notice: this.props.notice, closable: false });
+      notice = _react2.default.createElement(_notice2.default, { notice: this.props.notice, closable: false });
     }
 
     if (this.props.step.active === true) {
-      return React.createElement(
+      return _react2.default.createElement(
         'div',
         { className: 'step-body margin-top-small margin-bottom-small' },
         notice,
-        React.createElement(SelectField, { name: 'event_collection',
+        _react2.default.createElement(_select_field2.default, { name: 'event_collection',
           label: 'Event Collection',
           value: this.props.step.event_collection,
           options: this.props.eventCollections,
           requiredLabel: true,
           onBrowseEvents: this.props.onBrowseEvents,
           handleChange: this.handleChange }),
-        React.createElement(SelectField, { name: 'actor_property',
+        _react2.default.createElement(_select_field2.default, { name: 'actor_property',
           label: 'Actor Property',
           value: this.props.step.actor_property,
           options: this.props.propertyNames,
           requiredLabel: true,
           handleChange: this.handleChange }),
-        React.createElement(Timeframe, { ref: 'timeframe',
+        _react2.default.createElement(_timeframe2.default, { ref: 'timeframe',
           time: this.props.step.time,
           timezone: this.props.step.timezone,
           handleChange: this.handleChange }),
-        React.createElement(
+        _react2.default.createElement(
           'div',
           { className: 'field-component' },
-          React.createElement(FieldsToggle, { ref: 'filters-fields-toggle',
+          _react2.default.createElement(_fields_toggle2.default, { ref: 'filters-fields-toggle',
             name: 'Filters',
             toggleCallback: this.handleFiltersToggle,
-            fieldsCount: FilterUtils.validFilters(this.props.step.filters).length })
+            fieldsCount: _FilterUtils2.default.validFilters(this.props.step.filters).length })
         ),
-        React.createElement(FilterManager, { ref: 'filter-manager',
+        _react2.default.createElement(_filter_manager2.default, { ref: 'filter-manager',
           eventCollection: this.props.step.event_collection,
           filters: this.props.step.filters,
           handleChange: this.handleFilterChange,
@@ -9927,61 +10588,61 @@ var FunnelStep = React.createClass({
           addFilter: this.handleAddFilter,
           getPropertyType: this.props.getPropertyType,
           propertyNames: this.props.propertyNames }),
-        React.createElement(
+        _react2.default.createElement(
           'label',
           { className: 'block-label margin-top-small' },
-          React.createElement('input', { name: 'optional', type: 'checkbox', checked: this.props.step.optional, onChange: this.handleCheckboxChange }),
+          _react2.default.createElement('input', { name: 'optional', type: 'checkbox', checked: this.props.step.optional, onChange: this.handleCheckboxChange }),
           ' Optional Step'
         ),
-        React.createElement(
+        _react2.default.createElement(
           'label',
           { className: 'block-label' },
-          React.createElement('input', { name: 'inverted', type: 'checkbox', checked: this.props.step.inverted, onChange: this.handleCheckboxChange }),
+          _react2.default.createElement('input', { name: 'inverted', type: 'checkbox', checked: this.props.step.inverted, onChange: this.handleCheckboxChange }),
           ' Inverted Step'
         ),
-        React.createElement(
+        _react2.default.createElement(
           'label',
           { className: 'block-label' },
-          React.createElement('input', { name: 'with_actors', type: 'checkbox', checked: this.props.step.with_actors, onChange: this.handleCheckboxChange }),
+          _react2.default.createElement('input', { name: 'with_actors', type: 'checkbox', checked: this.props.step.with_actors, onChange: this.handleCheckboxChange }),
           ' With Actors'
         ),
-        React.createElement('hr', null),
+        _react2.default.createElement('hr', null),
         remove
       );
     }
   },
 
   render: function render() {
-    var stepWrapperClasses = classNames({
+    var stepWrapperClasses = (0, _classnames2.default)({
       'funnel-step': true,
       'active': this.props.step.active
     });
-    return React.createElement(
+    return _react2.default.createElement(
       'div',
       { className: stepWrapperClasses },
-      React.createElement(
+      _react2.default.createElement(
         'div',
         { className: 'step-header clearfix', onClick: this.toggleStepActive, role: 'step-header' },
-        React.createElement(
+        _react2.default.createElement(
           'div',
           { className: 'step-move-btns' },
-          React.createElement(
+          _react2.default.createElement(
             'a',
             { href: '#', className: 'up', onClick: this.moveStepUp, role: 'move-step' },
-            React.createElement('span', { className: 'arrow' })
+            _react2.default.createElement('span', { className: 'arrow' })
           ),
-          React.createElement(
+          _react2.default.createElement(
             'a',
             { href: '#', className: 'down', onClick: this.moveStepDown, role: 'move-step' },
-            React.createElement('span', { className: 'arrow' })
+            _react2.default.createElement('span', { className: 'arrow' })
           )
         ),
-        React.createElement(
+        _react2.default.createElement(
           'div',
           { className: 'step-number' },
           this.props.index + 1
         ),
-        React.createElement(
+        _react2.default.createElement(
           'div',
           { className: 'step-name' },
           'Step ',
@@ -10003,71 +10664,84 @@ module.exports = FunnelStep;
 "use strict";
 
 
-var React = __webpack_require__(1);
-var _ = __webpack_require__(0);
-var FunnelStep = __webpack_require__(60);
-var ExplorerActions = __webpack_require__(4);
+var _react = __webpack_require__(1);
 
-var FunnelsBuilder = React.createClass({
+var _react2 = _interopRequireDefault(_react);
+
+var _lodash = __webpack_require__(0);
+
+var _lodash2 = _interopRequireDefault(_lodash);
+
+var _funnel_step = __webpack_require__(60);
+
+var _funnel_step2 = _interopRequireDefault(_funnel_step);
+
+var _ExplorerActions = __webpack_require__(4);
+
+var _ExplorerActions2 = _interopRequireDefault(_ExplorerActions);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var FunnelsBuilder = _react2.default.createClass({
   displayName: 'FunnelsBuilder',
 
 
   propTypes: {
-    modelId: React.PropTypes.string.isRequired,
-    eventCollections: React.PropTypes.array.isRequired,
-    steps: React.PropTypes.array.isRequired,
-    stepNotices: React.PropTypes.array.isRequired,
-    onBrowseEvents: React.PropTypes.func.isRequired,
-    getEventPropertyNames: React.PropTypes.func.isRequired,
-    getPropertyType: React.PropTypes.func.isRequired
+    modelId: _react2.default.PropTypes.string.isRequired,
+    eventCollections: _react2.default.PropTypes.array.isRequired,
+    steps: _react2.default.PropTypes.array.isRequired,
+    stepNotices: _react2.default.PropTypes.array.isRequired,
+    onBrowseEvents: _react2.default.PropTypes.func.isRequired,
+    getEventPropertyNames: _react2.default.PropTypes.func.isRequired,
+    getPropertyType: _react2.default.PropTypes.func.isRequired
   },
 
   handleChange: function handleChange(index, name, value) {
     var updates = {};
     updates[name] = value;
-    ExplorerActions.updateStep(this.props.modelId, index, updates);
+    _ExplorerActions2.default.updateStep(this.props.modelId, index, updates);
   },
 
   addStep: function addStep(e) {
     e.preventDefault();
-    ExplorerActions.addStep(this.props.modelId);
+    _ExplorerActions2.default.addStep(this.props.modelId);
   },
 
   removeStep: function removeStep(index) {
-    ExplorerActions.removeStep(this.props.modelId, index);
+    _ExplorerActions2.default.removeStep(this.props.modelId, index);
   },
 
   handleAddFilter: function handleAddFilter(index) {
-    ExplorerActions.addStepFilter(this.props.modelId, index);
+    _ExplorerActions2.default.addStepFilter(this.props.modelId, index);
   },
 
   handleRemoveFilter: function handleRemoveFilter(stepIndex, filterIndex) {
-    ExplorerActions.removeStepFilter(this.props.modelId, stepIndex, filterIndex);
+    _ExplorerActions2.default.removeStepFilter(this.props.modelId, stepIndex, filterIndex);
   },
 
   handleFilterChange: function handleFilterChange(stepIndex, filterIndex, updates) {
-    ExplorerActions.updateStepFilter(this.props.modelId, stepIndex, filterIndex, updates);
+    _ExplorerActions2.default.updateStepFilter(this.props.modelId, stepIndex, filterIndex, updates);
   },
 
   toggleStepActive: function toggleStepActive(index, active) {
     if (active) {
-      ExplorerActions.setStepActive(this.props.modelId, index);
+      _ExplorerActions2.default.setStepActive(this.props.modelId, index);
     } else {
-      ExplorerActions.updateStep(this.props.modelId, index, { active: false });
+      _ExplorerActions2.default.updateStep(this.props.modelId, index, { active: false });
     }
   },
 
   moveStep: function moveStep(index, direction) {
-    ExplorerActions.moveStep(this.props.modelId, index, direction);
+    _ExplorerActions2.default.moveStep(this.props.modelId, index, direction);
   },
 
   buildSteps: function buildSteps() {
     return this.props.steps.map(function (step, index) {
-      var notice = _.find(this.props.stepNotices, { stepIndex: index });
-      return React.createElement(
+      var notice = _lodash2.default.find(this.props.stepNotices, { stepIndex: index });
+      return _react2.default.createElement(
         'li',
         { key: index },
-        React.createElement(FunnelStep, { index: index,
+        _react2.default.createElement(_funnel_step2.default, { index: index,
           step: step,
           notice: notice,
           removeStep: this.removeStep,
@@ -10088,23 +10762,23 @@ var FunnelsBuilder = React.createClass({
   },
 
   render: function render() {
-    return React.createElement(
+    return _react2.default.createElement(
       'div',
       { className: 'funnel-builder margin-top-small' },
-      React.createElement(
+      _react2.default.createElement(
         'h4',
         null,
         'Steps'
       ),
-      React.createElement(
+      _react2.default.createElement(
         'ul',
         { className: 'steps' },
         this.buildSteps()
       ),
-      React.createElement(
+      _react2.default.createElement(
         'a',
         { href: '#', className: 'add-step', onClick: this.addStep },
-        React.createElement('i', { className: 'icon glyphicon glyphicon-plus-sign margin-right-tiny' }),
+        _react2.default.createElement('i', { className: 'icon glyphicon glyphicon-plus-sign margin-right-tiny' }),
         'Add a step'
       )
     );
@@ -10121,29 +10795,39 @@ module.exports = FunnelsBuilder;
 "use strict";
 
 
-var React = __webpack_require__(1);
-var Input = __webpack_require__(13);
-var ExplorerUtils = __webpack_require__(3);
+var _react = __webpack_require__(1);
 
-var LatestField = React.createClass({
+var _react2 = _interopRequireDefault(_react);
+
+var _input = __webpack_require__(13);
+
+var _input2 = _interopRequireDefault(_input);
+
+var _ExplorerUtils = __webpack_require__(3);
+
+var _ExplorerUtils2 = _interopRequireDefault(_ExplorerUtils);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var LatestField = _react2.default.createClass({
   displayName: 'LatestField',
 
 
   render: function render() {
-    return React.createElement(
+    return _react2.default.createElement(
       'div',
       { className: 'form-group' },
-      React.createElement(Input, { type: 'text',
+      _react2.default.createElement(_input2.default, { type: 'text',
         name: 'latest',
         label: 'Limit number of events to extract',
         value: this.props.latest,
         placeholder: 'Eg: 1000',
         onChange: this.props.handleChange }),
-      React.createElement(
+      _react2.default.createElement(
         'small',
         { className: 'text-muted' },
-        React.createElement('span', { className: 'icon glyphicon glyphicon-info-sign' }),
-        React.createElement(
+        _react2.default.createElement('span', { className: 'icon glyphicon glyphicon-info-sign' }),
+        _react2.default.createElement(
           'span',
           null,
           'Results are limited to 10 million events'
@@ -10165,13 +10849,17 @@ module.exports = LatestField;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var React = __webpack_require__(1);
 
 var ReactMultiSelect = function (_React$Component) {
   _inherits(ReactMultiSelect, _React$Component);
@@ -10236,7 +10924,7 @@ var ReactMultiSelect = function (_React$Component) {
         className += ' react-select-box-option-selected';
       }
 
-      return React.createElement(
+      return _react2.default.createElement(
         'a',
         {
           id: this.state.id + '-' + i,
@@ -10266,7 +10954,7 @@ var ReactMultiSelect = function (_React$Component) {
         return _this2._renderOption({ value: item.value, selected: item.selected, label: item.value }, i);
       });
 
-      return React.createElement(
+      return _react2.default.createElement(
         'div',
         { className: className, ref: 'menu' },
         options
@@ -10282,13 +10970,13 @@ var ReactMultiSelect = function (_React$Component) {
         return i.value;
       }).join(', ') : this.props.label;
 
-      return React.createElement(
+      return _react2.default.createElement(
         'div',
         { className: 'react-select-box-container react-select-box-multi' },
-        React.createElement(
+        _react2.default.createElement(
           'button',
           { id: this.state.id, onClick: this._toggleOpenClose.bind(this), className: 'react-select-box' },
-          React.createElement(
+          _react2.default.createElement(
             'div',
             { className: 'react-select-box-label' },
             label
@@ -10300,7 +10988,7 @@ var ReactMultiSelect = function (_React$Component) {
   }]);
 
   return ReactMultiSelect;
-}(React.Component);
+}(_react2.default.Component);
 
 module.exports = ReactMultiSelect;
 
@@ -10313,17 +11001,33 @@ module.exports = ReactMultiSelect;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _ExplorerUtils = __webpack_require__(3);
+
+var _ExplorerUtils2 = _interopRequireDefault(_ExplorerUtils);
+
+var _input = __webpack_require__(13);
+
+var _input2 = _interopRequireDefault(_input);
+
+var _react_multi_select = __webpack_require__(63);
+
+var _react_multi_select2 = _interopRequireDefault(_react_multi_select);
+
+var _latest_field = __webpack_require__(62);
+
+var _latest_field2 = _interopRequireDefault(_latest_field);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var React = __webpack_require__(1);
-var ExplorerUtils = __webpack_require__(3);
-var Input = __webpack_require__(13);
-var ReactMultiSelect = __webpack_require__(63);
-var LatestField = __webpack_require__(62);
 
 var ExtractionOptions = function (_React$Component) {
   _inherits(ExtractionOptions, _React$Component);
@@ -10380,18 +11084,18 @@ var ExtractionOptions = function (_React$Component) {
       var extractionPropertiesFilter = void 0;
 
       if (this.props.isEmail) {
-        emailField = React.createElement(Input, { type: 'text',
+        emailField = _react2.default.createElement(_input2.default, { type: 'text',
           name: 'email',
           label: 'Recipient email address',
           placeholder: 'your@email.com',
           required: 'true',
           value: this.props.email,
           onChange: this.props.handleChangeWithEvent });
-        latestField = React.createElement(LatestField, { latest: this.props.latest, handleChange: this.props.handleChangeWithEvent });
+        latestField = _react2.default.createElement(_latest_field2.default, { latest: this.props.latest, handleChange: this.props.handleChangeWithEvent });
       }
 
       if (this._getExtractionKeys()) {
-        extractionPropertiesFilter = React.createElement(ReactMultiSelect, {
+        extractionPropertiesFilter = _react2.default.createElement(_react_multi_select2.default, {
           name: 'property_names',
           label: 'Filter extraction properties',
           handleChange: this._handlePropertyNamesChange.bind(this),
@@ -10399,24 +11103,24 @@ var ExtractionOptions = function (_React$Component) {
         });
       }
 
-      return React.createElement(
+      return _react2.default.createElement(
         'div',
         { className: 'field-component' },
-        React.createElement(
+        _react2.default.createElement(
           'div',
           { className: 'extraction-options' },
-          React.createElement(
+          _react2.default.createElement(
             'label',
             null,
-            React.createElement('input', { type: 'radio', name: 'extraction_type', value: 'immediate', onChange: this.props.setExtractionType, checked: !this.props.isEmail }),
+            _react2.default.createElement('input', { type: 'radio', name: 'extraction_type', value: 'immediate', onChange: this.props.setExtractionType, checked: !this.props.isEmail }),
             ' Preview latest ',
-            ExplorerUtils.EXRACTION_EVENT_LIMIT,
+            _ExplorerUtils2.default.EXRACTION_EVENT_LIMIT,
             ' events now'
           ),
-          React.createElement(
+          _react2.default.createElement(
             'label',
             null,
-            React.createElement('input', { type: 'radio', name: 'extraction_type', value: 'email', onChange: this.props.setExtractionType, checked: this.props.isEmail }),
+            _react2.default.createElement('input', { type: 'radio', name: 'extraction_type', value: 'email', onChange: this.props.setExtractionType, checked: this.props.isEmail }),
             ' Bulk CSV extraction by email'
           ),
           emailField,
@@ -10428,7 +11132,7 @@ var ExtractionOptions = function (_React$Component) {
   }]);
 
   return ExtractionOptions;
-}(React.Component);
+}(_react2.default.Component);
 
 module.exports = ExtractionOptions;
 
@@ -10439,14 +11143,25 @@ module.exports = ExtractionOptions;
 "use strict";
 
 
-var React = __webpack_require__(1);
-var _ = __webpack_require__(0);
-var FieldsToggle = __webpack_require__(14);
+var _react = __webpack_require__(1);
 
-// Components
-var ReactSelect = __webpack_require__(11);
+var _react2 = _interopRequireDefault(_react);
 
-var GroupByField = React.createClass({
+var _lodash = __webpack_require__(0);
+
+var _lodash2 = _interopRequireDefault(_lodash);
+
+var _fields_toggle = __webpack_require__(14);
+
+var _fields_toggle2 = _interopRequireDefault(_fields_toggle);
+
+var _react_select = __webpack_require__(11);
+
+var _react_select2 = _interopRequireDefault(_react_select);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var GroupByField = _react2.default.createClass({
   displayName: 'GroupByField',
 
 
@@ -10462,17 +11177,17 @@ var GroupByField = React.createClass({
   multiGroupToggle: function multiGroupToggle() {
     var icon = this.props.value.length > 1 ? 'remove' : 'plus';
     var text = this.props.value.length > 1 ? 'Remove second property' : 'Group by a second property';
-    return React.createElement(
+    return _react2.default.createElement(
       'a',
       { className: 'double-groupby-toggle', href: '#', onClick: this.toggleMultiGroupBy },
-      React.createElement('i', { className: "margin-right-bump icon glyphicon glyphicon-" + icon }),
+      _react2.default.createElement('i', { className: "margin-right-bump icon glyphicon glyphicon-" + icon }),
       text
     );
   },
 
   secondField: function secondField() {
     if (this.props.value.length > 1) {
-      return React.createElement(ReactSelect, { ref: 'select',
+      return _react2.default.createElement(_react_select2.default, { ref: 'select',
         inputClasses: 'group-by form-control margin-bottom-tiny',
         wrapClasses: 'margin-top-tiny',
         name: 'group_by.1',
@@ -10517,11 +11232,11 @@ var GroupByField = React.createClass({
   // React methods
 
   render: function render() {
-    return React.createElement(
+    return _react2.default.createElement(
       'div',
       { className: 'field-component' },
-      React.createElement(
-        FieldsToggle,
+      _react2.default.createElement(
+        _fields_toggle2.default,
         { ref: 'toggle',
           name: 'Group By',
           initialOpenState: this.shouldBeOpen(),
@@ -10532,7 +11247,7 @@ var GroupByField = React.createClass({
             group_by: []
           },
           toggleCallback: this.focusOnReactSelect },
-        React.createElement(ReactSelect, { ref: 'select',
+        _react2.default.createElement(_react_select2.default, { ref: 'select',
           inputClasses: 'group-by form-control margin-bottom-tiny',
           name: 'group_by.0',
           items: this.props.options,
@@ -10547,6 +11262,9 @@ var GroupByField = React.createClass({
 
 });
 
+// Components
+
+
 module.exports = GroupByField;
 
 /***/ }),
@@ -10556,23 +11274,31 @@ module.exports = GroupByField;
 "use strict";
 
 
-var React = __webpack_require__(1);
-var _ = __webpack_require__(0);
+var _react = __webpack_require__(1);
 
-// Components
-var Input = __webpack_require__(13);
+var _react2 = _interopRequireDefault(_react);
 
-var PercentileField = React.createClass({
+var _lodash = __webpack_require__(0);
+
+var _lodash2 = _interopRequireDefault(_lodash);
+
+var _input = __webpack_require__(13);
+
+var _input2 = _interopRequireDefault(_input);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var PercentileField = _react2.default.createClass({
   displayName: 'PercentileField',
 
 
   // React methods
 
   render: function render() {
-    return React.createElement(
+    return _react2.default.createElement(
       'div',
       { className: 'field-component' },
-      React.createElement(Input, { ref: 'input',
+      _react2.default.createElement(_input2.default, { ref: 'input',
         label: 'Percentile Value',
         classes: 'percentile',
         name: 'percentile',
@@ -10585,6 +11311,9 @@ var PercentileField = React.createClass({
 
 });
 
+// Components
+
+
 module.exports = PercentileField;
 
 /***/ }),
@@ -10594,26 +11323,74 @@ module.exports = PercentileField;
 "use strict";
 
 
-var _ = __webpack_require__(0);
-var React = __webpack_require__(1);
+var _lodash = __webpack_require__(0);
+
+var _lodash2 = _interopRequireDefault(_lodash);
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _fields_toggle = __webpack_require__(14);
+
+var _fields_toggle2 = _interopRequireDefault(_fields_toggle);
+
+var _select_field = __webpack_require__(36);
+
+var _select_field2 = _interopRequireDefault(_select_field);
+
+var _percentile_field = __webpack_require__(66);
+
+var _percentile_field2 = _interopRequireDefault(_percentile_field);
+
+var _group_by_field = __webpack_require__(65);
+
+var _group_by_field2 = _interopRequireDefault(_group_by_field);
+
+var _extraction_options = __webpack_require__(64);
+
+var _extraction_options2 = _interopRequireDefault(_extraction_options);
+
+var _funnel_builder = __webpack_require__(61);
+
+var _funnel_builder2 = _interopRequireDefault(_funnel_builder);
+
+var _timeframe = __webpack_require__(35);
+
+var _timeframe2 = _interopRequireDefault(_timeframe);
+
+var _interval = __webpack_require__(51);
+
+var _interval2 = _interopRequireDefault(_interval);
+
+var _input = __webpack_require__(13);
+
+var _input2 = _interopRequireDefault(_input);
+
+var _api_url = __webpack_require__(50);
+
+var _api_url2 = _interopRequireDefault(_api_url);
+
+var _ExplorerStore = __webpack_require__(12);
+
+var _ExplorerStore2 = _interopRequireDefault(_ExplorerStore);
+
+var _ExplorerUtils = __webpack_require__(3);
+
+var _ExplorerUtils2 = _interopRequireDefault(_ExplorerUtils);
+
+var _FilterUtils = __webpack_require__(8);
+
+var _FilterUtils2 = _interopRequireDefault(_FilterUtils);
+
+var _ExplorerActions = __webpack_require__(4);
+
+var _ExplorerActions2 = _interopRequireDefault(_ExplorerActions);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // Components
-var FieldsToggle = __webpack_require__(14);
-var SelectField = __webpack_require__(36);
-var PercentileField = __webpack_require__(66);
-var GroupByField = __webpack_require__(65);
-var ExtractionOptions = __webpack_require__(64);
-var FunnelBuilder = __webpack_require__(61);
-var Timeframe = __webpack_require__(35);
-var Interval = __webpack_require__(51);
-var Input = __webpack_require__(13);
-var ApiUrl = __webpack_require__(50);
-var ExplorerStore = __webpack_require__(12);
-var ExplorerUtils = __webpack_require__(3);
-var FilterUtils = __webpack_require__(8);
-var ExplorerActions = __webpack_require__(4);
-
-var QueryBuilder = React.createClass({
+var QueryBuilder = _react2.default.createClass({
   displayName: 'QueryBuilder',
 
 
@@ -10626,7 +11403,7 @@ var QueryBuilder = React.createClass({
   handleChange: function handleChange(update, value) {
     var updates = { query: {} };
 
-    if (_.isPlainObject(update)) {
+    if (_lodash2.default.isPlainObject(update)) {
       for (key in update) {
         updates.query[key] = update[key];
       }
@@ -10634,29 +11411,29 @@ var QueryBuilder = React.createClass({
       updates.query[update] = value;
     }
 
-    ExplorerActions.update(this.props.model.id, updates);
+    _ExplorerActions2.default.update(this.props.model.id, updates);
   },
 
   // Convenience Methods
 
   updateGroupBy: function updateGroupBy(updates) {
-    ExplorerActions.update(this.props.model.id, { query: updates });
+    _ExplorerActions2.default.update(this.props.model.id, { query: updates });
   },
 
   handleRevertChanges: function handleRevertChanges(event) {
     event.preventDefault();
-    ExplorerActions.revertActiveChanges();
+    _ExplorerActions2.default.revertActiveChanges();
   },
 
   shouldShowRevertButton: function shouldShowRevertButton() {
-    return ExplorerUtils.isPersisted(this.props.model) && this.props.model.originalModel && this.props.model.originalModel.query && !_.isEqual(this.props.model.query, this.props.model.originalModel.query);
+    return _ExplorerUtils2.default.isPersisted(this.props.model) && this.props.model.originalModel && this.props.model.originalModel.query && !_lodash2.default.isEqual(this.props.model.query, this.props.model.originalModel.query);
   },
 
   // Fields Builders
 
   buildEventCollectionField: function buildEventCollectionField() {
     if (this.props.model.query.analysis_type !== 'funnel') {
-      return React.createElement(SelectField, { name: 'event_collection',
+      return _react2.default.createElement(_select_field2.default, { name: 'event_collection',
         label: 'Event Collection',
         value: this.props.model.query.event_collection,
         requiredLabel: true,
@@ -10668,12 +11445,12 @@ var QueryBuilder = React.createClass({
 
   buildExtractionOptions: function buildExtractionOptions() {
     if (this.props.model.query.analysis_type === 'extraction') {
-      return React.createElement(ExtractionOptions, { latest: this.props.model.query.latest,
+      return _react2.default.createElement(_extraction_options2.default, { latest: this.props.model.query.latest,
         email: this.props.model.query.email,
         property_names: this.props.model.query.property_names,
         event_collection: this.props.model.query.event_collection,
         projectSchema: this.props.project.schema,
-        isEmail: ExplorerUtils.isEmailExtraction(this.props.model),
+        isEmail: _ExplorerUtils2.default.isEmailExtraction(this.props.model),
         handleChangeWithEvent: this.handleSelectionWithEvent,
         handleChange: this.handleChange,
         setExtractionType: this.props.setExtractionType });
@@ -10682,7 +11459,7 @@ var QueryBuilder = React.createClass({
 
   buildGroupByField: function buildGroupByField() {
     if (['extraction', 'funnel'].indexOf(this.props.model.query.analysis_type) === -1) {
-      return React.createElement(GroupByField, { ref: 'group-by-field',
+      return _react2.default.createElement(_group_by_field2.default, { ref: 'group-by-field',
         value: this.props.model.query.group_by,
         updateGroupBy: this.updateGroupBy,
         options: this.props.getEventPropertyNames(this.props.model.query.event_collection),
@@ -10692,8 +11469,8 @@ var QueryBuilder = React.createClass({
 
   buildTargetPropertyField: function buildTargetPropertyField() {
     var type = this.props.model.query.analysis_type;
-    if (type !== null && ExplorerUtils.shouldHaveTarget(this.props.model)) {
-      return React.createElement(SelectField, { name: 'target_property',
+    if (type !== null && _ExplorerUtils2.default.shouldHaveTarget(this.props.model)) {
+      return _react2.default.createElement(_select_field2.default, { name: 'target_property',
         label: 'Target Property',
         inputClasses: ['target-property'],
         requiredLabel: true,
@@ -10706,7 +11483,7 @@ var QueryBuilder = React.createClass({
 
   buildPercentileField: function buildPercentileField() {
     if (this.props.model.query.analysis_type === 'percentile') {
-      return React.createElement(PercentileField, { ref: 'percentile-field',
+      return _react2.default.createElement(_percentile_field2.default, { ref: 'percentile-field',
         value: this.props.model.query.percentile,
         onChange: this.handleSelectionWithEvent });
     }
@@ -10714,41 +11491,41 @@ var QueryBuilder = React.createClass({
 
   buildIntervalField: function buildIntervalField() {
     if (['extraction', 'funnel'].indexOf(this.props.model.query.analysis_type) === -1) {
-      return React.createElement(Interval, { interval: this.props.model.query.interval,
+      return _react2.default.createElement(_interval2.default, { interval: this.props.model.query.interval,
         handleChange: this.handleChange });
     }
   },
 
   buildFilters: function buildFilters() {
     if (this.props.model.query.analysis_type !== 'funnel') {
-      return React.createElement(
+      return _react2.default.createElement(
         'div',
         { className: 'field-component' },
-        React.createElement(FieldsToggle, { ref: 'filters-fields-toggle',
+        _react2.default.createElement(_fields_toggle2.default, { ref: 'filters-fields-toggle',
           name: 'Filters',
           toggleCallback: this.props.handleFiltersToggle,
-          fieldsCount: FilterUtils.validFilters(this.props.model.query.filters).length })
+          fieldsCount: _FilterUtils2.default.validFilters(this.props.model.query.filters).length })
       );
     }
   },
 
   buildGlobalTimeframePicker: function buildGlobalTimeframePicker() {
     if (this.props.model.query.analysis_type !== 'funnel') {
-      return React.createElement(
+      return _react2.default.createElement(
         'div',
         null,
-        React.createElement(Timeframe, { ref: 'timeframe',
+        _react2.default.createElement(_timeframe2.default, { ref: 'timeframe',
           time: this.props.model.query.time,
           timezone: this.props.model.query.timezone,
           handleChange: this.handleChange }),
-        React.createElement('hr', { className: 'fieldset-divider' })
+        _react2.default.createElement('hr', { className: 'fieldset-divider' })
       );
     }
   },
 
   buildFunnelBuilder: function buildFunnelBuilder() {
     if (this.props.model.query.analysis_type === 'funnel') {
-      return React.createElement(FunnelBuilder, { modelId: this.props.model.id,
+      return _react2.default.createElement(_funnel_builder2.default, { modelId: this.props.model.id,
         steps: this.props.model.query.steps,
         stepNotices: this.props.stepNotices || [],
         onBrowseEvents: this.props.onBrowseEvents,
@@ -10760,7 +11537,7 @@ var QueryBuilder = React.createClass({
 
   buildClearButton: function buildClearButton() {
     if (!this.shouldShowRevertButton()) {
-      return React.createElement(
+      return _react2.default.createElement(
         'button',
         { type: 'reset', role: 'clear-query',
           className: 'btn btn-default btn-block',
@@ -10769,7 +11546,7 @@ var QueryBuilder = React.createClass({
         'Clear'
       );
     } else {
-      return React.createElement(
+      return _react2.default.createElement(
         'button',
         {
           className: 'btn btn-default btn-block',
@@ -10785,16 +11562,16 @@ var QueryBuilder = React.createClass({
   render: function render() {
     var apiQueryUrl;
     if (this.props.model.isValid) {
-      apiQueryUrl = ExplorerUtils.getApiQueryUrl(this.props.client, this.props.model);
+      apiQueryUrl = _ExplorerUtils2.default.getApiQueryUrl(this.props.client, this.props.model);
     }
 
-    return React.createElement(
+    return _react2.default.createElement(
       'section',
       { className: 'query-pane-section query-builder' },
-      React.createElement(
+      _react2.default.createElement(
         'form',
         { className: 'form query-builder-form', onSubmit: this.props.handleQuerySubmit },
-        React.createElement(SelectField, { name: 'analysis_type',
+        _react2.default.createElement(_select_field2.default, { name: 'analysis_type',
           label: 'Analysis Type',
           inputClasses: ['analysis-type'],
           options: this.props.analysisTypes,
@@ -10810,12 +11587,12 @@ var QueryBuilder = React.createClass({
         this.buildGroupByField(),
         this.buildFilters(),
         this.buildIntervalField(),
-        React.createElement(
+        _react2.default.createElement(
           'div',
           { className: 'button-set-clear-toggle' },
           this.buildClearButton()
         ),
-        React.createElement(ApiUrl, { url: apiQueryUrl,
+        _react2.default.createElement(_api_url2.default, { url: apiQueryUrl,
           isValid: this.props.model.isValid })
       )
     );
@@ -10831,10 +11608,17 @@ module.exports = QueryBuilder;
 "use strict";
 
 
-var React = __webpack_require__(1);
-var classNames = __webpack_require__(6);
+var _react = __webpack_require__(1);
 
-var QueryPaneTabs = React.createClass({
+var _react2 = _interopRequireDefault(_react);
+
+var _classnames = __webpack_require__(6);
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var QueryPaneTabs = _react2.default.createClass({
   displayName: 'QueryPaneTabs',
 
 
@@ -10844,37 +11628,37 @@ var QueryPaneTabs = React.createClass({
 
   render: function render() {
     var btnNewQuery;
-    var queryPaneClasses = classNames({
+    var queryPaneClasses = (0, _classnames2.default)({
       'query-pane-tabs clearfix': true,
       'query-pane-persisted': this.props.persisted,
       'query-pane-new': !this.props.persisted
     });
 
     if (this.props.persisted) {
-      btnNewQuery = React.createElement(
+      btnNewQuery = _react2.default.createElement(
         'li',
         { role: 'presentation', className: 'tab-new-query' },
-        React.createElement(
+        _react2.default.createElement(
           'a',
           { ref: 'new-query', href: '#',
             title: 'Create a new query',
             onClick: this.props.createNewQuery },
-          React.createElement('span', { className: 'icon glyphicon icon-plus glyphicon-plus' })
+          _react2.default.createElement('span', { className: 'icon glyphicon icon-plus glyphicon-plus' })
         )
       );
     }
 
-    return React.createElement(
+    return _react2.default.createElement(
       'div',
       { className: queryPaneClasses },
-      React.createElement(
+      _react2.default.createElement(
         'ul',
         { className: 'nav nav-tabs' },
         btnNewQuery,
-        React.createElement(
+        _react2.default.createElement(
           'li',
           { role: 'presentation', className: this.props.activePane === 'build' ? 'tab-build-query active' : 'tab-build-query' },
-          React.createElement(
+          _react2.default.createElement(
             'a',
             { ref: 'build-tab', href: '#',
               id: 'build-query',
@@ -10883,16 +11667,16 @@ var QueryPaneTabs = React.createClass({
             this.props.persisted ? "Edit query" : "Create a new query"
           )
         ),
-        React.createElement(
+        _react2.default.createElement(
           'li',
           { role: 'presentation', className: this.props.activePane === 'browse' ? 'tab-browse-queries active' : 'tab-browse-queries' },
-          React.createElement(
+          _react2.default.createElement(
             'a',
             { ref: 'browse-tab', href: '#',
               id: 'browse',
               title: 'Browse saved queries',
               onClick: this.toggled.bind(this, 'browse') },
-            React.createElement('span', { className: 'icon glyphicon icon-th-list glyphicon-th-list' }),
+            _react2.default.createElement('span', { className: 'icon glyphicon icon-th-list glyphicon-th-list' }),
             'Browse'
           )
         )
@@ -10949,16 +11733,29 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__70__;
 "use strict";
 
 
-var _ = __webpack_require__(0);
-var React = __webpack_require__(1);
-var classNames = __webpack_require__(6);
-var Highlight = __webpack_require__(70);
+var _lodash = __webpack_require__(0);
 
-var CodeSample = React.createClass({
+var _lodash2 = _interopRequireDefault(_lodash);
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _classnames = __webpack_require__(6);
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
+var _reactHighlight = __webpack_require__(70);
+
+var _reactHighlight2 = _interopRequireDefault(_reactHighlight);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var CodeSample = _react2.default.createClass({
   displayName: 'CodeSample',
 
   render: function render() {
-    var panelClasses = classNames({
+    var panelClasses = (0, _classnames2.default)({
       'code-sample-panel': true,
       'hide': this.props.hidden
     });
@@ -10970,19 +11767,19 @@ var CodeSample = React.createClass({
       text = "Your query is not valid right now, so we can't show you a code sample.";
     }
 
-    return React.createElement(
+    return _react2.default.createElement(
       'div',
       { className: panelClasses },
-      React.createElement(
+      _react2.default.createElement(
         'a',
         { href: '#', className: 'close-btn', onClick: this.props.onCloseClick },
-        React.createElement('span', { className: 'icon glyphicon glyphicon glyphicon-remove-circle no-margin' })
+        _react2.default.createElement('span', { className: 'icon glyphicon glyphicon glyphicon-remove-circle no-margin' })
       ),
-      React.createElement(
+      _react2.default.createElement(
         'div',
         { className: 'sample' },
-        React.createElement(
-          Highlight,
+        _react2.default.createElement(
+          _reactHighlight2.default,
           { className: 'html' },
           text
         )
@@ -11000,11 +11797,21 @@ module.exports = CodeSample;
 "use strict";
 
 
-var React = __webpack_require__(1);
-var ChartTypeUtils = __webpack_require__(26);
-var FormatUtils = __webpack_require__(2);
+var _react = __webpack_require__(1);
 
-var KeenViz = React.createClass({
+var _react2 = _interopRequireDefault(_react);
+
+var _ChartTypeUtils = __webpack_require__(26);
+
+var _ChartTypeUtils2 = _interopRequireDefault(_ChartTypeUtils);
+
+var _FormatUtils = __webpack_require__(2);
+
+var _FormatUtils2 = _interopRequireDefault(_FormatUtils);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var KeenViz = _react2.default.createClass({
   displayName: 'KeenViz',
 
 
@@ -11054,8 +11861,8 @@ var KeenViz = React.createClass({
 
   render: function render() {
     var exportBtn;
-    if (ChartTypeUtils.isTableChartType(this.props.model.metadata.visualization.chart_type)) {
-      exportBtn = React.createElement(
+    if (_ChartTypeUtils2.default.isTableChartType(this.props.model.metadata.visualization.chart_type)) {
+      exportBtn = _react2.default.createElement(
         'button',
         { className: 'btn btn-default btn-download-csv',
           role: 'export-table',
@@ -11065,10 +11872,10 @@ var KeenViz = React.createClass({
       );
     }
 
-    return React.createElement(
+    return _react2.default.createElement(
       'div',
       { ref: 'keen-viz-wrapper' },
-      React.createElement('div', { ref: 'keen-viz' }),
+      _react2.default.createElement('div', { ref: 'keen-viz' }),
       exportBtn
     );
   }
@@ -11083,14 +11890,31 @@ module.exports = KeenViz;
 "use strict";
 
 
-var _ = __webpack_require__(0);
-var React = __webpack_require__(1);
-var Loader = __webpack_require__(29);
-var KeenViz = __webpack_require__(72);
-var ExplorerUtils = __webpack_require__(3);
-var prettyPrintJSON = __webpack_require__(2).prettyPrintJSON;
+var _lodash = __webpack_require__(0);
 
-var Chart = React.createClass({
+var _lodash2 = _interopRequireDefault(_lodash);
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _loader = __webpack_require__(29);
+
+var _loader2 = _interopRequireDefault(_loader);
+
+var _keen_viz = __webpack_require__(72);
+
+var _keen_viz2 = _interopRequireDefault(_keen_viz);
+
+var _ExplorerUtils = __webpack_require__(3);
+
+var _ExplorerUtils2 = _interopRequireDefault(_ExplorerUtils);
+
+var _FormatUtils = __webpack_require__(2);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Chart = _react2.default.createClass({
   displayName: 'Chart',
 
 
@@ -11100,10 +11924,10 @@ var Chart = React.createClass({
 
   buildVizContent: function buildVizContent() {
     if (!this.props.model.response) {
-      return React.createElement(
+      return _react2.default.createElement(
         'div',
         { ref: 'notice', className: 'big-notice' },
-        React.createElement(
+        _react2.default.createElement(
           'div',
           { className: 'alert alert-info' },
           'Let\'s go exploring!'
@@ -11111,11 +11935,11 @@ var Chart = React.createClass({
       );
     }
 
-    if (ExplorerUtils.isEmailExtraction(this.props.model)) {
-      return React.createElement(
+    if (_ExplorerUtils2.default.isEmailExtraction(this.props.model)) {
+      return _react2.default.createElement(
         'div',
         { ref: 'notice', className: 'big-notice' },
-        React.createElement(
+        _react2.default.createElement(
           'div',
           { className: 'alert alert-info' },
           'Email extractions don\'t have visualizations.'
@@ -11123,20 +11947,20 @@ var Chart = React.createClass({
       );
     }
 
-    if (!ExplorerUtils.resultCanBeVisualized(this.props.model)) {
-      return React.createElement(
+    if (!_ExplorerUtils2.default.resultCanBeVisualized(this.props.model)) {
+      return _react2.default.createElement(
         'div',
         { ref: 'notice', className: 'big-notice' },
-        React.createElement(
+        _react2.default.createElement(
           'div',
           { className: 'alert alert-danger' },
-          React.createElement('span', { className: 'icon glyphicon glyphicon-info-sign error' }),
+          _react2.default.createElement('span', { className: 'icon glyphicon glyphicon-info-sign error' }),
           'Your query returned no results.'
         )
       );
     }
 
-    if (ExplorerUtils.resultCanBeVisualized(this.props.model)) {
+    if (_ExplorerUtils2.default.resultCanBeVisualized(this.props.model)) {
       return this.buildViz();
     } else {
       this.props.dataviz.destroy();
@@ -11149,23 +11973,23 @@ var Chart = React.createClass({
     var analysisType = this.props.model.query.analysis_type;
     var wrapClasses = analysisType + '-viz';
 
-    if (ExplorerUtils.isJSONViz(this.props.model)) {
+    if (_ExplorerUtils2.default.isJSONViz(this.props.model)) {
       var content = {
         result: this.props.model.response.result
       };
       if (this.props.model.response.actors) {
         content.actors = this.props.model.response.actors;
       }
-      chartContent = React.createElement('textarea', { ref: 'jsonViz',
+      chartContent = _react2.default.createElement('textarea', { ref: 'jsonViz',
         className: 'json-view',
-        value: prettyPrintJSON(content),
+        value: (0, _FormatUtils.prettyPrintJSON)(content),
         readOnly: true });
     } else {
-      chartContent = React.createElement(KeenViz, { model: this.props.model, dataviz: this.props.dataviz,
+      chartContent = _react2.default.createElement(_keen_viz2.default, { model: this.props.model, dataviz: this.props.dataviz,
         exportToCsv: this.props.exportToCsv });
     }
 
-    return React.createElement(
+    return _react2.default.createElement(
       'div',
       { className: wrapClasses },
       chartContent
@@ -11179,10 +12003,10 @@ var Chart = React.createClass({
   render: function render() {
     var vizContent = this.buildVizContent();
 
-    return React.createElement(
+    return _react2.default.createElement(
       'div',
       { className: 'chart-area' },
-      React.createElement(Loader, { visible: this.props.model.loading }),
+      _react2.default.createElement(_loader2.default, { visible: this.props.model.loading }),
       vizContent
     );
   }
@@ -11203,31 +12027,77 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__74__;
 "use strict";
 
 
+var _lodash = __webpack_require__(0);
+
+var _lodash2 = _interopRequireDefault(_lodash);
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _classnames = __webpack_require__(6);
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
 var _keenDataviz = __webpack_require__(74);
 
 var _keenDataviz2 = _interopRequireDefault(_keenDataviz);
 
+var _select = __webpack_require__(15);
+
+var _select2 = _interopRequireDefault(_select);
+
+var _notice = __webpack_require__(27);
+
+var _notice2 = _interopRequireDefault(_notice);
+
+var _chart = __webpack_require__(73);
+
+var _chart2 = _interopRequireDefault(_chart);
+
+var _code_sample = __webpack_require__(71);
+
+var _code_sample2 = _interopRequireDefault(_code_sample);
+
+var _AppDispatcher = __webpack_require__(7);
+
+var _AppDispatcher2 = _interopRequireDefault(_AppDispatcher);
+
+var _ExplorerConstants = __webpack_require__(19);
+
+var _ExplorerConstants2 = _interopRequireDefault(_ExplorerConstants);
+
+var _ExplorerActions = __webpack_require__(4);
+
+var _ExplorerActions2 = _interopRequireDefault(_ExplorerActions);
+
+var _ExplorerStore = __webpack_require__(12);
+
+var _ExplorerStore2 = _interopRequireDefault(_ExplorerStore);
+
+var _NoticeActions = __webpack_require__(18);
+
+var _NoticeActions2 = _interopRequireDefault(_NoticeActions);
+
+var _ExplorerUtils = __webpack_require__(3);
+
+var _ExplorerUtils2 = _interopRequireDefault(_ExplorerUtils);
+
+var _ChartTypeUtils = __webpack_require__(26);
+
+var _ChartTypeUtils2 = _interopRequireDefault(_ChartTypeUtils);
+
+var _FormatUtils = __webpack_require__(2);
+
+var _FormatUtils2 = _interopRequireDefault(_FormatUtils);
+
+var _DataUtils = __webpack_require__(69);
+
+var _DataUtils2 = _interopRequireDefault(_DataUtils);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var _ = __webpack_require__(0);
-var React = __webpack_require__(1);
-var classNames = __webpack_require__(6);
-
-var Select = __webpack_require__(15);
-var Notice = __webpack_require__(27);
-var Chart = __webpack_require__(73);
-var CodeSample = __webpack_require__(71);
-var AppDispatcher = __webpack_require__(7);
-var ExplorerConstants = __webpack_require__(19);
-var ExplorerActions = __webpack_require__(4);
-var ExplorerStore = __webpack_require__(12);
-var NoticeActions = __webpack_require__(18);
-var ExplorerUtils = __webpack_require__(3);
-var ChartTypeUtils = __webpack_require__(26);
-var FormatUtils = __webpack_require__(2);
-var DataUtils = __webpack_require__(69);
-
-var Visualization = React.createClass({
+var Visualization = _react2.default.createClass({
   displayName: 'Visualization',
 
 
@@ -11260,11 +12130,11 @@ var Visualization = React.createClass({
   },
 
   noticeClosed: function noticeClosed() {
-    NoticeActions.clearAll();
+    _NoticeActions2.default.clearAll();
   },
 
   changeChartType: function changeChartType(event) {
-    var chartType = _.find(this.formatChartTypes(), function (type) {
+    var chartType = _lodash2.default.find(this.formatChartTypes(), function (type) {
       return type.value === event.target.value;
     });
     var updates = {
@@ -11272,13 +12142,13 @@ var Visualization = React.createClass({
         visualization: { chart_type: chartType.value }
       }
     };
-    ExplorerActions.update(this.props.model.id, updates);
+    _ExplorerActions2.default.update(this.props.model.id, updates);
   },
 
   formatChartTypes: function formatChartTypes() {
-    return _.map(ChartTypeUtils.getChartTypeOptions(this.props.model.query), function (type) {
+    return _lodash2.default.map(_ChartTypeUtils2.default.getChartTypeOptions(this.props.model.query), function (type) {
       return {
-        name: type !== 'JSON' ? FormatUtils.toTitleCase(type).replace('chart', '') : type,
+        name: type !== 'JSON' ? _FormatUtils2.default.toTitleCase(type).replace('chart', '') : type,
         value: type
       };
     });
@@ -11288,7 +12158,7 @@ var Visualization = React.createClass({
     if (this.props.model.metadata.visualization && this.props.model.metadata.visualization.chart_type) {
       return this.props.model.metadata.visualization.chart_type;
     } else {
-      return _.first(ChartTypeUtils.getChartTypeOptions(this.props.model.query));
+      return _lodash2.default.first(_ChartTypeUtils2.default.getChartTypeOptions(this.props.model.query));
     }
   },
 
@@ -11297,33 +12167,33 @@ var Visualization = React.createClass({
   },
 
   componentWillUnmount: function componentWillUnmount() {
-    AppDispatcher.unregister(this.dispatcherToken);
+    _AppDispatcher2.default.unregister(this.dispatcherToken);
   },
 
   exportToCsv: function exportToCsv() {
     var data = this.dataviz.dataset.matrix;
     var filename = this.props.model.query_name || 'untitled-query';
-    DataUtils.exportToCsv(data, filename);
+    _DataUtils2.default.exportToCsv(data, filename);
   },
 
   render: function render() {
     var chartTitle, codeSample;
 
-    var chartDetailBarClasses = classNames({
+    var chartDetailBarClasses = (0, _classnames2.default)({
       'chart-detail-bar': true,
       'chart-detail-bar-focus': (this.state.focusDisplayName || this.state.focusQueryName) && this.props.model.response !== null && !this.props.model.loading,
       'chart-detail-active': this.props.model.response !== null && !this.props.model.loading
     });
 
     if (this.props.model.isValid) {
-      codeSample = ExplorerUtils.getSdkExample(this.props.model, this.props.client);
+      codeSample = _ExplorerUtils2.default.getSdkExample(this.props.model, this.props.client);
     }
 
     if (this.props.persistence) {
-      chartTitle = React.createElement(
+      chartTitle = _react2.default.createElement(
         'div',
         { className: 'chart-title-component' },
-        React.createElement('input', { className: 'chart-display-name',
+        _react2.default.createElement('input', { className: 'chart-display-name',
           type: 'text',
           onChange: this.props.onDisplayNameChange,
           onBlur: this.handleDisplayNameBlur,
@@ -11331,20 +12201,20 @@ var Visualization = React.createClass({
           spellCheck: 'false',
           value: this.props.model.metadata.display_name,
           placeholder: 'Give your query a name...' }),
-        React.createElement(
+        _react2.default.createElement(
           'div',
           { className: 'chart-query-name' },
-          React.createElement(
+          _react2.default.createElement(
             'label',
             null,
             'Saved Query Resource Name \xA0',
-            React.createElement(
+            _react2.default.createElement(
               'a',
               { href: 'https://keen.io/docs/api/#saved-queries', target: '_blank' },
-              React.createElement('i', { className: 'icon glyphicon glyphicon-question-sign' })
+              _react2.default.createElement('i', { className: 'icon glyphicon glyphicon-question-sign' })
             )
           ),
-          React.createElement('input', { className: 'chart-query-name',
+          _react2.default.createElement('input', { className: 'chart-query-name',
             type: 'text',
             onChange: this.props.onQueryNameChange,
             onBlur: this.handleQueryNameBlur,
@@ -11355,21 +12225,21 @@ var Visualization = React.createClass({
       );
     }
 
-    return React.createElement(
+    return _react2.default.createElement(
       'div',
       { className: 'visualization' },
-      React.createElement(Notice, { notice: this.props.notice, closeCallback: this.noticeClosed }),
-      React.createElement(
+      _react2.default.createElement(_notice2.default, { notice: this.props.notice, closeCallback: this.noticeClosed }),
+      _react2.default.createElement(
         'div',
         { className: 'visualization-wrapper' },
-        React.createElement(
+        _react2.default.createElement(
           'div',
           { className: chartDetailBarClasses },
           chartTitle,
-          React.createElement(
+          _react2.default.createElement(
             'div',
             { className: 'chart-type-component' },
-            React.createElement(Select, { label: false,
+            _react2.default.createElement(_select2.default, { label: false,
               ref: 'chart-type',
               name: 'chart_type',
               classes: 'chart-type',
@@ -11380,14 +12250,14 @@ var Visualization = React.createClass({
               disabled: this.props.model.loading })
           )
         ),
-        React.createElement(
+        _react2.default.createElement(
           'div',
           { className: 'chart-component' },
-          React.createElement(Chart, { model: this.props.model,
+          _react2.default.createElement(_chart2.default, { model: this.props.model,
             dataviz: this.dataviz,
             exportToCsv: this.exportToCsv })
         ),
-        React.createElement(CodeSample, { ref: 'codesample',
+        _react2.default.createElement(_code_sample2.default, { ref: 'codesample',
           codeSample: codeSample,
           hidden: this.props.appState.codeSampleHidden,
           onCloseClick: this.props.toggleCodeSample,
@@ -11406,16 +12276,41 @@ module.exports = Visualization;
 "use strict";
 
 
-var React = __webpack_require__(1);
-var _ = __webpack_require__(0);
-var classNames = __webpack_require__(6);
-var Loader = __webpack_require__(29);
-var FormatUtils = __webpack_require__(2);
-var ProjectUtils = __webpack_require__(5);
-var ProjectActions = __webpack_require__(28);
-var Modal = __webpack_require__(40);
+var _react = __webpack_require__(1);
 
-var EventBrowser = React.createClass({
+var _react2 = _interopRequireDefault(_react);
+
+var _lodash = __webpack_require__(0);
+
+var _lodash2 = _interopRequireDefault(_lodash);
+
+var _classnames = __webpack_require__(6);
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
+var _loader = __webpack_require__(29);
+
+var _loader2 = _interopRequireDefault(_loader);
+
+var _FormatUtils = __webpack_require__(2);
+
+var _FormatUtils2 = _interopRequireDefault(_FormatUtils);
+
+var _ProjectUtils = __webpack_require__(5);
+
+var _ProjectUtils2 = _interopRequireDefault(_ProjectUtils);
+
+var _ProjectActions = __webpack_require__(28);
+
+var _ProjectActions2 = _interopRequireDefault(_ProjectActions);
+
+var _modal = __webpack_require__(40);
+
+var _modal2 = _interopRequireDefault(_modal);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var EventBrowser = _react2.default.createClass({
   displayName: 'EventBrowser',
 
 
@@ -11426,7 +12321,7 @@ var EventBrowser = React.createClass({
 
   shouldFetchCollectionSchema: function shouldFetchCollectionSchema(collection) {
     if (!this.props.project.schema[collection]) return false;
-    return _.keys(this.props.project.schema[collection].properties).length < 1;
+    return _lodash2.default.keys(this.props.project.schema[collection].properties).length < 1;
   },
 
   selectEventCollectionClick: function selectEventCollectionClick(event) {
@@ -11444,7 +12339,7 @@ var EventBrowser = React.createClass({
     if (this.state.activeView === 'recentEvents') {
       this.fetchRecentEvents(collection);
     } else if (this.shouldFetchCollectionSchema(collection)) {
-      ProjectActions.fetchCollectionSchema(this.props.client, collection);
+      _ProjectActions2.default.fetchCollectionSchema(this.props.client, collection);
     }
   },
 
@@ -11452,15 +12347,15 @@ var EventBrowser = React.createClass({
     if (this.state.activeView === 'recentEvents') {
       this.fetchRecentEvents();
     } else if (this.shouldFetchCollectionSchema(this.state.activeEventCollection)) {
-      ProjectActions.fetchCollectionSchema(this.props.client, this.state.activeEventCollection);
+      _ProjectActions2.default.fetchCollectionSchema(this.props.client, this.state.activeEventCollection);
     }
   },
 
   fetchRecentEvents: function fetchRecentEvents(collectionToUse) {
     var collection = collectionToUse ? collectionToUse : this.state.activeEventCollection;
     var schema = this.props.project.schema;
-    if (!_.isEmpty(schema) && schema[collection] && !schema[collection].recentEvents && !schema[collection].loading) {
-      ProjectActions.fetchRecentEventsForCollection(this.props.client, collection);
+    if (!_lodash2.default.isEmpty(schema) && schema[collection] && !schema[collection].recentEvents && !schema[collection].loading) {
+      _ProjectActions2.default.fetchRecentEventsForCollection(this.props.client, collection);
     }
   },
 
@@ -11471,16 +12366,16 @@ var EventBrowser = React.createClass({
   // Builders
 
   buildEventCollectionNodes: function buildEventCollectionNodes() {
-    return _.map(this.props.project.eventCollections, _.bind(function (eventCollection) {
+    return _lodash2.default.map(this.props.project.eventCollections, _lodash2.default.bind(function (eventCollection) {
       var re = new RegExp(this.state.searchtext, 'i');
-      var classes = classNames({
+      var classes = (0, _classnames2.default)({
         'active': this.state.activeEventCollection === eventCollection,
         'hide': re.test(eventCollection) ? false : true
       });
-      return React.createElement(
+      return _react2.default.createElement(
         'li',
         { className: classes, key: eventCollection },
-        React.createElement(
+        _react2.default.createElement(
           'a',
           { href: '#', onClick: this.setActiveEventCollectionClick },
           eventCollection
@@ -11505,7 +12400,7 @@ var EventBrowser = React.createClass({
   getRecentEvents: function getRecentEvents() {
     if (!this.props.project.schema[this.state.activeEventCollection]) return "";
     var recentEvents = this.props.project.schema[this.state.activeEventCollection].recentEvents;
-    return recentEvents ? FormatUtils.prettyPrintJSON(recentEvents) : "";
+    return recentEvents ? _FormatUtils2.default.prettyPrintJSON(recentEvents) : "";
   },
 
   getSchema: function getSchema() {
@@ -11514,11 +12409,11 @@ var EventBrowser = React.createClass({
     var properties = schema[collection] ? schema[collection].properties : {};
     var ordered = {};
     if (properties) {
-      _.each(Object.keys(properties).sort(), function (key, i) {
+      _lodash2.default.each(Object.keys(properties).sort(), function (key, i) {
         ordered[key] = properties[key];
       });
     }
-    return FormatUtils.prettyPrintJSON(ordered) || '';
+    return _FormatUtils2.default.prettyPrintJSON(ordered) || '';
   },
 
   changeActiveView: function changeActiveView(event) {
@@ -11539,13 +12434,13 @@ var EventBrowser = React.createClass({
   },
 
   componentDidMount: function componentDidMount() {
-    if (!this.state.activeEventCollection && !_.isEmpty(this.props.project.schema)) {
+    if (!this.state.activeEventCollection && !_lodash2.default.isEmpty(this.props.project.schema)) {
       this.setActiveEventCollection(this.props.currentEventCollection || this.props.project.eventCollections[0]);
     }
   },
 
   componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
-    if (!_.isEmpty(nextProps.project.schema) && !this.state.activeEventCollection) {
+    if (!_lodash2.default.isEmpty(nextProps.project.schema) && !this.state.activeEventCollection) {
       this.setState({ activeEventCollection: nextProps.project.eventCollections[0] });
     }
     if (nextProps.currentEventCollection && nextProps.currentEventCollection != this.props.currentEventCollection) {
@@ -11561,59 +12456,59 @@ var EventBrowser = React.createClass({
       previewData = this.getSchema();
     }
 
-    var browseContent = React.createElement(
+    var browseContent = _react2.default.createElement(
       'div',
       { className: 'event-browser', onKeyUp: this.handleKeyUp },
-      React.createElement(
+      _react2.default.createElement(
         'div',
         { className: 'event-names' },
-        React.createElement(
+        _react2.default.createElement(
           'div',
           { className: 'search-box' },
-          React.createElement('input', { type: 'text', name: 'search', ref: 'search-box', placeholder: 'Search...', onChange: this.setSearchText, autoComplete: 'off' }),
-          React.createElement('span', { className: 'glyphicon glyphicon-search icon' })
+          _react2.default.createElement('input', { type: 'text', name: 'search', ref: 'search-box', placeholder: 'Search...', onChange: this.setSearchText, autoComplete: 'off' }),
+          _react2.default.createElement('span', { className: 'glyphicon glyphicon-search icon' })
         ),
-        React.createElement(
+        _react2.default.createElement(
           'ul',
           { className: 'nav nav-pills nav-stacked event-names-list', ref: 'event-names-list' },
           this.buildEventCollectionNodes()
         )
       ),
-      React.createElement(
+      _react2.default.createElement(
         'div',
         { className: 'event-browser-content' },
-        React.createElement(
+        _react2.default.createElement(
           'ul',
           { className: 'nav nav-tabs view-options' },
-          React.createElement(
+          _react2.default.createElement(
             'li',
             { className: this.getNavClasses('schema') },
-            React.createElement(
+            _react2.default.createElement(
               'a',
               { href: '#', name: 'schema', onClick: this.changeActiveView },
               'Schema'
             )
           ),
-          React.createElement(
+          _react2.default.createElement(
             'li',
             { className: this.getNavClasses('recentEvents') },
-            React.createElement(
+            _react2.default.createElement(
               'a',
               { href: '#', name: 'recentEvents', onClick: this.changeActiveView },
               'Recent Events'
             )
           )
         ),
-        React.createElement(
+        _react2.default.createElement(
           'div',
           { ref: 'event-data-wrapper', className: 'event-data-wrapper' },
-          React.createElement(Loader, { ref: 'loader', visible: this.shouldShowLoader() }),
-          React.createElement('textarea', { className: 'json-view', value: previewData, readOnly: true })
+          _react2.default.createElement(_loader2.default, { ref: 'loader', visible: this.shouldShowLoader() }),
+          _react2.default.createElement('textarea', { className: 'json-view', value: previewData, readOnly: true })
         )
       )
     );
 
-    var alertContent = React.createElement(
+    var alertContent = _react2.default.createElement(
       'div',
       { className: 'alert alert-info no-margin no-collections-alert' },
       'There is no data to preview. This project does not have any event collections.'
@@ -11632,8 +12527,8 @@ var EventBrowser = React.createClass({
       });
     }
 
-    return React.createElement(
-      Modal,
+    return _react2.default.createElement(
+      _modal2.default,
       { ref: 'modal',
         title: 'Project Event Collections',
         size: 'large',
@@ -11656,49 +12551,112 @@ module.exports = EventBrowser;
 
 var _React$createClass;
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+var _react = __webpack_require__(1);
 
-var React = __webpack_require__(1);
-var _ = __webpack_require__(0);
-var EventBrowser = __webpack_require__(76);
-var Visualization = __webpack_require__(75);
-var QueryPaneTabs = __webpack_require__(68);
-var QueryBuilder = __webpack_require__(67);
-var BrowseQueries = __webpack_require__(49);
-var CacheToggle = __webpack_require__(48);
-var QueryActions = __webpack_require__(47);
-var Notice = __webpack_require__(27);
-var FilterManager = __webpack_require__(32);
-var ExplorerStore = __webpack_require__(12);
-var ExplorerActions = __webpack_require__(4);
-var NoticeActions = __webpack_require__(18);
-var AppStateActions = __webpack_require__(24);
-var NoticeStore = __webpack_require__(46);
-var AppStateStore = __webpack_require__(42);
-var ExplorerUtils = __webpack_require__(3);
-var FilterUtils = __webpack_require__(8);
-var ProjectUtils = __webpack_require__(5);
-var ExplorerActions = __webpack_require__(4);
-var QueryStringUtils = __webpack_require__(31);
+var _react2 = _interopRequireDefault(_react);
+
+var _lodash = __webpack_require__(0);
+
+var _lodash2 = _interopRequireDefault(_lodash);
+
+var _event_browser = __webpack_require__(76);
+
+var _event_browser2 = _interopRequireDefault(_event_browser);
+
+var _index = __webpack_require__(75);
+
+var _index2 = _interopRequireDefault(_index);
+
+var _query_pane_tabs = __webpack_require__(68);
+
+var _query_pane_tabs2 = _interopRequireDefault(_query_pane_tabs);
+
+var _index3 = __webpack_require__(67);
+
+var _index4 = _interopRequireDefault(_index3);
+
+var _browse_queries = __webpack_require__(49);
+
+var _browse_queries2 = _interopRequireDefault(_browse_queries);
+
+var _cache_toggle = __webpack_require__(48);
+
+var _cache_toggle2 = _interopRequireDefault(_cache_toggle);
+
+var _query_actions = __webpack_require__(47);
+
+var _query_actions2 = _interopRequireDefault(_query_actions);
+
+var _notice = __webpack_require__(27);
+
+var _notice2 = _interopRequireDefault(_notice);
+
+var _filter_manager = __webpack_require__(32);
+
+var _filter_manager2 = _interopRequireDefault(_filter_manager);
+
+var _ExplorerStore = __webpack_require__(12);
+
+var _ExplorerStore2 = _interopRequireDefault(_ExplorerStore);
+
+var _ExplorerActions = __webpack_require__(4);
+
+var _ExplorerActions2 = _interopRequireDefault(_ExplorerActions);
+
+var _NoticeActions = __webpack_require__(18);
+
+var _NoticeActions2 = _interopRequireDefault(_NoticeActions);
+
+var _AppStateActions = __webpack_require__(24);
+
+var _AppStateActions2 = _interopRequireDefault(_AppStateActions);
+
+var _NoticeStore = __webpack_require__(46);
+
+var _NoticeStore2 = _interopRequireDefault(_NoticeStore);
+
+var _AppStateStore = __webpack_require__(42);
+
+var _AppStateStore2 = _interopRequireDefault(_AppStateStore);
+
+var _ExplorerUtils = __webpack_require__(3);
+
+var _ExplorerUtils2 = _interopRequireDefault(_ExplorerUtils);
+
+var _FilterUtils = __webpack_require__(8);
+
+var _FilterUtils2 = _interopRequireDefault(_FilterUtils);
+
+var _ProjectUtils = __webpack_require__(5);
+
+var _ProjectUtils2 = _interopRequireDefault(_ProjectUtils);
+
+var _QueryStringUtils = __webpack_require__(31);
+
+var _QueryStringUtils2 = _interopRequireDefault(_QueryStringUtils);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function getStoresState() {
   return {
-    allPersistedExplorers: ExplorerStore.getAllPersisted(),
-    activeExplorer: ExplorerStore.getActive(),
-    notice: NoticeStore.getGlobalNotice(),
-    stepNotices: NoticeStore.getStepNotices(),
-    appState: AppStateStore.getState()
+    allPersistedExplorers: _ExplorerStore2.default.getAllPersisted(),
+    activeExplorer: _ExplorerStore2.default.getActive(),
+    notice: _NoticeStore2.default.getGlobalNotice(),
+    stepNotices: _NoticeStore2.default.getStepNotices(),
+    appState: _AppStateStore2.default.getState()
   };
 }
 
-var Explorer = React.createClass((_React$createClass = {
+var Explorer = _react2.default.createClass((_React$createClass = {
   displayName: 'Explorer',
 
 
   toggleFields: function toggleFields() {
-    _.each(this.getFieldsToggleComponents(), function (toggleObj) {
+    _lodash2.default.each(this.getFieldsToggleComponents(), function (toggleObj) {
       if (toggleObj.component) {
-        var hasValue = !_.isUndefined(toggleObj.value) && !_.isNull(toggleObj.value) ? true : false;
+        var hasValue = !_lodash2.default.isUndefined(toggleObj.value) && !_lodash2.default.isNull(toggleObj.value) ? true : false;
         toggleObj.component.setState({ open: hasValue });
       }
     });
@@ -11714,50 +12672,50 @@ var Explorer = React.createClass((_React$createClass = {
         event_collection: collectionName
       }
     };
-    ExplorerActions.update(this.state.activeExplorer.id, updates);
+    _ExplorerActions2.default.update(this.state.activeExplorer.id, updates);
     this.refs['event-browser'].refs.modal.close();
   },
 
   savedQueryClicked: function savedQueryClicked(event) {
     event.preventDefault();
     if (this.state.activeExplorer.loading) {
-      NoticeActions.create({
+      _NoticeActions2.default.create({
         icon: 'info-sign',
         type: 'warning',
         text: "There is already a query in progress. Wait for it to finish loading before selecting a query."
       });
     } else {
-      ExplorerActions.revertActiveChanges();
+      _ExplorerActions2.default.revertActiveChanges();
       var modelId = event.currentTarget.dataset.id;
-      ExplorerActions.setActive(modelId);
-      ExplorerActions.exec(this.props.client, modelId);
+      _ExplorerActions2.default.setActive(modelId);
+      _ExplorerActions2.default.exec(this.props.client, modelId);
     }
   },
 
   removeSavedQueryClicked: function removeSavedQueryClicked() {
     if (confirm('Are you sure you want to delete this saved query?')) {
-      ExplorerActions.destroy(this.props.persistence, this.state.activeExplorer.id);
+      _ExplorerActions2.default.destroy(this.props.persistence, this.state.activeExplorer.id);
     }
   },
 
   saveQueryClick: function saveQueryClick(event) {
     event.preventDefault();
-    ExplorerActions.save(this.props.persistence, this.state.activeExplorer.id);
+    _ExplorerActions2.default.save(this.props.persistence, this.state.activeExplorer.id);
   },
 
   cloneQueryClick: function cloneQueryClick(event) {
     event.preventDefault();
-    ExplorerActions.clone(this.state.activeExplorer.id);
-    var newExplorer = ExplorerStore.getLast();
-    ExplorerActions.setActive(newExplorer.id);
+    _ExplorerActions2.default.clone(this.state.activeExplorer.id);
+    var newExplorer = _ExplorerStore2.default.getLast();
+    _ExplorerActions2.default.setActive(newExplorer.id);
     this.setState({ activeQueryPane: 'build' });
   },
 
   createNewQuery: function createNewQuery(event) {
     event.preventDefault();
-    ExplorerActions.create();
-    var newExplorer = ExplorerStore.getLast();
-    ExplorerActions.setActive(newExplorer.id);
+    _ExplorerActions2.default.create();
+    var newExplorer = _ExplorerStore2.default.getLast();
+    _ExplorerActions2.default.setActive(newExplorer.id);
     this.setState({ activeQueryPane: 'build' });
   },
 
@@ -11772,30 +12730,30 @@ var Explorer = React.createClass((_React$createClass = {
 
   onDisplayNameChange: function onDisplayNameChange(event) {
     var updates = {
-      query_name: ExplorerUtils.slugify(event.target.value),
+      query_name: _ExplorerUtils2.default.slugify(event.target.value),
       metadata: {
         display_name: event.target.value
       }
     };
-    ExplorerActions.update(this.state.activeExplorer.id, updates);
+    _ExplorerActions2.default.update(this.state.activeExplorer.id, updates);
   },
 
   onQueryNameChange: function onQueryNameChange(event) {
     var name = event.target.value.replace(/[^\w-]/g, '');
-    ExplorerActions.update(this.state.activeExplorer.id, { query_name: name });
+    _ExplorerActions2.default.update(this.state.activeExplorer.id, { query_name: name });
   },
 
   handleRevertChanges: function handleRevertChanges(event) {
     event.preventDefault();
-    ExplorerActions.revertActiveChanges();
+    _ExplorerActions2.default.revertActiveChanges();
   },
 
   handleQuerySubmit: function handleQuerySubmit(event) {
     event.preventDefault();
-    if (ExplorerUtils.isEmailExtraction(this.state.activeExplorer)) {
-      ExplorerActions.runEmailExtraction(this.props.client, this.state.activeExplorer.id);
+    if (_ExplorerUtils2.default.isEmailExtraction(this.state.activeExplorer)) {
+      _ExplorerActions2.default.runEmailExtraction(this.props.client, this.state.activeExplorer.id);
     } else {
-      ExplorerActions.exec(this.props.client, this.state.activeExplorer.id);
+      _ExplorerActions2.default.exec(this.props.client, this.state.activeExplorer.id);
     }
   },
 
@@ -11805,7 +12763,7 @@ var Explorer = React.createClass((_React$createClass = {
         email: event.target.value === 'email' ? "" : null
       }
     };
-    ExplorerActions.update(this.state.activeExplorer.id, updates);
+    _ExplorerActions2.default.update(this.state.activeExplorer.id, updates);
   },
 
   handleClearQuery: function handleClearQuery() {
@@ -11814,20 +12772,20 @@ var Explorer = React.createClass((_React$createClass = {
     // model.
     var self = this;
     setTimeout(function () {
-      ExplorerActions.clear(self.state.activeExplorer.id);
+      _ExplorerActions2.default.clear(self.state.activeExplorer.id);
     }, 0);
   },
 
   handleAddFilter: function handleAddFilter() {
-    ExplorerActions.addFilter(this.state.activeExplorer.id);
+    _ExplorerActions2.default.addFilter(this.state.activeExplorer.id);
   },
 
   handleRemoveFilter: function handleRemoveFilter(index) {
-    ExplorerActions.removeFilter(this.state.activeExplorer.id, index);
+    _ExplorerActions2.default.removeFilter(this.state.activeExplorer.id, index);
   },
 
   handleFilterChange: function handleFilterChange(index, updates) {
-    ExplorerActions.updateFilter(this.state.activeExplorer.id, index, updates);
+    _ExplorerActions2.default.updateFilter(this.state.activeExplorer.id, index, updates);
   },
 
   // ********************************
@@ -11839,10 +12797,10 @@ var Explorer = React.createClass((_React$createClass = {
   },
 
   getSelectedIndex: function getSelectedIndex() {
-    if (!this.state.activeExplorer || !ExplorerUtils.isPersisted(this.state.activeExplorer)) {
+    if (!this.state.activeExplorer || !_ExplorerUtils2.default.isPersisted(this.state.activeExplorer)) {
       return null;
     }
-    return _.findIndex(this.state.allPersistedExplorers, { id: this.state.activeExplorer.id });
+    return _lodash2.default.findIndex(this.state.allPersistedExplorers, { id: this.state.activeExplorer.id });
   },
 
   toggleQueryPane: function toggleQueryPane(pane) {
@@ -11860,45 +12818,45 @@ var Explorer = React.createClass((_React$createClass = {
   return index;
 }), _defineProperty(_React$createClass, 'toggleCodeSample', function toggleCodeSample(event) {
   event.preventDefault();
-  AppStateActions.update({
+  _AppStateActions2.default.update({
     codeSampleHidden: !this.state.appState.codeSampleHidden
   });
 }), _defineProperty(_React$createClass, 'getEventPropertyNames', function getEventPropertyNames(collection) {
-  return ProjectUtils.getEventCollectionPropertyNames(this.props.project, collection);
+  return _ProjectUtils2.default.getEventCollectionPropertyNames(this.props.project, collection);
 }), _defineProperty(_React$createClass, 'getPropertyType', function getPropertyType(eventCollection, property_name) {
-  return ProjectUtils.getPropertyType(this.props.project, eventCollection, property_name);
+  return _ProjectUtils2.default.getPropertyType(this.props.project, eventCollection, property_name);
 }), _defineProperty(_React$createClass, 'componentDidMount', function componentDidMount() {
-  ExplorerStore.addChangeListener(this._onChange);
-  NoticeStore.addChangeListener(this._onChange);
-  AppStateStore.addChangeListener(this._onChange);
+  _ExplorerStore2.default.addChangeListener(this._onChange);
+  _NoticeStore2.default.addChangeListener(this._onChange);
+  _AppStateStore2.default.addChangeListener(this._onChange);
 }), _defineProperty(_React$createClass, 'componentWillUnmount', function componentWillUnmount() {
-  ExplorerStore.removeChangeListener(this._onChange);
-  NoticeStore.removeChangeListener(this._onChange);
-  AppStateStore.removeChangeListener(this._onChange);
+  _ExplorerStore2.default.removeChangeListener(this._onChange);
+  _NoticeStore2.default.removeChangeListener(this._onChange);
+  _AppStateStore2.default.removeChangeListener(this._onChange);
   // Create a default filter if there are no filters already on this model
   if (!this.state.activeExplorer.query.filters.length) {
-    ExplorerActions.addFilter(this.state.activeExplorer.id);
+    _ExplorerActions2.default.addFilter(this.state.activeExplorer.id);
   }
 }), _defineProperty(_React$createClass, 'getInitialState', function getInitialState() {
-  return _.assign(getStoresState(), {
+  return _lodash2.default.assign(getStoresState(), {
     activeQueryPane: 'build'
   });
 }), _defineProperty(_React$createClass, 'render', function render() {
   var cacheToggle, queryPane, queryPaneTabs, browseListNotice, browseEmptyContent;
 
   if (this.props.persistence) {
-    queryPaneTabs = React.createElement(QueryPaneTabs, { ref: 'query-pane-tabs',
+    queryPaneTabs = _react2.default.createElement(_query_pane_tabs2.default, { ref: 'query-pane-tabs',
       activePane: this.state.activeQueryPane,
       toggleCallback: this.toggleQueryPane,
       createNewQuery: this.createNewQuery,
-      persisted: ExplorerUtils.isPersisted(this.state.activeExplorer) });
+      persisted: _ExplorerUtils2.default.isPersisted(this.state.activeExplorer) });
     if (['extraction'].indexOf(this.state.activeExplorer.query.analysis_type) === -1) {
-      cacheToggle = React.createElement(CacheToggle, { model: this.state.activeExplorer });
+      cacheToggle = _react2.default.createElement(_cache_toggle2.default, { model: this.state.activeExplorer });
     }
     if (this.state.appState.fetchingPersistedExplorers) {
-      browseListNotice = React.createElement(Notice, { notice: { icon: 'info-sign', text: 'Loading saved queries...', type: 'info' }, closable: false });
+      browseListNotice = _react2.default.createElement(_notice2.default, { notice: { icon: 'info-sign', text: 'Loading saved queries...', type: 'info' }, closable: false });
     } else {
-      browseEmptyContent = React.createElement(
+      browseEmptyContent = _react2.default.createElement(
         'h4',
         { className: 'text-center' },
         'You don\'t have any saved queries yet.'
@@ -11907,7 +12865,7 @@ var Explorer = React.createClass((_React$createClass = {
   }
 
   if (!this.props.persistence || this.state.activeQueryPane === 'build') {
-    queryPane = React.createElement(QueryBuilder, { ref: 'query-builder',
+    queryPane = _react2.default.createElement(_index4.default, { ref: 'query-builder',
       model: this.state.activeExplorer,
       originalModel: this.state.activeExplorerOriginal,
       client: this.props.client,
@@ -11920,10 +12878,10 @@ var Explorer = React.createClass((_React$createClass = {
       handleClearQuery: this.handleClearQuery,
       getEventPropertyNames: this.getEventPropertyNames,
       getPropertyType: this.getPropertyType,
-      analysisTypes: ProjectUtils.getConstant('ANALYSIS_TYPES'),
+      analysisTypes: _ProjectUtils2.default.getConstant('ANALYSIS_TYPES'),
       stepNotices: this.state.stepNotices });
   } else {
-    queryPane = React.createElement(BrowseQueries, { ref: 'query-browser',
+    queryPane = _react2.default.createElement(_browse_queries2.default, { ref: 'query-browser',
       listItems: this.state.allPersistedExplorers,
       emptyContent: browseEmptyContent,
       notice: browseListNotice,
@@ -11931,22 +12889,22 @@ var Explorer = React.createClass((_React$createClass = {
       selectedIndex: this.getSelectedIndex() });
   }
 
-  return React.createElement(
+  return _react2.default.createElement(
     'div',
     { ref: 'root' },
-    React.createElement(
+    _react2.default.createElement(
       'div',
       { className: 'row' },
-      React.createElement(
+      _react2.default.createElement(
         'div',
         { className: 'col-sm-5 col-md-4 explorer-query-builder' },
         queryPaneTabs,
         queryPane
       ),
-      React.createElement(
+      _react2.default.createElement(
         'div',
         { ref: 'viz-area', className: 'col-sm-7 col-md-8 explorer-visualization' },
-        React.createElement(Visualization, { notice: this.state.notice,
+        _react2.default.createElement(_index2.default, { notice: this.state.notice,
           model: this.state.activeExplorer,
           client: this.props.client,
           project: this.props.project,
@@ -11957,7 +12915,7 @@ var Explorer = React.createClass((_React$createClass = {
           onQueryNameChange: this.onQueryNameChange,
           onDisplayNameChange: this.onDisplayNameChange }),
         cacheToggle,
-        React.createElement(QueryActions, { model: this.state.activeExplorer,
+        _react2.default.createElement(_query_actions2.default, { model: this.state.activeExplorer,
           handleRevertChanges: this.handleRevertChanges,
           handleQuerySubmit: this.handleQuerySubmit,
           saveQueryClick: this.saveQueryClick,
@@ -11968,12 +12926,12 @@ var Explorer = React.createClass((_React$createClass = {
           toggleCodeSample: this.toggleCodeSample })
       )
     ),
-    React.createElement(EventBrowser, { ref: 'event-browser',
+    _react2.default.createElement(_event_browser2.default, { ref: 'event-browser',
       client: this.props.client,
       project: this.props.project,
       currentEventCollection: this.state.activeExplorer.query.event_collection,
       selectEventCollection: this.selectEventCollection }),
-    React.createElement(FilterManager, { ref: 'filter-manager',
+    _react2.default.createElement(_filter_manager2.default, { ref: 'filter-manager',
       eventCollection: this.state.activeExplorer.query.event_collection,
       filters: this.state.activeExplorer.query.filters,
       handleChange: this.handleFilterChange,
@@ -11985,10 +12943,10 @@ var Explorer = React.createClass((_React$createClass = {
 }), _defineProperty(_React$createClass, '_onChange', function _onChange() {
   var newState = getStoresState();
   this.setState(newState);
-  if (ExplorerUtils.isPersisted(newState.activeExplorer)) {
+  if (_ExplorerUtils2.default.isPersisted(newState.activeExplorer)) {
     window.history.pushState({ model: newState.activeExplorer }, "", '?saved_query=' + newState.activeExplorer.id);
   } else {
-    QueryStringUtils.updateSearchString(ExplorerUtils.paramsForURL(newState.activeExplorer));
+    _QueryStringUtils2.default.updateSearchString(_ExplorerUtils2.default.paramsForURL(newState.activeExplorer));
   }
 }), _React$createClass));
 
@@ -12001,31 +12959,47 @@ module.exports = Explorer;
 "use strict";
 
 
-var React = __webpack_require__(1);
-var Loader = __webpack_require__(29);
-var ProjectStore = __webpack_require__(16);
-var AppStateStore = __webpack_require__(42);
-var Explorer = __webpack_require__(77);
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _loader = __webpack_require__(29);
+
+var _loader2 = _interopRequireDefault(_loader);
+
+var _ProjectStore = __webpack_require__(16);
+
+var _ProjectStore2 = _interopRequireDefault(_ProjectStore);
+
+var _AppStateStore = __webpack_require__(42);
+
+var _AppStateStore2 = _interopRequireDefault(_AppStateStore);
+
+var _index = __webpack_require__(77);
+
+var _index2 = _interopRequireDefault(_index);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function getProjectState() {
   return {
-    project: ProjectStore.getProject(),
-    app: AppStateStore.getState()
+    project: _ProjectStore2.default.getProject(),
+    app: _AppStateStore2.default.getState()
   };
 }
 
-var App = React.createClass({
+var App = _react2.default.createClass({
   displayName: 'App',
 
 
   componentDidMount: function componentDidMount() {
-    ProjectStore.addChangeListener(this._onChange);
-    AppStateStore.addChangeListener(this._onChange);
+    _ProjectStore2.default.addChangeListener(this._onChange);
+    _AppStateStore2.default.addChangeListener(this._onChange);
   },
 
   componentWillUnmount: function componentWillUnmount() {
-    ProjectStore.removeChangeListener(this._onChange);
-    AppStateStore.addChangeListener(this._onChange);
+    _ProjectStore2.default.removeChangeListener(this._onChange);
+    _AppStateStore2.default.addChangeListener(this._onChange);
   },
 
   getInitialState: function getInitialState() {
@@ -12033,11 +13007,11 @@ var App = React.createClass({
   },
 
   render: function render() {
-    return React.createElement(
+    return _react2.default.createElement(
       'div',
       { id: 'keen-explorer' },
-      React.createElement(Loader, { visible: this.state.project.loading || !this.state.app.ready, additionalClasses: 'app-loader' }),
-      React.createElement(Explorer, { project: this.state.project,
+      _react2.default.createElement(_loader2.default, { visible: this.state.project.loading || !this.state.app.ready, additionalClasses: 'app-loader' }),
+      _react2.default.createElement(_index2.default, { project: this.state.project,
         client: this.props.client,
         persistence: this.props.persistence })
     );
@@ -12081,30 +13055,43 @@ module.exports = {
 "use strict";
 
 
-var _ = __webpack_require__(0);
-var FormatUtils = __webpack_require__(2);
-var FilterUtils = __webpack_require__(8);
-var TimeframeUtils = __webpack_require__(17);
+var _lodash = __webpack_require__(0);
+
+var _lodash2 = _interopRequireDefault(_lodash);
+
+var _FormatUtils = __webpack_require__(2);
+
+var _FormatUtils2 = _interopRequireDefault(_FormatUtils);
+
+var _FilterUtils = __webpack_require__(8);
+
+var _FilterUtils2 = _interopRequireDefault(_FilterUtils);
+
+var _TimeframeUtils = __webpack_require__(17);
+
+var _TimeframeUtils2 = _interopRequireDefault(_TimeframeUtils);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var STEP_PARAMS = ['event_collection', 'actor_property', 'timeframe', 'interval', 'timezone', 'filters', 'optional', 'inverted', 'with_actors'];
 module.exports = {
 
   stepJSON: function stepJSON(step) {
-    var params = _.cloneDeep(step);
+    var params = _lodash2.default.cloneDeep(step);
 
-    _.assign(params, TimeframeUtils.getTimeParameters(step.time, step.timezone));
+    _lodash2.default.assign(params, _TimeframeUtils2.default.getTimeParameters(step.time, step.timezone));
 
     if (params.filters) {
-      params.filters = _.map(params.filters, function (filter) {
-        return FilterUtils.queryJSON(filter, TimeframeUtils.getTimezoneOffset(params.timezone));
+      params.filters = _lodash2.default.map(params.filters, function (filter) {
+        return _FilterUtils2.default.queryJSON(filter, _TimeframeUtils2.default.getTimezoneOffset(params.timezone));
       });
 
-      _.remove(params.filters, _.isEmpty);
+      _lodash2.default.remove(params.filters, _lodash2.default.isEmpty);
     }
 
     // Remove empty, null, or unnecessary properties
-    _.each(params, function (value, key) {
-      if (!FormatUtils.isValidQueryValue(value) || !_.includes(STEP_PARAMS, key)) {
+    _lodash2.default.each(params, function (value, key) {
+      if (!_FormatUtils2.default.isValidQueryValue(value) || !_lodash2.default.includes(STEP_PARAMS, key)) {
         delete params[key];
       }
     });
@@ -12114,13 +13101,13 @@ module.exports = {
 
   formatQueryParams: function formatQueryParams(step) {
     if (step.timeframe) {
-      var unpackedTime = TimeframeUtils.unpackTimeframeParam(step.timeframe, step.timezone);
+      var unpackedTime = _TimeframeUtils2.default.unpackTimeframeParam(step.timeframe, step.timezone);
       step.time = unpackedTime.time;
       step.timezone = unpackedTime.timezone;
     }
 
     if (step.filters) {
-      step.filters = _.compact(_.map(step.filters, FilterUtils.formatFilterParams));
+      step.filters = _lodash2.default.compact(_lodash2.default.map(step.filters, _FilterUtils2.default.formatFilterParams));
     }
 
     step.inverted = step.inverted === true || step.inverted === "true";
@@ -12145,22 +13132,29 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__82__;
 "use strict";
 
 
-var _ = __webpack_require__(0);
-var ExplorerUtils = __webpack_require__(3);
+var _lodash = __webpack_require__(0);
+
+var _lodash2 = _interopRequireDefault(_lodash);
+
+var _ExplorerUtils = __webpack_require__(3);
+
+var _ExplorerUtils2 = _interopRequireDefault(_ExplorerUtils);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function KeenSavedQueries(config) {
   this.config = config;
 }
 
 KeenSavedQueries.prototype.create = function (model, callback) {
-  var body = _.omit(model, ['id']);
+  var body = _lodash2.default.omit(model, ['id']);
   this.config.client.put(this.config.client.url('queries', 'saved', model.query_name)).auth(this.config.client.masterKey()).send(body).then(function (res) {
     callback(null, res);
   }).catch(callback);
 };
 
 KeenSavedQueries.prototype.update = function (model, callback) {
-  var body = _.omit(model, ['id']);
+  var body = _lodash2.default.omit(model, ['id']);
   this.config.client.put(this.config.client.url('queries', 'saved', model.id)).auth(this.config.client.masterKey()).send(body).then(function (res) {
     callback(null, res);
   }).catch(callback);
@@ -12199,10 +13193,14 @@ module.exports = KeenSavedQueries;
 "use strict";
 
 
+var _KeenSavedQueries = __webpack_require__(83);
+
+var _KeenSavedQueries2 = _interopRequireDefault(_KeenSavedQueries);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 module.exports = {
-
-  KeenSavedQueries: __webpack_require__(83)
-
+  KeenSavedQueries: _KeenSavedQueries2.default
 };
 
 /***/ }),
@@ -12229,43 +13227,89 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.KeenExplorer = undefined;
 
+var _lodash = __webpack_require__(0);
+
+var _lodash2 = _interopRequireDefault(_lodash);
+
 var _keenAnalysis = __webpack_require__(86);
 
 var _keenAnalysis2 = _interopRequireDefault(_keenAnalysis);
 
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = __webpack_require__(85);
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+var _persistence = __webpack_require__(84);
+
+var _persistence2 = _interopRequireDefault(_persistence);
+
+var _AppDispatcher = __webpack_require__(7);
+
+var _AppDispatcher2 = _interopRequireDefault(_AppDispatcher);
+
+var _app = __webpack_require__(78);
+
+var _app2 = _interopRequireDefault(_app);
+
+var _ProjectActions = __webpack_require__(28);
+
+var _ProjectActions2 = _interopRequireDefault(_ProjectActions);
+
+var _ExplorerActions = __webpack_require__(4);
+
+var _ExplorerActions2 = _interopRequireDefault(_ExplorerActions);
+
+var _AppStateActions = __webpack_require__(24);
+
+var _AppStateActions2 = _interopRequireDefault(_AppStateActions);
+
+var _NoticeActions = __webpack_require__(18);
+
+var _NoticeActions2 = _interopRequireDefault(_NoticeActions);
+
+var _ExplorerUtils = __webpack_require__(3);
+
+var _ExplorerUtils2 = _interopRequireDefault(_ExplorerUtils);
+
+var _FormatUtils = __webpack_require__(2);
+
+var _FormatUtils2 = _interopRequireDefault(_FormatUtils);
+
+var _RunValidations = __webpack_require__(10);
+
+var _ExplorerValidations = __webpack_require__(25);
+
+var _ExplorerValidations2 = _interopRequireDefault(_ExplorerValidations);
+
+var _ExplorerStore = __webpack_require__(12);
+
+var _ExplorerStore2 = _interopRequireDefault(_ExplorerStore);
+
+var _ProjectStore = __webpack_require__(16);
+
+var _ProjectStore2 = _interopRequireDefault(_ProjectStore);
+
+var _QueryStringUtils = __webpack_require__(31);
+
+var _QueryStringUtils2 = _interopRequireDefault(_QueryStringUtils);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var _ = __webpack_require__(0);
-
-var React = __webpack_require__(1);
-var ReactDOM = __webpack_require__(85);
-
-var Persistence = __webpack_require__(84);
-var AppDispatcher = __webpack_require__(7);
-var AppComponent = __webpack_require__(78);
-var ProjectActions = __webpack_require__(28);
-var ExplorerActions = __webpack_require__(4);
-var AppStateActions = __webpack_require__(24);
-var NoticeActions = __webpack_require__(18);
-var ExplorerUtils = __webpack_require__(3);
-var FormatUtils = __webpack_require__(2);
-var RunValidations = __webpack_require__(10).run;
-var ExplorerValidations = __webpack_require__(25);
-var ExplorerStore = __webpack_require__(12);
-var ProjectStore = __webpack_require__(16);
-var QueryStringUtils = __webpack_require__(31);
-
 var KeenExplorer = exports.KeenExplorer = function KeenExplorer(el) {
-  var tempId = FormatUtils.generateTempId();
-  this.appDispatcher = AppDispatcher;
+  var tempId = _FormatUtils2.default.generateTempId();
+  this.appDispatcher = _AppDispatcher2.default;
   this.config = {
-    params: QueryStringUtils.getQueryAttributes(),
+    params: _QueryStringUtils2.default.getQueryAttributes(),
     persistence: null
   };
   this.el(el);
-  ExplorerActions.create(_.assign(ExplorerUtils.formatQueryParams(this.config.params) || {}, { 'id': tempId }));
-  ExplorerActions.setActive(tempId);
-  ExplorerActions.validate(tempId);
+  _ExplorerActions2.default.create(_lodash2.default.assign(_ExplorerUtils2.default.formatQueryParams(this.config.params) || {}, { 'id': tempId }));
+  _ExplorerActions2.default.setActive(tempId);
+  _ExplorerActions2.default.validate(tempId);
 };
 
 KeenExplorer.prototype.client = function (obj) {
@@ -12274,8 +13318,8 @@ KeenExplorer.prototype.client = function (obj) {
   this.config.client.resources({
     'events': '{protocol}://{host}/3.0/projects/{projectId}/events'
   });
-  ProjectActions.create({ client: this.config.client });
-  ProjectActions.fetchProjectCollections(this.config.client);
+  _ProjectActions2.default.create({ client: this.config.client });
+  _ProjectActions2.default.fetchProjectCollections(this.config.client);
   return this;
 };
 
@@ -12293,20 +13337,20 @@ KeenExplorer.prototype.el = function (target) {
 
 KeenExplorer.prototype.fetch = function () {
   if (this.config.persistence) {
-    ExplorerActions.fetchAllPersisted(this.config.persistence, function (err) {
+    _ExplorerActions2.default.fetchAllPersisted(this.config.persistence, function (err) {
       if (err) console.error('There was an error fetching the persisted explorers: ', err.stack);
     });
     // Is this a saved query we want to load?
     if (this.config.params.saved_query) {
       // Once the models come back from the server, mark the right one as active.
-      ExplorerActions.fetchPersisted(this.config.persistence, { id: this.config.params.saved_query }, this.doneFetchingSavedQuery.bind(this, this.config.params.saved_query));
+      _ExplorerActions2.default.fetchPersisted(this.config.persistence, { id: this.config.params.saved_query }, this.doneFetchingSavedQuery.bind(this, this.config.params.saved_query));
     } else {
-      AppStateActions.update({ ready: true });
+      _AppStateActions2.default.update({ ready: true });
       // Run the query for this explorer if it's valid
-      var isEmailExtraction = ExplorerUtils.isEmailExtraction(ExplorerStore.getActive());
-      RunValidations(ExplorerValidations, ExplorerStore.getActive());
-      if (!isEmailExtraction && ExplorerStore.getActive().isValid) {
-        ExplorerActions.exec(this.config.client, ExplorerStore.getActive().id);
+      var isEmailExtraction = _ExplorerUtils2.default.isEmailExtraction(_ExplorerStore2.default.getActive());
+      (0, _RunValidations.run)(_ExplorerValidations2.default, _ExplorerStore2.default.getActive());
+      if (!isEmailExtraction && _ExplorerStore2.default.getActive().isValid) {
+        _ExplorerActions2.default.exec(this.config.client, _ExplorerStore2.default.getActive().id);
       }
     }
   }
@@ -12320,7 +13364,7 @@ KeenExplorer.prototype.persistence = function (bool) {
     if (!this.config.client || !this.config.client.masterKey()) {
       console.error('This feature requires a client instance with a masterKey value');
     }
-    this.config.persistence = new Persistence.KeenSavedQueries({
+    this.config.persistence = new _persistence2.default.KeenSavedQueries({
       baseUrl: this.config.client.url('queries', 'saved'),
       client: this.config.client
     });
@@ -12331,21 +13375,21 @@ KeenExplorer.prototype.persistence = function (bool) {
 
 KeenExplorer.prototype.doneFetchingSavedQuery = function (savedQueryName, err) {
   if (!err) {
-    ExplorerActions.setActive(savedQueryName);
-    ExplorerActions.exec(this.config.client, savedQueryName);
-    AppStateActions.update({ ready: true });
+    _ExplorerActions2.default.setActive(savedQueryName);
+    _ExplorerActions2.default.exec(this.config.client, savedQueryName);
+    _AppStateActions2.default.update({ ready: true });
   } else {
     if (err.status === 404) {
       // We couldn't find that saved query.
-      NoticeActions.create({
+      _NoticeActions2.default.create({
         text: 'The saved query ' + savedQueryName + ' could not be found.',
         type: 'error',
         icon: 'remove-sign'
       });
-      var id = FormatUtils.generateTempId();
-      ExplorerActions.create({ id: id });
-      ExplorerActions.setActive(id);
-      AppStateActions.update({ ready: true });
+      var id = _FormatUtils2.default.generateTempId();
+      _ExplorerActions2.default.create({ id: id });
+      _ExplorerActions2.default.setActive(id);
+      _AppStateActions2.default.update({ ready: true });
     } else {
       console.error("There was a problem fetching a saved query: ", err.stack);
     }
@@ -12353,14 +13397,14 @@ KeenExplorer.prototype.doneFetchingSavedQuery = function (savedQueryName, err) {
 };
 
 KeenExplorer.prototype.render = function () {
-  var Component = React.createFactory(AppComponent);
-  ReactDOM.render(Component({
+  var Component = _react2.default.createFactory(_app2.default);
+  _reactDom2.default.render(Component({
     persistence: this.config.persistence,
     client: this.config.client
   }), this.config.el);
 };
 
-KeenExplorer.Persistence = Persistence;
+KeenExplorer.Persistence = _persistence2.default;
 exports.default = KeenExplorer;
 
 /***/ }),
