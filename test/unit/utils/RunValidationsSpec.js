@@ -1,14 +1,11 @@
-const assert from 'chai').assert;
-const _ from 'lodash');
-const sinon from 'sinon/pkg/sinon.js');
-const moment from 'moment');
-const TestHelpers from '../../support/TestHelpers');
-const RunValidations from '../../../lib/js/app/utils/RunValidations');
+import _ from 'lodash';
+import TestHelpers from '../../support/TestHelpers';
+import RunValidations from '../../../lib/js/app/utils/RunValidations';
 
 describe('utils/RunValidations', () => {
   it('should run each validator', () => {
-    const spyOne = sinon.spy();
-    const spyTwo = sinon.spy();
+    const spyOne = jest.fn();
+    const spyTwo = jest.fn();
 
     const validations = {
       one: {
@@ -22,8 +19,8 @@ describe('utils/RunValidations', () => {
     };
     const model = TestHelpers.createExplorerModel();
     RunValidations.run(validations, model);
-    assert.isTrue(spyOne.calledWith(model));
-    assert.isTrue(spyTwo.calledWith(model));
+    expect(spyOne).toHaveBeenCalledWith(model);
+    expect(spyTwo).toHaveBeenCalledWith(model);
   });
 
   it('should properly set the errors on the model if a validator fails', () => {
@@ -46,7 +43,7 @@ describe('utils/RunValidations', () => {
       stringVal: ['not', 'a', 'string']
     };
     RunValidations.run(validations, model);
-    assert.deepEqual(model.errors, [
+    expect(model.errors).toEqual([
       {
         attribute: 'arrayVal',
         msg: 'is not array'
@@ -56,11 +53,11 @@ describe('utils/RunValidations', () => {
         msg: 'is not string'
       }
     ]);
-    assert.strictEqual(model.isValid, false);
+    expect(model.isValid).toEqual(false);
   });
 
   it('should not run validations if the shouldRun function returns false', () => {
-    const stub = sinon.stub();
+    const stub = jest.fn();
     const validations = {
       attribute: {
         msg: 'is not valid',
@@ -70,11 +67,11 @@ describe('utils/RunValidations', () => {
     };
     const model = { attribute: 'not valid' };
     RunValidations.run(validations, model);
-    assert.isFalse(stub.getCalls().length > 0);
+    expect(stub).not.toHaveBeenCalled();
   });
 
   it('should run validations if the shouldRun function returns true', () => {
-    const stub = sinon.stub().returns(false);
+    const stub = jest.fn().mockReturnValue(false);
     const validations = {
       arrayVal: {
         msg: 'is not array',
@@ -86,6 +83,6 @@ describe('utils/RunValidations', () => {
       arrayVal: 'not an array',
     };
     RunValidations.run(validations, model);
-    assert.isTrue(stub.calledOnce);
+    expect(stub).toHaveBeenCalledTimes(1);
   });
 });
