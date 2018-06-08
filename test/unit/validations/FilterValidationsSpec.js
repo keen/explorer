@@ -1,70 +1,67 @@
-
-var _ from 'lodash');
-let sinon from 'sinon/pkg/sinon.js');
-var moment from 'moment');
-var TestHelpers from '../../support/TestHelpers');
-var FormatUtils from '../../../lib/js/app/utils/FormatUtils');
-var RunValidations from '../../../lib/js/app/utils/RunValidations');
-var FilterValidations from '../../../lib/js/app/validations/FilterValidations');
+import _ from 'lodash';
+import TestHelpers from '../../support/TestHelpers';
+import FormatUtils from '../../../lib/js/app/utils/FormatUtils';
+import RunValidations from '../../../lib/js/app/utils/RunValidations';
+import FilterValidations from '../../../lib/js/app/validations/FilterValidations';
 
 describe('validations/FilterValidations', () => {
 
   describe('filter (non-geo) validations', () => {
     describe('property_name', () => {
       it('should have the proper error message', () => {
-        assert.strictEqual(FilterValidations.property_name.msg, 'Choose a property name');
+        expect(FilterValidations.property_name.msg).toEqual('Choose a property name');
       });
       it('should return true if the value is present', () => {
-        assert.isTrue(FilterValidations.property_name.validate({ property_name: 'value is here' }));
+        expect(FilterValidations.property_name.validate({ property_name: 'value is here' })).toBe(true);
       });
       it('should return false if the value is not present', () => {
-        assert.isFalse(FilterValidations.property_name.validate({ property_name: null }));
+        expect(FilterValidations.property_name.validate({ property_name: null })).toBe(false);
       });
     });
     describe('property_value', () => {
       it('should call parseList if the coercion_type is List', () => {
-        var filter = {
+        const filter = {
           coercion_type: 'List',
           property_value: ['a list']
         };
-        var stub = sinon.stub(FormatUtils, 'parseList');
+        const stub = jest.spyOn(FormatUtils, 'parseList').mockImplementation(()=>{});
         FilterValidations.property_value.validate(filter);
-        assert.isTrue(stub.calledWith(filter.property_value));
-        FormatUtils.parseList.restore();
+        expect(stub).toBeCalledWith(filter.property_value);
+        stub.mockRestore();
       });
       it('should run the geo validations if the coercion_type is Geo', () => {
-        var filter = {
+        const filter = {
           coercion_type: 'Geo',
           property_value: {
             coordinates: [1,0],
             max_distance_miles: '10'
           }
         };
-        var coordinatesSpy = sinon.spy(FilterValidations.coordinates, 'validate');
-        var maxDistanceSpy = sinon.spy(FilterValidations.max_distance_miles, 'validate');
+        const coordinatesSpy = jest.spyOn(FilterValidations.coordinates, 'validate');
+        const maxDistanceSpy = jest.spyOn(FilterValidations.max_distance_miles, 'validate');
         RunValidations.run(FilterValidations, filter);
 
-        assert.isTrue(coordinatesSpy.calledOnce);
-        assert.isTrue(maxDistanceSpy.calledOnce);
+        expect(coordinatesSpy).toHaveBeenCalledTimes(1);
+        expect(maxDistanceSpy).toHaveBeenCalledTimes(1);
 
-        FilterValidations.coordinates.validate.restore();
-        FilterValidations.max_distance_miles.validate.restore();
+        coordinatesSpy.mockRestore();
+        maxDistanceSpy.mockRestore();
       });
     });
     describe('operator', () => {
       it('should have the proper error message', () => {
-        assert.strictEqual(FilterValidations.operator.msg, 'Choose an operator');
+        expect(FilterValidations.operator.msg).toEqual('Choose an operator');
       });
       it('should return false if the value is not present', () => {
-        assert.isFalse(FilterValidations.operator.validate({ operator: null }));
+        expect(FilterValidations.operator.validate({ operator: null })).toBe(false);
       });
     });
     describe('coercion_type', () => {
       it('should have the proper error message', () => {
-        assert.strictEqual(FilterValidations.coercion_type.msg, 'Choose a coercion type');
+        expect(FilterValidations.coercion_type.msg).toEqual('Choose a coercion type');
       });
       it('should return false if the value is not present', () => {
-        assert.isFalse(FilterValidations.coercion_type.validate({ coercion_type: null }));
+        expect(FilterValidations.coercion_type.validate({ coercion_type: null })).toBe(false);
       });
     });
   });
