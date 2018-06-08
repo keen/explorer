@@ -1,6 +1,11 @@
-
 import _ from 'lodash';
 import KeenAnalysis from 'keen-analysis';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import TestUtils from 'react-addons-test-utils';
+import rquery from 'rquery';
+
+import TestHelpers from '../../../../support/TestHelpers';
 import QueryBuilder from '../../../../../lib/js/app/components/explorer/query_builder/index.js';
 import GroupByField from '../../../../../lib/js/app/components/explorer/query_builder/group_by_field.js';
 import SelectField from '../../../../../lib/js/app/components/explorer/query_builder/select_field.js';
@@ -10,11 +15,6 @@ import ExplorerActions from '../../../../../lib/js/app/actions/ExplorerActions';
 import Input from '../../../../../lib/js/app/components/common/select.js';
 import ExtractionOptions from '../../../../../lib/js/app/components/explorer/query_builder/extraction_options.js';
 import ReactSelect from '../../../../../lib/js/app/components/common/react_select.js';
-import React from 'react';
-import ReactDOM from 'react-dom';
-import TestUtils from 'react-addons-test-utils';
-import TestHelpers from '../../../../support/TestHelpers';
-import rquery from 'rquery';
 
 const $R = rquery(_, React, ReactDOM, TestUtils);
 

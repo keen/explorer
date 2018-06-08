@@ -1,15 +1,16 @@
-
 import  _ from 'lodash';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import TestUtils from 'react-addons-test-utils';
+import rquery from 'rquery';
+
 import ProjectUtils from '../../../../lib/js/app/utils/ProjectUtils.js';
 import Filter from '../../../../lib/js/app/components/common/filter.js';
 import Geo from '../../../../lib/js/app/components/common/geo.js';
 import Select from '../../../../lib/js/app/components/common/select.js';
 import ReactSelect from '../../../../lib/js/app/components/common/react_select.js';
-import React from 'react';
-import ReactDOM from 'react-dom';
-import TestUtils from 'react-addons-test-utils';
 import TestHelpers from '../../../support/TestHelpers';
-import rquery from 'rquery';
+
 const $R = rquery(_, React, ReactDOM, TestUtils);
 
 describe('components/common/filter', () => {

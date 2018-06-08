@@ -649,7 +649,8 @@
 /*-- Chart --*/
 
 .c3 svg {
-  font: 10px sans-serif; }
+  font: 10px sans-serif;
+  -webkit-tap-highlight-color: transparent; }
 
 .c3 path, .c3 line {
   fill: none;
@@ -661,11 +662,19 @@
   -ms-user-select: none;
       user-select: none; }
 
-.c3-legend-item-tile, .c3-xgrid-focus, .c3-ygrid, .c3-event-rect, .c3-bars path {
+.c3-legend-item-tile,
+.c3-xgrid-focus,
+.c3-ygrid,
+.c3-event-rect,
+.c3-bars path {
   shape-rendering: crispEdges; }
 
 .c3-chart-arc path {
   stroke: #fff; }
+
+.c3-chart-arc rect {
+  stroke: white;
+  stroke-width: 1; }
 
 .c3-chart-arc text {
   fill: #fff;
@@ -711,6 +720,7 @@
   stroke-width: 0; }
 
 .c3-bar._expanded_ {
+  fill-opacity: 1;
   fill-opacity: 0.75; }
 
 /*-- Focus --*/
@@ -728,12 +738,12 @@
 
 .c3-region {
   fill: steelblue;
-  fill-opacity: 0.1; }
+  fill-opacity: .1; }
 
 /*-- Brush --*/
 
 .c3-brush .extent {
-  fill-opacity: 0.1; }
+  fill-opacity: .1; }
 
 /*-- Select - Drag --*/
 
@@ -751,6 +761,11 @@
   stroke: lightgray;
   stroke-width: 1; }
 
+/*-- Title --*/
+
+.c3-title {
+  font: 14px sans-serif; }
+
 /*-- Tooltip --*/
 
 .c3-tooltip-container {
@@ -762,7 +777,7 @@
   background-color: #fff;
   empty-cells: show;
   -webkit-box-shadow: 7px 7px 12px -9px #777777;
-          box-shadow: 7px 7px 12px -9px #777777;
+  box-shadow: 7px 7px 12px -9px #777777;
   opacity: 0.9; }
 
 .c3-tooltip tr {
@@ -804,7 +819,7 @@
 
 .c3-chart-arcs .c3-chart-arcs-background {
   fill: #e0e0e0;
-  stroke: none; }
+  stroke: #FFF; }
 
 .c3-chart-arcs .c3-chart-arcs-gauge-unit {
   fill: #000;
@@ -820,6 +835,42 @@
   fill: #000;
   /*  font-size: 28px !important;*/ }
 
+.c3-chart-arc.c3-target g path {
+  opacity: 1; }
+
+.c3-chart-arc.c3-target.c3-focused g path {
+  opacity: 1; }
+
+:root {
+  --font-family-primary: 'Gotham Rounded SSm A', 'Gotham Rounded SSm B', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --font-family-primary: 'Gotham Rounded SSm A', 'Gotham Rounded SSm B', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --font-family-primary: 'Gotham Rounded SSm A', 'Gotham Rounded SSm B', var(--font-family-secondary);
+  --font-family-secondary: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+
+  --white:      #FFFFFF;
+  --black:      #1A1A1A;
+
+  --dark-gray:  #4D4D4D;
+  --gray:       #808080;
+  --light-gray: #A7A7A7;
+  --silver:     #E7E7E7;
+
+  --blue:       #5A9EED;
+  --teal:       #00BBDE;
+  --green:      #73D483;
+  --yellow:     #EEB058;
+  --orange:     #FF855C;
+  --red:        #FE6672;
+  --purple:     #8A8AD6;
+
+  --lavender:   hsl(310, 42%, 63%);
+  --mint:       #00CFBB;
+}
+
+.keen-dataviz .axis {
+  shape-rendering: crispEdges
+}
+
 /* WRAPPER */
 
 .keen-dataviz {
@@ -829,7 +880,11 @@
 
 .keen-dataviz .keen-dataviz-title {
   color: #4D4D4D;
+  color: #4D4D4D;
+  color: var(--dark-gray);
   font-family: 'Gotham Rounded SSm A', 'Gotham Rounded SSm B', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: 'Gotham Rounded SSm A', 'Gotham Rounded SSm B', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: var(--font-family-primary);
   font-size: 14px;
   font-weight: 200;
   line-height: 32px;
@@ -841,8 +896,12 @@
 
 .keen-dataviz .keen-dataviz-notes {
   color: #808080;
+  color: #808080;
+  color: var(--gray);
   display: block;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: var(--font-family-secondary);
   font-size: 12px;
   line-height: 32px;
 }
@@ -851,8 +910,12 @@
 
 .keen-dataviz .keen-dataviz-message {
   color: #808080;
+  color: #808080;
+  color: var(--gray);
   display: block;
   font-family: 'Gotham Rounded SSm A', 'Gotham Rounded SSm B', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: 'Gotham Rounded SSm A', 'Gotham Rounded SSm B', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: var(--font-family-primary);
   font-size: 21px;
   font-weight: 200;
   line-height: 24px;
@@ -864,7 +927,11 @@
 .keen-dataviz .keen-dataviz-metric {
   border-radius: 4px;
   color: #FFFFFF;
+  color: #FFFFFF;
+  color: var(--white);
   font-family: 'Gotham Rounded SSm A', 'Gotham Rounded SSm B', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: 'Gotham Rounded SSm A', 'Gotham Rounded SSm B', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: var(--font-family-primary);
   text-align: center;
 }
 
@@ -898,6 +965,8 @@
 
 .keen-dataviz .keen-dataviz-table {
   border-bottom: 1px solid #E7E7E7;
+  border-bottom: 1px solid #E7E7E7;
+  border-bottom: 1px solid var(--silver);
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
   overflow: scroll;
@@ -906,8 +975,12 @@
 
 .keen-dataviz .keen-dataviz-table table {
   background: #FFFFFF;
+  background: #FFFFFF;
+  background: var(--white);
   border-collapse: collapse;
   font-family: 'Gotham Rounded SSm A', 'Gotham Rounded SSm B', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: 'Gotham Rounded SSm A', 'Gotham Rounded SSm B', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: var(--font-family-primary);
   margin: 0;
   position: relative;
   width: 100%;
@@ -924,12 +997,20 @@
 
 .keen-dataviz .keen-dataviz-table th {
   border-bottom: 1px solid #E7E7E7;
+  border-bottom: 1px solid #E7E7E7;
+  border-bottom: 1px solid var(--silver);
   color: #4D4D4D;
+  color: #4D4D4D;
+  color: var(--dark-gray);
 }
 
 .keen-dataviz .keen-dataviz-table td {
   background-color: #FFFFFF;
+  background-color: #FFFFFF;
+  background-color: var(--white);
   color: #4D4D4D;
+  color: #4D4D4D;
+  color: var(--dark-gray);
   -webkit-transition: background-color 0.1s, color 0.05s;
   -o-transition: background-color 0.1s, color 0.05s;
   transition: background-color 0.1s, color 0.05s;
@@ -941,7 +1022,11 @@
 
 .keen-dataviz .keen-dataviz-table tr:hover td {
   background-color: #E7E7E7;
+  background-color: #E7E7E7;
+  background-color: var(--silver);
   color: #4D4D4D;
+  color: #4D4D4D;
+  color: var(--dark-gray);
 }
 
 .keen-dataviz .keen-dataviz-table .keen-dataviz-table-dataset thead {
@@ -950,6 +1035,8 @@
 
 .keen-dataviz .keen-dataviz-table .keen-dataviz-table-fixed-header {
   background: #FFFFFF;
+  background: #FFFFFF;
+  background: var(--white);
   border-bottom: 1px solid rgba(0,0,0,.15);
   position: absolute;
   top: 0;
@@ -970,7 +1057,6 @@
 
 .keen-dataviz .keen-spinner-indicator {
   border-radius: 100%;
-  border: 3px solid #000000;
   border: 3px solid rgba(0, 0, 0, .1);
   border-top-color: rgba(0, 0, 0, .45);
   -webkit-box-sizing: border-box;
@@ -990,6 +1076,8 @@
 .keen-dataviz .c3 svg,
 .keen-dataviz .c3-tooltip-container {
   font-family: 'Gotham Rounded SSm A', 'Gotham Rounded SSm B', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: 'Gotham Rounded SSm A', 'Gotham Rounded SSm B', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: var(--font-family-primary);
 }
 
 .keen-dataviz .c3-tooltip-container th {
@@ -1020,11 +1108,18 @@
 }
 
 .keen-c3-legend-label-overlay {
-  background: #ffffff;
-  background: rgba(255, 255, 255, 0.9);
-  -webkit-box-shadow: 0 1px 1px rgba(26, 26, 26, 0.09999999999999998);
-          box-shadow: 0 1px 1px rgba(26, 26, 26, 0.09999999999999998);
+  background: color(#FFFFFF alpha(-10%));
+  background: color(#FFFFFF alpha(-10%));
+  background: color(var(--white) alpha(-10%));
+  -webkit-box-shadow: 0 1px 1px color(#1A1A1A alpha(-90%));
+          box-shadow: 0 1px 1px color(#1A1A1A alpha(-90%));
+  -webkit-box-shadow: 0 1px 1px color(#1A1A1A alpha(-90%));
+  -webkit-box-shadow: 0 1px 1px color(var(--black) alpha(-90%));
+          box-shadow: 0 1px 1px color(#1A1A1A alpha(-90%));
+          box-shadow: 0 1px 1px color(var(--black) alpha(-90%));
   font-family: 'Gotham Rounded SSm A', 'Gotham Rounded SSm B', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: 'Gotham Rounded SSm A', 'Gotham Rounded SSm B', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: var(--font-family-primary);
   font-size: 11px;
   padding: 10px;
   position: absolute;
@@ -1034,6 +1129,8 @@
 
 .keen-c3-legend-label-overlay-pointer {
   border-color: transparent transparent #FFFFFF transparent;
+  border-color: transparent transparent #FFFFFF transparent;
+  border-color: transparent transparent var(--white) transparent;
   border-style: solid;
   border-width: 0 10px 10px 10px;
   height: 0;

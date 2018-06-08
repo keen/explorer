@@ -2,9 +2,10 @@ import _ from 'lodash';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import TestUtils from 'react-addons-test-utils';
+import rquery from 'rquery';
+
 import QueryActions from '../../../../lib/js/app/components/explorer/query_actions.js';
 import TestHelpers from '../../../support/TestHelpers';
-import rquery from 'rquery';
 
 const $R = rquery(_, React, ReactDOM, TestUtils);
 

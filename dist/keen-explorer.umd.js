@@ -2337,6 +2337,10 @@ var ExplorerStore = _.assign({}, EventEmitter.prototype, {
     _explorers = {};
   },
 
+  set: function set(explorer) {
+    _explorers[explorer.id] = explorer;
+  },
+
   get: function get(id) {
     return _explorers[id];
   },
@@ -3251,8 +3255,12 @@ EventEmitter.prototype.emit = function(type) {
       er = arguments[1];
       if (er instanceof Error) {
         throw er; // Unhandled 'error' event
+      } else {
+        // At least give some kind of context to the user
+        var err = new Error('Uncaught, unspecified "error" event. (' + er + ')');
+        err.context = er;
+        throw err;
       }
-      throw TypeError('Uncaught, unspecified "error" event.');
     }
   }
 
@@ -3275,18 +3283,11 @@ EventEmitter.prototype.emit = function(type) {
         break;
       // slower
       default:
-        len = arguments.length;
-        args = new Array(len - 1);
-        for (i = 1; i < len; i++)
-          args[i - 1] = arguments[i];
+        args = Array.prototype.slice.call(arguments, 1);
         handler.apply(this, args);
     }
   } else if (isObject(handler)) {
-    len = arguments.length;
-    args = new Array(len - 1);
-    for (i = 1; i < len; i++)
-      args[i - 1] = arguments[i];
-
+    args = Array.prototype.slice.call(arguments, 1);
     listeners = handler.slice();
     len = listeners.length;
     for (i = 0; i < len; i++)
@@ -3324,7 +3325,6 @@ EventEmitter.prototype.addListener = function(type, listener) {
 
   // Check for listener leak
   if (isObject(this._events[type]) && !this._events[type].warned) {
-    var m;
     if (!isUndefined(this._maxListeners)) {
       m = this._maxListeners;
     } else {
@@ -3446,7 +3446,7 @@ EventEmitter.prototype.removeAllListeners = function(type) {
 
   if (isFunction(listeners)) {
     this.removeListener(type, listeners);
-  } else {
+  } else if (listeners) {
     // LIFO order
     while (listeners.length)
       this.removeListener(type, listeners[listeners.length - 1]);
@@ -3467,15 +3467,20 @@ EventEmitter.prototype.listeners = function(type) {
   return ret;
 };
 
+EventEmitter.prototype.listenerCount = function(type) {
+  if (this._events) {
+    var evlistener = this._events[type];
+
+    if (isFunction(evlistener))
+      return 1;
+    else if (evlistener)
+      return evlistener.length;
+  }
+  return 0;
+};
+
 EventEmitter.listenerCount = function(emitter, type) {
-  var ret;
-  if (!emitter._events || !emitter._events[type])
-    ret = 0;
-  else if (isFunction(emitter._events[type]))
-    ret = 1;
-  else
-    ret = emitter._events[type].length;
-  return ret;
+  return emitter.listenerCount(type);
 };
 
 function isFunction(arg) {
@@ -11198,10 +11203,16 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__74__;
 "use strict";
 
 
+var _keenDataviz = __webpack_require__(74);
+
+var _keenDataviz2 = _interopRequireDefault(_keenDataviz);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 var _ = __webpack_require__(0);
 var React = __webpack_require__(1);
 var classNames = __webpack_require__(6);
-var KeenDataviz = __webpack_require__(74);
+
 var Select = __webpack_require__(15);
 var Notice = __webpack_require__(27);
 var Chart = __webpack_require__(73);
@@ -11282,7 +11293,7 @@ var Visualization = React.createClass({
   },
 
   componentWillMount: function componentWillMount() {
-    this.dataviz = new KeenDataviz();
+    this.dataviz = new _keenDataviz2.default();
   },
 
   componentWillUnmount: function componentWillUnmount() {
@@ -12216,8 +12227,16 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__86__;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.KeenExplorer = undefined;
+
+var _keenAnalysis = __webpack_require__(86);
+
+var _keenAnalysis2 = _interopRequireDefault(_keenAnalysis);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 var _ = __webpack_require__(0);
-var KeenAnalysis = __webpack_require__(86);
+
 var React = __webpack_require__(1);
 var ReactDOM = __webpack_require__(85);
 
@@ -12251,7 +12270,7 @@ var KeenExplorer = exports.KeenExplorer = function KeenExplorer(el) {
 
 KeenExplorer.prototype.client = function (obj) {
   if (!arguments.length) return this.config.client;
-  this.config.client = new KeenAnalysis(obj);
+  this.config.client = new _keenAnalysis2.default(obj);
   this.config.client.resources({
     'events': '{protocol}://{host}/3.0/projects/{projectId}/events'
   });

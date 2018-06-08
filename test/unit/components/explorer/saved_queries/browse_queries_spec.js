@@ -1,13 +1,13 @@
-import BrowseQueries from '../../../../../lib/js/app/components/explorer/saved_queries/browse_queries.js';
-import ExplorerUtils from '../../../../../lib/js/app/utils/ExplorerUtils';
-import ExplorerActions from '../../../../../lib/js/app/actions/ExplorerActions';
-
 import _ from 'lodash';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import TestUtils from 'react-addons-test-utils';
-import TestHelpers from '../../../../../test/support/TestHelpers';
 import rquery from 'rquery';
+
+import BrowseQueries from '../../../../../lib/js/app/components/explorer/saved_queries/browse_queries.js';
+import ExplorerUtils from '../../../../../lib/js/app/utils/ExplorerUtils';
+import ExplorerActions from '../../../../../lib/js/app/actions/ExplorerActions';
+import TestHelpers from '../../../../../test/support/TestHelpers';
 
 const $R = rquery(_, React, ReactDOM, TestUtils);
 

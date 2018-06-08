@@ -1,7 +1,7 @@
-
 import _ from 'lodash';
 import React from 'react';
 import TestUtils from 'react-addons-test-utils';
+
 import Geo from '../../../../lib/js/app/components/common/geo.js';
 import TestHelpers from '../../../support/TestHelpers';
 

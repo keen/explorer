@@ -1,14 +1,12 @@
-
 import _ from 'lodash';
-
-import Explorer from '../../../../lib/js/app/components/explorer/index.js';
-import CacheToggle from '../../../../lib/js/app/components/explorer/cache_toggle.js';
-
 import React from 'react';
 import ReactDOM from 'react-dom';
 import TestUtils from 'react-addons-test-utils';
-import TestHelpers from '../../../support/TestHelpers.js';
 import rquery from 'rquery';
+
+import Explorer from '../../../../lib/js/app/components/explorer/index.js';
+import CacheToggle from '../../../../lib/js/app/components/explorer/cache_toggle.js';
+import TestHelpers from '../../../support/TestHelpers.js';
 
 const $R = rquery(_, React, ReactDOM, TestUtils);
 

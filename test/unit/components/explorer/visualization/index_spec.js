@@ -1,6 +1,11 @@
 import _ from 'lodash';
 import KeenAnalysis from 'keen-analysis';
 import KeenDatavizCore from 'keen-dataviz';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import TestUtils from 'react-addons-test-utils';
+import rquery from 'rquery';
+
 import Visualization from '../../../../../lib/js/app/components/explorer/visualization/index.js';
 import Chart from '../../../../../lib/js/app/components/explorer/visualization/chart.js';
 import AppDispatcher from '../../../../../lib/js/app/dispatcher/AppDispatcher';
@@ -12,10 +17,6 @@ import ExplorerConstants from '../../../../../lib/js/app/constants/ExplorerConst
 import ExplorerActions from '../../../../../lib/js/app/actions/ExplorerActions';
 import NoticeActions from '../../../../../lib/js/app/actions/NoticeActions';
 import TestHelpers from '../../../../support/TestHelpers';
-import React from 'react';
-import ReactDOM from 'react-dom';
-import TestUtils from 'react-addons-test-utils';
-import rquery from 'rquery';
 
 const $R = rquery(_, React, ReactDOM, TestUtils);
 const KeenDataviz = new KeenDatavizCore();

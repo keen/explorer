@@ -1,10 +1,11 @@
 
 import _ from 'lodash';
+import React from 'react';
+import TestUtils from 'react-addons-test-utils';
+
 import RelativePicker from '../../../../lib/js/app/components/common/relative_picker.js';
 import ProjectUtils from '../../../../lib/js/app/utils/ProjectUtils';
 import ExplorerActions from '../../../../lib/js/app/actions/ExplorerActions';
-import React from 'react';
-import TestUtils from 'react-addons-test-utils';
 import TestHelpers from '../../../support/TestHelpers';
 
 describe('components/common/relative_picker', () => {

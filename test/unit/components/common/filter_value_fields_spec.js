@@ -1,14 +1,14 @@
-
 import _ from 'lodash';
 import moment from 'moment';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import TestUtils from 'react-addons-test-utils';
+
 import FilterValueFields from '../../../../lib/js/app/components/common/filter_value_fields.js';
 import Geo from '../../../../lib/js/app/components/common/geo.js';
 import Datepicker from '../../../../lib/js/app/components/common/datepicker.js';
 import ProjectUtils from '../../../../lib/js/app/utils/ProjectUtils.js';
 import Select from '../../../../lib/js/app/components/common/select.js';
-import React from 'react';
-import ReactDOM from 'react-dom';
-import TestUtils from 'react-addons-test-utils';
 import TestHelpers from '../../../support/TestHelpers';
 
 const datetimeFormat = 'll h:mm A';

@@ -1,11 +1,13 @@
-
 import React from 'react';
 import ReactDOM from 'react-dom';
-import KeenViz from '../../../../../lib/js/app/components/explorer/visualization/keen_viz.js';
 import TestUtils from 'react-addons-test-utils';
+import rquery from 'rquery';
+import _ from 'lodash';
+
+import KeenViz from '../../../../../lib/js/app/components/explorer/visualization/keen_viz.js';
+
 import ExplorerUtils from '../../../../../lib/js/app/utils/ExplorerUtils';
 import TestHelpers from '../../../../support/TestHelpers';
-import rquery from 'rquery';
 
 const $R = rquery(_, React, ReactDOM, TestUtils);
 

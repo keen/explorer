@@ -26,6 +26,7 @@
     "classnames": "2.1.2",
     "flux": "^2.0.3",
     "json-stable-stringify": "1.0.0",
+    "jquery": "^2.1.4",
     "keen-analysis": "^2.0.0",
     "keen-dataviz": "^2.0.4",
     "keymirror": "~0.1.0",
@@ -38,16 +39,6 @@
     "rquery": "^3.1.1",
     "string": "^2.0.1"
   },
-  "browserify-shim": {
-    "moment": "^2.7.0",
-    "jquery": "global:$"
-  },
-  "browserify": {
-    "transform": [
-      "browserify-shim",
-      "reactify"
-    ]
-  },
   "repository": {
     "type": "git",
     "url": "git@github.com:keen/explorer.git"
@@ -59,10 +50,6 @@
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
-    "browserify": "11.2.0",
-    "browserify-shim": "~3.8.0",
-    "chai": "^2.3.0",
-    "chai-as-promised": "^5.0.0",
     "concurrently": "^3.5.1",
     "connect-history-api-fallback": "0.0.5",
     "cssnano": "^3.10.0",
@@ -82,11 +69,8 @@
     "imports-loader": "^0.8.0",
     "jest": "^22.4.3",
     "jest-environment-jsdom-c3": "^2.0.0",
-    "jquery": "^2.1.4",
-    "jquery-browserify": "^1.8.1",
     "keen-js": "^3.3.0",
     "nock": "^9.2.6",
-    "phantomjs": "1.9.7-15",
     "postcss": "^6.0.21",
     "postcss-cli": "^5.0.0",
     "postcss-cssnext": "^2.4.0",
@@ -95,11 +79,8 @@
     "precss": "^3.1.2",
     "react-addons-test-utils": "^15.6.2",
     "react-test-renderer": "^15.6.2",
-    "reactify": "~0.15.1",
     "regenerator-runtime": "^0.11.1",
     "run-sequence": "~1.0.1",
-    "selenium-launcher": "^1.1.12",
-    "sinon": "1.14.1",
     "stringify": "~3.0.0",
     "style-loader": "^0.20.3",
     "webpack": "^4.5.0",

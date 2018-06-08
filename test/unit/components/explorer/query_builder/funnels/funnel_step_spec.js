@@ -1,13 +1,13 @@
-import ExplorerActions from '../../../../../../lib/js/app/actions/ExplorerActions.js';
-import FunnelStep from '../../../../../../lib/js/app/components/explorer/query_builder/funnels/funnel_step.js';
-import FunnelBuilder from '../../../../../../lib/js/app/components/explorer/query_builder/funnels/funnel_builder.js';
-
 import _ from 'lodash';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import TestUtils from 'react-addons-test-utils';
-import TestHelpers from '../../../../../../test/support/TestHelpers';
 import rquery from 'rquery';
+
+import ExplorerActions from '../../../../../../lib/js/app/actions/ExplorerActions.js';
+import FunnelStep from '../../../../../../lib/js/app/components/explorer/query_builder/funnels/funnel_step.js';
+import FunnelBuilder from '../../../../../../lib/js/app/components/explorer/query_builder/funnels/funnel_builder.js';
+import TestHelpers from '../../../../../../test/support/TestHelpers';
 
 const $R = rquery(_, React, ReactDOM, TestUtils);
 

@@ -1,6 +1,8 @@
-
 import _ from 'lodash';
 import moment from 'moment';
+import React from 'react';
+import TestUtils from 'react-addons-test-utils';
+
 import Timeframe from '../../../../lib/js/app/components/common/timeframe.js';
 import Timezone from '../../../../lib/js/app/components/common/timezone.js';
 import RelativePicker from '../../../../lib/js/app/components/common/relative_picker.js';
@@ -8,8 +10,6 @@ import AbsolutePicker from '../../../../lib/js/app/components/common/absolute_pi
 import ReactSelect from '../../../../lib/js/app/components/common/react_select.js';
 import FieldsToggle from '../../../../lib/js/app/components/common/fields_toggle.js';
 import ExplorerActions from '../../../../lib/js/app/actions/ExplorerActions';
-import React from 'react';
-import TestUtils from 'react-addons-test-utils';
 import TestHelpers from '../../../support/TestHelpers';
 
 describe('components/common/timeframe', () => {

@@ -1,7 +1,8 @@
 import _ from 'lodash';
-import Chart from '../../../../../lib/js/app/components/explorer/visualization/chart.js';
 import React from 'react';
 import TestUtils from 'react-addons-test-utils';
+
+import Chart from '../../../../../lib/js/app/components/explorer/visualization/chart.js';
 import ExplorerUtils from '../../../../../lib/js/app/utils/ExplorerUtils';
 import FormatUtils from '../../../../../lib/js/app/utils/FormatUtils';
 import TestHelpers from '../../../../support/TestHelpers';

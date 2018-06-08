@@ -1,10 +1,10 @@
-
 import _ from 'lodash';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import TestUtils from 'react-addons-test-utils';
-import TestHelpers from '../../../support/TestHelpers.js';
 import KeenAnalysis from 'keen-analysis';
+
+import TestHelpers from '../../../support/TestHelpers.js';
 import Explorer from '../../../../lib/js/app/components/explorer/index.js';
 import Visualization from '../../../../lib/js/app/components/explorer/visualization/index.js';
 import QueryBuilder from '../../../../lib/js/app/components/explorer/query_builder/index.js';

@@ -1,12 +1,13 @@
 import _ from 'lodash';
 import moment from 'moment';
+import XHRmock from 'xhr-mock';
+
 import TestHelpers from '../../support/TestHelpers';
 import ProjectStore from '../../../lib/js/app/stores/ProjectStore';
 import ProjectUtils from '../../../lib/js/app/utils/ProjectUtils';
 import FormatUtils from '../../../lib/js/app/utils/FormatUtils';
 import ExplorerStore from '../../../lib/js/app/stores/ExplorerStore';
 import ExplorerActions from '../../../lib/js/app/actions/ExplorerActions';
-import XHRmock from 'xhr-mock';
 
 jest.mock('../../../lib/js/app/actions/ProjectActions');
 
