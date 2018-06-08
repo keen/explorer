@@ -45,7 +45,7 @@ describe('validations/ExplorerValidations', () => {
         const explorer = TestHelpers.createExplorerModel();
         explorer.saving = false;
         explorer.query_name = '';
-        RunValidations.run({ query_name: ExplorerValidations.query_name }, explorer);
+        RunValidations({ query_name: ExplorerValidations.query_name }, explorer);
         expect(explorer.errors).toHaveLength(0);
       });
 
@@ -53,7 +53,7 @@ describe('validations/ExplorerValidations', () => {
         const explorer = TestHelpers.createExplorerModel();
         explorer.saving = true;
         explorer.query_name = '';
-        RunValidations.run({ query_name: ExplorerValidations.query_name }, explorer)
+        RunValidations({ query_name: ExplorerValidations.query_name }, explorer)
         expect(explorer.errors).toHaveLength(1);
       });
 
@@ -207,7 +207,7 @@ describe('validations/ExplorerValidations', () => {
       filter2.property_value = 'value';
       model.query.filters.push(filter2);
 
-      RunValidations.run(ExplorerValidations, model);
+      RunValidations(ExplorerValidations, model);
 
       expect(model.isValid).toBe(false);
       expect(model.errors).toHaveLength(2);
@@ -256,7 +256,7 @@ describe('validations/ExplorerValidations', () => {
 
       model.query.steps.push(step2);
 
-      RunValidations.run(ExplorerValidations, model);
+      RunValidations(ExplorerValidations, model);
 
       const steps = model.query.steps;
       expect(model.isValid).toBe(false);

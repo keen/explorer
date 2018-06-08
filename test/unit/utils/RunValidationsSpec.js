@@ -18,7 +18,7 @@ describe('utils/RunValidations', () => {
       }
     };
     const model = TestHelpers.createExplorerModel();
-    RunValidations.run(validations, model);
+    RunValidations(validations, model);
     expect(spyOne).toHaveBeenCalledWith(model);
     expect(spyTwo).toHaveBeenCalledWith(model);
   });
@@ -42,7 +42,7 @@ describe('utils/RunValidations', () => {
       arrayVal: 'not an array',
       stringVal: ['not', 'a', 'string']
     };
-    RunValidations.run(validations, model);
+    RunValidations(validations, model);
     expect(model.errors).toEqual([
       {
         attribute: 'arrayVal',
@@ -66,7 +66,7 @@ describe('utils/RunValidations', () => {
       }
     };
     const model = { attribute: 'not valid' };
-    RunValidations.run(validations, model);
+    RunValidations(validations, model);
     expect(stub).not.toHaveBeenCalled();
   });
 
@@ -82,7 +82,7 @@ describe('utils/RunValidations', () => {
     const model = {
       arrayVal: 'not an array',
     };
-    RunValidations.run(validations, model);
+    RunValidations(validations, model);
     expect(stub).toHaveBeenCalledTimes(1);
   });
 });

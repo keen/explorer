@@ -267,7 +267,7 @@ describe('utils/FilterUtils', () => {
         property_value: 'value',
         coercion_type: 'String'
       };
-      const spy = jest.spyOn(RunValidations, 'run');
+      const spy = jest.spyOn(RunValidations, 'default');
       const json = FilterUtils.queryJSON(filter);
       expect(spy).toHaveBeenCalledWith(FilterValidations, filter);
       spy.mockRestore();

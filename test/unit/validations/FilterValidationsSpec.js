@@ -39,7 +39,7 @@ describe('validations/FilterValidations', () => {
         };
         const coordinatesSpy = jest.spyOn(FilterValidations.coordinates, 'validate');
         const maxDistanceSpy = jest.spyOn(FilterValidations.max_distance_miles, 'validate');
-        RunValidations.run(FilterValidations, filter);
+        RunValidations(FilterValidations, filter);
 
         expect(coordinatesSpy).toHaveBeenCalledTimes(1);
         expect(maxDistanceSpy).toHaveBeenCalledTimes(1);

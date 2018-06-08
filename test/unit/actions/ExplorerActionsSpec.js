@@ -9,11 +9,13 @@ import AppDispatcher from '../../../lib/js/app/dispatcher/AppDispatcher';
 import ExplorerActions from '../../../lib/js/app/actions/ExplorerActions';
 import AppStateActions from '../../../lib/js/app/actions/AppStateActions';
 import FilterUtils from '../../../lib/js/app/utils/FilterUtils';
-import RunValidations from '../../../lib/js/app/utils/RunValidations';
+// import RunValidations from '../../../lib/js/app/utils/RunValidations';
 import ExplorerValidations from '../../../lib/js/app/validations/ExplorerValidations';
 import ExplorerUtils from '../../../lib/js/app/utils/ExplorerUtils';
 import ChartTypeUtils from '../../../lib/js/app/utils/ChartTypeUtils';
 import ExplorerStore from '../../../lib/js/app/stores/ExplorerStore';
+
+jest.mock('../../../lib/js/app/utils/RunValidations');
 
 describe('actions/ExplorerActions', () => {
   const analysisClient = new KeenAnalysis(TestHelpers.createClient());
@@ -246,7 +248,7 @@ describe('actions/ExplorerActions', () => {
       spy.mockRestore();
     });
     it('should run validations for each model', () => {
-      const spy = jest.spyOn(RunValidations, 'run').mockReturnValue([]);
+      const spy = RunValidations.mockReturnValue([]);
       ExplorerActions.fetchAllPersisted(persistence, callback);
       expect(spy).toHaveBeenCalledTimes(3);
       spy.mockRestore();

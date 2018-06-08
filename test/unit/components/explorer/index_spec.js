@@ -201,7 +201,7 @@ describe('components/explorer/index', () => {
     describe('saveQueryClick', () => {
       it('should call ExplorerActions.save', () => {
         const saveStub = jest.spyOn(ExplorerActions, 'save').mockImplementation(()=>{});
-        const runValidationsStub = jest.spyOn(RunValidations, 'run').mockImplementation(()=>{}).mockReturnValue([]);
+        const runValidationsStub = jest.spyOn(RunValidations, 'default').mockImplementation(()=>{}).mockReturnValue([]);
 
         explorer.id = 'TEMP-ABC';
         component.forceUpdate();
