@@ -1,47 +1,44 @@
-
-let sinon from 'sinon/pkg/sinon.js');
-var moment from 'moment');
-var KeenAnalysis from 'keen-analysis');
-var _ from 'lodash');
-var Qs from 'qs');
-var TestHelpers from '../../support/TestHelpers');
-var ExplorerActions from '../../../lib/js/app/actions/ExplorerActions');
-var ExplorerUtils from '../../../lib/js/app/utils/ExplorerUtils');
-var FilterUtils from '../../../lib/js/app/utils/FilterUtils');
-var FunnelUtils from '../../../lib/js/app/utils/FunnelUtils');
-var TimeframeUtils from '../../../lib/js/app/utils/TimeframeUtils');
-var RunValidations from '../../../lib/js/app/utils/RunValidations');
-var ExplorerValidations from '../../../lib/js/app/validations/ExplorerValidations')
+import KeenAnalysis from 'keen-analysis';
+import _ from 'lodash';
+import Qs from 'qs';
+import TestHelpers from '../../support/TestHelpers';
+import ExplorerActions from '../../../lib/js/app/actions/ExplorerActions';
+import ExplorerUtils from '../../../lib/js/app/utils/ExplorerUtils';
+import FilterUtils from '../../../lib/js/app/utils/FilterUtils';
+import FunnelUtils from '../../../lib/js/app/utils/FunnelUtils';
+import TimeframeUtils from '../../../lib/js/app/utils/TimeframeUtils';
+import RunValidations from '../../../lib/js/app/utils/RunValidations';
+import ExplorerValidations from '../../../lib/js/app/validations/ExplorerValidations';
 
 describe('utils/ExplorerUtils', () => {
   describe('extraction event limit', () => {
     it('should be 100', () => {
-      assert.strictEqual(ExplorerUtils.EXRACTION_EVENT_LIMIT, 100);
+      expect(ExplorerUtils.EXRACTION_EVENT_LIMIT).toEqual(100);
     });
   });
 
   describe('shouldHaveTarget', () => {
     it('should return false if the analysis_type is null', () => {
-      var explorer = { query: { analysis_type: null } };
-      assert.isFalse(ExplorerUtils.shouldHaveTarget(explorer));
+      const explorer = { query: { analysis_type: null } };
+      expect(ExplorerUtils.shouldHaveTarget(explorer)).toBe(false);
     });
     it('should return false if the analysis_type is undefined', () => {
-      var explorer = { query: {} };
-      assert.isFalse(ExplorerUtils.shouldHaveTarget(explorer));
+      const explorer = { query: {} };
+      expect(ExplorerUtils.shouldHaveTarget(explorer)).toBe(false);
     });
     it('should return false if the analysis_type is not in the required types', () => {
-      var explorer = { query: { analysis_type: 'count' } };
-      assert.isFalse(ExplorerUtils.shouldHaveTarget(explorer));
+      const explorer = { query: { analysis_type: 'count' } };
+      expect(ExplorerUtils.shouldHaveTarget(explorer)).toBe(false);
     });
     it('should return false if the analysis_type in the required types', () => {
-      var explorer = { query: { analysis_type: 'count_unique' } };
-      assert.isTrue(ExplorerUtils.shouldHaveTarget(explorer));
+      const explorer = { query: { analysis_type: 'count_unique' } };
+      expect(ExplorerUtils.shouldHaveTarget(explorer)).toBe(true);
     });
   });
 
   describe('queryJSON', () => {
     it('should remove values that are not part of the query params that get sent to Keen', () => {
-      var explorer = {
+      const explorer = {
         query: {
           someVal: 'shouldBeRemoved',
           someOtherVal: 'shouldAlsoBeRemoved',
@@ -50,14 +47,14 @@ describe('utils/ExplorerUtils', () => {
           timezone: 'US/Pacific'
         }
       };
-      assert.deepEqual(ExplorerUtils.queryJSON(explorer), {
+      expect(ExplorerUtils.queryJSON(explorer)).toEqual({
         event_collection: 'sholdRemain',
         analysis_type: 'shouldRemain',
         timezone: 'US/Pacific'
       });
     });
     it('should keep the timezone even if the timeframe type is absolute', () => {
-      var explorer = {
+      const explorer = {
         query: {
           timezone: 'US/Mountain',
           time: {
@@ -66,10 +63,10 @@ describe('utils/ExplorerUtils', () => {
           }
         }
       };
-      assert.deepPropertyVal(ExplorerUtils.queryJSON(explorer), 'timezone', 'US/Mountain');
+      expect(ExplorerUtils.queryJSON(explorer).timezone).toEqual('US/Mountain');
     });
     it('should remove values that are not valid query values', () => {
-      var explorer = {
+      const explorer = {
         query: {
           event_collection: undefined,
           analysis_type: 'shouldRemain',
@@ -77,27 +74,27 @@ describe('utils/ExplorerUtils', () => {
           filters: []
         }
       };
-      assert.deepEqual(ExplorerUtils.queryJSON(explorer), {
+      expect(ExplorerUtils.queryJSON(explorer)).toEqual({
         analysis_type: 'shouldRemain',
         timezone: 'UTC'
       });
     });
     it('should call FilterUtils.queryJSON for every filter', () => {
-      var explorer = { query: { filters: [{}, {}, {}] } };
-      var stub = sinon.stub(FilterUtils, 'queryJSON');
+      const explorer = { query: { filters: [{}, {}, {}] } };
+      const stub = jest.spyOn(FilterUtils, 'queryJSON');
       ExplorerUtils.queryJSON(explorer);
-      assert.lengthOf(stub.getCalls(), 3);
-      FilterUtils.queryJSON.restore();
+      expect(stub).toHaveBeenCalledTimes(3);
+      stub.mockRestore();
     });
     it('should call FunnelUtils.stepJSON for every step', () => {
-      var explorer = { query: { steps: [{}, {}, {}] } };
-      var stub = sinon.stub(FunnelUtils, 'stepJSON');
+      const explorer = { query: { steps: [{}, {}, {}] } };
+      const stub = jest.spyOn(FunnelUtils, 'stepJSON');
       ExplorerUtils.queryJSON(explorer);
-      assert.lengthOf(stub.getCalls(), 3);
-      FunnelUtils.stepJSON.restore();
+      expect(stub).toHaveBeenCalledTimes(3);
+      stub.mockRestore();
     });
     it('should remove empty filters', () => {
-      var explorer = {
+      const explorer = {
         query: {
           filters: [
             {
@@ -111,11 +108,11 @@ describe('utils/ExplorerUtils', () => {
           ]
         }
       };
-      var json = ExplorerUtils.queryJSON(explorer);
-      assert.lengthOf(json.filters, 1);
+      const json = ExplorerUtils.queryJSON(explorer);
+      expect(json.filters).toHaveLength(1);
     });
     it('should remove the fitlers key if it is empty after getting their queryJSON verisons', () => {
-      var explorer = {
+      const explorer = {
         query: {
           event_collection: 'click',
           analysis_type: 'count',
@@ -126,11 +123,11 @@ describe('utils/ExplorerUtils', () => {
           ]
         }
       };
-      var json = ExplorerUtils.queryJSON(explorer);
-      assert.isUndefined(json.filters);
+      const json = ExplorerUtils.queryJSON(explorer);
+      expect(json.filters).toBe(undefined);
     });
     it('should set the timeframe if there is one', () => {
-      var explorer = {
+      const explorer = {
         query: {
           event_collection: 'click',
           analysis_type: 'count',
@@ -141,8 +138,8 @@ describe('utils/ExplorerUtils', () => {
           }
         }
       };
-      var json = ExplorerUtils.queryJSON(explorer);
-      assert.deepEqual(json, {
+      const json = ExplorerUtils.queryJSON(explorer);
+      expect(json).toEqual({
         event_collection: 'click',
         analysis_type: 'count',
         timeframe: 'this_1_days',
@@ -150,15 +147,15 @@ describe('utils/ExplorerUtils', () => {
       });
     });
     it('should set the latest property to the EXRACTION_EVENT_LIMIT constant if the query is a synchronous extraction', () => {
-      var explorer = {
+      const explorer = {
         query: {
           analysis_type: 'extraction',
           event_collection: 'click',
           timezone: 'UTC'
         }
       };
-      var json = ExplorerUtils.queryJSON(explorer);
-      assert.deepEqual(json, {
+      const json = ExplorerUtils.queryJSON(explorer);
+      expect(json).toEqual({
         event_collection: 'click',
         analysis_type: 'extraction',
         latest: ExplorerUtils.EXRACTION_EVENT_LIMIT,
@@ -166,21 +163,21 @@ describe('utils/ExplorerUtils', () => {
       });
     });
     it('should not call getTimeParameters on the root query if the analysis type is funnel', () => {
-      var stub = sinon.stub(TimeframeUtils, 'getTimeParameters');
-      var explorer = {
+      const stub = jest.spyOn(TimeframeUtils, 'getTimeParameters');
+      const explorer = {
         query: {
           analysis_type: 'funnel'
         }
       };
-      var json = ExplorerUtils.queryJSON(explorer);
-      assert.isFalse(stub.called);
-      TimeframeUtils.getTimeParameters.restore();
+      const json = ExplorerUtils.queryJSON(explorer);
+      expect(stub).not.toBeCalled();
+      stub.mockRestore();
     });
   });
 
   describe('toJSON', () => {
     it('should set the refresh_rate to 0 if the analysis_type is extraction', () => {
-      var explorer = {
+      const explorer = {
         refresh_rate: 1440,
         query: {
           event_collection: 'click',
@@ -193,7 +190,7 @@ describe('utils/ExplorerUtils', () => {
           timezone: 'UTC'
         }
       };
-      assert.deepEqual(ExplorerUtils.toJSON(explorer), {
+      expect(ExplorerUtils.toJSON(explorer)).toEqual({
         query: {
           event_collection: 'click',
           analysis_type: 'extraction',
@@ -208,7 +205,7 @@ describe('utils/ExplorerUtils', () => {
 
   describe('cleanJSONforSave', () => {
     it('should remove the email field from extraction queries', () => {
-      var explorer = {
+      const explorer = {
         query: {
           analysis_type: 'extraction',
           property_names: ['a', 'b', 'c'],
@@ -216,11 +213,11 @@ describe('utils/ExplorerUtils', () => {
           email: 'eric@keen.io'
         }
       };
-      var result = ExplorerUtils.cleanJSONforSave(explorer);
-      assert.strictEqual(result.query.email, undefined);
+      const result = ExplorerUtils.cleanJSONforSave(explorer);
+      expect(result.query.email).toEqual(undefined);
     });
     it('should remove the property_names field from extraction queries', () => {
-      var explorer = {
+      const explorer = {
         query: {
           analysis_type: 'extraction',
           property_names: ['a', 'b', 'c'],
@@ -228,11 +225,11 @@ describe('utils/ExplorerUtils', () => {
           email: 'eric@keen.io'
         }
       };
-      var result = ExplorerUtils.cleanJSONforSave(explorer);
-      assert.strictEqual(result.query.property_names, undefined);
+      const result = ExplorerUtils.cleanJSONforSave(explorer);
+      expect(result.query.property_names).toEqual(undefined);
     });
     it('should set the latest field to the right value for extraction queries', () => {
-      var explorer = {
+      const explorer = {
         query: {
           analysis_type: 'extraction',
           property_names: ['a', 'b', 'c'],
@@ -240,25 +237,25 @@ describe('utils/ExplorerUtils', () => {
           email: 'eric@keen.io'
         }
       };
-      var result = ExplorerUtils.cleanJSONforSave(explorer);
-      assert.strictEqual(result.query.latest, 100);
+      const result = ExplorerUtils.cleanJSONforSave(explorer);
+      expect(result.query.latest).toEqual(100);
     });
   });
 
   describe('resultCanBeVisualized', () => {
     it('should return true if the value is the number 0', () => {
-      var explorer = {
+      const explorer = {
         response: {
           result: 0
         }
       };
-      assert.isTrue(ExplorerUtils.resultCanBeVisualized(explorer));
+      expect(ExplorerUtils.resultCanBeVisualized(explorer)).toBe(true);
     });
   });
 
   describe('mergeResponseWithExplorer', () => {
     it('should keep all explorer attributes', () => {
-      var explorer = {
+      const explorer = {
         id: 'TEMP-ABC',
         query_name: 'some-query-name',
         active: false,
@@ -292,7 +289,7 @@ describe('utils/ExplorerUtils', () => {
           }
         }
       };
-      var response = {
+      const response = {
         query_name: 'some-query-name',
         project_id: '10',
         query: {
@@ -305,7 +302,7 @@ describe('utils/ExplorerUtils', () => {
           }
         }
       };
-      var expectedExplorer = {
+      const expectedExplorer = {
         id: 'some-query-name',
         project_id: '10',
         query_name: 'some-query-name',
@@ -342,40 +339,40 @@ describe('utils/ExplorerUtils', () => {
         }
       };
       expectedExplorer.originalModel = _.cloneDeep(expectedExplorer);
-      assert.deepEqual(ExplorerUtils.mergeResponseWithExplorer(explorer, response), expectedExplorer);
+      expect(ExplorerUtils.mergeResponseWithExplorer(explorer, response)).toEqual(expectedExplorer);
     });
   });
 
   describe('formatQueryParams', () => {
     it('should call FunnelUtils.formatQueryParams for each step', () => {
-      var stub = sinon.stub(FunnelUtils, 'formatQueryParams').returns({});
+      const stub = jest.spyOn(FunnelUtils, 'formatQueryParams').mockReturnValue({});
 
       ExplorerUtils.formatQueryParams({query: { steps: [{}, {}, {}]} });
 
-      assert.lengthOf(stub.getCalls(), 3);
+      expect(stub).toHaveBeenCalledTimes(3);
 
-      FunnelUtils.formatQueryParams.restore();
+      stub.mockRestore();
     });
     it('should call unpackTimeframeParam if there is a timeframe', () => {
-      var params = {
+      const params = {
         query: {
           timeframe: 'this_1_days'
         }
       };
-      var stub = sinon.stub(TimeframeUtils, 'unpackTimeframeParam').returns({
+      const stub = jest.spyOn(TimeframeUtils, 'unpackTimeframeParam').mockReturnValue({
         time: {
           relativity: 'this',
           amount: '1',
           sub_timeframe: 'days'
         }
       });
-      var formatted = ExplorerUtils.formatQueryParams(params);
-      assert.isTrue(stub.calledOnce);
-      TimeframeUtils.unpackTimeframeParam.restore();
+      const formatted = ExplorerUtils.formatQueryParams(params);
+      expect(stub).toBeCalled();
+      stub.mockRestore();
     });
     it('should call FilterUtils.initList for list filters', () => {
-      var stub = sinon.stub(FilterUtils, 'initList');
-      var params = {
+      const stub = jest.spyOn(FilterUtils, 'initList');
+      const params = {
         query: {
           filters: [
             {
@@ -387,23 +384,23 @@ describe('utils/ExplorerUtils', () => {
         }
       };
       ExplorerUtils.formatQueryParams(params);
-      assert.isTrue(stub.calledOnce);
-      FilterUtils.initList.restore();
+      expect(stub).toHaveBeenCalled();
+      stub.mockRestore();
     });
     it('should call FilterUtils.getCoercedValue for every filter', () => {
-      var stub = sinon.stub(FilterUtils, 'getCoercedValue');
-      var params = {
+      const stub = jest.spyOn(FilterUtils, 'getCoercedValue');
+      const params = {
         query: {
           filters: [{}, {}, {}]
         }
       };
       ExplorerUtils.formatQueryParams(params);
-      assert.strictEqual(stub.callCount, 3);
-      FilterUtils.getCoercedValue.restore();
+      expect(stub).toHaveBeenCalledTimes(3);
+      stub.mockRestore();
     });
     describe('unpacking filters', () => {
       it('should properly unpack Boolean filters', () => {
-        var params = {
+        const params = {
           query: {
             filters: [{
               property_name: 'is_admin',
@@ -412,11 +409,11 @@ describe('utils/ExplorerUtils', () => {
             }]
           }
         };
-        var formattedParams = ExplorerUtils.formatQueryParams(params);
-        assert.strictEqual(formattedParams.query.filters[0].property_value, true);
+        const formattedParams = ExplorerUtils.formatQueryParams(params);
+        expect(formattedParams.query.filters[0].property_value).toEqual(true);
       });
       it('should properly unpack List filters', () => {
-        var params = {
+        const params = {
           query: {
             filters: [{
               property_name: 'is_admin',
@@ -425,11 +422,11 @@ describe('utils/ExplorerUtils', () => {
             }]
           }
         };
-        var formattedParams = ExplorerUtils.formatQueryParams(params);
-        assert.strictEqual(formattedParams.query.filters[0].property_value, "'1', '2', '3'");
+        const formattedParams = ExplorerUtils.formatQueryParams(params);
+        expect(formattedParams.query.filters[0].property_value).toEqual("'1', '2', '3'");
       });
       it('should properly unpack String filters', () => {
-        var params = {
+        const params = {
           query: {
             filters: [{
               property_name: 'is_admin',
@@ -438,11 +435,11 @@ describe('utils/ExplorerUtils', () => {
             }]
           }
         };
-        var formattedParams = ExplorerUtils.formatQueryParams(params);
-        assert.strictEqual(formattedParams.query.filters[0].property_value, "a name");
+        const formattedParams = ExplorerUtils.formatQueryParams(params);
+        expect(formattedParams.query.filters[0].property_value).toEqual("a name");
       });
       it('should properly unpack List filters', () => {
-        var params = {
+        const params = {
           query: {
             filters: [{
               property_name: 'is_admin',
@@ -451,11 +448,11 @@ describe('utils/ExplorerUtils', () => {
             }]
           }
         };
-        var formattedParams = ExplorerUtils.formatQueryParams(params);
-        assert.strictEqual(formattedParams.query.filters[0].property_value, '"this, right here", "is", "a", "list", \'1\', \'2\', \'3\', \'4\'');
+        const formattedParams = ExplorerUtils.formatQueryParams(params);
+        expect(formattedParams.query.filters[0].property_value).toEqual('"this, right here", "is", "a", "list", \'1\', \'2\', \'3\', \'4\'');
       });
       it('should properly unpack Datetime filters', () => {
-        var params = {
+        const params = {
           query: {
             filters: [{
               property_name: 'is_admin',
@@ -464,22 +461,22 @@ describe('utils/ExplorerUtils', () => {
             }]
           }
         };
-        var formattedParams = ExplorerUtils.formatQueryParams(params);
-        assert.strictEqual(formattedParams.query.filters[0].property_value, "2015-05-03T10:00:00.000");
+        const formattedParams = ExplorerUtils.formatQueryParams(params);
+        expect(formattedParams.query.filters[0].property_value).toEqual("2015-05-03T10:00:00.000");
       });
       it('should create arrays out of string group_by properties', () => {
-        var params = {
+        const params = {
           query: {
             group_by: 'string value'
           }
         };
-        var formattedParams = ExplorerUtils.formatQueryParams(params);
-        assert.sameMembers(formattedParams.query.group_by, ['string value']);
+        const formattedParams = ExplorerUtils.formatQueryParams(params);
+        expect(formattedParams.query.group_by).toEqual(['string value']);
       });
     });
     describe('opening a query created via API', () => {
       it('should create a metadata object if it is null', () => {
-        var params = {
+        const params = {
           "refresh_rate": 28800,
           "query_name": "actually-i-need-11",
           "query": {
@@ -495,11 +492,11 @@ describe('utils/ExplorerUtils', () => {
           "metadata": null
         };
 
-        var formattedParams = ExplorerUtils.formatQueryParams(params);
-        assert.isObject(formattedParams.metadata, 'Metadata object is missing');
+        const formattedParams = ExplorerUtils.formatQueryParams(params);
+        expect(formattedParams.metadata).toBeInstanceOf(Object);
       });
       it('should create a display name if it does not exist', () => {
-        var params = {
+        const params = {
           "refresh_rate": 28800,
           "query_name": "actually-i-need-11",
           "urls": {
@@ -520,11 +517,11 @@ describe('utils/ExplorerUtils', () => {
           }
         };
 
-        var formattedParams = ExplorerUtils.formatQueryParams(params);
-        assert.equal(formattedParams.metadata.display_name, params.query_name, 'Display name not set');
+        const formattedParams = ExplorerUtils.formatQueryParams(params);
+        expect(formattedParams.metadata.display_name).toEqual(params.query_name);
       });
       it('should create a display name if it is null', () => {
-        var params = {
+        const params = {
           "refresh_rate": 28800,
           "query_name": "actually-i-need-11",
           "urls": {
@@ -546,11 +543,11 @@ describe('utils/ExplorerUtils', () => {
           }
         };
 
-        var formattedParams = ExplorerUtils.formatQueryParams(params);
-        assert.equal(formattedParams.metadata.display_name, params.query_name, 'Display name not set');
+        const formattedParams = ExplorerUtils.formatQueryParams(params);
+        expect(formattedParams.metadata.display_name).toEqual(params.query_name);
       });
       it('should not overwrite the display name if it already exists', () => {
-        var params = {
+        const params = {
           "refresh_rate": 28800,
           "query_name": "actually-i-need-11",
           "urls": {
@@ -572,11 +569,11 @@ describe('utils/ExplorerUtils', () => {
           }
         };
 
-        var formattedParams = ExplorerUtils.formatQueryParams(params);
-        assert.equal(formattedParams.metadata.display_name, 'Actually I need 11', 'Display name was overwritten');
+        const formattedParams = ExplorerUtils.formatQueryParams(params);
+        expect(formattedParams.metadata.display_name).toEqual('Actually I need 11');
       });
-      it('should create a chart_type property equal metric if one does not exist and interval is not defined', () => {
-        var params = {
+      it('should create a chart_type property toEqual metric if one does not exist and interval is not defined', () => {
+        const params = {
           "refresh_rate": 28800,
           "query_name": "actually-i-need-11",
           "urls": {
@@ -600,11 +597,11 @@ describe('utils/ExplorerUtils', () => {
           }
         };
 
-        var formattedParams = ExplorerUtils.formatQueryParams(params);
-        assert.equal(formattedParams.metadata.visualization.chart_type, 'metric', 'Chart type not set');
+        const formattedParams = ExplorerUtils.formatQueryParams(params);
+        expect(formattedParams.metadata.visualization.chart_type).toEqual('metric');
       });
-      it('should create a chart_type property equal area if one does not exist and interval is defined', () => {
-        var params = {
+      it('should create a chart_type property toEqual area if one does not exist and interval is defined', () => {
+        const params = {
           "refresh_rate": 28800,
           "query_name": "actually-i-need-11",
           "urls": {
@@ -628,11 +625,11 @@ describe('utils/ExplorerUtils', () => {
           }
         };
 
-        var formattedParams = ExplorerUtils.formatQueryParams(params);
-        assert.equal(formattedParams.metadata.visualization.chart_type, 'area', 'Chart type not set');
+        const formattedParams = ExplorerUtils.formatQueryParams(params);
+        expect(formattedParams.metadata.visualization.chart_type).toEqual('area');
       });
       it('should not overwrite a chart_type that already exists', () => {
-        var params = {
+        const params = {
           "refresh_rate": 28800,
           "query_name": "actually-i-need-11",
           "urls": {
@@ -657,15 +654,17 @@ describe('utils/ExplorerUtils', () => {
           }
         };
 
-        var formattedParams = ExplorerUtils.formatQueryParams(params);
-        assert.equal(formattedParams.metadata.visualization.chart_type, 'line', 'Chart type was overwritten');
+        const formattedParams = ExplorerUtils.formatQueryParams(params);
+        expect(formattedParams.metadata.visualization.chart_type).toEqual('line');
       });
     });
   });
 
   describe('getApiQueryUrl', () => {
+    let client;
+    let explorer;
     beforeEach(() => {
-      this.explorer = _.assign({}, TestHelpers.createExplorerModel(), {
+      explorer = _.assign({}, TestHelpers.createExplorerModel(), {
         query: {
           analysis_type: 'count',
           event_collection: 'clicks',
@@ -693,64 +692,64 @@ describe('utils/ExplorerUtils', () => {
           chart_type: 'metric'
         }
       });
-      this.client = new KeenAnalysis(TestHelpers.createClient());
+      client = new KeenAnalysis(TestHelpers.createClient());
     });
 
     describe('removes unneeded attributes from the URL string', () => {
       it('analysis_type', () => {
-        var found = ExplorerUtils.getApiQueryUrl(this.client, this.explorer).match('analysis_type=');
-        assert.isNull(found);
+        const found = ExplorerUtils.getApiQueryUrl(client, explorer).match('analysis_type=');
+        expect(found).toBe(null);
       });
       it('chart_type', () => {
-        var found = ExplorerUtils.getApiQueryUrl(this.client, this.explorer).match('chart_type=');
-        assert.isNull(found);
+        const found = ExplorerUtils.getApiQueryUrl(client, explorer).match('chart_type=');
+        expect(found).toBe(null);
       });
     });
 
     describe('it constructs the URL correctly', () => {
       it('properly constructs a URL with an absolute timeframe', () => {
-        this.explorer.query.time = {
+        explorer.query.time = {
           start: new Date(),
           end: new Date()
         }
-        var found = ExplorerUtils.getApiQueryUrl(this.client, this.explorer).match(/timeframe/ig);
-        assert.lengthOf(found, 1);
+        const found = ExplorerUtils.getApiQueryUrl(client, explorer).match(/timeframe/ig);
+        expect(found).toHaveLength(1);
       });
 
       it('has the timeframe attribute', () => {
-        var found = ExplorerUtils.getApiQueryUrl(this.client, this.explorer).match(/timeframe=this_1_days/ig);
-        assert.lengthOf(found, 1);
+        const found = ExplorerUtils.getApiQueryUrl(client, explorer).match(/timeframe=this_1_days/ig);
+        expect(found).toHaveLength(1);
       });
 
       it('should properly JSON stringify the group_by property if it is a multiple item array', () => {
-        this.explorer.query.group_by = ['user.name', 'product.id'];
-        var url = ExplorerUtils.getApiQueryUrl(this.client, this.explorer);
-        var encodedValue = encodeURIComponent(JSON.stringify(['user.name', 'product.id']));
-        assert.isTrue(url.match(encodedValue).length === 1);
+        explorer.query.group_by = ['user.name', 'product.id'];
+        const url = ExplorerUtils.getApiQueryUrl(client, explorer);
+        const encodedValue = encodeURIComponent(JSON.stringify(['user.name', 'product.id']));
+        expect(url.match(encodedValue)).toHaveLength(1);
       });
 
       it('should not JSON stringify the group_by property if it is a single item array', () => {
-        this.explorer.query.group_by = ['user.name'];
-        var url = ExplorerUtils.getApiQueryUrl(this.client, this.explorer);
-        var arrayEncodedValue = encodeURIComponent(JSON.stringify(['user.name']));
-        var encodedValue = encodeURIComponent('user.name');
-        assert.strictEqual(url.match(arrayEncodedValue), null);
-        assert.isTrue(url.match(encodedValue).length === 1);
+        explorer.query.group_by = ['user.name'];
+        const url = ExplorerUtils.getApiQueryUrl(client, explorer);
+        const arrayEncodedValue = encodeURIComponent(JSON.stringify(['user.name']));
+        const encodedValue = encodeURIComponent('user.name');
+        expect(url.match(arrayEncodedValue)).toEqual(null);
+        expect(url.match(encodedValue)).toHaveLength(1);
       });
 
       describe('filters', () => {
         it('has the expected filters attribute', () => {
-          assert.include(ExplorerUtils.getApiQueryUrl(this.client, this.explorer), "filters=%5B%7B%22property_name%22%3A%22author.id%22%2C%22operator%22%3A%22eq%22%2C%22property_value%22%3A%22abc123%22%7D%2C%7B%22property_name%22%3A%22org_project_count%22%2C%22operator%22%3A%22gte%22%2C%22property_value%22%3A10%7D%5D");
+          expect(ExplorerUtils.getApiQueryUrl(client, explorer)).toContain("filters=%5B%7B%22property_name%22%3A%22author.id%22%2C%22operator%22%3A%22eq%22%2C%22property_value%22%3A%22abc123%22%7D%2C%7B%22property_name%22%3A%22org_project_count%22%2C%22operator%22%3A%22gte%22%2C%22property_value%22%3A10%7D%5D");
         });
         it('does not have the coercion_type property', () => {
-          assert.notInclude(ExplorerUtils.getApiQueryUrl(this.client, this.explorer), "coercion_type");
+          expect(ExplorerUtils.getApiQueryUrl(client, explorer)).not.toContain("coercion_type");
         });
       });
 
       describe('steps', () => {
 
         beforeEach(() => {
-          this.explorer.query = {
+          explorer.query = {
             analysis_type: 'funnel',
             steps: [{
               event_collection: 'signups',
@@ -766,15 +765,15 @@ describe('utils/ExplorerUtils', () => {
         });
 
         it('has the expected steps attribute', () => {
-          assert.include(ExplorerUtils.getApiQueryUrl(this.client, this.explorer), "&steps=%5B%7B%22")
+          expect(ExplorerUtils.getApiQueryUrl(client, explorer)).toContain("&steps=%5B%7B%22")
         });
 
         it('does not have a separate query param for each step', () => {
-          assert.notInclude(ExplorerUtils.getApiQueryUrl(this.client, this.explorer), encodeURIComponent("steps[0]"));
+          expect(ExplorerUtils.getApiQueryUrl(client, explorer)).not.toContain(encodeURIComponent("steps[0]"));
         });
 
         it('has the expected steps attribute', () => {
-          var explorer = {
+          const explorer = {
             query: {
               analysis_type: 'funnel',
               steps: [{
@@ -789,17 +788,17 @@ describe('utils/ExplorerUtils', () => {
               }]
             }
           };
-          var expectedURLcomponent = 'steps=' + encodeURIComponent(JSON.stringify([{
+          const expectedURLcomponent = 'steps=' + encodeURIComponent(JSON.stringify([{
             event_collection: 'signups',
             actor_property: 'user',
             timezone: 'US/Hawaii',
             timeframe: 'this_1_days'
           }]));
-          assert.include(ExplorerUtils.getApiQueryUrl(this.client, explorer), expectedURLcomponent);
+          expect(ExplorerUtils.getApiQueryUrl(client, explorer)).toContain(expectedURLcomponent);
         });
 
         it('does not have a separate query param for each step', () => {
-          var explorer = {
+          const explorer = {
             query: {
               analysis_type: 'funnel',
               steps: [{
@@ -814,7 +813,7 @@ describe('utils/ExplorerUtils', () => {
               }]
             }
           };
-          assert.notInclude(ExplorerUtils.getApiQueryUrl(this.client, explorer), encodeURIComponent("steps[0]"));
+          expect(ExplorerUtils.getApiQueryUrl(client, explorer)).not.toContain(encodeURIComponent("steps[0]"));
         });
 
       });
@@ -823,15 +822,17 @@ describe('utils/ExplorerUtils', () => {
   });
 
   describe('getSdkExample', () => {
+    let explorer;
+    let client;
 
     beforeEach(() => {
-      this.explorer = TestHelpers.createExplorerModel();
-      this.client = new KeenAnalysis(TestHelpers.createClient());
+      explorer = TestHelpers.createExplorerModel();
+      client = new KeenAnalysis(TestHelpers.createClient());
     });
 
     describe('removes unneeded attributes from the URL string', () => {
       beforeEach(() => {
-        this.explorer.query = {
+        explorer.query = {
           analysis_type: 'count',
           event_collection: 'clicks',
           timeframe: 'this_1_days',
@@ -842,13 +843,13 @@ describe('utils/ExplorerUtils', () => {
       });
 
       it('analysis_type', () => {
-        var found = ExplorerUtils.getSdkExample(this.explorer, this.client).match('analysis_type');
-        assert.isNull(found)
+        const found = ExplorerUtils.getSdkExample(explorer, client).match('analysis_type');
+        expect(found).toBe(null);
       });
 
       it('chart_type', () => {
-        var found = ExplorerUtils.getSdkExample(this.explorer, this.client).match('chart_type');
-        assert.isNull(found)
+        const found = ExplorerUtils.getSdkExample(explorer, client).match('chart_type');
+        expect(found).toBe(null);
       });
 
     });
@@ -856,7 +857,7 @@ describe('utils/ExplorerUtils', () => {
     describe('it constructs the example correctly', () => {
 
       it('has the timeframe attribute', () => {
-        this.explorer = {
+        explorer = {
           refresh_rate: 0,
           query: {
             analysis_type: 'count',
@@ -873,8 +874,8 @@ describe('utils/ExplorerUtils', () => {
           }
         };
 
-        var found = ExplorerUtils.getSdkExample(this.explorer, this.client).match('timeframe: "this_1_days"');
-        assert.lengthOf(found, 1);
+        const found = ExplorerUtils.getSdkExample(explorer, client).match('timeframe: "this_1_days"');
+        expect(found).toHaveLength(1);
       });
 
     })
@@ -883,9 +884,8 @@ describe('utils/ExplorerUtils', () => {
 
   describe('slugify', () => {
     it('it creates a slug using query name', () => {
-      var newName = ExplorerUtils.slugify('Saved Query name!*');
-
-      assert.equal(newName, 'saved-query-name');
+      const newName = ExplorerUtils.slugify('Saved Query name!*');
+      expect(newName).toEqual('saved-query-name');
     });
   });
 });
