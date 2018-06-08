@@ -1,13 +1,11 @@
-
-var _ from 'lodash');
-let sinon from 'sinon/pkg/sinon.js');
-var moment from 'moment');
-var TestHelpers from '../../support/TestHelpers');
-var AppDispatcher from '../../../lib/js/app/dispatcher/AppDispatcher');
-var ExplorerConstants from '../../../lib/js/app/constants/ExplorerConstants');
-var NoticeStore from '../../../lib/js/app/stores/NoticeStore');
-var ExplorerStore from '../../../lib/js/app/stores/ExplorerStore');
-var ExplorerActions from '../../../lib/js/app/actions/ExplorerActions');
+import _ from 'lodash';
+import moment from 'moment';
+import TestHelpers from '../../support/TestHelpers';
+import AppDispatcher from '../../../lib/js/app/dispatcher/AppDispatcher';
+import ExplorerConstants from '../../../lib/js/app/constants/ExplorerConstants';
+import NoticeStore from '../../../lib/js/app/stores/NoticeStore';
+import ExplorerStore from '../../../lib/js/app/stores/ExplorerStore';
+import ExplorerActions from '../../../lib/js/app/actions/ExplorerActions';
 
 describe('stores/NoticeStore', () => {
 
@@ -19,13 +17,13 @@ describe('stores/NoticeStore', () => {
     });
 
     describe('EXPLORER_SAVING actionType', () => {
-      it('should create the right notice with the "save" saveType', () => { 
+      it('should create the right notice with the "save" saveType', () => {
         AppDispatcher.dispatch({
           actionType: ExplorerConstants.EXPLORER_SAVING,
           saveType: 'save',
           id: 1
         });
-        assert.deepEqual(NoticeStore.getGlobalNotice(), {
+        expect(NoticeStore.getGlobalNotice()).toEqual({
           type: 'info',
           icon: 'info-sign',
           text: 'Saving query...',
@@ -38,7 +36,7 @@ describe('stores/NoticeStore', () => {
           saveType: 'update',
           id: 1
         });
-        assert.deepEqual(NoticeStore.getGlobalNotice(), {
+        expect(NoticeStore.getGlobalNotice()).toEqual({
           type: 'info',
           icon: 'info-sign',
           text: 'Updating query...',
@@ -54,7 +52,7 @@ describe('stores/NoticeStore', () => {
           saveType: 'save',
           id: 1
         });
-        assert.deepEqual(NoticeStore.getGlobalNotice(), {
+        expect(NoticeStore.getGlobalNotice()).toEqual({
           type: 'success',
           icon: 'ok',
           text: 'Query saved.',
@@ -67,7 +65,7 @@ describe('stores/NoticeStore', () => {
           saveType: 'update',
           id: 1
         });
-        assert.deepEqual(NoticeStore.getGlobalNotice(), {
+        expect(NoticeStore.getGlobalNotice()).toEqual({
           type: 'success',
           icon: 'ok',
           text: 'Query updated.',
@@ -85,7 +83,7 @@ describe('stores/NoticeStore', () => {
           errorMsg: errorMessage,
           id: 1
         });
-        assert.deepEqual(NoticeStore.getGlobalNotice(), {
+        expect(NoticeStore.getGlobalNotice()).toEqual({
           type: 'error',
           icon: 'remove-sign',
           text: 'Problem saving: ' + errorMessage,
@@ -100,7 +98,7 @@ describe('stores/NoticeStore', () => {
           errorMsg: errorMessage,
           id: 1
         });
-        assert.deepEqual(NoticeStore.getGlobalNotice(), {
+        expect(NoticeStore.getGlobalNotice()).toEqual({
           type: 'error',
           icon: 'remove-sign',
           text: 'Problem updating: ' + errorMessage,
@@ -115,7 +113,7 @@ describe('stores/NoticeStore', () => {
           actionType: ExplorerConstants.EXPLORER_DESTROYING,
           id: 1
         });
-        assert.deepEqual(NoticeStore.getGlobalNotice(), {
+        expect(NoticeStore.getGlobalNotice()).toEqual({
           type: 'info',
           text: 'Deleting query...',
           icon: 'info-sign',
@@ -129,7 +127,7 @@ describe('stores/NoticeStore', () => {
         AppDispatcher.dispatch({
           actionType: ExplorerConstants.EXPLORER_DESTROY_SUCCESS
         });
-        assert.deepEqual(NoticeStore.getGlobalNotice(), {
+        expect(NoticeStore.getGlobalNotice()).toEqual({
           type: 'success',
           text: 'Query deleted.',
           icon: 'ok',
@@ -146,7 +144,7 @@ describe('stores/NoticeStore', () => {
           id: 1,
           errorMsg: errorMsg
         });
-        assert.deepEqual(NoticeStore.getGlobalNotice(), {
+        expect(NoticeStore.getGlobalNotice()).toEqual({
           type: 'error',
           text: 'There was a problem deleting your query: ' + errorMsg,
           icon: 'remove-sign',
@@ -188,8 +186,8 @@ describe('stores/NoticeStore', () => {
           actionType: ExplorerConstants.EXPLORER_FOUND_INVALID,
           id: 'abc123'
         });
-        assert.lengthOf(NoticeStore.getStepNotices(), 2, 'number of notices');
-        assert.deepEqual(NoticeStore.getStepNotices()[0], {
+        expect(NoticeStore.getStepNotices()).toHaveLength(2);
+        expect(NoticeStore.getStepNotices()[0]).toEqual({
           id: 'abc123',
           location: 'step',
           stepIndex: 0,
@@ -197,7 +195,7 @@ describe('stores/NoticeStore', () => {
           type: 'error',
           icon: 'remove-sign'
         }, 'first step quality');
-        assert.deepEqual(NoticeStore.getStepNotices()[1], {
+        expect(NoticeStore.getStepNotices()[1]).toEqual({
           id: 'abc123',
           location: 'step',
           stepIndex: 2,
