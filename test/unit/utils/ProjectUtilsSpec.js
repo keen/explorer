@@ -1,18 +1,16 @@
-
-let sinon from 'sinon/pkg/sinon.js');
-var TestHelpers from '../../support/TestHelpers');
-var ProjectActions from '../../../lib/js/app/actions/ProjectActions');
-var ProjectUtils from '../../../lib/js/app/utils/ProjectUtils');
+import TestHelpers from '../../support/TestHelpers';
+import ProjectActions from '../../../lib/js/app/actions/ProjectActions';
+import ProjectUtils from '../../../lib/js/app/utils/ProjectUtils';
 
 describe('utils/ProjectUtils', () => {
 
   it('exists', () => {
-    assert.isDefined(ProjectUtils);
+    expect(ProjectUtils).not.toBe(undefined);
   });
 
   describe('getConstant', () => {
     it('should return the a project constant', () => {
-      var expectedAnalyisTypes = [
+      const expectedAnalyisTypes = [
         'sum',
         'count',
         'count_unique',
@@ -25,31 +23,22 @@ describe('utils/ProjectUtils', () => {
         'median',
         'funnel'
       ];
-      assert.sameMembers(ProjectUtils.getConstant('ANALYSIS_TYPES'), expectedAnalyisTypes);
-    });
-  });
-
-  describe('constants', () => {
-    describe('filter operators', () => {
-      describe('eq', () => {
-        xit('should return the right coercion types', () => {
-          
-        });
-      });
+      expect(ProjectUtils.getConstant('ANALYSIS_TYPES')).toEqual(expectedAnalyisTypes);
     });
   });
 
   describe('getPropertyType', () => {
-    before(() => {
-      this.project = { schema: TestHelpers.buildProjectSchema() };
+    let project;
+    beforeAll(() => {
+      project = { schema: TestHelpers.buildProjectSchema() };
     });
 
     it('should return the right type of property if it exists ', () => {
-      assert.strictEqual(ProjectUtils.getPropertyType(this.project, 'click', 'numProp'), 'num');
-      assert.strictEqual(ProjectUtils.getPropertyType(this.project, 'click', 'geoProp'), 'geo');
-      assert.strictEqual(ProjectUtils.getPropertyType(this.project, 'click', 'listProp'), 'list');
+      expect(ProjectUtils.getPropertyType(project, 'click', 'numProp')).toEqual('num');
+      expect(ProjectUtils.getPropertyType(project, 'click', 'geoProp')).toEqual('geo');
+      expect(ProjectUtils.getPropertyType(project, 'click', 'listProp')).toEqual('list');
     });
-    
+
   });
 
 });
