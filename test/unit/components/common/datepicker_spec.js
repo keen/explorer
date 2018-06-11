@@ -1,36 +1,37 @@
-var assert = require('chai').assert;
-let sinon = require('sinon/pkg/sinon.js');
-var _ = require('lodash');
-var React = require('react');
-var ReactDOM = require('react-dom');
-var TestUtils = require('react-addons-test-utils');
-var Datepicker = require('../../../../client/js/app/components/common/datepicker.js');
-var TestHelpers = require('../../../support/TestHelpers');
+import _ from 'lodash';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import TestUtils from 'react-addons-test-utils';
 
-describe('components/common/datepicker', function() {
-  before(function() {
-    this.onSetStub = sinon.stub();
-    this.component = TestUtils.renderIntoDocument(<Datepicker name="Picker" onSet={this.onSetStub} />);
+import Datepicker from '../../../../lib/js/app/components/common/datepicker.js';
+import TestHelpers from '../../../support/TestHelpers';
+
+describe('components/common/datepicker', () => {
+  let onSetStub;
+  let component;
+  beforeAll(() => {
+    onSetStub = jest.fn();
+    component = TestUtils.renderIntoDocument(<Datepicker name="Picker" onSet={onSetStub} />);
   });
 
-  beforeEach(function() {
-    this.onSetStub.reset();
+  beforeEach(() => {
+    onSetStub.mockClear();
   });
 
-  describe('setup', function() {
-    it('is of the right type', function() {
-      assert.isTrue(TestUtils.isCompositeComponentWithType(this.component, Datepicker));
+  describe('setup', () => {
+    it('is of the right type', () => {
+      expect(TestUtils.isCompositeComponentWithType(component, Datepicker)).toBe(true);
     });
-    it('has one input', function(){
-      assert.lengthOf(TestUtils.scryRenderedDOMComponentsWithTag(this.component, 'input'), 1);
+    it('has one input', () => {
+      expect(TestUtils.scryRenderedDOMComponentsWithTag(component, 'input').length).toBe(1);
     });
   });
 
-  describe('interactions', function() {
-    it('should call the onSet prop function with the correct day', function() {
-      var inputNode = this.component.refs.datepicker;
+  describe('interactions', () => {
+    it('should call the onSet prop function with the correct day', () => {
+      var inputNode = component.refs.datepicker;
       TestUtils.Simulate.focus(inputNode);
-      var dayNodes = $(ReactDOM.findDOMNode(this.component)).find('td[role="presentation"] div');
+      var dayNodes = $(ReactDOM.findDOMNode(component)).find('td[role="presentation"] div');
       var fifteenthDayNode;
       _.each(dayNodes, function(dayNode) {
         if (dayNode.textContent === '15') {
@@ -38,7 +39,7 @@ describe('components/common/datepicker', function() {
         }
       });
       $(fifteenthDayNode).click();
-      assert.strictEqual(this.onSetStub.getCall(0).args[1].getDate(), 15);
+      expect(onSetStub.mock.calls[0][1].getDate()).toBe(15);
     });
   });
 

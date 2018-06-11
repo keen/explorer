@@ -1,46 +1,45 @@
-let sinon = require('sinon/pkg/sinon.js');
-var assert = require('chai').assert;
-var _ = require('lodash');
-var React = require('react');
-var ReactDOM = require('react-dom');
-var TestUtils = require('react-addons-test-utils');
-var $R = require('rquery')(_, React, ReactDOM, TestUtils);
-var TestHelpers = require('../../../support/TestHelpers.js');
-var FilterManager = require('../../../../client/js/app/components/common/filter_manager.js');
+import  _ from 'lodash';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import TestUtils from 'react-addons-test-utils';
+import rquery from 'rquery';
+import TestHelpers from '../../../support/TestHelpers.js';
+import FilterManager from '../../../../lib/js/app/components/common/filter_manager.js';
+const $R = rquery(_, React, ReactDOM, TestUtils);
 
 function defaultProps() {
   return {
     eventCollection: null,
     filters: [],
-    handleChange: sinon.stub(),
-    removeFilter: sinon.stub(),
-    addFilter: sinon.stub(),
-    getPropertyType: sinon.stub().returns('String'),
+    handleChange: jest.fn(),
+    removeFilter: jest.fn(),
+    addFilter: jest.fn(),
+    getPropertyType: jest.fn().mockReturnValue('String'),
     propertyNames: []
   };
 }
 
-describe('components/common/filter_manager', function() {
-  it('has a message telling the user to choose an event collection is one is not set', function(){
-    var component = TestHelpers.renderComponent(FilterManager, defaultProps());
-    var message = 'Please select an Event Collection before making a filter.';
+describe('components/common/filter_manager', () => {
+  it('has a message telling the user to choose an event collection is one is not set', () => {
+    const component = TestHelpers.renderComponent(FilterManager, defaultProps());
+    const message = 'Please select an Event Collection before making a filter.';
 
-    assert.equal(message, TestUtils.findRenderedDOMComponentWithClass(component, 'no-filters-msg').textContent);
+    expect(message).toBe(TestUtils.findRenderedDOMComponentWithClass(component, 'no-filters-msg').textContent);
   });
-  it("no longer shows the message when an event collection is set", function() {
-    var component = TestHelpers.renderComponent(FilterManager, _.assign(defaultProps(), {
+  it("no longer shows the message when an event collection is set", () => {
+    const component = TestHelpers.renderComponent(FilterManager, _.assign(defaultProps(), {
       eventCollection: 'click'
     }));
-    assert.lengthOf(TestUtils.scryRenderedDOMComponentsWithClass(component, 'no-filters-msg'), 0);
+    expect(TestUtils.scryRenderedDOMComponentsWithClass(component, 'no-filters-msg').length).toBe(0);
   });
-  it("has an add filter button when an event collection is set", function() {
-    var component = TestHelpers.renderComponent(FilterManager, _.assign(defaultProps(), {
+  it("has an add filter button when an event collection is set", () => {
+    const component = TestHelpers.renderComponent(FilterManager, _.assign(defaultProps(), {
       eventCollection: 'click'
     }));
-    assert.lengthOf(TestUtils.scryRenderedDOMComponentsWithClass(component, 'add-filter'), 1);
+    expect(TestUtils.scryRenderedDOMComponentsWithClass(component, 'add-filter').length).toBe(1);
   });
-  it('should call removeFilter with the correct filter index when the remove button is clicked', function () {
-    var component = TestHelpers.renderComponent(FilterManager, _.assign(defaultProps(), {
+  it('should call removeFilter with the correct filter index when the remove button is clicked', () => {
+    const component = TestHelpers.renderComponent(FilterManager, _.assign(defaultProps(), {
       eventCollection: 'click',
       filters: [
         TestHelpers.createFilter(),
@@ -48,8 +47,8 @@ describe('components/common/filter_manager', function() {
         TestHelpers.createFilter()
       ]
     }));
-    var node = $R(component).find('.remove-filter').components[1];
+    const node = $R(component).find('.remove-filter').components[1];
     TestUtils.Simulate.click(node);
-    assert.isTrue(component.props.removeFilter.calledWith(1));
+    expect(component.props.removeFilter).toHaveBeenCalledTimes(1);
   });
 });

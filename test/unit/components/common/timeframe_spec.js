@@ -1,75 +1,79 @@
-var assert = require('chai').assert;
-var _ = require('lodash');
-var moment = require('moment');
-let sinon = require('sinon/pkg/sinon.js');
-var Timeframe = require('../../../../client/js/app/components/common/timeframe.js');
-var Timezone = require('../../../../client/js/app/components/common/timezone.js');
-var RelativePicker = require('../../../../client/js/app/components/common/relative_picker.js');
-var AbsolutePicker = require('../../../../client/js/app/components/common/absolute_picker.js');
-var ReactSelect = require('../../../../client/js/app/components/common/react_select.js');
-var FieldsToggle = require('../../../../client/js/app/components/common/fields_toggle.js');
-var ExplorerActions = require('../../../../client/js/app/actions/ExplorerActions');
-var React = require('react');
-var TestUtils = require('react-addons-test-utils');
-var TestHelpers = require('../../../support/TestHelpers');
+import _ from 'lodash';
+import moment from 'moment';
+import React from 'react';
+import TestUtils from 'react-addons-test-utils';
 
-describe('components/common/timeframe', function() {
-  before(function () {
-    this.handleChangeStub = sinon.stub();
+import Timeframe from '../../../../lib/js/app/components/common/timeframe.js';
+import Timezone from '../../../../lib/js/app/components/common/timezone.js';
+import RelativePicker from '../../../../lib/js/app/components/common/relative_picker.js';
+import AbsolutePicker from '../../../../lib/js/app/components/common/absolute_picker.js';
+import ReactSelect from '../../../../lib/js/app/components/common/react_select.js';
+import FieldsToggle from '../../../../lib/js/app/components/common/fields_toggle.js';
+import ExplorerActions from '../../../../lib/js/app/actions/ExplorerActions';
+import TestHelpers from '../../../support/TestHelpers';
+
+describe('components/common/timeframe', () => {
+  let handleChangeStub;
+  let model;
+  let project;
+  let component;
+
+  beforeAll(() => {
+    handleChangeStub = jest.fn();
   });
 
-  beforeEach(function() {
-    this.handleChangeStub.reset();
+  beforeEach(() => {
+    handleChangeStub.mockClear();
 
-    this.model = TestHelpers.createExplorerModel();
-    this.project = TestHelpers.createProject();
+    model = TestHelpers.createExplorerModel();
+    project = TestHelpers.createProject();
 
-    this.component = TestUtils.renderIntoDocument(<Timeframe time={this.model.query.time}
-                                                             timezone={this.model.query.timezone}
-                                                             handleChange={this.handleChangeStub} />
+    component = TestUtils.renderIntoDocument(<Timeframe time={model.query.time}
+                                                             timezone={model.query.timezone}
+                                                             handleChange={handleChangeStub} />
    )
   });
 
-  describe('setup', function() {
-    it('is of the right type', function() {
-      assert.isTrue(TestUtils.isCompositeComponentWithType(this.component, Timeframe));
+  describe('setup', () => {
+    it('is of the right type', () => {
+      expect(TestUtils.isCompositeComponentWithType(component, Timeframe)).toBe(true);
     });
 
-    it('has the relative tab selected by default', function(){
-      var relativeTab = TestUtils.findRenderedDOMComponentWithTag(this.component, 'ul').childNodes[0];
-      assert.isTrue(relativeTab.classList.contains('active'));
+    it('has the relative tab selected by default', () => {
+      const relativeTab = TestUtils.findRenderedDOMComponentWithTag(component, 'ul').childNodes[0];
+      expect(relativeTab.classList.contains('active')).toBe(true);
     });
 
-    it('has the relative picker shown by default', function(){
-      assert.lengthOf(TestUtils.scryRenderedDOMComponentsWithClass(this.component, 'relative-timeframe-picker'), 1);
-      assert.lengthOf(TestUtils.scryRenderedDOMComponentsWithClass(this.component, 'absolute-timeframe-picker'), 0);
+    it('has the relative picker shown by default', () => {
+      expect(TestUtils.scryRenderedDOMComponentsWithClass(component, 'relative-timeframe-picker')).toHaveLength(1);
+      expect(TestUtils.scryRenderedDOMComponentsWithClass(component, 'absolute-timeframe-picker')).toHaveLength(0);
     });
 
-    it('has one Timezone component', function(){
-      assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, Timezone), 1);
+    it('has one Timezone component', () => {
+      expect(TestUtils.scryRenderedComponentsWithType(component, Timezone)).toHaveLength(1);
     });
   });
 
-  describe('interactions', function() {
+  describe('interactions', () => {
 
-    describe('absolute_picker', function () {
-      it('clicking the absolute tab updates the model to an absolute timeframe', function () {
-        this.absoluteTimeframeLink = TestUtils.findRenderedDOMComponentWithClass(this.component, 'absolute-tab');
-        TestUtils.Simulate.click(this.absoluteTimeframeLink);
-        assert.strictEqual(this.handleChangeStub.getCall(0).args[0], 'time')
-        assert.deepEqual(this.handleChangeStub.getCall(0).args[1], {
+    describe('absolute_picker', () => {
+      it('clicking the absolute tab updates the model to an absolute timeframe', () => {
+        const absoluteTimeframeLink = TestUtils.findRenderedDOMComponentWithClass(component, 'absolute-tab');
+        TestUtils.Simulate.click(absoluteTimeframeLink);
+        expect(handleChangeStub.mock.calls[0][0]).toEqual('time');
+        expect(handleChangeStub.mock.calls[0][1]).toEqual({
           start: new Date(moment().subtract(1, 'days').startOf('day').format()),
           end: new Date(moment().startOf('day').format())
         });
       });
     });
 
-    describe('relative_picker', function () {
-      it('clicking the relative tab updates the model to a relative timeframe', function () {
-        this.relativeTimeframeLink = TestUtils.findRenderedDOMComponentWithClass(this.component, 'relative-tab');
-        TestUtils.Simulate.click(this.relativeTimeframeLink);
-        assert.strictEqual(this.handleChangeStub.getCall(0).args[0], 'time')
-        assert.deepEqual(this.handleChangeStub.getCall(0).args[1], {
+    describe('relative_picker', () => {
+      it('clicking the relative tab updates the model to a relative timeframe', () => {
+        const relativeTimeframeLink = TestUtils.findRenderedDOMComponentWithClass(component, 'relative-tab');
+        TestUtils.Simulate.click(relativeTimeframeLink);
+        expect(handleChangeStub.mock.calls[0][0]).toEqual('time');
+        expect(handleChangeStub.mock.calls[0][1]).toEqual({
           relativity: 'this',
           amount: '14',
           sub_timeframe: 'days'

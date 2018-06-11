@@ -1,15 +1,13 @@
-var assert = require('chai').assert;
-let sinon = require('sinon/pkg/sinon.js');
-var QueryStringUtils = require('../../../client/js/app/utils/QueryStringUtils');
+import QueryStringUtils from '../../../lib/js/app/utils/QueryStringUtils';
 
-describe('utils/QueryStringUtils', function() {
-  
-  describe('getQueryAttributes', function() {
-    
-    it('should properly parse funnel step filters', function () {
-      sinon.stub(QueryStringUtils, 'getSearchString').returns('query[steps][0][filters][0][property_value][0]=testing');
-      assert.sameMembers(QueryStringUtils.getQueryAttributes().query.steps[0].filters[0].property_value, ['testing']);
-      QueryStringUtils.getSearchString.restore();
+describe('utils/QueryStringUtils', () => {
+
+  describe('getQueryAttributes', () => {
+
+    it('should properly parse funnel step filters', () => {
+      const spy = jest.spyOn(QueryStringUtils, 'getSearchString').mockReturnValue('query[steps][0][filters][0][property_value][0]=testing');
+      expect(QueryStringUtils.getQueryAttributes().query.steps[0].filters[0].property_value).toEqual(['testing']);
+      spy.mockRestore();
     });
 
   });

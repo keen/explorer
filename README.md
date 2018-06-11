@@ -1,6 +1,24 @@
 # Keen IO Explorer
 
-![](https://s3.amazonaws.com/keen_web_static/assets/img/keen-explorer-v2.0.0.png)
+## Install
+
+```ssh
+npm install keen-explorer --save
+```
+## Example
+
+```javascript
+import KeenExplorer from 'keen-explorer';
+
+const myExplorer = new KeenExplorer('#keen-explorer-html-element')
+  .client({
+    projectId: 'PROJECT_ID',
+    readKey: 'READ_KEY',
+    masterKey: 'MASTER_KEY'
+  })
+  .persistence(true)
+  .fetch();
+```
 
 [Check out the demo here.](http://keen.github.io/explorer/) The Keen IO Explorer is an open source point-and-click interface for querying and visualizing your event data. It's maintained by the team at [Keen IO](https://keen.io/).
 
@@ -15,10 +33,6 @@ Read on for instructions on how to use the Explorer on your website or in your w
 
 ### How to use Explorer on your site or in your app
 
-#### Include the necessary files
-
-You have three options for including the necessary Explorer files:
-
 ##### Option 1: Use the hosted assets from our CDN
 
 ```html
@@ -27,8 +41,8 @@ You have three options for including the necessary Explorer files:
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
 <!-- Explorer Assets -->
-<link rel="stylesheet" href="https://d26b395fwzu5fz.cloudfront.net/apps/keen-explorer-3.2.0.min.css">
-<script src="https://d26b395fwzu5fz.cloudfront.net/apps/keen-explorer-3.2.0.min.js"></script>
+<link rel="stylesheet" href="https://d26b395fwzu5fz.cloudfront.net/apps/keen-explorer-4.0.0.min.css">
+<script src="https://d26b395fwzu5fz.cloudfront.net/apps/keen-explorer-4.0.0.min.js"></script>
 ```
 
 ##### Option 2: Include the files yourself
@@ -49,12 +63,12 @@ Somewhere on the page that you want to show Explorer you'll need to configure a 
 
 ```html
 <div id="keen-explorer"></div>
-<script type="text/javascript">
-  var myExplorer = new Keen.Explorer.App('#keen-explorer')
+<script>
+  const myExplorer = new KeenExplorer('#keen-explorer')
     .client({
-      projectId: "PROJECT_ID",
-      readKey: "READ_KEY",
-      masterKey: "MASTER_KEY"
+      projectId: 'PROJECT_ID',
+      readKey: 'READ_KEY',
+      masterKey: 'MASTER_KEY'
     })
     .persistence(true)
     .fetch();
@@ -63,32 +77,24 @@ Somewhere on the page that you want to show Explorer you'll need to configure a 
 
 And that's it. You're done!
 
-### How to develop with the Explorer
+## Custom builds of the Explorer
 
-  1. `git clone` this repository or [Download the source code](https://github.com/keen/explorer/archive/master.zip)
-  1. Navigate to the project directory and make a copy of or rename the demo file:
-  `cp demo/example_index.html demo/index.html` or `mv demo/example_index.html demo/index.html`
-  2. Configure the Keen.js client in the demo file at demo/index.html with your project ID and Keen IO API keys.
+  1. Clone our repo `git clone https://github.com/keen/explorer.git`
+  2. Configure the Keen.js client in the demo file at test/demo/demo-config.js with your project ID and Keen IO API keys.
   3. Install the dependencies with `npm install`.
-  4. Run the development script with `npm run dev` or `export PORT=8082; npm run dev`.
-  5. You can now view the demo locally at `http://localhost:8081/` or your specified port.
+  4. Run the development script with `npm run start`.
+  5. You can now view the demo locally at `http://localhost:8080/` or your specified port.
 
-#### Building the project:
+### Building the project:
 
 The project is built with [Webpack](https://github.com/webpack/webpack).
 
-* Run `npm run production` from the root directory of the project to build ALL files, including the minified versions for production use.
+* Run `npm run build` from the root directory of the project to build ALL files, including the minified versions for production use.
 
 #### Testing
 
 **Run Unit Tests**
 * Run `npm run test` to run all the tests. Currently there are only unit tests.
-
-**Run In Browser Mocha Unit Tests**
-This isn't normally required, but if you need to, you can run the tests in the browser.
-
-* Run a server on another port, we use [http-server](https://www.npmjs.org/package/http-server) on port `8082`
-* See the mocha unit test suite run on `http://localhost:8082/test/unit/`
 
 ### FAQ
 
@@ -138,5 +144,3 @@ These are the major technologies used in the project.
 * [Flux](http://facebook.github.io/flux/) for help managing the data model layer.
 * [Bootstrap](http://getbootstrap.com/) for our CSS framework.
 * [NPM](https://www.npmjs.org/) for dependency management.
-* [Browserify](http://browserify.org/) to compile modules for use in the browser.
-* [GulpJS](http://gulpjs.com/) for a task/build runner.

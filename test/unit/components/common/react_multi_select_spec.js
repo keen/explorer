@@ -1,42 +1,47 @@
-const assert = require('chai').assert;
-const sinon = require('sinon/pkg/sinon.js');
-const React = require('react');
-const ReactDOM = require('react-dom');
-const $R = require('rquery')(_, React, ReactDOM, TestUtils);
-const TestUtils = require('react-addons-test-utils');
+import  _ from 'lodash';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import TestUtils from 'react-addons-test-utils';
+import rquery from 'rquery';
 
-const ReactMultiSelect = require('../../../../client/js/app/components/common/react_multi_select.js');
-const TestHelpers = require('../../../support/TestHelpers');
+import ProjectUtils from '../../../../lib/js/app/utils/ProjectUtils.js';
+import ReactSelect from '../../../../lib/js/app/components/common/react_select.js';
+import ReactMultiSelect from '../../../../lib/js/app/components/common/react_multi_select.js';
+import TestHelpers from '../../../support/TestHelpers';
 
-describe('components/common/react_multi_select', function() {
-  before(function() {
-    this.handleChangeStub = sinon.stub();
+const $R = rquery(_, React, ReactDOM, TestUtils);
+
+describe('components/common/react_multi_select', () => {
+  let handleChangeStub;
+  let component;
+  beforeAll(() => {
+    handleChangeStub = jest.fn();
     const props = {
       name: 'filter-properties',
       model: TestHelpers.createExplorerModel(),
       label: "Filter extraction properties",
-      handleChange: this.handleChangeStub,
+      handleChange: handleChangeStub,
       items: ['name', 'email', 'user.id']
     }
 
-    this.component = TestUtils.renderIntoDocument(<ReactMultiSelect {...props} />);
+    component = TestUtils.renderIntoDocument(<ReactMultiSelect {...props} />);
   });
 
-  it('is of right type', function() {
-    assert.isTrue(TestUtils.isCompositeComponentWithType(this.component, ReactMultiSelect));
+  it('is of right type', () => {
+    expect(TestUtils.isCompositeComponentWithType(component, ReactMultiSelect)).toBe(true);
   });
 
-  it('displays correct number of options', function() {
-    const options = ReactDOM.findDOMNode(this.component.refs.menu).childNodes;
+  it('displays correct number of options', () => {
+    const options = ReactDOM.findDOMNode(component.refs.menu).childNodes;
 
-    assert.equal(options.length, 3);
+    expect(options.length).toBe(3);
   });
 
-  it('calls handleChange function when selection is made', function() {
-    const options = ReactDOM.findDOMNode(this.component.refs.menu).childNodes;
+  it('calls handleChange function when selection is made', () => {
+    const options = ReactDOM.findDOMNode(component.refs.menu).childNodes;
     TestUtils.Simulate.click(options[0]);
 
-    assert.isTrue(this.handleChangeStub.called);
+    expect(handleChangeStub).toHaveBeenCalled();
   });
 
 });

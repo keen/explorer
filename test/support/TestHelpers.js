@@ -1,34 +1,113 @@
-var _ = require('lodash');
-var React = require('react');
-var KeenAnalysis = require('keen-analysis');
-var TestUtils = require('react-addons-test-utils');
-var ProjectUtils = require('../../client/js/app/utils/ProjectUtils');
-var FormatUtils = require('../../client/js/app/utils/FormatUtils');
-let sinon = require('sinon/pkg/sinon.js');
+import _ from 'lodash';
+import React from 'react';
+import KeenAnalysis from 'keen-analysis';
+import TestUtils from 'react-addons-test-utils';
+import ProjectUtils from '../../lib/js/app/utils/ProjectUtils';
+import FormatUtils from '../../lib/js/app/utils/FormatUtils';
+
+const buildProjectSchema = () => {
+  return {
+    'click': {
+      name: 'click',
+      properties: {
+        'stringProp': 'string',
+        'datetimeProp': 'datetime',
+        'numProp': 'num',
+        'nullProp': 'null',
+        'boolProp': 'bool',
+        'listProp': 'list',
+        'geoProp': 'geo'
+      },
+      url: 'https://api.keen.io/3.0/projects/projectId/',
+      loading: false,
+      recentEvents: null
+    },
+    'test/test': {
+      name: 'test/test',
+      properties: {
+        'stringProp': 'string',
+        'datetimeProp': 'datetime',
+        'numProp': 'num',
+        'nullProp': 'null',
+        'boolProp': 'bool',
+        'listProp': 'list',
+        'geoProp': 'geo'
+      },
+      url: 'https://api.keen.io/3.0/projects/projectId/',
+      loading: false,
+      recentEvents: null
+    },
+    'test test': {
+      name: 'test test',
+      properties: {
+        'stringProp': 'string',
+        'datetimeProp': 'datetime',
+        'numProp': 'num',
+        'nullProp': 'null',
+        'boolProp': 'bool',
+        'listProp': 'list',
+        'geoProp': 'geo'
+      },
+      url: 'https://api.keen.io/3.0/projects/projectId/',
+      loading: false,
+      recentEvents: null
+    },
+    'test#test': {
+      name: 'test#test',
+      properties: {
+        'stringProp': 'string',
+      },
+      url: 'https://api.keen.io/3.0/projects/projectId/',
+      loading: false,
+      recentEvents: null
+    },
+    'test?test': {
+      name: 'test?test',
+      properties: {
+        'stringProp': 'string',
+      },
+    },
+    'test:test': {
+      name: 'test:test',
+      properties: {
+        'stringProp': 'string',
+      },
+    },
+    'test&test': {
+      name: 'test&test',
+      properties: {
+        'stringProp': 'string',
+      },
+    },
+  };
+};
 
 module.exports = {
 
-  renderComponent: function(componentClass, props) {
-    var Component = React.createFactory(componentClass);
+  renderComponent: (componentClass, props) => {
+    const Component = React.createFactory(componentClass);
     return TestUtils.renderIntoDocument(Component(props));
   },
 
-  createClient: function() {
+  createClient: () => {
     return {
       projectId: 'projectId',
       protocol: 'https',
       host: 'api.keen.io',
-      masterKey: 'masterKey'
+      masterKey: 'masterKey',
+      writeKey: 'writeKey',
+      readKey: 'readKey',
+      requestType: 'xhr'
     };
   },
 
-  fakeEvent: function(){
+  fakeEvent: () => {
     return {
-      preventDefault: function(){}
+      preventDefault: () => {}
     }
   },
 
-  createExplorerModel: function() {
+  createExplorerModel: () => {
     return {
       id: 'some_id',
       active: false,
@@ -69,7 +148,7 @@ module.exports = {
     };
   },
 
-  createFilter: function() {
+  createFilter: () => {
     return {
       property_name: null,
       property_value: null,
@@ -80,7 +159,7 @@ module.exports = {
     };
   },
 
-  createStep: function() {
+  createStep: () => {
     return {
       event_collection: null,
       actor_property: null,
@@ -100,34 +179,17 @@ module.exports = {
     };
   },
 
-  buildProjectSchema: function() {
-    return {
-      'click': {
-        name: 'click',
-        properties: {
-          'stringProp': 'string',
-          'datetimeProp': 'datetime',
-          'numProp': 'num',
-          'nullProp': 'null',
-          'boolProp': 'bool',
-          'listProp': 'list',
-          'geoProp': 'geo'
-        },
-        url: 'https://api.keen.io/3.0/projects/projectId/',
-        loading: false,
-        recentEvents: null
-      }
-    };
-  },
+  buildProjectSchema,
 
-  createProject: function() {
-    var schema = this.buildProjectSchema();
+  createProject: () => {
+    const schema = buildProjectSchema();
     return {
       client: new KeenAnalysis({
         projectId: 'projectId',
         protocol: 'https',
-        host: 'api.keen.io/3.0',
-        masterKey: 'masterKey'
+        host: 'api.keen.io',
+        masterKey: 'masterKey',
+        apiVersion: '3.0'
       }),
       loading: false,
       eventCollections: FormatUtils.sortItems(_.map(schema, 'name')),
@@ -135,7 +197,7 @@ module.exports = {
     };
   },
 
-  createDataviz: function() {
+  createDataviz: () => {
     return {
       chartType: function(){ return this; },
       data: 		 function(){ return this; },
@@ -153,15 +215,15 @@ module.exports = {
     };
   },
 
-  createFilters: function() {
-    var standardFilter = {
+  createFilters: () => {
+    const standardFilter = {
       property_name: 'propOne',
       operator: 'eq',
       property_value: 'abc',
       coercion_type: 'String',
     };
 
-    var geoFilter = {
+    const geoFilter = {
       property_name: 'keen.location.coordinates',
       operator: 'within',
       property_value: {
@@ -171,7 +233,7 @@ module.exports = {
       coercion_type: 'Geo'
     };
 
-    var listFilter = {
+    const listFilter = {
       property_name: 'propOne',
       operator: 'in',
       property_value: ["one", "two"],

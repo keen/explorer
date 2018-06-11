@@ -1,22 +1,22 @@
-var assert = require('chai').assert;
-var React = require('react');
-var TestUtils = require('react-addons-test-utils');
-var _ = require('lodash');
-let sinon = require('sinon/pkg/sinon.js');
-var Persistence = require('../../../../client/js/app/modules/persistence/persistence.js');
-var KeenSavedQueries = require('../../../../client/js/app/modules/persistence/KeenSavedQueries.js');
 
-describe('modules/persistence/persistence', function(){
+import React from 'react';
+import TestUtils from 'react-addons-test-utils';
+import _ from 'lodash';
+import Persistence from '../../../../lib/js/app/modules/persistence/persistence.js';
+import KeenSavedQueries from '../../../../lib/js/app/modules/persistence/KeenSavedQueries.js';
 
-  before(function () {
-    this.persistence = Persistence;
+describe('modules/persistence/persistence', () => {
+  let persistanceObj;
+
+  beforeAll(() => {
+    persistanceObj = Persistence;
   });
 
-  it('exists', function(){
-    assert.isDefined(Persistence);
+  it('exists', () => {
+    expect(persistanceObj).not.toBe(undefined);
   });
 
-  it('has a KeenSavedQueries key equal to the KeenSavedQueries class', function(){
-    assert.equal(Persistence.KeenSavedQueries, KeenSavedQueries);
+  it('has a KeenSavedQueries key equal to the KeenSavedQueries class', () => {
+    expect(Persistence.KeenSavedQueries).toEqual(KeenSavedQueries);
   });
 });

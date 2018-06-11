@@ -1,18 +1,16 @@
-var assert = require('chai').assert;
-let sinon = require('sinon/pkg/sinon.js');
-var TestHelpers = require('../../support/TestHelpers');
-var ProjectActions = require('../../../client/js/app/actions/ProjectActions');
-var ProjectUtils = require('../../../client/js/app/utils/ProjectUtils');
+import TestHelpers from '../../support/TestHelpers';
+import ProjectActions from '../../../lib/js/app/actions/ProjectActions';
+import ProjectUtils from '../../../lib/js/app/utils/ProjectUtils';
 
-describe('utils/ProjectUtils', function() {
+describe('utils/ProjectUtils', () => {
 
-  it('exists', function(){
-    assert.isDefined(ProjectUtils);
+  it('exists', () => {
+    expect(ProjectUtils).not.toBe(undefined);
   });
 
-  describe('getConstant', function() {
-    it('should return the a project constant', function(){
-      var expectedAnalyisTypes = [
+  describe('getConstant', () => {
+    it('should return the a project constant', () => {
+      const expectedAnalyisTypes = [
         'sum',
         'count',
         'count_unique',
@@ -25,31 +23,22 @@ describe('utils/ProjectUtils', function() {
         'median',
         'funnel'
       ];
-      assert.sameMembers(ProjectUtils.getConstant('ANALYSIS_TYPES'), expectedAnalyisTypes);
+      expect(ProjectUtils.getConstant('ANALYSIS_TYPES')).toEqual(expectedAnalyisTypes);
     });
   });
 
-  describe('constants', function () {
-    describe('filter operators', function () {
-      describe('eq', function () {
-        xit('should return the right coercion types', function () {
-          
-        });
-      });
-    });
-  });
-
-  describe('getPropertyType', function () {
-    before(function () {
-      this.project = { schema: TestHelpers.buildProjectSchema() };
+  describe('getPropertyType', () => {
+    let project;
+    beforeAll(() => {
+      project = { schema: TestHelpers.buildProjectSchema() };
     });
 
-    it('should return the right type of property if it exists ', function () {
-      assert.strictEqual(ProjectUtils.getPropertyType(this.project, 'click', 'numProp'), 'num');
-      assert.strictEqual(ProjectUtils.getPropertyType(this.project, 'click', 'geoProp'), 'geo');
-      assert.strictEqual(ProjectUtils.getPropertyType(this.project, 'click', 'listProp'), 'list');
+    it('should return the right type of property if it exists ', () => {
+      expect(ProjectUtils.getPropertyType(project, 'click', 'numProp')).toEqual('num');
+      expect(ProjectUtils.getPropertyType(project, 'click', 'geoProp')).toEqual('geo');
+      expect(ProjectUtils.getPropertyType(project, 'click', 'listProp')).toEqual('list');
     });
-    
+
   });
 
 });

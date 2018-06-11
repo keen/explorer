@@ -1,49 +1,51 @@
-var assert = require('chai').assert;
-var React = require('react');
-var _ = require('lodash');
-let sinon = require('sinon/pkg/sinon.js');
-var TestUtils = require('react-addons-test-utils');
-var TestHelpers = require('../../../support/TestHelpers');
 
-var ExplorerActions = require('../../../../client/js/app/actions/ExplorerActions');
-var TimeframeUtils = require('../../../../client/js/app/utils/TimeframeUtils');
-var ProjectUtils = require('../../../../client/js/app/utils/ProjectUtils');
-var Timezone = require('../../../../client/js/app/components/common/timezone.js');
+import React from 'react';
+import _ from 'lodash';
+import TestUtils from 'react-addons-test-utils';
+import TestHelpers from '../../../support/TestHelpers';
 
-describe('components/common/timezone', function() {
+import ExplorerActions from '../../../../lib/js/app/actions/ExplorerActions';
+import TimeframeUtils from '../../../../lib/js/app/utils/TimeframeUtils';
+import ProjectUtils from '../../../../lib/js/app/utils/ProjectUtils';
+import Timezone from '../../../../lib/js/app/components/common/timezone.js';
 
-  before(function () {
-    this.handleChangeStub = sinon.stub();
+describe('components/common/timezone', () => {
+  let handleChangeStub;
+  let model;
+  let component;
+
+  beforeAll(() => {
+    handleChangeStub = jest.fn();
   });
 
 
-  beforeEach(function () {
-    this.handleChangeStub.reset();
-    this.model = TestHelpers.createExplorerModel();
-    this.component = TestUtils.renderIntoDocument(<Timezone timezone={this.model.query.timezone}
-                                                            timeframe_type={TimeframeUtils.timeframeType(this.model.query.time)}
-                                                            handleChange={this.handleChangeStub} />);
+  beforeEach(() => {
+    handleChangeStub.mockClear();
+    model = TestHelpers.createExplorerModel();
+    component = TestUtils.renderIntoDocument(<Timezone timezone={model.query.timezone}
+                                                            timeframe_type={TimeframeUtils.timeframeType(model.query.time)}
+                                                            handleChange={handleChangeStub} />);
   });
 
-  it('should use the value from the project config if it matches the value', function(){
-    var timezoneInput = this.component.refs.timezone.refs.input;
+  it('should use the value from the project config if it matches the value', () => {
+    const timezoneInput = component.refs.timezone.refs.input;
     timezoneInput.value = 'US/Hawaii';
     TestUtils.Simulate.change(timezoneInput);
-    assert.strictEqual(this.handleChangeStub.getCall(0).args[1], 'US/Hawaii');
+    expect(handleChangeStub.mock.calls[0][1]).toEqual('US/Hawaii');
   });
 
-  it('should allow a custom value if there is no match in the project config', function(){
-    var timezoneInput = this.component.refs.timezone.refs.input;
+  it('should allow a custom value if there is no match in the project config', () => {
+    const timezoneInput = component.refs.timezone.refs.input;
     timezoneInput.value = '-27000';
     TestUtils.Simulate.change(timezoneInput);
-    assert.strictEqual(this.handleChangeStub.getCall(0).args[1], '-27000');
+    expect(handleChangeStub.mock.calls[0][1]).toEqual('-27000');
   });
 
-  it('should allow a custom value if there is no match in the project config', function(){
-    var props = _.assign({}, this.component.props, { timezone: 'US/Hawaii' });
-    this.component = TestHelpers.renderComponent(Timezone, props);
-    var inputValue = this.component.refs.timezone.refs.input.value;
+  it('should allow a custom value if there is no match in the project config', () => {
+    const props = _.assign({}, component.props, { timezone: 'US/Hawaii' });
+    component = TestHelpers.renderComponent(Timezone, props);
+    const inputValue = component.refs.timezone.refs.input.value;
 
-    assert.strictEqual(inputValue, 'US/Hawaii');
+    expect(inputValue).toEqual('US/Hawaii');
   });
 });

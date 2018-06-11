@@ -1,19 +1,29 @@
-var assert = require('chai').assert;
-let sinon = require('sinon/pkg/sinon.js');
-var KeenAnalysis = require('keen-analysis');
-var KeenHelpers = require('../../../support/TestHelpers');
-var KeenSavedQueries = require('../../../../client/js/app/modules/persistence/KeenSavedQueries.js');
+import KeenAnalysis from 'keen-analysis';
+import KeenHelpers from '../../../support/TestHelpers';
+import KeenSavedQueries from '../../../../lib/js/app/modules/persistence/KeenSavedQueries';
+import XHRmock from 'xhr-mock';
 
-describe('modules/persistence/KeenSavedQueries', function(){
+describe('modules/persistence/KeenSavedQueries', () => {
+  let config;
+  let KeenSavedQueriesObj;
+  let bookmarkObj;
 
-  beforeEach(function () {
-    this.config = {
+  beforeAll(()=>{
+    XHRmock.setup();
+  });
+
+  afterAll(()=>{
+    XHRmock.teardown();
+  });
+
+  beforeEach(() => {
+    config = {
       masterKey: 'fakeKey',
       baseUrl: 'https://test-bookmarks-keen.io/projects/123/queries/saved',
       client: new KeenAnalysis(KeenHelpers.createClient())
     };
-    this.KeenSavedQueries = new KeenSavedQueries(this.config);
-    this.bookmarkObj = {
+    KeenSavedQueriesObj = new KeenSavedQueries(config);
+    bookmarkObj = {
       id: 'some-name-original',
       query_name: 'some-name',
       query: {
@@ -27,32 +37,22 @@ describe('modules/persistence/KeenSavedQueries', function(){
     };
   });
 
-  it('exists', function(){
-    assert.isDefined(KeenSavedQueries);
+  it('exists', () => {
+    expect(KeenSavedQueriesObj).not.toBe(undefined);
   });
 
-  describe('Constructor', function(){
-    it('configures itself with a proper baseUrl', function(){
-      assert.equal(this.KeenSavedQueries.config.baseUrl, this.config.baseUrl);
+  describe('Constructor', () => {
+    it('configures itself with a proper baseUrl', () => {
+      expect(KeenSavedQueriesObj.config.baseUrl).toEqual(config.baseUrl);
     });
   });
 
-  describe('Basic CRUD methods', function(){
+  describe('Basic CRUD methods', () => {
 
-    beforeEach(function(){
-      this.xhrOpenSpy = sinon.spy(XMLHttpRequest.prototype, 'open');
-      this.xhrSendStub = sinon.stub(XMLHttpRequest.prototype, 'send');
-    });
-
-    afterEach(function(){
-      this.xhrOpenSpy.restore();
-      this.xhrSendStub.restore();
-    });
-
-    describe('create function', function(){
-      it('makes a PUT request with the right url and body', function(){
-        var expectedURL = this.config.client.url('queries', 'saved', 'some-name');
-        var expectedRequestBody = {
+    describe('create function', () => {
+      it('makes a PUT request with the right url and body', (done) => {
+        const expectedURL = config.client.url('queries', 'saved', 'some-name');
+        const expectedRequestBody = {
           query_name: 'some-name',
           query: {
             analysis_type: 'count',
@@ -63,16 +63,20 @@ describe('modules/persistence/KeenSavedQueries', function(){
             display_name: 'some name'
           }
         };
-        this.KeenSavedQueries.create(this.bookmarkObj);
-        assert.isTrue(this.xhrOpenSpy.calledWith('PUT', expectedURL, true));
-        assert.strictEqual(this.xhrSendStub.getCall(0).args[0], JSON.stringify(expectedRequestBody));
+        XHRmock.put(expectedURL,
+          (req, res) => {
+            expect(JSON.parse(req.body())).toMatchObject(expectedRequestBody);
+            done();
+            return res.status(200).body({});
+          });
+        KeenSavedQueriesObj.create(bookmarkObj);
       });
     });
 
-    describe('update function', function(){
-      it('makes a PUT request with the right url and body', function(){
-        var expectedURL = this.config.client.url('queries', 'saved', 'some-name-original');
-        var expectedRequestBody = {
+    describe('update function', () => {
+      it('makes a PUT request with the right url and body', (done) => {
+        const expectedURL = config.client.url('queries', 'saved', 'some-name-original');
+        const expectedRequestBody = {
           query_name: 'some-name',
           query: {
             analysis_type: 'count',
@@ -83,41 +87,57 @@ describe('modules/persistence/KeenSavedQueries', function(){
             display_name: 'some name'
           }
         };
-        this.KeenSavedQueries.update(this.bookmarkObj);
-        assert.isTrue(this.xhrOpenSpy.calledWith('PUT', expectedURL, true));
-        assert.strictEqual(this.xhrSendStub.getCall(0).args[0], JSON.stringify(expectedRequestBody));
+        XHRmock.put(expectedURL,
+          (req, res) => {
+            expect(JSON.parse(req.body())).toMatchObject(expectedRequestBody);
+            done();
+            return res.status(200).body({});
+          });
+
+        KeenSavedQueriesObj.update(bookmarkObj);
       });
     });
 
-    describe('get function', function(){
-      it('for a single bookmark it makes a GET request with the right url and body', function(){
-        var expectedURL = this.config.client.url('queries', 'saved', 'some-name-original', {
-          api_key: this.config.client.masterKey()
+    describe('get function', () => {
+      it('for a single bookmark it makes a GET request with the right url and body', (done) => {
+        let expectedURL = config.client.url('queries', 'saved', 'some-name-original', {
+          api_key: config.client.masterKey()
         });
-        expectedURL += '&';
-        this.KeenSavedQueries.get(this.bookmarkObj);
-        assert.isTrue(this.xhrOpenSpy.calledWith('GET', expectedURL, true));
-        assert.isUndefined(this.xhrSendStub.getCall(0).args[0]);
-      });
+        XHRmock.get(expectedURL,
+          (req, res) => {
+            done();
+            return res.status(200).body({});
+          });
 
-      it('for all bookmarks it makes a GET request with the right url and body', function(){
-        var expectedURL = this.config.client.url('queries', 'saved', {
-          api_key: this.config.client.masterKey(),
-          analysis_type: 'saved'
+        KeenSavedQueriesObj.get(bookmarkObj);
+      });
+    });
+
+    it('for all bookmarks it makes a GET request with the right url and body', (done) => {
+      const expectedURL = config.client.url('queries', 'saved', {
+        api_key: config.client.masterKey(),
+        analysis_type: 'saved'
+      });
+      XHRmock.get(expectedURL,
+        (req, res) => {
+          done();
+          return res.status(200).body({});
         });
-        this.KeenSavedQueries.get();
-        assert.isTrue(this.xhrOpenSpy.calledWith('GET', expectedURL, true));
-        assert.isUndefined(this.xhrSendStub.getCall(0).args[0]);
+
+      KeenSavedQueriesObj.get();
+    });
+
+    describe('destroy function', () => {
+      it('makes a DELETE request with the right url and body', (done) => {
+        const expectedURL = config.client.url('queries', 'saved', 'some-name-original');
+        XHRmock.delete(expectedURL,
+          (req, res) => {
+            done();
+            return res.status(200).body({});
+          });
+        KeenSavedQueriesObj.destroy(bookmarkObj);
       });
     });
 
-    describe('destroy function', function(){
-      it('makes a DELETE request with the right url and body', function(){
-        var expectedURL = this.config.client.url('queries', 'saved', 'some-name-original');
-        this.KeenSavedQueries.destroy(this.bookmarkObj);
-        assert.isTrue(this.xhrOpenSpy.calledWith('DELETE', expectedURL, true));
-        assert.isString(this.xhrSendStub.getCall(0).args[0]);
-      });
-    });
   });
 });

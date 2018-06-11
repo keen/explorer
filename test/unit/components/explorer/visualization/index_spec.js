@@ -1,124 +1,136 @@
-var assert = require('chai').assert;
-var _ = require('lodash');
-var KeenAnalysis = require('keen-analysis');
-let sinon = require('sinon/pkg/sinon.js');
-var Visualization = require('../../../../../client/js/app/components/explorer/visualization/index.js');
-var Chart = require('../../../../../client/js/app/components/explorer/visualization/chart.js');
-var AppDispatcher = require('../../../../../client/js/app/dispatcher/AppDispatcher');
-var AppStateStore = require('../../../../../client/js/app/stores/AppStateStore');
-var ExplorerUtils = require('../../../../../client/js/app/utils/ExplorerUtils');
-var ChartTypeUtils = require('../../../../../client/js/app/utils/ChartTypeUtils');
-var DataUtils = require('../../../../../client/js/app/utils/DataUtils');
-var ExplorerConstants = require('../../../../../client/js/app/constants/ExplorerConstants');
-var ExplorerActions = require('../../../../../client/js/app/actions/ExplorerActions');
-var NoticeActions = require('../../../../../client/js/app/actions/NoticeActions');
-var TestHelpers = require('../../../../support/TestHelpers');
-var React = require('react');
-var ReactDOM = require('react-dom');
-var TestUtils = require('react-addons-test-utils');
-var $R = require('rquery')(_, React, ReactDOM, TestUtils);
+import _ from 'lodash';
+import KeenAnalysis from 'keen-analysis';
+import KeenDatavizCore from 'keen-dataviz';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import TestUtils from 'react-addons-test-utils';
+import rquery from 'rquery';
 
-describe('components/explorer/visualization/index', function() {
-  beforeEach(function() {
-    this.client = new KeenAnalysis(TestHelpers.createClient());
-    this.model = TestHelpers.createExplorerModel();
-    this.model.id = 10;
-    this.project = TestHelpers.createProject();
-    var datavizStub = sinon.stub(Keen, 'Dataviz').returns(TestHelpers.createDataviz());
-    this.chartOptionsStub = sinon.stub(ChartTypeUtils, 'getChartTypeOptions').returns([]);
-    this.exportToCsvStub = sinon.stub(DataUtils, 'exportToCsv').returns([]);
+import Visualization from '../../../../../lib/js/app/components/explorer/visualization/index.js';
+import Chart from '../../../../../lib/js/app/components/explorer/visualization/chart.js';
+import AppDispatcher from '../../../../../lib/js/app/dispatcher/AppDispatcher';
+import AppStateStore from '../../../../../lib/js/app/stores/AppStateStore';
+import ExplorerUtils from '../../../../../lib/js/app/utils/ExplorerUtils';
+import ChartTypeUtils from '../../../../../lib/js/app/utils/ChartTypeUtils';
+import DataUtils from '../../../../../lib/js/app/utils/DataUtils';
+import ExplorerConstants from '../../../../../lib/js/app/constants/ExplorerConstants';
+import ExplorerActions from '../../../../../lib/js/app/actions/ExplorerActions';
+import NoticeActions from '../../../../../lib/js/app/actions/NoticeActions';
+import TestHelpers from '../../../../support/TestHelpers';
 
-    this.renderComponent = function(props) {
-      var defaults = {
-        client: this.client,
-        model: this.model,
-        project: this.project,
+const $R = rquery(_, React, ReactDOM, TestUtils);
+const KeenDataviz = new KeenDatavizCore();
+
+describe('components/explorer/visualization/index', () => {
+  let client;
+  let model;
+  let project;
+  let datavizStub;
+  let chartOptionsStub;
+  let exportToCsvStub;
+  let renderComponent;
+  let component;
+  let getOptionsFromComponent;
+
+  beforeEach(() => {
+    client = new KeenAnalysis(TestHelpers.createClient());
+    model = TestHelpers.createExplorerModel();
+    model.id = 10;
+    project = TestHelpers.createProject();
+
+    chartOptionsStub = jest.spyOn(ChartTypeUtils, 'getChartTypeOptions').mockImplementation(()=>{}).mockReturnValue([]);
+    exportToCsvStub = jest.spyOn(DataUtils, 'exportToCsv').mockImplementation(()=>{}).mockReturnValue([]);
+
+    renderComponent = function(props) {
+      const defaults = {
+        client,
+        model,
+        project,
         persistence: null,
         appState: AppStateStore.getState()
       };
-      var props = _.assign({}, defaults, props);
-      return TestUtils.renderIntoDocument(<Visualization {...props} />);
+      const propsExt = _.assign({}, defaults, props);
+      return TestUtils.renderIntoDocument(<Visualization {...propsExt} />);
     };
 
-    this.component = this.renderComponent();
+    component = renderComponent();
 
-    this.getOptionsFromComponent = function(component) {
-      var chartTypeSelect = this.component.refs['chart-type'].refs.select;
-      var optionNodes = chartTypeSelect.childNodes;
+    getOptionsFromComponent = function(component) {
+      const chartTypeSelect = component.refs['chart-type'].refs.select;
+      const optionNodes = chartTypeSelect.childNodes;
       return _.map(optionNodes, function(optionNode) {
         return optionNode.textContent;
       });
     };
   });
 
-  afterEach(function () {
-    Keen.Dataviz.restore();
-    ChartTypeUtils.getChartTypeOptions.restore();
-    DataUtils.exportToCsv.restore();
+  afterEach(() => {
+    chartOptionsStub.mockRestore();
+    exportToCsvStub.mockRestore();
   });
 
-  describe('setup', function() {
-    it('is of the right type', function() {
-      assert.isTrue(TestUtils.isCompositeComponentWithType(this.component, Visualization));
+  describe('setup', () => {
+    it('is of the right type', () => {
+      expect(TestUtils.isCompositeComponentWithType(component, Visualization)).toBe(true);
     });
-    it('has one chart child component', function(){
-      assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, Chart), 1);
+    it('has one chart child component', () => {
+      expect(TestUtils.scryRenderedComponentsWithType(component, Chart)).toHaveLength(1);
     });
 
-    describe('without persistence', function () {
-      it('should not show the Save/Update button', function () {
-        assert.lengthOf($R(this.component).find('[role="save-query"]').components, 0);
+    describe('without persistence', () => {
+      it('should not show the Save/Update button', () => {
+        expect($R(component).find('[role="save-query"]').components).toHaveLength(0);
       });
     });
   });
 
-  describe('chart types select', function() {
-    describe('populates with the right chart types based on the dataviz capabilities', function() {
-      it('basic options', function(){
-        this.model.result = 50;
-        this.chartOptionsStub.returns([
+  describe('chart types select', () => {
+    describe('populates with the right chart types based on the dataviz capabilities', () => {
+      it('basic options', () => {
+        model.result = 50;
+        chartOptionsStub.mockReturnValue([
           'metric',
           'JSON'
         ]);
-        this.component.forceUpdate();
-        var options = this.getOptionsFromComponent(this.component);
-        assert.sameMembers(options, ['JSON', 'Metric']);
+        component.forceUpdate();
+        const options = getOptionsFromComponent(component);
+        expect(options).toEqual(expect.arrayContaining(['JSON', 'Metric']));
       });
     });
 
-    it('is not disabled when the model is not loading', function(){
-      this.model.result = 50;
-      this.model.loading = false;
-      this.component.forceUpdate();
-      assert.isFalse(this.component.refs['chart-type'].refs.select.disabled);
+    it('is not disabled when the model is not loading', () => {
+      model.result = 50;
+      model.loading = false;
+      component.forceUpdate();
+      expect(component.refs['chart-type'].refs.select.disabled).toBe(false);
     });
 
-    it('is disabled when the model is actively loading', function(){
-      this.model.loading = true;
-      this.component.forceUpdate();
-      assert.isTrue(this.component.refs['chart-type'].refs.select.disabled);
+    it('is disabled when the model is actively loading', () => {
+      model.loading = true;
+      component.forceUpdate();
+      expect(component.refs['chart-type'].refs.select.disabled).toBe(true);
     });
 
   });
 
-  describe('default chart type', function() {
-    it('renders a default chart type if there is no metadata.visualization object', function() {
-      this.chartOptionsStub.returns([
+  describe('default chart type', () => {
+    it('renders a default chart type if there is no metadata.visualization object', () => {
+      chartOptionsStub.mockReturnValue([
           'metric',
           'JSON'
       ]);
 
-      this.component.forceUpdate();
-      var selectField = this.component.refs['chart-type'].refs.select;
+      component.forceUpdate();
+      const selectField = component.refs['chart-type'].refs.select;
 
-      assert.equal(selectField.value, 'metric');
+      expect(selectField.value).toEqual('metric');
     });
   });
 
-  describe('export to csv', function() {
-    it('exports to csv chart data', function() {
-      this.component.exportToCsv([['column1', 'column2'], ['row1 value 1', 'row2 value2']]);
-      sinon.assert.called(this.exportToCsvStub);
+  describe('export to csv', () => {
+    it('exports to csv chart data', () => {
+      component.exportToCsv([['column1', 'column2'], ['row1 value 1', 'row2 value2']]);
+      expect(exportToCsvStub).toBeCalledWith([["Index"]], "untitled-query");
     });
   });
 

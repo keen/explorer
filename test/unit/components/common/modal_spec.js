@@ -1,46 +1,44 @@
-let sinon = require('sinon/pkg/sinon.js');
-var assert = require('chai').assert;
-var _ = require('lodash');
-var React = require('react');
-var ReactDOM = require('react-dom');
-var TestUtils = require('react-addons-test-utils');
-var Modal = require('../../../../client/js/app/components/common/modal.js');
+import _ from 'lodash';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import TestUtils from 'react-addons-test-utils';
+import Modal from '../../../../lib/js/app/components/common/modal.js';
 
-describe('components/common/modal', function() {
+describe('components/common/modal', () => {
 
-  describe('setup', function() {
+  describe('setup', () => {
 
-    it('is of the right type', function() {
-      var modal = TestUtils.renderIntoDocument(<Modal title="Test Modal" />);
-      assert.isTrue(TestUtils.isCompositeComponentWithType(modal, Modal));
+    it('is of the right type', () => {
+      const modal = TestUtils.renderIntoDocument(<Modal title="Test Modal" />);
+      expect(TestUtils.isCompositeComponentWithType(modal, Modal)).toBe(true);
     });
 
-    it('it adds the modal classes', function() {
-      var modal = TestUtils.renderIntoDocument(<Modal title="Test Modal" modalClasses="a-test-class some-other-class" />);
-      var classes = 'a-test-class some-other-class modal';
-      assert.equal(ReactDOM.findDOMNode(modal).className, classes);
+    it('it adds the modal classes', () => {
+      const modal = TestUtils.renderIntoDocument(<Modal title="Test Modal" modalClasses="a-test-class some-other-class" />);
+      const classes = 'a-test-class some-other-class modal';
+      expect(ReactDOM.findDOMNode(modal).className).toEqual(classes);
     });
 
-    it('it adds the large class', function() {
-      var modal = TestUtils.renderIntoDocument(<Modal title="Test Modal" size="large" />);
-      var classes = 'modal-dialog modal-lg';
-      assert.equal(ReactDOM.findDOMNode(modal).childNodes[0].className, classes);
+    it('it adds the large class', () => {
+      const modal = TestUtils.renderIntoDocument(<Modal title="Test Modal" size="large" />);
+      const classes = 'modal-dialog modal-lg';
+      expect(ReactDOM.findDOMNode(modal).childNodes[0].className).toEqual(classes);
     });
 
-    it('it sets the title', function() {
-      var modal = TestUtils.renderIntoDocument(<Modal title="Test Modal" />);
-      var headerText = $(ReactDOM.findDOMNode(modal)).find('.modal-title').text();
-      assert.strictEqual(headerText, 'Test Modal');
+    it('it sets the title', () => {
+      const modal = TestUtils.renderIntoDocument(<Modal title="Test Modal" />);
+      const headerText = $(ReactDOM.findDOMNode(modal)).find('.modal-title').text();
+      expect(headerText).toEqual('Test Modal');
     });
 
-    it("it doesn't have a footer by default", function() {
-      var modal = TestUtils.renderIntoDocument(<Modal title="Test Modal" />);
-      assert.lengthOf($(ReactDOM.findDOMNode(modal)).find('.modal-footer'), 0);
+    it("it doesn't have a footer by default", () => {
+      const modal = TestUtils.renderIntoDocument(<Modal title="Test Modal" />);
+      expect($(ReactDOM.findDOMNode(modal)).find('.modal-footer')).toHaveLength(0);
     });
 
-    it("it sets up the footer properly", function() {
-      var onClickSpy = sinon.spy();
-      var modal = TestUtils.renderIntoDocument(<Modal title="Test Modal" useFooter={true} footerBtns={[{
+    it("it sets up the footer properly", () => {
+      const onClickSpy = jest.fn();
+      const modal = TestUtils.renderIntoDocument(<Modal title="Test Modal" useFooter={true} footerBtns={[{
         text: 'Done'
       }, {
         text: 'Submit',
@@ -48,68 +46,69 @@ describe('components/common/modal', function() {
         classes: 'btn-primary'
       }]} />);
 
-      var defaultButton = TestUtils.findRenderedDOMComponentWithClass(modal, 'btn-default');
-      var primaryButton = TestUtils.findRenderedDOMComponentWithClass(modal, 'btn-primary');
+      const defaultButton = TestUtils.findRenderedDOMComponentWithClass(modal, 'btn-default');
+      const primaryButton = TestUtils.findRenderedDOMComponentWithClass(modal, 'btn-primary');
 
       TestUtils.Simulate.click(primaryButton);
 
-      assert.equal(defaultButton.textContent, 'Done');
-      assert.equal(primaryButton.textContent, 'Submit');
-      assert.isTrue(primaryButton.classList.contains('btn-primary'));
-      assert.isTrue(onClickSpy.calledOnce);
+      expect(defaultButton.textContent).toEqual('Done');
+      expect(primaryButton.textContent).toEqual('Submit');
+      expect(primaryButton.classList.contains('btn-primary')).toBe(true);
+      expect(onClickSpy).toHaveBeenCalled();
     });
 
   });
 
-  describe('component functions', function() {
+  describe('component functions', () => {
+    let modal;
 
-    beforeEach(function(){
-      this.modal = TestUtils.renderIntoDocument(<Modal title="Test Modal" />);
+    beforeEach(() => {
+      modal = TestUtils.renderIntoDocument(<Modal title="Test Modal" />);
     });
 
-    describe('opening', function(){
+    describe('opening', () => {
 
-      it('open calls addBackdrop', function(){
-        var addBackdropSpy = sinon.spy(this.modal, 'addBackdrop');
-        this.modal.open();
-        assert.isTrue(addBackdropSpy.calledOnce);
-        this.modal.addBackdrop.restore();
+      it('open calls addBackdrop', () => {
+        const addBackdropSpy = jest.spyOn(modal, 'addBackdrop');
+        modal.open();
+        expect(addBackdropSpy).toHaveBeenCalledTimes(1);
+        addBackdropSpy.mockRestore();
       });
 
-      it('open sets the state attr open to true', function(){
-        this.modal.open();
-        assert.isTrue(this.modal.state.open);
+      it('open sets the state attr open to true', () => {
+        modal.open();
+        expect(modal.state.open).toBe(true);
       });
 
-      it('addBackdrop properly adds the backdrop', function(){
-        this.modal.open();
-        assert.isTrue($('body').hasClass('modal-open'));
-        assert.lengthOf($('body').find('#modal-backdrop'), 1);
+      it('addBackdrop properly adds the backdrop', () => {
+        modal.open();
+        expect($('body').hasClass('modal-open')).toBe(true);
+        expect($('body').find('#modal-backdrop')).toHaveLength(1);
       });
 
     });
 
-    describe('closing', function(){
+    describe('closing', () => {
 
-      it('close calls removeBackdrop', function(){
-        var removeBackdropSpy = sinon.spy(this.modal, 'removeBackdrop');
-        this.modal.open();
-        this.modal.close();
-        assert.isTrue(removeBackdropSpy.calledOnce);
-        this.modal.removeBackdrop.restore();
+      it('close calls removeBackdrop', () => {
+        const removeBackdropSpy = jest.spyOn(modal, 'removeBackdrop');
+        modal.open();
+        modal.close();
+        expect(removeBackdropSpy).toHaveBeenCalledTimes(1);
+        removeBackdropSpy.mockRestore();
       });
 
-      it('open sets the state attr open to true', function(){
-        this.modal.open(); // Open first, because "false" is the default value for the 'open' state attr.
-        this.modal.close();
-        assert.isFalse(this.modal.state.open);
+      it('open sets the state attr open to true', () => {
+        modal.open(); // Open first, because "false" is the default value for the 'open' state attr.
+        modal.close();
+        expect(modal.state.open).toBe(false);
       });
 
-      it('removeBackdrop removes the backdrop properly', function(){
-        this.modal.open();
-        this.modal.close();
-        assert.isFalse($('body').hasClass('modal-open'));
-        assert.lengthOf($('body').find('#modal-backdrop'), 0);
+      it('removeBackdrop removes the backdrop properly', () => {
+        modal.open();
+        modal.close();
+        expect($('body').hasClass('modal-open')).toBe(false);
+        expect($('body').find('#modal-backdrop')).toHaveLength(0);
       });
 
     });

@@ -1,23 +1,24 @@
-var assert = require('chai').assert;
-let sinon = require('sinon/pkg/sinon.js');
-var _ = require('lodash');
-var React = require('react');
-var TestUtils = require('react-addons-test-utils');
-var Geo = require('../../../../client/js/app/components/common/geo.js');
-var TestHelpers = require('../../../support/TestHelpers');
+import _ from 'lodash';
+import React from 'react';
+import TestUtils from 'react-addons-test-utils';
 
-describe('components/common/geo', function() {
-  before(function() {
-    this.filter = TestHelpers.createFilters().geo;
-    this.component = TestUtils.renderIntoDocument(<Geo filter={this.filter} handleGeoSelection={sinon.stub} />);
+import Geo from '../../../../lib/js/app/components/common/geo.js';
+import TestHelpers from '../../../support/TestHelpers';
+
+describe('components/common/geo', () => {
+  let filter;
+  let component;
+  beforeAll(() => {
+    filter = TestHelpers.createFilters().geo;
+    component = TestUtils.renderIntoDocument(<Geo filter={filter} handleGeoSelection={jest.fn()} />);
   });
 
-  describe('setup', function() {
-    it('is of the right type', function() {
-      assert.isTrue(TestUtils.isCompositeComponentWithType(this.component, Geo));
+  describe('setup', () => {
+    it('is of the right type', () => {
+      expect(TestUtils.isCompositeComponentWithType(component, Geo)).toBe(true);
     });
   });
-  it('has three inputs', function(){
-    assert.lengthOf(TestUtils.scryRenderedDOMComponentsWithTag(this.component, 'input'), 3);
+  it('has three inputs', () => {
+    expect(TestUtils.scryRenderedDOMComponentsWithTag(component, 'input')).toHaveLength(3);
   });
 });

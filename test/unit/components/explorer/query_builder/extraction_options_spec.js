@@ -1,19 +1,24 @@
-var assert = require('chai').assert;
-var _ = require('lodash');
-var React = require('react');
-var ReactDOM = require('react-dom');
-var TestUtils = require('react-addons-test-utils');
-var ExtractionOptions = require('../../../../../client/js/app/components/explorer/query_builder/extraction_options.js');
-var TestHelpers = require('../../../../../test/support/TestHelpers');
-var $R = require('rquery')(_, React, ReactDOM, TestUtils);
+import _ from 'lodash';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import TestUtils from 'react-addons-test-utils';
+import rquery from 'rquery';
 
-describe('components/explorer/query_builder/extraction_options', function() {
-  beforeEach(function() {
-    var model = TestHelpers.createExplorerModel();
-    this.defaultProps = {
-      handleSelectionWithEvent: function(){},
-      handleChange: function(){},
-      setExtractionType: function(){},
+import ExtractionOptions from '../../../../../lib/js/app/components/explorer/query_builder/extraction_options.js';
+import TestHelpers from '../../../../../test/support/TestHelpers';
+
+const $R = rquery(_, React, ReactDOM, TestUtils);
+
+describe('components/explorer/query_builder/extraction_options', () => {
+  let defaultProps;
+  let renderComponent;
+  let component;
+  beforeEach(() => {
+    const model = TestHelpers.createExplorerModel();
+    defaultProps = {
+      handleSelectionWithEvent: () => {},
+      handleChange: () => {},
+      setExtractionType: () => {},
       latest: model.query.latest,
       email: model.query.email,
       event_collection: model.query.event_collection,
@@ -21,39 +26,39 @@ describe('components/explorer/query_builder/extraction_options', function() {
       isEmail: false,
       projectSchema: {}
     };
-    this.renderComponent = function(props) {
-      var props = _.assign({}, this.defaultProps, props);
-      return TestUtils.renderIntoDocument(<ExtractionOptions {...props} />);
+    renderComponent = function(props) {
+      let propsExt = _.assign({}, defaultProps, props);
+      return TestUtils.renderIntoDocument(<ExtractionOptions {...propsExt} />);
     };
-    this.component = this.renderComponent();
+    component = renderComponent();
   });
 
-  describe('an email extraction', function () {
-    it('shows the email field', function() {
-      var props = _.assign({}, this.component.props, { isEmail: true });
-      this.component = TestHelpers.renderComponent(ExtractionOptions, props);
+  describe('an email extraction', () => {
+    it('shows the email field', () => {
+      let props = _.assign({}, component.props, { isEmail: true });
+      component = TestHelpers.renderComponent(ExtractionOptions, props);
 
-      assert.lengthOf($R(this.component).find('input[name="email"]').components, 1);
+      expect($R(component).find('input[name="email"]').components).toHaveLength(1);
     });
-    it('shows the latest field', function() {
-      var props = _.assign({}, this.component.props, { isEmail: true });
-      this.component = TestHelpers.renderComponent(ExtractionOptions, props);
+    it('shows the latest field', () => {
+      let props = _.assign({}, component.props, { isEmail: true });
+      component = TestHelpers.renderComponent(ExtractionOptions, props);
 
-      assert.lengthOf($R(this.component).find('LatestField').components, 1);
+      expect($R(component).find('LatestField').components).toHaveLength(1);
     });
   });
 
-  describe('extraction properties filter', function() {
-    it('shows when an extraction model is loaded', function() {
+  describe('extraction properties filter', () => {
+    it('shows when an extraction model is loaded', () => {
       const projectSchema = { 'test_collection': { sortedProperties: ["test_name"] } };
-      const props = _.assign({}, this.component.props, { event_collection: 'test_collection', projectSchema: projectSchema });
-      this.component = TestHelpers.renderComponent(ExtractionOptions, props);
+      const props = _.assign({}, component.props, { event_collection: 'test_collection', projectSchema: projectSchema });
+      component = TestHelpers.renderComponent(ExtractionOptions, props);
 
-      assert.lengthOf($R(this.component).find('ReactMultiSelect').components, 1);
+      expect($R(component).find('ReactMultiSelect').components).toHaveLength(1);
     });
 
-    it('is hidden when with all other types of models', function() {
-      assert.lengthOf($R(this.component).find('ReactMultiSelect').components, 0);
+    it('is hidden when with all other types of models', () => {
+      expect($R(component).find('ReactMultiSelect').components).toHaveLength(0);
     });
   });
 });

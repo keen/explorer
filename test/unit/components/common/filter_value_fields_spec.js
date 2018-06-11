@@ -1,118 +1,123 @@
-var assert = require('chai').assert;
-var _ = require('lodash');
-var moment = require('moment');
-let sinon = require('sinon/pkg/sinon.js');
-var FilterValueFields = require('../../../../client/js/app/components/common/filter_value_fields.js');
-var Geo = require('../../../../client/js/app/components/common/geo.js');
-var Datepicker = require('../../../../client/js/app/components/common/datepicker.js');
-var ProjectUtils = require('../../../../client/js/app/utils/ProjectUtils.js');
-var Select = require('../../../../client/js/app/components/common/select.js');
-var React = require('react');
-var ReactDOM = require('react-dom');
-var TestUtils = require('react-addons-test-utils');
-var TestHelpers = require('../../../support/TestHelpers');
+import _ from 'lodash';
+import moment from 'moment';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import TestUtils from 'react-addons-test-utils';
 
-var datetimeFormat = 'll h:mm A';
+import FilterValueFields from '../../../../lib/js/app/components/common/filter_value_fields.js';
+import Geo from '../../../../lib/js/app/components/common/geo.js';
+import Datepicker from '../../../../lib/js/app/components/common/datepicker.js';
+import ProjectUtils from '../../../../lib/js/app/utils/ProjectUtils.js';
+import Select from '../../../../lib/js/app/components/common/select.js';
+import TestHelpers from '../../../support/TestHelpers';
 
-describe('components/common/filter_value_fields', function() {
+const datetimeFormat = 'll h:mm A';
 
-  beforeEach(function() {
-    this.project = TestHelpers.createProject();
-    this.model = TestHelpers.createExplorerModel();;
-    this.model.event_collection = 'click';
-    this.handleChangeStub = sinon.stub();
-    this.operators = ProjectUtils.getConstant('FILTER_OPERATORS');
-    this.filter = {
+describe('components/common/filter_value_fields', () => {
+  let project;
+  let model;
+  let handleChangeStub;
+  let operators;
+  let filter;
+  let index;
+  let component;
+
+  beforeEach(() => {
+    project = TestHelpers.createProject();
+    model = TestHelpers.createExplorerModel();;
+    model.event_collection = 'click';
+    handleChangeStub = jest.fn();
+    operators = ProjectUtils.getConstant('FILTER_OPERATORS');
+    filter = {
       property_name: 'propOne',
       operator: 'eq',
       property_value: 'abc',
       coercion_type: 'String'
     };
-    this.index = 0;
+    index = 0;
 
-    this.component = TestUtils.renderIntoDocument(<FilterValueFields filter={this.filter}
-                                                                     filterOperators={this.operators}
-                                                                     handleChange={this.handleChangeStub} />);
+    component = TestUtils.renderIntoDocument(<FilterValueFields filter={filter}
+                                                                     filterOperators={operators}
+                                                                     handleChange={handleChangeStub} />);
   });
 
-  describe('setup', function() {
-    it('is of the right type', function() {
-      assert.isTrue(TestUtils.isCompositeComponentWithType(this.component, FilterValueFields));
+  describe('setup', () => {
+    it('is of the right type', () => {
+      expect(TestUtils.isCompositeComponentWithType(component, FilterValueFields)).toBe(true);
     });
 
-    describe('Datetime', function() {
-      beforeEach(function(){
-        this.filter.coercion_type = 'Datetime';
-        this.filter.property_value = 'May 15, 2015 10:00 AM';
-        var props = _.assign({}, this.component.props, {filter: this.filter});
-        this.component = TestHelpers.renderComponent(FilterValueFields, props);
+    describe('Datetime', () => {
+      beforeEach(() => {
+        filter.coercion_type = 'Datetime';
+        filter.property_value = 'May 15, 2015 10:00 AM';
+        const props = _.assign({}, component.props, {filter: filter});
+        component = TestHelpers.renderComponent(FilterValueFields, props);
       });
 
-      it('has a Datetime component', function(){
-        assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, Datepicker), 1);
+      it('has a Datetime component', () => {
+        expect(TestUtils.scryRenderedComponentsWithType(component, Datepicker)).toHaveLength(1);
       });
 
-      describe('Setting values datetime values', function () {
-        it('properly sets the property_value from the date picker', function () {
-          this.component.refs['date-value-input'].refs.datepicker.value = 'Jan 1, 2015';
-          TestUtils.Simulate.blur(this.component.refs['date-value-input'].refs.datepicker);
-          assert.strictEqual(
-            moment(this.handleChangeStub.getCall(0).args[1]).format(datetimeFormat),
+      describe('Setting values datetime values', () => {
+        it('properly sets the property_value from the date picker', () => {
+          component.refs['date-value-input'].refs.datepicker.value = 'Jan 1, 2015';
+          TestUtils.Simulate.blur(component.refs['date-value-input'].refs.datepicker);
+          expect(moment(handleChangeStub.mock.calls[0][1]).format(datetimeFormat)).toEqual(
             "Jan 1, 2015 10:00 AM"
           );
         });
-        it('properly sets the properly_value from the time picker', function () {
-          var inputNode = this.component.refs['time-value-input'].refs.timepicker.refs.input;
+        it('properly sets the properly_value from the time picker', () => {
+          var inputNode = component.refs['time-value-input'].refs.timepicker.refs.input;
           TestUtils.Simulate.focus(inputNode);
           inputNode.value = '03:47 PM';
           TestUtils.Simulate.blur(inputNode);
-          assert.strictEqual(
-            moment(this.handleChangeStub.getCall(0).args[1]).format(datetimeFormat),
+          expect(moment(handleChangeStub.mock.calls[0][1]).format(datetimeFormat)).toEqual(
             "May 15, 2015 3:47 PM"
           );
         });
       });
     });
 
-    describe('Boolean', function() {
-      beforeEach(function(){
-        var props = _.assign({}, this.component.props, { filter: { coercion_type: 'Boolean' } });
-        this.component = TestHelpers.renderComponent(FilterValueFields, props);
+    describe('Boolean', () => {
+      beforeEach(() => {
+        const props = _.assign({}, component.props, { filter: { coercion_type: 'Boolean' } });
+        component = TestHelpers.renderComponent(FilterValueFields, props);
       });
 
-      it('has a Select component', function(){
-        assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, Select), 2);
+      it('has a Select component', () => {
+        expect(TestUtils.scryRenderedComponentsWithType(component, Select)).toHaveLength(2);
       });
 
-      it('has no input tags', function(){
-        assert.lengthOf(TestUtils.scryRenderedDOMComponentsWithTag(this.component, 'input'), 0);
-      });
-    });
-
-    describe('Null', function () {
-      beforeEach(function () {
-        var props = _.assign({}, this.component.props, { filter: { coercion_type: 'Null' } });
-        this.component = TestHelpers.renderComponent(FilterValueFields, props);
-      });
-
-      it('has one input', function() {
-        assert.lengthOf(TestUtils.scryRenderedDOMComponentsWithTag(this.component, 'input'), 1);
-      });
-
-      it('has a readonly input', function () {
-        var input = TestUtils.scryRenderedDOMComponentsWithTag(this.component, 'input')[0];
-        assert.isTrue(input.readOnly);
-      });
-
-      it('the input value has a placeholder of \'null\'', function () {
-        var input = TestUtils.scryRenderedDOMComponentsWithTag(this.component, 'input')[0];
-        assert.equal(input.placeholder, 'Null');
+      it('has no input tags', () => {
+        expect(TestUtils.scryRenderedDOMComponentsWithTag(component, 'input')).toHaveLength(0);
       });
     });
 
-    describe('Geo', function () {
-      beforeEach(function () {
-        var props = _.assign({}, this.component.props, { filter: {
+    describe('Null', () => {
+      beforeEach(() => {
+        const props = _.assign({}, component.props, { filter: { coercion_type: 'Null' } });
+        component = TestHelpers.renderComponent(FilterValueFields, props);
+      });
+
+      it('has one input', () => {
+        expect(TestUtils.scryRenderedDOMComponentsWithTag(component, 'input')).toHaveLength(1);
+      });
+
+      it('has a readonly input', () => {
+        const input = TestUtils.scryRenderedDOMComponentsWithTag(component, 'input')[0];
+        expect(input.readOnly).toBe(true);
+      });
+
+      it('the input value has a placeholder of \'null\'', () => {
+        const input = TestUtils.scryRenderedDOMComponentsWithTag(component, 'input')[0];
+        expect(input.placeholder).toBe('Null');
+      });
+    });
+
+    describe('Geo', () => {
+      let getPropertyTypeStub;
+      beforeEach(() => {
+        const props = _.assign({}, component.props, { filter: {
           property_name: 'geoProp',
           coercion_type: 'Geo',
           operator: 'within',
@@ -121,79 +126,79 @@ describe('components/common/filter_value_fields', function() {
             max_distance_miles: null
           }
         }});
-        this.component = TestHelpers.renderComponent(FilterValueFields, props);
-        sinon.stub(ProjectUtils, 'getPropertyType');
+        component = TestHelpers.renderComponent(FilterValueFields, props);
+        getPropertyTypeStub = jest.spyOn(ProjectUtils, 'getPropertyType').mockImplementation(() => {});
       });
 
-      afterEach(function () {
-        ProjectUtils.getPropertyType.restore();
+      afterEach(() => {
+        getPropertyTypeStub.mockRestore();
       });
 
-      it('has a Geo component', function(){
-        assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, Geo), 1);
+      it('has a Geo component', () => {
+        expect(TestUtils.scryRenderedComponentsWithType(component, Geo)).toHaveLength(1);
       });
 
-      it('has 3 inputs for geo-location query data', function(){
-        assert.lengthOf(TestUtils.scryRenderedDOMComponentsWithTag(this.component, 'input'), 3);
+      it('has 3 inputs for geo-location query data', () => {
+        expect(TestUtils.scryRenderedDOMComponentsWithTag(component, 'input')).toHaveLength(3);
       });
     });
 
-    describe('not Boolean or Datetime or Null', function() {
-      beforeEach(function(){
-        var props = _.assign({}, this.component.props, {
+    describe('not Boolean or Datetime or Null', () => {
+      beforeEach(() => {
+        const props = _.assign({}, component.props, {
           filter: { coercion_type: 'String' }
         });
-        this.component = TestHelpers.renderComponent(FilterValueFields, props);
+        component = TestHelpers.renderComponent(FilterValueFields, props);
       });
 
-      it('does not have a Datetime component', function(){
-        assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, Datepicker), 0);
+      it('does not have a Datetime component', () => {
+        expect(TestUtils.scryRenderedComponentsWithType(component, Datepicker)).toHaveLength(0);
       });
 
-      it('has one input', function(){
-        assert.lengthOf(TestUtils.scryRenderedDOMComponentsWithTag(this.component, 'input'), 1);
+      it('has one input', () => {
+        expect(TestUtils.scryRenderedDOMComponentsWithTag(component, 'input')).toHaveLength(1);
       });
 
-      it('has one select', function(){
-        assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, Select), 1);
+      it('has one select', () => {
+        expect(TestUtils.scryRenderedComponentsWithType(component, Select)).toHaveLength(1);
       });
     });
 
-    describe('available coercion types', function () {
-      describe('when property type is not geo', function () {
-        it('has all the coercion types', function () {
-          var defaultCoercionOptions = ['String', 'Number', 'Null', 'List', 'Boolean', 'Datetime']
+    describe('available coercion types', () => {
+      describe('when property type is not geo', () => {
+        it('has all the coercion types', () => {
+          const defaultCoercionOptions = ['String', 'Number', 'Null', 'List', 'Boolean', 'Datetime']
 
-          var props = _.assign({}, this.component.props, {
+          const props = _.assign({}, component.props, {
             filter: { operator: 'eq' }
           });
-          this.component = TestHelpers.renderComponent(FilterValueFields, props);
+          component = TestHelpers.renderComponent(FilterValueFields, props);
 
-          var coercionTypeSelect = TestUtils.scryRenderedDOMComponentsWithTag(this.component, 'select')[0];
-          var coercionOptions = _.map(coercionTypeSelect.childNodes, function(node){
+          const coercionTypeSelect = TestUtils.scryRenderedDOMComponentsWithTag(component, 'select')[0];
+          let coercionOptions = _.map(coercionTypeSelect.childNodes, function(node){
             return node.value;
           });
           coercionOptions = _.compact(coercionOptions);
 
-          assert.sameMembers(defaultCoercionOptions, coercionOptions);
+          expect(defaultCoercionOptions).toEqual(coercionOptions);
         });
       });
     });
-    describe('available property value options when Boolean', function () {
-      it('is true or false', function () {
-        const props = _.assign({}, this.component.props, {
+    describe('available property value options when Boolean', () => {
+      it('is true or false', () => {
+        const props = _.assign({}, component.props, {
           filter: { operator: 'exists', coercion_type: 'Boolean' }
         });
-        this.component = TestHelpers.renderComponent(FilterValueFields, props);
+        component = TestHelpers.renderComponent(FilterValueFields, props);
 
-        const boolPropValueSelect = ReactDOM.findDOMNode(this.component.refs['boolean-value-set']).childNodes[0].childNodes[0];
+        const boolPropValueSelect = ReactDOM.findDOMNode(component.refs['boolean-value-set']).childNodes[0].childNodes[0];
 
         const boolPropValueSelectOptions = _.map(boolPropValueSelect.childNodes, function(node){
           return node.value;
         });
         const propertyValueOptions = _.compact(boolPropValueSelectOptions);
 
-        assert.sameMembers(propertyValueOptions, ['true', 'false']);
+        expect(propertyValueOptions).toEqual(['false', 'true']);
       });
     });
   });

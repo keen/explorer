@@ -1,92 +1,96 @@
-var assert = require('chai').assert;
-var _ = require('lodash');
-let sinon = require('sinon/pkg/sinon.js');
-var RelativePicker = require('../../../../client/js/app/components/common/relative_picker.js');
-var ProjectUtils = require('../../../../client/js/app/utils/ProjectUtils');
-var ExplorerActions = require('../../../../client/js/app/actions/ExplorerActions');
-var React = require('react');
-var TestUtils = require('react-addons-test-utils');
-var TestHelpers = require('../../../support/TestHelpers');
 
-describe('components/common/relative_picker', function() {
-  before(function () {
-    this.handleChangeStub = sinon.stub();
+import _ from 'lodash';
+import React from 'react';
+import TestUtils from 'react-addons-test-utils';
+
+import RelativePicker from '../../../../lib/js/app/components/common/relative_picker.js';
+import ProjectUtils from '../../../../lib/js/app/utils/ProjectUtils';
+import ExplorerActions from '../../../../lib/js/app/actions/ExplorerActions';
+import TestHelpers from '../../../support/TestHelpers';
+
+describe('components/common/relative_picker', () => {
+  let handleChangeStub;
+  let time;
+  let component;
+  let selectNode;
+  beforeAll(() => {
+    handleChangeStub = jest.fn();
   });
 
-  beforeEach(function() {
-    this.handleChangeStub.reset();
+  beforeEach(() => {
+    handleChangeStub.mockClear();
 
-    this.time = TestHelpers.createExplorerModel().query.time;
+    time = TestHelpers.createExplorerModel().query.time;
 
-    var relativeIntervalTypes = ProjectUtils.getConstant('RELATIVE_INTERVAL_TYPES');
+    const relativeIntervalTypes = ProjectUtils.getConstant('RELATIVE_INTERVAL_TYPES');
 
-    this.component = TestUtils.renderIntoDocument(<RelativePicker intervalVisible={true}
+    component = TestUtils.renderIntoDocument(<RelativePicker intervalVisible={true}
                                                                   relativeIntervalTypes={relativeIntervalTypes}
-                                                                  time={this.time}
-                                                                  handleChange={this.handleChangeStub} />);
+                                                                  time={time}
+                                                                  handleChange={handleChangeStub} />);
   });
 
-  describe('setup', function() {
-    it('is of the right type', function() {
-      assert.isTrue(TestUtils.isCompositeComponentWithType(this.component, RelativePicker));
+  describe('setup', () => {
+    it('is of the right type', () => {
+      expect(TestUtils.isCompositeComponentWithType(component, RelativePicker)).toBe(true);
     });
-    it('has one input child component', function(){
-      assert.lengthOf(TestUtils.scryRenderedDOMComponentsWithTag(this.component, 'input'), 1);
+    it('has one input child component', () => {
+      expect(TestUtils.scryRenderedDOMComponentsWithTag(component, 'input')).toHaveLength(1);
     });
   });
 
-  describe('field change reactions', function(){
-    describe('relativity', function () {
-      it('sets the chosen relativity on the query', function () {
-        selectNode = TestUtils.findRenderedDOMComponentWithClass(this.component, 'relativity').childNodes[0].childNodes[0];
+  describe('field change reactions', () => {
+    describe('relativity', () => {
+      it('sets the chosen relativity on the query', () => {
+        selectNode = TestUtils.findRenderedDOMComponentWithClass(component, 'relativity').childNodes[0].childNodes[0];
         TestUtils.Simulate.change(selectNode, {
           target: {
             name: 'relativity',
             value: 'this'
           }
         });
-        assert.deepPropertyVal(this.handleChangeStub.getCall(0).args[1], 'relativity', 'this');
+        expect(handleChangeStub.mock.calls[0][1]).toMatchObject({'relativity':'this'});
       });
     });
-    describe('amount', function () {
-      it('sets the amount on the query', function () {
-        var amountInput = TestUtils.findRenderedDOMComponentWithClass(this.component, 'amount').childNodes[0];
+    describe('amount', () => {
+      it('sets the amount on the query', () => {
+        const amountInput = TestUtils.findRenderedDOMComponentWithClass(component, 'amount').childNodes[0];
         TestUtils.Simulate.change(amountInput, {
           target: {
             name: 'amount',
             value: '1'
           }
         });
-        assert.deepPropertyVal(this.handleChangeStub.getCall(0).args[1], 'amount', '1');
+        expect(handleChangeStub.mock.calls[0][1]).toMatchObject({'amount':'1'});
       });
     });
-    describe('sub_timeframe', function () {
-      it('sets the chosen sub-timeframe on the query', function () {
-        selectNode = TestUtils.findRenderedDOMComponentWithClass(this.component, 'sub-timeframe').childNodes[0].childNodes[0];
+    describe('sub_timeframe', () => {
+      it('sets the chosen sub-timeframe on the query', () => {
+        selectNode = TestUtils.findRenderedDOMComponentWithClass(component, 'sub-timeframe').childNodes[0].childNodes[0];
         TestUtils.Simulate.change(selectNode, {
           target: {
             name: 'sub_timeframe',
             value: 'weeks'
           }
         });
-        assert.deepPropertyVal(this.handleChangeStub.getCall(0).args[1], 'sub_timeframe', 'weeks');
+        expect(handleChangeStub.mock.calls[0][1]).toMatchObject({'sub_timeframe':'weeks'});
       });
     });
-    describe('relativity description', function () {
-      it('is empty when no relative query params are set', function () {
-        var props = _.assign({},
-          this.component.props,
+    describe('relativity description', () => {
+      it('is empty when no relative query params are set', () => {
+        const props = _.assign({},
+          component.props,
           {time: { relativity: '', amount: '', sub_timeframe: '' }}
         );
-        this.component = TestHelpers.renderComponent(RelativePicker, props);
+        component = TestHelpers.renderComponent(RelativePicker, props);
 
-        assert.lengthOf(TestUtils.scryRenderedDOMComponentsWithClass(this.component, 'help-block'), 0);
+        expect(TestUtils.scryRenderedDOMComponentsWithClass(component, 'help-block')).toHaveLength(0);
       });
 
-      describe('when relativity is "this"', function () {
-        beforeEach(function () {
-          var props = _.assign({},
-            this.component.props,
+      describe('when relativity is "this"', () => {
+        beforeEach(() => {
+          const props = _.assign({},
+            component.props,
             {
               time: {
                 relativity: 'this',
@@ -95,19 +99,19 @@ describe('components/common/relative_picker', function() {
               }
             }
           );
-          this.component = TestHelpers.renderComponent(RelativePicker, props);
+          component = TestHelpers.renderComponent(RelativePicker, props);
         });
 
-        it('describes the set interval and relativity', function () {
-          var descriptionNode = TestUtils.findRenderedDOMComponentWithClass(this.component, 'help-block');
-          assert.equal(descriptionNode.textContent, 'The last 1 week including the current week.');
+        it('describes the set interval and relativity', () => {
+          const descriptionNode = TestUtils.findRenderedDOMComponentWithClass(component, 'help-block');
+          expect(descriptionNode.textContent).toEqual('The last 1 week including the current week.');
         });
       });
 
-      describe('when relativity is not \'this\'', function () {
-        it('describes the set interval and relativity', function () {
-          var props = _.assign({},
-            this.component.props,
+      describe('when relativity is not \'this\'', () => {
+        it('describes the set interval and relativity', () => {
+          const props = _.assign({},
+            component.props,
             {
               time: {
                 relativity: 'previous',
@@ -116,10 +120,10 @@ describe('components/common/relative_picker', function() {
               }
             }
           );
-          this.component = TestHelpers.renderComponent(RelativePicker, props);
-          var descriptionNode = TestUtils.findRenderedDOMComponentWithClass(this.component, 'help-block');
+          component = TestHelpers.renderComponent(RelativePicker, props);
+          const descriptionNode = TestUtils.findRenderedDOMComponentWithClass(component, 'help-block');
 
-          assert.equal(descriptionNode.textContent, 'The last 1 week excluding the current week.');
+          expect(descriptionNode.textContent).toEqual('The last 1 week excluding the current week.');
         });
       });
     });

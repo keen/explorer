@@ -1,83 +1,90 @@
-var assert = require('chai').assert;
-let sinon = require('sinon/pkg/sinon.js');
-var _ = require('lodash');
-var React = require('react');
-var ReactDOM = require('react-dom');
-var TestUtils = require('react-addons-test-utils');
-var QueryActions = require('../../../../client/js/app/components/explorer/query_actions.js');
-var TestHelpers = require('../../../support/TestHelpers');
-var $R = require('rquery')(_, React, ReactDOM, TestUtils);
+import _ from 'lodash';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import TestUtils from 'react-addons-test-utils';
+import rquery from 'rquery';
 
-describe('components/explorer/query_actions', function() {
+import QueryActions from '../../../../lib/js/app/components/explorer/query_actions.js';
+import TestHelpers from '../../../support/TestHelpers';
 
-  beforeEach(function() {
-    this.model = TestHelpers.createExplorerModel();
-    this.model.metadata.user = { id: 1 };
-    this.model.metadata.display_name = 'A saved query name';
-    this.handleSubmitStub = sinon.stub();
-    this.handleRevertStub = sinon.stub();
+const $R = rquery(_, React, ReactDOM, TestUtils);
 
-    this.defaultProps = {
-      handleQuerySubmit: this.handleSubmitStub,
-      model: this.model,
-      handleRevertChanges: this.handleRevertStub,
+describe('components/explorer/query_actions', () => {
+  let model;
+  let handleSubmitStub;
+  let handleRevertStub;
+  let defaultProps;
+  let renderComponent;
+  let component;
+
+  beforeEach(() => {
+    model = TestHelpers.createExplorerModel();
+    model.metadata.user = { id: 1 };
+    model.metadata.display_name = 'A saved query name';
+    handleSubmitStub = jest.fn();
+    handleRevertStub = jest.fn();
+
+    defaultProps = {
+      handleQuerySubmit: handleSubmitStub,
+      model: model,
+      handleRevertChanges: handleRevertStub,
       persistence: null,
       user: { id: 1 },
-      removeClick: function(){}
+      removeClick: () => {}
     };
-    this.renderComponent = function(props) {
-      var props = _.assign({}, this.defaultProps, props);
-      return TestUtils.renderIntoDocument(<QueryActions {...props} />);
+    renderComponent = function(props) {
+      let propsExt = _.assign({}, defaultProps, props);
+      return TestUtils.renderIntoDocument(<QueryActions {...propsExt} />);
     };
-    this.component = this.renderComponent();
+    component = renderComponent();
   });
 
-  describe('setup', function () {
-    it('is of the right type', function () {
-      assert.isTrue(TestUtils.isCompositeComponentWithType(this.component, QueryActions));
+  describe('setup', () => {
+    it('is of the right type', () => {
+      expect(TestUtils.isCompositeComponentWithType(component, QueryActions)).toBe(true);
     });
 
-    describe('buttons shown', function () {
-      describe('default buttons', function () {
-        it('has the run-query button', function () {
-          assert.lengthOf($R(this.component).find('[role="run-query"]').components, 1);
+    describe('buttons shown', () => {
+      describe('default buttons', () => {
+        it('has the run-query button', () => {
+          expect($R(component).find('[role="run-query"]').components).toHaveLength(1);
         });
       });
-      describe('dynamic buttons', function () {
-        describe('without persistence', function () {
-          it('does not show the save button if persistence is null', function () {
-            assert.lengthOf($R(this.component).find('[role="save-query"]').components, 0);
+      describe('dynamic buttons', () => {
+        describe('without persistence', () => {
+          it('does not show the save button if persistence is null', () => {
+            expect($R(component).find('[role="save-query"]').components).toHaveLength(0);
           });
-          it('does not show the delete button if persistence is null', function () {
-            assert.lengthOf($R(this.component).find('[role="delete-query"]').components, 0);
+          it('does not show the delete button if persistence is null', () => {
+            expect($R(component).find('[role="delete-query"]').components).toHaveLength(0);
           });
-          it('does not show the clone button if persistence is null', function () {
-            assert.lengthOf($R(this.component).find('[role="clone-query"]').components, 0);
+          it('does not show the clone button if persistence is null', () => {
+            expect($R(component).find('[role="clone-query"]').components).toHaveLength(0);
           });
         });
-        describe('with persistence', function () {
-          it('does show the save button', function () {
-            this.component = this.renderComponent({ persistence: {} });
-            assert.lengthOf($R(this.component).find('[role="save-query"]').components, 1);
+        describe('with persistence', () => {
+          it('does show the save button', () => {
+            component = renderComponent({ persistence: {} });
+            expect($R(component).find('[role="save-query"]').components).toHaveLength(1);
           });
-          it('does show the delete button', function () {
-            this.component = this.renderComponent({ persistence: {} });
-            assert.lengthOf($R(this.component).find('[role="delete-query"]').components, 1);
+          it('does show the delete button', () => {
+            component = renderComponent({ persistence: {} });
+            expect($R(component).find('[role="delete-query"]').components).toHaveLength(1);
           });
-          it('does show the clone button', function () {
-            this.component = this.renderComponent({ persistence: {} });
-            assert.lengthOf($R(this.component).find('[role="clone-query"]').components, 1);
+          it('does show the clone button', () => {
+            component = renderComponent({ persistence: {} });
+            expect($R(component).find('[role="clone-query"]').components).toHaveLength(1);
           });
-          describe('if the query is an email extraction', function () {
-            it('the save button is disabled', function () {
-              var model = TestHelpers.createExplorerModel();
+          describe('if the query is an email extraction', () => {
+            it('the save button is disabled', () => {
+              const model = TestHelpers.createExplorerModel();
               model.query.analysis_type = 'extraction';
               model.query.email = 'someone@keen.io';
-              this.component = this.renderComponent({
+              component = renderComponent({
                 model: model,
                 persistence: {}
               });
-              assert.isTrue($R(this.component).find('[role="save-query"]').components[0].disabled);
+              expect($R(component).find('[role="save-query"]').components[0].disabled).toBe(true);
             });
           });
         });
@@ -85,77 +92,77 @@ describe('components/explorer/query_actions', function() {
     });
   });
 
-  describe('button callbacks', function () {
-    it('calls handleQuerySubmit when the run query button is clicked', function () {
-      var stub = sinon.stub();
-      this.component = this.renderComponent({ handleQuerySubmit: stub });
-      TestUtils.Simulate.click($R(this.component).find('[role="run-query"]').components[0]);
-      assert.isTrue(stub.calledOnce);
+  describe('button callbacks', () => {
+    it('calls handleQuerySubmit when the run query button is clicked', () => {
+      const stub = jest.fn();
+      component = renderComponent({ handleQuerySubmit: stub });
+      TestUtils.Simulate.click($R(component).find('[role="run-query"]').components[0]);
+      expect(stub).toBeCalled();
     });
-    it('calls saveQueryClick when the save query button is clicked', function () {
-      var stub = sinon.stub();
-      this.component = this.renderComponent({ persistence: {}, saveQueryClick: stub });
-      TestUtils.Simulate.click($R(this.component).find('[role="save-query"]').components[0]);
-      assert.isTrue(stub.calledOnce);
+    it('calls saveQueryClick when the save query button is clicked', () => {
+      const stub = jest.fn();
+      component = renderComponent({ persistence: {}, saveQueryClick: stub });
+      TestUtils.Simulate.click($R(component).find('[role="save-query"]').components[0]);
+      expect(stub).toBeCalled();
     });
-    it('calls removeClick when the delete query button is clicked', function () {
-      var stub = sinon.stub();
-      this.component = this.renderComponent({ persistence: {}, removeClick: stub });
-      TestUtils.Simulate.click($R(this.component).find('[role="delete-query"]').components[0]);
-      assert.isTrue(stub.calledOnce);
+    it('calls removeClick when the delete query button is clicked', () => {
+      const stub = jest.fn();
+      component = renderComponent({ persistence: {}, removeClick: stub });
+      TestUtils.Simulate.click($R(component).find('[role="delete-query"]').components[0]);
+      expect(stub).toBeCalled();
     });
-    it('calls toggleCodeSample when the embed button is clicked', function () {
-      var stub = sinon.stub();
-      this.component = this.renderComponent({ toggleCodeSample: stub });
-      TestUtils.Simulate.click($R(this.component).find('[role="toggle-code-sample"]').components[0]);
-      assert.isTrue(stub.calledOnce);
+    it('calls toggleCodeSample when the embed button is clicked', () => {
+      const stub = jest.fn();
+      component = renderComponent({ toggleCodeSample: stub });
+      TestUtils.Simulate.click($R(component).find('[role="toggle-code-sample"]').components[0]);
+      expect(stub).toBeCalled();
     });
   });
 
-  describe('Button text', function(){
+  describe('Button text', () => {
 
-    it('returns \'Run model\' when model is not loading', function() {
-      this.model.loading = false;
-      this.component.forceUpdate();
-      assert.equal($R(this.component).find('[role="run-query"]').text(), 'Run Query');
+    it('returns \'Run model\' when model is not loading', () => {
+      model.loading = false;
+      component.forceUpdate();
+      expect($R(component).find('[role="run-query"]').text()).toEqual('Run Query');
     });
 
-    it('returns \'Running...\' when model is loading', function() {
-      this.component.props.model.loading = true;
-      this.component.forceUpdate();
-      assert.equal($R(this.component).find('[role="run-query"]').text(), 'Running...');
+    it('returns \'Running...\' when model is loading', () => {
+      component.props.model.loading = true;
+      component.forceUpdate();
+      expect($R(component).find('[role="run-query"]').text()).toEqual('Running...');
     });
 
-    describe('extractions', function() {
-      beforeEach(function(){
-        this.model.query.analysis_type = 'extraction';
+    describe('extractions', () => {
+      beforeEach(() => {
+        model.query.analysis_type = 'extraction';
       });
 
-      it('returns \'Run Extraction\' when no email is present in the model', function(){
-        this.model.loading = false;
-        this.component.forceUpdate();
-        assert.equal($R(this.component).find('[role="run-query"]').text(), 'Run Extraction');
+      it('returns \'Run Extraction\' when no email is present in the model', () => {
+        model.loading = false;
+        component.forceUpdate();
+        expect($R(component).find('[role="run-query"]').text()).toEqual('Run Extraction');
       });
 
-      it('returns \'Send Email Extraction\' when an email is present in the model', function(){
-        this.model.loading = false;
-        this.model.query.email = 'someone@keen.io';
-        this.component.forceUpdate();
-        assert.equal($R(this.component).find('[role="run-query"]').text(), 'Send Email Extraction');
+      it('returns \'Send Email Extraction\' when an email is present in the model', () => {
+        model.loading = false;
+        model.query.email = 'someone@keen.io';
+        component.forceUpdate();
+        expect($R(component).find('[role="run-query"]').text()).toEqual('Send Email Extraction');
       });
 
 
-      it('returns \'Sending...\' when an email is present in the model and the model is loading', function(){
-        this.model.loading = true;
-        this.model.query.email = 'someone@keen.io';
-        this.component.forceUpdate();
-        assert.equal($R(this.component).find('[role="run-query"]').text(), 'Sending...');
+      it('returns \'Sending...\' when an email is present in the model and the model is loading', () => {
+        model.loading = true;
+        model.query.email = 'someone@keen.io';
+        component.forceUpdate();
+        expect($R(component).find('[role="run-query"]').text()).toEqual('Sending...');
       });
 
-      it('returns \'Running...\' when extraction is loading', function() {
-        this.model.loading = true;
-        this.component.forceUpdate();
-        assert.equal($R(this.component).find('[role="run-query"]').text(), 'Running...');
+      it('returns \'Running...\' when extraction is loading', () => {
+        model.loading = true;
+        component.forceUpdate();
+        expect($R(component).find('[role="run-query"]').text()).toEqual('Running...');
       });
     });
   });

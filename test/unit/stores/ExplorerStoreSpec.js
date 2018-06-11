@@ -1,31 +1,41 @@
-var assert = require('chai').assert;
-var expect = require('chai').expect;
-var _ = require('lodash');
-let sinon = require('sinon/pkg/sinon.js');
-var moment = require('moment');
-var TestHelpers = require('../../support/TestHelpers');
-var ProjectStore = require('../../../client/js/app/stores/ProjectStore');
-var ProjectUtils = require('../../../client/js/app/utils/ProjectUtils');
-var FormatUtils = require('../../../client/js/app/utils/FormatUtils');
-var ExplorerStore = require('../../../client/js/app/stores/ExplorerStore');
-var ExplorerActions = require('../../../client/js/app/actions/ExplorerActions');
+import _ from 'lodash';
+import moment from 'moment';
+import XHRmock from 'xhr-mock';
 
-describe('stores/ExplorerStore', function() {
-  beforeEach(function () {
+import TestHelpers from '../../support/TestHelpers';
+import ProjectStore from '../../../lib/js/app/stores/ProjectStore';
+import ProjectUtils from '../../../lib/js/app/utils/ProjectUtils';
+import FormatUtils from '../../../lib/js/app/utils/FormatUtils';
+import ExplorerStore from '../../../lib/js/app/stores/ExplorerStore';
+import ExplorerActions from '../../../lib/js/app/actions/ExplorerActions';
+
+jest.mock('../../../lib/js/app/actions/ProjectActions');
+
+describe('stores/ExplorerStore', () => {
+  let getProjectSpy;
+  beforeAll(()=>{
+    XHRmock.setup();
+    getProjectSpy = jest.spyOn(ProjectStore, 'getProject').mockReturnValue({ client: {}});
+  });
+
+  afterAll(()=>{
+    XHRmock.teardown();
+  });
+  beforeEach(() => {
     ExplorerStore.clearAll();
   });
 
-  describe('create', function () {
-    it('should create a single', function () {
+  describe('create', () => {
+    it('should create a single', () => {
       ExplorerActions.create();
-      assert.lengthOf(Object.keys(ExplorerStore.getAll()), 1)
+      expect(Object.keys(ExplorerStore.getAll())).toHaveLength(1)
     });
-    it('should not allow creating with active set to true', function () {
-      expect(ExplorerActions.create.bind(null, { active: true })).to.throw("You must use setActive to set a model as active.");
+    it('should not allow creating with active set to true', () => {
+      expect(ExplorerActions.create.bind(null, { active: true })).toThrow("You must use setActive to set a model as active.");
     });
-    it('should create a explorer with the right default attributes', function () {
+    it('should create a explorer with the right default attributes', () => {
       ExplorerActions.create();
-      var defaults = {
+      const defaults = {
         active: false,
         response: null,
         dataTimestamp: null,
@@ -63,11 +73,10 @@ describe('stores/ExplorerStore', function() {
         }
       };
 
-      var keys = Object.keys(ExplorerStore.getAll());
-      assert.deepEqual(_.omit(ExplorerStore.getAll()[keys[0]], 'id'),
-                       defaults);
+      const keys = Object.keys(ExplorerStore.getAll());
+      expect(_.omit(ExplorerStore.getAll()[keys[0]], 'id')).toEqual(defaults);
     });
-    it('should assign attributes passed in to the new explorer', function () {
+    it('should assign attributes passed in to the new explorer', () => {
       ExplorerActions.create({
         query: {
           event_collection: 'clicks',
@@ -79,71 +88,71 @@ describe('stores/ExplorerStore', function() {
           }
         }
       });
-      var keys = Object.keys(ExplorerStore.getAll());
-      assert.deepPropertyVal(ExplorerStore.getAll()[keys[0]], 'query.event_collection', 'clicks');
-      assert.deepPropertyVal(ExplorerStore.getAll()[keys[0]], 'query.analysis_type', 'count');
-      assert.deepPropertyVal(ExplorerStore.getAll()[keys[0]], 'metadata.visualization.chart_type', 'metric');
+      const keys = Object.keys(ExplorerStore.getAll());
+      expect(ExplorerStore.getAll()[keys[0]].query.event_collection).toEqual('clicks');
+      expect(ExplorerStore.getAll()[keys[0]].query.analysis_type).toEqual('count');
+      expect(ExplorerStore.getAll()[keys[0]].metadata.visualization.chart_type).toEqual('metric');
     });
-    it('should translate a null group_by to an empty array', function () {
+    it('should translate a null group_by to an empty array', () => {
       ExplorerActions.create({
         query: {
           group_by: null
         }
       });
-      var keys = Object.keys(ExplorerStore.getAll());
-      assert.equal(ExplorerStore.getAll()[keys[0]].query.group_by.length, 0);
+      const keys = Object.keys(ExplorerStore.getAll());
+      expect(ExplorerStore.getAll()[keys[0]].query.group_by).toHaveLength(0);
     });
-    it('should wrap non-null group_by values in an array', function () {
+    it('should wrap non-null group_by values in an array', () => {
       ExplorerActions.create({
         query: {
           group_by: 'thing'
         }
       });
-      var keys = Object.keys(ExplorerStore.getAll());
-      assert.equal(ExplorerStore.getAll()[keys[0]].query.group_by.length, 1);
-      assert.equal(ExplorerStore.getAll()[keys[0]].query.group_by[0], 'thing');
+      const keys = Object.keys(ExplorerStore.getAll());
+      expect(ExplorerStore.getAll()[keys[0]].query.group_by).toHaveLength(1);
+      expect(ExplorerStore.getAll()[keys[0]].query.group_by[0]).toEqual('thing');
     });
-    it('should set the store object key to the id is one is passed in', function () {
+    it('should set the store object key to the id is one is passed in', () => {
       ExplorerActions.create({
         id: 'abc123'
       });
-      var keys = Object.keys(ExplorerStore.getAll());
-      assert.deepPropertyVal(ExplorerStore.getAll()[keys[0]], 'id', 'abc123');
+      const keys = Object.keys(ExplorerStore.getAll());
+      expect(ExplorerStore.getAll()[keys[0]].id).toEqual('abc123');
     });
-    it('should create default metadata if metadata is null', function () {
+    it('should create default metadata if metadata is null', () => {
       ExplorerActions.create({
         id: 'abc123',
         metadata: null
       });
-      assert.deepEqual(ExplorerStore.get('abc123').metadata, {
+      expect(ExplorerStore.get('abc123').metadata).toEqual({
         display_name: null,
         visualization: {
           chart_type: null
         }
       });
     });
-    it('should turn query.group_by into an array if it is not one already', function () {
+    it('should turn query.group_by into an array if it is not one already', () => {
       ExplorerActions.create({
         id: 'abc123',
         query: {
           group_by: 'thing'
         }
       });
-      assert.sameMembers(ExplorerStore.get('abc123').query.group_by, ['thing']);
+      expect(ExplorerStore.get('abc123').query.group_by).toEqual(expect.arrayContaining(['thing']));
     });
-    it('should turn percentile value into a number if it was originally a string', function () {
+    it('should turn percentile value into a number if it was originally a string', () => {
       ExplorerActions.create({
         id: 'abc123',
         query: {
           percentile: '50'
         }
       });
-      assert.typeOf(ExplorerStore.get('abc123').query.percentile, 'number');
+      expect(ExplorerStore.get('abc123').query.percentile).toBeGreaterThan(0);
     });
   });
 
-  describe('clone', function() {
-    it('should only clone query data and metadata.visualization.chart_type', function() {
+  describe('clone', () => {
+    it('should only clone query data and metadata.visualization.chart_type', () => {
       ExplorerActions.create({
         id: 'abc123',
         query_name: 'Test Query',
@@ -159,23 +168,21 @@ describe('stores/ExplorerStore', function() {
         }
       });
 
-      var source = ExplorerStore.get('abc123');
+      const source = ExplorerStore.get('abc123');
       ExplorerActions.clone(source.id);
-      var clone = ExplorerStore.getLast();
-      var keys = Object.keys(ExplorerStore.getAll());
+      const clone = ExplorerStore.getLast();
+      const keys = Object.keys(ExplorerStore.getAll());
 
-      assert.lengthOf(keys, 2);
-      assert.isTrue(clone.id !== source.id);
-      assert.deepPropertyNotVal(clone, 'id', 'abc123');
-      assert.deepPropertyNotVal(clone, 'query_name', 'Test Query');
-      assert.deepPropertyVal(clone, 'query_name', null);
-      assert.deepPropertyVal(clone, 'query.event_collection', 'signups');
-      assert.deepPropertyVal(clone, 'query.analysis_type', 'count');
-      assert.deepPropertyVal(clone, 'metadata.display_name', null);
-      assert.deepPropertyVal(clone, 'metadata.visualization.chart_type', 'metric');
+      expect(keys).toHaveLength(2);
+      expect(clone.id).not.toBe(source.id);
+      expect(clone.query_name).toBe(null);
+      expect(clone.query.event_collection).toBe('signups');
+      expect(clone.query.analysis_type).toBe('count');
+      expect(clone.metadata.display_name).toBe(null);
+      expect(clone.metadata.visualization.chart_type).toBe('metric');
     });
 
-    it('should clone query into a new object and not modify original object', function() {
+    it('should clone query into a new object and not modify original object', () => {
       ExplorerActions.create({
         id: 'abc456',
         query_name: 'Another Test Query',
@@ -191,25 +198,25 @@ describe('stores/ExplorerStore', function() {
         }
       });
 
-      var source = ExplorerStore.get('abc456');
+      const source = ExplorerStore.get('abc456');
       ExplorerActions.clone(source.id);
-      var clone = ExplorerStore.getLast();
-      var keys = Object.keys(ExplorerStore.getAll());
+      const clone = ExplorerStore.getLast();
+      const keys = Object.keys(ExplorerStore.getAll());
 
-      assert.lengthOf(keys, 2);
-      assert.notStrictEqual(source.query, clone.query);
-      assert.notStrictEqual(source.metadata.visualization, clone.metadata.visualization);
-      assert.deepPropertyVal(source, 'id','abc456');
-      assert.deepPropertyVal(source, 'query_name', 'Another Test Query');
-      assert.deepPropertyVal(source, 'query.event_collection', 'signups');
-      assert.deepPropertyVal(source, 'query.analysis_type', 'count');
-      assert.deepPropertyVal(source, 'metadata.display_name', 'Another Test');
-      assert.deepPropertyVal(source, 'metadata.visualization.chart_type', 'metric');
+      expect(keys).toHaveLength(2);
+      expect(source.query === clone.query).toBe(false);
+      expect(source.metadata.visualization === clone.metadata.visualization).toBe(false);
+      expect(source.id).toBe('abc456');
+      expect(source.query_name).toBe('Another Test Query');
+      expect(source.query.event_collection).toBe('signups');
+      expect(source.query.analysis_type).toBe('count');
+      expect(source.metadata.display_name).toBe('Another Test');
+      expect(source.metadata.visualization.chart_type).toBe('metric');
     });
   });
 
-  describe('createBatch', function () {
-    it('should create a model for every object in the array under the key "models"', function () {
+  describe('createBatch', () => {
+    it('should create a model for every object in the array under the key "models"', () => {
       ExplorerActions.createBatch([
         {
           query: {
@@ -247,15 +254,15 @@ describe('stores/ExplorerStore', function() {
           }
         }
       ]);
-      var keys = Object.keys(ExplorerStore.getAll());
-      assert.lengthOf(keys, 3);
-      assert.strictEqual(keys[1], 'with_an_id');
-      assert.strictEqual(keys[2], 'also_with_an_id');
+      const keys = Object.keys(ExplorerStore.getAll());
+      expect(keys).toHaveLength(3);
+      expect(keys[1]).toBe('with_an_id');
+      expect(keys[2]).toBe('also_with_an_id');
     });
   });
 
-  describe('getLast', function () {
-    it('should get the last explorer in the store', function () {
+  describe('getLast', () => {
+    it('should get the last explorer in the store', () => {
       ExplorerActions.create({
         id: 'ONE',
         query: {
@@ -286,12 +293,12 @@ describe('stores/ExplorerStore', function() {
           chart_type: 'metric'
         }
       });
-      assert.strictEqual(ExplorerStore.getLast().id, 'THREE');
+      expect(ExplorerStore.getLast().id).toEqual('THREE');
     });
   });
 
-  describe('update', function () {
-    it('should properly update the correct explorer', function () {
+  describe('update', () => {
+    it('should properly update the correct explorer', () => {
       ExplorerActions.create({
         id: 'SOME_ID',
         query: {
@@ -302,8 +309,8 @@ describe('stores/ExplorerStore', function() {
           chart_type: 'metric'
         }
       });
-      var explorer = ExplorerStore.get('SOME_ID');
-      var updates = _.cloneDeep(explorer);
+      let explorer = ExplorerStore.get('SOME_ID');
+      let updates = _.cloneDeep(explorer);
       updates.query.event_collection = 'not_clicks';
       updates.query.analysis_type = 'not_count';
       updates.visualization.chart_type = 'not_metric';
@@ -312,12 +319,12 @@ describe('stores/ExplorerStore', function() {
 
       explorer = ExplorerStore.get('SOME_ID');
 
-      assert.deepPropertyVal(explorer, 'query.event_collection', 'not_clicks');
-      assert.deepPropertyVal(explorer, 'query.analysis_type', 'not_count');
-      assert.deepPropertyVal(explorer, 'visualization.chart_type', 'not_metric');
+      expect(explorer.query.event_collection).toBe('not_clicks');
+      expect(explorer.query.analysis_type).toBe('not_count');
+      expect(explorer.visualization.chart_type).toBe('not_metric');
     });
 
-    it('should properly merge array values', function () {
+    it('should properly merge array values', () => {
       ExplorerActions.create({
         id: 'SOME_ID',
         query: {
@@ -329,16 +336,16 @@ describe('stores/ExplorerStore', function() {
           chart_type: 'metric'
         }
       });
-      var explorer = ExplorerStore.get('SOME_ID');
-      var updates = { query: { group_by: ['name'] } }
+      let explorer = ExplorerStore.get('SOME_ID');
+      let updates = { query: { group_by: ['name'] } }
       ExplorerActions.update('SOME_ID', updates);
 
       explorer = ExplorerStore.get('SOME_ID');
 
-      assert.sameMembers(explorer.query.group_by, ['name']);
+      expect(explorer.query.group_by).toEqual(expect.arrayContaining(['name']));
     });
 
-    it('should properly merge the time object', function () {
+    it('should properly merge the time object', () => {
       ExplorerActions.create({
         id: 'SOME_ID',
         query: {
@@ -353,8 +360,8 @@ describe('stores/ExplorerStore', function() {
           chart_type: 'metric'
         }
       });
-      var explorer = ExplorerStore.get('SOME_ID');
-      var updates = {
+      let explorer = ExplorerStore.get('SOME_ID');
+      let updates = {
         query: {
           time: {
             amount: "14",
@@ -365,14 +372,14 @@ describe('stores/ExplorerStore', function() {
       }
       ExplorerActions.update('SOME_ID', updates);
       explorer = ExplorerStore.get('SOME_ID');
-      assert.deepEqual(explorer.query.time, {
+      expect(explorer.query.time).toEqual({
         amount: "14",
         relativity: "this",
         sub_timeframe: "days"
       });
     });
 
-    it('should replace the store object key with the new ID if one is passed in via updates', function () {
+    it('should replace the store object key with the new ID if one is passed in via updates', () => {
       ExplorerActions.create({
         id: 'SOME_ID',
         query_name: 'A saved query',
@@ -386,11 +393,12 @@ describe('stores/ExplorerStore', function() {
       });
 
       ExplorerActions.update('SOME_ID', { id: 'abc123' });
-      var explorers = ExplorerStore.getAll();
-      assert.lengthOf(Object.keys(explorers), 1);
-      assert.propertyVal(explorers, 'abc123');
+      const explorers = ExplorerStore.getAll();
+      expect(Object.keys(explorers)).toHaveLength(1);
+      expect(Object.keys(explorers)[0]).toBe('abc123');
     });
-    it('should wrap the group_by property in an array if it is not already', function () {
+
+    it('should wrap the group_by property in an array if it is not already', () => {
       ExplorerActions.create({
         id: 'SOME_ID',
         query_name: 'A saved query',
@@ -402,13 +410,13 @@ describe('stores/ExplorerStore', function() {
           chart_type: 'metric'
         }
       });
-      var newQuery = _.cloneDeep(ExplorerStore.get('SOME_ID').query);
+      const newQuery = _.cloneDeep(ExplorerStore.get('SOME_ID').query);
       newQuery.group_by = 'not_wrapped';
       ExplorerActions.update('SOME_ID', { query: newQuery });
-      assert.sameMembers(ExplorerStore.get('SOME_ID').query.group_by, ['not_wrapped']);
+      expect(ExplorerStore.get('SOME_ID').query.group_by).toEqual(expect.arrayContaining(['not_wrapped']));
     });
 
-    it('should turn percentile value into a number if it was originally a string', function () {
+    it('should turn percentile value into a number if it was originally a string', () => {
       ExplorerActions.create({
         id: 'SOME_ID',
         query_name: 'A saved query',
@@ -422,200 +430,209 @@ describe('stores/ExplorerStore', function() {
           chart_type: 'metric'
         }
       });
-      var newQuery = _.cloneDeep(ExplorerStore.get('SOME_ID').query);
+      const newQuery = _.cloneDeep(ExplorerStore.get('SOME_ID').query);
       newQuery.percentile = '75';
       ExplorerActions.update('SOME_ID', { query: newQuery });
-      assert.typeOf(ExplorerStore.get('SOME_ID').query.percentile, 'number');
+      expect(ExplorerStore.get('SOME_ID').query.percentile).toBeGreaterThan(0);
     });
 
-    describe('clearing values', function () {
-      it('should set email to null if updating analysis type to something that is not extraction', function () {
-        ExplorerActions.create({
-          id: 'SOME_ID',
-          name: 'A saved query',
-          query: {
-            email: 'someone@keen.io',
-            latest: '1000',
-            analysis_type: 'extraction',
-            event_collection: 'clicks',
-            timeframe: 'this_1_days'
-          },
-          visualization: {
-            chart_type: 'metric'
-          }
-        });
+  });
 
-        var explorer = ExplorerStore.get('SOME_ID');
-        var updates = _.cloneDeep(explorer);
-        updates.query.analysis_type = 'count';
-        ExplorerActions.update('SOME_ID', updates);
-
-        assert.deepPropertyVal(ExplorerStore.get('SOME_ID'), 'query.email', null);
+  describe('clearing values', () => {
+    it('should set email to null if updating analysis type to something that is not extraction', () => {
+      ExplorerActions.create({
+        id: 'SOME_ID',
+        name: 'A saved query',
+        query: {
+          email: 'someone@keen.io',
+          latest: '1000',
+          analysis_type: 'extraction',
+          event_collection: 'clicks',
+          timeframe: 'this_1_days'
+        },
+        visualization: {
+          chart_type: 'metric'
+        }
       });
-      it('should set latest to null if updating analysis type to something that is not extraction', function () {
-        ExplorerActions.create({
-          id: 'SOME_ID',
-          name: 'A saved query',
-          query: {
-            email: 'someone@keen.io',
-            latest: '1000',
-            analysis_type: 'extraction',
-            event_collection: 'clicks',
-            timeframe: 'this_1_days'
-          },
-          visualization: {
-            chart_type: 'metric'
-          }
-        });
 
-        var explorer = ExplorerStore.get('SOME_ID');
-        var updates = _.cloneDeep(explorer);
-        updates.query.analysis_type = 'count';
-        ExplorerActions.update('SOME_ID', updates);
+      const explorer = ExplorerStore.get('SOME_ID');
+      const updates = _.cloneDeep(explorer);
+      updates.query.analysis_type = 'count';
+      ExplorerActions.update('SOME_ID', updates);
 
-        assert.deepPropertyVal(ExplorerStore.get('SOME_ID'), 'query.latest', null);
+      expect(ExplorerStore.get('SOME_ID').query.email).toBe(null);
+    });
+
+    it('should set latest to null if updating analysis type to something that is not extraction', () => {
+      ExplorerActions.create({
+        id: 'SOME_ID',
+        name: 'A saved query',
+        query: {
+          email: 'someone@keen.io',
+          latest: '1000',
+          analysis_type: 'extraction',
+          event_collection: 'clicks',
+          timeframe: 'this_1_days'
+        },
+        visualization: {
+          chart_type: 'metric'
+        }
       });
-      it('does not clear the email field if the analysis type is extraction', function () {
-        ExplorerActions.create({
-          id: 'SOME_ID',
-          name: 'A saved query',
-          query: {
-            analysis_type: 'count',
-            event_collection: 'clicks',
-            timeframe: 'this_1_days'
-          },
-          visualization: {
-            chart_type: 'metric'
-          }
-        });
 
-        var explorer = ExplorerStore.get('SOME_ID');
-        var updates = _.cloneDeep(explorer);
-        updates.query.analysis_type = 'extraction';
-        updates.query.email = 'someone@keen.io';
-        ExplorerActions.update('SOME_ID', updates);
+      const explorer = ExplorerStore.get('SOME_ID');
+      const updates = _.cloneDeep(explorer);
+      updates.query.analysis_type = 'count';
+      ExplorerActions.update('SOME_ID', updates);
 
-        assert.deepPropertyVal(ExplorerStore.get('SOME_ID'), 'query.email', 'someone@keen.io');
+      expect(ExplorerStore.get('SOME_ID').query.latest).toBe(null);
+    });
+
+    it('does not clear the email field if the analysis type is extraction', () => {
+      ExplorerActions.create({
+        id: 'SOME_ID',
+        name: 'A saved query',
+        query: {
+          analysis_type: 'count',
+          event_collection: 'clicks',
+          timeframe: 'this_1_days'
+        },
+        visualization: {
+          chart_type: 'metric'
+        }
       });
-      it('does not clear the latest field if the analysis type is extraction and email is present', function () {
-        ExplorerActions.create({
-          id: 'SOME_ID',
-          name: 'A saved query',
-          query: {
-            analysis_type: 'count',
-            event_collection: 'clicks',
-            timeframe: 'this_1_days'
-          },
-          visualization: {
-            chart_type: 'metric'
-          }
-        });
 
-        var explorer = ExplorerStore.get('SOME_ID');
-        var updates = _.cloneDeep(explorer);
-        updates.query.analysis_type = 'extraction';
-        updates.query.email = 'person@keen.io';
-        updates.query.latest = '1000';
-        ExplorerActions.update('SOME_ID', updates);
+      const explorer = ExplorerStore.get('SOME_ID');
+      const updates = _.cloneDeep(explorer);
+      updates.query.analysis_type = 'extraction';
+      updates.query.email = 'someone@keen.io';
+      ExplorerActions.update('SOME_ID', updates);
 
-        assert.deepPropertyVal(ExplorerStore.get('SOME_ID'), 'query.latest', '1000');
+      expect(ExplorerStore.get('SOME_ID').query.email).toEqual('someone@keen.io');
+    });
+
+    it('does not clear the latest field if the analysis type is extraction and email is present', () => {
+      ExplorerActions.create({
+        id: 'SOME_ID',
+        name: 'A saved query',
+        query: {
+          analysis_type: 'count',
+          event_collection: 'clicks',
+          timeframe: 'this_1_days'
+        },
+        visualization: {
+          chart_type: 'metric'
+        }
       });
-      it('should set group_by to empty array and interval to null if the analysis type is extraction', function () {
-        ExplorerActions.create({
-          id: 'SOME_ID',
-          name: 'A saved query',
-          query: {
-            analysis_type: 'count',
-            event_collection: 'clicks',
-            timeframe: 'this_1_days'
-          },
-          visualization: {
-            chart_type: 'metric'
-          }
-        });
 
-        var explorer = ExplorerStore.get('SOME_ID');
-        var updates = _.cloneDeep(explorer);
-        updates.query.analysis_type = 'extraction';
-        updates.query.latest = 1000;
-        ExplorerActions.update('SOME_ID', updates);
+      const explorer = ExplorerStore.get('SOME_ID');
+      const updates = _.cloneDeep(explorer);
+      updates.query.analysis_type = 'extraction';
+      updates.query.email = 'person@keen.io';
+      updates.query.latest = '1000';
+      ExplorerActions.update('SOME_ID', updates);
 
-        assert.deepPropertyVal(ExplorerStore.get('SOME_ID'), 'query.interval', null);
-        assert.sameMembers(ExplorerStore.get('SOME_ID').query.group_by, []);
+      expect(ExplorerStore.get('SOME_ID').query.latest).toEqual('1000');
+    });
+
+
+    it('should set group_by to empty array and interval to null if the analysis type is extraction', () => {
+      ExplorerActions.create({
+        id: 'SOME_ID',
+        name: 'A saved query',
+        query: {
+          analysis_type: 'count',
+          event_collection: 'clicks',
+          timeframe: 'this_1_days'
+        },
+        visualization: {
+          chart_type: 'metric'
+        }
       });
-      it('should set percentile to null if the analysis type is not percentile', function () {
-        ExplorerActions.create({
-          id: 'SOME_ID',
-          name: 'A saved query',
-          query: {
-            event_collection: 'clicks',
-            analysis_type: 'percentile',
-            target_property: 'response.time',
-            percentile: '99',
-            timeframe: 'this_1_days'
-          },
-          visualization: {
-            chart_type: 'metric'
-          }
-        });
 
-        var explorer = ExplorerStore.get('SOME_ID');
-        var updates = _.cloneDeep(explorer);
-        updates.query.analysis_type = 'count';
-        ExplorerActions.update('SOME_ID', updates);
+      const explorer = ExplorerStore.get('SOME_ID');
+      const updates = _.cloneDeep(explorer);
+      updates.query.analysis_type = 'extraction';
+      updates.query.latest = 1000;
+      ExplorerActions.update('SOME_ID', updates);
 
-        assert.deepPropertyVal(ExplorerStore.get('SOME_ID'), 'query.percentile', null);
-        assert.deepPropertyVal(ExplorerStore.get('SOME_ID'), 'query.target_property', null);
+      expect(ExplorerStore.get('SOME_ID').query.interval).toEqual(null);
+      expect(ExplorerStore.get('SOME_ID').query.group_by).toEqual(expect.arrayContaining([]));
+    });
+
+    it('should set percentile to null if the analysis type is not percentile', () => {
+      ExplorerActions.create({
+        id: 'SOME_ID',
+        name: 'A saved query',
+        query: {
+          event_collection: 'clicks',
+          analysis_type: 'percentile',
+          target_property: 'response.time',
+          percentile: '99',
+          timeframe: 'this_1_days'
+        },
+        visualization: {
+          chart_type: 'metric'
+        }
       });
-      it('should set target_property to null if the analysis type is count', function () {
-        ExplorerActions.create({
-          id: 'SOME_ID',
-          name: 'A saved query',
-          query: {
-            event_collection: 'clicks',
-            analysis_type: 'count_unique',
-            target_property: 'response.time',
-            timeframe: 'this_1_days'
-          },
-          visualization: {
-            chart_type: 'metric'
-          }
-        });
 
-        var explorer = ExplorerStore.get('SOME_ID');
-        var updates = _.cloneDeep(explorer);
-        updates.query.analysis_type = 'count';
-        ExplorerActions.update('SOME_ID', updates);
+      const explorer = ExplorerStore.get('SOME_ID');
+      const updates = _.cloneDeep(explorer);
+      updates.query.analysis_type = 'count';
+      ExplorerActions.update('SOME_ID', updates);
 
-        assert.deepPropertyVal(ExplorerStore.get('SOME_ID'), 'query.target_property', null);
+      expect(ExplorerStore.get('SOME_ID').query.percentile).toBe(null);
+      expect(ExplorerStore.get('SOME_ID').query.target_property).toBe(null);
+    });
+
+    it('should set target_property to null if the analysis type is count', () => {
+      ExplorerActions.create({
+        id: 'SOME_ID',
+        name: 'A saved query',
+        query: {
+          event_collection: 'clicks',
+          analysis_type: 'count_unique',
+          target_property: 'response.time',
+          timeframe: 'this_1_days'
+        },
+        visualization: {
+          chart_type: 'metric'
+        }
       });
-      it('should set target_property to null if the analysis type is extraction', function () {
-        ExplorerActions.create({
-          id: 'SOME_ID',
-          name: 'A saved query',
-          query: {
-            event_collection: 'clicks',
-            analysis_type: 'count_unique',
-            target_property: 'response.time',
-            timeframe: 'this_1_days'
-          },
-          visualization: {
-            chart_type: 'metric'
-          }
-        });
 
-        var explorer = ExplorerStore.get('SOME_ID');
-        var updates = _.cloneDeep(explorer);
-        updates.query.analysis_type = 'extraction';
-        ExplorerActions.update('SOME_ID', updates);
+      const explorer = ExplorerStore.get('SOME_ID');
+      const updates = _.cloneDeep(explorer);
+      updates.query.analysis_type = 'count';
+      ExplorerActions.update('SOME_ID', updates);
 
-        assert.deepPropertyVal(ExplorerStore.get('SOME_ID'), 'query.target_property', null);
+      expect(ExplorerStore.get('SOME_ID').query.target_property).toBe(null);
+    });
+
+    it('should set target_property to null if the analysis type is extraction', () => {
+      ExplorerActions.create({
+        id: 'SOME_ID',
+        name: 'A saved query',
+        query: {
+          event_collection: 'clicks',
+          analysis_type: 'count_unique',
+          target_property: 'response.time',
+          timeframe: 'this_1_days'
+        },
+        visualization: {
+          chart_type: 'metric'
+        }
       });
+
+      const explorer = ExplorerStore.get('SOME_ID');
+      const updates = _.cloneDeep(explorer);
+      updates.query.analysis_type = 'extraction';
+      ExplorerActions.update('SOME_ID', updates);
+
+      expect(ExplorerStore.get('SOME_ID').query.target_property).toBe(null);
     });
   });
 
-  describe('remove', function () {
-    it('should remove an explorer', function () {
+  describe('remove', () => {
+    it('should remove an explorer', () => {
       ExplorerActions.create({
         id: 'SOME_ID',
         query: {
@@ -626,12 +643,13 @@ describe('stores/ExplorerStore', function() {
           chart_type: 'metric'
         }
       });
-      assert.deepProperty(ExplorerStore.getAll(), 'SOME_ID');
+      expect(ExplorerStore.getAll().SOME_ID).not.toBe(undefined);
       ExplorerActions.remove('SOME_ID');
-      assert.notDeepProperty(this.store, 'SOME_ID');
+      expect(ExplorerStore.getAll().SOME_ID).toBe(undefined);
     });
-    describe('creating a new active model after removal of the currently active one', function () {
-      beforeEach(function() {
+
+    describe('creating a new active model after removal of the currently active one', () => {
+      beforeEach(() => {
         ExplorerActions.create({
           id: 'abc',
           query: {
@@ -659,57 +677,60 @@ describe('stores/ExplorerStore', function() {
         ExplorerActions.setActive('abc');
         ExplorerActions.remove('abc');
       });
-      it('should have an active model after', function () {
-        assert.isTrue(ExplorerStore.getActive().active);
+      it('should have an active model after', () => {
+        expect(ExplorerStore.getActive().active).toBe(true);
       });
-      it('should create the new model, not select an existing persisted model', function () {
-        assert.strictEqual(ExplorerStore.getActive().id.match('TEMP-').length, 1);
+      it('should create the new model, not select an existing persisted model', () => {
+        expect(ExplorerStore.getActive().id.match('TEMP-')).toHaveLength(1);
       });
-      it('should only have a single active model', function () {
-        assert.strictEqual(_.filter(ExplorerStore.getAll(), { active: true  }).length, 1);
+      it('should only have a single active model', () => {
+        expect(_.filter(ExplorerStore.getAll(), { active: true  })).toHaveLength(1);
       });
-      it('should create the new active model and then set it active to ensure it has an originalModel property', function () {
-        assert.isTrue(!_.isUndefined(ExplorerStore.getActive().originalModel));
+      it('should create the new active model and then set it active to ensure it has an originalModel property', () => {
+        expect(!_.isUndefined(ExplorerStore.getActive().originalModel)).toBe(true);
       });
     });
+
   });
 
-  describe('set active', function () {
-    beforeEach(function () {
+  describe('set active', () => {
+    beforeEach(() => {
       ExplorerActions.create();
       ExplorerActions.create();
       ExplorerActions.create();
     });
-    it('should set the given explorer active', function () {
-      var keys = Object.keys(ExplorerStore.getAll());
+    it('should set the given explorer active', () => {
+      const keys = Object.keys(ExplorerStore.getAll());
       ExplorerActions.setActive(keys[1]);
-      assert.isTrue(ExplorerStore.getAll()[keys[1]].active);
+      expect(ExplorerStore.getAll()[keys[1]].active).toBe(true);
     });
-    it('should set the rest of the explorers as not active', function () {
-      var keys = Object.keys(ExplorerStore.getAll());
+    it('should set the rest of the explorers as not active', () => {
+      const keys = Object.keys(ExplorerStore.getAll());
       ExplorerActions.setActive(keys[0]);
       ExplorerActions.setActive(keys[2]);
 
-      assert.isFalse(ExplorerStore.getAll()[keys[0]].active);
-      assert.isFalse(ExplorerStore.getAll()[keys[1]].active);
-      assert.isTrue(ExplorerStore.getAll()[keys[2]].active);
+      expect(ExplorerStore.getAll()[keys[0]].active).toBe(false);
+      expect(ExplorerStore.getAll()[keys[1]].active).toBe(false);
+      expect(ExplorerStore.getAll()[keys[2]].active).toBe(true);
     });
   });
 
-  describe('filters', function () {
-    beforeEach(function () {
+
+  describe('filters', () => {
+    let explorer;
+    beforeEach(() => {
       ExplorerActions.create();
-      this.explorer = ExplorerStore.getAll()[Object.keys(ExplorerStore.getAll())[0]];
+      explorer = ExplorerStore.getAll()[Object.keys(ExplorerStore.getAll())[0]];
     });
-    describe('add filter', function () {
-      it('should add a new filter to the query', function () {
-        assert.lengthOf(this.explorer.query.filters, 0);
-        ExplorerActions.addFilter(this.explorer.id);
-        assert.lengthOf(this.explorer.query.filters, 1);
+    describe('add filter', () => {
+      it('should add a new filter to the query', () => {
+        expect(explorer.query.filters).toHaveLength(0);
+        ExplorerActions.addFilter(explorer.id);
+        expect(explorer.query.filters).toHaveLength(1);
       });
-      it('should add a new filter to the query with the expected default values', function () {
-        ExplorerActions.addFilter(this.explorer.id);
-        assert.deepEqual(this.explorer.query.filters[0], {
+      it('should add a new filter to the query with the expected default values', () => {
+        ExplorerActions.addFilter(explorer.id);
+        expect(explorer.query.filters[0]).toEqual({
           property_name: null,
           property_value: null,
           operator: 'eq',
@@ -718,14 +739,14 @@ describe('stores/ExplorerStore', function() {
           isValid: true
         });
       });
-      it('should add a new filter to the query with the provided attributes', function () {
-        ExplorerActions.addFilter(this.explorer.id, {
+      it('should add a new filter to the query with the provided attributes', () => {
+        ExplorerActions.addFilter(explorer.id, {
           property_name: 'some_name',
           operator: 'gte',
           property_value: 'some_value',
           coercion_type: 'String'
         });
-        assert.deepEqual(this.explorer.query.filters[0], {
+        expect(explorer.query.filters[0]).toEqual({
           property_name: 'some_name',
           operator: 'gte',
           property_value: 'some_value',
@@ -736,15 +757,15 @@ describe('stores/ExplorerStore', function() {
       });
     });
 
-    describe('remove filter', function () {
-      beforeEach(function () {
+    describe('remove filter', () => {
+      beforeEach(() => {
         ExplorerStore.clearAll();
         ExplorerActions.create();
         ExplorerActions.create();
         ExplorerActions.create();
       });
-      it('should remove the correct filter from the explorer with the provided ID', function () {
-        var secondExplorer = ExplorerStore.getAll()[Object.keys(ExplorerStore.getAll())[1]];
+      it('should remove the correct filter from the explorer with the provided ID', () => {
+        const secondExplorer = ExplorerStore.getAll()[Object.keys(ExplorerStore.getAll())[1]];
         // Add three filters
         ExplorerActions.addFilter(secondExplorer.id, {
           property_name: 'one',
@@ -765,8 +786,8 @@ describe('stores/ExplorerStore', function() {
           operator: 'eq'
         });
         ExplorerActions.removeFilter(secondExplorer.id, 1);
-        assert.lengthOf(ExplorerStore.get(secondExplorer.id).query.filters, 2);
-        assert.sameDeepMembers(ExplorerStore.get(secondExplorer.id).query.filters, [
+        expect(ExplorerStore.get(secondExplorer.id).query.filters).toHaveLength(2);
+        expect(ExplorerStore.get(secondExplorer.id).query.filters).toEqual(expect.arrayContaining([
           {
             property_name: 'one',
             property_value: 'value',
@@ -783,330 +804,315 @@ describe('stores/ExplorerStore', function() {
             errors: [],
             isValid: true
           }
-        ]);
+        ]));
       });
     });
 
-    describe('update filter', function () {
-      before(function () {
-        this.getPropertyTypeStub = sinon.stub(ProjectUtils, 'getPropertyType');
-        this.coercionTypeForPropertyTypeStub = sinon.stub(FormatUtils, 'coercionTypeForPropertyType');
-        this.getProjectStub = sinon.stub(ProjectStore, 'getProject');
+    describe('update filter', () => {
+      let getPropertyTypeStub;
+      let coercionTypeForPropertyTypeStub;
+      let getProjectStub;
+      beforeAll(() => {
+        getPropertyTypeStub = jest.spyOn(ProjectUtils, 'getPropertyType').mockImplementation(()=>{});
+        coercionTypeForPropertyTypeStub = jest.spyOn(FormatUtils, 'coercionTypeForPropertyType').mockImplementation(()=>{});
+        getProjectStub = jest.spyOn(ProjectStore, 'getProject').mockImplementation(()=>{});
       });
 
-      after(function () {
-        ProjectUtils.getPropertyType.restore();
-        FormatUtils.coercionTypeForPropertyType.restore();
-        ProjectStore.getProject.restore();
+      afterAll(() => {
+        getPropertyTypeStub.mockRestore();
+        coercionTypeForPropertyTypeStub.mockRestore();
+        getProjectStub.mockRestore();
       });
 
-      beforeEach(function () {
+      beforeEach(() => {
         ExplorerActions.create();
-        this.explorer = ExplorerStore.getAll()[Object.keys(ExplorerStore.getAll())[0]];
-        ExplorerActions.addFilter(this.explorer.id);
+        explorer = ExplorerStore.getAll()[Object.keys(ExplorerStore.getAll())[0]];
+        ExplorerActions.addFilter(explorer.id);
       });
 
-      it('should apply the provided updates', function () {
-        this.coercionTypeForPropertyTypeStub.returns('String');
-        ExplorerActions.updateFilter(this.explorer.id, 0, {
+      it('should apply the provided updates', () => {
+        coercionTypeForPropertyTypeStub.mockReturnValue('String');
+        ExplorerActions.updateFilter(explorer.id, 0, {
           property_name: 'some_other_name'
         });
-        assert.deepPropertyVal(ExplorerStore.get(this.explorer.id).query.filters[0], 'property_name', 'some_other_name');
+        expect(ExplorerStore.get(explorer.id).query.filters[0].property_name).toBe('some_other_name');
       });
 
-      describe('preparing updates before updating the filter', function () {
 
-        describe('property_name', function () {
-          it('should set the coercion type to the default for that type when the property name is changed', function () {
-            this.coercionTypeForPropertyTypeStub.returns('Datetime');
-            ExplorerActions.updateFilter(this.explorer.id, 0, {
+      describe('preparing updates before updating the filter', () => {
+
+        describe('property_name', () => {
+          it('should set the coercion type to the default for that type when the property name is changed', () => {
+            coercionTypeForPropertyTypeStub.mockReturnValue('Datetime');
+            ExplorerActions.updateFilter(explorer.id, 0, {
               property_name: 'some_other_name'
             });
-            assert.deepPropertyVal(ExplorerStore.get(this.explorer.id).query.filters[0], 'property_name', 'some_other_name');
-            assert.deepPropertyVal(ExplorerStore.get(this.explorer.id).query.filters[0], 'coercion_type', 'Datetime');
+            expect(ExplorerStore.get(explorer.id).query.filters[0].property_name).toBe('some_other_name');
+            expect(ExplorerStore.get(explorer.id).query.filters[0].coercion_type).toBe('Datetime');
           });
-          it('should NOT change the coercion_type if the property_name is the same', function () {
-            this.coercionTypeForPropertyTypeStub.returns('List');
-            ExplorerActions.updateFilter(this.explorer.id, 0, {
+          it('should NOT change the coercion_type if the property_name is the same', () => {
+            coercionTypeForPropertyTypeStub.mockReturnValue('List');
+            ExplorerActions.updateFilter(explorer.id, 0, {
               property_name: 'name',
               property_value: 'something',
               operator: 'eq'
             });
-            this.coercionTypeForPropertyTypeStub.returns('String');
-            ExplorerActions.updateFilter(this.explorer.id, 0, {
+            coercionTypeForPropertyTypeStub.mockReturnValue('String');
+            ExplorerActions.updateFilter(explorer.id, 0, {
               property_value: 'something else'
             });
-            assert.deepPropertyVal(ExplorerStore.get(this.explorer.id).query.filters[0], 'property_name', 'name');
-            assert.deepPropertyVal(ExplorerStore.get(this.explorer.id).query.filters[0], 'coercion_type', 'List');
+            expect(ExplorerStore.get(explorer.id).query.filters[0].property_name).toBe('name');
+            expect(ExplorerStore.get(explorer.id).query.filters[0].coercion_type).toBe('List');
           });
-          describe('with exists operator', function() {
-            it('should keep the coercion_type as Boolean', function () {
-              ExplorerActions.updateFilter(this.explorer.id, 0, {
+          describe('with exists operator', () => {
+            it('should keep the coercion_type as Boolean', () => {
+              ExplorerActions.updateFilter(explorer.id, 0, {
                 property_name: 'name',
                 operator: 'exists',
                 coercion_type: 'Boolean',
                 property_value: true
               });
-              ExplorerActions.updateFilter(this.explorer.id, 0, {
+              ExplorerActions.updateFilter(explorer.id, 0, {
                 property_name: 'new value'
               });
-              assert.deepPropertyVal(ExplorerStore.get(this.explorer.id).query.filters[0], 'coercion_type', 'Boolean');
+              expect(ExplorerStore.get(explorer.id).query.filters[0].coercion_type).toBe('Boolean');
             });
-            it('should keep the property_value as the Boolean value (true)', function () {
-              ExplorerActions.updateFilter(this.explorer.id, 0, {
+            it('should keep the property_value as the Boolean value (true)', () => {
+              ExplorerActions.updateFilter(explorer.id, 0, {
                 property_name: 'name',
                 operator: 'exists',
                 coercion_type: 'Boolean',
                 property_value: true
               });
-              ExplorerActions.updateFilter(this.explorer.id, 0, {
+              ExplorerActions.updateFilter(explorer.id, 0, {
                 property_name: 'new value'
               });
-              assert.deepPropertyVal(ExplorerStore.get(this.explorer.id).query.filters[0], 'property_value', true);
+              expect(ExplorerStore.get(explorer.id).query.filters[0].property_value).toBe(true);
             });
-            it('should keep the property_value as the Boolean value (false)', function () {
-              ExplorerActions.updateFilter(this.explorer.id, 0, {
+            it('should keep the property_value as the Boolean value (false)', () => {
+              ExplorerActions.updateFilter(explorer.id, 0, {
                 property_name: 'name',
                 operator: 'exists',
                 coercion_type: 'Boolean',
                 property_value: false
               });
-              ExplorerActions.updateFilter(this.explorer.id, 0, {
+              ExplorerActions.updateFilter(explorer.id, 0, {
                 property_name: 'new value'
               });
-              assert.deepPropertyVal(ExplorerStore.get(this.explorer.id).query.filters[0], 'property_value', false);
+              expect(ExplorerStore.get(explorer.id).query.filters[0].property_value).toBe(false);
             });
           });
         });
+      });
 
-        describe('operator', function () {
-          it('should NOT change coercion_type if the operator is the same', function () {
-            this.coercionTypeForPropertyTypeStub.returns('List');
-            ExplorerActions.updateFilter(this.explorer.id, 0, {
-              property_name: 'name',
-              operator: 'eq'
-            });
-            this.coercionTypeForPropertyTypeStub.returns('String');
-            ExplorerActions.updateFilter(this.explorer.id, 0, {
-              property_value: 'some value'
-            });
-            assert.deepPropertyVal(ExplorerStore.get(this.explorer.id).query.filters[0], 'property_name', 'name');
-            assert.deepPropertyVal(ExplorerStore.get(this.explorer.id).query.filters[0], 'coercion_type', 'List');
+    describe('operator', () => {
+        it('should NOT change coercion_type if the operator is the same', () => {
+          coercionTypeForPropertyTypeStub.mockReturnValue('List');
+          ExplorerActions.updateFilter(explorer.id, 0, {
+            property_name: 'name',
+            operator: 'eq'
           });
-
-          describe('updating the coercion_type based on the operator', function () {
-            beforeEach(function () {
-              ExplorerActions.updateFilter(this.explorer.id, 0, {
-                property_name: 'name',
-                operator: 'eq',
-                coercion_type: 'String'
-              });
-            });
-
-            it('should change the coercion_type to List for operator "in"', function () {
-              ExplorerActions.updateFilter(this.explorer.id, 0, {
-                operator: 'in'
-              });
-              assert.deepPropertyVal(ExplorerStore.get(this.explorer.id).query.filters[0], 'coercion_type', 'List');
-            });
-            it('should change the coercion_type to Boolean for operator "exists"', function () {
-              ExplorerActions.updateFilter(this.explorer.id, 0, {
-                operator: 'exists'
-              });
-              assert.deepPropertyVal(ExplorerStore.get(this.explorer.id).query.filters[0], 'coercion_type', 'Boolean');
-            });
-            it('should change the coercion_type to Geo for operator "within"', function () {
-              ExplorerActions.updateFilter(this.explorer.id, 0, {
-                operator: 'within'
-              });
-              assert.deepPropertyVal(ExplorerStore.get(this.explorer.id).query.filters[0], 'coercion_type', 'Geo');
-            });
-            it('should update to the right coercion_type for that operator if the current type is not supported', function () {
-              ExplorerActions.updateFilter(this.explorer.id, 0, {
-                coercion_type: 'Boolean'
-              });
-              ExplorerActions.updateFilter(this.explorer.id, 0, {
-                operator: 'gt'
-              });
-              assert.deepPropertyVal(ExplorerStore.get(this.explorer.id).query.filters[0], 'coercion_type', 'Number');
-            });
-            it('should NOT update to the right coercion_type for that operator if the current type IS supported', function () {
-              ExplorerActions.updateFilter(this.explorer.id, 0, {
-                coercion_type: 'String'
-              });
-              ExplorerActions.updateFilter(this.explorer.id, 0, {
-                operator: 'gt'
-              });
-              assert.deepPropertyVal(ExplorerStore.get(this.explorer.id).query.filters[0], 'coercion_type', 'String');
-            });
+          coercionTypeForPropertyTypeStub.mockReturnValue('String');
+          ExplorerActions.updateFilter(explorer.id, 0, {
+            property_value: 'some value'
           });
+          expect(ExplorerStore.get(explorer.id).query.filters[0].property_name).toBe('name');
+          expect(ExplorerStore.get(explorer.id).query.filters[0].coercion_type).toBe('List');
         });
 
-        describe('Geo coercion_type', function () {
-          it('should set up a default geo filter if the coercion_type is changed to Geo', function () {
-            ExplorerActions.updateFilter(this.explorer.id, 0, {
+        describe('updating the coercion_type based on the operator', () => {
+          beforeEach(() => {
+            ExplorerActions.updateFilter(explorer.id, 0, {
               property_name: 'name',
               operator: 'eq',
               coercion_type: 'String'
             });
-            ExplorerActions.updateFilter(this.explorer.id, 0, {
+          });
+
+          it('should change the coercion_type to List for operator "in"', () => {
+            ExplorerActions.updateFilter(explorer.id, 0, {
+              operator: 'in'
+            });
+            expect(ExplorerStore.get(explorer.id).query.filters[0].coercion_type).toBe('List');
+          });
+          it('should change the coercion_type to Boolean for operator "exists"', () => {
+            ExplorerActions.updateFilter(explorer.id, 0, {
+              operator: 'exists'
+            });
+            expect(ExplorerStore.get(explorer.id).query.filters[0].coercion_type).toBe('Boolean');
+          });
+          it('should change the coercion_type to Geo for operator "within"', () => {
+            ExplorerActions.updateFilter(explorer.id, 0, {
               operator: 'within'
             });
-            assert.deepPropertyVal(ExplorerStore.get(this.explorer.id).query.filters[0], 'coercion_type', 'Geo');
-            assert.deepEqual(ExplorerStore.get(this.explorer.id).query.filters[0].property_value, {
-              coordinates: [],
-              max_distance_miles: null
-            });
+            expect(ExplorerStore.get(explorer.id).query.filters[0].coercion_type).toBe('Geo');
           });
-        });
-
-        describe('coercion of the propety value', function () {
-          it('should coerce the property value (Number)', function () {
-            this.coercionTypeForPropertyTypeStub.returns('Number');
-            ExplorerActions.updateFilter(this.explorer.id, 0, {
-              property_name: 'name',
-              operator: 'eq',
-              coercion_type: 'Number'
-            });
-            ExplorerActions.updateFilter(this.explorer.id, 0, {
-              property_value: '10'
-            });
-            assert.deepPropertyVal(ExplorerStore.get(this.explorer.id).query.filters[0], 'property_value', 10);
-          });
-
-          it('should coerce the property value (Boolean)', function () {
-            this.coercionTypeForPropertyTypeStub.returns('Boolean');
-            ExplorerActions.updateFilter(this.explorer.id, 0, {
-              property_name: 'name',
-              operator: 'eq',
+          it('should update to the right coercion_type for that operator if the current type is not supported', () => {
+            ExplorerActions.updateFilter(explorer.id, 0, {
               coercion_type: 'Boolean'
             });
-            ExplorerActions.updateFilter(this.explorer.id, 0, {
-              property_value: 'true'
+            ExplorerActions.updateFilter(explorer.id, 0, {
+              operator: 'gt'
             });
-            assert.deepPropertyVal(ExplorerStore.get(this.explorer.id).query.filters[0], 'property_value', true);
+            expect(ExplorerStore.get(explorer.id).query.filters[0].coercion_type).toBe('Number');
+          });
+          it('should NOT update to the right coercion_type for that operator if the current type IS supported', () => {
+            ExplorerActions.updateFilter(explorer.id, 0, {
+              coercion_type: 'String'
+            });
+            ExplorerActions.updateFilter(explorer.id, 0, {
+              operator: 'gt'
+            });
+            expect(ExplorerStore.get(explorer.id).query.filters[0].coercion_type).toBe('String');
           });
         });
       });
-    });
 
-    describe('clear', function () {
-      it('should reset the given explorer to defaults but keeps the same active, name, originalModel and metadata attributes', function () {
-        ExplorerStore.clearAll();
-        ExplorerActions.create(_.assign({}, TestHelpers.createExplorerModel(), {
-          id: 'ABC-SOME-ID',
-          query_name: 'some name',
-          query: {
-            event_collection: 'clicks',
-            analysis_type: 'count'
-          },
-          metadata: {
-            display_name: 'some name',
-            visualization: {
-              chart_type: 'metric'
+      describe('Geo coercion_type', () => {
+        it('should set up a default geo filter if the coercion_type is changed to Geo', () => {
+          ExplorerActions.updateFilter(explorer.id, 0, {
+            property_name: 'name',
+            operator: 'eq',
+            coercion_type: 'String'
+          });
+          ExplorerActions.updateFilter(explorer.id, 0, {
+            operator: 'within'
+          });
+          expect(ExplorerStore.get(explorer.id).query.filters[0].coercion_type).toBe('Geo');
+          expect(ExplorerStore.get(explorer.id).query.filters[0].property_value).toEqual({
+            coordinates: [],
+            max_distance_miles: null
+          });
+        });
+      });
+
+      describe('clear', () => {
+        beforeAll(()=>{
+          getProjectSpy = jest.spyOn(ProjectStore, 'getProject').mockReturnValue({ client: {}});
+        });
+
+        it('should reset the given explorer to defaults but keeps the same active, name, originalModel and metadata attributes', () => {
+          ExplorerStore.clearAll();
+          ExplorerActions.create(_.assign({}, TestHelpers.createExplorerModel(), {
+            id: 'ABC-SOME-ID',
+            query_name: 'some name',
+            query: {
+              event_collection: 'clicks',
+              analysis_type: 'count'
+            },
+            metadata: {
+              display_name: 'some name',
+              visualization: {
+                chart_type: 'metric'
+              }
             }
-          }
-        }));
-        ExplorerActions.setActive('ABC-SOME-ID');
-        var updates = _.cloneDeep(ExplorerStore.get('ABC-SOME-ID'));
-        var originalModel = _.cloneDeep(ExplorerStore.get('ABC-SOME-ID'));
-        updates.originalModel = originalModel;
-        ExplorerActions.update('ABC-SOME-ID', updates);
+          }));
+          ExplorerActions.setActive('ABC-SOME-ID');
+          const updates = _.cloneDeep(ExplorerStore.get('ABC-SOME-ID'));
+          const originalModel = _.cloneDeep(ExplorerStore.get('ABC-SOME-ID'));
+          updates.originalModel = originalModel;
+          ExplorerActions.update('ABC-SOME-ID', updates);
 
-        ExplorerActions.clear('ABC-SOME-ID');
+          ExplorerActions.clear('ABC-SOME-ID');
 
-        var expectedModel = {
-          id: 'ABC-SOME-ID',
-          active: true,
-          response: null,
-          dataTimestamp: null,
-          loading: false,
-          saving: false,
-          isValid: true,
-          errors: [],
-          query_name: 'some name',
-          refresh_rate: 0,
-          query: {
-            event_collection: null,
-            analysis_type: null,
-            target_property: null,
-            percentile: null,
-            group_by: [],
-            interval: null,
-            timezone: ProjectUtils.getLocalTimezone(),
-            filters: null,
-            email: null,
-            latest: null,
-            property_names: [],
-            filters: [],
-            steps: [],
-            time: {
-              relativity: 'this',
-              amount: 14,
-              sub_timeframe: 'days'
-            }
-          },
-          metadata: {
-            display_name: 'some name',
-            visualization: {
-              chart_type: 'metric'
-            }
-          },
-          originalModel: originalModel
-        };
+          const expectedModel = {
+            id: 'ABC-SOME-ID',
+            active: true,
+            response: null,
+            dataTimestamp: null,
+            loading: false,
+            saving: false,
+            isValid: true,
+            errors: [],
+            query_name: 'some name',
+            refresh_rate: 0,
+            query: {
+              event_collection: null,
+              analysis_type: null,
+              target_property: null,
+              percentile: null,
+              group_by: [],
+              interval: null,
+              timezone: ProjectUtils.getLocalTimezone(),
+              filters: null,
+              email: null,
+              latest: null,
+              property_names: [],
+              filters: [],
+              steps: [],
+              time: {
+                relativity: 'this',
+                amount: 14,
+                sub_timeframe: 'days'
+              }
+            },
+            metadata: {
+              display_name: 'some name',
+              visualization: {
+                chart_type: 'metric'
+              }
+            },
+            originalModel: originalModel
+          };
 
-        assert.deepEqual(ExplorerStore.get('ABC-SOME-ID'), expectedModel);
+          expect(ExplorerStore.get('ABC-SOME-ID')).toEqual(expectedModel);
+        });
       });
     });
   });
 
-  describe('getActive', function () {
-    it('should return the active explorer', function () {
+
+  describe('getActive', () => {
+    it('should return the active explorer', () => {
       ExplorerActions.create();
       ExplorerActions.create();
       ExplorerActions.create({ id: 'some_id' });
       ExplorerActions.setActive('some_id');
-      var keys = Object.keys(ExplorerStore.getAll());
-      assert.strictEqual(ExplorerStore.getActive().id, ExplorerStore.getAll()[keys[2]].id);
+      const keys = Object.keys(ExplorerStore.getAll());
+      expect(ExplorerStore.getActive().id).toEqual(ExplorerStore.getAll()[keys[2]].id);
     });
   });
 
-  describe('getAll', function () {
-    it('should return all the explorers', function () {
+  describe('getAll', () => {
+    it('should return all the explorers', () => {
       ExplorerActions.create();
       ExplorerActions.create();
-      assert.lengthOf(Object.keys(ExplorerStore.getAll()), 2);
+      expect(Object.keys(ExplorerStore.getAll())).toHaveLength(2);
     });
   });
 
-  describe('funnels', function () {
-    describe('changing TO funnels', function () {
+  describe('funnels', () => {
+    beforeAll(()=>{
+      getProjectSpy = jest.spyOn(ProjectStore, 'getProject').mockReturnValue({ client: {}});
+    });
 
-      beforeEach(function () {
+    describe('changing TO funnels', () => {
+
+      beforeEach(() => {
         ExplorerActions.create({id: 'abc123'});
       });
 
-      it('should set root query properties to null or empty arrays', function () {
+      it('should set root query properties to null or empty arrays', () => {
         ExplorerActions.update('abc123', { query: { analysis_type: 'funnel' } });
 
-        var explorer = ExplorerStore.get('abc123');
-        assert.deepPropertyVal(explorer, 'query.event_collection', null);
-        assert.deepPropertyVal(explorer, 'query.target_property', null);
-        assert.deepPropertyVal(explorer, 'query.time', null);
-        assert.deepPropertyVal(explorer, 'query.timezone', null);
-        assert.sameMembers(explorer.query.filters, []);
+        const explorer = ExplorerStore.get('abc123');
+        expect(explorer.query.event_collection).toBe(null);
+        expect(explorer.query.target_property).toBe(null);
+        expect(explorer.query.time).toBe(null);
+        expect(explorer.query.timezone).toBe(null);
+        expect(explorer.query.filters).toEqual([]);
       });
 
-      it('should create a first active step', function () {
+      it('should create a first active step', () => {
         ExplorerActions.update('abc123', { query: { analysis_type: 'funnel' } });
 
-        var explorer = ExplorerStore.get('abc123');
-        assert.deepProperty(explorer, 'query.steps');
-        assert.strictEqual(explorer.query.steps.length, 1);
-        assert.strictEqual(explorer.query.steps[0].active, true);
+        const explorer = ExplorerStore.get('abc123');
+        expect(explorer.query.steps).not.toBe(undefined);
+        expect(explorer.query.steps).toHaveLength(1);
+        expect(explorer.query.steps[0].active).toBe(true);
       });
 
-      it('should move root properties over to the first step', function () {
+      it('should move root properties over to the first step', () => {
         ExplorerActions.update('abc123', {
           query: {
             filters: [],
@@ -1120,18 +1126,18 @@ describe('stores/ExplorerStore', function() {
           }
         });
         ExplorerActions.update('abc123', { query: { analysis_type: 'funnel' } });
-        var explorer = ExplorerStore.get('abc123');
+        const explorer = ExplorerStore.get('abc123');
 
-        assert.strictEqual(explorer.query.steps[0].event_collection, 'pageviews');
-        assert.strictEqual(explorer.query.steps[0].actor_property, 'user');
-        assert.deepEqual(explorer.query.steps[0].time, {
+        expect(explorer.query.steps[0].event_collection).toBe('pageviews');
+        expect(explorer.query.steps[0].actor_property).toBe('user');
+        expect(explorer.query.steps[0].time).toEqual({
          relativity: 'this',
          amount: 1,
          sub_timeframe: 'hours'
         });
       });
 
-      it('should remove the root group_by property', function () {
+      it('should remove the root group_by property', () => {
         ExplorerActions.update('abc123', {
           query: {
             analysis_type: 'count',
@@ -1142,11 +1148,11 @@ describe('stores/ExplorerStore', function() {
           }
         });
         ExplorerActions.update('abc123', { query: { analysis_type: 'funnel' } });
-        var explorer = ExplorerStore.get('abc123');
-        assert.sameMembers(explorer.query.group_by, []);
+        const explorer = ExplorerStore.get('abc123');
+        expect(explorer.query.group_by).toEqual([]);
       });
 
-      it('should set unsupported interval property value to null', function () {
+      it('should set unsupported interval property value to null', () => {
         ExplorerActions.update('abc123', {
           query: {
             analysis_type: 'count',
@@ -1156,11 +1162,11 @@ describe('stores/ExplorerStore', function() {
           }
         });
         ExplorerActions.update('abc123', { query: { analysis_type: 'funnel' } });
-        var explorer = ExplorerStore.get('abc123');
-        assert.equal(explorer.query.interval, null);
+        const explorer = ExplorerStore.get('abc123');
+        expect(explorer.query.interval).toEqual(null);
       });
 
-      it('should set the global timeframe property to null', function () {
+      it('should set the global timeframe property to null', () => {
         ExplorerActions.update('abc123', {
           query: {
             filters: [],
@@ -1175,14 +1181,13 @@ describe('stores/ExplorerStore', function() {
           }
         });
         ExplorerActions.update('abc123', { query: { analysis_type: 'funnel' } });
-        var explorer = ExplorerStore.get('abc123');
-        assert.strictEqual(explorer.query.timeframe, null);
+        const explorer = ExplorerStore.get('abc123');
+        expect(explorer.query.timeframe).toEqual(null);
       });
-
     });
 
-    describe('changing FROM funnels', function () {
-      beforeEach(function () {
+    describe('changing FROM funnels', () => {
+      beforeEach(() => {
         ExplorerActions.create({
           id: 'abc123',
           query: {
@@ -1215,60 +1220,60 @@ describe('stores/ExplorerStore', function() {
         });
       });
 
-      it('removes the steps property', function() {
-        var updates = _.cloneDeep(ExplorerStore.get('abc123'));
+      it('removes the steps property', () => {
+        const updates = _.cloneDeep(ExplorerStore.get('abc123'));
         updates.query.analysis_type = 'count';
         ExplorerActions.update('abc123', updates);
-        assert.sameMembers(ExplorerStore.get('abc123').query.steps, []);
+        expect(ExplorerStore.get('abc123').query.steps).toEqual([]);
       });
 
-      it('moves active step properties to the root query', function () {
-        var updates = _.cloneDeep(ExplorerStore.get('abc123'));
+      it('moves active step properties to the root query', () => {
+        const updates = _.cloneDeep(ExplorerStore.get('abc123'));
         updates.query.analysis_type = 'count_unique';
         ExplorerActions.update('abc123', updates);
 
-        var newExplorer = ExplorerStore.get('abc123');
+        const newExplorer = ExplorerStore.get('abc123');
 
-        assert.strictEqual(newExplorer.query.event_collection, 'signups');
-        assert.strictEqual(newExplorer.query.target_property, 'user');
-        assert.strictEqual(newExplorer.query.timezone, 'PDT');
-        assert.deepEqual(newExplorer.query.time, {
+        expect(newExplorer.query.event_collection).toEqual('signups');
+        expect(newExplorer.query.target_property).toEqual('user');
+        expect(newExplorer.query.timezone).toEqual('PDT');
+        expect(newExplorer.query.time).toEqual({
           relativity: 'this',
           amount: 7,
           sub_timeframe: 'days'
         });
       });
 
-      it('returns the unchanged model if there are no steps', function () {
+      it('returns the unchanged model if there are no steps', () => {
         ExplorerActions.create({ id: 'def456',
           query: {
             event_collection: 'collection',
             analysis_type: 'funnel',
           }
         });
-        var updates = _.cloneDeep(ExplorerStore.get('def456'));
+        const updates = _.cloneDeep(ExplorerStore.get('def456'));
         updates.query.analysis_type = 'count';
         ExplorerActions.update('def456', updates);
-        assert.strictEqual(ExplorerStore.get('def456').query.event_collection, 'collection');
-        assert.strictEqual(ExplorerStore.get('def456').query.analysis_type, 'count');
+        expect(ExplorerStore.get('def456').query.event_collection).toEqual('collection');
+        expect(ExplorerStore.get('def456').query.analysis_type).toEqual('count');
       });
     });
 
-    describe('Funnel step management', function () {
-      beforeEach(function() {
+    describe('Funnel step management', () => {
+      beforeEach(() => {
         ExplorerStore.clearAll();
         ExplorerActions.create({ id: 'abc123', query: { analysis_type: 'funnel' } });
       });
-      it('should properly add a step when addStep is called', function () {
-        var oldStepsLength = ExplorerStore.get('abc123').query.steps.length;
+      it('should properly add a step when addStep is called', () => {
+        const oldStepsLength = ExplorerStore.get('abc123').query.steps.length;
         ExplorerActions.addStep('abc123');
-        assert.equal(ExplorerStore.get('abc123').query.steps.length, oldStepsLength+1);
+        expect(ExplorerStore.get('abc123').query.steps).toHaveLength(oldStepsLength+1);
       });
-      it('should make the first step active when added', function () {
-        assert.equal(ExplorerStore.get('abc123').query.steps.length, 0);
+      it('should make the first step active when added', () => {
+        expect(ExplorerStore.get('abc123').query.steps).toHaveLength(0);
         ExplorerActions.addStep('abc123');
-        assert.equal(ExplorerStore.get('abc123').query.steps.length, 1);
-        assert.deepEqual(ExplorerStore.get('abc123').query.steps[0], {
+        expect(ExplorerStore.get('abc123').query.steps).toHaveLength(1);
+        expect(ExplorerStore.get('abc123').query.steps[0]).toEqual({
           event_collection: null,
           actor_property: null,
           time: {
@@ -1295,26 +1300,26 @@ describe('stores/ExplorerStore', function() {
           ]
         });
       });
-      it('should throw an error if a step is attempted to be added without the explorer having a funnel analysis type', function () {
-        var updates = _.cloneDeep(ExplorerStore.get('abc123'));
+      it('should throw an error if a step is attempted to be added without the explorer having a funnel analysis type', () => {
+        const updates = _.cloneDeep(ExplorerStore.get('abc123'));
         updates.query.analysis_type = 'count';
         ExplorerActions.update('abc123', updates);
-        expect(ExplorerActions.addStep.bind(null, 'abc123')).to.throw("Error: Attempting to add a step to a non-funnel query. Explorer id: abc123");
+        expect(ExplorerActions.addStep.bind(null, 'abc123')).toThrow("Error: Attempting to add a step to a non-funnel query. Explorer id: abc123");
       });
-      it('should properly remove a step at the given index', function () {
+      it('should properly remove a step at the given index', () => {
         ExplorerActions.addStep('abc123', { event_collection: 'one' });
         ExplorerActions.addStep('abc123', { event_collection: 'two' });
         ExplorerActions.addStep('abc123', { event_collection: 'three' });
         ExplorerActions.addStep('abc123', { event_collection: 'four' });
-        assert.equal(ExplorerStore.get('abc123').query.steps.length, 4);
+        expect(ExplorerStore.get('abc123').query.steps).toHaveLength(4);
         ExplorerActions.removeStep('abc123', 2);
-        assert.equal(ExplorerStore.get('abc123').query.steps.length, 3);
+        expect(ExplorerStore.get('abc123').query.steps).toHaveLength(3);
 
-        assert.equal(ExplorerStore.get('abc123').query.steps[0].event_collection, 'one');
-        assert.equal(ExplorerStore.get('abc123').query.steps[1].event_collection, 'two');
-        assert.equal(ExplorerStore.get('abc123').query.steps[2].event_collection, 'four');
+        expect(ExplorerStore.get('abc123').query.steps[0].event_collection).toEqual('one');
+        expect(ExplorerStore.get('abc123').query.steps[1].event_collection).toEqual('two');
+        expect(ExplorerStore.get('abc123').query.steps[2].event_collection).toEqual('four');
       });
-      it('should properly update a step at the given index and not change any others', function () {
+      it('should properly update a step at the given index and not change any others', () => {
         ExplorerActions.addStep('abc123', { event_collection: 'one' });
         ExplorerActions.addStep('abc123', { event_collection: 'two' });
         ExplorerActions.addStep('abc123', { event_collection: 'three' });
@@ -1322,31 +1327,31 @@ describe('stores/ExplorerStore', function() {
 
         ExplorerActions.updateStep('abc123', 1, { event_collection: 'something else' });
 
-        assert.equal(ExplorerStore.get('abc123').query.steps[0].event_collection, 'one');
-        assert.equal(ExplorerStore.get('abc123').query.steps[1].event_collection, 'something else');
-        assert.equal(ExplorerStore.get('abc123').query.steps[2].event_collection, 'three');
-        assert.equal(ExplorerStore.get('abc123').query.steps[3].event_collection, 'four');
+        expect(ExplorerStore.get('abc123').query.steps[0].event_collection).toEqual('one');
+        expect(ExplorerStore.get('abc123').query.steps[1].event_collection).toEqual('something else');
+        expect(ExplorerStore.get('abc123').query.steps[2].event_collection).toEqual('three');
+        expect(ExplorerStore.get('abc123').query.steps[3].event_collection).toEqual('four');
       });
-      it('should properly set a step active and all others inactive', function () {
+      it('should properly set a step active and all others inactive', () => {
         ExplorerActions.addStep('abc123', { event_collection: 'one' });
         ExplorerActions.addStep('abc123', { event_collection: 'two' });
         ExplorerActions.addStep('abc123', { event_collection: 'three' });
         ExplorerActions.addStep('abc123', { event_collection: 'four' });
 
-        assert.isFalse(ExplorerStore.get('abc123').query.steps[0].active, 'step 1');
-        assert.isFalse(ExplorerStore.get('abc123').query.steps[1].active, 'step 2');
-        assert.isFalse(ExplorerStore.get('abc123').query.steps[2].active, 'step 3');
-        assert.isTrue(ExplorerStore.get('abc123').query.steps[3].active, 'step 4');
+        expect(ExplorerStore.get('abc123').query.steps[0].active).not.toBe(true);
+        expect(ExplorerStore.get('abc123').query.steps[1].active).not.toBe(true);
+        expect(ExplorerStore.get('abc123').query.steps[2].active).not.toBe(true);
+        expect(ExplorerStore.get('abc123').query.steps[3].active).toBe(true);
 
         ExplorerActions.setStepActive('abc123', 2);
 
-        assert.isFalse(ExplorerStore.get('abc123').query.steps[0].active, 'step 1');
-        assert.isFalse(ExplorerStore.get('abc123').query.steps[1].active, 'step 2');
-        assert.isTrue(ExplorerStore.get('abc123').query.steps[2].active, 'step 3');
-        assert.isFalse(ExplorerStore.get('abc123').query.steps[3].active, 'step 4');
+        expect(ExplorerStore.get('abc123').query.steps[0].active).not.toBe(true);
+        expect(ExplorerStore.get('abc123').query.steps[1].active).not.toBe(true);
+        expect(ExplorerStore.get('abc123').query.steps[2].active).toBe(true);
+        expect(ExplorerStore.get('abc123').query.steps[3].active).not.toBe(true);
       });
 
-      it('should properly move the step up', function () {
+      it('should properly move the step up', () => {
         ExplorerActions.addStep('abc123', { event_collection: 'one' });
         ExplorerActions.addStep('abc123', { event_collection: 'two' });
         ExplorerActions.addStep('abc123', { event_collection: 'three' });
@@ -1354,13 +1359,13 @@ describe('stores/ExplorerStore', function() {
 
         ExplorerActions.moveStep('abc123', 2, 'up');
 
-        assert.equal(ExplorerStore.get('abc123').query.steps[0].event_collection, 'one');
-        assert.equal(ExplorerStore.get('abc123').query.steps[1].event_collection, 'three');
-        assert.equal(ExplorerStore.get('abc123').query.steps[2].event_collection, 'two');
-        assert.equal(ExplorerStore.get('abc123').query.steps[3].event_collection, 'four');
+        expect(ExplorerStore.get('abc123').query.steps[0].event_collection).toEqual('one');
+        expect(ExplorerStore.get('abc123').query.steps[1].event_collection).toEqual('three');
+        expect(ExplorerStore.get('abc123').query.steps[2].event_collection).toEqual('two');
+        expect(ExplorerStore.get('abc123').query.steps[3].event_collection).toEqual('four');
       });
 
-      it('should properly move the step down', function () {
+      it('should properly move the step down', () => {
         ExplorerActions.addStep('abc123', { event_collection: 'one' });
         ExplorerActions.addStep('abc123', { event_collection: 'two' });
         ExplorerActions.addStep('abc123', { event_collection: 'three' });
@@ -1368,13 +1373,13 @@ describe('stores/ExplorerStore', function() {
 
         ExplorerActions.moveStep('abc123', 2, 'down');
 
-        assert.equal(ExplorerStore.get('abc123').query.steps[0].event_collection, 'one');
-        assert.equal(ExplorerStore.get('abc123').query.steps[1].event_collection, 'two');
-        assert.equal(ExplorerStore.get('abc123').query.steps[2].event_collection, 'four');
-        assert.equal(ExplorerStore.get('abc123').query.steps[3].event_collection, 'three');
+        expect(ExplorerStore.get('abc123').query.steps[0].event_collection).toEqual('one');
+        expect(ExplorerStore.get('abc123').query.steps[1].event_collection).toEqual('two');
+        expect(ExplorerStore.get('abc123').query.steps[2].event_collection).toEqual('four');
+        expect(ExplorerStore.get('abc123').query.steps[3].event_collection).toEqual('three');
       });
 
-      it('should be a no op if you try to move the first step up', function () {
+      it('should be a no op if you try to move the first step up', () => {
         ExplorerActions.addStep('abc123', { event_collection: 'one' });
         ExplorerActions.addStep('abc123', { event_collection: 'two' });
         ExplorerActions.addStep('abc123', { event_collection: 'three' });
@@ -1382,13 +1387,13 @@ describe('stores/ExplorerStore', function() {
 
         ExplorerActions.moveStep('abc123', 0, 'up');
 
-        assert.equal(ExplorerStore.get('abc123').query.steps[0].event_collection, 'one');
-        assert.equal(ExplorerStore.get('abc123').query.steps[1].event_collection, 'two');
-        assert.equal(ExplorerStore.get('abc123').query.steps[2].event_collection, 'three');
-        assert.equal(ExplorerStore.get('abc123').query.steps[3].event_collection, 'four');
+        expect(ExplorerStore.get('abc123').query.steps[0].event_collection).toEqual( 'one');
+        expect(ExplorerStore.get('abc123').query.steps[1].event_collection).toEqual('two');
+        expect(ExplorerStore.get('abc123').query.steps[2].event_collection).toEqual('three');
+        expect(ExplorerStore.get('abc123').query.steps[3].event_collection).toEqual('four');
       });
 
-      it('should be a no op if you try to move the last step down', function () {
+      it('should be a no op if you try to move the last step down', () => {
         ExplorerActions.addStep('abc123', { event_collection: 'one' });
         ExplorerActions.addStep('abc123', { event_collection: 'two' });
         ExplorerActions.addStep('abc123', { event_collection: 'three' });
@@ -1396,22 +1401,22 @@ describe('stores/ExplorerStore', function() {
 
         ExplorerActions.moveStep('abc123', 3, 'down');
 
-        assert.equal(ExplorerStore.get('abc123').query.steps[0].event_collection, 'one');
-        assert.equal(ExplorerStore.get('abc123').query.steps[1].event_collection, 'two');
-        assert.equal(ExplorerStore.get('abc123').query.steps[2].event_collection, 'three');
-        assert.equal(ExplorerStore.get('abc123').query.steps[3].event_collection, 'four');
+        expect(ExplorerStore.get('abc123').query.steps[0].event_collection).toEqual('one');
+        expect(ExplorerStore.get('abc123').query.steps[1].event_collection).toEqual('two');
+        expect(ExplorerStore.get('abc123').query.steps[2].event_collection).toEqual('three');
+        expect(ExplorerStore.get('abc123').query.steps[3].event_collection).toEqual('four');
       });
 
-      describe('Funnel Step Filters', function () {
-        it('should add a filter to a step', function () {
+      describe('Funnel Step Filters', () => {
+        it('should add a filter to a step', () => {
           ExplorerActions.addStep('abc123', { event_collection: 'one' });
           ExplorerActions.addStep('abc123', { event_collection: 'two' });
           ExplorerActions.addStepFilter('abc123', 1, { property_name: 'name' });
 
-          assert.equal(ExplorerStore.get('abc123').query.steps[1].filters.length, 1);
-          assert.equal(ExplorerStore.get('abc123').query.steps[1].filters[0].property_name, 'name');
+          expect(ExplorerStore.get('abc123').query.steps[1].filters).toHaveLength(1);
+          expect(ExplorerStore.get('abc123').query.steps[1].filters[0].property_name).toEqual('name');
         });
-        it('should remove a filter from the correct step', function () {
+        it('should remove a filter from the correct step', () => {
           ExplorerActions.addStep('abc123', { event_collection: 'one' });
           ExplorerActions.addStep('abc123', { event_collection: 'two' });
           ExplorerActions.addStepFilter('abc123', 0, { property_name: 'one' });
@@ -1419,11 +1424,11 @@ describe('stores/ExplorerStore', function() {
           ExplorerActions.addStepFilter('abc123', 1, { property_name: 'three' });
           ExplorerActions.removeStepFilter('abc123', 1, 0);
 
-          assert.equal(ExplorerStore.get('abc123').query.steps[1].filters.length, 1);
-          assert.equal(ExplorerStore.get('abc123').query.steps[1].filters[0].property_name, 'three');
+          expect(ExplorerStore.get('abc123').query.steps[1].filters).toHaveLength(1);
+          expect(ExplorerStore.get('abc123').query.steps[1].filters[0].property_name).toEqual('three');
         });
-        it('should update a filter at the correct step', function () {
-          sinon.stub(ProjectUtils, 'getPropertyType').returns('String');
+        it('should update a filter at the correct step', () => {
+          const spy = jest.spyOn(ProjectUtils, 'getPropertyType').mockReturnValue('String');
 
           ExplorerActions.addStep('abc123', { event_collection: 'one' });
           ExplorerActions.addStep('abc123', { event_collection: 'two' });
@@ -1432,12 +1437,13 @@ describe('stores/ExplorerStore', function() {
           ExplorerActions.addStepFilter('abc123', 1, { property_name: 'three' });
           ExplorerActions.updateStepFilter('abc123', 1, 0, { property_name: 'something else' });
 
-          assert.equal(ExplorerStore.get('abc123').query.steps[1].filters.length, 2);
-          assert.equal(ExplorerStore.get('abc123').query.steps[1].filters[0].property_name, 'something else');
+          expect(ExplorerStore.get('abc123').query.steps[1].filters).toHaveLength(2);
+          expect(ExplorerStore.get('abc123').query.steps[1].filters[0].property_name).toEqual('something else');
 
-          ProjectUtils.getPropertyType.restore();
+          spy.mockRestore();
         });
       });
     });
   });
+
 });

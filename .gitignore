@@ -3,9 +3,7 @@
 .awspublish-keen-js
 .DS_Store
 
-dist/*
-demo/index.html
 node_modules
-test/unit/build/browserified_tests.*
 
+demo-config.js
 .idea/

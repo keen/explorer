@@ -1,38 +1,45 @@
-var assert = require('chai').assert;
-var expect = require('chai').expect;
-let sinon = require('sinon/pkg/sinon.js');
-var React = require('react');
-var ReactDOM = require('react-dom');
-var KeenViz = require('../../../../../client/js/app/components/explorer/visualization/keen_viz.js');
-var TestUtils = require('react-addons-test-utils');
-var ExplorerUtils = require('../../../../../client/js/app/utils/ExplorerUtils');
-var TestHelpers = require('../../../../support/TestHelpers');
-var $R = require('rquery')(_, React, ReactDOM, TestUtils);
+import React from 'react';
+import ReactDOM from 'react-dom';
+import TestUtils from 'react-addons-test-utils';
+import rquery from 'rquery';
+import _ from 'lodash';
 
-describe('components/explorer/visualization/keen_viz', function() {
+import KeenViz from '../../../../../lib/js/app/components/explorer/visualization/keen_viz.js';
 
-  beforeEach(function() {
-    this.model = TestHelpers.createExplorerModel();
-    this.dataviz = TestHelpers.createDataviz();
-    this.exportToCsv = function() { return this; }
-    this.component = TestUtils.renderIntoDocument(<KeenViz model={this.model} dataviz={this.dataviz} exportToCsv={this.exportToCsv}/>);
-    this.exportToCsvStub = sinon.stub(this, 'exportToCsv');
+import ExplorerUtils from '../../../../../lib/js/app/utils/ExplorerUtils';
+import TestHelpers from '../../../../support/TestHelpers';
+
+const $R = rquery(_, React, ReactDOM, TestUtils);
+
+describe('components/explorer/visualization/keen_viz', () => {
+  let model;
+  let dataviz;
+  let exportToCsv;
+  let exportToCsvStub;
+  let component;
+
+  beforeEach(() => {
+    model = TestHelpers.createExplorerModel();
+    dataviz = TestHelpers.createDataviz();
+    exportToCsv = jest.fn();
+    component = TestUtils.renderIntoDocument(<KeenViz model={model} dataviz={dataviz} exportToCsv={exportToCsv}/>);
+    exportToCsvStub = jest.fn();
   });
 
-  describe('export to csv button', function() {
-    it('export to csv button is not shown when chart type is different than table', function() {
-    	assert.lengthOf($R(this.component).find('[role="export-table"]').components, 0);
+  describe('export to csv button', () => {
+    it('export to csv button is not shown when chart type is different than table', () => {
+    	expect($R(component).find('[role="export-table"]').components).toHaveLength(0);
     });
-    it('export to csv button is shown when char type table is selected', function() {
-      this.model.metadata.visualization.chart_type = 'table';
-      this.component = TestUtils.renderIntoDocument(<KeenViz model={this.model} dataviz={this.dataviz} exportToCsv={this.exportToCsv}/>);
-      assert.lengthOf($R(this.component).find('[role="export-table"]').components, 1);
+    it('export to csv button is shown when char type table is selected', () => {
+      model.metadata.visualization.chart_type = 'table';
+      component = TestUtils.renderIntoDocument(<KeenViz model={model} dataviz={dataviz} exportToCsv={exportToCsv}/>);
+      expect($R(component).find('[role="export-table"]').components).toHaveLength(1);
     });
-    it('export to csv button calls export to csv function', function() {
-      this.model.metadata.visualization.chart_type = 'table';
-      this.component = TestUtils.renderIntoDocument(<KeenViz model={this.model} dataviz={this.dataviz} exportToCsv={this.exportToCsv}/>);
-      TestUtils.Simulate.click($R(this.component).find('[role="export-table"]').components[0]);
-      sinon.assert.called(this.exportToCsvStub);
+    it('export to csv button calls export to csv function', () => {
+      model.metadata.visualization.chart_type = 'table';
+      component = TestUtils.renderIntoDocument(<KeenViz model={model} dataviz={dataviz} exportToCsv={exportToCsv}/>);
+      TestUtils.Simulate.click($R(component).find('[role="export-table"]').components[0]);
+      expect(exportToCsv).toBeCalled();
     });
   });
 });

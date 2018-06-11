@@ -1,80 +1,98 @@
-const assert = require('chai').assert;
-const expect = require('chai').expect;
-const sinon = require('sinon/pkg/sinon.js');
-const moment = require('moment');
-const _ = require('lodash');
-const KeenAnalysis = require('keen-analysis');
-const Qs = require('qs');
-const TestHelpers = require('../../support/TestHelpers');
-const AppDispatcher = require('../../../client/js/app/dispatcher/AppDispatcher');
-const ExplorerActions = require('../../../client/js/app/actions/ExplorerActions');
-const AppStateActions = require('../../../client/js/app/actions/AppStateActions');
-const FilterUtils = require('../../../client/js/app/utils/FilterUtils');
-const RunValidations = require('../../../client/js/app/utils/RunValidations');
-const ExplorerValidations = require('../../../client/js/app/validations/ExplorerValidations');
-const ExplorerUtils = require('../../../client/js/app/utils/ExplorerUtils');
-const ChartTypeUtils = require('../../../client/js/app/utils/ChartTypeUtils');
-const ExplorerStore = require('../../../client/js/app/stores/ExplorerStore');
+import moment from 'moment';
+import _ from 'lodash';
+import KeenAnalysis from 'keen-analysis';
+import Qs from 'qs';
+import XHRmock from 'xhr-mock';
 
-describe('actions/ExplorerActions', function() {
-  before(function () {
-    this.dispatchStub = sinon.stub(AppDispatcher, 'dispatch');
+import TestHelpers from '../../support/TestHelpers';
+import AppDispatcher from '../../../lib/js/app/dispatcher/AppDispatcher';
+import ExplorerActions from '../../../lib/js/app/actions/ExplorerActions';
+import AppStateActions from '../../../lib/js/app/actions/AppStateActions';
+import FilterUtils from '../../../lib/js/app/utils/FilterUtils';
+import RunValidations from '../../../lib/js/app/utils/RunValidations';
+import ExplorerValidations from '../../../lib/js/app/validations/ExplorerValidations';
+import ExplorerUtils from '../../../lib/js/app/utils/ExplorerUtils';
+import ChartTypeUtils from '../../../lib/js/app/utils/ChartTypeUtils';
+import ExplorerStore from '../../../lib/js/app/stores/ExplorerStore';
+
+describe('actions/ExplorerActions', () => {
+  const analysisClient = new KeenAnalysis(TestHelpers.createClient());
+  const mockDispatch = jest.fn();
+  let spyGet;
+  let client;
+  let spyRunQuery;
+
+  beforeAll(() => {
+    XHRmock.setup();
   });
 
-  after(function () {
-    AppDispatcher.dispatch.restore();
+  afterAll(() => {
+    spyDispatch.mockRestore();
+    XHRmock.teardown();
   });
 
-  beforeEach(function () {
-    this.dispatchStub.reset();
+  beforeEach(() => {
+    client = new KeenAnalysis(TestHelpers.createClient());
+    // spyDispatch.mockClear();
   });
 
-  describe('exec', function () {
-    before(function () {
-      this.client = new KeenAnalysis(TestHelpers.createClient());
-      this.getStub = sinon.stub(ExplorerStore, 'get');
-      this.runQueryStub = sinon.stub(ExplorerUtils, 'runQuery');
+  describe('exec', () => {
+    let spyDispatch;
+
+    beforeAll(() => {
+      spyGet = jest.spyOn(ExplorerStore, 'get');
+      spyRunQuery = jest.spyOn(ExplorerUtils, 'runQuery').mockImplementation(() => {});
     });
 
-    after(function () {
-      ExplorerStore.get.restore();
-      ExplorerUtils.runQuery.restore();
+    afterAll(() => {
+     spyRunQuery.mockRestore();
+     spyGet.mockRestore();
+     spyDispatch.mockRestore();
     });
 
-    beforeEach(function () {
-      this.runQueryStub.reset();
+    beforeEach(() => {
+      spyDispatch = jest.spyOn(AppDispatcher, 'dispatch').mockImplementation(() => {});
+      spyGet.mockClear();
+      spyRunQuery.mockClear();
     });
 
-    it('should throw an error if the model is currently loading', function () {
-      var explorer = { id: 5, loading: true };
-      this.getStub.returns(explorer);
-      expect(ExplorerActions.exec.bind(null, this.client, explorer.id)).to.throw("Warning: calling exec when model loading is true. Explorer id: 5");
+    afterEach(() => {
+      spyDispatch.mockRestore();
+    })
+
+    it('should throw an error if the model is currently loading', () => {
+      const explorer = { id: 5, loading: true };
+      ExplorerStore.set(explorer);
+      expect(ExplorerActions.exec.bind(null, client, explorer.id)).toThrow("Warning: calling exec when model loading is true. Explorer id: 5");
     });
-    it('should run the validations with the right arguments', function () {
-      var explorer = TestHelpers.createExplorerModel();
+
+    it('should run the validations with the right arguments', () => {
+      const explorer = TestHelpers.createExplorerModel();
       explorer.query.analysis_type = 'count';
-      this.getStub.returns(explorer);
-      var stub = sinon.stub(ExplorerActions, 'validate');
-      ExplorerActions.exec(this.client, explorer.id);
-      assert.isTrue(stub.calledOnce);
-      ExplorerActions.validate.restore();
+      ExplorerStore.set(explorer);
+      const spyValidate = jest.spyOn(ExplorerActions, 'validate');
+      ExplorerActions.exec(client, explorer.id);
+      expect(spyValidate).toHaveBeenCalledTimes(1);
+      spyValidate.mockRestore();
     });
-    it('should call the dispatcher to update the store and set loading to true', function () {
-      var explorer = {
+
+    it('should call the dispatcher to update the store and set loading to true', () => {
+      const explorer = {
         id: 5,
         loading: false,
         query: {},
         isValid: true
       };
-      this.getStub.returns(explorer);
-      ExplorerActions.exec(this.client, explorer.id);
-      assert.isTrue(this.dispatchStub.calledWith({
+      ExplorerStore.set(explorer);
+      ExplorerActions.exec(client, explorer.id);
+      expect(spyDispatch).toBeCalledWith({
         actionType: 'EXPLORER_UPDATE',
         id: 5,
         updates: { loading: true }
-      }));
+      });
     });
-    it('should add the latest attribute with a limit for extractions', function () {
+
+    it('should add the latest attribute with a limit for extractions', () => {
       var explorer = {
         id: 5,
         loading: false,
@@ -84,21 +102,26 @@ describe('actions/ExplorerActions', function() {
           analysis_type: 'extraction'
         }
       };
-      this.getStub.returns(explorer);
-      ExplorerActions.exec(this.client, explorer.id);
-      assert.strictEqual(
-        this.runQueryStub.getCall(0).args[0].query.latest,
-        100
-      );
+      ExplorerStore.set(explorer);
+      ExplorerActions.exec(client, explorer.id);
+      expect(spyRunQuery.mock.calls[0][0].query.latest)
+        .toEqual(100);
     });
+
   });
 
-  describe('runEmailExtraction', function () {
-    beforeEach(function () {
-      this.validateStub = sinon.stub(ExplorerActions, 'validate');
-      this.runQueryStub = sinon.stub(ExplorerUtils, 'runQuery');
-      this.client = { run: sinon.stub() };
-      this.explorer = {
+  describe('runEmailExtraction', () => {
+    let spyValidate;
+    let spyGet;
+    let spyRunQuery;
+    let explorer;
+    let client;
+
+    beforeEach(() => {
+      spyValidate = jest.spyOn(ExplorerActions, 'validate').mockImplementation(() => {});
+      spyRunQuery = jest.spyOn(ExplorerUtils, 'runQuery').mockImplementation(() => {});
+      client = { run: jest.fn() };
+      explorer = {
         isValid: false,
         errors: [{
           msg: 'invalid'
@@ -110,29 +133,43 @@ describe('actions/ExplorerActions', function() {
           latest: '100'
         }
       };
-      this.getStub = sinon.stub(ExplorerStore, 'get').returns(this.explorer);
+
+      spyGet = jest.spyOn(ExplorerStore, 'get').mockReturnValue(explorer);
+      ExplorerStore.set(explorer);
     });
 
-    afterEach(function () {
-      ExplorerActions.validate.restore();
-      ExplorerUtils.runQuery.restore();
-      ExplorerStore.get.restore();
+    afterEach(() => {
+      spyValidate.mockRestore();
+      spyRunQuery.mockRestore();
+      spyGet.mockRestore();
     });
 
-    it('should run validations', function () {
-      ExplorerActions.runEmailExtraction(this.client, this.explorer.id);
-      assert.isTrue(this.validateStub.calledOnce);
+    it('should run validations', () => {
+      ExplorerActions.runEmailExtraction(client, explorer.id);
+      expect(spyValidate).toHaveBeenCalledTimes(1);
     });
-    it('should NOT run the query if validaton fails', function () {
-      this.validateStub.returns([{ msg: 'invalid' }]);
-      ExplorerActions.runEmailExtraction(this.client, this.explorer.id);
-      assert.isFalse(this.runQueryStub.called);
+
+    it('should NOT run the query if validaton fails', () => {
+      spyValidate.mockReturnValue([{ msg: 'invalid' }]);
+      ExplorerActions.runEmailExtraction(client, explorer.id);
+      expect(spyRunQuery).not.toHaveBeenCalled();
     });
+
   });
 
-  describe('fetchAllPersisted', function () {
-    beforeEach(function () {
-      this.models = [
+  describe('fetchAllPersisted', () => {
+    let models;
+    let persistence;
+    let callback;
+    let explorer;
+    beforeEach(() => {
+      explorer = {
+        isValid: false,
+        errors: [],
+        query: {}
+      };
+      ExplorerStore.set(explorer);
+      models = [
         {
           id: '1',
           name: 'favorite 1',
@@ -189,81 +226,92 @@ describe('actions/ExplorerActions', function() {
           metadata: {
             visualization: {
               chart_type: 'metric'
-            }
+            },
+            display_name: 'some name'
           }
         }
       ];
-      function getFn(id, callback) {
-        callback(null, this.models);
-      }
-      this.persistence = {
-        get: getFn.bind(this)
+      persistence = {
+        get: (id, callback) => {
+          callback(null, models);
+        }
       };
-      this.callback = sinon.stub();
+      callback = jest.fn();
     });
 
-    it('should format the params for each model', function () {
-      var spy = sinon.spy(ExplorerUtils, 'formatQueryParams');
-      ExplorerActions.fetchAllPersisted(this.persistence, this.callback);
-      assert.strictEqual(spy.getCalls().length, 3);
-      ExplorerUtils.formatQueryParams.restore();
+    it('should format the params for each model', () => {
+      const spy = jest.spyOn(ExplorerUtils, 'formatQueryParams');
+      ExplorerActions.fetchAllPersisted(persistence, callback);
+      expect(spy).toHaveBeenCalledTimes(3);
+      spy.mockRestore();
     });
-    it('should run validations for each model', function () {
-      var stub = sinon.stub(RunValidations, 'run').returns([]);
-      ExplorerActions.fetchAllPersisted(this.persistence, this.callback);
-      assert.strictEqual(stub.getCalls().length, 3);
-      RunValidations.run.restore();
+    it('should run validations for each model', () => {
+      const spy = jest.spyOn(RunValidations, 'run');
+      ExplorerActions.fetchAllPersisted(persistence, callback);
+      expect(spy).toHaveBeenCalledTimes(3);
+      spy.mockRestore();
     });
-    it('should include invalid models', function () {
-      this.models[2].query = {};
-      var stub = sinon.stub(ExplorerActions, 'createBatch');
-      ExplorerActions.fetchAllPersisted(this.persistence, this.callback);
-      assert.strictEqual(stub.getCall(0).args[0].length, 3);
-      ExplorerActions.createBatch.restore();
+    it('should include invalid models', () => {
+      models[2].query = {};
+      const spy = jest.spyOn(ExplorerActions, 'createBatch');
+      ExplorerActions.fetchAllPersisted(persistence, callback);
+      expect(spy).toHaveBeenCalledTimes(1);
+      spy.mockRestore();
     });
-    it('should log a warning for invalid models', function () {
-      this.models[2].query = {};
-      var stub = sinon.stub(window.console, 'warn');
-      ExplorerActions.fetchAllPersisted(this.persistence, this.callback);
-      assert.strictEqual(stub.getCall(0).args[0], 'A persisted explorer model is invalid: ');
-      assert.deepPropertyVal(stub.getCall(0).args[1], 'id', '3');
-      window.console.warn.restore();
+    it('should log a warning for invalid models', () => {
+      models[2].query = {};
+      const spy = jest.spyOn(window.console, 'warn');
+      ExplorerActions.fetchAllPersisted(persistence, callback);
+      expect(spy.mock.calls[0][0])
+        .toEqual('A persisted explorer model is invalid: ');
+      spy.mockRestore();
     });
-    it('should call update app state when done and set fetchingPersistedExplorers to false', function () {
-      var stub = sinon.stub(AppStateActions, 'update');
-      ExplorerActions.fetchAllPersisted(this.persistence, this.callback);
-      assert.isTrue(stub.calledWith({ fetchingPersistedExplorers: false }));
-      AppStateActions.update.restore();
+    it('should call update app state when done and set fetchingPersistedExplorers to false', () => {
+      const spy = jest.spyOn(AppStateActions, 'update');
+      ExplorerActions.fetchAllPersisted(persistence, callback);
+      expect(spy).toHaveBeenCalledWith({ fetchingPersistedExplorers: false });
+      spy.mockRestore();
     });
   });
 
-  describe('execError', function () {
-    beforeEach(function () {
-      var explorer = { id: 5 };
+  describe('execError', () => {
+    let explorer;
+    let spyDispatch;
+    beforeEach(() => {
+      explorer = { id: 5 };
+      spyDispatch = jest.spyOn(AppDispatcher, 'dispatch');
       ExplorerActions.execError(explorer, { message: 'NOPE' });
     });
 
-    it('should call the dispatcher to update with the right argments', function () {
-      assert.isTrue(this.dispatchStub.calledWith({
+    it('should call the dispatcher to update with the right argments', () => {
+      expect(spyDispatch).toHaveBeenCalledWith({
         actionType: 'EXPLORER_UPDATE',
         id: 5,
         updates: { loading: false }
-      }));
+      });
     });
-    it('should create a notice with the error message', function () {
-      assert.isTrue(this.dispatchStub.calledWith({
+
+    it('should create a notice with the error message', () => {
+      expect(spyDispatch).toHaveBeenCalledWith({
         actionType: 'NOTICE_CREATE',
         attrs: {
           text: 'NOPE',
           type: 'error'
         }
-      }));
+      });
     });
+
   });
 
-  describe('execSuccess', function () {
-    beforeEach(function () {
-      this.explorer = {
+
+  describe('execSuccess', () => {
+    let explorer;
+    let response;
+    let spyResponseSupportsChartType;
+    let spyGetChartTypeOptions;
+    let spyDispatch;
+    beforeEach(() => {
+      explorer = {
         id: 5,
         query: {
           analysis_type: 'count'
@@ -274,208 +322,222 @@ describe('actions/ExplorerActions', function() {
           }
         }
       };
-      this.response = { result: 100 };
-      sinon.stub(ChartTypeUtils, 'getChartTypeOptions').returns(['metric']);
-      this.responseSupportsChartTypeStub = sinon.stub(ChartTypeUtils, 'responseSupportsChartType').returns(false);
+      response = { result: 100 };
+
+      spyGetChartTypeOptions = jest.spyOn(ChartTypeUtils, 'getChartTypeOptions').mockReturnValue(['metric']);
+      spyResponseSupportsChartType = jest.spyOn(ChartTypeUtils, 'responseSupportsChartType').mockReturnValue(false);
+      spyDispatch = jest.spyOn(AppDispatcher, 'dispatch').mockReset();
     });
-    afterEach(function () {
-      ChartTypeUtils.getChartTypeOptions.restore();
-      ChartTypeUtils.responseSupportsChartType.restore();
+    afterEach(() => {
+      spyGetChartTypeOptions.mockRestore();
+      spyResponseSupportsChartType.mockRestore();
     });
 
-    it('should call the dispatcher to update with the right arguments', function () {
+    it('should call the dispatcher to update with the right arguments', () => {
       let expectedUpdates = {
         loading: false,
-        response: this.response,
-        metadata: _.cloneDeep(this.explorer.metadata)
+        response: response,
+        metadata: _.cloneDeep(explorer.metadata)
       };
       expectedUpdates.metadata.visualization.chart_type = 'metric';
 
-      ExplorerActions.execSuccess(this.explorer, this.response);
-
-      assert.strictEqual(this.dispatchStub.getCall(2).args[0].actionType, 'EXPLORER_UPDATE');
-      assert.strictEqual(this.dispatchStub.getCall(2).args[0].id, 5);
+      ExplorerActions.execSuccess(explorer, response);
+      expect(spyDispatch.mock.calls[2][0].actionType).toEqual('EXPLORER_UPDATE');
+      expect(spyDispatch.mock.calls[2][0].id).toEqual(5);
 
       // We need to check the dataTimestamp separately because we cannot get Date.now()'s to match
       // as they will be off by a few milliseconds.
-      assert.deepEqual(_.omit(this.dispatchStub.getCall(2).args[0].updates, 'dataTimestamp'), expectedUpdates);
+      expect(_.omit(spyDispatch.mock.calls[2][0].updates, 'dataTimestamp')).toEqual(expectedUpdates);
 
-      let actualTimestamp = this.dispatchStub.getCall(2).args[0].updates.dataTimestamp;
+      let actualTimestamp = spyDispatch.mock.calls[2][0].updates.dataTimestamp;
       actualTimestamp = actualTimestamp.toString().substring(0, actualTimestamp.length-5);
 
       let expectedTimestamp = Date.now();
       expectedTimestamp = expectedTimestamp.toString().substring(0, expectedTimestamp.length-5);
 
-      assert.strictEqual(actualTimestamp, expectedTimestamp);
+      expect(actualTimestamp).toEqual(expectedTimestamp);
+
     });
-    it('should clear all notices', function () {
-      ExplorerActions.execSuccess(this.explorer, this.response);
-      assert.isTrue(this.dispatchStub.calledWith({
+
+    it('should clear all notices', () => {
+      ExplorerActions.execSuccess(explorer, response);
+      expect(spyDispatch).toHaveBeenCalledWith({
         actionType: 'NOTICE_CLEAR_ALL'
-      }));
+      });
     });
-    it('should add a query object on the response if one is not there', function () {
-      ExplorerActions.execSuccess(this.explorer, this.response);
-      assert.deepPropertyVal(this.dispatchStub.getCall(2).args[0].updates.response, 'query');
-      assert.deepEqual(this.dispatchStub.getCall(2).args[0].updates.response.query, { analysis_type: 'count', timezone: 'UTC' });
+
+    it('should add a query object on the response if one is not there', () => {
+      ExplorerActions.execSuccess(explorer, response);
+      expect(spyDispatch.mock.calls[2][0].updates.response.query).toEqual({ analysis_type: 'count', timezone: 'UTC' });
     });
-    it('should not add a query object on the response if one is not there', function () {
-      ExplorerActions.execSuccess(this.explorer, _.assign({}, this.response, { query: { analysis_type: 'not_count' } }));
-      assert.deepPropertyVal(this.dispatchStub.getCall(2).args[0].updates.response, 'query');
-      assert.deepEqual(this.dispatchStub.getCall(2).args[0].updates.response.query, { analysis_type: 'not_count' });
+
+    it('should not add a query object on the response if one is not there', () => {
+      ExplorerActions.execSuccess(explorer, _.assign({}, response, { query: { analysis_type: 'not_count' } }));
+      expect(spyDispatch.mock.calls[2][0].updates.response.query).toEqual({ analysis_type: 'not_count' });
     });
-    it('should call ExplorerUtils.responseSupportsChartType with the right arguments', function () {
-      var response = _.assign({}, this.response, { query: { analysis_type: 'not_count' } });
-      ExplorerActions.execSuccess(this.explorer, response);
-      assert.isTrue(this.responseSupportsChartTypeStub.calledWith(response.query, this.explorer.metadata.visualization.chart_type));
+
+    it('should call ExplorerUtils.responseSupportsChartType with the right arguments', () => {
+      const response1 = _.assign({}, response, { query: { analysis_type: 'not_count' } });
+      ExplorerActions.execSuccess(explorer, response1);
+      expect(spyResponseSupportsChartType).toHaveBeenCalledWith(response1.query, explorer.metadata.visualization.chart_type);
     });
+
   });
 
-  describe('async functions', function () {
-    before(function () {
-      this.getStub = sinon.stub(ExplorerStore, 'get')
-    });
-    after(function () {
-      ExplorerStore.get.restore();
-    });
 
-    describe('save with unpersisted explorer', function () {
-      beforeEach(function () {
-        this.persistence = {
+  describe('async functions', () => {
+    let spyGet;
+    beforeAll(() => {
+      spyGet = jest.spyOn(ExplorerStore, 'get')
+    });
+    afterAll(() => {
+      spyGet.mockRestore();
+    });
+    describe('save with unpersisted explorer', () => {
+      let persistence;
+      let explorer;
+      let spyDispatch;
+      let spyExplorerUtil;
+      beforeEach(() => {
+        persistence = {
           create: function(model, callback) {
             callback(null, _.assign({}, ExplorerUtils.formatQueryParams(ExplorerUtils.toJSON(model)), { query_name: 'abc123' }));
           }
         };
-        this.explorer = TestHelpers.createExplorerModel();
-        this.explorer.id = 'TEMP-ABC';
-        this.explorer.query_name = 'some name';
-        this.explorer.query.event_collection = 'clicks';
-        this.explorer.query.analysis_type = 'count';
-        this.getStub.returns(this.explorer);
-        sinon.stub(ExplorerUtils, 'mergeResponseWithExplorer').returns({ testKey: 'some updates' });
+        explorer = TestHelpers.createExplorerModel();
+        explorer.id = 'TEMP-ABC';
+        explorer.query_name = 'some name';
+        explorer.query.event_collection = 'clicks';
+        explorer.query.analysis_type = 'count';
+        spyDispatch = jest.spyOn(AppDispatcher, 'dispatch').mockReset();
+        spyGet.mockReturnValue(explorer);
+        spyExplorerUtil = jest.spyOn(ExplorerUtils, 'mergeResponseWithExplorer').mockReturnValue({ testKey: 'some updates' });
       });
 
-      afterEach(function(){
-        ExplorerUtils.mergeResponseWithExplorer.restore();
+      afterEach(() => {
+        spyExplorerUtil.mockRestore();
       });
 
-      it('should dispatch an EXPLORER_SAVING event', function () {
-        ExplorerActions.save(this.persistence, 'TEMP-ABC');
-        assert.isTrue(this.dispatchStub.calledWith({
+      it('should dispatch an EXPLORER_SAVING event', () => {
+        ExplorerActions.save(persistence, 'TEMP-ABC');
+        expect(spyDispatch).toHaveBeenCalledWith({
           actionType: 'EXPLORER_SAVING',
           id: 'TEMP-ABC',
           saveType: 'save'
-        }));
+        });
       });
-      it('should dispatch to update the right model with params from mergeResponseWithExplorer if successful', function () {
-        ExplorerActions.save(this.persistence, 'TEMP-ABC');
-        assert.isTrue(this.dispatchStub.calledWith({
+
+      it('should dispatch to update the right model with params from mergeResponseWithExplorer if successful', () => {
+        ExplorerActions.save(persistence, 'TEMP-ABC');
+        expect(spyDispatch).toHaveBeenCalledWith({
           actionType: 'EXPLORER_UPDATE',
           id: 'TEMP-ABC',
           updates: { testKey: 'some updates' }
-        }));
+        });
       });
-      it('should dispatch a fail event if there is a failure', function () {
-        var errorResp = { text: 'an error' };
-        this.persistence.create = function(model, callback) {
+
+      it('should dispatch a fail event if there is a failure', () => {
+        const errorResp = { text: 'an error' };
+        persistence.create = (model, callback) => {
           callback(errorResp);
         };
-        ExplorerActions.save(this.persistence, 'TEMP-ABC');
-        assert.isTrue(this.dispatchStub.calledWith({
+        ExplorerActions.save(persistence, 'TEMP-ABC');
+        expect(spyDispatch).toHaveBeenCalledWith({
           actionType: 'EXPLORER_SAVE_FAIL',
           saveType: 'save',
           id: 'TEMP-ABC',
           errorResp: errorResp,
-          query: this.explorer.query
-        }));
+          query: explorer.query
+        });
       });
-      it('should set the "saving" property back to false if found invalid', function () {
-        this.explorer.query.query_name = '';
-        this.explorer.isValid = false;
-        ExplorerActions.save(this.persistence, 'TEMP-ABC');
-        assert.isTrue(this.dispatchStub.calledWith({
+
+      it('should set the "saving" property back to false if found invalid', () => {
+        explorer.query.query_name = '';
+        explorer.isValid = false;
+        ExplorerActions.save(persistence, 'TEMP-ABC');
+        expect(spyDispatch).toHaveBeenCalledWith({
           actionType: 'EXPLORER_UPDATE',
           id: 'TEMP-ABC',
           updates: { saving: false }
-        }));
+        });
       });
     });
+  });
 
-    describe('save with an already persisted explorer', function () {
-      beforeEach(function () {
-        this.persistence = {
+
+
+    describe('save with an already persisted explorer', () => {
+      let spyGet;
+      let persistence;
+      let explorer;
+      let spyExplorerUtil;
+      let spyDispatch;
+
+      beforeEach(() => {
+        persistence = {
           update: function(model, callback) {
             callback(null, _.assign({}, ExplorerUtils.formatQueryParams(ExplorerUtils.toJSON(model)), { query_name: 'abc123' }));
           }
         };
-        this.explorer = TestHelpers.createExplorerModel();
-        this.explorer.id = 'abc123';
-        this.explorer.query_name = 'anb123';
-        this.explorer.query.event_collection = 'clicks';
-        this.explorer.query.analysis_type = 'count';
-        this.getStub.returns(this.explorer);
-        sinon.stub(ExplorerUtils, 'mergeResponseWithExplorer').returns({ testKey: 'some updates' });
+        explorer = TestHelpers.createExplorerModel();
+        explorer.id = 'abc123';
+        explorer.query_name = 'anb123';
+        explorer.query.event_collection = 'clicks';
+        explorer.query.analysis_type = 'count';
+        spyDispatch = jest.spyOn(AppDispatcher, 'dispatch').mockReset();
+        spyGet = jest.spyOn(ExplorerStore, 'get').mockReturnValue(explorer);
+        spyExplorerUtil = jest.spyOn(ExplorerUtils, 'mergeResponseWithExplorer').mockReturnValue({ testKey: 'some updates' });
       });
 
-      afterEach(function(){
-        ExplorerUtils.mergeResponseWithExplorer.restore();
+      afterEach(() => {
+        spyExplorerUtil.mockRestore();
       });
 
-      it('should dispatch an EXPLORER_SAVING event', function () {
-        ExplorerActions.save(this.persistence, 'ABC');
-        assert.isTrue(this.dispatchStub.calledWith({
+      it('should dispatch an EXPLORER_SAVING event', () => {
+        ExplorerActions.save(persistence, 'ABC');
+        expect(spyDispatch).toHaveBeenCalledWith({
           actionType: 'EXPLORER_SAVING',
           id: 'ABC',
           saveType: 'update'
-        }));
+        });
       });
-      it('should dispatch to update the right model with params from mergeResponseWithExplorer if successful', function () {
-        ExplorerActions.save(this.persistence, 'ABC');
-        assert.isTrue(this.dispatchStub.calledWith({
+
+      it('should dispatch to update the right model with params from mergeResponseWithExplorer if successful', () => {
+        ExplorerActions.save(persistence, 'ABC');
+        expect(spyDispatch).toHaveBeenCalledWith({
           actionType: 'EXPLORER_UPDATE',
           id: 'ABC',
           updates: { testKey: 'some updates' }
-        }));
+        });
       });
-      it('should dispatch a fail event if there is a failure', function () {
-        var errorResp = { text: 'an error' };
-        this.persistence.update = function(model, callback) {
+
+      it('should dispatch a fail event if there is a failure', () => {
+        const errorResp = { text: 'an error' };
+        persistence.update = (model, callback) => {
           callback(errorResp);
         };
-        ExplorerActions.save(this.persistence, 'ABC');
-        assert.isTrue(this.dispatchStub.calledWith({
+        ExplorerActions.save(persistence, 'ABC');
+        expect(spyDispatch).toHaveBeenCalledWith({
           actionType: 'EXPLORER_SAVE_FAIL',
           saveType: 'update',
           id: 'ABC',
           errorResp: errorResp,
-          query: this.explorer.query
-        }));
-      });
-    });
-
-    describe('destroy', function () {
-      xit('should dispatch a EXPLORER_DESTROYING message', function () {
-
-      });
-      xit('should dispatch a EXPLORER_DESTROY_FAIL message if destroy call fails', function () {
-
-      });
-      xit('should dispatch a EXPLORER_DESTROY_SUCCESS message if destroy call succeeds', function () {
-
-      });
-      xit('should remove the model if destroy call succeeds', function () {
-
-      });
-    });
-
-    describe('clone a saved query', function () {
-        it('should dispatch an EXPLORER_CLONE event', function () {
-          ExplorerActions.clone('ABC');
-          assert.isTrue(this.dispatchStub.calledWith({
-            actionType: 'EXPLORER_CLONE',
-            id: 'ABC'
-          }));
+          query: explorer.query
         });
+      });
+
     });
-  });
+
+    describe('clone a saved query', () => {
+      it('should dispatch an EXPLORER_CLONE event', () => {
+        let spyDispatch = jest.spyOn(AppDispatcher, 'dispatch').mockReset();
+        ExplorerActions.clone('ABC');
+        expect(spyDispatch).toHaveBeenCalledWith({
+          actionType: 'EXPLORER_CLONE',
+          id: 'ABC'
+        });
+      });
+    });
+
+
 });

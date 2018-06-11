@@ -1,75 +1,77 @@
-var assert = require('chai').assert;
-var _ = require('lodash');
-var React = require('react');
-var TestUtils = require('react-addons-test-utils');
-let sinon = require('sinon/pkg/sinon.js');
-var FormatUtils = require('../../../../client/js/app/utils/FormatUtils');
-var TimeframeUtils = require('../../../../client/js/app/utils/TimeframeUtils');
-var AbsolutePicker = require('../../../../client/js/app/components/common/absolute_picker.js');
-var Datepicker = require('../../../../client/js/app/components/common/datepicker.js');
-var Timepicker = require('../../../../client/js/app/components/common/timepicker.js');
-var TestHelpers = require('../../../support/TestHelpers');
 
-describe('components/common/absolute_picker', function() {
+import _ from 'lodash';
+import React from 'react';
+import TestUtils from 'react-addons-test-utils';
 
-  beforeEach(function() {
-    this.model = TestHelpers.createExplorerModel();
-    this.component = TestUtils.renderIntoDocument(<AbsolutePicker time={this.model.query.time}/>);
+import FormatUtils from '../../../../lib/js/app/utils/FormatUtils';
+import TimeframeUtils from '../../../../lib/js/app/utils/TimeframeUtils';
+import AbsolutePicker from '../../../../lib/js/app/components/common/absolute_picker.js';
+import Datepicker from '../../../../lib/js/app/components/common/datepicker.js';
+import Timepicker from '../../../../lib/js/app/components/common/timepicker.js';
+import TestHelpers from '../../../support/TestHelpers';
+
+describe('components/common/absolute_picker', () => {
+  let model;
+  let component;
+
+  beforeEach(() => {
+    model = TestHelpers.createExplorerModel();
+    component = TestUtils.renderIntoDocument(<AbsolutePicker time={model.query.time}/>);
   });
 
-  describe('setup', function() {
-    it('is of the right type', function() {
-      assert.isTrue(TestUtils.isCompositeComponentWithType(this.component, AbsolutePicker));
+  describe('setup', () => {
+    it('is of the right type', () => {
+      expect(TestUtils.isCompositeComponentWithType(component, AbsolutePicker)).toBe(true);
     });
 
-    it('has 2 Datepicker child components', function(){
-      assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, Datepicker), 2);
+    it('has 2 Datepicker child components', () => {
+      expect(TestUtils.scryRenderedComponentsWithType(component, Datepicker).length).toBe(2);
     });
 
-    it('has 2 Timepicker child components', function(){
-      assert.lengthOf(TestUtils.scryRenderedComponentsWithType(this.component, Timepicker), 2);
+    it('has 2 Timepicker child components', () => {
+      expect(TestUtils.scryRenderedComponentsWithType(component, Timepicker).length).toBe(2);
     });
 
-    it('has 4 input child components', function(){
-      assert.lengthOf(TestUtils.scryRenderedDOMComponentsWithTag(this.component, 'input'), 4);
+    it('has 4 input child components', () => {
+      expect(TestUtils.scryRenderedDOMComponentsWithTag(component, 'input').length).toBe(4);
     });
   });
 
-  describe('UI interactions', function () {
-    beforeEach(function(){
-      this.model = TestHelpers.createExplorerModel();
-      this.model.query.time = {
+  describe('UI interactions', () => {
+    beforeEach(() => {
+      model = TestHelpers.createExplorerModel();
+      model.query.time = {
         start: FormatUtils.convertDateToUTC(new Date(FormatUtils.formatISOTimeNoTimezone("June 7 2015 1:00 PM UT"))),
         end: FormatUtils.convertDateToUTC(new Date(FormatUtils.formatISOTimeNoTimezone("June 8 2015 3:37 PM UT")))
       };
-      this.component = TestUtils.renderIntoDocument(<AbsolutePicker time={this.model.query.time}/>);
+      component = TestUtils.renderIntoDocument(<AbsolutePicker time={model.query.time}/>);
     });
-    describe('displaying the correct dates and times at load', function () {
-      it('should display the correct start date', function () {
-        assert.strictEqual(this.component.refs['start-date'].refs['datepicker'].value, "Jun 7, 2015");
+    describe('displaying the correct dates and times at load', () => {
+      it('should display the correct start date', () => {
+        expect(component.refs['start-date'].refs['datepicker'].value).toBe("Jun 7, 2015");
       });
-      it('should display the correct start time', function () {
-        assert.strictEqual(this.component.refs['start-time'].refs['timepicker'].refs.input.value, "1:00 PM");
+      it('should display the correct start time', () => {
+        expect(component.refs['start-time'].refs['timepicker'].refs.input.value).toBe("1:00 PM");
       });
-      it('should display the correct start date', function () {
-        assert.strictEqual(this.component.refs['end-date'].refs['datepicker'].value, "Jun 8, 2015");
+      it('should display the correct start date', () => {
+        expect(component.refs['end-date'].refs['datepicker'].value).toBe("Jun 8, 2015");
       });
-      it('should display the correct end time', function () {
-        assert.strictEqual(this.component.refs['end-time'].refs['timepicker'].refs.input.value, "3:37 PM");
+      it('should display the correct end time', () => {
+        expect(component.refs['end-time'].refs['timepicker'].refs.input.value).toBe("3:37 PM");
       });
     });
-    describe('date and time correctness on change', function () {
-      it('should change the time as expected when the time value is changed ', function () {
-        var startTimeInputNode = this.component.refs['start-time'].refs['timepicker'].refs.input;
+    describe('date and time correctness on change', () => {
+      it('should change the time as expected when the time value is changed ', () => {
+        var startTimeInputNode = component.refs['start-time'].refs['timepicker'].refs.input;
         startTimeInputNode.value = "2:55 PM";
         TestUtils.Simulate.blur(startTimeInputNode);
-        assert.strictEqual(this.component.refs['start-time'].refs['timepicker'].refs.input.value, "2:55 PM");
+        expect(component.refs['start-time'].refs['timepicker'].refs.input.value).toBe("2:55 PM");
       });
-      it('should change the date as expected when the time value is changed ', function () {
-        var startTimeInputNode = this.component.refs['start-time'].refs['timepicker'].refs.input;
+      it('should change the date as expected when the time value is changed ', () => {
+        var startTimeInputNode = component.refs['start-time'].refs['timepicker'].refs.input;
         startTimeInputNode.value = "2:55 PM";
         TestUtils.Simulate.blur(startTimeInputNode);
-        assert.strictEqual(this.component.refs['start-date'].refs['datepicker'].value, "Jun 7, 2015");
+        expect(component.refs['start-date'].refs['datepicker'].value).toBe("Jun 7, 2015");
       });
     });
   });
