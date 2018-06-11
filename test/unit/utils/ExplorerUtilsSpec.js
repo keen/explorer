@@ -7,7 +7,6 @@ import ExplorerUtils from '../../../lib/js/app/utils/ExplorerUtils';
 import FilterUtils from '../../../lib/js/app/utils/FilterUtils';
 import FunnelUtils from '../../../lib/js/app/utils/FunnelUtils';
 import TimeframeUtils from '../../../lib/js/app/utils/TimeframeUtils';
-import RunValidations from '../../../lib/js/app/utils/RunValidations';
 import ExplorerValidations from '../../../lib/js/app/validations/ExplorerValidations';
 
 describe('utils/ExplorerUtils', () => {

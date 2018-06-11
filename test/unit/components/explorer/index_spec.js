@@ -18,7 +18,6 @@ import ExplorerStore from '../../../../lib/js/app/stores/ExplorerStore';
 import NoticeStore from '../../../../lib/js/app/stores/NoticeStore';
 import AppStateStore from '../../../../lib/js/app/stores/AppStateStore';
 import ExplorerActions from '../../../../lib/js/app/actions/ExplorerActions';
-import RunValidations from '../../../../lib/js/app/utils/RunValidations';
 import NoticeActions from '../../../../lib/js/app/actions/NoticeActions';
 import ExplorerUtils from '../../../../lib/js/app/utils/ExplorerUtils';
 import Modal from '../../../../lib/js/app/components/common/modal.js';
@@ -201,16 +200,10 @@ describe('components/explorer/index', () => {
     describe('saveQueryClick', () => {
       it('should call ExplorerActions.save', () => {
         const saveStub = jest.spyOn(ExplorerActions, 'save').mockImplementation(()=>{});
-        const runValidationsStub = jest.spyOn(RunValidations, 'default').mockImplementation(()=>{}).mockReturnValue([]);
-
         explorer.id = 'TEMP-ABC';
         component.forceUpdate();
-
         component.saveQueryClick(TestHelpers.fakeEvent());
-
         expect(saveStub).toHaveBeenCalledTimes(1);
-
-        runValidationsStub.mockRestore();
         saveStub.mockRestore();
       });
     });
