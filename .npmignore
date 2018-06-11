@@ -10,7 +10,7 @@
 
 bower.json
 gulpfile.js
-dist/keen-explorer.bundle*
+keen-explorer.bundle.*
 
 node_modules
 test

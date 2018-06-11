@@ -6,6 +6,5 @@
 node_modules
 
 demo-config.js
-keen-explorer.bundle.js
-.pairs
+dist/keen-explorer.bundle.*
 .idea/
