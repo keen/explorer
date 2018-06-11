@@ -42,7 +42,7 @@ Read on for instructions on how to use the Explorer on your website or in your w
 
 <!-- Explorer Assets -->
 <link rel="stylesheet" href="https://d26b395fwzu5fz.cloudfront.net/apps/keen-explorer-4.0.0.min.css">
-<script src="https://d26b395fwzu5fz.cloudfront.net/apps/keen-explorer-4.0.0.min.js"></script>
+<script src="https://d26b395fwzu5fz.cloudfront.net/apps/keen-explorer-4.0.0.bundle.min.js"></script>
 ```
 
 ##### Option 2: Include the files yourself
