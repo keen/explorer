@@ -26,7 +26,7 @@ module.exports = {
     rules: [
       {
         test: /picker/,
-        loader: 'imports-loader?define=>false'
+        loader: 'imports-loader?define=>false',
       },
 
       {
@@ -37,7 +37,7 @@ module.exports = {
         exclude: [
           path.resolve(__dirname, 'node_modules'),
         ],
-        loader: 'babel-loader'
+        loader: 'babel-loader',
 
       },
 
@@ -81,24 +81,24 @@ module.exports = {
   },
 
   externals: !process.env.BUNDLE && process.env.NODE_ENV !== 'development' ? {
-      classnames: true,
-      flux: true,
-      'json-stable-stringify': true,
-      'keen-analysis': true,
-      'keen-dataviz': true,
-      keymirror: true,
-      lodash: true,
-      moment: true,
-      qs: true,
-      react: true,
-      'react-addons-test-utils': true,
-      'react-dom': true,
-      'react-highlight': true,
-      rquery: true,
-      string: true,
-      jquery: 'jQuery',
-    } : {
-      jquery: 'jQuery',
+    classnames: true,
+    flux: true,
+    'json-stable-stringify': true,
+    'keen-analysis': true,
+    'keen-dataviz': true,
+    keymirror: true,
+    lodash: true,
+    moment: true,
+    qs: true,
+    react: true,
+    'react-addons-test-utils': true,
+    'react-dom': true,
+    'react-highlight': true,
+    rquery: true,
+    string: true,
+    jquery: 'jQuery',
+  } : {
+    jquery: 'jQuery',
   },
 
 };
