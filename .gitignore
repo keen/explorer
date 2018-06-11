@@ -4,7 +4,6 @@
 .DS_Store
 
 node_modules
-test/unit/build/browserified_tests.*
 
 demo-config.js
 .idea/
