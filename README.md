@@ -41,8 +41,8 @@ Read on for instructions on how to use the Explorer on your website or in your w
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
 <!-- Explorer Assets -->
-<link rel="stylesheet" href="https://d26b395fwzu5fz.cloudfront.net/apps/keen-explorer-4.0.2.min.css">
-<script src="https://d26b395fwzu5fz.cloudfront.net/apps/keen-explorer-4.0.2.bundle.min.js"></script>
+<link rel="stylesheet" href="https://d26b395fwzu5fz.cloudfront.net/apps/keen-explorer-4.0.3.min.css">
+<script src="https://d26b395fwzu5fz.cloudfront.net/apps/keen-explorer-4.0.3.bundle.min.js"></script>
 ```
 
 ##### Option 2: Include the files yourself
