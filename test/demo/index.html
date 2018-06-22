@@ -13,6 +13,7 @@
 <body>
   <div id="explorer" style="padding: 20px;"></div>
   <script type="text/javascript">
+  /*
     $(document).ready(function(){
       const app = new KeenExplorer('#explorer')
         .client(demoConfig)
@@ -21,6 +22,14 @@
         // or just render..
         // app.render();
     });
+*/
+  window.Keen.ready(function() {
+  window.explorer = new KeenExplorer('#explorer')
+    .client(demoConfig)
+    .persistence(true)
+    .fetch();
+  window.startExplorerEventTracking();
+  });
   </script>
 </body>
 </html>

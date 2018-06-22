@@ -608,7 +608,9 @@ var ExplorerUtils = {
       queryAttrs += '&steps=' + steps;
     }
 
-    url += '?api_key=' + client.readKey() + '&' + queryAttrs;
+    var authKey = client.masterKey() || client.readKey();
+
+    url += '?api_key=' + authKey + '&' + queryAttrs;
     return url;
   },
 
@@ -682,7 +684,7 @@ var ExplorerUtils = {
       return '        ' + param + ': ' + s(params[param], { space: 0 });
     }).join(',\n');
 
-    var value = ['<!DOCTYPE html>', '<html>', '<head>', '  <meta charset="utf-8">', '  <link href="https://d26b395fwzu5fz.cloudfront.net/keen-dataviz-1.1.3.css" rel="stylesheet" />', '</head>', '<body>', '  <!-- Target DOM Node -->', '  <div id="keen-example-chart"></div>', '  ', '  <script src="https://d26b395fwzu5fz.cloudfront.net/keen-analysis-1.2.2.js" type="text/javascript"></script>', '  <script src="https://d26b395fwzu5fz.cloudfront.net/keen-dataviz-1.1.3.js" type="text/javascript"></script>', '  <script type="text/javascript">', '    var client = new Keen({', '      projectId: ' + s(client.config.projectId) + ',', '      readKey: ' + s(client.config.readKey) + echoIf(dynamicConstructorValues, ','), dynamicConstructorValues, '    });', '    ', '    var chart = new Keen.Dataviz()', '      .el("#keen-example-chart")', '      .height(240)', '      .title("' + chartTitle + '")', '' + chartType ? '      .type("' + chartType + '")' : '', '      .prepare();', '    ', '    client', '      .query(' + s(params.analysis_type) + ', {', dynamicCriteria, '      })', '      .then(function(res) {', '        chart.data(res).render();', '      })', '      .catch(function(err) {', '        chart.message(err.message);', '      });', '    ', '  </script>', '</body>', '</html>'];
+    var value = ['<!DOCTYPE html>', '<html>', '<head>', '  <meta charset="utf-8">', '  <link href="https://d26b395fwzu5fz.cloudfront.net/keen-dataviz-2.0.4.min.css" rel="stylesheet" />', '</head>', '<body>', '  <!-- Target DOM Node -->', '  <div id="keen-example-chart"></div>', '  ', '  <script src="https://d26b395fwzu5fz.cloudfront.net/keen-analysis-2.0.0.min.js" type="text/javascript"></script>', '  <script src="https://d26b395fwzu5fz.cloudfront.net/keen-dataviz-2.0.4.min.js" type="text/javascript"></script>', '  <script type="text/javascript">', '    var client = new Keen({', '      projectId: ' + s(client.config.projectId) + ',', '      readKey: ' + s(client.config.readKey) + echoIf(dynamicConstructorValues, ','), dynamicConstructorValues, '    });', '    ', '    var chart = new Keen.Dataviz()', '      .el("#keen-example-chart")', '      .height(240)', '      .title("' + chartTitle + '")', '' + chartType ? '      .type("' + chartType + '")' : '', '      .prepare();', '    ', '    client', '      .query(' + s(params.analysis_type) + ', {', dynamicCriteria, '      })', '      .then(function(res) {', '        chart.data(res).render();', '      })', '      .catch(function(err) {', '        chart.message(err.message);', '      });', '    ', '  </script>', '</body>', '</html>'];
     return _lodash2.default.filter(value, function (val) {
       return val !== "";
     }).join('\n');
@@ -5300,8 +5302,9 @@ var ProjectActions = {
   fetchProjectCollections: function fetchProjectCollections(client) {
     var project = _ProjectStore2.default.getProject();
     if (!project) console.error("Cannot fetchProjectCollections: No project model has been created yet.");
+    var authKey = client.masterKey() || client.readKey();
 
-    return client.get(client.url('projectId')).auth(client.masterKey()).send().then(function (res) {
+    return client.get(client.url('projectId')).auth(authKey).send().then(function (res) {
       var schema = _lodash2.default.assign({}, project.schema);
       _lodash2.default.each(res.events, function (collection) {
         schema[collection.name] = _lodash2.default.assign(collection, {
@@ -13620,6 +13623,9 @@ var KeenExplorer = exports.KeenExplorer = function KeenExplorer(el) {
     persistence: null
   };
   this.el(el);
+  if (!this.config.el) {
+    console.error("Can't find HTML tag", el);
+  }
   _ExplorerActions2.default.create(_lodash2.default.assign(_ExplorerUtils2.default.formatQueryParams(this.config.params) || {}, { 'id': tempId }));
   _ExplorerActions2.default.setActive(tempId);
   _ExplorerActions2.default.validate(tempId);
@@ -13666,6 +13672,8 @@ KeenExplorer.prototype.fetch = function () {
         _ExplorerActions2.default.exec(this.config.client, _ExplorerStore2.default.getActive().id);
       }
     }
+  } else {
+    _AppStateActions2.default.update({ ready: true });
   }
   this.render();
   return this;
@@ -13675,7 +13683,7 @@ KeenExplorer.prototype.persistence = function (bool) {
   if (!arguments.length) return this.config.persistence;
   if (typeof bool === 'boolean' && bool) {
     if (!this.config.client || !this.config.client.masterKey()) {
-      console.error('This feature requires a client instance with a masterKey value');
+      console.error('The Persistence feature requires a client instance with a masterKey value');
     }
     this.config.persistence = new _persistence2.default.KeenSavedQueries({
       baseUrl: this.config.client.url('queries', 'saved'),
