@@ -2331,8 +2331,6 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
 }
 
 #keen-explorer .react-select-box-option:hover {
-  color: var(dashboard-blue);
-  color: var(dashboard-blue);
   background-color: #F2F2F2;
 }
 

@@ -1500,105 +1500,98 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
   z-index: 1;
 }
 
-#keen-explorer :root{
-  bump-size: 3px;
-  tiny-size: 8px;
-  small-size: 15px;
-  medium-size: 25px;
-}
-
 #keen-explorer .no-margin {
   margin: 0;
 }
 
 #keen-explorer .margin-top-bump {
-  margin-top: var(bump-size);
-  margin-top: var(bump-size);
+  margin-top: 3px;
+  margin-top: 3px;
 }
 
 #keen-explorer .margin-bottom-bump {
-  margin-bottom: var(bump-size);
-  margin-bottom: var(bump-size);
+  margin-bottom: 3px;
+  margin-bottom: 3px;
 }
 
 #keen-explorer .margin-right-bump {
-  margin-right: var(bump-size);
-  margin-right: var(bump-size);
+  margin-right: 3px;
+  margin-right: 3px;
 }
 
 #keen-explorer .margin-left-bump {
-  margin-left: var(bump-size);
-  margin-left: var(bump-size);
+  margin-left: 3px;
+  margin-left: 3px;
 }
 
 #keen-explorer .margin-top-tiny {
-  margin-top: var(tiny-size);
-  margin-top: var(tiny-size);
+  margin-top: 8px;
+  margin-top: 8px;
 }
 
 #keen-explorer .margin-bottom-tiny {
-  margin-bottom: var(tiny-size);
-  margin-bottom: var(tiny-size);
+  margin-bottom: 8px;
+  margin-bottom: 8px;
 }
 
 #keen-explorer .margin-right-tiny {
-	margin-right: var(tiny-size);
-	margin-right: var(tiny-size);
+	margin-right: 8px;
+	margin-right: 8px;
 }
 
 #keen-explorer .margin-left-tiny {
-	margin-left: var(tiny-size);
-	margin-left: var(tiny-size);
+	margin-left: 8px;
+	margin-left: 8px;
 }
 
 #keen-explorer .padding-tiny {
-  padding: var(tiny-size);
-  padding: var(tiny-size);
+  padding: 8px;
+  padding: 8px;
 }
 
 #keen-explorer .padding-right-tiny {
-  padding-right: var(tiny-size);
-  padding-right: var(tiny-size);
+  padding-right: 8px;
+  padding-right: 8px;
 }
 
 #keen-explorer .margin-top-small {
-  margin-top: var(small-size);
-  margin-top: var(small-size);
+  margin-top: 15px;
+  margin-top: 15px;
 }
 
 #keen-explorer .margin-bottom-small {
-  margin-bottom: var(small-size);
-  margin-bottom: var(small-size);
+  margin-bottom: 15px;
+  margin-bottom: 15px;
 }
 
 #keen-explorer .margin-left-small {
-  margin-left: var(small-size);
-  margin-left: var(small-size);
+  margin-left: 15px;
+  margin-left: 15px;
 }
 
 #keen-explorer .margin-right-small {
-  margin-right: var(small-size);
-  margin-right: var(small-size);
+  margin-right: 15px;
+  margin-right: 15px;
 }
 
 #keen-explorer .margin-top-medium {
-  margin-top: var(medium-size);
-  margin-top: var(medium-size);
+  margin-top: 25px;
+  margin-top: 25px;
 }
 
 #keen-explorer .margin-bottom-medium {
-  margin-bottom: var(medium-size);
-  margin-bottom: var(medium-size);
+  margin-bottom: 25px;
+  margin-bottom: 25px;
 }
 
 #keen-explorer .margin-right-medium {
-  margin-right: var(medium-size);
-  margin-right: var(medium-size);
+  margin-right: 25px;
+  margin-right: 25px;
 }
 
 #keen-explorer .margin-left-medium {
-  margin-left: var(medium-size);
-  margin-left: var(medium-size);
+  margin-left: 25px;
+  margin-left: 25px;
 }
 
 #keen-explorer .no-radius-left {
@@ -2284,8 +2277,6 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
 }
 
 #keen-explorer .react-select-box-option:hover {
-  color: var(dashboard-blue);
-  color: var(dashboard-blue);
   background-color: #F2F2F2;
 }
 
@@ -2932,11 +2923,6 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
   font-size: 12px;
 }
 
-#keen-explorer :root{
-  active-color: #536778;
-  arrow-size: 5px;
-}
-
 #keen-explorer .funnel-builder .funnel-step {
     padding: 0 5px;
   }
@@ -2972,8 +2958,8 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
     text-align: center;
     font-weight: bold;
     border-radius: 100px;
-    color: var(active-color);
-    color: var(active-color);
+    color: #536778;
+    color: #536778;
     margin-right: 10px;
   }
 
@@ -3015,23 +3001,23 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
 
 #keen-explorer .funnel-builder .step-move-btns .up .arrow {
       bottom: 6px;
-      border-left: var(arrow-size) solid transparent;
-      border-left: var(arrow-size) solid transparent;
-      border-right: var(arrow-size) solid transparent;
-      border-right: var(arrow-size) solid transparent;
-      border-bottom: var(arrow-size) solid #FFF;
-      border-bottom: var(arrow-size) solid #FFF;
+      border-left: 5px solid transparent;
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
+      border-right: 5px solid transparent;
+      border-bottom: 5px solid #FFF;
+      border-bottom: 5px solid #FFF;
 
     }
 
 #keen-explorer .funnel-builder .step-move-btns .down .arrow {
       top: 6px;
-      border-left: var(arrow-size) solid transparent;
-      border-left: var(arrow-size) solid transparent;
-      border-right: var(arrow-size) solid transparent;
-      border-right: var(arrow-size) solid transparent;
-      border-top: var(arrow-size) solid #FFF;
-      border-top: var(arrow-size) solid #FFF;
+      border-left: 5px solid transparent;
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
+      border-right: 5px solid transparent;
+      border-top: 5px solid #FFF;
+      border-top: 5px solid #FFF;
     }
 
 #keen-explorer .funnel-builder a.add-step {
@@ -3054,8 +3040,8 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
   }
 
 #keen-explorer .funnel-builder .funnel-step.active .step-header {
-      background: var(active-color);
-      background: var(active-color);
+      background: #536778;
+      background: #536778;
       border-bottom: none;
     }
 

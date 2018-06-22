@@ -1,74 +1,73 @@
 :root{
-  bump-size: 3px;
-  tiny-size: 8px;
-  small-size: 15px;
-  medium-size: 25px;
+  --bump-size: 3px;
+  --tiny-size: 8px;
+  --small-size: 15px;
+  --medium-size: 25px;
 }
 
 .no-margin {
   margin: 0;
 }
 
-
 .margin-top-bump {
-  margin-top: var(bump-size);
+  margin-top: var(--bump-size);
 }
 .margin-bottom-bump {
-  margin-bottom: var(bump-size);
+  margin-bottom: var(--bump-size);
 }
 .margin-right-bump {
-  margin-right: var(bump-size);
+  margin-right: var(--bump-size);
 }
 .margin-left-bump {
-  margin-left: var(bump-size);
+  margin-left: var(--bump-size);
 }
 
 
 .margin-top-tiny {
-  margin-top: var(tiny-size);
+  margin-top: var(--tiny-size);
 }
 .margin-bottom-tiny {
-  margin-bottom: var(tiny-size);
+  margin-bottom: var(--tiny-size);
 }
 .margin-right-tiny {
-	margin-right: var(tiny-size);
+	margin-right: var(--tiny-size);
 }
 .margin-left-tiny {
-	margin-left: var(tiny-size);
+	margin-left: var(--tiny-size);
 }
 .padding-tiny {
-  padding: var(tiny-size);
+  padding: var(--tiny-size);
 }
 .padding-right-tiny {
-  padding-right: var(tiny-size);
+  padding-right: var(--tiny-size);
 }
 
 
 .margin-top-small {
-  margin-top: var(small-size);
+  margin-top: var(--small-size);
 }
 .margin-bottom-small {
-  margin-bottom: var(small-size);
+  margin-bottom: var(--small-size);
 }
 .margin-left-small {
-  margin-left: var(small-size);
+  margin-left: var(--small-size);
 }
 .margin-right-small {
-  margin-right: var(small-size);
+  margin-right: var(--small-size);
 }
 
 
 .margin-top-medium {
-  margin-top: var(medium-size);
+  margin-top: var(--medium-size);
 }
 .margin-bottom-medium {
-  margin-bottom: var(medium-size);
+  margin-bottom: var(--medium-size);
 }
 .margin-right-medium {
-  margin-right: var(medium-size);
+  margin-right: var(--medium-size);
 }
 .margin-left-medium {
-  margin-left: var(medium-size);
+  margin-left: var(--medium-size);
 }
 
 

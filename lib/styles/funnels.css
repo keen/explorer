@@ -1,6 +1,6 @@
 :root{
-  active-color: #536778;
-  arrow-size: 5px;
+  --active-color: #536778;
+  --arrow-size: 5px;
 }
 
 .funnel-builder {
@@ -40,7 +40,7 @@
     text-align: center;
     font-weight: bold;
     border-radius: 100px;
-    color: var(active-color);
+    color: var(--active-color);
     margin-right: 10px;
   }
 
@@ -78,16 +78,16 @@
     }
     .up .arrow {
       bottom: 6px;
-      border-left: var(arrow-size) solid transparent;
-      border-right: var(arrow-size) solid transparent;
-      border-bottom: var(arrow-size) solid #FFF;
+      border-left: var(--arrow-size) solid transparent;
+      border-right: var(--arrow-size) solid transparent;
+      border-bottom: var(--arrow-size) solid #FFF;
 
     }
     .down .arrow {
       top: 6px;
-      border-left: var(arrow-size) solid transparent;
-      border-right: var(arrow-size) solid transparent;
-      border-top: var(arrow-size) solid #FFF;
+      border-left: var(--arrow-size) solid transparent;
+      border-right: var(--arrow-size) solid transparent;
+      border-top: var(--arrow-size) solid #FFF;
     }
   }
 
@@ -108,7 +108,7 @@
     padding: 0;
 
     .step-header {
-      background: var(active-color);
+      background: var(--active-color);
       border-bottom: none;
     }
 

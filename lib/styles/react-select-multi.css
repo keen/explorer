@@ -185,7 +185,6 @@
   text-decoration: none;
 
   &:hover {
-    color: var(dashboard-blue);
     background-color: #F2F2F2;
   }
 }
