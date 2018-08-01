@@ -1,4 +1,4 @@
-# Keen IO Explorer
+# Keen Explorer
 
 ## Install
 
@@ -10,10 +10,9 @@ npm install keen-explorer --save
 ```javascript
 import KeenExplorer from 'keen-explorer';
 
-const myExplorer = new KeenExplorer('#keen-explorer-html-element')
+const myExplorer = new KeenExplorer('#keen-explorer-html-element') // querySelector
   .client({
     projectId: 'PROJECT_ID',
-    readKey: 'READ_KEY',
     masterKey: 'MASTER_KEY'
   })
   .persistence(true)
@@ -22,60 +21,36 @@ const myExplorer = new KeenExplorer('#keen-explorer-html-element')
 
 [Check out the demo here.](http://keen.github.io/explorer/) The Keen IO Explorer is an open source point-and-click interface for querying and visualizing your event data. It's maintained by the team at [Keen IO](https://keen.io/).
 
-Read on for instructions on how to use the Explorer on your website or in your web app and how to get set up to develop with the Explorer.
-
-## Table of Contents
-1. [How to use Explorer on your site or in your app](#how-to-use-explorer-on-your-site-or-in-your-app)
-2. [How to develop with the Explorer](#how-to-develop-with-the-explorer)
-3. [FAQ](#faq)
-4. [Contributing](#contributing)
-5. [Tech used in this project](#tech-used-in-this-project)
-
-### How to use Explorer on your site or in your app
-
-##### Option 1: Use the hosted assets from our CDN
+## Install from CDN
 
 ```html
-<!-- Dependencies -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<head>
+  <!-- Dependencies -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
-<!-- Explorer Assets -->
-<link rel="stylesheet" href="https://d26b395fwzu5fz.cloudfront.net/apps/keen-explorer-4.0.3.min.css">
-<script src="https://d26b395fwzu5fz.cloudfront.net/apps/keen-explorer-4.0.3.bundle.min.js"></script>
+  <!-- Explorer Assets -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/keen-explorer@4/dist/keen-explorer.min.css">
+  <script crossorigin src="https://cdn.jsdelivr.net/npm/keen-explorer@4/dist/keen-explorer.bundle.min.js"></script>
+</head>
+
+<body>
+  <div id="keen-explorer"></div>
+  <script>
+  const myExplorer = new KeenExplorer('#keen-explorer')
+  .client({
+    projectId: 'PROJECT_ID',
+    masterKey: 'MASTER_KEY'
+  })
+  .persistence(true)
+  .fetch();
+</script>
+</body>
 ```
-
-##### Option 2: Include the files yourself
-
-You'd need to include all of the same assets as those listed in the CDN example above. You can [download the Explorer source code](https://github.com/keen/explorer/archive/master.zip) to get the `keen-explorer.js` and `keen-explorer.css` files (as well as the minified versions). And you can choose to include jQuery and Bootstrap however you wish, from CDNs or using downloaded copies.
-
-##### Option 3: Install using NPM
-
-This is as easy as `npm install keen-explorer`
 
 #### Get your project ID & API keys
 
 If you haven’t done so already, [login to Keen IO to create a project](https://keen.io/add-project) for your app. You'll need a [Keen IO account](https://keen.io/signup?s=explorer) to create a project. The Project ID and API Keys are available on the Project Overview page. You will need these for the next steps.
-
-#### Initialize the app
-
-Somewhere on the page that you want to show Explorer you'll need to configure a Keen.js client and pass that into the initialization of a new Explorer. Here's how you do it:
-
-```html
-<div id="keen-explorer"></div>
-<script>
-  const myExplorer = new KeenExplorer('#keen-explorer')
-    .client({
-      projectId: 'PROJECT_ID',
-      readKey: 'READ_KEY',
-      masterKey: 'MASTER_KEY'
-    })
-    .persistence(true)
-    .fetch();
-</script>
-```
-
-And that's it. You're done!
 
 ## Custom builds of the Explorer
 

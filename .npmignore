@@ -10,8 +10,21 @@
 
 bower.json
 gulpfile.js
+bower.json
+gulpfile.js
+.babelrc
+test
+.travis.yml
+circle.yml
+jest.config.js
+replace-config.js
+webpack.config.js
+postcss.config.js
+.eslintrc
+.eslintignore
 
-dist/keen-explorer.bundle.*
+dist/keen-explorer.bundle.js
+dist/keen-explorer.bundle.js.map
 
 node_modules
 test

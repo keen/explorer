@@ -841,32 +841,6 @@
 .c3-chart-arc.c3-target.c3-focused g path {
   opacity: 1; }
 
-:root {
-  --font-family-primary: 'Gotham Rounded SSm A', 'Gotham Rounded SSm B', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  --font-family-primary: 'Gotham Rounded SSm A', 'Gotham Rounded SSm B', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  --font-family-primary: 'Gotham Rounded SSm A', 'Gotham Rounded SSm B', var(--font-family-secondary);
-  --font-family-secondary: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-
-  --white:      #FFFFFF;
-  --black:      #1A1A1A;
-
-  --dark-gray:  #4D4D4D;
-  --gray:       #808080;
-  --light-gray: #A7A7A7;
-  --silver:     #E7E7E7;
-
-  --blue:       #5A9EED;
-  --teal:       #00BBDE;
-  --green:      #73D483;
-  --yellow:     #EEB058;
-  --orange:     #FF855C;
-  --red:        #FE6672;
-  --purple:     #8A8AD6;
-
-  --lavender:   hsl(310, 42%, 63%);
-  --mint:       #00CFBB;
-}
-
 .keen-dataviz .axis {
   shape-rendering: crispEdges
 }
@@ -876,18 +850,15 @@
 .keen-dataviz {
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
+  font-family: 'Gotham Rounded SSm A', 'Gotham Rounded SSm B', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: 'Gotham Rounded SSm A', 'Gotham Rounded SSm B', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  height: inherit;
 }
 
 .keen-dataviz .keen-dataviz-title {
   color: #4D4D4D;
   color: #4D4D4D;
-  color: var(--dark-gray);
-  font-family: 'Gotham Rounded SSm A', 'Gotham Rounded SSm B', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  font-family: 'Gotham Rounded SSm A', 'Gotham Rounded SSm B', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  font-family: var(--font-family-primary);
-  font-size: 14px;
-  font-weight: 200;
-  line-height: 32px;
+  margin-bottom: 0.3em;
 }
 
 .keen-dataviz .keen-dataviz-stage {
@@ -897,58 +868,48 @@
 .keen-dataviz .keen-dataviz-notes {
   color: #808080;
   color: #808080;
-  color: var(--gray);
   display: block;
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  font-family: var(--font-family-secondary);
-  font-size: 12px;
-  line-height: 32px;
+  font-size: 0.8em;
 }
 
-/* MESSAGE */
-
-.keen-dataviz .keen-dataviz-message {
-  color: #808080;
-  color: #808080;
-  color: var(--gray);
-  display: block;
-  font-family: 'Gotham Rounded SSm A', 'Gotham Rounded SSm B', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  font-family: 'Gotham Rounded SSm A', 'Gotham Rounded SSm B', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  font-family: var(--font-family-primary);
-  font-size: 21px;
-  font-weight: 200;
-  line-height: 24px;
+.keen-dataviz-box {
+  border-radius: 4px;
   text-align: center;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+      align-items: center;
+  -ms-flex-pack: center;
+      justify-content: center;
+  min-height:8em;
+  -ms-flex-flow: row wrap;
+      flex-flow: row wrap;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  padding: 1em 0;
+  min-height: 8em;
 }
 
 /* METRIC */
 
-.keen-dataviz .keen-dataviz-metric {
-  border-radius: 4px;
+.keen-dataviz-metric {
+  height: inherit;
   color: #FFFFFF;
   color: #FFFFFF;
-  color: var(--white);
-  font-family: 'Gotham Rounded SSm A', 'Gotham Rounded SSm B', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  font-family: 'Gotham Rounded SSm A', 'Gotham Rounded SSm B', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  font-family: var(--font-family-primary);
-  text-align: center;
+  background: rgb(0, 187, 222);
 }
 
-.keen-dataviz .keen-dataviz-metric-value {
-  display: block;
-  font-size: 72px;
-  font-weight: 700;
-  line-height: 72px;
-}
+.keen-dataviz-metric-value {
+    font-size: 4.3em;
+    font-weight: 700;
+    width: 100%;
+  }
 
-.keen-dataviz .keen-dataviz-metric-title {
-  display: block;
-  font-size: 24px;
-  font-weight: 200;
-  line-height: 24px;
-  padding-top: 8px;
-}
+.keen-dataviz-metric-title {
+    font-size: 2em;
+    font-weight: 200;
+    width: 100%;
+  }
 
 .keen-dataviz .keen-dataviz-metric-prefix {}
 
@@ -957,8 +918,10 @@
 /* MESSAGE */
 
 .keen-dataviz .keen-dataviz-message {
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  color: #808080;
+  color: #808080;
+  font-size: 1.5em;
+  width:100%;
 }
 
 /* TABLE */
@@ -966,31 +929,66 @@
 .keen-dataviz .keen-dataviz-table {
   border-bottom: 1px solid #E7E7E7;
   border-bottom: 1px solid #E7E7E7;
-  border-bottom: 1px solid var(--silver);
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
   overflow: scroll;
   position: relative;
+
+  width: 100%;
 }
 
 .keen-dataviz .keen-dataviz-table table {
   background: #FFFFFF;
   background: #FFFFFF;
-  background: var(--white);
   border-collapse: collapse;
-  font-family: 'Gotham Rounded SSm A', 'Gotham Rounded SSm B', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  font-family: 'Gotham Rounded SSm A', 'Gotham Rounded SSm B', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  font-family: var(--font-family-primary);
   margin: 0;
   position: relative;
   width: 100%;
 }
 
+.keen-dataviz .keen-dataviz-table table .table-pagination td {
+      background-color: #FFFFFF;
+      background-color: #FFFFFF;
+    }
+
+.keen-dataviz .keen-dataviz-table table .table-pagination:hover td {
+      background-color: #FFFFFF;
+      background-color: #FFFFFF;
+    }
+
+.keen-dataviz .keen-dataviz-table table .table-pagination a {
+      border: 1px solid #E7E7E7;
+      border: 1px solid #E7E7E7;
+      padding: 0.5em;
+      margin-right: 0.2em;
+      cursor: pointer;
+    }
+
+.keen-dataviz .keen-dataviz-table table .table-pagination .active{
+      background: #4D4D4D;
+      background: #4D4D4D;
+      color: #FFFFFF;
+      color: #FFFFFF;
+    }
+
+.keen-dataviz .keen-dataviz-table table .table-pagination .arrow{
+      font-weight:bold;
+    }
+
+.keen-dataviz .keen-dataviz-table th{
+  background: white;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  cursor: pointer;
+}
+
 .keen-dataviz .keen-dataviz-table th,
 .keen-dataviz .keen-dataviz-table td {
   border-collapse: collapse;
-  font-size: 13px;
-  padding: 10px;
+  font-size: 1em;
+  padding: 0.7em;
   text-align: left;
   white-space: nowrap;
 }
@@ -998,45 +996,34 @@
 .keen-dataviz .keen-dataviz-table th {
   border-bottom: 1px solid #E7E7E7;
   border-bottom: 1px solid #E7E7E7;
-  border-bottom: 1px solid var(--silver);
   color: #4D4D4D;
   color: #4D4D4D;
-  color: var(--dark-gray);
 }
 
 .keen-dataviz .keen-dataviz-table td {
   background-color: #FFFFFF;
   background-color: #FFFFFF;
-  background-color: var(--white);
   color: #4D4D4D;
   color: #4D4D4D;
-  color: var(--dark-gray);
   -webkit-transition: background-color 0.1s, color 0.05s;
   -o-transition: background-color 0.1s, color 0.05s;
   transition: background-color 0.1s, color 0.05s;
 }
 
-.keen-dataviz .keen-dataviz-table tr:nth-child(even) td {
+.keen-dataviz .keen-dataviz-table .table-data-row:nth-child(even) td{
   background-color: #F3F5F6;
 }
 
-.keen-dataviz .keen-dataviz-table tr:hover td {
+.keen-dataviz .keen-dataviz-table .table-data-row:hover td{
   background-color: #E7E7E7;
   background-color: #E7E7E7;
-  background-color: var(--silver);
   color: #4D4D4D;
   color: #4D4D4D;
-  color: var(--dark-gray);
-}
-
-.keen-dataviz .keen-dataviz-table .keen-dataviz-table-dataset thead {
-  visibility: hidden;
 }
 
 .keen-dataviz .keen-dataviz-table .keen-dataviz-table-fixed-header {
   background: #FFFFFF;
   background: #FFFFFF;
-  background: var(--white);
   border-bottom: 1px solid rgba(0,0,0,.15);
   position: absolute;
   top: 0;
@@ -1045,26 +1032,18 @@
   transition: top .1s;
 }
 
-.keen-dataviz .keen-spinner-container {
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
-  display: block;
-  height: 50px;
-  margin: 0 auto;
-  position: relative;
-  width: 35px;
-}
-
 .keen-dataviz .keen-spinner-indicator {
   border-radius: 100%;
   border: 3px solid rgba(0, 0, 0, .1);
   border-top-color: rgba(0, 0, 0, .45);
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
-  height: 35px;
-  width: 35px;
+  height: 3em;
+  width: 3em;
   -webkit-animation:spin .7s linear infinite;
   animation:spin .7s linear infinite;
+  -ms-animation: spin .7s linear infinite;
+  -o-animation: spin .7s linear infinite;
 }
 
 @-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
@@ -1075,69 +1054,280 @@
 
 .keen-dataviz .c3 svg,
 .keen-dataviz .c3-tooltip-container {
-  font-family: 'Gotham Rounded SSm A', 'Gotham Rounded SSm B', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  font-family: 'Gotham Rounded SSm A', 'Gotham Rounded SSm B', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  font-family: var(--font-family-primary);
 }
 
 .keen-dataviz .c3-tooltip-container th {
-  font-size: 12px;
-  max-width: 280px;
+  max-width: 50%;
   word-wrap: break-word;
+  color: #FFFFFF;
+  color: #FFFFFF;
+  background: #1A1A1A;
+  background: #1A1A1A;
 }
 
 .keen-dataviz .c3-tooltip-container td {
-  font-size: 11px;
-  max-width: 280px;
+  max-width: 50%;
   word-wrap: break-word;
 }
 
 .keen-dataviz .c3-tooltip-container td.name span {
-  border-radius: 50%;
 }
 
 .keen-dataviz .c3-chart-arc text {
-  font-size: 11px;
 }
+
+.keen-dataviz-rendering{
+  xheight: inherit;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: center;
+      justify-content: center;
+  -ms-flex-flow: row;
+      flex-flow: row;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+}
+
+.keen-dataviz-rendering .c3-chart{
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-positive: 2;
+        flex-grow: 2;
+    -ms-flex-item-align: center;
+        align-self: center;
+    -ms-flex-order: 1;
+        order: 1;
+  }
+
+.keen-dataviz-rendering .c3-chart-100-percent{
+    width: 100%;
+    -ms-flex-item-align: center;
+        align-self: center;
+  }
+
+.keen-dataviz-rendering-horizontal{
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+  }
 
 /* CUSTOM LEGEND */
 
 .keen-c3-legend {
-  position: absolute;
+  display: -ms-flexbox;
+  display: flex;
+  position: relative;
   top: 0;
+  -ms-flex-positive: 1;
+      flex-grow: 1;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
 }
+
+.keen-c3-legend-horizontal{
+    -ms-flex-direction: row;
+        flex-direction: row;
+    -ms-flex-item-align: end;
+        align-self: flex-end;
+    display: -ms-flexbox;
+    display: flex;
+    flex-direction: row;
+    -ms-flex-pack: center;
+        justify-content: center;
+    width: 100%;
+    padding: 1em 0;
+    height: 3.5em;
+  }
+
+.keen-c3-legend-horizontal-pagination-left{
+      -ms-flex-order: 0;
+          order: 0;
+      display: -ms-flexbox;
+      display: flex;
+      margin-right: 1.5em;
+    }
+
+.keen-c3-legend-horizontal-items{
+      -ms-flex-order: 1;
+          order: 1;
+      display: -ms-flexbox;
+      display: flex;
+    }
+
+.keen-c3-legend-horizontal-pagination-right{
+      -ms-flex-order: 2;
+          order: 2;
+      display: -ms-flexbox;
+      display: flex;
+      margin-left: 1.5em;
+    }
+
+.keen-c3-legend-top{
+    -ms-flex-order: 0;
+        order: 0;
+  }
+
+.keen-c3-legend-bottom {
+    -ms-flex-order: 2;
+        order: 2;
+  }
+
+.keen-c3-legend-vertical{
+    -ms-flex-direction: column;
+        flex-direction: column;
+  }
+
+.keen-c3-legend-vertical .keen-c3-legend-pagination-icons
+    {
+      margin: 0.5em 0.1em;
+      -ms-flex-order: 2;
+          order: 2;
+    }
+
+.keen-c3-legend-left{
+    -ms-flex-order: 0;
+        order: 0;
+  }
+
+.keen-c3-legend-right{
+    -ms-flex-order: 2;
+        order: 2;
+  }
+
+.keen-c3-legend-items{
+    -ms-flex-order: 1;
+        order: 1;
+  }
+
+.keen-c3-legend-vertical-items{
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: row;
+        flex-direction: row;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+    -ms-flex-pack: start;
+        justify-content: flex-start;
+    -ms-flex-line-pack: start;
+        align-content: flex-start;
+  }
+
+.keen-c3-legend-vertical-items .legend-item{
+      width: 100%;
+    }
+
+.keen-c3-legend-horizontal-items{
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: row;
+        flex-direction: row;
+  }
+
+.keen-c3-legend-horizontal-items .legend-item{
+      margin: 0 0.25em;
+    }
+
+.keen-c3-legend .legend-item{
+    display: -ms-flexbox;
+    display: flex;
+    cursor: pointer;
+    overflow: hidden;
+    padding: 0.2em;
+    white-space: nowrap;
+    -o-text-overflow: ellipsis;
+       text-overflow: ellipsis;
+  }
+
+.keen-c3-legend .legend-item > * {
+      vertical-align: middle;
+    }
+
+.keen-c3-legend .legend-item-color-sample{
+      display: inline-block;
+      width: 1em;
+      height: 1em;
+      margin-right: 0.5em;
+      pointer-events: none;
+    }
+
+.keen-c3-legend .legend-item-text{
+      pointer-events: none;
+    }
+
+.keen-c3-legend-label-overlay .overlay-pointer {
+    border-color: transparent transparent #FFFFFF transparent;
+    border-color: transparent transparent #FFFFFF transparent;
+    border-style: solid;
+    border-width: 0 10px 10px 10px;
+    height: 0;
+    width: 0px;
+    position: absolute;
+    top: -10px;
+  }
+
+.keen-c3-legend-position-left .overlay-pointer {
+        left: 0px;
+      }
+
+.keen-c3-legend-position-right .overlay-pointer {
+        left: 0px;
+      }
+
+.keen-c3-legend-pagination-vertical {
+    margin-top: 0.5em;
+  }
+
+.keen-c3-legend-pagination-icons {
+    padding: 0.2em;
+  }
+
+.keen-c3-legend-pagination-icons i {
+      border-left: 1em solid transparent;
+      border-right: 1em solid transparent;
+      border-top: 1.5em solid #4D4D4D;
+      border-top: 1.5em solid #4D4D4D;
+      display: inline-block;
+      padding: 0em;
+      float: left;
+      cursor: pointer;
+      font-size: 0.5em;
+    }
+
+.keen-c3-legend-pagination-icons .right {
+      -ms-transform: rotate(-90deg);
+          transform: rotate(-90deg);
+      -webkit-transform: rotate(-90deg);
+    }
+
+.keen-c3-legend-pagination-icons .left {
+      -ms-transform: rotate(90deg);
+          transform: rotate(90deg);
+      -webkit-transform: rotate(90deg);
+    }
+
+.keen-c3-legend-pagination-icons .up {
+      -ms-transform: rotate(-180deg);
+          transform: rotate(-180deg);
+      -webkit-transform: rotate(-180deg);
+      margin-top: 0.1em;
+    }
+
+.keen-c3-legend-pagination-icons .down {
+      margin-right: 0.1em;
+    }
 
 .keen-c3-legend-label-overlay {
-  background: color(#FFFFFF alpha(-10%));
-  background: color(#FFFFFF alpha(-10%));
-  background: color(var(--white) alpha(-10%));
-  -webkit-box-shadow: 0 1px 1px color(#1A1A1A alpha(-90%));
-          box-shadow: 0 1px 1px color(#1A1A1A alpha(-90%));
-  -webkit-box-shadow: 0 1px 1px color(#1A1A1A alpha(-90%));
-  -webkit-box-shadow: 0 1px 1px color(var(--black) alpha(-90%));
-          box-shadow: 0 1px 1px color(#1A1A1A alpha(-90%));
-          box-shadow: 0 1px 1px color(var(--black) alpha(-90%));
-  font-family: 'Gotham Rounded SSm A', 'Gotham Rounded SSm B', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  font-family: 'Gotham Rounded SSm A', 'Gotham Rounded SSm B', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  font-family: var(--font-family-primary);
-  font-size: 11px;
-  padding: 10px;
+  font-size: 1em;
+  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.9);
+  -webkit-box-shadow: 0 1px 1px rgba(26, 26, 26, 0.09999999999999998);
+          box-shadow: 0 1px 1px rgba(26, 26, 26, 0.09999999999999998);
+  box-shadow: 0 1px 1px rgba(26, 26, 26, 0.09999999999999998);
+  padding: 0.6em;
+  margin-top: 1.5em;
   position: absolute;
   word-wrap: break-word;
-  z-index: 2;
-}
-
-.keen-c3-legend-label-overlay-pointer {
-  border-color: transparent transparent #FFFFFF transparent;
-  border-color: transparent transparent #FFFFFF transparent;
-  border-color: transparent transparent var(--white) transparent;
-  border-style: solid;
-  border-width: 0 10px 10px 10px;
-  height: 0;
-  position: absolute;
-  right: 90px;
-  top: -10px;
-  width: 0;
+  pointer-events: none;
+  z-index: 22;
 }
 
 /*
@@ -1547,105 +1737,98 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
   z-index: 1;
 }
 
-#keen-explorer :root{
-  bump-size: 3px;
-  tiny-size: 8px;
-  small-size: 15px;
-  medium-size: 25px;
-}
-
 #keen-explorer .no-margin {
   margin: 0;
 }
 
 #keen-explorer .margin-top-bump {
-  margin-top: var(bump-size);
-  margin-top: var(bump-size);
+  margin-top: 3px;
+  margin-top: 3px;
 }
 
 #keen-explorer .margin-bottom-bump {
-  margin-bottom: var(bump-size);
-  margin-bottom: var(bump-size);
+  margin-bottom: 3px;
+  margin-bottom: 3px;
 }
 
 #keen-explorer .margin-right-bump {
-  margin-right: var(bump-size);
-  margin-right: var(bump-size);
+  margin-right: 3px;
+  margin-right: 3px;
 }
 
 #keen-explorer .margin-left-bump {
-  margin-left: var(bump-size);
-  margin-left: var(bump-size);
+  margin-left: 3px;
+  margin-left: 3px;
 }
 
 #keen-explorer .margin-top-tiny {
-  margin-top: var(tiny-size);
-  margin-top: var(tiny-size);
+  margin-top: 8px;
+  margin-top: 8px;
 }
 
 #keen-explorer .margin-bottom-tiny {
-  margin-bottom: var(tiny-size);
-  margin-bottom: var(tiny-size);
+  margin-bottom: 8px;
+  margin-bottom: 8px;
 }
 
 #keen-explorer .margin-right-tiny {
-	margin-right: var(tiny-size);
-	margin-right: var(tiny-size);
+	margin-right: 8px;
+	margin-right: 8px;
 }
 
 #keen-explorer .margin-left-tiny {
-	margin-left: var(tiny-size);
-	margin-left: var(tiny-size);
+	margin-left: 8px;
+	margin-left: 8px;
 }
 
 #keen-explorer .padding-tiny {
-  padding: var(tiny-size);
-  padding: var(tiny-size);
+  padding: 8px;
+  padding: 8px;
 }
 
 #keen-explorer .padding-right-tiny {
-  padding-right: var(tiny-size);
-  padding-right: var(tiny-size);
+  padding-right: 8px;
+  padding-right: 8px;
 }
 
 #keen-explorer .margin-top-small {
-  margin-top: var(small-size);
-  margin-top: var(small-size);
+  margin-top: 15px;
+  margin-top: 15px;
 }
 
 #keen-explorer .margin-bottom-small {
-  margin-bottom: var(small-size);
-  margin-bottom: var(small-size);
+  margin-bottom: 15px;
+  margin-bottom: 15px;
 }
 
 #keen-explorer .margin-left-small {
-  margin-left: var(small-size);
-  margin-left: var(small-size);
+  margin-left: 15px;
+  margin-left: 15px;
 }
 
 #keen-explorer .margin-right-small {
-  margin-right: var(small-size);
-  margin-right: var(small-size);
+  margin-right: 15px;
+  margin-right: 15px;
 }
 
 #keen-explorer .margin-top-medium {
-  margin-top: var(medium-size);
-  margin-top: var(medium-size);
+  margin-top: 25px;
+  margin-top: 25px;
 }
 
 #keen-explorer .margin-bottom-medium {
-  margin-bottom: var(medium-size);
-  margin-bottom: var(medium-size);
+  margin-bottom: 25px;
+  margin-bottom: 25px;
 }
 
 #keen-explorer .margin-right-medium {
-  margin-right: var(medium-size);
-  margin-right: var(medium-size);
+  margin-right: 25px;
+  margin-right: 25px;
 }
 
 #keen-explorer .margin-left-medium {
-  margin-left: var(medium-size);
-  margin-left: var(medium-size);
+  margin-left: 25px;
+  margin-left: 25px;
 }
 
 #keen-explorer .no-radius-left {
@@ -2880,6 +3063,11 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
         max-width: 300px;
 }
 
+#keen-explorer .visualization .keen-dataviz{
+  width: 100%;
+  height: 300px;
+}
+
 #keen-explorer .code-sample-panel {
   background-color: rgba(0,0,0,.25);
   border-bottom: 1px solid #a7a7a7;
@@ -2977,11 +3165,6 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
   font-size: 12px;
 }
 
-#keen-explorer :root{
-  active-color: #536778;
-  arrow-size: 5px;
-}
-
 #keen-explorer .funnel-builder .funnel-step {
     padding: 0 5px;
   }
@@ -3017,8 +3200,8 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
     text-align: center;
     font-weight: bold;
     border-radius: 100px;
-    color: var(active-color);
-    color: var(active-color);
+    color: #536778;
+    color: #536778;
     margin-right: 10px;
   }
 
@@ -3060,23 +3243,23 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
 
 #keen-explorer .funnel-builder .step-move-btns .up .arrow {
       bottom: 6px;
-      border-left: var(arrow-size) solid transparent;
-      border-left: var(arrow-size) solid transparent;
-      border-right: var(arrow-size) solid transparent;
-      border-right: var(arrow-size) solid transparent;
-      border-bottom: var(arrow-size) solid #FFF;
-      border-bottom: var(arrow-size) solid #FFF;
+      border-left: 5px solid transparent;
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
+      border-right: 5px solid transparent;
+      border-bottom: 5px solid #FFF;
+      border-bottom: 5px solid #FFF;
 
     }
 
 #keen-explorer .funnel-builder .step-move-btns .down .arrow {
       top: 6px;
-      border-left: var(arrow-size) solid transparent;
-      border-left: var(arrow-size) solid transparent;
-      border-right: var(arrow-size) solid transparent;
-      border-right: var(arrow-size) solid transparent;
-      border-top: var(arrow-size) solid #FFF;
-      border-top: var(arrow-size) solid #FFF;
+      border-left: 5px solid transparent;
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
+      border-right: 5px solid transparent;
+      border-top: 5px solid #FFF;
+      border-top: 5px solid #FFF;
     }
 
 #keen-explorer .funnel-builder a.add-step {
@@ -3099,8 +3282,8 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
   }
 
 #keen-explorer .funnel-builder .funnel-step.active .step-header {
-      background: var(active-color);
-      background: var(active-color);
+      background: #536778;
+      background: #536778;
       border-bottom: none;
     }
 

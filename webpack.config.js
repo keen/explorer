@@ -3,6 +3,14 @@ const webpack = require('webpack');
 
 const fileName = 'keen-explorer';
 
+let definePluginVars = {};
+if (process.env.NODE_ENV === 'development') {
+  const demoConfig = require('../demo-config');
+  definePluginVars = {
+    webpackKeenGlobals: JSON.stringify({ demoConfig })
+  };
+}
+
 module.exports = {
   entry: ['./lib/js/app/app.js'],
 
@@ -67,7 +75,7 @@ module.exports = {
   // stats: 'verbose',
 
   plugins: [
-    new webpack.DefinePlugin({}),
+    new webpack.DefinePlugin(definePluginVars),
   ],
 
   mode: process.env.NODE_ENV,
