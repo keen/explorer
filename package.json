@@ -24,12 +24,13 @@
     "update_docs": "node ./node_modules/replace-in-file/bin/cli.js --configFile=replace-config.js"
   },
   "dependencies": {
+    "c3": "^0.6.6",
     "classnames": "2.1.2",
     "flux": "^2.0.3",
     "jquery": "^2.1.4",
     "json-stable-stringify": "1.0.0",
     "keen-analysis": "^3.0.4",
-    "keen-dataviz": "^3.0.4",
+    "keen-dataviz": "^3.0.8",
     "keymirror": "~0.1.0",
     "lodash": "^4.0.0",
     "moment": "^2.7.0",
