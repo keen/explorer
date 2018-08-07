@@ -10,13 +10,22 @@ npm install keen-explorer --save
 ```javascript
 import KeenExplorer from 'keen-explorer';
 
-const myExplorer = new KeenExplorer('#keen-explorer-html-element') // querySelector
-  .client({
+const myExplorer = new KeenExplorer({
+  container: '#keen-explorer-html-element', // querySelector
+  persistence: true, // optional: ability to save queries etc
+
+  keenAnalysisOptions: {
+    // configuration for KeenAnalysis
+    // https://github.com/keen/keen-analysis.js
     projectId: 'PROJECT_ID',
     masterKey: 'MASTER_KEY'
-  })
-  .persistence(true)
-  .fetch();
+  },
+
+  keenDatavizOptions: {
+    // OPTIONAL configuration for KeenDataviz
+    // https://github.com/keen/keen-dataviz.js
+  }
+});
 ```
 
 [Check out the demo here.](http://keen.github.io/explorer/) The Keen IO Explorer is an open source point-and-click interface for querying and visualizing your event data. It's maintained by the team at [Keen IO](https://keen.io/).
@@ -37,14 +46,23 @@ const myExplorer = new KeenExplorer('#keen-explorer-html-element') // querySelec
 <body>
   <div id="keen-explorer"></div>
   <script>
-  const myExplorer = new KeenExplorer('#keen-explorer')
-  .client({
-    projectId: 'PROJECT_ID',
-    masterKey: 'MASTER_KEY'
-  })
-  .persistence(true)
-  .fetch();
-</script>
+  const myExplorer = new KeenExplorer({
+    container: '#keen-explorer-html-element', // querySelector
+    persistence: true, // optional: ability to save queries etc
+
+    keenAnalysisOptions: {
+      // configuration for KeenAnalysis
+      // https://github.com/keen/keen-analysis.js
+      projectId: 'PROJECT_ID',
+      masterKey: 'MASTER_KEY'
+    },
+
+    keenDatavizOptions: {
+      // OPTIONAL configuration for KeenDataviz
+      // https://github.com/keen/keen-dataviz.js
+    }
+  });
+  </script>
 </body>
 ```
 

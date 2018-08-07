@@ -30,7 +30,7 @@
     "jquery": "^2.1.4",
     "json-stable-stringify": "1.0.0",
     "keen-analysis": "^3.0.4",
-    "keen-dataviz": "^3.0.8",
+    "keen-dataviz": "^3.0.9",
     "keymirror": "~0.1.0",
     "lodash": "^4.0.0",
     "moment": "^2.7.0",
