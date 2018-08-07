@@ -22,10 +22,23 @@
         // app.render();
     });
 */
-  window.explorer = new KeenExplorer('#explorer')
-    .client(keenGlobals.demoConfig)
-    .persistence(true)
-    .fetch();
+
+window.explorer = new KeenExplorer({
+  container: '#explorer',
+  keenAnalysisOptions: {
+    ...keenGlobals.demoConfig,
+    cache: {
+      maxAge: 30 * 1000
+    }
+  },
+  keenDatavizOptions: {
+    title: 'New Customers per Week',
+    showTitle: true,
+    colors: ['#000', '#ccc']
+  },
+  persistence: true
+});
+
   // window.startExplorerEventTracking();
 
   </script>
