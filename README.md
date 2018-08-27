@@ -13,14 +13,13 @@ import KeenExplorer from 'keen-explorer';
 const myExplorer = new KeenExplorer('#keen-explorer-html-element')
   .client({
     projectId: 'PROJECT_ID',
-    readKey: 'READ_KEY',
-    masterKey: 'MASTER_KEY'
+    readKey: 'READ_KEY'
   })
   .persistence(true)
   .fetch();
 ```
 
-[Check out the demo here.](http://keen.github.io/explorer/) The Keen IO Explorer is an open source point-and-click interface for querying and visualizing your event data. It's maintained by the team at [Keen IO](https://keen.io/).
+[Check out the demo here.](https://keen.github.io/explorer/) The Keen IO Explorer is an open source point-and-click interface for querying and visualizing your event data. It's maintained by the team at [Keen IO](https://keen.io/).
 
 Read on for instructions on how to use the Explorer on your website or in your web app and how to get set up to develop with the Explorer.
 
@@ -67,8 +66,7 @@ Somewhere on the page that you want to show Explorer you'll need to configure a 
   const myExplorer = new KeenExplorer('#keen-explorer')
     .client({
       projectId: 'PROJECT_ID',
-      readKey: 'READ_KEY',
-      masterKey: 'MASTER_KEY'
+      readKey: 'READ_KEY'
     })
     .persistence(true)
     .fetch();
@@ -140,7 +138,7 @@ Screenshots encouraged! Would an animated GIF be more informative than a screens
 
 These are the major technologies used in the project.
 
-* [ReactJS](http://facebook.github.io/react/) for UI Components & input handling.
-* [Flux](http://facebook.github.io/flux/) for help managing the data model layer.
-* [Bootstrap](http://getbootstrap.com/) for our CSS framework.
+* [ReactJS](https://facebook.github.io/react/) for UI Components & input handling.
+* [Flux](https://facebook.github.io/flux/) for help managing the data model layer.
+* [Bootstrap](https://getbootstrap.com/) for our CSS framework.
 * [NPM](https://www.npmjs.org/) for dependency management.
