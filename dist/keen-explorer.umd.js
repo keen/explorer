@@ -690,7 +690,7 @@ var ExplorerUtils = {
       queryOptions = 'saved_query_name: \'' + explorer.query_name + '\'';
     }
 
-    var datavizConfig = explorerConfig.keenDatavizOptions;
+    var datavizConfig = explorerConfig && explorerConfig.keenDatavizOptions;
     var datavizOptionsString = '';
     if (datavizConfig) {
       Object.keys(datavizConfig).forEach(function (key) {
@@ -699,7 +699,7 @@ var ExplorerUtils = {
       });
     }
 
-    var analysisConfig = explorerConfig.keenAnalysisOptions;
+    var analysisConfig = explorerConfig && explorerConfig.keenAnalysisOptions;
     var analysisOptionsString = 'projectId: \'' + client.config.projectId + '\',\n    readKey: ' + (client.config.readKey ? '\'' + client.config.readKey + '\'' : undefined) + ',\n    masterKey: ' + (client.config.masterKey ? '\'' + client.config.masterKey + '\'' : undefined);
     if (analysisConfig) {
       analysisOptionsString = '';
