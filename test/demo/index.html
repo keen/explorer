@@ -7,10 +7,10 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
   <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet">
   <link rel="stylesheet" href="keen-explorer.css">
-  <script src="demo-config.js"></script>
   <script src="keen-explorer.umd.js"></script>
 </head>
 <body>
+
   <div id="explorer" style="padding: 20px;"></div>
   <script type="text/javascript">
   /*
@@ -23,13 +23,20 @@
         // app.render();
     });
 */
-  window.Keen.ready(function() {
-  window.explorer = new KeenExplorer('#explorer')
-    .client(demoConfig)
-    .persistence(true)
-    .fetch();
-  window.startExplorerEventTracking();
-  });
+
+window.explorer = new KeenExplorer({
+  container: '#explorer',
+  keenAnalysisOptions: {
+    ...keenGlobals.demoConfig
+  },
+  keenDatavizOptions: {
+    colors: ['#000', '#ccc']
+  },
+  persistence: true
+});
+
+  // window.startExplorerEventTracking();
+
   </script>
 </body>
 </html>

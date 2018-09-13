@@ -205,3 +205,9 @@ table.data-table {
     }
   }
 }
+
+.visualization .keen-dataviz{
+  width: 100%;
+  height: 300px;
+  overflow: scroll;
+}

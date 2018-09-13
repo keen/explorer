@@ -3,13 +3,13 @@
     ["env", {
       "production": {
         "targets": {
-          "browsers": ["last 2 versions", "safari >= 7"]
+          "browsers": ["last 3 versions", "safari >= 7"]
         },
         "modules": false,
       },
       "development": {
         "targets": {
-          "browsers": ["last 2 versions", "safari >= 7"]
+          "browsers": ["last 3 versions", "safari >= 7"]
         },
         "modules": false,
       },
@@ -18,5 +18,6 @@
       }
     }],
     "react"
-  ]
+  ],
+  "plugins": ["transform-object-rest-spread"]
 }
