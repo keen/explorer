@@ -20,6 +20,13 @@ describe('components/explorer/visualization/keen_viz', () => {
 
   beforeEach(() => {
     model = TestHelpers.createExplorerModel();
+    model.response = {
+      query: {},
+      result: [{
+        a: 1,
+        b: 2
+      }]
+    };
     dataviz = TestHelpers.createDataviz();
     exportToCsv = jest.fn();
     component = TestUtils.renderIntoDocument(<KeenViz model={model} dataviz={dataviz} exportToCsv={exportToCsv}/>);

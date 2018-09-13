@@ -97,7 +97,7 @@ module.exports = {
       masterKey: 'masterKey',
       writeKey: 'writeKey',
       readKey: 'readKey',
-      requestType: 'xhr'
+    //  requestType: 'xhr'
     };
   },
 

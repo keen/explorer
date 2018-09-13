@@ -841,11 +841,6 @@ describe('utils/ExplorerUtils', () => {
         };
       });
 
-      it('analysis_type', () => {
-        const found = ExplorerUtils.getSdkExample(explorer, client).match('analysis_type');
-        expect(found).toBe(null);
-      });
-
       it('chart_type', () => {
         const found = ExplorerUtils.getSdkExample(explorer, client).match('chart_type');
         expect(found).toBe(null);

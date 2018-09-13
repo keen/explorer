@@ -30,7 +30,7 @@ describe('components/explorer/query_builder/group_by_field', () => {
 
   describe('with a single group by', () => {
     it('shows one input', () => {
-      expect($R(component).find('.group-by').components).toHaveLength(1);
+      expect($R(component).find('.group-by').components).toHaveLength(2);
     });
     it('shows the correct toggle button text', () => {
       expect($R(component).find('a').components[1].text).toEqual("Group by a second property");
@@ -43,7 +43,7 @@ describe('components/explorer/query_builder/group_by_field', () => {
       });
     })
     it('shows two inputs', () => {
-      expect($R(component).find('.group-by').components).toHaveLength(2);
+      expect($R(component).find('.group-by').components).toHaveLength(3);
     });
     it('shows the correct toggle button text', () => {
       expect($R(component).find('a').components[1].text).toEqual("Remove second property");

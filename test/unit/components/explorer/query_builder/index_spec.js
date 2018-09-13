@@ -67,7 +67,7 @@ describe('components/explorer/query_builder/index', () => {
     });
 
     it('has the right number of ReactSelect child components', () => {
-      expect(TestUtils.scryRenderedComponentsWithType(component, ReactSelect)).toHaveLength(4);
+      expect(TestUtils.scryRenderedComponentsWithType(component, ReactSelect)).toHaveLength(5);
     });
 
     it('has the right number of ReactSelect child components when the analysis type is extraction', () => {
