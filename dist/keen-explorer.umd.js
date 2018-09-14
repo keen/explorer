@@ -13100,11 +13100,10 @@ var KeenViz = _react2.default.createClass({
     if (this.props.model.metadata.visualization.chart_type) {
       type = this.props.model.metadata.visualization.chart_type;
     }
-
     var results = this.props.model.response;
-    if (Array.isArray(results.result) && results.result[0].timeframe && results.result[0].timeframe.start && !this.props.model.response.dateConvertedToTimezone) {
+    if (Array.isArray(results.result) && results.result[0].timeframe && results.result[0].timeframe.start && !this.props.model.response.dateConvertedToTimezone && type !== 'table') {
       this.props.model.response.dateConvertedToTimezone = true;
-      var dateFormat = 'YYYY-MM-DDTHH:mm:ss';
+      var dateFormat = 'YYYY-MM-DDTHH:mm:ss.000Z';
       results.result.forEach(function (result, key) {
         results.result[key].timeframe.start = (0, _momentTimezone2.default)(result.timeframe.start).tz(results.query.timezone).format(dateFormat);
         results.result[key].timeframe.end = (0, _momentTimezone2.default)(result.timeframe.end).tz(results.query.timezone).format(dateFormat);
@@ -13146,6 +13145,8 @@ var KeenViz = _react2.default.createClass({
   },
 
   render: function render() {
+    var _this = this;
+
     var exportBtn;
     if (_ChartTypeUtils2.default.isTableChartType(this.props.model.metadata.visualization.chart_type)) {
       exportBtn = _react2.default.createElement(
@@ -13153,7 +13154,9 @@ var KeenViz = _react2.default.createClass({
         { className: 'btn btn-default btn-download-csv',
           role: 'export-table',
           type: 'button',
-          onClick: this.props.exportToCsv },
+          onClick: function onClick() {
+            return _this.props.exportToCsv(_this.datavizInstance);
+          } },
         'Download CSV'
       );
     }
@@ -13459,8 +13462,11 @@ var Visualization = _react2.default.createClass({
     _AppDispatcher2.default.unregister(this.dispatcherToken);
   },
 
-  exportToCsv: function exportToCsv() {
+  exportToCsv: function exportToCsv(dataviz) {
     var data = this.dataviz.dataset.matrix;
+    if (dataviz) {
+      data = dataviz.dataset.matrix;
+    }
     var filename = this.props.model.query_name || 'untitled-query';
     _DataUtils2.default.exportToCsv(data, filename);
   },
