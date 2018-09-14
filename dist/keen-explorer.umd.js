@@ -13464,7 +13464,7 @@ var Visualization = _react2.default.createClass({
 
   exportToCsv: function exportToCsv(dataviz) {
     var data = this.dataviz.dataset.matrix;
-    if (dataviz) {
+    if (dataviz && dataviz.dataset && dataviz.dataset.matrix) {
       data = dataviz.dataset.matrix;
     }
     var filename = this.props.model.query_name || 'untitled-query';
