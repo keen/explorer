@@ -7786,7 +7786,7 @@ var Interval = function (_React$Component) {
 
       return _react2.default.createElement(
         'div',
-        { className: 'field-component timeframe' },
+        { className: 'field-component timeframe interval-margin-top' },
         _react2.default.createElement(
           _fields_toggle2.default,
           { ref: 'interval-toggle',
