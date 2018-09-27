@@ -116,7 +116,6 @@
 	border-color: @hasFieldsCountBgColor;
 
 	h5, &:hover h5, &:focus h5 {
-		color: #FFF;
 		padding-left: 0;
 	}
 

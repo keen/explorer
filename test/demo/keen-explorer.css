@@ -909,7 +909,7 @@
           box-sizing: border-box;
   font-family: 'Gotham Rounded SSm A', 'Gotham Rounded SSm B', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-family: 'Gotham Rounded SSm A', 'Gotham Rounded SSm B', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  height: inherit;
+  height: 100%;
 }
 
 .keen-dataviz .partial-interval-indicator{
@@ -1136,7 +1136,6 @@
 }
 
 .keen-dataviz-rendering{
-  xheight: inherit;
   display: -ms-flexbox;
   display: flex;
   -ms-flex-pack: center;
@@ -1150,8 +1149,6 @@
 .keen-dataviz-rendering .c3-chart{
     display: -ms-flexbox;
     display: flex;
-    -ms-flex-positive: 2;
-        flex-grow: 2;
     -ms-flex-item-align: center;
         align-self: center;
     -ms-flex-order: 1;
@@ -1176,8 +1173,6 @@
   display: flex;
   position: relative;
   top: 0;
-  -ms-flex-positive: 1;
-      flex-grow: 1;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
 }
@@ -1283,7 +1278,7 @@
   }
 
 .keen-c3-legend-vertical-items .legend-item{
-      width: 100%;
+      width: 8em;
     }
 
 .keen-c3-legend-horizontal-items{
@@ -1294,6 +1289,7 @@
   }
 
 .keen-c3-legend-horizontal-items .legend-item{
+      width: 6em;
       margin: 0 0.25em;
     }
 
@@ -1306,6 +1302,7 @@
     white-space: nowrap;
     -o-text-overflow: ellipsis;
        text-overflow: ellipsis;
+    font-size: 0.8em;
   }
 
 .keen-c3-legend .legend-item > * {
@@ -2258,7 +2255,6 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
 }
 
 #keen-explorer .fields-toggle.has-fields-count h5, #keen-explorer .fields-toggle.has-fields-count:hover h5, #keen-explorer .fields-toggle.has-fields-count:focus h5, #keen-explorer .fields-toggle.open.has-fields-count h5, #keen-explorer .fields-toggle.open.has-fields-count:hover h5, #keen-explorer .fields-toggle.open.has-fields-count:focus h5 {
-		color: #FFF;
 		padding-left: 0;
 	}
 
@@ -3371,6 +3367,10 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
 #keen-explorer .funnel-builder .funnel-step.active .step-body {
       padding: 0 15px;
     }
+
+#keen-explorer div.interval-margin-top{
+  margin: 0 0 10px;
+}
 
 #keen-explorer .timeframe {
   margin: 20px 0 10px;
