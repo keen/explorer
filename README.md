@@ -39,8 +39,8 @@ const myExplorer = new KeenExplorer({
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
   <!-- Explorer Assets -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/keen-explorer@4/dist/keen-explorer.min.css">
-  <script crossorigin src="https://cdn.jsdelivr.net/npm/keen-explorer@4/dist/keen-explorer.bundle.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/keen-explorer@5/dist/keen-explorer.min.css">
+  <script crossorigin src="https://cdn.jsdelivr.net/npm/keen-explorer@5/dist/keen-explorer.bundle.min.js"></script>
 </head>
 
 <body>
