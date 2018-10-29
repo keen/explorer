@@ -17,11 +17,10 @@
     "build:css": "node_modules/postcss-cli/bin/postcss lib/styles/base.css -o dist/keen-explorer.css --config postcss.config.js",
     "build:css:min": "OPTIMIZE_MINIMIZE=1 node_modules/postcss-cli/bin/postcss lib/styles/base.css -o dist/keen-explorer.min.css --config postcss.config.js",
     "preversion": "npm run build && npm run test",
-    "version": "npm run update_docs && git add .",
+    "version": "git add .",
     "postversion": "git push && git push --tags",
     "profile": "webpack --profile --json > stats.json",
-    "analyze": "webpack-bundle-analyzer stats.json /dist",
-    "update_docs": "node ./node_modules/replace-in-file/bin/cli.js --configFile=replace-config.js"
+    "analyze": "webpack-bundle-analyzer stats.json /dist"
   },
   "dependencies": {
     "c3": "^0.6.6",
