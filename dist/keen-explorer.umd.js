@@ -5169,11 +5169,11 @@ var ChartTypeUtils = {
   getChartTypeOptions: function getChartTypeOptions(query) {
     var dataTypes = {
       'singular': ['metric'],
-      'categorical': ['pie', 'bar', 'donut', 'table'],
-      'cat-interval': ['area', 'bar', 'line', 'spline', 'area-spline', 'step', 'area-step', 'table'],
-      'cat-ordinal': ['area', 'bar', 'line', 'spline', 'area-spline', 'step', 'area-step', 'table'],
+      'categorical': ['pie', 'bar', 'horizontal-bar', 'donut', 'table'],
+      'cat-interval': ['area', 'bar', 'horizontal-bar', 'line', 'spline', 'area-spline', 'step', 'area-step', 'table'],
+      'cat-ordinal': ['area', 'bar', 'horizontal-bar', 'line', 'spline', 'area-spline', 'step', 'area-step', 'table'],
       'chronological': ['area', 'bar', 'line', 'spline', 'area-spline', 'step', 'area-step', 'table'],
-      'cat-chronological': ['area', 'bar', 'line', 'spline', 'area-spline', 'step', 'area-step', 'table'],
+      'cat-chronological': ['area', 'bar', 'horizontal-bar', 'line', 'spline', 'area-spline', 'step', 'area-step', 'table'],
       'nominal': ['table'],
       'extraction': ['table']
     };

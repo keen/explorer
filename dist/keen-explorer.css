@@ -1111,29 +1111,59 @@
 
 /* C3 CUSTOMIZATIONS */
 
-.keen-dataviz .c3 svg,
-.keen-dataviz .c3-tooltip-container {
-}
+.keen-dataviz .c3-axis-y path {
+       display: none;
+    }
+
+.keen-dataviz .c3-axis-y .tick line{
+      display: none;
+    }
+
+.keen-dataviz .tick line, .keen-dataviz path.domain{
+    stroke-opacity: 0.2;
+  }
+
+.keen-dataviz .c3-ygrid{
+    stroke-dasharray: none;
+    stroke-opacity: 0.1;
+  }
+
+.keen-dataviz .c3-ygrids :nth-child(even) {
+    display: none;
+  }
+
+.keen-dataviz .c3-tooltip {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    padding:  0.2em;
+    border-radius: 0.2em;
+    -webkit-box-shadow: none;
+            box-shadow: none;
+    border-collapse: separate;
+  }
+
+.keen-dataviz .c3-tooltip th {
+      text-align: center;
+    }
+
+.keen-dataviz .c3-tooltip table, .keen-dataviz .c3-tooltip th, .keen-dataviz .c3-tooltip tr, .keen-dataviz .c3-tooltip td {
+      border: none;
+      background: none;
+      font-size: 0.9em;
+    }
 
 .keen-dataviz .c3-tooltip-container th {
-  max-width: 50%;
-  word-wrap: break-word;
-  color: #FFFFFF;
-  color: #FFFFFF;
-  background: #1A1A1A;
-  background: #1A1A1A;
-}
+      max-width: 50%;
+      word-wrap: break-word;
+      color: #1A1A1A;
+      color: #1A1A1A;
+      background: none;
+      font-weight: normal;
+    }
 
 .keen-dataviz .c3-tooltip-container td {
-  max-width: 50%;
-  word-wrap: break-word;
-}
-
-.keen-dataviz .c3-tooltip-container td.name span {
-}
-
-.keen-dataviz .c3-chart-arc text {
-}
+      max-width: 50%;
+      word-wrap: break-word;
+    }
 
 .keen-dataviz-rendering{
   display: -ms-flexbox;
@@ -1315,6 +1345,8 @@
       height: 100%;
       margin-right: 0.5em;
       pointer-events: none;
+      -ms-flex: none;
+          flex: none;
     }
 
 .keen-c3-legend .legend-item-text{
