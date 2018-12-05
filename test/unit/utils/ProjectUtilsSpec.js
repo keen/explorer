@@ -11,17 +11,18 @@ describe('utils/ProjectUtils', () => {
   describe('getConstant', () => {
     it('should return the a project constant', () => {
       const expectedAnalyisTypes = [
-        'sum',
+        'average',
         'count',
         'count_unique',
-        'minimum',
-        'maximum',
-        'average',
-        'select_unique',
         'extraction',
-        'percentile',
+        'funnel',
+        'maximum',
         'median',
-        'funnel'
+        'minimum',
+        'percentile',
+        'select_unique',
+        'standard_deviation',
+        'sum'
       ];
       expect(ProjectUtils.getConstant('ANALYSIS_TYPES')).toEqual(expectedAnalyisTypes);
     });

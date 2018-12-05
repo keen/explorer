@@ -1100,12 +1100,16 @@ var ExplorerActions = {
       }
       var models = [];
 
-      var sortAlpha = function sortAlpha(a, b) {
-        var textA = (a.query_name || a.name || '').toUpperCase();
-        var textB = (b.query_name || b.name || '').toUpperCase();
-        return textA < textB ? -1 : textA > textB ? 1 : 0;
-      };
-      resp.sort(sortAlpha);
+      if (resp.length > 0) {
+        var sortAlpha = function sortAlpha(a, b) {
+          var textA = (a.query_name || a.name || '').toUpperCase();
+          var textB = (b.query_name || b.name || '').toUpperCase();
+          return textA < textB ? -1 : textA > textB ? 1 : 0;
+        };
+
+        ;
+        resp.sort(sortAlpha);
+      }
 
       resp.forEach(function (model) {
         var formattedModel = _ExplorerUtils2.default.formatQueryParams(model);
@@ -14654,8 +14658,12 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var KeenExplorer = exports.KeenExplorer = function KeenExplorer(options) {
   var tempId = _FormatUtils2.default.generateTempId();
   this.appDispatcher = _AppDispatcher2.default;
+  var params = _QueryStringUtils2.default.getQueryAttributes();
+  if (params && params.query && params.query.limit) {
+    params.query.limit = parseInt(params.query.limit);
+  }
   this.config = {
-    params: _QueryStringUtils2.default.getQueryAttributes(),
+    params: params,
     persistence: null
   };
   if (typeof options === 'string') {
