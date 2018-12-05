@@ -19,8 +19,8 @@
     "preversion": "npm run build && npm run test",
     "version": "git add .",
     "postversion": "git push && git push --tags",
-    "profile": "webpack --profile --json > stats.json",
-    "analyze": "webpack-bundle-analyzer stats.json /dist"
+    "profile": "BUNDLE=1 OPTIMIZE_MINIMIZE=1 webpack --profile --json > stats.json",
+    "analyze": "BUNDLE=1 OPTIMIZE_MINIMIZE=1 webpack-bundle-analyzer stats.json dist"
   },
   "dependencies": {
     "c3": "^0.6.6",
