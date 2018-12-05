@@ -65,31 +65,4 @@ describe('KeenExplorer App', () => {
 
     const explorerApp = new KeenExplorer('#explorer').client(clientConfig);
   });
-
-  it('runs a query if the querystring has query attrs in it', (done) => {
-    XHRmock.get(
-      new RegExp(analysisClient.url('projectId')),
-      (req, res) => {
-        return res.status(200).body(JSON.stringify([]));
-      }
-    );
-
-    XHRmock.post(
-      new RegExp(analysisClient.url('projectId', 'queries')),
-      (req, res) => {
-        expect(req.header('Content-Type')).toEqual('application/json');
-        // expect(req.header('Authorization')).toEqual(clientConfig.readKey);
-        done();
-        return res.status(200).body(JSON.stringify([]));
-      }
-    );
-
-    const explorerApp = new KeenExplorer({
-        container: '#explorer',
-        persistence: true
-      })
-      .client(clientConfig);
-
-  });
-
 });

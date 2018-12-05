@@ -1099,11 +1099,10 @@ var ExplorerActions = {
         return;
       }
       var models = [];
-      console.log(resp);
 
       var sortAlpha = function sortAlpha(a, b) {
-        var textA = a.query_name.toUpperCase();
-        var textB = b.query_name.toUpperCase();
+        var textA = (a.query_name || a.name || '').toUpperCase();
+        var textB = (b.query_name || b.name || '').toUpperCase();
         return textA < textB ? -1 : textA > textB ? 1 : 0;
       };
       resp.sort(sortAlpha);
