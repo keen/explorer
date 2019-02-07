@@ -1,3 +1,5 @@
+require('@babel/polyfill');
+
 const path = require('path');
 const webpack = require('webpack');
 
@@ -12,7 +14,7 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 module.exports = {
-  entry: ['./lib/js/app/app.js'],
+  entry: ['@babel/polyfill', './lib/js/app/app.js'],
 
   target: 'web',
 
@@ -53,6 +55,11 @@ module.exports = {
         test: /\.html$/,
         loader: 'html-loader',
       },
+
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader'],
+      },
     ],
 
   },
@@ -90,7 +97,6 @@ module.exports = {
 
   externals: !process.env.BUNDLE && process.env.NODE_ENV !== 'development' ? {
     classnames: true,
-    flux: true,
     'json-stable-stringify': true,
     'keen-analysis': true,
     'keen-dataviz': true,
@@ -102,11 +108,8 @@ module.exports = {
     'react-addons-test-utils': true,
     'react-dom': true,
     'react-highlight': true,
-    rquery: true,
     string: true,
-    jquery: 'jQuery',
   } : {
-    jquery: 'jQuery',
   },
 
 };

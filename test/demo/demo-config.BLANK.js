@@ -1,3 +1,6 @@
+// copy this file to the parent folder of /explorer
+// remove .BLANK from the filename
+
 const demoConfig = {
   projectId: 'YOUR_PROJECT_ID',
   readKey: 'YOUR_READ_KEY',

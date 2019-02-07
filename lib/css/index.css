@@ -4,6 +4,8 @@ body{
   font-family: Montserrat, Tahoma, Arial;
 }
 
-.a .b{
+.a{
+  .b{
     font-size:120px;
   }
+}
