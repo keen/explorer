@@ -14,7 +14,7 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 module.exports = {
-  entry: ['@babel/polyfill', './lib/js/app/app.js'],
+  entry: ['@babel/polyfill', './lib/js/index.js'],
 
   target: 'web',
 

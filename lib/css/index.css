@@ -9,3 +9,16 @@ body{
     font-size:120px;
   }
 }
+
+.label{
+  padding: 1rem 0 0.5rem;
+}
+
+button{
+  margin: 2rem 0 0;
+  padding: 1rem;
+}
+
+#keen-dataviz-container{
+  height: 300px;
+}
