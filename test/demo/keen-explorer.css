@@ -20,3 +20,149 @@ button{
 #keen-dataviz-container{
   height: 300px;
 }
+
+* {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.strong{
+  font-weight: bold;
+}
+
+.timeframe .tabs{
+    display:-ms-flexbox;
+    display:flex;
+  }
+
+.timeframe .tabs .tab{
+      -ms-flex: 1;
+          flex: 1;
+      padding: 1rem;
+      background: #fafafa;
+      cursor: pointer;
+      border: 1px solid #e8e8e8;
+      border-radius: 5px 5px 0 0;
+    }
+
+.timeframe .tabs .active{
+      background: #fff;
+      border-bottom: 1px solid #fff;
+    }
+
+.timeframe .tabContent{
+    padding: 1rem;
+    border: 1px solid #e8e8e8;
+    border-top: none;
+  }
+
+.timeframe .relative{
+    display:-ms-flexbox;
+    display:flex;
+  }
+
+.timeframe .relative .relativity, .timeframe .relative .inputNumber{
+      margin-right:0.5rem;
+    }
+
+.timeframe .relative .relativity{
+      width:100%;
+      max-width:12rem;
+    }
+
+.timeframe .relative .inputNumber{
+      font-size: 1rem;
+      padding: 0.5rem 0.6rem;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      font-weight: 400;
+    }
+
+.timeframe .relative .units{
+      width:100%;
+      max-width:12rem;
+    }
+
+.timeframe .description{
+    margin-top: 0.5rem;
+    padding: 1rem 0.5rem;
+    background: #fafafa;
+  }
+
+.timeframe .tabAbsolute .DateRangePickerInput_arrow{
+      display: none;
+    }
+
+.timeframe .tabAbsolute .DateInput {
+      width: 8rem;
+      background: none;
+    }
+
+.timeframe .tabAbsolute .DateInput_input {
+      padding: 0.5rem;
+      font-size: 1rem;
+      line-height: normal;
+      color:#000;
+      font-weight: normal;
+      border-radius: 5px;
+    }
+
+.timeframe .tabAbsolute .rc-time-picker-input{
+      font-size: 1rem;
+      line-height: normal;
+      font-weight: normal;
+      color: #000;
+      height: 2.4rem;
+      width: 7rem;
+      border-radius: 5px;
+    }
+
+.timeframe .tabAbsolute .line{
+      display: -ms-flexbox;
+      display: flex;
+      -ms-flex-align: center;
+          align-items: center;
+      margin: 0.5rem;
+    }
+
+.timeframe .tabAbsolute .line .title{
+        width: 4rem;
+      }
+
+.timeframe .tabAbsolute .line .SingleDatePicker {
+        margin-right: 0.5rem;
+      }
+
+.timeframe .tabAbsolute .line .SingleDatePickerInput__withBorder {
+        border-radius: 5px;
+        border: 1px solid #dbdbdb;
+      }
+
+.rc-time-picker-panel .rc-time-picker-panel-inner{
+    -webkit-box-shadow: none;
+            box-shadow: none;
+    border-radius: 5px;
+  }
+
+.rc-time-picker-panel .rc-time-picker-input{
+    font-size: 1rem;
+    line-height: normal;
+    font-weight: normal;
+    color: #000;
+    height: 2.4rem;
+    width: 8rem;
+    border-radius: 5px;
+  }
+
+.rc-time-picker-panel .rc-time-picker-panel-select{
+    font-size: 1rem;
+  }
+
+.rc-time-picker-panel .rc-time-picker-panel-select li{
+      height: 2rem;
+      line-height: 2rem;
+    }
+
+.rc-time-picker-panel .rc-time-picker-panel-input{
+    font-size: 1rem;
+  }

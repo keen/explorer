@@ -22,3 +22,130 @@ button{
 #keen-dataviz-container{
   height: 300px;
 }
+
+* {
+  box-sizing: border-box;
+}
+
+.strong{
+  font-weight: bold;
+}
+
+.timeframe{
+  .tabs{
+    display:flex;
+    .tab{
+      flex: 1;
+      padding: 1rem;
+      background: #fafafa;
+      cursor: pointer;
+      border: 1px solid #e8e8e8;
+      border-radius: 5px 5px 0 0;
+    }
+    .active{
+      background: #fff;
+      border-bottom: 1px solid #fff;
+    }
+  }
+  .tabContent{
+    padding: 1rem;
+    border: 1px solid #e8e8e8;
+    border-top: none;
+  }
+  .relative{
+    display:flex;
+    .relativity, .inputNumber{
+      margin-right:0.5rem;
+    }
+    .relativity{
+      width:100%;
+      max-width:12rem;
+    }
+    .inputNumber{
+      font-size: 1rem;
+      padding: 0.5rem 0.6rem;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      font-weight: 400;
+    }
+    .units{
+      width:100%;
+      max-width:12rem;
+    }
+  }
+  .description{
+    margin-top: 0.5rem;
+    padding: 1rem 0.5rem;
+    background: #fafafa;
+  }
+
+  .tabAbsolute{
+    .DateRangePickerInput_arrow{
+      display: none;
+    }
+    .DateInput {
+      width: 8rem;
+      background: none;
+    }
+    .DateInput_input {
+      padding: 0.5rem;
+      font-size: 1rem;
+      line-height: normal;
+      color:#000;
+      font-weight: normal;
+      border-radius: 5px;
+    }
+    .rc-time-picker-input{
+      font-size: 1rem;
+      line-height: normal;
+      font-weight: normal;
+      color: #000;
+      height: 2.4rem;
+      width: 7rem;
+      border-radius: 5px;
+    }
+    .line{
+      display: flex;
+      align-items: center;
+      margin: 0.5rem;
+      .title{
+        width: 4rem;
+      }
+      .SingleDatePicker {
+        margin-right: 0.5rem;
+      }
+      .SingleDatePickerInput__withBorder {
+        border-radius: 5px;
+        border: 1px solid #dbdbdb;
+      }
+    }
+  }
+
+
+}
+
+.rc-time-picker-panel{
+  .rc-time-picker-panel-inner{
+    box-shadow: none;
+    border-radius: 5px;
+  }
+  .rc-time-picker-input{
+    font-size: 1rem;
+    line-height: normal;
+    font-weight: normal;
+    color: #000;
+    height: 2.4rem;
+    width: 8rem;
+    border-radius: 5px;
+  }
+  .rc-time-picker-panel-select{
+    font-size: 1rem;
+    li{
+      height: 2rem;
+      line-height: 2rem;
+    }
+  }
+  .rc-time-picker-panel-input{
+    font-size: 1rem;
+  }
+}
