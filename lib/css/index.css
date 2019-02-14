@@ -1,17 +1,11 @@
 body{
-  margin: 3rem auto;
-  width: 50%;
+  margin: 0 auto;
+  width: 70%;
   font-family: Montserrat, Tahoma, Arial;
 }
 
-.a{
-  .b{
-    font-size:120px;
-  }
-}
-
-.label{
-  padding: 1rem 0 0.5rem;
+* {
+  box-sizing: border-box;
 }
 
 button{
@@ -19,39 +13,98 @@ button{
   padding: 1rem;
 }
 
-#keen-dataviz-container{
-  height: 300px;
+.label{
+  padding: 1rem 0 0.5rem;
 }
 
-* {
-  box-sizing: border-box;
+.keenExplorer{
+  display: flex;
+  .panel{
+    flex: 1;
+  }
+  .result{
+    flex: 1;
+  }
+  .keen-dataviz-container{
+    height: 300px;
+  }
+
+  .foldable{
+    margin-top: 0.5rem;
+    border: 1px solid #e8e8e8;
+    background: #fdfdfd;
+    padding: 0.5rem;
+    cursor: pointer;
+    border-radius: 5px;
+    &Active{
+      background: none;
+    }
+    .title{
+      padding: 0.5rem;
+      .icon{
+        float: right;
+      }
+    }
+    .content{
+      margin-top: 0.5rem;
+    }
+    .tabContent{
+      border: 0;
+    }
+  }
+
 }
 
-.strong{
-  font-weight: bold;
+.tabs{
+  display:flex;
+  .tab{
+    flex: 1;
+    padding: 1rem;
+    background: #fafafa;
+    cursor: pointer;
+    border: 1px solid #e8e8e8;
+    border-radius: 5px 5px 0 0;
+  }
+  .active{
+    background: #fff;
+    border-bottom: 1px solid #fff;
+  }
+}
+.tabContent{
+  padding: 1rem;
+  border: 1px solid #e8e8e8;
+  border-top: none;
+}
+
+.inputNumber{
+  font-size: 1rem;
+  padding: 0.5rem 0.6rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-weight: 400;
+}
+
+.interval{
+  .standardUnits{
+    width: 10rem;
+  }
+  .line{
+    display: flex;
+    align-items: center;
+    .title{
+      margin-right: 1rem;
+    }
+    .inputNumber{
+      width: 4rem;
+      margin-right: 0.5rem;
+    }
+    .timeUnits{
+      width: 10rem;
+    }
+  }
 }
 
 .timeframe{
-  .tabs{
-    display:flex;
-    .tab{
-      flex: 1;
-      padding: 1rem;
-      background: #fafafa;
-      cursor: pointer;
-      border: 1px solid #e8e8e8;
-      border-radius: 5px 5px 0 0;
-    }
-    .active{
-      background: #fff;
-      border-bottom: 1px solid #fff;
-    }
-  }
-  .tabContent{
-    padding: 1rem;
-    border: 1px solid #e8e8e8;
-    border-top: none;
-  }
   .relative{
     display:flex;
     .relativity, .inputNumber{
@@ -61,13 +114,6 @@ button{
       width:100%;
       max-width:12rem;
     }
-    .inputNumber{
-      font-size: 1rem;
-      padding: 0.5rem 0.6rem;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-      font-weight: 400;
-    }
     .units{
       width:100%;
       max-width:12rem;
@@ -75,7 +121,7 @@ button{
   }
   .description{
     margin-top: 0.5rem;
-    padding: 1rem 0.5rem;
+    padding: 1rem;
     background: #fafafa;
   }
 
@@ -120,8 +166,6 @@ button{
       }
     }
   }
-
-
 }
 
 .rc-time-picker-panel{

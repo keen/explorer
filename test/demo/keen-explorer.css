@@ -1,24 +1,7 @@
 body{
-  margin: 3rem auto;
-  width: 50%;
+  margin: 0 auto;
+  width: 70%;
   font-family: Montserrat, Tahoma, Arial;
-}
-
-.a .b{
-    font-size:120px;
-  }
-
-.label{
-  padding: 1rem 0 0.5rem;
-}
-
-button{
-  margin: 2rem 0 0;
-  padding: 1rem;
-}
-
-#keen-dataviz-container{
-  height: 300px;
 }
 
 * {
@@ -26,35 +9,121 @@ button{
           box-sizing: border-box;
 }
 
-.strong{
-  font-weight: bold;
+button{
+  margin: 2rem 0 0;
+  padding: 1rem;
 }
 
-.timeframe .tabs{
-    display:-ms-flexbox;
-    display:flex;
+.label{
+  padding: 1rem 0 0.5rem;
+}
+
+.keenExplorer{
+  display: -ms-flexbox;
+  display: flex;
+
+}
+
+.keenExplorer .panel{
+    -ms-flex: 1;
+        flex: 1;
   }
 
-.timeframe .tabs .tab{
-      -ms-flex: 1;
-          flex: 1;
-      padding: 1rem;
-      background: #fafafa;
-      cursor: pointer;
-      border: 1px solid #e8e8e8;
-      border-radius: 5px 5px 0 0;
-    }
+.keenExplorer .result{
+    -ms-flex: 1;
+        flex: 1;
+  }
 
-.timeframe .tabs .active{
-      background: #fff;
-      border-bottom: 1px solid #fff;
-    }
+.keenExplorer .keen-dataviz-container{
+    height: 300px;
+  }
 
-.timeframe .tabContent{
-    padding: 1rem;
+.keenExplorer .foldable{
+    margin-top: 0.5rem;
     border: 1px solid #e8e8e8;
-    border-top: none;
+    background: #fdfdfd;
+    padding: 0.5rem;
+    cursor: pointer;
+    border-radius: 5px;
   }
+
+.keenExplorer .foldableActive{
+      background: none;
+    }
+
+.keenExplorer .foldable .title{
+      padding: 0.5rem;
+    }
+
+.keenExplorer .foldable .title .icon{
+        float: right;
+      }
+
+.keenExplorer .foldable .content{
+      margin-top: 0.5rem;
+    }
+
+.keenExplorer .foldable .tabContent{
+      border: 0;
+    }
+
+.tabs{
+  display:-ms-flexbox;
+  display:flex;
+}
+
+.tabs .tab{
+    -ms-flex: 1;
+        flex: 1;
+    padding: 1rem;
+    background: #fafafa;
+    cursor: pointer;
+    border: 1px solid #e8e8e8;
+    border-radius: 5px 5px 0 0;
+  }
+
+.tabs .active{
+    background: #fff;
+    border-bottom: 1px solid #fff;
+  }
+
+.tabContent{
+  padding: 1rem;
+  border: 1px solid #e8e8e8;
+  border-top: none;
+}
+
+.inputNumber{
+  font-size: 1rem;
+  padding: 0.5rem 0.6rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-weight: 400;
+}
+
+.interval .standardUnits{
+    width: 10rem;
+  }
+
+.interval .line{
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+        align-items: center;
+  }
+
+.interval .line .title{
+      margin-right: 1rem;
+    }
+
+.interval .line .inputNumber{
+      width: 4rem;
+      margin-right: 0.5rem;
+    }
+
+.interval .line .timeUnits{
+      width: 10rem;
+    }
 
 .timeframe .relative{
     display:-ms-flexbox;
@@ -70,14 +139,6 @@ button{
       max-width:12rem;
     }
 
-.timeframe .relative .inputNumber{
-      font-size: 1rem;
-      padding: 0.5rem 0.6rem;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-      font-weight: 400;
-    }
-
 .timeframe .relative .units{
       width:100%;
       max-width:12rem;
@@ -85,7 +146,7 @@ button{
 
 .timeframe .description{
     margin-top: 0.5rem;
-    padding: 1rem 0.5rem;
+    padding: 1rem;
     background: #fafafa;
   }
 
