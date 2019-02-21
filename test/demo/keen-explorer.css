@@ -21,7 +21,6 @@ button{
 .keenExplorer{
   display: -ms-flexbox;
   display: flex;
-
 }
 
 .keenExplorer .panel{
@@ -32,6 +31,7 @@ button{
 .keenExplorer .result{
     -ms-flex: 1;
         flex: 1;
+    padding: 1rem;
   }
 
 .keenExplorer .keen-dataviz-container{
@@ -66,6 +66,69 @@ button{
 .keenExplorer .foldable .tabContent{
       border: 0;
     }
+
+.keenExplorer .optional{
+    margin-left: 1em;
+    font-size: 0.7em;
+    color:#ddd;
+    color: #737373;
+  }
+
+.keenExplorer .groupBy .label{
+      padding: 0 0 0.5rem;
+    }
+
+.keenExplorer .groupBy .btnPlus, .keenExplorer .groupBy .btnMinus{
+      margin-top: 1rem;
+      padding: 0.7rem;
+      background: #fdfdfd;
+      border: 1px solid #e8e8e8;
+      border-radius: 5px;
+      display: inline-block;
+    }
+
+.keenExplorer .groupBy .options{
+      margin-top: 1rem;
+      display:-ms-flexbox;
+      display:flex;
+    }
+
+.keenExplorer .groupBy .options .orderBy{
+        width: 8em;
+        padding-right: 1rem;
+      }
+
+.keenExplorer .groupBy .options .orderBy .select{
+          width: 100%;
+        }
+
+.keenExplorer .groupBy .options .limit{
+        width: 8em;
+      }
+
+.keenExplorer .groupBy .options .limit .input{
+          width: 100%;
+        }
+
+.keenExplorer .groupBy .additionalTargetProperty{
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid #f1f1f1;
+    }
+
+.keenExplorer .letsGo{
+    display:-ms-flexbox;
+    display:flex;
+    width:100%;
+    height:300px;
+    -ms-flex-pack: center;
+        justify-content: center;
+    -ms-flex-align: center;
+        align-items: center;
+    background-color: #dff3f8;
+    border-color: transparent;
+    color: #207690;
+  }
 
 .tabs{
   display:-ms-flexbox;

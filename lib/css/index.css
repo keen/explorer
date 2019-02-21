@@ -24,6 +24,7 @@ button{
   }
   .result{
     flex: 1;
+    padding: 1rem;
   }
   .keen-dataviz-container{
     height: 300px;
@@ -53,6 +54,59 @@ button{
     }
   }
 
+  .optional{
+    margin-left: 1em;
+    font-size: 0.7em;
+    color:#ddd;
+    color: #737373;
+  }
+
+  .groupBy{
+    .label{
+      padding: 0 0 0.5rem;
+    }
+    .btnPlus, .btnMinus{
+      margin-top: 1rem;
+      padding: 0.7rem;
+      background: #fdfdfd;
+      border: 1px solid #e8e8e8;
+      border-radius: 5px;
+      display: inline-block;
+    }
+    .options{
+      margin-top: 1rem;
+      display:flex;
+      .orderBy{
+        width: 8em;
+        padding-right: 1rem;
+        .select{
+          width: 100%;
+        }
+      }
+      .limit{
+        width: 8em;
+        .input{
+          width: 100%;
+        }
+      }
+    }
+    .additionalTargetProperty{
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid #f1f1f1;
+    }
+  }
+
+  .letsGo{
+    display:flex;
+    width:100%;
+    height:300px;
+    justify-content: center;
+    align-items: center;
+    background-color: #dff3f8;
+    border-color: transparent;
+    color: #207690;
+  }
 }
 
 .tabs{
