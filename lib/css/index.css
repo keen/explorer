@@ -8,6 +8,8 @@ body{
   box-sizing: border-box;
 }
 
+@import "./components/filters.css";
+
 button{
   margin: 2rem 0 0;
   padding: 1rem;
@@ -159,6 +161,7 @@ button{
 }
 
 .timeframe{
+  margin-bottom: 0.5rem;
   .relative{
     display:flex;
     .relativity, .inputNumber{
@@ -245,5 +248,18 @@ button{
   }
   .rc-time-picker-panel-input{
     font-size: 1rem;
+  }
+}
+
+.apiQueryUrl{
+  cursor: pointer;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  font-size: 0.8rem;
+  input{
+    flex: 1;
+    margin: 0 1rem;
   }
 }

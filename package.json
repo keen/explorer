@@ -41,6 +41,7 @@
     "react-redux": "^6.0.0",
     "react-select": "^2.3.0",
     "redux": "^4.0.1",
+    "redux-devtools-extension": "^2.13.7",
     "redux-saga": "^1.0.0",
     "string": "^2.0.1"
   },
@@ -79,7 +80,6 @@
     "react-addons-test-utils": "^15.6.2",
     "react-test-renderer": "^15.6.2",
     "redux-devtools": "^3.5.0",
-    "redux-devtools-extension": "^2.13.7",
     "regenerator-runtime": "^0.11.1",
     "replace-in-file": "^3.4.0",
     "run-sequence": "~1.0.1",

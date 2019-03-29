@@ -1,5 +1,7 @@
 {
   "extends": ["airbnb"],
   "rules": {
+    "react/jsx-filename-extension": ["ignore"],
+    "jsx-quotes": ["error", "prefer-single"]
   }
 }
