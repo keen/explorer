@@ -1,0 +1,44 @@
+.modal{
+  display:flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  .header{
+    flex:0;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 1rem;
+    .title{
+        float: left;
+      }
+      .x{
+        color: #565656;
+        float: right;
+        font-weight: bold;
+        cursor: pointer;
+        padding: 1rem;
+        margin: -2rem -1rem;
+        font-size: 2rem;
+      }
+  }
+  .container{
+    flex:1;
+    padding: 1rem 0;
+    clear: both;
+    width: 100%;
+    overflow-y: scroll;
+    white-space: pre-wrap;
+  }
+}
+
+.button-copy{
+  padding: 1rem;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  background: #b0f1ca;
+}
+.button-copy:active{
+  background: #fff;
+}

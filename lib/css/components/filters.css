@@ -1,18 +1,4 @@
-.filtersContainer{
-  .header{
-    .title{
-      float: left;
-    }
-    .x{
-      color: #565656;
-      float: right;
-      font-weight: bold;
-      cursor: pointer;
-      padding: 1rem;
-      margin: -2rem -1.4rem;
-      font-size: 2rem;
-    }
-  }
+.filters-container{
   .list{
     width: 100%;
     .row{

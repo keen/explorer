@@ -4,11 +4,14 @@ body{
   font-family: Montserrat, Tahoma, Arial;
 }
 
+
 * {
   box-sizing: border-box;
 }
 
+@import "./variables.css";
 @import "./components/filters.css";
+@import "./components/modal.css";
 
 button{
   margin: 2rem 0 0;
@@ -262,4 +265,26 @@ button{
     flex: 1;
     margin: 0 1rem;
   }
+}
+
+.fa-copy:active{
+  color: var(--color-link-active);
+}
+
+.button-run-query{
+
+}
+
+.button-embed-html{
+  float: right;
+}
+
+.preview{
+  width: 100%;
+  height: 300px;
+  overflow-y: scroll;
+}
+
+.chartType{
+  margin-top: 1rem;
 }

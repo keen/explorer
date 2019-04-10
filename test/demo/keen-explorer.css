@@ -4,41 +4,32 @@ body{
   font-family: Montserrat, Tahoma, Arial;
 }
 
+
 * {
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
 }
 
-.filtersContainer .header .title{
-      float: left;
-    }
 
-.filtersContainer .header .x{
-      color: #565656;
-      float: right;
-      font-weight: bold;
-      cursor: pointer;
-      padding: 1rem;
-      margin: -2rem -1.4rem;
-      font-size: 2rem;
-    }
-
-.filtersContainer .list{
+.filters-container .list{
     width: 100%;
   }
 
-.filtersContainer .list .row{
+
+.filters-container .list .row{
       display: -ms-flexbox;
       display: flex;
       width: 100%;
     }
 
-.filtersContainer .list .row .rowPart{
+
+.filters-container .list .row .rowPart{
         -ms-flex:1;
             flex:1;
       }
 
-.filtersContainer .list .row .rowPart input{
+
+.filters-container .list .row .rowPart input{
           padding: 0.55rem 0.7rem;
           font-size: 1rem;
           border-radius: 4px;
@@ -46,36 +37,104 @@ body{
           width: 100%;
         }
 
-.filtersContainer .list .btnAdd{
+
+.filters-container .list .btnAdd{
       padding:1rem;
       background:#ddd;
       float: left;
     }
 
-.filtersContainer .list .btnSave{
+
+.filters-container .list .btnSave{
       padding:1rem;
       background:#ccc;
       float:right
     }
+
+
+.modal{
+  display:-ms-flexbox;
+  display:flex;
+  -ms-flex-direction: column;
+      flex-direction: column;
+  height: 100%;
+  width: 100%;
+}
+
+
+.modal .header{
+    -ms-flex:0;
+        flex:0;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 1rem;
+  }
+
+
+.modal .header .title{
+        float: left;
+      }
+
+
+.modal .header .x{
+        color: #565656;
+        float: right;
+        font-weight: bold;
+        cursor: pointer;
+        padding: 1rem;
+        margin: -2rem -1rem;
+        font-size: 2rem;
+      }
+
+
+.modal .container{
+    -ms-flex:1;
+        flex:1;
+    padding: 1rem 0;
+    clear: both;
+    width: 100%;
+    overflow-y: scroll;
+    white-space: pre-wrap;
+  }
+
+
+.button-copy{
+  padding: 1rem;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  background: #b0f1ca;
+}
+
+
+.button-copy:active{
+  background: #fff;
+}
+
 
 button{
   margin: 2rem 0 0;
   padding: 1rem;
 }
 
+
 .label{
   padding: 1rem 0 0.5rem;
 }
+
 
 .keenExplorer{
   display: -ms-flexbox;
   display: flex;
 }
 
+
 .keenExplorer .panel{
     -ms-flex: 1;
         flex: 1;
   }
+
 
 .keenExplorer .result{
     -ms-flex: 1;
@@ -83,9 +142,11 @@ button{
     padding: 1rem;
   }
 
+
 .keenExplorer .keen-dataviz-container{
     height: 300px;
   }
+
 
 .keenExplorer .foldable{
     margin-top: 0.5rem;
@@ -96,25 +157,31 @@ button{
     border-radius: 5px;
   }
 
+
 .keenExplorer .foldableActive{
       background: none;
     }
+
 
 .keenExplorer .foldable .title{
       padding: 0.5rem;
     }
 
+
 .keenExplorer .foldable .title .icon{
         float: right;
       }
+
 
 .keenExplorer .foldable .content{
       margin-top: 0.5rem;
     }
 
+
 .keenExplorer .foldable .tabContent{
       border: 0;
     }
+
 
 .keenExplorer .optional{
     margin-left: 1em;
@@ -123,9 +190,11 @@ button{
     color: #737373;
   }
 
+
 .keenExplorer .groupBy .label{
       padding: 0 0 0.5rem;
     }
+
 
 .keenExplorer .groupBy .btnPlus, .keenExplorer .groupBy .btnMinus{
       margin-top: 1rem;
@@ -136,34 +205,41 @@ button{
       display: inline-block;
     }
 
+
 .keenExplorer .groupBy .options{
       margin-top: 1rem;
       display:-ms-flexbox;
       display:flex;
     }
 
+
 .keenExplorer .groupBy .options .orderBy{
         width: 8em;
         padding-right: 1rem;
       }
 
+
 .keenExplorer .groupBy .options .orderBy .select{
           width: 100%;
         }
+
 
 .keenExplorer .groupBy .options .limit{
         width: 8em;
       }
 
+
 .keenExplorer .groupBy .options .limit .input{
           width: 100%;
         }
+
 
 .keenExplorer .groupBy .additionalTargetProperty{
       margin-top: 1rem;
       padding-top: 1rem;
       border-top: 1px solid #f1f1f1;
     }
+
 
 .keenExplorer .letsGo{
     display:-ms-flexbox;
@@ -179,10 +255,12 @@ button{
     color: #207690;
   }
 
+
 .tabs{
   display:-ms-flexbox;
   display:flex;
 }
+
 
 .tabs .tab{
     -ms-flex: 1;
@@ -194,16 +272,19 @@ button{
     border-radius: 5px 5px 0 0;
   }
 
+
 .tabs .active{
     background: #fff;
     border-bottom: 1px solid #fff;
   }
+
 
 .tabContent{
   padding: 1rem;
   border: 1px solid #e8e8e8;
   border-top: none;
 }
+
 
 .inputNumber{
   font-size: 1rem;
@@ -213,9 +294,11 @@ button{
   font-weight: 400;
 }
 
+
 .interval .standardUnits{
     width: 10rem;
   }
+
 
 .interval .line{
     display: -ms-flexbox;
@@ -224,41 +307,50 @@ button{
         align-items: center;
   }
 
+
 .interval .line .title{
       margin-right: 1rem;
     }
+
 
 .interval .line .inputNumber{
       width: 4rem;
       margin-right: 0.5rem;
     }
 
+
 .interval .line .timeUnits{
       width: 10rem;
     }
 
+
 .timeframe{
   margin-bottom: 0.5rem;
 }
+
 
 .timeframe .relative{
     display:-ms-flexbox;
     display:flex;
   }
 
+
 .timeframe .relative .relativity, .timeframe .relative .inputNumber{
       margin-right:0.5rem;
     }
+
 
 .timeframe .relative .relativity{
       width:100%;
       max-width:12rem;
     }
 
+
 .timeframe .relative .units{
       width:100%;
       max-width:12rem;
     }
+
 
 .timeframe .description{
     margin-top: 0.5rem;
@@ -266,14 +358,17 @@ button{
     background: #fafafa;
   }
 
+
 .timeframe .tabAbsolute .DateRangePickerInput_arrow{
       display: none;
     }
+
 
 .timeframe .tabAbsolute .DateInput {
       width: 8rem;
       background: none;
     }
+
 
 .timeframe .tabAbsolute .DateInput_input {
       padding: 0.5rem;
@@ -283,6 +378,7 @@ button{
       font-weight: normal;
       border-radius: 5px;
     }
+
 
 .timeframe .tabAbsolute .rc-time-picker-input{
       font-size: 1rem;
@@ -294,6 +390,7 @@ button{
       border-radius: 5px;
     }
 
+
 .timeframe .tabAbsolute .line{
       display: -ms-flexbox;
       display: flex;
@@ -302,24 +399,29 @@ button{
       margin: 0.5rem;
     }
 
+
 .timeframe .tabAbsolute .line .title{
         width: 4rem;
       }
 
+
 .timeframe .tabAbsolute .line .SingleDatePicker {
         margin-right: 0.5rem;
       }
+
 
 .timeframe .tabAbsolute .line .SingleDatePickerInput__withBorder {
         border-radius: 5px;
         border: 1px solid #dbdbdb;
       }
 
+
 .rc-time-picker-panel .rc-time-picker-panel-inner{
     -webkit-box-shadow: none;
             box-shadow: none;
     border-radius: 5px;
   }
+
 
 .rc-time-picker-panel .rc-time-picker-input{
     font-size: 1rem;
@@ -331,18 +433,22 @@ button{
     border-radius: 5px;
   }
 
+
 .rc-time-picker-panel .rc-time-picker-panel-select{
     font-size: 1rem;
   }
+
 
 .rc-time-picker-panel .rc-time-picker-panel-select li{
       height: 2rem;
       line-height: 2rem;
     }
 
+
 .rc-time-picker-panel .rc-time-picker-panel-input{
     font-size: 1rem;
   }
+
 
 .apiQueryUrl{
   cursor: pointer;
@@ -355,8 +461,37 @@ button{
   font-size: 0.8rem;
 }
 
+
 .apiQueryUrl input{
     -ms-flex: 1;
         flex: 1;
     margin: 0 1rem;
   }
+
+
+.fa-copy:active{
+  color: #00bbde;
+  color: #00bbde;
+}
+
+
+.button-run-query{
+
+}
+
+
+.button-embed-html{
+  float: right;
+}
+
+
+.preview{
+  width: 100%;
+  height: 300px;
+  overflow-y: scroll;
+}
+
+
+.chartType{
+  margin-top: 1rem;
+}
