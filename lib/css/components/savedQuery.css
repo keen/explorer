@@ -1,0 +1,21 @@
+.saved-query {
+  margin: 1rem 0;
+
+  input {
+    padding: 1rem;
+  }
+
+  .button-copy{
+    padding: 1rem;
+    right: 0;
+    bottom: 0;
+    border: 0;
+    cursor: pointer;
+    display: inline;
+  }
+
+  .button-copy:active{
+    background: #fff;
+  }
+
+}

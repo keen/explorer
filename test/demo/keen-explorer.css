@@ -97,20 +97,46 @@ body{
   }
 
 
-.button-copy{
-  padding: 1rem;
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  border: 1px solid #ccc;
-  cursor: pointer;
-  background: #b0f1ca;
+.modal .button-copy{
+    padding: 1rem;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    background: #b0f1ca;
+  }
+
+
+.modal .button-copy:active{
+    background: #fff;
+  }
+
+
+.saved-query {
+  margin: 1rem 0;
+
 }
 
 
-.button-copy:active{
-  background: #fff;
-}
+.saved-query input {
+    padding: 1rem;
+  }
+
+
+.saved-query .button-copy{
+    padding: 1rem;
+    right: 0;
+    bottom: 0;
+    border: 0;
+    cursor: pointer;
+    display: inline;
+  }
+
+
+.saved-query .button-copy:active{
+    background: #fff;
+  }
 
 
 button{

@@ -28,17 +28,19 @@
     overflow-y: scroll;
     white-space: pre-wrap;
   }
+
+  .button-copy{
+    padding: 1rem;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    background: #b0f1ca;
+  }
+
+  .button-copy:active{
+    background: #fff;
+  }
 }
 
-.button-copy{
-  padding: 1rem;
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  border: 1px solid #ccc;
-  cursor: pointer;
-  background: #b0f1ca;
-}
-.button-copy:active{
-  background: #fff;
-}
