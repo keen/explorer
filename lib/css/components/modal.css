@@ -5,7 +5,7 @@
   width: 100%;
   .header{
     flex:0;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid #eee;
     padding-bottom: 1rem;
     .title{
         float: left;
@@ -34,13 +34,13 @@
     position: absolute;
     right: 0;
     bottom: 0;
-    border: 1px solid #ccc;
     cursor: pointer;
-    background: #b0f1ca;
+    background: #1e93d8;
+    color: #fff;
   }
 
   .button-copy:active{
-    background: #fff;
+    background: #30a1e4;
   }
 }
 

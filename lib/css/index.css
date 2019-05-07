@@ -13,6 +13,7 @@ body{
 @import "./components/filters.css";
 @import "./components/modal.css";
 @import "./components/savedQuery.css";
+@import "./components/savedQueries.css";
 
 button{
   margin: 2rem 0 0;

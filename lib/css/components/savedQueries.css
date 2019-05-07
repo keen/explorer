@@ -1,0 +1,10 @@
+.saved-queries{
+  .item{
+    padding: 1rem;
+    cursor: pointer;
+  }
+
+  .active{
+    background: #eee;
+  }
+}
