@@ -12,6 +12,7 @@ body{
 
 
 .filters-container .list{
+    margin: 2rem 0;
     width: 100%;
   }
 
@@ -20,12 +21,14 @@ body{
       display: -ms-flexbox;
       display: flex;
       width: 100%;
+      margin: 0 0 1rem;
     }
 
 
 .filters-container .list .row .rowPart{
         -ms-flex:1;
             flex:1;
+        padding: 0 0.5rem;
       }
 
 
@@ -33,23 +36,33 @@ body{
           padding: 0.55rem 0.7rem;
           font-size: 1rem;
           border-radius: 4px;
-          border: 1px solid #ccc;
+          border: 1px solid #aaa;
           width: 100%;
         }
 
 
+.filters-container .list .row .rowPart .delete{
+          cursor: pointer;
+        }
+
+
+.filters-container .list .row .rowPart .delete i {
+            color: #ea7373;
+          }
+
+
 .filters-container .list .btnAdd{
-      padding:1rem;
-      background:#ddd;
+      margin: 0.5rem;
+      cursor: pointer;
+      padding: 1rem;
+      background:#eee;
       float: left;
     }
 
 
-.filters-container .list .btnSave{
-      padding:1rem;
-      background:#ccc;
-      float:right
-    }
+.filters-container .list .btnAdd i {
+        margin-right: 1rem;
+      }
 
 
 .modal{
@@ -161,6 +174,11 @@ button{
 }
 
 
+.hide{
+  display: none;
+}
+
+
 .keenExplorer{
   display: -ms-flexbox;
   display: flex;
@@ -171,6 +189,26 @@ button{
     -ms-flex: 1;
         flex: 1;
   }
+
+
+.keenExplorer .panel-buttons{
+    display: -ms-flexbox;
+    display: flex;
+  }
+
+
+.keenExplorer .panel-buttons .button{
+      -ms-flex: 1;
+          flex: 1;
+      padding: 1rem;
+      background: #eee;
+      border-radius: 0.5rem 0.5rem 0 0;
+    }
+
+
+.keenExplorer .panel-buttons .button-active{
+      background: #ccc;
+    }
 
 
 .keenExplorer .result{

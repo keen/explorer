@@ -1,29 +1,38 @@
 .filters-container{
   .list{
+    margin: 2rem 0;
     width: 100%;
     .row{
       display: flex;
       width: 100%;
+      margin: 0 0 1rem;
       .rowPart{
         flex:1;
+        padding: 0 0.5rem;
         input{
           padding: 0.55rem 0.7rem;
           font-size: 1rem;
           border-radius: 4px;
-          border: 1px solid #ccc;
+          border: 1px solid #aaa;
           width: 100%;
+        }
+        .delete{
+          cursor: pointer;
+          i {
+            color: #ea7373;
+          }
         }
       }
     }
     .btnAdd{
-      padding:1rem;
-      background:#ddd;
+      margin: 0.5rem;
+      cursor: pointer;
+      padding: 1rem;
+      background:#eee;
       float: left;
-    }
-    .btnSave{
-      padding:1rem;
-      background:#ccc;
-      float:right
+      i {
+        margin-right: 1rem;
+      }
     }
   }
 }

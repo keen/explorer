@@ -24,10 +24,26 @@ button{
   padding: 1rem 0 0.5rem;
 }
 
+.hide{
+  display: none;
+}
+
 .keenExplorer{
   display: flex;
   .panel{
     flex: 1;
+  }
+  .panel-buttons{
+    display: flex;
+    .button{
+      flex: 1;
+      padding: 1rem;
+      background: #eee;
+      border-radius: 0.5rem 0.5rem 0 0;
+    }
+    .button-active{
+      background: #ccc;
+    }
   }
   .result{
     flex: 1;
