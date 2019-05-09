@@ -31,12 +31,13 @@
 
   .button-copy{
     padding: 1rem;
-    position: absolute;
-    right: 0;
-    bottom: 0;
+    width: 10rem;
+    text-align: center;
     cursor: pointer;
     background: #1e93d8;
     color: #fff;
+    border-radius: 0.5rem;
+    margin-top: 1rem;
   }
 
   .button-copy:active{

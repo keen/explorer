@@ -112,12 +112,13 @@ body{
 
 .modal .button-copy{
     padding: 1rem;
-    position: absolute;
-    right: 0;
-    bottom: 0;
+    width: 10rem;
+    text-align: center;
     cursor: pointer;
     background: #1e93d8;
     color: #fff;
+    border-radius: 0.5rem;
+    margin-top: 1rem;
   }
 
 
@@ -152,14 +153,47 @@ body{
   }
 
 
-.saved-queries .item{
-    padding: 1rem;
-    cursor: pointer;
+.saved-queries{
+  overflow: scroll;
+  max-height: 40rem;
+}
+
+
+.saved-queries .input-filter{
+    width: 100%;
+    padding: 0.5rem;
+    font-size: 1rem;
   }
 
 
+.saved-queries .item{
+    padding: 1.2rem;
+    cursor: pointer;
+    overflow: auto;
+    border: 1px solid #eee;
+    margin-bottom: -1px;
+  }
+
+
+.saved-queries .item .name{
+      margin: 0 0 0.5rem;
+    }
+
+
+.saved-queries .item .cached{
+      float: left;
+      font-size: 0.7rem;
+    }
+
+
+.saved-queries .item .data{
+      float: right;
+      font-size: 0.7rem;
+    }
+
+
 .saved-queries .active{
-    background: #eee;
+    background: #f7f7f7;
   }
 
 
@@ -198,6 +232,8 @@ button{
 
 
 .keenExplorer .panel-buttons .button{
+      margin: 1px;
+      cursor: pointer;
       -ms-flex: 1;
           flex: 1;
       padding: 1rem;
@@ -207,14 +243,25 @@ button{
 
 
 .keenExplorer .panel-buttons .button-active{
-      background: #ccc;
+      border: 1px solid #ccc;
+      border-bottom: 0;
+      background: #fff;
+    }
+
+
+.keenExplorer .panel-buttons .button-clear{
+      float: right;
+      cursor: pointer;
+      font-size: 1.2rem;
+      color: #ccc;
     }
 
 
 .keenExplorer .result{
-    -ms-flex: 1;
-        flex: 1;
-    padding: 1rem;
+    -ms-flex: 2;
+        flex: 2;
+    padding: 0 1.5rem;
+    overflow: hidden;
   }
 
 
@@ -256,6 +303,26 @@ button{
 
 .keenExplorer .foldable .tabContent{
       border: 0;
+    }
+
+
+.keenExplorer .filters{
+    display: -ms-flexbox;
+    display: flex;
+  }
+
+
+.keenExplorer .filters .title{
+      -ms-flex: 1;
+          flex: 1;
+    }
+
+
+.keenExplorer .filters .count{
+      -ms-flex-item-align: center;
+          align-self: center;
+      text-align: right;
+      padding: 0 0.5rem 0 0;
     }
 
 
@@ -317,7 +384,7 @@ button{
     }
 
 
-.keenExplorer .letsGo{
+.keenExplorer .lets-go{
     display:-ms-flexbox;
     display:flex;
     width:100%;
@@ -329,6 +396,12 @@ button{
     background-color: #dff3f8;
     border-color: transparent;
     color: #207690;
+
+    background-color: #fff;
+    border-color: transparent;
+    color: #207690;
+    font-size: 2rem;
+    border: 1px dashed #ccc;
   }
 
 
@@ -552,34 +625,113 @@ button{
 
 
 .button-run-query{
-
+  font-size: 1rem;
+  border-radius: 0.3rem;
+  background: #16b913;
+  color: #fff;
+  border: 0;
+  padding: 1rem 2rem;
+  cursor: pointer;
+  margin: 1rem 0 0;
 }
 
 
-.button-embed-html{
-  float: right;
-}
+.button-run-query i {
+    margin-right: 0.5rem;
+  }
 
 
-.button-download-csv{
-  float: right;
-  margin: 0;
-}
-
-
-.button-download-json{
-  float: right;
-  margin: 0 1rem 0 0;
+.error{
+  padding: 1rem;
+  background: #ffc3c3;
+  margin: 1rem 0 0;
 }
 
 
 .preview{
-  width: 100%;
-  height: 340px;
-  overflow-y: scroll;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: row;
+      flex-direction: row;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
 }
+
+
+.preview .loader{
+    width: 100%;
+    height: 340px;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+        align-items: center;
+    -ms-flex-pack: center;
+        justify-content: center;
+    font-size: 5rem;
+    color: #eee;
+  }
+
+
+.preview .keen-dataviz-container, .preview .react-json-view{
+    width: 100%;
+    height: 340px;
+    overflow-y: scroll;
+  }
+
+
+.preview .react-json-view{
+    padding-top: 1rem;
+  }
+
+
+.preview .select-chart-type-container{
+    -ms-flex: 1;
+        flex: 1;
+    -ms-flex-order: 1;
+        order: 1;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-item-align: center;
+        align-self: center;
+    -ms-flex-direction: column;
+        flex-direction: column;
+    -ms-flex-pack: end;
+        justify-content: flex-end;
+  }
+
+
+.preview .select-chart-type {
+    -ms-flex: 1;
+        flex: 1;
+    width: 20rem;
+    -ms-flex-item-align: end;
+        align-self: flex-end;
+  }
+
+
+.preview .button-download{
+    -ms-flex-order: 0;
+        order: 0;
+    background: transparent;
+    border: 0;
+    margin: 0;
+    cursor: pointer;
+    font-size: 0.8rem;
+  }
+
+
+.preview .button-download i{
+      margin-right: 0.5rem;
+    }
 
 
 .chartType{
   margin-top: 1rem;
+}
+
+
+.reload{
+  position: absolute;
+  left: 1rem;
+  top: 1rem;
 }

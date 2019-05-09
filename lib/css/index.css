@@ -36,18 +36,29 @@ button{
   .panel-buttons{
     display: flex;
     .button{
+      margin: 1px;
+      cursor: pointer;
       flex: 1;
       padding: 1rem;
       background: #eee;
       border-radius: 0.5rem 0.5rem 0 0;
     }
     .button-active{
-      background: #ccc;
+      border: 1px solid #ccc;
+      border-bottom: 0;
+      background: #fff;
+    }
+    .button-clear{
+      float: right;
+      cursor: pointer;
+      font-size: 1.2rem;
+      color: #ccc;
     }
   }
   .result{
-    flex: 1;
-    padding: 1rem;
+    flex: 2;
+    padding: 0 1.5rem;
+    overflow: hidden;
   }
   .keen-dataviz-container{
     height: calc(100% - 3rem);
@@ -77,6 +88,19 @@ button{
       border: 0;
     }
   }
+
+  .filters{
+    display: flex;
+    .title{
+      flex: 1;
+    }
+    .count{
+      align-self: center;
+      text-align: right;
+      padding: 0 0.5rem 0 0;
+    }
+  }
+
 
   .optional{
     margin-left: 1em;
@@ -121,7 +145,7 @@ button{
     }
   }
 
-  .letsGo{
+  .lets-go{
     display:flex;
     width:100%;
     height:300px;
@@ -130,6 +154,12 @@ button{
     background-color: #dff3f8;
     border-color: transparent;
     color: #207690;
+
+    background-color: #fff;
+    border-color: transparent;
+    color: #207690;
+    font-size: 2rem;
+    border: 1px dashed #ccc;
   }
 }
 
@@ -291,29 +321,78 @@ button{
 }
 
 .button-run-query{
-
+  font-size: 1rem;
+  border-radius: 0.3rem;
+  background: #16b913;
+  color: #fff;
+  border: 0;
+  padding: 1rem 2rem;
+  cursor: pointer;
+  margin: 1rem 0 0;
+  i {
+    margin-right: 0.5rem;
+  }
 }
 
-.button-embed-html{
-  float: right;
-}
-
-.button-download-csv{
-  float: right;
-  margin: 0;
-}
-
-.button-download-json{
-  float: right;
-  margin: 0 1rem 0 0;
+.error{
+  padding: 1rem;
+  background: #ffc3c3;
+  margin: 1rem 0 0;
 }
 
 .preview{
-  width: 100%;
-  height: 340px;
-  overflow-y: scroll;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  .loader{
+    width: 100%;
+    height: 340px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 5rem;
+    color: #eee;
+  }
+  .keen-dataviz-container, .react-json-view{
+    width: 100%;
+    height: 340px;
+    overflow-y: scroll;
+  }
+  .react-json-view{
+    padding-top: 1rem;
+  }
+  .select-chart-type-container{
+    flex: 1;
+    order: 1;
+    display: flex;
+    align-self: center;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+  .select-chart-type {
+    flex: 1;
+    width: 20rem;
+    align-self: flex-end;
+  }
+  .button-download{
+    order: 0;
+    background: transparent;
+    border: 0;
+    margin: 0;
+    cursor: pointer;
+    font-size: 0.8rem;
+    i{
+      margin-right: 0.5rem;
+    }
+  }
 }
 
 .chartType{
   margin-top: 1rem;
+}
+
+.reload{
+  position: absolute;
+  left: 1rem;
+  top: 1rem;
 }
