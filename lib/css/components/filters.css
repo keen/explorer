@@ -6,7 +6,7 @@
       display: flex;
       width: 100%;
       margin: 0 0 1rem;
-      .rowPart{
+      .row-part{
         flex:1;
         padding: 0 0.5rem;
         input{
@@ -18,18 +18,26 @@
         }
         .delete{
           cursor: pointer;
+          display: flex;
+          align-items: center;
+          height: 100%;
+          font-size: 1.2rem;
           i {
             color: #ea7373;
           }
         }
       }
+      .no-flex{
+        flex: 0;
+      }
     }
-    .btnAdd{
+    .button-add-filter{
       margin: 0.5rem;
       cursor: pointer;
-      padding: 1rem;
-      background:#eee;
+      padding: 1rem 2rem;
+      background: #eee;
       float: left;
+      border-radius: 0.3rem;
       i {
         margin-right: 1rem;
       }

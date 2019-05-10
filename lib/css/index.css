@@ -34,25 +34,12 @@ button{
     flex: 1;
   }
   .panel-buttons{
-    display: flex;
-    .button{
-      margin: 1px;
+    .button-new-query{
+      flex: none;
       cursor: pointer;
-      flex: 1;
-      padding: 1rem;
-      background: #eee;
-      border-radius: 0.5rem 0.5rem 0 0;
-    }
-    .button-active{
-      border: 1px solid #ccc;
-      border-bottom: 0;
-      background: #fff;
-    }
-    .button-clear{
-      float: right;
-      cursor: pointer;
-      font-size: 1.2rem;
-      color: #ccc;
+      i{
+        
+      }
     }
   }
   .result{
@@ -178,6 +165,7 @@ button{
     border-bottom: 1px solid #fff;
   }
 }
+
 .tabContent{
   padding: 1rem;
   border: 1px solid #e8e8e8;
@@ -323,7 +311,7 @@ button{
 .button-run-query{
   font-size: 1rem;
   border-radius: 0.3rem;
-  background: #16b913;
+  background: #009ebb;
   color: #fff;
   border: 0;
   padding: 1rem 2rem;
@@ -336,14 +324,24 @@ button{
 
 .error{
   padding: 1rem;
-  background: #ffc3c3;
+  background: #ffe5e5;
   margin: 1rem 0 0;
+}
+
+.box-info{
+  padding: 1rem;
+  background: #f1faff;
+}
+
+.tabContent .box-info{
+  margin: -1rem;
 }
 
 .preview{
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  background: #fafafa;
   .loader{
     width: 100%;
     height: 340px;
@@ -356,10 +354,11 @@ button{
   .keen-dataviz-container, .react-json-view{
     width: 100%;
     height: 340px;
+    background: #fff;
     overflow-y: scroll;
   }
   .react-json-view{
-    padding-top: 1rem;
+    padding: 1rem;
   }
   .select-chart-type-container{
     flex: 1;
@@ -368,6 +367,7 @@ button{
     align-self: center;
     flex-direction: column;
     justify-content: flex-end;
+    margin: 0.3rem;
   }
   .select-chart-type {
     flex: 1;
@@ -395,4 +395,23 @@ button{
   position: absolute;
   left: 1rem;
   top: 1rem;
+}
+
+.button-toggle{
+  margin-left: 1rem;
+  font-size: 1rem;
+  border: 0;
+  display: inline;
+  padding: 1rem;
+  cursor: pointer;
+  border: 1px solid #ddd;
+  background: #fafafa;
+  border-radius: 0.3rem;
+  i {
+    margin-left: 1rem;
+  }
+}
+
+.button-toggle-active {
+  background: #ffff;
 }

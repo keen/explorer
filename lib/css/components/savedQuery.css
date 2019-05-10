@@ -1,8 +1,62 @@
 .saved-query {
   margin: 1rem 0;
+  border: 1px solid #e8e8e8;
+  background: #fcfcfc;
+  padding: 1rem;
+  border-radius: 0.3rem;
 
-  input {
+  .input-name {
+    font-size: 1rem;
     padding: 1rem;
+    border-radius: 0.3rem;
+    border: 1px solid #e8e8e8;
+    width: 100%;
+  }
+
+  .resource-name{
+    padding: 1rem 0 0;
+    display: flex;
+    overflow: hidden;
+    .line {
+      flex: 1;
+      white-space: nowrap;
+      span{
+        white-space: nowrap;
+        overflow: hidden;
+        flex: 1;
+      }
+      i {
+        flex: 0;
+        color: #009ebb;
+      }
+    }
+    .line-label{
+      flex: 0;
+      margin-right: 0.5rem;
+    }
+    a {
+
+    }
+  }
+
+  .cache {
+    padding: 1rem 0 0;
+    max-width: 12rem;
+    .cache-toggle{
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      color: #128296;
+    }
+    i {
+      font-size: 1.3rem;
+      margin-right: 0.6rem;
+    }
+    .fa-toggle-off{
+      color: #7b7b7b;
+    }
+    .cache-refresh{
+    }
   }
 
   .button-copy{
@@ -12,6 +66,27 @@
     border: 0;
     cursor: pointer;
     display: inline;
+  }
+
+  .buttons{
+    * {
+      margin-top: 1rem;
+      padding: 1rem 2rem;
+      font-size: 1rem;
+      border-radius: 0.3rem;
+      cursor: pointer;
+    }
+    .button-save{
+      color: #108196;
+      border: 1px solid #009ebb;
+    }
+    .button-clone{
+      margin-left: 1rem;
+    }
+    .button-delete{
+      float: right;
+      color: #c50d0d;
+    }
   }
 
   .button-copy:active{

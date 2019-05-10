@@ -24536,7 +24536,7 @@ if(false) {}
 
 exports = module.exports = __webpack_require__(72)(false);
 // Module
-exports.push([module.i, "body{\n  margin: 0 auto;\n  width: 70%;\n  font-family: Montserrat, Tahoma, Arial;\n}\n\n\n* {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n\n\n.filters-container .list{\n    width: 100%;\n  }\n\n\n.filters-container .list .row{\n      display: -ms-flexbox;\n      display: flex;\n      width: 100%;\n    }\n\n\n.filters-container .list .row .rowPart{\n        -ms-flex:1;\n            flex:1;\n      }\n\n\n.filters-container .list .row .rowPart input{\n          padding: 0.55rem 0.7rem;\n          font-size: 1rem;\n          border-radius: 4px;\n          border: 1px solid #ccc;\n          width: 100%;\n        }\n\n\n.filters-container .list .btnAdd{\n      padding:1rem;\n      background:#ddd;\n      float: left;\n    }\n\n\n.filters-container .list .btnSave{\n      padding:1rem;\n      background:#ccc;\n      float:right\n    }\n\n\n.modal{\n  display:-ms-flexbox;\n  display:flex;\n  -ms-flex-direction: column;\n      flex-direction: column;\n  height: 100%;\n  width: 100%;\n}\n\n\n.modal .header{\n    -ms-flex:0;\n        flex:0;\n    border-bottom: 1px solid #eee;\n    padding-bottom: 1rem;\n  }\n\n\n.modal .header .title{\n        float: left;\n      }\n\n\n.modal .header .x{\n        color: #565656;\n        float: right;\n        font-weight: bold;\n        cursor: pointer;\n        padding: 1rem;\n        margin: -2rem -1rem;\n        font-size: 2rem;\n      }\n\n\n.modal .container{\n    -ms-flex:1;\n        flex:1;\n    padding: 1rem 0;\n    clear: both;\n    width: 100%;\n    overflow-y: scroll;\n    white-space: pre-wrap;\n  }\n\n\n.modal .button-copy{\n    padding: 1rem;\n    position: absolute;\n    right: 0;\n    bottom: 0;\n    cursor: pointer;\n    background: #1e93d8;\n    color: #fff;\n  }\n\n\n.modal .button-copy:active{\n    background: #30a1e4;\n  }\n\n\n.saved-query {\n  margin: 1rem 0;\n\n}\n\n\n.saved-query input {\n    padding: 1rem;\n  }\n\n\n.saved-query .button-copy{\n    padding: 1rem;\n    right: 0;\n    bottom: 0;\n    border: 0;\n    cursor: pointer;\n    display: inline;\n  }\n\n\n.saved-query .button-copy:active{\n    background: #fff;\n  }\n\n\n.saved-queries .item{\n    padding: 1rem;\n    cursor: pointer;\n  }\n\n\n.saved-queries .active{\n    background: #eee;\n  }\n\n\nbutton{\n  margin: 2rem 0 0;\n  padding: 1rem;\n}\n\n\n.label{\n  padding: 1rem 0 0.5rem;\n}\n\n\n.keenExplorer{\n  display: -ms-flexbox;\n  display: flex;\n}\n\n\n.keenExplorer .panel{\n    -ms-flex: 1;\n        flex: 1;\n  }\n\n\n.keenExplorer .result{\n    -ms-flex: 1;\n        flex: 1;\n    padding: 1rem;\n  }\n\n\n.keenExplorer .keen-dataviz-container{\n    height: calc(100% - 3rem);\n    overflow: hidden;\n  }\n\n\n.keenExplorer .foldable{\n    margin-top: 0.5rem;\n    border: 1px solid #e8e8e8;\n    background: #fdfdfd;\n    padding: 0.5rem;\n    cursor: pointer;\n    border-radius: 5px;\n  }\n\n\n.keenExplorer .foldableActive{\n      background: none;\n    }\n\n\n.keenExplorer .foldable .title{\n      padding: 0.5rem;\n    }\n\n\n.keenExplorer .foldable .title .icon{\n        float: right;\n      }\n\n\n.keenExplorer .foldable .content{\n      margin-top: 0.5rem;\n    }\n\n\n.keenExplorer .foldable .tabContent{\n      border: 0;\n    }\n\n\n.keenExplorer .optional{\n    margin-left: 1em;\n    font-size: 0.7em;\n    color:#ddd;\n    color: #737373;\n  }\n\n\n.keenExplorer .groupBy .label{\n      padding: 0 0 0.5rem;\n    }\n\n\n.keenExplorer .groupBy .btnPlus, .keenExplorer .groupBy .btnMinus{\n      margin-top: 1rem;\n      padding: 0.7rem;\n      background: #fdfdfd;\n      border: 1px solid #e8e8e8;\n      border-radius: 5px;\n      display: inline-block;\n    }\n\n\n.keenExplorer .groupBy .options{\n      margin-top: 1rem;\n      display:-ms-flexbox;\n      display:flex;\n    }\n\n\n.keenExplorer .groupBy .options .orderBy{\n        width: 8em;\n        padding-right: 1rem;\n      }\n\n\n.keenExplorer .groupBy .options .orderBy .select{\n          width: 100%;\n        }\n\n\n.keenExplorer .groupBy .options .limit{\n        width: 8em;\n      }\n\n\n.keenExplorer .groupBy .options .limit .input{\n          width: 100%;\n        }\n\n\n.keenExplorer .groupBy .additionalTargetProperty{\n      margin-top: 1rem;\n      padding-top: 1rem;\n      border-top: 1px solid #f1f1f1;\n    }\n\n\n.keenExplorer .letsGo{\n    display:-ms-flexbox;\n    display:flex;\n    width:100%;\n    height:300px;\n    -ms-flex-pack: center;\n        justify-content: center;\n    -ms-flex-align: center;\n        align-items: center;\n    background-color: #dff3f8;\n    border-color: transparent;\n    color: #207690;\n  }\n\n\n.tabs{\n  display:-ms-flexbox;\n  display:flex;\n}\n\n\n.tabs .tab{\n    -ms-flex: 1;\n        flex: 1;\n    padding: 1rem;\n    background: #fafafa;\n    cursor: pointer;\n    border: 1px solid #e8e8e8;\n    border-radius: 5px 5px 0 0;\n  }\n\n\n.tabs .active{\n    background: #fff;\n    border-bottom: 1px solid #fff;\n  }\n\n\n.tabContent{\n  padding: 1rem;\n  border: 1px solid #e8e8e8;\n  border-top: none;\n}\n\n\n.inputNumber{\n  font-size: 1rem;\n  padding: 0.5rem 0.6rem;\n  border-radius: 5px;\n  border: 1px solid #ccc;\n  font-weight: 400;\n}\n\n\n.interval .standardUnits{\n    width: 10rem;\n  }\n\n\n.interval .line{\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-align: center;\n        align-items: center;\n  }\n\n\n.interval .line .title{\n      margin-right: 1rem;\n    }\n\n\n.interval .line .inputNumber{\n      width: 4rem;\n      margin-right: 0.5rem;\n    }\n\n\n.interval .line .timeUnits{\n      width: 10rem;\n    }\n\n\n.timeframe{\n  margin-bottom: 0.5rem;\n}\n\n\n.timeframe .relative{\n    display:-ms-flexbox;\n    display:flex;\n  }\n\n\n.timeframe .relative .relativity, .timeframe .relative .inputNumber{\n      margin-right:0.5rem;\n    }\n\n\n.timeframe .relative .relativity{\n      width:100%;\n      max-width:12rem;\n    }\n\n\n.timeframe .relative .units{\n      width:100%;\n      max-width:12rem;\n    }\n\n\n.timeframe .description{\n    margin-top: 0.5rem;\n    padding: 1rem;\n    background: #fafafa;\n  }\n\n\n.timeframe .tabAbsolute .DateRangePickerInput_arrow{\n      display: none;\n    }\n\n\n.timeframe .tabAbsolute .DateInput {\n      width: 8rem;\n      background: none;\n    }\n\n\n.timeframe .tabAbsolute .DateInput_input {\n      padding: 0.5rem;\n      font-size: 1rem;\n      line-height: normal;\n      color:#000;\n      font-weight: normal;\n      border-radius: 5px;\n    }\n\n\n.timeframe .tabAbsolute .rc-time-picker-input{\n      font-size: 1rem;\n      line-height: normal;\n      font-weight: normal;\n      color: #000;\n      height: 2.4rem;\n      width: 7rem;\n      border-radius: 5px;\n    }\n\n\n.timeframe .tabAbsolute .line{\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-align: center;\n          align-items: center;\n      margin: 0.5rem;\n    }\n\n\n.timeframe .tabAbsolute .line .title{\n        width: 4rem;\n      }\n\n\n.timeframe .tabAbsolute .line .SingleDatePicker {\n        margin-right: 0.5rem;\n      }\n\n\n.timeframe .tabAbsolute .line .SingleDatePickerInput__withBorder {\n        border-radius: 5px;\n        border: 1px solid #dbdbdb;\n      }\n\n\n.rc-time-picker-panel .rc-time-picker-panel-inner{\n    -webkit-box-shadow: none;\n            box-shadow: none;\n    border-radius: 5px;\n  }\n\n\n.rc-time-picker-panel .rc-time-picker-input{\n    font-size: 1rem;\n    line-height: normal;\n    font-weight: normal;\n    color: #000;\n    height: 2.4rem;\n    width: 8rem;\n    border-radius: 5px;\n  }\n\n\n.rc-time-picker-panel .rc-time-picker-panel-select{\n    font-size: 1rem;\n  }\n\n\n.rc-time-picker-panel .rc-time-picker-panel-select li{\n      height: 2rem;\n      line-height: 2rem;\n    }\n\n\n.rc-time-picker-panel .rc-time-picker-panel-input{\n    font-size: 1rem;\n  }\n\n\n.apiQueryUrl{\n  cursor: pointer;\n  padding: 1rem;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-align: center;\n      align-items: center;\n  width: 100%;\n  font-size: 0.8rem;\n}\n\n\n.apiQueryUrl input{\n    -ms-flex: 1;\n        flex: 1;\n    margin: 0 1rem;\n  }\n\n\n.fa-copy:active{\n  color: #00bbde;\n  color: #00bbde;\n}\n\n\n.button-run-query{\n\n}\n\n\n.button-embed-html{\n  float: right;\n}\n\n\n.button-download-csv{\n  float: right;\n  margin: 0;\n}\n\n\n.button-download-json{\n  float: right;\n  margin: 0 1rem 0 0;\n}\n\n\n.preview{\n  width: 100%;\n  height: 340px;\n  overflow-y: scroll;\n}\n\n\n.chartType{\n  margin-top: 1rem;\n}", ""]);
+exports.push([module.i, "body{\n  margin: 0 auto;\n  width: 70%;\n  font-family: Montserrat, Tahoma, Arial;\n}\n\n\n* {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n\n\n.filters-container .list{\n    margin: 2rem 0;\n    width: 100%;\n  }\n\n\n.filters-container .list .row{\n      display: -ms-flexbox;\n      display: flex;\n      width: 100%;\n      margin: 0 0 1rem;\n    }\n\n\n.filters-container .list .row .rowPart{\n        -ms-flex:1;\n            flex:1;\n        padding: 0 0.5rem;\n      }\n\n\n.filters-container .list .row .rowPart input{\n          padding: 0.55rem 0.7rem;\n          font-size: 1rem;\n          border-radius: 4px;\n          border: 1px solid #aaa;\n          width: 100%;\n        }\n\n\n.filters-container .list .row .rowPart .delete{\n          cursor: pointer;\n        }\n\n\n.filters-container .list .row .rowPart .delete i {\n            color: #ea7373;\n          }\n\n\n.filters-container .list .btnAdd{\n      margin: 0.5rem;\n      cursor: pointer;\n      padding: 1rem;\n      background:#eee;\n      float: left;\n    }\n\n\n.filters-container .list .btnAdd i {\n        margin-right: 1rem;\n      }\n\n\n.modal{\n  display:-ms-flexbox;\n  display:flex;\n  -ms-flex-direction: column;\n      flex-direction: column;\n  height: 100%;\n  width: 100%;\n}\n\n\n.modal .header{\n    -ms-flex:0;\n        flex:0;\n    border-bottom: 1px solid #eee;\n    padding-bottom: 1rem;\n  }\n\n\n.modal .header .title{\n        float: left;\n      }\n\n\n.modal .header .x{\n        color: #565656;\n        float: right;\n        font-weight: bold;\n        cursor: pointer;\n        padding: 1rem;\n        margin: -2rem -1rem;\n        font-size: 2rem;\n      }\n\n\n.modal .container{\n    -ms-flex:1;\n        flex:1;\n    padding: 1rem 0;\n    clear: both;\n    width: 100%;\n    overflow-y: scroll;\n    white-space: pre-wrap;\n  }\n\n\n.modal .button-copy{\n    padding: 1rem;\n    width: 10rem;\n    text-align: center;\n    cursor: pointer;\n    background: #1e93d8;\n    color: #fff;\n    border-radius: 0.5rem;\n    margin-top: 1rem;\n  }\n\n\n.modal .button-copy:active{\n    background: #30a1e4;\n  }\n\n\n.saved-query {\n  margin: 1rem 0;\n\n}\n\n\n.saved-query input {\n    padding: 1rem;\n  }\n\n\n.saved-query .button-copy{\n    padding: 1rem;\n    right: 0;\n    bottom: 0;\n    border: 0;\n    cursor: pointer;\n    display: inline;\n  }\n\n\n.saved-query .button-copy:active{\n    background: #fff;\n  }\n\n\n.saved-queries{\n  overflow: scroll;\n  max-height: 40rem;\n}\n\n\n.saved-queries .input-filter{\n    width: 100%;\n    padding: 0.5rem;\n    font-size: 1rem;\n  }\n\n\n.saved-queries .item{\n    padding: 1.2rem;\n    cursor: pointer;\n    overflow: auto;\n    border: 1px solid #eee;\n    margin-bottom: -1px;\n  }\n\n\n.saved-queries .item .name{\n      margin: 0 0 0.5rem;\n    }\n\n\n.saved-queries .item .cached{\n      float: left;\n      font-size: 0.7rem;\n    }\n\n\n.saved-queries .item .data{\n      float: right;\n      font-size: 0.7rem;\n    }\n\n\n.saved-queries .active{\n    background: #f7f7f7;\n  }\n\n\nbutton{\n  margin: 2rem 0 0;\n  padding: 1rem;\n}\n\n\n.label{\n  padding: 1rem 0 0.5rem;\n}\n\n\n.hide{\n  display: none;\n}\n\n\n.keenExplorer{\n  display: -ms-flexbox;\n  display: flex;\n}\n\n\n.keenExplorer .panel{\n    -ms-flex: 1;\n        flex: 1;\n  }\n\n\n.keenExplorer .panel-buttons{\n    display: -ms-flexbox;\n    display: flex;\n  }\n\n\n.keenExplorer .panel-buttons .button{\n      margin: 1px;\n      cursor: pointer;\n      -ms-flex: 1;\n          flex: 1;\n      padding: 1rem;\n      background: #eee;\n      border-radius: 0.5rem 0.5rem 0 0;\n    }\n\n\n.keenExplorer .panel-buttons .button-active{\n      border: 1px solid #ccc;\n      border-bottom: 0;\n      background: #fff;\n    }\n\n\n.keenExplorer .panel-buttons .button-clear{\n      float: right;\n      cursor: pointer;\n      font-size: 1.2rem;\n      color: #ccc;\n    }\n\n\n.keenExplorer .result{\n    -ms-flex: 2;\n        flex: 2;\n    padding: 0 1.5rem;\n    overflow: hidden;\n  }\n\n\n.keenExplorer .keen-dataviz-container{\n    height: calc(100% - 3rem);\n    overflow: hidden;\n  }\n\n\n.keenExplorer .foldable{\n    margin-top: 0.5rem;\n    border: 1px solid #e8e8e8;\n    background: #fdfdfd;\n    padding: 0.5rem;\n    cursor: pointer;\n    border-radius: 5px;\n  }\n\n\n.keenExplorer .foldableActive{\n      background: none;\n    }\n\n\n.keenExplorer .foldable .title{\n      padding: 0.5rem;\n    }\n\n\n.keenExplorer .foldable .title .icon{\n        float: right;\n      }\n\n\n.keenExplorer .foldable .content{\n      margin-top: 0.5rem;\n    }\n\n\n.keenExplorer .foldable .tabContent{\n      border: 0;\n    }\n\n\n.keenExplorer .filters{\n    display: -ms-flexbox;\n    display: flex;\n  }\n\n\n.keenExplorer .filters .title{\n      -ms-flex: 1;\n          flex: 1;\n    }\n\n\n.keenExplorer .filters .count{\n      -ms-flex-item-align: center;\n          align-self: center;\n      text-align: right;\n      padding: 0 0.5rem 0 0;\n    }\n\n\n.keenExplorer .optional{\n    margin-left: 1em;\n    font-size: 0.7em;\n    color:#ddd;\n    color: #737373;\n  }\n\n\n.keenExplorer .groupBy .label{\n      padding: 0 0 0.5rem;\n    }\n\n\n.keenExplorer .groupBy .btnPlus, .keenExplorer .groupBy .btnMinus{\n      margin-top: 1rem;\n      padding: 0.7rem;\n      background: #fdfdfd;\n      border: 1px solid #e8e8e8;\n      border-radius: 5px;\n      display: inline-block;\n    }\n\n\n.keenExplorer .groupBy .options{\n      margin-top: 1rem;\n      display:-ms-flexbox;\n      display:flex;\n    }\n\n\n.keenExplorer .groupBy .options .orderBy{\n        width: 8em;\n        padding-right: 1rem;\n      }\n\n\n.keenExplorer .groupBy .options .orderBy .select{\n          width: 100%;\n        }\n\n\n.keenExplorer .groupBy .options .limit{\n        width: 8em;\n      }\n\n\n.keenExplorer .groupBy .options .limit .input{\n          width: 100%;\n        }\n\n\n.keenExplorer .groupBy .additionalTargetProperty{\n      margin-top: 1rem;\n      padding-top: 1rem;\n      border-top: 1px solid #f1f1f1;\n    }\n\n\n.keenExplorer .lets-go{\n    display:-ms-flexbox;\n    display:flex;\n    width:100%;\n    height:300px;\n    -ms-flex-pack: center;\n        justify-content: center;\n    -ms-flex-align: center;\n        align-items: center;\n    background-color: #dff3f8;\n    border-color: transparent;\n    color: #207690;\n\n    background-color: #fff;\n    border-color: transparent;\n    color: #207690;\n    font-size: 2rem;\n    border: 1px dashed #ccc;\n  }\n\n\n.tabs{\n  display:-ms-flexbox;\n  display:flex;\n}\n\n\n.tabs .tab{\n    -ms-flex: 1;\n        flex: 1;\n    padding: 1rem;\n    background: #fafafa;\n    cursor: pointer;\n    border: 1px solid #e8e8e8;\n    border-radius: 5px 5px 0 0;\n  }\n\n\n.tabs .active{\n    background: #fff;\n    border-bottom: 1px solid #fff;\n  }\n\n\n.tabContent{\n  padding: 1rem;\n  border: 1px solid #e8e8e8;\n  border-top: none;\n}\n\n\n.inputNumber{\n  font-size: 1rem;\n  padding: 0.5rem 0.6rem;\n  border-radius: 5px;\n  border: 1px solid #ccc;\n  font-weight: 400;\n}\n\n\n.interval .standardUnits{\n    width: 10rem;\n  }\n\n\n.interval .line{\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-align: center;\n        align-items: center;\n  }\n\n\n.interval .line .title{\n      margin-right: 1rem;\n    }\n\n\n.interval .line .inputNumber{\n      width: 4rem;\n      margin-right: 0.5rem;\n    }\n\n\n.interval .line .timeUnits{\n      width: 10rem;\n    }\n\n\n.timeframe{\n  margin-bottom: 0.5rem;\n}\n\n\n.timeframe .relative{\n    display:-ms-flexbox;\n    display:flex;\n  }\n\n\n.timeframe .relative .relativity, .timeframe .relative .inputNumber{\n      margin-right:0.5rem;\n    }\n\n\n.timeframe .relative .relativity{\n      width:100%;\n      max-width:12rem;\n    }\n\n\n.timeframe .relative .units{\n      width:100%;\n      max-width:12rem;\n    }\n\n\n.timeframe .description{\n    margin-top: 0.5rem;\n    padding: 1rem;\n    background: #fafafa;\n  }\n\n\n.timeframe .tabAbsolute .DateRangePickerInput_arrow{\n      display: none;\n    }\n\n\n.timeframe .tabAbsolute .DateInput {\n      width: 8rem;\n      background: none;\n    }\n\n\n.timeframe .tabAbsolute .DateInput_input {\n      padding: 0.5rem;\n      font-size: 1rem;\n      line-height: normal;\n      color:#000;\n      font-weight: normal;\n      border-radius: 5px;\n    }\n\n\n.timeframe .tabAbsolute .rc-time-picker-input{\n      font-size: 1rem;\n      line-height: normal;\n      font-weight: normal;\n      color: #000;\n      height: 2.4rem;\n      width: 7rem;\n      border-radius: 5px;\n    }\n\n\n.timeframe .tabAbsolute .line{\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-align: center;\n          align-items: center;\n      margin: 0.5rem;\n    }\n\n\n.timeframe .tabAbsolute .line .title{\n        width: 4rem;\n      }\n\n\n.timeframe .tabAbsolute .line .SingleDatePicker {\n        margin-right: 0.5rem;\n      }\n\n\n.timeframe .tabAbsolute .line .SingleDatePickerInput__withBorder {\n        border-radius: 5px;\n        border: 1px solid #dbdbdb;\n      }\n\n\n.rc-time-picker-panel .rc-time-picker-panel-inner{\n    -webkit-box-shadow: none;\n            box-shadow: none;\n    border-radius: 5px;\n  }\n\n\n.rc-time-picker-panel .rc-time-picker-input{\n    font-size: 1rem;\n    line-height: normal;\n    font-weight: normal;\n    color: #000;\n    height: 2.4rem;\n    width: 8rem;\n    border-radius: 5px;\n  }\n\n\n.rc-time-picker-panel .rc-time-picker-panel-select{\n    font-size: 1rem;\n  }\n\n\n.rc-time-picker-panel .rc-time-picker-panel-select li{\n      height: 2rem;\n      line-height: 2rem;\n    }\n\n\n.rc-time-picker-panel .rc-time-picker-panel-input{\n    font-size: 1rem;\n  }\n\n\n.apiQueryUrl{\n  cursor: pointer;\n  padding: 1rem;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-align: center;\n      align-items: center;\n  width: 100%;\n  font-size: 0.8rem;\n}\n\n\n.apiQueryUrl input{\n    -ms-flex: 1;\n        flex: 1;\n    margin: 0 1rem;\n  }\n\n\n.fa-copy:active{\n  color: #00bbde;\n  color: #00bbde;\n}\n\n\n.button-run-query{\n  font-size: 1rem;\n  border-radius: 0.3rem;\n  background: #16b913;\n  color: #fff;\n  border: 0;\n  padding: 1rem 2rem;\n  cursor: pointer;\n  margin: 1rem 0 0;\n}\n\n\n.button-run-query i {\n    margin-right: 0.5rem;\n  }\n\n\n.error{\n  padding: 1rem;\n  background: #ffc3c3;\n  margin: 1rem 0 0;\n}\n\n\n.preview{\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-direction: row;\n      flex-direction: row;\n  -ms-flex-wrap: wrap;\n      flex-wrap: wrap;\n}\n\n\n.preview .loader{\n    width: 100%;\n    height: 340px;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-align: center;\n        align-items: center;\n    -ms-flex-pack: center;\n        justify-content: center;\n    font-size: 5rem;\n    color: #eee;\n  }\n\n\n.preview .keen-dataviz-container, .preview .react-json-view{\n    width: 100%;\n    height: 340px;\n    overflow-y: scroll;\n  }\n\n\n.preview .react-json-view{\n    padding-top: 1rem;\n  }\n\n\n.preview .select-chart-type-container{\n    -ms-flex: 1;\n        flex: 1;\n    -ms-flex-order: 1;\n        order: 1;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-item-align: center;\n        align-self: center;\n    -ms-flex-direction: column;\n        flex-direction: column;\n    -ms-flex-pack: end;\n        justify-content: flex-end;\n  }\n\n\n.preview .select-chart-type {\n    -ms-flex: 1;\n        flex: 1;\n    width: 20rem;\n    -ms-flex-item-align: end;\n        align-self: flex-end;\n  }\n\n\n.preview .button-download{\n    -ms-flex-order: 0;\n        order: 0;\n    background: transparent;\n    border: 0;\n    margin: 0;\n    cursor: pointer;\n    font-size: 0.8rem;\n  }\n\n\n.preview .button-download i{\n      margin-right: 0.5rem;\n    }\n\n\n.chartType{\n  margin-top: 1rem;\n}\n\n\n.reload{\n  position: absolute;\n  left: 1rem;\n  top: 1rem;\n}", ""]);
 
 
 
@@ -38364,7 +38364,7 @@ var queries_queries = function queries() {
         results: action.payload
       });
 
-    case 'UPDATE_SAVED_QUERIES':
+    case 'CLIENT_FETCH_SAVED_QUERIES_SUCCESS':
       return queries_objectSpread({}, state, {
         saved: action.payload
       });
@@ -38375,7 +38375,9 @@ var queries_queries = function queries() {
       });
 
     case 'RESET_UI':
-      return queries_objectSpread({}, queries_defaultState);
+      return queries_objectSpread({}, state, {
+        results: queries_defaultState.results
+      });
 
     default:
       return state;
@@ -38384,6 +38386,8 @@ var queries_queries = function queries() {
 
 /* harmony default export */ var reducers_queries = (queries_queries);
 // CONCATENATED MODULE: ./lib/js/app/components/consts.js
+var PANEL_NEW_QUERY = 0;
+var PANEL_BROWSE = 1;
 var ANALYSIS_TYPES = [{
   type: 'average',
   targetProperty: true
@@ -38593,6 +38597,14 @@ var DATA_TYPES = [{
   value: 'Datetime'
 }];
 // CONCATENATED MODULE: ./lib/js/app/redux/reducers/ui.js
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
 function ui_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { ui_defineProperty(target, key, source[key]); }); } return target; }
 
 function ui_defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -38609,19 +38621,21 @@ var defaultStateSavedQuery = {
   exists: false
 };
 var ui_defaultState = {
+  activePanel: PANEL_NEW_QUERY,
   autoload: false,
   analysisType: defaultAnalysisType.type,
   eventCollection: undefined,
   showTargetProperty: false,
   targetProperty: undefined,
-  timezone: parseInt(localStorage.timezone || 0),
-  filters: undefined,
+  timezone: parseInt(localStorage.timezone || 0, 0),
+  filters: [],
+  modalFilters: false,
   groupBy: undefined,
   orderBy: undefined,
   limit: undefined,
   interval: undefined,
   numberOfGroupByProps: 1,
-  timeframe: "".concat(RELATIVITY_UNITS[0], "_").concat(DEFAULT_NUMBER_OF_TIME_UNITS, "_").concat(TIME_UNITS[0]),
+  timeframe: "".concat(RELATIVITY_UNITS[0], "_").concat(DEFAULT_NUMBER_OF_TIME_UNITS, "_").concat(TIME_UNITS[2]),
   timeframeData: {
     activeTab: TIMEFRAME_TABS[0],
     relativity: RELATIVITY_UNITS[0],
@@ -38632,7 +38646,10 @@ var ui_defaultState = {
   },
   chartType: undefined,
   savedQuery: ui_objectSpread({}, defaultStateSavedQuery),
-  activeSavedQuery: -1
+  activeSavedQuery: -1,
+  empty: true,
+  error: null,
+  fetching: false
 };
 
 var ui_queries = function queries() {
@@ -38641,21 +38658,80 @@ var ui_queries = function queries() {
 
   switch (action.type) {
     case 'UI_UPDATE':
-      return ui_objectSpread({}, state, action.payload);
+      return ui_objectSpread({}, state, action.payload, {
+        empty: false
+      });
+
+    case 'CLIENT_RUN_QUERY':
+      return ui_objectSpread({}, state, {
+        error: null,
+        fetching: true
+      });
+
+    case 'CLIENT_RUN_QUERY_ERROR':
+      return ui_objectSpread({}, state, {
+        error: action.payload,
+        fetching: false
+      });
+
+    case 'CLIENT_RUN_QUERY_SUCCESS':
+      return ui_objectSpread({}, state, {
+        fetching: false
+      });
 
     case 'UPDATE_SAVED_QUERY_UI':
       return ui_objectSpread({}, state, {
         savedQuery: ui_objectSpread({}, state.savedQuery, action.payload)
       });
 
+    case 'CLIENT_SAVE_QUERY_SUCCESS':
+      return ui_objectSpread({}, state, {
+        savedQuery: ui_objectSpread({}, state.savedQuery, {
+          exists: true
+        })
+      });
+
+    case 'CLIENT_FETCH_SAVED_QUERIES_SUCCESS':
+      return ui_objectSpread({}, state, {
+        activeSavedQuery: ui_defaultState.activeSavedQuery
+      });
+
     case 'RESET_SAVED_QUERY_UI':
       return ui_objectSpread({}, state, {
         savedQuery: ui_objectSpread({}, defaultStateSavedQuery),
-        activeSavedQuery: -1
+        activeSavedQuery: ui_defaultState.activeSavedQuery
       });
 
     case 'RESET_UI':
       return ui_objectSpread({}, ui_defaultState);
+
+    case 'ADD_FILTER':
+      return ui_objectSpread({}, state, {
+        filters: [].concat(_toConsumableArray(state.filters), [{
+          propertyName: '',
+          operator: 'eq',
+          propertyType: 'String',
+          propertyValue: ''
+        }])
+      });
+
+    case 'DELETE_FILTER':
+      return ui_objectSpread({}, state, {
+        filters: state.filters.filter(function (item, index) {
+          return index !== action.payload;
+        })
+      });
+
+    case 'UPDATE_FILTER':
+      return ui_objectSpread({}, state, {
+        filters: state.filters.map(function (item, index) {
+          if (action.payload.index !== index) {
+            return item;
+          }
+
+          return ui_objectSpread({}, item, action.payload.item);
+        })
+      });
 
     default:
       return state;
@@ -39127,13 +39203,22 @@ regeneratorRuntime.mark(sagas_fetchSchema),
 regeneratorRuntime.mark(query),
     _marked4 =
 /*#__PURE__*/
-regeneratorRuntime.mark(watchFetchProject),
+regeneratorRuntime.mark(saveQuery),
     _marked5 =
+/*#__PURE__*/
+regeneratorRuntime.mark(deleteQuery),
+    _marked6 =
+/*#__PURE__*/
+regeneratorRuntime.mark(fetchSavedQueries),
+    _marked7 =
+/*#__PURE__*/
+regeneratorRuntime.mark(watchFetchProject),
+    _marked8 =
 /*#__PURE__*/
 regeneratorRuntime.mark(rootSaga);
 
 
-
+ // import { fetchSavedQueries } from '../actionCreators/client';
 
 function fetchProject() {
   var url, responseBody;
@@ -39159,7 +39244,7 @@ function fetchProject() {
           });
 
         case 7:
-          _context.next = 14;
+          _context.next = 13;
           break;
 
         case 9:
@@ -39172,17 +39257,12 @@ function fetchProject() {
           });
 
         case 13:
-          return _context.abrupt("return");
-
-        case 14:
         case "end":
           return _context.stop();
       }
     }
   }, _marked, null, [[0, 9]]);
 }
-
-;
 
 function sagas_fetchSchema(_ref) {
   var payload, url, responseBody;
@@ -39218,7 +39298,7 @@ function sagas_fetchSchema(_ref) {
           });
 
         case 10:
-          _context2.next = 17;
+          _context2.next = 16;
           break;
 
         case 12:
@@ -39231,17 +39311,12 @@ function sagas_fetchSchema(_ref) {
           });
 
         case 16:
-          return _context2.abrupt("return");
-
-        case 17:
         case "end":
           return _context2.stop();
       }
     }
   }, _marked2, null, [[3, 12]]);
 }
-
-;
 
 function query(_ref2) {
   var payload, responseBody;
@@ -39263,7 +39338,7 @@ function query(_ref2) {
           });
 
         case 7:
-          _context3.next = 14;
+          _context3.next = 13;
           break;
 
         case 9:
@@ -39276,9 +39351,6 @@ function query(_ref2) {
           });
 
         case 13:
-          return _context3.abrupt("return");
-
-        case 14:
         case "end":
           return _context3.stop();
       }
@@ -39286,44 +39358,175 @@ function query(_ref2) {
   }, _marked3, null, [[1, 9]]);
 }
 
-;
-function watchFetchProject() {
-  return regeneratorRuntime.wrap(function watchFetchProject$(_context4) {
+function saveQuery(_ref3) {
+  var payload, name, body, responseBody;
+  return regeneratorRuntime.wrap(function saveQuery$(_context4) {
     while (1) {
       switch (_context4.prev = _context4.next) {
         case 0:
-          _context4.next = 2;
-          return takeLatest$1('CLIENT_FETCH_PROJECT', fetchProject);
+          payload = _ref3.payload;
+          _context4.prev = 1;
+          name = payload.name, body = payload.body;
+          _context4.next = 5;
+          return client.put(client.url('queries', 'saved', name)).auth(client.masterKey()).send(body);
 
-        case 2:
-          _context4.next = 4;
-          return takeLatest$1('CLIENT_FETCH_SCHEMA', sagas_fetchSchema);
+        case 5:
+          responseBody = _context4.sent;
+          _context4.next = 8;
+          return chunk_585b854f_put({
+            type: 'CLIENT_SAVE_QUERY_SUCCESS',
+            payload: responseBody
+          });
 
-        case 4:
-          _context4.next = 6;
-          return takeLatest$1('CLIENT_RUN_QUERY', query);
+        case 8:
+          _context4.next = 14;
+          break;
 
-        case 6:
+        case 10:
+          _context4.prev = 10;
+          _context4.t0 = _context4["catch"](1);
+          _context4.next = 14;
+          return chunk_585b854f_put({
+            type: 'CLIENT_SAVE_QUERY_ERROR',
+            payload: _context4.t0
+          });
+
+        case 14:
         case "end":
           return _context4.stop();
       }
     }
-  }, _marked4);
+  }, _marked4, null, [[1, 10]]);
 }
-function rootSaga() {
-  return regeneratorRuntime.wrap(function rootSaga$(_context5) {
+
+function deleteQuery(_ref4) {
+  var payload, responseBody;
+  return regeneratorRuntime.wrap(function deleteQuery$(_context5) {
     while (1) {
       switch (_context5.prev = _context5.next) {
         case 0:
-          _context5.next = 2;
-          return chunk_585b854f_all([watchFetchProject()]);
+          payload = _ref4.payload;
+          _context5.prev = 1;
+          _context5.next = 4;
+          return client.query(payload);
 
-        case 2:
+        case 4:
+          responseBody = _context5.sent;
+          _context5.next = 7;
+          return chunk_585b854f_put({
+            type: 'CLIENT_RUN_QUERY_SUCCESS',
+            payload: responseBody
+          });
+
+        case 7:
+          _context5.next = 13;
+          break;
+
+        case 9:
+          _context5.prev = 9;
+          _context5.t0 = _context5["catch"](1);
+          _context5.next = 13;
+          return chunk_585b854f_put({
+            type: 'CLIENT_RUN_QUERY_ERROR',
+            payload: _context5.t0
+          });
+
+        case 13:
         case "end":
           return _context5.stop();
       }
     }
-  }, _marked5);
+  }, _marked5, null, [[1, 9]]);
+}
+
+function fetchSavedQueries() {
+  var responseBody;
+  return regeneratorRuntime.wrap(function fetchSavedQueries$(_context6) {
+    while (1) {
+      switch (_context6.prev = _context6.next) {
+        case 0:
+          _context6.prev = 0;
+          _context6.next = 3;
+          return client.get(client.url('queries', 'saved')).auth(client.masterKey()).send();
+
+        case 3:
+          responseBody = _context6.sent;
+          _context6.next = 6;
+          return chunk_585b854f_put({
+            type: 'CLIENT_FETCH_SAVED_QUERIES_SUCCESS',
+            payload: responseBody
+          });
+
+        case 6:
+          _context6.next = 12;
+          break;
+
+        case 8:
+          _context6.prev = 8;
+          _context6.t0 = _context6["catch"](0);
+          _context6.next = 12;
+          return chunk_585b854f_put({
+            type: 'CLIENT_SAVE_QUERY_ERROR',
+            payload: _context6.t0
+          });
+
+        case 12:
+        case "end":
+          return _context6.stop();
+      }
+    }
+  }, _marked6, null, [[0, 8]]);
+}
+
+function watchFetchProject() {
+  return regeneratorRuntime.wrap(function watchFetchProject$(_context7) {
+    while (1) {
+      switch (_context7.prev = _context7.next) {
+        case 0:
+          _context7.next = 2;
+          return takeLatest$1('CLIENT_FETCH_PROJECT', fetchProject);
+
+        case 2:
+          _context7.next = 4;
+          return takeLatest$1('CLIENT_FETCH_SCHEMA', sagas_fetchSchema);
+
+        case 4:
+          _context7.next = 6;
+          return takeLatest$1('CLIENT_RUN_QUERY', query);
+
+        case 6:
+          _context7.next = 8;
+          return takeLatest$1('CLIENT_SAVE_QUERY', saveQuery);
+
+        case 8:
+          _context7.next = 10;
+          return takeLatest$1('CLIENT_DELETE_QUERY', deleteQuery);
+
+        case 10:
+          _context7.next = 12;
+          return takeLatest$1(['CLIENT_FETCH_SAVED_QUERIES', 'CLIENT_SAVE_QUERY_SUCCESS'], fetchSavedQueries);
+
+        case 12:
+        case "end":
+          return _context7.stop();
+      }
+    }
+  }, _marked7);
+}
+function rootSaga() {
+  return regeneratorRuntime.wrap(function rootSaga$(_context8) {
+    while (1) {
+      switch (_context8.prev = _context8.next) {
+        case 0:
+          _context8.next = 2;
+          return chunk_585b854f_all([watchFetchProject()]);
+
+        case 2:
+        case "end":
+          return _context8.stop();
+      }
+    }
+  }, _marked8);
 }
 // EXTERNAL MODULE: ./package.json
 var package_0 = __webpack_require__(273);
@@ -44203,6 +44406,23 @@ var client_fetchSchema = function fetchSchema(payload) {
     payload: payload
   };
 };
+var client_saveQuery = function saveQuery(payload) {
+  return {
+    type: 'CLIENT_SAVE_QUERY',
+    payload: payload
+  };
+};
+var client_deleteQuery = function deleteQuery(payload) {
+  return {
+    type: 'CLIENT_DELETE_QUERY',
+    payload: payload
+  };
+};
+var client_fetchSavedQueries = function fetchSavedQueries() {
+  return {
+    type: 'CLIENT_FETCH_SAVED_QUERIES'
+  };
+};
 // CONCATENATED MODULE: ./lib/js/app/redux/actionCreators/ui.js
 var ui_updateUI = function updateUI(payload) {
   return {
@@ -44225,6 +44445,23 @@ var resetSavedQueryUI = function resetSavedQueryUI(payload) {
 var ui_resetUI = function resetUI() {
   return {
     type: 'RESET_UI'
+  };
+};
+var addFilter = function addFilter() {
+  return {
+    type: 'ADD_FILTER'
+  };
+};
+var deleteFilter = function deleteFilter(payload) {
+  return {
+    type: 'DELETE_FILTER',
+    payload: payload
+  };
+};
+var ui_updateFilter = function updateFilter(payload) {
+  return {
+    type: 'UPDATE_FILTER',
+    payload: payload
   };
 };
 // CONCATENATED MODULE: ./lib/js/app/components/explorer/SelectTargetProperty.js
@@ -44320,7 +44557,7 @@ var keen_dataviz = __webpack_require__(475);
 
 // CONCATENATED MODULE: ./lib/js/app/utils/csv.js
 var exportToCsv = function exportToCsv(data, filename) {
-  var csvContent = 'data:text/csv;charset=utf-8,';
+  var csvContent = '';
   data.forEach(function (row, i) {
     row.forEach(function (cell, j) {
       csvContent += String(cell).replace(/,/g, '');
@@ -44341,7 +44578,7 @@ var exportToCsv = function exportToCsv(data, filename) {
   }
 
   var htmlElement = document.createElement('a');
-  htmlElement.setAttribute('href', encodeURI(csvContent));
+  htmlElement.setAttribute('href', 'data:text/csv;charset=utf-8,' + encodeURI(csvContent));
   htmlElement.setAttribute('download', filenameWithExt);
   document.body.appendChild(htmlElement);
   htmlElement.click();
@@ -44349,7 +44586,7 @@ var exportToCsv = function exportToCsv(data, filename) {
 // CONCATENATED MODULE: ./lib/js/app/utils/json.js
 var exportToJson = function exportToJson(data, filename) {
   var htmlElement = document.createElement('a');
-  htmlElement.setAttribute('href', encodeURI(JSON.stringify(data)));
+  htmlElement.setAttribute('href', 'data:text/json;charset=utf-8,' + encodeURI(JSON.stringify(data)));
   var filenameWithExt = filename;
 
   if (!filename.includes('.json')) {
@@ -44390,7 +44627,7 @@ var Dataviz_mapStateToProps = function mapStateToProps(state) {
   return {
     results: state.queries.results,
     type: state.ui.chartType,
-    queryName: state.ui.queryName
+    queryName: state.ui.savedQuery.name
   };
 };
 
@@ -44401,10 +44638,10 @@ var Dataviz_DatavizComponent =
 function (_Component) {
   Dataviz_inherits(DatavizComponent, _Component);
 
-  function DatavizComponent() {
+  function DatavizComponent(props) {
     Dataviz_classCallCheck(this, DatavizComponent);
 
-    return Dataviz_possibleConstructorReturn(this, Dataviz_getPrototypeOf(DatavizComponent).apply(this, arguments));
+    return Dataviz_possibleConstructorReturn(this, Dataviz_getPrototypeOf(DatavizComponent).call(this, props));
   }
 
   Dataviz_createClass(DatavizComponent, [{
@@ -44414,7 +44651,11 @@ function (_Component) {
     }
   }, {
     key: "componentDidUpdate",
-    value: function componentDidUpdate() {
+    value: function componentDidUpdate(prevProps) {
+      if (prevProps.queryName !== this.props.queryName) {
+        return;
+      }
+
       this.generateChart();
     }
   }, {
@@ -44425,7 +44666,7 @@ function (_Component) {
           type = _this$props.type;
 
       if (results) {
-        console.log('draw');
+        console.log('draw chart');
         this.dataviz = new external_keen_dataviz_default.a({
           container: '#keen-dataviz-container',
           type: type,
@@ -44446,16 +44687,20 @@ function (_Component) {
         className: "keen-dataviz-container",
         id: "keen-dataviz-container"
       }), external_react_default.a.createElement("button", {
-        className: "button-download-csv",
+        className: "button-download button-download-csv",
         onClick: function onClick() {
           return exportToCsv(data, filename);
         }
-      }, "Download as CSV"), external_react_default.a.createElement("button", {
-        className: "button-download-json",
+      }, external_react_default.a.createElement("i", {
+        className: "fas fa-download"
+      }), " CSV"), external_react_default.a.createElement("button", {
+        className: "button-download button-download-json",
         onClick: function onClick() {
           return exportToJson(results, filename);
         }
-      }, "Download as JSON"));
+      }, external_react_default.a.createElement("i", {
+        className: "fas fa-download"
+      }), " JSON"));
     }
   }]);
 
@@ -50024,7 +50269,7 @@ function (_Component) {
         label: TIME_UNITS[2],
         value: TIME_UNITS[2]
       },
-      numberOfUnits: '14',
+      numberOfUnits: DEFAULT_NUMBER_OF_TIME_UNITS,
       startDate: external_moment_default()().subtract(1, 'day'),
       endDate: external_moment_default()(),
       startTime: external_moment_default()(external_moment_default()().format('YYYY-MM-DD')),
@@ -50035,8 +50280,7 @@ function (_Component) {
 
   Timeframe_createClass(Timeframe, [{
     key: "componentDidMount",
-    value: function componentDidMount() {
-      this.onChange();
+    value: function componentDidMount() {// this.onChange();
     }
   }, {
     key: "onChange",
@@ -50434,6 +50678,10 @@ function (_Component) {
 // CONCATENATED MODULE: ./lib/js/app/components/explorer/Filters.js
 function Filters_typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { Filters_typeof = function _typeof(obj) { return typeof obj; }; } else { Filters_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return Filters_typeof(obj); }
 
+function Filters_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { Filters_defineProperty(target, key, source[key]); }); } return target; }
+
+function Filters_defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function Filters_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function Filters_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -50460,13 +50708,16 @@ function Filters_setPrototypeOf(o, p) { Filters_setPrototypeOf = Object.setProto
 var Filters_mapStateToProps = function mapStateToProps(state) {
   return {
     collections: state.collections,
-    ui: state.ui
+    filters: state.ui.filters
   };
 };
 
 var Filters_mapDispatchToProps = {
   fetchSchema: client_fetchSchema,
-  updateUI: ui_updateUI
+  updateUI: ui_updateUI,
+  addFilter: addFilter,
+  deleteFilter: deleteFilter,
+  updateFilter: ui_updateFilter
 };
 
 var Filters_Filters =
@@ -50482,57 +50733,110 @@ function (_Component) {
 
   Filters_createClass(Filters, [{
     key: "componentDidMount",
-    value: function componentDidMount() {//    this.onChange();
-    }
-  }, {
-    key: "onChange",
-    value: function onChange() {
-      this.props.onChange({});
-    }
+    value: function componentDidMount() {}
   }, {
     key: "render",
     value: function render() {
       var _this = this;
 
-      var filters = [1];
+      var _this$props = this.props,
+          collections = _this$props.collections,
+          filters = _this$props.filters,
+          updateFilter = _this$props.updateFilter;
       return external_react_default.a.createElement("div", {
         className: "list"
-      }, filters.map(function (item) {
+      }, filters.map(function (item, index) {
+        var propertyName = item.propertyName,
+            propertyType = item.propertyType,
+            propertyValue = item.propertyValue,
+            operator = item.operator;
         return external_react_default.a.createElement("div", {
-          className: "row"
+          className: "row",
+          key: index
         }, external_react_default.a.createElement("div", {
           className: "rowPart"
-        }, external_react_default.a.createElement(react_select_esm //  value = {  }
-        , {
-          options: Object.keys(_this.props.collections.schema).map(function (item) {
+        }, external_react_default.a.createElement(react_select_esm, {
+          value: {
+            label: propertyName,
+            value: propertyName
+          },
+          options: Object.keys(collections.schema).map(function (colItem) {
             return {
-              label: item,
-              value: item
+              label: colItem,
+              value: colItem
             };
           }),
-          onChange: function onChange(e) {}
+          onChange: function onChange(e) {
+            updateFilter({
+              index: index,
+              item: Filters_objectSpread({}, item, {
+                propertyName: e.value
+              })
+            });
+          }
         })), external_react_default.a.createElement("div", {
           className: "rowPart"
-        }, external_react_default.a.createElement(react_select_esm //  value = {  }
-        , {
+        }, external_react_default.a.createElement(react_select_esm, {
+          value: {
+            label: operator,
+            value: operator
+          },
           options: FILTER_OPERATORS,
-          onChange: function onChange(e) {}
+          onChange: function onChange(e) {
+            updateFilter({
+              index: index,
+              item: Filters_objectSpread({}, item, {
+                operator: e.value
+              })
+            });
+          }
         })), external_react_default.a.createElement("div", {
           className: "rowPart"
-        }, external_react_default.a.createElement(react_select_esm //  value = {  }
-        , {
+        }, external_react_default.a.createElement(react_select_esm, {
+          value: {
+            label: propertyType,
+            value: propertyType
+          },
           options: DATA_TYPES,
-          onChange: function onChange(e) {}
+          onChange: function onChange(e) {
+            updateFilter({
+              index: index,
+              item: Filters_objectSpread({}, item, {
+                propertyType: e.value
+              })
+            });
+          }
         })), external_react_default.a.createElement("div", {
           className: "rowPart"
         }, external_react_default.a.createElement("input", {
-          type: "text"
-        })));
+          type: "text",
+          onChange: function onChange(e) {
+            updateFilter({
+              index: index,
+              item: Filters_objectSpread({}, item, {
+                propertyValue: e.target.value
+              })
+            });
+          },
+          value: propertyValue
+        })), external_react_default.a.createElement("div", {
+          className: "rowPart"
+        }, external_react_default.a.createElement("a", {
+          className: "delete",
+          onClick: function onClick() {
+            _this.props.deleteFilter(index);
+          }
+        }, external_react_default.a.createElement("i", {
+          className: "fas fa-times"
+        }))));
       }), external_react_default.a.createElement("div", {
-        className: "btnAdd"
-      }, "+ Add another filter"), external_react_default.a.createElement("div", {
-        className: "btnSave"
-      }, "Save"));
+        className: "btnAdd",
+        onClick: function onClick() {
+          _this.props.addFilter();
+        }
+      }, external_react_default.a.createElement("i", {
+        className: "fas fa-plus"
+      }), " Add filter"));
     }
   }]);
 
@@ -50848,6 +51152,15 @@ function EmbedHTML_setPrototypeOf(o, p) { EmbedHTML_setPrototypeOf = Object.setP
 
 
 
+
+var EmbedHTML_mapStateToProps = function mapStateToProps(state) {
+  return {
+    ui: state.ui
+  };
+};
+
+var EmbedHTML_mapDispatchToProps = {};
+
 var EmbedHTML_EmbedHTML =
 /*#__PURE__*/
 function (_Component) {
@@ -50864,11 +51177,9 @@ function (_Component) {
     value: function renderIfDefined(_ref) {
       var key = _ref.key,
           value = _ref.value;
-      var _this$props = this.props,
-          queryParams = _this$props.queryParams,
-          savedQuery = _this$props.savedQuery;
+      var savedQuery = this.props.ui.savedQuery;
 
-      if (queryParams[key]) {
+      if (this.props.ui[key]) {
         return "            ".concat(key, ": ").concat(value, ",\n");
       }
 
@@ -50881,47 +51192,61 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this$props2 = this.props,
-          queryParams = _this$props2.queryParams,
-          projectId = _this$props2.projectId,
-          readKey = _this$props2.readKey,
-          savedQuery = _this$props2.savedQuery;
+      var _this$props = this.props,
+          projectId = _this$props.projectId,
+          readKey = _this$props.readKey;
+      var _this$props$ui = this.props.ui,
+          analysisType = _this$props$ui.analysisType,
+          eventCollection = _this$props$ui.eventCollection,
+          targetProperty = _this$props$ui.targetProperty,
+          timeframe = _this$props$ui.timeframe,
+          timezone = _this$props$ui.timezone,
+          filters = _this$props$ui.filters,
+          interval = _this$props$ui.interval,
+          groupBy = _this$props$ui.groupBy,
+          orderBy = _this$props$ui.orderBy,
+          limit = _this$props$ui.limit,
+          savedQuery = _this$props$ui.savedQuery;
       var params = [];
       params.push(this.renderIfDefined({
         key: 'analysisType',
-        value: "'".concat(queryParams.analysisType, "'")
+        value: "'".concat(analysisType, "'")
       }));
       params.push(this.renderIfDefined({
         key: 'eventCollection',
-        value: "'".concat(queryParams.eventCollection, "'")
+        value: "'".concat(eventCollection, "'")
+      }));
+      params.push(this.renderIfDefined({
+        key: 'targetProperty',
+        value: "'".concat(targetProperty, "'")
       }));
       params.push(this.renderIfDefined({
         key: 'timeframe',
-        value: "".concat(JSON.stringify(queryParams.timeframe))
+        value: "".concat(JSON.stringify(timeframe))
       }));
       params.push(this.renderIfDefined({
         key: 'interval',
-        value: "'".concat(queryParams.interval, "'")
+        value: "'".concat(interval, "'")
       }));
       params.push(this.renderIfDefined({
         key: 'groupBy',
-        value: "".concat(JSON.stringify(queryParams.groupBy))
+        value: "".concat(JSON.stringify(groupBy))
       }));
       params.push(this.renderIfDefined({
         key: 'limit',
-        value: "'".concat(queryParams.limit, "'")
+        value: "'".concat(limit, "'")
       }));
       params.push(this.renderIfDefined({
         key: 'orderBy',
-        value: "".concat(JSON.stringify(queryParams.orderBy))
+        value: "".concat(JSON.stringify(orderBy))
       }));
       params.push(this.renderIfDefined({
         key: 'filters',
-        value: "".concat(JSON.stringify(queryParams.filters))
+        value: "".concat(JSON.stringify(filters))
       }));
       params.push(this.renderIfDefined({
         key: 'timezone',
-        value: "".concat(queryParams.timezone)
+        value: "".concat(timezone)
       }));
 
       if (savedQuery && savedQuery.name && savedQuery.exists) {
@@ -50952,7 +51277,7 @@ function (_Component) {
   return EmbedHTML;
 }(external_react_["Component"]);
 
-/* harmony default export */ var explorer_EmbedHTML = (EmbedHTML_EmbedHTML);
+/* harmony default export */ var explorer_EmbedHTML = (connect_connect(EmbedHTML_mapStateToProps, EmbedHTML_mapDispatchToProps)(EmbedHTML_EmbedHTML));
 // CONCATENATED MODULE: ./lib/js/app/components/explorer/SavedQuery.js
 function SavedQuery_typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { SavedQuery_typeof = function _typeof(obj) { return typeof obj; }; } else { SavedQuery_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return SavedQuery_typeof(obj); }
 
@@ -50978,6 +51303,7 @@ function SavedQuery_setPrototypeOf(o, p) { SavedQuery_setPrototypeOf = Object.se
 
 
 
+
 var SavedQuery_mapStateToProps = function mapStateToProps(state) {
   return {
     results: state.queries.results,
@@ -50988,7 +51314,9 @@ var SavedQuery_mapStateToProps = function mapStateToProps(state) {
 
 var SavedQuery_mapDispatchToProps = {
   updateSavedQueryUI: updateSavedQueryUI,
-  resetSavedQueryUI: resetSavedQueryUI
+  resetSavedQueryUI: resetSavedQueryUI,
+  saveQuery: client_saveQuery,
+  deleteQuery: client_deleteQuery
 };
 
 var SavedQuery_SavedQuery =
@@ -51011,13 +51339,10 @@ function (_Component) {
   SavedQuery_createClass(SavedQuery, [{
     key: "save",
     value: function save() {
-      var _this2 = this;
-
       this.setState({
         error: null
       });
       var _this$props = this.props,
-          client = _this$props.client,
           chartType = _this$props.chartType,
           queryParams = _this$props.queryParams,
           uiSavedQuery = _this$props.uiSavedQuery;
@@ -51032,46 +51357,24 @@ function (_Component) {
         return;
       }
 
-      client.put(client.url('queries', 'saved', name)).auth(client.masterKey()).send({
-        query: queryParams,
-        metadata: {
-          displayName: displayName,
-          visualization: {
-            chartType: chartType
-          }
-        },
-        refreshRate: refreshRate * 60 * 60
-      })
-      /*
-        .put({
-          url: client.url('queries', 'saved', name),
-          api_key: client.config.masterKey,
-          params: {
-            query: queryParams,
-            metadata: {
-              displayName,
-              visualization: {
-                chartType,
-              },
-            },
-            refreshRate: refreshRate * 60 * 60,
+      this.props.saveQuery({
+        name: name,
+        body: {
+          query: queryParams,
+          metadata: {
+            displayName: displayName,
+            visualization: {
+              chartType: chartType
+            }
           },
-        })
-        */
-      .then(function (res) {
-        _this2.props.updateSavedQueryUI({
-          exists: true
-        });
-      })["catch"](function (error) {
-        _this2.setState({
-          error: error.message
-        });
+          refreshRate: refreshRate * 60 * 60
+        }
       });
     }
   }, {
     key: "delete",
     value: function _delete() {
-      var _this3 = this;
+      var _this2 = this;
 
       this.setState({
         error: null
@@ -51081,9 +51384,9 @@ function (_Component) {
           uiSavedQuery = _this$props2.uiSavedQuery;
       var name = uiSavedQuery.name;
       client.del(client.url('queries', 'saved', name)).auth(client.masterKey()).send().then(function (res) {
-        _this3.props.resetSavedQueryUI();
+        _this2.props.resetSavedQueryUI();
       })["catch"](function (error) {
-        _this3.setState({
+        _this2.setState({
           error: error.message
         });
       });
@@ -51099,7 +51402,7 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this4 = this;
+      var _this3 = this;
 
       var uiSavedQuery = this.props.uiSavedQuery;
       var error = this.state.error;
@@ -51117,10 +51420,11 @@ function (_Component) {
       return external_react_default.a.createElement("div", {
         className: "saved-query"
       }, external_react_default.a.createElement("div", null, external_react_default.a.createElement("input", {
+        placeholder: "Give your query a name...",
         type: "text",
         value: displayName,
         onChange: function onChange(e) {
-          _this4.props.updateSavedQueryUI({
+          _this3.props.updateSavedQueryUI({
             name: slugify(e.target.value),
             displayName: e.target.value,
             exists: false
@@ -51128,7 +51432,9 @@ function (_Component) {
         },
         className: ""
       }), external_react_default.a.createElement("input", {
+        placeholder: "Query name on the API-side",
         type: "text",
+        readOnly: true,
         value: name
       }), external_react_default.a.createElement("a", {
         className: "button-copy",
@@ -51141,7 +51447,7 @@ function (_Component) {
         type: "checkbox",
         id: "inputCheckbox",
         onChange: function onChange(e) {
-          _this4.props.updateSavedQueryUI({
+          _this3.props.updateSavedQueryUI({
             cache: e.target.checked,
             refreshRate: e.target.checked ? 4 : 0
           });
@@ -51167,7 +51473,7 @@ function (_Component) {
           };
         }),
         onChange: function onChange(value) {
-          _this4.props.updateSavedQueryUI({
+          _this3.props.updateSavedQueryUI({
             refreshRate: value.value
           });
         },
@@ -51177,22 +51483,22 @@ function (_Component) {
       }, error), !exists && external_react_default.a.createElement("button", {
         className: "button-run-query",
         onClick: function onClick() {
-          return _this4.save();
+          return _this3.save();
         }
       }, "Save"), exists && external_react_default.a.createElement("button", {
         className: "button-run-query",
         onClick: function onClick() {
-          return _this4.save();
+          return _this3.save();
         }
       }, "Update"), exists && external_react_default.a.createElement("button", {
         className: "button-run-query",
         onClick: function onClick() {
-          return _this4.clone();
+          return _this3.clone();
         }
       }, "Clone"), exists && external_react_default.a.createElement("button", {
         className: "button-run-query",
         onClick: function onClick() {
-          return _this4["delete"]();
+          return _this3["delete"]();
         }
       }, "Delete"));
     }
@@ -51233,6 +51539,8 @@ function SavedQueryBrowser_setPrototypeOf(o, p) { SavedQueryBrowser_setPrototype
 
 
 
+
+
 var SavedQueryBrowser_mapStateToProps = function mapStateToProps(state) {
   return {
     savedQueries: state.queries.saved,
@@ -51242,7 +51550,8 @@ var SavedQueryBrowser_mapStateToProps = function mapStateToProps(state) {
 
 var SavedQueryBrowser_mapDispatchToProps = {
   updateSavedQueries: updateSavedQueries,
-  updateUI: ui_updateUI
+  updateUI: ui_updateUI,
+  fetchSavedQueries: client_fetchSavedQueries
 };
 
 var SavedQueryBrowser_SavedQueryBrowser =
@@ -51257,7 +51566,8 @@ function (_Component) {
 
     _this = SavedQueryBrowser_possibleConstructorReturn(this, SavedQueryBrowser_getPrototypeOf(SavedQueryBrowser).call(this, props));
     _this.state = {
-      error: null
+      error: null,
+      filter: ''
     };
     return _this;
   }
@@ -51265,37 +51575,50 @@ function (_Component) {
   SavedQueryBrowser_createClass(SavedQueryBrowser, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      this.fetchSavedQueries();
+      this.props.fetchSavedQueries();
     }
   }, {
-    key: "fetchSavedQueries",
-    value: function fetchSavedQueries() {
-      var _this2 = this;
+    key: "getName",
+    value: function getName(item) {
+      if (item.metadata && item.metadata.display_name) {
+        return item.metadata.display_name;
+      }
 
-      var _this$props = this.props,
-          client = _this$props.client,
-          updateSavedQueries = _this$props.updateSavedQueries;
-      client.get(client.url('queries', 'saved')).auth(client.masterKey()).send().then(function (res) {
-        updateSavedQueries(res);
-      })["catch"](function (error) {
-        _this2.setState({
-          error: error.message
-        });
+      return item.query_name;
+    }
+  }, {
+    key: "updateFilter",
+    value: function updateFilter(e) {
+      this.setState({
+        filter: e.target.value
       });
     }
   }, {
     key: "render",
     value: function render() {
-      var _this$props2 = this.props,
-          savedQueries = _this$props2.savedQueries,
-          activeSavedQuery = _this$props2.activeSavedQuery,
-          updateUI = _this$props2.updateUI;
+      var _this2 = this;
+
+      var _this$props = this.props,
+          savedQueries = _this$props.savedQueries,
+          activeSavedQuery = _this$props.activeSavedQuery,
+          updateUI = _this$props.updateUI;
+      var filter = this.state.filter;
       var error = this.state.error;
       return external_react_default.a.createElement("div", {
         className: "saved-queries"
       }, error && external_react_default.a.createElement("div", {
         className: "error"
-      }, error), savedQueries.map(function (item, index) {
+      }, error), external_react_default.a.createElement("input", {
+        className: "input-filter",
+        placeholder: "Filter...",
+        type: "text",
+        value: filter,
+        onChange: function onChange(e) {
+          return _this2.updateFilter(e);
+        }
+      }), savedQueries.filter(function (item) {
+        return _this2.getName(item).toLowerCase().indexOf(filter.toLowerCase()) >= 0;
+      }).map(function (item, index) {
         return external_react_default.a.createElement("div", {
           key: item.query_name,
           className: "item ".concat(activeSavedQuery === index && 'active'),
@@ -51303,6 +51626,7 @@ function (_Component) {
             var query = item.query,
                 metadata = item.metadata;
             updateUI({
+              autoload: true,
               activeSavedQuery: index,
               analysisType: query.analysis_type,
               eventCollection: query.event_collection,
@@ -51311,17 +51635,31 @@ function (_Component) {
               timeframe: query.timeframe,
               groupBy: query.groupBy,
               interval: query.interval,
+              filters: query.filters.map(function (item) {
+                return {
+                  propertyName: item.property_name,
+                  operator: item.operator,
+                  propertyValue: item.property_value // propertyType: this.detectType(item),
+
+                };
+              }),
               chartType: metadata.visualization.chart_type,
               savedQuery: {
                 name: item.query_name,
                 displayName: metadata.display_name,
                 exists: true,
                 cache: !!item.refresh_rate,
-                refreshRate: item.refresh_rate
+                refreshRate: item.refresh_rate / 60 / 60
               }
             });
           }
-        }, item.query_name);
+        }, external_react_default.a.createElement("div", {
+          className: "name"
+        }, _this2.getName(item)), external_react_default.a.createElement("div", {
+          className: "cached"
+        }, !!item.refresh_rate && external_react_default.a.createElement("span", null, "Cached")), external_react_default.a.createElement("div", {
+          className: "data"
+        }, external_moment_default()(item.last_modified_date).format('MMMM Do YYYY, h:mm:ss a')));
       }));
     }
   }]);
@@ -51330,7 +51668,7 @@ function (_Component) {
 }(external_react_["Component"]);
 
 /* harmony default export */ var explorer_SavedQueryBrowser = (connect_connect(SavedQueryBrowser_mapStateToProps, SavedQueryBrowser_mapDispatchToProps)(SavedQueryBrowser_SavedQueryBrowser));
-// CONCATENATED MODULE: ./lib/js/app/utils/ChartTypes.js
+// CONCATENATED MODULE: ./lib/js/app/utils/chartTypes.js
 var getQueryDataType = function getQueryDataType(query) {
   var isInterval = typeof query.interval === "string";
   var isGroupBy = typeof query.group_by === "string" || query.group_by instanceof Array && query.group_by.length === 1;
@@ -51509,7 +51847,7 @@ function (_Component) {
       if (UIencodedState !== UIencodedStateOld) {
         search_params.set('state', UIencodedState);
         url.search = search_params.toString();
-        history.pushState({}, "", url.toString());
+        history.pushState({}, '', url.toString());
       }
 
       var _this$props$ui = this.props.ui,
@@ -51592,6 +51930,7 @@ function (_Component) {
           resetUI = _this$props.resetUI,
           fetchSchema = _this$props.fetchSchema;
       var _this$props$ui3 = this.props.ui,
+          activePanel = _this$props$ui3.activePanel,
           analysisType = _this$props$ui3.analysisType,
           eventCollection = _this$props$ui3.eventCollection,
           showTargetProperty = _this$props$ui3.showTargetProperty,
@@ -51601,7 +51940,11 @@ function (_Component) {
           interval = _this$props$ui3.interval,
           groupBy = _this$props$ui3.groupBy,
           chartType = _this$props$ui3.chartType,
-          savedQuery = _this$props$ui3.savedQuery;
+          modalFilters = _this$props$ui3.modalFilters,
+          empty = _this$props$ui3.empty,
+          error = _this$props$ui3.error,
+          filters = _this$props$ui3.filters,
+          fetching = _this$props$ui3.fetching;
       var selectedAnalysisType = {
         label: analysisType,
         value: analysisType
@@ -51652,12 +51995,31 @@ function (_Component) {
           projectId = _this$props$keenAnaly.projectId;
       return external_react_default.a.createElement("div", {
         className: "keenExplorer"
-      }, external_react_default.a.createElement("button", {
+      }, external_react_default.a.createElement("div", {
+        className: "panel"
+      }, external_react_default.a.createElement("div", {
+        className: "panel-buttons"
+      }, external_react_default.a.createElement("div", {
+        className: "button ".concat(activePanel === PANEL_NEW_QUERY ? 'button-active' : ''),
+        onClick: function onClick() {
+          return updateUI({
+            activePanel: PANEL_NEW_QUERY
+          });
+        }
+      }, "Query", !empty && external_react_default.a.createElement("i", {
+        className: "button-clear fa fa-times",
         onClick: function onClick() {
           resetUI();
         }
-      }, "X"), external_react_default.a.createElement("div", {
-        className: "panel"
+      })), external_react_default.a.createElement("div", {
+        className: "button ".concat(activePanel === PANEL_BROWSE ? 'button-active' : ''),
+        onClick: function onClick() {
+          return updateUI({
+            activePanel: PANEL_BROWSE
+          });
+        }
+      }, "Browse")), external_react_default.a.createElement("div", {
+        className: "panel-content ".concat(activePanel !== PANEL_NEW_QUERY ? 'hide' : '')
       }, external_react_default.a.createElement("div", {
         className: "label"
       }, "Analysis Type"), external_react_default.a.createElement(react_select_esm, {
@@ -51716,19 +52078,25 @@ function (_Component) {
         }
       }), external_react_default.a.createElement("div", {
         onClick: function onClick() {
-          return _this2.openModal('filters');
+          return updateUI({
+            modalFilters: true
+          });
         },
         className: "filters foldable"
       }, external_react_default.a.createElement("div", {
         className: "title"
-      }, "Filters")), external_react_default.a.createElement(lib_default.a, {
-        isOpen: this.state.modal.filters,
+      }, "Filters"), !!filters.length && external_react_default.a.createElement("div", {
+        className: "count"
+      }, filters.length)), external_react_default.a.createElement(lib_default.a, {
+        isOpen: modalFilters,
         onRequestClose: function onRequestClose() {
-          return _this2.closeModal('filters');
+          return updateUI({
+            modalFilters: false
+          });
         },
         contentLabel: "Example Modal"
       }, external_react_default.a.createElement("div", {
-        className: "filters-container"
+        className: "filters-container modal"
       }, external_react_default.a.createElement("div", {
         className: "header"
       }, external_react_default.a.createElement("div", {
@@ -51736,7 +52104,9 @@ function (_Component) {
       }, "Filters"), external_react_default.a.createElement("div", {
         className: "x",
         onClick: function onClick() {
-          return _this2.closeModal('filters');
+          return updateUI({
+            modalFilters: false
+          });
         }
       }, "x")), external_react_default.a.createElement(explorer_Filters, null))), external_react_default.a.createElement(Foldable_Foldable, {
         title: "Group By - Order By",
@@ -51774,14 +52144,47 @@ function (_Component) {
       }), external_react_default.a.createElement("i", {
         className: "fas fa-copy"
       }))), external_react_default.a.createElement("div", {
+        className: "panel-content ".concat(activePanel !== PANEL_BROWSE ? 'hide' : '')
+      }, external_react_default.a.createElement(explorer_SavedQueryBrowser, {
+        client: client
+      }))), external_react_default.a.createElement("div", {
         className: "result"
       }, !hasResults && external_react_default.a.createElement("div", {
-        className: "letsGo"
+        className: "lets-go"
       }, "Let's go exploring!"), hasResults && external_react_default.a.createElement("div", {
         className: ""
       }, external_react_default.a.createElement("div", {
         className: "preview"
-      }, chartType === 'JSON' && external_react_default.a.createElement(explorer_JsonView, null), chartType !== 'JSON' && external_react_default.a.createElement(Dataviz, null)), external_react_default.a.createElement(react_select_esm, {
+      }, chartType === 'JSON' && external_react_default.a.createElement(explorer_JsonView, null), chartType !== 'JSON' && external_react_default.a.createElement(external_react_["Fragment"], null, external_react_default.a.createElement(Dataviz, null), external_react_default.a.createElement("button", {
+        className: "button-download button-embed-html",
+        onClick: function onClick() {
+          return _this2.openModal('embed');
+        }
+      }, external_react_default.a.createElement("i", {
+        className: "fas fa-code"
+      }), " Embed HTML"), external_react_default.a.createElement(lib_default.a, {
+        isOpen: this.state.modal.embed,
+        onRequestClose: function onRequestClose() {
+          return _this2.closeModal('embed');
+        }
+      }, external_react_default.a.createElement("div", {
+        className: "modal"
+      }, external_react_default.a.createElement("div", {
+        className: "header"
+      }, external_react_default.a.createElement("div", {
+        className: "title"
+      }, "Embed HTML"), external_react_default.a.createElement("div", {
+        className: "x",
+        onClick: function onClick() {
+          return _this2.closeModal('embed');
+        }
+      }, "x")), external_react_default.a.createElement(explorer_EmbedHTML, {
+        projectId: projectId,
+        readKey: readKey
+      })))), external_react_default.a.createElement("div", {
+        className: "select-chart-type-container"
+      }, external_react_default.a.createElement(react_select_esm, {
+        className: "select-chart-type",
         value: chartTypeSelected,
         options: chartTypes.map(function (item) {
           return {
@@ -51793,44 +52196,19 @@ function (_Component) {
           updateUI({
             chartType: e.value
           });
-        },
-        className: "chartType"
-      })), external_react_default.a.createElement("button", {
+        }
+      })))), error && external_react_default.a.createElement("div", {
+        className: "error"
+      }, error.body), external_react_default.a.createElement("button", {
         className: "button-run-query",
         onClick: function onClick() {
           return _this2.runQuery();
         }
-      }, "Run Query"), external_react_default.a.createElement("button", {
-        className: "button-embed-html",
-        onClick: function onClick() {
-          return _this2.openModal('embed');
-        }
-      }, "Embed html"), external_react_default.a.createElement(lib_default.a, {
-        isOpen: this.state.modal.embed,
-        onRequestClose: function onRequestClose() {
-          return _this2.closeModal('embed');
-        }
-      }, external_react_default.a.createElement("div", {
-        className: "modal"
-      }, external_react_default.a.createElement("div", {
-        className: "header"
-      }, external_react_default.a.createElement("div", {
-        className: "title"
-      }, "Embed html"), external_react_default.a.createElement("div", {
-        className: "x",
-        onClick: function onClick() {
-          return _this2.closeModal('embed');
-        }
-      }, "x")), external_react_default.a.createElement(explorer_EmbedHTML, {
-        projectId: projectId,
-        readKey: readKey,
-        queryParams: queryParams,
-        savedQuery: savedQuery
-      }))), external_react_default.a.createElement(explorer_SavedQuery, {
+      }, fetching && external_react_default.a.createElement("i", {
+        className: "fas fa-circle-notch fa-spin"
+      }), "Run Query"), external_react_default.a.createElement(explorer_SavedQuery, {
         client: client,
         queryParams: queryParams
-      }), external_react_default.a.createElement(explorer_SavedQueryBrowser, {
-        client: client
       })));
     }
   }]);
