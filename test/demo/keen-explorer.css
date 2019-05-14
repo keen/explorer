@@ -1,21 +1,30 @@
 body{
-  margin: 0 auto;
-  width: 70%;
+  margin: 2rem auto;
+  width: 80%;
   font-family: Montserrat, Tahoma, Arial;
 }
-
 
 * {
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
 }
 
+.extraction{
+  margin-top: 1rem;
+}
+
+.extraction .first-label{
+    padding-top: 0;
+  }
+
+.extraction .input-text{
+    width: 100%;
+  }
 
 .filters-container .list{
     margin: 2rem 0;
     width: 100%;
   }
-
 
 .filters-container .list .row{
       display: -ms-flexbox;
@@ -24,13 +33,11 @@ body{
       margin: 0 0 1rem;
     }
 
-
 .filters-container .list .row .row-part{
         -ms-flex:1;
             flex:1;
         padding: 0 0.5rem;
       }
-
 
 .filters-container .list .row .row-part input{
           padding: 0.55rem 0.7rem;
@@ -39,7 +46,6 @@ body{
           border: 1px solid #aaa;
           width: 100%;
         }
-
 
 .filters-container .list .row .row-part .delete{
           cursor: pointer;
@@ -51,17 +57,14 @@ body{
           font-size: 1.2rem;
         }
 
-
 .filters-container .list .row .row-part .delete i {
             color: #ea7373;
           }
-
 
 .filters-container .list .row .no-flex{
         -ms-flex: 0;
             flex: 0;
       }
-
 
 .filters-container .list .button-add-filter{
       margin: 0.5rem;
@@ -72,11 +75,9 @@ body{
       border-radius: 0.3rem;
     }
 
-
 .filters-container .list .button-add-filter i {
         margin-right: 1rem;
       }
-
 
 .modal{
   display:-ms-flexbox;
@@ -87,7 +88,6 @@ body{
   width: 100%;
 }
 
-
 .modal .header{
     -ms-flex:0;
         flex:0;
@@ -95,11 +95,9 @@ body{
     padding-bottom: 1rem;
   }
 
-
 .modal .header .title{
         float: left;
       }
-
 
 .modal .header .x{
         color: #565656;
@@ -111,7 +109,6 @@ body{
         font-size: 2rem;
       }
 
-
 .modal .container{
     -ms-flex:1;
         flex:1;
@@ -121,7 +118,6 @@ body{
     overflow-y: scroll;
     white-space: pre-wrap;
   }
-
 
 .modal .button-copy{
     padding: 1rem;
@@ -134,11 +130,9 @@ body{
     margin-top: 1rem;
   }
 
-
 .modal .button-copy:active{
     background: #30a1e4;
   }
-
 
 .saved-query {
   margin: 1rem 0;
@@ -149,7 +143,6 @@ body{
 
 }
 
-
 .saved-query .input-name {
     font-size: 1rem;
     padding: 1rem;
@@ -158,7 +151,6 @@ body{
     width: 100%;
   }
 
-
 .saved-query .resource-name{
     padding: 1rem 0 0;
     display: -ms-flexbox;
@@ -166,13 +158,11 @@ body{
     overflow: hidden;
   }
 
-
 .saved-query .resource-name .line {
       -ms-flex: 1;
           flex: 1;
       white-space: nowrap;
     }
-
 
 .saved-query .resource-name .line span{
         white-space: nowrap;
@@ -181,13 +171,11 @@ body{
             flex: 1;
       }
 
-
 .saved-query .resource-name .line i {
         -ms-flex: 0;
             flex: 0;
         color: #009ebb;
       }
-
 
 .saved-query .resource-name .line-label{
       -ms-flex: 0;
@@ -195,17 +183,14 @@ body{
       margin-right: 0.5rem;
     }
 
-
 .saved-query .resource-name a {
 
     }
-
 
 .saved-query .cache {
     padding: 1rem 0 0;
     max-width: 12rem;
   }
-
 
 .saved-query .cache .cache-toggle{
       display: -ms-flexbox;
@@ -216,21 +201,17 @@ body{
       color: #128296;
     }
 
-
 .saved-query .cache i {
       font-size: 1.3rem;
       margin-right: 0.6rem;
     }
 
-
 .saved-query .cache .fa-toggle-off{
       color: #7b7b7b;
     }
 
-
 .saved-query .cache .cache-refresh{
     }
-
 
 .saved-query .button-copy{
     padding: 1rem;
@@ -241,7 +222,6 @@ body{
     display: inline;
   }
 
-
 .saved-query .buttons * {
       margin-top: 1rem;
       padding: 1rem 2rem;
@@ -250,34 +230,28 @@ body{
       cursor: pointer;
     }
 
-
 .saved-query .buttons .button-save{
       color: #108196;
       border: 1px solid #009ebb;
     }
 
-
 .saved-query .buttons .button-clone{
       margin-left: 1rem;
     }
-
 
 .saved-query .buttons .button-delete{
       float: right;
       color: #c50d0d;
     }
 
-
 .saved-query .button-copy:active{
     background: #fff;
   }
 
-
 .saved-queries{
   overflow: scroll;
-  max-height: 40rem;
+  max-height: 100%;
 }
-
 
 .saved-queries .input-filter{
     width: 100%;
@@ -287,7 +261,6 @@ body{
     margin: 0 0 -1px;
   }
 
-
 .saved-queries .item{
     padding: 1.2rem;
     cursor: pointer;
@@ -296,56 +269,46 @@ body{
     margin-bottom: -1px;
   }
 
-
 .saved-queries .item .name{
       margin: 0 0 0.5rem;
     }
-
 
 .saved-queries .item .cached{
       float: left;
       font-size: 0.7rem;
     }
 
-
 .saved-queries .item .data{
       float: right;
       font-size: 0.7rem;
     }
 
-
 .saved-queries .active{
     background: #f7f7f7;
   }
-
 
 button{
   margin: 2rem 0 0;
   padding: 1rem;
 }
 
-
 .label{
   padding: 1rem 0 0.5rem;
 }
 
-
 .hide{
   display: none;
 }
-
 
 .keenExplorer{
   display: -ms-flexbox;
   display: flex;
 }
 
-
 .keenExplorer .panel{
     -ms-flex: 1;
         flex: 1;
   }
-
 
 .keenExplorer .panel-buttons .button-new-query{
       -ms-flex: none;
@@ -353,11 +316,9 @@ button{
       cursor: pointer;
     }
 
-
 .keenExplorer .panel-buttons .button-new-query i{
         
       }
-
 
 .keenExplorer .result{
     -ms-flex: 2;
@@ -366,12 +327,10 @@ button{
     overflow: hidden;
   }
 
-
 .keenExplorer .keen-dataviz-container{
     height: calc(100% - 3rem);
     overflow: hidden;
   }
-
 
 .keenExplorer .foldable{
     margin-top: 0.5rem;
@@ -382,43 +341,35 @@ button{
     border-radius: 5px;
   }
 
-
 .keenExplorer .foldableActive{
       background: none;
     }
-
 
 .keenExplorer .foldable .title{
       padding: 0.5rem;
     }
 
-
 .keenExplorer .foldable .title .icon{
         float: right;
       }
-
 
 .keenExplorer .foldable .content{
       margin-top: 0.5rem;
     }
 
-
-.keenExplorer .foldable .tabContent{
+.keenExplorer .foldable .tab-content{
       border: 0;
     }
-
 
 .keenExplorer .filters{
     display: -ms-flexbox;
     display: flex;
   }
 
-
 .keenExplorer .filters .title{
       -ms-flex: 1;
           flex: 1;
     }
-
 
 .keenExplorer .filters .count{
       -ms-flex-item-align: center;
@@ -427,7 +378,6 @@ button{
       padding: 0 0.5rem 0 0;
     }
 
-
 .keenExplorer .optional{
     margin-left: 1em;
     font-size: 0.7em;
@@ -435,11 +385,9 @@ button{
     color: #737373;
   }
 
-
 .keenExplorer .groupBy .label{
       padding: 0 0 0.5rem;
     }
-
 
 .keenExplorer .groupBy .btnPlus, .keenExplorer .groupBy .btnMinus{
       margin-top: 1rem;
@@ -450,41 +398,34 @@ button{
       display: inline-block;
     }
 
-
 .keenExplorer .groupBy .options{
       margin-top: 1rem;
       display:-ms-flexbox;
       display:flex;
     }
 
-
 .keenExplorer .groupBy .options .orderBy{
         width: 8em;
         padding-right: 1rem;
       }
 
-
 .keenExplorer .groupBy .options .orderBy .select{
           width: 100%;
         }
-
 
 .keenExplorer .groupBy .options .limit{
         width: 8em;
       }
 
-
 .keenExplorer .groupBy .options .limit .input{
           width: 100%;
         }
-
 
 .keenExplorer .groupBy .additionalTargetProperty{
       margin-top: 1rem;
       padding-top: 1rem;
       border-top: 1px solid #f1f1f1;
     }
-
 
 .keenExplorer .lets-go{
     display:-ms-flexbox;
@@ -506,12 +447,10 @@ button{
     border: 1px dashed #ccc;
   }
 
-
 .tabs{
   display:-ms-flexbox;
   display:flex;
 }
-
 
 .tabs .tab{
     -ms-flex: 1;
@@ -523,19 +462,16 @@ button{
     border-radius: 5px 5px 0 0;
   }
 
-
 .tabs .active{
     background: #fff;
     border-bottom: 1px solid #fff;
   }
 
-
-.tabContent{
+.tab-content{
   padding: 1rem;
   border: 1px solid #e8e8e8;
   border-top: none;
 }
-
 
 .inputNumber{
   font-size: 1rem;
@@ -545,11 +481,17 @@ button{
   font-weight: 400;
 }
 
+.input-text{
+  font-size: 1rem;
+  padding: 0.5rem 0.6rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-weight: 400;
+}
 
 .interval .standardUnits{
     width: 10rem;
   }
-
 
 .interval .line{
     display: -ms-flexbox;
@@ -558,50 +500,41 @@ button{
         align-items: center;
   }
 
-
 .interval .line .title{
       margin-right: 1rem;
     }
-
 
 .interval .line .inputNumber{
       width: 4rem;
       margin-right: 0.5rem;
     }
 
-
 .interval .line .timeUnits{
       width: 10rem;
     }
 
-
 .timeframe{
   margin-bottom: 0.5rem;
 }
-
 
 .timeframe .relative{
     display:-ms-flexbox;
     display:flex;
   }
 
-
 .timeframe .relative .relativity, .timeframe .relative .inputNumber{
       margin-right:0.5rem;
     }
-
 
 .timeframe .relative .relativity{
       width:100%;
       max-width:12rem;
     }
 
-
 .timeframe .relative .units{
       width:100%;
       max-width:12rem;
     }
-
 
 .timeframe .description{
     margin-top: 0.5rem;
@@ -609,17 +542,14 @@ button{
     background: #fafafa;
   }
 
-
 .timeframe .tabAbsolute .DateRangePickerInput_arrow{
       display: none;
     }
-
 
 .timeframe .tabAbsolute .DateInput {
       width: 8rem;
       background: none;
     }
-
 
 .timeframe .tabAbsolute .DateInput_input {
       padding: 0.5rem;
@@ -629,7 +559,6 @@ button{
       font-weight: normal;
       border-radius: 5px;
     }
-
 
 .timeframe .tabAbsolute .rc-time-picker-input{
       font-size: 1rem;
@@ -641,7 +570,6 @@ button{
       border-radius: 5px;
     }
 
-
 .timeframe .tabAbsolute .line{
       display: -ms-flexbox;
       display: flex;
@@ -650,29 +578,24 @@ button{
       margin: 0.5rem;
     }
 
-
 .timeframe .tabAbsolute .line .title{
         width: 4rem;
       }
 
-
 .timeframe .tabAbsolute .line .SingleDatePicker {
         margin-right: 0.5rem;
       }
-
 
 .timeframe .tabAbsolute .line .SingleDatePickerInput__withBorder {
         border-radius: 5px;
         border: 1px solid #dbdbdb;
       }
 
-
 .rc-time-picker-panel .rc-time-picker-panel-inner{
     -webkit-box-shadow: none;
             box-shadow: none;
     border-radius: 5px;
   }
-
 
 .rc-time-picker-panel .rc-time-picker-input{
     font-size: 1rem;
@@ -684,22 +607,18 @@ button{
     border-radius: 5px;
   }
 
-
 .rc-time-picker-panel .rc-time-picker-panel-select{
     font-size: 1rem;
   }
-
 
 .rc-time-picker-panel .rc-time-picker-panel-select li{
       height: 2rem;
       line-height: 2rem;
     }
 
-
 .rc-time-picker-panel .rc-time-picker-panel-input{
     font-size: 1rem;
   }
-
 
 .apiQueryUrl{
   cursor: pointer;
@@ -712,19 +631,16 @@ button{
   font-size: 0.8rem;
 }
 
-
 .apiQueryUrl input{
     -ms-flex: 1;
         flex: 1;
     margin: 0 1rem;
   }
 
-
 .fa-copy:active{
   color: #00bbde;
   color: #00bbde;
 }
-
 
 .button-run-query{
   font-size: 1rem;
@@ -737,11 +653,9 @@ button{
   margin: 1rem 0 0;
 }
 
-
 .button-run-query i {
     margin-right: 0.5rem;
   }
-
 
 .error{
   padding: 1rem;
@@ -749,17 +663,14 @@ button{
   margin: 1rem 0 0;
 }
 
-
 .box-info{
   padding: 1rem;
   background: #f1faff;
 }
 
-
 .tabContent .box-info{
   margin: -1rem;
 }
-
 
 .preview{
   display: -ms-flexbox;
@@ -770,7 +681,6 @@ button{
       flex-wrap: wrap;
   background: #fafafa;
 }
-
 
 .preview .loader{
     width: 100%;
@@ -785,7 +695,6 @@ button{
     color: #eee;
   }
 
-
 .preview .keen-dataviz-container, .preview .react-json-view{
     width: 100%;
     height: 340px;
@@ -793,11 +702,9 @@ button{
     overflow-y: scroll;
   }
 
-
 .preview .react-json-view{
     padding: 1rem;
   }
-
 
 .preview .select-chart-type-container{
     -ms-flex: 1;
@@ -815,7 +722,6 @@ button{
     margin: 0.3rem;
   }
 
-
 .preview .select-chart-type {
     -ms-flex: 1;
         flex: 1;
@@ -823,7 +729,6 @@ button{
     -ms-flex-item-align: end;
         align-self: flex-end;
   }
-
 
 .preview .button-download{
     -ms-flex-order: 0;
@@ -835,23 +740,20 @@ button{
     font-size: 0.8rem;
   }
 
-
 .preview .button-download i{
       margin-right: 0.5rem;
     }
-
 
 .chartType{
   margin-top: 1rem;
 }
 
-
 .reload{
   position: absolute;
   left: 1rem;
   top: 1rem;
+  color: #ccc;
 }
-
 
 .button-toggle{
   margin-left: 1rem;
@@ -865,12 +767,19 @@ button{
   border-radius: 0.3rem;
 }
 
-
 .button-toggle i {
     margin-left: 1rem;
   }
 
-
 .button-toggle-active {
   background: rgb(255, 255, 255);
+}
+
+.result-string{
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: center;
+      justify-content: center;
+  -ms-flex-align: center;
+      align-items: center;
 }

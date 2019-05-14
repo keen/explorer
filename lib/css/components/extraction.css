@@ -1,0 +1,9 @@
+.extraction{
+  margin-top: 1rem;
+  .first-label{
+    padding-top: 0;
+  }
+  .input-text{
+    width: 100%;
+  }
+}

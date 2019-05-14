@@ -1,15 +1,15 @@
 body{
-  margin: 0 auto;
-  width: 70%;
+  margin: 2rem auto;
+  width: 80%;
   font-family: Montserrat, Tahoma, Arial;
 }
-
 
 * {
   box-sizing: border-box;
 }
 
 @import "./variables.css";
+@import "./components/extraction.css";
 @import "./components/filters.css";
 @import "./components/modal.css";
 @import "./components/savedQuery.css";
@@ -71,7 +71,7 @@ button{
     .content{
       margin-top: 0.5rem;
     }
-    .tabContent{
+    .tab-content{
       border: 0;
     }
   }
@@ -166,13 +166,21 @@ button{
   }
 }
 
-.tabContent{
+.tab-content{
   padding: 1rem;
   border: 1px solid #e8e8e8;
   border-top: none;
 }
 
 .inputNumber{
+  font-size: 1rem;
+  padding: 0.5rem 0.6rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-weight: 400;
+}
+
+.input-text{
   font-size: 1rem;
   padding: 0.5rem 0.6rem;
   border-radius: 5px;
@@ -395,6 +403,7 @@ button{
   position: absolute;
   left: 1rem;
   top: 1rem;
+  color: #ccc;
 }
 
 .button-toggle{
@@ -414,4 +423,10 @@ button{
 
 .button-toggle-active {
   background: #ffff;
+}
+
+.result-string{
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

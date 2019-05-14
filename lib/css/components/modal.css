@@ -3,10 +3,12 @@
   flex-direction: column;
   height: 100%;
   width: 100%;
+
   .header{
     flex:0;
     border-bottom: 1px solid #eee;
     padding-bottom: 1rem;
+
     .title{
         float: left;
       }
@@ -20,6 +22,7 @@
         font-size: 2rem;
       }
   }
+
   .container{
     flex:1;
     padding: 1rem 0;
