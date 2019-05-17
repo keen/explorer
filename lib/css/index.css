@@ -15,6 +15,7 @@ body{
 @import "./components/modal.css";
 @import "./components/savedQuery.css";
 @import "./components/savedQueries.css";
+@import "./components/funnel.css";
 
 @import '../../node_modules/react-dates/lib/css/_datepicker.css';
 @import '../../node_modules/rc-time-picker/assets/index.css';

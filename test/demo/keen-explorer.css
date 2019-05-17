@@ -291,6 +291,39 @@ body{
     background: #f7f7f7;
   }
 
+.funnel .content{
+    padding: 0.3rem 0.5rem;
+  }
+
+.funnel .first-label{
+    padding-top: 0;
+  }
+
+.funnel .input-text{
+    width: 100%;
+  }
+
+.funnel .button{
+    cursor: pointer;
+  }
+
+.funnel .button-delete{
+    color: #797979;
+  }
+
+.funnel .button-add{
+    margin-top: 1rem;
+    padding: 0.7rem;
+    background: #fdfdfd;
+    border: 1px solid #e8e8e8;
+    border-radius: 5px;
+    display: inline-block;
+  }
+
+.funnel .button-add i{
+      margin-right: 0.3rem;
+    }
+
 .PresetDateRangePicker_panel {
   padding: 0 22px 11px
 }
