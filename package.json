@@ -34,7 +34,7 @@
     "prop-types": "^15.6.2",
     "qs": "2.2.3",
     "rc-time-picker": "^3.6.2",
-    "react": "^16.7.0",
+    "react": "^16.8.6",
     "react-dates": "^19.0.2",
     "react-dom": "^16.7.0",
     "react-highlight": "^0.9.0",

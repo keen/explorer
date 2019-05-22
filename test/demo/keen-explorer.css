@@ -324,6 +324,36 @@ body{
       margin-right: 0.3rem;
     }
 
+.funnel .line-options{
+    margin: 1rem 0 0 0;
+  }
+
+.funnel .line-checkbox{
+    margin: 0.5rem 0 0 0;
+  }
+
+.funnel .line-checkbox input{
+      margin-right: 0.5rem;
+    }
+
+.funnel .line-checkbox label{
+      cursor: pointer;
+    }
+
+.funnel .step-switch-position-buttons{
+    float: left;
+    margin: -0.5rem 0.8rem 0 0;
+    color: #797979;
+  }
+
+.funnel .step-switch-position-buttons .move-up{
+      margin-top: 0.1rem;
+    }
+
+.funnel .step-switch-position-buttons .move-down{
+      margin-top: -0.3rem;
+    }
+
 .PresetDateRangePicker_panel {
   padding: 0 22px 11px
 }
