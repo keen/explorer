@@ -1,17 +1,30 @@
 # Keen Explorer
 
+<a href="https://keen.io/"><img src="https://img.shields.io/github/release/keen/explorer.svg?style=flat-square&maxAge=600" alt=""></a>
+<a href="https://github.com/keen/explorer/graphs/contributors" alt="Contributors"><img src="https://img.shields.io/github/contributors/keen/explorer.svg" /></a>
+<a href="https://github.com/keen/explorer/pulse" alt="Activity"><img src="https://img.shields.io/github/last-commit/keen/explorer.svg" /></a>
+<a href="#" alt="License"><img src="https://img.shields.io/github/license/keen/explorer.svg" /></a>
+<a href="http://slack.keen.io/"><img src="https://img.shields.io/badge/slack-keen-orange.svg?style=flat-square&maxAge=3600" alt="Slack"></a>
+<a href="https://www.jsdelivr.com/package/npm/keen-explorer"><img src="https://data.jsdelivr.com/v1/package/npm/keen-explorer/badge" alt=""></a>
+<a href="https://www.npmjs.com/package/keen-explorer"><img src="https://img.shields.io/npm/dm/keen-explorer.svg" alt=""></a>
+
 ## Install
 
 ```ssh
 npm install keen-explorer --save
 ```
+
+## Live Demo
+
+http://keen.github.io/explorer/
+
 ## Example
 
 ```javascript
 import KeenExplorer from 'keen-explorer';
 
 const myExplorer = new KeenExplorer({
-  container: '#keen-explorer-html-element', // querySelector
+  container: '#keen-explorer-container', // querySelector
   persistence: true, // optional: ability to save queries etc
 
   keenAnalysisOptions: {
@@ -134,6 +147,4 @@ Screenshots encouraged! Would an animated GIF be more informative than a screens
 These are the major technologies used in the project.
 
 * [ReactJS](http://facebook.github.io/react/) for UI Components & input handling.
-* [Flux](http://facebook.github.io/flux/) for help managing the data model layer.
-* [Bootstrap](http://getbootstrap.com/) for our CSS framework.
 * [NPM](https://www.npmjs.org/) for dependency management.

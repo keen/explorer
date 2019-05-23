@@ -1,12 +1,14 @@
-body{
+.dev-body{
   margin: 2rem auto;
   width: 80%;
   font-family: Montserrat, Tahoma, Arial;
 }
 
-* {
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+.dev-reload-button{
+  position: absolute;
+  left: 1rem;
+  top: 1rem;
+  color: #ccc;
 }
 
 .extraction{
@@ -156,10 +158,11 @@ body{
   }
 
 .saved-query .resource-name{
-    padding: 1rem 0 0;
+    padding: 0.5rem 0.5rem 0;
     display: -ms-flexbox;
     display: flex;
     overflow: hidden;
+    font-size: 0.8rem;
   }
 
 .saved-query .resource-name .line {
@@ -196,6 +199,15 @@ body{
     max-width: 12rem;
   }
 
+.saved-query .cache .line-checkbox input{
+        margin-right: 0.5rem;
+        outline: none;
+      }
+
+.saved-query .cache .line-checkbox label{
+        cursor: pointer;
+      }
+
 .saved-query .cache .cache-toggle{
       display: -ms-flexbox;
       display: flex;
@@ -218,7 +230,7 @@ body{
     }
 
 .saved-query .button-copy{
-    padding: 1rem;
+    padding: 0.7rem;
     right: 0;
     bottom: 0;
     border: 0;
@@ -228,9 +240,9 @@ body{
 
 .saved-query .buttons * {
       margin-top: 1rem;
-      padding: 1rem 2rem;
-      font-size: 1rem;
+      padding: 0.8rem;
       border-radius: 0.3rem;
+      font-size: 1rem;
       cursor: pointer;
     }
 
@@ -259,10 +271,11 @@ body{
 
 .saved-queries .input-filter{
     width: 100%;
-    padding: 0.5rem;
+    padding: 0.6rem;
     font-size: 1rem;
-    border: 1px solid #eee;
-    margin: 0 0 -1px;
+    border: 1px solid #ccc;
+    margin: .5rem 0;
+    border-radius: 0.3rem;
   }
 
 .saved-queries .item{
@@ -293,10 +306,6 @@ body{
 
 .funnel .content{
     padding: 0.3rem 0.5rem;
-  }
-
-.funnel .first-label{
-    padding-top: 0;
   }
 
 .funnel .input-text{
@@ -1581,37 +1590,44 @@ li.rc-time-picker-panel-select-option-disabled:hover {
   cursor: not-allowed;
 }
 
-button{
-  margin: 2rem 0 0;
-  padding: 1rem;
-}
-
-.label{
-  padding: 1rem 0 0.5rem;
-}
-
-.hide{
-  display: none;
-}
+.keenExplorer *, .ReactModalPortal * {
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+  }
 
 .keenExplorer{
   display: -ms-flexbox;
   display: flex;
 }
 
+.keenExplorer button{
+    margin: 2rem 0 0;
+    padding: 1rem;
+  }
+
+.keenExplorer .label{
+    padding: 1rem 0 0.3rem;
+  }
+
+.keenExplorer .hide{
+    display: none;
+  }
+
+.keenExplorer input:focus {
+    outline: 2px solid #00bbde;
+    outline: 2px solid #00bbde;
+  }
+
 .keenExplorer .panel{
     -ms-flex: 1;
         flex: 1;
+    min-width: 22rem;
   }
 
-.keenExplorer .panel-buttons .button-new-query{
-      -ms-flex: none;
-          flex: none;
-      cursor: pointer;
-    }
-
-.keenExplorer .panel-buttons .button-new-query i{
-        
+.keenExplorer .panel .panel-buttons .button-new-query{
+        -ms-flex: none;
+            flex: none;
+        cursor: pointer;
       }
 
 .keenExplorer .result{
@@ -1730,23 +1746,17 @@ button{
         justify-content: center;
     -ms-flex-align: center;
         align-items: center;
-    background-color: #dff3f8;
-    border-color: transparent;
     color: #207690;
-
-    background-color: #fff;
-    border-color: transparent;
-    color: #207690;
-    font-size: 2rem;
-    border: 1px dashed #ccc;
+    border: 1px solid #eee;
+    font-size: 1.3rem;
   }
 
-.tabs{
+.keenExplorer .tabs{
   display:-ms-flexbox;
   display:flex;
 }
 
-.tabs .tab{
+.keenExplorer .tabs .tab{
     -ms-flex: 1;
         flex: 1;
     padding: 1rem;
@@ -1756,18 +1766,18 @@ button{
     border-radius: 5px 5px 0 0;
   }
 
-.tabs .active{
+.keenExplorer .tabs .active{
     background: #fff;
     border-bottom: 1px solid #fff;
   }
 
-.tab-content{
+.keenExplorer .tab-content{
   padding: 1rem;
   border: 1px solid #e8e8e8;
   border-top: none;
 }
 
-.inputNumber{
+.keenExplorer .inputNumber{
   font-size: 1rem;
   padding: 0.5rem 0.6rem;
   border-radius: 5px;
@@ -1775,7 +1785,7 @@ button{
   font-weight: 400;
 }
 
-.input-text{
+.keenExplorer .input-text{
   font-size: 1rem;
   padding: 0.5rem 0.6rem;
   border-radius: 5px;
@@ -1783,69 +1793,69 @@ button{
   font-weight: 400;
 }
 
-.interval .standardUnits{
+.keenExplorer .interval .standardUnits{
     width: 10rem;
   }
 
-.interval .line{
+.keenExplorer .interval .line{
     display: -ms-flexbox;
     display: flex;
     -ms-flex-align: center;
         align-items: center;
   }
 
-.interval .line .title{
+.keenExplorer .interval .line .title{
       margin-right: 1rem;
     }
 
-.interval .line .inputNumber{
+.keenExplorer .interval .line .inputNumber{
       width: 4rem;
       margin-right: 0.5rem;
     }
 
-.interval .line .timeUnits{
+.keenExplorer .interval .line .timeUnits{
       width: 10rem;
     }
 
-.timeframe{
+.keenExplorer .timeframe{
   margin-bottom: 0.5rem;
-}
+  }
 
-.timeframe .relative{
+.keenExplorer .timeframe .relative{
     display:-ms-flexbox;
     display:flex;
   }
 
-.timeframe .relative .relativity, .timeframe .relative .inputNumber{
+.keenExplorer .timeframe .relative .relativity, .keenExplorer .timeframe .relative .inputNumber{
       margin-right:0.5rem;
     }
 
-.timeframe .relative .relativity{
+.keenExplorer .timeframe .relative .relativity{
       width:100%;
       max-width:12rem;
     }
 
-.timeframe .relative .units{
+.keenExplorer .timeframe .relative .units{
       width:100%;
       max-width:12rem;
     }
 
-.timeframe .description{
+.keenExplorer .timeframe .description{
     margin-top: 0.5rem;
     padding: 1rem;
     background: #fafafa;
   }
 
-.timeframe .tabAbsolute .DateRangePickerInput_arrow{
+.keenExplorer .timeframe .tabAbsolute .DateRangePickerInput_arrow{
       display: none;
     }
 
-.timeframe .tabAbsolute .DateInput {
+.keenExplorer .timeframe .tabAbsolute .DateInput {
       width: 8rem;
       background: none;
     }
 
-.timeframe .tabAbsolute .DateInput_input {
+.keenExplorer .timeframe .tabAbsolute .DateInput_input {
       padding: 0.5rem;
       font-size: 1rem;
       line-height: normal;
@@ -1854,7 +1864,7 @@ button{
       border-radius: 5px;
     }
 
-.timeframe .tabAbsolute .rc-time-picker-input{
+.keenExplorer .timeframe .tabAbsolute .rc-time-picker-input{
       font-size: 1rem;
       line-height: normal;
       font-weight: normal;
@@ -1864,7 +1874,7 @@ button{
       border-radius: 5px;
     }
 
-.timeframe .tabAbsolute .line{
+.keenExplorer .timeframe .tabAbsolute .line{
       display: -ms-flexbox;
       display: flex;
       -ms-flex-align: center;
@@ -1872,26 +1882,26 @@ button{
       margin: 0.5rem;
     }
 
-.timeframe .tabAbsolute .line .title{
+.keenExplorer .timeframe .tabAbsolute .line .title{
         width: 4rem;
       }
 
-.timeframe .tabAbsolute .line .SingleDatePicker {
+.keenExplorer .timeframe .tabAbsolute .line .SingleDatePicker {
         margin-right: 0.5rem;
       }
 
-.timeframe .tabAbsolute .line .SingleDatePickerInput__withBorder {
+.keenExplorer .timeframe .tabAbsolute .line .SingleDatePickerInput__withBorder {
         border-radius: 5px;
         border: 1px solid #dbdbdb;
       }
 
-.rc-time-picker-panel .rc-time-picker-panel-inner{
+.keenExplorer .rc-time-picker-panel .rc-time-picker-panel-inner{
     -webkit-box-shadow: none;
             box-shadow: none;
     border-radius: 5px;
   }
 
-.rc-time-picker-panel .rc-time-picker-input{
+.keenExplorer .rc-time-picker-panel .rc-time-picker-input{
     font-size: 1rem;
     line-height: normal;
     font-weight: normal;
@@ -1901,20 +1911,20 @@ button{
     border-radius: 5px;
   }
 
-.rc-time-picker-panel .rc-time-picker-panel-select{
+.keenExplorer .rc-time-picker-panel .rc-time-picker-panel-select{
     font-size: 1rem;
   }
 
-.rc-time-picker-panel .rc-time-picker-panel-select li{
+.keenExplorer .rc-time-picker-panel .rc-time-picker-panel-select li{
       height: 2rem;
       line-height: 2rem;
     }
 
-.rc-time-picker-panel .rc-time-picker-panel-input{
+.keenExplorer .rc-time-picker-panel .rc-time-picker-panel-input{
     font-size: 1rem;
   }
 
-.apiQueryUrl{
+.keenExplorer .apiQueryUrl{
   cursor: pointer;
   padding: 1rem;
   display: -ms-flexbox;
@@ -1925,18 +1935,18 @@ button{
   font-size: 0.8rem;
 }
 
-.apiQueryUrl input{
+.keenExplorer .apiQueryUrl input{
     -ms-flex: 1;
         flex: 1;
     margin: 0 1rem;
   }
 
-.fa-copy:active{
+.keenExplorer .fa-copy:active{
   color: #00bbde;
   color: #00bbde;
 }
 
-.button-run-query{
+.keenExplorer .button-run-query{
   font-size: 1rem;
   border-radius: 0.3rem;
   background: #009ebb;
@@ -1947,26 +1957,26 @@ button{
   margin: 1rem 0 0;
 }
 
-.button-run-query i {
+.keenExplorer .button-run-query i {
     margin-right: 0.5rem;
   }
 
-.error{
+.keenExplorer .error{
   padding: 1rem;
   background: #ffe5e5;
-  margin: 1rem 0 0;
+  margin: 1rem 0;
 }
 
-.box-info{
+.keenExplorer .box-info{
   padding: 1rem;
   background: #f1faff;
 }
 
-.tabContent .box-info{
+.keenExplorer .tabContent .box-info{
   margin: -1rem;
 }
 
-.preview{
+.keenExplorer .preview{
   display: -ms-flexbox;
   display: flex;
   -ms-flex-direction: row;
@@ -1976,7 +1986,7 @@ button{
   background: #fafafa;
 }
 
-.preview .loader{
+.keenExplorer .preview .loader{
     width: 100%;
     height: 340px;
     display: -ms-flexbox;
@@ -1989,18 +1999,18 @@ button{
     color: #eee;
   }
 
-.preview .keen-dataviz-container, .preview .react-json-view{
+.keenExplorer .preview .keen-dataviz-container, .keenExplorer .preview .react-json-view{
     width: 100%;
     height: 340px;
     background: #fff;
     overflow-y: scroll;
   }
 
-.preview .react-json-view{
+.keenExplorer .preview .react-json-view{
     padding: 1rem;
   }
 
-.preview .select-chart-type-container{
+.keenExplorer .preview .select-chart-type-container{
     -ms-flex: 1;
         flex: 1;
     -ms-flex-order: 1;
@@ -2016,7 +2026,7 @@ button{
     margin: 0.3rem;
   }
 
-.preview .select-chart-type {
+.keenExplorer .preview .select-chart-type {
     -ms-flex: 1;
         flex: 1;
     width: 20rem;
@@ -2024,7 +2034,7 @@ button{
         align-self: flex-end;
   }
 
-.preview .button-download{
+.keenExplorer .preview .button-download{
     -ms-flex-order: 0;
         order: 0;
     background: transparent;
@@ -2034,22 +2044,15 @@ button{
     font-size: 0.8rem;
   }
 
-.preview .button-download i{
+.keenExplorer .preview .button-download i{
       margin-right: 0.5rem;
     }
 
-.chartType{
+.keenExplorer .chartType{
   margin-top: 1rem;
 }
 
-.reload{
-  position: absolute;
-  left: 1rem;
-  top: 1rem;
-  color: #ccc;
-}
-
-.button-toggle{
+.keenExplorer .button-toggle{
   margin-left: 1rem;
   font-size: 1rem;
   border: 0;
@@ -2061,19 +2064,55 @@ button{
   border-radius: 0.3rem;
 }
 
-.button-toggle i {
+.keenExplorer .button-toggle i {
     margin-left: 1rem;
   }
 
-.button-toggle-active {
+.keenExplorer .button-toggle-active {
   background: rgb(255, 255, 255);
 }
 
-.result-string{
+.keenExplorer .result-string{
   display: -ms-flexbox;
   display: flex;
   -ms-flex-pack: center;
       justify-content: center;
   -ms-flex-align: center;
       align-items: center;
+}
+
+.keenExplorer .CalendarDay__selected {
+  background: #00bbde;
+  background: #00bbde;
+  border: 1px double #00bbde;
+  border: 1px double #00bbde;
+}
+
+.keenExplorer .CalendarDay__selected:active {
+  background: #00bbde;
+  background: #00bbde;
+  border: 1px double #00bbde;
+  border: 1px double #00bbde;
+}
+
+.keenExplorer .CalendarDay__selected:hover {
+  background: #00bbde;
+  background: #00bbde;
+  border: 1px double #00bbde;
+  border: 1px double #00bbde;
+}
+
+.keenExplorer .DayPickerKeyboardShortcuts_show__bottomRight::before{
+  border-right: 33px solid #00bbde;
+  border-right: 33px solid #00bbde;
+}
+
+.keenExplorer .DateInput_input__focused{
+  border-bottom: 2px solid #00bbde;
+  border-bottom: 2px solid #00bbde;
+}
+
+.keenExplorer .fa-spin {
+  -webkit-animation: fa-spin 1s infinite linear;
+          animation: fa-spin 1s infinite linear;
 }

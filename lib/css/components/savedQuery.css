@@ -14,9 +14,10 @@
   }
 
   .resource-name{
-    padding: 1rem 0 0;
+    padding: 0.5rem 0.5rem 0;
     display: flex;
     overflow: hidden;
+    font-size: 0.8rem;
     .line {
       flex: 1;
       white-space: nowrap;
@@ -42,6 +43,16 @@
   .cache {
     padding: 1rem 0 0;
     max-width: 12rem;
+
+    .line-checkbox{
+      input{
+        margin-right: 0.5rem;
+        outline: none;
+      }
+      label{
+        cursor: pointer;
+      }
+    }
     .cache-toggle{
       display: flex;
       align-items: center;
@@ -60,7 +71,7 @@
   }
 
   .button-copy{
-    padding: 1rem;
+    padding: 0.7rem;
     right: 0;
     bottom: 0;
     border: 0;
@@ -71,9 +82,9 @@
   .buttons{
     * {
       margin-top: 1rem;
-      padding: 1rem 2rem;
-      font-size: 1rem;
+      padding: 0.8rem;
       border-radius: 0.3rem;
+      font-size: 1rem;
       cursor: pointer;
     }
     .button-save{

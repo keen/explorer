@@ -1,11 +1,14 @@
-body{
+.dev-body{
   margin: 2rem auto;
   width: 80%;
   font-family: Montserrat, Tahoma, Arial;
 }
 
-* {
-  box-sizing: border-box;
+.dev-reload-button{
+  position: absolute;
+  left: 1rem;
+  top: 1rem;
+  color: #ccc;
 }
 
 @import "./variables.css";
@@ -20,38 +23,50 @@ body{
 @import '../../node_modules/react-dates/lib/css/_datepicker.css';
 @import '../../node_modules/rc-time-picker/assets/index.css';
 
-button{
-  margin: 2rem 0 0;
-  padding: 1rem;
-}
-
-.label{
-  padding: 1rem 0 0.5rem;
-}
-
-.hide{
-  display: none;
+.keenExplorer, .ReactModalPortal{
+  * {
+    box-sizing: border-box;
+  }
 }
 
 .keenExplorer{
   display: flex;
+
+  button{
+    margin: 2rem 0 0;
+    padding: 1rem;
+  }
+  
+  .label{
+    padding: 1rem 0 0.3rem;
+  }
+  
+  .hide{
+    display: none;
+  }
+  
+  input:focus {
+    outline: 2px solid var(--color-link-active);
+  }
+
   .panel{
     flex: 1;
-  }
-  .panel-buttons{
-    .button-new-query{
-      flex: none;
-      cursor: pointer;
-      i{
-        
+    min-width: 22rem;
+
+    .panel-buttons{
+      .button-new-query{
+        flex: none;
+        cursor: pointer;
       }
     }
   }
+
   .result{
     flex: 2;
     padding: 0 1.5rem;
     overflow: hidden;
   }
+
   .keen-dataviz-container{
     height: calc(100% - 3rem);
     overflow: hidden;
@@ -92,7 +107,6 @@ button{
       padding: 0 0.5rem 0 0;
     }
   }
-
 
   .optional{
     margin-left: 1em;
@@ -143,17 +157,10 @@ button{
     height:300px;
     justify-content: center;
     align-items: center;
-    background-color: #dff3f8;
-    border-color: transparent;
     color: #207690;
-
-    background-color: #fff;
-    border-color: transparent;
-    color: #207690;
-    font-size: 2rem;
-    border: 1px dashed #ccc;
+    border: 1px solid #eee;
+    font-size: 1.3rem;
   }
-}
 
 .tabs{
   display:flex;
@@ -276,7 +283,7 @@ button{
       }
     }
   }
-}
+  }
 
 .rc-time-picker-panel{
   .rc-time-picker-panel-inner{
@@ -338,7 +345,7 @@ button{
 .error{
   padding: 1rem;
   background: #ffe5e5;
-  margin: 1rem 0 0;
+  margin: 1rem 0;
 }
 
 .box-info{
@@ -404,13 +411,6 @@ button{
   margin-top: 1rem;
 }
 
-.reload{
-  position: absolute;
-  left: 1rem;
-  top: 1rem;
-  color: #ccc;
-}
-
 .button-toggle{
   margin-left: 1rem;
   font-size: 1rem;
@@ -434,4 +434,23 @@ button{
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.CalendarDay__selected, .CalendarDay__selected:active, .CalendarDay__selected:hover {
+  background: var(--color-link-active);
+  border: 1px double var(--color-link-active);
+}
+
+.DayPickerKeyboardShortcuts_show__bottomRight::before{
+  border-right: 33px solid var(--color-link-active);
+}
+
+.DateInput_input__focused{
+  border-bottom: 2px solid var(--color-link-active);
+}
+
+
+.fa-spin {
+  animation: fa-spin 1s infinite linear;
+}
 }
