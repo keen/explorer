@@ -50,6 +50,7 @@ body.explorer-transitions #keen-data-explorer-wrapper {
 
 #keen-data-explorer-wrapper {
     opacity: 1;
+    min-height: 600px;
 }
 
 .explorer-features {
@@ -200,4 +201,10 @@ body.demo-active .footer {
 
 body.demo-active .explorer-ctas {
     display: block;
+}
+
+@media (min-width: 1200px) {
+    .container {
+        width: 100%;
+    }
 }
