@@ -11,26 +11,27 @@
   color: #ccc;
 }
 
-@import "./variables.css";
-@import "./components/extraction.css";
-@import "./components/percentile.css";
-@import "./components/filters.css";
-@import "./components/modal.css";
-@import "./components/savedQuery.css";
-@import "./components/savedQueries.css";
-@import "./components/funnel.css";
-
 @import '../../node_modules/react-dates/lib/css/_datepicker.css';
 @import '../../node_modules/rc-time-picker/assets/index.css';
 
-.keenExplorer, .ReactModalPortal{
+.keenExplorer,
+.ReactModalPortal,
+.rc-time-picker-panel {
+
+  @import "./variables.css";
+  @import "./components/extraction.css";
+  @import "./components/percentile.css";
+  @import "./components/filters.css";
+  @import "./components/modal.css";
+  @import "./components/savedQuery.css";
+  @import "./components/savedQueries.css";
+  @import "./components/funnel.css";
+
+  display: flex;
+
   * {
     box-sizing: border-box;
   }
-}
-
-.keenExplorer{
-  display: flex;
 
   button{
     margin: 2rem 0 0;
@@ -228,12 +229,18 @@
       margin-right:0.5rem;
     }
     .relativity{
-      width:100%;
+      flex: 0;
       max-width:12rem;
+      min-width: 6rem;
     }
     .units{
-      width:100%;
+      flex: 0;
       max-width:12rem;
+      min-width: 6rem;
+    }
+    .inputNumber{
+      flex: 1;
+      min-width: 6rem;
     }
   }
   .description{
@@ -453,4 +460,31 @@
 .fa-spin {
   animation: fa-spin 1s infinite linear;
 }
+
+}
+
+@media screen and (max-width: 1000px) {
+  .keenExplorer{
+    flex-direction: column;
+    .panel{
+      min-width: none;
+    }
+    .result{
+      display: flex;
+      flex-direction: column;
+      .preview{
+        order: 1;
+      }
+      .button-run-query{
+        order: 0;
+      }
+      .button-toggle {
+        order: 3;
+        margin: 1rem 0;
+      }
+      .saved-query{
+        order: 3;
+      }
+    }
+  }
 }
