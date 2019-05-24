@@ -57485,7 +57485,10 @@ function (_Component) {
 
       var timezoneOption = TIMEZONES.find(function (item) {
         return item.value === timezone;
-      });
+      }) || {
+        label: 'UTC',
+        value: 0
+      };
       return external_react_default.a.createElement(external_react_["Fragment"], null, external_react_default.a.createElement("div", {
         className: "timeframe"
       }, external_react_default.a.createElement("div", {
