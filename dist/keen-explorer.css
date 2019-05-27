@@ -1,6 +1,7 @@
 .dev-body{
   margin: 2rem auto;
-  width: 80%;
+  width: 100%;
+  max-width: 1500px;
   font-family: Montserrat, Tahoma, Arial;
 }
 

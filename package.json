@@ -51,6 +51,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.4.3",
+    "@babel/plugin-proposal-object-rest-spread": "^7.4.4",
     "@babel/preset-env": "^7.4.3",
     "@babel/preset-react": "^7.0.0",
     "autoprefixer": "^8.2.0",
@@ -92,7 +93,7 @@
     "stringify": "~3.0.0",
     "style-loader": "^0.20.3",
     "webpack": "^4.29.0",
-    "webpack-bundle-analyzer": "^2.11.1",
+    "webpack-bundle-analyzer": "^3.3.2",
     "webpack-cli": "^3.2.1",
     "webpack-dev-server": "^3.3.1",
     "xhr-mock": "^2.3.2"

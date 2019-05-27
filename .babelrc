@@ -6,6 +6,7 @@
     "plugins": ["line-numbers"],
     "theme": "default",
     "css": true
-  }]
+  }],
+  ["@babel/plugin-proposal-object-rest-spread"]
   ]
 }
