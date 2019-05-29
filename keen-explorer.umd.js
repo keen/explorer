@@ -61490,7 +61490,7 @@ function (_Component) {
         onClick: function onClick() {
           return togglePanelSave();
         }
-      }, "Save as..."), panelSave && external_react_default.a.createElement(explorer_SavedQuery, {
+      }, "Save as..."), features.save && panelSave && external_react_default.a.createElement(explorer_SavedQuery, {
         client: client,
         queryParams: queryParams
       }))));
