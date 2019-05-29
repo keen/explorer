@@ -6,7 +6,7 @@
   border-radius: 0.3rem;
 
   .input-name {
-    font-size: 1rem;
+    font-size: var(--font-size);
     padding: 1rem;
     border-radius: 0.3rem;
     border: 1px solid #e8e8e8;
@@ -14,7 +14,7 @@
   }
 
   .resource-name{
-    padding: 0.5rem 0.5rem 0;
+    padding: 1rem 0.2rem 0;
     display: flex;
     overflow: hidden;
     font-size: 0.8rem;
@@ -28,15 +28,11 @@
       }
       i {
         flex: 0;
-        color: #009ebb;
       }
     }
     .line-label{
       flex: 0;
       margin-right: 0.5rem;
-    }
-    a {
-
     }
   }
 
@@ -45,6 +41,7 @@
     max-width: 12rem;
 
     .line-checkbox{
+      display: flex;
       input{
         margin-right: 0.5rem;
         outline: none;
@@ -82,21 +79,29 @@
   .buttons{
     * {
       margin-top: 1rem;
-      padding: 0.8rem;
+      padding: 0.88rem calc(0.88rem*2);
       border-radius: 0.3rem;
-      font-size: 1rem;
+      font-size: var(--font-size);
       cursor: pointer;
+      text-transform: uppercase;
+      border: 0;
+      font-weight: var(--font-weight-semibold);
     }
     .button-save{
-      color: #108196;
-      border: 1px solid #009ebb;
+      color: #fff;
+      background: var(--color-dark-sky-blue);
     }
     .button-clone{
       margin-left: 1rem;
+      color: var(--color-dark-sky-blue);
+      background: transparent;
+      border: 1px solid #eee;
     }
     .button-delete{
       float: right;
-      color: #c50d0d;
+      color: #6f6c6c;
+      background: transparent;
+      border: 1px solid #eee;
     }
   }
 

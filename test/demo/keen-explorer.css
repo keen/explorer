@@ -1239,6 +1239,24 @@ li.rc-time-picker-panel-select-option-disabled:hover {
   cursor: not-allowed;
 }
 
+.keenExplorer {
+  font-size: undefined;
+  font-size: undefined;
+
+}
+
+.ReactModalPortal {
+  font-size: undefined;
+  font-size: undefined;
+
+}
+
+.rc-time-picker-panel {
+  font-size: undefined;
+  font-size: undefined;
+
+}
+
 .keenExplorer .extraction,.ReactModalPortal .extraction,.rc-time-picker-panel .extraction{
   margin-top: 1rem;
 }
@@ -1273,9 +1291,28 @@ li.rc-time-picker-panel-select-option-disabled:hover {
         padding: 0 0.5rem;
       }
 
-.keenExplorer .filters-container .list .row .row-part input,.ReactModalPortal .filters-container .list .row .row-part input,.rc-time-picker-panel .filters-container .list .row .row-part input{
+.keenExplorer .filters-container .list .row .row-part input{
           padding: 0.55rem 0.7rem;
-          font-size: 1rem;
+          font-size: 0.88rem;
+          font-size: 0.88rem;
+          border-radius: 4px;
+          border: 1px solid #ccc;
+          width: 100%;
+        }
+
+.ReactModalPortal .filters-container .list .row .row-part input{
+          padding: 0.55rem 0.7rem;
+          font-size: 0.88rem;
+          font-size: 0.88rem;
+          border-radius: 4px;
+          border: 1px solid #ccc;
+          width: 100%;
+        }
+
+.rc-time-picker-panel .filters-container .list .row .row-part input{
+          padding: 0.55rem 0.7rem;
+          font-size: 0.88rem;
+          font-size: 0.88rem;
           border-radius: 4px;
           border: 1px solid #ccc;
           width: 100%;
@@ -1432,8 +1469,27 @@ li.rc-time-picker-panel-select-option-disabled:hover {
   border-radius: 0.3rem;
 }
 
-.keenExplorer .saved-query .input-name, .ReactModalPortal .saved-query .input-name, .rc-time-picker-panel .saved-query .input-name {
-    font-size: 1rem;
+.keenExplorer .saved-query .input-name {
+    font-size: 0.88rem;
+    font-size: 0.88rem;
+    padding: 1rem;
+    border-radius: 0.3rem;
+    border: 1px solid #e8e8e8;
+    width: 100%;
+  }
+
+.ReactModalPortal .saved-query .input-name {
+    font-size: 0.88rem;
+    font-size: 0.88rem;
+    padding: 1rem;
+    border-radius: 0.3rem;
+    border: 1px solid #e8e8e8;
+    width: 100%;
+  }
+
+.rc-time-picker-panel .saved-query .input-name {
+    font-size: 0.88rem;
+    font-size: 0.88rem;
     padding: 1rem;
     border-radius: 0.3rem;
     border: 1px solid #e8e8e8;
@@ -1441,7 +1497,7 @@ li.rc-time-picker-panel-select-option-disabled:hover {
   }
 
 .keenExplorer .saved-query .resource-name,.ReactModalPortal .saved-query .resource-name,.rc-time-picker-panel .saved-query .resource-name{
-    padding: 0.5rem 0.5rem 0;
+    padding: 1rem 0.2rem 0;
     display: -ms-flexbox;
     display: flex;
     overflow: hidden;
@@ -1464,7 +1520,6 @@ li.rc-time-picker-panel-select-option-disabled:hover {
 .keenExplorer .saved-query .resource-name .line i, .ReactModalPortal .saved-query .resource-name .line i, .rc-time-picker-panel .saved-query .resource-name .line i {
         -ms-flex: 0;
             flex: 0;
-        color: #009ebb;
       }
 
 .keenExplorer .saved-query .resource-name .line-label,.ReactModalPortal .saved-query .resource-name .line-label,.rc-time-picker-panel .saved-query .resource-name .line-label{
@@ -1473,14 +1528,15 @@ li.rc-time-picker-panel-select-option-disabled:hover {
       margin-right: 0.5rem;
     }
 
-.keenExplorer .saved-query .resource-name a, .ReactModalPortal .saved-query .resource-name a, .rc-time-picker-panel .saved-query .resource-name a {
-
-    }
-
 .keenExplorer .saved-query .cache, .ReactModalPortal .saved-query .cache, .rc-time-picker-panel .saved-query .cache {
     padding: 1rem 0 0;
     max-width: 12rem;
   }
+
+.keenExplorer .saved-query .cache .line-checkbox,.ReactModalPortal .saved-query .cache .line-checkbox,.rc-time-picker-panel .saved-query .cache .line-checkbox{
+      display: -ms-flexbox;
+      display: flex;
+    }
 
 .keenExplorer .saved-query .cache .line-checkbox input,.ReactModalPortal .saved-query .cache .line-checkbox input,.rc-time-picker-panel .saved-query .cache .line-checkbox input{
         margin-right: 0.5rem;
@@ -1521,26 +1577,92 @@ li.rc-time-picker-panel-select-option-disabled:hover {
     display: inline;
   }
 
-.keenExplorer .saved-query .buttons *, .ReactModalPortal .saved-query .buttons *, .rc-time-picker-panel .saved-query .buttons * {
+.keenExplorer .saved-query .buttons * {
       margin-top: 1rem;
-      padding: 0.8rem;
+      padding: 0.88rem calc(0.88rem*2);
       border-radius: 0.3rem;
-      font-size: 1rem;
+      font-size: 0.88rem;
+      font-size: 0.88rem;
       cursor: pointer;
+      text-transform: uppercase;
+      border: 0;
+      font-weight: 600;
+      font-weight: 600;
     }
 
-.keenExplorer .saved-query .buttons .button-save,.ReactModalPortal .saved-query .buttons .button-save,.rc-time-picker-panel .saved-query .buttons .button-save{
-      color: #108196;
-      border: 1px solid #009ebb;
+.ReactModalPortal .saved-query .buttons * {
+      margin-top: 1rem;
+      padding: 0.88rem calc(0.88rem*2);
+      border-radius: 0.3rem;
+      font-size: 0.88rem;
+      font-size: 0.88rem;
+      cursor: pointer;
+      text-transform: uppercase;
+      border: 0;
+      font-weight: 600;
+      font-weight: 600;
     }
 
-.keenExplorer .saved-query .buttons .button-clone,.ReactModalPortal .saved-query .buttons .button-clone,.rc-time-picker-panel .saved-query .buttons .button-clone{
+.rc-time-picker-panel .saved-query .buttons * {
+      margin-top: 1rem;
+      padding: 0.88rem calc(0.88rem*2);
+      border-radius: 0.3rem;
+      font-size: 0.88rem;
+      font-size: 0.88rem;
+      cursor: pointer;
+      text-transform: uppercase;
+      border: 0;
+      font-weight: 600;
+      font-weight: 600;
+    }
+
+.keenExplorer .saved-query .buttons .button-save{
+      color: #fff;
+      background: #45b2e8;
+      background: #45b2e8;
+    }
+
+.ReactModalPortal .saved-query .buttons .button-save{
+      color: #fff;
+      background: #45b2e8;
+      background: #45b2e8;
+    }
+
+.rc-time-picker-panel .saved-query .buttons .button-save{
+      color: #fff;
+      background: #45b2e8;
+      background: #45b2e8;
+    }
+
+.keenExplorer .saved-query .buttons .button-clone{
       margin-left: 1rem;
+      color: #45b2e8;
+      color: #45b2e8;
+      background: transparent;
+      border: 1px solid #eee;
+    }
+
+.ReactModalPortal .saved-query .buttons .button-clone{
+      margin-left: 1rem;
+      color: #45b2e8;
+      color: #45b2e8;
+      background: transparent;
+      border: 1px solid #eee;
+    }
+
+.rc-time-picker-panel .saved-query .buttons .button-clone{
+      margin-left: 1rem;
+      color: #45b2e8;
+      color: #45b2e8;
+      background: transparent;
+      border: 1px solid #eee;
     }
 
 .keenExplorer .saved-query .buttons .button-delete,.ReactModalPortal .saved-query .buttons .button-delete,.rc-time-picker-panel .saved-query .buttons .button-delete{
       float: right;
-      color: #c50d0d;
+      color: #6f6c6c;
+      background: transparent;
+      border: 1px solid #eee;
     }
 
 .keenExplorer .saved-query .button-copy:active,.ReactModalPortal .saved-query .button-copy:active,.rc-time-picker-panel .saved-query .button-copy:active{
@@ -1555,18 +1677,17 @@ li.rc-time-picker-panel-select-option-disabled:hover {
 .keenExplorer .saved-queries .input-filter,.ReactModalPortal .saved-queries .input-filter,.rc-time-picker-panel .saved-queries .input-filter{
     width: 100%;
     padding: 0.6rem;
-    font-size: 1rem;
+    font-size: 0.9rem;
     border: 1px solid #ccc;
     margin: .5rem 0;
     border-radius: 0.3rem;
   }
 
 .keenExplorer .saved-queries .item,.ReactModalPortal .saved-queries .item,.rc-time-picker-panel .saved-queries .item{
-    padding: 1.2rem;
+    padding: 1rem;
     cursor: pointer;
     overflow: auto;
-    border: 1px solid #eee;
-    margin-bottom: -1px;
+    border-bottom: 1px solid #f3f3f3;
   }
 
 .keenExplorer .saved-queries .item .name,.ReactModalPortal .saved-queries .item .name,.rc-time-picker-panel .saved-queries .item .name{
@@ -1575,8 +1696,12 @@ li.rc-time-picker-panel-select-option-disabled:hover {
 
 .keenExplorer .saved-queries .item .cached,.ReactModalPortal .saved-queries .item .cached,.rc-time-picker-panel .saved-queries .item .cached{
       float: left;
-      font-size: 0.7rem;
     }
+
+.keenExplorer .saved-queries .item .cached *,.ReactModalPortal .saved-queries .item .cached *,.rc-time-picker-panel .saved-queries .item .cached *{
+        font-size: 0.6rem;
+        text-transform: uppercase;
+      }
 
 .keenExplorer .saved-queries .item .data,.ReactModalPortal .saved-queries .item .data,.rc-time-picker-panel .saved-queries .item .data{
       float: right;
@@ -1646,9 +1771,29 @@ li.rc-time-picker-panel-select-option-disabled:hover {
       margin-top: -0.3rem;
     }
 
-.keenExplorer *, .ReactModalPortal *, .rc-time-picker-panel * {
+.keenExplorer * {
     -webkit-box-sizing: border-box;
             box-sizing: border-box;
+    font-size: 0.88rem;
+    font-size: 0.88rem;
+}
+
+.ReactModalPortal * {
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+    font-size: 0.88rem;
+    font-size: 0.88rem;
+}
+
+.rc-time-picker-panel * {
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+    font-size: 0.88rem;
+    font-size: 0.88rem;
+}
+
+.keenExplorer .keen-dataviz .c3 svg g text tspan, .ReactModalPortal .keen-dataviz .c3 svg g text tspan, .rc-time-picker-panel .keen-dataviz .c3 svg g text tspan {
+      font-size: 10px !important;
 }
 
 .keenExplorer button,.ReactModalPortal button,.rc-time-picker-panel button{
@@ -1683,12 +1828,23 @@ li.rc-time-picker-panel-select-option-disabled:hover {
     -ms-flex: 1;
         flex: 1;
     min-width: 22rem;
+    -webkit-box-shadow: -3px 7px 11px rgba(0,0,0,0.1);
+            box-shadow: -3px 7px 11px rgba(0,0,0,0.1);
+    border-radius: 0.3rem;
 }
 
 .keenExplorer .panel .panel-buttons .button-new-query,.ReactModalPortal .panel .panel-buttons .button-new-query,.rc-time-picker-panel .panel .panel-buttons .button-new-query{
         -ms-flex: none;
             flex: none;
         cursor: pointer;
+      }
+
+.keenExplorer .panel .panel-content,.ReactModalPortal .panel .panel-content,.rc-time-picker-panel .panel .panel-content{
+      padding: 1rem;
+    }
+
+.keenExplorer .panel .panel-content .label-analysis-type,.ReactModalPortal .panel .panel-content .label-analysis-type,.rc-time-picker-panel .panel .panel-content .label-analysis-type{
+        padding-top: 0;
       }
 
 .keenExplorer .result,.ReactModalPortal .result,.rc-time-picker-panel .result{
@@ -1801,15 +1957,14 @@ li.rc-time-picker-panel-select-option-disabled:hover {
 .keenExplorer .lets-go,.ReactModalPortal .lets-go,.rc-time-picker-panel .lets-go{
     display:-ms-flexbox;
     display:flex;
-    width:100%;
-    height:300px;
+    width: 100%;
+    height: 300px;
     -ms-flex-pack: center;
         justify-content: center;
     -ms-flex-align: center;
         align-items: center;
-    color: #207690;
-    border: 1px solid #eee;
-    font-size: 1.3rem;
+    color: #9b9b9b;
+    background: #fafafa;
 }
 
 .keenExplorer .tabs,.ReactModalPortal .tabs,.rc-time-picker-panel .tabs{
@@ -1832,22 +1987,64 @@ li.rc-time-picker-panel-select-option-disabled:hover {
     border-bottom: 1px solid #fff;
   }
 
+.keenExplorer .panel-buttons .active,.ReactModalPortal .panel-buttons .active,.rc-time-picker-panel .panel-buttons .active{
+    border-right: 0;
+  }
+
 .keenExplorer .tab-content,.ReactModalPortal .tab-content,.rc-time-picker-panel .tab-content{
   padding: 1rem;
   border: 1px solid #e8e8e8;
   border-top: none;
 }
 
-.keenExplorer .inputNumber,.ReactModalPortal .inputNumber,.rc-time-picker-panel .inputNumber{
-  font-size: 1rem;
+.keenExplorer .inputNumber{
+  font-size: 0.88rem;
+  font-size: 0.88rem;
   padding: 0.5rem 0.6rem;
   border-radius: 5px;
   border: 1px solid #ccc;
   font-weight: 400;
 }
 
-.keenExplorer .input-text,.ReactModalPortal .input-text,.rc-time-picker-panel .input-text{
-  font-size: 1rem;
+.ReactModalPortal .inputNumber{
+  font-size: 0.88rem;
+  font-size: 0.88rem;
+  padding: 0.5rem 0.6rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-weight: 400;
+}
+
+.rc-time-picker-panel .inputNumber{
+  font-size: 0.88rem;
+  font-size: 0.88rem;
+  padding: 0.5rem 0.6rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-weight: 400;
+}
+
+.keenExplorer .input-text{
+  font-size: 0.88rem;
+  font-size: 0.88rem;
+  padding: 0.5rem 0.6rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-weight: 400;
+}
+
+.ReactModalPortal .input-text{
+  font-size: 0.88rem;
+  font-size: 0.88rem;
+  padding: 0.5rem 0.6rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-weight: 400;
+}
+
+.rc-time-picker-panel .input-text{
+  font-size: 0.88rem;
+  font-size: 0.88rem;
   padding: 0.5rem 0.6rem;
   border-radius: 5px;
   border: 1px solid #ccc;
@@ -1926,17 +2123,61 @@ li.rc-time-picker-panel-select-option-disabled:hover {
       background: none;
     }
 
-.keenExplorer .timeframe .tabAbsolute .DateInput_input, .ReactModalPortal .timeframe .tabAbsolute .DateInput_input, .rc-time-picker-panel .timeframe .tabAbsolute .DateInput_input {
+.keenExplorer .timeframe .tabAbsolute .DateInput_input {
       padding: 0.5rem;
-      font-size: 1rem;
+      font-size: 0.88rem;
+      font-size: 0.88rem;
       line-height: normal;
       color:#000;
       font-weight: normal;
       border-radius: 5px;
     }
 
-.keenExplorer .timeframe .tabAbsolute .rc-time-picker-input,.ReactModalPortal .timeframe .tabAbsolute .rc-time-picker-input,.rc-time-picker-panel .timeframe .tabAbsolute .rc-time-picker-input{
-      font-size: 1rem;
+.ReactModalPortal .timeframe .tabAbsolute .DateInput_input {
+      padding: 0.5rem;
+      font-size: 0.88rem;
+      font-size: 0.88rem;
+      line-height: normal;
+      color:#000;
+      font-weight: normal;
+      border-radius: 5px;
+    }
+
+.rc-time-picker-panel .timeframe .tabAbsolute .DateInput_input {
+      padding: 0.5rem;
+      font-size: 0.88rem;
+      font-size: 0.88rem;
+      line-height: normal;
+      color:#000;
+      font-weight: normal;
+      border-radius: 5px;
+    }
+
+.keenExplorer .timeframe .tabAbsolute .rc-time-picker-input{
+      font-size: 0.88rem;
+      font-size: 0.88rem;
+      line-height: normal;
+      font-weight: normal;
+      color: #000;
+      height: 2.4rem;
+      width: 7rem;
+      border-radius: 5px;
+    }
+
+.ReactModalPortal .timeframe .tabAbsolute .rc-time-picker-input{
+      font-size: 0.88rem;
+      font-size: 0.88rem;
+      line-height: normal;
+      font-weight: normal;
+      color: #000;
+      height: 2.4rem;
+      width: 7rem;
+      border-radius: 5px;
+    }
+
+.rc-time-picker-panel .timeframe .tabAbsolute .rc-time-picker-input{
+      font-size: 0.88rem;
+      font-size: 0.88rem;
       line-height: normal;
       font-weight: normal;
       color: #000;
@@ -1972,8 +2213,9 @@ li.rc-time-picker-panel-select-option-disabled:hover {
     border-radius: 5px;
   }
 
-.keenExplorer .rc-time-picker-panel .rc-time-picker-input,.ReactModalPortal .rc-time-picker-panel .rc-time-picker-input,.rc-time-picker-panel .rc-time-picker-panel .rc-time-picker-input{
-    font-size: 1rem;
+.keenExplorer .rc-time-picker-panel .rc-time-picker-input{
+    font-size: 0.88rem;
+    font-size: 0.88rem;
     line-height: normal;
     font-weight: normal;
     color: #000;
@@ -1982,8 +2224,41 @@ li.rc-time-picker-panel-select-option-disabled:hover {
     border-radius: 5px;
   }
 
-.keenExplorer .rc-time-picker-panel .rc-time-picker-panel-select,.ReactModalPortal .rc-time-picker-panel .rc-time-picker-panel-select,.rc-time-picker-panel .rc-time-picker-panel .rc-time-picker-panel-select{
-    font-size: 1rem;
+.ReactModalPortal .rc-time-picker-panel .rc-time-picker-input{
+    font-size: 0.88rem;
+    font-size: 0.88rem;
+    line-height: normal;
+    font-weight: normal;
+    color: #000;
+    height: 2.4rem;
+    width: 8rem;
+    border-radius: 5px;
+  }
+
+.rc-time-picker-panel .rc-time-picker-panel .rc-time-picker-input{
+    font-size: 0.88rem;
+    font-size: 0.88rem;
+    line-height: normal;
+    font-weight: normal;
+    color: #000;
+    height: 2.4rem;
+    width: 8rem;
+    border-radius: 5px;
+  }
+
+.keenExplorer .rc-time-picker-panel .rc-time-picker-panel-select{
+    font-size: 0.88rem;
+    font-size: 0.88rem;
+  }
+
+.ReactModalPortal .rc-time-picker-panel .rc-time-picker-panel-select{
+    font-size: 0.88rem;
+    font-size: 0.88rem;
+  }
+
+.rc-time-picker-panel .rc-time-picker-panel .rc-time-picker-panel-select{
+    font-size: 0.88rem;
+    font-size: 0.88rem;
   }
 
 .keenExplorer .rc-time-picker-panel .rc-time-picker-panel-select li,.ReactModalPortal .rc-time-picker-panel .rc-time-picker-panel-select li,.rc-time-picker-panel .rc-time-picker-panel .rc-time-picker-panel-select li{
@@ -1991,8 +2266,19 @@ li.rc-time-picker-panel-select-option-disabled:hover {
       line-height: 2rem;
     }
 
-.keenExplorer .rc-time-picker-panel .rc-time-picker-panel-input,.ReactModalPortal .rc-time-picker-panel .rc-time-picker-panel-input,.rc-time-picker-panel .rc-time-picker-panel .rc-time-picker-panel-input{
-    font-size: 1rem;
+.keenExplorer .rc-time-picker-panel .rc-time-picker-panel-input{
+    font-size: 0.88rem;
+    font-size: 0.88rem;
+  }
+
+.ReactModalPortal .rc-time-picker-panel .rc-time-picker-panel-input{
+    font-size: 0.88rem;
+    font-size: 0.88rem;
+  }
+
+.rc-time-picker-panel .rc-time-picker-panel .rc-time-picker-panel-input{
+    font-size: 0.88rem;
+    font-size: 0.88rem;
   }
 
 .keenExplorer .apiQueryUrl,.ReactModalPortal .apiQueryUrl,.rc-time-picker-panel .apiQueryUrl{
@@ -2027,15 +2313,55 @@ li.rc-time-picker-panel-select-option-disabled:hover {
   color: #00bbde;
 }
 
-.keenExplorer .button-run-query,.ReactModalPortal .button-run-query,.rc-time-picker-panel .button-run-query{
-  font-size: 1rem;
+.keenExplorer .button-run-query{
+  font-size: 0.88rem;
+  font-size: 0.88rem;
+  text-transform: uppercase;
   border-radius: 0.3rem;
-  background: #009ebb;
+  background: #3ecf8e;
+  background: #3ecf8e;
   color: #fff;
+  font-weight: 600;
+  font-weight: 600;
   border: 0;
-  padding: 1rem 2rem;
+  padding: 0.88rem calc(0.88rem*2);
+  padding: 0.88rem calc(0.88rem*2);
   cursor: pointer;
-  margin: 1rem 0 0;
+  margin: 0;
+}
+
+.ReactModalPortal .button-run-query{
+  font-size: 0.88rem;
+  font-size: 0.88rem;
+  text-transform: uppercase;
+  border-radius: 0.3rem;
+  background: #3ecf8e;
+  background: #3ecf8e;
+  color: #fff;
+  font-weight: 600;
+  font-weight: 600;
+  border: 0;
+  padding: 0.88rem calc(0.88rem*2);
+  padding: 0.88rem calc(0.88rem*2);
+  cursor: pointer;
+  margin: 0;
+}
+
+.rc-time-picker-panel .button-run-query{
+  font-size: 0.88rem;
+  font-size: 0.88rem;
+  text-transform: uppercase;
+  border-radius: 0.3rem;
+  background: #3ecf8e;
+  background: #3ecf8e;
+  color: #fff;
+  font-weight: 600;
+  font-weight: 600;
+  border: 0;
+  padding: 0.88rem calc(0.88rem*2);
+  padding: 0.88rem calc(0.88rem*2);
+  cursor: pointer;
+  margin: 0;
 }
 
 .keenExplorer .button-run-query i, .ReactModalPortal .button-run-query i, .rc-time-picker-panel .button-run-query i {
@@ -2053,7 +2379,7 @@ li.rc-time-picker-panel-select-option-disabled:hover {
   background: #f1faff;
 }
 
-.keenExplorer .tabContent .box-info,.ReactModalPortal .tabContent .box-info,.rc-time-picker-panel .tabContent .box-info{
+.keenExplorer .tab-content .box-info,.ReactModalPortal .tab-content .box-info,.rc-time-picker-panel .tab-content .box-info{
   margin: -1rem;
 }
 
@@ -2129,20 +2455,75 @@ li.rc-time-picker-panel-select-option-disabled:hover {
       margin-right: 0.5rem;
     }
 
+.keenExplorer .action-buttons,.ReactModalPortal .action-buttons,.rc-time-picker-panel .action-buttons{
+  margin-top: 1rem;
+}
+
 .keenExplorer .chartType,.ReactModalPortal .chartType,.rc-time-picker-panel .chartType{
   margin-top: 1rem;
 }
 
-.keenExplorer .button-toggle,.ReactModalPortal .button-toggle,.rc-time-picker-panel .button-toggle{
+.keenExplorer .button-toggle{
   margin-left: 1rem;
-  font-size: 1rem;
-  border: 0;
   display: inline;
-  padding: 1rem;
   cursor: pointer;
-  border: 1px solid #ddd;
-  background: #fafafa;
   border-radius: 0.3rem;
+  font-size: 0.88rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #3ecf8e;
+  color: #3ecf8e;
+  color: #45b2e8;
+  color: #45b2e8;
+  background: #fcfcfc;
+  border: 1px solid #efefef;
+  border: 1px solid #efefef;
+  padding: 0.88rem calc(0.88rem*2);
+  padding: 0.88rem calc(0.88rem*2);
+}
+
+.ReactModalPortal .button-toggle{
+  margin-left: 1rem;
+  display: inline;
+  cursor: pointer;
+  border-radius: 0.3rem;
+  font-size: 0.88rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #3ecf8e;
+  color: #3ecf8e;
+  color: #45b2e8;
+  color: #45b2e8;
+  background: #fcfcfc;
+  border: 1px solid #efefef;
+  border: 1px solid #efefef;
+  padding: 0.88rem calc(0.88rem*2);
+  padding: 0.88rem calc(0.88rem*2);
+}
+
+.rc-time-picker-panel .button-toggle{
+  margin-left: 1rem;
+  display: inline;
+  cursor: pointer;
+  border-radius: 0.3rem;
+  font-size: 0.88rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #3ecf8e;
+  color: #3ecf8e;
+  color: #45b2e8;
+  color: #45b2e8;
+  background: #fcfcfc;
+  border: 1px solid #efefef;
+  border: 1px solid #efefef;
+  padding: 0.88rem calc(0.88rem*2);
+  padding: 0.88rem calc(0.88rem*2);
 }
 
 .keenExplorer .button-toggle i, .ReactModalPortal .button-toggle i, .rc-time-picker-panel .button-toggle i {
@@ -2266,17 +2647,25 @@ li.rc-time-picker-panel-select-option-disabled:hover {
         flex-direction: column;
   }
     .keenExplorer .panel{
+      -webkit-box-shadow: none;
+              box-shadow: none;
       min-width: none;
     }
+      .keenExplorer .panel .panel-content{
+        padding: 0 1rem;
+      }
     .keenExplorer .result{
       display: -ms-flexbox;
       display: flex;
       -ms-flex-direction: column;
           flex-direction: column;
     }
-      .keenExplorer .result .preview{
+      .keenExplorer .result .preview, .keenExplorer .result .lets-go{
         -ms-flex-order: 1;
             order: 1;
+      }
+      .keenExplorer .result .error{
+        margin-bottom: 0;
       }
       .keenExplorer .result .button-run-query{
         -ms-flex-order: 0;
@@ -2285,10 +2674,15 @@ li.rc-time-picker-panel-select-option-disabled:hover {
       .keenExplorer .result .button-toggle {
         -ms-flex-order: 3;
             order: 3;
-        margin: 1rem 0;
       }
       .keenExplorer .result .saved-query{
         -ms-flex-order: 3;
             order: 3;
       }
+      .keenExplorer .result .action-buttons{
+        margin-bottom: 1rem;
+      }
+    .filters-container .delete{
+      margin-top: 0.5rem;
+    }
 }
