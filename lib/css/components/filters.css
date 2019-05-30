@@ -19,9 +19,13 @@
         .datetime-pickers{
           display: flex;
           .DateInput{
-            width: auto;
+            width: 100%;
+          }
+          .SingleDatePickerInput{
+            width: 100%;
           }
           .SingleDatePicker{
+            flex: 1;
             margin-right: 0.1rem;
           }
           .SingleDatePickerInput__withBorder{
@@ -31,6 +35,9 @@
             padding: 0.333rem;
             text-align: center;
             height: 2.3rem;
+          }
+          .rc-time-picker{
+            flex: 1;
           }
           input.rc-time-picker-input{
             padding: 0.3rem;
@@ -50,9 +57,10 @@
           display: flex;
           align-items: center;
           height: 100%;
-          font-size: 1.2rem;
           i {
             color: #ea7373;
+            font-size: 1rem;
+            padding: 0.5rem;
           }
         }
       }
@@ -60,18 +68,43 @@
         flex: 0;
       }
     }
+
+  }
+
+  .action-buttons{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-top: 0;
+
     .button-add-filter{
-      margin: 0.5rem;
+      margin-right: 1rem;
       cursor: pointer;
+      text-transform: uppercase;
       padding: 1rem 2rem;
       background: #eee;
-      float: left;
       border-radius: 0.3rem;
       i {
         margin-right: 1rem;
       }
     }
+
+    .button-done{
+      cursor: pointer;
+      color: #fff;
+      background: var(--color-dark-sky-blue);
+      text-transform: uppercase;
+      width: 10rem;
+      padding: 1rem;
+      text-align: center;
+      border-radius: 0.3rem;
+      i{
+        margin-right: 1rem;
+      }
+    }
   }
+
+
 
   @media screen and (max-width: 1000px) {
     .list{
