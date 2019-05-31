@@ -492,6 +492,10 @@
   animation: fa-spin 1s infinite linear;
 }
 
+  .react-select-option{
+    padding: 0.7rem 1rem;
+  }
+
 }
 
 @media screen and (max-width: 1000px) {

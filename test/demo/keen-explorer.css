@@ -2704,6 +2704,10 @@ li.rc-time-picker-panel-select-option-disabled:hover {
           animation: fa-spin 1s infinite linear;
 }
 
+.keenExplorer .react-select-option,.ReactModalPortal .react-select-option,.rc-time-picker-panel .react-select-option{
+    padding: 0.7rem 1rem;
+}
+
 @media screen and (max-width: 1000px) {
   .keenExplorer{
     -ms-flex-direction: column;
