@@ -28,6 +28,7 @@
   @import "./components/savedQuery.css";
   @import "./components/savedQueries.css";
   @import "./components/funnel.css";
+  @import "./components/dataviz.css";
 
   display: flex;
 
@@ -424,6 +425,11 @@
     flex: 1;
     width: 20rem;
     align-self: flex-end;
+  }
+  .chart-not-supported-note{
+    float: right;
+    text-align: right;
+    padding: 0.5rem;
   }
   .button-download{
     order: 0;

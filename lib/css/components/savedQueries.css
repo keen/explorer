@@ -1,6 +1,7 @@
 .saved-queries{
   overflow: scroll;
-  max-height: 100%;
+  min-height: 100%;
+  max-height: 44rem;
 
   .input-filter{
     width: 100%;

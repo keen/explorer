@@ -1276,6 +1276,7 @@ li.rc-time-picker-panel-select-option-disabled:hover {
 .keenExplorer .filters-container .list,.ReactModalPortal .filters-container .list,.rc-time-picker-panel .filters-container .list{
     margin: 2rem 0;
     width: 100%;
+
   }
 
 .keenExplorer .filters-container .list .row,.ReactModalPortal .filters-container .list .row,.rc-time-picker-panel .filters-container .list .row{
@@ -1324,10 +1325,16 @@ li.rc-time-picker-panel-select-option-disabled:hover {
         }
 
 .keenExplorer .filters-container .list .row .row-part .datetime-pickers .DateInput,.ReactModalPortal .filters-container .list .row .row-part .datetime-pickers .DateInput,.rc-time-picker-panel .filters-container .list .row .row-part .datetime-pickers .DateInput{
-            width: auto;
+            width: 100%;
+          }
+
+.keenExplorer .filters-container .list .row .row-part .datetime-pickers .SingleDatePickerInput,.ReactModalPortal .filters-container .list .row .row-part .datetime-pickers .SingleDatePickerInput,.rc-time-picker-panel .filters-container .list .row .row-part .datetime-pickers .SingleDatePickerInput{
+            width: 100%;
           }
 
 .keenExplorer .filters-container .list .row .row-part .datetime-pickers .SingleDatePicker,.ReactModalPortal .filters-container .list .row .row-part .datetime-pickers .SingleDatePicker,.rc-time-picker-panel .filters-container .list .row .row-part .datetime-pickers .SingleDatePicker{
+            -ms-flex: 1;
+                flex: 1;
             margin-right: 0.1rem;
           }
 
@@ -1339,6 +1346,11 @@ li.rc-time-picker-panel-select-option-disabled:hover {
             padding: 0.333rem;
             text-align: center;
             height: 2.3rem;
+          }
+
+.keenExplorer .filters-container .list .row .row-part .datetime-pickers .rc-time-picker,.ReactModalPortal .filters-container .list .row .row-part .datetime-pickers .rc-time-picker,.rc-time-picker-panel .filters-container .list .row .row-part .datetime-pickers .rc-time-picker{
+            -ms-flex: 1;
+                flex: 1;
           }
 
 .keenExplorer .filters-container .list .row .row-part .datetime-pickers input.rc-time-picker-input,.ReactModalPortal .filters-container .list .row .row-part .datetime-pickers input.rc-time-picker-input,.rc-time-picker-panel .filters-container .list .row .row-part .datetime-pickers input.rc-time-picker-input{
@@ -1360,11 +1372,12 @@ li.rc-time-picker-panel-select-option-disabled:hover {
           -ms-flex-align: center;
               align-items: center;
           height: 100%;
-          font-size: 1.2rem;
         }
 
 .keenExplorer .filters-container .list .row .row-part .delete i, .ReactModalPortal .filters-container .list .row .row-part .delete i, .rc-time-picker-panel .filters-container .list .row .row-part .delete i {
             color: #ea7373;
+            font-size: 1rem;
+            padding: 0.5rem;
           }
 
 .keenExplorer .filters-container .list .row .no-flex,.ReactModalPortal .filters-container .list .row .no-flex,.rc-time-picker-panel .filters-container .list .row .no-flex{
@@ -1372,16 +1385,66 @@ li.rc-time-picker-panel-select-option-disabled:hover {
             flex: 0;
       }
 
-.keenExplorer .filters-container .list .button-add-filter,.ReactModalPortal .filters-container .list .button-add-filter,.rc-time-picker-panel .filters-container .list .button-add-filter{
-      margin: 0.5rem;
+.keenExplorer .filters-container .action-buttons,.ReactModalPortal .filters-container .action-buttons,.rc-time-picker-panel .filters-container .action-buttons{
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+        align-items: center;
+    -ms-flex-pack: end;
+        justify-content: flex-end;
+    margin-top: 0;
+  }
+
+.keenExplorer .filters-container .action-buttons .button-add-filter,.ReactModalPortal .filters-container .action-buttons .button-add-filter,.rc-time-picker-panel .filters-container .action-buttons .button-add-filter{
+      margin-right: 1rem;
       cursor: pointer;
+      text-transform: uppercase;
       padding: 1rem 2rem;
       background: #eee;
-      float: left;
       border-radius: 0.3rem;
     }
 
-.keenExplorer .filters-container .list .button-add-filter i, .ReactModalPortal .filters-container .list .button-add-filter i, .rc-time-picker-panel .filters-container .list .button-add-filter i {
+.keenExplorer .filters-container .action-buttons .button-add-filter i, .ReactModalPortal .filters-container .action-buttons .button-add-filter i, .rc-time-picker-panel .filters-container .action-buttons .button-add-filter i {
+        margin-right: 1rem;
+      }
+
+.keenExplorer .filters-container .action-buttons .button-done{
+      cursor: pointer;
+      color: #fff;
+      background: #45b2e8;
+      background: #45b2e8;
+      text-transform: uppercase;
+      width: 10rem;
+      padding: 1rem;
+      text-align: center;
+      border-radius: 0.3rem;
+    }
+
+.ReactModalPortal .filters-container .action-buttons .button-done{
+      cursor: pointer;
+      color: #fff;
+      background: #45b2e8;
+      background: #45b2e8;
+      text-transform: uppercase;
+      width: 10rem;
+      padding: 1rem;
+      text-align: center;
+      border-radius: 0.3rem;
+    }
+
+.rc-time-picker-panel .filters-container .action-buttons .button-done{
+      cursor: pointer;
+      color: #fff;
+      background: #45b2e8;
+      background: #45b2e8;
+      text-transform: uppercase;
+      width: 10rem;
+      padding: 1rem;
+      text-align: center;
+      border-radius: 0.3rem;
+    }
+
+.keenExplorer .filters-container .action-buttons .button-done i,.ReactModalPortal .filters-container .action-buttons .button-done i,.rc-time-picker-panel .filters-container .action-buttons .button-done i{
         margin-right: 1rem;
       }
 
@@ -2639,6 +2702,10 @@ li.rc-time-picker-panel-select-option-disabled:hover {
 .keenExplorer .fa-spin, .ReactModalPortal .fa-spin, .rc-time-picker-panel .fa-spin {
   -webkit-animation: fa-spin 1s infinite linear;
           animation: fa-spin 1s infinite linear;
+}
+
+.keenExplorer .react-select-option,.ReactModalPortal .react-select-option,.rc-time-picker-panel .react-select-option{
+    padding: 0.7rem 1rem;
 }
 
 @media screen and (max-width: 1000px) {
