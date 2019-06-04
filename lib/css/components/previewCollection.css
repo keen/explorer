@@ -1,0 +1,35 @@
+.a-preview-collection{
+  padding: 0.5rem;
+  margin: 0 0 1rem;
+  cursor: pointer;
+  background: #fafafa;
+  border-radius: 0.3rem;
+  width: 100%;
+  float: left;
+  i{
+    font-size: 0.8em;
+    margin-right: 0.2rem;
+  }
+}
+
+.preview-collection-content{
+  display: flex;
+  flex-direction: row;
+  .list {
+    height: 100%;
+    overflow-y: scroll;
+    .item{
+      cursor: pointer;
+      padding: 1rem;
+      overflow: auto;
+      border-bottom: 1px solid #f3f3f3;
+    }
+    .active{
+      background: #f7f7f7;
+    }
+  }
+  .content{
+    height: 100%;
+    overflow-y: scroll;
+  }
+}

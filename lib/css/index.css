@@ -29,6 +29,7 @@
   @import "./components/savedQueries.css";
   @import "./components/funnel.css";
   @import "./components/dataviz.css";
+  @import "./components/previewCollection.css";
 
   display: flex;
 
