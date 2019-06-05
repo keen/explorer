@@ -30,6 +30,7 @@
   @import "./components/funnel.css";
   @import "./components/dataviz.css";
   @import "./components/previewCollection.css";
+  @import "./components/preview.css";
 
   display: flex;
 
@@ -370,8 +371,18 @@
   padding: var(--font-size) calc(var(--font-size)*2);
   cursor: pointer;
   margin: 0;
-  i {
-    margin-right: 0.5rem;
+}
+
+.button-with-loading-spinner {
+  .loading-spinner{
+    display: inline-block;
+    margin: 0 0.5rem 0 -0.5rem;
+    padding: 0;
+    i {
+      margin: 0;
+      padding: 0;
+      font-size: 1rem;
+    }
   }
 }
 
@@ -494,15 +505,25 @@
   border-bottom: 2px solid var(--color-link-active);
 }
 
+  .loading-spinner{
+    i {
+      font-size: 1.5rem;
+    }
+  }
 
-.fa-spin {
-  animation: fa-spin 1s infinite linear;
-}
+  .fa-spin {
+    animation: fa-spin 1s infinite linear;
+  }
 
   .react-select-option{
     padding: 0.7rem 1rem;
   }
 
+  .react-json-view{
+    .string-value{
+      word-break: break-word;
+    }
+  }
 }
 
 @media screen and (max-width: 1000px) {
