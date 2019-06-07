@@ -1209,7 +1209,7 @@ var CONSTANTS = {
 
   DEFAULT_TIMEZONE: 'UTC',
 
-  ANALYSIS_TYPES: ['sum', 'count', 'count_unique', 'minimum', 'maximum', 'average', 'select_unique', 'extraction', 'percentile', 'median', 'funnel'],
+  ANALYSIS_TYPES: ['sum', 'count', 'count_unique', 'minimum', 'maximum', 'average', 'select_unique', 'extraction', 'percentile', 'median', 'funnel', 'standard_deviation'],
 
   ABSOLUTE_INTERVAL_TYPES: [{ name: 'minutely', value: 'minutely' }, { name: 'hourly', value: 'hourly' }, { name: 'daily', value: 'daily' }, { name: 'weekly', value: 'weekly' }, { name: 'monthly', value: 'monthly' }, { name: 'yearly', value: 'yearly' }],
 
@@ -11968,7 +11968,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = {
   exportToCsv: function exportToCsv(data, filename) {
-    var csvContent = 'data:text/csv;charset=utf-8,';
+    var csvContent = '';
     var htmlElement;
 
     data.forEach(function (row, i) {
@@ -11983,8 +11983,20 @@ exports.default = {
       }
     });
 
+    var encodedData = '';
+    if (typeof window !== 'undefined' && window.URL) {
+      var blob = new Blob(['\uFEFF' + csvContent], { type: 'text/csv; charset=utf-8' });
+      encodedData = window.URL.createObjectURL(blob);
+    } else {
+      encodedData = 'data:text/csv;charset=utf-8,' + encodeURI(csvContent);
+    }
+
     htmlElement = document.createElement('a');
-    htmlElement.setAttribute('href', encodeURI(csvContent));
+    htmlElement.setAttribute('href', encodedData);
+
+    if (filename.indexOf('.csv') === -1) {
+      filename += '.csv';
+    }
     htmlElement.setAttribute('download', filename);
     document.body.appendChild(htmlElement);
     htmlElement.click();
