@@ -23,14 +23,16 @@
 @import '../../node_modules/react-dates/lib/css/_datepicker.css';
 @import '../../node_modules/rc-time-picker/assets/index.css';
 
+@import "./variables.css";
+
 .keenExplorer,
 .ReactModalPortal,
 .rc-time-picker-panel {
   font-family: Montserrat, Tahoma, Arial;
   font-size: var(--font-size);
+  color: var(--font-color);
   display: flex;
 
-  @import "./variables.css";
   @import "./components/extraction.css";
   @import "./components/percentile.css";
   @import "./components/filters.css";
@@ -52,7 +54,7 @@
     padding: 1rem;
   }
   
-  .label{
+  .label-main{
     padding: 1rem 0 0.3rem;
   }
   
@@ -64,7 +66,7 @@
     outline: 2px solid var(--color-link-active);
   }
 
-  .panel{
+  .panel-main{
     flex: 1;
     min-width: 26rem;
     box-shadow: -3px 7px 11px rgba(0,0,0,0.1);
@@ -136,7 +138,7 @@
   }
 
   .groupBy{
-    .label{
+    .label-main{
       padding: 0 0 0.5rem;
     }
     .btnPlus, .btnMinus{
@@ -209,12 +211,13 @@
   border-top: none;
 }
 
-.inputNumber{
+.input-number{
   font-size: var(--font-size);
   padding: 0.5rem 0.6rem;
   border-radius: 5px;
   border: 1px solid #ccc;
   font-weight: 400;
+  line-height: normal;
 }
 
 .input-text{
@@ -223,6 +226,7 @@
   border-radius: 5px;
   border: 1px solid #ccc;
   font-weight: 400;
+  line-height: normal;
 }
 
 .interval{
@@ -235,7 +239,7 @@
     .title{
       margin-right: 1rem;
     }
-    .inputNumber{
+    .input-number{
       width: 4rem;
       margin-right: 0.5rem;
     }
@@ -249,7 +253,7 @@
   margin-bottom: 0.5rem;
   .relative{
     display:flex;
-    .relativity, .inputNumber{
+    .relativity, .input-number{
       margin-right:0.5rem;
     }
     .relativity{
@@ -262,7 +266,7 @@
       max-width:12rem;
       min-width: 6rem;
     }
-    .inputNumber{
+    .input-number{
       flex: 1;
       min-width: 6rem;
     }

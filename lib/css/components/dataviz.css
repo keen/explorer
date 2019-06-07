@@ -4,7 +4,7 @@
 }
 
 .keen-dataviz-metric-value{
-  font-size: 3rem;
+  font-size: 4rem !important;
 }
 
 .keen-dataviz .c3 svg g text tspan {
