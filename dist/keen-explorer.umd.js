@@ -10454,7 +10454,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__163__;
 /* 164 */
 /***/ (function(module) {
 
-module.exports = {"a":"6.0.1"};
+module.exports = {"a":"6.0.2"};
 
 /***/ }),
 /* 165 */
@@ -26921,7 +26921,7 @@ function (_Component) {
         theme: getThemeForSelect
       }), analysisType !== 'funnel' && external_react_default.a.createElement(explorer_EventCollection, {
         saveStateToLocalStorage: saveStateToLocalStorage.eventCollection
-      }), previewCollection && external_react_default.a.createElement(external_react_["Fragment"], null, external_react_default.a.createElement("a", {
+      }), previewCollection && external_react_default.a.createElement(external_react_["Fragment"], null, external_react_default.a.createElement("div", {
         className: "a-preview-collection",
         onClick: function onClick() {
           updateUI({
