@@ -29,9 +29,11 @@ const myExplorer = new KeenExplorer({
   keenAnalysis: {
     // configuration for KeenAnalysis
     // https://github.com/keen/keen-analysis.js
-    projectId: 'PROJECT_ID',
-    masterKey: 'MASTER_KEY',
-    readKey: 'READ_KEY',
+    config: {
+      projectId: 'PROJECT_ID',
+      masterKey: 'MASTER_KEY',
+      readKey: 'READ_KEY',
+    },
   },
 
   keenDataviz: {
@@ -47,12 +49,14 @@ const myExplorer = new KeenExplorer({
 
 ```html
 <head>
-  <!-- Explorer Assets -->
+  <link href="https://fonts.googleapis.com/css?family=Montserrat%7CMontserrat:600%7CHind" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/keen-explorer@6/dist/keen-explorer.min.css">
   <script crossorigin src="https://cdn.jsdelivr.net/npm/keen-explorer@6/dist/keen-explorer.bundle.min.js"></script>
 </head>
 
-<body>
+<body class="keen-explorer-template">
   <div id="keen-explorer-container"></div>
   <script>
   const myExplorer = new KeenExplorer({
@@ -61,9 +65,11 @@ const myExplorer = new KeenExplorer({
   keenAnalysis: {
     // configuration for KeenAnalysis
     // https://github.com/keen/keen-analysis.js
-    projectId: 'PROJECT_ID',
-    masterKey: 'MASTER_KEY',
-    readKey: 'READ_KEY',
+    config: {
+      projectId: 'PROJECT_ID',
+      masterKey: 'MASTER_KEY',
+      readKey: 'READ_KEY',
+    },
   },
 
   keenDataviz: {
