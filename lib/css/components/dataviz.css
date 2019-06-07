@@ -1,0 +1,12 @@
+.keen-dataviz-container{
+  height: calc(100% - 3rem);
+  overflow: hidden;
+}
+
+.keen-dataviz-metric-value{
+  font-size: 3rem;
+}
+
+.keen-dataviz .c3 svg g text tspan {
+  font-size: 10px !important;
+}

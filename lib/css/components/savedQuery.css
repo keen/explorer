@@ -1,3 +1,5 @@
+@import "../variables.css";
+
 .saved-query {
   margin: 1rem 0;
   border: 1px solid #e8e8e8;

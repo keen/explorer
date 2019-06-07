@@ -1,7 +1,7 @@
 {
   "name": "keen-explorer",
   "description": "Data Explorer by Keen IO",
-  "version": "5.1.0",
+  "version": "6.0.1",
   "license": "MIT",
   "bucket-name": "keen-js",
   "main": "dist/keen-explorer.umd.js",
@@ -16,7 +16,6 @@
     "build:bundle": "NODE_ENV=production BUNDLE=1 webpack -p && NODE_ENV=production OPTIMIZE_MINIMIZE=1 BUNDLE=1 webpack -p ",
     "build:css": "node_modules/postcss-cli/bin/postcss lib/css/index.css -o dist/keen-explorer.css --config postcss.config.js",
     "build:css:min": "OPTIMIZE_MINIMIZE=1 node_modules/postcss-cli/bin/postcss lib/css/index.css -o dist/keen-explorer.min.css --config postcss.config.js",
-    "preversion": "npm run test",
     "version": "npm run build && git add .",
     "postversion": "git push && git push --tags",
     "profile": "BUNDLE=1 OPTIMIZE_MINIMIZE=1 webpack --profile --json > stats.json",

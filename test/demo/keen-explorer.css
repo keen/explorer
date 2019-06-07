@@ -2,7 +2,6 @@
   margin: 2rem auto;
   width: 100%;
   max-width: 1500px;
-  font-family: Montserrat, Tahoma, Arial;
 }
 
 .dev-reload-button{
@@ -11,6 +10,16 @@
   top: 1rem;
   color: #ccc;
 }
+
+.keen-explorer-template{
+  margin: 0 auto;
+  width: 100%;
+  max-width: 1500px;
+}
+
+.keen-explorer-template #keen-explorer-container{
+    padding: 1rem;
+  }
 
 .PresetDateRangePicker_panel {
   padding: 0 22px 11px
@@ -1240,18 +1249,27 @@ li.rc-time-picker-panel-select-option-disabled:hover {
 }
 
 .keenExplorer {
+  font-family: Montserrat, Tahoma, Arial;
   font-size: undefined;
   font-size: undefined;
+  display: -ms-flexbox;
+  display: flex;
 }
 
 .ReactModalPortal {
+  font-family: Montserrat, Tahoma, Arial;
   font-size: undefined;
   font-size: undefined;
+  display: -ms-flexbox;
+  display: flex;
 }
 
 .rc-time-picker-panel {
+  font-family: Montserrat, Tahoma, Arial;
   font-size: undefined;
   font-size: undefined;
+  display: -ms-flexbox;
+  display: flex;
 }
 
 .keenExplorer .extraction,.ReactModalPortal .extraction,.rc-time-picker-panel .extraction{
@@ -1825,6 +1843,19 @@ li.rc-time-picker-panel-select-option-disabled:hover {
       margin-top: -0.3rem;
     }
 
+.keenExplorer .keen-dataviz-container,.ReactModalPortal .keen-dataviz-container,.rc-time-picker-panel .keen-dataviz-container{
+  height: calc(100% - 3rem);
+  overflow: hidden;
+}
+
+.keenExplorer .keen-dataviz-metric-value,.ReactModalPortal .keen-dataviz-metric-value,.rc-time-picker-panel .keen-dataviz-metric-value{
+  font-size: 3rem;
+}
+
+.keenExplorer .keen-dataviz .c3 svg g text tspan, .ReactModalPortal .keen-dataviz .c3 svg g text tspan, .rc-time-picker-panel .keen-dataviz .c3 svg g text tspan {
+  font-size: 10px !important;
+}
+
 .keenExplorer .a-preview-collection,.ReactModalPortal .a-preview-collection,.rc-time-picker-panel .a-preview-collection{
   padding: 0.5rem;
   margin: 0 0 1rem;
@@ -1916,13 +1947,6 @@ li.rc-time-picker-panel-select-option-disabled:hover {
     }
 }
 
-.keenExplorer,
-.ReactModalPortal,
-.rc-time-picker-panel {
-  display: -ms-flexbox;
-  display: flex;
-}
-
 .keenExplorer .preview .download-toggle-label,.ReactModalPortal .preview .download-toggle-label,.rc-time-picker-panel .preview .download-toggle-label{
     padding: 1rem;
     cursor: pointer;
@@ -1967,10 +1991,6 @@ li.rc-time-picker-panel-select-option-disabled:hover {
             box-sizing: border-box;
     font-size: 0.88rem;
     font-size: 0.88rem;
-}
-
-.keenExplorer .keen-dataviz .c3 svg g text tspan, .ReactModalPortal .keen-dataviz .c3 svg g text tspan, .rc-time-picker-panel .keen-dataviz .c3 svg g text tspan {
-      font-size: 10px !important;
 }
 
 .keenExplorer button,.ReactModalPortal button,.rc-time-picker-panel button{
@@ -2028,11 +2048,6 @@ li.rc-time-picker-panel-select-option-disabled:hover {
     -ms-flex: 3;
         flex: 3;
     padding: 0 1.5rem;
-    overflow: hidden;
-}
-
-.keenExplorer .keen-dataviz-container,.ReactModalPortal .keen-dataviz-container,.rc-time-picker-panel .keen-dataviz-container{
-    height: calc(100% - 3rem);
     overflow: hidden;
 }
 

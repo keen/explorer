@@ -25,16 +25,18 @@ import KeenExplorer from 'keen-explorer';
 
 const myExplorer = new KeenExplorer({
   container: '#keen-explorer-container', // querySelector
-  persistence: true, // optional: ability to save queries etc
 
-  keenAnalysisOptions: {
+  keenAnalysis: {
     // configuration for KeenAnalysis
     // https://github.com/keen/keen-analysis.js
-    projectId: 'PROJECT_ID',
-    masterKey: 'MASTER_KEY'
+    config: {
+      projectId: 'PROJECT_ID',
+      masterKey: 'MASTER_KEY',
+      readKey: 'READ_KEY',
+    },
   },
 
-  keenDatavizOptions: {
+  keenDataviz: {
     // OPTIONAL configuration for KeenDataviz
     // https://github.com/keen/keen-dataviz.js
   }
@@ -47,33 +49,33 @@ const myExplorer = new KeenExplorer({
 
 ```html
 <head>
-  <!-- Dependencies -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Montserrat%7CMontserrat:600%7CHind" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 
-  <!-- Explorer Assets -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/keen-explorer@5/dist/keen-explorer.min.css">
-  <script crossorigin src="https://cdn.jsdelivr.net/npm/keen-explorer@5/dist/keen-explorer.bundle.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/keen-explorer@6/dist/keen-explorer.min.css">
+  <script crossorigin src="https://cdn.jsdelivr.net/npm/keen-explorer@6/dist/keen-explorer.bundle.min.js"></script>
 </head>
 
-<body>
-  <div id="keen-explorer"></div>
+<body class="keen-explorer-template">
+  <div id="keen-explorer-container"></div>
   <script>
   const myExplorer = new KeenExplorer({
-    container: '#keen-explorer-html-element', // querySelector
-    persistence: true, // optional: ability to save queries etc
+  container: '#keen-explorer-container', // querySelector
 
-    keenAnalysisOptions: {
-      // configuration for KeenAnalysis
-      // https://github.com/keen/keen-analysis.js
+  keenAnalysis: {
+    // configuration for KeenAnalysis
+    // https://github.com/keen/keen-analysis.js
+    config: {
       projectId: 'PROJECT_ID',
-      masterKey: 'MASTER_KEY'
+      masterKey: 'MASTER_KEY',
+      readKey: 'READ_KEY',
     },
+  },
 
-    keenDatavizOptions: {
-      // OPTIONAL configuration for KeenDataviz
-      // https://github.com/keen/keen-dataviz.js
-    }
+  keenDataviz: {
+    // OPTIONAL configuration for KeenDataviz
+    // https://github.com/keen/keen-dataviz.js
+  }
   });
   </script>
 </body>

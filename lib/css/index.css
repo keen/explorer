@@ -2,7 +2,6 @@
   margin: 2rem auto;
   width: 100%;
   max-width: 1500px;
-  font-family: Montserrat, Tahoma, Arial;
 }
 
 .dev-reload-button{
@@ -12,13 +11,24 @@
   color: #ccc;
 }
 
+.keen-explorer-template{
+  margin: 0 auto;
+  width: 100%;
+  max-width: 1500px;
+  #keen-explorer-container{
+    padding: 1rem;
+  }
+}
+
 @import '../../node_modules/react-dates/lib/css/_datepicker.css';
 @import '../../node_modules/rc-time-picker/assets/index.css';
 
 .keenExplorer,
 .ReactModalPortal,
 .rc-time-picker-panel {
+  font-family: Montserrat, Tahoma, Arial;
   font-size: var(--font-size);
+  display: flex;
 
   @import "./variables.css";
   @import "./components/extraction.css";
@@ -32,15 +42,9 @@
   @import "./components/previewCollection.css";
   @import "./components/preview.css";
 
-  display: flex;
-
   * {
     box-sizing: border-box;
     font-size: var(--font-size);
-  }
-
-  .keen-dataviz .c3 svg g text tspan {
-      font-size: 10px !important;
   }
 
   button{
@@ -85,11 +89,6 @@
   .result{
     flex: 3;
     padding: 0 1.5rem;
-    overflow: hidden;
-  }
-
-  .keen-dataviz-container{
-    height: calc(100% - 3rem);
     overflow: hidden;
   }
 
