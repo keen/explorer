@@ -25,6 +25,8 @@ postcss.config.js
 
 dist/keen-explorer.bundle.js
 dist/keen-explorer.bundle.js.map
+dist/index.html
+dist/assets
 
 node_modules
 test

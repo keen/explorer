@@ -1,3685 +1,2762 @@
-/*
- * Keen Data-Tools project. Made with <3 by Keen.io (https://keen.io/)
- */
+.dev-body{
+  margin: 2rem auto;
+  width: 100%;
+  max-width: 1500px;
+  font-family: Montserrat, Tahoma, Arial;
+}
 
-/* ==========================================================================
-   $BASE-PICKER
-   ========================================================================== */
-
-/**
- * Note: the root picker element should *NOT* be styled more than what’s here.
- */
-
-.picker {
-  font-size: 16px;
-  text-align: left;
-  line-height: 1.2;
-  color: #000000;
+.dev-reload-button{
   position: absolute;
-  z-index: 10000;
+  left: 1rem;
+  top: 1rem;
+  color: #ccc;
+}
+
+.PresetDateRangePicker_panel {
+  padding: 0 22px 11px
+}
+
+.PresetDateRangePicker_button {
+  position: relative;
+  height: 100%;
+  text-align: center;
+  background: 0 0;
+  border: 2px solid #00a699;
+  color: #00a699;
+  padding: 4px 12px;
+  margin-right: 8px;
+  font: inherit;
+  font-weight: 700;
+  line-height: normal;
+  overflow: visible;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  cursor: pointer
+}
+
+.PresetDateRangePicker_button:active {
+  outline: 0
+}
+
+.PresetDateRangePicker_button__selected {
+  color: #fff;
+  background: #00a699
+}
+
+.SingleDatePickerInput {
+  display: inline-block;
+  background-color: #fff
+}
+
+.SingleDatePickerInput__withBorder {
+  border-radius: 2px;
+  border: 1px solid #dbdbdb
+}
+
+.SingleDatePickerInput__rtl {
+  direction: rtl
+}
+
+.SingleDatePickerInput__disabled {
+  background-color: #f2f2f2
+}
+
+.SingleDatePickerInput__block {
+  display: block
+}
+
+.SingleDatePickerInput__showClearDate {
+  padding-right: 30px
+}
+
+.SingleDatePickerInput_clearDate {
+  background: 0 0;
+  border: 0;
+  color: inherit;
+  font: inherit;
+  line-height: normal;
+  overflow: visible;
+  cursor: pointer;
+  padding: 10px;
+  margin: 0 10px 0 5px;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%)
+}
+
+.SingleDatePickerInput_clearDate__default:focus,
+.SingleDatePickerInput_clearDate__default:hover {
+  background: #dbdbdb;
+  border-radius: 50%
+}
+
+.SingleDatePickerInput_clearDate__small {
+  padding: 6px
+}
+
+.SingleDatePickerInput_clearDate__hide {
+  visibility: hidden
+}
+
+.SingleDatePickerInput_clearDate_svg {
+  fill: #82888a;
+  height: 12px;
+  width: 15px;
+  vertical-align: middle
+}
+
+.SingleDatePickerInput_clearDate_svg__small {
+  height: 9px
+}
+
+.SingleDatePickerInput_calendarIcon {
+  background: 0 0;
+  border: 0;
+  color: inherit;
+  font: inherit;
+  line-height: normal;
+  overflow: visible;
+  cursor: pointer;
+  display: inline-block;
+  vertical-align: middle;
+  padding: 10px;
+  margin: 0 5px 0 10px
+}
+
+.SingleDatePickerInput_calendarIcon_svg {
+  fill: #82888a;
+  height: 15px;
+  width: 14px;
+  vertical-align: middle
+}
+
+.SingleDatePicker {
+  position: relative;
+  display: inline-block
+}
+
+.SingleDatePicker__block {
+  display: block
+}
+
+.SingleDatePicker_picker {
+  z-index: 1;
+  background-color: #fff;
+  position: absolute
+}
+
+.SingleDatePicker_picker__rtl {
+  direction: rtl
+}
+
+.SingleDatePicker_picker__directionLeft {
+  left: 0
+}
+
+.SingleDatePicker_picker__directionRight {
+  right: 0
+}
+
+.SingleDatePicker_picker__portal {
+  background-color: rgba(0,0,0,.3);
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%
+}
+
+.SingleDatePicker_picker__fullScreenPortal {
+  background-color: #fff
+}
+
+.SingleDatePicker_closeButton {
+  background: 0 0;
+  border: 0;
+  color: inherit;
+  font: inherit;
+  line-height: normal;
+  overflow: visible;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 15px;
+  z-index: 2
+}
+
+.SingleDatePicker_closeButton:focus,
+.SingleDatePicker_closeButton:hover {
+  color: darken(#cacccd,10%);
+  text-decoration: none
+}
+
+.SingleDatePicker_closeButton_svg {
+  height: 15px;
+  width: 15px;
+  fill: #cacccd
+}
+
+.DayPickerKeyboardShortcuts_buttonReset {
+  background: 0 0;
+  border: 0;
+  border-radius: 0;
+  color: inherit;
+  font: inherit;
+  line-height: normal;
+  overflow: visible;
+  padding: 0;
+  cursor: pointer;
+  font-size: 14px
+}
+
+.DayPickerKeyboardShortcuts_buttonReset:active {
+  outline: 0
+}
+
+.DayPickerKeyboardShortcuts_show {
+  width: 33px;
+  height: 26px;
+  position: absolute;
+  z-index: 2
+}
+
+.DayPickerKeyboardShortcuts_show::before {
+  content: "";
+  display: block;
+  position: absolute
+}
+
+.DayPickerKeyboardShortcuts_show__bottomRight {
+  bottom: 0;
+  right: 0
+}
+
+.DayPickerKeyboardShortcuts_show__bottomRight::before {
+  border-top: 26px solid transparent;
+  border-right: 33px solid #00a699;
+  bottom: 0;
+  right: 0
+}
+
+.DayPickerKeyboardShortcuts_show__bottomRight:hover::before {
+  border-right: 33px solid #008489
+}
+
+.DayPickerKeyboardShortcuts_show__topRight {
+  top: 0;
+  right: 0
+}
+
+.DayPickerKeyboardShortcuts_show__topRight::before {
+  border-bottom: 26px solid transparent;
+  border-right: 33px solid #00a699;
+  top: 0;
+  right: 0
+}
+
+.DayPickerKeyboardShortcuts_show__topRight:hover::before {
+  border-right: 33px solid #008489
+}
+
+.DayPickerKeyboardShortcuts_show__topLeft {
+  top: 0;
+  left: 0
+}
+
+.DayPickerKeyboardShortcuts_show__topLeft::before {
+  border-bottom: 26px solid transparent;
+  border-left: 33px solid #00a699;
+  top: 0;
+  left: 0
+}
+
+.DayPickerKeyboardShortcuts_show__topLeft:hover::before {
+  border-left: 33px solid #008489
+}
+
+.DayPickerKeyboardShortcuts_showSpan {
+  color: #fff;
+  position: absolute
+}
+
+.DayPickerKeyboardShortcuts_showSpan__bottomRight {
+  bottom: 0;
+  right: 5px
+}
+
+.DayPickerKeyboardShortcuts_showSpan__topRight {
+  top: 1px;
+  right: 5px
+}
+
+.DayPickerKeyboardShortcuts_showSpan__topLeft {
+  top: 1px;
+  left: 5px
+}
+
+.DayPickerKeyboardShortcuts_panel {
+  overflow: auto;
+  background: #fff;
+  border: 1px solid #dbdbdb;
+  border-radius: 2px;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  z-index: 2;
+  padding: 22px;
+  margin: 33px;
+  text-align: left
+}
+
+.DayPickerKeyboardShortcuts_title {
+  font-size: 16px;
+  font-weight: 700;
+  margin: 0
+}
+
+.DayPickerKeyboardShortcuts_list {
+  list-style: none;
+  padding: 0;
+  font-size: 14px
+}
+
+.DayPickerKeyboardShortcuts_close {
+  position: absolute;
+  right: 22px;
+  top: 22px;
+  z-index: 2
+}
+
+.DayPickerKeyboardShortcuts_close:active {
+  outline: 0
+}
+
+.DayPickerKeyboardShortcuts_closeSvg {
+  height: 15px;
+  width: 15px;
+  fill: #cacccd
+}
+
+.DayPickerKeyboardShortcuts_closeSvg:focus,
+.DayPickerKeyboardShortcuts_closeSvg:hover {
+  fill: #82888a
+}
+
+.CalendarDay {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  cursor: pointer;
+  font-size: 14px;
+  text-align: center
+}
+
+.CalendarDay:active {
+  outline: 0
+}
+
+.CalendarDay__defaultCursor {
+  cursor: default
+}
+
+.CalendarDay__default {
+  border: 1px solid #e4e7e7;
+  color: #484848;
+  background: #fff
+}
+
+.CalendarDay__default:hover {
+  background: #e4e7e7;
+  border: 1px solid #e4e7e7;
+  color: inherit
+}
+
+.CalendarDay__hovered_offset {
+  background: #f4f5f5;
+  border: 1px double #e4e7e7;
+  color: inherit
+}
+
+.CalendarDay__outside {
+  border: 0;
+  background: #fff;
+  color: #484848
+}
+
+.CalendarDay__outside:hover {
+  border: 0
+}
+
+.CalendarDay__blocked_minimum_nights {
+  background: #fff;
+  border: 1px solid #eceeee;
+  color: #cacccd
+}
+
+.CalendarDay__blocked_minimum_nights:active,
+.CalendarDay__blocked_minimum_nights:hover {
+  background: #fff;
+  color: #cacccd
+}
+
+.CalendarDay__highlighted_calendar {
+  background: #ffe8bc;
+  color: #484848
+}
+
+.CalendarDay__highlighted_calendar:active,
+.CalendarDay__highlighted_calendar:hover {
+  background: #ffce71;
+  color: #484848
+}
+
+.CalendarDay__selected_span {
+  background: #66e2da;
+  border: 1px double #33dacd;
+  color: #fff
+}
+
+.CalendarDay__selected_span:active,
+.CalendarDay__selected_span:hover {
+  background: #33dacd;
+  border: 1px double #33dacd;
+  color: #fff
+}
+
+.CalendarDay__last_in_range,
+.CalendarDay__last_in_range:hover {
+  border-style: solid
+}
+
+.CalendarDay__selected,
+.CalendarDay__selected:active,
+.CalendarDay__selected:hover {
+  background: #00a699;
+  border: 1px double #00a699;
+  color: #fff
+}
+
+.CalendarDay__hovered_span,
+.CalendarDay__hovered_span:hover {
+  background: #b2f1ec;
+  border: 1px double #80e8e0;
+  color: #007a87
+}
+
+.CalendarDay__hovered_span:active {
+  background: #80e8e0;
+  border: 1px double #80e8e0;
+  color: #007a87
+}
+
+.CalendarDay__blocked_calendar,
+.CalendarDay__blocked_calendar:active,
+.CalendarDay__blocked_calendar:hover {
+  background: #cacccd;
+  border: 1px solid #cacccd;
+  color: #82888a
+}
+
+.CalendarDay__blocked_out_of_range,
+.CalendarDay__blocked_out_of_range:active,
+.CalendarDay__blocked_out_of_range:hover {
+  background: #fff;
+  border: 1px solid #e4e7e7;
+  color: #cacccd
+}
+
+.CalendarMonth {
+  background: #fff;
+  text-align: center;
+  vertical-align: top;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none
+}
+
+.CalendarMonth_table {
+  border-collapse: collapse;
+  border-spacing: 0
+}
+
+.CalendarMonth_verticalSpacing {
+  border-collapse: separate
+}
+
+.CalendarMonth_caption {
+  color: #484848;
+  font-size: 18px;
+  text-align: center;
+  padding-top: 22px;
+  padding-bottom: 37px;
+  caption-side: top;
+  caption-side: initial
+}
+
+.CalendarMonth_caption__verticalScrollable {
+  padding-top: 12px;
+  padding-bottom: 7px
+}
+
+.CalendarMonthGrid {
+  background: #fff;
+  text-align: left;
+  z-index: 0
+}
+
+.CalendarMonthGrid__animating {
+  z-index: 1
+}
+
+.CalendarMonthGrid__horizontal {
+  position: absolute;
+  left: 9px
+}
+
+.CalendarMonthGrid__vertical {
+  margin: 0 auto
+}
+
+.CalendarMonthGrid__vertical_scrollable {
+  margin: 0 auto;
+  overflow-y: scroll
+}
+
+.CalendarMonthGrid_month__horizontal {
+  display: inline-block;
+  vertical-align: top;
+  min-height: 100%
+}
+
+.CalendarMonthGrid_month__hideForAnimation {
+  position: absolute;
+  z-index: -1;
+  opacity: 0;
+  pointer-events: none
+}
+
+.CalendarMonthGrid_month__hidden {
+  visibility: hidden
+}
+
+.DayPickerNavigation {
+  position: relative;
+  z-index: 2
+}
+
+.DayPickerNavigation__horizontal {
+  height: 0
+}
+
+.DayPickerNavigation__verticalDefault {
+  position: absolute;
+  width: 100%;
+  height: 52px;
+  bottom: 0;
+  left: 0
+}
+
+.DayPickerNavigation__verticalScrollableDefault {
+  position: relative
+}
+
+.DayPickerNavigation_button {
+  cursor: pointer;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-}
-
-/**
- * The picker input element.
- */
-
-.picker__input {
-  cursor: default;
-}
-
-/**
- * When the picker is opened, the input element is “activated”.
- */
-
-.picker__input.picker__input--active {
-  border-color: #0089ec;
-}
-
-/**
- * The holder is the only “scrollable” top-level container element.
- */
-
-.picker__holder {
-  width: 100%;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-}
-
-/*!
- * Classic picker styling for pickadate.js
- * Demo: http://amsul.github.io/pickadate.js
- */
-
-/**
- * Note: the root picker element should *NOT* be styled more than what’s here.
- */
-
-.picker {
-  width: 100%;
-}
-
-/**
- * The holder is the base of the picker.
- */
-
-.picker__holder {
-  position: absolute;
-  background: #ffffff;
-  border: 1px solid #aaaaaa;
-  border-top-width: 0;
-  border-bottom-width: 0;
-  border-radius: 0 0 5px 5px;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-  min-width: 176px;
-  max-width: 466px;
-  max-height: 0;
-  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
-  filter: alpha(opacity=0);
-  -moz-opacity: 0;
-  opacity: 0;
-  -webkit-transform: translateY(-1em) perspective(600px) rotateX(10deg);
-  transform: translateY(-1em) perspective(600px) rotateX(10deg);
-  -webkit-transition: -webkit-transform 0.15s ease-out, opacity 0.15s ease-out, max-height 0s 0.15s, border-width 0s 0.15s;
-  -webkit-transition: opacity 0.15s ease-out, max-height 0s 0.15s, border-width 0s 0.15s, -webkit-transform 0.15s ease-out;
-  transition: opacity 0.15s ease-out, max-height 0s 0.15s, border-width 0s 0.15s, -webkit-transform 0.15s ease-out;
-  -o-transition: transform 0.15s ease-out, opacity 0.15s ease-out, max-height 0s 0.15s, border-width 0s 0.15s;
-  transition: transform 0.15s ease-out, opacity 0.15s ease-out, max-height 0s 0.15s, border-width 0s 0.15s;
-  transition: transform 0.15s ease-out, opacity 0.15s ease-out, max-height 0s 0.15s, border-width 0s 0.15s, -webkit-transform 0.15s ease-out;
-}
-
-/**
- * The frame and wrap work together to ensure that
- * clicks within the picker don’t reach the holder.
- */
-
-.picker__frame {
-  padding: 1px;
-}
-
-.picker__wrap {
-  margin: -1px;
-}
-
-/**
- * When the picker opens...
- */
-
-.picker--opened .picker__holder {
-  max-height: 25em;
-  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
-  filter: alpha(opacity=100);
-  -moz-opacity: 1;
-  opacity: 1;
-  border-top-width: 1px;
-  border-bottom-width: 1px;
-  -webkit-transform: translateY(0) perspective(600px) rotateX(0);
-  transform: translateY(0) perspective(600px) rotateX(0);
-  -webkit-transition: -webkit-transform 0.15s ease-out, opacity 0.15s ease-out, max-height 0s, border-width 0s;
-  -webkit-transition: opacity 0.15s ease-out, max-height 0s, border-width 0s, -webkit-transform 0.15s ease-out;
-  transition: opacity 0.15s ease-out, max-height 0s, border-width 0s, -webkit-transform 0.15s ease-out;
-  -o-transition: transform 0.15s ease-out, opacity 0.15s ease-out, max-height 0s, border-width 0s;
-  transition: transform 0.15s ease-out, opacity 0.15s ease-out, max-height 0s, border-width 0s;
-  transition: transform 0.15s ease-out, opacity 0.15s ease-out, max-height 0s, border-width 0s, -webkit-transform 0.15s ease-out;
-  -webkit-box-shadow: 0 6px 18px 1px rgba(0, 0, 0, 0.12);
-  box-shadow: 0 6px 18px 1px rgba(0, 0, 0, 0.12);
-}
-
-/* ==========================================================================
-   $BASE-DATE-PICKER
-   ========================================================================== */
-
-/**
- * The picker box.
- */
-
-.picker__box {
-  padding: 0 1em;
-}
-
-/**
- * The header containing the month and year stuff.
- */
-
-.picker__header {
-  text-align: center;
-  position: relative;
-  margin-top: .75em;
-}
-
-/**
- * The month and year labels.
- */
-
-.picker__month,
-.picker__year {
-  font-weight: 500;
-  display: inline-block;
-  margin-left: .25em;
-  margin-right: .25em;
-}
-
-.picker__year {
-  color: #999999;
-  font-size: .8em;
-  font-style: italic;
-}
-
-/**
- * The month and year selectors.
- */
-
-.picker__select--month,
-.picker__select--year {
-  border: 1px solid #b7b7b7;
-  height: 2em;
-  padding: .5em;
-  margin-left: .25em;
-  margin-right: .25em;
-}
-
-@media (min-width: 24.5em) {
-  .picker__select--month,
-  .picker__select--year {
-    margin-top: -0.5em;
-  }
-}
-
-.picker__select--month {
-  width: 35%;
-}
-
-.picker__select--year {
-  width: 22.5%;
-}
-
-.picker__select--month:focus,
-.picker__select--year:focus {
-  border-color: #0089ec;
-}
-
-/**
- * The month navigation buttons.
- */
-
-.picker__nav--prev,
-.picker__nav--next {
-  position: absolute;
-  padding: .5em 1.25em;
-  width: 1em;
-  height: 1em;
-  -webkit-box-sizing: content-box;
-          box-sizing: content-box;
-  top: -0.25em;
-}
-
-@media (min-width: 24.5em) {
-  .picker__nav--prev,
-  .picker__nav--next {
-    top: -0.33em;
-  }
-}
-
-.picker__nav--prev {
-  left: -1em;
-  padding-right: 1.25em;
-}
-
-@media (min-width: 24.5em) {
-  .picker__nav--prev {
-    padding-right: 1.5em;
-  }
-}
-
-.picker__nav--next {
-  right: -1em;
-  padding-left: 1.25em;
-}
-
-@media (min-width: 24.5em) {
-  .picker__nav--next {
-    padding-left: 1.5em;
-  }
-}
-
-.picker__nav--prev:before,
-.picker__nav--next:before {
-  content: " ";
-  border-top: .5em solid transparent;
-  border-bottom: .5em solid transparent;
-  border-right: 0.75em solid #000000;
-  width: 0;
-  height: 0;
-  display: block;
-  margin: 0 auto;
-}
-
-.picker__nav--next:before {
-  border-right: 0;
-  border-left: 0.75em solid #000000;
-}
-
-.picker__nav--prev:hover,
-.picker__nav--next:hover {
-  cursor: pointer;
-  color: #000000;
-  background: #b1dcfb;
-}
-
-.picker__nav--disabled,
-.picker__nav--disabled:hover,
-.picker__nav--disabled:before,
-.picker__nav--disabled:before:hover {
-  cursor: default;
-  background: none;
-  border-right-color: #f5f5f5;
-  border-left-color: #f5f5f5;
-}
-
-/**
- * The calendar table of dates
- */
-
-.picker__table {
-  text-align: center;
-  border-collapse: collapse;
-  border-spacing: 0;
-  table-layout: fixed;
-  font-size: inherit;
-  width: 100%;
-  margin-top: .75em;
-  margin-bottom: .5em;
-}
-
-@media (min-height: 33.875em) {
-  .picker__table {
-    margin-bottom: .75em;
-  }
-}
-
-.picker__table td {
-  margin: 0;
-  padding: 0;
-}
-
-/**
- * The weekday labels
- */
-
-.picker__weekday {
-  width: 14.285714286%;
-  font-size: .75em;
-  padding-bottom: .25em;
-  color: #999999;
-  font-weight: 500;
-  /* Increase the spacing a tad */
-}
-
-@media (min-height: 33.875em) {
-  .picker__weekday {
-    padding-bottom: .5em;
-  }
-}
-
-/**
- * The days on the calendar
- */
-
-.picker__day {
-  padding: .3125em 0;
-  font-weight: 200;
-  border: 1px solid transparent;
-}
-
-.picker__day--today {
-  position: relative;
-}
-
-.picker__day--today:before {
-  content: " ";
-  position: absolute;
-  top: 2px;
-  right: 2px;
-  width: 0;
-  height: 0;
-  border-top: 0.5em solid #0059bc;
-  border-left: .5em solid transparent;
-}
-
-.picker__day--disabled:before {
-  border-top-color: #aaaaaa;
-}
-
-.picker__day--outfocus {
-  color: #dddddd;
-}
-
-.picker__day--infocus:hover,
-.picker__day--outfocus:hover {
-  cursor: pointer;
-  color: #000000;
-  background: #b1dcfb;
-}
-
-.picker__day--highlighted {
-  border-color: #0089ec;
-}
-
-.picker__day--highlighted:hover,
-.picker--focused .picker__day--highlighted {
-  cursor: pointer;
-  color: #000000;
-  background: #b1dcfb;
-}
-
-.picker__day--selected,
-.picker__day--selected:hover,
-.picker--focused .picker__day--selected {
-  background: #0089ec;
-  color: #ffffff;
-}
-
-.picker__day--disabled,
-.picker__day--disabled:hover,
-.picker--focused .picker__day--disabled {
-  background: #f5f5f5;
-  border-color: #f5f5f5;
-  color: #dddddd;
-  cursor: default;
-}
-
-.picker__day--highlighted.picker__day--disabled,
-.picker__day--highlighted.picker__day--disabled:hover {
-  background: #bbbbbb;
-}
-
-/**
- * The footer containing the "today", "clear", and "close" buttons.
- */
-
-.picker__footer {
-  text-align: center;
-}
-
-.picker__button--today,
-.picker__button--clear,
-.picker__button--close {
-  border: 1px solid #ffffff;
-  background: #ffffff;
-  font-size: .8em;
-  padding: .66em 0;
-  font-weight: bold;
-  width: 33%;
-  display: inline-block;
-  vertical-align: bottom;
-}
-
-.picker__button--today:hover,
-.picker__button--clear:hover,
-.picker__button--close:hover {
-  cursor: pointer;
-  color: #000000;
-  background: #b1dcfb;
-  border-bottom-color: #b1dcfb;
-}
-
-.picker__button--today:focus,
-.picker__button--clear:focus,
-.picker__button--close:focus {
-  background: #b1dcfb;
-  border-color: #0089ec;
-  outline: none;
-}
-
-.picker__button--today:before,
-.picker__button--clear:before,
-.picker__button--close:before {
-  position: relative;
-  display: inline-block;
-  height: 0;
-}
-
-.picker__button--today:before,
-.picker__button--clear:before {
-  content: " ";
-  margin-right: .45em;
-}
-
-.picker__button--today:before {
-  top: -0.05em;
-  width: 0;
-  border-top: 0.66em solid #0059bc;
-  border-left: .66em solid transparent;
-}
-
-.picker__button--clear:before {
-  top: -0.25em;
-  width: .66em;
-  border-top: 3px solid #ee2200;
-}
-
-.picker__button--close:before {
-  content: "\D7";
-  top: -0.1em;
-  vertical-align: top;
-  font-size: 1.1em;
-  margin-right: .35em;
-  color: #777777;
-}
-
-.picker__button--today[disabled],
-.picker__button--today[disabled]:hover {
-  background: #f5f5f5;
-  border-color: #f5f5f5;
-  color: #dddddd;
-  cursor: default;
-}
-
-.picker__button--today[disabled]:before {
-  border-top-color: #aaaaaa;
-}
-
-/* ==========================================================================
-   $CLASSIC-DATE-PICKER
-   ========================================================================== */
-
-/* ==========================================================================
-   $BASE-TIME-PICKER
-   ========================================================================== */
-
-/**
- * The list of times.
- */
-
-.picker__list {
-  list-style: none;
-  padding: 0.75em 0 4.2em;
-  margin: 0;
-}
-
-/**
- * The times on the clock.
- */
-
-.picker__list-item {
-  border-bottom: 1px solid #dddddd;
-  border-top: 1px solid #dddddd;
-  margin-bottom: -1px;
-  position: relative;
-  background: #ffffff;
-  padding: .75em 1.25em;
-}
-
-@media (min-height: 46.75em) {
-  .picker__list-item {
-    padding: .5em 1em;
-  }
-}
-
-/* Hovered time */
-
-.picker__list-item:hover {
-  cursor: pointer;
-  color: #000000;
-  background: #b1dcfb;
-  border-color: #0089ec;
-  z-index: 10;
-}
-
-/* Highlighted and hovered/focused time */
-
-.picker__list-item--highlighted {
-  border-color: #0089ec;
-  z-index: 10;
-}
-
-.picker__list-item--highlighted:hover,
-.picker--focused .picker__list-item--highlighted {
-  cursor: pointer;
-  color: #000000;
-  background: #b1dcfb;
-}
-
-/* Selected and hovered/focused time */
-
-.picker__list-item--selected,
-.picker__list-item--selected:hover,
-.picker--focused .picker__list-item--selected {
-  background: #0089ec;
-  color: #ffffff;
-  z-index: 10;
-}
-
-/* Disabled time */
-
-.picker__list-item--disabled,
-.picker__list-item--disabled:hover,
-.picker--focused .picker__list-item--disabled {
-  background: #f5f5f5;
-  border-color: #f5f5f5;
-  color: #dddddd;
-  cursor: default;
-  border-color: #dddddd;
-  z-index: auto;
-}
-
-/**
- * The clear button
- */
-
-.picker--time .picker__button--clear {
-  display: block;
-  width: 80%;
-  margin: 1em auto 0;
-  padding: 1em 1.25em;
-  background: none;
   border: 0;
-  font-weight: 500;
-  font-size: .67em;
-  text-align: center;
-  text-transform: uppercase;
-  color: #666;
-}
-
-.picker--time .picker__button--clear:hover,
-.picker--time .picker__button--clear:focus {
-  color: #000000;
-  background: #b1dcfb;
-  background: #ee2200;
-  border-color: #ee2200;
-  cursor: pointer;
-  color: #ffffff;
-  outline: none;
-}
-
-.picker--time .picker__button--clear:before {
-  top: -0.25em;
-  color: #666;
-  font-size: 1.25em;
-  font-weight: bold;
-}
-
-.picker--time .picker__button--clear:hover:before,
-.picker--time .picker__button--clear:focus:before {
-  color: #ffffff;
-  border-color: #ffffff;
-}
-
-/* ==========================================================================
-   $CLASSIC-TIME-PICKER
-   ========================================================================== */
-
-/**
- * Note: the root picker element should __NOT__ be styled
- * more than what’s here. Style the `.picker__holder` instead.
- */
-
-.picker--time {
-  min-width: 256px;
-  max-width: 320px;
-}
-
-/**
- * The holder is the base of the picker.
- */
-
-.picker--time .picker__holder {
-  background: #f2f2f2;
-}
-
-@media (min-height: 40.125em) {
-  .picker--time .picker__holder {
-    font-size: .875em;
-  }
-}
-
-/**
- * The box contains the list of times.
- */
-
-.picker--time .picker__box {
   padding: 0;
-  position: relative;
+  margin: 0
 }
 
-/*-- Chart --*/
-
-.c3 svg {
-  font: 10px sans-serif;
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-}
-
-.c3 path, .c3 line {
-  fill: none;
-  stroke: #000;
-}
-
-.c3 text {
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-      user-select: none;
-}
-
-.c3-legend-item-tile,
-.c3-xgrid-focus,
-.c3-ygrid,
-.c3-event-rect,
-.c3-bars path {
-  shape-rendering: crispEdges;
-}
-
-.c3-chart-arc path {
-  stroke: #fff;
-}
-
-.c3-chart-arc rect {
-  stroke: white;
-  stroke-width: 1;
-}
-
-.c3-chart-arc text {
-  fill: #fff;
-  font-size: 13px;
-}
-
-/*-- Axis --*/
-
-/*-- Grid --*/
-
-.c3-grid line {
-  stroke: #aaa;
-}
-
-.c3-grid text {
-  fill: #aaa;
-}
-
-.c3-xgrid, .c3-ygrid {
-  stroke-dasharray: 3 3;
-}
-
-/*-- Text on Chart --*/
-
-.c3-text.c3-empty {
-  fill: #808080;
-  font-size: 2em;
-}
-
-/*-- Line --*/
-
-.c3-line {
-  stroke-width: 1px;
-}
-
-/*-- Point --*/
-
-.c3-circle._expanded_ {
-  stroke-width: 1px;
-  stroke: white;
-}
-
-.c3-selected-circle {
-  fill: white;
-  stroke-width: 2px;
-}
-
-/*-- Bar --*/
-
-.c3-bar {
-  stroke-width: 0;
-}
-
-.c3-bar._expanded_ {
-  fill-opacity: 1;
-  fill-opacity: 0.75;
-}
-
-/*-- Focus --*/
-
-.c3-target.c3-focused {
-  opacity: 1;
-}
-
-.c3-target.c3-focused path.c3-line, .c3-target.c3-focused path.c3-step {
-  stroke-width: 2px;
-}
-
-.c3-target.c3-defocused {
-  opacity: 0.3 !important;
-}
-
-/*-- Region --*/
-
-.c3-region {
-  fill: steelblue;
-  fill-opacity: 0.1;
-}
-
-/*-- Brush --*/
-
-.c3-brush .extent {
-  fill-opacity: 0.1;
-}
-
-/*-- Select - Drag --*/
-
-/*-- Legend --*/
-
-.c3-legend-item {
-  font-size: 12px;
-}
-
-.c3-legend-item-hidden {
-  opacity: 0.15;
-}
-
-.c3-legend-background {
-  opacity: 0.75;
-  fill: white;
-  stroke: lightgray;
-  stroke-width: 1;
-}
-
-/*-- Title --*/
-
-.c3-title {
-  font: 14px sans-serif;
-}
-
-/*-- Tooltip --*/
-
-.c3-tooltip-container {
-  z-index: 10;
-}
-
-.c3-tooltip {
-  border-collapse: collapse;
-  border-spacing: 0;
+.DayPickerNavigation_button__default {
+  border: 1px solid #e4e7e7;
   background-color: #fff;
-  empty-cells: show;
-  -webkit-box-shadow: 7px 7px 12px -9px #777777;
-  box-shadow: 7px 7px 12px -9px #777777;
-  opacity: 0.9;
+  color: #757575
 }
 
-.c3-tooltip tr {
-  border: 1px solid #CCC;
+.DayPickerNavigation_button__default:focus,
+.DayPickerNavigation_button__default:hover {
+  border: 1px solid #c4c4c4
 }
 
-.c3-tooltip th {
-  background-color: #aaa;
-  font-size: 14px;
-  padding: 2px 5px;
-  text-align: left;
-  color: #FFF;
+.DayPickerNavigation_button__default:active {
+  background: #f2f2f2
 }
 
-.c3-tooltip td {
-  font-size: 13px;
-  padding: 3px 6px;
-  background-color: #fff;
-  border-left: 1px dotted #999;
-}
-
-.c3-tooltip td > span {
-  display: inline-block;
-  width: 10px;
-  height: 10px;
-  margin-right: 6px;
-}
-
-.c3-tooltip td.value {
-  text-align: right;
-}
-
-/*-- Area --*/
-
-.c3-area {
-  stroke-width: 0;
-  opacity: 0.2;
-}
-
-/*-- Arc --*/
-
-.c3-chart-arcs-title {
-  dominant-baseline: middle;
-  font-size: 1.3em;
-}
-
-.c3-chart-arcs .c3-chart-arcs-background {
-  fill: #e0e0e0;
-  stroke: #FFF;
-}
-
-.c3-chart-arcs .c3-chart-arcs-gauge-unit {
-  fill: #000;
-  font-size: 16px;
-}
-
-.c3-chart-arcs .c3-chart-arcs-gauge-max {
-  fill: #777;
-}
-
-.c3-chart-arcs .c3-chart-arcs-gauge-min {
-  fill: #777;
-}
-
-.c3-chart-arc .c3-gauge-value {
-  fill: #000;
-  /*  font-size: 28px !important;*/
-}
-
-.c3-chart-arc.c3-target g path {
-  opacity: 1;
-}
-
-.c3-chart-arc.c3-target.c3-focused g path {
-  opacity: 1;
-}
-
-/*-- Zoom --*/
-
-.c3-drag-zoom.enabled {
-  pointer-events: all !important;
-  visibility: visible;
-}
-
-.c3-drag-zoom.disabled {
-  pointer-events: none !important;
-  visibility: hidden;
-}
-
-.c3-drag-zoom .extent {
-  fill-opacity: 0.1;
-}
-
-.keen-dataviz .axis {
-  shape-rendering: crispEdges
-}
-
-/* WRAPPER */
-
-.keen-dataviz {
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
-  font-family: 'Gotham Rounded SSm A', 'Gotham Rounded SSm B', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  font-family: 'Gotham Rounded SSm A', 'Gotham Rounded SSm B', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  height: 100%;
-}
-
-.keen-dataviz .partial-interval-indicator{
-    fill: #bdbdbd;
-  }
-
-.keen-dataviz .keen-dataviz-title {
-  color: #4D4D4D;
-  color: #4D4D4D;
-  padding-bottom: 0.8em;
-}
-
-.keen-dataviz .keen-dataviz-stage {
-  display: block;
-}
-
-.keen-dataviz .keen-dataviz-notes {
-  color: #808080;
-  color: #808080;
-  display: block;
-  font-size: 0.8em;
-}
-
-.keen-dataviz-box {
-  border-radius: 4px;
-  text-align: center;
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-align: center;
-      align-items: center;
-  -ms-flex-flow: row wrap;
-      flex-flow: row wrap;
-  -ms-flex-pack: distribute;
-      justify-content: space-around;
-  padding: 1em 0;
-  min-height: 4em;
-  height: inherit;
-}
-
-/* METRIC */
-
-.keen-dataviz-metric {
-  height: inherit;
-  color: #FFFFFF;
-  color: #FFFFFF;
-  background: rgb(0, 187, 222);
-}
-
-.keen-dataviz-metric-value {
-    font-size: 4.3em;
-    font-weight: 700;
-    width: 100%;
-  }
-
-.keen-dataviz-metric-title {
-    font-size: 2em;
-    font-weight: 200;
-    width: 100%;
-  }
-
-.keen-dataviz .keen-dataviz-metric-prefix {}
-
-.keen-dataviz .keen-dataviz-metric-suffix {}
-
-/* MESSAGE */
-
-.keen-dataviz .keen-dataviz-message {
-  color: #808080;
-  color: #808080;
-  font-size: 1.5em;
-  width:100%;
-}
-
-/* TABLE */
-
-.keen-dataviz .keen-dataviz-table {
-  border-bottom: 1px solid #E7E7E7;
-  border-bottom: 1px solid #E7E7E7;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
-  overflow: scroll;
-  position: relative;
-
-  width: 100%;
-}
-
-.keen-dataviz .keen-dataviz-table table {
-  background: #FFFFFF;
-  background: #FFFFFF;
-  border-collapse: collapse;
-  margin: 0;
-  position: relative;
-  width: 100%;
-}
-
-.keen-dataviz .keen-dataviz-table table .table-pagination td {
-      background-color: #FFFFFF;
-      background-color: #FFFFFF;
-    }
-
-.keen-dataviz .keen-dataviz-table table .table-pagination:hover td {
-      background-color: #FFFFFF;
-      background-color: #FFFFFF;
-    }
-
-.keen-dataviz .keen-dataviz-table table .table-pagination a {
-      border: 1px solid #E7E7E7;
-      border: 1px solid #E7E7E7;
-      padding: 0.5em;
-      margin-right: 0.2em;
-      cursor: pointer;
-    }
-
-.keen-dataviz .keen-dataviz-table table .table-pagination .active{
-      background: #4D4D4D;
-      background: #4D4D4D;
-      color: #FFFFFF;
-      color: #FFFFFF;
-    }
-
-.keen-dataviz .keen-dataviz-table table .table-pagination .arrow{
-      font-weight:bold;
-    }
-
-.keen-dataviz .keen-dataviz-table th{
-  background: white;
-  position: -webkit-sticky;
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  cursor: pointer;
-}
-
-.keen-dataviz .keen-dataviz-table th,
-.keen-dataviz .keen-dataviz-table td {
-  border-collapse: collapse;
-  font-size: 1em;
-  padding: 0.7em;
-  text-align: left;
-  white-space: nowrap;
-}
-
-.keen-dataviz .keen-dataviz-table th {
-  border-bottom: 1px solid #E7E7E7;
-  border-bottom: 1px solid #E7E7E7;
-  color: #4D4D4D;
-  color: #4D4D4D;
-}
-
-.keen-dataviz .keen-dataviz-table td {
-  background-color: #FFFFFF;
-  background-color: #FFFFFF;
-  color: #4D4D4D;
-  color: #4D4D4D;
-  -webkit-transition: background-color 0.1s, color 0.05s;
-  -o-transition: background-color 0.1s, color 0.05s;
-  transition: background-color 0.1s, color 0.05s;
-}
-
-.keen-dataviz .keen-dataviz-table .table-data-row:nth-child(even) td{
-  background-color: #F3F5F6;
-}
-
-.keen-dataviz .keen-dataviz-table .table-data-row:hover td{
-  background-color: #E7E7E7;
-  background-color: #E7E7E7;
-  color: #4D4D4D;
-  color: #4D4D4D;
-}
-
-.keen-dataviz .keen-dataviz-table .keen-dataviz-table-fixed-header {
-  background: #FFFFFF;
-  background: #FFFFFF;
-  border-bottom: 1px solid rgba(0,0,0,.15);
-  position: absolute;
-  top: 0;
-  -webkit-transition: top .1s;
-  -o-transition: top .1s;
-  transition: top .1s;
-}
-
-.keen-dataviz .keen-spinner-indicator {
-  border-radius: 100%;
-  border: 3px solid rgba(0, 0, 0, .1);
-  border-top-color: rgba(0, 0, 0, .45);
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
-  height: 3em;
-  width: 3em;
-  -webkit-animation:spin .7s linear infinite;
-  animation:spin .7s linear infinite;
-  -ms-animation: spin .7s linear infinite;
-  -o-animation: spin .7s linear infinite;
-}
-
-@-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
-
-@keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
-
-/* C3 CUSTOMIZATIONS */
-
-.keen-dataviz .c3-axis-y path {
-       display: none;
-    }
-
-.keen-dataviz .c3-axis-y .tick line{
-      display: none;
-    }
-
-.keen-dataviz .tick line, .keen-dataviz path.domain{
-    stroke-opacity: 0.2;
-  }
-
-.keen-dataviz .c3-ygrid{
-    stroke-dasharray: none;
-    stroke-opacity: 0.1;
-  }
-
-.keen-dataviz .c3-ygrids :nth-child(even) {
-    display: none;
-  }
-
-.keen-dataviz .c3-tooltip {
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    padding:  0.2em;
-    border-radius: 0.2em;
-    -webkit-box-shadow: none;
-            box-shadow: none;
-    border-collapse: separate;
-  }
-
-.keen-dataviz .c3-tooltip th {
-      text-align: center;
-    }
-
-.keen-dataviz .c3-tooltip table, .keen-dataviz .c3-tooltip th, .keen-dataviz .c3-tooltip tr, .keen-dataviz .c3-tooltip td {
-      border: none;
-      background: none;
-      font-size: 0.9em;
-    }
-
-.keen-dataviz .c3-tooltip-container th {
-      max-width: 50%;
-      word-wrap: break-word;
-      color: #1A1A1A;
-      color: #1A1A1A;
-      background: none;
-      font-weight: normal;
-    }
-
-.keen-dataviz .c3-tooltip-container td {
-      max-width: 50%;
-      word-wrap: break-word;
-    }
-
-.keen-dataviz-rendering{
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-pack: center;
-      justify-content: center;
-  -ms-flex-flow: row;
-      flex-flow: row;
-  -ms-flex-pack: distribute;
-      justify-content: space-around;
-}
-
-.keen-dataviz-rendering .c3-chart{
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-item-align: center;
-        align-self: center;
-    -ms-flex-order: 1;
-        order: 1;
-  }
-
-.keen-dataviz-rendering .c3-chart-100-percent{
-    width: 100%;
-    -ms-flex-item-align: center;
-        align-self: center;
-  }
-
-.keen-dataviz-rendering-horizontal{
-    -ms-flex-wrap: wrap;
-        flex-wrap: wrap;
-  }
-
-/* CUSTOM LEGEND */
-
-.keen-c3-legend {
-  display: -ms-flexbox;
-  display: flex;
-  position: relative;
-  top: 0;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
-}
-
-.keen-c3-legend-horizontal{
-    -ms-flex-direction: row;
-        flex-direction: row;
-    -ms-flex-item-align: end;
-        align-self: flex-end;
-    display: -ms-flexbox;
-    display: flex;
-    flex-direction: row;
-    -ms-flex-pack: center;
-        justify-content: center;
-    width: 100%;
-    padding: 0.5em 0;
-  }
-
-.keen-c3-legend-horizontal-pagination-left{
-      -ms-flex-order: 0;
-          order: 0;
-      display: -ms-flexbox;
-      display: flex;
-      margin-right: 1.5em;
-    }
-
-.keen-c3-legend-horizontal-items{
-      -ms-flex-order: 1;
-          order: 1;
-      display: -ms-flexbox;
-      display: flex;
-    }
-
-.keen-c3-legend-horizontal-pagination-right{
-      -ms-flex-order: 2;
-          order: 2;
-      display: -ms-flexbox;
-      display: flex;
-      margin-left: 1.5em;
-    }
-
-.keen-c3-legend-top{
-    -ms-flex-order: 0;
-        order: 0;
-  }
-
-.keen-c3-legend-bottom {
-    -ms-flex-order: 2;
-        order: 2;
-  }
-
-.keen-c3-legend-bottom .keen-c3-legend-label-overlay{
-    top: 0;
-    margin-top: -2.7em;
-  }
-
-.keen-c3-legend-bottom .keen-c3-legend-label-overlay .overlay-pointer {
-      top: 2.4em;
-      -webkit-transform: rotate(180deg);
-          -ms-transform: rotate(180deg);
-              transform: rotate(180deg);
-      border-color: transparent transparent #f0f0f0 transparent;
-    }
-
-.keen-c3-legend-vertical{
-    -ms-flex-direction: column;
-        flex-direction: column;
-  }
-
-.keen-c3-legend-vertical .keen-c3-legend-pagination-icons
-    {
-      margin: 0.5em 0.1em;
-      -ms-flex-order: 2;
-          order: 2;
-    }
-
-.keen-c3-legend-left{
-    -ms-flex-order: 0;
-        order: 0;
-  }
-
-.keen-c3-legend-right{
-    -ms-flex-order: 2;
-        order: 2;
-  }
-
-.keen-c3-legend-items{
-    -ms-flex-order: 1;
-        order: 1;
-  }
-
-.keen-c3-legend-vertical-items{
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-direction: row;
-        flex-direction: row;
-    -ms-flex-wrap: wrap;
-        flex-wrap: wrap;
-    -ms-flex-pack: start;
-        justify-content: flex-start;
-    -ms-flex-line-pack: start;
-        align-content: flex-start;
-  }
-
-.keen-c3-legend-vertical-items .legend-item{
-      width: 8em;
-    }
-
-.keen-c3-legend-horizontal-items{
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-direction: row;
-        flex-direction: row;
-  }
-
-.keen-c3-legend-horizontal-items .legend-item{
-      width: 6em;
-      margin: 0 0.25em;
-    }
-
-.keen-c3-legend .legend-item{
-    display: -ms-flexbox;
-    display: flex;
-    cursor: pointer;
-    overflow: hidden;
-    padding: 0.2em;
-    white-space: nowrap;
-    -o-text-overflow: ellipsis;
-       text-overflow: ellipsis;
-    font-size: 0.8em;
-  }
-
-.keen-c3-legend .legend-item > * {
-      vertical-align: middle;
-    }
-
-.keen-c3-legend .legend-item-color-sample{
-      display: inline-block;
-      width: 1em;
-      height: 100%;
-      margin-right: 0.5em;
-      pointer-events: none;
-      -ms-flex: none;
-          flex: none;
-    }
-
-.keen-c3-legend .legend-item-text{
-      pointer-events: none;
-    }
-
-.keen-c3-legend-label-overlay .overlay-pointer {
-    border-color: transparent transparent #FFFFFF transparent;
-    border-color: transparent transparent #FFFFFF transparent;
-    border-style: solid;
-    border-width: 0 10px 10px 10px;
-    height: 0;
-    width: 0px;
-    position: absolute;
-    top: -10px;
-  }
-
-.keen-c3-legend-position-left .overlay-pointer {
-        left: 0px;
-      }
-
-.keen-c3-legend-position-right .overlay-pointer {
-        left: 0px;
-      }
-
-.keen-c3-legend-pagination-vertical {
-    margin-top: 0.5em;
-  }
-
-.keen-c3-legend-pagination-icons {
-    padding: 0.2em;
-  }
-
-.keen-c3-legend-pagination-icons i {
-      border-left: 1em solid transparent;
-      border-right: 1em solid transparent;
-      border-top: 1.5em solid #4D4D4D;
-      border-top: 1.5em solid #4D4D4D;
-      display: inline-block;
-      padding: 0em;
-      float: left;
-      cursor: pointer;
-      font-size: 0.5em;
-    }
-
-.keen-c3-legend-pagination-icons .right {
-      -ms-transform: rotate(-90deg);
-          transform: rotate(-90deg);
-      -webkit-transform: rotate(-90deg);
-    }
-
-.keen-c3-legend-pagination-icons .left {
-      -ms-transform: rotate(90deg);
-          transform: rotate(90deg);
-      -webkit-transform: rotate(90deg);
-    }
-
-.keen-c3-legend-pagination-icons .up {
-      -ms-transform: rotate(-180deg);
-          transform: rotate(-180deg);
-      -webkit-transform: rotate(-180deg);
-      margin-top: 0.1em;
-    }
-
-.keen-c3-legend-pagination-icons .down {
-      margin-right: 0.1em;
-    }
-
-.keen-c3-legend-label-overlay {
-  font-size: 1em;
-  background: rgba(255, 255, 255, 0.9);
-  background: rgba(255, 255, 255, 0.9);
-  -webkit-box-shadow: 0 1px 1px rgba(26, 26, 26, 0.09999999999999998);
-          box-shadow: 0 1px 1px rgba(26, 26, 26, 0.09999999999999998);
-  box-shadow: 0 1px 1px rgba(26, 26, 26, 0.09999999999999998);
-  padding: 0.6em;
-  margin-top: 1.5em;
-  position: absolute;
-  word-wrap: break-word;
-  pointer-events: none;
-  z-index: 222;
-}
-
-/*
-
-github.com style (c) Vasily Polovnyov <vast@whiteants.net>
-
-*/
-
-.hljs {
-  display: block;
-  overflow-x: auto;
-  padding: 0.5em;
-  color: #333;
-  background: #f8f8f8;
-}
-
-.hljs-comment,
-.hljs-quote {
-  color: #998;
-  font-style: italic;
-}
-
-.hljs-keyword,
-.hljs-selector-tag,
-.hljs-subst {
-  color: #333;
-  font-weight: bold;
-}
-
-.hljs-number,
-.hljs-literal,
-.hljs-variable,
-.hljs-template-variable,
-.hljs-tag .hljs-attr {
-  color: #008080;
-}
-
-.hljs-string,
-.hljs-doctag {
-  color: #d14;
-}
-
-.hljs-title,
-.hljs-section,
-.hljs-selector-id {
-  color: #900;
-  font-weight: bold;
-}
-
-.hljs-subst {
-  font-weight: normal;
-}
-
-.hljs-type,
-.hljs-class .hljs-title {
-  color: #458;
-  font-weight: bold;
-}
-
-.hljs-tag,
-.hljs-name,
-.hljs-attribute {
-  color: #000080;
-  font-weight: normal;
-}
-
-.hljs-regexp,
-.hljs-link {
-  color: #009926;
-}
-
-.hljs-symbol,
-.hljs-bullet {
-  color: #990073;
-}
-
-.hljs-built_in,
-.hljs-builtin-name {
-  color: #0086b3;
-}
-
-.hljs-meta {
-  color: #999;
-  font-weight: bold;
-}
-
-.hljs-deletion {
-  background: #fdd;
-}
-
-.hljs-addition {
-  background: #dfd;
-}
-
-.hljs-emphasis {
-  font-style: italic;
-}
-
-.hljs-strong {
-  font-weight: bold;
-}
-
-#keen-explorer {
-  color: #333;
-  font-family: 'Verla Round', 'Gotham Rounded A', 'Gotham Rounded B', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  font-size: 14px;
-  line-height: 1.5;
-  padding: 0 0 24px;
-  position: relative;
-
-@-webkit-keyframes stretchdelay {
-  0%, 40%, 100% { -webkit-transform: scaleY(0.4) }
-  20% { -webkit-transform: scaleY(1.0) }
-}
-
-@keyframes stretchdelay {
-  0%, 40%, 100% {
-    transform: scaleY(0.4);
-    -webkit-transform: scaleY(0.4);
-  }  20% {
-    transform: scaleY(1.0);
-    -webkit-transform: scaleY(1.0);
-  }
-}
-
-@hasFieldsCountBgColor: #627181;
-
-}
-
-#keen-explorer .nav-tabs {
-  border-bottom: medium none;
-}
-
-#keen-explorer .nav-tabs li a {
-    background-color: rgba(0,0,0,.05);
-    border-bottom-color: transparent;
-    border-radius: 0;
-    color: #4d4d4d;
-    cursor: pointer;
-    margin: 0;
-  }
-
-#keen-explorer .nav-tabs li.active > a,
-  #keen-explorer .nav-tabs li.active > a:focus,
-  #keen-explorer .nav-tabs li.active > a:hover {
-    background-color: #fff;
-    border-left-color: rgba(0,0,0,.07);
-    border-right-color: rgba(0,0,0,.07);
-    border-top-color: rgba(0,0,0,.07);
-    color: #4d4d4d;
-    z-index: 3;
-  }
-
-#keen-explorer .nav-tabs li.active > a .icon, #keen-explorer .nav-tabs li.active > a:focus .icon, #keen-explorer .nav-tabs li.active > a:hover .icon {
-      color: #808080;
-    }
-
-#keen-explorer .nav-pills > li > a {
-  background-color: #f2f2f2;
-}
-
-#keen-explorer .nav-pills>li.active>a,
-#keen-explorer .nav-pills>li.active>a:focus,
-#keen-explorer .nav-pills>li.active>a:hover {
-  background-color: #00bbde;
-  border-color: transparent;
-  color: #fff;
-}
-
-#keen-explorer .btn-default {
-  background-color: #fff;
-}
-
-#keen-explorer h1, #keen-explorer h2, #keen-explorer h3, #keen-explorer h4, #keen-explorer h5 {
-  color: #2A333C;
-  font-family: "Gotham Rounded A", "Gotham Rounded B", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-weight: 400;
-}
-
-#keen-explorer a:hover, #keen-explorer a:focus {
-  text-decoration: none;
-}
-
-#keen-explorer label {
-  font-family: "Gotham Rounded A", "Gotham Rounded B", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-weight: 400;
-}
-
-#keen-explorer .callout {
-  border-radius: 4px;
-  border: 1px solid #DDD;
-  border-left-color: #56C0E0;
-  border-left-width: 5px;
-  padding: 10px 20px 10px 10px;
-  background: #FFF;
-}
-
-#keen-explorer .callout h4 {
-    margin-top: 0;
-    color: #3A87AD;
-  }
-
-#keen-explorer .callout p {
-    font-size: 16px;
-    color: #888;
-  }
-
-#keen-explorer .callout p:last-child {
-    margin-bottom: 0;
-  }
-
-#keen-explorer .help-block {
-  font-size: 12px;
-  font-style: italic;
-  margin: 10px 0 0;
-}
-
-#keen-explorer .subdued {
-  color: #999;
-}
-
-#keen-explorer :root{
-  dashboard-dark-grey: #4D4D4D;
-  dashboard-light-grey: #E5E5E5;
-  ashboard-blue: #3E8ACC;
-}
-
-#keen-explorer .field-component {
-  margin: 0 0 10px;
-}
-
-#keen-explorer .form-collapse-right {
-  padding-right: 0;
-}
-
-#keen-explorer .form-collapse-left {
-  padding-left: 0;
-}
-
-#keen-explorer label {
-  font-size: 16px;
-  color: #536779;
-}
-
-#keen-explorer label.block-label {
-  display: block;
-}
-
-#keen-explorer label.valign {
-  line-height: 30px;
-}
-
-#keen-explorer .form-control {
-  height: 35px;
-}
-
-#keen-explorer .input-group-btn .btn:focus, #keen-explorer .input-group-btn .btn:active {
-  outline: none;
-}
-
-#keen-explorer .input-group-btn .btn i {
-    margin: 0;
-    top: 2px;
-}
-
-#keen-explorer .btn {
-  border-radius: 2px;
-}
-
-#keen-explorer .btn-default {
-  border-color: #d7d7d7;
-}
-
-#keen-explorer .btn-primary {
-  background-color: #00bbde;
-  border-color: transparent;
-  color: #fff
-}
-
-#keen-explorer .btn-primary:focus, #keen-explorer .btn-primary:hover {
-  background-color: #0099b6;
-}
-
-#keen-explorer .datepicker-wrapper, #keen-explorer .timepicker-wrapper {
-  position: relative;
-}
-
-#keen-explorer .picker {
-  min-width: 350px;
-}
-
-#keen-explorer .picker.picker--time .picker__holder {
-    width: 80px;
-  }
-
-#keen-explorer .picker.picker--time .picker__list {
-    height: 120px;
-  }
-
-#keen-explorer .picker__list-item {
-  padding: 4px 6px;
-}
-
-#keen-explorer button.field-secondary-control {
-  color: #808080;
-  font-size: 12px;
-  padding: 8px 8px 8px 0;
-}
-
-#keen-explorer button.field-secondary-control span.icon {
-    margin-right: 2px;
-  }
-
-#keen-explorer .explorer-api-url input {
-    margin: 10px 0 0;
-  }
-
-#keen-explorer hr.fieldset-divider {
-  border-bottom: 1px solid rgba(0,0,0,.07);
-  border-top: 1px solid #fff;
-}
-
-#keen-explorer .search-box {
-  border: 1px solid #d7d7d7;
-  border-radius: 2px;
-  height: 32px;
-  margin: 0 0 10px;
-  position: relative;
-}
-
-#keen-explorer .search-box input {
-    background-color: transparent;
-    border: none;
-    height: 32px;
-    line-height: 32px;
-    padding: 0 10px 0 35px;
-    width: 100%
-  }
-
-#keen-explorer .search-box input:focus {
-  outline: none;
-}
-
-#keen-explorer .search-box .icon {
-    color: #a7a7a7;
-    font-size: 16px;
-    left: 10px;
-    margin-top: 8px;
-    position: absolute;
-  }
-
-#keen-explorer .select-element {
-  border: 1px solid #d7d7d7;
-  border-radius: 2px;
-  position: relative;
-}
-
-#keen-explorer .select-element .pseudo-select-arrow, #keen-explorer .select-element::before, #keen-explorer .select-element::after {
-    content: '';
-    position: absolute;
-    right: 8px;
-    border-color: #4d4d4d transparent;
-    border-style: solid;
-    height: 0px;
-    width: 0px;
-    border-left-width: 4px;
-    border-right-width: 4px;
-  }
-
-#keen-explorer .select-element::before {
-  top: 10px;
-  border-top-width: 0px;
-  border-bottom-width: 5px;
-}
-
-#keen-explorer .select-element::after {
-  bottom: 10px;
-  border-top-width: 5px;
-  border-bottom-width: 0px;
-}
-
-#keen-explorer .select-element select {
-    background-color: transparent;
-    border: medium none;
-    -webkit-box-shadow: none;
-            box-shadow: none;
-    height: 35px;
-    line-height: 24px;
-    padding-right: 25px;
-    position: relative;
-    text-indent: 0.01px;
-    -o-text-overflow: '';
-       text-overflow: '';
-
-    -webkit-border-radius: 0px;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-}
-
-#keen-explorer .select-element select:focus {
-  border: 1px solid rgba(0, 187, 222, .67);
-  border-radius: 2px;
-  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.07), 0 0 8px rgba(0, 187, 222, .35);
-          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.07), 0 0 8px rgba(0, 187, 222, .35);
+.DayPickerNavigation_button__disabled {
   cursor: default;
-  outline: 0;
-  z-index: 1;
+  border: 1px solid #f2f2f2
 }
 
-#keen-explorer .no-margin {
-  margin: 0;
+.DayPickerNavigation_button__disabled:focus,
+.DayPickerNavigation_button__disabled:hover {
+  border: 1px solid #f2f2f2
 }
 
-#keen-explorer .margin-top-bump {
-  margin-top: 3px;
-  margin-top: 3px;
+.DayPickerNavigation_button__disabled:active {
+  background: 0 0
 }
 
-#keen-explorer .margin-bottom-bump {
-  margin-bottom: 3px;
-  margin-bottom: 3px;
-}
-
-#keen-explorer .margin-right-bump {
-  margin-right: 3px;
-  margin-right: 3px;
-}
-
-#keen-explorer .margin-left-bump {
-  margin-left: 3px;
-  margin-left: 3px;
-}
-
-#keen-explorer .margin-top-tiny {
-  margin-top: 8px;
-  margin-top: 8px;
-}
-
-#keen-explorer .margin-bottom-tiny {
-  margin-bottom: 8px;
-  margin-bottom: 8px;
-}
-
-#keen-explorer .margin-right-tiny {
-	margin-right: 8px;
-	margin-right: 8px;
-}
-
-#keen-explorer .margin-left-tiny {
-	margin-left: 8px;
-	margin-left: 8px;
-}
-
-#keen-explorer .padding-tiny {
-  padding: 8px;
-  padding: 8px;
-}
-
-#keen-explorer .padding-right-tiny {
-  padding-right: 8px;
-  padding-right: 8px;
-}
-
-#keen-explorer .margin-top-small {
-  margin-top: 15px;
-  margin-top: 15px;
-}
-
-#keen-explorer .margin-bottom-small {
-  margin-bottom: 15px;
-  margin-bottom: 15px;
-}
-
-#keen-explorer .margin-left-small {
-  margin-left: 15px;
-  margin-left: 15px;
-}
-
-#keen-explorer .margin-right-small {
-  margin-right: 15px;
-  margin-right: 15px;
-}
-
-#keen-explorer .margin-top-medium {
-  margin-top: 25px;
-  margin-top: 25px;
-}
-
-#keen-explorer .margin-bottom-medium {
-  margin-bottom: 25px;
-  margin-bottom: 25px;
-}
-
-#keen-explorer .margin-right-medium {
-  margin-right: 25px;
-  margin-right: 25px;
-}
-
-#keen-explorer .margin-left-medium {
-  margin-left: 25px;
-  margin-left: 25px;
-}
-
-#keen-explorer .no-radius-left {
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
-}
-
-#keen-explorer .no-radius-right {
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
-}
-
-#keen-explorer .explorer-loader {
-  background: rgba(255, 255, 255, 0.67);
-  height: 100%;
-  left: 0;
+.DayPickerNavigation_button__horizontalDefault {
   position: absolute;
-  top: 0;
-  width: 100%;
-  z-index: 1000;
-}
-
-#keen-explorer .explorer-loader .msg {
-    color: #4D4D4D;
-    font-family: "Gotham Rounded A", "Gotham Rounded B", "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: 32px;
-    font-weight: lighter;
-
-    height: 30px;
-    left: 50%;
-    line-height: 30px;
-    margin-top: -15px;
-    margin-left: -75px;
-    position: absolute;
-    text-align: center;
-    top: 50%;
-    width: 200px;
-  }
-
-#keen-explorer .explorer-spinner {
-  position: absolute;
-  left: -30px;
-  top: -4px;
-  width: 50px;
-  height: 40px;
-  text-align: center;
-  font-size: 10px;
-}
-
-#keen-explorer .explorer-spinner > div {
-    background-color: #00BBDE;
-    height: 100%;
-    width: 4px;
-    margin-right: 2px;
-    display: inline-block;
-
-    -webkit-animation: stretchdelay 1.2s infinite ease-in-out;
-    animation: stretchdelay 1.2s infinite ease-in-out;
-  }
-
-#keen-explorer .explorer-spinner .rect2 {
-  -webkit-animation-delay: -1.1s;
-  animation-delay: -1.1s;
-}
-
-#keen-explorer .explorer-spinner .rect3 {
-  -webkit-animation-delay: -1.0s;
-  animation-delay: -1.0s;
-}
-
-#keen-explorer .explorer-spinner .rect4 {
-  -webkit-animation-delay: -0.9s;
-  animation-delay: -0.9s;
-}
-
-#keen-explorer .explorer-spinner .rect5 {
-  -webkit-animation-delay: -0.8s;
-  animation-delay: -0.8s;
-}
-
-#keen-explorer .app-loader {
-  z-index: 2000;
-}
-
-#keen-explorer .chart-component .loader {
-    background: #F2F2F2;
-  }
-
-#keen-explorer .chart-component .loader .msg {
-      color: #808080;
-      font-size: 24px;
-      margin-left: -60px;
-      width: 150px;
-    }
-
-#keen-explorer .chart-component .loader .explorer-spinner {
-      height: 20px;
-      top: 6px;
-    }
-
-#keen-explorer .chart-component .loader .explorer-spinner > div {
-        background-color: #808080;
-      }
-
-#keen-explorer .fav-icon,
-#keen-explorer .btn-default .icon.fav-icon,
-#keen-explorer .nav.nav-tabs li.active a .fav-icon,
-#keen-explorer .nav.nav-tabs li a:hover .fav-icon {
-  color: #F22613;
-}
-
-#keen-explorer .browse-queries {
-  margin-top: -1px;
-}
-
-#keen-explorer .browse-queries .queries-group-options {
-    padding-bottom: 10px;
-  }
-
-#keen-explorer .browse-queries .queries-group-options .radio-inline {
-      width: 49%;
-      text-align: center;
-      margin: 0;
-      padding: 0;
-    }
-
-#keen-explorer .browse-queries ul.interactive-list {
-    max-height: 400px;
-    overflow-y: scroll;
-  }
-
-#keen-explorer .browse-queries .metadata {
-    padding: 5px 0 0;
-  }
-
-#keen-explorer .browse-queries .metadata p {
-      color: #a7a7a7;
-      margin: 0;
-      font-size: 12px;
-    }
-
-#keen-explorer .browse-queries .metadata .icon {
-      color: #d7d7d7;
-      font-size: 14px;
-      margin-right: 5px;
-    }
-
-#keen-explorer .browse-queries .metadata .date {
-      text-align: right;
-    }
-
-#keen-explorer .event-browser {
-	overflow: hidden;
-	height: 400px;
-
-}
-
-#keen-explorer .event-browser .search-box {
-		margin: 6px;
-		height: 38px;
-	}
-
-#keen-explorer .event-browser .event-names, #keen-explorer .event-browser .event-browser-content {
-		float: left;
-	}
-
-#keen-explorer .event-browser .event-names {
-		width: 25%;
-		height: 100%;
-		position: relative;
-		border-right: 1px solid #DDD;
-	}
-
-#keen-explorer .event-browser .event-browser-content {
-		width: 75%;
-		position: relative;
-	}
-
-#keen-explorer .event-browser ul.event-names-list {
-		width: 100%;
-		height: 350px;
-		-webkit-box-sizing: border-box;
-		        box-sizing: border-box;
-		overflow-y: scroll;
-		border-top: 1px solid #DDD;
-	}
-
-#keen-explorer .event-browser ul.event-names-list li {
-			margin: 0;
-		}
-
-#keen-explorer .event-browser ul.event-names-list li a {
-				display: block;
-				padding: 10px;
-				border-radius: 0;
-				border-top: 1px solid #EFEFEF;
-			}
-
-#keen-explorer .event-browser ul.event-names-list li a:not(:hover) {
-				background: #FFF;
-			}
-
-#keen-explorer .event-browser ul.event-names-list li.active a, #keen-explorer .event-browser ul.event-names-list li.active a:hover, #keen-explorer .event-browser ul.event-names-list li.active a:active, #keen-explorer .event-browser ul.event-names-list li.active a:focus {
-				color: #FFF;
-				background-color: #00BBDE;
-			}
-
-#keen-explorer .event-browser .select-btn {
-		position: absolute;
-		top: 10px;
-		right: 10px;
-	}
-
-#keen-explorer .event-browser .view-options {
-		width: 100%;
-		height: 52px;
-		border-bottom: 1px solid #DDD;
-		padding: 10px 0 0 10px;
-	}
-
-#keen-explorer .event-browser .event-data-wrapper {
-		height: 348px;
-		-webkit-box-sizing: border-box;
-		        box-sizing: border-box;
-	}
-
-#keen-explorer .event-browser textarea.json-view {
-		overflow-y: scroll;
-		border: 0;
-		background: #FFF;
-		resize: none;
-		border-radius: 0 0 5px 0;
-		min-height: 100%;
-	}
-
-#keen-explorer .event-browser-modal .modal-body {
-	padding: 0;
-}
-
-#keen-explorer .fields-toggle {
-	background: #F2F2F2;
-	border: 1px solid transparent;
-	border-radius: 2px;
-
-}
-
-#keen-explorer .fields-toggle .toggle-label {
-		display: block;
-		cursor: pointer;
-		padding: 10px 10px 8px;
-		position: relative;
-
-	}
-
-#keen-explorer .fields-toggle .toggle-label h5 {
-			font-size: 16px;
-			color: #b7b7b7;
-			line-height: 20px;
-			margin: 0;
-			padding-left: 40px;
-			text-transform: none;
-		}
-
-#keen-explorer .fields-toggle .toggle-label .toggle-button {
-			background: none;
-			border: 1px solid #c5c5c5;
-			border-radius: 50%;
-			color: #c5c5c5;
-			height: 24px;
-			line-height: 24px;
-			margin: 0;
-			outline: 0;
-			padding: 0;
-			position: absolute;
-			text-align: center;
-			top: 7px;
-			width: 24px;
-		}
-
-#keen-explorer .fields-toggle .toggle-label .toggle-button .icon {
-				display: block;
-				font-family: 'Gotham Rounded A', 'Gotham Rounded B', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-				font-size: 22px;
-				height: 24px;
-				line-height: 24px;
-				position: relative;
-				top: -1px;
-				-webkit-font-smoothing: none
-			}
-
-#keen-explorer .fields-toggle .toggle-label .toggle-button .icon::before {
-  content: "\002B";
-}
-
-#keen-explorer .fields-toggle .toggle-label .toggle-button:focus,
-			#keen-explorer .fields-toggle .toggle-label .toggle-button:hover {}
-
-#keen-explorer .fields-toggle .toggle-label:focus,
-		#keen-explorer .fields-toggle .toggle-label:hover {
-  background: #E7E7E7;
-}
-
-#keen-explorer .fields-toggle .toggle-label:focus h5, #keen-explorer .fields-toggle .toggle-label:hover h5 {
-				color: #999;
-}
-
-#keen-explorer .fields-toggle .toggle-label:focus .toggle-button, #keen-explorer .fields-toggle .toggle-label:hover .toggle-button {
-				border-color: #999;
-				color: #999;
-}
-
-#keen-explorer .fields-toggle .toggle-body {
-		display: none;
-		padding: 5px 10px 10px;
-	}
-
-#keen-explorer .fields-toggle.open {
-	background: #FFF;
-
-	border: 1px solid rgba(0,0,0,.07);
-	-webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-	        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-}
-
-#keen-explorer .fields-toggle.open .toggle-label {
-		background: none;
-	}
-
-#keen-explorer .fields-toggle.open .toggle-label h5,
-		#keen-explorer .fields-toggle.open .toggle-label:hover h5 {
-			color: #414141;
-			padding-left: 0;
-		}
-
-#keen-explorer .fields-toggle.open .toggle-button {
-		border-color: #d7d7d7;
-		color: #CCC;
-		right: 10px;
-	}
-
-#keen-explorer .fields-toggle.open .toggle-button .icon {
-			top: -3px;
-		}
-
-#keen-explorer .fields-toggle.open .toggle-button .icon::before {
-			content: "\00D7";
-		}
-
-#keen-explorer .fields-toggle.open .toggle-body {
-		display: block;
-	}
-
-#keen-explorer .fields-toggle.has-fields-count, #keen-explorer .fields-toggle.open.has-fields-count {
-	background: @hasFieldsCountBgColor;
-	border-color: @hasFieldsCountBgColor;
-}
-
-#keen-explorer .fields-toggle.has-fields-count h5, #keen-explorer .fields-toggle.has-fields-count:hover h5, #keen-explorer .fields-toggle.has-fields-count:focus h5, #keen-explorer .fields-toggle.open.has-fields-count h5, #keen-explorer .fields-toggle.open.has-fields-count:hover h5, #keen-explorer .fields-toggle.open.has-fields-count:focus h5 {
-		padding-left: 0;
-	}
-
-#keen-explorer .fields-toggle.has-fields-count .toggle-label:hover, #keen-explorer .fields-toggle.open.has-fields-count .toggle-label:hover {
-		background: @hasFieldsCountBgColor;
-	}
-
-#keen-explorer .fields-toggle.has-fields-count .toggle-label:hover .toggle-button, #keen-explorer .fields-toggle.open.has-fields-count .toggle-label:hover .toggle-button {
-			border-color: #FFF;
-			color: @hasFieldsCountBgColor;
-		}
-
-#keen-explorer .fields-toggle.has-fields-count .toggle-button, #keen-explorer .fields-toggle.open.has-fields-count .toggle-button {
-		font-size: 14px;
-		line-height: 28px;
-		color: @hasFieldsCountBgColor;
-		border-color: #FFF;
-		background: #FFF;
-		width: 30px;
-		border-radius: 10px;
-		text-align: center;
-		margin: 0;
-		right: 10px;
-	}
-
-#keen-explorer .fields-toggle.has-fields-count .toggle-button .icon::before, #keen-explorer .fields-toggle.open.has-fields-count .toggle-button .icon::before {
-			content: none;
-		}
-
-#keen-explorer .react-select {
-  position: relative;
-}
-
-#keen-explorer .react-select > input {
-    border: 1px solid #d7d7d7;
-    border-radius: 3px;
-    -webkit-box-shadow: none;
-            box-shadow: none;
-    -webkit-box-sizing: border-box;
-            box-sizing: border-box;
-    cursor: pointer;
-    padding: 6px 20px 6px 12px;
-    width: 100%;
-  }
-
-#keen-explorer .react-select .arrow, #keen-explorer .react-select::before, #keen-explorer .react-select::after {
-    content: "";
-    position: absolute;
-    right: 8px;
-    border-color: #4D4D4D transparent;
-    border-style: solid;
-    height: 0px;
-    width: 0px;
-    border-left-width: 4px;
-    border-right-width: 4px;
-  }
-
-#keen-explorer .react-select::before {
-  top: 10px;
-  border-top-width: 0px;
-  border-bottom-width: 5px;
-}
-
-#keen-explorer .react-select::after {
-  bottom: 10px;
-  border-top-width: 5px;
-  border-bottom-width: 0px;
-}
-
-#keen-explorer .react-select.visible::before, #keen-explorer .react-select.visible::after {
-  border-color: #A7A7A7 transparent;
-}
-
-#keen-explorer .react-select > input:active,
-#keen-explorer .react-select > input:focus {
-  border: 1px solid rgba(0, 187, 222, .67);
-  border-radius: 2px;
-  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.07), 0 0 8px rgba(0, 187, 222, .35);
-          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.07), 0 0 8px rgba(0, 187, 222, .35);
-  cursor: text;
-  outline: 0;
-  z-index: 1;
-}
-
-#keen-explorer .react-select .react-select-scrollpane {
-  border: 1px solid #d7d7d7;
-  background: #FFF;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
-  height: 200px;
-  bottom: -205px;
-  overflow-y: scroll;
-  position: absolute;
-  width: 100%;
-  z-index: 500;
-  -webkit-box-shadow: 0 2px 3px rgba(0,0,0,0.2);
-          box-shadow: 0 2px 3px rgba(0,0,0,0.2);
-}
-
-#keen-explorer .react-select-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  z-index: 900;
-}
-
-#keen-explorer .react-select-list li {}
-
-#keen-explorer .react-select-item {
-  /*border-collapse: collapse;*/
-  border-top: 1px solid #d7d7d7;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
-  color: #4d4d4d;
-  cursor: pointer;
-  display: block;
-  min-height: 30px;
-  padding: 5px 12px;
-  text-decoration: none;
-}
-
-#keen-explorer .react-select-item:active { outline: none; }
-
-#keen-explorer .react-select li.active,
-#keen-explorer .react-select-item:focus,
-#keen-explorer .react-select-item:hover {
-  background-color: #e7e7e7;
-}
-
-#keen-explorer .react-select-item:first-child {
-  border-top-color: transparent;
-}
-
-#keen-explorer .react-select-aria-notice {
-  display: none;
-}
-
-#keen-explorer .react-select-box-container {
-  position: relative;
-  width: 100%;
-  display: inline-block;
-  background-color: #fff;
-  border-radius: 4px;
-  text-align: left;
-  -webkit-box-shadow: 0 0 2px rgba(0, 0, 0, .3);
-          box-shadow: 0 0 2px rgba(0, 0, 0, .3);
-  margin-top: 6px;
-}
-
-#keen-explorer .react-select-box {
-  padding: 11px 0;
-  display: inline-block;
-  cursor: pointer;
-  border: none;
-  width: 100%;
-  text-align: left;
-  background-color: transparent
-}
-
-#keen-explorer .react-select-box:before {
-  content: ' ';
-  z-index: 1;
-  position: absolute;
-  height: 13px;
-  top: 15px;
-  right: 34px;
-  border-left: 1px solid #CBD2D7;
-}
-
-#keen-explorer .react-select-box:after {
-  content: ' ';
-  position: absolute;
-  z-index: 1;
-  top: 17px;
-  right: 13px;
-  border-top: 6px solid #7B8E9B;
-  border-left: 5px solid transparent;
-  border-right: 5px solid transparent;
-}
-
-#keen-explorer .react-select-box-label,
-#keen-explorer .react-select-box-option {
-  line-height: 16px;
-  font-size: 12px;
-  color: #7B8E9B;
-}
-
-#keen-explorer .react-select-box-label {
-  padding: 0 40px 0 20px;
-  font-weight: bold;
-  color: #0493D1;
-}
-
-#keen-explorer .react-select-box-options {
-  margin: 2px 0 0;
-  position: absolute;
-  padding: 10px 0;
-  width: 100%;
-  top: 100%;
-  left: 0;
-  z-index: 4;
-  background-color: #fff;
-  border-radius: 4px;
-  -webkit-box-shadow: 0 0 2px rgba(0, 0, 0, .3);
-          box-shadow: 0 0 2px rgba(0, 0, 0, .3);
-}
-
-#keen-explorer .react-select-box-options-list {
-  list-style: none outside;
-  margin: 0;
-  padding: 0;
-}
-
-#keen-explorer .react-select-box-option {
-  padding: 10px 20px;
-  margin: 0;
-  cursor: pointer;
-  display: block;
-  line-height: 1.2;
-  text-decoration: none;
-  white-space: nowrap;
-  overflow: hidden;
-  -o-text-overflow: ellipsis;
-     text-overflow: ellipsis
-}
-
-#keen-explorer .react-select-box-option:hover {
-  color: #0493D1;
-  background-color: #f4f4f4;
-  position: relative;
-}
-
-#keen-explorer .react-select-box-option-selected {
-  color: #CBD2D7;
-}
-
-#keen-explorer .react-select-box-hidden {
-  display: none;
-}
-
-#keen-explorer .react-select-box-container {
-  position: relative;
-  width: 100%;
-  display: inline-block;
-  background-color: #fff;
-  border-radius: 4px;
-  text-align: left;
-  -webkit-box-shadow: 0 0 2px rgba(0, 0, 0, .3);
-          box-shadow: 0 0 2px rgba(0, 0, 0, .3);
-  margin-top: 6px;
-}
-
-#keen-explorer .react-select-box {
-  padding: 11px 0;
-  display: inline-block;
-  cursor: pointer;
-  border: none;
-  width: 100%;
-  text-align: left;
-  background-color: transparent
-}
-
-#keen-explorer .react-select-box:before {
-  content: ' ';
-  z-index: 1;
-  position: absolute;
-  height: 13px;
-  top: 15px;
-  right: 34px;
-  border-left: 1px solid #CBD2D7;
-}
-
-#keen-explorer .react-select-box:after {
-  content: ' ';
-  position: absolute;
-  z-index: 1;
-  top: 17px;
-  right: 13px;
-  border-top: 6px solid #7B8E9B;
-  border-left: 5px solid transparent;
-  border-right: 5px solid transparent;
-}
-
-#keen-explorer .react-select-box-label,
-#keen-explorer .react-select-box-option {
-  line-height: 16px;
-  font-size: 12px;
-  color: #555;
-}
-
-#keen-explorer .react-select-box-label {
-  padding: 0 40px 0 20px;
-  font-weight: bold;
-  color: #555;
-  word-break: break-all;
-}
-
-#keen-explorer .react-select-box-options {
-  margin: 2px 0 0;
-  position: absolute;
-  padding: 10px 0;
-  width: 100%;
-  top: 100%;
-  left: 0;
-  z-index: 4;
-  background-color: #fff;
-  max-height: 250px;
-  overflow-y: scroll;
-}
-
-#keen-explorer .react-select-box-options-list {
-  list-style: none outside;
-  margin: 0;
-  padding: 0;
-}
-
-#keen-explorer .react-select-box-option {
-  padding: 10px 20px;
-  margin: 0;
-  cursor: pointer;
-  display: block;
-  line-height: 1.2;
-  text-decoration: none
-}
-
-#keen-explorer .react-select-box-option:hover {
-  background-color: #F2F2F2;
-}
-
-#keen-explorer .react-select-box-option-selected {
-  color: #CBD2D7;
-}
-
-#keen-explorer .react-select-box-hidden {
-  display: none;
-}
-
-#keen-explorer .react-select-box-multi .react-select-box-option {
-  padding-left: 42px;
-  position: relative;
-}
-
-#keen-explorer .react-select-box-multi .react-select-box-option:before {
-  content: ' ';
-  position: absolute;
-  line-height: 1;
-  text-align: center;
-  left: 20px;
-  top: 9px;
+  top: 18px;
+  line-height: .78;
   border-radius: 3px;
-  height: 12px;
-  width: 12px;
-  margin-right: 10px;
-  border: 1px solid #7B8E9B;
-  background: #f9f9f9;
-  vertical-align: middle;
+  padding: 6px 9px
 }
 
-#keen-explorer .react-select-box-multi .react-select-box-option-selected:before {
-  content: '✓';
+.DayPickerNavigation_leftButton__horizontalDefault {
+  left: 22px
 }
 
-#keen-explorer .react-select-box-multi .react-select-box-option-selected {
-  color: #1F3344;
+.DayPickerNavigation_rightButton__horizontalDefault {
+  right: 22px
 }
 
-#keen-explorer .interactive-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-#keen-explorer .interactive-list li {
-    position: relative;
-    font-size: 16px;
-    font-weight: 300;
-    cursor: pointer;
-    padding: 8px 10px;
-    word-wrap: break-word;
-    border-top: 1px solid #d7d7d7;
-  }
-
-#keen-explorer .interactive-list li .name {
-      margin: 0;
-      padding: 0;
-      line-height: 28px;
-      padding-right: 28px;
-      text-transform: none;
-    }
-
-#keen-explorer .interactive-list li:last-child {
-  border-bottom: 1px solid #d7d7d7;
-}
-
-#keen-explorer .interactive-list li.active, #keen-explorer .interactive-list li.active:hover {
-    background: #f2f2f2;
-  }
-
-#keen-explorer .interactive-list li.active .name, #keen-explorer .interactive-list li.active:hover .name {
-      color: #282828;
-    }
-
-#keen-explorer .interactive-list li.active .metadata p, #keen-explorer .interactive-list li.active .metadata .icon, #keen-explorer .interactive-list li.active:hover .metadata p, #keen-explorer .interactive-list li.active:hover .metadata .icon {
-        color: #808080;
-      }
-
-#keen-explorer .interactive-list li.active a.remove-btn, #keen-explorer .interactive-list li.active:hover a.remove-btn {
-      border-color: #a7a7a7;
-    }
-
-#keen-explorer .interactive-list li.active a.remove-btn .icon, #keen-explorer .interactive-list li.active:hover a.remove-btn .icon {
-        color: #a7a7a7;
-      }
-
-#keen-explorer .interactive-list li:hover {
-    background: #e7e7e7;
-  }
-
-#keen-explorer .interactive-list .remove-btn {
-    background: none;
-    border: 1px solid #d7d7d7;
-    border-radius: 50%;
-    color: #c5c5c5;
-    height: 24px;
-    line-height: 24px;
-    padding: 0px;
-    position: absolute;
-    right: 10px;
-    top: 10px;
-    width: 24px;
-  }
-
-#keen-explorer .interactive-list .remove-btn .icon::before {
-			content: "\00D7";
-		}
-
-#keen-explorer .interactive-list .remove-btn:hover {
-  background: none;
-}
-
-#keen-explorer .interactive-list .remove-btn .icon {
-      display: block;
-      font-size: 20px;
-      position: relative;
-      text-align: center;
-}
-
-#keen-explorer .interactive-list .remove-btn .icon:hover {
-  color: #444;
-}
-
-#keen-explorer .interactive-list h6 {
-    background: #1B65A3;
-    border-radius: 3px;
-    margin-top: 3px;
-    padding: 2px 6px;
-  }
-
-#keen-explorer .interactive-list .icon {
-    font-size: 11px;
-  }
-
-#keen-explorer .modal-title .icon {
-    font-size: 18px;
-  }
-
-#keen-explorer .modal-title .icon.big {
-    font-size: 24px;
-  }
-
-#keen-explorer section.dashboard {
-  min-height: 918px;
-
-}
-
-#keen-explorer section.dashboard .dashboard-item {
-    background: #FAFAFA;
-    border: 1px solid #DDD;
-    height: 200px;
-
-    padding-top: 70px;
-    text-align: center;
-    color: #999;
-    font-size: 18px;
-  }
-
-#keen-explorer section.dashboard .row {
-    margin-bottom: 20px;
-  }
-
-#keen-explorer .explorer {
-  position: relative;
-}
-
-#keen-explorer .explorer-query-builder,
-#keen-explorer .explorer-visualization {
-  margin: 0 0 24px;
-}
-
-#keen-explorer .modular-section {
-  border: 1px solid #DDD;
-  border-radius: 4px;
-  background: #FFF;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-}
-
-#keen-explorer .modular-section-body {
+.DayPickerNavigation_button__verticalDefault {
   padding: 5px;
-}
-
-#keen-explorer .notice-component {
-  margin: 0 0 15px;
-}
-
-#keen-explorer .notice {
-  padding: 5em 0em;
-  text-align: center;
-  width: 100%;
-  color: #555;
-  font-size: 24px;
-  font-weight: 300;
-}
-
-#keen-explorer .notice i.error {
-    top: 3px;
-    margin-right: 15px;
-  }
-
-#keen-explorer .query-pane-tabs {
-  height: 41px;
-  position: relative;
-}
-
-#keen-explorer .query-pane-tabs li {
-    position: absolute;
-  }
-
-#keen-explorer .query-pane-tabs li a {
-      line-height: 21px;
-      margin: 1px 1px 0 1px;
-      padding: 9px 9px 10px;
-    }
-
-#keen-explorer .query-pane-tabs li a .icon {
-        color: #4d4d4d;
-        font-size: 12px;
-      }
-
-#keen-explorer .query-pane-tabs li.active > a {
-  margin: 0px;
-  padding: 10px;
-}
-
-#keen-explorer .query-pane-tabs li.tab-build-query {
-  left: 0px;
-  right: 121px;
-}
-
-#keen-explorer .query-pane-tabs li.tab-browse-queries {
-  padding-left: 0px;
-  padding-right: 0px;
-  right: 0px;
-  text-align: center;
-  width: 120px;
-}
-
-#keen-explorer .query-pane-tabs li.tab-browse-queries a {
-        border-radius: 0 2px 0 0;
-}
-
-#keen-explorer .query-pane-tabs li.tab-browse-queries .icon {
-        margin-right: 5px;
-}
-
-#keen-explorer .query-pane-persisted li.tab-new-query {
-  padding-left: 0px;
-  padding-right: 0px;
-  text-align: center;
-  width: 42px;
-}
-
-#keen-explorer .query-pane-persisted li.tab-new-query a {
-        border-radius: 2px 0 0 0;
-}
-
-#keen-explorer .query-pane-persisted li.tab-build-query {
-  left: 42px;
-}
-
-#keen-explorer .query-pane-section {
-  background-color: #fff;
-  border: 1px solid rgba(0,0,0,.07);
-  padding: 18px 10px 10px;
-  position: relative;
-}
-
-#keen-explorer .extraction-options {
-  background: #F2F2F2;
-  padding: 10px 15px;
-}
-
-#keen-explorer .extraction-options label {
-    font-size: 14px;
-    line-height: 28px;
-    margin: 0;
-  }
-
-#keen-explorer .extraction-options label:first-child {
-    margin-right: 15px;
-  }
-
-#keen-explorer .extraction-options input[type=radio] {
-    margin-right: 5px;
-  }
-
-#keen-explorer .extraction-options .form-group {
-    margin: 15px 0 0;
-  }
-
-#keen-explorer .extraction-options .form-group label {
-      font-size: 13px;
-      line-height: 18px;
-      margin: 0 0 5px;
-    }
-
-#keen-explorer .extraction-options small.text-muted {
-    display: block;
-    margin: 5px 0 0;
-  }
-
-#keen-explorer .extraction-options small.text-muted .icon {
-      margin-right: 5px;
-    }
-
-#keen-explorer .button-set-clear-toggle btn.btn-default {
-    border-color: #e7e7e7;
-    color: #808080;
-    font-size: 13px;
-    padding: 5px;
-  }
-
-#keen-explorer #browse-event-collections {
-  padding-left: 5px;
-}
-
-#keen-explorer #browse-event-collections .icon {
-    color: #A7A7A7;
-    font-size: 9px;
-    top: 0;
-  }
-
-#keen-explorer .double-groupby-toggle {
-  font-size: 12px;
-  padding: 0 5px;
-}
-
-#keen-explorer .double-groupby-toggle .icon, #keen-explorer .double-groupby-toggle .glyphicon {
-    color: #A7A7A7;
-    font-size: 9px
-  }
-
-#keen-explorer .double-groupby-toggle .icon.glyphicon-plus, #keen-explorer .double-groupby-toggle .glyphicon.glyphicon-plus {
-  top: 0;
-}
-
-#keen-explorer .google-visualization-table {
-  min-width: 100%;
-}
-
-#keen-explorer .btn-download-csv {
-  margin-top: 10px;
-}
-
-#keen-explorer .explorer-visualization {
-  position: relative;
-}
-
-#keen-explorer .chart-area {
-  position: relative;
-}
-
-#keen-explorer .chart-area .loader {
-    border-radius: 3px;
-  }
-
-#keen-explorer .visualization-wrapper {
   background: #fff;
-  border: 1px solid rgba(0,0,0,.07);
-  padding: 10px;
+  -webkit-box-shadow: 0 0 5px 2px rgba(0,0,0,.1);
+          box-shadow: 0 0 5px 2px rgba(0,0,0,.1);
   position: relative;
+  display: inline-block;
+  text-align: center;
+  height: 100%;
+  width: 50%
 }
 
-#keen-explorer .chart {
-  position: relative;
+.DayPickerNavigation_nextButton__verticalDefault {
+  border-left: 0
 }
 
-#keen-explorer .chart .keen-metric {
-    margin: 15px;
-  }
-
-#keen-explorer .chart-detail-bar {
-  height: 37px;
-  margin-bottom: 10px;
-  opacity: .35;
-  position: relative;
-  z-index: 1
-}
-
-#keen-explorer .chart-detail-bar.chart-detail-active {
-  opacity: 1;
-}
-
-#keen-explorer .chart-detail-bar .chart-title-component {
-    background: #fff;
-    left: 0;
-    position: absolute;
-    right: 132px;
-}
-
-#keen-explorer .chart-detail-bar .chart-title-component input {
-      border: 1px solid #d7d7d7;
-      color: #536779;
-      cursor: pointer;
-      font-size: 16px;
-      padding: 7px 10px 4px;
-      width: 100%
-    }
-
-#keen-explorer .chart-detail-bar .chart-title-component input:hover {
-  background-color: #fbfbfb;
-}
-
-#keen-explorer .chart-detail-bar .chart-title-component input:focus,
-      #keen-explorer .chart-detail-bar .chart-title-component input.active {
-  border: 1px solid rgba(0, 187, 222, .67);
-  border-radius: 2px;
-  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.07), 0 0 8px rgba(0, 187, 222, .35);
-          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.07), 0 0 8px rgba(0, 187, 222, .35);
-  cursor: default;
-  outline: 0;
-}
-
-#keen-explorer .chart-detail-bar .chart-title-component .chart-query-name {
-      background-color: rgba(0, 0, 0, 0.05);
-      border-radius: 2px;
-      border-top-color: transparent;
-      display: none;
-      font-size: 13px;
-      padding: 5px 10px;
-    }
-
-#keen-explorer .chart-detail-bar .chart-title-component .chart-query-name input {
-        background: #FFF;
-        border: medium none;
-        color: #808080;
-        padding: 5px 10px;
-      }
-
-#keen-explorer .chart-detail-bar .chart-title-component .chart-query-name label {
-        color: #808080;
-        font-size: 11px;
-      }
-
-#keen-explorer .chart-detail-bar .chart-type-component {
-    position: absolute;
-    right: 0px;
-    width: 124px;
-}
-
-#keen-explorer .chart-detail-bar .chart-type-component select {
-      cursor: pointer
-    }
-
-#keen-explorer .chart-detail-bar .chart-type-component select:focus,
-      #keen-explorer .chart-detail-bar .chart-type-component select.active {
-  border: 1px solid rgba(0, 187, 222, .67);
-  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.07), 0 0 8px rgba(0, 187, 222, .35);
-          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.07), 0 0 8px rgba(0, 187, 222, .35);
-  outline: 0;
-}
-
-#keen-explorer .chart-detail-bar-focus .chart-title-component .chart-query-name {
-  display: block;
-}
-
-#keen-explorer .chart-options {
-  border-top: 1px solid rgba(0,0,0,.07);
-  margin: 10px 0 0;
-  padding: 10px 0 0;
-}
-
-#keen-explorer .chart-options select {
-    margin-top: 1px;
-  }
-
-#keen-explorer .chart-options .btn-primary {
-    min-width: 124px;
-  }
-
-#keen-explorer .chart-options .code-sample-toggle {
-    color: #4d4d4d;
-    font-size: 12px;
-    min-width: 100px;
-    padding: 8px 14px 7px
-  }
-
-#keen-explorer .chart-options .code-sample-toggle.open {
-  background-color: #d7d7d7;
-}
-
-#keen-explorer .big-notice {
-  padding: 5em 2em;
-}
-
-#keen-explorer .big-notice .alert {
-    font-size: 22px;
-    text-align: center;
-  }
-
-#keen-explorer .alert-small {
-  padding: 5px 10px;
-}
-
-#keen-explorer textarea.json-view {
-  background-color: #f5f5f5;
-  border: none;
-  border-radius: 2px;
-  color: #4d4d4d;
-  display: block;
-  font-size: 12px;
-  line-height: 1.5;
-  min-height: 300px;
-  padding: 15px;
-  resize: none;
-  word-break: break-all;
-  word-wrap: break-word;
+.DayPickerNavigation_nextButton__verticalScrollableDefault {
   width: 100%
 }
 
-#keen-explorer textarea.json-view:focus {
-  outline: 0;
+.DayPickerNavigation_svg__horizontal {
+  height: 19px;
+  width: 19px;
+  fill: #82888a;
+  display: block
 }
 
-#keen-explorer .extraction-viz {
-  max-height: 450px;
-  overflow: scroll;
+.DayPickerNavigation_svg__vertical {
+  height: 42px;
+  width: 42px;
+  fill: #484848
+}
+
+.DayPickerNavigation_svg__disabled {
+  fill: #f2f2f2
+}
+
+.DayPicker {
+  background: #fff;
   position: relative;
+  text-align: left
 }
 
-#keen-explorer table.data-table {
-  border-collapse: inherit;
-  font-family: "Gotham Rounded A", "Gotham Rounded B", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 13px;
-  margin: 0;
-  word-wrap: break-word;
+.DayPicker__horizontal {
+  background: #fff
 }
 
-#keen-explorer table.data-table th, #keen-explorer table.data-table td {
-    border-right: 1px solid rgba(0,0,0,.07);
-  }
-
-#keen-explorer table.data-table thead tr th {
-        padding: 5px 8px;
-        vertical-align: middle;
-      }
-
-#keen-explorer table.data-table tbody tr.even {
-  background: #F2F2F2;
+.DayPicker__verticalScrollable {
+  height: 100%
 }
 
-#keen-explorer table.data-table tbody tr td {
-        max-width: 300px;
+.DayPicker__hidden {
+  visibility: hidden
 }
 
-#keen-explorer .visualization .keen-dataviz{
-  width: 100%;
-  height: 300px;
-  overflow: scroll;
+.DayPicker__withBorder {
+  -webkit-box-shadow: 0 2px 6px rgba(0,0,0,.05),0 0 0 1px rgba(0,0,0,.07);
+          box-shadow: 0 2px 6px rgba(0,0,0,.05),0 0 0 1px rgba(0,0,0,.07);
+  border-radius: 3px
 }
 
-#keen-explorer .code-sample-panel {
-  background-color: rgba(0,0,0,.25);
-  border-bottom: 1px solid #a7a7a7;
-  border-radius: 2px 2px 0 0;
+.DayPicker_portal__horizontal {
+  -webkit-box-shadow: none;
+          box-shadow: none;
+  position: absolute;
+  left: 50%;
+  top: 50%
+}
+
+.DayPicker_portal__vertical {
+  position: static;
+  position: initial
+}
+
+.DayPicker_focusRegion {
+  outline: 0
+}
+
+.DayPicker_calendarInfo__horizontal,
+.DayPicker_wrapper__horizontal {
+  display: inline-block;
+  vertical-align: top
+}
+
+.DayPicker_weekHeaders {
+  position: relative
+}
+
+.DayPicker_weekHeaders__horizontal {
+  margin-left: 9px
+}
+
+.DayPicker_weekHeader {
+  color: #757575;
+  position: absolute;
+  top: 62px;
+  z-index: 2;
+  text-align: left
+}
+
+.DayPicker_weekHeader__vertical {
+  left: 50%
+}
+
+.DayPicker_weekHeader__verticalScrollable {
+  top: 0;
+  display: table-row;
+  border-bottom: 1px solid #dbdbdb;
+  background: #fff;
+  margin-left: 0;
   left: 0;
-  overflow-y: scroll;
+  width: 100%;
+  text-align: center
+}
+
+.DayPicker_weekHeader_ul {
+  list-style: none;
+  margin: 1px 0;
+  padding-left: 0;
+  padding-right: 0;
+  font-size: 14px
+}
+
+.DayPicker_weekHeader_li {
+  display: inline-block;
+  text-align: center
+}
+
+.DayPicker_transitionContainer {
+  position: relative;
+  overflow: hidden;
+  border-radius: 3px
+}
+
+.DayPicker_transitionContainer__horizontal {
+  -webkit-transition: height .2s ease-in-out;
+  -o-transition: height .2s ease-in-out;
+  transition: height .2s ease-in-out
+}
+
+.DayPicker_transitionContainer__vertical {
+  width: 100%
+}
+
+.DayPicker_transitionContainer__verticalScrollable {
+  padding-top: 20px;
+  height: 100%;
   position: absolute;
   top: 0;
-  width: 100%;
-  z-index: 100;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  overflow-y: scroll
 }
 
-#keen-explorer .code-sample-panel .sample {
-    padding: 10px;
-  }
-
-#keen-explorer .code-sample-panel pre {
-    background-color: #fff;
-    border: medium none;
-    font-size: 11px;
-    margin: 0;
-    min-height: 400px;
-    padding: 15px 10px;
-  }
-
-#keen-explorer .code-sample-panel .close-btn {
-    color: #808080;
-    font-size: 24px;
-    position: absolute;
-    right: 20px;
-    top: 15px;
-  }
-
-#keen-explorer .filters .filter-property-col {
-    padding-right: 0;
-  }
-
-#keen-explorer .filters .filter-value-col {
-    padding-left: 0;
-    padding-right: 0;
-  }
-
-#keen-explorer .filters .coercion_type select {
-    padding: 6px 9px;
-  }
-
-#keen-explorer .filters p.invalid {
-    margin: 0;
-    color: #A94442;
-  }
-
-#keen-explorer .filter-row {
-  padding: 5px 15px;
-}
-
-#keen-explorer .filter-incomplete {
-  background: #f2dede;
-}
-
-#keen-explorer .filter-buttons {
-  padding: 15px 0 0 15px;
-}
-
-#keen-explorer .remove-filter {
+.DateInput {
+  margin: 0;
+  padding: 0;
+  background: #fff;
   position: relative;
-  top: 4px;
-  line-height: 22px;
-  font-size: 20px;
-  display: block;
-  border-radius: 180px;
-  background: #A7A7A7;
-  color: #FFF;
-  width: 26px;
-  height: 26px;
-  text-align: center;
-  font-weight: 700
+  display: inline-block;
+  width: 130px;
+  vertical-align: middle
 }
 
-#keen-explorer .remove-filter:hover {
-  color: #FFF;
-  background-color: #B4B4B4;
+.DateInput__small {
+  width: 97px
 }
 
-#keen-explorer .filter-instructions {
-  margin: 3px 0 0 0;
-  font-size: 12px;
+.DateInput__block {
+  width: 100%
 }
 
-#keen-explorer .filters-modal .modal-body {
-    background-color: #F2F2F2;
-    padding: 15px 0;
-  }
-
-#keen-explorer .coercion-type select {
-  font-size: 12px;
+.DateInput__disabled {
+  background: #f2f2f2;
+  color: #dbdbdb
 }
 
-#keen-explorer .funnel-builder .funnel-step {
-    padding: 0 5px;
-  }
-
-#keen-explorer .funnel-builder .funnel-body {
-    padding: 0 10px;
-  }
-
-#keen-explorer .funnel-builder .funnel-step.active {
-    padding: 0;
-  }
-
-#keen-explorer .funnel-builder .steps {
-    list-style: none;
-    padding: 0;
-  }
-
-#keen-explorer .funnel-builder .step-header {
-    cursor: pointer;
-    display: block;
-    background: #E7E7E7;
-    padding: 6px 10px;
-    border-radius: 2px;
-    border-bottom: 2px solid #DADADA;
-  }
-
-#keen-explorer .funnel-builder .step-number {
-    float: left;
-    background: #FFF;
-    height: 35px;
-    width: 35px;
-    line-height: 35px;
-    text-align: center;
-    font-weight: bold;
-    border-radius: 100px;
-    color: #536778;
-    color: #536778;
-    margin-right: 10px;
-  }
-
-#keen-explorer .funnel-builder .step-name {
-    float: left;
-    color: #5C6F7F;
-    line-height: 35px;
-  }
-
-#keen-explorer .funnel-builder .step-move-btns {
-    display: none;
-    position: relative;
-    width: 25px;
-    height: 35px;
-  }
-
-#keen-explorer .funnel-builder .step-move-btns a {
-      position: absolute;
-      left: 0px;
-      width: 25px;
-      height: 15px;
-      background: #617688;
-    }
-
-#keen-explorer .funnel-builder .step-move-btns a.up {
-      top: 0px;
-    }
-
-#keen-explorer .funnel-builder .step-move-btns a.down {
-      bottom: 0px;
-    }
-
-#keen-explorer .funnel-builder .step-move-btns .arrow {
-      width: 0;
-      height: 0;
-      position: absolute;
-      left: 7px;
-    }
-
-#keen-explorer .funnel-builder .step-move-btns .up .arrow {
-      bottom: 6px;
-      border-left: 5px solid transparent;
-      border-left: 5px solid transparent;
-      border-right: 5px solid transparent;
-      border-right: 5px solid transparent;
-      border-bottom: 5px solid #FFF;
-      border-bottom: 5px solid #FFF;
-
-    }
-
-#keen-explorer .funnel-builder .step-move-btns .down .arrow {
-      top: 6px;
-      border-left: 5px solid transparent;
-      border-left: 5px solid transparent;
-      border-right: 5px solid transparent;
-      border-right: 5px solid transparent;
-      border-top: 5px solid #FFF;
-      border-top: 5px solid #FFF;
-    }
-
-#keen-explorer .funnel-builder a.add-step {
-    font-size: 16px;
-    display: block;
-    margin: 10px 15px;
-  }
-
-#keen-explorer .funnel-builder a.remove-step, #keen-explorer .funnel-builder a.remove-step .icon {
-    color: #9A9A9A;
-  }
-
-/*
-   * Active Step
-   */
-
-#keen-explorer .funnel-builder .funnel-step.active {
-    padding: 0;
-
-  }
-
-#keen-explorer .funnel-builder .funnel-step.active .step-header {
-      background: #536778;
-      background: #536778;
-      border-bottom: none;
-    }
-
-#keen-explorer .funnel-builder .funnel-step.active .step-name {
-      color: #FFF;
-    }
-
-#keen-explorer .funnel-builder .funnel-step.active .step-move-btns {
-      display: block;
-      float: right;
-    }
-
-#keen-explorer .funnel-builder .funnel-step.active .step-body {
-      padding: 0 15px;
-    }
-
-#keen-explorer div.interval-margin-top{
-  margin: 0 0 10px;
-}
-
-#keen-explorer .timeframe {
-  margin: 20px 0 10px;
-}
-
-#keen-explorer .timeframe .nav {
-    margin-bottom: 10px;
-  }
-
-#keen-explorer .timeframe .nav li {
-      width: 50%;
-    }
-
-#keen-explorer .timeframe .nav li a {
-        border-radius: 2px 0 0 2px;
-        color: #4d4d4d;
-        font-size: 13px;
-        margin: 0;
-        padding: 8px 12px 7px;
-        text-align: center;
-      }
-
-#keen-explorer .timeframe .nav li.active a {
-  background-color: #808080;
-  color: #fff;
-}
-
-#keen-explorer .timeframe .nav li + li {
-      margin-left: 0;
-    }
-
-#keen-explorer .timeframe .nav li + li a {
-        border-radius: 0 2px 2px 0;
-      }
-
-#keen-explorer .timeframe .form-group {
-    margin-bottom: 0;
-  }
-
-#keen-explorer .relative-timeframe-picker {
-  border: 1px solid #e7e7e7;
-  border-radius: 2px;
-}
-
-#keen-explorer .relative-timeframe-picker .select-element {
-    border: medium none;
-  }
-
-#keen-explorer .relative-timeframe-picker input, #keen-explorer .relative-timeframe-picker select {
-    border: medium none;
-    -webkit-box-shadow: none;
-            box-shadow: none;
-    position: relative
-  }
-
-#keen-explorer .relative-timeframe-picker input:focus, #keen-explorer .relative-timeframe-picker select:focus {
-  border: 1px solid rgba(0, 187, 222, .67);
-  border-radius: 2px;
-  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.07), 0 0 8px rgba(0, 187, 222, .35);
-          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.07), 0 0 8px rgba(0, 187, 222, .35);
-  cursor: default;
-  outline: 0;
-  z-index: 1;
-}
-
-#keen-explorer .relative-timeframe-picker .amount, #keen-explorer .relative-timeframe-picker .sub-timeframe {
-    border-left: 1px solid #e7e7e7;
-  }
-
-#keen-explorer .relative-timeframe-picker .help-block {
-    background-color: rgba(0, 0, 0, 0.05);
-    border-top: 1px solid #e7e7e7;
-    color: #808080;
-    font-size: 11px;
-    font-style: normal;
-    margin: 0;
-    padding: 5px 10px 4px;
-  }
-
-#keen-explorer .absolute-timeframe-picker label {
-    font-size: 14px;
-    line-height: 34px;
-    text-align: right;
-    width: 100%;
-  }
-
-#keen-explorer .timezone-toggle {
-  padding: 5px 0 0;
-}
-
-#keen-explorer .timezone-toggle .toggle-display {
-    padding: 2px 0 0;
-  }
-
-#keen-explorer .timezone-toggle .toggle-display button {
-      color: #00afd7;
-      padding: 0 5px;
-    }
-
-#keen-explorer .timezone-toggle .toggle-display button .icon {
-        color: #A7A7A7;
-        font-size: 10px;
-        top: 0;
-      }
-
-#keen-explorer .timezone-toggle .toggle-options {
-    display: none;
-  }
-
-#keen-explorer .timezone-toggle.active .toggle-display {
-      display: none;
-}
-
-#keen-explorer .timezone-toggle.active .toggle-options {
-      display: block;
-}
-
-#keen-explorer .query-actions {
-  background: #FFF;
-  border: 1px solid rgba(0, 0, 0, 0.07);
-  border-top: medium none;
-  padding: 10px;
-}
-
-#keen-explorer .query-actions .manage-group {
-    border-left: 1px solid #D7D7D7;
-    margin-left: 10px;
-  }
-
-#keen-explorer .query-actions .manage-group .btn {
-      margin-left: 10px;
-    }
-
-#keen-explorer .query-actions .btn-link {
-    color: #808080;
-    font-size: 12px;
-  }
-
-#keen-explorer .cache-toggle {
-  background: #FFF;
-  border: 1px solid rgba(0, 0, 0, 0.07);
+.DateInput_input {
+  font-weight: 200;
+  font-size: 19px;
+  line-height: 24px;
+  color: #484848;
+  background-color: #fff;
+  width: 100%;
+  padding: 11px 11px 9px;
+  border: 0;
   border-top: 0;
-  padding: 5px 10px;
-  height: 32px;
+  border-right: 0;
+  border-bottom: 2px solid transparent;
+  border-left: 0;
+  border-radius: 0
 }
 
-#keen-explorer .cache-toggle label,
-  #keen-explorer .cache-toggle span.cache-details,
-  #keen-explorer .cache-toggle span.cache-settings {
-    color: #808080;
-    font-size: 12px;
-    margin: 0;
-    padding-right: 10px;
-  }
-
-#keen-explorer .cache-toggle label a, #keen-explorer .cache-toggle span.cache-details a, #keen-explorer .cache-toggle span.cache-settings a {
-      padding: 0 5px;
-    }
-
-#keen-explorer .cache-toggle input[name="cache"] {
-    margin-right: 5px;
-  }
-
-#keen-explorer .cache-toggle.inactive label {
-    color: #A2A2A2;
-  }
-
-#keen-explorer .cache-settings {
-  white-space: nowrap;
+.DateInput_input__small {
+  font-size: 15px;
+  line-height: 18px;
+  letter-spacing: .2px;
+  padding: 7px 7px 5px
 }
 
-#keen-explorer .cache-settings input[name="refresh_rate"] {
-    display: inline-block;
-    font-size: 12px;
-    height: 21px;
-    text-align: center;
-    width: 56px;
-  }
-
-#keen-explorer a {
-    color: #00bbde;
-  }
-
-#keen-explorer a:focus, #keen-explorer button:focus, #keen-explorer input:focus, #keen-explorer select:focus {
-  -webkit-box-shadow: 0 0 8px rgba(0, 187, 222, .35);
-          box-shadow: 0 0 8px rgba(0, 187, 222, .35);
-  outline: 1px solid rgba(0, 187, 222, .35);
+.DateInput_input__regular {
+  font-weight: auto
 }
 
-#keen-explorer hr {
-    margin: 10px 0;
+.DateInput_input__readOnly {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none
+}
+
+.DateInput_input__focused {
+  outline: 0;
+  background: #fff;
+  border: 0;
+  border-top: 0;
+  border-right: 0;
+  border-bottom: 2px solid #008489;
+  border-left: 0
+}
+
+.DateInput_input__disabled {
+  background: #f2f2f2;
+  font-style: italic
+}
+
+.DateInput_screenReaderMessage {
+  border: 0;
+  clip: rect(0,0,0,0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px
+}
+
+.DateInput_fang {
+  position: absolute;
+  width: 20px;
+  height: 10px;
+  left: 22px;
+  z-index: 2
+}
+
+.DateInput_fangShape {
+  fill: #fff
+}
+
+.DateInput_fangStroke {
+  stroke: #dbdbdb;
+  fill: transparent
+}
+
+.DateRangePickerInput {
+  background-color: #fff;
+  display: inline-block
+}
+
+.DateRangePickerInput__disabled {
+  background: #f2f2f2
+}
+
+.DateRangePickerInput__withBorder {
+  border-radius: 2px;
+  border: 1px solid #dbdbdb
+}
+
+.DateRangePickerInput__rtl {
+  direction: rtl
+}
+
+.DateRangePickerInput__block {
+  display: block
+}
+
+.DateRangePickerInput__showClearDates {
+  padding-right: 30px
+}
+
+.DateRangePickerInput_arrow {
+  display: inline-block;
+  vertical-align: middle;
+  color: #484848
+}
+
+.DateRangePickerInput_arrow_svg {
+  vertical-align: middle;
+  fill: #484848;
+  height: 24px;
+  width: 24px
+}
+
+.DateRangePickerInput_clearDates {
+  background: 0 0;
+  border: 0;
+  color: inherit;
+  font: inherit;
+  line-height: normal;
+  overflow: visible;
+  cursor: pointer;
+  padding: 10px;
+  margin: 0 10px 0 5px;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%)
+}
+
+.DateRangePickerInput_clearDates__small {
+  padding: 6px
+}
+
+.DateRangePickerInput_clearDates_default:focus,
+.DateRangePickerInput_clearDates_default:hover {
+  background: #dbdbdb;
+  border-radius: 50%
+}
+
+.DateRangePickerInput_clearDates__hide {
+  visibility: hidden
+}
+
+.DateRangePickerInput_clearDates_svg {
+  fill: #82888a;
+  height: 12px;
+  width: 15px;
+  vertical-align: middle
+}
+
+.DateRangePickerInput_clearDates_svg__small {
+  height: 9px
+}
+
+.DateRangePickerInput_calendarIcon {
+  background: 0 0;
+  border: 0;
+  color: inherit;
+  font: inherit;
+  line-height: normal;
+  overflow: visible;
+  cursor: pointer;
+  display: inline-block;
+  vertical-align: middle;
+  padding: 10px;
+  margin: 0 5px 0 10px
+}
+
+.DateRangePickerInput_calendarIcon_svg {
+  fill: #82888a;
+  height: 15px;
+  width: 14px;
+  vertical-align: middle
+}
+
+.DateRangePicker {
+  position: relative;
+  display: inline-block
+}
+
+.DateRangePicker__block {
+  display: block
+}
+
+.DateRangePicker_picker {
+  z-index: 1;
+  background-color: #fff;
+  position: absolute
+}
+
+.DateRangePicker_picker__rtl {
+  direction: rtl
+}
+
+.DateRangePicker_picker__directionLeft {
+  left: 0
+}
+
+.DateRangePicker_picker__directionRight {
+  right: 0
+}
+
+.DateRangePicker_picker__portal {
+  background-color: rgba(0,0,0,.3);
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%
+}
+
+.DateRangePicker_picker__fullScreenPortal {
+  background-color: #fff
+}
+
+.DateRangePicker_closeButton {
+  background: 0 0;
+  border: 0;
+  color: inherit;
+  font: inherit;
+  line-height: normal;
+  overflow: visible;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 15px;
+  z-index: 2
+}
+
+.DateRangePicker_closeButton:focus,
+.DateRangePicker_closeButton:hover {
+  color: darken(#cacccd,10%);
+  text-decoration: none
+}
+
+.DateRangePicker_closeButton_svg {
+  height: 15px;
+  width: 15px;
+  fill: #cacccd
+}
+
+.rc-time-picker {
+  display: inline-block;
+  position: relative;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.rc-time-picker * {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.rc-time-picker-clear {
+  position: absolute;
+  right: 6px;
+  cursor: pointer;
+  overflow: hidden;
+  width: 20px;
+  height: 20px;
+  text-align: center;
+  line-height: 20px;
+  top: 3px;
+  margin: 0;
+}
+
+.rc-time-picker-clear-icon:after {
+  content: "x";
+  font-size: 12px;
+  font-style: normal;
+  color: #aaa;
+  display: inline-block;
+  line-height: 1;
+  height: 20px;
+  width: 20px;
+  -webkit-transition: color 0.3s ease;
+  -o-transition: color 0.3s ease;
+  transition: color 0.3s ease;
+}
+
+.rc-time-picker-clear-icon:hover:after {
+  color: #666;
+}
+
+.rc-time-picker-input {
+  width: 100%;
+  position: relative;
+  display: inline-block;
+  padding: 4px 7px;
+  height: 28px;
+  cursor: text;
+  font-size: 12px;
+  line-height: 1.5;
+  color: #666;
+  background-color: #fff;
+  background-image: none;
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+  -webkit-transition: border 0.2s cubic-bezier(0.645, 0.045, 0.355, 1), background 0.2s cubic-bezier(0.645, 0.045, 0.355, 1), -webkit-box-shadow 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+  transition: border 0.2s cubic-bezier(0.645, 0.045, 0.355, 1), background 0.2s cubic-bezier(0.645, 0.045, 0.355, 1), -webkit-box-shadow 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+  -o-transition: border 0.2s cubic-bezier(0.645, 0.045, 0.355, 1), background 0.2s cubic-bezier(0.645, 0.045, 0.355, 1), box-shadow 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+  transition: border 0.2s cubic-bezier(0.645, 0.045, 0.355, 1), background 0.2s cubic-bezier(0.645, 0.045, 0.355, 1), box-shadow 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+  transition: border 0.2s cubic-bezier(0.645, 0.045, 0.355, 1), background 0.2s cubic-bezier(0.645, 0.045, 0.355, 1), box-shadow 0.2s cubic-bezier(0.645, 0.045, 0.355, 1), -webkit-box-shadow 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
+.rc-time-picker-input[disabled] {
+  color: #ccc;
+  background: #f7f7f7;
+  cursor: not-allowed;
+}
+
+.rc-time-picker-panel {
+  z-index: 1070;
+  width: 170px;
+  position: absolute;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.rc-time-picker-panel * {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.rc-time-picker-panel-inner {
+  display: inline-block;
+  position: relative;
+  outline: none;
+  list-style: none;
+  font-size: 12px;
+  text-align: left;
+  background-color: #fff;
+  border-radius: 4px;
+  -webkit-box-shadow: 0 1px 5px #ccc;
+          box-shadow: 0 1px 5px #ccc;
+  background-clip: padding-box;
+  border: 1px solid #ccc;
+  line-height: 1.5;
+}
+
+.rc-time-picker-panel-narrow {
+  max-width: 113px;
+}
+
+.rc-time-picker-panel-input {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  cursor: auto;
+  line-height: 1.5;
+  outline: 0;
+  border: 1px solid transparent;
+}
+
+.rc-time-picker-panel-input-wrap {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  position: relative;
+  padding: 6px;
+  border-bottom: 1px solid #e9e9e9;
+}
+
+.rc-time-picker-panel-input-invalid {
+  border-color: red;
+}
+
+.rc-time-picker-panel-select {
+  float: left;
+  font-size: 12px;
+  border: 1px solid #e9e9e9;
+  border-width: 0 1px;
+  margin-left: -1px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  width: 56px;
+  max-height: 144px;
+  overflow-y: auto;
+  position: relative;
+}
+
+.rc-time-picker-panel-select-active {
+  overflow-y: auto;
+}
+
+.rc-time-picker-panel-select:first-child {
+  border-left: 0;
+  margin-left: 0;
+}
+
+.rc-time-picker-panel-select:last-child {
+  border-right: 0;
+}
+
+.rc-time-picker-panel-select ul {
+  list-style: none;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+.rc-time-picker-panel-select li {
+  list-style: none;
+  margin: 0;
+  padding: 0 0 0 16px;
+  width: 100%;
+  height: 24px;
+  line-height: 24px;
+  text-align: left;
+  cursor: pointer;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
+.rc-time-picker-panel-select li:hover {
+  background: #edfaff;
+}
+
+li.rc-time-picker-panel-select-option-selected {
+  background: #f7f7f7;
+  font-weight: bold;
+}
+
+li.rc-time-picker-panel-select-option-disabled {
+  color: #ccc;
+}
+
+li.rc-time-picker-panel-select-option-disabled:hover {
+  background: transparent;
+  cursor: not-allowed;
+}
+
+.keenExplorer {
+  font-size: undefined;
+  font-size: undefined;
+
+}
+
+.ReactModalPortal {
+  font-size: undefined;
+  font-size: undefined;
+
+}
+
+.rc-time-picker-panel {
+  font-size: undefined;
+  font-size: undefined;
+
+}
+
+.keenExplorer .extraction,.ReactModalPortal .extraction,.rc-time-picker-panel .extraction{
+  margin-top: 1rem;
+}
+
+.keenExplorer .extraction .first-label,.ReactModalPortal .extraction .first-label,.rc-time-picker-panel .extraction .first-label{
+    padding-top: 0;
   }
 
-#keen-explorer .btn .icon,
-  #keen-explorer h1 .icon,
-  #keen-explorer h2 .icon,
-  #keen-explorer h3 .icon,
-  #keen-explorer h4 .icon,
-  #keen-explorer .alert .icon {
-    margin-right: 10px;
-  }
-
-#keen-explorer .icon.no-margin {
-    margin: 0;
-  }
-
-#keen-explorer .btn-default .icon {
-    color: #666;
-  }
-
-#keen-explorer .block {
-    display: block;
-  }
-
-#keen-explorer .btn-icon .icon {
-      text-align: center;
-      margin: 0;
-      top: 2px;
-    }
-
-#keen-explorer .tooltip {
-    z-index: 1040;
-  }
-
-#keen-explorer .modal-content {
-    border: medium none;
-    border-radius: 2px;
-    -webkit-box-shadow: 0 0 10px rgba(0,0,0,.35);
-            box-shadow: 0 0 10px rgba(0,0,0,.35);
-  }
-
-#keen-explorer .width-100{
+.keenExplorer .extraction .input-text,.ReactModalPortal .extraction .input-text,.rc-time-picker-panel .extraction .input-text{
     width: 100%;
   }
 
-#keen-explorer .margin-0{
-    margin: 0;
+.keenExplorer .percentile .input-text,.ReactModalPortal .percentile .input-text,.rc-time-picker-panel .percentile .input-text{
+    width: 100%;
   }
 
-#keen-explorer .flex{
+.keenExplorer .filters-container .list,.ReactModalPortal .filters-container .list,.rc-time-picker-panel .filters-container .list{
+    margin: 2rem 0;
+    width: 100%;
+
+  }
+
+.keenExplorer .filters-container .list .row,.ReactModalPortal .filters-container .list .row,.rc-time-picker-panel .filters-container .list .row{
+      display: -ms-flexbox;
+      display: flex;
+      width: 100%;
+      margin: 0 0 1rem;
+    }
+
+.keenExplorer .filters-container .list .row .row-part,.ReactModalPortal .filters-container .list .row .row-part,.rc-time-picker-panel .filters-container .list .row .row-part{
+        -ms-flex:1;
+            flex:1;
+        padding: 0 0.5rem;
+      }
+
+.keenExplorer .filters-container .list .row .row-part input{
+          padding: 0.55rem 0.7rem;
+          font-size: 0.88rem;
+          font-size: 0.88rem;
+          border-radius: 4px;
+          border: 1px solid #ccc;
+          width: 100%;
+        }
+
+.ReactModalPortal .filters-container .list .row .row-part input{
+          padding: 0.55rem 0.7rem;
+          font-size: 0.88rem;
+          font-size: 0.88rem;
+          border-radius: 4px;
+          border: 1px solid #ccc;
+          width: 100%;
+        }
+
+.rc-time-picker-panel .filters-container .list .row .row-part input{
+          padding: 0.55rem 0.7rem;
+          font-size: 0.88rem;
+          font-size: 0.88rem;
+          border-radius: 4px;
+          border: 1px solid #ccc;
+          width: 100%;
+        }
+
+.keenExplorer .filters-container .list .row .row-part .datetime-pickers,.ReactModalPortal .filters-container .list .row .row-part .datetime-pickers,.rc-time-picker-panel .filters-container .list .row .row-part .datetime-pickers{
+          display: -ms-flexbox;
+          display: flex;
+        }
+
+.keenExplorer .filters-container .list .row .row-part .datetime-pickers .DateInput,.ReactModalPortal .filters-container .list .row .row-part .datetime-pickers .DateInput,.rc-time-picker-panel .filters-container .list .row .row-part .datetime-pickers .DateInput{
+            width: 100%;
+          }
+
+.keenExplorer .filters-container .list .row .row-part .datetime-pickers .SingleDatePickerInput,.ReactModalPortal .filters-container .list .row .row-part .datetime-pickers .SingleDatePickerInput,.rc-time-picker-panel .filters-container .list .row .row-part .datetime-pickers .SingleDatePickerInput{
+            width: 100%;
+          }
+
+.keenExplorer .filters-container .list .row .row-part .datetime-pickers .SingleDatePicker,.ReactModalPortal .filters-container .list .row .row-part .datetime-pickers .SingleDatePicker,.rc-time-picker-panel .filters-container .list .row .row-part .datetime-pickers .SingleDatePicker{
+            -ms-flex: 1;
+                flex: 1;
+            margin-right: 0.1rem;
+          }
+
+.keenExplorer .filters-container .list .row .row-part .datetime-pickers .SingleDatePickerInput__withBorder,.ReactModalPortal .filters-container .list .row .row-part .datetime-pickers .SingleDatePickerInput__withBorder,.rc-time-picker-panel .filters-container .list .row .row-part .datetime-pickers .SingleDatePickerInput__withBorder{
+            border: 0;
+          }
+
+.keenExplorer .filters-container .list .row .row-part .datetime-pickers input.DateInput_input,.ReactModalPortal .filters-container .list .row .row-part .datetime-pickers input.DateInput_input,.rc-time-picker-panel .filters-container .list .row .row-part .datetime-pickers input.DateInput_input{
+            padding: 0.333rem;
+            text-align: center;
+            height: 2.3rem;
+          }
+
+.keenExplorer .filters-container .list .row .row-part .datetime-pickers .rc-time-picker,.ReactModalPortal .filters-container .list .row .row-part .datetime-pickers .rc-time-picker,.rc-time-picker-panel .filters-container .list .row .row-part .datetime-pickers .rc-time-picker{
+            -ms-flex: 1;
+                flex: 1;
+          }
+
+.keenExplorer .filters-container .list .row .row-part .datetime-pickers input.rc-time-picker-input,.ReactModalPortal .filters-container .list .row .row-part .datetime-pickers input.rc-time-picker-input,.rc-time-picker-panel .filters-container .list .row .row-part .datetime-pickers input.rc-time-picker-input{
+            padding: 0.3rem;
+            text-align: center;
+            height: auto;
+            line-height: auto;
+            height: 2.3rem;
+          }
+
+.keenExplorer .filters-container .list .row .row-part .within-inputs input,.ReactModalPortal .filters-container .list .row .row-part .within-inputs input,.rc-time-picker-panel .filters-container .list .row .row-part .within-inputs input{
+            margin-bottom: 0.2rem;
+          }
+
+.keenExplorer .filters-container .list .row .row-part .delete,.ReactModalPortal .filters-container .list .row .row-part .delete,.rc-time-picker-panel .filters-container .list .row .row-part .delete{
+          cursor: pointer;
+          display: -ms-flexbox;
+          display: flex;
+          -ms-flex-align: center;
+              align-items: center;
+          height: 100%;
+        }
+
+.keenExplorer .filters-container .list .row .row-part .delete i, .ReactModalPortal .filters-container .list .row .row-part .delete i, .rc-time-picker-panel .filters-container .list .row .row-part .delete i {
+            color: #ea7373;
+            font-size: 1rem;
+            padding: 0.5rem;
+          }
+
+.keenExplorer .filters-container .list .row .no-flex,.ReactModalPortal .filters-container .list .row .no-flex,.rc-time-picker-panel .filters-container .list .row .no-flex{
+        -ms-flex: 0;
+            flex: 0;
+      }
+
+.keenExplorer .filters-container .action-buttons,.ReactModalPortal .filters-container .action-buttons,.rc-time-picker-panel .filters-container .action-buttons{
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+        align-items: center;
+    -ms-flex-pack: end;
+        justify-content: flex-end;
+    margin-top: 0;
+  }
+
+.keenExplorer .filters-container .action-buttons .button-add-filter,.ReactModalPortal .filters-container .action-buttons .button-add-filter,.rc-time-picker-panel .filters-container .action-buttons .button-add-filter{
+      margin-right: 1rem;
+      cursor: pointer;
+      text-transform: uppercase;
+      padding: 1rem 2rem;
+      background: #eee;
+      border-radius: 0.3rem;
+    }
+
+.keenExplorer .filters-container .action-buttons .button-add-filter i, .ReactModalPortal .filters-container .action-buttons .button-add-filter i, .rc-time-picker-panel .filters-container .action-buttons .button-add-filter i {
+        margin-right: 1rem;
+      }
+
+.keenExplorer .filters-container .action-buttons .button-done{
+      cursor: pointer;
+      color: #fff;
+      background: #45b2e8;
+      background: #45b2e8;
+      text-transform: uppercase;
+      width: 10rem;
+      padding: 1rem;
+      text-align: center;
+      border-radius: 0.3rem;
+    }
+
+.ReactModalPortal .filters-container .action-buttons .button-done{
+      cursor: pointer;
+      color: #fff;
+      background: #45b2e8;
+      background: #45b2e8;
+      text-transform: uppercase;
+      width: 10rem;
+      padding: 1rem;
+      text-align: center;
+      border-radius: 0.3rem;
+    }
+
+.rc-time-picker-panel .filters-container .action-buttons .button-done{
+      cursor: pointer;
+      color: #fff;
+      background: #45b2e8;
+      background: #45b2e8;
+      text-transform: uppercase;
+      width: 10rem;
+      padding: 1rem;
+      text-align: center;
+      border-radius: 0.3rem;
+    }
+
+.keenExplorer .filters-container .action-buttons .button-done i,.ReactModalPortal .filters-container .action-buttons .button-done i,.rc-time-picker-panel .filters-container .action-buttons .button-done i{
+        margin-right: 1rem;
+      }
+
+@media screen and (max-width: 1000px) {
+      .keenExplorer .filters-container .list .row,.ReactModalPortal .filters-container .list .row,.rc-time-picker-panel .filters-container .list .row{
+        -ms-flex-direction: column;
+            flex-direction: column;
+      }
+        .keenExplorer .filters-container .list .row .row-part,.ReactModalPortal .filters-container .list .row .row-part,.rc-time-picker-panel .filters-container .list .row .row-part{
+          margin-bottom: 0.3rem;
+        }
+        .keenExplorer .filters-container .list .row .delete,.ReactModalPortal .filters-container .list .row .delete,.rc-time-picker-panel .filters-container .list .row .delete{
+          float: right;
+          padding-right: 1rem;
+        }
+}
+
+.keenExplorer,
+.ReactModalPortal,
+.rc-time-picker-panel {
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.keenExplorer .modal,.ReactModalPortal .modal,.rc-time-picker-panel .modal{
+  display:-ms-flexbox;
+  display:flex;
+  -ms-flex-direction: column;
+      flex-direction: column;
+  height: 100%;
+  width: 100%;
+}
+
+.keenExplorer .modal .header,.ReactModalPortal .modal .header,.rc-time-picker-panel .modal .header{
+    -ms-flex:0;
+        flex:0;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 1rem;
+  }
+
+.keenExplorer .modal .header .title,.ReactModalPortal .modal .header .title,.rc-time-picker-panel .modal .header .title{
+        float: left;
+      }
+
+.keenExplorer .modal .header .x,.ReactModalPortal .modal .header .x,.rc-time-picker-panel .modal .header .x{
+        color: #565656;
+        float: right;
+        font-weight: bold;
+        cursor: pointer;
+        padding: 1rem;
+        margin: -2rem -1rem;
+        font-size: 2rem;
+      }
+
+.keenExplorer .modal .container,.ReactModalPortal .modal .container,.rc-time-picker-panel .modal .container{
+    -ms-flex:1;
+        flex:1;
+    padding: 1rem 0;
+    clear: both;
+    width: 100%;
+    overflow-y: scroll;
+    white-space: pre-wrap;
+  }
+
+.keenExplorer .modal .button-copy,.ReactModalPortal .modal .button-copy,.rc-time-picker-panel .modal .button-copy{
+    padding: 1rem;
+    width: 10rem;
+    text-align: center;
+    cursor: pointer;
+    background: #1e93d8;
+    color: #fff;
+    border-radius: 0.5rem;
+    margin-top: 1rem;
+  }
+
+.keenExplorer .modal .button-copy:active,.ReactModalPortal .modal .button-copy:active,.rc-time-picker-panel .modal .button-copy:active{
+    background: #30a1e4;
+  }
+
+.keenExplorer .saved-query, .ReactModalPortal .saved-query, .rc-time-picker-panel .saved-query {
+  margin: 1rem 0;
+  border: 1px solid #e8e8e8;
+  background: #fcfcfc;
+  padding: 1rem;
+  border-radius: 0.3rem;
+}
+
+.keenExplorer .saved-query .input-name {
+    font-size: 0.88rem;
+    font-size: 0.88rem;
+    padding: 1rem;
+    border-radius: 0.3rem;
+    border: 1px solid #e8e8e8;
+    width: 100%;
+  }
+
+.ReactModalPortal .saved-query .input-name {
+    font-size: 0.88rem;
+    font-size: 0.88rem;
+    padding: 1rem;
+    border-radius: 0.3rem;
+    border: 1px solid #e8e8e8;
+    width: 100%;
+  }
+
+.rc-time-picker-panel .saved-query .input-name {
+    font-size: 0.88rem;
+    font-size: 0.88rem;
+    padding: 1rem;
+    border-radius: 0.3rem;
+    border: 1px solid #e8e8e8;
+    width: 100%;
+  }
+
+.keenExplorer .saved-query .resource-name,.ReactModalPortal .saved-query .resource-name,.rc-time-picker-panel .saved-query .resource-name{
+    padding: 1rem 0.2rem 0;
+    display: -ms-flexbox;
+    display: flex;
+    overflow: hidden;
+    font-size: 0.8rem;
+  }
+
+.keenExplorer .saved-query .resource-name .line, .ReactModalPortal .saved-query .resource-name .line, .rc-time-picker-panel .saved-query .resource-name .line {
+      -ms-flex: 1;
+          flex: 1;
+      white-space: nowrap;
+    }
+
+.keenExplorer .saved-query .resource-name .line span,.ReactModalPortal .saved-query .resource-name .line span,.rc-time-picker-panel .saved-query .resource-name .line span{
+        white-space: nowrap;
+        overflow: hidden;
+        -ms-flex: 1;
+            flex: 1;
+      }
+
+.keenExplorer .saved-query .resource-name .line i, .ReactModalPortal .saved-query .resource-name .line i, .rc-time-picker-panel .saved-query .resource-name .line i {
+        -ms-flex: 0;
+            flex: 0;
+      }
+
+.keenExplorer .saved-query .resource-name .line-label,.ReactModalPortal .saved-query .resource-name .line-label,.rc-time-picker-panel .saved-query .resource-name .line-label{
+      -ms-flex: 0;
+          flex: 0;
+      margin-right: 0.5rem;
+    }
+
+.keenExplorer .saved-query .cache, .ReactModalPortal .saved-query .cache, .rc-time-picker-panel .saved-query .cache {
+    padding: 1rem 0 0;
+    max-width: 12rem;
+  }
+
+.keenExplorer .saved-query .cache .line-checkbox,.ReactModalPortal .saved-query .cache .line-checkbox,.rc-time-picker-panel .saved-query .cache .line-checkbox{
+      display: -ms-flexbox;
+      display: flex;
+    }
+
+.keenExplorer .saved-query .cache .line-checkbox input,.ReactModalPortal .saved-query .cache .line-checkbox input,.rc-time-picker-panel .saved-query .cache .line-checkbox input{
+        margin-right: 0.5rem;
+        outline: none;
+      }
+
+.keenExplorer .saved-query .cache .line-checkbox label,.ReactModalPortal .saved-query .cache .line-checkbox label,.rc-time-picker-panel .saved-query .cache .line-checkbox label{
+        cursor: pointer;
+      }
+
+.keenExplorer .saved-query .cache .cache-toggle,.ReactModalPortal .saved-query .cache .cache-toggle,.rc-time-picker-panel .saved-query .cache .cache-toggle{
+      display: -ms-flexbox;
+      display: flex;
+      -ms-flex-align: center;
+          align-items: center;
+      cursor: pointer;
+      color: #128296;
+    }
+
+.keenExplorer .saved-query .cache i, .ReactModalPortal .saved-query .cache i, .rc-time-picker-panel .saved-query .cache i {
+      font-size: 1.3rem;
+      margin-right: 0.6rem;
+    }
+
+.keenExplorer .saved-query .cache .fa-toggle-off,.ReactModalPortal .saved-query .cache .fa-toggle-off,.rc-time-picker-panel .saved-query .cache .fa-toggle-off{
+      color: #7b7b7b;
+    }
+
+.keenExplorer .saved-query .cache .cache-refresh,.ReactModalPortal .saved-query .cache .cache-refresh,.rc-time-picker-panel .saved-query .cache .cache-refresh{
+    }
+
+.keenExplorer .saved-query .button-copy,.ReactModalPortal .saved-query .button-copy,.rc-time-picker-panel .saved-query .button-copy{
+    padding: 0.7rem;
+    right: 0;
+    bottom: 0;
+    border: 0;
+    cursor: pointer;
+    display: inline;
+  }
+
+.keenExplorer .saved-query .buttons * {
+      margin-top: 1rem;
+      padding: 0.88rem calc(0.88rem*2);
+      border-radius: 0.3rem;
+      font-size: 0.88rem;
+      font-size: 0.88rem;
+      cursor: pointer;
+      text-transform: uppercase;
+      border: 0;
+      font-weight: 600;
+      font-weight: 600;
+    }
+
+.ReactModalPortal .saved-query .buttons * {
+      margin-top: 1rem;
+      padding: 0.88rem calc(0.88rem*2);
+      border-radius: 0.3rem;
+      font-size: 0.88rem;
+      font-size: 0.88rem;
+      cursor: pointer;
+      text-transform: uppercase;
+      border: 0;
+      font-weight: 600;
+      font-weight: 600;
+    }
+
+.rc-time-picker-panel .saved-query .buttons * {
+      margin-top: 1rem;
+      padding: 0.88rem calc(0.88rem*2);
+      border-radius: 0.3rem;
+      font-size: 0.88rem;
+      font-size: 0.88rem;
+      cursor: pointer;
+      text-transform: uppercase;
+      border: 0;
+      font-weight: 600;
+      font-weight: 600;
+    }
+
+.keenExplorer .saved-query .buttons .button-save{
+      color: #fff;
+      background: #45b2e8;
+      background: #45b2e8;
+    }
+
+.ReactModalPortal .saved-query .buttons .button-save{
+      color: #fff;
+      background: #45b2e8;
+      background: #45b2e8;
+    }
+
+.rc-time-picker-panel .saved-query .buttons .button-save{
+      color: #fff;
+      background: #45b2e8;
+      background: #45b2e8;
+    }
+
+.keenExplorer .saved-query .buttons .button-clone{
+      margin-left: 1rem;
+      color: #45b2e8;
+      color: #45b2e8;
+      background: transparent;
+      border: 1px solid #eee;
+    }
+
+.ReactModalPortal .saved-query .buttons .button-clone{
+      margin-left: 1rem;
+      color: #45b2e8;
+      color: #45b2e8;
+      background: transparent;
+      border: 1px solid #eee;
+    }
+
+.rc-time-picker-panel .saved-query .buttons .button-clone{
+      margin-left: 1rem;
+      color: #45b2e8;
+      color: #45b2e8;
+      background: transparent;
+      border: 1px solid #eee;
+    }
+
+.keenExplorer .saved-query .buttons .button-delete,.ReactModalPortal .saved-query .buttons .button-delete,.rc-time-picker-panel .saved-query .buttons .button-delete{
+      float: right;
+      color: #6f6c6c;
+      background: transparent;
+      border: 1px solid #eee;
+    }
+
+.keenExplorer .saved-query .button-copy:active,.ReactModalPortal .saved-query .button-copy:active,.rc-time-picker-panel .saved-query .button-copy:active{
+    background: #fff;
+  }
+
+.keenExplorer .saved-queries,.ReactModalPortal .saved-queries,.rc-time-picker-panel .saved-queries{
+  overflow: scroll;
+  min-height: 100%;
+  max-height: 44rem;
+}
+
+.keenExplorer .saved-queries .input-filter,.ReactModalPortal .saved-queries .input-filter,.rc-time-picker-panel .saved-queries .input-filter{
+    width: 100%;
+    padding: 0.6rem;
+    font-size: 0.9rem;
+    border: 1px solid #ccc;
+    margin: .5rem 0;
+    border-radius: 0.3rem;
+  }
+
+.keenExplorer .saved-queries .item,.ReactModalPortal .saved-queries .item,.rc-time-picker-panel .saved-queries .item{
+    padding: 1rem;
+    cursor: pointer;
+    overflow: auto;
+    border-bottom: 1px solid #f3f3f3;
+  }
+
+.keenExplorer .saved-queries .item .name,.ReactModalPortal .saved-queries .item .name,.rc-time-picker-panel .saved-queries .item .name{
+      margin: 0 0 0.5rem;
+    }
+
+.keenExplorer .saved-queries .item .cached,.ReactModalPortal .saved-queries .item .cached,.rc-time-picker-panel .saved-queries .item .cached{
+      float: left;
+    }
+
+.keenExplorer .saved-queries .item .cached *,.ReactModalPortal .saved-queries .item .cached *,.rc-time-picker-panel .saved-queries .item .cached *{
+        font-size: 0.6rem;
+        text-transform: uppercase;
+      }
+
+.keenExplorer .saved-queries .item .data,.ReactModalPortal .saved-queries .item .data,.rc-time-picker-panel .saved-queries .item .data{
+      float: right;
+      font-size: 0.7rem;
+    }
+
+.keenExplorer .saved-queries .active,.ReactModalPortal .saved-queries .active,.rc-time-picker-panel .saved-queries .active{
+    background: #f7f7f7;
+  }
+
+.keenExplorer .funnel .content,.ReactModalPortal .funnel .content,.rc-time-picker-panel .funnel .content{
+    padding: 0.3rem 0.5rem;
+  }
+
+.keenExplorer .funnel .input-text,.ReactModalPortal .funnel .input-text,.rc-time-picker-panel .funnel .input-text{
+    width: 100%;
+  }
+
+.keenExplorer .funnel .button,.ReactModalPortal .funnel .button,.rc-time-picker-panel .funnel .button{
+    cursor: pointer;
+  }
+
+.keenExplorer .funnel .button-delete,.ReactModalPortal .funnel .button-delete,.rc-time-picker-panel .funnel .button-delete{
+    color: #797979;
+  }
+
+.keenExplorer .funnel .button-add,.ReactModalPortal .funnel .button-add,.rc-time-picker-panel .funnel .button-add{
+    margin-top: 1rem;
+    padding: 0.7rem;
+    background: #fdfdfd;
+    border: 1px solid #e8e8e8;
+    border-radius: 5px;
+    display: inline-block;
+  }
+
+.keenExplorer .funnel .button-add i,.ReactModalPortal .funnel .button-add i,.rc-time-picker-panel .funnel .button-add i{
+      margin-right: 0.3rem;
+    }
+
+.keenExplorer .funnel .line-options,.ReactModalPortal .funnel .line-options,.rc-time-picker-panel .funnel .line-options{
+    margin: 1rem 0 0 0;
+  }
+
+.keenExplorer .funnel .line-checkbox,.ReactModalPortal .funnel .line-checkbox,.rc-time-picker-panel .funnel .line-checkbox{
+    margin: 0.5rem 0 0 0;
+  }
+
+.keenExplorer .funnel .line-checkbox input,.ReactModalPortal .funnel .line-checkbox input,.rc-time-picker-panel .funnel .line-checkbox input{
+      margin-right: 0.5rem;
+    }
+
+.keenExplorer .funnel .line-checkbox label,.ReactModalPortal .funnel .line-checkbox label,.rc-time-picker-panel .funnel .line-checkbox label{
+      cursor: pointer;
+    }
+
+.keenExplorer .funnel .step-switch-position-buttons,.ReactModalPortal .funnel .step-switch-position-buttons,.rc-time-picker-panel .funnel .step-switch-position-buttons{
+    float: left;
+    margin: -0.5rem 0.8rem 0 0;
+    color: #797979;
+  }
+
+.keenExplorer .funnel .step-switch-position-buttons .move-up,.ReactModalPortal .funnel .step-switch-position-buttons .move-up,.rc-time-picker-panel .funnel .step-switch-position-buttons .move-up{
+      margin-top: 0.1rem;
+    }
+
+.keenExplorer .funnel .step-switch-position-buttons .move-down,.ReactModalPortal .funnel .step-switch-position-buttons .move-down,.rc-time-picker-panel .funnel .step-switch-position-buttons .move-down{
+      margin-top: -0.3rem;
+    }
+
+.keenExplorer * {
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+    font-size: 0.88rem;
+    font-size: 0.88rem;
+}
+
+.ReactModalPortal * {
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+    font-size: 0.88rem;
+    font-size: 0.88rem;
+}
+
+.rc-time-picker-panel * {
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+    font-size: 0.88rem;
+    font-size: 0.88rem;
+}
+
+.keenExplorer .keen-dataviz .c3 svg g text tspan, .ReactModalPortal .keen-dataviz .c3 svg g text tspan, .rc-time-picker-panel .keen-dataviz .c3 svg g text tspan {
+      font-size: 10px !important;
+}
+
+.keenExplorer button,.ReactModalPortal button,.rc-time-picker-panel button{
+    margin: 2rem 0 0;
+    padding: 1rem;
+}
+
+.keenExplorer .label,.ReactModalPortal .label,.rc-time-picker-panel .label{
+    padding: 1rem 0 0.3rem;
+}
+
+.keenExplorer .hide,.ReactModalPortal .hide,.rc-time-picker-panel .hide{
+    display: none;
+}
+
+.keenExplorer input:focus {
+    outline: 2px solid #00bbde;
+    outline: 2px solid #00bbde;
+}
+
+.ReactModalPortal input:focus {
+    outline: 2px solid #00bbde;
+    outline: 2px solid #00bbde;
+}
+
+.rc-time-picker-panel input:focus {
+    outline: 2px solid #00bbde;
+    outline: 2px solid #00bbde;
+}
+
+.keenExplorer .panel,.ReactModalPortal .panel,.rc-time-picker-panel .panel{
+    -ms-flex: 1;
+        flex: 1;
+    min-width: 22rem;
+    -webkit-box-shadow: -3px 7px 11px rgba(0,0,0,0.1);
+            box-shadow: -3px 7px 11px rgba(0,0,0,0.1);
+    border-radius: 0.3rem;
+}
+
+.keenExplorer .panel .panel-buttons .button-new-query,.ReactModalPortal .panel .panel-buttons .button-new-query,.rc-time-picker-panel .panel .panel-buttons .button-new-query{
+        -ms-flex: none;
+            flex: none;
+        cursor: pointer;
+      }
+
+.keenExplorer .panel .panel-content,.ReactModalPortal .panel .panel-content,.rc-time-picker-panel .panel .panel-content{
+      padding: 1rem;
+    }
+
+.keenExplorer .panel .panel-content .label-analysis-type,.ReactModalPortal .panel .panel-content .label-analysis-type,.rc-time-picker-panel .panel .panel-content .label-analysis-type{
+        padding-top: 0;
+      }
+
+.keenExplorer .result,.ReactModalPortal .result,.rc-time-picker-panel .result{
+    -ms-flex: 2;
+        flex: 2;
+    padding: 0 1.5rem;
+    overflow: hidden;
+}
+
+.keenExplorer .keen-dataviz-container,.ReactModalPortal .keen-dataviz-container,.rc-time-picker-panel .keen-dataviz-container{
+    height: calc(100% - 3rem);
+    overflow: hidden;
+}
+
+.keenExplorer .foldable,.ReactModalPortal .foldable,.rc-time-picker-panel .foldable{
+    margin-top: 0.5rem;
+    border: 1px solid #e8e8e8;
+    background: #fdfdfd;
+    padding: 0.5rem;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.keenExplorer .foldableActive,.ReactModalPortal .foldableActive,.rc-time-picker-panel .foldableActive{
+      background: none;
+    }
+
+.keenExplorer .foldable .title,.ReactModalPortal .foldable .title,.rc-time-picker-panel .foldable .title{
+      padding: 0.5rem;
+    }
+
+.keenExplorer .foldable .title .icon,.ReactModalPortal .foldable .title .icon,.rc-time-picker-panel .foldable .title .icon{
+        float: right;
+      }
+
+.keenExplorer .foldable .content,.ReactModalPortal .foldable .content,.rc-time-picker-panel .foldable .content{
+      margin-top: 0.5rem;
+    }
+
+.keenExplorer .foldable .tab-content,.ReactModalPortal .foldable .tab-content,.rc-time-picker-panel .foldable .tab-content{
+      border: 0;
+    }
+
+.keenExplorer .filters,.ReactModalPortal .filters,.rc-time-picker-panel .filters{
+    display: -ms-flexbox;
+    display: flex;
+}
+
+.keenExplorer .filters .title,.ReactModalPortal .filters .title,.rc-time-picker-panel .filters .title{
+      -ms-flex: 1;
+          flex: 1;
+    }
+
+.keenExplorer .filters .count,.ReactModalPortal .filters .count,.rc-time-picker-panel .filters .count{
+      -ms-flex-item-align: center;
+          align-self: center;
+      text-align: right;
+      padding: 0 0.5rem 0 0;
+    }
+
+.keenExplorer .optional,.ReactModalPortal .optional,.rc-time-picker-panel .optional{
+    margin-left: 1em;
+    font-size: 0.7em;
+    color:#ddd;
+    color: #737373;
+}
+
+.keenExplorer .groupBy .label,.ReactModalPortal .groupBy .label,.rc-time-picker-panel .groupBy .label{
+      padding: 0 0 0.5rem;
+    }
+
+.keenExplorer .groupBy .btnPlus, .keenExplorer .groupBy .btnMinus, .ReactModalPortal .groupBy .btnPlus, .ReactModalPortal .groupBy .btnMinus, .rc-time-picker-panel .groupBy .btnPlus, .rc-time-picker-panel .groupBy .btnMinus{
+      margin-top: 1rem;
+      padding: 0.7rem;
+      background: #fdfdfd;
+      border: 1px solid #e8e8e8;
+      border-radius: 5px;
+      display: inline-block;
+    }
+
+.keenExplorer .groupBy .options,.ReactModalPortal .groupBy .options,.rc-time-picker-panel .groupBy .options{
+      margin-top: 1rem;
+      display:-ms-flexbox;
+      display:flex;
+    }
+
+.keenExplorer .groupBy .options .orderBy,.ReactModalPortal .groupBy .options .orderBy,.rc-time-picker-panel .groupBy .options .orderBy{
+        width: 8em;
+        padding-right: 1rem;
+      }
+
+.keenExplorer .groupBy .options .orderBy .select,.ReactModalPortal .groupBy .options .orderBy .select,.rc-time-picker-panel .groupBy .options .orderBy .select{
+          width: 100%;
+        }
+
+.keenExplorer .groupBy .options .limit,.ReactModalPortal .groupBy .options .limit,.rc-time-picker-panel .groupBy .options .limit{
+        width: 8em;
+      }
+
+.keenExplorer .groupBy .options .limit .input,.ReactModalPortal .groupBy .options .limit .input,.rc-time-picker-panel .groupBy .options .limit .input{
+          width: 100%;
+        }
+
+.keenExplorer .groupBy .additionalTargetProperty,.ReactModalPortal .groupBy .additionalTargetProperty,.rc-time-picker-panel .groupBy .additionalTargetProperty{
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid #f1f1f1;
+    }
+
+.keenExplorer .lets-go,.ReactModalPortal .lets-go,.rc-time-picker-panel .lets-go{
+    display:-ms-flexbox;
+    display:flex;
+    width: 100%;
+    height: 300px;
+    -ms-flex-pack: center;
+        justify-content: center;
+    -ms-flex-align: center;
+        align-items: center;
+    color: #9b9b9b;
+    background: #fafafa;
+}
+
+.keenExplorer .tabs,.ReactModalPortal .tabs,.rc-time-picker-panel .tabs{
+  display:-ms-flexbox;
+  display:flex;
+}
+
+.keenExplorer .tabs .tab,.ReactModalPortal .tabs .tab,.rc-time-picker-panel .tabs .tab{
+    -ms-flex: 1;
+        flex: 1;
+    padding: 1rem;
+    background: #fafafa;
+    cursor: pointer;
+    border: 1px solid #e8e8e8;
+    border-radius: 5px 5px 0 0;
+  }
+
+.keenExplorer .tabs .active,.ReactModalPortal .tabs .active,.rc-time-picker-panel .tabs .active{
+    background: #fff;
+    border-bottom: 1px solid #fff;
+  }
+
+.keenExplorer .panel-buttons .active,.ReactModalPortal .panel-buttons .active,.rc-time-picker-panel .panel-buttons .active{
+    border-right: 0;
+  }
+
+.keenExplorer .tab-content,.ReactModalPortal .tab-content,.rc-time-picker-panel .tab-content{
+  padding: 1rem;
+  border: 1px solid #e8e8e8;
+  border-top: none;
+}
+
+.keenExplorer .inputNumber{
+  font-size: 0.88rem;
+  font-size: 0.88rem;
+  padding: 0.5rem 0.6rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-weight: 400;
+}
+
+.ReactModalPortal .inputNumber{
+  font-size: 0.88rem;
+  font-size: 0.88rem;
+  padding: 0.5rem 0.6rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-weight: 400;
+}
+
+.rc-time-picker-panel .inputNumber{
+  font-size: 0.88rem;
+  font-size: 0.88rem;
+  padding: 0.5rem 0.6rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-weight: 400;
+}
+
+.keenExplorer .input-text{
+  font-size: 0.88rem;
+  font-size: 0.88rem;
+  padding: 0.5rem 0.6rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-weight: 400;
+}
+
+.ReactModalPortal .input-text{
+  font-size: 0.88rem;
+  font-size: 0.88rem;
+  padding: 0.5rem 0.6rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-weight: 400;
+}
+
+.rc-time-picker-panel .input-text{
+  font-size: 0.88rem;
+  font-size: 0.88rem;
+  padding: 0.5rem 0.6rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-weight: 400;
+}
+
+.keenExplorer .interval .standardUnits,.ReactModalPortal .interval .standardUnits,.rc-time-picker-panel .interval .standardUnits{
+    width: 10rem;
+  }
+
+.keenExplorer .interval .line,.ReactModalPortal .interval .line,.rc-time-picker-panel .interval .line{
     display: -ms-flexbox;
     display: flex;
     -ms-flex-align: center;
         align-items: center;
   }
 
-#keen-explorer .flex input, #keen-explorer .flex select {
-      border: 1px solid #e7e7e7;
-      border-radius: 0;
-      height: 33px;
-      -webkit-box-shadow: inset 0px 0px 0px 0px red;
-              box-shadow: inset 0px 0px 0px 0px red;
+.keenExplorer .interval .line .title,.ReactModalPortal .interval .line .title,.rc-time-picker-panel .interval .line .title{
+      margin-right: 1rem;
     }
 
-#keen-explorer .flex select {
-      border: 1px solid #e7e7e7;
-      border-radius: 0;
-      line-height: inherit;
+.keenExplorer .interval .line .inputNumber,.ReactModalPortal .interval .line .inputNumber,.rc-time-picker-panel .interval .line .inputNumber{
+      width: 4rem;
+      margin-right: 0.5rem;
     }
 
-#keen-explorer .flex .select-element {
-      border: 0;
+.keenExplorer .interval .line .timeUnits,.ReactModalPortal .interval .line .timeUnits,.rc-time-picker-panel .interval .line .timeUnits{
+      width: 10rem;
     }
 
-#keen-explorer .label-small{
-    padding-right: 1em;
-    text-align: right;
-  }
-
-#keen-explorer .flex-row{
-    margin: 0;
-  }
-
-.modal-backdrop {
-  background-color: rgba(41,52,62,.85)
+.keenExplorer .timeframe,.ReactModalPortal .timeframe,.rc-time-picker-panel .timeframe{
+  margin-bottom: 0.5rem;
 }
 
-.modal-backdrop.in {
-  opacity: 1;
+.keenExplorer .timeframe .relative,.ReactModalPortal .timeframe .relative,.rc-time-picker-panel .timeframe .relative{
+    display:-ms-flexbox;
+    display:flex;
+  }
+
+.keenExplorer .timeframe .relative .relativity, .keenExplorer .timeframe .relative .inputNumber, .ReactModalPortal .timeframe .relative .relativity, .ReactModalPortal .timeframe .relative .inputNumber, .rc-time-picker-panel .timeframe .relative .relativity, .rc-time-picker-panel .timeframe .relative .inputNumber{
+      margin-right:0.5rem;
+    }
+
+.keenExplorer .timeframe .relative .relativity,.ReactModalPortal .timeframe .relative .relativity,.rc-time-picker-panel .timeframe .relative .relativity{
+      -ms-flex: 0;
+          flex: 0;
+      max-width:12rem;
+      min-width: 6rem;
+    }
+
+.keenExplorer .timeframe .relative .units,.ReactModalPortal .timeframe .relative .units,.rc-time-picker-panel .timeframe .relative .units{
+      -ms-flex: 0;
+          flex: 0;
+      max-width:12rem;
+      min-width: 6rem;
+    }
+
+.keenExplorer .timeframe .relative .inputNumber,.ReactModalPortal .timeframe .relative .inputNumber,.rc-time-picker-panel .timeframe .relative .inputNumber{
+      -ms-flex: 1;
+          flex: 1;
+      min-width: 6rem;
+    }
+
+.keenExplorer .timeframe .description,.ReactModalPortal .timeframe .description,.rc-time-picker-panel .timeframe .description{
+    margin-top: 0.5rem;
+    padding: 1rem;
+    background: #fafafa;
+  }
+
+.keenExplorer .timeframe .tabAbsolute .DateRangePickerInput_arrow,.ReactModalPortal .timeframe .tabAbsolute .DateRangePickerInput_arrow,.rc-time-picker-panel .timeframe .tabAbsolute .DateRangePickerInput_arrow{
+      display: none;
+    }
+
+.keenExplorer .timeframe .tabAbsolute .DateInput, .ReactModalPortal .timeframe .tabAbsolute .DateInput, .rc-time-picker-panel .timeframe .tabAbsolute .DateInput {
+      width: 8rem;
+      background: none;
+    }
+
+.keenExplorer .timeframe .tabAbsolute .DateInput_input {
+      padding: 0.5rem;
+      font-size: 0.88rem;
+      font-size: 0.88rem;
+      line-height: normal;
+      color:#000;
+      font-weight: normal;
+      border-radius: 5px;
+    }
+
+.ReactModalPortal .timeframe .tabAbsolute .DateInput_input {
+      padding: 0.5rem;
+      font-size: 0.88rem;
+      font-size: 0.88rem;
+      line-height: normal;
+      color:#000;
+      font-weight: normal;
+      border-radius: 5px;
+    }
+
+.rc-time-picker-panel .timeframe .tabAbsolute .DateInput_input {
+      padding: 0.5rem;
+      font-size: 0.88rem;
+      font-size: 0.88rem;
+      line-height: normal;
+      color:#000;
+      font-weight: normal;
+      border-radius: 5px;
+    }
+
+.keenExplorer .timeframe .tabAbsolute .rc-time-picker-input{
+      font-size: 0.88rem;
+      font-size: 0.88rem;
+      line-height: normal;
+      font-weight: normal;
+      color: #000;
+      height: 2.4rem;
+      width: 7rem;
+      border-radius: 5px;
+    }
+
+.ReactModalPortal .timeframe .tabAbsolute .rc-time-picker-input{
+      font-size: 0.88rem;
+      font-size: 0.88rem;
+      line-height: normal;
+      font-weight: normal;
+      color: #000;
+      height: 2.4rem;
+      width: 7rem;
+      border-radius: 5px;
+    }
+
+.rc-time-picker-panel .timeframe .tabAbsolute .rc-time-picker-input{
+      font-size: 0.88rem;
+      font-size: 0.88rem;
+      line-height: normal;
+      font-weight: normal;
+      color: #000;
+      height: 2.4rem;
+      width: 7rem;
+      border-radius: 5px;
+    }
+
+.keenExplorer .timeframe .tabAbsolute .line,.ReactModalPortal .timeframe .tabAbsolute .line,.rc-time-picker-panel .timeframe .tabAbsolute .line{
+      display: -ms-flexbox;
+      display: flex;
+      -ms-flex-align: center;
+          align-items: center;
+      margin: 0.5rem;
+    }
+
+.keenExplorer .timeframe .tabAbsolute .line .title,.ReactModalPortal .timeframe .tabAbsolute .line .title,.rc-time-picker-panel .timeframe .tabAbsolute .line .title{
+        width: 4rem;
+      }
+
+.keenExplorer .timeframe .tabAbsolute .line .SingleDatePicker, .ReactModalPortal .timeframe .tabAbsolute .line .SingleDatePicker, .rc-time-picker-panel .timeframe .tabAbsolute .line .SingleDatePicker {
+        margin-right: 0.5rem;
+      }
+
+.keenExplorer .timeframe .tabAbsolute .line .SingleDatePickerInput__withBorder, .ReactModalPortal .timeframe .tabAbsolute .line .SingleDatePickerInput__withBorder, .rc-time-picker-panel .timeframe .tabAbsolute .line .SingleDatePickerInput__withBorder {
+        border-radius: 5px;
+        border: 1px solid #dbdbdb;
+      }
+
+.keenExplorer .rc-time-picker-panel .rc-time-picker-panel-inner,.ReactModalPortal .rc-time-picker-panel .rc-time-picker-panel-inner,.rc-time-picker-panel .rc-time-picker-panel .rc-time-picker-panel-inner{
+    -webkit-box-shadow: none;
+            box-shadow: none;
+    border-radius: 5px;
+  }
+
+.keenExplorer .rc-time-picker-panel .rc-time-picker-input{
+    font-size: 0.88rem;
+    font-size: 0.88rem;
+    line-height: normal;
+    font-weight: normal;
+    color: #000;
+    height: 2.4rem;
+    width: 8rem;
+    border-radius: 5px;
+  }
+
+.ReactModalPortal .rc-time-picker-panel .rc-time-picker-input{
+    font-size: 0.88rem;
+    font-size: 0.88rem;
+    line-height: normal;
+    font-weight: normal;
+    color: #000;
+    height: 2.4rem;
+    width: 8rem;
+    border-radius: 5px;
+  }
+
+.rc-time-picker-panel .rc-time-picker-panel .rc-time-picker-input{
+    font-size: 0.88rem;
+    font-size: 0.88rem;
+    line-height: normal;
+    font-weight: normal;
+    color: #000;
+    height: 2.4rem;
+    width: 8rem;
+    border-radius: 5px;
+  }
+
+.keenExplorer .rc-time-picker-panel .rc-time-picker-panel-select{
+    font-size: 0.88rem;
+    font-size: 0.88rem;
+  }
+
+.ReactModalPortal .rc-time-picker-panel .rc-time-picker-panel-select{
+    font-size: 0.88rem;
+    font-size: 0.88rem;
+  }
+
+.rc-time-picker-panel .rc-time-picker-panel .rc-time-picker-panel-select{
+    font-size: 0.88rem;
+    font-size: 0.88rem;
+  }
+
+.keenExplorer .rc-time-picker-panel .rc-time-picker-panel-select li,.ReactModalPortal .rc-time-picker-panel .rc-time-picker-panel-select li,.rc-time-picker-panel .rc-time-picker-panel .rc-time-picker-panel-select li{
+      height: 2rem;
+      line-height: 2rem;
+    }
+
+.keenExplorer .rc-time-picker-panel .rc-time-picker-panel-input{
+    font-size: 0.88rem;
+    font-size: 0.88rem;
+  }
+
+.ReactModalPortal .rc-time-picker-panel .rc-time-picker-panel-input{
+    font-size: 0.88rem;
+    font-size: 0.88rem;
+  }
+
+.rc-time-picker-panel .rc-time-picker-panel .rc-time-picker-panel-input{
+    font-size: 0.88rem;
+    font-size: 0.88rem;
+  }
+
+.keenExplorer .apiQueryUrl,.ReactModalPortal .apiQueryUrl,.rc-time-picker-panel .apiQueryUrl{
+  cursor: pointer;
+  padding: 1rem;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+      align-items: center;
+  width: 100%;
+  font-size: 0.8rem;
+}
+
+.keenExplorer .apiQueryUrl input,.ReactModalPortal .apiQueryUrl input,.rc-time-picker-panel .apiQueryUrl input{
+    -ms-flex: 1;
+        flex: 1;
+    margin: 0 1rem;
+  }
+
+.keenExplorer .fa-copy:active{
+  color: #00bbde;
+  color: #00bbde;
+}
+
+.ReactModalPortal .fa-copy:active{
+  color: #00bbde;
+  color: #00bbde;
+}
+
+.rc-time-picker-panel .fa-copy:active{
+  color: #00bbde;
+  color: #00bbde;
+}
+
+.keenExplorer .button-run-query{
+  font-size: 0.88rem;
+  font-size: 0.88rem;
+  text-transform: uppercase;
+  border-radius: 0.3rem;
+  background: #3ecf8e;
+  background: #3ecf8e;
+  color: #fff;
+  font-weight: 600;
+  font-weight: 600;
+  border: 0;
+  padding: 0.88rem calc(0.88rem*2);
+  padding: 0.88rem calc(0.88rem*2);
+  cursor: pointer;
+  margin: 0;
+}
+
+.ReactModalPortal .button-run-query{
+  font-size: 0.88rem;
+  font-size: 0.88rem;
+  text-transform: uppercase;
+  border-radius: 0.3rem;
+  background: #3ecf8e;
+  background: #3ecf8e;
+  color: #fff;
+  font-weight: 600;
+  font-weight: 600;
+  border: 0;
+  padding: 0.88rem calc(0.88rem*2);
+  padding: 0.88rem calc(0.88rem*2);
+  cursor: pointer;
+  margin: 0;
+}
+
+.rc-time-picker-panel .button-run-query{
+  font-size: 0.88rem;
+  font-size: 0.88rem;
+  text-transform: uppercase;
+  border-radius: 0.3rem;
+  background: #3ecf8e;
+  background: #3ecf8e;
+  color: #fff;
+  font-weight: 600;
+  font-weight: 600;
+  border: 0;
+  padding: 0.88rem calc(0.88rem*2);
+  padding: 0.88rem calc(0.88rem*2);
+  cursor: pointer;
+  margin: 0;
+}
+
+.keenExplorer .button-run-query i, .ReactModalPortal .button-run-query i, .rc-time-picker-panel .button-run-query i {
+    margin-right: 0.5rem;
+  }
+
+.keenExplorer .error,.ReactModalPortal .error,.rc-time-picker-panel .error{
+  padding: 1rem;
+  background: #ffe5e5;
+  margin: 1rem 0;
+}
+
+.keenExplorer .box-info,.ReactModalPortal .box-info,.rc-time-picker-panel .box-info{
+  padding: 1rem;
+  background: #f1faff;
+}
+
+.keenExplorer .tab-content .box-info,.ReactModalPortal .tab-content .box-info,.rc-time-picker-panel .tab-content .box-info{
+  margin: -1rem;
+}
+
+.keenExplorer .preview,.ReactModalPortal .preview,.rc-time-picker-panel .preview{
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: row;
+      flex-direction: row;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  background: #fafafa;
+}
+
+.keenExplorer .preview .loader,.ReactModalPortal .preview .loader,.rc-time-picker-panel .preview .loader{
+    width: 100%;
+    height: 340px;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+        align-items: center;
+    -ms-flex-pack: center;
+        justify-content: center;
+    font-size: 5rem;
+    color: #eee;
+  }
+
+.keenExplorer .preview .keen-dataviz-container, .keenExplorer .preview .react-json-view, .ReactModalPortal .preview .keen-dataviz-container, .ReactModalPortal .preview .react-json-view, .rc-time-picker-panel .preview .keen-dataviz-container, .rc-time-picker-panel .preview .react-json-view{
+    width: 100%;
+    height: 340px;
+    background: #fff;
+    overflow-y: scroll;
+  }
+
+.keenExplorer .preview .react-json-view,.ReactModalPortal .preview .react-json-view,.rc-time-picker-panel .preview .react-json-view{
+    padding: 1rem;
+  }
+
+.keenExplorer .preview .select-chart-type-container,.ReactModalPortal .preview .select-chart-type-container,.rc-time-picker-panel .preview .select-chart-type-container{
+    -ms-flex: 1;
+        flex: 1;
+    -ms-flex-order: 1;
+        order: 1;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-item-align: center;
+        align-self: center;
+    -ms-flex-direction: column;
+        flex-direction: column;
+    -ms-flex-pack: end;
+        justify-content: flex-end;
+    margin: 0.3rem;
+  }
+
+.keenExplorer .preview .select-chart-type, .ReactModalPortal .preview .select-chart-type, .rc-time-picker-panel .preview .select-chart-type {
+    -ms-flex: 1;
+        flex: 1;
+    width: 20rem;
+    -ms-flex-item-align: end;
+        align-self: flex-end;
+  }
+
+.keenExplorer .preview .chart-not-supported-note,.ReactModalPortal .preview .chart-not-supported-note,.rc-time-picker-panel .preview .chart-not-supported-note{
+    float: right;
+    text-align: right;
+    padding: 0.5rem;
+  }
+
+.keenExplorer .preview .button-download,.ReactModalPortal .preview .button-download,.rc-time-picker-panel .preview .button-download{
+    -ms-flex-order: 0;
+        order: 0;
+    background: transparent;
+    border: 0;
+    margin: 0;
+    cursor: pointer;
+    font-size: 0.8rem;
+  }
+
+.keenExplorer .preview .button-download i,.ReactModalPortal .preview .button-download i,.rc-time-picker-panel .preview .button-download i{
+      margin-right: 0.5rem;
+    }
+
+.keenExplorer .action-buttons,.ReactModalPortal .action-buttons,.rc-time-picker-panel .action-buttons{
+  margin-top: 1rem;
+}
+
+.keenExplorer .chartType,.ReactModalPortal .chartType,.rc-time-picker-panel .chartType{
+  margin-top: 1rem;
+}
+
+.keenExplorer .button-toggle{
+  margin-left: 1rem;
+  display: inline;
+  cursor: pointer;
+  border-radius: 0.3rem;
+  font-size: 0.88rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #3ecf8e;
+  color: #3ecf8e;
+  color: #45b2e8;
+  color: #45b2e8;
+  background: #fcfcfc;
+  border: 1px solid #efefef;
+  border: 1px solid #efefef;
+  padding: 0.88rem calc(0.88rem*2);
+  padding: 0.88rem calc(0.88rem*2);
+}
+
+.ReactModalPortal .button-toggle{
+  margin-left: 1rem;
+  display: inline;
+  cursor: pointer;
+  border-radius: 0.3rem;
+  font-size: 0.88rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #3ecf8e;
+  color: #3ecf8e;
+  color: #45b2e8;
+  color: #45b2e8;
+  background: #fcfcfc;
+  border: 1px solid #efefef;
+  border: 1px solid #efefef;
+  padding: 0.88rem calc(0.88rem*2);
+  padding: 0.88rem calc(0.88rem*2);
+}
+
+.rc-time-picker-panel .button-toggle{
+  margin-left: 1rem;
+  display: inline;
+  cursor: pointer;
+  border-radius: 0.3rem;
+  font-size: 0.88rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #3ecf8e;
+  color: #3ecf8e;
+  color: #45b2e8;
+  color: #45b2e8;
+  background: #fcfcfc;
+  border: 1px solid #efefef;
+  border: 1px solid #efefef;
+  padding: 0.88rem calc(0.88rem*2);
+  padding: 0.88rem calc(0.88rem*2);
+}
+
+.keenExplorer .button-toggle i, .ReactModalPortal .button-toggle i, .rc-time-picker-panel .button-toggle i {
+    margin-left: 1rem;
+  }
+
+.keenExplorer .button-toggle-active, .ReactModalPortal .button-toggle-active, .rc-time-picker-panel .button-toggle-active {
+  background: rgb(255, 255, 255);
+}
+
+.keenExplorer .result-string,.ReactModalPortal .result-string,.rc-time-picker-panel .result-string{
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: center;
+      justify-content: center;
+  -ms-flex-align: center;
+      align-items: center;
+}
+
+.keenExplorer .CalendarDay__selected {
+  background: #00bbde;
+  background: #00bbde;
+  border: 1px double #00bbde;
+  border: 1px double #00bbde;
+}
+
+.keenExplorer .CalendarDay__selected:active {
+  background: #00bbde;
+  background: #00bbde;
+  border: 1px double #00bbde;
+  border: 1px double #00bbde;
+}
+
+.keenExplorer .CalendarDay__selected:hover {
+  background: #00bbde;
+  background: #00bbde;
+  border: 1px double #00bbde;
+  border: 1px double #00bbde;
+}
+
+.ReactModalPortal .CalendarDay__selected {
+  background: #00bbde;
+  background: #00bbde;
+  border: 1px double #00bbde;
+  border: 1px double #00bbde;
+}
+
+.ReactModalPortal .CalendarDay__selected:active {
+  background: #00bbde;
+  background: #00bbde;
+  border: 1px double #00bbde;
+  border: 1px double #00bbde;
+}
+
+.ReactModalPortal .CalendarDay__selected:hover {
+  background: #00bbde;
+  background: #00bbde;
+  border: 1px double #00bbde;
+  border: 1px double #00bbde;
+}
+
+.rc-time-picker-panel .CalendarDay__selected {
+  background: #00bbde;
+  background: #00bbde;
+  border: 1px double #00bbde;
+  border: 1px double #00bbde;
+}
+
+.rc-time-picker-panel .CalendarDay__selected:active {
+  background: #00bbde;
+  background: #00bbde;
+  border: 1px double #00bbde;
+  border: 1px double #00bbde;
+}
+
+.rc-time-picker-panel .CalendarDay__selected:hover {
+  background: #00bbde;
+  background: #00bbde;
+  border: 1px double #00bbde;
+  border: 1px double #00bbde;
+}
+
+.keenExplorer .DayPickerKeyboardShortcuts_show__bottomRight::before{
+  border-right: 33px solid #00bbde;
+  border-right: 33px solid #00bbde;
+}
+
+.ReactModalPortal .DayPickerKeyboardShortcuts_show__bottomRight::before{
+  border-right: 33px solid #00bbde;
+  border-right: 33px solid #00bbde;
+}
+
+.rc-time-picker-panel .DayPickerKeyboardShortcuts_show__bottomRight::before{
+  border-right: 33px solid #00bbde;
+  border-right: 33px solid #00bbde;
+}
+
+.keenExplorer .DateInput_input__focused{
+  border-bottom: 2px solid #00bbde;
+  border-bottom: 2px solid #00bbde;
+}
+
+.ReactModalPortal .DateInput_input__focused{
+  border-bottom: 2px solid #00bbde;
+  border-bottom: 2px solid #00bbde;
+}
+
+.rc-time-picker-panel .DateInput_input__focused{
+  border-bottom: 2px solid #00bbde;
+  border-bottom: 2px solid #00bbde;
+}
+
+.keenExplorer .fa-spin, .ReactModalPortal .fa-spin, .rc-time-picker-panel .fa-spin {
+  -webkit-animation: fa-spin 1s infinite linear;
+          animation: fa-spin 1s infinite linear;
+}
+
+.keenExplorer .react-select-option,.ReactModalPortal .react-select-option,.rc-time-picker-panel .react-select-option{
+    padding: 0.7rem 1rem;
+}
+
+@media screen and (max-width: 1000px) {
+  .keenExplorer{
+    -ms-flex-direction: column;
+        flex-direction: column;
+  }
+    .keenExplorer .panel{
+      -webkit-box-shadow: none;
+              box-shadow: none;
+      min-width: none;
+    }
+      .keenExplorer .panel .panel-content{
+        padding: 0 1rem;
+      }
+    .keenExplorer .result{
+      display: -ms-flexbox;
+      display: flex;
+      -ms-flex-direction: column;
+          flex-direction: column;
+    }
+      .keenExplorer .result .preview, .keenExplorer .result .lets-go{
+        -ms-flex-order: 1;
+            order: 1;
+      }
+      .keenExplorer .result .error{
+        margin-bottom: 0;
+      }
+      .keenExplorer .result .button-run-query{
+        -ms-flex-order: 0;
+            order: 0;
+      }
+      .keenExplorer .result .button-toggle {
+        -ms-flex-order: 3;
+            order: 3;
+      }
+      .keenExplorer .result .saved-query{
+        -ms-flex-order: 3;
+            order: 3;
+      }
+      .keenExplorer .result .action-buttons{
+        margin-bottom: 1rem;
+      }
+    .filters-container .delete{
+      margin-top: 0.5rem;
+    }
 }

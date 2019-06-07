@@ -2,61 +2,28 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Keen IO Explorer</title>
-  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-  <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet">
+  <title>Keen Explorer</title>
   <link rel="stylesheet" href="keen-explorer.css">
   <script src="keen-explorer.umd.js"></script>
-
-  <scriptx src="//d26b395fwzu5fz.cloudfront.net/3.4.1/keen.js" type="text/javascript"></script>
-  <linkx rel="stylesheet" href="https://cdn.jsdelivr.net/npm/keen-explorer@5/dist/keen-explorer.min.css">
-  <scriptx src="https://cdn.jsdelivr.net/npm/keen-explorer@5/dist/keen-explorer.bundle.min.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Montserrat%7CMontserrat:600%7CHind" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 </head>
-<body>
-    <div id="keen-explorer-wrapper" style="padding: 20px;"></div>
-
+<body class="dev-body">
+  <a href="/" class="dev-reload-button">Reset</a>
+  <div id="keen-explorer-wrapper"></div>
 
   <script type="text/javascript">
-// window.Keen.ready(function() {
-     window.explorer = new KeenExplorer({
+     new KeenExplorer({
        container: '#keen-explorer-wrapper',
        persistence: true,
-       keenAnalysisOptions: {
-         projectId: '5b71aabec9e77c00014eb5a2',
-         masterKey: '840483CB6A50C1594D9EC29AE15A0198C72BC307531309E6C1E66A86D6654DCC',
-         readKey: 'F697DF64A4AF87A3DA956BD9BC182BBFE8E7C0BA42A82EC8592D4A7E7EFDFDBF277C08BA15CE5D404EA6BEEA17BC965CA88BAD31D64206BB1B4E549E544FEE146C512A22CE915F3F658ABA6CEB3590145A8D2F30F64667EEF3321E371FA8F01F',
-         writeKey: '766CBC2E8E5BD3E755022FC14211B00B761B3BE79E3D3D62F84CA3F853559824053CBB6BAAAAE8896045282D6F8E8FE9FC10C67D3E5061BD5FC46A0280D715EFEE07C72369D14290F446D4C7C9BBAADE4000AB3F6F942A3F62362BD8326AE1BF'
-
+       keenAnalysis: {
+         config: keenGlobals.demoConfig
        },
-       keenDatavizOptions: {
-       }
-       });
-  //   });
-  /*
-    $(document).ready(function(){
-      const app = new KeenExplorer('#keen-explorer-wrapper')
-        .client(demoConfig)
-        .persistence(true)
-        .fetch();
-        // or just render..
-        // app.render();
+       keenDataviz: {
+       },
+       features: {
+       },
     });
-
-
-window.explorer = new KeenExplorer({
-  container: '#keen-explorer-wrapper',
-  keenAnalysisOptions: {
-    ...keenGlobals.demoConfig
-  },
-  keenDatavizOptions: {
-    colors: ['#000', '#ccc']
-  },
-  persistence: true
-});
-*/
-  // window.startExplorerEventTracking();
-
   </script>
 </body>
 </html>
