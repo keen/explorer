@@ -10454,7 +10454,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__163__;
 /* 164 */
 /***/ (function(module) {
 
-module.exports = {"a":"6.0.3"};
+module.exports = {"a":"6.0.4"};
 
 /***/ }),
 /* 165 */
@@ -26943,7 +26943,7 @@ function (_Component) {
           }
         }
       }, external_react_default.a.createElement("div", {
-        className: "modal"
+        className: "modal-main"
       }, external_react_default.a.createElement("div", {
         className: "header"
       }, external_react_default.a.createElement("div", {
@@ -27043,7 +27043,7 @@ function (_Component) {
           }
         }
       }, external_react_default.a.createElement("div", {
-        className: "modal"
+        className: "modal-main"
       }, external_react_default.a.createElement("div", {
         className: "header"
       }, external_react_default.a.createElement("div", {
