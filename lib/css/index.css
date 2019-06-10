@@ -25,7 +25,7 @@
 
 @import "./variables.css";
 
-.keenExplorer,
+.keen-explorer,
 .ReactModalPortal,
 .rc-time-picker-panel {
   font-family: Montserrat, Tahoma, Arial;
@@ -101,17 +101,18 @@
     padding: 0.5rem;
     cursor: pointer;
     border-radius: 5px;
-    &Active{
+    &-active{
       background: none;
     }
     .title{
       padding: 0.5rem;
-      .icon{
+      .foldable-icon{
         float: right;
       }
     }
     .content{
       margin-top: 0.5rem;
+      padding: 0;
     }
     .tab-content{
       border: 0;
@@ -137,11 +138,11 @@
     color: #737373;
   }
 
-  .groupBy{
+  .group-by{
     .label-main{
       padding: 0 0 0.5rem;
     }
-    .btnPlus, .btnMinus{
+    .btn-plus, .btn-minus{
       margin-top: 1rem;
       padding: 0.7rem;
       background: #fdfdfd;
@@ -152,7 +153,7 @@
     .options{
       margin-top: 1rem;
       display:flex;
-      .orderBy{
+      .order-by{
         width: 8em;
         padding-right: 1rem;
         .select{
@@ -166,7 +167,7 @@
         }
       }
     }
-    .additionalTargetProperty{
+    .additional-target-property{
       margin-top: 1rem;
       padding-top: 1rem;
       border-top: 1px solid #f1f1f1;
@@ -230,7 +231,7 @@
 }
 
 .interval{
-  .standardUnits{
+  .standard-units{
     width: 10rem;
   }
   .line{
@@ -243,7 +244,7 @@
       width: 4rem;
       margin-right: 0.5rem;
     }
-    .timeUnits{
+    .time-units{
       width: 10rem;
     }
   }
