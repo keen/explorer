@@ -2883,44 +2883,44 @@ li.rc-time-picker-panel-select-option-disabled:hover {
     }
 
 @media screen and (max-width: 1000px) {
-  .keenExplorer{
+  .keen-explorer{
     -ms-flex-direction: column;
         flex-direction: column;
   }
-    .keenExplorer .panel{
+    .keen-explorer .panel{
       -webkit-box-shadow: none;
               box-shadow: none;
       min-width: none;
     }
-      .keenExplorer .panel .panel-content{
+      .keen-explorer .panel .panel-content{
         padding: 0 1rem;
       }
-    .keenExplorer .result{
+    .keen-explorer .result{
       display: -ms-flexbox;
       display: flex;
       -ms-flex-direction: column;
           flex-direction: column;
     }
-      .keenExplorer .result .preview, .keenExplorer .result .lets-go{
+      .keen-explorer .result .preview, .keen-explorer .result .lets-go{
         -ms-flex-order: 1;
             order: 1;
       }
-      .keenExplorer .result .error{
+      .keen-explorer .result .error{
         margin-bottom: 0;
       }
-      .keenExplorer .result .button-run-query{
+      .keen-explorer .result .button-run-query{
         -ms-flex-order: 0;
             order: 0;
       }
-      .keenExplorer .result .button-toggle {
+      .keen-explorer .result .button-toggle {
         -ms-flex-order: 3;
             order: 3;
       }
-      .keenExplorer .result .saved-query{
+      .keen-explorer .result .saved-query{
         -ms-flex-order: 3;
             order: 3;
       }
-      .keenExplorer .result .action-buttons{
+      .keen-explorer .result .action-buttons{
         margin-bottom: 1rem;
       }
     .filters-container .delete{

@@ -10454,7 +10454,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__163__;
 /* 164 */
 /***/ (function(module) {
 
-module.exports = {"a":"6.0.5"};
+module.exports = {"a":"6.0.6"};
 
 /***/ }),
 /* 165 */
