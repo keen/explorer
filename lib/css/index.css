@@ -531,7 +531,7 @@
 }
 
 @media screen and (max-width: 1000px) {
-  .keenExplorer{
+  .keen-explorer{
     flex-direction: column;
     .panel{
       box-shadow: none;
