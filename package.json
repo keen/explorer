@@ -17,7 +17,7 @@
     "build:css": "node_modules/postcss-cli/bin/postcss lib/css/index.css -o dist/keen-explorer.css --config postcss.config.js",
     "build:css:min": "OPTIMIZE_MINIMIZE=1 node_modules/postcss-cli/bin/postcss lib/css/index.css -o dist/keen-explorer.min.css --config postcss.config.js",
     "version": "npm run build && git add .",
-    "postversion": "git push && git push --tags",
+    "postversion": "git push && git push --tags && npm publish",
     "profile": "BUNDLE=1 OPTIMIZE_MINIMIZE=1 webpack --profile --json > stats.json",
     "analyze": "BUNDLE=1 OPTIMIZE_MINIMIZE=1 webpack-bundle-analyzer stats.json dist"
   },
@@ -41,7 +41,7 @@
     "react-json-view": "^1.19.1",
     "react-modal": "^3.8.1",
     "react-redux": "^6.0.0",
-    "react-select": "^2.3.0",
+    "react-select": "^3.0.4",
     "redux": "^4.0.1",
     "redux-devtools-extension": "^2.13.7",
     "redux-saga": "^1.0.0",

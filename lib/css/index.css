@@ -81,8 +81,13 @@
 
     .panel-content{
       padding: 1rem;
+      .event-collection .label-main{
+        padding-top: 0;
+      }
+    }
 
-      .label-analysis-type{
+    .panel-funnel{
+      .label-analysis-type {
         padding-top: 0;
       }
     }
