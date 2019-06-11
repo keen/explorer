@@ -1876,7 +1876,7 @@ li.rc-time-picker-panel-select-option-disabled:hover {
 
 .keen-explorer .a-preview-collection,.ReactModalPortal .a-preview-collection,.rc-time-picker-panel .a-preview-collection{
   padding: 0.5rem;
-  margin: 0 0 1rem;
+  margin: 0;
   cursor: pointer;
   background: #fafafa;
   border-radius: 0.3rem;
@@ -1966,6 +1966,9 @@ li.rc-time-picker-panel-select-option-disabled:hover {
 .keen-explorer .preview .download-toggle-label,.ReactModalPortal .preview .download-toggle-label,.rc-time-picker-panel .preview .download-toggle-label{
     padding: 1rem;
     cursor: pointer;
+    height: -webkit-min-content;
+    height: -moz-min-content;
+    height: min-content;
   }
 
 .keen-explorer .preview .download-toggle-label i,.ReactModalPortal .preview .download-toggle-label i,.rc-time-picker-panel .preview .download-toggle-label i{
@@ -1974,19 +1977,36 @@ li.rc-time-picker-panel-select-option-disabled:hover {
 
 .keen-explorer .preview .download-buttons,.ReactModalPortal .preview .download-buttons,.rc-time-picker-panel .preview .download-buttons{
     position: absolute;
-    background: #fafafa;
+    background: #fdfdfd;
     display: -ms-flexbox;
     display: flex;
     -ms-flex-direction: column;
         flex-direction: column;
-    -webkit-box-shadow: 2px 3px 4px rgba(0,0,0,0.05);
-            box-shadow: 2px 3px 4px rgba(0,0,0,0.05);
+    -webkit-box-shadow: 2px 3px 6px rgba(0,0,0,0.05);
+            box-shadow: 2px 3px 6px rgba(0,0,0,0.05);
     margin-top: -2px;
   }
 
+.keen-explorer .preview .download-buttons button, .ReactModalPortal .preview .download-buttons button, .rc-time-picker-panel .preview .download-buttons button {
+      border: 1px solid #f7f7f7;
+    }
+
+.keen-explorer .preview .download-buttons button:hover,.ReactModalPortal .preview .download-buttons button:hover,.rc-time-picker-panel .preview .download-buttons button:hover{
+      background: #fff;
+    }
+
 .keen-explorer .preview .download-buttons .button-download,.ReactModalPortal .preview .download-buttons .button-download,.rc-time-picker-panel .preview .download-buttons .button-download{
       padding: 1rem 3rem;
+      height: -webkit-min-content;
+      height: -moz-min-content;
+      height: min-content;
     }
+
+.keen-explorer .preview .button-embed-html,.ReactModalPortal .preview .button-embed-html,.rc-time-picker-panel .preview .button-embed-html{
+    height: -webkit-min-content;
+    height: -moz-min-content;
+    height: min-content;
+  }
 
 .keen-explorer * {
     -webkit-box-sizing: border-box;
@@ -2056,7 +2076,11 @@ li.rc-time-picker-panel-select-option-disabled:hover {
       padding: 1rem;
     }
 
-.keen-explorer .panel-main .panel-content .label-analysis-type,.ReactModalPortal .panel-main .panel-content .label-analysis-type,.rc-time-picker-panel .panel-main .panel-content .label-analysis-type{
+.keen-explorer .panel-main .panel-content .event-collection .label-main,.ReactModalPortal .panel-main .panel-content .event-collection .label-main,.rc-time-picker-panel .panel-main .panel-content .event-collection .label-main{
+        padding-top: 0;
+      }
+
+.keen-explorer .panel-main .panel-funnel .label-analysis-type, .ReactModalPortal .panel-main .panel-funnel .label-analysis-type, .rc-time-picker-panel .panel-main .panel-funnel .label-analysis-type {
         padding-top: 0;
       }
 
