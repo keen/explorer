@@ -17,7 +17,9 @@
        container: '#keen-explorer-wrapper',
        persistence: true,
        keenAnalysis: {
-         config: keenGlobals.demoConfig
+         config: {
+          ...keenGlobals.demoConfig
+         },
        },
        keenDataviz: {
        },

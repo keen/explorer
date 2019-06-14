@@ -6,4 +6,7 @@
   .input-text{
     width: 100%;
   }
+  .bulk-panel{
+    margin-bottom: 1rem;
+  }
 }

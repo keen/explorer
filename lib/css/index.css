@@ -86,6 +86,10 @@
       }
     }
 
+    .panel-saved-queries{
+      padding-right: 0;
+    }
+
     .panel-funnel{
       .label-analysis-type {
         padding-top: 0;
@@ -96,7 +100,7 @@
   .result{
     flex: 3;
     padding: 0 1.5rem;
-    overflow: hidden;
+    overflow-x: hidden;
   }
 
   .foldable{

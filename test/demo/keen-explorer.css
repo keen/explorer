@@ -1290,6 +1290,10 @@ li.rc-time-picker-panel-select-option-disabled:hover {
     width: 100%;
   }
 
+.keen-explorer .extraction .bulk-panel,.ReactModalPortal .extraction .bulk-panel,.rc-time-picker-panel .extraction .bulk-panel{
+    margin-bottom: 1rem;
+  }
+
 .keen-explorer .percentile .input-text,.ReactModalPortal .percentile .input-text,.rc-time-picker-panel .percentile .input-text{
     width: 100%;
   }
@@ -1754,6 +1758,7 @@ li.rc-time-picker-panel-select-option-disabled:hover {
   overflow: scroll;
   min-height: 100%;
   max-height: 44rem;
+  padding-right: 1rem;
 }
 
 .keen-explorer .saved-queries .input-filter,.ReactModalPortal .saved-queries .input-filter,.rc-time-picker-panel .saved-queries .input-filter{
@@ -1766,33 +1771,74 @@ li.rc-time-picker-panel-select-option-disabled:hover {
   }
 
 .keen-explorer .saved-queries .item,.ReactModalPortal .saved-queries .item,.rc-time-picker-panel .saved-queries .item{
-    padding: 1rem;
+    position: relative;
+    padding: 1rem 0.5rem;
     cursor: pointer;
     overflow: auto;
     border-bottom: 1px solid #f3f3f3;
   }
 
 .keen-explorer .saved-queries .item .name,.ReactModalPortal .saved-queries .item .name,.rc-time-picker-panel .saved-queries .item .name{
-      margin: 0 0 0.5rem;
+      margin: 0rem 1rem 1rem 0;
     }
 
-.keen-explorer .saved-queries .item .cached,.ReactModalPortal .saved-queries .item .cached,.rc-time-picker-panel .saved-queries .item .cached{
+.keen-explorer .saved-queries .item .cached{
       float: left;
+      color: #3ecf8e;
+      color: #3ecf8e;
+      text-transform: uppercase;
     }
 
-.keen-explorer .saved-queries .item .cached *,.ReactModalPortal .saved-queries .item .cached *,.rc-time-picker-panel .saved-queries .item .cached *{
-        font-size: 0.6rem;
-        text-transform: uppercase;
+.ReactModalPortal .saved-queries .item .cached{
+      float: left;
+      color: #3ecf8e;
+      color: #3ecf8e;
+      text-transform: uppercase;
+    }
+
+.rc-time-picker-panel .saved-queries .item .cached{
+      float: left;
+      color: #3ecf8e;
+      color: #3ecf8e;
+      text-transform: uppercase;
+    }
+
+.keen-explorer .saved-queries .item .cached *, .ReactModalPortal .saved-queries .item .cached *, .rc-time-picker-panel .saved-queries .item .cached * {
+        font-size: 0.7rem;
       }
 
 .keen-explorer .saved-queries .item .data,.ReactModalPortal .saved-queries .item .data,.rc-time-picker-panel .saved-queries .item .data{
       float: right;
       font-size: 0.7rem;
+      color: rgba(0,0,0,0.5);
     }
 
-.keen-explorer .saved-queries .active,.ReactModalPortal .saved-queries .active,.rc-time-picker-panel .saved-queries .active{
-    background: #f7f7f7;
+.keen-explorer .saved-queries .item .button-delete,.ReactModalPortal .saved-queries .item .button-delete,.rc-time-picker-panel .saved-queries .item .button-delete{
+      position: absolute;
+      right: 0.2rem;
+      top: 0.2rem;
+      padding: 0.2rem;
+      color: rgba(0,0,0,0.2);
+    }
+
+.keen-explorer .saved-queries .active{
+    background: #edfff5;
+    background: #edfff5;
   }
+
+.ReactModalPortal .saved-queries .active{
+    background: #edfff5;
+    background: #edfff5;
+  }
+
+.rc-time-picker-panel .saved-queries .active{
+    background: #edfff5;
+    background: #edfff5;
+  }
+
+.keen-explorer .saved-queries .active .cached, .ReactModalPortal .saved-queries .active .cached, .rc-time-picker-panel .saved-queries .active .cached {
+      color: rgba(0,0,0,0.5);
+    }
 
 .keen-explorer .funnel .content,.ReactModalPortal .funnel .content,.rc-time-picker-panel .funnel .content{
     padding: 0.3rem 0.5rem;
@@ -1917,8 +1963,19 @@ li.rc-time-picker-panel-select-option-disabled:hover {
       border-bottom: 1px solid #f3f3f3;
     }
 
-.keen-explorer .preview-collection-content .list .active,.ReactModalPortal .preview-collection-content .list .active,.rc-time-picker-panel .preview-collection-content .list .active{
-      background: #f7f7f7;
+.keen-explorer .preview-collection-content .list .active{
+      background: #edfff5;
+      background: #edfff5;
+    }
+
+.ReactModalPortal .preview-collection-content .list .active{
+      background: #edfff5;
+      background: #edfff5;
+    }
+
+.rc-time-picker-panel .preview-collection-content .list .active{
+      background: #edfff5;
+      background: #edfff5;
     }
 
 .keen-explorer .preview-collection-content .content,.ReactModalPortal .preview-collection-content .content,.rc-time-picker-panel .preview-collection-content .content{
@@ -2080,6 +2137,10 @@ li.rc-time-picker-panel-select-option-disabled:hover {
         padding-top: 0;
       }
 
+.keen-explorer .panel-main .panel-saved-queries,.ReactModalPortal .panel-main .panel-saved-queries,.rc-time-picker-panel .panel-main .panel-saved-queries{
+      padding-right: 0;
+    }
+
 .keen-explorer .panel-main .panel-funnel .label-analysis-type, .ReactModalPortal .panel-main .panel-funnel .label-analysis-type, .rc-time-picker-panel .panel-main .panel-funnel .label-analysis-type {
         padding-top: 0;
       }
@@ -2088,7 +2149,7 @@ li.rc-time-picker-panel-select-option-disabled:hover {
     -ms-flex: 3;
         flex: 3;
     padding: 0 1.5rem;
-    overflow: hidden;
+    overflow-x: hidden;
 }
 
 .keen-explorer .foldable,.ReactModalPortal .foldable,.rc-time-picker-panel .foldable{
