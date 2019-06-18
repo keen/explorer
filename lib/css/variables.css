@@ -6,5 +6,6 @@
   --color-dark-mint: #3ecf8e;
   --color-dark-sky-blue: #45b2e8;
   --border-light: 1px solid #efefef;
-  --list-item-active: #edfff5;
+  --list-item: #fff;
+  --list-item-active: #fcfcfc;
 }

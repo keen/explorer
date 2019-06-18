@@ -1,4 +1,4 @@
-.keen-dataviz{
+.keen-dataviz {
   font-family: inherit !important;
   .keen-c3-legend {
     .legend-item-text {
@@ -7,9 +7,12 @@
   }
 }
 
-.keen-dataviz-container{
+.keen-dataviz-container {
   height: calc(100% - 3rem);
   overflow: hidden;
+  .keen-dataviz-execution-meta {
+    top: 1rem;
+  }
 }
 
 .keen-dataviz-metric-value{

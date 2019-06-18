@@ -30,6 +30,7 @@
       padding: 1rem;
       overflow: auto;
       border-bottom: 1px solid #f3f3f3;
+      background: var(--list-item);
     }
     .active{
       background: var(--list-item-active);

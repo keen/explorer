@@ -18,6 +18,7 @@
     cursor: pointer;
     overflow: auto;
     border-bottom: 1px solid #f3f3f3;
+    background: var(--list-item);
     .name{
       margin: 0rem 1rem 1rem 0;
     }
@@ -45,8 +46,5 @@
 
   .active{
     background: var(--list-item-active);
-    .cached {
-      color: rgba(0,0,0,0.5);
-    }
   }
 }
