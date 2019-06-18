@@ -7,7 +7,7 @@
 		var a = typeof exports === 'object' ? factory(require("react"), require("react-redux"), require("react-select"), require("moment"), require("redux"), require("react-json-view"), require("react-dates"), require("rc-time-picker"), require("react-modal"), require("moment-timezone"), require("react-dom"), require("redux-devtools-extension"), require("redux-saga"), require("keen-analysis"), require("prop-types"), require("keen-dataviz")) : factory(root["react"], root["react-redux"], root["react-select"], root["moment"], root["redux"], root["react-json-view"], root["react-dates"], root["rc-time-picker"], root["react-modal"], root["moment-timezone"], root["react-dom"], root["redux-devtools-extension"], root["redux-saga"], root["keen-analysis"], root["prop-types"], root["keen-dataviz"]);
 		for(var i in a) (typeof exports === 'object' ? exports : root)[i] = a[i];
 	}
-})(window, function(__WEBPACK_EXTERNAL_MODULE__0__, __WEBPACK_EXTERNAL_MODULE__2__, __WEBPACK_EXTERNAL_MODULE__7__, __WEBPACK_EXTERNAL_MODULE__10__, __WEBPACK_EXTERNAL_MODULE__56__, __WEBPACK_EXTERNAL_MODULE__57__, __WEBPACK_EXTERNAL_MODULE__58__, __WEBPACK_EXTERNAL_MODULE__59__, __WEBPACK_EXTERNAL_MODULE__60__, __WEBPACK_EXTERNAL_MODULE__78__, __WEBPACK_EXTERNAL_MODULE__160__, __WEBPACK_EXTERNAL_MODULE__161__, __WEBPACK_EXTERNAL_MODULE__162__, __WEBPACK_EXTERNAL_MODULE__163__, __WEBPACK_EXTERNAL_MODULE__165__, __WEBPACK_EXTERNAL_MODULE__167__) {
+})(window, function(__WEBPACK_EXTERNAL_MODULE__0__, __WEBPACK_EXTERNAL_MODULE__2__, __WEBPACK_EXTERNAL_MODULE__7__, __WEBPACK_EXTERNAL_MODULE__10__, __WEBPACK_EXTERNAL_MODULE__56__, __WEBPACK_EXTERNAL_MODULE__57__, __WEBPACK_EXTERNAL_MODULE__58__, __WEBPACK_EXTERNAL_MODULE__59__, __WEBPACK_EXTERNAL_MODULE__60__, __WEBPACK_EXTERNAL_MODULE__78__, __WEBPACK_EXTERNAL_MODULE__160__, __WEBPACK_EXTERNAL_MODULE__161__, __WEBPACK_EXTERNAL_MODULE__162__, __WEBPACK_EXTERNAL_MODULE__163__, __WEBPACK_EXTERNAL_MODULE__166__, __WEBPACK_EXTERNAL_MODULE__168__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -91,7 +91,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 168);
+/******/ 	return __webpack_require__(__webpack_require__.s = 169);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -471,7 +471,7 @@ var ctx = __webpack_require__(26);
 var IObject = __webpack_require__(50);
 var toObject = __webpack_require__(15);
 var toLength = __webpack_require__(9);
-var asc = __webpack_require__(261);
+var asc = __webpack_require__(262);
 module.exports = function (TYPE, $create) {
   var IS_MAP = TYPE == 1;
   var IS_FILTER = TYPE == 2;
@@ -1621,8 +1621,8 @@ module.exports = function (O, D) {
 
 
 
-var base64 = __webpack_require__(337)
-var ieee754 = __webpack_require__(338)
+var base64 = __webpack_require__(338)
+var ieee754 = __webpack_require__(339)
 var isArray = __webpack_require__(144)
 
 exports.Buffer = Buffer
@@ -4123,7 +4123,7 @@ var singleton = null;
 var	singletonCounter = 0;
 var	stylesInsertedAtTop = [];
 
-var	fixUrls = __webpack_require__(336);
+var	fixUrls = __webpack_require__(337);
 
 module.exports = function(list, options) {
 	if (typeof DEBUG !== "undefined" && DEBUG) {
@@ -4755,7 +4755,7 @@ SafeBuffer.allocUnsafeSlow = function (size) {
 "use strict";
 
 
-var implementation = __webpack_require__(361);
+var implementation = __webpack_require__(362);
 
 module.exports = Function.prototype.bind || implementation;
 
@@ -5966,7 +5966,7 @@ exports.Readable = exports;
 exports.Writable = __webpack_require__(108);
 exports.Duplex = __webpack_require__(41);
 exports.Transform = __webpack_require__(149);
-exports.PassThrough = __webpack_require__(347);
+exports.PassThrough = __webpack_require__(348);
 
 
 /***/ }),
@@ -6046,7 +6046,7 @@ util.inherits = __webpack_require__(49);
 
 /*<replacement>*/
 var internalUtil = {
-  deprecate: __webpack_require__(346)
+  deprecate: __webpack_require__(347)
 };
 /*</replacement>*/
 
@@ -6661,7 +6661,7 @@ Writable.prototype._destroy = function (err, cb) {
   this.end();
   cb(err);
 };
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(74), __webpack_require__(344).setImmediate, __webpack_require__(25)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(74), __webpack_require__(345).setImmediate, __webpack_require__(25)))
 
 /***/ }),
 /* 109 */
@@ -6670,8 +6670,8 @@ Writable.prototype._destroy = function (err, cb) {
 "use strict";
 
 
-var keys = __webpack_require__(358);
-var foreach = __webpack_require__(360);
+var keys = __webpack_require__(359);
+var foreach = __webpack_require__(361);
 var hasSymbols = typeof Symbol === 'function' && typeof Symbol() === 'symbol';
 
 var toStr = Object.prototype.toString;
@@ -7784,9 +7784,9 @@ var anInstance = __webpack_require__(46);
 var forOf = __webpack_require__(68);
 var speciesConstructor = __webpack_require__(53);
 var task = __webpack_require__(104).set;
-var microtask = __webpack_require__(282)();
+var microtask = __webpack_require__(283)();
 var newPromiseCapabilityModule = __webpack_require__(136);
-var perform = __webpack_require__(283);
+var perform = __webpack_require__(284);
 var userAgent = __webpack_require__(69);
 var promiseResolve = __webpack_require__(137);
 var PROMISE = 'Promise';
@@ -8509,7 +8509,7 @@ util.inherits = __webpack_require__(49);
 /*</replacement>*/
 
 /*<replacement>*/
-var debugUtil = __webpack_require__(341);
+var debugUtil = __webpack_require__(342);
 var debug = void 0;
 if (debugUtil && debugUtil.debuglog) {
   debug = debugUtil.debuglog('stream');
@@ -8518,7 +8518,7 @@ if (debugUtil && debugUtil.debuglog) {
 }
 /*</replacement>*/
 
-var BufferList = __webpack_require__(342);
+var BufferList = __webpack_require__(343);
 var destroyImpl = __webpack_require__(147);
 var StringDecoder;
 
@@ -10073,7 +10073,7 @@ function done(stream, er, data) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // eslint-disable-next-line import/no-unresolved
-__webpack_require__(353);
+__webpack_require__(354);
 
 
 /***/ }),
@@ -10083,7 +10083,7 @@ __webpack_require__(353);
 "use strict";
 
 
-var ES = __webpack_require__(362);
+var ES = __webpack_require__(363);
 
 var MAX_SAFE_INTEGER = Number.MAX_SAFE_INTEGER || (Math.pow(2, 53) - 1);
 
@@ -10452,24 +10452,4779 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__163__;
 
 /***/ }),
 /* 164 */
+/***/ (function(module, exports, __webpack_require__) {
+
+(function webpackUniversalModuleDefinition(root, factory) {
+	if(true)
+		module.exports = factory();
+	else { var i, a; }
+})(window, function() {
+return /******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, {
+/******/ 				configurable: false,
+/******/ 				enumerable: true,
+/******/ 				get: getter
+/******/ 			});
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = 44);
+/******/ })
+/************************************************************************/
+/******/ ([
+/* 0 */
+/***/ (function(module, exports) {
+
+module.exports = each;
+
+function each(o, cb, s){
+  var n;
+  if (!o){
+    return 0;
+  }
+  s = !s ? o : s;
+  if (o instanceof Array){
+    // Indexed arrays, needed for Safari
+    for (n=0; n<o.length; n++) {
+      if (cb.call(s, o[n], n, o) === false){
+        return 0;
+      }
+    }
+  } else {
+    // Hashtables
+    for (n in o){
+      if (o.hasOwnProperty(n)) {
+        if (cb.call(s, o[n], n, o) === false){
+          return 0;
+        }
+      }
+    }
+  }
+  return 1;
+}
+
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports) {
+
+module.exports = extend;
+
+function extend(target){
+  for (var i = 1; i < arguments.length; i++) {
+    for (var prop in arguments[i]){
+      target[prop] = arguments[i][prop];
+    }
+  }
+  return target;
+};
+
+
+/***/ }),
+/* 2 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* WEBPACK VAR INJECTION */(function(global) {/* harmony import */ var _index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(18);
+/* harmony import */ var _finally__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(5);
+
+
+
+var globalNS = (function() {
+  // the only reliable means to get the global object is
+  // `Function('return this')()`
+  // However, this causes CSP violations in Chrome apps.
+  if (typeof self !== 'undefined') {
+    return self;
+  }
+  if (typeof window !== 'undefined') {
+    return window;
+  }
+  if (typeof global !== 'undefined') {
+    return global;
+  }
+  throw new Error('unable to locate global object');
+})();
+
+if (!globalNS.Promise) {
+  globalNS.Promise = _index__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"];
+} else if (!globalNS.Promise.prototype['finally']) {
+  globalNS.Promise.prototype['finally'] = _finally__WEBPACK_IMPORTED_MODULE_1__[/* default */ "a"];
+}
+
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(4)))
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var configDefault = exports.configDefault = {
+
+  // defer events - queue
+  // https://github.com/keen/keen-tracking.js/blob/master/docs/defer-events.md
+  queue: {
+    capacity: 5000,
+    interval: 15
+  },
+
+  // connection problems - retry request
+  retry: {
+    limit: 10,
+    initialDelay: 200,
+    retryOnResponseStatuses: [408, 500, 502, 503, 504]
+  },
+
+  unique: false, // record only unique events?
+  // if so - store unique events hashes to compare
+  cache: {
+    /*
+      storage: 'indexeddb', // uncomment for persistence
+    */
+    dbName: 'keenTracking', // indexedDB name
+    dbCollectionName: 'events',
+    dbCollectionKey: 'hash',
+
+    /*
+      hashingMethod: 'md5', // if undefined - store as stringified JSON
+    */
+    maxAge: 60 * 1000 // store for 1 minute
+  }
+};
+
+exports.default = configDefault;
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports) {
+
+var g;
+
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || Function("return this")() || (1, eval)("this");
+} catch (e) {
+	// This works if the window reference is available
+	if (typeof window === "object") g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
+
+
+/***/ }),
+/* 5 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony default export */ __webpack_exports__["a"] = (function(callback) {
+  var constructor = this.constructor;
+  return this.then(
+    function(value) {
+      return constructor.resolve(callback()).then(function() {
+        return value;
+      });
+    },
+    function(reason) {
+      return constructor.resolve(callback()).then(function() {
+        return constructor.reject(reason);
+      });
+    }
+  );
+});
+
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports) {
+
+(function(self) {
+  'use strict';
+
+  if (self.fetch) {
+    return
+  }
+
+  var support = {
+    searchParams: 'URLSearchParams' in self,
+    iterable: 'Symbol' in self && 'iterator' in Symbol,
+    blob: 'FileReader' in self && 'Blob' in self && (function() {
+      try {
+        new Blob()
+        return true
+      } catch(e) {
+        return false
+      }
+    })(),
+    formData: 'FormData' in self,
+    arrayBuffer: 'ArrayBuffer' in self
+  }
+
+  if (support.arrayBuffer) {
+    var viewClasses = [
+      '[object Int8Array]',
+      '[object Uint8Array]',
+      '[object Uint8ClampedArray]',
+      '[object Int16Array]',
+      '[object Uint16Array]',
+      '[object Int32Array]',
+      '[object Uint32Array]',
+      '[object Float32Array]',
+      '[object Float64Array]'
+    ]
+
+    var isDataView = function(obj) {
+      return obj && DataView.prototype.isPrototypeOf(obj)
+    }
+
+    var isArrayBufferView = ArrayBuffer.isView || function(obj) {
+      return obj && viewClasses.indexOf(Object.prototype.toString.call(obj)) > -1
+    }
+  }
+
+  function normalizeName(name) {
+    if (typeof name !== 'string') {
+      name = String(name)
+    }
+    if (/[^a-z0-9\-#$%&'*+.\^_`|~]/i.test(name)) {
+      throw new TypeError('Invalid character in header field name')
+    }
+    return name.toLowerCase()
+  }
+
+  function normalizeValue(value) {
+    if (typeof value !== 'string') {
+      value = String(value)
+    }
+    return value
+  }
+
+  // Build a destructive iterator for the value list
+  function iteratorFor(items) {
+    var iterator = {
+      next: function() {
+        var value = items.shift()
+        return {done: value === undefined, value: value}
+      }
+    }
+
+    if (support.iterable) {
+      iterator[Symbol.iterator] = function() {
+        return iterator
+      }
+    }
+
+    return iterator
+  }
+
+  function Headers(headers) {
+    this.map = {}
+
+    if (headers instanceof Headers) {
+      headers.forEach(function(value, name) {
+        this.append(name, value)
+      }, this)
+    } else if (Array.isArray(headers)) {
+      headers.forEach(function(header) {
+        this.append(header[0], header[1])
+      }, this)
+    } else if (headers) {
+      Object.getOwnPropertyNames(headers).forEach(function(name) {
+        this.append(name, headers[name])
+      }, this)
+    }
+  }
+
+  Headers.prototype.append = function(name, value) {
+    name = normalizeName(name)
+    value = normalizeValue(value)
+    var oldValue = this.map[name]
+    this.map[name] = oldValue ? oldValue+','+value : value
+  }
+
+  Headers.prototype['delete'] = function(name) {
+    delete this.map[normalizeName(name)]
+  }
+
+  Headers.prototype.get = function(name) {
+    name = normalizeName(name)
+    return this.has(name) ? this.map[name] : null
+  }
+
+  Headers.prototype.has = function(name) {
+    return this.map.hasOwnProperty(normalizeName(name))
+  }
+
+  Headers.prototype.set = function(name, value) {
+    this.map[normalizeName(name)] = normalizeValue(value)
+  }
+
+  Headers.prototype.forEach = function(callback, thisArg) {
+    for (var name in this.map) {
+      if (this.map.hasOwnProperty(name)) {
+        callback.call(thisArg, this.map[name], name, this)
+      }
+    }
+  }
+
+  Headers.prototype.keys = function() {
+    var items = []
+    this.forEach(function(value, name) { items.push(name) })
+    return iteratorFor(items)
+  }
+
+  Headers.prototype.values = function() {
+    var items = []
+    this.forEach(function(value) { items.push(value) })
+    return iteratorFor(items)
+  }
+
+  Headers.prototype.entries = function() {
+    var items = []
+    this.forEach(function(value, name) { items.push([name, value]) })
+    return iteratorFor(items)
+  }
+
+  if (support.iterable) {
+    Headers.prototype[Symbol.iterator] = Headers.prototype.entries
+  }
+
+  function consumed(body) {
+    if (body.bodyUsed) {
+      return Promise.reject(new TypeError('Already read'))
+    }
+    body.bodyUsed = true
+  }
+
+  function fileReaderReady(reader) {
+    return new Promise(function(resolve, reject) {
+      reader.onload = function() {
+        resolve(reader.result)
+      }
+      reader.onerror = function() {
+        reject(reader.error)
+      }
+    })
+  }
+
+  function readBlobAsArrayBuffer(blob) {
+    var reader = new FileReader()
+    var promise = fileReaderReady(reader)
+    reader.readAsArrayBuffer(blob)
+    return promise
+  }
+
+  function readBlobAsText(blob) {
+    var reader = new FileReader()
+    var promise = fileReaderReady(reader)
+    reader.readAsText(blob)
+    return promise
+  }
+
+  function readArrayBufferAsText(buf) {
+    var view = new Uint8Array(buf)
+    var chars = new Array(view.length)
+
+    for (var i = 0; i < view.length; i++) {
+      chars[i] = String.fromCharCode(view[i])
+    }
+    return chars.join('')
+  }
+
+  function bufferClone(buf) {
+    if (buf.slice) {
+      return buf.slice(0)
+    } else {
+      var view = new Uint8Array(buf.byteLength)
+      view.set(new Uint8Array(buf))
+      return view.buffer
+    }
+  }
+
+  function Body() {
+    this.bodyUsed = false
+
+    this._initBody = function(body) {
+      this._bodyInit = body
+      if (!body) {
+        this._bodyText = ''
+      } else if (typeof body === 'string') {
+        this._bodyText = body
+      } else if (support.blob && Blob.prototype.isPrototypeOf(body)) {
+        this._bodyBlob = body
+      } else if (support.formData && FormData.prototype.isPrototypeOf(body)) {
+        this._bodyFormData = body
+      } else if (support.searchParams && URLSearchParams.prototype.isPrototypeOf(body)) {
+        this._bodyText = body.toString()
+      } else if (support.arrayBuffer && support.blob && isDataView(body)) {
+        this._bodyArrayBuffer = bufferClone(body.buffer)
+        // IE 10-11 can't handle a DataView body.
+        this._bodyInit = new Blob([this._bodyArrayBuffer])
+      } else if (support.arrayBuffer && (ArrayBuffer.prototype.isPrototypeOf(body) || isArrayBufferView(body))) {
+        this._bodyArrayBuffer = bufferClone(body)
+      } else {
+        throw new Error('unsupported BodyInit type')
+      }
+
+      if (!this.headers.get('content-type')) {
+        if (typeof body === 'string') {
+          this.headers.set('content-type', 'text/plain;charset=UTF-8')
+        } else if (this._bodyBlob && this._bodyBlob.type) {
+          this.headers.set('content-type', this._bodyBlob.type)
+        } else if (support.searchParams && URLSearchParams.prototype.isPrototypeOf(body)) {
+          this.headers.set('content-type', 'application/x-www-form-urlencoded;charset=UTF-8')
+        }
+      }
+    }
+
+    if (support.blob) {
+      this.blob = function() {
+        var rejected = consumed(this)
+        if (rejected) {
+          return rejected
+        }
+
+        if (this._bodyBlob) {
+          return Promise.resolve(this._bodyBlob)
+        } else if (this._bodyArrayBuffer) {
+          return Promise.resolve(new Blob([this._bodyArrayBuffer]))
+        } else if (this._bodyFormData) {
+          throw new Error('could not read FormData body as blob')
+        } else {
+          return Promise.resolve(new Blob([this._bodyText]))
+        }
+      }
+
+      this.arrayBuffer = function() {
+        if (this._bodyArrayBuffer) {
+          return consumed(this) || Promise.resolve(this._bodyArrayBuffer)
+        } else {
+          return this.blob().then(readBlobAsArrayBuffer)
+        }
+      }
+    }
+
+    this.text = function() {
+      var rejected = consumed(this)
+      if (rejected) {
+        return rejected
+      }
+
+      if (this._bodyBlob) {
+        return readBlobAsText(this._bodyBlob)
+      } else if (this._bodyArrayBuffer) {
+        return Promise.resolve(readArrayBufferAsText(this._bodyArrayBuffer))
+      } else if (this._bodyFormData) {
+        throw new Error('could not read FormData body as text')
+      } else {
+        return Promise.resolve(this._bodyText)
+      }
+    }
+
+    if (support.formData) {
+      this.formData = function() {
+        return this.text().then(decode)
+      }
+    }
+
+    this.json = function() {
+      return this.text().then(JSON.parse)
+    }
+
+    return this
+  }
+
+  // HTTP methods whose capitalization should be normalized
+  var methods = ['DELETE', 'GET', 'HEAD', 'OPTIONS', 'POST', 'PUT']
+
+  function normalizeMethod(method) {
+    var upcased = method.toUpperCase()
+    return (methods.indexOf(upcased) > -1) ? upcased : method
+  }
+
+  function Request(input, options) {
+    options = options || {}
+    var body = options.body
+
+    if (input instanceof Request) {
+      if (input.bodyUsed) {
+        throw new TypeError('Already read')
+      }
+      this.url = input.url
+      this.credentials = input.credentials
+      if (!options.headers) {
+        this.headers = new Headers(input.headers)
+      }
+      this.method = input.method
+      this.mode = input.mode
+      if (!body && input._bodyInit != null) {
+        body = input._bodyInit
+        input.bodyUsed = true
+      }
+    } else {
+      this.url = String(input)
+    }
+
+    this.credentials = options.credentials || this.credentials || 'omit'
+    if (options.headers || !this.headers) {
+      this.headers = new Headers(options.headers)
+    }
+    this.method = normalizeMethod(options.method || this.method || 'GET')
+    this.mode = options.mode || this.mode || null
+    this.referrer = null
+
+    if ((this.method === 'GET' || this.method === 'HEAD') && body) {
+      throw new TypeError('Body not allowed for GET or HEAD requests')
+    }
+    this._initBody(body)
+  }
+
+  Request.prototype.clone = function() {
+    return new Request(this, { body: this._bodyInit })
+  }
+
+  function decode(body) {
+    var form = new FormData()
+    body.trim().split('&').forEach(function(bytes) {
+      if (bytes) {
+        var split = bytes.split('=')
+        var name = split.shift().replace(/\+/g, ' ')
+        var value = split.join('=').replace(/\+/g, ' ')
+        form.append(decodeURIComponent(name), decodeURIComponent(value))
+      }
+    })
+    return form
+  }
+
+  function parseHeaders(rawHeaders) {
+    var headers = new Headers()
+    // Replace instances of \r\n and \n followed by at least one space or horizontal tab with a space
+    // https://tools.ietf.org/html/rfc7230#section-3.2
+    var preProcessedHeaders = rawHeaders.replace(/\r?\n[\t ]+/g, ' ')
+    preProcessedHeaders.split(/\r?\n/).forEach(function(line) {
+      var parts = line.split(':')
+      var key = parts.shift().trim()
+      if (key) {
+        var value = parts.join(':').trim()
+        headers.append(key, value)
+      }
+    })
+    return headers
+  }
+
+  Body.call(Request.prototype)
+
+  function Response(bodyInit, options) {
+    if (!options) {
+      options = {}
+    }
+
+    this.type = 'default'
+    this.status = options.status === undefined ? 200 : options.status
+    this.ok = this.status >= 200 && this.status < 300
+    this.statusText = 'statusText' in options ? options.statusText : 'OK'
+    this.headers = new Headers(options.headers)
+    this.url = options.url || ''
+    this._initBody(bodyInit)
+  }
+
+  Body.call(Response.prototype)
+
+  Response.prototype.clone = function() {
+    return new Response(this._bodyInit, {
+      status: this.status,
+      statusText: this.statusText,
+      headers: new Headers(this.headers),
+      url: this.url
+    })
+  }
+
+  Response.error = function() {
+    var response = new Response(null, {status: 0, statusText: ''})
+    response.type = 'error'
+    return response
+  }
+
+  var redirectStatuses = [301, 302, 303, 307, 308]
+
+  Response.redirect = function(url, status) {
+    if (redirectStatuses.indexOf(status) === -1) {
+      throw new RangeError('Invalid status code')
+    }
+
+    return new Response(null, {status: status, headers: {location: url}})
+  }
+
+  self.Headers = Headers
+  self.Request = Request
+  self.Response = Response
+
+  self.fetch = function(input, init) {
+    return new Promise(function(resolve, reject) {
+      var request = new Request(input, init)
+      var xhr = new XMLHttpRequest()
+
+      xhr.onload = function() {
+        var options = {
+          status: xhr.status,
+          statusText: xhr.statusText,
+          headers: parseHeaders(xhr.getAllResponseHeaders() || '')
+        }
+        options.url = 'responseURL' in xhr ? xhr.responseURL : options.headers.get('X-Request-URL')
+        var body = 'response' in xhr ? xhr.response : xhr.responseText
+        resolve(new Response(body, options))
+      }
+
+      xhr.onerror = function() {
+        reject(new TypeError('Network request failed'))
+      }
+
+      xhr.ontimeout = function() {
+        reject(new TypeError('Network request failed'))
+      }
+
+      xhr.open(request.method, request.url, true)
+
+      if (request.credentials === 'include') {
+        xhr.withCredentials = true
+      } else if (request.credentials === 'omit') {
+        xhr.withCredentials = false
+      }
+
+      if ('responseType' in xhr && support.blob) {
+        xhr.responseType = 'blob'
+      }
+
+      request.headers.forEach(function(value, name) {
+        xhr.setRequestHeader(name, value)
+      })
+
+      xhr.send(typeof request._bodyInit === 'undefined' ? null : request._bodyInit)
+    })
+  }
+  self.fetch.polyfill = true
+})(typeof self !== 'undefined' ? self : this);
+
+
+/***/ }),
+/* 7 */
+/***/ (function(module) {
+
+module.exports = {"name":"keen-tracking","version":"4.4.0","description":"Track events - custom user actions, clicks, pageviews, purchases.","main":"dist/node/keen-tracking.js","browser":"dist/keen-tracking.js","repository":{"type":"git","url":"https://github.com/keen/keen-tracking.js.git"},"scripts":{"start":"NODE_ENV=development webpack-dev-server","test":"NODE_ENV=test jest && npm run test:node","test:node":"NODE_ENV=test TEST_ENV=node jest","test:watch":"NODE_ENV=test jest --watch","test:node:watch":"NODE_ENV=test TEST_ENV=node jest --watch","build":"NODE_ENV=production webpack -p && NODE_ENV=production OPTIMIZE_MINIMIZE=1 webpack -p && npm run build:node","build:node":"TARGET=node NODE_ENV=production webpack -p","profile":"webpack --profile --json > stats.json","analyze":"webpack-bundle-analyzer stats.json /dist","preversion":"npm run build:node && npm run test","version":"npm run build && git add .","postversion":"git push && git push --tags","demo":"node ./test/demo/index.node.js"},"bugs":"https://github.com/keen/keen-tracking.js/issues","author":"Keen IO <team@keen.io> (https://keen.io/)","homepage":"https://keen.io","keywords":["Tracking","Tracker","Event Tracker","Event tracking","Track events","Page tracking","User tracking","Analytics event tracking","Analytics events","Analytics tracking","Custom events","Analytics","Stats","Statistics","Monitoring","Metrics","Pageviews","Segmentation","Funnel","Conversion","Log","Logger","Logging","Javascript events","Universal tracking","Click analytics"],"contributors":["Dustin Larimer <dustin@keen.io> (https://github.com/dustinlarimer)","Eric Anderson <eric@keen.io> (https://github.com/aroc)","Joe Wegner <joe@keen.io> (http://www.wegnerdesign.com)","Alex Kleissner <alex@keen.io> (https://github.com/hex337)","Adam Kasprowicz <adam.kasprowicz@keen.io> (https://github.com/adamkasprowicz)","Dariusz Łacheta <dariusz.lacheta@keen.io> (https://github.com/dariuszlacheta)"],"license":"MIT","dependencies":{"component-emitter":"^1.2.0","js-cookie":"2.1.0","keen-core":"^0.1.3","promise-polyfill":"^8.0.0","whatwg-fetch":"^2.0.4"},"devDependencies":{"babel-core":"^6.26.3","babel-jest":"^23.0.1","babel-loader":"^7.1.5","babel-plugin-transform-es2015-modules-commonjs":"^6.26.2","babel-plugin-transform-object-rest-spread":"^6.26.0","babel-polyfill":"^6.26.0","babel-preset-env":"^1.7.0","babel-preset-es2015":"^6.24.1","babel-preset-stage-0":"^6.24.1","eslint":"^4.19.1","eslint-config-airbnb":"^16.1.0","eslint-loader":"^2.0.0","eslint-plugin-import":"^2.11.0","eslint-plugin-jsx-a11y":"^6.0.3","html-loader":"^0.5.5","html-webpack-plugin":"^3.2.0","jest":"^22.4.3","jest-fetch-mock":"^1.6.5","merge":"^1.2.1","nock":"^9.2.6","regenerator-runtime":"^0.11.1","replace-in-file":"^3.4.0","url-parse":"^1.4.3","webpack":"^4.5.0","webpack-bundle-analyzer":"^2.11.1","webpack-cli":"^2.0.13","webpack-dev-server":"^3.1.14","xhr-mock":"^2.3.2"}};
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+/**
+ * Expose `Emitter`.
+ */
+
+if (true) {
+  module.exports = Emitter;
+}
+
+/**
+ * Initialize a new `Emitter`.
+ *
+ * @api public
+ */
+
+function Emitter(obj) {
+  if (obj) return mixin(obj);
+};
+
+/**
+ * Mixin the emitter properties.
+ *
+ * @param {Object} obj
+ * @return {Object}
+ * @api private
+ */
+
+function mixin(obj) {
+  for (var key in Emitter.prototype) {
+    obj[key] = Emitter.prototype[key];
+  }
+  return obj;
+}
+
+/**
+ * Listen on the given `event` with `fn`.
+ *
+ * @param {String} event
+ * @param {Function} fn
+ * @return {Emitter}
+ * @api public
+ */
+
+Emitter.prototype.on =
+Emitter.prototype.addEventListener = function(event, fn){
+  this._callbacks = this._callbacks || {};
+  (this._callbacks['$' + event] = this._callbacks['$' + event] || [])
+    .push(fn);
+  return this;
+};
+
+/**
+ * Adds an `event` listener that will be invoked a single
+ * time then automatically removed.
+ *
+ * @param {String} event
+ * @param {Function} fn
+ * @return {Emitter}
+ * @api public
+ */
+
+Emitter.prototype.once = function(event, fn){
+  function on() {
+    this.off(event, on);
+    fn.apply(this, arguments);
+  }
+
+  on.fn = fn;
+  this.on(event, on);
+  return this;
+};
+
+/**
+ * Remove the given callback for `event` or all
+ * registered callbacks.
+ *
+ * @param {String} event
+ * @param {Function} fn
+ * @return {Emitter}
+ * @api public
+ */
+
+Emitter.prototype.off =
+Emitter.prototype.removeListener =
+Emitter.prototype.removeAllListeners =
+Emitter.prototype.removeEventListener = function(event, fn){
+  this._callbacks = this._callbacks || {};
+
+  // all
+  if (0 == arguments.length) {
+    this._callbacks = {};
+    return this;
+  }
+
+  // specific event
+  var callbacks = this._callbacks['$' + event];
+  if (!callbacks) return this;
+
+  // remove all handlers
+  if (1 == arguments.length) {
+    delete this._callbacks['$' + event];
+    return this;
+  }
+
+  // remove specific handler
+  var cb;
+  for (var i = 0; i < callbacks.length; i++) {
+    cb = callbacks[i];
+    if (cb === fn || cb.fn === fn) {
+      callbacks.splice(i, 1);
+      break;
+    }
+  }
+  return this;
+};
+
+/**
+ * Emit `event` with the given args.
+ *
+ * @param {String} event
+ * @param {Mixed} ...
+ * @return {Emitter}
+ */
+
+Emitter.prototype.emit = function(event){
+  this._callbacks = this._callbacks || {};
+  var args = [].slice.call(arguments, 1)
+    , callbacks = this._callbacks['$' + event];
+
+  if (callbacks) {
+    callbacks = callbacks.slice(0);
+    for (var i = 0, len = callbacks.length; i < len; ++i) {
+      callbacks[i].apply(this, args);
+    }
+  }
+
+  return this;
+};
+
+/**
+ * Return array of callbacks for `event`.
+ *
+ * @param {String} event
+ * @return {Array}
+ * @api public
+ */
+
+Emitter.prototype.listeners = function(event){
+  this._callbacks = this._callbacks || {};
+  return this._callbacks['$' + event] || [];
+};
+
+/**
+ * Check if this emitter has `event` handlers.
+ *
+ * @param {String} event
+ * @return {Boolean}
+ * @api public
+ */
+
+Emitter.prototype.hasListeners = function(event){
+  return !! this.listeners(event).length;
+};
+
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _keenCore = __webpack_require__(42);
+
+var _keenCore2 = _interopRequireDefault(_keenCore);
+
+var _each = __webpack_require__(0);
+
+var _each2 = _interopRequireDefault(_each);
+
+var _extend = __webpack_require__(1);
+
+var _extend2 = _interopRequireDefault(_extend);
+
+var _queue = __webpack_require__(17);
+
+var _optOut = __webpack_require__(16);
+
+var _package = __webpack_require__(7);
+
+var _package2 = _interopRequireDefault(_package);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+_keenCore2.default.helpers = _keenCore2.default.helpers || {};
+_keenCore2.default.prototype.observers = _keenCore2.default.observers || {};
+
+// Install internal queue
+_keenCore2.default.on('client', function (client) {
+  client.extensions = {
+    events: [],
+    collections: {}
+  };
+
+  if (!client.config.respectDoNotTrack) {
+    this.doNotTrack = false;
+  }
+
+  if (typeof client.config.optOut !== 'undefined') {
+    (0, _optOut.setOptOut)(client.config.optOut);
+    this.optedOut = client.config.optOut;
+  }
+
+  client.queue = (0, _queue.queue)(client.config.queue);
+  client.queue.on('flush', function () {
+    client.recordDeferredEvents();
+  });
+});
+
+// Accessors
+_keenCore2.default.prototype.writeKey = function (str) {
+  if (!arguments.length) return this.config.writeKey;
+  this.config.writeKey = str ? String(str) : null;
+  return this;
+};
+
+_keenCore2.default.prototype.referrerPolicy = function (str) {
+  if (!arguments.length) return this.config.referrerPolicy;
+  this.config.referrerPolicy = str ? String(str) : null;
+  return this;
+};
+
+// DEPRECATED
+_keenCore2.default.prototype.setGlobalProperties = function (props) {
+  _keenCore2.default.log('This method has been removed. Check out #extendEvents: https://github.com/keen/keen-tracking.js#extend-events');
+  return this;
+};
+
+_keenCore2.default.version = _package2.default.version;
+
+exports.default = _keenCore2.default;
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.getDomNodePath = getDomNodePath;
+function getDomNodePath(el) {
+  if (!el.nodeName) return '';
+
+  var stack = [];
+  while (el.parentNode != null) {
+    // console.log(el.nodeName);
+    var sibCount = 0;
+    var sibIndex = 0;
+    for (var i = 0; i < el.parentNode.childNodes.length; i++) {
+      var sib = el.parentNode.childNodes[i];
+      if (sib.nodeName == el.nodeName) {
+        if (sib === el) {
+          sibIndex = sibCount;
+        }
+        sibCount++;
+      }
+    }
+    if (el.hasAttribute('id') && el.id != '') {
+      stack.unshift(el.nodeName.toLowerCase() + '#' + el.id);
+    } else if (sibCount > 1) {
+      stack.unshift(el.nodeName.toLowerCase() + ':eq(' + sibIndex + ')');
+    } else {
+      stack.unshift(el.nodeName.toLowerCase());
+    }
+    el = el.parentNode;
+  }
+
+  return stack.slice(1).join(' > ');
+}
+
+// via: http://stackoverflow.com/a/16742828/2511985
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.getWindowProfile = getWindowProfile;
+function getWindowProfile() {
+  var body, html, output;
+
+  if ('undefined' == typeof document) return {};
+
+  body = document.body || {};
+  html = document.documentElement || {};
+
+  output = {
+    'height': 'innerHeight' in window ? window.innerHeight : document.documentElement.offsetHeight,
+    'width': 'innerWidth' in window ? window.innerWidth : document.documentElement.offsetWidth,
+    'scrollHeight': Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight) || null
+  };
+
+  if (window.screen) {
+    output.ratio = {
+      'height': window.screen.availHeight ? parseFloat((window.innerHeight / window.screen.availHeight).toFixed(2)) : null,
+      'width': window.screen.availWidth ? parseFloat((window.innerWidth / window.screen.availWidth).toFixed(2)) : null
+    };
+  }
+
+  return output;
+}
+
+/*
+  Notes:
+    document.documentElement.offsetHeight/Width is a workaround for IE8 and below, where window.innerHeight/Width is undefined
+*/
+
+/***/ }),
+/* 12 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.getScreenProfile = getScreenProfile;
+function getScreenProfile() {
+  var keys, output;
+
+  if ('undefined' == typeof window || !window.screen) return {};
+
+  keys = ['height', 'width', 'colorDepth', 'pixelDepth', 'availHeight', 'availWidth'];
+  output = {};
+
+  for (var i = 0; i < keys.length; i++) {
+    output[keys[i]] = window.screen[keys[i]] ? window.screen[keys[i]] : null;
+  }
+
+  output.orientation = {
+    'angle': window.screen.orientation ? window.screen.orientation['angle'] : 0,
+    'type': window.innerWidth > window.innerHeight ? 'landscape' : 'portrait'
+  };
+
+  return output;
+}
+
+/***/ }),
+/* 13 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var MD5 = exports.MD5 = function MD5(d) {
+  var result = M(V(Y(X(d), 8 * d.length)));return result.toLowerCase();
+};function M(d) {
+  for (var _, m = "0123456789ABCDEF", f = "", r = 0; r < d.length; r++) {
+    _ = d.charCodeAt(r), f += m.charAt(_ >>> 4 & 15) + m.charAt(15 & _);
+  }return f;
+}function X(d) {
+  for (var _ = Array(d.length >> 2), m = 0; m < _.length; m++) {
+    _[m] = 0;
+  }for (m = 0; m < 8 * d.length; m += 8) {
+    _[m >> 5] |= (255 & d.charCodeAt(m / 8)) << m % 32;
+  }return _;
+}function V(d) {
+  for (var _ = "", m = 0; m < 32 * d.length; m += 8) {
+    _ += String.fromCharCode(d[m >> 5] >>> m % 32 & 255);
+  }return _;
+}function Y(d, _) {
+  d[_ >> 5] |= 128 << _ % 32, d[14 + (_ + 64 >>> 9 << 4)] = _;for (var m = 1732584193, f = -271733879, r = -1732584194, i = 271733878, n = 0; n < d.length; n += 16) {
+    var h = m,
+        t = f,
+        g = r,
+        e = i;f = md5_ii(f = md5_ii(f = md5_ii(f = md5_ii(f = md5_hh(f = md5_hh(f = md5_hh(f = md5_hh(f = md5_gg(f = md5_gg(f = md5_gg(f = md5_gg(f = md5_ff(f = md5_ff(f = md5_ff(f = md5_ff(f, r = md5_ff(r, i = md5_ff(i, m = md5_ff(m, f, r, i, d[n + 0], 7, -680876936), f, r, d[n + 1], 12, -389564586), m, f, d[n + 2], 17, 606105819), i, m, d[n + 3], 22, -1044525330), r = md5_ff(r, i = md5_ff(i, m = md5_ff(m, f, r, i, d[n + 4], 7, -176418897), f, r, d[n + 5], 12, 1200080426), m, f, d[n + 6], 17, -1473231341), i, m, d[n + 7], 22, -45705983), r = md5_ff(r, i = md5_ff(i, m = md5_ff(m, f, r, i, d[n + 8], 7, 1770035416), f, r, d[n + 9], 12, -1958414417), m, f, d[n + 10], 17, -42063), i, m, d[n + 11], 22, -1990404162), r = md5_ff(r, i = md5_ff(i, m = md5_ff(m, f, r, i, d[n + 12], 7, 1804603682), f, r, d[n + 13], 12, -40341101), m, f, d[n + 14], 17, -1502002290), i, m, d[n + 15], 22, 1236535329), r = md5_gg(r, i = md5_gg(i, m = md5_gg(m, f, r, i, d[n + 1], 5, -165796510), f, r, d[n + 6], 9, -1069501632), m, f, d[n + 11], 14, 643717713), i, m, d[n + 0], 20, -373897302), r = md5_gg(r, i = md5_gg(i, m = md5_gg(m, f, r, i, d[n + 5], 5, -701558691), f, r, d[n + 10], 9, 38016083), m, f, d[n + 15], 14, -660478335), i, m, d[n + 4], 20, -405537848), r = md5_gg(r, i = md5_gg(i, m = md5_gg(m, f, r, i, d[n + 9], 5, 568446438), f, r, d[n + 14], 9, -1019803690), m, f, d[n + 3], 14, -187363961), i, m, d[n + 8], 20, 1163531501), r = md5_gg(r, i = md5_gg(i, m = md5_gg(m, f, r, i, d[n + 13], 5, -1444681467), f, r, d[n + 2], 9, -51403784), m, f, d[n + 7], 14, 1735328473), i, m, d[n + 12], 20, -1926607734), r = md5_hh(r, i = md5_hh(i, m = md5_hh(m, f, r, i, d[n + 5], 4, -378558), f, r, d[n + 8], 11, -2022574463), m, f, d[n + 11], 16, 1839030562), i, m, d[n + 14], 23, -35309556), r = md5_hh(r, i = md5_hh(i, m = md5_hh(m, f, r, i, d[n + 1], 4, -1530992060), f, r, d[n + 4], 11, 1272893353), m, f, d[n + 7], 16, -155497632), i, m, d[n + 10], 23, -1094730640), r = md5_hh(r, i = md5_hh(i, m = md5_hh(m, f, r, i, d[n + 13], 4, 681279174), f, r, d[n + 0], 11, -358537222), m, f, d[n + 3], 16, -722521979), i, m, d[n + 6], 23, 76029189), r = md5_hh(r, i = md5_hh(i, m = md5_hh(m, f, r, i, d[n + 9], 4, -640364487), f, r, d[n + 12], 11, -421815835), m, f, d[n + 15], 16, 530742520), i, m, d[n + 2], 23, -995338651), r = md5_ii(r, i = md5_ii(i, m = md5_ii(m, f, r, i, d[n + 0], 6, -198630844), f, r, d[n + 7], 10, 1126891415), m, f, d[n + 14], 15, -1416354905), i, m, d[n + 5], 21, -57434055), r = md5_ii(r, i = md5_ii(i, m = md5_ii(m, f, r, i, d[n + 12], 6, 1700485571), f, r, d[n + 3], 10, -1894986606), m, f, d[n + 10], 15, -1051523), i, m, d[n + 1], 21, -2054922799), r = md5_ii(r, i = md5_ii(i, m = md5_ii(m, f, r, i, d[n + 8], 6, 1873313359), f, r, d[n + 15], 10, -30611744), m, f, d[n + 6], 15, -1560198380), i, m, d[n + 13], 21, 1309151649), r = md5_ii(r, i = md5_ii(i, m = md5_ii(m, f, r, i, d[n + 4], 6, -145523070), f, r, d[n + 11], 10, -1120210379), m, f, d[n + 2], 15, 718787259), i, m, d[n + 9], 21, -343485551), m = safe_add(m, h), f = safe_add(f, t), r = safe_add(r, g), i = safe_add(i, e);
+  }return Array(m, f, r, i);
+}function md5_cmn(d, _, m, f, r, i) {
+  return safe_add(bit_rol(safe_add(safe_add(_, d), safe_add(f, i)), r), m);
+}function md5_ff(d, _, m, f, r, i, n) {
+  return md5_cmn(_ & m | ~_ & f, d, _, r, i, n);
+}function md5_gg(d, _, m, f, r, i, n) {
+  return md5_cmn(_ & f | m & ~f, d, _, r, i, n);
+}function md5_hh(d, _, m, f, r, i, n) {
+  return md5_cmn(_ ^ m ^ f, d, _, r, i, n);
+}function md5_ii(d, _, m, f, r, i, n) {
+  return md5_cmn(m ^ (_ | ~f), d, _, r, i, n);
+}function safe_add(d, _) {
+  var m = (65535 & d) + (65535 & _);return (d >> 16) + (_ >> 16) + (m >> 16) << 16 | 65535 & m;
+}function bit_rol(d, _) {
+  return d << _ | d >>> 32 - _;
+}
+
+exports.default = MD5;
+
+/***/ }),
+/* 14 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var deepExtend = exports.deepExtend = function deepExtend(target) {
+  for (var i = 1; i < arguments.length; i++) {
+    // Copy unique items from incoming array
+    if (target instanceof Array && arguments[i] instanceof Array) {
+      for (var j = 0; j < arguments[i].length; j++) {
+        if (target.indexOf(arguments[i][j]) < 0) {
+          target.push(arguments[i][j]);
+        }
+      }
+    }
+    // Blend objects
+    else {
+        for (var prop in arguments[i]) {
+          // Recurse when both contain objects of same name
+          // and incoming is not a null object
+          if (typeof target[prop] !== 'undefined' && _typeof(target[prop]) === 'object' && _typeof(arguments[i][prop]) === 'object' && arguments[i][prop] !== null) {
+            deepExtend(target[prop], clone(arguments[i][prop]));
+          }
+          // Otherwise just copy it over...
+          else if (arguments[i][prop] !== undefined && typeof arguments[i][prop] !== 'function') {
+              target[prop] = clone(arguments[i][prop]);
+            }
+        }
+      }
+  }
+  return target;
+};
+
+function clone(input) {
+  return JSON.parse(JSON.stringify(input));
+}
+
+/***/ }),
+/* 15 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+exports.extendEvent = extendEvent;
+exports.extendEvents = extendEvents;
+exports.getExtendedEventBody = getExtendedEventBody;
+
+var _deepExtend = __webpack_require__(14);
+
+var _each = __webpack_require__(0);
+
+var _each2 = _interopRequireDefault(_each);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function extendEvent(eventCollection, eventModifier) {
+  if (arguments.length !== 2 || typeof eventCollection !== 'string' || 'object' !== (typeof eventModifier === 'undefined' ? 'undefined' : _typeof(eventModifier)) && 'function' !== typeof eventModifier) {
+    handleValidationError.call(this, 'Incorrect arguments provided to #extendEvent method');
+    return;
+  }
+  this.extensions.collections[eventCollection] = this.extensions.collections[eventCollection] || [];
+  this.extensions.collections[eventCollection].push(eventModifier);
+  this.emit('extendEvent', eventCollection, eventModifier);
+  return this;
+}
+
+function extendEvents(eventsModifier) {
+  if (arguments.length !== 1 || 'object' !== (typeof eventsModifier === 'undefined' ? 'undefined' : _typeof(eventsModifier)) && 'function' !== typeof eventsModifier) {
+    handleValidationError.call(this, 'Incorrect arguments provided to #extendEvents method');
+    return;
+  }
+  this.extensions.events.push(eventsModifier);
+  this.emit('extendEvents', eventsModifier);
+  return this;
+}
+
+function handleValidationError(message) {
+  this.emit('error', 'Event(s) not extended: ' + message);
+}
+
+function getExtendedEventBody(result, queue) {
+  if (queue && queue.length > 0) {
+    (0, _each2.default)(queue, function (eventModifier, i) {
+      var modifierResult = typeof eventModifier === 'function' ? eventModifier() : eventModifier;
+      (0, _deepExtend.deepExtend)(result, modifierResult);
+    });
+  }
+  return result;
+}
+
+/***/ }),
+/* 16 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.setOptOut = setOptOut;
+function setOptOut() {
+    var optOut = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
+
+    if (optOut) {
+        localStorage.setItem('optout', optOut);
+        return;
+    }
+
+    localStorage.removeItem('optout');
+};
+
+/***/ }),
+/* 17 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+exports.queue = queue;
+
+var _componentEmitter = __webpack_require__(8);
+
+var _componentEmitter2 = _interopRequireDefault(_componentEmitter);
+
+var _configDefault = __webpack_require__(3);
+
+var _configDefault2 = _interopRequireDefault(_configDefault);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function queue() {
+  var configQueue = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
+  if (this instanceof queue === false) {
+    return new queue(configQueue);
+  }
+  this.capacity = 0;
+  this.config = _extends({}, _configDefault2.default.queue, configQueue);
+  this.events = {
+    // "collection-1": [],
+    // "collection-2": []
+  };
+  this.interval = 0;
+  this.timer = null;
+  return this;
+}
+
+(0, _componentEmitter2.default)(queue.prototype);
+
+queue.prototype.check = function () {
+  if (shouldFlushQueue(this)) {
+    this.flush();
+  }
+  if (this.config.interval === 0 || this.capacity === 0) {
+    this.pause();
+  }
+  return this;
+};
+
+queue.prototype.flush = function () {
+  this.emit('flush');
+  this.interval = 0;
+  return this;
+};
+
+queue.prototype.pause = function () {
+  if (this.timer) {
+    clearInterval(this.timer);
+    this.timer = null;
+  }
+  return this;
+};
+
+queue.prototype.start = function () {
+  var self = this;
+  self.pause();
+  self.timer = setInterval(function () {
+    self.interval++;
+    self.check();
+  }, 1000);
+  return self;
+};
+
+function shouldFlushQueue(props) {
+  if (props.capacity > 0 && props.interval >= props.config.interval) {
+    return true;
+  } else if (props.capacity >= props.config.capacity) {
+    return true;
+  }
+  return false;
+}
+
+/***/ }),
+/* 18 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(setImmediate) {/* harmony import */ var _finally__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5);
+
+
+// Store setTimeout reference so promise-polyfill will be unaffected by
+// other code modifying setTimeout (like sinon.useFakeTimers())
+var setTimeoutFunc = setTimeout;
+
+function noop() {}
+
+// Polyfill for Function.prototype.bind
+function bind(fn, thisArg) {
+  return function() {
+    fn.apply(thisArg, arguments);
+  };
+}
+
+function Promise(fn) {
+  if (!(this instanceof Promise))
+    throw new TypeError('Promises must be constructed via new');
+  if (typeof fn !== 'function') throw new TypeError('not a function');
+  this._state = 0;
+  this._handled = false;
+  this._value = undefined;
+  this._deferreds = [];
+
+  doResolve(fn, this);
+}
+
+function handle(self, deferred) {
+  while (self._state === 3) {
+    self = self._value;
+  }
+  if (self._state === 0) {
+    self._deferreds.push(deferred);
+    return;
+  }
+  self._handled = true;
+  Promise._immediateFn(function() {
+    var cb = self._state === 1 ? deferred.onFulfilled : deferred.onRejected;
+    if (cb === null) {
+      (self._state === 1 ? resolve : reject)(deferred.promise, self._value);
+      return;
+    }
+    var ret;
+    try {
+      ret = cb(self._value);
+    } catch (e) {
+      reject(deferred.promise, e);
+      return;
+    }
+    resolve(deferred.promise, ret);
+  });
+}
+
+function resolve(self, newValue) {
+  try {
+    // Promise Resolution Procedure: https://github.com/promises-aplus/promises-spec#the-promise-resolution-procedure
+    if (newValue === self)
+      throw new TypeError('A promise cannot be resolved with itself.');
+    if (
+      newValue &&
+      (typeof newValue === 'object' || typeof newValue === 'function')
+    ) {
+      var then = newValue.then;
+      if (newValue instanceof Promise) {
+        self._state = 3;
+        self._value = newValue;
+        finale(self);
+        return;
+      } else if (typeof then === 'function') {
+        doResolve(bind(then, newValue), self);
+        return;
+      }
+    }
+    self._state = 1;
+    self._value = newValue;
+    finale(self);
+  } catch (e) {
+    reject(self, e);
+  }
+}
+
+function reject(self, newValue) {
+  self._state = 2;
+  self._value = newValue;
+  finale(self);
+}
+
+function finale(self) {
+  if (self._state === 2 && self._deferreds.length === 0) {
+    Promise._immediateFn(function() {
+      if (!self._handled) {
+        Promise._unhandledRejectionFn(self._value);
+      }
+    });
+  }
+
+  for (var i = 0, len = self._deferreds.length; i < len; i++) {
+    handle(self, self._deferreds[i]);
+  }
+  self._deferreds = null;
+}
+
+function Handler(onFulfilled, onRejected, promise) {
+  this.onFulfilled = typeof onFulfilled === 'function' ? onFulfilled : null;
+  this.onRejected = typeof onRejected === 'function' ? onRejected : null;
+  this.promise = promise;
+}
+
+/**
+ * Take a potentially misbehaving resolver function and make sure
+ * onFulfilled and onRejected are only called once.
+ *
+ * Makes no guarantees about asynchrony.
+ */
+function doResolve(fn, self) {
+  var done = false;
+  try {
+    fn(
+      function(value) {
+        if (done) return;
+        done = true;
+        resolve(self, value);
+      },
+      function(reason) {
+        if (done) return;
+        done = true;
+        reject(self, reason);
+      }
+    );
+  } catch (ex) {
+    if (done) return;
+    done = true;
+    reject(self, ex);
+  }
+}
+
+Promise.prototype['catch'] = function(onRejected) {
+  return this.then(null, onRejected);
+};
+
+Promise.prototype.then = function(onFulfilled, onRejected) {
+  var prom = new this.constructor(noop);
+
+  handle(this, new Handler(onFulfilled, onRejected, prom));
+  return prom;
+};
+
+Promise.prototype['finally'] = _finally__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"];
+
+Promise.all = function(arr) {
+  return new Promise(function(resolve, reject) {
+    if (!arr || typeof arr.length === 'undefined')
+      throw new TypeError('Promise.all accepts an array');
+    var args = Array.prototype.slice.call(arr);
+    if (args.length === 0) return resolve([]);
+    var remaining = args.length;
+
+    function res(i, val) {
+      try {
+        if (val && (typeof val === 'object' || typeof val === 'function')) {
+          var then = val.then;
+          if (typeof then === 'function') {
+            then.call(
+              val,
+              function(val) {
+                res(i, val);
+              },
+              reject
+            );
+            return;
+          }
+        }
+        args[i] = val;
+        if (--remaining === 0) {
+          resolve(args);
+        }
+      } catch (ex) {
+        reject(ex);
+      }
+    }
+
+    for (var i = 0; i < args.length; i++) {
+      res(i, args[i]);
+    }
+  });
+};
+
+Promise.resolve = function(value) {
+  if (value && typeof value === 'object' && value.constructor === Promise) {
+    return value;
+  }
+
+  return new Promise(function(resolve) {
+    resolve(value);
+  });
+};
+
+Promise.reject = function(value) {
+  return new Promise(function(resolve, reject) {
+    reject(value);
+  });
+};
+
+Promise.race = function(values) {
+  return new Promise(function(resolve, reject) {
+    for (var i = 0, len = values.length; i < len; i++) {
+      values[i].then(resolve, reject);
+    }
+  });
+};
+
+// Use polyfill for setImmediate for performance gains
+Promise._immediateFn =
+  (typeof setImmediate === 'function' &&
+    function(fn) {
+      setImmediate(fn);
+    }) ||
+  function(fn) {
+    setTimeoutFunc(fn, 0);
+  };
+
+Promise._unhandledRejectionFn = function _unhandledRejectionFn(err) {
+  if (typeof console !== 'undefined' && console) {
+    console.warn('Possible Unhandled Promise Rejection:', err); // eslint-disable-line no-console
+  }
+};
+
+/* harmony default export */ __webpack_exports__["a"] = (Promise);
+
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(37).setImmediate))
+
+/***/ }),
+/* 19 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.timer = timer;
+function timer(num) {
+  if (this instanceof timer === false) {
+    return new timer(num);
+  }
+  this.count = num || 0;
+  return this;
+}
+
+timer.prototype.start = function () {
+  var self = this;
+  this.pause();
+  this.interval = setInterval(function () {
+    self.count++;
+  }, 1000);
+  return this;
+};
+
+timer.prototype.pause = function () {
+  clearInterval(this.interval);
+  return this;
+};
+
+timer.prototype.value = function () {
+  return this.count;
+};
+
+timer.prototype.clear = function () {
+  this.count = 0;
+  return this;
+};
+
+/***/ }),
+/* 20 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+exports.serializeForm = serializeForm;
+/*
+  This is a modified copy of https://github.com/defunctzombie/form-serialize/ v0.7.1
+  Includes a new configuration option:
+    * ignoreTypes - Array, Default: [], Example: [ 'password' ]
+*/
+
+// types which indicate a submit action and are not successful controls
+// these will be ignored
+var k_r_submitter = /^(?:submit|button|image|reset|file)$/i;
+
+// node names which could be successful controls
+var k_r_success_contrls = /^(?:input|select|textarea|keygen)/i;
+
+// Matches bracket notation.
+var brackets = /(\[[^\[\]]*\])/g;
+
+// serializes form fields
+// @param form MUST be an HTMLForm element
+// @param options is an optional argument to configure the serialization. Default output
+// with no options specified is a url encoded string
+//    - hash: [true | false] Configure the output type. If true, the output will
+//    be a js object.
+//    - serializer: [function] Optional serializer function to override the default one.
+//    The function takes 3 arguments (result, key, value) and should return new result
+//    hash and url encoded str serializers are provided with this module
+//    - disabled: [true | false]. If true serialize disabled fields.
+//    - empty: [true | false]. If true serialize empty fields
+function serializeForm(form, options) {
+  if ((typeof options === 'undefined' ? 'undefined' : _typeof(options)) != 'object') {
+    options = { hash: !!options };
+  } else if (options.hash === undefined) {
+    options.hash = true;
+  }
+
+  var result = options.hash ? {} : '';
+  var serializer = options.serializer || (options.hash ? hash_serializer : str_serialize);
+
+  var elements = form && form.elements ? form.elements : [];
+
+  // Object store each radio and set if it's empty or not
+  var radio_store = Object.create(null);
+
+  for (var i = 0; i < elements.length; ++i) {
+    var element = elements[i];
+
+    // NEW: Skip ignored field types
+    if (options.ignoreTypes && options.ignoreTypes.indexOf(element.type) > -1) {
+      continue;
+    }
+    // ingore disabled fields
+    if (!options.disabled && element.disabled || !element.name) {
+      continue;
+    }
+    // ignore anyhting that is not considered a success field
+    if (!k_r_success_contrls.test(element.nodeName) || k_r_submitter.test(element.type)) {
+      continue;
+    }
+
+    var key = element.name;
+    var val = element.value;
+
+    // we can't just use element.value for checkboxes cause some browsers lie to us
+    // they say "on" for value when the box isn't checked
+    if ((element.type === 'checkbox' || element.type === 'radio') && !element.checked) {
+      val = undefined;
+    }
+
+    // If we want empty elements
+    if (options.empty) {
+      if (element.type === 'checkbox' && !element.checked) {
+        val = '';
+      }
+
+      // for radio
+      if (element.type === 'radio') {
+        if (!radio_store[element.name] && !element.checked) {
+          radio_store[element.name] = false;
+        } else if (element.checked) {
+          radio_store[element.name] = true;
+        }
+      }
+
+      // if options empty is true, continue only if its radio
+      if (val == undefined && element.type == 'radio') {
+        continue;
+      }
+    } else {
+      // value-less fields are ignored unless options.empty is true
+      if (!val) {
+        continue;
+      }
+    }
+
+    // multi select boxes
+    if (element.type === 'select-multiple') {
+      val = [];
+
+      var selectOptions = element.options;
+      var isSelectedOptions = false;
+      for (var j = 0; j < selectOptions.length; ++j) {
+        var option = selectOptions[j];
+        var allowedEmpty = options.empty && !option.value;
+        var hasValue = option.value || allowedEmpty;
+        if (option.selected && hasValue) {
+          isSelectedOptions = true;
+
+          // If using a hash serializer be sure to add the
+          // correct notation for an array in the multi-select
+          // context. Here the name attribute on the select element
+          // might be missing the trailing bracket pair. Both names
+          // "foo" and "foo[]" should be arrays.
+          if (options.hash && key.slice(key.length - 2) !== '[]') {
+            result = serializer(result, key + '[]', option.value);
+          } else {
+            result = serializer(result, key, option.value);
+          }
+        }
+      }
+
+      if (!isSelectedOptions && options.empty) {
+        result = serializer(result, key, '');
+      }
+      continue;
+    }
+
+    result = serializer(result, key, val);
+  }
+
+  if (options.empty) {
+    for (var key in radio_store) {
+      if (!radio_store[key]) {
+        result = serializer(result, key, '');
+      }
+    }
+  }
+
+  return result;
+}
+
+function parse_keys(string) {
+  var keys = [];
+  var prefix = /^([^\[\]]*)/;
+  var children = new RegExp(brackets);
+  var match = prefix.exec(string);
+
+  if (match[1]) {
+    keys.push(match[1]);
+  }
+
+  while ((match = children.exec(string)) !== null) {
+    keys.push(match[1]);
+  }
+
+  return keys;
+}
+
+function hash_assign(result, keys, value) {
+  if (keys.length === 0) {
+    result = value;
+    return result;
+  }
+
+  var key = keys.shift();
+  var between = key.match(/^\[(.+?)\]$/);
+
+  if (key === '[]') {
+    result = result || [];
+
+    if (Array.isArray(result)) {
+      result.push(hash_assign(null, keys, value));
+    } else {
+      // This might be the result of bad name attributes like "[][foo]",
+      // in this case the original `result` object will already be
+      // assigned to an object literal. Rather than coerce the object to
+      // an array, or cause an exception the attribute "_values" is
+      // assigned as an array.
+      result._values = result._values || [];
+      result._values.push(hash_assign(null, keys, value));
+    }
+
+    return result;
+  }
+
+  // Key is an attribute name and can be assigned directly.
+  if (!between) {
+    result[key] = hash_assign(result[key], keys, value);
+  } else {
+    var string = between[1];
+    // +var converts the variable into a number
+    // better than parseInt because it doesn't truncate away trailing
+    // letters and actually fails if whole thing is not a number
+    var index = +string;
+
+    // If the characters between the brackets is not a number it is an
+    // attribute name and can be assigned directly.
+    if (isNaN(index)) {
+      result = result || {};
+      result[string] = hash_assign(result[string], keys, value);
+    } else {
+      result = result || [];
+      result[index] = hash_assign(result[index], keys, value);
+    }
+  }
+
+  return result;
+}
+
+// Object/hash encoding serializer.
+function hash_serializer(result, key, value) {
+  var matches = key.match(brackets);
+
+  // Has brackets? Use the recursive assignment function to walk the keys,
+  // construct any missing objects in the result tree and make the assignment
+  // at the end of the chain.
+  if (matches) {
+    var keys = parse_keys(key);
+    hash_assign(result, keys, value);
+  } else {
+    // Non bracket notation can make assignments directly.
+    var existing = result[key];
+
+    // If the value has been assigned already (for instance when a radio and
+    // a checkbox have the same name attribute) convert the previous value
+    // into an array before pushing into it.
+    //
+    // NOTE: If this requirement were removed all hash creation and
+    // assignment could go through `hash_assign`.
+    if (existing) {
+      if (!Array.isArray(existing)) {
+        result[key] = [existing];
+      }
+
+      result[key].push(value);
+    } else {
+      result[key] = value;
+    }
+  }
+
+  return result;
+}
+
+// urlform encoding serializer
+function str_serialize(result, key, value) {
+  // encode newlines as \r\n cause the html spec says so
+  value = value.replace(/(\r)?\n/g, '\r\n');
+  value = encodeURIComponent(value);
+
+  // spaces should be '+' rather than '%20'.
+  value = value.replace(/%20/g, '+');
+  return result + (result ? '&' : '') + encodeURIComponent(key) + '=' + value;
+}
+
+/***/ }),
+/* 21 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
+ * JavaScript Cookie v2.1.0
+ * https://github.com/js-cookie/js-cookie
+ *
+ * Copyright 2006, 2015 Klaus Hartl & Fagner Brack
+ * Released under the MIT license
+ */
+(function (factory) {
+	if (true) {
+		!(__WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
+				(__WEBPACK_AMD_DEFINE_FACTORY__.call(exports, __webpack_require__, exports, module)) :
+				__WEBPACK_AMD_DEFINE_FACTORY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+	} else { var api, _OldCookies; }
+}(function () {
+	function extend () {
+		var i = 0;
+		var result = {};
+		for (; i < arguments.length; i++) {
+			var attributes = arguments[ i ];
+			for (var key in attributes) {
+				result[key] = attributes[key];
+			}
+		}
+		return result;
+	}
+
+	function init (converter) {
+		function api (key, value, attributes) {
+			var result;
+
+			// Write
+
+			if (arguments.length > 1) {
+				attributes = extend({
+					path: '/'
+				}, api.defaults, attributes);
+
+				if (typeof attributes.expires === 'number') {
+					var expires = new Date();
+					expires.setMilliseconds(expires.getMilliseconds() + attributes.expires * 864e+5);
+					attributes.expires = expires;
+				}
+
+				try {
+					result = JSON.stringify(value);
+					if (/^[\{\[]/.test(result)) {
+						value = result;
+					}
+				} catch (e) {}
+
+				if (!converter.write) {
+					value = encodeURIComponent(String(value))
+						.replace(/%(23|24|26|2B|3A|3C|3E|3D|2F|3F|40|5B|5D|5E|60|7B|7D|7C)/g, decodeURIComponent);
+				} else {
+					value = converter.write(value, key);
+				}
+
+				key = encodeURIComponent(String(key));
+				key = key.replace(/%(23|24|26|2B|5E|60|7C)/g, decodeURIComponent);
+				key = key.replace(/[\(\)]/g, escape);
+
+				return (document.cookie = [
+					key, '=', value,
+					attributes.expires && '; expires=' + attributes.expires.toUTCString(), // use expires attribute, max-age is not supported by IE
+					attributes.path    && '; path=' + attributes.path,
+					attributes.domain  && '; domain=' + attributes.domain,
+					attributes.secure ? '; secure' : ''
+				].join(''));
+			}
+
+			// Read
+
+			if (!key) {
+				result = {};
+			}
+
+			// To prevent the for loop in the first place assign an empty array
+			// in case there are no cookies at all. Also prevents odd result when
+			// calling "get()"
+			var cookies = document.cookie ? document.cookie.split('; ') : [];
+			var rdecode = /(%[0-9A-Z]{2})+/g;
+			var i = 0;
+
+			for (; i < cookies.length; i++) {
+				var parts = cookies[i].split('=');
+				var name = parts[0].replace(rdecode, decodeURIComponent);
+				var cookie = parts.slice(1).join('=');
+
+				if (cookie.charAt(0) === '"') {
+					cookie = cookie.slice(1, -1);
+				}
+
+				try {
+					cookie = converter.read ?
+						converter.read(cookie, name) : converter(cookie, name) ||
+						cookie.replace(rdecode, decodeURIComponent);
+
+					if (this.json) {
+						try {
+							cookie = JSON.parse(cookie);
+						} catch (e) {}
+					}
+
+					if (key === name) {
+						result = cookie;
+						break;
+					}
+
+					if (!key) {
+						result[name] = cookie;
+					}
+				} catch (e) {}
+			}
+
+			return result;
+		}
+
+		api.get = api.set = api;
+		api.getJSON = function () {
+			return api.apply({
+				json: true
+			}, [].slice.call(arguments));
+		};
+		api.defaults = {};
+
+		api.remove = function (key, attributes) {
+			api(key, '', extend(attributes, {
+				expires: -1
+			}));
+		};
+
+		api.withConverter = init;
+
+		return api;
+	}
+
+	return init(function () {});
+}));
+
+
+/***/ }),
+/* 22 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.cookie = undefined;
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var _jsCookie = __webpack_require__(21);
+
+var _jsCookie2 = _interopRequireDefault(_jsCookie);
+
+var _extend = __webpack_require__(1);
+
+var _extend2 = _interopRequireDefault(_extend);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var cookie = exports.cookie = function cookie(str) {
+  if (!arguments.length) return;
+  if (this instanceof cookie === false) {
+    return new cookie(str);
+  }
+
+  this.config = {
+    key: str,
+    options: {
+      expires: 365
+    }
+  };
+  this.data = this.get();
+  return this;
+};
+
+cookie.prototype.get = function (str) {
+  var data = {};
+
+  if (_jsCookie2.default.get(this.config.key)) {
+    data = _jsCookie2.default.getJSON(this.config.key);
+  }
+  if (str && (typeof data === 'undefined' ? 'undefined' : _typeof(data)) === 'object' && typeof data !== null) {
+    return typeof data[str] !== 'undefined' ? data[str] : null;
+  } else {
+    return data;
+  }
+};
+
+cookie.prototype.set = function (str, value, options) {
+  if (!arguments.length || !this.enabled()) return this;
+  if (typeof str === 'string' && arguments.length >= 2) {
+    this.data[str] = value ? value : null;
+  } else if ((typeof str === 'undefined' ? 'undefined' : _typeof(str)) === 'object' && arguments.length === 1) {
+    (0, _extend2.default)(this.data, str);
+  }
+  _jsCookie2.default.set(this.config.key, this.data, (0, _extend2.default)(this.config.options, options || {}));
+  return this;
+};
+
+cookie.prototype.expire = function (daysUntilExpire) {
+  if (daysUntilExpire) {
+    _jsCookie2.default.set(this.config.key, this.data, (0, _extend2.default)(this.config.options, { expires: daysUntilExpire }));
+  } else {
+    _jsCookie2.default.remove(this.config.key);
+    this.data = {};
+  }
+  return this;
+};
+
+cookie.prototype.options = function (obj) {
+  if (!arguments.length) return this.config.options;
+  this.config.options = (typeof obj === 'undefined' ? 'undefined' : _typeof(obj)) === 'object' ? obj : {};
+  return this;
+};
+
+cookie.prototype.enabled = function () {
+  return navigator.cookieEnabled;
+};
+
+/***/ }),
+/* 23 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.getUniqueId = getUniqueId;
+function getUniqueId() {
+  // uuidv4
+  if (typeof crypto !== 'undefined' && crypto.getRandomValues) {
+    // browser
+    return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, function (c) {
+      return (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16);
+    });
+  } else {
+    // node & older browsers
+    var str = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx';
+    return str.replace(/[xy]/g, function (c) {
+      var r = Math.random() * 16 | 0,
+          v = c == 'x' ? r : r & 0x3 | 0x8;
+      return v.toString(16);
+    });
+  }
+}
+
+/***/ }),
+/* 24 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+exports.getScrollState = getScrollState;
+
+var _extend = __webpack_require__(1);
+
+var _extend2 = _interopRequireDefault(_extend);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function getScrollState(obj) {
+  var config = (typeof obj === 'undefined' ? 'undefined' : _typeof(obj)) === 'object' ? obj : {};
+  var state = (0, _extend2.default)({
+    pixel: 0,
+    pixel_max: 0,
+    ratio: null,
+    ratio_max: null
+  }, config);
+
+  if ((typeof window === 'undefined' ? 'undefined' : _typeof(window)) !== undefined || (typeof document === 'undefined' ? 'undefined' : _typeof(document)) !== undefined) {
+    state.pixel = getScrollOffset() + getWindowHeight();
+    if (state.pixel > state.pixel_max) {
+      state.pixel_max = state.pixel;
+    }
+    state.ratio = parseFloat(Number(state.pixel / getScrollableArea()).toFixed(2));
+    state.ratio_max = parseFloat(Number(state.pixel_max / getScrollableArea()).toFixed(2));
+  }
+
+  return state;
+}
+
+function getScrollableArea() {
+  var body = document.body;
+  var html = document.documentElement;
+  return Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight) || null;
+}
+
+function getScrollOffset() {
+  return window.pageYOffset !== undefined ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop;
+}
+
+function getWindowHeight() {
+  return window.innerHeight || document.documentElement.clientHeight;
+}
+
+/***/ }),
+/* 25 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.getDomNodeProfile = getDomNodeProfile;
+
+var _getDomNodePath = __webpack_require__(10);
+
+function getDomNodeProfile(el) {
+  return {
+    action: el.action,
+    class: el.className,
+    href: getElementProps(el, 'href'),
+    id: getElementProps(el, 'id'),
+    event_key: getElementProps(el, 'data-event-key'),
+    method: el.method,
+    name: el.name,
+    node_name: el.nodeName,
+    selector: (0, _getDomNodePath.getDomNodePath)(el),
+    text: getElementProps(el, 'text'),
+    title: getElementProps(el, 'title'),
+    type: el.type,
+    x_position: el.offsetLeft || el.clientLeft || null,
+    y_position: el.offsetTop || el.clientTop || null
+  };
+}
+
+var getElementProps = function getElementProps(el, prop) {
+  if (el[prop]) {
+    return el[prop];
+  }
+  if (el.hasAttribute && el.hasAttribute(prop)) {
+    return el.getAttribute(prop);
+  }
+  if (el.parentNode) {
+    return getElementProps(el.parentNode, prop);
+  }
+  return null;
+};
+
+/***/ }),
+/* 26 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.getDomainName = getDomainName;
+function extractHostname(url) {
+    var hostname;
+    //find & remove protocol (http, ftp, etc.) and get hostname
+
+    if (url.indexOf("://") > -1) {
+        hostname = url.split('/')[2];
+    } else {
+        hostname = url.split('/')[0];
+    }
+
+    //find & remove port number
+    hostname = hostname.split(':')[0];
+    //find & remove "?"
+    hostname = hostname.split('?')[0];
+
+    return hostname;
+}
+
+// To address those who want the "root domain," use this function:
+function getDomainName(url) {
+    var domain = extractHostname(url),
+        splitArr = domain.split('.'),
+        arrLen = splitArr.length;
+
+    //extracting the root domain here
+    //if there is a subdomain
+    if (arrLen > 2) {
+        domain = splitArr[arrLen - 2] + '.' + splitArr[arrLen - 1];
+        //check to see if it's using a Country Code Top Level Domain (ccTLD) (i.e. ".me.uk")
+        if (splitArr[arrLen - 2].length == 2 && splitArr[arrLen - 1].length == 2) {
+            //this is using a ccTLD
+            domain = splitArr[arrLen - 3] + '.' + domain;
+        }
+    }
+    return domain;
+}
+
+/***/ }),
+/* 27 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.getDatetimeIndex = getDatetimeIndex;
+function getDatetimeIndex(input) {
+  var date = input || new Date();
+  return {
+    'hour_of_day': date.getHours(),
+    'day_of_week': parseInt(1 + date.getDay()),
+    'day_of_month': date.getDate(),
+    'month': parseInt(1 + date.getMonth()),
+    'year': date.getFullYear()
+  };
+}
+
+/***/ }),
+/* 28 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.getBrowserProfile = getBrowserProfile;
+
+var _getScreenProfile = __webpack_require__(12);
+
+var _getWindowProfile = __webpack_require__(11);
+
+function getBrowserProfile() {
+  return {
+    'cookies': 'undefined' !== typeof navigator.cookieEnabled ? navigator.cookieEnabled : false,
+    'codeName': navigator.appCodeName,
+    'description': getDocumentDescription(),
+    'language': navigator.language,
+    'name': navigator.appName,
+    'online': navigator.onLine,
+    'platform': navigator.platform,
+    'useragent': navigator.userAgent,
+    'version': navigator.appVersion,
+    'doNotTrack': navigator.doNotTrack,
+    'screen': (0, _getScreenProfile.getScreenProfile)(),
+    'window': (0, _getWindowProfile.getWindowProfile)()
+  };
+}
+
+function getDocumentDescription() {
+  var el;
+  if (document && typeof document.querySelector === 'function') {
+    el = document.querySelector('meta[name="description"]');
+  }
+  return el ? el.content : '';
+}
+
+/***/ }),
+/* 29 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+exports.initAutoTrackingCore = initAutoTrackingCore;
+
+var _package = __webpack_require__(7);
+
+var _package2 = _interopRequireDefault(_package);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function initAutoTrackingCore(lib) {
+  return function (obj) {
+    var client = this;
+    var helpers = lib.helpers;
+    var utils = lib.utils;
+
+    var options = utils.extend({
+      ignoreDisabledFormFields: false,
+      ignoreFormFieldTypes: ['password'],
+      recordClicks: true,
+      recordClicksPositionPointer: false,
+      recordFormSubmits: true,
+      recordPageViews: true,
+      recordPageViewsOnExit: false,
+      recordScrollState: true,
+      shareUuidAcrossDomains: false,
+      collectIpAddress: true,
+      collectUuid: true,
+      recordElementViews: true,
+      catchError: undefined // optional, function(someError) - error handler
+    }, obj);
+
+    if (client.config.requestType === 'beaconAPI' && options.catchError) {
+      throw 'You cannot use the BeaconAPI and catchError function in the same time, because BeaconAPI ignores errors. For requests with error handling - use requestType: \'fetch\'';
+      return;
+    }
+
+    if (client.config.requestType === 'jsonp' // jsonp is deprecated, it's the default value from old keen's client
+    ) {
+        if (options.catchError) {
+          client.config.requestType = 'fetch';
+        } else {
+          client.config.requestType = 'beaconAPI';
+        }
+      }
+
+    var now = new Date();
+    var allTimeOnSiteS = 0;
+    var allTimeOnSiteMS = 0;
+    if (typeof document !== 'undefined') {
+      var hidden = void 0;
+      var visibilityChange = void 0;
+      if (typeof document.hidden !== "undefined") {
+        hidden = "hidden";
+        visibilityChange = "visibilitychange";
+      } else if (typeof document.msHidden !== "undefined") {
+        hidden = "msHidden";
+        visibilityChange = "msvisibilitychange";
+      } else if (typeof document.webkitHidden !== "undefined") {
+        hidden = "webkitHidden";
+        visibilityChange = "webkitvisibilitychange";
+      }
+
+      var handleVisibilityChange = function handleVisibilityChange() {
+        if (document[hidden]) {
+          allTimeOnSiteS += getSecondsSinceDate(now);
+          allTimeOnSiteMS += getMiliSecondsSinceDate(now);
+          return;
+        }
+        now = new Date();
+      };
+      if (typeof document.addEventListener !== "undefined" || hidden !== undefined) {
+        document.addEventListener(visibilityChange, handleVisibilityChange, false);
+      }
+    }
+
+    var cookie = new utils.cookie('keen');
+
+    var domainName = helpers.getDomainName(window.location.hostname);
+    var cookieDomain = domainName && options.shareUuidAcrossDomains ? {
+      domain: '.' + domainName
+    } : {};
+
+    var uuid = void 0;
+    if (options.collectUuid) {
+      uuid = cookie.get('uuid');
+      if (!uuid) {
+        uuid = helpers.getUniqueId();
+        cookie.set('uuid', uuid, cookieDomain);
+      }
+    }
+
+    var initialReferrer = cookie.get('initialReferrer');
+    if (!initialReferrer) {
+      initialReferrer = document && document.referrer || undefined;
+      cookie.set('initialReferrer', initialReferrer, cookieDomain);
+    }
+
+    var scrollState = {};
+    if (options.recordScrollState) {
+      scrollState = helpers.getScrollState();
+      utils.listener('window').on('scroll', function () {
+        scrollState = helpers.getScrollState(scrollState);
+      });
+    }
+
+    var addons = [{
+      name: 'keen:ua_parser',
+      input: {
+        ua_string: 'user_agent'
+      },
+      output: 'tech'
+    }, {
+      name: 'keen:url_parser',
+      input: {
+        url: 'url.full'
+      },
+      output: 'url.info'
+    }, {
+      name: 'keen:url_parser',
+      input: {
+        url: 'referrer.full'
+      },
+      output: 'referrer.info'
+    }, {
+      name: 'keen:date_time_parser',
+      input: {
+        date_time: 'keen.timestamp'
+      },
+      output: 'time.utc'
+    }, {
+      name: 'keen:date_time_parser',
+      input: {
+        date_time: 'local_time_full'
+      },
+      output: 'time.local'
+    }];
+
+    var ip_address = '${keen.ip}';
+    addons.push({
+      name: 'keen:ip_to_geo',
+      input: {
+        ip: 'ip_address',
+        remove_ip_property: !options.collectIpAddress
+      },
+      output: 'geo'
+    });
+
+    client.extendEvents(function () {
+      var browserProfile = helpers.getBrowserProfile();
+      return {
+        tracked_by: _package2.default.name + '-' + _package2.default.version,
+        local_time_full: new Date().toISOString(),
+        user: {
+          uuid: uuid
+        },
+        page: {
+          title: document ? document.title : null,
+          description: browserProfile.description,
+          scroll_state: scrollState,
+          time_on_page: allTimeOnSiteS > 0 ? allTimeOnSiteS : getSecondsSinceDate(now),
+          time_on_page_ms: allTimeOnSiteMS > 0 ? allTimeOnSiteMS : getMiliSecondsSinceDate(now)
+        },
+
+        ip_address: ip_address,
+        geo: {/* Enriched */},
+
+        user_agent: '${keen.user_agent}',
+        tech: {
+          profile: browserProfile
+          /* Enriched */
+        },
+
+        url: {
+          full: window ? window.location.href : '',
+          info: {/* Enriched */}
+        },
+
+        referrer: {
+          initial: initialReferrer,
+          full: document ? document.referrer : '',
+          info: {/* Enriched */}
+        },
+
+        time: {
+          local: {/* Enriched */},
+          utc: {/* Enriched */}
+        },
+
+        keen: {
+          timestamp: new Date().toISOString(),
+          addons: addons
+        }
+      };
+    });
+
+    if (options.recordClicks === true) {
+      utils.listener('a, a *').on('click', function (e) {
+        var el = e.target;
+        var event = {
+          element: helpers.getDomNodeProfile(el),
+          local_time_full: new Date().toISOString()
+        };
+
+        // pointer position tracking
+        if (options.recordClicksPositionPointer === true) {
+          var pointer = {
+            x_position: e.pageX,
+            y_position: e.pageY
+          };
+          event = _extends({}, event, { pointer: pointer });
+        }
+
+        if (options.catchError) {
+          return client.recordEvent({
+            collection: 'clicks',
+            event: event
+          }).catch(function (err) {
+            options.catchError(err);
+          });
+        }
+
+        return client.recordEvent({
+          collection: 'clicks',
+          event: event
+        });
+      });
+    }
+
+    if (options.recordFormSubmits === true) {
+      utils.listener('form').on('submit', function (e) {
+        var el = e.target;
+        var serializerOptions = {
+          disabled: options.ignoreDisabledFormFields,
+          ignoreTypes: options.ignoreFormFieldTypes
+        };
+        var event = {
+          form: {
+            action: el.action,
+            fields: utils.serializeForm(el, serializerOptions),
+            method: el.method
+          },
+          element: helpers.getDomNodeProfile(el),
+          local_time_full: new Date().toISOString()
+        };
+
+        if (options.catchError) {
+          return client.recordEvent({
+            collection: 'form_submissions',
+            event: event
+          }).catch(function (err) {
+            options.catchError(err);
+          });
+        }
+
+        return client.recordEvent({
+          collection: 'form_submissions',
+          event: event
+        });
+      });
+    }
+
+    if (options.recordPageViews === true && !options.recordPageViewsOnExit) {
+      if (options.catchError) {
+        client.recordEvent({
+          collection: 'pageviews'
+        }).catch(function (err) {
+          options.catchError(err);
+        });
+      } else {
+        client.recordEvent({
+          collection: 'pageviews'
+        });
+      }
+    }
+
+    if (options.recordPageViewsOnExit && typeof window !== 'undefined') {
+      window.addEventListener('beforeunload', function () {
+        client.config.requestType = 'beaconAPI'; // you can run beforeunload only with beaconAPI
+        client.recordEvent({
+          collection: 'pageviews'
+        });
+      });
+    }
+
+    if (options.recordElementViews === true) {
+      if (typeof IntersectionObserver !== 'undefined') {
+        var elementViewsOptions = {
+          threshold: 1.0
+        };
+        var elementViewsCallback = function elementViewsCallback(events, observer) {
+          events.forEach(function (el) {
+            if (el.isIntersecting) {
+              var event = {
+                element: helpers.getDomNodeProfile(el.target),
+                local_time_full: new Date().toISOString()
+              };
+              if (options.catchError) {
+                return client.recordEvent({
+                  collection: 'element_views',
+                  event: event
+                }).catch(function (err) {
+                  options.catchError(err);
+                });
+              }
+
+              return client.recordEvent({
+                collection: 'element_views',
+                event: event
+              });
+            }
+          });
+        };
+        var observer = new IntersectionObserver(elementViewsCallback, elementViewsOptions);
+        var target = document.querySelectorAll('.track-element-view');
+        target.forEach(function (el) {
+          observer.observe(el);
+        });
+        client.observers.IntersectionObserver = observer;
+      }
+    }
+
+    return client;
+  };
+}
+
+function getSecondsSinceDate(date) {
+  return Math.round(getMiliSecondsSinceDate(date) / 1000);
+}
+
+function getMiliSecondsSinceDate(date) {
+  return new Date().getTime() - date.getTime();
+}
+
+/***/ }),
+/* 30 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+exports.deferEvent = deferEvent;
+exports.deferEvents = deferEvents;
+exports.queueCapacity = queueCapacity;
+exports.queueInterval = queueInterval;
+exports.recordDeferredEvents = recordDeferredEvents;
+
+var _index = __webpack_require__(9);
+
+var _index2 = _interopRequireDefault(_index);
+
+var _each = __webpack_require__(0);
+
+var _each2 = _interopRequireDefault(_each);
+
+var _queue = __webpack_require__(17);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function deferEvent(eventCollection, eventBody) {
+
+  if (arguments.length !== 2 || typeof eventCollection !== 'string') {
+    handleValidationError.call(this, 'Incorrect arguments provided to #deferEvent method');
+    return;
+  }
+
+  this.queue.events[eventCollection] = this.queue.events[eventCollection] || [];
+  this.queue.events[eventCollection].push(eventBody);
+  this.queue.capacity++;
+  if (!this.queue.timer) {
+    this.queue.start();
+  }
+  this.emit('deferEvent', eventCollection, eventBody);
+  return this;
+}
+
+function deferEvents(eventsHash) {
+  var self = this;
+
+  if (arguments.length !== 1 || (typeof eventsHash === 'undefined' ? 'undefined' : _typeof(eventsHash)) !== 'object') {
+    handleValidationError.call(this, 'Incorrect arguments provided to #deferEvents method');
+    return;
+  }
+
+  (0, _each2.default)(eventsHash, function (eventList, eventCollection) {
+    self.queue.events[eventCollection] = self.queue.events[eventCollection] || [];
+    self.queue.events[eventCollection] = self.queue.events[eventCollection].concat(eventList);
+    self.queue.capacity = self.queue.capacity + eventList.length;
+    if (!self.queue.timer) {
+      self.queue.start();
+    }
+  });
+  self.emit('deferEvents', eventsHash);
+  return self;
+}
+
+function queueCapacity(num) {
+  if (!arguments.length) return this.queue.config.capacity;
+  this.queue.config.capacity = num ? Number(num) : 0;
+  this.queue.check();
+  return this;
+}
+
+function queueInterval(num) {
+  if (!arguments.length) return this.queue.config.interval;
+  this.queue.config.interval = num ? Number(num) : 0;
+  this.queue.check();
+  return this;
+}
+
+function recordDeferredEvents() {
+  var self = this;
+
+  if (self.queue.capacity > 0) {
+    self.queue.pause();
+    var clonedQueueConfig = _extends({}, self.queue.config);
+    var clonedQueueEvents = _extends({}, self.queue.events);
+    self.queue = (0, _queue.queue)();
+    self.queue.config = clonedQueueConfig;
+    self.queue.on('flush', function () {
+      self.recordDeferredEvents();
+    });
+    self.emit('recordDeferredEvents', clonedQueueEvents);
+    self.recordEvents(clonedQueueEvents, function (err, res) {
+      if (err) {
+        self.emit('recordDeferredEventsError', err, clonedQueueEvents);
+      }
+    });
+  }
+  return self;
+}
+
+function handleValidationError(message) {
+  this.emit('error', 'Event(s) not deferred: ' + message);
+}
+
+/***/ }),
+/* 31 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.getFromCache = exports.saveToCache = undefined;
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+__webpack_require__(2);
+
+__webpack_require__(6);
+
+var _md = __webpack_require__(13);
+
+var _md2 = _interopRequireDefault(_md);
+
+var _configDefault = __webpack_require__(3);
+
+var _configDefault2 = _interopRequireDefault(_configDefault);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+if (typeof self === 'undefined') {
+  console.log('IndexedDB is available only in Browser ENV');
+}
+
+var indexedDBAvailable = typeof self !== 'undefined' && 'indexedDB' in self;
+
+var cachingEnabled = true;
+
+if (!indexedDBAvailable) {
+  // console.log("Your browser doesn't support a stable version of IndexedDB.");
+  cachingEnabled = false; // graceful degradation
+}
+
+var db = void 0;
+var cacheConfig = _extends({}, _configDefault2.default.cache);
+
+function initializeIndexedDb() {
+  var requestCacheConfig = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
+  if (db) {
+    return Promise.resolve();
+  }
+  if (!cachingEnabled) {
+    return Promise.resolve();
+  }
+  cacheConfig = _extends({}, cacheConfig, requestCacheConfig);
+  return new Promise(function (resolve, reject) {
+    var dbConnectionRequest = self.indexedDB.open(cacheConfig.dbName);
+    dbConnectionRequest.onerror = function (event) {
+      cachingEnabled = false;
+      resolve();
+    };
+
+    dbConnectionRequest.onupgradeneeded = function (event) {
+      var db = event.target.result;
+      var objectStore = db.createObjectStore(cacheConfig.dbCollectionName, { keyPath: cacheConfig.dbCollectionKey });
+      objectStore.createIndex(cacheConfig.dbCollectionKey, cacheConfig.dbCollectionKey, { unique: true });
+      objectStore.createIndex('expiryTime', 'expiryTime', { unique: false });
+    };
+
+    dbConnectionRequest.onsuccess = function (event) {
+      db = event.target.result;
+      db.onerror = function (event) {
+        cachingEnabled = false; // graceful degradation
+      };
+      resolve(db);
+    };
+  });
+}
+
+var saveToCache = exports.saveToCache = function saveToCache(hash) {
+  var configOptions = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+  return initializeIndexedDb(configOptions).then(function () {
+    var transactionSave = db.transaction(cacheConfig.dbCollectionName, "readwrite").objectStore(cacheConfig.dbCollectionName);
+    var requestSave = transactionSave.add({
+      hash: hash,
+      expiryTime: Date.now() + cacheConfig.maxAge
+    });
+    requestSave.onsuccess = function (event) {};
+    requestSave.onerror = function (event) {
+      cachingEnabled = false;
+    };
+  });
+};
+
+var getFromCache = exports.getFromCache = function getFromCache(hash) {
+  var configOptions = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+  return initializeIndexedDb(configOptions).then(function () {
+    return new Promise(function (resolve, reject) {
+      if (!cachingEnabled) {
+        return resolve(null);
+      }
+
+      var transactionCleanUp = db.transaction(cacheConfig.dbCollectionName, "readwrite").objectStore(cacheConfig.dbCollectionName);
+      var indexCleanUp = transactionCleanUp.index('expiryTime');
+      var upperBoundOpenKeyRange = IDBKeyRange.upperBound(Date.now(), true);
+      indexCleanUp.openCursor(upperBoundOpenKeyRange).onsuccess = function (event) {
+        var cursor = event.target.result;
+        if (cursor) {
+          var transactionDelete = db.transaction(cacheConfig.dbCollectionName, "readwrite").objectStore(cacheConfig.dbCollectionName).delete(event.target.result.value[cacheConfig.dbCollectionKey]);
+          cursor.continue();
+        }
+      };
+
+      var transactionIndex = db.transaction(cacheConfig.dbCollectionName, "readwrite").objectStore(cacheConfig.dbCollectionName);
+      var index = transactionIndex.index(cacheConfig.dbCollectionKey);
+      var responseFromCache = index.get(hash);
+      responseFromCache.onsuccess = function (event) {
+        if (!event.target.result || event.target.result.expiryTime < Date.now()) {
+          if (event.target.result && event.target.result.expiryTime < Date.now()) {
+            var transactionDelete = db.transaction(cacheConfig.dbCollectionName, "readwrite").objectStore(cacheConfig.dbCollectionName).delete(event.target.result[cacheConfig.dbCollectionKey]);
+            transactionDelete.onsuccess = function (event) {
+              resolve(getFromCache(hash, configOptions));
+            };
+            transactionDelete.onerror = function (event) {
+              cachingEnabled = false;
+              resolve(getFromCache(hash, configOptions));
+            };
+            return resolve(null);
+          }
+          return resolve(null);
+        } else {
+          return resolve(event.target.result);
+        }
+      };
+      responseFromCache.onerror = function (event) {
+        cachingEnabled = false;
+        resolve(getFromCache(hash, configOptions));
+      };
+    });
+  });
+};
+
+/***/ }),
+/* 32 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.isUnique = undefined;
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+__webpack_require__(2);
+
+var _md = __webpack_require__(13);
+
+var _md2 = _interopRequireDefault(_md);
+
+var _cacheBrowser = __webpack_require__(31);
+
+var _configDefault = __webpack_require__(3);
+
+var _configDefault2 = _interopRequireDefault(_configDefault);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var uniqueIds = [];
+
+var isUnique = exports.isUnique = function isUnique(customCacheConfig, extendedEventBody) {
+  var configCache = _extends({}, _configDefault2.default.cache, customCacheConfig.cache);
+  var stringifiedEvent = JSON.stringify(extendedEventBody);
+  var hashingMethod = configCache.hashingMethod;
+
+  var hash = hashingMethod && hashingMethod.toLowerCase() === 'md5' ? (0, _md2.default)(stringifiedEvent) : stringifiedEvent;
+  var expiryTime = configCache.maxAge ? Date.now() + configCache.maxAge : undefined;
+  var item = {
+    hash: hash,
+    expiryTime: expiryTime
+  };
+  if (expiryTime) {
+    var now = Date.now();
+    uniqueIds = uniqueIds.filter(function (item) {
+      return item.expiryTime > now;
+    });
+  }
+
+  var alreadySentEvent = uniqueIds.find(function (item) {
+    return item.hash === hash;
+  });
+  if (alreadySentEvent) {
+    if (alreadySentEvent.expiryTime && alreadySentEvent.expiryTime < Date.now()) {
+      uniqueIds = uniqueIds.filter(function (item) {
+        return item.hash !== hash;
+      });
+    } else {
+      return Promise.resolve(false);
+    }
+  }
+  uniqueIds.push(item);
+  if (configCache.storage && configCache.storage.toLowerCase() === 'indexeddb') {
+    return (0, _cacheBrowser.getFromCache)(hash, configCache).then(function (alreadySentEvent) {
+      if (alreadySentEvent) {
+        return false;
+      }
+      (0, _cacheBrowser.saveToCache)(hash, configCache);
+      return true;
+    });
+  }
+
+  return Promise.resolve(true);
+};
+
+exports.default = isUnique;
+
+/***/ }),
+/* 33 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+exports.default = function (url, options) {
+  var config = _extends({}, _configDefault2.default, options.retry || {});
+
+  var retriesLimit = config.retry.limit;
+  var retryInitialDelay = config.retry.initialDelay;
+  var retryOn = config.retry.retryOnResponseStatuses;
+  var retriesCount = 0;
+
+  if (retryOn && !(retryOn instanceof Array)) {
+    throw {
+      name: 'ArgumentError',
+      message: 'retryOn property expects an array'
+    };
+  }
+
+  return new Promise(function (resolve, reject) {
+    var wrappedFetch = function wrappedFetch(n) {
+      fetch(url, options).then(function (response) {
+        if (retryOn.indexOf(response.status) === -1) {
+          resolve(response);
+        } else {
+          if (n > 0) {
+            retry();
+          } else {
+            reject(response);
+          }
+        }
+      }).catch(function (error) {
+        if (n > 0) {
+          retry();
+        } else {
+          reject(error);
+        }
+      });
+    };
+
+    function retry() {
+      retriesCount = retriesCount + 1;
+      setTimeout(function () {
+        wrappedFetch(retriesLimit - retriesCount);
+      }, 2 ^ retriesCount * retryInitialDelay);
+    }
+
+    wrappedFetch(retriesLimit - retriesCount);
+  });
+};
+
+__webpack_require__(2);
+
+__webpack_require__(6);
+
+var _configDefault = __webpack_require__(3);
+
+var _configDefault2 = _interopRequireDefault(_configDefault);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+;
+
+/***/ }),
+/* 34 */
+/***/ (function(module, exports) {
+
+module.exports = {
+  map: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",
+  encode: function (n) {
+    "use strict";
+    var o = "", i = 0, m = this.map, i1, i2, i3, e1, e2, e3, e4;
+    n = this.utf8.encode(n);
+    while (i < n.length) {
+      i1 = n.charCodeAt(i++); i2 = n.charCodeAt(i++); i3 = n.charCodeAt(i++);
+      e1 = (i1 >> 2); e2 = (((i1 & 3) << 4) | (i2 >> 4)); e3 = (isNaN(i2) ? 64 : ((i2 & 15) << 2) | (i3 >> 6));
+      e4 = (isNaN(i2) || isNaN(i3)) ? 64 : i3 & 63;
+      o = o + m.charAt(e1) + m.charAt(e2) + m.charAt(e3) + m.charAt(e4);
+    } return o;
+  },
+  decode: function (n) {
+    "use strict";
+    var o = "", i = 0, m = this.map, cc = String.fromCharCode, e1, e2, e3, e4, c1, c2, c3;
+    n = n.replace(/[^A-Za-z0-9\+\/\=]/g, "");
+    while (i < n.length) {
+      e1 = m.indexOf(n.charAt(i++)); e2 = m.indexOf(n.charAt(i++));
+      e3 = m.indexOf(n.charAt(i++)); e4 = m.indexOf(n.charAt(i++));
+      c1 = (e1 << 2) | (e2 >> 4); c2 = ((e2 & 15) << 4) | (e3 >> 2);
+      c3 = ((e3 & 3) << 6) | e4;
+      o = o + (cc(c1) + ((e3 != 64) ? cc(c2) : "")) + (((e4 != 64) ? cc(c3) : ""));
+    } return this.utf8.decode(o);
+  },
+  utf8: {
+    encode: function (n) {
+      "use strict";
+      var o = "", i = 0, cc = String.fromCharCode, c;
+      while (i < n.length) {
+        c = n.charCodeAt(i++); o = o + ((c < 128) ? cc(c) : ((c > 127) && (c < 2048)) ?
+        (cc((c >> 6) | 192) + cc((c & 63) | 128)) : (cc((c >> 12) | 224) + cc(((c >> 6) & 63) | 128) + cc((c & 63) | 128)));
+        } return o;
+    },
+    decode: function (n) {
+      "use strict";
+      var o = "", i = 0, cc = String.fromCharCode, c2, c;
+      while (i < n.length) {
+        c = n.charCodeAt(i);
+        o = o + ((c < 128) ? [cc(c), i++][0] : ((c > 191) && (c < 224)) ?
+        [cc(((c & 31) << 6) | ((c2 = n.charCodeAt(i + 1)) & 63)), (i += 2)][0] :
+        [cc(((c & 15) << 12) | (((c2 = n.charCodeAt(i + 1)) & 63) << 6) | ((c3 = n.charCodeAt(i + 2)) & 63)), (i += 3)][0]);
+      } return o;
+    }
+  }
+};
+
+
+/***/ }),
+/* 35 */
+/***/ (function(module, exports) {
+
+// shim for using process in browser
+var process = module.exports = {};
+
+// cached from whatever global is present so that test runners that stub it
+// don't break things.  But we need to wrap it in a try catch in case it is
+// wrapped in strict mode code which doesn't define any globals.  It's inside a
+// function because try/catches deoptimize in certain engines.
+
+var cachedSetTimeout;
+var cachedClearTimeout;
+
+function defaultSetTimout() {
+    throw new Error('setTimeout has not been defined');
+}
+function defaultClearTimeout () {
+    throw new Error('clearTimeout has not been defined');
+}
+(function () {
+    try {
+        if (typeof setTimeout === 'function') {
+            cachedSetTimeout = setTimeout;
+        } else {
+            cachedSetTimeout = defaultSetTimout;
+        }
+    } catch (e) {
+        cachedSetTimeout = defaultSetTimout;
+    }
+    try {
+        if (typeof clearTimeout === 'function') {
+            cachedClearTimeout = clearTimeout;
+        } else {
+            cachedClearTimeout = defaultClearTimeout;
+        }
+    } catch (e) {
+        cachedClearTimeout = defaultClearTimeout;
+    }
+} ())
+function runTimeout(fun) {
+    if (cachedSetTimeout === setTimeout) {
+        //normal enviroments in sane situations
+        return setTimeout(fun, 0);
+    }
+    // if setTimeout wasn't available but was latter defined
+    if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
+        cachedSetTimeout = setTimeout;
+        return setTimeout(fun, 0);
+    }
+    try {
+        // when when somebody has screwed with setTimeout but no I.E. maddness
+        return cachedSetTimeout(fun, 0);
+    } catch(e){
+        try {
+            // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
+            return cachedSetTimeout.call(null, fun, 0);
+        } catch(e){
+            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
+            return cachedSetTimeout.call(this, fun, 0);
+        }
+    }
+
+
+}
+function runClearTimeout(marker) {
+    if (cachedClearTimeout === clearTimeout) {
+        //normal enviroments in sane situations
+        return clearTimeout(marker);
+    }
+    // if clearTimeout wasn't available but was latter defined
+    if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
+        cachedClearTimeout = clearTimeout;
+        return clearTimeout(marker);
+    }
+    try {
+        // when when somebody has screwed with setTimeout but no I.E. maddness
+        return cachedClearTimeout(marker);
+    } catch (e){
+        try {
+            // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
+            return cachedClearTimeout.call(null, marker);
+        } catch (e){
+            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
+            // Some versions of I.E. have different rules for clearTimeout vs setTimeout
+            return cachedClearTimeout.call(this, marker);
+        }
+    }
+
+
+
+}
+var queue = [];
+var draining = false;
+var currentQueue;
+var queueIndex = -1;
+
+function cleanUpNextTick() {
+    if (!draining || !currentQueue) {
+        return;
+    }
+    draining = false;
+    if (currentQueue.length) {
+        queue = currentQueue.concat(queue);
+    } else {
+        queueIndex = -1;
+    }
+    if (queue.length) {
+        drainQueue();
+    }
+}
+
+function drainQueue() {
+    if (draining) {
+        return;
+    }
+    var timeout = runTimeout(cleanUpNextTick);
+    draining = true;
+
+    var len = queue.length;
+    while(len) {
+        currentQueue = queue;
+        queue = [];
+        while (++queueIndex < len) {
+            if (currentQueue) {
+                currentQueue[queueIndex].run();
+            }
+        }
+        queueIndex = -1;
+        len = queue.length;
+    }
+    currentQueue = null;
+    draining = false;
+    runClearTimeout(timeout);
+}
+
+process.nextTick = function (fun) {
+    var args = new Array(arguments.length - 1);
+    if (arguments.length > 1) {
+        for (var i = 1; i < arguments.length; i++) {
+            args[i - 1] = arguments[i];
+        }
+    }
+    queue.push(new Item(fun, args));
+    if (queue.length === 1 && !draining) {
+        runTimeout(drainQueue);
+    }
+};
+
+// v8 likes predictible objects
+function Item(fun, array) {
+    this.fun = fun;
+    this.array = array;
+}
+Item.prototype.run = function () {
+    this.fun.apply(null, this.array);
+};
+process.title = 'browser';
+process.browser = true;
+process.env = {};
+process.argv = [];
+process.version = ''; // empty string to avoid regexp issues
+process.versions = {};
+
+function noop() {}
+
+process.on = noop;
+process.addListener = noop;
+process.once = noop;
+process.off = noop;
+process.removeListener = noop;
+process.removeAllListeners = noop;
+process.emit = noop;
+process.prependListener = noop;
+process.prependOnceListener = noop;
+
+process.listeners = function (name) { return [] }
+
+process.binding = function (name) {
+    throw new Error('process.binding is not supported');
+};
+
+process.cwd = function () { return '/' };
+process.chdir = function (dir) {
+    throw new Error('process.chdir is not supported');
+};
+process.umask = function() { return 0; };
+
+
+/***/ }),
+/* 36 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(global, process) {(function (global, undefined) {
+    "use strict";
+
+    if (global.setImmediate) {
+        return;
+    }
+
+    var nextHandle = 1; // Spec says greater than zero
+    var tasksByHandle = {};
+    var currentlyRunningATask = false;
+    var doc = global.document;
+    var registerImmediate;
+
+    function setImmediate(callback) {
+      // Callback can either be a function or a string
+      if (typeof callback !== "function") {
+        callback = new Function("" + callback);
+      }
+      // Copy function arguments
+      var args = new Array(arguments.length - 1);
+      for (var i = 0; i < args.length; i++) {
+          args[i] = arguments[i + 1];
+      }
+      // Store and register the task
+      var task = { callback: callback, args: args };
+      tasksByHandle[nextHandle] = task;
+      registerImmediate(nextHandle);
+      return nextHandle++;
+    }
+
+    function clearImmediate(handle) {
+        delete tasksByHandle[handle];
+    }
+
+    function run(task) {
+        var callback = task.callback;
+        var args = task.args;
+        switch (args.length) {
+        case 0:
+            callback();
+            break;
+        case 1:
+            callback(args[0]);
+            break;
+        case 2:
+            callback(args[0], args[1]);
+            break;
+        case 3:
+            callback(args[0], args[1], args[2]);
+            break;
+        default:
+            callback.apply(undefined, args);
+            break;
+        }
+    }
+
+    function runIfPresent(handle) {
+        // From the spec: "Wait until any invocations of this algorithm started before this one have completed."
+        // So if we're currently running a task, we'll need to delay this invocation.
+        if (currentlyRunningATask) {
+            // Delay by doing a setTimeout. setImmediate was tried instead, but in Firefox 7 it generated a
+            // "too much recursion" error.
+            setTimeout(runIfPresent, 0, handle);
+        } else {
+            var task = tasksByHandle[handle];
+            if (task) {
+                currentlyRunningATask = true;
+                try {
+                    run(task);
+                } finally {
+                    clearImmediate(handle);
+                    currentlyRunningATask = false;
+                }
+            }
+        }
+    }
+
+    function installNextTickImplementation() {
+        registerImmediate = function(handle) {
+            process.nextTick(function () { runIfPresent(handle); });
+        };
+    }
+
+    function canUsePostMessage() {
+        // The test against `importScripts` prevents this implementation from being installed inside a web worker,
+        // where `global.postMessage` means something completely different and can't be used for this purpose.
+        if (global.postMessage && !global.importScripts) {
+            var postMessageIsAsynchronous = true;
+            var oldOnMessage = global.onmessage;
+            global.onmessage = function() {
+                postMessageIsAsynchronous = false;
+            };
+            global.postMessage("", "*");
+            global.onmessage = oldOnMessage;
+            return postMessageIsAsynchronous;
+        }
+    }
+
+    function installPostMessageImplementation() {
+        // Installs an event handler on `global` for the `message` event: see
+        // * https://developer.mozilla.org/en/DOM/window.postMessage
+        // * http://www.whatwg.org/specs/web-apps/current-work/multipage/comms.html#crossDocumentMessages
+
+        var messagePrefix = "setImmediate$" + Math.random() + "$";
+        var onGlobalMessage = function(event) {
+            if (event.source === global &&
+                typeof event.data === "string" &&
+                event.data.indexOf(messagePrefix) === 0) {
+                runIfPresent(+event.data.slice(messagePrefix.length));
+            }
+        };
+
+        if (global.addEventListener) {
+            global.addEventListener("message", onGlobalMessage, false);
+        } else {
+            global.attachEvent("onmessage", onGlobalMessage);
+        }
+
+        registerImmediate = function(handle) {
+            global.postMessage(messagePrefix + handle, "*");
+        };
+    }
+
+    function installMessageChannelImplementation() {
+        var channel = new MessageChannel();
+        channel.port1.onmessage = function(event) {
+            var handle = event.data;
+            runIfPresent(handle);
+        };
+
+        registerImmediate = function(handle) {
+            channel.port2.postMessage(handle);
+        };
+    }
+
+    function installReadyStateChangeImplementation() {
+        var html = doc.documentElement;
+        registerImmediate = function(handle) {
+            // Create a <script> element; its readystatechange event will be fired asynchronously once it is inserted
+            // into the document. Do so, thus queuing up the task. Remember to clean up once it's been called.
+            var script = doc.createElement("script");
+            script.onreadystatechange = function () {
+                runIfPresent(handle);
+                script.onreadystatechange = null;
+                html.removeChild(script);
+                script = null;
+            };
+            html.appendChild(script);
+        };
+    }
+
+    function installSetTimeoutImplementation() {
+        registerImmediate = function(handle) {
+            setTimeout(runIfPresent, 0, handle);
+        };
+    }
+
+    // If supported, we should attach to the prototype of global, since that is where setTimeout et al. live.
+    var attachTo = Object.getPrototypeOf && Object.getPrototypeOf(global);
+    attachTo = attachTo && attachTo.setTimeout ? attachTo : global;
+
+    // Don't get fooled by e.g. browserify environments.
+    if ({}.toString.call(global.process) === "[object process]") {
+        // For Node.js before 0.9
+        installNextTickImplementation();
+
+    } else if (canUsePostMessage()) {
+        // For non-IE10 modern browsers
+        installPostMessageImplementation();
+
+    } else if (global.MessageChannel) {
+        // For web workers, where supported
+        installMessageChannelImplementation();
+
+    } else if (doc && "onreadystatechange" in doc.createElement("script")) {
+        // For IE 6–8
+        installReadyStateChangeImplementation();
+
+    } else {
+        // For older browsers
+        installSetTimeoutImplementation();
+    }
+
+    attachTo.setImmediate = setImmediate;
+    attachTo.clearImmediate = clearImmediate;
+}(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
+
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(4), __webpack_require__(35)))
+
+/***/ }),
+/* 37 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(global) {var scope = (typeof global !== "undefined" && global) ||
+            (typeof self !== "undefined" && self) ||
+            window;
+var apply = Function.prototype.apply;
+
+// DOM APIs, for completeness
+
+exports.setTimeout = function() {
+  return new Timeout(apply.call(setTimeout, scope, arguments), clearTimeout);
+};
+exports.setInterval = function() {
+  return new Timeout(apply.call(setInterval, scope, arguments), clearInterval);
+};
+exports.clearTimeout =
+exports.clearInterval = function(timeout) {
+  if (timeout) {
+    timeout.close();
+  }
+};
+
+function Timeout(id, clearFn) {
+  this._id = id;
+  this._clearFn = clearFn;
+}
+Timeout.prototype.unref = Timeout.prototype.ref = function() {};
+Timeout.prototype.close = function() {
+  this._clearFn.call(scope, this._id);
+};
+
+// Does not start the time, just sets up the members needed.
+exports.enroll = function(item, msecs) {
+  clearTimeout(item._idleTimeoutId);
+  item._idleTimeout = msecs;
+};
+
+exports.unenroll = function(item) {
+  clearTimeout(item._idleTimeoutId);
+  item._idleTimeout = -1;
+};
+
+exports._unrefActive = exports.active = function(item) {
+  clearTimeout(item._idleTimeoutId);
+
+  var msecs = item._idleTimeout;
+  if (msecs >= 0) {
+    item._idleTimeoutId = setTimeout(function onTimeout() {
+      if (item._onTimeout)
+        item._onTimeout();
+    }, msecs);
+  }
+};
+
+// setimmediate attaches itself to the global object
+__webpack_require__(36);
+// On some exotic environments, it's not clear which object `setimmediate` was
+// able to install onto.  Search each possibility in the same order as the
+// `setimmediate` library.
+exports.setImmediate = (typeof self !== "undefined" && self.setImmediate) ||
+                       (typeof global !== "undefined" && global.setImmediate) ||
+                       (this && this.setImmediate);
+exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
+                         (typeof global !== "undefined" && global.clearImmediate) ||
+                         (this && this.clearImmediate);
+
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(4)))
+
+/***/ }),
+/* 38 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+exports.recordEvent = recordEvent;
+exports.recordEvents = recordEvents;
+
+__webpack_require__(2);
+
+__webpack_require__(6);
+
+var _base = __webpack_require__(34);
+
+var _base2 = _interopRequireDefault(_base);
+
+var _each = __webpack_require__(0);
+
+var _each2 = _interopRequireDefault(_each);
+
+var _extend = __webpack_require__(1);
+
+var _extend2 = _interopRequireDefault(_extend);
+
+var _index = __webpack_require__(9);
+
+var _index2 = _interopRequireDefault(_index);
+
+var _package = __webpack_require__(7);
+
+var _extendEvents = __webpack_require__(15);
+
+var _fetchRetry = __webpack_require__(33);
+
+var _fetchRetry2 = _interopRequireDefault(_fetchRetry);
+
+var _unique = __webpack_require__(32);
+
+var _unique2 = _interopRequireDefault(_unique);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// ------------------------------
+// .recordEvent
+// ------------------------------
+
+function recordEvent(eventCollectionOrConfigObject, eventBody, callback) {
+  var _this = this;
+
+  var eventCollection = eventCollectionOrConfigObject;
+  var useBeaconApi = false;
+  var unique = void 0;
+  var configObject = void 0;
+  var clientConfig = this.config;
+
+  if ((typeof eventCollectionOrConfigObject === 'undefined' ? 'undefined' : _typeof(eventCollectionOrConfigObject)) === 'object' && eventCollectionOrConfigObject) {
+    // slowly but surely we migrate to one object with all args
+    configObject = eventCollectionOrConfigObject;
+    eventCollection = eventCollectionOrConfigObject.collection || eventCollectionOrConfigObject.event_collection;
+    eventBody = eventCollectionOrConfigObject.event;
+    callback = eventCollectionOrConfigObject.callback;
+    unique = eventCollectionOrConfigObject.unique;
+  }
+
+  var url = this.url('events', encodeURIComponent(eventCollection));
+  var data = {};
+
+  if (!checkValidation.call(this, callback)) {
+    return;
+  }
+
+  if (!eventCollection || typeof eventCollection !== 'string') {
+    handleValidationError.call(this, 'Collection name must be a string.', callback);
+    return;
+  }
+
+  (0, _extend2.default)(data, eventBody);
+
+  // ------------------------------
+  // Run extendEvent(s) transforms
+  // ------------------------------
+  var extendedEventsHash = {};
+  (0, _extendEvents.getExtendedEventBody)(extendedEventsHash, this.extensions.events);
+  (0, _extendEvents.getExtendedEventBody)(extendedEventsHash, this.extensions.collections[eventCollection]);
+  (0, _extendEvents.getExtendedEventBody)(extendedEventsHash, [data]);
+
+  if (unique) {
+    return (0, _unique2.default)(configObject, extendedEventsHash).then(function (isUniqueResult) {
+      if (!isUniqueResult) {
+        return Promise.resolve({
+          created: false,
+          message: '[NOT_UNIQUE] This event has already been recorded'
+        });
+      }
+      return recordEvent.call(_this, _extends({}, eventCollectionOrConfigObject, { unique: undefined }));
+    });
+  }
+
+  this.emit('recordEvent', eventCollection, extendedEventsHash);
+
+  if (!_index2.default.enabled) {
+    handleValidationError.call(this, 'Keen.enabled is set to false.', callback);
+    return false;
+  }
+
+  if (_index2.default.optedOut) {
+    return Promise.resolve({
+      created: false,
+      message: 'Keen.optedOut is set to true.'
+    });
+  }
+
+  if (_index2.default.doNotTrack) {
+    return Promise.resolve({
+      created: false,
+      message: 'Keen.doNotTrack is set to true.'
+    });
+  }
+
+  return send.call(this, { url: url, extendedEventsHash: extendedEventsHash, callback: callback, configObject: configObject, eventCollection: eventCollection });
+}
+
+// ------------------------------
+// .recordEvents
+// ------------------------------
+
+function recordEvents(eventsHash, callback) {
+  var self = this;
+  var url = this.url('events');
+
+  if (!checkValidation.call(this, callback)) {
+    return;
+  }
+
+  if ('object' !== (typeof eventsHash === 'undefined' ? 'undefined' : _typeof(eventsHash)) || eventsHash instanceof Array) {
+    handleValidationError.call(this, 'First argument must be an object', callback);
+    return;
+  }
+
+  if (arguments.length > 2) {
+    handleValidationError.call(this, 'Incorrect arguments provided to #recordEvents method', callback);
+    return;
+  }
+
+  // ------------------------------
+  // Run extendEvent(s) transforms
+  // ------------------------------
+  var extendedEventsHash = {};
+  (0, _each2.default)(eventsHash, function (eventList, eventCollection) {
+    // Find or create collection on new hash
+    extendedEventsHash[eventCollection] = extendedEventsHash[eventCollection] || [];
+    // Loop over each eventBody in the existing hash
+    (0, _each2.default)(eventList, function (eventBody, index) {
+      // Create a new data object
+      var extendedEventBody = {};
+      // Process "events" transform pipeline
+      (0, _extendEvents.getExtendedEventBody)(extendedEventBody, self.extensions.events);
+      // Process "collection" transform pipeline
+      (0, _extendEvents.getExtendedEventBody)(extendedEventBody, self.extensions.collections[eventCollection]);
+      // Blend existing eventBody data into the result
+      (0, _extendEvents.getExtendedEventBody)(extendedEventBody, [eventBody]);
+      // Push extendedEventBody into new hash
+      extendedEventsHash[eventCollection].push(extendedEventBody);
+    });
+  });
+
+  this.emit('recordEvents', extendedEventsHash);
+
+  if (!_index2.default.enabled) {
+    handleValidationError.call(this, 'Keen.enabled is set to false.', callback);
+    return false;
+  }
+
+  if (_index2.default.optedOut) {
+    return Promise.resolve({
+      created: false,
+      message: 'Keen.optedOut is set to true.'
+    });
+  }
+
+  if (_index2.default.doNotTrack) {
+    return Promise.resolve({
+      created: false,
+      message: 'Keen.doNotTrack is set to true.'
+    });
+  }
+
+  return send.call(this, { url: url, extendedEventsHash: extendedEventsHash, callback: callback });
+}
+
+function send(_ref) {
+  var url = _ref.url,
+      extendedEventsHash = _ref.extendedEventsHash,
+      callback = _ref.callback,
+      _ref$configObject = _ref.configObject,
+      configObject = _ref$configObject === undefined ? {} : _ref$configObject,
+      eventCollection = _ref.eventCollection;
+
+  var clientConfig = this.config;
+  var requestType = configObject.requestType // specific method for one request
+  || this.config.requestType; // global request type of client
+
+  if (navigator && navigator.sendBeacon && requestType === 'beaconAPI'
+  // so you can send specific recordEvent() using beaconAPI
+  // even if your global client's config prefers Fetch
+  ) {
+      navigator.sendBeacon(url + '?api_key=' + this.writeKey(), JSON.stringify(extendedEventsHash));
+      if (callback) {
+        // Beacon API is not handling responses nor errors
+        callback();
+      }
+      return this;
+    }
+
+  // this is IMAGE beacon, not the Beacon API. deprecated
+  if (requestType === 'beacon' || requestType === 'img') {
+    var getRequestUrl = this.url('events', encodeURIComponent(eventCollection), {
+      api_key: this.writeKey(),
+      data: encodeURIComponent(_base2.default.encode(JSON.stringify(extendedEventsHash))),
+      modified: new Date().getTime()
+    });
+    var getRequestUrlOkLength = getRequestUrl.length < getUrlMaxLength();
+
+    if (getRequestUrlOkLength) {
+      sendBeacon.call(this, getRequestUrl, callback);
+    } else {
+      if (callback) {
+        callback('Beacon URL length exceeds current browser limit, and XHR is not supported.', null);
+      }
+    }
+    return this;
+  }
+
+  if (typeof fetch !== 'undefined') {
+    return sendFetch.call(this, 'POST', url, extendedEventsHash, callback);
+  }
+
+  return this;
+}
+
+function sendFetch(method, url, data) {
+  var callback = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : undefined;
+
+  var self = this;
+
+  return (0, _fetchRetry2.default)(url, {
+    method: method,
+    body: data ? JSON.stringify(data) : '',
+    mode: 'cors',
+    redirect: 'follow',
+    referrerPolicy: self.referrerPolicy() || 'unsafe-url',
+    headers: {
+      'Authorization': self.writeKey(),
+      'Content-Type': 'application/json',
+      'keen-sdk': 'javascript-' + _package.version
+    },
+    // keepalive: true, not supported for CORS yet
+    retry: self.config.retry
+  }).catch(function (connectionError) {
+    if (typeof callback !== 'undefined') {
+      callback.call(self, connectionError, null);
+    }
+    self.emit('error', connectionError);
+    return Promise.reject(connectionError);
+  }).then(function (response) {
+    if (response.ok) {
+      return response.json();
+    }
+
+    return response.json().then(function (responseJSON) {
+      return Promise.reject({
+        error_code: responseJSON.error_code,
+        body: responseJSON.message,
+        status: response.status,
+        ok: false,
+        statusText: response.statusText
+      });
+    });
+  }).then(function (responseJSON) {
+    var eventsSavedSuccessfuly = checkEventsSavedSuccessfuly(responseJSON);
+    if (eventsSavedSuccessfuly) {
+      if (typeof callback !== 'undefined') {
+        callback.call(self, null, responseJSON);
+      }
+      return Promise.resolve(responseJSON);
+    } else {
+      if (typeof callback !== 'undefined') {
+        callback.call(self, responseJSON, null);
+      }
+      self.emit('error', responseJSON);
+      return Promise.reject(responseJSON);
+    }
+  });
+}
+
+function checkEventsSavedSuccessfuly(response) {
+  // single event
+  if (typeof response.created !== 'undefined') {
+    if (response.created) {
+      return true;
+    }
+    return false;
+  }
+  // multiple events
+  var responseKeys = Object.keys(response);
+  var notSavedEvents = responseKeys.map(function (collection) {
+    return response[collection].filter(function (event) {
+      return !event.success;
+    });
+  }).filter(function (collection) {
+    return collection.length > 0;
+  });
+
+  if (notSavedEvents.length === 0) {
+    return true;
+  }
+
+  return false;
+}
+
+// Validation
+function checkValidation(callback) {
+
+  if (!this.projectId()) {
+    handleValidationError.call(this, 'Keen.Client is missing a projectId property.', callback);
+    return false;
+  }
+  if (!this.writeKey()) {
+    handleValidationError.call(this, 'Keen.Client is missing a writeKey property.', callback);
+    return false;
+  }
+  return true;
+}
+
+function handleValidationError(message, callback) {
+  var err = 'Event(s) not recorded: ' + message;
+  this.emit('error', err);
+  if (callback) {
+    callback.call(this, err, null);
+  }
+}
+
+function getUrlMaxLength() {
+  if ('undefined' !== typeof window && navigator) {
+    if (navigator.userAgent.indexOf('MSIE') !== -1 || navigator.appVersion.indexOf('Trident/') > 0) {
+      return 1900;
+    }
+  }
+  return 16000;
+}
+
+/*
+  DEPRECATED METHODS
+*/
+
+// Image Beacon Requests
+// DEPRECATED
+function sendBeacon(url, callback) {
+  var self = this,
+      img = document.createElement('img'),
+      loaded = false;
+
+  img.onload = function () {
+    loaded = true;
+    if ('naturalHeight' in this) {
+      if (this.naturalHeight + this.naturalWidth === 0) {
+        this.onerror();
+        return;
+      }
+    } else if (this.width + this.height === 0) {
+      this.onerror();
+      return;
+    }
+    if (callback) {
+      callback.call(self);
+    }
+  };
+  img.onerror = function () {
+    loaded = true;
+    if (callback) {
+      callback.call(self, 'An error occurred!', null);
+    }
+  };
+  img.src = url + '&c=clv1';
+}
+
+/***/ }),
+/* 39 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.listenerCore = undefined;
+
+var _componentEmitter = __webpack_require__(8);
+
+var _componentEmitter2 = _interopRequireDefault(_componentEmitter);
+
+var _each = __webpack_require__(0);
+
+var _each2 = _interopRequireDefault(_each);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/*
+
+  // Create a new element listner
+  var myClickerCatcher = Keen.utils.listener(".nav li > a");
+
+  // Listen for a given event
+  myClicker.on("click", function(e){
+    // do stuff!
+  });
+
+  // Listen for event once
+  myClicker.once("click", function(e){ });
+
+  // Cancel a given event listener
+  myClicker.off("click");
+
+  // Cancel all event listners
+  myClicker.off();
+
+*/
+
+var listenerCore = exports.listenerCore = function listenerCore(ctx) {
+
+  // Make sure this object exists
+  ctx.domListeners = ctx.domListeners || {
+    /*
+    'click': {
+      '.nav li > a': [fn, fn, fn]
+    }
+    */
+  };
+
+  function listener(str) {
+    if (!str) return;
+    if (this instanceof listener === false) {
+      return new listener(str);
+    }
+    this.selector = str;
+    return this;
+  }
+
+  listener.prototype.on = function (str, fn) {
+    var self = this;
+
+    if (arguments.length !== 2 || 'string' !== typeof str || 'function' !== typeof fn) return this;
+
+    // Set each listener on a parent dictionary, indexed by event:
+    if ('undefined' === typeof ctx.domListeners[str]) {
+      addListener(str, eventHandler(str));
+      ctx.domListeners[str] = {};
+    }
+    ctx.domListeners[str][self.selector] = ctx.domListeners[str][self.selector] || [];
+    ctx.domListeners[str][self.selector].push(fn);
+    return self;
+  };
+
+  listener.prototype.once = function (str, fn) {
+    var self = this;
+    function on() {
+      self.off(str, on);
+      return fn.apply(self, arguments);
+    }
+    on.fn = fn;
+    self.on(str, on);
+    return self;
+  };
+
+  listener.prototype.off = function (str, fn) {
+    var self = this,
+        survivors = [];
+    if (arguments.length === 2) {
+      (0, _each2.default)(ctx.domListeners[str][self.selector], function (handler, i) {
+        if (handler === fn || handler.fn === fn) return;
+        survivors.push(handler);
+      });
+      ctx.domListeners[str][self.selector] = survivors;
+    } else if (arguments.length === 1) {
+      try {
+        delete ctx.domListeners[str][self.selector];
+      } catch (e) {
+        ctx.domListeners[str][self.selector] = [];
+      }
+    } else {
+      // loop over every eventType and delete handlers
+      (0, _each2.default)(ctx.domListeners, function (hash, eventType) {
+        // if ('undefined' === typeof hash[str]) return;
+        try {
+          delete ctx.domListeners[eventType][self.selector];
+        } catch (e) {
+          ctx.domListeners[eventType][self.selector] = function () {};
+        }
+      });
+    }
+    return self;
+  };
+
+  function eventHandler(eventType) {
+    return function (e) {
+      var evt, target;
+
+      evt = e || window.event;
+      target = evt.target || evt.srcElement;
+
+      // If nothing assigned to this event type, let it go
+      if ('undefined' === ctx.domListeners[eventType]) return;
+
+      (0, _each2.default)(ctx.domListeners[eventType], function (handlers, key) {
+
+        if (matches(target, key)) {
+          // Call all handlers for this eventType + node
+          (0, _each2.default)(handlers, function (fn, i) {
+            if ('click' === eventType && 'A' === target.nodeName) {
+              deferClickEvent(evt, target, fn);
+            } else if ('submit' === eventType && 'FORM' === target.nodeName) {
+              deferFormSubmit(evt, target, fn);
+            } else {
+              fn(evt);
+            }
+          });
+        } else if ('window' === key) {
+          // Call all handlers
+          (0, _each2.default)(handlers, function (fn, i) {
+            fn(evt);
+          });
+        }
+        return;
+      });
+    };
+  }
+
+  return listener;
+};
+
+// ------------------------------
+// Attach global event listener
+// ------------------------------
+
+function addListener(eventType, fn) {
+  if (document.addEventListener) {
+    document.addEventListener(eventType, fn, false);
+  } else {
+    document.attachEvent("on" + eventType, fn);
+  }
+}
+
+// ------------------------------
+// Match DOM element to selector
+// ------------------------------
+
+function matches(elem, selector) {
+  // We'll use querySelectorAll to find all element matching the selector,
+  // then check if the given element is included in that list.
+  // Executing the query on the parentNode reduces the resulting nodeList,
+  // document doesn't have a parentNode, though.
+  var nodeList = (elem.parentNode || document).querySelectorAll(selector) || [],
+      i = nodeList.length;
+
+  // loop on the nodeList
+  while (i--) {
+    if (nodeList[i] == elem) {
+      return true;
+    }
+  }
+  return false;
+}
+
+// ------------------------------
+// Handle 'click' events (A)
+// ------------------------------
+
+function deferClickEvent(evt, anchor, callback) {
+  var timeout = 500,
+      targetAttr,
+      cbResponse;
+
+  // Get 'target' attribute from anchor
+  if (anchor.getAttribute !== void 0) {
+    targetAttr = anchor.getAttribute("target");
+  } else if (anchor.target) {
+    targetAttr = anchor.target;
+  }
+
+  // Fire listener and catch possible response (return false)
+  cbResponse = callback(evt);
+
+  // If prevented within callback, bail:
+  if ('boolean' === typeof cbResponse && cbResponse === false || evt.defaultPrevented || evt.returnValue === false) {
+    if (evt.preventDefault) {
+      evt.preventDefault();
+    }
+    evt.returnValue = false;
+    return false;
+  }
+  // Else if anchor doesn't kick off a new window or tab.. defer and replay the event:
+  else if (targetAttr !== '_blank' && targetAttr !== 'blank' && !evt.metaKey && !anchor.hasAttribute('download')) {
+      if (evt.preventDefault) {
+        evt.preventDefault();
+      }
+      evt.returnValue = false;
+      if (anchor.href && anchor.href !== '#' && anchor.href !== window.location + '#') {
+        if (typeof cbResponse !== 'undefined') {
+          if (navigator && navigator.sendBeacon) {
+            window.location = anchor.href;
+            return;
+          }
+          // promise
+          cbResponse.then(function () {
+            window.location = anchor.href;
+          }).catch(function (err) {
+            // change location anyway - to not let user hanging
+            window.location = anchor.href;
+          });
+        } else {
+          setTimeout(function () {
+            window.location = anchor.href;
+          }, timeout);
+        }
+      }
+    }
+
+  return false;
+}
+
+// ------------------------------
+// Handle 'submit' events (FORM)
+// ------------------------------
+
+function deferFormSubmit(evt, form, callback) {
+  var timeout = 500;
+  // Fire listener and catch possible response (return false)
+  var cbResponse = callback(evt);
+
+  // If prevented within callback, bail
+  if ('boolean' === typeof cbResponse && cbResponse === false || evt.defaultPrevented || evt.returnValue === false) {
+    if (evt.preventDefault) {
+      evt.preventDefault();
+    }
+    evt.returnValue = false;
+    return false;
+  }
+  // Defer and replay event
+  else {
+      if (evt.preventDefault) {
+        evt.preventDefault();
+      }
+      evt.returnValue = false;
+      if (typeof cbResponse !== 'undefined') {
+        if (navigator && navigator.sendBeacon) {
+          form.submit();
+          return;
+        }
+        // promise
+        cbResponse.then(function () {
+          form.submit();
+        }).catch(function (err) {
+          // submit form anyway - to not let user hanging
+          form.submit();
+        });
+      } else {
+        setTimeout(function () {
+          form.submit();
+        }, timeout);
+      }
+    }
+
+  return false;
+}
+
+/***/ }),
+/* 40 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var each = __webpack_require__(0),
+    extend = __webpack_require__(1);
+
+module.exports = serialize;
+
+function serialize(data){
+  var query = [];
+  each(data, function(value, key){
+    if ('string' !== typeof value) {
+      value = JSON.stringify(value);
+    }
+    query.push(key + '=' + encodeURIComponent(value));
+  });
+  return query.join('&');
+}
+
+
+/***/ }),
+/* 41 */
+/***/ (function(module, exports) {
+
+module.exports = parseParams;
+
+function parseParams(str){
+  // via: http://stackoverflow.com/a/2880929/2511985
+  var urlParams = {},
+      match,
+      pl     = /\+/g,  // Regex for replacing addition symbol with a space
+      search = /([^&=]+)=?([^&]*)/g,
+      decode = function (s) { return decodeURIComponent(s.replace(pl, " ")); },
+      query  = str.split("?")[1];
+
+  while (!!(match=search.exec(query))) {
+    urlParams[decode(match[1])] = decode(match[2]);
+  }
+  return urlParams;
+};
+
+
+/***/ }),
+/* 42 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(global) {(function(env){
+  var previousKeen = env.Keen || undefined;
+  var each = __webpack_require__(0),
+      extend = __webpack_require__(1),
+      parseParams = __webpack_require__(41),
+      serialize = __webpack_require__(40);
+
+  var Emitter = __webpack_require__(8);
+
+  function Client(props){
+    if (this instanceof Client === false) {
+      return new Client(props);
+    }
+    this.configure(props);
+
+    // Set up event handling
+    if (Client.debug) {
+      this.on('error', Client.log);
+    }
+    this.emit('ready');
+    Client.emit('client', this);
+  }
+
+  if (previousKeen && typeof previousKeen.resources === 'undefined') {
+    Client.legacyVersion = previousKeen;
+  }
+
+  Emitter(Client);
+  Emitter(Client.prototype);
+
+  extend(Client, {
+    debug: false,
+    enabled: true,
+    loaded: false,
+    version: '__VERSION__'
+  });
+
+  // Set or extend helpers
+  Client.helpers = Client.helpers || {};
+
+  // Set or extend resources
+  Client.resources = Client.resources || {};
+  extend(Client.resources, {
+    'base'      : '{protocol}://{host}',
+    'version'   : '{protocol}://{host}/3.0',
+    'projects'  : '{protocol}://{host}/3.0/projects',
+    'projectId' : '{protocol}://{host}/3.0/projects/{projectId}',
+    'events'    : '{protocol}://{host}/3.0/projects/{projectId}/events',
+    'queries'   : '{protocol}://{host}/3.0/projects/{projectId}/queries'
+  });
+
+  // Set or extend utils
+  Client.utils = Client.utils || {};
+  extend(Client.utils, {
+    'each'        : each,
+    'extend'      : extend,
+    'parseParams' : parseParams,
+    'serialize'   : serialize
+  });
+
+  Client.extendLibrary = function(target, source) {
+    var previous = previousKeen || source;
+    if (isDefined(previous) && isDefined(previous.resources)) {
+      each(previous, function(value, key) {
+        if (typeof value === 'object') {
+          target[key] = target[key] || {};
+          extend(target[key], value);
+        }
+        else {
+          target[key] = target[key] || value;
+        }
+      });
+      extend(target.prototype, previous.prototype);
+    }
+    return target;
+  };
+
+  Client.log = function(str){
+    if (Client.debug && typeof console === 'object') {
+      console.log('[Keen]', str);
+    }
+  };
+
+  Client.noConflict = function(){
+    if (typeof env.Keen !== 'undefined') {
+      env.Keen = Client.legacyVersion || previousKeen;
+    }
+    return Client;
+  };
+
+  Client.ready = function(fn){
+    if (Client.loaded) {
+      fn();
+    }
+    else {
+      Client.once('ready', fn);
+    }
+  };
+
+  Client.prototype.configure = function(obj){
+    var config = obj || {};
+    this.config = this.config || {
+      projectId    : undefined,
+      writeKey     : undefined,
+      host         : 'api.keen.io',
+      protocol     : 'https',
+      requestType  : 'jsonp',
+      resources    : extend({}, Client.resources)
+    };
+
+    // IE<10 request shim
+    if (typeof window !== 'undefined' && window.navigator && window.navigator.userAgent && window.navigator.userAgent.indexOf('MSIE') > -1) {
+      config.protocol = document.location.protocol.replace(':', '');
+    }
+
+    if (config.host) {
+      config.host.replace(/.*?:\/\//g, '');
+    }
+
+    extend(this.config, config);
+    return this;
+  };
+
+  Client.prototype.masterKey = function(str){
+    if (!arguments.length) return this.config.masterKey;
+    this.config.masterKey = str ? String(str) : null;
+    return this;
+  };
+
+  Client.prototype.projectId = function(str){
+    if (!arguments.length) return this.config.projectId;
+    this.config.projectId = (str ? String(str) : null);
+    return this;
+  };
+
+  Client.prototype.resources = function(obj){
+    if (!arguments.length) return this.config.resources;
+    var self = this;
+    if (typeof obj === 'object') {
+      each(obj, function(value, key){
+        self.config.resources[key] = (value ? value : null);
+      });
+    }
+    return self;
+  };
+
+  Client.prototype.url = function(name){
+    var args = Array.prototype.slice.call(arguments, 1),
+        baseUrl = this.config.resources.base || '{protocol}://{host}',
+        path;
+
+    if (name && typeof name === 'string') {
+      if (this.config.resources[name]) {
+        path = this.config.resources[name];
+      }
+      else {
+        path = baseUrl + name;
+      }
+    }
+    else {
+      path = baseUrl;
+    }
+
+    each(this.config, function(value, key){
+      if (typeof value !== 'object') {
+        path = path.replace('{' + key + '}', value);
+      }
+    });
+
+    each(args, function(arg, i){
+      if (typeof arg === 'string') {
+        path += '/' + arg;
+      }
+      else if (typeof arg === 'object') {
+        path += '?';
+        each(arg, function(value, key){
+          path += key + '=' + value + '&';
+        });
+        path = path.slice(0, -1);
+      }
+    });
+
+    return path;
+  };
+
+  domReady(function(){
+    Client.loaded = true;
+    Client.emit('ready');
+  });
+
+  function domReady(fn){
+    if (Client.loaded || typeof document === 'undefined') {
+      fn();
+      return;
+    }
+    // Firefox 3.5 shim
+    if(document.readyState == null && document.addEventListener){
+      document.addEventListener('DOMContentLoaded', function DOMContentLoaded(){
+        document.removeEventListener('DOMContentLoaded', DOMContentLoaded, false);
+        document.readyState = 'complete';
+      }, false);
+      document.readyState = 'loading';
+    }
+    testDom(fn);
+  }
+
+  function testDom(fn){
+    if (/in/.test(document.readyState)) {
+      setTimeout(function(){
+        testDom(fn);
+      }, 9);
+    }
+    else {
+      fn();
+    }
+  }
+
+  function isDefined(target) {
+    return typeof target !== 'undefined';
+  }
+
+  function isUndefined(target) {
+    return typeof target === 'undefined';
+  }
+
+  module.exports = Client;
+
+}).call(this, typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {});
+
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(4)))
+
+/***/ }),
+/* 43 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.KeenTracking = exports.Keen = exports.keenGlobals = undefined;
+
+var _index = __webpack_require__(9);
+
+var _index2 = _interopRequireDefault(_index);
+
+var _each = __webpack_require__(0);
+
+var _each2 = _interopRequireDefault(_each);
+
+var _extend = __webpack_require__(1);
+
+var _extend2 = _interopRequireDefault(_extend);
+
+var _listener = __webpack_require__(39);
+
+var _recordEventsBrowser = __webpack_require__(38);
+
+var _deferEvents = __webpack_require__(30);
+
+var _extendEvents = __webpack_require__(15);
+
+var _browserAutoTracking = __webpack_require__(29);
+
+var _getBrowserProfile = __webpack_require__(28);
+
+var _getDatetimeIndex = __webpack_require__(27);
+
+var _getDomainName = __webpack_require__(26);
+
+var _getDomNodePath = __webpack_require__(10);
+
+var _getDomNodeProfile = __webpack_require__(25);
+
+var _getScreenProfile = __webpack_require__(12);
+
+var _getScrollState = __webpack_require__(24);
+
+var _getUniqueId = __webpack_require__(23);
+
+var _getWindowProfile = __webpack_require__(11);
+
+var _cookie = __webpack_require__(22);
+
+var _deepExtend = __webpack_require__(14);
+
+var _serializeForm = __webpack_require__(20);
+
+var _timer = __webpack_require__(19);
+
+var _optOut = __webpack_require__(16);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// ------------------------
+// Methods
+// ------------------------
+(0, _extend2.default)(_index2.default.prototype, {
+  recordEvent: _recordEventsBrowser.recordEvent,
+  recordEvents: _recordEventsBrowser.recordEvents
+});
+
+(0, _extend2.default)(_index2.default.prototype, {
+  deferEvent: _deferEvents.deferEvent,
+  deferEvents: _deferEvents.deferEvents,
+  queueCapacity: _deferEvents.queueCapacity,
+  queueInterval: _deferEvents.queueInterval,
+  recordDeferredEvents: _deferEvents.recordDeferredEvents,
+  setOptOut: _optOut.setOptOut
+});
+(0, _extend2.default)(_index2.default.prototype, {
+  extendEvent: _extendEvents.extendEvent,
+  extendEvents: _extendEvents.extendEvents
+});
+
+// ------------------------
+// Auto-Tracking
+// ------------------------
+var initAutoTracking = (0, _browserAutoTracking.initAutoTrackingCore)(_index2.default);
+(0, _extend2.default)(_index2.default.prototype, {
+  initAutoTracking: initAutoTracking
+});
+
+// ------------------------
+// Helpers
+// ------------------------
+(0, _extend2.default)(_index2.default.helpers, {
+  getBrowserProfile: _getBrowserProfile.getBrowserProfile,
+  getDatetimeIndex: _getDatetimeIndex.getDatetimeIndex,
+  getDomainName: _getDomainName.getDomainName,
+  getDomNodePath: _getDomNodePath.getDomNodePath,
+  getDomNodeProfile: _getDomNodeProfile.getDomNodeProfile,
+  getScreenProfile: _getScreenProfile.getScreenProfile,
+  getScrollState: _getScrollState.getScrollState,
+  getUniqueId: _getUniqueId.getUniqueId,
+  getWindowProfile: _getWindowProfile.getWindowProfile
+});
+
+// ------------------------
+// Utils
+// ------------------------
+var listener = (0, _listener.listenerCore)(_index2.default);
+(0, _extend2.default)(_index2.default.utils, {
+  cookie: _cookie.cookie,
+  deepExtend: _deepExtend.deepExtend,
+  listener: listener,
+  serializeForm: _serializeForm.serializeForm,
+  timer: _timer.timer
+});
+
+_index2.default.listenTo = function (listenerHash) {
+  (0, _each2.default)(listenerHash, function (callback, key) {
+    var split = key.split(' ');
+    var eventType = split[0],
+        selector = split.slice(1, split.length).join(' ');
+    // Create an unassigned listener
+    return listener(selector).on(eventType, callback);
+  });
+};
+
+var keenGlobals = exports.keenGlobals = undefined;
+if (typeof webpackKeenGlobals !== 'undefined') {
+  exports.keenGlobals = keenGlobals = webpackKeenGlobals;
+}
+
+if (localStorage && localStorage.getItem('optout')) {
+  _index2.default.optedOut = true;
+}
+
+if ((0, _getBrowserProfile.getBrowserProfile)().doNotTrack === '1' || (0, _getBrowserProfile.getBrowserProfile)().doNotTrack === 'yes') {
+  _index2.default.doNotTrack = true;
+}
+
+var Keen = exports.Keen = _index2.default.extendLibrary(_index2.default); // deprecated, left for backward compatibility
+var KeenTracking = exports.KeenTracking = Keen;
+exports.default = Keen;
+
+/***/ }),
+/* 44 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(43);
+
+
+/***/ })
+/******/ ]);
+});
+//# sourceMappingURL=keen-tracking.js.map
+
+/***/ }),
+/* 165 */
 /***/ (function(module) {
 
 module.exports = {"a":"6.0.8"};
 
 /***/ }),
-/* 165 */
+/* 166 */
 /***/ (function(module, exports) {
 
-module.exports = __WEBPACK_EXTERNAL_MODULE__165__;
+module.exports = __WEBPACK_EXTERNAL_MODULE__166__;
 
 /***/ }),
-/* 166 */
+/* 167 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(Buffer) {
 
-var parse = __webpack_require__(339);
+var parse = __webpack_require__(340);
 
 module.exports = function (data) {
   var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
@@ -10499,47 +15254,47 @@ module.exports = function (data) {
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(54).Buffer))
 
 /***/ }),
-/* 167 */
+/* 168 */
 /***/ (function(module, exports) {
 
-module.exports = __WEBPACK_EXTERNAL_MODULE__167__;
-
-/***/ }),
-/* 168 */
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(169);
-module.exports = __webpack_require__(390);
-
+module.exports = __WEBPACK_EXTERNAL_MODULE__168__;
 
 /***/ }),
 /* 169 */
 /***/ (function(module, exports, __webpack_require__) {
 
+__webpack_require__(170);
+module.exports = __webpack_require__(391);
+
+
+/***/ }),
+/* 170 */
+/***/ (function(module, exports, __webpack_require__) {
+
 "use strict";
 /* WEBPACK VAR INJECTION */(function(global) {
 
-__webpack_require__(170);
+__webpack_require__(171);
 
-__webpack_require__(313);
+__webpack_require__(314);
 
-__webpack_require__(315);
+__webpack_require__(316);
 
-__webpack_require__(317);
+__webpack_require__(318);
 
-__webpack_require__(319);
+__webpack_require__(320);
 
-__webpack_require__(321);
+__webpack_require__(322);
 
-__webpack_require__(323);
+__webpack_require__(324);
 
-__webpack_require__(325);
+__webpack_require__(326);
 
-__webpack_require__(327);
+__webpack_require__(328);
 
-__webpack_require__(329);
+__webpack_require__(330);
 
-__webpack_require__(333);
+__webpack_require__(334);
 
 if (global._babelPolyfill && typeof console !== "undefined" && console.warn) {
   console.warn("@babel/polyfill is loaded more than once on this page. This is probably not desirable/intended " + "and may have consequences if different versions of the polyfills are applied sequentially. " + "If you do need to load the polyfill more than once, use @babel/polyfill/noConflict " + "instead to bypass the warning.");
@@ -10549,11 +15304,10 @@ global._babelPolyfill = true;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(25)))
 
 /***/ }),
-/* 170 */
+/* 171 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(171);
-__webpack_require__(173);
+__webpack_require__(172);
 __webpack_require__(174);
 __webpack_require__(175);
 __webpack_require__(176);
@@ -10595,7 +15349,7 @@ __webpack_require__(211);
 __webpack_require__(212);
 __webpack_require__(213);
 __webpack_require__(214);
-__webpack_require__(216);
+__webpack_require__(215);
 __webpack_require__(217);
 __webpack_require__(218);
 __webpack_require__(219);
@@ -10629,16 +15383,16 @@ __webpack_require__(246);
 __webpack_require__(247);
 __webpack_require__(248);
 __webpack_require__(249);
-__webpack_require__(251);
+__webpack_require__(250);
 __webpack_require__(252);
-__webpack_require__(254);
+__webpack_require__(253);
 __webpack_require__(255);
 __webpack_require__(256);
 __webpack_require__(257);
 __webpack_require__(258);
 __webpack_require__(259);
 __webpack_require__(260);
-__webpack_require__(263);
+__webpack_require__(261);
 __webpack_require__(264);
 __webpack_require__(265);
 __webpack_require__(266);
@@ -10651,17 +15405,17 @@ __webpack_require__(272);
 __webpack_require__(273);
 __webpack_require__(274);
 __webpack_require__(275);
-__webpack_require__(101);
 __webpack_require__(276);
-__webpack_require__(133);
+__webpack_require__(101);
 __webpack_require__(277);
-__webpack_require__(134);
+__webpack_require__(133);
 __webpack_require__(278);
+__webpack_require__(134);
 __webpack_require__(279);
 __webpack_require__(280);
 __webpack_require__(281);
+__webpack_require__(282);
 __webpack_require__(135);
-__webpack_require__(284);
 __webpack_require__(285);
 __webpack_require__(286);
 __webpack_require__(287);
@@ -10690,11 +15444,12 @@ __webpack_require__(309);
 __webpack_require__(310);
 __webpack_require__(311);
 __webpack_require__(312);
+__webpack_require__(313);
 module.exports = __webpack_require__(13);
 
 
 /***/ }),
-/* 171 */
+/* 172 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10713,7 +15468,7 @@ var uid = __webpack_require__(34);
 var wks = __webpack_require__(8);
 var wksExt = __webpack_require__(81);
 var wksDefine = __webpack_require__(115);
-var enumKeys = __webpack_require__(172);
+var enumKeys = __webpack_require__(173);
 var isArray = __webpack_require__(84);
 var anObject = __webpack_require__(4);
 var isObject = __webpack_require__(6);
@@ -10935,7 +15690,7 @@ setToStringTag(global.JSON, 'JSON', true);
 
 
 /***/ }),
-/* 172 */
+/* 173 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // all enumerable object keys, includes symbols
@@ -10956,7 +15711,7 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 173 */
+/* 174 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $export = __webpack_require__(1);
@@ -10965,7 +15720,7 @@ $export($export.S, 'Object', { create: __webpack_require__(38) });
 
 
 /***/ }),
-/* 174 */
+/* 175 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $export = __webpack_require__(1);
@@ -10974,7 +15729,7 @@ $export($export.S + $export.F * !__webpack_require__(12), 'Object', { defineProp
 
 
 /***/ }),
-/* 175 */
+/* 176 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $export = __webpack_require__(1);
@@ -10983,7 +15738,7 @@ $export($export.S + $export.F * !__webpack_require__(12), 'Object', { defineProp
 
 
 /***/ }),
-/* 176 */
+/* 177 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.6 Object.getOwnPropertyDescriptor(O, P)
@@ -10998,7 +15753,7 @@ __webpack_require__(23)('getOwnPropertyDescriptor', function () {
 
 
 /***/ }),
-/* 177 */
+/* 178 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.9 Object.getPrototypeOf(O)
@@ -11013,7 +15768,7 @@ __webpack_require__(23)('getPrototypeOf', function () {
 
 
 /***/ }),
-/* 178 */
+/* 179 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.14 Object.keys(O)
@@ -11028,7 +15783,7 @@ __webpack_require__(23)('keys', function () {
 
 
 /***/ }),
-/* 179 */
+/* 180 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.7 Object.getOwnPropertyNames(O)
@@ -11038,7 +15793,7 @@ __webpack_require__(23)('getOwnPropertyNames', function () {
 
 
 /***/ }),
-/* 180 */
+/* 181 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.5 Object.freeze(O)
@@ -11053,7 +15808,7 @@ __webpack_require__(23)('freeze', function ($freeze) {
 
 
 /***/ }),
-/* 181 */
+/* 182 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.17 Object.seal(O)
@@ -11068,7 +15823,7 @@ __webpack_require__(23)('seal', function ($seal) {
 
 
 /***/ }),
-/* 182 */
+/* 183 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.15 Object.preventExtensions(O)
@@ -11083,7 +15838,7 @@ __webpack_require__(23)('preventExtensions', function ($preventExtensions) {
 
 
 /***/ }),
-/* 183 */
+/* 184 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.12 Object.isFrozen(O)
@@ -11097,7 +15852,7 @@ __webpack_require__(23)('isFrozen', function ($isFrozen) {
 
 
 /***/ }),
-/* 184 */
+/* 185 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.13 Object.isSealed(O)
@@ -11111,7 +15866,7 @@ __webpack_require__(23)('isSealed', function ($isSealed) {
 
 
 /***/ }),
-/* 185 */
+/* 186 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.11 Object.isExtensible(O)
@@ -11125,7 +15880,7 @@ __webpack_require__(23)('isExtensible', function ($isExtensible) {
 
 
 /***/ }),
-/* 186 */
+/* 187 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.3.1 Object.assign(target, source)
@@ -11135,7 +15890,7 @@ $export($export.S + $export.F, 'Object', { assign: __webpack_require__(119) });
 
 
 /***/ }),
-/* 187 */
+/* 188 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.3.10 Object.is(value1, value2)
@@ -11144,7 +15899,7 @@ $export($export.S, 'Object', { is: __webpack_require__(120) });
 
 
 /***/ }),
-/* 188 */
+/* 189 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.3.19 Object.setPrototypeOf(O, proto)
@@ -11153,7 +15908,7 @@ $export($export.S, 'Object', { setPrototypeOf: __webpack_require__(86).set });
 
 
 /***/ }),
-/* 189 */
+/* 190 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11170,7 +15925,7 @@ if (test + '' != '[object z]') {
 
 
 /***/ }),
-/* 190 */
+/* 191 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.2.3.2 / 15.3.4.5 Function.prototype.bind(thisArg, args...)
@@ -11180,7 +15935,7 @@ $export($export.P, 'Function', { bind: __webpack_require__(121) });
 
 
 /***/ }),
-/* 191 */
+/* 192 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var dP = __webpack_require__(11).f;
@@ -11202,7 +15957,7 @@ NAME in FProto || __webpack_require__(12) && dP(FProto, NAME, {
 
 
 /***/ }),
-/* 192 */
+/* 193 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11222,7 +15977,7 @@ if (!(HAS_INSTANCE in FunctionProto)) __webpack_require__(11).f(FunctionProto, H
 
 
 /***/ }),
-/* 193 */
+/* 194 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $export = __webpack_require__(1);
@@ -11232,7 +15987,7 @@ $export($export.G + $export.F * (parseInt != $parseInt), { parseInt: $parseInt }
 
 
 /***/ }),
-/* 194 */
+/* 195 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $export = __webpack_require__(1);
@@ -11242,7 +15997,7 @@ $export($export.G + $export.F * (parseFloat != $parseFloat), { parseFloat: $pars
 
 
 /***/ }),
-/* 195 */
+/* 196 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11318,7 +16073,7 @@ if (!$Number(' 0o1') || !$Number('0b1') || $Number('+0x1')) {
 
 
 /***/ }),
-/* 196 */
+/* 197 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11439,7 +16194,7 @@ $export($export.P + $export.F * (!!$toFixed && (
 
 
 /***/ }),
-/* 197 */
+/* 198 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11464,7 +16219,7 @@ $export($export.P + $export.F * ($fails(function () {
 
 
 /***/ }),
-/* 198 */
+/* 199 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 20.1.2.1 Number.EPSILON
@@ -11474,7 +16229,7 @@ $export($export.S, 'Number', { EPSILON: Math.pow(2, -52) });
 
 
 /***/ }),
-/* 199 */
+/* 200 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 20.1.2.2 Number.isFinite(number)
@@ -11489,7 +16244,7 @@ $export($export.S, 'Number', {
 
 
 /***/ }),
-/* 200 */
+/* 201 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 20.1.2.3 Number.isInteger(number)
@@ -11499,7 +16254,7 @@ $export($export.S, 'Number', { isInteger: __webpack_require__(126) });
 
 
 /***/ }),
-/* 201 */
+/* 202 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 20.1.2.4 Number.isNaN(number)
@@ -11514,7 +16269,7 @@ $export($export.S, 'Number', {
 
 
 /***/ }),
-/* 202 */
+/* 203 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 20.1.2.5 Number.isSafeInteger(number)
@@ -11530,7 +16285,7 @@ $export($export.S, 'Number', {
 
 
 /***/ }),
-/* 203 */
+/* 204 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 20.1.2.6 Number.MAX_SAFE_INTEGER
@@ -11540,7 +16295,7 @@ $export($export.S, 'Number', { MAX_SAFE_INTEGER: 0x1fffffffffffff });
 
 
 /***/ }),
-/* 204 */
+/* 205 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 20.1.2.10 Number.MIN_SAFE_INTEGER
@@ -11550,7 +16305,7 @@ $export($export.S, 'Number', { MIN_SAFE_INTEGER: -0x1fffffffffffff });
 
 
 /***/ }),
-/* 205 */
+/* 206 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $export = __webpack_require__(1);
@@ -11560,7 +16315,7 @@ $export($export.S + $export.F * (Number.parseFloat != $parseFloat), 'Number', { 
 
 
 /***/ }),
-/* 206 */
+/* 207 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $export = __webpack_require__(1);
@@ -11570,7 +16325,7 @@ $export($export.S + $export.F * (Number.parseInt != $parseInt), 'Number', { pars
 
 
 /***/ }),
-/* 207 */
+/* 208 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 20.2.2.3 Math.acosh(x)
@@ -11594,7 +16349,7 @@ $export($export.S + $export.F * !($acosh
 
 
 /***/ }),
-/* 208 */
+/* 209 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 20.2.2.5 Math.asinh(x)
@@ -11610,7 +16365,7 @@ $export($export.S + $export.F * !($asinh && 1 / $asinh(0) > 0), 'Math', { asinh:
 
 
 /***/ }),
-/* 209 */
+/* 210 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 20.2.2.7 Math.atanh(x)
@@ -11626,7 +16381,7 @@ $export($export.S + $export.F * !($atanh && 1 / $atanh(-0) < 0), 'Math', {
 
 
 /***/ }),
-/* 210 */
+/* 211 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 20.2.2.9 Math.cbrt(x)
@@ -11641,7 +16396,7 @@ $export($export.S, 'Math', {
 
 
 /***/ }),
-/* 211 */
+/* 212 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 20.2.2.11 Math.clz32(x)
@@ -11655,7 +16410,7 @@ $export($export.S, 'Math', {
 
 
 /***/ }),
-/* 212 */
+/* 213 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 20.2.2.12 Math.cosh(x)
@@ -11670,7 +16425,7 @@ $export($export.S, 'Math', {
 
 
 /***/ }),
-/* 213 */
+/* 214 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 20.2.2.14 Math.expm1(x)
@@ -11681,17 +16436,17 @@ $export($export.S + $export.F * ($expm1 != Math.expm1), 'Math', { expm1: $expm1 
 
 
 /***/ }),
-/* 214 */
+/* 215 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 20.2.2.16 Math.fround(x)
 var $export = __webpack_require__(1);
 
-$export($export.S, 'Math', { fround: __webpack_require__(215) });
+$export($export.S, 'Math', { fround: __webpack_require__(216) });
 
 
 /***/ }),
-/* 215 */
+/* 216 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 20.2.2.16 Math.fround(x)
@@ -11720,7 +16475,7 @@ module.exports = Math.fround || function fround(x) {
 
 
 /***/ }),
-/* 216 */
+/* 217 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 20.2.2.17 Math.hypot([value1[, value2[, … ]]])
@@ -11751,7 +16506,7 @@ $export($export.S, 'Math', {
 
 
 /***/ }),
-/* 217 */
+/* 218 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 20.2.2.18 Math.imul(x, y)
@@ -11774,7 +16529,7 @@ $export($export.S + $export.F * __webpack_require__(3)(function () {
 
 
 /***/ }),
-/* 218 */
+/* 219 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 20.2.2.21 Math.log10(x)
@@ -11788,7 +16543,7 @@ $export($export.S, 'Math', {
 
 
 /***/ }),
-/* 219 */
+/* 220 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 20.2.2.20 Math.log1p(x)
@@ -11798,7 +16553,7 @@ $export($export.S, 'Math', { log1p: __webpack_require__(127) });
 
 
 /***/ }),
-/* 220 */
+/* 221 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 20.2.2.22 Math.log2(x)
@@ -11812,7 +16567,7 @@ $export($export.S, 'Math', {
 
 
 /***/ }),
-/* 221 */
+/* 222 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 20.2.2.28 Math.sign(x)
@@ -11822,7 +16577,7 @@ $export($export.S, 'Math', { sign: __webpack_require__(90) });
 
 
 /***/ }),
-/* 222 */
+/* 223 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 20.2.2.30 Math.sinh(x)
@@ -11843,7 +16598,7 @@ $export($export.S + $export.F * __webpack_require__(3)(function () {
 
 
 /***/ }),
-/* 223 */
+/* 224 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 20.2.2.33 Math.tanh(x)
@@ -11861,7 +16616,7 @@ $export($export.S, 'Math', {
 
 
 /***/ }),
-/* 224 */
+/* 225 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 20.2.2.34 Math.trunc(x)
@@ -11875,7 +16630,7 @@ $export($export.S, 'Math', {
 
 
 /***/ }),
-/* 225 */
+/* 226 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $export = __webpack_require__(1);
@@ -11904,7 +16659,7 @@ $export($export.S + $export.F * (!!$fromCodePoint && $fromCodePoint.length != 1)
 
 
 /***/ }),
-/* 226 */
+/* 227 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $export = __webpack_require__(1);
@@ -11928,7 +16683,7 @@ $export($export.S, 'String', {
 
 
 /***/ }),
-/* 227 */
+/* 228 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11942,7 +16697,7 @@ __webpack_require__(63)('trim', function ($trim) {
 
 
 /***/ }),
-/* 228 */
+/* 229 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11966,7 +16721,7 @@ __webpack_require__(93)(String, 'String', function (iterated) {
 
 
 /***/ }),
-/* 229 */
+/* 230 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11982,7 +16737,7 @@ $export($export.P, 'String', {
 
 
 /***/ }),
-/* 230 */
+/* 231 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12009,7 +16764,7 @@ $export($export.P + $export.F * __webpack_require__(96)(ENDS_WITH), 'String', {
 
 
 /***/ }),
-/* 231 */
+/* 232 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12028,7 +16783,7 @@ $export($export.P + $export.F * __webpack_require__(96)(INCLUDES), 'String', {
 
 
 /***/ }),
-/* 232 */
+/* 233 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $export = __webpack_require__(1);
@@ -12040,7 +16795,7 @@ $export($export.P, 'String', {
 
 
 /***/ }),
-/* 233 */
+/* 234 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12065,7 +16820,7 @@ $export($export.P + $export.F * __webpack_require__(96)(STARTS_WITH), 'String', 
 
 
 /***/ }),
-/* 234 */
+/* 235 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12079,7 +16834,7 @@ __webpack_require__(16)('anchor', function (createHTML) {
 
 
 /***/ }),
-/* 235 */
+/* 236 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12093,7 +16848,7 @@ __webpack_require__(16)('big', function (createHTML) {
 
 
 /***/ }),
-/* 236 */
+/* 237 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12107,7 +16862,7 @@ __webpack_require__(16)('blink', function (createHTML) {
 
 
 /***/ }),
-/* 237 */
+/* 238 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12121,7 +16876,7 @@ __webpack_require__(16)('bold', function (createHTML) {
 
 
 /***/ }),
-/* 238 */
+/* 239 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12135,7 +16890,7 @@ __webpack_require__(16)('fixed', function (createHTML) {
 
 
 /***/ }),
-/* 239 */
+/* 240 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12149,7 +16904,7 @@ __webpack_require__(16)('fontcolor', function (createHTML) {
 
 
 /***/ }),
-/* 240 */
+/* 241 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12163,7 +16918,7 @@ __webpack_require__(16)('fontsize', function (createHTML) {
 
 
 /***/ }),
-/* 241 */
+/* 242 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12177,7 +16932,7 @@ __webpack_require__(16)('italics', function (createHTML) {
 
 
 /***/ }),
-/* 242 */
+/* 243 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12191,7 +16946,7 @@ __webpack_require__(16)('link', function (createHTML) {
 
 
 /***/ }),
-/* 243 */
+/* 244 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12205,7 +16960,7 @@ __webpack_require__(16)('small', function (createHTML) {
 
 
 /***/ }),
-/* 244 */
+/* 245 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12219,7 +16974,7 @@ __webpack_require__(16)('strike', function (createHTML) {
 
 
 /***/ }),
-/* 245 */
+/* 246 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12233,7 +16988,7 @@ __webpack_require__(16)('sub', function (createHTML) {
 
 
 /***/ }),
-/* 246 */
+/* 247 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12247,7 +17002,7 @@ __webpack_require__(16)('sup', function (createHTML) {
 
 
 /***/ }),
-/* 247 */
+/* 248 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 20.3.3.1 / 15.9.4.4 Date.now()
@@ -12257,7 +17012,7 @@ $export($export.S, 'Date', { now: function () { return new Date().getTime(); } }
 
 
 /***/ }),
-/* 248 */
+/* 249 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12280,12 +17035,12 @@ $export($export.P + $export.F * __webpack_require__(3)(function () {
 
 
 /***/ }),
-/* 249 */
+/* 250 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 20.3.4.36 / 15.9.5.43 Date.prototype.toISOString()
 var $export = __webpack_require__(1);
-var toISOString = __webpack_require__(250);
+var toISOString = __webpack_require__(251);
 
 // PhantomJS / old WebKit has a broken implementations
 $export($export.P + $export.F * (Date.prototype.toISOString !== toISOString), 'Date', {
@@ -12294,7 +17049,7 @@ $export($export.P + $export.F * (Date.prototype.toISOString !== toISOString), 'D
 
 
 /***/ }),
-/* 250 */
+/* 251 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12327,7 +17082,7 @@ module.exports = (fails(function () {
 
 
 /***/ }),
-/* 251 */
+/* 252 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var DateProto = Date.prototype;
@@ -12345,17 +17100,17 @@ if (new Date(NaN) + '' != INVALID_DATE) {
 
 
 /***/ }),
-/* 252 */
+/* 253 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var TO_PRIMITIVE = __webpack_require__(8)('toPrimitive');
 var proto = Date.prototype;
 
-if (!(TO_PRIMITIVE in proto)) __webpack_require__(18)(proto, TO_PRIMITIVE, __webpack_require__(253));
+if (!(TO_PRIMITIVE in proto)) __webpack_require__(18)(proto, TO_PRIMITIVE, __webpack_require__(254));
 
 
 /***/ }),
-/* 253 */
+/* 254 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12371,7 +17126,7 @@ module.exports = function (hint) {
 
 
 /***/ }),
-/* 254 */
+/* 255 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 22.1.2.2 / 15.4.3.2 Array.isArray(arg)
@@ -12381,7 +17136,7 @@ $export($export.S, 'Array', { isArray: __webpack_require__(84) });
 
 
 /***/ }),
-/* 255 */
+/* 256 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12425,7 +17180,7 @@ $export($export.S + $export.F * !__webpack_require__(64)(function (iter) { Array
 
 
 /***/ }),
-/* 256 */
+/* 257 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12451,7 +17206,7 @@ $export($export.S + $export.F * __webpack_require__(3)(function () {
 
 
 /***/ }),
-/* 257 */
+/* 258 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12470,7 +17225,7 @@ $export($export.P + $export.F * (__webpack_require__(50) != Object || !__webpack
 
 
 /***/ }),
-/* 258 */
+/* 259 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12505,7 +17260,7 @@ $export($export.P + $export.F * __webpack_require__(3)(function () {
 
 
 /***/ }),
-/* 259 */
+/* 260 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12535,7 +17290,7 @@ $export($export.P + $export.F * (fails(function () {
 
 
 /***/ }),
-/* 260 */
+/* 261 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12553,11 +17308,11 @@ $export($export.P + $export.F * !STRICT, 'Array', {
 
 
 /***/ }),
-/* 261 */
+/* 262 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 9.4.2.3 ArraySpeciesCreate(originalArray, length)
-var speciesConstructor = __webpack_require__(262);
+var speciesConstructor = __webpack_require__(263);
 
 module.exports = function (original, length) {
   return new (speciesConstructor(original))(length);
@@ -12565,7 +17320,7 @@ module.exports = function (original, length) {
 
 
 /***/ }),
-/* 262 */
+/* 263 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var isObject = __webpack_require__(6);
@@ -12587,7 +17342,7 @@ module.exports = function (original) {
 
 
 /***/ }),
-/* 263 */
+/* 264 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12604,7 +17359,7 @@ $export($export.P + $export.F * !__webpack_require__(20)([].map, true), 'Array',
 
 
 /***/ }),
-/* 264 */
+/* 265 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12621,7 +17376,7 @@ $export($export.P + $export.F * !__webpack_require__(20)([].filter, true), 'Arra
 
 
 /***/ }),
-/* 265 */
+/* 266 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12638,7 +17393,7 @@ $export($export.P + $export.F * !__webpack_require__(20)([].some, true), 'Array'
 
 
 /***/ }),
-/* 266 */
+/* 267 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12655,7 +17410,7 @@ $export($export.P + $export.F * !__webpack_require__(20)([].every, true), 'Array
 
 
 /***/ }),
-/* 267 */
+/* 268 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12672,7 +17427,7 @@ $export($export.P + $export.F * !__webpack_require__(20)([].reduce, true), 'Arra
 
 
 /***/ }),
-/* 268 */
+/* 269 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12689,7 +17444,7 @@ $export($export.P + $export.F * !__webpack_require__(20)([].reduceRight, true), 
 
 
 /***/ }),
-/* 269 */
+/* 270 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12711,7 +17466,7 @@ $export($export.P + $export.F * (NEGATIVE_ZERO || !__webpack_require__(20)($nati
 
 
 /***/ }),
-/* 270 */
+/* 271 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12740,7 +17495,7 @@ $export($export.P + $export.F * (NEGATIVE_ZERO || !__webpack_require__(20)($nati
 
 
 /***/ }),
-/* 271 */
+/* 272 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 22.1.3.3 Array.prototype.copyWithin(target, start, end = this.length)
@@ -12752,7 +17507,7 @@ __webpack_require__(44)('copyWithin');
 
 
 /***/ }),
-/* 272 */
+/* 273 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 22.1.3.6 Array.prototype.fill(value, start = 0, end = this.length)
@@ -12764,7 +17519,7 @@ __webpack_require__(44)('fill');
 
 
 /***/ }),
-/* 273 */
+/* 274 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12785,7 +17540,7 @@ __webpack_require__(44)(KEY);
 
 
 /***/ }),
-/* 274 */
+/* 275 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12806,14 +17561,14 @@ __webpack_require__(44)(KEY);
 
 
 /***/ }),
-/* 275 */
+/* 276 */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(45)('Array');
 
 
 /***/ }),
-/* 276 */
+/* 277 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var global = __webpack_require__(5);
@@ -12862,7 +17617,7 @@ __webpack_require__(45)('RegExp');
 
 
 /***/ }),
-/* 277 */
+/* 278 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12894,7 +17649,7 @@ if (__webpack_require__(3)(function () { return $toString.call({ source: 'a', fl
 
 
 /***/ }),
-/* 278 */
+/* 279 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12941,7 +17696,7 @@ __webpack_require__(67)('match', 1, function (defined, MATCH, $match, maybeCallN
 
 
 /***/ }),
-/* 279 */
+/* 280 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13066,7 +17821,7 @@ __webpack_require__(67)('replace', 2, function (defined, REPLACE, $replace, mayb
 
 
 /***/ }),
-/* 280 */
+/* 281 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13104,7 +17859,7 @@ __webpack_require__(67)('search', 1, function (defined, SEARCH, $search, maybeCa
 
 
 /***/ }),
-/* 281 */
+/* 282 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13245,7 +18000,7 @@ __webpack_require__(67)('split', 2, function (defined, SPLIT, $split, maybeCallN
 
 
 /***/ }),
-/* 282 */
+/* 283 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var global = __webpack_require__(5);
@@ -13320,7 +18075,7 @@ module.exports = function () {
 
 
 /***/ }),
-/* 283 */
+/* 284 */
 /***/ (function(module, exports) {
 
 module.exports = function (exec) {
@@ -13333,7 +18088,7 @@ module.exports = function (exec) {
 
 
 /***/ }),
-/* 284 */
+/* 285 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13359,7 +18114,7 @@ module.exports = __webpack_require__(70)(MAP, function (get) {
 
 
 /***/ }),
-/* 285 */
+/* 286 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13380,7 +18135,7 @@ module.exports = __webpack_require__(70)(SET, function (get) {
 
 
 /***/ }),
-/* 286 */
+/* 287 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13446,7 +18201,7 @@ if (fails(function () { return new $WeakMap().set((Object.freeze || Object)(tmp)
 
 
 /***/ }),
-/* 287 */
+/* 288 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13467,7 +18222,7 @@ __webpack_require__(70)(WEAK_SET, function (get) {
 
 
 /***/ }),
-/* 288 */
+/* 289 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13520,7 +18275,7 @@ __webpack_require__(45)(ARRAY_BUFFER);
 
 
 /***/ }),
-/* 289 */
+/* 290 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $export = __webpack_require__(1);
@@ -13530,7 +18285,7 @@ $export($export.G + $export.W + $export.F * !__webpack_require__(71).ABV, {
 
 
 /***/ }),
-/* 290 */
+/* 291 */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(30)('Int8', 1, function (init) {
@@ -13541,7 +18296,7 @@ __webpack_require__(30)('Int8', 1, function (init) {
 
 
 /***/ }),
-/* 291 */
+/* 292 */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(30)('Uint8', 1, function (init) {
@@ -13552,7 +18307,7 @@ __webpack_require__(30)('Uint8', 1, function (init) {
 
 
 /***/ }),
-/* 292 */
+/* 293 */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(30)('Uint8', 1, function (init) {
@@ -13563,7 +18318,7 @@ __webpack_require__(30)('Uint8', 1, function (init) {
 
 
 /***/ }),
-/* 293 */
+/* 294 */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(30)('Int16', 2, function (init) {
@@ -13574,7 +18329,7 @@ __webpack_require__(30)('Int16', 2, function (init) {
 
 
 /***/ }),
-/* 294 */
+/* 295 */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(30)('Uint16', 2, function (init) {
@@ -13585,7 +18340,7 @@ __webpack_require__(30)('Uint16', 2, function (init) {
 
 
 /***/ }),
-/* 295 */
+/* 296 */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(30)('Int32', 4, function (init) {
@@ -13596,7 +18351,7 @@ __webpack_require__(30)('Int32', 4, function (init) {
 
 
 /***/ }),
-/* 296 */
+/* 297 */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(30)('Uint32', 4, function (init) {
@@ -13607,7 +18362,7 @@ __webpack_require__(30)('Uint32', 4, function (init) {
 
 
 /***/ }),
-/* 297 */
+/* 298 */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(30)('Float32', 4, function (init) {
@@ -13618,7 +18373,7 @@ __webpack_require__(30)('Float32', 4, function (init) {
 
 
 /***/ }),
-/* 298 */
+/* 299 */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(30)('Float64', 8, function (init) {
@@ -13629,7 +18384,7 @@ __webpack_require__(30)('Float64', 8, function (init) {
 
 
 /***/ }),
-/* 299 */
+/* 300 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 26.1.1 Reflect.apply(target, thisArgument, argumentsList)
@@ -13651,7 +18406,7 @@ $export($export.S + $export.F * !__webpack_require__(3)(function () {
 
 
 /***/ }),
-/* 300 */
+/* 301 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 26.1.2 Reflect.construct(target, argumentsList [, newTarget])
@@ -13704,7 +18459,7 @@ $export($export.S + $export.F * (NEW_TARGET_BUG || ARGS_BUG), 'Reflect', {
 
 
 /***/ }),
-/* 301 */
+/* 302 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 26.1.3 Reflect.defineProperty(target, propertyKey, attributes)
@@ -13733,7 +18488,7 @@ $export($export.S + $export.F * __webpack_require__(3)(function () {
 
 
 /***/ }),
-/* 302 */
+/* 303 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 26.1.4 Reflect.deleteProperty(target, propertyKey)
@@ -13750,7 +18505,7 @@ $export($export.S, 'Reflect', {
 
 
 /***/ }),
-/* 303 */
+/* 304 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13783,7 +18538,7 @@ $export($export.S, 'Reflect', {
 
 
 /***/ }),
-/* 304 */
+/* 305 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 26.1.6 Reflect.get(target, propertyKey [, receiver])
@@ -13810,7 +18565,7 @@ $export($export.S, 'Reflect', { get: get });
 
 
 /***/ }),
-/* 305 */
+/* 306 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 26.1.7 Reflect.getOwnPropertyDescriptor(target, propertyKey)
@@ -13826,7 +18581,7 @@ $export($export.S, 'Reflect', {
 
 
 /***/ }),
-/* 306 */
+/* 307 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 26.1.8 Reflect.getPrototypeOf(target)
@@ -13842,7 +18597,7 @@ $export($export.S, 'Reflect', {
 
 
 /***/ }),
-/* 307 */
+/* 308 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 26.1.9 Reflect.has(target, propertyKey)
@@ -13856,7 +18611,7 @@ $export($export.S, 'Reflect', {
 
 
 /***/ }),
-/* 308 */
+/* 309 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 26.1.10 Reflect.isExtensible(target)
@@ -13873,7 +18628,7 @@ $export($export.S, 'Reflect', {
 
 
 /***/ }),
-/* 309 */
+/* 310 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 26.1.11 Reflect.ownKeys(target)
@@ -13883,7 +18638,7 @@ $export($export.S, 'Reflect', { ownKeys: __webpack_require__(141) });
 
 
 /***/ }),
-/* 310 */
+/* 311 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 26.1.12 Reflect.preventExtensions(target)
@@ -13905,7 +18660,7 @@ $export($export.S, 'Reflect', {
 
 
 /***/ }),
-/* 311 */
+/* 312 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 26.1.13 Reflect.set(target, propertyKey, V [, receiver])
@@ -13944,7 +18699,7 @@ $export($export.S, 'Reflect', { set: set });
 
 
 /***/ }),
-/* 312 */
+/* 313 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 26.1.14 Reflect.setPrototypeOf(target, proto)
@@ -13965,15 +18720,15 @@ if (setProto) $export($export.S, 'Reflect', {
 
 
 /***/ }),
-/* 313 */
+/* 314 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(314);
+__webpack_require__(315);
 module.exports = __webpack_require__(13).Array.includes;
 
 
 /***/ }),
-/* 314 */
+/* 315 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13992,15 +18747,15 @@ __webpack_require__(44)('includes');
 
 
 /***/ }),
-/* 315 */
+/* 316 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(316);
+__webpack_require__(317);
 module.exports = __webpack_require__(13).String.padStart;
 
 
 /***/ }),
-/* 316 */
+/* 317 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14019,15 +18774,15 @@ $export($export.P + $export.F * /Version\/10\.\d+(\.\d+)? Safari\//.test(userAge
 
 
 /***/ }),
-/* 317 */
+/* 318 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(318);
+__webpack_require__(319);
 module.exports = __webpack_require__(13).String.padEnd;
 
 
 /***/ }),
-/* 318 */
+/* 319 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14046,30 +18801,30 @@ $export($export.P + $export.F * /Version\/10\.\d+(\.\d+)? Safari\//.test(userAge
 
 
 /***/ }),
-/* 319 */
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(320);
-module.exports = __webpack_require__(81).f('asyncIterator');
-
-
-/***/ }),
 /* 320 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(115)('asyncIterator');
+__webpack_require__(321);
+module.exports = __webpack_require__(81).f('asyncIterator');
 
 
 /***/ }),
 /* 321 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(322);
-module.exports = __webpack_require__(13).Object.getOwnPropertyDescriptors;
+__webpack_require__(115)('asyncIterator');
 
 
 /***/ }),
 /* 322 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(323);
+module.exports = __webpack_require__(13).Object.getOwnPropertyDescriptors;
+
+
+/***/ }),
+/* 323 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // https://github.com/tc39/proposal-object-getownpropertydescriptors
@@ -14097,15 +18852,15 @@ $export($export.S, 'Object', {
 
 
 /***/ }),
-/* 323 */
+/* 324 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(324);
+__webpack_require__(325);
 module.exports = __webpack_require__(13).Object.values;
 
 
 /***/ }),
-/* 324 */
+/* 325 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // https://github.com/tc39/proposal-object-values-entries
@@ -14120,15 +18875,15 @@ $export($export.S, 'Object', {
 
 
 /***/ }),
-/* 325 */
+/* 326 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(326);
+__webpack_require__(327);
 module.exports = __webpack_require__(13).Object.entries;
 
 
 /***/ }),
-/* 326 */
+/* 327 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // https://github.com/tc39/proposal-object-values-entries
@@ -14143,18 +18898,18 @@ $export($export.S, 'Object', {
 
 
 /***/ }),
-/* 327 */
+/* 328 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 __webpack_require__(135);
-__webpack_require__(328);
+__webpack_require__(329);
 module.exports = __webpack_require__(13).Promise['finally'];
 
 
 /***/ }),
-/* 328 */
+/* 329 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14181,17 +18936,17 @@ $export($export.P + $export.R, 'Promise', { 'finally': function (onFinally) {
 
 
 /***/ }),
-/* 329 */
+/* 330 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(330);
 __webpack_require__(331);
 __webpack_require__(332);
+__webpack_require__(333);
 module.exports = __webpack_require__(13);
 
 
 /***/ }),
-/* 330 */
+/* 331 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // ie9- setTimeout & setInterval additional parameters fix
@@ -14217,7 +18972,7 @@ $export($export.G + $export.B + $export.F * MSIE, {
 
 
 /***/ }),
-/* 331 */
+/* 332 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $export = __webpack_require__(1);
@@ -14229,7 +18984,7 @@ $export($export.G + $export.B, {
 
 
 /***/ }),
-/* 332 */
+/* 333 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $iterators = __webpack_require__(101);
@@ -14293,7 +19048,7 @@ for (var collections = getKeys(DOMIterables), i = 0; i < collections.length; i++
 
 
 /***/ }),
-/* 333 */
+/* 334 */
 /***/ (function(module, exports) {
 
 /**
@@ -15020,11 +19775,11 @@ for (var collections = getKeys(DOMIterables), i = 0; i < collections.length; i++
 
 
 /***/ }),
-/* 334 */
+/* 335 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(335);
+var content = __webpack_require__(336);
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -15045,17 +19800,17 @@ if(content.locals) module.exports = content.locals;
 if(false) {}
 
 /***/ }),
-/* 335 */
+/* 336 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(72)(false);
 // Module
-exports.push([module.i, ".dev-body{\n  margin: 2rem auto;\n  width: 100%;\n  max-width: 1500px;\n}\n\n.dev-reload-button{\n  position: absolute;\n  left: 1rem;\n  top: 1rem;\n  color: #ccc;\n}\n\n.keen-explorer-template{\n  margin: 0 auto;\n  width: 100%;\n  max-width: 1500px;\n}\n\n.keen-explorer-template #keen-explorer-container{\n    padding: 1rem;\n  }\n\n.PresetDateRangePicker_panel {\n  padding: 0 22px 11px\n}\n\n.PresetDateRangePicker_button {\n  position: relative;\n  height: 100%;\n  text-align: center;\n  background: 0 0;\n  border: 2px solid #00a699;\n  color: #00a699;\n  padding: 4px 12px;\n  margin-right: 8px;\n  font: inherit;\n  font-weight: 700;\n  line-height: normal;\n  overflow: visible;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  cursor: pointer\n}\n\n.PresetDateRangePicker_button:active {\n  outline: 0\n}\n\n.PresetDateRangePicker_button__selected {\n  color: #fff;\n  background: #00a699\n}\n\n.SingleDatePickerInput {\n  display: inline-block;\n  background-color: #fff\n}\n\n.SingleDatePickerInput__withBorder {\n  border-radius: 2px;\n  border: 1px solid #dbdbdb\n}\n\n.SingleDatePickerInput__rtl {\n  direction: rtl\n}\n\n.SingleDatePickerInput__disabled {\n  background-color: #f2f2f2\n}\n\n.SingleDatePickerInput__block {\n  display: block\n}\n\n.SingleDatePickerInput__showClearDate {\n  padding-right: 30px\n}\n\n.SingleDatePickerInput_clearDate {\n  background: 0 0;\n  border: 0;\n  color: inherit;\n  font: inherit;\n  line-height: normal;\n  overflow: visible;\n  cursor: pointer;\n  padding: 10px;\n  margin: 0 10px 0 5px;\n  position: absolute;\n  right: 0;\n  top: 50%;\n  -webkit-transform: translateY(-50%);\n  transform: translateY(-50%)\n}\n\n.SingleDatePickerInput_clearDate__default:focus,\n.SingleDatePickerInput_clearDate__default:hover {\n  background: #dbdbdb;\n  border-radius: 50%\n}\n\n.SingleDatePickerInput_clearDate__small {\n  padding: 6px\n}\n\n.SingleDatePickerInput_clearDate__hide {\n  visibility: hidden\n}\n\n.SingleDatePickerInput_clearDate_svg {\n  fill: #82888a;\n  height: 12px;\n  width: 15px;\n  vertical-align: middle\n}\n\n.SingleDatePickerInput_clearDate_svg__small {\n  height: 9px\n}\n\n.SingleDatePickerInput_calendarIcon {\n  background: 0 0;\n  border: 0;\n  color: inherit;\n  font: inherit;\n  line-height: normal;\n  overflow: visible;\n  cursor: pointer;\n  display: inline-block;\n  vertical-align: middle;\n  padding: 10px;\n  margin: 0 5px 0 10px\n}\n\n.SingleDatePickerInput_calendarIcon_svg {\n  fill: #82888a;\n  height: 15px;\n  width: 14px;\n  vertical-align: middle\n}\n\n.SingleDatePicker {\n  position: relative;\n  display: inline-block\n}\n\n.SingleDatePicker__block {\n  display: block\n}\n\n.SingleDatePicker_picker {\n  z-index: 1;\n  background-color: #fff;\n  position: absolute\n}\n\n.SingleDatePicker_picker__rtl {\n  direction: rtl\n}\n\n.SingleDatePicker_picker__directionLeft {\n  left: 0\n}\n\n.SingleDatePicker_picker__directionRight {\n  right: 0\n}\n\n.SingleDatePicker_picker__portal {\n  background-color: rgba(0,0,0,.3);\n  position: fixed;\n  top: 0;\n  left: 0;\n  height: 100%;\n  width: 100%\n}\n\n.SingleDatePicker_picker__fullScreenPortal {\n  background-color: #fff\n}\n\n.SingleDatePicker_closeButton {\n  background: 0 0;\n  border: 0;\n  color: inherit;\n  font: inherit;\n  line-height: normal;\n  overflow: visible;\n  cursor: pointer;\n  position: absolute;\n  top: 0;\n  right: 0;\n  padding: 15px;\n  z-index: 2\n}\n\n.SingleDatePicker_closeButton:focus,\n.SingleDatePicker_closeButton:hover {\n  color: darken(#cacccd,10%);\n  text-decoration: none\n}\n\n.SingleDatePicker_closeButton_svg {\n  height: 15px;\n  width: 15px;\n  fill: #cacccd\n}\n\n.DayPickerKeyboardShortcuts_buttonReset {\n  background: 0 0;\n  border: 0;\n  border-radius: 0;\n  color: inherit;\n  font: inherit;\n  line-height: normal;\n  overflow: visible;\n  padding: 0;\n  cursor: pointer;\n  font-size: 14px\n}\n\n.DayPickerKeyboardShortcuts_buttonReset:active {\n  outline: 0\n}\n\n.DayPickerKeyboardShortcuts_show {\n  width: 33px;\n  height: 26px;\n  position: absolute;\n  z-index: 2\n}\n\n.DayPickerKeyboardShortcuts_show::before {\n  content: \"\";\n  display: block;\n  position: absolute\n}\n\n.DayPickerKeyboardShortcuts_show__bottomRight {\n  bottom: 0;\n  right: 0\n}\n\n.DayPickerKeyboardShortcuts_show__bottomRight::before {\n  border-top: 26px solid transparent;\n  border-right: 33px solid #00a699;\n  bottom: 0;\n  right: 0\n}\n\n.DayPickerKeyboardShortcuts_show__bottomRight:hover::before {\n  border-right: 33px solid #008489\n}\n\n.DayPickerKeyboardShortcuts_show__topRight {\n  top: 0;\n  right: 0\n}\n\n.DayPickerKeyboardShortcuts_show__topRight::before {\n  border-bottom: 26px solid transparent;\n  border-right: 33px solid #00a699;\n  top: 0;\n  right: 0\n}\n\n.DayPickerKeyboardShortcuts_show__topRight:hover::before {\n  border-right: 33px solid #008489\n}\n\n.DayPickerKeyboardShortcuts_show__topLeft {\n  top: 0;\n  left: 0\n}\n\n.DayPickerKeyboardShortcuts_show__topLeft::before {\n  border-bottom: 26px solid transparent;\n  border-left: 33px solid #00a699;\n  top: 0;\n  left: 0\n}\n\n.DayPickerKeyboardShortcuts_show__topLeft:hover::before {\n  border-left: 33px solid #008489\n}\n\n.DayPickerKeyboardShortcuts_showSpan {\n  color: #fff;\n  position: absolute\n}\n\n.DayPickerKeyboardShortcuts_showSpan__bottomRight {\n  bottom: 0;\n  right: 5px\n}\n\n.DayPickerKeyboardShortcuts_showSpan__topRight {\n  top: 1px;\n  right: 5px\n}\n\n.DayPickerKeyboardShortcuts_showSpan__topLeft {\n  top: 1px;\n  left: 5px\n}\n\n.DayPickerKeyboardShortcuts_panel {\n  overflow: auto;\n  background: #fff;\n  border: 1px solid #dbdbdb;\n  border-radius: 2px;\n  position: absolute;\n  top: 0;\n  bottom: 0;\n  right: 0;\n  left: 0;\n  z-index: 2;\n  padding: 22px;\n  margin: 33px;\n  text-align: left\n}\n\n.DayPickerKeyboardShortcuts_title {\n  font-size: 16px;\n  font-weight: 700;\n  margin: 0\n}\n\n.DayPickerKeyboardShortcuts_list {\n  list-style: none;\n  padding: 0;\n  font-size: 14px\n}\n\n.DayPickerKeyboardShortcuts_close {\n  position: absolute;\n  right: 22px;\n  top: 22px;\n  z-index: 2\n}\n\n.DayPickerKeyboardShortcuts_close:active {\n  outline: 0\n}\n\n.DayPickerKeyboardShortcuts_closeSvg {\n  height: 15px;\n  width: 15px;\n  fill: #cacccd\n}\n\n.DayPickerKeyboardShortcuts_closeSvg:focus,\n.DayPickerKeyboardShortcuts_closeSvg:hover {\n  fill: #82888a\n}\n\n.CalendarDay {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  cursor: pointer;\n  font-size: 14px;\n  text-align: center\n}\n\n.CalendarDay:active {\n  outline: 0\n}\n\n.CalendarDay__defaultCursor {\n  cursor: default\n}\n\n.CalendarDay__default {\n  border: 1px solid #e4e7e7;\n  color: #484848;\n  background: #fff\n}\n\n.CalendarDay__default:hover {\n  background: #e4e7e7;\n  border: 1px solid #e4e7e7;\n  color: inherit\n}\n\n.CalendarDay__hovered_offset {\n  background: #f4f5f5;\n  border: 1px double #e4e7e7;\n  color: inherit\n}\n\n.CalendarDay__outside {\n  border: 0;\n  background: #fff;\n  color: #484848\n}\n\n.CalendarDay__outside:hover {\n  border: 0\n}\n\n.CalendarDay__blocked_minimum_nights {\n  background: #fff;\n  border: 1px solid #eceeee;\n  color: #cacccd\n}\n\n.CalendarDay__blocked_minimum_nights:active,\n.CalendarDay__blocked_minimum_nights:hover {\n  background: #fff;\n  color: #cacccd\n}\n\n.CalendarDay__highlighted_calendar {\n  background: #ffe8bc;\n  color: #484848\n}\n\n.CalendarDay__highlighted_calendar:active,\n.CalendarDay__highlighted_calendar:hover {\n  background: #ffce71;\n  color: #484848\n}\n\n.CalendarDay__selected_span {\n  background: #66e2da;\n  border: 1px double #33dacd;\n  color: #fff\n}\n\n.CalendarDay__selected_span:active,\n.CalendarDay__selected_span:hover {\n  background: #33dacd;\n  border: 1px double #33dacd;\n  color: #fff\n}\n\n.CalendarDay__last_in_range,\n.CalendarDay__last_in_range:hover {\n  border-style: solid\n}\n\n.CalendarDay__selected,\n.CalendarDay__selected:active,\n.CalendarDay__selected:hover {\n  background: #00a699;\n  border: 1px double #00a699;\n  color: #fff\n}\n\n.CalendarDay__hovered_span,\n.CalendarDay__hovered_span:hover {\n  background: #b2f1ec;\n  border: 1px double #80e8e0;\n  color: #007a87\n}\n\n.CalendarDay__hovered_span:active {\n  background: #80e8e0;\n  border: 1px double #80e8e0;\n  color: #007a87\n}\n\n.CalendarDay__blocked_calendar,\n.CalendarDay__blocked_calendar:active,\n.CalendarDay__blocked_calendar:hover {\n  background: #cacccd;\n  border: 1px solid #cacccd;\n  color: #82888a\n}\n\n.CalendarDay__blocked_out_of_range,\n.CalendarDay__blocked_out_of_range:active,\n.CalendarDay__blocked_out_of_range:hover {\n  background: #fff;\n  border: 1px solid #e4e7e7;\n  color: #cacccd\n}\n\n.CalendarMonth {\n  background: #fff;\n  text-align: center;\n  vertical-align: top;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none\n}\n\n.CalendarMonth_table {\n  border-collapse: collapse;\n  border-spacing: 0\n}\n\n.CalendarMonth_verticalSpacing {\n  border-collapse: separate\n}\n\n.CalendarMonth_caption {\n  color: #484848;\n  font-size: 18px;\n  text-align: center;\n  padding-top: 22px;\n  padding-bottom: 37px;\n  caption-side: top;\n  caption-side: initial\n}\n\n.CalendarMonth_caption__verticalScrollable {\n  padding-top: 12px;\n  padding-bottom: 7px\n}\n\n.CalendarMonthGrid {\n  background: #fff;\n  text-align: left;\n  z-index: 0\n}\n\n.CalendarMonthGrid__animating {\n  z-index: 1\n}\n\n.CalendarMonthGrid__horizontal {\n  position: absolute;\n  left: 9px\n}\n\n.CalendarMonthGrid__vertical {\n  margin: 0 auto\n}\n\n.CalendarMonthGrid__vertical_scrollable {\n  margin: 0 auto;\n  overflow-y: scroll\n}\n\n.CalendarMonthGrid_month__horizontal {\n  display: inline-block;\n  vertical-align: top;\n  min-height: 100%\n}\n\n.CalendarMonthGrid_month__hideForAnimation {\n  position: absolute;\n  z-index: -1;\n  opacity: 0;\n  pointer-events: none\n}\n\n.CalendarMonthGrid_month__hidden {\n  visibility: hidden\n}\n\n.DayPickerNavigation {\n  position: relative;\n  z-index: 2\n}\n\n.DayPickerNavigation__horizontal {\n  height: 0\n}\n\n.DayPickerNavigation__verticalDefault {\n  position: absolute;\n  width: 100%;\n  height: 52px;\n  bottom: 0;\n  left: 0\n}\n\n.DayPickerNavigation__verticalScrollableDefault {\n  position: relative\n}\n\n.DayPickerNavigation_button {\n  cursor: pointer;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n  border: 0;\n  padding: 0;\n  margin: 0\n}\n\n.DayPickerNavigation_button__default {\n  border: 1px solid #e4e7e7;\n  background-color: #fff;\n  color: #757575\n}\n\n.DayPickerNavigation_button__default:focus,\n.DayPickerNavigation_button__default:hover {\n  border: 1px solid #c4c4c4\n}\n\n.DayPickerNavigation_button__default:active {\n  background: #f2f2f2\n}\n\n.DayPickerNavigation_button__disabled {\n  cursor: default;\n  border: 1px solid #f2f2f2\n}\n\n.DayPickerNavigation_button__disabled:focus,\n.DayPickerNavigation_button__disabled:hover {\n  border: 1px solid #f2f2f2\n}\n\n.DayPickerNavigation_button__disabled:active {\n  background: 0 0\n}\n\n.DayPickerNavigation_button__horizontalDefault {\n  position: absolute;\n  top: 18px;\n  line-height: .78;\n  border-radius: 3px;\n  padding: 6px 9px\n}\n\n.DayPickerNavigation_leftButton__horizontalDefault {\n  left: 22px\n}\n\n.DayPickerNavigation_rightButton__horizontalDefault {\n  right: 22px\n}\n\n.DayPickerNavigation_button__verticalDefault {\n  padding: 5px;\n  background: #fff;\n  -webkit-box-shadow: 0 0 5px 2px rgba(0,0,0,.1);\n          box-shadow: 0 0 5px 2px rgba(0,0,0,.1);\n  position: relative;\n  display: inline-block;\n  text-align: center;\n  height: 100%;\n  width: 50%\n}\n\n.DayPickerNavigation_nextButton__verticalDefault {\n  border-left: 0\n}\n\n.DayPickerNavigation_nextButton__verticalScrollableDefault {\n  width: 100%\n}\n\n.DayPickerNavigation_svg__horizontal {\n  height: 19px;\n  width: 19px;\n  fill: #82888a;\n  display: block\n}\n\n.DayPickerNavigation_svg__vertical {\n  height: 42px;\n  width: 42px;\n  fill: #484848\n}\n\n.DayPickerNavigation_svg__disabled {\n  fill: #f2f2f2\n}\n\n.DayPicker {\n  background: #fff;\n  position: relative;\n  text-align: left\n}\n\n.DayPicker__horizontal {\n  background: #fff\n}\n\n.DayPicker__verticalScrollable {\n  height: 100%\n}\n\n.DayPicker__hidden {\n  visibility: hidden\n}\n\n.DayPicker__withBorder {\n  -webkit-box-shadow: 0 2px 6px rgba(0,0,0,.05),0 0 0 1px rgba(0,0,0,.07);\n          box-shadow: 0 2px 6px rgba(0,0,0,.05),0 0 0 1px rgba(0,0,0,.07);\n  border-radius: 3px\n}\n\n.DayPicker_portal__horizontal {\n  -webkit-box-shadow: none;\n          box-shadow: none;\n  position: absolute;\n  left: 50%;\n  top: 50%\n}\n\n.DayPicker_portal__vertical {\n  position: static;\n  position: initial\n}\n\n.DayPicker_focusRegion {\n  outline: 0\n}\n\n.DayPicker_calendarInfo__horizontal,\n.DayPicker_wrapper__horizontal {\n  display: inline-block;\n  vertical-align: top\n}\n\n.DayPicker_weekHeaders {\n  position: relative\n}\n\n.DayPicker_weekHeaders__horizontal {\n  margin-left: 9px\n}\n\n.DayPicker_weekHeader {\n  color: #757575;\n  position: absolute;\n  top: 62px;\n  z-index: 2;\n  text-align: left\n}\n\n.DayPicker_weekHeader__vertical {\n  left: 50%\n}\n\n.DayPicker_weekHeader__verticalScrollable {\n  top: 0;\n  display: table-row;\n  border-bottom: 1px solid #dbdbdb;\n  background: #fff;\n  margin-left: 0;\n  left: 0;\n  width: 100%;\n  text-align: center\n}\n\n.DayPicker_weekHeader_ul {\n  list-style: none;\n  margin: 1px 0;\n  padding-left: 0;\n  padding-right: 0;\n  font-size: 14px\n}\n\n.DayPicker_weekHeader_li {\n  display: inline-block;\n  text-align: center\n}\n\n.DayPicker_transitionContainer {\n  position: relative;\n  overflow: hidden;\n  border-radius: 3px\n}\n\n.DayPicker_transitionContainer__horizontal {\n  -webkit-transition: height .2s ease-in-out;\n  -o-transition: height .2s ease-in-out;\n  transition: height .2s ease-in-out\n}\n\n.DayPicker_transitionContainer__vertical {\n  width: 100%\n}\n\n.DayPicker_transitionContainer__verticalScrollable {\n  padding-top: 20px;\n  height: 100%;\n  position: absolute;\n  top: 0;\n  bottom: 0;\n  right: 0;\n  left: 0;\n  overflow-y: scroll\n}\n\n.DateInput {\n  margin: 0;\n  padding: 0;\n  background: #fff;\n  position: relative;\n  display: inline-block;\n  width: 130px;\n  vertical-align: middle\n}\n\n.DateInput__small {\n  width: 97px\n}\n\n.DateInput__block {\n  width: 100%\n}\n\n.DateInput__disabled {\n  background: #f2f2f2;\n  color: #dbdbdb\n}\n\n.DateInput_input {\n  font-weight: 200;\n  font-size: 19px;\n  line-height: 24px;\n  color: #484848;\n  background-color: #fff;\n  width: 100%;\n  padding: 11px 11px 9px;\n  border: 0;\n  border-top: 0;\n  border-right: 0;\n  border-bottom: 2px solid transparent;\n  border-left: 0;\n  border-radius: 0\n}\n\n.DateInput_input__small {\n  font-size: 15px;\n  line-height: 18px;\n  letter-spacing: .2px;\n  padding: 7px 7px 5px\n}\n\n.DateInput_input__regular {\n  font-weight: auto\n}\n\n.DateInput_input__readOnly {\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none\n}\n\n.DateInput_input__focused {\n  outline: 0;\n  background: #fff;\n  border: 0;\n  border-top: 0;\n  border-right: 0;\n  border-bottom: 2px solid #008489;\n  border-left: 0\n}\n\n.DateInput_input__disabled {\n  background: #f2f2f2;\n  font-style: italic\n}\n\n.DateInput_screenReaderMessage {\n  border: 0;\n  clip: rect(0,0,0,0);\n  height: 1px;\n  margin: -1px;\n  overflow: hidden;\n  padding: 0;\n  position: absolute;\n  width: 1px\n}\n\n.DateInput_fang {\n  position: absolute;\n  width: 20px;\n  height: 10px;\n  left: 22px;\n  z-index: 2\n}\n\n.DateInput_fangShape {\n  fill: #fff\n}\n\n.DateInput_fangStroke {\n  stroke: #dbdbdb;\n  fill: transparent\n}\n\n.DateRangePickerInput {\n  background-color: #fff;\n  display: inline-block\n}\n\n.DateRangePickerInput__disabled {\n  background: #f2f2f2\n}\n\n.DateRangePickerInput__withBorder {\n  border-radius: 2px;\n  border: 1px solid #dbdbdb\n}\n\n.DateRangePickerInput__rtl {\n  direction: rtl\n}\n\n.DateRangePickerInput__block {\n  display: block\n}\n\n.DateRangePickerInput__showClearDates {\n  padding-right: 30px\n}\n\n.DateRangePickerInput_arrow {\n  display: inline-block;\n  vertical-align: middle;\n  color: #484848\n}\n\n.DateRangePickerInput_arrow_svg {\n  vertical-align: middle;\n  fill: #484848;\n  height: 24px;\n  width: 24px\n}\n\n.DateRangePickerInput_clearDates {\n  background: 0 0;\n  border: 0;\n  color: inherit;\n  font: inherit;\n  line-height: normal;\n  overflow: visible;\n  cursor: pointer;\n  padding: 10px;\n  margin: 0 10px 0 5px;\n  position: absolute;\n  right: 0;\n  top: 50%;\n  -webkit-transform: translateY(-50%);\n  transform: translateY(-50%)\n}\n\n.DateRangePickerInput_clearDates__small {\n  padding: 6px\n}\n\n.DateRangePickerInput_clearDates_default:focus,\n.DateRangePickerInput_clearDates_default:hover {\n  background: #dbdbdb;\n  border-radius: 50%\n}\n\n.DateRangePickerInput_clearDates__hide {\n  visibility: hidden\n}\n\n.DateRangePickerInput_clearDates_svg {\n  fill: #82888a;\n  height: 12px;\n  width: 15px;\n  vertical-align: middle\n}\n\n.DateRangePickerInput_clearDates_svg__small {\n  height: 9px\n}\n\n.DateRangePickerInput_calendarIcon {\n  background: 0 0;\n  border: 0;\n  color: inherit;\n  font: inherit;\n  line-height: normal;\n  overflow: visible;\n  cursor: pointer;\n  display: inline-block;\n  vertical-align: middle;\n  padding: 10px;\n  margin: 0 5px 0 10px\n}\n\n.DateRangePickerInput_calendarIcon_svg {\n  fill: #82888a;\n  height: 15px;\n  width: 14px;\n  vertical-align: middle\n}\n\n.DateRangePicker {\n  position: relative;\n  display: inline-block\n}\n\n.DateRangePicker__block {\n  display: block\n}\n\n.DateRangePicker_picker {\n  z-index: 1;\n  background-color: #fff;\n  position: absolute\n}\n\n.DateRangePicker_picker__rtl {\n  direction: rtl\n}\n\n.DateRangePicker_picker__directionLeft {\n  left: 0\n}\n\n.DateRangePicker_picker__directionRight {\n  right: 0\n}\n\n.DateRangePicker_picker__portal {\n  background-color: rgba(0,0,0,.3);\n  position: fixed;\n  top: 0;\n  left: 0;\n  height: 100%;\n  width: 100%\n}\n\n.DateRangePicker_picker__fullScreenPortal {\n  background-color: #fff\n}\n\n.DateRangePicker_closeButton {\n  background: 0 0;\n  border: 0;\n  color: inherit;\n  font: inherit;\n  line-height: normal;\n  overflow: visible;\n  cursor: pointer;\n  position: absolute;\n  top: 0;\n  right: 0;\n  padding: 15px;\n  z-index: 2\n}\n\n.DateRangePicker_closeButton:focus,\n.DateRangePicker_closeButton:hover {\n  color: darken(#cacccd,10%);\n  text-decoration: none\n}\n\n.DateRangePicker_closeButton_svg {\n  height: 15px;\n  width: 15px;\n  fill: #cacccd\n}\n\n.rc-time-picker {\n  display: inline-block;\n  position: relative;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n\n.rc-time-picker * {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n\n.rc-time-picker-clear {\n  position: absolute;\n  right: 6px;\n  cursor: pointer;\n  overflow: hidden;\n  width: 20px;\n  height: 20px;\n  text-align: center;\n  line-height: 20px;\n  top: 3px;\n  margin: 0;\n}\n\n.rc-time-picker-clear-icon:after {\n  content: \"x\";\n  font-size: 12px;\n  font-style: normal;\n  color: #aaa;\n  display: inline-block;\n  line-height: 1;\n  height: 20px;\n  width: 20px;\n  -webkit-transition: color 0.3s ease;\n  -o-transition: color 0.3s ease;\n  transition: color 0.3s ease;\n}\n\n.rc-time-picker-clear-icon:hover:after {\n  color: #666;\n}\n\n.rc-time-picker-input {\n  width: 100%;\n  position: relative;\n  display: inline-block;\n  padding: 4px 7px;\n  height: 28px;\n  cursor: text;\n  font-size: 12px;\n  line-height: 1.5;\n  color: #666;\n  background-color: #fff;\n  background-image: none;\n  border: 1px solid #d9d9d9;\n  border-radius: 4px;\n  -webkit-transition: border 0.2s cubic-bezier(0.645, 0.045, 0.355, 1), background 0.2s cubic-bezier(0.645, 0.045, 0.355, 1), -webkit-box-shadow 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);\n  transition: border 0.2s cubic-bezier(0.645, 0.045, 0.355, 1), background 0.2s cubic-bezier(0.645, 0.045, 0.355, 1), -webkit-box-shadow 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);\n  -o-transition: border 0.2s cubic-bezier(0.645, 0.045, 0.355, 1), background 0.2s cubic-bezier(0.645, 0.045, 0.355, 1), box-shadow 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);\n  transition: border 0.2s cubic-bezier(0.645, 0.045, 0.355, 1), background 0.2s cubic-bezier(0.645, 0.045, 0.355, 1), box-shadow 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);\n  transition: border 0.2s cubic-bezier(0.645, 0.045, 0.355, 1), background 0.2s cubic-bezier(0.645, 0.045, 0.355, 1), box-shadow 0.2s cubic-bezier(0.645, 0.045, 0.355, 1), -webkit-box-shadow 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);\n}\n\n.rc-time-picker-input[disabled] {\n  color: #ccc;\n  background: #f7f7f7;\n  cursor: not-allowed;\n}\n\n.rc-time-picker-panel {\n  z-index: 1070;\n  width: 170px;\n  position: absolute;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n\n.rc-time-picker-panel * {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n\n.rc-time-picker-panel-inner {\n  display: inline-block;\n  position: relative;\n  outline: none;\n  list-style: none;\n  font-size: 12px;\n  text-align: left;\n  background-color: #fff;\n  border-radius: 4px;\n  -webkit-box-shadow: 0 1px 5px #ccc;\n          box-shadow: 0 1px 5px #ccc;\n  background-clip: padding-box;\n  border: 1px solid #ccc;\n  line-height: 1.5;\n}\n\n.rc-time-picker-panel-narrow {\n  max-width: 113px;\n}\n\n.rc-time-picker-panel-input {\n  margin: 0;\n  padding: 0;\n  width: 100%;\n  cursor: auto;\n  line-height: 1.5;\n  outline: 0;\n  border: 1px solid transparent;\n}\n\n.rc-time-picker-panel-input-wrap {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  position: relative;\n  padding: 6px;\n  border-bottom: 1px solid #e9e9e9;\n}\n\n.rc-time-picker-panel-input-invalid {\n  border-color: red;\n}\n\n.rc-time-picker-panel-select {\n  float: left;\n  font-size: 12px;\n  border: 1px solid #e9e9e9;\n  border-width: 0 1px;\n  margin-left: -1px;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  width: 56px;\n  max-height: 144px;\n  overflow-y: auto;\n  position: relative;\n}\n\n.rc-time-picker-panel-select-active {\n  overflow-y: auto;\n}\n\n.rc-time-picker-panel-select:first-child {\n  border-left: 0;\n  margin-left: 0;\n}\n\n.rc-time-picker-panel-select:last-child {\n  border-right: 0;\n}\n\n.rc-time-picker-panel-select ul {\n  list-style: none;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  width: 100%;\n}\n\n.rc-time-picker-panel-select li {\n  list-style: none;\n  margin: 0;\n  padding: 0 0 0 16px;\n  width: 100%;\n  height: 24px;\n  line-height: 24px;\n  text-align: left;\n  cursor: pointer;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n\n.rc-time-picker-panel-select li:hover {\n  background: #edfaff;\n}\n\nli.rc-time-picker-panel-select-option-selected {\n  background: #f7f7f7;\n  font-weight: bold;\n}\n\nli.rc-time-picker-panel-select-option-disabled {\n  color: #ccc;\n}\n\nli.rc-time-picker-panel-select-option-disabled:hover {\n  background: transparent;\n  cursor: not-allowed;\n}\n\n.keen-explorer {\n  font-family: Montserrat, Tahoma, Arial;\n  font-size: 0.88rem;\n  font-size: 0.88rem;\n  color: #000;\n  color: #000;\n  display: -ms-flexbox;\n  display: flex;\n}\n\n.ReactModalPortal {\n  font-family: Montserrat, Tahoma, Arial;\n  font-size: 0.88rem;\n  font-size: 0.88rem;\n  color: #000;\n  color: #000;\n  display: -ms-flexbox;\n  display: flex;\n}\n\n.rc-time-picker-panel {\n  font-family: Montserrat, Tahoma, Arial;\n  font-size: 0.88rem;\n  font-size: 0.88rem;\n  color: #000;\n  color: #000;\n  display: -ms-flexbox;\n  display: flex;\n}\n\n.keen-explorer .extraction,.ReactModalPortal .extraction,.rc-time-picker-panel .extraction{\n  margin-top: 1rem;\n}\n\n.keen-explorer .extraction .first-label,.ReactModalPortal .extraction .first-label,.rc-time-picker-panel .extraction .first-label{\n    padding-top: 0;\n  }\n\n.keen-explorer .extraction .input-text,.ReactModalPortal .extraction .input-text,.rc-time-picker-panel .extraction .input-text{\n    width: 100%;\n  }\n\n.keen-explorer .percentile .input-text,.ReactModalPortal .percentile .input-text,.rc-time-picker-panel .percentile .input-text{\n    width: 100%;\n  }\n\n.keen-explorer .filters-container .list,.ReactModalPortal .filters-container .list,.rc-time-picker-panel .filters-container .list{\n    margin: 2rem 0;\n    width: 100%;\n\n  }\n\n.keen-explorer .filters-container .list .row,.ReactModalPortal .filters-container .list .row,.rc-time-picker-panel .filters-container .list .row{\n      display: -ms-flexbox;\n      display: flex;\n      width: 100%;\n      margin: 0 0 1rem;\n    }\n\n.keen-explorer .filters-container .list .row .row-part,.ReactModalPortal .filters-container .list .row .row-part,.rc-time-picker-panel .filters-container .list .row .row-part{\n        -ms-flex:1;\n            flex:1;\n        padding: 0 0.5rem;\n      }\n\n.keen-explorer .filters-container .list .row .row-part input{\n          padding: 0.55rem 0.7rem;\n          font-size: 0.88rem;\n          font-size: 0.88rem;\n          border-radius: 4px;\n          border: 1px solid #ccc;\n          width: 100%;\n        }\n\n.ReactModalPortal .filters-container .list .row .row-part input{\n          padding: 0.55rem 0.7rem;\n          font-size: 0.88rem;\n          font-size: 0.88rem;\n          border-radius: 4px;\n          border: 1px solid #ccc;\n          width: 100%;\n        }\n\n.rc-time-picker-panel .filters-container .list .row .row-part input{\n          padding: 0.55rem 0.7rem;\n          font-size: 0.88rem;\n          font-size: 0.88rem;\n          border-radius: 4px;\n          border: 1px solid #ccc;\n          width: 100%;\n        }\n\n.keen-explorer .filters-container .list .row .row-part .datetime-pickers,.ReactModalPortal .filters-container .list .row .row-part .datetime-pickers,.rc-time-picker-panel .filters-container .list .row .row-part .datetime-pickers{\n          display: -ms-flexbox;\n          display: flex;\n        }\n\n.keen-explorer .filters-container .list .row .row-part .datetime-pickers .DateInput,.ReactModalPortal .filters-container .list .row .row-part .datetime-pickers .DateInput,.rc-time-picker-panel .filters-container .list .row .row-part .datetime-pickers .DateInput{\n            width: 100%;\n          }\n\n.keen-explorer .filters-container .list .row .row-part .datetime-pickers .SingleDatePickerInput,.ReactModalPortal .filters-container .list .row .row-part .datetime-pickers .SingleDatePickerInput,.rc-time-picker-panel .filters-container .list .row .row-part .datetime-pickers .SingleDatePickerInput{\n            width: 100%;\n          }\n\n.keen-explorer .filters-container .list .row .row-part .datetime-pickers .SingleDatePicker,.ReactModalPortal .filters-container .list .row .row-part .datetime-pickers .SingleDatePicker,.rc-time-picker-panel .filters-container .list .row .row-part .datetime-pickers .SingleDatePicker{\n            -ms-flex: 1;\n                flex: 1;\n            margin-right: 0.1rem;\n          }\n\n.keen-explorer .filters-container .list .row .row-part .datetime-pickers .SingleDatePickerInput__withBorder,.ReactModalPortal .filters-container .list .row .row-part .datetime-pickers .SingleDatePickerInput__withBorder,.rc-time-picker-panel .filters-container .list .row .row-part .datetime-pickers .SingleDatePickerInput__withBorder{\n            border: 0;\n          }\n\n.keen-explorer .filters-container .list .row .row-part .datetime-pickers input.DateInput_input,.ReactModalPortal .filters-container .list .row .row-part .datetime-pickers input.DateInput_input,.rc-time-picker-panel .filters-container .list .row .row-part .datetime-pickers input.DateInput_input{\n            padding: 0.333rem;\n            text-align: center;\n            height: 2.3rem;\n          }\n\n.keen-explorer .filters-container .list .row .row-part .datetime-pickers .rc-time-picker,.ReactModalPortal .filters-container .list .row .row-part .datetime-pickers .rc-time-picker,.rc-time-picker-panel .filters-container .list .row .row-part .datetime-pickers .rc-time-picker{\n            -ms-flex: 1;\n                flex: 1;\n          }\n\n.keen-explorer .filters-container .list .row .row-part .datetime-pickers input.rc-time-picker-input,.ReactModalPortal .filters-container .list .row .row-part .datetime-pickers input.rc-time-picker-input,.rc-time-picker-panel .filters-container .list .row .row-part .datetime-pickers input.rc-time-picker-input{\n            padding: 0.3rem;\n            text-align: center;\n            height: auto;\n            line-height: auto;\n            height: 2.3rem;\n          }\n\n.keen-explorer .filters-container .list .row .row-part .within-inputs input,.ReactModalPortal .filters-container .list .row .row-part .within-inputs input,.rc-time-picker-panel .filters-container .list .row .row-part .within-inputs input{\n            margin-bottom: 0.2rem;\n          }\n\n.keen-explorer .filters-container .list .row .row-part .delete,.ReactModalPortal .filters-container .list .row .row-part .delete,.rc-time-picker-panel .filters-container .list .row .row-part .delete{\n          cursor: pointer;\n          display: -ms-flexbox;\n          display: flex;\n          -ms-flex-align: center;\n              align-items: center;\n          height: 100%;\n        }\n\n.keen-explorer .filters-container .list .row .row-part .delete i, .ReactModalPortal .filters-container .list .row .row-part .delete i, .rc-time-picker-panel .filters-container .list .row .row-part .delete i {\n            color: #ea7373;\n            font-size: 1rem;\n            padding: 0.5rem;\n          }\n\n.keen-explorer .filters-container .list .row .no-flex,.ReactModalPortal .filters-container .list .row .no-flex,.rc-time-picker-panel .filters-container .list .row .no-flex{\n        -ms-flex: 0;\n            flex: 0;\n      }\n\n.keen-explorer .filters-container .action-buttons,.ReactModalPortal .filters-container .action-buttons,.rc-time-picker-panel .filters-container .action-buttons{\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-align: center;\n        align-items: center;\n    -ms-flex-pack: end;\n        justify-content: flex-end;\n    margin-top: 0;\n  }\n\n.keen-explorer .filters-container .action-buttons .button-add-filter,.ReactModalPortal .filters-container .action-buttons .button-add-filter,.rc-time-picker-panel .filters-container .action-buttons .button-add-filter{\n      margin-right: 1rem;\n      cursor: pointer;\n      text-transform: uppercase;\n      padding: 1rem 2rem;\n      background: #eee;\n      border-radius: 0.3rem;\n    }\n\n.keen-explorer .filters-container .action-buttons .button-add-filter i, .ReactModalPortal .filters-container .action-buttons .button-add-filter i, .rc-time-picker-panel .filters-container .action-buttons .button-add-filter i {\n        margin-right: 1rem;\n      }\n\n.keen-explorer .filters-container .action-buttons .button-done{\n      cursor: pointer;\n      color: #fff;\n      background: #45b2e8;\n      background: #45b2e8;\n      text-transform: uppercase;\n      width: 10rem;\n      padding: 1rem;\n      text-align: center;\n      border-radius: 0.3rem;\n    }\n\n.ReactModalPortal .filters-container .action-buttons .button-done{\n      cursor: pointer;\n      color: #fff;\n      background: #45b2e8;\n      background: #45b2e8;\n      text-transform: uppercase;\n      width: 10rem;\n      padding: 1rem;\n      text-align: center;\n      border-radius: 0.3rem;\n    }\n\n.rc-time-picker-panel .filters-container .action-buttons .button-done{\n      cursor: pointer;\n      color: #fff;\n      background: #45b2e8;\n      background: #45b2e8;\n      text-transform: uppercase;\n      width: 10rem;\n      padding: 1rem;\n      text-align: center;\n      border-radius: 0.3rem;\n    }\n\n.keen-explorer .filters-container .action-buttons .button-done i,.ReactModalPortal .filters-container .action-buttons .button-done i,.rc-time-picker-panel .filters-container .action-buttons .button-done i{\n        margin-right: 1rem;\n      }\n\n@media screen and (max-width: 1000px) {\n      .keen-explorer .filters-container .list .row,.ReactModalPortal .filters-container .list .row,.rc-time-picker-panel .filters-container .list .row{\n        -ms-flex-direction: column;\n            flex-direction: column;\n      }\n        .keen-explorer .filters-container .list .row .row-part,.ReactModalPortal .filters-container .list .row .row-part,.rc-time-picker-panel .filters-container .list .row .row-part{\n          margin-bottom: 0.3rem;\n        }\n        .keen-explorer .filters-container .list .row .delete,.ReactModalPortal .filters-container .list .row .delete,.rc-time-picker-panel .filters-container .list .row .delete{\n          float: right;\n          padding-right: 1rem;\n        }\n}\n\n.keen-explorer .modal-main,.ReactModalPortal .modal-main,.rc-time-picker-panel .modal-main{\n  display:-ms-flexbox;\n  display:flex;\n  -ms-flex-direction: column;\n      flex-direction: column;\n  height: 100%;\n  width: 100%;\n}\n\n.keen-explorer .modal-main .header,.ReactModalPortal .modal-main .header,.rc-time-picker-panel .modal-main .header{\n    -ms-flex:0;\n        flex:0;\n    border-bottom: 1px solid #eee;\n    padding-bottom: 1rem;\n  }\n\n.keen-explorer .modal-main .header .title,.ReactModalPortal .modal-main .header .title,.rc-time-picker-panel .modal-main .header .title{\n        float: left;\n      }\n\n.keen-explorer .modal-main .header .x,.ReactModalPortal .modal-main .header .x,.rc-time-picker-panel .modal-main .header .x{\n        color: #565656;\n        float: right;\n        font-weight: bold;\n        cursor: pointer;\n        padding: 1rem;\n        margin: -2rem -1rem;\n        font-size: 2rem;\n      }\n\n.keen-explorer .modal-main .container,.ReactModalPortal .modal-main .container,.rc-time-picker-panel .modal-main .container{\n    -ms-flex:1;\n        flex:1;\n    padding: 1rem 0;\n    clear: both;\n    width: 100%;\n    overflow-y: scroll;\n    white-space: pre-wrap;\n  }\n\n.keen-explorer .modal-main .button-copy,.ReactModalPortal .modal-main .button-copy,.rc-time-picker-panel .modal-main .button-copy{\n    padding: 1rem;\n    width: 10rem;\n    text-align: center;\n    cursor: pointer;\n    background: #1e93d8;\n    color: #fff;\n    border-radius: 0.5rem;\n    margin-top: 1rem;\n  }\n\n.keen-explorer .modal-main .button-copy:active,.ReactModalPortal .modal-main .button-copy:active,.rc-time-picker-panel .modal-main .button-copy:active{\n    background: #30a1e4;\n  }\n\n.keen-explorer .ReactModal__Overlay,.ReactModalPortal .ReactModal__Overlay,.rc-time-picker-panel .ReactModal__Overlay{\n  z-index: 9999;\n}\n\n.keen-explorer .saved-query, .ReactModalPortal .saved-query, .rc-time-picker-panel .saved-query {\n  margin: 1rem 0;\n  border: 1px solid #e8e8e8;\n  background: #fcfcfc;\n  padding: 1rem;\n  border-radius: 0.3rem;\n}\n\n.keen-explorer .saved-query .input-name {\n    font-size: 0.88rem;\n    font-size: 0.88rem;\n    padding: 1rem;\n    border-radius: 0.3rem;\n    border: 1px solid #e8e8e8;\n    width: 100%;\n  }\n\n.ReactModalPortal .saved-query .input-name {\n    font-size: 0.88rem;\n    font-size: 0.88rem;\n    padding: 1rem;\n    border-radius: 0.3rem;\n    border: 1px solid #e8e8e8;\n    width: 100%;\n  }\n\n.rc-time-picker-panel .saved-query .input-name {\n    font-size: 0.88rem;\n    font-size: 0.88rem;\n    padding: 1rem;\n    border-radius: 0.3rem;\n    border: 1px solid #e8e8e8;\n    width: 100%;\n  }\n\n.keen-explorer .saved-query .resource-name,.ReactModalPortal .saved-query .resource-name,.rc-time-picker-panel .saved-query .resource-name{\n    padding: 1rem 0.2rem 0;\n    display: -ms-flexbox;\n    display: flex;\n    overflow: hidden;\n    font-size: 0.8rem;\n  }\n\n.keen-explorer .saved-query .resource-name .line, .ReactModalPortal .saved-query .resource-name .line, .rc-time-picker-panel .saved-query .resource-name .line {\n      -ms-flex: 1;\n          flex: 1;\n      white-space: nowrap;\n    }\n\n.keen-explorer .saved-query .resource-name .line span,.ReactModalPortal .saved-query .resource-name .line span,.rc-time-picker-panel .saved-query .resource-name .line span{\n        white-space: nowrap;\n        overflow: hidden;\n        -ms-flex: 1;\n            flex: 1;\n      }\n\n.keen-explorer .saved-query .resource-name .line i, .ReactModalPortal .saved-query .resource-name .line i, .rc-time-picker-panel .saved-query .resource-name .line i {\n        -ms-flex: 0;\n            flex: 0;\n      }\n\n.keen-explorer .saved-query .resource-name .line-label,.ReactModalPortal .saved-query .resource-name .line-label,.rc-time-picker-panel .saved-query .resource-name .line-label{\n      -ms-flex: 0;\n          flex: 0;\n      margin-right: 0.5rem;\n    }\n\n.keen-explorer .saved-query .cache, .ReactModalPortal .saved-query .cache, .rc-time-picker-panel .saved-query .cache {\n    padding: 1rem 0 0;\n    max-width: 12rem;\n  }\n\n.keen-explorer .saved-query .cache .line-checkbox,.ReactModalPortal .saved-query .cache .line-checkbox,.rc-time-picker-panel .saved-query .cache .line-checkbox{\n      display: -ms-flexbox;\n      display: flex;\n    }\n\n.keen-explorer .saved-query .cache .line-checkbox input,.ReactModalPortal .saved-query .cache .line-checkbox input,.rc-time-picker-panel .saved-query .cache .line-checkbox input{\n        margin-right: 0.5rem;\n        outline: none;\n      }\n\n.keen-explorer .saved-query .cache .line-checkbox label,.ReactModalPortal .saved-query .cache .line-checkbox label,.rc-time-picker-panel .saved-query .cache .line-checkbox label{\n        cursor: pointer;\n      }\n\n.keen-explorer .saved-query .cache .cache-toggle,.ReactModalPortal .saved-query .cache .cache-toggle,.rc-time-picker-panel .saved-query .cache .cache-toggle{\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-align: center;\n          align-items: center;\n      cursor: pointer;\n      color: #128296;\n    }\n\n.keen-explorer .saved-query .cache i, .ReactModalPortal .saved-query .cache i, .rc-time-picker-panel .saved-query .cache i {\n      font-size: 1.3rem;\n      margin-right: 0.6rem;\n    }\n\n.keen-explorer .saved-query .cache .fa-toggle-off,.ReactModalPortal .saved-query .cache .fa-toggle-off,.rc-time-picker-panel .saved-query .cache .fa-toggle-off{\n      color: #7b7b7b;\n    }\n\n.keen-explorer .saved-query .cache .cache-refresh,.ReactModalPortal .saved-query .cache .cache-refresh,.rc-time-picker-panel .saved-query .cache .cache-refresh{\n    }\n\n.keen-explorer .saved-query .button-copy,.ReactModalPortal .saved-query .button-copy,.rc-time-picker-panel .saved-query .button-copy{\n    padding: 0.7rem;\n    right: 0;\n    bottom: 0;\n    border: 0;\n    cursor: pointer;\n    display: inline;\n  }\n\n.keen-explorer .saved-query .buttons * {\n      margin-top: 1rem;\n      padding: 0.88rem calc(0.88rem*2);\n      border-radius: 0.3rem;\n      font-size: 0.88rem;\n      font-size: 0.88rem;\n      cursor: pointer;\n      text-transform: uppercase;\n      border: 0;\n      font-weight: 600;\n      font-weight: 600;\n    }\n\n.ReactModalPortal .saved-query .buttons * {\n      margin-top: 1rem;\n      padding: 0.88rem calc(0.88rem*2);\n      border-radius: 0.3rem;\n      font-size: 0.88rem;\n      font-size: 0.88rem;\n      cursor: pointer;\n      text-transform: uppercase;\n      border: 0;\n      font-weight: 600;\n      font-weight: 600;\n    }\n\n.rc-time-picker-panel .saved-query .buttons * {\n      margin-top: 1rem;\n      padding: 0.88rem calc(0.88rem*2);\n      border-radius: 0.3rem;\n      font-size: 0.88rem;\n      font-size: 0.88rem;\n      cursor: pointer;\n      text-transform: uppercase;\n      border: 0;\n      font-weight: 600;\n      font-weight: 600;\n    }\n\n.keen-explorer .saved-query .buttons .button-save{\n      color: #fff;\n      background: #45b2e8;\n      background: #45b2e8;\n    }\n\n.ReactModalPortal .saved-query .buttons .button-save{\n      color: #fff;\n      background: #45b2e8;\n      background: #45b2e8;\n    }\n\n.rc-time-picker-panel .saved-query .buttons .button-save{\n      color: #fff;\n      background: #45b2e8;\n      background: #45b2e8;\n    }\n\n.keen-explorer .saved-query .buttons .button-clone{\n      margin-left: 1rem;\n      color: #45b2e8;\n      color: #45b2e8;\n      background: transparent;\n      border: 1px solid #eee;\n    }\n\n.ReactModalPortal .saved-query .buttons .button-clone{\n      margin-left: 1rem;\n      color: #45b2e8;\n      color: #45b2e8;\n      background: transparent;\n      border: 1px solid #eee;\n    }\n\n.rc-time-picker-panel .saved-query .buttons .button-clone{\n      margin-left: 1rem;\n      color: #45b2e8;\n      color: #45b2e8;\n      background: transparent;\n      border: 1px solid #eee;\n    }\n\n.keen-explorer .saved-query .buttons .button-delete,.ReactModalPortal .saved-query .buttons .button-delete,.rc-time-picker-panel .saved-query .buttons .button-delete{\n      float: right;\n      color: #6f6c6c;\n      background: transparent;\n      border: 1px solid #eee;\n    }\n\n.keen-explorer .saved-query .button-copy:active,.ReactModalPortal .saved-query .button-copy:active,.rc-time-picker-panel .saved-query .button-copy:active{\n    background: #fff;\n  }\n\n.keen-explorer .saved-queries,.ReactModalPortal .saved-queries,.rc-time-picker-panel .saved-queries{\n  overflow: scroll;\n  min-height: 100%;\n  max-height: 44rem;\n}\n\n.keen-explorer .saved-queries .input-filter,.ReactModalPortal .saved-queries .input-filter,.rc-time-picker-panel .saved-queries .input-filter{\n    width: 100%;\n    padding: 0.6rem;\n    font-size: 0.9rem;\n    border: 1px solid #ccc;\n    margin: .5rem 0;\n    border-radius: 0.3rem;\n  }\n\n.keen-explorer .saved-queries .item,.ReactModalPortal .saved-queries .item,.rc-time-picker-panel .saved-queries .item{\n    padding: 1rem;\n    cursor: pointer;\n    overflow: auto;\n    border-bottom: 1px solid #f3f3f3;\n  }\n\n.keen-explorer .saved-queries .item .name,.ReactModalPortal .saved-queries .item .name,.rc-time-picker-panel .saved-queries .item .name{\n      margin: 0 0 0.5rem;\n    }\n\n.keen-explorer .saved-queries .item .cached,.ReactModalPortal .saved-queries .item .cached,.rc-time-picker-panel .saved-queries .item .cached{\n      float: left;\n    }\n\n.keen-explorer .saved-queries .item .cached *,.ReactModalPortal .saved-queries .item .cached *,.rc-time-picker-panel .saved-queries .item .cached *{\n        font-size: 0.6rem;\n        text-transform: uppercase;\n      }\n\n.keen-explorer .saved-queries .item .data,.ReactModalPortal .saved-queries .item .data,.rc-time-picker-panel .saved-queries .item .data{\n      float: right;\n      font-size: 0.7rem;\n    }\n\n.keen-explorer .saved-queries .active,.ReactModalPortal .saved-queries .active,.rc-time-picker-panel .saved-queries .active{\n    background: #f7f7f7;\n  }\n\n.keen-explorer .funnel .content,.ReactModalPortal .funnel .content,.rc-time-picker-panel .funnel .content{\n    padding: 0.3rem 0.5rem;\n  }\n\n.keen-explorer .funnel .input-text,.ReactModalPortal .funnel .input-text,.rc-time-picker-panel .funnel .input-text{\n    width: 100%;\n  }\n\n.keen-explorer .funnel .button,.ReactModalPortal .funnel .button,.rc-time-picker-panel .funnel .button{\n    cursor: pointer;\n  }\n\n.keen-explorer .funnel .button-delete,.ReactModalPortal .funnel .button-delete,.rc-time-picker-panel .funnel .button-delete{\n    color: #797979;\n  }\n\n.keen-explorer .funnel .button-add,.ReactModalPortal .funnel .button-add,.rc-time-picker-panel .funnel .button-add{\n    margin-top: 1rem;\n    padding: 0.7rem;\n    background: #fdfdfd;\n    border: 1px solid #e8e8e8;\n    border-radius: 5px;\n    display: inline-block;\n  }\n\n.keen-explorer .funnel .button-add i,.ReactModalPortal .funnel .button-add i,.rc-time-picker-panel .funnel .button-add i{\n      margin-right: 0.3rem;\n    }\n\n.keen-explorer .funnel .line-options,.ReactModalPortal .funnel .line-options,.rc-time-picker-panel .funnel .line-options{\n    margin: 1rem 0 0 0;\n  }\n\n.keen-explorer .funnel .line-checkbox,.ReactModalPortal .funnel .line-checkbox,.rc-time-picker-panel .funnel .line-checkbox{\n    margin: 0.5rem 0 0 0;\n  }\n\n.keen-explorer .funnel .line-checkbox input,.ReactModalPortal .funnel .line-checkbox input,.rc-time-picker-panel .funnel .line-checkbox input{\n      margin-right: 0.5rem;\n    }\n\n.keen-explorer .funnel .line-checkbox label,.ReactModalPortal .funnel .line-checkbox label,.rc-time-picker-panel .funnel .line-checkbox label{\n      cursor: pointer;\n    }\n\n.keen-explorer .funnel .step-switch-position-buttons,.ReactModalPortal .funnel .step-switch-position-buttons,.rc-time-picker-panel .funnel .step-switch-position-buttons{\n    float: left;\n    margin: -0.5rem 0.8rem 0 0;\n    color: #797979;\n  }\n\n.keen-explorer .funnel .step-switch-position-buttons .move-up,.ReactModalPortal .funnel .step-switch-position-buttons .move-up,.rc-time-picker-panel .funnel .step-switch-position-buttons .move-up{\n      margin-top: 0.1rem;\n    }\n\n.keen-explorer .funnel .step-switch-position-buttons .move-down,.ReactModalPortal .funnel .step-switch-position-buttons .move-down,.rc-time-picker-panel .funnel .step-switch-position-buttons .move-down{\n      margin-top: -0.3rem;\n    }\n\n.keen-explorer .keen-dataviz,.ReactModalPortal .keen-dataviz,.rc-time-picker-panel .keen-dataviz{\n  font-family: inherit !important;\n}\n\n.keen-explorer .keen-dataviz .keen-c3-legend .legend-item-text, .ReactModalPortal .keen-dataviz .keen-c3-legend .legend-item-text, .rc-time-picker-panel .keen-dataviz .keen-c3-legend .legend-item-text {\n      font-size: 1em;\n    }\n\n.keen-explorer .keen-dataviz-container,.ReactModalPortal .keen-dataviz-container,.rc-time-picker-panel .keen-dataviz-container{\n  height: calc(100% - 3rem);\n  overflow: hidden;\n}\n\n.keen-explorer .keen-dataviz-metric-value,.ReactModalPortal .keen-dataviz-metric-value,.rc-time-picker-panel .keen-dataviz-metric-value{\n  font-size: 4rem !important;\n}\n\n.keen-explorer .keen-dataviz .c3 svg g text tspan, .ReactModalPortal .keen-dataviz .c3 svg g text tspan, .rc-time-picker-panel .keen-dataviz .c3 svg g text tspan {\n  font-size: 10px !important;\n}\n\n.keen-explorer .a-preview-collection,.ReactModalPortal .a-preview-collection,.rc-time-picker-panel .a-preview-collection{\n  padding: 0.5rem;\n  margin: 0;\n  cursor: pointer;\n  background: #fafafa;\n  border-radius: 0.3rem;\n}\n\n.keen-explorer .a-preview-collection i,.ReactModalPortal .a-preview-collection i,.rc-time-picker-panel .a-preview-collection i{\n    font-size: 0.8em;\n    margin-right: 0.2rem;\n  }\n\n.keen-explorer .preview-collection-content,.ReactModalPortal .preview-collection-content,.rc-time-picker-panel .preview-collection-content{\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-direction: row;\n      flex-direction: row;\n}\n\n.keen-explorer .preview-collection-content .input-filter,.ReactModalPortal .preview-collection-content .input-filter,.rc-time-picker-panel .preview-collection-content .input-filter{\n    width: 100%;\n    padding: 0.6rem;\n    font-size: 0.9rem;\n    border: 1px solid #ccc;\n    margin: .5rem 0;\n    border-radius: 0.3rem;\n  }\n\n.keen-explorer .preview-collection-content .list, .ReactModalPortal .preview-collection-content .list, .rc-time-picker-panel .preview-collection-content .list {\n    height: 100%;\n    overflow-y: scroll;\n    -ms-flex: 1;\n        flex: 1;\n  }\n\n.keen-explorer .preview-collection-content .list .item,.ReactModalPortal .preview-collection-content .list .item,.rc-time-picker-panel .preview-collection-content .list .item{\n      cursor: pointer;\n      padding: 1rem;\n      overflow: auto;\n      border-bottom: 1px solid #f3f3f3;\n    }\n\n.keen-explorer .preview-collection-content .list .active,.ReactModalPortal .preview-collection-content .list .active,.rc-time-picker-panel .preview-collection-content .list .active{\n      background: #f7f7f7;\n    }\n\n.keen-explorer .preview-collection-content .content,.ReactModalPortal .preview-collection-content .content,.rc-time-picker-panel .preview-collection-content .content{\n    -ms-flex: 3;\n        flex: 3;\n    height: 100%;\n    padding: 0.5rem 0 0.5rem 1rem;\n  }\n\n.keen-explorer .preview-collection-content .content .tabs .tab,.ReactModalPortal .preview-collection-content .content .tabs .tab,.rc-time-picker-panel .preview-collection-content .content .tabs .tab{\n        -ms-flex: none;\n            flex: none;\n        padding: 1rem 1.5rem;\n      }\n\n.keen-explorer .preview-collection-content .content .tabs .tab-placeholder,.ReactModalPortal .preview-collection-content .content .tabs .tab-placeholder,.rc-time-picker-panel .preview-collection-content .content .tabs .tab-placeholder{\n        -ms-flex: 1;\n            flex: 1;\n        border-bottom: 1px solid #e8e8e8;\n      }\n\n.keen-explorer .preview-collection-content .content .tab-content,.ReactModalPortal .preview-collection-content .content .tab-content,.rc-time-picker-panel .preview-collection-content .content .tab-content{\n      height: 100%;\n      width: 100%;\n      overflow: scroll;\n      padding-bottom: 4rem;\n    }\n\n@media screen and (max-width: 900px) {\n\n  .keen-explorer .preview-collection-content,.ReactModalPortal .preview-collection-content,.rc-time-picker-panel .preview-collection-content{\n    -ms-flex-direction: column;\n        flex-direction: column;\n  }\n    .keen-explorer .preview-collection-content .list, .keen-explorer .preview-collection-content .content, .ReactModalPortal .preview-collection-content .list, .ReactModalPortal .preview-collection-content .content, .rc-time-picker-panel .preview-collection-content .list, .rc-time-picker-panel .preview-collection-content .content{\n      height: auto;\n      overflow-y: visible;\n      padding: 0;\n    }\n    .keen-explorer .preview-collection-content .content,.ReactModalPortal .preview-collection-content .content,.rc-time-picker-panel .preview-collection-content .content{\n      padding-top: 2rem;\n    }\n}\n\n.keen-explorer .preview .download-toggle-label,.ReactModalPortal .preview .download-toggle-label,.rc-time-picker-panel .preview .download-toggle-label{\n    padding: 1rem;\n    cursor: pointer;\n    height: -webkit-min-content;\n    height: -moz-min-content;\n    height: min-content;\n  }\n\n.keen-explorer .preview .download-toggle-label i,.ReactModalPortal .preview .download-toggle-label i,.rc-time-picker-panel .preview .download-toggle-label i{\n      margin-right: 0.5rem;\n    }\n\n.keen-explorer .preview .download-buttons,.ReactModalPortal .preview .download-buttons,.rc-time-picker-panel .preview .download-buttons{\n    position: absolute;\n    background: #fdfdfd;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: column;\n        flex-direction: column;\n    -webkit-box-shadow: 2px 3px 6px rgba(0,0,0,0.05);\n            box-shadow: 2px 3px 6px rgba(0,0,0,0.05);\n    margin-top: -2px;\n  }\n\n.keen-explorer .preview .download-buttons button, .ReactModalPortal .preview .download-buttons button, .rc-time-picker-panel .preview .download-buttons button {\n      border: 1px solid #f7f7f7;\n    }\n\n.keen-explorer .preview .download-buttons button:hover,.ReactModalPortal .preview .download-buttons button:hover,.rc-time-picker-panel .preview .download-buttons button:hover{\n      background: #fff;\n    }\n\n.keen-explorer .preview .download-buttons .button-download,.ReactModalPortal .preview .download-buttons .button-download,.rc-time-picker-panel .preview .download-buttons .button-download{\n      padding: 1rem 3rem;\n      height: -webkit-min-content;\n      height: -moz-min-content;\n      height: min-content;\n    }\n\n.keen-explorer .preview .button-embed-html,.ReactModalPortal .preview .button-embed-html,.rc-time-picker-panel .preview .button-embed-html{\n    height: -webkit-min-content;\n    height: -moz-min-content;\n    height: min-content;\n  }\n\n.keen-explorer * {\n    -webkit-box-sizing: border-box;\n            box-sizing: border-box;\n    font-size: 0.88rem;\n    font-size: 0.88rem;\n}\n\n.ReactModalPortal * {\n    -webkit-box-sizing: border-box;\n            box-sizing: border-box;\n    font-size: 0.88rem;\n    font-size: 0.88rem;\n}\n\n.rc-time-picker-panel * {\n    -webkit-box-sizing: border-box;\n            box-sizing: border-box;\n    font-size: 0.88rem;\n    font-size: 0.88rem;\n}\n\n.keen-explorer button,.ReactModalPortal button,.rc-time-picker-panel button{\n    margin: 2rem 0 0;\n    padding: 1rem;\n}\n\n.keen-explorer .label-main,.ReactModalPortal .label-main,.rc-time-picker-panel .label-main{\n    padding: 1rem 0 0.3rem;\n}\n\n.keen-explorer .hide,.ReactModalPortal .hide,.rc-time-picker-panel .hide{\n    display: none;\n}\n\n.keen-explorer input:focus {\n    outline: 2px solid #00bbde;\n    outline: 2px solid #00bbde;\n}\n\n.ReactModalPortal input:focus {\n    outline: 2px solid #00bbde;\n    outline: 2px solid #00bbde;\n}\n\n.rc-time-picker-panel input:focus {\n    outline: 2px solid #00bbde;\n    outline: 2px solid #00bbde;\n}\n\n.keen-explorer .panel-main,.ReactModalPortal .panel-main,.rc-time-picker-panel .panel-main{\n    -ms-flex: 1;\n        flex: 1;\n    min-width: 26rem;\n    -webkit-box-shadow: -3px 7px 11px rgba(0,0,0,0.1);\n            box-shadow: -3px 7px 11px rgba(0,0,0,0.1);\n    border-radius: 0.3rem;\n}\n\n.keen-explorer .panel-main .panel-buttons .button-new-query,.ReactModalPortal .panel-main .panel-buttons .button-new-query,.rc-time-picker-panel .panel-main .panel-buttons .button-new-query{\n        -ms-flex: none;\n            flex: none;\n        cursor: pointer;\n      }\n\n.keen-explorer .panel-main .panel-content,.ReactModalPortal .panel-main .panel-content,.rc-time-picker-panel .panel-main .panel-content{\n      padding: 1rem;\n    }\n\n.keen-explorer .panel-main .panel-content .event-collection .label-main,.ReactModalPortal .panel-main .panel-content .event-collection .label-main,.rc-time-picker-panel .panel-main .panel-content .event-collection .label-main{\n        padding-top: 0;\n      }\n\n.keen-explorer .panel-main .panel-funnel .label-analysis-type, .ReactModalPortal .panel-main .panel-funnel .label-analysis-type, .rc-time-picker-panel .panel-main .panel-funnel .label-analysis-type {\n        padding-top: 0;\n      }\n\n.keen-explorer .result,.ReactModalPortal .result,.rc-time-picker-panel .result{\n    -ms-flex: 3;\n        flex: 3;\n    padding: 0 1.5rem;\n    overflow: hidden;\n}\n\n.keen-explorer .foldable,.ReactModalPortal .foldable,.rc-time-picker-panel .foldable{\n    margin-top: 0.5rem;\n    border: 1px solid #e8e8e8;\n    background: #fdfdfd;\n    padding: 0.5rem;\n    cursor: pointer;\n    border-radius: 5px;\n}\n\n.keen-explorer .foldable-active,.ReactModalPortal .foldable-active,.rc-time-picker-panel .foldable-active{\n      background: none;\n    }\n\n.keen-explorer .foldable .title,.ReactModalPortal .foldable .title,.rc-time-picker-panel .foldable .title{\n      padding: 0.5rem;\n    }\n\n.keen-explorer .foldable .title .foldable-icon,.ReactModalPortal .foldable .title .foldable-icon,.rc-time-picker-panel .foldable .title .foldable-icon{\n        float: right;\n      }\n\n.keen-explorer .foldable .content,.ReactModalPortal .foldable .content,.rc-time-picker-panel .foldable .content{\n      margin-top: 0.5rem;\n      padding: 0;\n    }\n\n.keen-explorer .foldable .tab-content,.ReactModalPortal .foldable .tab-content,.rc-time-picker-panel .foldable .tab-content{\n      border: 0;\n    }\n\n.keen-explorer .filters,.ReactModalPortal .filters,.rc-time-picker-panel .filters{\n    display: -ms-flexbox;\n    display: flex;\n}\n\n.keen-explorer .filters .title,.ReactModalPortal .filters .title,.rc-time-picker-panel .filters .title{\n      -ms-flex: 1;\n          flex: 1;\n    }\n\n.keen-explorer .filters .count,.ReactModalPortal .filters .count,.rc-time-picker-panel .filters .count{\n      -ms-flex-item-align: center;\n          align-self: center;\n      text-align: right;\n      padding: 0 0.5rem 0 0;\n    }\n\n.keen-explorer .optional,.ReactModalPortal .optional,.rc-time-picker-panel .optional{\n    margin-left: 1em;\n    font-size: 0.7em;\n    color:#ddd;\n    color: #737373;\n}\n\n.keen-explorer .group-by .label-main,.ReactModalPortal .group-by .label-main,.rc-time-picker-panel .group-by .label-main{\n      padding: 0 0 0.5rem;\n    }\n\n.keen-explorer .group-by .btn-plus, .keen-explorer .group-by .btn-minus, .ReactModalPortal .group-by .btn-plus, .ReactModalPortal .group-by .btn-minus, .rc-time-picker-panel .group-by .btn-plus, .rc-time-picker-panel .group-by .btn-minus{\n      margin-top: 1rem;\n      padding: 0.7rem;\n      background: #fdfdfd;\n      border: 1px solid #e8e8e8;\n      border-radius: 5px;\n      display: inline-block;\n    }\n\n.keen-explorer .group-by .options,.ReactModalPortal .group-by .options,.rc-time-picker-panel .group-by .options{\n      margin-top: 1rem;\n      display:-ms-flexbox;\n      display:flex;\n    }\n\n.keen-explorer .group-by .options .order-by,.ReactModalPortal .group-by .options .order-by,.rc-time-picker-panel .group-by .options .order-by{\n        width: 8em;\n        padding-right: 1rem;\n      }\n\n.keen-explorer .group-by .options .order-by .select,.ReactModalPortal .group-by .options .order-by .select,.rc-time-picker-panel .group-by .options .order-by .select{\n          width: 100%;\n        }\n\n.keen-explorer .group-by .options .limit,.ReactModalPortal .group-by .options .limit,.rc-time-picker-panel .group-by .options .limit{\n        width: 8em;\n      }\n\n.keen-explorer .group-by .options .limit .input,.ReactModalPortal .group-by .options .limit .input,.rc-time-picker-panel .group-by .options .limit .input{\n          width: 100%;\n        }\n\n.keen-explorer .group-by .additional-target-property,.ReactModalPortal .group-by .additional-target-property,.rc-time-picker-panel .group-by .additional-target-property{\n      margin-top: 1rem;\n      padding-top: 1rem;\n      border-top: 1px solid #f1f1f1;\n    }\n\n.keen-explorer .lets-go,.ReactModalPortal .lets-go,.rc-time-picker-panel .lets-go{\n    display:-ms-flexbox;\n    display:flex;\n    width: 100%;\n    height: 390px;\n    -ms-flex-pack: center;\n        justify-content: center;\n    -ms-flex-align: center;\n        align-items: center;\n    color: #9b9b9b;\n    background: #fafafa;\n}\n\n.keen-explorer .tabs,.ReactModalPortal .tabs,.rc-time-picker-panel .tabs{\n  display:-ms-flexbox;\n  display:flex;\n}\n\n.keen-explorer .tabs .tab,.ReactModalPortal .tabs .tab,.rc-time-picker-panel .tabs .tab{\n    -ms-flex: 1;\n        flex: 1;\n    padding: 1rem;\n    background: #fafafa;\n    cursor: pointer;\n    border: 1px solid #e8e8e8;\n    border-radius: 5px 5px 0 0;\n  }\n\n.keen-explorer .tabs .active,.ReactModalPortal .tabs .active,.rc-time-picker-panel .tabs .active{\n    background: #fff;\n    border-bottom: 1px solid #fff;\n  }\n\n.keen-explorer .panel-buttons .active,.ReactModalPortal .panel-buttons .active,.rc-time-picker-panel .panel-buttons .active{\n    border-right: 0;\n  }\n\n.keen-explorer .tab-content,.ReactModalPortal .tab-content,.rc-time-picker-panel .tab-content{\n  padding: 1rem;\n  border: 1px solid #e8e8e8;\n  border-top: none;\n}\n\n.keen-explorer .input-number{\n  font-size: 0.88rem;\n  font-size: 0.88rem;\n  padding: 0.5rem 0.6rem;\n  border-radius: 5px;\n  border: 1px solid #ccc;\n  font-weight: 400;\n  line-height: normal;\n}\n\n.ReactModalPortal .input-number{\n  font-size: 0.88rem;\n  font-size: 0.88rem;\n  padding: 0.5rem 0.6rem;\n  border-radius: 5px;\n  border: 1px solid #ccc;\n  font-weight: 400;\n  line-height: normal;\n}\n\n.rc-time-picker-panel .input-number{\n  font-size: 0.88rem;\n  font-size: 0.88rem;\n  padding: 0.5rem 0.6rem;\n  border-radius: 5px;\n  border: 1px solid #ccc;\n  font-weight: 400;\n  line-height: normal;\n}\n\n.keen-explorer .input-text{\n  font-size: 0.88rem;\n  font-size: 0.88rem;\n  padding: 0.5rem 0.6rem;\n  border-radius: 5px;\n  border: 1px solid #ccc;\n  font-weight: 400;\n  line-height: normal;\n}\n\n.ReactModalPortal .input-text{\n  font-size: 0.88rem;\n  font-size: 0.88rem;\n  padding: 0.5rem 0.6rem;\n  border-radius: 5px;\n  border: 1px solid #ccc;\n  font-weight: 400;\n  line-height: normal;\n}\n\n.rc-time-picker-panel .input-text{\n  font-size: 0.88rem;\n  font-size: 0.88rem;\n  padding: 0.5rem 0.6rem;\n  border-radius: 5px;\n  border: 1px solid #ccc;\n  font-weight: 400;\n  line-height: normal;\n}\n\n.keen-explorer .interval .standard-units,.ReactModalPortal .interval .standard-units,.rc-time-picker-panel .interval .standard-units{\n    width: 10rem;\n  }\n\n.keen-explorer .interval .line,.ReactModalPortal .interval .line,.rc-time-picker-panel .interval .line{\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-align: center;\n        align-items: center;\n  }\n\n.keen-explorer .interval .line .title,.ReactModalPortal .interval .line .title,.rc-time-picker-panel .interval .line .title{\n      margin-right: 1rem;\n    }\n\n.keen-explorer .interval .line .input-number,.ReactModalPortal .interval .line .input-number,.rc-time-picker-panel .interval .line .input-number{\n      width: 4rem;\n      margin-right: 0.5rem;\n    }\n\n.keen-explorer .interval .line .time-units,.ReactModalPortal .interval .line .time-units,.rc-time-picker-panel .interval .line .time-units{\n      width: 10rem;\n    }\n\n.keen-explorer .timeframe,.ReactModalPortal .timeframe,.rc-time-picker-panel .timeframe{\n  margin-bottom: 0.5rem;\n}\n\n.keen-explorer .timeframe .relative,.ReactModalPortal .timeframe .relative,.rc-time-picker-panel .timeframe .relative{\n    display:-ms-flexbox;\n    display:flex;\n  }\n\n.keen-explorer .timeframe .relative .relativity, .keen-explorer .timeframe .relative .input-number, .ReactModalPortal .timeframe .relative .relativity, .ReactModalPortal .timeframe .relative .input-number, .rc-time-picker-panel .timeframe .relative .relativity, .rc-time-picker-panel .timeframe .relative .input-number{\n      margin-right:0.5rem;\n    }\n\n.keen-explorer .timeframe .relative .relativity,.ReactModalPortal .timeframe .relative .relativity,.rc-time-picker-panel .timeframe .relative .relativity{\n      -ms-flex: 0;\n          flex: 0;\n      max-width:12rem;\n      min-width: 6rem;\n    }\n\n.keen-explorer .timeframe .relative .units,.ReactModalPortal .timeframe .relative .units,.rc-time-picker-panel .timeframe .relative .units{\n      -ms-flex: 0;\n          flex: 0;\n      max-width:12rem;\n      min-width: 6rem;\n    }\n\n.keen-explorer .timeframe .relative .input-number,.ReactModalPortal .timeframe .relative .input-number,.rc-time-picker-panel .timeframe .relative .input-number{\n      -ms-flex: 1;\n          flex: 1;\n      min-width: 6rem;\n    }\n\n.keen-explorer .timeframe .description,.ReactModalPortal .timeframe .description,.rc-time-picker-panel .timeframe .description{\n    margin-top: 0.5rem;\n    padding: 1rem;\n    background: #fafafa;\n  }\n\n.keen-explorer .timeframe .tabAbsolute .DateRangePickerInput_arrow,.ReactModalPortal .timeframe .tabAbsolute .DateRangePickerInput_arrow,.rc-time-picker-panel .timeframe .tabAbsolute .DateRangePickerInput_arrow{\n      display: none;\n    }\n\n.keen-explorer .timeframe .tabAbsolute .DateInput, .ReactModalPortal .timeframe .tabAbsolute .DateInput, .rc-time-picker-panel .timeframe .tabAbsolute .DateInput {\n      width: 8rem;\n      background: none;\n    }\n\n.keen-explorer .timeframe .tabAbsolute .DateInput_input {\n      padding: 0.5rem;\n      font-size: 0.88rem;\n      font-size: 0.88rem;\n      line-height: normal;\n      color:#000;\n      font-weight: normal;\n      border-radius: 5px;\n    }\n\n.ReactModalPortal .timeframe .tabAbsolute .DateInput_input {\n      padding: 0.5rem;\n      font-size: 0.88rem;\n      font-size: 0.88rem;\n      line-height: normal;\n      color:#000;\n      font-weight: normal;\n      border-radius: 5px;\n    }\n\n.rc-time-picker-panel .timeframe .tabAbsolute .DateInput_input {\n      padding: 0.5rem;\n      font-size: 0.88rem;\n      font-size: 0.88rem;\n      line-height: normal;\n      color:#000;\n      font-weight: normal;\n      border-radius: 5px;\n    }\n\n.keen-explorer .timeframe .tabAbsolute .rc-time-picker-input{\n      font-size: 0.88rem;\n      font-size: 0.88rem;\n      line-height: normal;\n      font-weight: normal;\n      color: #000;\n      height: 2.4rem;\n      width: 7rem;\n      border-radius: 5px;\n    }\n\n.ReactModalPortal .timeframe .tabAbsolute .rc-time-picker-input{\n      font-size: 0.88rem;\n      font-size: 0.88rem;\n      line-height: normal;\n      font-weight: normal;\n      color: #000;\n      height: 2.4rem;\n      width: 7rem;\n      border-radius: 5px;\n    }\n\n.rc-time-picker-panel .timeframe .tabAbsolute .rc-time-picker-input{\n      font-size: 0.88rem;\n      font-size: 0.88rem;\n      line-height: normal;\n      font-weight: normal;\n      color: #000;\n      height: 2.4rem;\n      width: 7rem;\n      border-radius: 5px;\n    }\n\n.keen-explorer .timeframe .tabAbsolute .line,.ReactModalPortal .timeframe .tabAbsolute .line,.rc-time-picker-panel .timeframe .tabAbsolute .line{\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-align: center;\n          align-items: center;\n      margin: 0.5rem;\n    }\n\n.keen-explorer .timeframe .tabAbsolute .line .title,.ReactModalPortal .timeframe .tabAbsolute .line .title,.rc-time-picker-panel .timeframe .tabAbsolute .line .title{\n        width: 4rem;\n      }\n\n.keen-explorer .timeframe .tabAbsolute .line .SingleDatePicker, .ReactModalPortal .timeframe .tabAbsolute .line .SingleDatePicker, .rc-time-picker-panel .timeframe .tabAbsolute .line .SingleDatePicker {\n        margin-right: 0.5rem;\n      }\n\n.keen-explorer .timeframe .tabAbsolute .line .SingleDatePickerInput__withBorder, .ReactModalPortal .timeframe .tabAbsolute .line .SingleDatePickerInput__withBorder, .rc-time-picker-panel .timeframe .tabAbsolute .line .SingleDatePickerInput__withBorder {\n        border-radius: 5px;\n        border: 1px solid #dbdbdb;\n      }\n\n.keen-explorer .rc-time-picker-panel .rc-time-picker-panel-inner,.ReactModalPortal .rc-time-picker-panel .rc-time-picker-panel-inner,.rc-time-picker-panel .rc-time-picker-panel .rc-time-picker-panel-inner{\n    -webkit-box-shadow: none;\n            box-shadow: none;\n    border-radius: 5px;\n  }\n\n.keen-explorer .rc-time-picker-panel .rc-time-picker-input{\n    font-size: 0.88rem;\n    font-size: 0.88rem;\n    line-height: normal;\n    font-weight: normal;\n    color: #000;\n    height: 2.4rem;\n    width: 8rem;\n    border-radius: 5px;\n  }\n\n.ReactModalPortal .rc-time-picker-panel .rc-time-picker-input{\n    font-size: 0.88rem;\n    font-size: 0.88rem;\n    line-height: normal;\n    font-weight: normal;\n    color: #000;\n    height: 2.4rem;\n    width: 8rem;\n    border-radius: 5px;\n  }\n\n.rc-time-picker-panel .rc-time-picker-panel .rc-time-picker-input{\n    font-size: 0.88rem;\n    font-size: 0.88rem;\n    line-height: normal;\n    font-weight: normal;\n    color: #000;\n    height: 2.4rem;\n    width: 8rem;\n    border-radius: 5px;\n  }\n\n.keen-explorer .rc-time-picker-panel .rc-time-picker-panel-select{\n    font-size: 0.88rem;\n    font-size: 0.88rem;\n  }\n\n.ReactModalPortal .rc-time-picker-panel .rc-time-picker-panel-select{\n    font-size: 0.88rem;\n    font-size: 0.88rem;\n  }\n\n.rc-time-picker-panel .rc-time-picker-panel .rc-time-picker-panel-select{\n    font-size: 0.88rem;\n    font-size: 0.88rem;\n  }\n\n.keen-explorer .rc-time-picker-panel .rc-time-picker-panel-select li,.ReactModalPortal .rc-time-picker-panel .rc-time-picker-panel-select li,.rc-time-picker-panel .rc-time-picker-panel .rc-time-picker-panel-select li{\n      height: 2rem;\n      line-height: 2rem;\n    }\n\n.keen-explorer .rc-time-picker-panel .rc-time-picker-panel-input{\n    font-size: 0.88rem;\n    font-size: 0.88rem;\n  }\n\n.ReactModalPortal .rc-time-picker-panel .rc-time-picker-panel-input{\n    font-size: 0.88rem;\n    font-size: 0.88rem;\n  }\n\n.rc-time-picker-panel .rc-time-picker-panel .rc-time-picker-panel-input{\n    font-size: 0.88rem;\n    font-size: 0.88rem;\n  }\n\n.keen-explorer .apiQueryUrl,.ReactModalPortal .apiQueryUrl,.rc-time-picker-panel .apiQueryUrl{\n  cursor: pointer;\n  padding: 1rem;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-align: center;\n      align-items: center;\n  width: 100%;\n  font-size: 0.8rem;\n}\n\n.keen-explorer .apiQueryUrl input,.ReactModalPortal .apiQueryUrl input,.rc-time-picker-panel .apiQueryUrl input{\n    -ms-flex: 1;\n        flex: 1;\n    margin: 0 1rem;\n  }\n\n.keen-explorer .fa-copy:active{\n  color: #00bbde;\n  color: #00bbde;\n}\n\n.ReactModalPortal .fa-copy:active{\n  color: #00bbde;\n  color: #00bbde;\n}\n\n.rc-time-picker-panel .fa-copy:active{\n  color: #00bbde;\n  color: #00bbde;\n}\n\n.keen-explorer .button-run-query{\n  font-size: 0.88rem;\n  font-size: 0.88rem;\n  text-transform: uppercase;\n  border-radius: 0.3rem;\n  background: #3ecf8e;\n  background: #3ecf8e;\n  color: #fff;\n  font-weight: 600;\n  font-weight: 600;\n  border: 0;\n  padding: 0.88rem calc(0.88rem*2);\n  padding: 0.88rem calc(0.88rem*2);\n  cursor: pointer;\n  margin: 0;\n}\n\n.ReactModalPortal .button-run-query{\n  font-size: 0.88rem;\n  font-size: 0.88rem;\n  text-transform: uppercase;\n  border-radius: 0.3rem;\n  background: #3ecf8e;\n  background: #3ecf8e;\n  color: #fff;\n  font-weight: 600;\n  font-weight: 600;\n  border: 0;\n  padding: 0.88rem calc(0.88rem*2);\n  padding: 0.88rem calc(0.88rem*2);\n  cursor: pointer;\n  margin: 0;\n}\n\n.rc-time-picker-panel .button-run-query{\n  font-size: 0.88rem;\n  font-size: 0.88rem;\n  text-transform: uppercase;\n  border-radius: 0.3rem;\n  background: #3ecf8e;\n  background: #3ecf8e;\n  color: #fff;\n  font-weight: 600;\n  font-weight: 600;\n  border: 0;\n  padding: 0.88rem calc(0.88rem*2);\n  padding: 0.88rem calc(0.88rem*2);\n  cursor: pointer;\n  margin: 0;\n}\n\n.keen-explorer .button-with-loading-spinner .loading-spinner,.ReactModalPortal .button-with-loading-spinner .loading-spinner,.rc-time-picker-panel .button-with-loading-spinner .loading-spinner{\n    display: inline-block;\n    margin: 0 0.5rem 0 -0.5rem;\n    padding: 0;\n  }\n\n.keen-explorer .button-with-loading-spinner .loading-spinner i, .ReactModalPortal .button-with-loading-spinner .loading-spinner i, .rc-time-picker-panel .button-with-loading-spinner .loading-spinner i {\n      margin: 0;\n      padding: 0;\n      font-size: 1rem;\n    }\n\n.keen-explorer .error,.ReactModalPortal .error,.rc-time-picker-panel .error{\n  padding: 1rem;\n  background: #ffe5e5;\n  margin: 1rem 0;\n}\n\n.keen-explorer .box-info,.ReactModalPortal .box-info,.rc-time-picker-panel .box-info{\n  padding: 1rem;\n  background: #f1faff;\n}\n\n.keen-explorer .tab-content .box-info,.ReactModalPortal .tab-content .box-info,.rc-time-picker-panel .tab-content .box-info{\n  margin: -1rem;\n}\n\n.keen-explorer .preview,.ReactModalPortal .preview,.rc-time-picker-panel .preview{\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-direction: row;\n      flex-direction: row;\n  -ms-flex-wrap: wrap;\n      flex-wrap: wrap;\n  background: #fafafa;\n}\n\n.keen-explorer .preview .loader,.ReactModalPortal .preview .loader,.rc-time-picker-panel .preview .loader{\n    width: 100%;\n    height: 340px;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-align: center;\n        align-items: center;\n    -ms-flex-pack: center;\n        justify-content: center;\n    font-size: 5rem;\n    color: #eee;\n  }\n\n.keen-explorer .preview .keen-dataviz-container, .keen-explorer .preview .react-json-view, .ReactModalPortal .preview .keen-dataviz-container, .ReactModalPortal .preview .react-json-view, .rc-time-picker-panel .preview .keen-dataviz-container, .rc-time-picker-panel .preview .react-json-view{\n    width: 100%;\n    height: 340px;\n    background: #fff;\n    overflow-y: scroll;\n  }\n\n.keen-explorer .preview .react-json-view,.ReactModalPortal .preview .react-json-view,.rc-time-picker-panel .preview .react-json-view{\n    padding: 1rem;\n  }\n\n.keen-explorer .preview .select-chart-type-container,.ReactModalPortal .preview .select-chart-type-container,.rc-time-picker-panel .preview .select-chart-type-container{\n    -ms-flex: 1;\n        flex: 1;\n    -ms-flex-order: 1;\n        order: 1;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-item-align: center;\n        align-self: center;\n    -ms-flex-direction: column;\n        flex-direction: column;\n    -ms-flex-pack: end;\n        justify-content: flex-end;\n    margin: 0.3rem;\n  }\n\n.keen-explorer .preview .select-chart-type, .ReactModalPortal .preview .select-chart-type, .rc-time-picker-panel .preview .select-chart-type {\n    -ms-flex: 1;\n        flex: 1;\n    width: 20rem;\n    -ms-flex-item-align: end;\n        align-self: flex-end;\n  }\n\n.keen-explorer .preview .chart-not-supported-note,.ReactModalPortal .preview .chart-not-supported-note,.rc-time-picker-panel .preview .chart-not-supported-note{\n    float: right;\n    text-align: right;\n    padding: 0.5rem;\n  }\n\n.keen-explorer .preview .button-download,.ReactModalPortal .preview .button-download,.rc-time-picker-panel .preview .button-download{\n    -ms-flex-order: 0;\n        order: 0;\n    background: transparent;\n    border: 0;\n    margin: 0;\n    cursor: pointer;\n    font-size: 0.8rem;\n  }\n\n.keen-explorer .preview .button-download i,.ReactModalPortal .preview .button-download i,.rc-time-picker-panel .preview .button-download i{\n      margin-right: 0.5rem;\n    }\n\n.keen-explorer .action-buttons,.ReactModalPortal .action-buttons,.rc-time-picker-panel .action-buttons{\n  margin-top: 1rem;\n}\n\n.keen-explorer .chartType,.ReactModalPortal .chartType,.rc-time-picker-panel .chartType{\n  margin-top: 1rem;\n}\n\n.keen-explorer .button-toggle{\n  margin-left: 1rem;\n  display: inline;\n  cursor: pointer;\n  border-radius: 0.3rem;\n  font-size: 0.88rem;\n  font-size: 0.88rem;\n  font-weight: 600;\n  font-weight: 600;\n  text-transform: uppercase;\n  color: #3ecf8e;\n  color: #3ecf8e;\n  color: #45b2e8;\n  color: #45b2e8;\n  background: #fcfcfc;\n  border: 1px solid #efefef;\n  border: 1px solid #efefef;\n  padding: 0.88rem calc(0.88rem*2);\n  padding: 0.88rem calc(0.88rem*2);\n}\n\n.ReactModalPortal .button-toggle{\n  margin-left: 1rem;\n  display: inline;\n  cursor: pointer;\n  border-radius: 0.3rem;\n  font-size: 0.88rem;\n  font-size: 0.88rem;\n  font-weight: 600;\n  font-weight: 600;\n  text-transform: uppercase;\n  color: #3ecf8e;\n  color: #3ecf8e;\n  color: #45b2e8;\n  color: #45b2e8;\n  background: #fcfcfc;\n  border: 1px solid #efefef;\n  border: 1px solid #efefef;\n  padding: 0.88rem calc(0.88rem*2);\n  padding: 0.88rem calc(0.88rem*2);\n}\n\n.rc-time-picker-panel .button-toggle{\n  margin-left: 1rem;\n  display: inline;\n  cursor: pointer;\n  border-radius: 0.3rem;\n  font-size: 0.88rem;\n  font-size: 0.88rem;\n  font-weight: 600;\n  font-weight: 600;\n  text-transform: uppercase;\n  color: #3ecf8e;\n  color: #3ecf8e;\n  color: #45b2e8;\n  color: #45b2e8;\n  background: #fcfcfc;\n  border: 1px solid #efefef;\n  border: 1px solid #efefef;\n  padding: 0.88rem calc(0.88rem*2);\n  padding: 0.88rem calc(0.88rem*2);\n}\n\n.keen-explorer .button-toggle i, .ReactModalPortal .button-toggle i, .rc-time-picker-panel .button-toggle i {\n    margin-left: 1rem;\n  }\n\n.keen-explorer .button-toggle-active, .ReactModalPortal .button-toggle-active, .rc-time-picker-panel .button-toggle-active {\n  background: rgb(255, 255, 255);\n}\n\n.keen-explorer .result-string,.ReactModalPortal .result-string,.rc-time-picker-panel .result-string{\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-pack: center;\n      justify-content: center;\n  -ms-flex-align: center;\n      align-items: center;\n}\n\n.keen-explorer .CalendarDay__selected {\n  background: #00bbde;\n  background: #00bbde;\n  border: 1px double #00bbde;\n  border: 1px double #00bbde;\n}\n\n.keen-explorer .CalendarDay__selected:active {\n  background: #00bbde;\n  background: #00bbde;\n  border: 1px double #00bbde;\n  border: 1px double #00bbde;\n}\n\n.keen-explorer .CalendarDay__selected:hover {\n  background: #00bbde;\n  background: #00bbde;\n  border: 1px double #00bbde;\n  border: 1px double #00bbde;\n}\n\n.ReactModalPortal .CalendarDay__selected {\n  background: #00bbde;\n  background: #00bbde;\n  border: 1px double #00bbde;\n  border: 1px double #00bbde;\n}\n\n.ReactModalPortal .CalendarDay__selected:active {\n  background: #00bbde;\n  background: #00bbde;\n  border: 1px double #00bbde;\n  border: 1px double #00bbde;\n}\n\n.ReactModalPortal .CalendarDay__selected:hover {\n  background: #00bbde;\n  background: #00bbde;\n  border: 1px double #00bbde;\n  border: 1px double #00bbde;\n}\n\n.rc-time-picker-panel .CalendarDay__selected {\n  background: #00bbde;\n  background: #00bbde;\n  border: 1px double #00bbde;\n  border: 1px double #00bbde;\n}\n\n.rc-time-picker-panel .CalendarDay__selected:active {\n  background: #00bbde;\n  background: #00bbde;\n  border: 1px double #00bbde;\n  border: 1px double #00bbde;\n}\n\n.rc-time-picker-panel .CalendarDay__selected:hover {\n  background: #00bbde;\n  background: #00bbde;\n  border: 1px double #00bbde;\n  border: 1px double #00bbde;\n}\n\n.keen-explorer .DayPickerKeyboardShortcuts_show__bottomRight::before{\n  border-right: 33px solid #00bbde;\n  border-right: 33px solid #00bbde;\n}\n\n.ReactModalPortal .DayPickerKeyboardShortcuts_show__bottomRight::before{\n  border-right: 33px solid #00bbde;\n  border-right: 33px solid #00bbde;\n}\n\n.rc-time-picker-panel .DayPickerKeyboardShortcuts_show__bottomRight::before{\n  border-right: 33px solid #00bbde;\n  border-right: 33px solid #00bbde;\n}\n\n.keen-explorer .DateInput_input__focused{\n  border-bottom: 2px solid #00bbde;\n  border-bottom: 2px solid #00bbde;\n}\n\n.ReactModalPortal .DateInput_input__focused{\n  border-bottom: 2px solid #00bbde;\n  border-bottom: 2px solid #00bbde;\n}\n\n.rc-time-picker-panel .DateInput_input__focused{\n  border-bottom: 2px solid #00bbde;\n  border-bottom: 2px solid #00bbde;\n}\n\n.keen-explorer .loading-spinner i, .ReactModalPortal .loading-spinner i, .rc-time-picker-panel .loading-spinner i {\n      font-size: 1.5rem;\n    }\n\n.keen-explorer .fa-spin, .ReactModalPortal .fa-spin, .rc-time-picker-panel .fa-spin {\n    -webkit-animation: fa-spin 1s infinite linear;\n            animation: fa-spin 1s infinite linear;\n}\n\n.keen-explorer .react-select-option,.ReactModalPortal .react-select-option,.rc-time-picker-panel .react-select-option{\n    padding: 0.7rem 1rem;\n}\n\n.keen-explorer .react-json-view .string-value,.ReactModalPortal .react-json-view .string-value,.rc-time-picker-panel .react-json-view .string-value{\n      word-break: break-word;\n    }\n\n@media screen and (max-width: 1000px) {\n  .keen-explorer{\n    -ms-flex-direction: column;\n        flex-direction: column;\n  }\n    .keen-explorer .panel{\n      -webkit-box-shadow: none;\n              box-shadow: none;\n      min-width: none;\n    }\n      .keen-explorer .panel .panel-content{\n        padding: 0 1rem;\n      }\n    .keen-explorer .result{\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: column;\n          flex-direction: column;\n    }\n      .keen-explorer .result .preview, .keen-explorer .result .lets-go{\n        -ms-flex-order: 1;\n            order: 1;\n      }\n      .keen-explorer .result .error{\n        margin-bottom: 0;\n      }\n      .keen-explorer .result .button-run-query{\n        -ms-flex-order: 0;\n            order: 0;\n      }\n      .keen-explorer .result .button-toggle {\n        -ms-flex-order: 3;\n            order: 3;\n      }\n      .keen-explorer .result .saved-query{\n        -ms-flex-order: 3;\n            order: 3;\n      }\n      .keen-explorer .result .action-buttons{\n        margin-bottom: 1rem;\n      }\n    .filters-container .delete{\n      margin-top: 0.5rem;\n    }\n}", ""]);
+exports.push([module.i, ".dev-body{\n  margin: 2rem auto;\n  width: 100%;\n  max-width: 1500px;\n}\n\n.dev-reload-button{\n  position: absolute;\n  left: 1rem;\n  top: 1rem;\n  color: #ccc;\n}\n\n.keen-explorer-template{\n  margin: 0 auto;\n  width: 100%;\n  max-width: 1500px;\n}\n\n.keen-explorer-template #keen-explorer-container{\n    padding: 1rem;\n  }\n\n.PresetDateRangePicker_panel {\n  padding: 0 22px 11px\n}\n\n.PresetDateRangePicker_button {\n  position: relative;\n  height: 100%;\n  text-align: center;\n  background: 0 0;\n  border: 2px solid #00a699;\n  color: #00a699;\n  padding: 4px 12px;\n  margin-right: 8px;\n  font: inherit;\n  font-weight: 700;\n  line-height: normal;\n  overflow: visible;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  cursor: pointer\n}\n\n.PresetDateRangePicker_button:active {\n  outline: 0\n}\n\n.PresetDateRangePicker_button__selected {\n  color: #fff;\n  background: #00a699\n}\n\n.SingleDatePickerInput {\n  display: inline-block;\n  background-color: #fff\n}\n\n.SingleDatePickerInput__withBorder {\n  border-radius: 2px;\n  border: 1px solid #dbdbdb\n}\n\n.SingleDatePickerInput__rtl {\n  direction: rtl\n}\n\n.SingleDatePickerInput__disabled {\n  background-color: #f2f2f2\n}\n\n.SingleDatePickerInput__block {\n  display: block\n}\n\n.SingleDatePickerInput__showClearDate {\n  padding-right: 30px\n}\n\n.SingleDatePickerInput_clearDate {\n  background: 0 0;\n  border: 0;\n  color: inherit;\n  font: inherit;\n  line-height: normal;\n  overflow: visible;\n  cursor: pointer;\n  padding: 10px;\n  margin: 0 10px 0 5px;\n  position: absolute;\n  right: 0;\n  top: 50%;\n  -webkit-transform: translateY(-50%);\n  transform: translateY(-50%)\n}\n\n.SingleDatePickerInput_clearDate__default:focus,\n.SingleDatePickerInput_clearDate__default:hover {\n  background: #dbdbdb;\n  border-radius: 50%\n}\n\n.SingleDatePickerInput_clearDate__small {\n  padding: 6px\n}\n\n.SingleDatePickerInput_clearDate__hide {\n  visibility: hidden\n}\n\n.SingleDatePickerInput_clearDate_svg {\n  fill: #82888a;\n  height: 12px;\n  width: 15px;\n  vertical-align: middle\n}\n\n.SingleDatePickerInput_clearDate_svg__small {\n  height: 9px\n}\n\n.SingleDatePickerInput_calendarIcon {\n  background: 0 0;\n  border: 0;\n  color: inherit;\n  font: inherit;\n  line-height: normal;\n  overflow: visible;\n  cursor: pointer;\n  display: inline-block;\n  vertical-align: middle;\n  padding: 10px;\n  margin: 0 5px 0 10px\n}\n\n.SingleDatePickerInput_calendarIcon_svg {\n  fill: #82888a;\n  height: 15px;\n  width: 14px;\n  vertical-align: middle\n}\n\n.SingleDatePicker {\n  position: relative;\n  display: inline-block\n}\n\n.SingleDatePicker__block {\n  display: block\n}\n\n.SingleDatePicker_picker {\n  z-index: 1;\n  background-color: #fff;\n  position: absolute\n}\n\n.SingleDatePicker_picker__rtl {\n  direction: rtl\n}\n\n.SingleDatePicker_picker__directionLeft {\n  left: 0\n}\n\n.SingleDatePicker_picker__directionRight {\n  right: 0\n}\n\n.SingleDatePicker_picker__portal {\n  background-color: rgba(0,0,0,.3);\n  position: fixed;\n  top: 0;\n  left: 0;\n  height: 100%;\n  width: 100%\n}\n\n.SingleDatePicker_picker__fullScreenPortal {\n  background-color: #fff\n}\n\n.SingleDatePicker_closeButton {\n  background: 0 0;\n  border: 0;\n  color: inherit;\n  font: inherit;\n  line-height: normal;\n  overflow: visible;\n  cursor: pointer;\n  position: absolute;\n  top: 0;\n  right: 0;\n  padding: 15px;\n  z-index: 2\n}\n\n.SingleDatePicker_closeButton:focus,\n.SingleDatePicker_closeButton:hover {\n  color: darken(#cacccd,10%);\n  text-decoration: none\n}\n\n.SingleDatePicker_closeButton_svg {\n  height: 15px;\n  width: 15px;\n  fill: #cacccd\n}\n\n.DayPickerKeyboardShortcuts_buttonReset {\n  background: 0 0;\n  border: 0;\n  border-radius: 0;\n  color: inherit;\n  font: inherit;\n  line-height: normal;\n  overflow: visible;\n  padding: 0;\n  cursor: pointer;\n  font-size: 14px\n}\n\n.DayPickerKeyboardShortcuts_buttonReset:active {\n  outline: 0\n}\n\n.DayPickerKeyboardShortcuts_show {\n  width: 33px;\n  height: 26px;\n  position: absolute;\n  z-index: 2\n}\n\n.DayPickerKeyboardShortcuts_show::before {\n  content: \"\";\n  display: block;\n  position: absolute\n}\n\n.DayPickerKeyboardShortcuts_show__bottomRight {\n  bottom: 0;\n  right: 0\n}\n\n.DayPickerKeyboardShortcuts_show__bottomRight::before {\n  border-top: 26px solid transparent;\n  border-right: 33px solid #00a699;\n  bottom: 0;\n  right: 0\n}\n\n.DayPickerKeyboardShortcuts_show__bottomRight:hover::before {\n  border-right: 33px solid #008489\n}\n\n.DayPickerKeyboardShortcuts_show__topRight {\n  top: 0;\n  right: 0\n}\n\n.DayPickerKeyboardShortcuts_show__topRight::before {\n  border-bottom: 26px solid transparent;\n  border-right: 33px solid #00a699;\n  top: 0;\n  right: 0\n}\n\n.DayPickerKeyboardShortcuts_show__topRight:hover::before {\n  border-right: 33px solid #008489\n}\n\n.DayPickerKeyboardShortcuts_show__topLeft {\n  top: 0;\n  left: 0\n}\n\n.DayPickerKeyboardShortcuts_show__topLeft::before {\n  border-bottom: 26px solid transparent;\n  border-left: 33px solid #00a699;\n  top: 0;\n  left: 0\n}\n\n.DayPickerKeyboardShortcuts_show__topLeft:hover::before {\n  border-left: 33px solid #008489\n}\n\n.DayPickerKeyboardShortcuts_showSpan {\n  color: #fff;\n  position: absolute\n}\n\n.DayPickerKeyboardShortcuts_showSpan__bottomRight {\n  bottom: 0;\n  right: 5px\n}\n\n.DayPickerKeyboardShortcuts_showSpan__topRight {\n  top: 1px;\n  right: 5px\n}\n\n.DayPickerKeyboardShortcuts_showSpan__topLeft {\n  top: 1px;\n  left: 5px\n}\n\n.DayPickerKeyboardShortcuts_panel {\n  overflow: auto;\n  background: #fff;\n  border: 1px solid #dbdbdb;\n  border-radius: 2px;\n  position: absolute;\n  top: 0;\n  bottom: 0;\n  right: 0;\n  left: 0;\n  z-index: 2;\n  padding: 22px;\n  margin: 33px;\n  text-align: left\n}\n\n.DayPickerKeyboardShortcuts_title {\n  font-size: 16px;\n  font-weight: 700;\n  margin: 0\n}\n\n.DayPickerKeyboardShortcuts_list {\n  list-style: none;\n  padding: 0;\n  font-size: 14px\n}\n\n.DayPickerKeyboardShortcuts_close {\n  position: absolute;\n  right: 22px;\n  top: 22px;\n  z-index: 2\n}\n\n.DayPickerKeyboardShortcuts_close:active {\n  outline: 0\n}\n\n.DayPickerKeyboardShortcuts_closeSvg {\n  height: 15px;\n  width: 15px;\n  fill: #cacccd\n}\n\n.DayPickerKeyboardShortcuts_closeSvg:focus,\n.DayPickerKeyboardShortcuts_closeSvg:hover {\n  fill: #82888a\n}\n\n.CalendarDay {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  cursor: pointer;\n  font-size: 14px;\n  text-align: center\n}\n\n.CalendarDay:active {\n  outline: 0\n}\n\n.CalendarDay__defaultCursor {\n  cursor: default\n}\n\n.CalendarDay__default {\n  border: 1px solid #e4e7e7;\n  color: #484848;\n  background: #fff\n}\n\n.CalendarDay__default:hover {\n  background: #e4e7e7;\n  border: 1px solid #e4e7e7;\n  color: inherit\n}\n\n.CalendarDay__hovered_offset {\n  background: #f4f5f5;\n  border: 1px double #e4e7e7;\n  color: inherit\n}\n\n.CalendarDay__outside {\n  border: 0;\n  background: #fff;\n  color: #484848\n}\n\n.CalendarDay__outside:hover {\n  border: 0\n}\n\n.CalendarDay__blocked_minimum_nights {\n  background: #fff;\n  border: 1px solid #eceeee;\n  color: #cacccd\n}\n\n.CalendarDay__blocked_minimum_nights:active,\n.CalendarDay__blocked_minimum_nights:hover {\n  background: #fff;\n  color: #cacccd\n}\n\n.CalendarDay__highlighted_calendar {\n  background: #ffe8bc;\n  color: #484848\n}\n\n.CalendarDay__highlighted_calendar:active,\n.CalendarDay__highlighted_calendar:hover {\n  background: #ffce71;\n  color: #484848\n}\n\n.CalendarDay__selected_span {\n  background: #66e2da;\n  border: 1px double #33dacd;\n  color: #fff\n}\n\n.CalendarDay__selected_span:active,\n.CalendarDay__selected_span:hover {\n  background: #33dacd;\n  border: 1px double #33dacd;\n  color: #fff\n}\n\n.CalendarDay__last_in_range,\n.CalendarDay__last_in_range:hover {\n  border-style: solid\n}\n\n.CalendarDay__selected,\n.CalendarDay__selected:active,\n.CalendarDay__selected:hover {\n  background: #00a699;\n  border: 1px double #00a699;\n  color: #fff\n}\n\n.CalendarDay__hovered_span,\n.CalendarDay__hovered_span:hover {\n  background: #b2f1ec;\n  border: 1px double #80e8e0;\n  color: #007a87\n}\n\n.CalendarDay__hovered_span:active {\n  background: #80e8e0;\n  border: 1px double #80e8e0;\n  color: #007a87\n}\n\n.CalendarDay__blocked_calendar,\n.CalendarDay__blocked_calendar:active,\n.CalendarDay__blocked_calendar:hover {\n  background: #cacccd;\n  border: 1px solid #cacccd;\n  color: #82888a\n}\n\n.CalendarDay__blocked_out_of_range,\n.CalendarDay__blocked_out_of_range:active,\n.CalendarDay__blocked_out_of_range:hover {\n  background: #fff;\n  border: 1px solid #e4e7e7;\n  color: #cacccd\n}\n\n.CalendarMonth {\n  background: #fff;\n  text-align: center;\n  vertical-align: top;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none\n}\n\n.CalendarMonth_table {\n  border-collapse: collapse;\n  border-spacing: 0\n}\n\n.CalendarMonth_verticalSpacing {\n  border-collapse: separate\n}\n\n.CalendarMonth_caption {\n  color: #484848;\n  font-size: 18px;\n  text-align: center;\n  padding-top: 22px;\n  padding-bottom: 37px;\n  caption-side: top;\n  caption-side: initial\n}\n\n.CalendarMonth_caption__verticalScrollable {\n  padding-top: 12px;\n  padding-bottom: 7px\n}\n\n.CalendarMonthGrid {\n  background: #fff;\n  text-align: left;\n  z-index: 0\n}\n\n.CalendarMonthGrid__animating {\n  z-index: 1\n}\n\n.CalendarMonthGrid__horizontal {\n  position: absolute;\n  left: 9px\n}\n\n.CalendarMonthGrid__vertical {\n  margin: 0 auto\n}\n\n.CalendarMonthGrid__vertical_scrollable {\n  margin: 0 auto;\n  overflow-y: scroll\n}\n\n.CalendarMonthGrid_month__horizontal {\n  display: inline-block;\n  vertical-align: top;\n  min-height: 100%\n}\n\n.CalendarMonthGrid_month__hideForAnimation {\n  position: absolute;\n  z-index: -1;\n  opacity: 0;\n  pointer-events: none\n}\n\n.CalendarMonthGrid_month__hidden {\n  visibility: hidden\n}\n\n.DayPickerNavigation {\n  position: relative;\n  z-index: 2\n}\n\n.DayPickerNavigation__horizontal {\n  height: 0\n}\n\n.DayPickerNavigation__verticalDefault {\n  position: absolute;\n  width: 100%;\n  height: 52px;\n  bottom: 0;\n  left: 0\n}\n\n.DayPickerNavigation__verticalScrollableDefault {\n  position: relative\n}\n\n.DayPickerNavigation_button {\n  cursor: pointer;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n  border: 0;\n  padding: 0;\n  margin: 0\n}\n\n.DayPickerNavigation_button__default {\n  border: 1px solid #e4e7e7;\n  background-color: #fff;\n  color: #757575\n}\n\n.DayPickerNavigation_button__default:focus,\n.DayPickerNavigation_button__default:hover {\n  border: 1px solid #c4c4c4\n}\n\n.DayPickerNavigation_button__default:active {\n  background: #f2f2f2\n}\n\n.DayPickerNavigation_button__disabled {\n  cursor: default;\n  border: 1px solid #f2f2f2\n}\n\n.DayPickerNavigation_button__disabled:focus,\n.DayPickerNavigation_button__disabled:hover {\n  border: 1px solid #f2f2f2\n}\n\n.DayPickerNavigation_button__disabled:active {\n  background: 0 0\n}\n\n.DayPickerNavigation_button__horizontalDefault {\n  position: absolute;\n  top: 18px;\n  line-height: .78;\n  border-radius: 3px;\n  padding: 6px 9px\n}\n\n.DayPickerNavigation_leftButton__horizontalDefault {\n  left: 22px\n}\n\n.DayPickerNavigation_rightButton__horizontalDefault {\n  right: 22px\n}\n\n.DayPickerNavigation_button__verticalDefault {\n  padding: 5px;\n  background: #fff;\n  -webkit-box-shadow: 0 0 5px 2px rgba(0,0,0,.1);\n          box-shadow: 0 0 5px 2px rgba(0,0,0,.1);\n  position: relative;\n  display: inline-block;\n  text-align: center;\n  height: 100%;\n  width: 50%\n}\n\n.DayPickerNavigation_nextButton__verticalDefault {\n  border-left: 0\n}\n\n.DayPickerNavigation_nextButton__verticalScrollableDefault {\n  width: 100%\n}\n\n.DayPickerNavigation_svg__horizontal {\n  height: 19px;\n  width: 19px;\n  fill: #82888a;\n  display: block\n}\n\n.DayPickerNavigation_svg__vertical {\n  height: 42px;\n  width: 42px;\n  fill: #484848\n}\n\n.DayPickerNavigation_svg__disabled {\n  fill: #f2f2f2\n}\n\n.DayPicker {\n  background: #fff;\n  position: relative;\n  text-align: left\n}\n\n.DayPicker__horizontal {\n  background: #fff\n}\n\n.DayPicker__verticalScrollable {\n  height: 100%\n}\n\n.DayPicker__hidden {\n  visibility: hidden\n}\n\n.DayPicker__withBorder {\n  -webkit-box-shadow: 0 2px 6px rgba(0,0,0,.05),0 0 0 1px rgba(0,0,0,.07);\n          box-shadow: 0 2px 6px rgba(0,0,0,.05),0 0 0 1px rgba(0,0,0,.07);\n  border-radius: 3px\n}\n\n.DayPicker_portal__horizontal {\n  -webkit-box-shadow: none;\n          box-shadow: none;\n  position: absolute;\n  left: 50%;\n  top: 50%\n}\n\n.DayPicker_portal__vertical {\n  position: static;\n  position: initial\n}\n\n.DayPicker_focusRegion {\n  outline: 0\n}\n\n.DayPicker_calendarInfo__horizontal,\n.DayPicker_wrapper__horizontal {\n  display: inline-block;\n  vertical-align: top\n}\n\n.DayPicker_weekHeaders {\n  position: relative\n}\n\n.DayPicker_weekHeaders__horizontal {\n  margin-left: 9px\n}\n\n.DayPicker_weekHeader {\n  color: #757575;\n  position: absolute;\n  top: 62px;\n  z-index: 2;\n  text-align: left\n}\n\n.DayPicker_weekHeader__vertical {\n  left: 50%\n}\n\n.DayPicker_weekHeader__verticalScrollable {\n  top: 0;\n  display: table-row;\n  border-bottom: 1px solid #dbdbdb;\n  background: #fff;\n  margin-left: 0;\n  left: 0;\n  width: 100%;\n  text-align: center\n}\n\n.DayPicker_weekHeader_ul {\n  list-style: none;\n  margin: 1px 0;\n  padding-left: 0;\n  padding-right: 0;\n  font-size: 14px\n}\n\n.DayPicker_weekHeader_li {\n  display: inline-block;\n  text-align: center\n}\n\n.DayPicker_transitionContainer {\n  position: relative;\n  overflow: hidden;\n  border-radius: 3px\n}\n\n.DayPicker_transitionContainer__horizontal {\n  -webkit-transition: height .2s ease-in-out;\n  -o-transition: height .2s ease-in-out;\n  transition: height .2s ease-in-out\n}\n\n.DayPicker_transitionContainer__vertical {\n  width: 100%\n}\n\n.DayPicker_transitionContainer__verticalScrollable {\n  padding-top: 20px;\n  height: 100%;\n  position: absolute;\n  top: 0;\n  bottom: 0;\n  right: 0;\n  left: 0;\n  overflow-y: scroll\n}\n\n.DateInput {\n  margin: 0;\n  padding: 0;\n  background: #fff;\n  position: relative;\n  display: inline-block;\n  width: 130px;\n  vertical-align: middle\n}\n\n.DateInput__small {\n  width: 97px\n}\n\n.DateInput__block {\n  width: 100%\n}\n\n.DateInput__disabled {\n  background: #f2f2f2;\n  color: #dbdbdb\n}\n\n.DateInput_input {\n  font-weight: 200;\n  font-size: 19px;\n  line-height: 24px;\n  color: #484848;\n  background-color: #fff;\n  width: 100%;\n  padding: 11px 11px 9px;\n  border: 0;\n  border-top: 0;\n  border-right: 0;\n  border-bottom: 2px solid transparent;\n  border-left: 0;\n  border-radius: 0\n}\n\n.DateInput_input__small {\n  font-size: 15px;\n  line-height: 18px;\n  letter-spacing: .2px;\n  padding: 7px 7px 5px\n}\n\n.DateInput_input__regular {\n  font-weight: auto\n}\n\n.DateInput_input__readOnly {\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none\n}\n\n.DateInput_input__focused {\n  outline: 0;\n  background: #fff;\n  border: 0;\n  border-top: 0;\n  border-right: 0;\n  border-bottom: 2px solid #008489;\n  border-left: 0\n}\n\n.DateInput_input__disabled {\n  background: #f2f2f2;\n  font-style: italic\n}\n\n.DateInput_screenReaderMessage {\n  border: 0;\n  clip: rect(0,0,0,0);\n  height: 1px;\n  margin: -1px;\n  overflow: hidden;\n  padding: 0;\n  position: absolute;\n  width: 1px\n}\n\n.DateInput_fang {\n  position: absolute;\n  width: 20px;\n  height: 10px;\n  left: 22px;\n  z-index: 2\n}\n\n.DateInput_fangShape {\n  fill: #fff\n}\n\n.DateInput_fangStroke {\n  stroke: #dbdbdb;\n  fill: transparent\n}\n\n.DateRangePickerInput {\n  background-color: #fff;\n  display: inline-block\n}\n\n.DateRangePickerInput__disabled {\n  background: #f2f2f2\n}\n\n.DateRangePickerInput__withBorder {\n  border-radius: 2px;\n  border: 1px solid #dbdbdb\n}\n\n.DateRangePickerInput__rtl {\n  direction: rtl\n}\n\n.DateRangePickerInput__block {\n  display: block\n}\n\n.DateRangePickerInput__showClearDates {\n  padding-right: 30px\n}\n\n.DateRangePickerInput_arrow {\n  display: inline-block;\n  vertical-align: middle;\n  color: #484848\n}\n\n.DateRangePickerInput_arrow_svg {\n  vertical-align: middle;\n  fill: #484848;\n  height: 24px;\n  width: 24px\n}\n\n.DateRangePickerInput_clearDates {\n  background: 0 0;\n  border: 0;\n  color: inherit;\n  font: inherit;\n  line-height: normal;\n  overflow: visible;\n  cursor: pointer;\n  padding: 10px;\n  margin: 0 10px 0 5px;\n  position: absolute;\n  right: 0;\n  top: 50%;\n  -webkit-transform: translateY(-50%);\n  transform: translateY(-50%)\n}\n\n.DateRangePickerInput_clearDates__small {\n  padding: 6px\n}\n\n.DateRangePickerInput_clearDates_default:focus,\n.DateRangePickerInput_clearDates_default:hover {\n  background: #dbdbdb;\n  border-radius: 50%\n}\n\n.DateRangePickerInput_clearDates__hide {\n  visibility: hidden\n}\n\n.DateRangePickerInput_clearDates_svg {\n  fill: #82888a;\n  height: 12px;\n  width: 15px;\n  vertical-align: middle\n}\n\n.DateRangePickerInput_clearDates_svg__small {\n  height: 9px\n}\n\n.DateRangePickerInput_calendarIcon {\n  background: 0 0;\n  border: 0;\n  color: inherit;\n  font: inherit;\n  line-height: normal;\n  overflow: visible;\n  cursor: pointer;\n  display: inline-block;\n  vertical-align: middle;\n  padding: 10px;\n  margin: 0 5px 0 10px\n}\n\n.DateRangePickerInput_calendarIcon_svg {\n  fill: #82888a;\n  height: 15px;\n  width: 14px;\n  vertical-align: middle\n}\n\n.DateRangePicker {\n  position: relative;\n  display: inline-block\n}\n\n.DateRangePicker__block {\n  display: block\n}\n\n.DateRangePicker_picker {\n  z-index: 1;\n  background-color: #fff;\n  position: absolute\n}\n\n.DateRangePicker_picker__rtl {\n  direction: rtl\n}\n\n.DateRangePicker_picker__directionLeft {\n  left: 0\n}\n\n.DateRangePicker_picker__directionRight {\n  right: 0\n}\n\n.DateRangePicker_picker__portal {\n  background-color: rgba(0,0,0,.3);\n  position: fixed;\n  top: 0;\n  left: 0;\n  height: 100%;\n  width: 100%\n}\n\n.DateRangePicker_picker__fullScreenPortal {\n  background-color: #fff\n}\n\n.DateRangePicker_closeButton {\n  background: 0 0;\n  border: 0;\n  color: inherit;\n  font: inherit;\n  line-height: normal;\n  overflow: visible;\n  cursor: pointer;\n  position: absolute;\n  top: 0;\n  right: 0;\n  padding: 15px;\n  z-index: 2\n}\n\n.DateRangePicker_closeButton:focus,\n.DateRangePicker_closeButton:hover {\n  color: darken(#cacccd,10%);\n  text-decoration: none\n}\n\n.DateRangePicker_closeButton_svg {\n  height: 15px;\n  width: 15px;\n  fill: #cacccd\n}\n\n.rc-time-picker {\n  display: inline-block;\n  position: relative;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n\n.rc-time-picker * {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n\n.rc-time-picker-clear {\n  position: absolute;\n  right: 6px;\n  cursor: pointer;\n  overflow: hidden;\n  width: 20px;\n  height: 20px;\n  text-align: center;\n  line-height: 20px;\n  top: 3px;\n  margin: 0;\n}\n\n.rc-time-picker-clear-icon:after {\n  content: \"x\";\n  font-size: 12px;\n  font-style: normal;\n  color: #aaa;\n  display: inline-block;\n  line-height: 1;\n  height: 20px;\n  width: 20px;\n  -webkit-transition: color 0.3s ease;\n  -o-transition: color 0.3s ease;\n  transition: color 0.3s ease;\n}\n\n.rc-time-picker-clear-icon:hover:after {\n  color: #666;\n}\n\n.rc-time-picker-input {\n  width: 100%;\n  position: relative;\n  display: inline-block;\n  padding: 4px 7px;\n  height: 28px;\n  cursor: text;\n  font-size: 12px;\n  line-height: 1.5;\n  color: #666;\n  background-color: #fff;\n  background-image: none;\n  border: 1px solid #d9d9d9;\n  border-radius: 4px;\n  -webkit-transition: border 0.2s cubic-bezier(0.645, 0.045, 0.355, 1), background 0.2s cubic-bezier(0.645, 0.045, 0.355, 1), -webkit-box-shadow 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);\n  transition: border 0.2s cubic-bezier(0.645, 0.045, 0.355, 1), background 0.2s cubic-bezier(0.645, 0.045, 0.355, 1), -webkit-box-shadow 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);\n  -o-transition: border 0.2s cubic-bezier(0.645, 0.045, 0.355, 1), background 0.2s cubic-bezier(0.645, 0.045, 0.355, 1), box-shadow 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);\n  transition: border 0.2s cubic-bezier(0.645, 0.045, 0.355, 1), background 0.2s cubic-bezier(0.645, 0.045, 0.355, 1), box-shadow 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);\n  transition: border 0.2s cubic-bezier(0.645, 0.045, 0.355, 1), background 0.2s cubic-bezier(0.645, 0.045, 0.355, 1), box-shadow 0.2s cubic-bezier(0.645, 0.045, 0.355, 1), -webkit-box-shadow 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);\n}\n\n.rc-time-picker-input[disabled] {\n  color: #ccc;\n  background: #f7f7f7;\n  cursor: not-allowed;\n}\n\n.rc-time-picker-panel {\n  z-index: 1070;\n  width: 170px;\n  position: absolute;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n\n.rc-time-picker-panel * {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n\n.rc-time-picker-panel-inner {\n  display: inline-block;\n  position: relative;\n  outline: none;\n  list-style: none;\n  font-size: 12px;\n  text-align: left;\n  background-color: #fff;\n  border-radius: 4px;\n  -webkit-box-shadow: 0 1px 5px #ccc;\n          box-shadow: 0 1px 5px #ccc;\n  background-clip: padding-box;\n  border: 1px solid #ccc;\n  line-height: 1.5;\n}\n\n.rc-time-picker-panel-narrow {\n  max-width: 113px;\n}\n\n.rc-time-picker-panel-input {\n  margin: 0;\n  padding: 0;\n  width: 100%;\n  cursor: auto;\n  line-height: 1.5;\n  outline: 0;\n  border: 1px solid transparent;\n}\n\n.rc-time-picker-panel-input-wrap {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  position: relative;\n  padding: 6px;\n  border-bottom: 1px solid #e9e9e9;\n}\n\n.rc-time-picker-panel-input-invalid {\n  border-color: red;\n}\n\n.rc-time-picker-panel-select {\n  float: left;\n  font-size: 12px;\n  border: 1px solid #e9e9e9;\n  border-width: 0 1px;\n  margin-left: -1px;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  width: 56px;\n  max-height: 144px;\n  overflow-y: auto;\n  position: relative;\n}\n\n.rc-time-picker-panel-select-active {\n  overflow-y: auto;\n}\n\n.rc-time-picker-panel-select:first-child {\n  border-left: 0;\n  margin-left: 0;\n}\n\n.rc-time-picker-panel-select:last-child {\n  border-right: 0;\n}\n\n.rc-time-picker-panel-select ul {\n  list-style: none;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  width: 100%;\n}\n\n.rc-time-picker-panel-select li {\n  list-style: none;\n  margin: 0;\n  padding: 0 0 0 16px;\n  width: 100%;\n  height: 24px;\n  line-height: 24px;\n  text-align: left;\n  cursor: pointer;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n\n.rc-time-picker-panel-select li:hover {\n  background: #edfaff;\n}\n\nli.rc-time-picker-panel-select-option-selected {\n  background: #f7f7f7;\n  font-weight: bold;\n}\n\nli.rc-time-picker-panel-select-option-disabled {\n  color: #ccc;\n}\n\nli.rc-time-picker-panel-select-option-disabled:hover {\n  background: transparent;\n  cursor: not-allowed;\n}\n\n.keen-explorer {\n  font-family: Montserrat, Tahoma, Arial;\n  font-size: 0.88rem;\n  font-size: 0.88rem;\n  color: #000;\n  color: #000;\n  display: -ms-flexbox;\n  display: flex;\n}\n\n.ReactModalPortal {\n  font-family: Montserrat, Tahoma, Arial;\n  font-size: 0.88rem;\n  font-size: 0.88rem;\n  color: #000;\n  color: #000;\n  display: -ms-flexbox;\n  display: flex;\n}\n\n.rc-time-picker-panel {\n  font-family: Montserrat, Tahoma, Arial;\n  font-size: 0.88rem;\n  font-size: 0.88rem;\n  color: #000;\n  color: #000;\n  display: -ms-flexbox;\n  display: flex;\n}\n\n.keen-explorer .extraction,.ReactModalPortal .extraction,.rc-time-picker-panel .extraction{\n  margin-top: 1rem;\n}\n\n.keen-explorer .extraction .first-label,.ReactModalPortal .extraction .first-label,.rc-time-picker-panel .extraction .first-label{\n    padding-top: 0;\n  }\n\n.keen-explorer .extraction .input-text,.ReactModalPortal .extraction .input-text,.rc-time-picker-panel .extraction .input-text{\n    width: 100%;\n  }\n\n.keen-explorer .extraction .bulk-panel,.ReactModalPortal .extraction .bulk-panel,.rc-time-picker-panel .extraction .bulk-panel{\n    margin-bottom: 1rem;\n  }\n\n.keen-explorer .percentile .input-text,.ReactModalPortal .percentile .input-text,.rc-time-picker-panel .percentile .input-text{\n    width: 100%;\n  }\n\n.keen-explorer .filters-container .list,.ReactModalPortal .filters-container .list,.rc-time-picker-panel .filters-container .list{\n    margin: 2rem 0;\n    width: 100%;\n\n  }\n\n.keen-explorer .filters-container .list .row,.ReactModalPortal .filters-container .list .row,.rc-time-picker-panel .filters-container .list .row{\n      display: -ms-flexbox;\n      display: flex;\n      width: 100%;\n      margin: 0 0 1rem;\n    }\n\n.keen-explorer .filters-container .list .row .row-part,.ReactModalPortal .filters-container .list .row .row-part,.rc-time-picker-panel .filters-container .list .row .row-part{\n        -ms-flex:1;\n            flex:1;\n        padding: 0 0.5rem;\n      }\n\n.keen-explorer .filters-container .list .row .row-part input{\n          padding: 0.55rem 0.7rem;\n          font-size: 0.88rem;\n          font-size: 0.88rem;\n          border-radius: 4px;\n          border: 1px solid #ccc;\n          width: 100%;\n        }\n\n.ReactModalPortal .filters-container .list .row .row-part input{\n          padding: 0.55rem 0.7rem;\n          font-size: 0.88rem;\n          font-size: 0.88rem;\n          border-radius: 4px;\n          border: 1px solid #ccc;\n          width: 100%;\n        }\n\n.rc-time-picker-panel .filters-container .list .row .row-part input{\n          padding: 0.55rem 0.7rem;\n          font-size: 0.88rem;\n          font-size: 0.88rem;\n          border-radius: 4px;\n          border: 1px solid #ccc;\n          width: 100%;\n        }\n\n.keen-explorer .filters-container .list .row .row-part .datetime-pickers,.ReactModalPortal .filters-container .list .row .row-part .datetime-pickers,.rc-time-picker-panel .filters-container .list .row .row-part .datetime-pickers{\n          display: -ms-flexbox;\n          display: flex;\n        }\n\n.keen-explorer .filters-container .list .row .row-part .datetime-pickers .DateInput,.ReactModalPortal .filters-container .list .row .row-part .datetime-pickers .DateInput,.rc-time-picker-panel .filters-container .list .row .row-part .datetime-pickers .DateInput{\n            width: 100%;\n          }\n\n.keen-explorer .filters-container .list .row .row-part .datetime-pickers .SingleDatePickerInput,.ReactModalPortal .filters-container .list .row .row-part .datetime-pickers .SingleDatePickerInput,.rc-time-picker-panel .filters-container .list .row .row-part .datetime-pickers .SingleDatePickerInput{\n            width: 100%;\n          }\n\n.keen-explorer .filters-container .list .row .row-part .datetime-pickers .SingleDatePicker,.ReactModalPortal .filters-container .list .row .row-part .datetime-pickers .SingleDatePicker,.rc-time-picker-panel .filters-container .list .row .row-part .datetime-pickers .SingleDatePicker{\n            -ms-flex: 1;\n                flex: 1;\n            margin-right: 0.1rem;\n          }\n\n.keen-explorer .filters-container .list .row .row-part .datetime-pickers .SingleDatePickerInput__withBorder,.ReactModalPortal .filters-container .list .row .row-part .datetime-pickers .SingleDatePickerInput__withBorder,.rc-time-picker-panel .filters-container .list .row .row-part .datetime-pickers .SingleDatePickerInput__withBorder{\n            border: 0;\n          }\n\n.keen-explorer .filters-container .list .row .row-part .datetime-pickers input.DateInput_input,.ReactModalPortal .filters-container .list .row .row-part .datetime-pickers input.DateInput_input,.rc-time-picker-panel .filters-container .list .row .row-part .datetime-pickers input.DateInput_input{\n            padding: 0.333rem;\n            text-align: center;\n            height: 2.3rem;\n          }\n\n.keen-explorer .filters-container .list .row .row-part .datetime-pickers .rc-time-picker,.ReactModalPortal .filters-container .list .row .row-part .datetime-pickers .rc-time-picker,.rc-time-picker-panel .filters-container .list .row .row-part .datetime-pickers .rc-time-picker{\n            -ms-flex: 1;\n                flex: 1;\n          }\n\n.keen-explorer .filters-container .list .row .row-part .datetime-pickers input.rc-time-picker-input,.ReactModalPortal .filters-container .list .row .row-part .datetime-pickers input.rc-time-picker-input,.rc-time-picker-panel .filters-container .list .row .row-part .datetime-pickers input.rc-time-picker-input{\n            padding: 0.3rem;\n            text-align: center;\n            height: auto;\n            line-height: auto;\n            height: 2.3rem;\n          }\n\n.keen-explorer .filters-container .list .row .row-part .within-inputs input,.ReactModalPortal .filters-container .list .row .row-part .within-inputs input,.rc-time-picker-panel .filters-container .list .row .row-part .within-inputs input{\n            margin-bottom: 0.2rem;\n          }\n\n.keen-explorer .filters-container .list .row .row-part .delete,.ReactModalPortal .filters-container .list .row .row-part .delete,.rc-time-picker-panel .filters-container .list .row .row-part .delete{\n          cursor: pointer;\n          display: -ms-flexbox;\n          display: flex;\n          -ms-flex-align: center;\n              align-items: center;\n          height: 100%;\n        }\n\n.keen-explorer .filters-container .list .row .row-part .delete i, .ReactModalPortal .filters-container .list .row .row-part .delete i, .rc-time-picker-panel .filters-container .list .row .row-part .delete i {\n            color: #ea7373;\n            font-size: 1rem;\n            padding: 0.5rem;\n          }\n\n.keen-explorer .filters-container .list .row .no-flex,.ReactModalPortal .filters-container .list .row .no-flex,.rc-time-picker-panel .filters-container .list .row .no-flex{\n        -ms-flex: 0;\n            flex: 0;\n      }\n\n.keen-explorer .filters-container .action-buttons,.ReactModalPortal .filters-container .action-buttons,.rc-time-picker-panel .filters-container .action-buttons{\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-align: center;\n        align-items: center;\n    -ms-flex-pack: end;\n        justify-content: flex-end;\n    margin-top: 0;\n  }\n\n.keen-explorer .filters-container .action-buttons .button-add-filter,.ReactModalPortal .filters-container .action-buttons .button-add-filter,.rc-time-picker-panel .filters-container .action-buttons .button-add-filter{\n      margin-right: 1rem;\n      cursor: pointer;\n      text-transform: uppercase;\n      padding: 1rem 2rem;\n      background: #eee;\n      border-radius: 0.3rem;\n    }\n\n.keen-explorer .filters-container .action-buttons .button-add-filter i, .ReactModalPortal .filters-container .action-buttons .button-add-filter i, .rc-time-picker-panel .filters-container .action-buttons .button-add-filter i {\n        margin-right: 1rem;\n      }\n\n.keen-explorer .filters-container .action-buttons .button-done{\n      cursor: pointer;\n      color: #fff;\n      background: #45b2e8;\n      background: #45b2e8;\n      text-transform: uppercase;\n      width: 10rem;\n      padding: 1rem;\n      text-align: center;\n      border-radius: 0.3rem;\n    }\n\n.ReactModalPortal .filters-container .action-buttons .button-done{\n      cursor: pointer;\n      color: #fff;\n      background: #45b2e8;\n      background: #45b2e8;\n      text-transform: uppercase;\n      width: 10rem;\n      padding: 1rem;\n      text-align: center;\n      border-radius: 0.3rem;\n    }\n\n.rc-time-picker-panel .filters-container .action-buttons .button-done{\n      cursor: pointer;\n      color: #fff;\n      background: #45b2e8;\n      background: #45b2e8;\n      text-transform: uppercase;\n      width: 10rem;\n      padding: 1rem;\n      text-align: center;\n      border-radius: 0.3rem;\n    }\n\n.keen-explorer .filters-container .action-buttons .button-done i,.ReactModalPortal .filters-container .action-buttons .button-done i,.rc-time-picker-panel .filters-container .action-buttons .button-done i{\n        margin-right: 1rem;\n      }\n\n@media screen and (max-width: 1000px) {\n      .keen-explorer .filters-container .list .row,.ReactModalPortal .filters-container .list .row,.rc-time-picker-panel .filters-container .list .row{\n        -ms-flex-direction: column;\n            flex-direction: column;\n      }\n        .keen-explorer .filters-container .list .row .row-part,.ReactModalPortal .filters-container .list .row .row-part,.rc-time-picker-panel .filters-container .list .row .row-part{\n          margin-bottom: 0.3rem;\n        }\n        .keen-explorer .filters-container .list .row .delete,.ReactModalPortal .filters-container .list .row .delete,.rc-time-picker-panel .filters-container .list .row .delete{\n          float: right;\n          padding-right: 1rem;\n        }\n}\n\n.keen-explorer .modal-main,.ReactModalPortal .modal-main,.rc-time-picker-panel .modal-main{\n  display:-ms-flexbox;\n  display:flex;\n  -ms-flex-direction: column;\n      flex-direction: column;\n  height: 100%;\n  width: 100%;\n}\n\n.keen-explorer .modal-main .header,.ReactModalPortal .modal-main .header,.rc-time-picker-panel .modal-main .header{\n    -ms-flex:0;\n        flex:0;\n    border-bottom: 1px solid #eee;\n    padding-bottom: 1rem;\n  }\n\n.keen-explorer .modal-main .header .title,.ReactModalPortal .modal-main .header .title,.rc-time-picker-panel .modal-main .header .title{\n        float: left;\n      }\n\n.keen-explorer .modal-main .header .x,.ReactModalPortal .modal-main .header .x,.rc-time-picker-panel .modal-main .header .x{\n        color: #565656;\n        float: right;\n        font-weight: bold;\n        cursor: pointer;\n        padding: 1rem;\n        margin: -2rem -1rem;\n        font-size: 2rem;\n      }\n\n.keen-explorer .modal-main .container,.ReactModalPortal .modal-main .container,.rc-time-picker-panel .modal-main .container{\n    -ms-flex:1;\n        flex:1;\n    padding: 1rem 0;\n    clear: both;\n    width: 100%;\n    overflow-y: scroll;\n    white-space: pre-wrap;\n  }\n\n.keen-explorer .modal-main .button-copy,.ReactModalPortal .modal-main .button-copy,.rc-time-picker-panel .modal-main .button-copy{\n    padding: 1rem;\n    width: 10rem;\n    text-align: center;\n    cursor: pointer;\n    background: #1e93d8;\n    color: #fff;\n    border-radius: 0.5rem;\n    margin-top: 1rem;\n  }\n\n.keen-explorer .modal-main .button-copy:active,.ReactModalPortal .modal-main .button-copy:active,.rc-time-picker-panel .modal-main .button-copy:active{\n    background: #30a1e4;\n  }\n\n.keen-explorer .ReactModal__Overlay,.ReactModalPortal .ReactModal__Overlay,.rc-time-picker-panel .ReactModal__Overlay{\n  z-index: 9999;\n}\n\n.keen-explorer .saved-query, .ReactModalPortal .saved-query, .rc-time-picker-panel .saved-query {\n  margin: 1rem 0;\n  border: 1px solid #e8e8e8;\n  background: #fcfcfc;\n  padding: 1rem;\n  border-radius: 0.3rem;\n}\n\n.keen-explorer .saved-query .input-name {\n    font-size: 0.88rem;\n    font-size: 0.88rem;\n    padding: 1rem;\n    border-radius: 0.3rem;\n    border: 1px solid #e8e8e8;\n    width: 100%;\n  }\n\n.ReactModalPortal .saved-query .input-name {\n    font-size: 0.88rem;\n    font-size: 0.88rem;\n    padding: 1rem;\n    border-radius: 0.3rem;\n    border: 1px solid #e8e8e8;\n    width: 100%;\n  }\n\n.rc-time-picker-panel .saved-query .input-name {\n    font-size: 0.88rem;\n    font-size: 0.88rem;\n    padding: 1rem;\n    border-radius: 0.3rem;\n    border: 1px solid #e8e8e8;\n    width: 100%;\n  }\n\n.keen-explorer .saved-query .resource-name,.ReactModalPortal .saved-query .resource-name,.rc-time-picker-panel .saved-query .resource-name{\n    padding: 1rem 0.2rem 0;\n    display: -ms-flexbox;\n    display: flex;\n    overflow: hidden;\n    font-size: 0.8rem;\n  }\n\n.keen-explorer .saved-query .resource-name .line, .ReactModalPortal .saved-query .resource-name .line, .rc-time-picker-panel .saved-query .resource-name .line {\n      -ms-flex: 1;\n          flex: 1;\n      white-space: nowrap;\n    }\n\n.keen-explorer .saved-query .resource-name .line span,.ReactModalPortal .saved-query .resource-name .line span,.rc-time-picker-panel .saved-query .resource-name .line span{\n        white-space: nowrap;\n        overflow: hidden;\n        -ms-flex: 1;\n            flex: 1;\n      }\n\n.keen-explorer .saved-query .resource-name .line i, .ReactModalPortal .saved-query .resource-name .line i, .rc-time-picker-panel .saved-query .resource-name .line i {\n        -ms-flex: 0;\n            flex: 0;\n      }\n\n.keen-explorer .saved-query .resource-name .line-label,.ReactModalPortal .saved-query .resource-name .line-label,.rc-time-picker-panel .saved-query .resource-name .line-label{\n      -ms-flex: 0;\n          flex: 0;\n      margin-right: 0.5rem;\n    }\n\n.keen-explorer .saved-query .cache, .ReactModalPortal .saved-query .cache, .rc-time-picker-panel .saved-query .cache {\n    padding: 1rem 0 0;\n    max-width: 12rem;\n  }\n\n.keen-explorer .saved-query .cache .line-checkbox,.ReactModalPortal .saved-query .cache .line-checkbox,.rc-time-picker-panel .saved-query .cache .line-checkbox{\n      display: -ms-flexbox;\n      display: flex;\n    }\n\n.keen-explorer .saved-query .cache .line-checkbox input,.ReactModalPortal .saved-query .cache .line-checkbox input,.rc-time-picker-panel .saved-query .cache .line-checkbox input{\n        margin-right: 0.5rem;\n        outline: none;\n      }\n\n.keen-explorer .saved-query .cache .line-checkbox label,.ReactModalPortal .saved-query .cache .line-checkbox label,.rc-time-picker-panel .saved-query .cache .line-checkbox label{\n        cursor: pointer;\n      }\n\n.keen-explorer .saved-query .cache .cache-toggle,.ReactModalPortal .saved-query .cache .cache-toggle,.rc-time-picker-panel .saved-query .cache .cache-toggle{\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-align: center;\n          align-items: center;\n      cursor: pointer;\n      color: #128296;\n    }\n\n.keen-explorer .saved-query .cache i, .ReactModalPortal .saved-query .cache i, .rc-time-picker-panel .saved-query .cache i {\n      font-size: 1.3rem;\n      margin-right: 0.6rem;\n    }\n\n.keen-explorer .saved-query .cache .fa-toggle-off,.ReactModalPortal .saved-query .cache .fa-toggle-off,.rc-time-picker-panel .saved-query .cache .fa-toggle-off{\n      color: #7b7b7b;\n    }\n\n.keen-explorer .saved-query .cache .cache-refresh,.ReactModalPortal .saved-query .cache .cache-refresh,.rc-time-picker-panel .saved-query .cache .cache-refresh{\n    }\n\n.keen-explorer .saved-query .button-copy,.ReactModalPortal .saved-query .button-copy,.rc-time-picker-panel .saved-query .button-copy{\n    padding: 0.7rem;\n    right: 0;\n    bottom: 0;\n    border: 0;\n    cursor: pointer;\n    display: inline;\n  }\n\n.keen-explorer .saved-query .buttons * {\n      margin-top: 1rem;\n      padding: 0.88rem calc(0.88rem*2);\n      border-radius: 0.3rem;\n      font-size: 0.88rem;\n      font-size: 0.88rem;\n      cursor: pointer;\n      text-transform: uppercase;\n      border: 0;\n      font-weight: 600;\n      font-weight: 600;\n    }\n\n.ReactModalPortal .saved-query .buttons * {\n      margin-top: 1rem;\n      padding: 0.88rem calc(0.88rem*2);\n      border-radius: 0.3rem;\n      font-size: 0.88rem;\n      font-size: 0.88rem;\n      cursor: pointer;\n      text-transform: uppercase;\n      border: 0;\n      font-weight: 600;\n      font-weight: 600;\n    }\n\n.rc-time-picker-panel .saved-query .buttons * {\n      margin-top: 1rem;\n      padding: 0.88rem calc(0.88rem*2);\n      border-radius: 0.3rem;\n      font-size: 0.88rem;\n      font-size: 0.88rem;\n      cursor: pointer;\n      text-transform: uppercase;\n      border: 0;\n      font-weight: 600;\n      font-weight: 600;\n    }\n\n.keen-explorer .saved-query .buttons .button-save{\n      color: #fff;\n      background: #45b2e8;\n      background: #45b2e8;\n    }\n\n.ReactModalPortal .saved-query .buttons .button-save{\n      color: #fff;\n      background: #45b2e8;\n      background: #45b2e8;\n    }\n\n.rc-time-picker-panel .saved-query .buttons .button-save{\n      color: #fff;\n      background: #45b2e8;\n      background: #45b2e8;\n    }\n\n.keen-explorer .saved-query .buttons .button-clone{\n      margin-left: 1rem;\n      color: #45b2e8;\n      color: #45b2e8;\n      background: transparent;\n      border: 1px solid #eee;\n    }\n\n.ReactModalPortal .saved-query .buttons .button-clone{\n      margin-left: 1rem;\n      color: #45b2e8;\n      color: #45b2e8;\n      background: transparent;\n      border: 1px solid #eee;\n    }\n\n.rc-time-picker-panel .saved-query .buttons .button-clone{\n      margin-left: 1rem;\n      color: #45b2e8;\n      color: #45b2e8;\n      background: transparent;\n      border: 1px solid #eee;\n    }\n\n.keen-explorer .saved-query .buttons .button-delete,.ReactModalPortal .saved-query .buttons .button-delete,.rc-time-picker-panel .saved-query .buttons .button-delete{\n      float: right;\n      color: #6f6c6c;\n      background: transparent;\n      border: 1px solid #eee;\n    }\n\n.keen-explorer .saved-query .button-copy:active,.ReactModalPortal .saved-query .button-copy:active,.rc-time-picker-panel .saved-query .button-copy:active{\n    background: #fff;\n  }\n\n.keen-explorer .saved-queries,.ReactModalPortal .saved-queries,.rc-time-picker-panel .saved-queries{\n  overflow: scroll;\n  min-height: 100%;\n  max-height: 44rem;\n  padding-right: 1rem;\n}\n\n.keen-explorer .saved-queries .input-filter,.ReactModalPortal .saved-queries .input-filter,.rc-time-picker-panel .saved-queries .input-filter{\n    width: 100%;\n    padding: 0.6rem;\n    font-size: 0.9rem;\n    border: 1px solid #ccc;\n    margin: .5rem 0;\n    border-radius: 0.3rem;\n  }\n\n.keen-explorer .saved-queries .item{\n    position: relative;\n    padding: 1rem 0.5rem;\n    cursor: pointer;\n    overflow: auto;\n    border-bottom: 1px solid #f3f3f3;\n    background: #fff;\n    background: #fff;\n  }\n\n.ReactModalPortal .saved-queries .item{\n    position: relative;\n    padding: 1rem 0.5rem;\n    cursor: pointer;\n    overflow: auto;\n    border-bottom: 1px solid #f3f3f3;\n    background: #fff;\n    background: #fff;\n  }\n\n.rc-time-picker-panel .saved-queries .item{\n    position: relative;\n    padding: 1rem 0.5rem;\n    cursor: pointer;\n    overflow: auto;\n    border-bottom: 1px solid #f3f3f3;\n    background: #fff;\n    background: #fff;\n  }\n\n.keen-explorer .saved-queries .item .name,.ReactModalPortal .saved-queries .item .name,.rc-time-picker-panel .saved-queries .item .name{\n      margin: 0rem 1rem 1rem 0;\n    }\n\n.keen-explorer .saved-queries .item .cached{\n      float: left;\n      color: #3ecf8e;\n      color: #3ecf8e;\n      text-transform: uppercase;\n    }\n\n.ReactModalPortal .saved-queries .item .cached{\n      float: left;\n      color: #3ecf8e;\n      color: #3ecf8e;\n      text-transform: uppercase;\n    }\n\n.rc-time-picker-panel .saved-queries .item .cached{\n      float: left;\n      color: #3ecf8e;\n      color: #3ecf8e;\n      text-transform: uppercase;\n    }\n\n.keen-explorer .saved-queries .item .cached *, .ReactModalPortal .saved-queries .item .cached *, .rc-time-picker-panel .saved-queries .item .cached * {\n        font-size: 0.7rem;\n      }\n\n.keen-explorer .saved-queries .item .data,.ReactModalPortal .saved-queries .item .data,.rc-time-picker-panel .saved-queries .item .data{\n      float: right;\n      font-size: 0.7rem;\n      color: rgba(0,0,0,0.5);\n    }\n\n.keen-explorer .saved-queries .item .button-delete,.ReactModalPortal .saved-queries .item .button-delete,.rc-time-picker-panel .saved-queries .item .button-delete{\n      position: absolute;\n      right: 0.2rem;\n      top: 0.2rem;\n      padding: 0.2rem;\n      color: rgba(0,0,0,0.2);\n    }\n\n.keen-explorer .saved-queries .active{\n    background: #fcfcfc;\n    background: #fcfcfc;\n  }\n\n.ReactModalPortal .saved-queries .active{\n    background: #fcfcfc;\n    background: #fcfcfc;\n  }\n\n.rc-time-picker-panel .saved-queries .active{\n    background: #fcfcfc;\n    background: #fcfcfc;\n  }\n\n.keen-explorer .funnel .content,.ReactModalPortal .funnel .content,.rc-time-picker-panel .funnel .content{\n    padding: 0.3rem 0.5rem;\n  }\n\n.keen-explorer .funnel .input-text,.ReactModalPortal .funnel .input-text,.rc-time-picker-panel .funnel .input-text{\n    width: 100%;\n  }\n\n.keen-explorer .funnel .button,.ReactModalPortal .funnel .button,.rc-time-picker-panel .funnel .button{\n    cursor: pointer;\n  }\n\n.keen-explorer .funnel .button-delete,.ReactModalPortal .funnel .button-delete,.rc-time-picker-panel .funnel .button-delete{\n    color: #797979;\n  }\n\n.keen-explorer .funnel .button-add,.ReactModalPortal .funnel .button-add,.rc-time-picker-panel .funnel .button-add{\n    margin-top: 1rem;\n    padding: 0.7rem;\n    background: #fdfdfd;\n    border: 1px solid #e8e8e8;\n    border-radius: 5px;\n    display: inline-block;\n  }\n\n.keen-explorer .funnel .button-add i,.ReactModalPortal .funnel .button-add i,.rc-time-picker-panel .funnel .button-add i{\n      margin-right: 0.3rem;\n    }\n\n.keen-explorer .funnel .line-options,.ReactModalPortal .funnel .line-options,.rc-time-picker-panel .funnel .line-options{\n    margin: 1rem 0 0 0;\n  }\n\n.keen-explorer .funnel .line-checkbox,.ReactModalPortal .funnel .line-checkbox,.rc-time-picker-panel .funnel .line-checkbox{\n    margin: 0.5rem 0 0 0;\n  }\n\n.keen-explorer .funnel .line-checkbox input,.ReactModalPortal .funnel .line-checkbox input,.rc-time-picker-panel .funnel .line-checkbox input{\n      margin-right: 0.5rem;\n    }\n\n.keen-explorer .funnel .line-checkbox label,.ReactModalPortal .funnel .line-checkbox label,.rc-time-picker-panel .funnel .line-checkbox label{\n      cursor: pointer;\n    }\n\n.keen-explorer .funnel .step-switch-position-buttons,.ReactModalPortal .funnel .step-switch-position-buttons,.rc-time-picker-panel .funnel .step-switch-position-buttons{\n    float: left;\n    margin: -0.5rem 0.8rem 0 0;\n    color: #797979;\n  }\n\n.keen-explorer .funnel .step-switch-position-buttons .move-up,.ReactModalPortal .funnel .step-switch-position-buttons .move-up,.rc-time-picker-panel .funnel .step-switch-position-buttons .move-up{\n      margin-top: 0.1rem;\n    }\n\n.keen-explorer .funnel .step-switch-position-buttons .move-down,.ReactModalPortal .funnel .step-switch-position-buttons .move-down,.rc-time-picker-panel .funnel .step-switch-position-buttons .move-down{\n      margin-top: -0.3rem;\n    }\n\n.keen-explorer .keen-dataviz, .ReactModalPortal .keen-dataviz, .rc-time-picker-panel .keen-dataviz {\n  font-family: inherit !important;\n}\n\n.keen-explorer .keen-dataviz .keen-c3-legend .legend-item-text, .ReactModalPortal .keen-dataviz .keen-c3-legend .legend-item-text, .rc-time-picker-panel .keen-dataviz .keen-c3-legend .legend-item-text {\n      font-size: 1em;\n    }\n\n.keen-explorer .keen-dataviz-container, .ReactModalPortal .keen-dataviz-container, .rc-time-picker-panel .keen-dataviz-container {\n  height: calc(100% - 3rem);\n  overflow: hidden;\n}\n\n.keen-explorer .keen-dataviz-container .keen-dataviz-execution-meta, .ReactModalPortal .keen-dataviz-container .keen-dataviz-execution-meta, .rc-time-picker-panel .keen-dataviz-container .keen-dataviz-execution-meta {\n    top: 1rem;\n  }\n\n.keen-explorer .keen-dataviz-metric-value,.ReactModalPortal .keen-dataviz-metric-value,.rc-time-picker-panel .keen-dataviz-metric-value{\n  font-size: 4rem !important;\n}\n\n.keen-explorer .keen-dataviz .c3 svg g text tspan, .ReactModalPortal .keen-dataviz .c3 svg g text tspan, .rc-time-picker-panel .keen-dataviz .c3 svg g text tspan {\n  font-size: 10px !important;\n}\n\n.keen-explorer .a-preview-collection,.ReactModalPortal .a-preview-collection,.rc-time-picker-panel .a-preview-collection{\n  padding: 0.5rem;\n  margin: 0;\n  cursor: pointer;\n  background: #fafafa;\n  border-radius: 0.3rem;\n}\n\n.keen-explorer .a-preview-collection i,.ReactModalPortal .a-preview-collection i,.rc-time-picker-panel .a-preview-collection i{\n    font-size: 0.8em;\n    margin-right: 0.2rem;\n  }\n\n.keen-explorer .preview-collection-content,.ReactModalPortal .preview-collection-content,.rc-time-picker-panel .preview-collection-content{\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-direction: row;\n      flex-direction: row;\n}\n\n.keen-explorer .preview-collection-content .input-filter,.ReactModalPortal .preview-collection-content .input-filter,.rc-time-picker-panel .preview-collection-content .input-filter{\n    width: 100%;\n    padding: 0.6rem;\n    font-size: 0.9rem;\n    border: 1px solid #ccc;\n    margin: .5rem 0;\n    border-radius: 0.3rem;\n  }\n\n.keen-explorer .preview-collection-content .list, .ReactModalPortal .preview-collection-content .list, .rc-time-picker-panel .preview-collection-content .list {\n    height: 100%;\n    overflow-y: scroll;\n    -ms-flex: 1;\n        flex: 1;\n  }\n\n.keen-explorer .preview-collection-content .list .item{\n      cursor: pointer;\n      padding: 1rem;\n      overflow: auto;\n      border-bottom: 1px solid #f3f3f3;\n      background: #fff;\n      background: #fff;\n    }\n\n.ReactModalPortal .preview-collection-content .list .item{\n      cursor: pointer;\n      padding: 1rem;\n      overflow: auto;\n      border-bottom: 1px solid #f3f3f3;\n      background: #fff;\n      background: #fff;\n    }\n\n.rc-time-picker-panel .preview-collection-content .list .item{\n      cursor: pointer;\n      padding: 1rem;\n      overflow: auto;\n      border-bottom: 1px solid #f3f3f3;\n      background: #fff;\n      background: #fff;\n    }\n\n.keen-explorer .preview-collection-content .list .active{\n      background: #fcfcfc;\n      background: #fcfcfc;\n    }\n\n.ReactModalPortal .preview-collection-content .list .active{\n      background: #fcfcfc;\n      background: #fcfcfc;\n    }\n\n.rc-time-picker-panel .preview-collection-content .list .active{\n      background: #fcfcfc;\n      background: #fcfcfc;\n    }\n\n.keen-explorer .preview-collection-content .content,.ReactModalPortal .preview-collection-content .content,.rc-time-picker-panel .preview-collection-content .content{\n    -ms-flex: 3;\n        flex: 3;\n    height: 100%;\n    padding: 0.5rem 0 0.5rem 1rem;\n  }\n\n.keen-explorer .preview-collection-content .content .tabs .tab,.ReactModalPortal .preview-collection-content .content .tabs .tab,.rc-time-picker-panel .preview-collection-content .content .tabs .tab{\n        -ms-flex: none;\n            flex: none;\n        padding: 1rem 1.5rem;\n      }\n\n.keen-explorer .preview-collection-content .content .tabs .tab-placeholder,.ReactModalPortal .preview-collection-content .content .tabs .tab-placeholder,.rc-time-picker-panel .preview-collection-content .content .tabs .tab-placeholder{\n        -ms-flex: 1;\n            flex: 1;\n        border-bottom: 1px solid #e8e8e8;\n      }\n\n.keen-explorer .preview-collection-content .content .tab-content,.ReactModalPortal .preview-collection-content .content .tab-content,.rc-time-picker-panel .preview-collection-content .content .tab-content{\n      height: 100%;\n      width: 100%;\n      overflow: scroll;\n      padding-bottom: 4rem;\n    }\n\n@media screen and (max-width: 900px) {\n\n  .keen-explorer .preview-collection-content,.ReactModalPortal .preview-collection-content,.rc-time-picker-panel .preview-collection-content{\n    -ms-flex-direction: column;\n        flex-direction: column;\n  }\n    .keen-explorer .preview-collection-content .list, .keen-explorer .preview-collection-content .content, .ReactModalPortal .preview-collection-content .list, .ReactModalPortal .preview-collection-content .content, .rc-time-picker-panel .preview-collection-content .list, .rc-time-picker-panel .preview-collection-content .content{\n      height: auto;\n      overflow-y: visible;\n      padding: 0;\n    }\n    .keen-explorer .preview-collection-content .content,.ReactModalPortal .preview-collection-content .content,.rc-time-picker-panel .preview-collection-content .content{\n      padding-top: 2rem;\n    }\n}\n\n.keen-explorer .preview .download-toggle-label,.ReactModalPortal .preview .download-toggle-label,.rc-time-picker-panel .preview .download-toggle-label{\n    padding: 1rem;\n    cursor: pointer;\n    height: -webkit-min-content;\n    height: -moz-min-content;\n    height: min-content;\n  }\n\n.keen-explorer .preview .download-toggle-label i,.ReactModalPortal .preview .download-toggle-label i,.rc-time-picker-panel .preview .download-toggle-label i{\n      margin-right: 0.5rem;\n    }\n\n.keen-explorer .preview .download-buttons,.ReactModalPortal .preview .download-buttons,.rc-time-picker-panel .preview .download-buttons{\n    position: absolute;\n    background: #fdfdfd;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: column;\n        flex-direction: column;\n    -webkit-box-shadow: 2px 3px 6px rgba(0,0,0,0.05);\n            box-shadow: 2px 3px 6px rgba(0,0,0,0.05);\n    margin-top: -2px;\n  }\n\n.keen-explorer .preview .download-buttons button, .ReactModalPortal .preview .download-buttons button, .rc-time-picker-panel .preview .download-buttons button {\n      border: 1px solid #f7f7f7;\n    }\n\n.keen-explorer .preview .download-buttons button:hover,.ReactModalPortal .preview .download-buttons button:hover,.rc-time-picker-panel .preview .download-buttons button:hover{\n      background: #fff;\n    }\n\n.keen-explorer .preview .download-buttons .button-download,.ReactModalPortal .preview .download-buttons .button-download,.rc-time-picker-panel .preview .download-buttons .button-download{\n      padding: 1rem 3rem;\n      height: -webkit-min-content;\n      height: -moz-min-content;\n      height: min-content;\n    }\n\n.keen-explorer .preview .button-embed-html,.ReactModalPortal .preview .button-embed-html,.rc-time-picker-panel .preview .button-embed-html{\n    height: -webkit-min-content;\n    height: -moz-min-content;\n    height: min-content;\n  }\n\n.keen-explorer * {\n    -webkit-box-sizing: border-box;\n            box-sizing: border-box;\n    font-size: 0.88rem;\n    font-size: 0.88rem;\n}\n\n.ReactModalPortal * {\n    -webkit-box-sizing: border-box;\n            box-sizing: border-box;\n    font-size: 0.88rem;\n    font-size: 0.88rem;\n}\n\n.rc-time-picker-panel * {\n    -webkit-box-sizing: border-box;\n            box-sizing: border-box;\n    font-size: 0.88rem;\n    font-size: 0.88rem;\n}\n\n.keen-explorer button,.ReactModalPortal button,.rc-time-picker-panel button{\n    margin: 2rem 0 0;\n    padding: 1rem;\n}\n\n.keen-explorer .label-main,.ReactModalPortal .label-main,.rc-time-picker-panel .label-main{\n    padding: 1rem 0 0.3rem;\n}\n\n.keen-explorer .hide,.ReactModalPortal .hide,.rc-time-picker-panel .hide{\n    display: none;\n}\n\n.keen-explorer input:focus {\n    outline: 2px solid #00bbde;\n    outline: 2px solid #00bbde;\n}\n\n.ReactModalPortal input:focus {\n    outline: 2px solid #00bbde;\n    outline: 2px solid #00bbde;\n}\n\n.rc-time-picker-panel input:focus {\n    outline: 2px solid #00bbde;\n    outline: 2px solid #00bbde;\n}\n\n.keen-explorer .panel-main,.ReactModalPortal .panel-main,.rc-time-picker-panel .panel-main{\n    -ms-flex: 1;\n        flex: 1;\n    min-width: 26rem;\n    -webkit-box-shadow: -3px 7px 11px rgba(0,0,0,0.1);\n            box-shadow: -3px 7px 11px rgba(0,0,0,0.1);\n    border-radius: 0.3rem;\n}\n\n.keen-explorer .panel-main .panel-buttons .button-new-query,.ReactModalPortal .panel-main .panel-buttons .button-new-query,.rc-time-picker-panel .panel-main .panel-buttons .button-new-query{\n        -ms-flex: none;\n            flex: none;\n        cursor: pointer;\n      }\n\n.keen-explorer .panel-main .panel-content,.ReactModalPortal .panel-main .panel-content,.rc-time-picker-panel .panel-main .panel-content{\n      padding: 1rem;\n    }\n\n.keen-explorer .panel-main .panel-content .event-collection .label-main,.ReactModalPortal .panel-main .panel-content .event-collection .label-main,.rc-time-picker-panel .panel-main .panel-content .event-collection .label-main{\n        padding-top: 0;\n      }\n\n.keen-explorer .panel-main .panel-saved-queries,.ReactModalPortal .panel-main .panel-saved-queries,.rc-time-picker-panel .panel-main .panel-saved-queries{\n      padding-right: 0;\n    }\n\n.keen-explorer .panel-main .panel-funnel .label-analysis-type, .ReactModalPortal .panel-main .panel-funnel .label-analysis-type, .rc-time-picker-panel .panel-main .panel-funnel .label-analysis-type {\n        padding-top: 0;\n      }\n\n.keen-explorer .result,.ReactModalPortal .result,.rc-time-picker-panel .result{\n    -ms-flex: 3;\n        flex: 3;\n    padding: 0 1.5rem;\n    overflow-x: hidden;\n}\n\n.keen-explorer .foldable,.ReactModalPortal .foldable,.rc-time-picker-panel .foldable{\n    margin-top: 0.5rem;\n    border: 1px solid #e8e8e8;\n    background: #fdfdfd;\n    padding: 0.5rem;\n    cursor: pointer;\n    border-radius: 5px;\n}\n\n.keen-explorer .foldable-active,.ReactModalPortal .foldable-active,.rc-time-picker-panel .foldable-active{\n      background: none;\n    }\n\n.keen-explorer .foldable .title,.ReactModalPortal .foldable .title,.rc-time-picker-panel .foldable .title{\n      padding: 0.5rem;\n    }\n\n.keen-explorer .foldable .title .foldable-icon,.ReactModalPortal .foldable .title .foldable-icon,.rc-time-picker-panel .foldable .title .foldable-icon{\n        float: right;\n      }\n\n.keen-explorer .foldable .content,.ReactModalPortal .foldable .content,.rc-time-picker-panel .foldable .content{\n      margin-top: 0.5rem;\n      padding: 0;\n    }\n\n.keen-explorer .foldable .tab-content,.ReactModalPortal .foldable .tab-content,.rc-time-picker-panel .foldable .tab-content{\n      border: 0;\n    }\n\n.keen-explorer .filters,.ReactModalPortal .filters,.rc-time-picker-panel .filters{\n    display: -ms-flexbox;\n    display: flex;\n}\n\n.keen-explorer .filters .title,.ReactModalPortal .filters .title,.rc-time-picker-panel .filters .title{\n      -ms-flex: 1;\n          flex: 1;\n    }\n\n.keen-explorer .filters .count,.ReactModalPortal .filters .count,.rc-time-picker-panel .filters .count{\n      -ms-flex-item-align: center;\n          align-self: center;\n      text-align: right;\n      padding: 0 0.5rem 0 0;\n    }\n\n.keen-explorer .optional,.ReactModalPortal .optional,.rc-time-picker-panel .optional{\n    margin-left: 1em;\n    font-size: 0.7em;\n    color:#ddd;\n    color: #737373;\n}\n\n.keen-explorer .group-by .label-main,.ReactModalPortal .group-by .label-main,.rc-time-picker-panel .group-by .label-main{\n      padding: 0 0 0.5rem;\n    }\n\n.keen-explorer .group-by .btn-plus, .keen-explorer .group-by .btn-minus, .ReactModalPortal .group-by .btn-plus, .ReactModalPortal .group-by .btn-minus, .rc-time-picker-panel .group-by .btn-plus, .rc-time-picker-panel .group-by .btn-minus{\n      margin-top: 1rem;\n      padding: 0.7rem;\n      background: #fdfdfd;\n      border: 1px solid #e8e8e8;\n      border-radius: 5px;\n      display: inline-block;\n    }\n\n.keen-explorer .group-by .options,.ReactModalPortal .group-by .options,.rc-time-picker-panel .group-by .options{\n      margin-top: 1rem;\n      display:-ms-flexbox;\n      display:flex;\n    }\n\n.keen-explorer .group-by .options .order-by,.ReactModalPortal .group-by .options .order-by,.rc-time-picker-panel .group-by .options .order-by{\n        width: 8em;\n        padding-right: 1rem;\n      }\n\n.keen-explorer .group-by .options .order-by .select,.ReactModalPortal .group-by .options .order-by .select,.rc-time-picker-panel .group-by .options .order-by .select{\n          width: 100%;\n        }\n\n.keen-explorer .group-by .options .limit,.ReactModalPortal .group-by .options .limit,.rc-time-picker-panel .group-by .options .limit{\n        width: 8em;\n      }\n\n.keen-explorer .group-by .options .limit .input,.ReactModalPortal .group-by .options .limit .input,.rc-time-picker-panel .group-by .options .limit .input{\n          width: 100%;\n        }\n\n.keen-explorer .group-by .additional-target-property,.ReactModalPortal .group-by .additional-target-property,.rc-time-picker-panel .group-by .additional-target-property{\n      margin-top: 1rem;\n      padding-top: 1rem;\n      border-top: 1px solid #f1f1f1;\n    }\n\n.keen-explorer .lets-go,.ReactModalPortal .lets-go,.rc-time-picker-panel .lets-go{\n    display:-ms-flexbox;\n    display:flex;\n    width: 100%;\n    height: 390px;\n    -ms-flex-pack: center;\n        justify-content: center;\n    -ms-flex-align: center;\n        align-items: center;\n    color: #9b9b9b;\n    background: #fafafa;\n}\n\n.keen-explorer .tabs,.ReactModalPortal .tabs,.rc-time-picker-panel .tabs{\n  display:-ms-flexbox;\n  display:flex;\n}\n\n.keen-explorer .tabs .tab,.ReactModalPortal .tabs .tab,.rc-time-picker-panel .tabs .tab{\n    -ms-flex: 1;\n        flex: 1;\n    padding: 1rem;\n    background: #fafafa;\n    cursor: pointer;\n    border: 1px solid #e8e8e8;\n    border-radius: 5px 5px 0 0;\n  }\n\n.keen-explorer .tabs .active,.ReactModalPortal .tabs .active,.rc-time-picker-panel .tabs .active{\n    background: #fff;\n    border-bottom: 1px solid #fff;\n  }\n\n.keen-explorer .panel-buttons .active,.ReactModalPortal .panel-buttons .active,.rc-time-picker-panel .panel-buttons .active{\n    border-right: 0;\n  }\n\n.keen-explorer .tab-content,.ReactModalPortal .tab-content,.rc-time-picker-panel .tab-content{\n  padding: 1rem;\n  border: 1px solid #e8e8e8;\n  border-top: none;\n}\n\n.keen-explorer .input-number{\n  font-size: 0.88rem;\n  font-size: 0.88rem;\n  padding: 0.5rem 0.6rem;\n  border-radius: 5px;\n  border: 1px solid #ccc;\n  font-weight: 400;\n  line-height: normal;\n}\n\n.ReactModalPortal .input-number{\n  font-size: 0.88rem;\n  font-size: 0.88rem;\n  padding: 0.5rem 0.6rem;\n  border-radius: 5px;\n  border: 1px solid #ccc;\n  font-weight: 400;\n  line-height: normal;\n}\n\n.rc-time-picker-panel .input-number{\n  font-size: 0.88rem;\n  font-size: 0.88rem;\n  padding: 0.5rem 0.6rem;\n  border-radius: 5px;\n  border: 1px solid #ccc;\n  font-weight: 400;\n  line-height: normal;\n}\n\n.keen-explorer .input-text{\n  font-size: 0.88rem;\n  font-size: 0.88rem;\n  padding: 0.5rem 0.6rem;\n  border-radius: 5px;\n  border: 1px solid #ccc;\n  font-weight: 400;\n  line-height: normal;\n}\n\n.ReactModalPortal .input-text{\n  font-size: 0.88rem;\n  font-size: 0.88rem;\n  padding: 0.5rem 0.6rem;\n  border-radius: 5px;\n  border: 1px solid #ccc;\n  font-weight: 400;\n  line-height: normal;\n}\n\n.rc-time-picker-panel .input-text{\n  font-size: 0.88rem;\n  font-size: 0.88rem;\n  padding: 0.5rem 0.6rem;\n  border-radius: 5px;\n  border: 1px solid #ccc;\n  font-weight: 400;\n  line-height: normal;\n}\n\n.keen-explorer .interval .standard-units,.ReactModalPortal .interval .standard-units,.rc-time-picker-panel .interval .standard-units{\n    width: 10rem;\n  }\n\n.keen-explorer .interval .line,.ReactModalPortal .interval .line,.rc-time-picker-panel .interval .line{\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-align: center;\n        align-items: center;\n  }\n\n.keen-explorer .interval .line .title,.ReactModalPortal .interval .line .title,.rc-time-picker-panel .interval .line .title{\n      margin-right: 1rem;\n    }\n\n.keen-explorer .interval .line .input-number,.ReactModalPortal .interval .line .input-number,.rc-time-picker-panel .interval .line .input-number{\n      width: 4rem;\n      margin-right: 0.5rem;\n    }\n\n.keen-explorer .interval .line .time-units,.ReactModalPortal .interval .line .time-units,.rc-time-picker-panel .interval .line .time-units{\n      width: 10rem;\n    }\n\n.keen-explorer .timeframe,.ReactModalPortal .timeframe,.rc-time-picker-panel .timeframe{\n  margin-bottom: 0.5rem;\n}\n\n.keen-explorer .timeframe .relative,.ReactModalPortal .timeframe .relative,.rc-time-picker-panel .timeframe .relative{\n    display:-ms-flexbox;\n    display:flex;\n  }\n\n.keen-explorer .timeframe .relative .relativity, .keen-explorer .timeframe .relative .input-number, .ReactModalPortal .timeframe .relative .relativity, .ReactModalPortal .timeframe .relative .input-number, .rc-time-picker-panel .timeframe .relative .relativity, .rc-time-picker-panel .timeframe .relative .input-number{\n      margin-right:0.5rem;\n    }\n\n.keen-explorer .timeframe .relative .relativity,.ReactModalPortal .timeframe .relative .relativity,.rc-time-picker-panel .timeframe .relative .relativity{\n      -ms-flex: 0;\n          flex: 0;\n      max-width:12rem;\n      min-width: 6rem;\n    }\n\n.keen-explorer .timeframe .relative .units,.ReactModalPortal .timeframe .relative .units,.rc-time-picker-panel .timeframe .relative .units{\n      -ms-flex: 0;\n          flex: 0;\n      max-width:12rem;\n      min-width: 6rem;\n    }\n\n.keen-explorer .timeframe .relative .input-number,.ReactModalPortal .timeframe .relative .input-number,.rc-time-picker-panel .timeframe .relative .input-number{\n      -ms-flex: 1;\n          flex: 1;\n      min-width: 6rem;\n    }\n\n.keen-explorer .timeframe .description,.ReactModalPortal .timeframe .description,.rc-time-picker-panel .timeframe .description{\n    margin-top: 0.5rem;\n    padding: 1rem;\n    background: #fafafa;\n  }\n\n.keen-explorer .timeframe .tabAbsolute .DateRangePickerInput_arrow,.ReactModalPortal .timeframe .tabAbsolute .DateRangePickerInput_arrow,.rc-time-picker-panel .timeframe .tabAbsolute .DateRangePickerInput_arrow{\n      display: none;\n    }\n\n.keen-explorer .timeframe .tabAbsolute .DateInput, .ReactModalPortal .timeframe .tabAbsolute .DateInput, .rc-time-picker-panel .timeframe .tabAbsolute .DateInput {\n      width: 8rem;\n      background: none;\n    }\n\n.keen-explorer .timeframe .tabAbsolute .DateInput_input {\n      padding: 0.5rem;\n      font-size: 0.88rem;\n      font-size: 0.88rem;\n      line-height: normal;\n      color:#000;\n      font-weight: normal;\n      border-radius: 5px;\n    }\n\n.ReactModalPortal .timeframe .tabAbsolute .DateInput_input {\n      padding: 0.5rem;\n      font-size: 0.88rem;\n      font-size: 0.88rem;\n      line-height: normal;\n      color:#000;\n      font-weight: normal;\n      border-radius: 5px;\n    }\n\n.rc-time-picker-panel .timeframe .tabAbsolute .DateInput_input {\n      padding: 0.5rem;\n      font-size: 0.88rem;\n      font-size: 0.88rem;\n      line-height: normal;\n      color:#000;\n      font-weight: normal;\n      border-radius: 5px;\n    }\n\n.keen-explorer .timeframe .tabAbsolute .rc-time-picker-input{\n      font-size: 0.88rem;\n      font-size: 0.88rem;\n      line-height: normal;\n      font-weight: normal;\n      color: #000;\n      height: 2.4rem;\n      width: 7rem;\n      border-radius: 5px;\n    }\n\n.ReactModalPortal .timeframe .tabAbsolute .rc-time-picker-input{\n      font-size: 0.88rem;\n      font-size: 0.88rem;\n      line-height: normal;\n      font-weight: normal;\n      color: #000;\n      height: 2.4rem;\n      width: 7rem;\n      border-radius: 5px;\n    }\n\n.rc-time-picker-panel .timeframe .tabAbsolute .rc-time-picker-input{\n      font-size: 0.88rem;\n      font-size: 0.88rem;\n      line-height: normal;\n      font-weight: normal;\n      color: #000;\n      height: 2.4rem;\n      width: 7rem;\n      border-radius: 5px;\n    }\n\n.keen-explorer .timeframe .tabAbsolute .line,.ReactModalPortal .timeframe .tabAbsolute .line,.rc-time-picker-panel .timeframe .tabAbsolute .line{\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-align: center;\n          align-items: center;\n      margin: 0.5rem;\n    }\n\n.keen-explorer .timeframe .tabAbsolute .line .title,.ReactModalPortal .timeframe .tabAbsolute .line .title,.rc-time-picker-panel .timeframe .tabAbsolute .line .title{\n        width: 4rem;\n      }\n\n.keen-explorer .timeframe .tabAbsolute .line .SingleDatePicker, .ReactModalPortal .timeframe .tabAbsolute .line .SingleDatePicker, .rc-time-picker-panel .timeframe .tabAbsolute .line .SingleDatePicker {\n        margin-right: 0.5rem;\n      }\n\n.keen-explorer .timeframe .tabAbsolute .line .SingleDatePickerInput__withBorder, .ReactModalPortal .timeframe .tabAbsolute .line .SingleDatePickerInput__withBorder, .rc-time-picker-panel .timeframe .tabAbsolute .line .SingleDatePickerInput__withBorder {\n        border-radius: 5px;\n        border: 1px solid #dbdbdb;\n      }\n\n.keen-explorer .rc-time-picker-panel .rc-time-picker-panel-inner,.ReactModalPortal .rc-time-picker-panel .rc-time-picker-panel-inner,.rc-time-picker-panel .rc-time-picker-panel .rc-time-picker-panel-inner{\n    -webkit-box-shadow: none;\n            box-shadow: none;\n    border-radius: 5px;\n  }\n\n.keen-explorer .rc-time-picker-panel .rc-time-picker-input{\n    font-size: 0.88rem;\n    font-size: 0.88rem;\n    line-height: normal;\n    font-weight: normal;\n    color: #000;\n    height: 2.4rem;\n    width: 8rem;\n    border-radius: 5px;\n  }\n\n.ReactModalPortal .rc-time-picker-panel .rc-time-picker-input{\n    font-size: 0.88rem;\n    font-size: 0.88rem;\n    line-height: normal;\n    font-weight: normal;\n    color: #000;\n    height: 2.4rem;\n    width: 8rem;\n    border-radius: 5px;\n  }\n\n.rc-time-picker-panel .rc-time-picker-panel .rc-time-picker-input{\n    font-size: 0.88rem;\n    font-size: 0.88rem;\n    line-height: normal;\n    font-weight: normal;\n    color: #000;\n    height: 2.4rem;\n    width: 8rem;\n    border-radius: 5px;\n  }\n\n.keen-explorer .rc-time-picker-panel .rc-time-picker-panel-select{\n    font-size: 0.88rem;\n    font-size: 0.88rem;\n  }\n\n.ReactModalPortal .rc-time-picker-panel .rc-time-picker-panel-select{\n    font-size: 0.88rem;\n    font-size: 0.88rem;\n  }\n\n.rc-time-picker-panel .rc-time-picker-panel .rc-time-picker-panel-select{\n    font-size: 0.88rem;\n    font-size: 0.88rem;\n  }\n\n.keen-explorer .rc-time-picker-panel .rc-time-picker-panel-select li,.ReactModalPortal .rc-time-picker-panel .rc-time-picker-panel-select li,.rc-time-picker-panel .rc-time-picker-panel .rc-time-picker-panel-select li{\n      height: 2rem;\n      line-height: 2rem;\n    }\n\n.keen-explorer .rc-time-picker-panel .rc-time-picker-panel-input{\n    font-size: 0.88rem;\n    font-size: 0.88rem;\n  }\n\n.ReactModalPortal .rc-time-picker-panel .rc-time-picker-panel-input{\n    font-size: 0.88rem;\n    font-size: 0.88rem;\n  }\n\n.rc-time-picker-panel .rc-time-picker-panel .rc-time-picker-panel-input{\n    font-size: 0.88rem;\n    font-size: 0.88rem;\n  }\n\n.keen-explorer .apiQueryUrl,.ReactModalPortal .apiQueryUrl,.rc-time-picker-panel .apiQueryUrl{\n  cursor: pointer;\n  padding: 1rem;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-align: center;\n      align-items: center;\n  width: 100%;\n  font-size: 0.8rem;\n}\n\n.keen-explorer .apiQueryUrl input,.ReactModalPortal .apiQueryUrl input,.rc-time-picker-panel .apiQueryUrl input{\n    -ms-flex: 1;\n        flex: 1;\n    margin: 0 1rem;\n  }\n\n.keen-explorer .fa-copy:active{\n  color: #00bbde;\n  color: #00bbde;\n}\n\n.ReactModalPortal .fa-copy:active{\n  color: #00bbde;\n  color: #00bbde;\n}\n\n.rc-time-picker-panel .fa-copy:active{\n  color: #00bbde;\n  color: #00bbde;\n}\n\n.keen-explorer .button-run-query{\n  font-size: 0.88rem;\n  font-size: 0.88rem;\n  text-transform: uppercase;\n  border-radius: 0.3rem;\n  background: #3ecf8e;\n  background: #3ecf8e;\n  color: #fff;\n  font-weight: 600;\n  font-weight: 600;\n  border: 0;\n  padding: 0.88rem calc(0.88rem*2);\n  padding: 0.88rem calc(0.88rem*2);\n  cursor: pointer;\n  margin: 0;\n}\n\n.ReactModalPortal .button-run-query{\n  font-size: 0.88rem;\n  font-size: 0.88rem;\n  text-transform: uppercase;\n  border-radius: 0.3rem;\n  background: #3ecf8e;\n  background: #3ecf8e;\n  color: #fff;\n  font-weight: 600;\n  font-weight: 600;\n  border: 0;\n  padding: 0.88rem calc(0.88rem*2);\n  padding: 0.88rem calc(0.88rem*2);\n  cursor: pointer;\n  margin: 0;\n}\n\n.rc-time-picker-panel .button-run-query{\n  font-size: 0.88rem;\n  font-size: 0.88rem;\n  text-transform: uppercase;\n  border-radius: 0.3rem;\n  background: #3ecf8e;\n  background: #3ecf8e;\n  color: #fff;\n  font-weight: 600;\n  font-weight: 600;\n  border: 0;\n  padding: 0.88rem calc(0.88rem*2);\n  padding: 0.88rem calc(0.88rem*2);\n  cursor: pointer;\n  margin: 0;\n}\n\n.keen-explorer .button-with-loading-spinner .loading-spinner,.ReactModalPortal .button-with-loading-spinner .loading-spinner,.rc-time-picker-panel .button-with-loading-spinner .loading-spinner{\n    display: inline-block;\n    margin: 0 0.5rem 0 -0.5rem;\n    padding: 0;\n  }\n\n.keen-explorer .button-with-loading-spinner .loading-spinner i, .ReactModalPortal .button-with-loading-spinner .loading-spinner i, .rc-time-picker-panel .button-with-loading-spinner .loading-spinner i {\n      margin: 0;\n      padding: 0;\n      font-size: 1rem;\n    }\n\n.keen-explorer .error,.ReactModalPortal .error,.rc-time-picker-panel .error{\n  padding: 1rem;\n  background: #ffe5e5;\n  margin: 1rem 0;\n}\n\n.keen-explorer .box-info,.ReactModalPortal .box-info,.rc-time-picker-panel .box-info{\n  padding: 1rem;\n  background: #f1faff;\n}\n\n.keen-explorer .tab-content .box-info,.ReactModalPortal .tab-content .box-info,.rc-time-picker-panel .tab-content .box-info{\n  margin: -1rem;\n}\n\n.keen-explorer .preview,.ReactModalPortal .preview,.rc-time-picker-panel .preview{\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-direction: row;\n      flex-direction: row;\n  -ms-flex-wrap: wrap;\n      flex-wrap: wrap;\n  background: #fafafa;\n}\n\n.keen-explorer .preview .loader,.ReactModalPortal .preview .loader,.rc-time-picker-panel .preview .loader{\n    width: 100%;\n    height: 340px;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-align: center;\n        align-items: center;\n    -ms-flex-pack: center;\n        justify-content: center;\n    font-size: 5rem;\n    color: #eee;\n  }\n\n.keen-explorer .preview .keen-dataviz-container, .keen-explorer .preview .react-json-view, .ReactModalPortal .preview .keen-dataviz-container, .ReactModalPortal .preview .react-json-view, .rc-time-picker-panel .preview .keen-dataviz-container, .rc-time-picker-panel .preview .react-json-view{\n    width: 100%;\n    height: 340px;\n    background: #fff;\n    overflow-y: scroll;\n  }\n\n.keen-explorer .preview .react-json-view,.ReactModalPortal .preview .react-json-view,.rc-time-picker-panel .preview .react-json-view{\n    padding: 1rem;\n  }\n\n.keen-explorer .preview .select-chart-type-container,.ReactModalPortal .preview .select-chart-type-container,.rc-time-picker-panel .preview .select-chart-type-container{\n    -ms-flex: 1;\n        flex: 1;\n    -ms-flex-order: 1;\n        order: 1;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-item-align: center;\n        align-self: center;\n    -ms-flex-direction: column;\n        flex-direction: column;\n    -ms-flex-pack: end;\n        justify-content: flex-end;\n    margin: 0.3rem;\n  }\n\n.keen-explorer .preview .select-chart-type, .ReactModalPortal .preview .select-chart-type, .rc-time-picker-panel .preview .select-chart-type {\n    -ms-flex: 1;\n        flex: 1;\n    width: 20rem;\n    -ms-flex-item-align: end;\n        align-self: flex-end;\n  }\n\n.keen-explorer .preview .chart-not-supported-note,.ReactModalPortal .preview .chart-not-supported-note,.rc-time-picker-panel .preview .chart-not-supported-note{\n    float: right;\n    text-align: right;\n    padding: 0.5rem;\n  }\n\n.keen-explorer .preview .button-download,.ReactModalPortal .preview .button-download,.rc-time-picker-panel .preview .button-download{\n    -ms-flex-order: 0;\n        order: 0;\n    background: transparent;\n    border: 0;\n    margin: 0;\n    cursor: pointer;\n    font-size: 0.8rem;\n  }\n\n.keen-explorer .preview .button-download i,.ReactModalPortal .preview .button-download i,.rc-time-picker-panel .preview .button-download i{\n      margin-right: 0.5rem;\n    }\n\n.keen-explorer .action-buttons,.ReactModalPortal .action-buttons,.rc-time-picker-panel .action-buttons{\n  margin-top: 1rem;\n}\n\n.keen-explorer .chartType,.ReactModalPortal .chartType,.rc-time-picker-panel .chartType{\n  margin-top: 1rem;\n}\n\n.keen-explorer .button-toggle{\n  margin-left: 1rem;\n  display: inline;\n  cursor: pointer;\n  border-radius: 0.3rem;\n  font-size: 0.88rem;\n  font-size: 0.88rem;\n  font-weight: 600;\n  font-weight: 600;\n  text-transform: uppercase;\n  color: #3ecf8e;\n  color: #3ecf8e;\n  color: #45b2e8;\n  color: #45b2e8;\n  background: #fcfcfc;\n  border: 1px solid #efefef;\n  border: 1px solid #efefef;\n  padding: 0.88rem calc(0.88rem*2);\n  padding: 0.88rem calc(0.88rem*2);\n}\n\n.ReactModalPortal .button-toggle{\n  margin-left: 1rem;\n  display: inline;\n  cursor: pointer;\n  border-radius: 0.3rem;\n  font-size: 0.88rem;\n  font-size: 0.88rem;\n  font-weight: 600;\n  font-weight: 600;\n  text-transform: uppercase;\n  color: #3ecf8e;\n  color: #3ecf8e;\n  color: #45b2e8;\n  color: #45b2e8;\n  background: #fcfcfc;\n  border: 1px solid #efefef;\n  border: 1px solid #efefef;\n  padding: 0.88rem calc(0.88rem*2);\n  padding: 0.88rem calc(0.88rem*2);\n}\n\n.rc-time-picker-panel .button-toggle{\n  margin-left: 1rem;\n  display: inline;\n  cursor: pointer;\n  border-radius: 0.3rem;\n  font-size: 0.88rem;\n  font-size: 0.88rem;\n  font-weight: 600;\n  font-weight: 600;\n  text-transform: uppercase;\n  color: #3ecf8e;\n  color: #3ecf8e;\n  color: #45b2e8;\n  color: #45b2e8;\n  background: #fcfcfc;\n  border: 1px solid #efefef;\n  border: 1px solid #efefef;\n  padding: 0.88rem calc(0.88rem*2);\n  padding: 0.88rem calc(0.88rem*2);\n}\n\n.keen-explorer .button-toggle i, .ReactModalPortal .button-toggle i, .rc-time-picker-panel .button-toggle i {\n    margin-left: 1rem;\n  }\n\n.keen-explorer .button-toggle-active, .ReactModalPortal .button-toggle-active, .rc-time-picker-panel .button-toggle-active {\n  background: rgb(255, 255, 255);\n}\n\n.keen-explorer .result-string,.ReactModalPortal .result-string,.rc-time-picker-panel .result-string{\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-pack: center;\n      justify-content: center;\n  -ms-flex-align: center;\n      align-items: center;\n}\n\n.keen-explorer .CalendarDay__selected {\n  background: #00bbde;\n  background: #00bbde;\n  border: 1px double #00bbde;\n  border: 1px double #00bbde;\n}\n\n.keen-explorer .CalendarDay__selected:active {\n  background: #00bbde;\n  background: #00bbde;\n  border: 1px double #00bbde;\n  border: 1px double #00bbde;\n}\n\n.keen-explorer .CalendarDay__selected:hover {\n  background: #00bbde;\n  background: #00bbde;\n  border: 1px double #00bbde;\n  border: 1px double #00bbde;\n}\n\n.ReactModalPortal .CalendarDay__selected {\n  background: #00bbde;\n  background: #00bbde;\n  border: 1px double #00bbde;\n  border: 1px double #00bbde;\n}\n\n.ReactModalPortal .CalendarDay__selected:active {\n  background: #00bbde;\n  background: #00bbde;\n  border: 1px double #00bbde;\n  border: 1px double #00bbde;\n}\n\n.ReactModalPortal .CalendarDay__selected:hover {\n  background: #00bbde;\n  background: #00bbde;\n  border: 1px double #00bbde;\n  border: 1px double #00bbde;\n}\n\n.rc-time-picker-panel .CalendarDay__selected {\n  background: #00bbde;\n  background: #00bbde;\n  border: 1px double #00bbde;\n  border: 1px double #00bbde;\n}\n\n.rc-time-picker-panel .CalendarDay__selected:active {\n  background: #00bbde;\n  background: #00bbde;\n  border: 1px double #00bbde;\n  border: 1px double #00bbde;\n}\n\n.rc-time-picker-panel .CalendarDay__selected:hover {\n  background: #00bbde;\n  background: #00bbde;\n  border: 1px double #00bbde;\n  border: 1px double #00bbde;\n}\n\n.keen-explorer .DayPickerKeyboardShortcuts_show__bottomRight::before{\n  border-right: 33px solid #00bbde;\n  border-right: 33px solid #00bbde;\n}\n\n.ReactModalPortal .DayPickerKeyboardShortcuts_show__bottomRight::before{\n  border-right: 33px solid #00bbde;\n  border-right: 33px solid #00bbde;\n}\n\n.rc-time-picker-panel .DayPickerKeyboardShortcuts_show__bottomRight::before{\n  border-right: 33px solid #00bbde;\n  border-right: 33px solid #00bbde;\n}\n\n.keen-explorer .DateInput_input__focused{\n  border-bottom: 2px solid #00bbde;\n  border-bottom: 2px solid #00bbde;\n}\n\n.ReactModalPortal .DateInput_input__focused{\n  border-bottom: 2px solid #00bbde;\n  border-bottom: 2px solid #00bbde;\n}\n\n.rc-time-picker-panel .DateInput_input__focused{\n  border-bottom: 2px solid #00bbde;\n  border-bottom: 2px solid #00bbde;\n}\n\n.keen-explorer .loading-spinner i, .ReactModalPortal .loading-spinner i, .rc-time-picker-panel .loading-spinner i {\n      font-size: 1.5rem;\n    }\n\n.keen-explorer .fa-spin, .ReactModalPortal .fa-spin, .rc-time-picker-panel .fa-spin {\n    -webkit-animation: fa-spin 1s infinite linear;\n            animation: fa-spin 1s infinite linear;\n}\n\n.keen-explorer .react-select-option,.ReactModalPortal .react-select-option,.rc-time-picker-panel .react-select-option{\n    padding: 0.7rem 1rem;\n}\n\n.keen-explorer .react-json-view .string-value,.ReactModalPortal .react-json-view .string-value,.rc-time-picker-panel .react-json-view .string-value{\n      word-break: break-word;\n    }\n\n@media screen and (max-width: 1000px) {\n  .keen-explorer{\n    -ms-flex-direction: column;\n        flex-direction: column;\n  }\n    .keen-explorer .panel{\n      -webkit-box-shadow: none;\n              box-shadow: none;\n      min-width: none;\n    }\n      .keen-explorer .panel .panel-content{\n        padding: 0 1rem;\n      }\n    .keen-explorer .result{\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: column;\n          flex-direction: column;\n    }\n      .keen-explorer .result .preview, .keen-explorer .result .lets-go{\n        -ms-flex-order: 1;\n            order: 1;\n      }\n      .keen-explorer .result .error{\n        margin-bottom: 0;\n      }\n      .keen-explorer .result .button-run-query{\n        -ms-flex-order: 0;\n            order: 0;\n      }\n      .keen-explorer .result .button-toggle {\n        -ms-flex-order: 3;\n            order: 3;\n      }\n      .keen-explorer .result .saved-query{\n        -ms-flex-order: 3;\n            order: 3;\n      }\n      .keen-explorer .result .action-buttons{\n        margin-bottom: 1rem;\n      }\n    .filters-container .delete{\n      margin-top: 0.5rem;\n    }\n}", ""]);
 
 
 
 /***/ }),
-/* 336 */
+/* 337 */
 /***/ (function(module, exports) {
 
 
@@ -15150,7 +19905,7 @@ module.exports = function (css) {
 
 
 /***/ }),
-/* 337 */
+/* 338 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15308,7 +20063,7 @@ function fromByteArray (uint8) {
 
 
 /***/ }),
-/* 338 */
+/* 339 */
 /***/ (function(module, exports) {
 
 exports.read = function (buffer, offset, isLE, mLen, nBytes) {
@@ -15398,7 +20153,7 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
 
 
 /***/ }),
-/* 339 */
+/* 340 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15448,10 +20203,10 @@ CSV Parse
 Please look at the [project documentation](https://csv.js.org/parse/) for additional
 information.
 */
-var _require = __webpack_require__(340),
+var _require = __webpack_require__(341),
     Transform = _require.Transform;
 
-var ResizeableBuffer = __webpack_require__(352);
+var ResizeableBuffer = __webpack_require__(353);
 
 var cr = 13;
 var nl = 10;
@@ -16600,7 +21355,7 @@ var normalizeColumnsArray = function normalizeColumnsArray(columns) {
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(54).Buffer))
 
 /***/ }),
-/* 340 */
+/* 341 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // Copyright Joyent, Inc. and other Node contributors.
@@ -16631,10 +21386,10 @@ var inherits = __webpack_require__(49);
 
 inherits(Stream, EE);
 Stream.Readable = __webpack_require__(107);
-Stream.Writable = __webpack_require__(348);
-Stream.Duplex = __webpack_require__(349);
-Stream.Transform = __webpack_require__(350);
-Stream.PassThrough = __webpack_require__(351);
+Stream.Writable = __webpack_require__(349);
+Stream.Duplex = __webpack_require__(350);
+Stream.Transform = __webpack_require__(351);
+Stream.PassThrough = __webpack_require__(352);
 
 // Backwards-compat with node 0.4.x
 Stream.Stream = Stream;
@@ -16733,13 +21488,13 @@ Stream.prototype.pipe = function(dest, options) {
 
 
 /***/ }),
-/* 341 */
+/* 342 */
 /***/ (function(module, exports) {
 
 /* (ignored) */
 
 /***/ }),
-/* 342 */
+/* 343 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16748,7 +21503,7 @@ Stream.prototype.pipe = function(dest, options) {
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var Buffer = __webpack_require__(76).Buffer;
-var util = __webpack_require__(343);
+var util = __webpack_require__(344);
 
 function copyBuffer(src, target, offset) {
   src.copy(target, offset);
@@ -16824,13 +21579,13 @@ if (util && util.inspect && util.inspect.custom) {
 }
 
 /***/ }),
-/* 343 */
+/* 344 */
 /***/ (function(module, exports) {
 
 /* (ignored) */
 
 /***/ }),
-/* 344 */
+/* 345 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {var scope = (typeof global !== "undefined" && global) ||
@@ -16886,7 +21641,7 @@ exports._unrefActive = exports.active = function(item) {
 };
 
 // setimmediate attaches itself to the global object
-__webpack_require__(345);
+__webpack_require__(346);
 // On some exotic environments, it's not clear which object `setimmediate` was
 // able to install onto.  Search each possibility in the same order as the
 // `setimmediate` library.
@@ -16900,7 +21655,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(25)))
 
 /***/ }),
-/* 345 */
+/* 346 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, process) {(function (global, undefined) {
@@ -17093,7 +21848,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(25), __webpack_require__(74)))
 
 /***/ }),
-/* 346 */
+/* 347 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {
@@ -17167,7 +21922,7 @@ function config (name) {
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(25)))
 
 /***/ }),
-/* 347 */
+/* 348 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17220,35 +21975,35 @@ PassThrough.prototype._transform = function (chunk, encoding, cb) {
 };
 
 /***/ }),
-/* 348 */
+/* 349 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(108);
 
 
 /***/ }),
-/* 349 */
+/* 350 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(41);
 
 
 /***/ }),
-/* 350 */
+/* 351 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(107).Transform
 
 
 /***/ }),
-/* 351 */
+/* 352 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(107).PassThrough
 
 
 /***/ }),
-/* 352 */
+/* 353 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17330,20 +22085,20 @@ module.exports = ResizeableBuffer;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(54).Buffer))
 
 /***/ }),
-/* 353 */
+/* 354 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _registerCSSInterfaceWithDefaultTheme = _interopRequireDefault(__webpack_require__(354));
+var _registerCSSInterfaceWithDefaultTheme = _interopRequireDefault(__webpack_require__(355));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 (0, _registerCSSInterfaceWithDefaultTheme["default"])();
 
 /***/ }),
-/* 354 */
+/* 355 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17354,9 +22109,9 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = registerCSSInterfaceWithDefaultTheme;
 
-var _reactWithStylesInterfaceCss = _interopRequireDefault(__webpack_require__(355));
+var _reactWithStylesInterfaceCss = _interopRequireDefault(__webpack_require__(356));
 
-var _registerInterfaceWithDefaultTheme = _interopRequireDefault(__webpack_require__(376));
+var _registerInterfaceWithDefaultTheme = _interopRequireDefault(__webpack_require__(377));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
@@ -17365,36 +22120,36 @@ function registerCSSInterfaceWithDefaultTheme() {
 }
 
 /***/ }),
-/* 355 */
+/* 356 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // eslint-disable-next-line import/no-unresolved
-module.exports = __webpack_require__(356).default;
+module.exports = __webpack_require__(357).default;
 
 
 /***/ }),
-/* 356 */
+/* 357 */
 /***/ (function(module, exports, __webpack_require__) {
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _arrayPrototype = __webpack_require__(357);
+var _arrayPrototype = __webpack_require__(358);
 
 var _arrayPrototype2 = _interopRequireDefault(_arrayPrototype);
 
-var _globalCache = __webpack_require__(372);
+var _globalCache = __webpack_require__(373);
 
 var _globalCache2 = _interopRequireDefault(_globalCache);
 
-var _constants = __webpack_require__(373);
+var _constants = __webpack_require__(374);
 
-var _getClassName = __webpack_require__(374);
+var _getClassName = __webpack_require__(375);
 
 var _getClassName2 = _interopRequireDefault(_getClassName);
 
-var _separateStyles2 = __webpack_require__(375);
+var _separateStyles2 = __webpack_require__(376);
 
 var _separateStyles3 = _interopRequireDefault(_separateStyles2);
 
@@ -17452,7 +22207,7 @@ function resolve(stylesArray) {
 exports['default'] = { create: create, resolve: resolve };
 
 /***/ }),
-/* 357 */
+/* 358 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17464,7 +22219,7 @@ var bind = __webpack_require__(77);
 var implementation = __webpack_require__(151);
 var getPolyfill = __webpack_require__(159);
 var polyfill = getPolyfill();
-var shim = __webpack_require__(371);
+var shim = __webpack_require__(372);
 
 var boundFlat = bind.call(Function.call, polyfill);
 
@@ -17478,7 +22233,7 @@ module.exports = boundFlat;
 
 
 /***/ }),
-/* 358 */
+/* 359 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17488,7 +22243,7 @@ module.exports = boundFlat;
 var has = Object.prototype.hasOwnProperty;
 var toStr = Object.prototype.toString;
 var slice = Array.prototype.slice;
-var isArgs = __webpack_require__(359);
+var isArgs = __webpack_require__(360);
 var isEnumerable = Object.prototype.propertyIsEnumerable;
 var hasDontEnumBug = !isEnumerable.call({ toString: null }, 'toString');
 var hasProtoEnumBug = isEnumerable.call(function () {}, 'prototype');
@@ -17625,7 +22380,7 @@ module.exports = keysShim;
 
 
 /***/ }),
-/* 359 */
+/* 360 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17649,7 +22404,7 @@ module.exports = function isArguments(value) {
 
 
 /***/ }),
-/* 360 */
+/* 361 */
 /***/ (function(module, exports) {
 
 
@@ -17677,7 +22432,7 @@ module.exports = function forEach (obj, fn, ctx) {
 
 
 /***/ }),
-/* 361 */
+/* 362 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17736,13 +22491,13 @@ module.exports = function bind(that) {
 
 
 /***/ }),
-/* 362 */
+/* 363 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var ES2016 = __webpack_require__(363);
+var ES2016 = __webpack_require__(364);
 var assign = __webpack_require__(112);
 
 var ES2017 = assign(assign({}, ES2016), {
@@ -17768,13 +22523,13 @@ module.exports = ES2017;
 
 
 /***/ }),
-/* 363 */
+/* 364 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var ES2015 = __webpack_require__(364);
+var ES2015 = __webpack_require__(365);
 var assign = __webpack_require__(112);
 
 var ES2016 = assign(assign({}, ES2015), {
@@ -17791,14 +22546,14 @@ module.exports = ES2016;
 
 
 /***/ }),
-/* 364 */
+/* 365 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var has = __webpack_require__(110);
-var toPrimitive = __webpack_require__(365);
+var toPrimitive = __webpack_require__(366);
 
 var GetIntrinsic = __webpack_require__(154);
 
@@ -17820,7 +22575,7 @@ var MAX_SAFE_INTEGER = $Number.MAX_SAFE_INTEGER || Math.pow(2, 53) - 1;
 var assign = __webpack_require__(112);
 var sign = __webpack_require__(157);
 var mod = __webpack_require__(158);
-var isPrimitive = __webpack_require__(367);
+var isPrimitive = __webpack_require__(368);
 var parseInteger = parseInt;
 var bind = __webpack_require__(77);
 var arraySlice = bind.call(Function.call, $Array.prototype.slice);
@@ -17858,9 +22613,9 @@ var trim = function (value) {
 	return replace(value, trimRegex, '');
 };
 
-var ES5 = __webpack_require__(368);
+var ES5 = __webpack_require__(369);
 
-var hasRegExpMatcher = __webpack_require__(370);
+var hasRegExpMatcher = __webpack_require__(371);
 
 // https://people.mozilla.org/~jorendorff/es6-draft.html#sec-abstract-operations
 var ES6 = assign(assign({}, ES5), {
@@ -18491,7 +23246,7 @@ module.exports = ES6;
 
 
 /***/ }),
-/* 365 */
+/* 366 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18501,7 +23256,7 @@ var hasSymbols = typeof Symbol === 'function' && typeof Symbol.iterator === 'sym
 
 var isPrimitive = __webpack_require__(152);
 var isCallable = __webpack_require__(111);
-var isDate = __webpack_require__(366);
+var isDate = __webpack_require__(367);
 var isSymbol = __webpack_require__(153);
 
 var ordinaryToPrimitive = function OrdinaryToPrimitive(O, hint) {
@@ -18572,7 +23327,7 @@ module.exports = function ToPrimitive(input, PreferredType) {
 
 
 /***/ }),
-/* 366 */
+/* 367 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18599,7 +23354,7 @@ module.exports = function isDateObject(value) {
 
 
 /***/ }),
-/* 367 */
+/* 368 */
 /***/ (function(module, exports) {
 
 module.exports = function isPrimitive(value) {
@@ -18608,7 +23363,7 @@ module.exports = function isPrimitive(value) {
 
 
 /***/ }),
-/* 368 */
+/* 369 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18627,7 +23382,7 @@ var sign = __webpack_require__(157);
 var mod = __webpack_require__(158);
 
 var IsCallable = __webpack_require__(111);
-var toPrimitive = __webpack_require__(369);
+var toPrimitive = __webpack_require__(370);
 
 var has = __webpack_require__(110);
 
@@ -18857,7 +23612,7 @@ module.exports = ES5;
 
 
 /***/ }),
-/* 369 */
+/* 370 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18901,7 +23656,7 @@ module.exports = function ToPrimitive(input, PreferredType) {
 
 
 /***/ }),
-/* 370 */
+/* 371 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18947,7 +23702,7 @@ module.exports = function isRegex(value) {
 
 
 /***/ }),
-/* 371 */
+/* 372 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18968,7 +23723,7 @@ module.exports = function shimFlat() {
 
 
 /***/ }),
-/* 372 */
+/* 373 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19067,7 +23822,7 @@ module.exports = globalCache;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(25)))
 
 /***/ }),
-/* 373 */
+/* 374 */
 /***/ (function(module, exports) {
 
 Object.defineProperty(exports, "__esModule", {
@@ -19080,7 +23835,7 @@ exports.GLOBAL_CACHE_KEY = GLOBAL_CACHE_KEY;
 exports.MAX_SPECIFICITY = MAX_SPECIFICITY;
 
 /***/ }),
-/* 374 */
+/* 375 */
 /***/ (function(module, exports) {
 
 Object.defineProperty(exports, "__esModule", {
@@ -19101,7 +23856,7 @@ function getClassName(namespace, styleName) {
 }
 
 /***/ }),
-/* 375 */
+/* 376 */
 /***/ (function(module, exports) {
 
 Object.defineProperty(exports, "__esModule", {
@@ -19149,7 +23904,7 @@ function separateStyles(stylesArray) {
 exports['default'] = separateStyles;
 
 /***/ }),
-/* 376 */
+/* 377 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19160,9 +23915,9 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = registerInterfaceWithDefaultTheme;
 
-var _ThemedStyleSheet = _interopRequireDefault(__webpack_require__(377));
+var _ThemedStyleSheet = _interopRequireDefault(__webpack_require__(378));
 
-var _DefaultTheme = _interopRequireDefault(__webpack_require__(378));
+var _DefaultTheme = _interopRequireDefault(__webpack_require__(379));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
@@ -19173,7 +23928,7 @@ function registerInterfaceWithDefaultTheme(reactWithStylesInterface) {
 }
 
 /***/ }),
-/* 377 */
+/* 378 */
 /***/ (function(module, exports, __webpack_require__) {
 
 Object.defineProperty(exports, "__esModule", {
@@ -19267,7 +24022,7 @@ exports['default'] = {
 };
 
 /***/ }),
-/* 378 */
+/* 379 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19455,11 +24210,11 @@ var _default = {
 exports["default"] = _default;
 
 /***/ }),
-/* 379 */
+/* 380 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(380);
+var content = __webpack_require__(381);
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -19480,17 +24235,17 @@ if(content.locals) module.exports = content.locals;
 if(false) {}
 
 /***/ }),
-/* 380 */
+/* 381 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(72)(false);
 // Module
-exports.push([module.i, "/*-- Chart --*/\n.c3 svg {\n  font: 10px sans-serif;\n  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);\n}\n\n.c3 path, .c3 line {\n  fill: none;\n  stroke: #000;\n}\n\n.c3 text {\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n      user-select: none;\n}\n\n.c3-legend-item-tile,\n.c3-xgrid-focus,\n.c3-ygrid,\n.c3-event-rect,\n.c3-bars path {\n  shape-rendering: crispEdges;\n}\n\n.c3-chart-arc path {\n  stroke: #fff;\n}\n\n.c3-chart-arc rect {\n  stroke: white;\n  stroke-width: 1;\n}\n\n.c3-chart-arc text {\n  fill: #fff;\n  font-size: 13px;\n}\n\n/*-- Axis --*/\n/*-- Grid --*/\n.c3-grid line {\n  stroke: #aaa;\n}\n\n.c3-grid text {\n  fill: #aaa;\n}\n\n.c3-xgrid, .c3-ygrid {\n  stroke-dasharray: 3 3;\n}\n\n/*-- Text on Chart --*/\n.c3-text.c3-empty {\n  fill: #808080;\n  font-size: 2em;\n}\n\n/*-- Line --*/\n.c3-line {\n  stroke-width: 1px;\n}\n\n/*-- Point --*/\n.c3-circle._expanded_ {\n  stroke-width: 1px;\n  stroke: white;\n}\n\n.c3-selected-circle {\n  fill: white;\n  stroke-width: 2px;\n}\n\n/*-- Bar --*/\n.c3-bar {\n  stroke-width: 0;\n}\n\n.c3-bar._expanded_ {\n  fill-opacity: 1;\n  fill-opacity: 0.75;\n}\n\n/*-- Focus --*/\n.c3-target.c3-focused {\n  opacity: 1;\n}\n\n.c3-target.c3-focused path.c3-line, .c3-target.c3-focused path.c3-step {\n  stroke-width: 2px;\n}\n\n.c3-target.c3-defocused {\n  opacity: 0.3 !important;\n}\n\n/*-- Region --*/\n.c3-region {\n  fill: steelblue;\n  fill-opacity: 0.1;\n}\n\n/*-- Brush --*/\n.c3-brush .extent {\n  fill-opacity: 0.1;\n}\n\n/*-- Select - Drag --*/\n/*-- Legend --*/\n.c3-legend-item {\n  font-size: 12px;\n}\n\n.c3-legend-item-hidden {\n  opacity: 0.15;\n}\n\n.c3-legend-background {\n  opacity: 0.75;\n  fill: white;\n  stroke: lightgray;\n  stroke-width: 1;\n}\n\n/*-- Title --*/\n.c3-title {\n  font: 14px sans-serif;\n}\n\n/*-- Tooltip --*/\n.c3-tooltip-container {\n  z-index: 10;\n}\n\n.c3-tooltip {\n  border-collapse: collapse;\n  border-spacing: 0;\n  background-color: #fff;\n  empty-cells: show;\n  -webkit-box-shadow: 7px 7px 12px -9px #777777;\n  box-shadow: 7px 7px 12px -9px #777777;\n  opacity: 0.9;\n}\n\n.c3-tooltip tr {\n  border: 1px solid #CCC;\n}\n\n.c3-tooltip th {\n  background-color: #aaa;\n  font-size: 14px;\n  padding: 2px 5px;\n  text-align: left;\n  color: #FFF;\n}\n\n.c3-tooltip td {\n  font-size: 13px;\n  padding: 3px 6px;\n  background-color: #fff;\n  border-left: 1px dotted #999;\n}\n\n.c3-tooltip td > span {\n  display: inline-block;\n  width: 10px;\n  height: 10px;\n  margin-right: 6px;\n}\n\n.c3-tooltip td.value {\n  text-align: right;\n}\n\n/*-- Area --*/\n.c3-area {\n  stroke-width: 0;\n  opacity: 0.2;\n}\n\n/*-- Arc --*/\n.c3-chart-arcs-title {\n  dominant-baseline: middle;\n  font-size: 1.3em;\n}\n\n.c3-chart-arcs .c3-chart-arcs-background {\n  fill: #e0e0e0;\n  stroke: #FFF;\n}\n\n.c3-chart-arcs .c3-chart-arcs-gauge-unit {\n  fill: #000;\n  font-size: 16px;\n}\n\n.c3-chart-arcs .c3-chart-arcs-gauge-max {\n  fill: #777;\n}\n\n.c3-chart-arcs .c3-chart-arcs-gauge-min {\n  fill: #777;\n}\n\n.c3-chart-arc .c3-gauge-value {\n  fill: #000;\n  /*  font-size: 28px !important;*/\n}\n\n.c3-chart-arc.c3-target g path {\n  opacity: 1;\n}\n\n.c3-chart-arc.c3-target.c3-focused g path {\n  opacity: 1;\n}\n\n/*-- Zoom --*/\n.c3-drag-zoom.enabled {\n  pointer-events: all !important;\n  visibility: visible;\n}\n\n.c3-drag-zoom.disabled {\n  pointer-events: none !important;\n  visibility: hidden;\n}\n\n.c3-drag-zoom .extent {\n  fill-opacity: 0.1;\n}\n/* WRAPPER */\n.keen-dataviz {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  font-family: 'Gotham Rounded SSm A', 'Gotham Rounded SSm B', 'Helvetica Neue', Helvetica, Arial, sans-serif;\n  font-family: 'Gotham Rounded SSm A', 'Gotham Rounded SSm B', 'Helvetica Neue', Helvetica, Arial, sans-serif;\n  height: 100%;\n}\n.keen-dataviz .partial-interval-indicator{\n    fill: #bdbdbd;\n  }\n.keen-dataviz .axis {\n    shape-rendering: crispEdges\n  }\n.keen-dataviz-title {\n    color: #4D4D4D;\n    color: #4D4D4D;\n    padding-bottom: 0.8em;\n  }\n.keen-dataviz-stage {\n    display: block;\n  }\n.keen-dataviz-notes {\n    color: #808080;\n    color: #808080;\n    display: block;\n    font-size: 0.8em;\n  }\n.keen-dataviz-box {\n    border-radius: 4px;\n    text-align: center;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-align: center;\n        align-items: center;\n    -ms-flex-flow: row;\n        flex-flow: row;\n    -ms-flex-pack: center;\n        justify-content: center;\n    -ms-flex-direction: column;\n        flex-direction: column;\n    padding: 1em 0;\n    min-height: 4em;\n    height: inherit;\n  }\n.keen-dataviz-button {\n    padding: 0.5rem 1rem;\n    margin: 1rem 0;\n    border-radius: 4px;\n    background-color: #f9f9f9;\n    border-color: #d6d6d6;\n    cursor: pointer;\n    -webkit-transition: background-color 300ms ease;\n    -o-transition: background-color 300ms ease;\n    transition: background-color 300ms ease\n  }\n.keen-dataviz-button:hover {\n  background-color: #E7E7E7;\n  background-color: #E7E7E7;\n}\n.keen-dataviz .metric-comparison {\n    -ms-flex-direction: column-reverse;\n        flex-direction: column-reverse;\n    color: #1A1A1A;\n    color: #1A1A1A;\n    background: #f9f9f9;\n  }\n/* METRIC */\n.keen-dataviz-metric {\n    height: inherit;\n    color: #FFFFFF;\n    color: #FFFFFF;\n    background: rgb(0, 187, 222);\n  }\n.keen-dataviz-metric-value {\n      font-size: 4.3em;\n      font-weight: 700;\n      width: 100%;\n    }\n.keen-dataviz-metric-value-smaller {\n        font-size: 3em;\n      }\n.keen-dataviz-metric-title {\n      font-size: 2em;\n      font-weight: 200;\n      width: 100%;\n    }\n.keen-dataviz-metric-green {\n      color: #73D483;\n      color: #73D483;\n      font-size: 2em;\n    }\n.keen-dataviz-metric-red {\n      color: #FE6672;\n      color: #FE6672;\n      font-size: 2em;\n    }\n.keen-dataviz .arrow-green {\n    width: 0;\n    height: 0;\n    border-left: 8px solid transparent;\n    border-right: 8px solid transparent;\n    border-bottom: 8px solid #73D483;\n    border-bottom: 8px solid #73D483;\n    position: relative;\n    top: 0.7em;\n    left: -0.6em;\n  }\n.keen-dataviz .arrow-red {\n    width: 0;\n    height: 0;\n    border-left: 8px solid transparent;\n    border-right: 8px solid transparent;\n    border-top: 8px solid #FE6672;\n    border-top: 8px solid #FE6672;\n    position: relative;\n    top: 0.8em;\n    left: -0.6em;\n  }\n/* MESSAGE */\n.keen-dataviz-message {\n    color: #808080;\n    color: #808080;\n    font-size: 1.5em;\n    width:100%;\n  }\n/* FUNNEL */\n.keen-dataviz .text-label {\n      fill: #1A1A1A;\n      fill: #1A1A1A;\n    }\n.keen-dataviz .text-main {\n      fill: #FFFFFF;\n      fill: #FFFFFF;\n      font-size: 1.5em;\n    }\n.keen-dataviz .text-second {\n      fill: #FFFFFF;\n      fill: #FFFFFF;\n    }\n.keen-dataviz .chart-lines {\n      stroke: #E7E7E7;\n      stroke: #E7E7E7;\n    }\n/* METRIC COMBO */\n.keen-dataviz-metric-combo {\n    width: 270px;\n    height: 120px;\n    position: relative;\n  }\n.keen-dataviz-metric-combo .metric-combo-data {\n      width: 100%;\n      height: 100%;\n      padding: 0.5rem;\n      position: absolute;\n      z-index: -1;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-wrap: wrap;\n          flex-wrap: wrap;\n      -webkit-box-sizing: border-box;\n              box-sizing: border-box;\n    }\n.keen-dataviz-metric-combo .c3-chart {\n      height: 120px;\n    }\n.keen-dataviz-metric-combo .c3-lines {\n      display: none;\n    }\n.keen-dataviz-metric-combo .keen-dataviz-title,\n    .keen-dataviz-metric-combo .current-count {\n      width: 100%;\n    }\n.keen-dataviz-metric-combo .current-count {\n      margin-top: auto;\n      margin-bottom: auto;\n      font-size: 2rem;\n      text-align: center;\n    }\n.keen-dataviz-metric-combo .percent-difference {\n      position: absolute;\n      top: 0.5rem;\n      right: 0.5rem;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-align: center;\n          align-items: center;\n      font-size: 80%;\n    }\n.keen-dataviz-metric-combo .arrow-green,\n    .keen-dataviz-metric-combo .arrow-red {\n      margin-right: 0.25rem;\n      position: static;\n      border-width: 5px;\n    }\n/* TABLE */\n.keen-dataviz-table {\n    border-bottom: 1px solid #E7E7E7;\n    border-bottom: 1px solid #E7E7E7;\n    -webkit-box-sizing: border-box;\n            box-sizing: border-box;\n    overflow: scroll;\n    position: relative;\n    width: 100%;\n  }\n.keen-dataviz-table table {\n      background: #FFFFFF;\n      background: #FFFFFF;\n      border-collapse: collapse;\n      margin: 0;\n      position: relative;\n      width: 100%;\n    }\n.keen-dataviz-table table .table-pagination td {\n          background-color: #FFFFFF;\n          background-color: #FFFFFF;\n        }\n.keen-dataviz-table table .table-pagination:hover td {\n          background-color: #FFFFFF;\n          background-color: #FFFFFF;\n        }\n.keen-dataviz-table table .table-pagination a {\n          border: 1px solid #E7E7E7;\n          border: 1px solid #E7E7E7;\n          padding: 0.5em;\n          margin-right: 0.2em;\n          cursor: pointer;\n        }\n.keen-dataviz-table table .table-pagination .active{\n          background: #4D4D4D;\n          background: #4D4D4D;\n          color: #FFFFFF;\n          color: #FFFFFF;\n        }\n.keen-dataviz-table table .table-pagination .arrow{\n          font-weight:bold;\n        }\n.keen-dataviz-table th{\n    background: white;\n    position: -webkit-sticky;\n    position: sticky;\n    top: 0;\n    z-index: 10;\n    cursor: pointer;\n  }\n.keen-dataviz-table th,\n  .keen-dataviz-table td {\n    border-collapse: collapse;\n    font-size: 1em;\n    padding: 0.7em;\n    text-align: left;\n    white-space: nowrap;\n  }\n.keen-dataviz-table th {\n    border-bottom: 1px solid #E7E7E7;\n    border-bottom: 1px solid #E7E7E7;\n    color: #4D4D4D;\n    color: #4D4D4D;\n  }\n.keen-dataviz-table td {\n    background-color: #FFFFFF;\n    background-color: #FFFFFF;\n    color: #4D4D4D;\n    color: #4D4D4D;\n    -webkit-transition: background-color 0.1s, color 0.05s;\n    -o-transition: background-color 0.1s, color 0.05s;\n    transition: background-color 0.1s, color 0.05s;\n  }\n.keen-dataviz-table .table-data-row:nth-child(even) td{\n    background-color: #F3F5F6;\n  }\n.keen-dataviz-table .table-data-row:hover td{\n    background-color: #E7E7E7;\n    background-color: #E7E7E7;\n    color: #4D4D4D;\n    color: #4D4D4D;\n  }\n.keen-dataviz-table .keen-dataviz-table-fixed-header {\n    background: #FFFFFF;\n    background: #FFFFFF;\n    border-bottom: 1px solid rgba(0,0,0,.15);\n    position: absolute;\n    top: 0;\n    -webkit-transition: top .1s;\n    -o-transition: top .1s;\n    transition: top .1s;\n  }\n.keen-dataviz .keen-spinner-indicator {\n    border-radius: 100%;\n    border: 3px solid rgba(0, 0, 0, .1);\n    border-top-color: rgba(0, 0, 0, .45);\n    -webkit-box-sizing: border-box;\n            box-sizing: border-box;\n    height: 3em;\n    width: 3em;\n    -webkit-animation:spin .7s linear infinite;\n    animation:spin .7s linear infinite;\n    -ms-animation: spin .7s linear infinite;\n    -o-animation: spin .7s linear infinite;\n  }\n@-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }\n@keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }\n/* C3 CUSTOMIZATIONS */\n.keen-dataviz .c3-axis-y path {\n       display: none;\n    }\n.keen-dataviz .c3-axis-y .tick line{\n      display: none;\n    }\n.keen-dataviz .tick line, .keen-dataviz path.domain{\n    stroke-opacity: 0.2;\n  }\n.keen-dataviz .c3-ygrid{\n    stroke-dasharray: none;\n    stroke-opacity: 0.1;\n  }\n.keen-dataviz .c3-ygrids :nth-child(even) {\n    display: none;\n  }\n.keen-dataviz .c3-tooltip {\n    border: 1px solid rgba(0, 0, 0, 0.1);\n    padding:  0.2em;\n    border-radius: 0.2em;\n    -webkit-box-shadow: none;\n            box-shadow: none;\n    border-collapse: separate;\n  }\n.keen-dataviz .c3-tooltip th {\n      text-align: center;\n    }\n.keen-dataviz .c3-tooltip table, .keen-dataviz .c3-tooltip th, .keen-dataviz .c3-tooltip tr, .keen-dataviz .c3-tooltip td {\n      border: none;\n      background: none;\n      font-size: 0.9em;\n    }\n.keen-dataviz .c3-tooltip-container th {\n      max-width: 50%;\n      word-wrap: break-word;\n      color: #1A1A1A;\n      color: #1A1A1A;\n      background: none;\n      font-weight: normal;\n    }\n.keen-dataviz .c3-tooltip-container td {\n      max-width: 50%;\n      word-wrap: break-word;\n    }\n.keen-dataviz-rendering{\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-pack: center;\n        justify-content: center;\n    -ms-flex-flow: row;\n        flex-flow: row;\n    -ms-flex-pack: distribute;\n        justify-content: space-around;\n  }\n.keen-dataviz-rendering .c3-chart{\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-item-align: center;\n          align-self: center;\n      -ms-flex-order: 1;\n          order: 1;\n      -ms-flex: 1;\n          flex: 1;\n    }\n.keen-dataviz-rendering .c3-chart-100-percent{\n      width: 100%;\n      -ms-flex-item-align: center;\n          align-self: center;\n    }\n.keen-dataviz-rendering-horizontal{\n      -ms-flex-wrap: wrap;\n          flex-wrap: wrap;\n    }\n/* CUSTOM LEGEND */\n.keen-c3-legend {\n  display: -ms-flexbox;\n  display: flex;\n  position: relative;\n  top: 0;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.keen-c3-legend-horizontal{\n    -ms-flex-direction: row;\n        flex-direction: row;\n    -ms-flex-item-align: end;\n        align-self: flex-end;\n    display: -ms-flexbox;\n    display: flex;\n    flex-direction: row;\n    -ms-flex-pack: center;\n        justify-content: center;\n    width: 100%;\n    padding: 0.5em 0;\n  }\n.keen-c3-legend-horizontal-pagination-left{\n      -ms-flex-order: 0;\n          order: 0;\n      display: -ms-flexbox;\n      display: flex;\n      margin-right: 1.5em;\n    }\n.keen-c3-legend-horizontal-items{\n      -ms-flex-order: 1;\n          order: 1;\n      display: -ms-flexbox;\n      display: flex;\n    }\n.keen-c3-legend-horizontal-pagination-right{\n      -ms-flex-order: 2;\n          order: 2;\n      display: -ms-flexbox;\n      display: flex;\n      margin-left: 1.5em;\n    }\n.keen-c3-legend-top{\n    -ms-flex-order: 0;\n        order: 0;\n  }\n.keen-c3-legend-bottom {\n    -ms-flex-order: 2;\n        order: 2;\n  }\n.keen-c3-legend-bottom .keen-c3-legend-label-overlay{\n    top: 0;\n    margin-top: -2.7em;\n  }\n.keen-c3-legend-bottom .keen-c3-legend-label-overlay .overlay-pointer {\n      top: 2.4em;\n      -webkit-transform: rotate(180deg);\n          -ms-transform: rotate(180deg);\n              transform: rotate(180deg);\n      border-color: transparent transparent #f0f0f0 transparent;\n    }\n.keen-c3-legend-vertical{\n    -ms-flex-direction: column;\n        flex-direction: column;\n  }\n.keen-c3-legend-vertical .keen-c3-legend-pagination-icons\n    {\n      margin: 0.5em 0.1em;\n      -ms-flex-order: 2;\n          order: 2;\n    }\n.keen-c3-legend-left{\n    -ms-flex-order: 0;\n        order: 0;\n  }\n.keen-c3-legend-right{\n    -ms-flex-order: 2;\n        order: 2;\n  }\n.keen-c3-legend-items{\n    -ms-flex-order: 1;\n        order: 1;\n  }\n.keen-c3-legend-vertical-items{\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: column;\n        flex-direction: column;\n  }\n.keen-c3-legend-vertical-items .legend-item{\n      width: 8em;\n    }\n.keen-c3-legend-horizontal-items{\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n  }\n.keen-c3-legend-horizontal-items .legend-item{\n      width: 6em;\n      margin: 0 0.25em;\n    }\n.keen-c3-legend .legend-item{\n    display: -ms-flexbox;\n    display: flex;\n    cursor: pointer;\n    padding: 0.2em;\n    font-size: 0.8em;\n  }\n.keen-c3-legend .legend-item > * {\n      vertical-align: middle;\n    }\n.keen-c3-legend .legend-item-color-sample{\n      display: inline-block;\n      width: 1em;\n      height: 1em;\n      margin-right: 0.5em;\n      pointer-events: none;\n      -ms-flex: none;\n          flex: none;\n    }\n.keen-c3-legend .legend-item-text{\n      pointer-events: none;\n      overflow: hidden;\n      white-space: nowrap;\n      -o-text-overflow: ellipsis;\n         text-overflow: ellipsis;\n      text-align: left;\n    }\n.keen-c3-legend-label-overlay .overlay-pointer {\n    border-color: transparent transparent #FFFFFF transparent;\n    border-color: transparent transparent #FFFFFF transparent;\n    border-style: solid;\n    border-width: 0 10px 10px 10px;\n    height: 0;\n    width: 0px;\n    position: absolute;\n    top: -10px;\n  }\n.keen-c3-legend-position-left .overlay-pointer {\n        left: 0px;\n      }\n.keen-c3-legend-position-right .overlay-pointer {\n        left: 0px;\n      }\n.keen-c3-legend-pagination-vertical {\n    margin-top: 0.5em;\n  }\n.keen-c3-legend-pagination-icons {\n    padding: 0.2em;\n  }\n.keen-c3-legend-pagination-icons i {\n      border-left: 1em solid transparent;\n      border-right: 1em solid transparent;\n      border-top: 1.5em solid #4D4D4D;\n      border-top: 1.5em solid #4D4D4D;\n      display: inline-block;\n      padding: 0em;\n      float: left;\n      cursor: pointer;\n      font-size: 0.5em;\n    }\n.keen-c3-legend-pagination-icons .right {\n      -ms-transform: rotate(-90deg);\n          transform: rotate(-90deg);\n      -webkit-transform: rotate(-90deg);\n    }\n.keen-c3-legend-pagination-icons .left {\n      -ms-transform: rotate(90deg);\n          transform: rotate(90deg);\n      -webkit-transform: rotate(90deg);\n    }\n.keen-c3-legend-pagination-icons .up {\n      -ms-transform: rotate(-180deg);\n          transform: rotate(-180deg);\n      -webkit-transform: rotate(-180deg);\n      margin-top: 0.1em;\n    }\n.keen-c3-legend-pagination-icons .down {\n      margin-right: 0.1em;\n    }\n.keen-c3-legend-label-overlay {\n    font-size: 1em;\n    background: rgba(255, 255, 255, 0.9);\n    background: rgba(255, 255, 255, 0.9);\n    -webkit-box-shadow: 0 1px 1px rgba(26, 26, 26, 0.09999999999999998);\n            box-shadow: 0 1px 1px rgba(26, 26, 26, 0.09999999999999998);\n    box-shadow: 0 1px 1px rgba(26, 26, 26, 0.09999999999999998);\n    padding: 0.6em;\n    margin-top: 1.5em;\n    position: absolute;\n    word-wrap: break-word;\n    pointer-events: none;\n    z-index: 222;\n  }\n.keen-dataviz-range .c3-area-Min {\n  display: none;\n}\n.keen-dataviz-range .c3-bars-Min {\n  display: none;\n}\n", ""]);
+exports.push([module.i, "/*-- Chart --*/\n.c3 svg {\n  font: 10px sans-serif;\n  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);\n}\n\n.c3 path, .c3 line {\n  fill: none;\n  stroke: #000;\n}\n\n.c3 text {\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n      user-select: none;\n}\n\n.c3-legend-item-tile,\n.c3-xgrid-focus,\n.c3-ygrid,\n.c3-event-rect,\n.c3-bars path {\n  shape-rendering: crispEdges;\n}\n\n.c3-chart-arc path {\n  stroke: #fff;\n}\n\n.c3-chart-arc rect {\n  stroke: white;\n  stroke-width: 1;\n}\n\n.c3-chart-arc text {\n  fill: #fff;\n  font-size: 13px;\n}\n\n/*-- Axis --*/\n/*-- Grid --*/\n.c3-grid line {\n  stroke: #aaa;\n}\n\n.c3-grid text {\n  fill: #aaa;\n}\n\n.c3-xgrid, .c3-ygrid {\n  stroke-dasharray: 3 3;\n}\n\n/*-- Text on Chart --*/\n.c3-text.c3-empty {\n  fill: #808080;\n  font-size: 2em;\n}\n\n/*-- Line --*/\n.c3-line {\n  stroke-width: 1px;\n}\n\n/*-- Point --*/\n.c3-circle._expanded_ {\n  stroke-width: 1px;\n  stroke: white;\n}\n\n.c3-selected-circle {\n  fill: white;\n  stroke-width: 2px;\n}\n\n/*-- Bar --*/\n.c3-bar {\n  stroke-width: 0;\n}\n\n.c3-bar._expanded_ {\n  fill-opacity: 1;\n  fill-opacity: 0.75;\n}\n\n/*-- Focus --*/\n.c3-target.c3-focused {\n  opacity: 1;\n}\n\n.c3-target.c3-focused path.c3-line, .c3-target.c3-focused path.c3-step {\n  stroke-width: 2px;\n}\n\n.c3-target.c3-defocused {\n  opacity: 0.3 !important;\n}\n\n/*-- Region --*/\n.c3-region {\n  fill: steelblue;\n  fill-opacity: 0.1;\n}\n\n/*-- Brush --*/\n.c3-brush .extent {\n  fill-opacity: 0.1;\n}\n\n/*-- Select - Drag --*/\n/*-- Legend --*/\n.c3-legend-item {\n  font-size: 12px;\n}\n\n.c3-legend-item-hidden {\n  opacity: 0.15;\n}\n\n.c3-legend-background {\n  opacity: 0.75;\n  fill: white;\n  stroke: lightgray;\n  stroke-width: 1;\n}\n\n/*-- Title --*/\n.c3-title {\n  font: 14px sans-serif;\n}\n\n/*-- Tooltip --*/\n.c3-tooltip-container {\n  z-index: 10;\n}\n\n.c3-tooltip {\n  border-collapse: collapse;\n  border-spacing: 0;\n  background-color: #fff;\n  empty-cells: show;\n  -webkit-box-shadow: 7px 7px 12px -9px #777777;\n  box-shadow: 7px 7px 12px -9px #777777;\n  opacity: 0.9;\n}\n\n.c3-tooltip tr {\n  border: 1px solid #CCC;\n}\n\n.c3-tooltip th {\n  background-color: #aaa;\n  font-size: 14px;\n  padding: 2px 5px;\n  text-align: left;\n  color: #FFF;\n}\n\n.c3-tooltip td {\n  font-size: 13px;\n  padding: 3px 6px;\n  background-color: #fff;\n  border-left: 1px dotted #999;\n}\n\n.c3-tooltip td > span {\n  display: inline-block;\n  width: 10px;\n  height: 10px;\n  margin-right: 6px;\n}\n\n.c3-tooltip .value {\n  text-align: right;\n}\n\n/*-- Area --*/\n.c3-area {\n  stroke-width: 0;\n  opacity: 0.2;\n}\n\n/*-- Arc --*/\n.c3-chart-arcs-title {\n  dominant-baseline: middle;\n  font-size: 1.3em;\n}\n\n.c3-chart-arcs .c3-chart-arcs-background {\n  fill: #e0e0e0;\n  stroke: #FFF;\n}\n\n.c3-chart-arcs .c3-chart-arcs-gauge-unit {\n  fill: #000;\n  font-size: 16px;\n}\n\n.c3-chart-arcs .c3-chart-arcs-gauge-max {\n  fill: #777;\n}\n\n.c3-chart-arcs .c3-chart-arcs-gauge-min {\n  fill: #777;\n}\n\n.c3-chart-arc .c3-gauge-value {\n  fill: #000;\n  /*  font-size: 28px !important;*/\n}\n\n.c3-chart-arc.c3-target g path {\n  opacity: 1;\n}\n\n.c3-chart-arc.c3-target.c3-focused g path {\n  opacity: 1;\n}\n\n/*-- Zoom --*/\n.c3-drag-zoom.enabled {\n  pointer-events: all !important;\n  visibility: visible;\n}\n\n.c3-drag-zoom.disabled {\n  pointer-events: none !important;\n  visibility: hidden;\n}\n\n.c3-drag-zoom .extent {\n  fill-opacity: 0.1;\n}\n/* WRAPPER */\n.keen-dataviz {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  font-family: 'Gotham Rounded SSm A', 'Gotham Rounded SSm B', 'Helvetica Neue', Helvetica, Arial, sans-serif;\n  font-family: 'Gotham Rounded SSm A', 'Gotham Rounded SSm B', 'Helvetica Neue', Helvetica, Arial, sans-serif;\n  height: 100%;\n}\n.keen-dataviz .partial-interval-indicator{\n    fill: #bdbdbd;\n  }\n.keen-dataviz .axis {\n    shape-rendering: crispEdges\n  }\n.keen-dataviz-title {\n    color: #4D4D4D;\n    color: #4D4D4D;\n    padding-bottom: 0.8em;\n  }\n.keen-dataviz-stage {\n    display: block;\n  }\n.keen-dataviz-notes {\n    color: #808080;\n    color: #808080;\n    display: block;\n    font-size: 0.8em;\n  }\n.keen-dataviz-box {\n    border-radius: 4px;\n    text-align: center;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-align: center;\n        align-items: center;\n    -ms-flex-flow: row;\n        flex-flow: row;\n    -ms-flex-pack: center;\n        justify-content: center;\n    -ms-flex-direction: column;\n        flex-direction: column;\n    padding: 1em 0;\n    min-height: 4em;\n    height: inherit;\n  }\n.keen-dataviz-button {\n    padding: 0.5rem 1rem;\n    margin: 1rem 0;\n    border-radius: 4px;\n    background-color: #f9f9f9;\n    border-color: #d6d6d6;\n    cursor: pointer;\n    -webkit-transition: background-color 300ms ease;\n    -o-transition: background-color 300ms ease;\n    transition: background-color 300ms ease\n  }\n.keen-dataviz-button:hover {\n  background-color: #E7E7E7;\n  background-color: #E7E7E7;\n}\n.keen-dataviz .metric-comparison {\n    -ms-flex-direction: column-reverse;\n        flex-direction: column-reverse;\n    color: #1A1A1A;\n    color: #1A1A1A;\n    background: #f9f9f9;\n  }\n/* METRIC */\n.keen-dataviz-metric {\n    height: inherit;\n    color: #FFFFFF;\n    color: #FFFFFF;\n    background: rgb(0, 187, 222);\n  }\n.keen-dataviz-metric-value {\n      font-size: 4.3em;\n      font-weight: 700;\n      width: 100%;\n    }\n.keen-dataviz-metric-value-smaller {\n        font-size: 3em;\n      }\n.keen-dataviz-metric-title {\n      font-size: 2em;\n      font-weight: 200;\n      width: 100%;\n    }\n.keen-dataviz-metric-green {\n      color: #73D483;\n      color: #73D483;\n      font-size: 2em;\n    }\n.keen-dataviz-metric-red {\n      color: #FE6672;\n      color: #FE6672;\n      font-size: 2em;\n    }\n.keen-dataviz .arrow-green {\n    width: 0;\n    height: 0;\n    border-left: 8px solid transparent;\n    border-right: 8px solid transparent;\n    border-bottom: 8px solid #73D483;\n    border-bottom: 8px solid #73D483;\n    position: relative;\n    top: 0.7em;\n    left: -0.6em;\n  }\n.keen-dataviz .arrow-red {\n    width: 0;\n    height: 0;\n    border-left: 8px solid transparent;\n    border-right: 8px solid transparent;\n    border-top: 8px solid #FE6672;\n    border-top: 8px solid #FE6672;\n    position: relative;\n    top: 0.8em;\n    left: -0.6em;\n  }\n/* MESSAGE */\n.keen-dataviz-message {\n    color: #808080;\n    color: #808080;\n    font-size: 1.5em;\n    width:100%;\n  }\n/* FUNNEL */\n.keen-dataviz .text-label {\n      fill: #1A1A1A;\n      fill: #1A1A1A;\n    }\n.keen-dataviz .text-main {\n      fill: #FFFFFF;\n      fill: #FFFFFF;\n      font-size: 1.5em;\n    }\n.keen-dataviz .text-second {\n      fill: #FFFFFF;\n      fill: #FFFFFF;\n    }\n.keen-dataviz .chart-lines {\n      stroke: #E7E7E7;\n      stroke: #E7E7E7;\n    }\n/* METRIC COMBO */\n.keen-dataviz-metric-combo {\n    width: 270px;\n    height: 120px;\n    position: relative;\n  }\n.keen-dataviz-metric-combo .metric-combo-data {\n      width: 100%;\n      height: 100%;\n      padding: 0.5rem;\n      position: absolute;\n      z-index: -1;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-wrap: wrap;\n          flex-wrap: wrap;\n      -webkit-box-sizing: border-box;\n              box-sizing: border-box;\n    }\n.keen-dataviz-metric-combo .c3-chart {\n      height: 120px;\n    }\n.keen-dataviz-metric-combo .c3-lines {\n      display: none;\n    }\n.keen-dataviz-metric-combo .keen-dataviz-title,\n    .keen-dataviz-metric-combo .current-count {\n      width: 100%;\n    }\n.keen-dataviz-metric-combo .current-count {\n      margin-top: auto;\n      margin-bottom: auto;\n      font-size: 2rem;\n      text-align: center;\n    }\n.keen-dataviz-metric-combo .percent-difference {\n      position: absolute;\n      top: 0.5rem;\n      right: 0.5rem;\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-align: center;\n          align-items: center;\n      font-size: 80%;\n    }\n.keen-dataviz-metric-combo .arrow-green,\n    .keen-dataviz-metric-combo .arrow-red {\n      margin-right: 0.25rem;\n      position: static;\n      border-width: 5px;\n    }\n/* TABLE */\n.keen-dataviz-table {\n    border-bottom: 1px solid #E7E7E7;\n    border-bottom: 1px solid #E7E7E7;\n    -webkit-box-sizing: border-box;\n            box-sizing: border-box;\n    overflow: scroll;\n    position: relative;\n    width: 100%;\n  }\n.keen-dataviz-table table {\n      background: #FFFFFF;\n      background: #FFFFFF;\n      border-collapse: collapse;\n      margin: 0;\n      position: relative;\n      width: 100%;\n    }\n.keen-dataviz-table table .table-pagination td {\n          background-color: #FFFFFF;\n          background-color: #FFFFFF;\n        }\n.keen-dataviz-table table .table-pagination:hover td {\n          background-color: #FFFFFF;\n          background-color: #FFFFFF;\n        }\n.keen-dataviz-table table .table-pagination a {\n          border: 1px solid #E7E7E7;\n          border: 1px solid #E7E7E7;\n          padding: 0.5em;\n          margin-right: 0.2em;\n          cursor: pointer;\n        }\n.keen-dataviz-table table .table-pagination .active{\n          background: #4D4D4D;\n          background: #4D4D4D;\n          color: #FFFFFF;\n          color: #FFFFFF;\n        }\n.keen-dataviz-table table .table-pagination .arrow{\n          font-weight:bold;\n        }\n.keen-dataviz-table th{\n    background: white;\n    position: -webkit-sticky;\n    position: sticky;\n    top: 0;\n    z-index: 10;\n    cursor: pointer;\n  }\n.keen-dataviz-table th,\n  .keen-dataviz-table td {\n    border-collapse: collapse;\n    font-size: 1em;\n    padding: 0.7em;\n    text-align: left;\n    white-space: nowrap;\n  }\n.keen-dataviz-table th {\n    border-bottom: 1px solid #E7E7E7;\n    border-bottom: 1px solid #E7E7E7;\n    color: #4D4D4D;\n    color: #4D4D4D;\n  }\n.keen-dataviz-table td {\n    background-color: #FFFFFF;\n    background-color: #FFFFFF;\n    color: #4D4D4D;\n    color: #4D4D4D;\n    -webkit-transition: background-color 0.1s, color 0.05s;\n    -o-transition: background-color 0.1s, color 0.05s;\n    transition: background-color 0.1s, color 0.05s;\n  }\n.keen-dataviz-table .table-data-row:nth-child(even) td{\n    background-color: #F3F5F6;\n  }\n.keen-dataviz-table .table-data-row:hover td{\n    background-color: #E7E7E7;\n    background-color: #E7E7E7;\n    color: #4D4D4D;\n    color: #4D4D4D;\n  }\n.keen-dataviz-table .keen-dataviz-table-fixed-header {\n    background: #FFFFFF;\n    background: #FFFFFF;\n    border-bottom: 1px solid rgba(0,0,0,.15);\n    position: absolute;\n    top: 0;\n    -webkit-transition: top .1s;\n    -o-transition: top .1s;\n    transition: top .1s;\n  }\n.keen-dataviz .keen-spinner-indicator {\n    border-radius: 100%;\n    border: 3px solid rgba(0, 0, 0, .1);\n    border-top-color: rgba(0, 0, 0, .45);\n    -webkit-box-sizing: border-box;\n            box-sizing: border-box;\n    height: 3em;\n    width: 3em;\n    -webkit-animation:spin .7s linear infinite;\n    animation:spin .7s linear infinite;\n    -ms-animation: spin .7s linear infinite;\n    -o-animation: spin .7s linear infinite;\n  }\n.keen-dataviz-execution-meta {\n    position: absolute;\n    z-index: 999;\n    padding: 0.5rem 1rem;\n    margin: 0.75rem 0;\n    display: inline-grid;\n    grid-template-columns: repeat(2, -webkit-max-content);\n    grid-template-columns: repeat(2, max-content);\n    grid-gap: 0.5em 1em;\n    text-transform: uppercase;\n    font-size: 0.75rem;\n    border: 1px solid #eee;\n    background: #fff;\n  }\n.keen-dataviz-execution-meta dt {\n      font-weight: bold\n    }\n.keen-dataviz-execution-meta dt:hover + dd {\n  font-weight: bold;\n}\n.keen-dataviz-execution-meta dt, .keen-dataviz-execution-meta dd {\n      margin: 0;\n      cursor: pointer;\n    }\n.keen-dataviz-execution-meta .copied:after {\n  content: 'copied!';\n  vertical-align: middle;\n  display: inline-block;\n  font-size: 10px;\n  margin-left: 0.5em;\n  position: absolute;\n  text-transform: none;\n  font-weight: normal;\n  -webkit-animation: 1s ease 0s 1 both fadeOut;\n          animation: 1s ease 0s 1 both fadeOut;\n}\n@-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }\n@keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }\n@-webkit-keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }\n@keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }\n/* C3 CUSTOMIZATIONS */\n.keen-dataviz .c3-axis-y path {\n       display: none;\n    }\n.keen-dataviz .c3-axis-y .tick line{\n      display: none;\n    }\n.keen-dataviz .tick line, .keen-dataviz path.domain{\n    stroke-opacity: 0.2;\n  }\n.keen-dataviz .c3-ygrid{\n    stroke-dasharray: none;\n    stroke-opacity: 0.1;\n  }\n.keen-dataviz .c3-ygrids :nth-child(even) {\n    display: none;\n  }\n.keen-dataviz .c3-tooltip {\n    border: 1px solid rgba(0, 0, 0, 0.1);\n    padding:  0.2em;\n    border-radius: 0.2em;\n    -webkit-box-shadow: none;\n            box-shadow: none;\n    border-collapse: separate;\n  }\n.keen-dataviz .c3-tooltip th {\n      text-align: center;\n    }\n.keen-dataviz .c3-tooltip table, .keen-dataviz .c3-tooltip th, .keen-dataviz .c3-tooltip tr, .keen-dataviz .c3-tooltip td {\n      border: none;\n      background: none;\n      font-size: 0.9em;\n    }\n.keen-dataviz .c3-tooltip-container th {\n      max-width: 50%;\n      word-wrap: break-word;\n      color: #1A1A1A;\n      color: #1A1A1A;\n      background: none;\n      font-weight: normal;\n    }\n.keen-dataviz .c3-tooltip-container td {\n      max-width: 50%;\n      word-wrap: break-word;\n    }\n.keen-dataviz-rendering{\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-pack: center;\n        justify-content: center;\n    -ms-flex-flow: row;\n        flex-flow: row;\n    -ms-flex-pack: distribute;\n        justify-content: space-around;\n  }\n.keen-dataviz-rendering .c3-chart{\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-item-align: center;\n          align-self: center;\n      -ms-flex-order: 1;\n          order: 1;\n      -ms-flex: 1;\n          flex: 1;\n    }\n.keen-dataviz-rendering .c3-chart-100-percent{\n      width: 100%;\n      -ms-flex-item-align: center;\n          align-self: center;\n    }\n.keen-dataviz-rendering-horizontal{\n      -ms-flex-wrap: wrap;\n          flex-wrap: wrap;\n    }\n/* CUSTOM LEGEND */\n.keen-c3-legend {\n  display: -ms-flexbox;\n  display: flex;\n  position: relative;\n  top: 0;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.keen-c3-legend-horizontal{\n    -ms-flex-direction: row;\n        flex-direction: row;\n    -ms-flex-item-align: end;\n        align-self: flex-end;\n    display: -ms-flexbox;\n    display: flex;\n    flex-direction: row;\n    -ms-flex-pack: center;\n        justify-content: center;\n    width: 100%;\n    padding: 0.5em 0;\n  }\n.keen-c3-legend-horizontal-pagination-left{\n      -ms-flex-order: 0;\n          order: 0;\n      display: -ms-flexbox;\n      display: flex;\n      margin-right: 1.5em;\n    }\n.keen-c3-legend-horizontal-items{\n      -ms-flex-order: 1;\n          order: 1;\n      display: -ms-flexbox;\n      display: flex;\n    }\n.keen-c3-legend-horizontal-pagination-right{\n      -ms-flex-order: 2;\n          order: 2;\n      display: -ms-flexbox;\n      display: flex;\n      margin-left: 1.5em;\n    }\n.keen-c3-legend-top{\n    -ms-flex-order: 0;\n        order: 0;\n  }\n.keen-c3-legend-bottom {\n    -ms-flex-order: 2;\n        order: 2;\n  }\n.keen-c3-legend-bottom .keen-c3-legend-label-overlay{\n    top: 0;\n    margin-top: -2.7em;\n  }\n.keen-c3-legend-bottom .keen-c3-legend-label-overlay .overlay-pointer {\n      top: 2.4em;\n      -webkit-transform: rotate(180deg);\n          -ms-transform: rotate(180deg);\n              transform: rotate(180deg);\n      border-color: transparent transparent #f0f0f0 transparent;\n    }\n.keen-c3-legend-vertical{\n    -ms-flex-direction: column;\n        flex-direction: column;\n  }\n.keen-c3-legend-vertical .keen-c3-legend-pagination-icons\n    {\n      margin: 0.5em 0.1em;\n      -ms-flex-order: 2;\n          order: 2;\n    }\n.keen-c3-legend-left{\n    -ms-flex-order: 0;\n        order: 0;\n  }\n.keen-c3-legend-right{\n    -ms-flex-order: 2;\n        order: 2;\n  }\n.keen-c3-legend-items{\n    -ms-flex-order: 1;\n        order: 1;\n  }\n.keen-c3-legend-vertical-items{\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: column;\n        flex-direction: column;\n  }\n.keen-c3-legend-vertical-items .legend-item{\n      width: 8em;\n    }\n.keen-c3-legend-horizontal-items{\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n  }\n.keen-c3-legend-horizontal-items .legend-item{\n      width: 6em;\n      margin: 0 0.25em;\n    }\n.keen-c3-legend .legend-item{\n    display: -ms-flexbox;\n    display: flex;\n    cursor: pointer;\n    padding: 0.2em;\n    font-size: 0.8em;\n  }\n.keen-c3-legend .legend-item > * {\n      vertical-align: middle;\n    }\n.keen-c3-legend .legend-item-color-sample{\n      display: inline-block;\n      width: 1em;\n      height: 1em;\n      margin-right: 0.5em;\n      pointer-events: none;\n      -ms-flex: none;\n          flex: none;\n    }\n.keen-c3-legend .legend-item-text{\n      pointer-events: none;\n      overflow: hidden;\n      white-space: nowrap;\n      -o-text-overflow: ellipsis;\n         text-overflow: ellipsis;\n      text-align: left;\n    }\n.keen-c3-legend-label-overlay .overlay-pointer {\n    border-color: transparent transparent #FFFFFF transparent;\n    border-color: transparent transparent #FFFFFF transparent;\n    border-style: solid;\n    border-width: 0 10px 10px 10px;\n    height: 0;\n    width: 0px;\n    position: absolute;\n    top: -10px;\n  }\n.keen-c3-legend-position-left .overlay-pointer {\n        left: 0px;\n      }\n.keen-c3-legend-position-right .overlay-pointer {\n        left: 0px;\n      }\n.keen-c3-legend-pagination-vertical {\n    margin-top: 0.5em;\n  }\n.keen-c3-legend-pagination-icons {\n    padding: 0.2em;\n  }\n.keen-c3-legend-pagination-icons i {\n      border-left: 1em solid transparent;\n      border-right: 1em solid transparent;\n      border-top: 1.5em solid #4D4D4D;\n      border-top: 1.5em solid #4D4D4D;\n      display: inline-block;\n      padding: 0em;\n      float: left;\n      cursor: pointer;\n      font-size: 0.5em;\n    }\n.keen-c3-legend-pagination-icons .right {\n      -ms-transform: rotate(-90deg);\n          transform: rotate(-90deg);\n      -webkit-transform: rotate(-90deg);\n    }\n.keen-c3-legend-pagination-icons .left {\n      -ms-transform: rotate(90deg);\n          transform: rotate(90deg);\n      -webkit-transform: rotate(90deg);\n    }\n.keen-c3-legend-pagination-icons .up {\n      -ms-transform: rotate(-180deg);\n          transform: rotate(-180deg);\n      -webkit-transform: rotate(-180deg);\n      margin-top: 0.1em;\n    }\n.keen-c3-legend-pagination-icons .down {\n      margin-right: 0.1em;\n    }\n.keen-c3-legend-label-overlay {\n    font-size: 1em;\n    background: rgba(255, 255, 255, 0.9);\n    background: rgba(255, 255, 255, 0.9);\n    -webkit-box-shadow: 0 1px 1px rgba(26, 26, 26, 0.09999999999999998);\n            box-shadow: 0 1px 1px rgba(26, 26, 26, 0.09999999999999998);\n    box-shadow: 0 1px 1px rgba(26, 26, 26, 0.09999999999999998);\n    padding: 0.6em;\n    margin-top: 1.5em;\n    position: absolute;\n    word-wrap: break-word;\n    pointer-events: none;\n    z-index: 222;\n  }\n.keen-dataviz-range .c3-area-Min {\n  display: none;\n}\n.keen-dataviz-range .c3-bars-Min {\n  display: none;\n}\n", ""]);
 
 
 
 /***/ }),
-/* 381 */
+/* 382 */
 /***/ (function(module, exports) {
 
 Prism.languages.clike = {
@@ -19526,7 +24281,7 @@ Prism.languages.clike = {
 
 
 /***/ }),
-/* 382 */
+/* 383 */
 /***/ (function(module, exports) {
 
 Prism.languages.javascript = Prism.languages.extend('clike', {
@@ -19618,7 +24373,7 @@ Prism.languages.js = Prism.languages.javascript;
 
 
 /***/ }),
-/* 383 */
+/* 384 */
 /***/ (function(module, exports) {
 
 (function (Prism) {
@@ -19675,7 +24430,7 @@ Prism.languages.js = Prism.languages.javascript;
 
 
 /***/ }),
-/* 384 */
+/* 385 */
 /***/ (function(module, exports) {
 
 Prism.languages.markup = {
@@ -19781,11 +24536,11 @@ Prism.languages.svg = Prism.languages.markup;
 
 
 /***/ }),
-/* 385 */
+/* 386 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(386);
+var content = __webpack_require__(387);
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -19806,7 +24561,7 @@ if(content.locals) module.exports = content.locals;
 if(false) {}
 
 /***/ }),
-/* 386 */
+/* 387 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(72)(false);
@@ -19816,7 +24571,7 @@ exports.push([module.i, "pre[class*=\"language-\"].line-numbers {\n\tposition: r
 
 
 /***/ }),
-/* 387 */
+/* 388 */
 /***/ (function(module, exports) {
 
 (function () {
@@ -19990,11 +24745,11 @@ exports.push([module.i, "pre[class*=\"language-\"].line-numbers {\n\tposition: r
 
 
 /***/ }),
-/* 388 */
+/* 389 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(389);
+var content = __webpack_require__(390);
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -20015,7 +24770,7 @@ if(content.locals) module.exports = content.locals;
 if(false) {}
 
 /***/ }),
-/* 389 */
+/* 390 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(72)(false);
@@ -20025,7 +24780,7 @@ exports.push([module.i, "/**\n * prism.js default theme for JavaScript, CSS and 
 
 
 /***/ }),
-/* 390 */
+/* 391 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -20056,8 +24811,12 @@ var external_redux_saga_default = /*#__PURE__*/__webpack_require__.n(external_re
 var external_keen_analysis_ = __webpack_require__(163);
 var external_keen_analysis_default = /*#__PURE__*/__webpack_require__.n(external_keen_analysis_);
 
+// EXTERNAL MODULE: ./node_modules/keen-tracking/dist/keen-tracking.js
+var keen_tracking = __webpack_require__(164);
+var keen_tracking_default = /*#__PURE__*/__webpack_require__.n(keen_tracking);
+
 // EXTERNAL MODULE: ./test/demo/keen-explorer.css
-var keen_explorer = __webpack_require__(334);
+var keen_explorer = __webpack_require__(335);
 
 // CONCATENATED MODULE: ./lib/js/app/redux/reducers/collections.js
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
@@ -20416,9 +25175,101 @@ var TAB_TIMEFRAME_RELATIVE = 0;
 var TAB_TIMEFRAME_ABSOLUTE = 1;
 var TAB_EXTRACTION_PREVIEW = 0;
 var TAB_EXTRACTION_BULK = 1;
-var EXTRACTION_PREVIEW_EVENTS_LIMIT = 100;
+var EXTRACTION_PREVIEW_EVENTS_DEFAULT = 100;
+var EXTRACTION_PREVIEW_EVENTS_LIMIT = 100000;
 var EXTRACTION_BULK_EVENTS_DEFAULT = 1000;
 var EXTRACTION_BULK_EVENTS_LIMIT = 10000000;
+// CONCATENATED MODULE: ./lib/js/app/utils/chartTypes.js
+function chartTypes_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { chartTypes_defineProperty(target, key, source[key]); }); } return target; }
+
+function chartTypes_defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var getQueryDataType = function getQueryDataType(queryParams) {
+  var query = queryParams;
+
+  if (query.analysis_type) {
+    // underscore format to camel
+    query = chartTypes_objectSpread({}, queryParams, {
+      groupBy: queryParams.group_by,
+      analysisType: queryParams.analysis_type
+    });
+  }
+
+  var isInterval = typeof query.interval === 'string';
+  var isGroupBy = typeof query.groupBy === 'string' || query.groupBy instanceof Array && query.groupBy.length === 1;
+  var is2xGroupBy = query.groupBy instanceof Array && query.groupBy.length === 2;
+  var dataType;
+
+  if (query.analysisType === 'funnel') {
+    dataType = 'catOrdinal';
+  } else if (query.analysisType === 'extraction') {
+    dataType = 'extraction';
+  } else if (query.analysisType === 'select_unique') {
+    dataType = 'nominal';
+  } // metric
+  else if (!isGroupBy && !isInterval && !is2xGroupBy) {
+      dataType = 'singular';
+    } // groupBy, no interval
+    else if (isGroupBy && !isInterval) {
+        dataType = 'categorical';
+      } // interval, no groupBy
+      else if (isInterval && !isGroupBy && !is2xGroupBy) {
+          dataType = 'chronological';
+        } // interval, groupBy
+        else if (isInterval && (isGroupBy || is2xGroupBy)) {
+            dataType = 'catChronological';
+          } // 2x groupBy
+          // TODO: research possible dataType options
+          else if (!isInterval && is2xGroupBy) {
+              dataType = 'categorical';
+            }
+
+  if (query.analysisType === 'extraction') {
+    dataType = 'extraction';
+  }
+
+  if (query.analysisType === 'funnel') {
+    dataType = 'funnel';
+  }
+
+  return dataType;
+};
+var getChartTypeOptions = function getChartTypeOptions(query) {
+  var dataTypes = {
+    singular: ['metric'],
+    categorical: ['bar', 'horizontal-bar', 'pie', 'donut', 'table'],
+    catInterval: ['area', 'bar', 'horizontal-bar', 'line', 'spline', 'area-spline', 'step', 'area-step', 'table'],
+    catOrdinal: ['area', 'bar', 'horizontal-bar', 'line', 'spline', 'area-spline', 'step', 'area-step', 'table'],
+    chronological: ['area', 'bar', 'line', 'spline', 'area-spline', 'step', 'area-step', 'table'],
+    catChronological: ['area', 'bar', 'horizontal-bar', 'line', 'spline', 'area-spline', 'step', 'area-step', 'table'],
+    nominal: ['table'],
+    extraction: ['table'],
+    funnel: ['horizontal-bar', 'funnel', 'horizontal-funnel', 'funnel-3d', 'horizontal-funnel-3d', 'table']
+  };
+  var queryDataType = getQueryDataType(query);
+  return dataTypes[queryDataType].concat(['JSON']);
+};
+var getChartType = function getChartType(payload) {
+  var query = payload.query;
+
+  if (payload && payload.metadata && payload.metadata.visualization && payload.metadata.visualization.chart_type) {
+    return payload.metadata.visualization.chart_type;
+  }
+
+  var chartTypes = getChartTypeOptions(query);
+
+  if (chartTypes.length) {
+    return chartTypes[0];
+  }
+
+  return 'JSON';
+};
+var responseSupportsChartType = function responseSupportsChartType(query, chartType) {
+  return getChartTypeOptions(query).includes(chartType);
+};
+var isTableChartType = function isTableChartType(chartType) {
+  return chartType == 'table';
+};
 // CONCATENATED MODULE: ./lib/js/app/redux/reducers/ui.js
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
 
@@ -20435,6 +25286,7 @@ function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) r
 function ui_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { ui_defineProperty(target, key, source[key]); }); } return target; }
 
 function ui_defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 var defaultAnalysisType = ANALYSIS_TYPES.find(function (item) {
@@ -20462,7 +25314,6 @@ var ui_defaultState = {
   autoload: false,
   analysisType: defaultAnalysisType.type,
   eventCollection: localStorage.eventCollection || undefined,
-  showTargetProperty: false,
   targetProperty: undefined,
   filters: [],
   modalFilters: false,
@@ -20471,7 +25322,7 @@ var ui_defaultState = {
   groupBy: undefined,
   orderBy: undefined,
   limit: undefined,
-  latest: EXTRACTION_PREVIEW_EVENTS_LIMIT,
+  latest: EXTRACTION_PREVIEW_EVENTS_DEFAULT,
   email: '',
   propertyNames: [],
   interval: undefined,
@@ -20488,7 +25339,8 @@ var ui_defaultState = {
   extractionActiveTab: TAB_EXTRACTION_PREVIEW,
   steps: [ui_objectSpread({}, defaultStep)],
   activeStep: 0,
-  stepLabels: ['']
+  stepLabels: [''],
+  loadHeavySchemas: false
 };
 
 var ui_queries = function queries() {
@@ -20512,11 +25364,10 @@ var ui_queries = function queries() {
 
     case 'CHANGE_EVENT_COLLECTION':
       var eventCollection = ui_defaultState.eventCollection,
-          showTargetProperty = ui_defaultState.showTargetProperty,
           analysisType = ui_defaultState.analysisType,
           timeframe = ui_defaultState.timeframe,
           timeframeActiveTab = ui_defaultState.timeframeActiveTab,
-          defaults = _objectWithoutProperties(ui_defaultState, ["eventCollection", "showTargetProperty", "analysisType", "timeframe", "timeframeActiveTab"]);
+          defaults = _objectWithoutProperties(ui_defaultState, ["eventCollection", "analysisType", "timeframe", "timeframeActiveTab"]);
 
       return ui_objectSpread({}, state, defaults, action.payload);
 
@@ -20534,7 +25385,8 @@ var ui_queries = function queries() {
 
     case 'CLIENT_RUN_QUERY_SUCCESS':
       return ui_objectSpread({}, state, {
-        fetching: false
+        fetching: false,
+        chartType: getChartType(action.payload)
       });
 
     case 'UPDATE_SAVED_QUERY_UI':
@@ -21855,6 +26707,10 @@ function debounce(delayLength, pattern, worker) {
 
 
 // CONCATENATED MODULE: ./lib/js/app/redux/sagas/index.js
+function sagas_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { sagas_defineProperty(target, key, source[key]); }); } return target; }
+
+function sagas_defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 var _marked =
 /*#__PURE__*/
 regeneratorRuntime.mark(fetchProject),
@@ -21930,50 +26786,114 @@ function fetchProject() {
   }, _marked, null, [[0, 9]]);
 }
 
+var getSchemas = function getSchemas(state) {
+  return state.collections.schemas;
+};
+
+var getLoadHeavySchemas = function getLoadHeavySchemas(state) {
+  return state.ui.loadHeavySchemas;
+};
+
 function sagas_fetchSchema(_ref) {
-  var payload, url, responseBody;
+  var payload, schemas, loadHeavySchemas, url, responseBody, _responseBody$propert, properties, propertiesKeys, validProperties;
+
   return regeneratorRuntime.wrap(function fetchSchema$(_context2) {
     while (1) {
       switch (_context2.prev = _context2.next) {
         case 0:
           payload = _ref.payload;
-          _context2.prev = 1;
+
+          if (payload.eventCollection) {
+            _context2.next = 3;
+            break;
+          }
+
+          return _context2.abrupt("return");
+
+        case 3:
+          _context2.next = 5;
+          return chunk_585b854f_select(getSchemas);
+
+        case 5:
+          schemas = _context2.sent;
+
+          if (!schemas[payload.eventCollection]) {
+            _context2.next = 10;
+            break;
+          }
+
+          _context2.next = 9;
+          return put({
+            type: 'CLIENT_FETCH_SCHEMA_SUCCESS',
+            eventCollection: payload.eventCollection,
+            payload: {
+              properties: schemas[payload.eventCollection]
+            }
+          });
+
+        case 9:
+          return _context2.abrupt("return");
+
+        case 10:
+          _context2.next = 12;
+          return chunk_585b854f_select(getLoadHeavySchemas);
+
+        case 12:
+          loadHeavySchemas = _context2.sent;
+          _context2.prev = 13;
           url = app_client.url("/3.0/projects/{projectId}/events/".concat(payload.eventCollection), {
             api_key: app_client.config.masterKey
           });
-          _context2.next = 5;
+          _context2.next = 17;
           return fetch(url).then(function (response) {
             return response.json();
           });
 
-        case 5:
+        case 17:
           responseBody = _context2.sent;
-          _context2.next = 8;
+          _responseBody$propert = responseBody.properties, properties = _responseBody$propert === void 0 ? {} : _responseBody$propert;
+          propertiesKeys = Object.keys(properties);
+
+          if (propertiesKeys.length > 500 && !loadHeavySchemas) {
+            // heavy schema - try to remove invalid keys
+            propertiesKeys = propertiesKeys.filter(function (item) {
+              return item.indexOf('{') === -1 && item.indexOf('request.params') === -1;
+            });
+            validProperties = {};
+            propertiesKeys.forEach(function (key) {
+              validProperties[key] = properties[key];
+            });
+            properties = sagas_objectSpread({}, validProperties);
+          }
+
+          _context2.next = 23;
           return put({
             type: 'CLIENT_FETCH_SCHEMA_SUCCESS',
             eventCollection: payload.eventCollection,
-            payload: responseBody
+            payload: {
+              properties: properties
+            }
           });
 
-        case 8:
-          _context2.next = 14;
+        case 23:
+          _context2.next = 29;
           break;
 
-        case 10:
-          _context2.prev = 10;
-          _context2.t0 = _context2["catch"](1);
-          _context2.next = 14;
+        case 25:
+          _context2.prev = 25;
+          _context2.t0 = _context2["catch"](13);
+          _context2.next = 29;
           return put({
             type: 'CLIENT_FETCH_SCHEMA_ERROR',
             payload: _context2.t0
           });
 
-        case 14:
+        case 29:
         case "end":
           return _context2.stop();
       }
     }
-  }, _marked2, null, [[1, 10]]);
+  }, _marked2, null, [[13, 25]]);
 }
 
 function sagas_fetchRecentEvents(_ref2) {
@@ -21988,7 +26908,7 @@ function sagas_fetchRecentEvents(_ref2) {
           return app_client.query({
             analysisType: 'extraction',
             eventCollection: payload.eventCollection,
-            latest: 10
+            latest: payload.latest || 10
           });
 
         case 4:
@@ -22071,7 +26991,11 @@ function saveQuery(_ref4) {
           _context5.prev = 1;
           name = payload.name, body = payload.body;
           _context5.next = 5;
-          return app_client.put(app_client.url('queries', 'saved', name)).auth(app_client.masterKey()).send(body);
+          return app_client.put({
+            url: app_client.url('queries', 'saved', name),
+            apiKey: app_client.config.masterKey,
+            params: body
+          });
 
         case 5:
           responseBody = _context5.sent;
@@ -22246,10 +27170,10 @@ function rootSaga() {
   }, _marked9);
 }
 // EXTERNAL MODULE: ./package.json
-var package_0 = __webpack_require__(164);
+var package_0 = __webpack_require__(165);
 
 // EXTERNAL MODULE: external "prop-types"
-var external_prop_types_ = __webpack_require__(165);
+var external_prop_types_ = __webpack_require__(166);
 var external_prop_types_default = /*#__PURE__*/__webpack_require__.n(external_prop_types_);
 
 // EXTERNAL MODULE: external "react-select"
@@ -22261,7 +27185,7 @@ var external_react_modal_ = __webpack_require__(60);
 var external_react_modal_default = /*#__PURE__*/__webpack_require__.n(external_react_modal_);
 
 // EXTERNAL MODULE: ./node_modules/csv-parse/lib/es5/sync.js
-var sync = __webpack_require__(166);
+var sync = __webpack_require__(167);
 var sync_default = /*#__PURE__*/__webpack_require__.n(sync);
 
 // CONCATENATED MODULE: ./lib/js/app/utils/style.js
@@ -22490,16 +27414,27 @@ function (_Component) {
           eventCollection = _this$props.eventCollection,
           updateUI = _this$props.updateUI;
       var schema = schemas[eventCollection] || {};
+      var sortedSchemaProps = Object.keys(schema).sort(function (a, b) {
+        if (a.toLowerCase() < b.toLowerCase()) {
+          return -1;
+        }
+
+        if (a.toLowerCase() > b.toLowerCase()) {
+          return 1;
+        }
+
+        return 0;
+      }).map(function (item) {
+        return {
+          label: item,
+          value: item
+        };
+      });
       return external_react_default.a.createElement(external_react_["Fragment"], null, external_react_default.a.createElement("div", {
         className: "label-main"
       }, "Target property"), external_react_default.a.createElement(shared_ReactSelect, {
         value: this.props.value,
-        options: Object.keys(schema).map(function (item) {
-          return {
-            label: item,
-            value: item
-          };
-        }),
+        options: sortedSchemaProps,
         onChange: function onChange(value) {
           updateUI({
             targetProperty: value.value
@@ -22581,15 +27516,14 @@ function EventCollection_extends() { EventCollection_extends = Object.assign || 
 
 
 
+
+
 var EventCollection_Input = function Input(props) {
   return external_react_default.a.createElement(external_react_select_["components"].Input, EventCollection_extends({}, props, {
     autofill: "off",
     name: "eventCollection"
   }));
 };
-
-
-
 
 var EventCollection_mapStateToProps = function mapStateToProps(state) {
   return {
@@ -22603,7 +27537,6 @@ var EventCollection_mapStateToProps = function mapStateToProps(state) {
 var EventCollection_mapDispatchToProps = {
   fetchSchema: client_fetchSchema,
   changeEventCollection: ui_changeEventCollection,
-  updateUI: ui_updateUI,
   updateStepUI: ui_updateStepUI
 };
 
@@ -22628,7 +27561,6 @@ function (_Component) {
           steps = _this$props.steps,
           fetchSchema = _this$props.fetchSchema,
           changeEventCollection = _this$props.changeEventCollection,
-          updateUI = _this$props.updateUI,
           updateStepUI = _this$props.updateStepUI;
       var _this$props2 = this.props,
           eventCollection = _this$props2.eventCollection,
@@ -22640,6 +27572,27 @@ function (_Component) {
 
       var hasValue = !!eventCollection;
       var placeholder = !hasValue ? 'Choose an event collection' : undefined;
+      var collectionsItems = collections.items;
+      var sortedCollectionsItems = collectionsItems.sort(function (a, b) {
+        if (a.name.toLowerCase() < b.name.toLowerCase()) {
+          return -1;
+        }
+
+        if (a.name.toLowerCase() > b.name.toLowerCase()) {
+          return 1;
+        }
+
+        return 0;
+      }).map(function (item) {
+        return {
+          label: item.name,
+          value: item.url
+        };
+      });
+      var selectedEventCollection = eventCollection && {
+        label: eventCollection,
+        value: eventCollection
+      };
       return external_react_default.a.createElement("div", {
         className: "event-collection"
       }, external_react_default.a.createElement("div", {
@@ -22648,19 +27601,11 @@ function (_Component) {
         name: "eventCollection",
         placeholder: placeholder,
         autoFocus: !hasValue,
-        value: {
-          label: eventCollection,
-          value: eventCollection
-        },
+        value: selectedEventCollection,
         components: {
           Input: EventCollection_Input
         },
-        options: collections.items.map(function (item) {
-          return {
-            label: item.name,
-            value: item.url
-          };
-        }),
+        options: sortedCollectionsItems,
         onChange: function onChange(e) {
           if (saveStateToLocalStorage && localStorage) {
             localStorage.setItem('eventCollection', e.label);
@@ -22767,6 +27712,19 @@ function (_Component) {
         }
       }), items.filter(function (item) {
         return item.name.toLowerCase().indexOf(filter.toLowerCase()) >= 0;
+      }).sort(function (itemA, itemB) {
+        var a = itemA.name;
+        var b = itemB.name;
+
+        if (a.toLowerCase() < b.toLowerCase()) {
+          return -1;
+        }
+
+        if (a.toLowerCase() > b.toLowerCase()) {
+          return 1;
+        }
+
+        return 0;
       }).map(function (_ref) {
         var name = _ref.name;
         return external_react_default.a.createElement("div", {
@@ -23334,6 +28292,20 @@ function (_Component) {
         label: 'UTC',
         value: 0
       };
+      var sortedTimezones = TIMEZONES.sort(function (itemA, itemB) {
+        var a = itemA.label;
+        var b = itemB.label;
+
+        if (a.toLowerCase() < b.toLowerCase()) {
+          return -1;
+        }
+
+        if (a.toLowerCase() > b.toLowerCase()) {
+          return 1;
+        }
+
+        return 0;
+      });
       return external_react_default.a.createElement(external_react_["Fragment"], null, external_react_default.a.createElement("div", {
         className: "timeframe"
       }, external_react_default.a.createElement("div", {
@@ -23381,7 +28353,7 @@ function (_Component) {
           label: "Timezone: ".concat(timezoneOption.label),
           value: timezoneOption.value
         },
-        options: TIMEZONES,
+        options: sortedTimezones,
         onChange: function onChange(e) {
           localStorage.setItem('timezone', e.value);
           updateUI({
@@ -23460,12 +28432,32 @@ function (_Component) {
   }
 
   Extraction_createClass(Extraction, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var latest = this.props.latest;
+      var _this$props = this.props,
+          extractionActiveTab = _this$props.extractionActiveTab,
+          updateUI = _this$props.updateUI;
+      var max = EXTRACTION_PREVIEW_EVENTS_LIMIT;
+
+      if (extractionActiveTab === TAB_EXTRACTION_BULK) {
+        max = EXTRACTION_BULK_EVENTS_LIMIT;
+      }
+
+      if (latest > max) {
+        latest = max;
+      }
+
+      updateUI({
+        latest: latest
+      });
+    }
+  }, {
     key: "renderBulkPanel",
     value: function renderBulkPanel() {
-      var _this$props = this.props,
-          email = _this$props.email,
-          latest = _this$props.latest,
-          updateUI = _this$props.updateUI;
+      var _this$props2 = this.props,
+          email = _this$props2.email,
+          updateUI = _this$props2.updateUI;
       return external_react_default.a.createElement("div", {
         className: "bulk-panel"
       }, external_react_default.a.createElement("div", {
@@ -23475,41 +28467,24 @@ function (_Component) {
         className: "input-text",
         placeholder: "your@email.com",
         value: email,
+        name: "email",
         onChange: function onChange(e) {
           updateUI({
             email: e.target.value
           });
         }
-      }), external_react_default.a.createElement("div", {
-        className: "label-main"
-      }, "Limit number of events to extract"), external_react_default.a.createElement("input", {
-        type: "number",
-        className: "input-text",
-        value: latest,
-        onChange: function onChange(e) {
-          var value = e.target.value;
-
-          if (value > EXTRACTION_BULK_EVENTS_LIMIT) {
-            value = EXTRACTION_BULK_EVENTS_LIMIT;
-          }
-
-          updateUI({
-            latest: value
-          });
-        }
-      }), external_react_default.a.createElement("div", {
-        className: "label-main"
-      }, "Results are limited to 10 million events"));
+      }));
     }
   }, {
     key: "render",
     value: function render() {
-      var _this$props2 = this.props,
-          schemas = _this$props2.schemas,
-          eventCollection = _this$props2.eventCollection,
-          extractionActiveTab = _this$props2.extractionActiveTab,
-          propertyNames = _this$props2.propertyNames,
-          updateUI = _this$props2.updateUI;
+      var _this$props3 = this.props,
+          schemas = _this$props3.schemas,
+          eventCollection = _this$props3.eventCollection,
+          extractionActiveTab = _this$props3.extractionActiveTab,
+          propertyNames = _this$props3.propertyNames,
+          latest = _this$props3.latest,
+          updateUI = _this$props3.updateUI;
       var valuesFromState = propertyNames.map(function (item) {
         return {
           value: item,
@@ -23517,6 +28492,23 @@ function (_Component) {
         };
       });
       var schema = schemas[eventCollection] || {};
+      var schemaProps = Object.keys(schema);
+      var sortedSchemaProps = schemaProps.sort(function (a, b) {
+        if (a.toLowerCase() < b.toLowerCase()) {
+          return -1;
+        }
+
+        if (a.toLowerCase() > b.toLowerCase()) {
+          return 1;
+        }
+
+        return 0;
+      }).map(function (item) {
+        return {
+          label: item,
+          value: item
+        };
+      });
       return external_react_default.a.createElement("div", {
         className: "extraction"
       }, external_react_default.a.createElement("div", {
@@ -23526,10 +28518,10 @@ function (_Component) {
         onClick: function onClick() {
           return updateUI({
             extractionActiveTab: TAB_EXTRACTION_PREVIEW,
-            latest: EXTRACTION_PREVIEW_EVENTS_LIMIT
+            latest: EXTRACTION_PREVIEW_EVENTS_DEFAULT
           });
         }
-      }, "Preview 100 events"), external_react_default.a.createElement("div", {
+      }, "Preview events"), external_react_default.a.createElement("div", {
         className: "tab ".concat(extractionActiveTab === TAB_EXTRACTION_BULK ? 'active' : ''),
         onClick: function onClick() {
           return updateUI({
@@ -23539,15 +28531,19 @@ function (_Component) {
         }
       }, "Bulk CSV extraction")), external_react_default.a.createElement("div", {
         className: "tab-content"
-      }, extractionActiveTab === TAB_EXTRACTION_BULK && this.renderBulkPanel(), external_react_default.a.createElement(shared_ReactSelect, {
+      }, extractionActiveTab === TAB_EXTRACTION_BULK && this.renderBulkPanel(), external_react_default.a.createElement("div", {
+        className: "label-main first-label"
+      }, "Properties to extract"), external_react_default.a.createElement(shared_ReactSelect, {
         value: valuesFromState,
-        options: Object.keys(schema).map(function (item) {
-          return {
-            label: item,
-            value: item
-          };
-        }),
+        options: sortedSchemaProps,
         onChange: function onChange(selectedValues) {
+          if (!selectedValues) {
+            updateUI({
+              propertyNames: []
+            });
+            return;
+          }
+
           updateUI({
             propertyNames: selectedValues.map(function (item) {
               return item.value;
@@ -23558,6 +28554,28 @@ function (_Component) {
         isMulti: true,
         className: "standardUnits",
         theme: getThemeForSelect
+      }), external_react_default.a.createElement("div", {
+        className: "label-main"
+      }, "Limit number of events to extract"), external_react_default.a.createElement("input", {
+        type: "number",
+        className: "input-text",
+        value: latest,
+        onChange: function onChange(e) {
+          var value = e.target.value;
+          var max = EXTRACTION_PREVIEW_EVENTS_LIMIT;
+
+          if (extractionActiveTab === TAB_EXTRACTION_BULK) {
+            max = EXTRACTION_BULK_EVENTS_LIMIT;
+          }
+
+          if (value > max) {
+            value = max;
+          }
+
+          updateUI({
+            latest: value
+          });
+        }
       })));
     }
   }]);
@@ -23853,6 +28871,7 @@ function (_Component) {
       var _this$props = this.props,
           funnel = _this$props.funnel,
           step = _this$props.step,
+          steps = _this$props.steps,
           updateStepUI = _this$props.updateStepUI,
           updateUI = _this$props.updateUI;
 
@@ -23870,8 +28889,9 @@ function (_Component) {
           payload: {
             filters: Filters_toConsumableArray(validFilters)
           },
-          rootPayload: {},
-          modalFilters: false
+          rootPayload: {
+            modalFilters: false
+          }
         });
         return;
       }
@@ -24118,7 +29138,17 @@ function (_Component) {
           propertyValue: propertyValue
         });
       });
-      var schemaProps = Object.keys(schema).map(function (colItem) {
+      var schemaProps = Object.keys(schema).sort(function (a, b) {
+        if (a.toLowerCase() < b.toLowerCase()) {
+          return -1;
+        }
+
+        if (a.toLowerCase() > b.toLowerCase()) {
+          return 1;
+        }
+
+        return 0;
+      }).map(function (colItem) {
         return {
           label: colItem,
           value: colItem
@@ -24392,6 +29422,22 @@ function (_Component) {
       var groupByValue = groupBy ? groupBy[0] : '';
       var groupByValue2 = groupByValue ? groupBy[1] : '';
       var elementsToRender = [];
+      var sortedSchemaProps = this.getCurrentSchema().sort(function (a, b) {
+        if (a.toLowerCase() < b.toLowerCase()) {
+          return -1;
+        }
+
+        if (a.toLowerCase() > b.toLowerCase()) {
+          return 1;
+        }
+
+        return 0;
+      }).map(function (item) {
+        return {
+          label: item,
+          value: item
+        };
+      });
       elementsToRender.push(external_react_default.a.createElement("div", {
         key: "groupBy1"
       }, external_react_default.a.createElement("div", {
@@ -24401,12 +29447,7 @@ function (_Component) {
           label: groupByValue,
           value: groupByValue
         },
-        options: this.getCurrentSchema().map(function (item) {
-          return {
-            label: item,
-            value: item
-          };
-        }),
+        options: sortedSchemaProps,
         onChange: function onChange(value) {
           updateUI({
             groupBy: [value.value]
@@ -24471,12 +29512,7 @@ function (_Component) {
             label: groupByValue2,
             value: groupByValue2
           },
-          options: this.getCurrentSchema().map(function (item) {
-            return {
-              label: item,
-              value: item
-            };
-          }),
+          options: sortedSchemaProps,
           onChange: function onChange(value) {
             updateUI({
               groupBy: [groupBy[0], value.value]
@@ -25208,6 +30244,23 @@ function (_Component) {
       var actorProperty = this.props.steps[step].actorProperty;
       var eventCollection = steps[step].eventCollection;
       var schema = schemas[eventCollection] || {};
+      var schemaProps = Object.keys(schema);
+      var sortedSchemaProps = schemaProps.sort(function (a, b) {
+        if (a.toLowerCase() < b.toLowerCase()) {
+          return -1;
+        }
+
+        if (a.toLowerCase() > b.toLowerCase()) {
+          return 1;
+        }
+
+        return 0;
+      }).map(function (item) {
+        return {
+          label: item,
+          value: item
+        };
+      });
       return external_react_default.a.createElement(external_react_["Fragment"], null, external_react_default.a.createElement("div", {
         className: "label-main"
       }, "Actor property"), external_react_default.a.createElement(shared_ReactSelect, {
@@ -25215,12 +30268,7 @@ function (_Component) {
           label: actorProperty,
           value: actorProperty
         },
-        options: Object.keys(schema).map(function (item) {
-          return {
-            label: item,
-            value: item
-          };
-        }),
+        options: sortedSchemaProps,
         onChange: function onChange(selectedItem) {
           updateStepUI({
             step: step,
@@ -25355,14 +30403,16 @@ function (_Component) {
   }, {
     key: "delete",
     value: function _delete() {
-      this.setState({
-        error: null
-      });
-      var uiSavedQuery = this.props.uiSavedQuery;
-      var name = uiSavedQuery.name;
-      this.props.deleteQuery({
-        name: name
-      });
+      if (confirm('Delete this query?')) {
+        this.setState({
+          error: null
+        });
+        var uiSavedQuery = this.props.uiSavedQuery;
+        var name = uiSavedQuery.name;
+        this.props.deleteQuery({
+          name: name
+        });
+      }
     }
   }, {
     key: "clone",
@@ -25550,7 +30600,8 @@ var SavedQueryBrowser_mapDispatchToProps = {
   updateSavedQueries: updateSavedQueries,
   updateUI: ui_updateUI,
   fetchSavedQueries: client_fetchSavedQueries,
-  resetResults: queries_resetResults
+  resetResults: queries_resetResults,
+  deleteQuery: client_deleteQuery
 };
 
 var SavedQueryBrowser_SavedQueryBrowser =
@@ -25617,6 +30668,19 @@ function (_Component) {
       };
     }
   }, {
+    key: "confirmDeleteQuery",
+    value: function confirmDeleteQuery(_ref2) {
+      var e = _ref2.e,
+          query_name = _ref2.query_name;
+      e.stopPropagation();
+
+      if (confirm("Delete query \"".concat(query_name, "\"?"))) {
+        this.props.deleteQuery({
+          name: query_name
+        });
+      }
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this2 = this;
@@ -25624,7 +30688,6 @@ function (_Component) {
       var _this$props = this.props,
           savedQueries = _this$props.savedQueries,
           savedQuery = _this$props.savedQuery,
-          timezone = _this$props.timezone,
           updateUI = _this$props.updateUI,
           resetResults = _this$props.resetResults;
 
@@ -25640,8 +30703,9 @@ function (_Component) {
       };
 
       var activeSavedQuery = savedQuery && savedQuery.name;
-      var filter = this.state.filter;
-      var error = this.state.error;
+      var _this$state = this.state,
+          filter = _this$state.filter,
+          error = _this$state.error;
       return external_react_default.a.createElement("div", {
         className: "saved-queries"
       }, error && external_react_default.a.createElement("div", {
@@ -25656,7 +30720,21 @@ function (_Component) {
         }
       }), savedQueries.filter(function (item) {
         return _this2.getName(item).toLowerCase().indexOf(filter.toLowerCase()) >= 0;
-      }).map(function (item, index) {
+      }).sort(function (itemA, itemB) {
+        var a = _this2.getName(itemA);
+
+        var b = _this2.getName(itemB);
+
+        if (a.toLowerCase() < b.toLowerCase()) {
+          return -1;
+        }
+
+        if (a.toLowerCase() > b.toLowerCase()) {
+          return 1;
+        }
+
+        return 0;
+      }).map(function (item) {
         return external_react_default.a.createElement("div", {
           key: item.query_name,
           className: "item ".concat(activeSavedQuery === item.query_name && 'active'),
@@ -25741,7 +30819,15 @@ function (_Component) {
           className: "cached"
         }, !!item.refresh_rate && external_react_default.a.createElement("span", null, "Cached")), external_react_default.a.createElement("div", {
           className: "data"
-        }, external_moment_timezone_default()(item.last_modified_date).format('MMMM Do YYYY, h:mm:ss a')));
+        }, external_moment_timezone_default()(item.last_modified_date).format('MMMM Do YYYY, h:mm:ss a')), external_react_default.a.createElement("i", {
+          onClick: function onClick(e) {
+            return _this2.confirmDeleteQuery({
+              e: e,
+              query_name: item.query_name
+            });
+          },
+          className: "fas fa-times button-delete"
+        }));
       }));
     }
   }]);
@@ -25751,11 +30837,11 @@ function (_Component) {
 
 /* harmony default export */ var explorer_SavedQueryBrowser = (Object(external_react_redux_["connect"])(SavedQueryBrowser_mapStateToProps, SavedQueryBrowser_mapDispatchToProps)(SavedQueryBrowser_SavedQueryBrowser));
 // EXTERNAL MODULE: external "keen-dataviz"
-var external_keen_dataviz_ = __webpack_require__(167);
+var external_keen_dataviz_ = __webpack_require__(168);
 var external_keen_dataviz_default = /*#__PURE__*/__webpack_require__.n(external_keen_dataviz_);
 
 // EXTERNAL MODULE: ./node_modules/keen-dataviz/dist/keen-dataviz.css
-var keen_dataviz = __webpack_require__(379);
+var keen_dataviz = __webpack_require__(380);
 
 // CONCATENATED MODULE: ./lib/js/app/utils/csv.js
 var exportToCsv = function exportToCsv(data, filename) {
@@ -25957,15 +31043,10 @@ function (_Component) {
           this.dataviz.destroy();
         }
 
-        if (type && results.metadata && results.metadata.visualization && !results.metadata.visualization.chart_type) {
-          results.metadata.visualization.chart_type = type;
-        }
-
         try {
           this.dataviz = new external_keen_dataviz_default.a(Dataviz_defineProperty({
             container: '#keen-dataviz-container',
             type: type,
-            // title: 'New Customers per Week',
             title: false,
             labels: labels,
             // funnel step labels
@@ -26221,25 +31302,25 @@ var prism_core = __webpack_require__(113);
 var prism_core_default = /*#__PURE__*/__webpack_require__.n(prism_core);
 
 // EXTERNAL MODULE: ./node_modules/prismjs/components/prism-clike.js
-var prism_clike = __webpack_require__(381);
+var prism_clike = __webpack_require__(382);
 
 // EXTERNAL MODULE: ./node_modules/prismjs/components/prism-javascript.js
-var prism_javascript = __webpack_require__(382);
+var prism_javascript = __webpack_require__(383);
 
 // EXTERNAL MODULE: ./node_modules/prismjs/components/prism-css.js
-var prism_css = __webpack_require__(383);
+var prism_css = __webpack_require__(384);
 
 // EXTERNAL MODULE: ./node_modules/prismjs/components/prism-markup.js
-var prism_markup = __webpack_require__(384);
+var prism_markup = __webpack_require__(385);
 
 // EXTERNAL MODULE: ./node_modules/prismjs/plugins/line-numbers/prism-line-numbers.css
-var prism_line_numbers = __webpack_require__(385);
+var prism_line_numbers = __webpack_require__(386);
 
 // EXTERNAL MODULE: ./node_modules/prismjs/plugins/line-numbers/prism-line-numbers.js
-var line_numbers_prism_line_numbers = __webpack_require__(387);
+var line_numbers_prism_line_numbers = __webpack_require__(388);
 
 // EXTERNAL MODULE: ./node_modules/prismjs/themes/prism.css
-var prism = __webpack_require__(388);
+var prism = __webpack_require__(389);
 
 // CONCATENATED MODULE: ./lib/js/app/components/explorer/EmbedHTML.js
 function EmbedHTML_typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { EmbedHTML_typeof = function _typeof(obj) { return typeof obj; }; } else { EmbedHTML_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return EmbedHTML_typeof(obj); }
@@ -26314,8 +31395,28 @@ function (_Component) {
       return '';
     }
   }, {
+    key: "renderIfDefinedInStep",
+    value: function renderIfDefinedInStep(_ref2) {
+      var key = _ref2.key,
+          value = _ref2.value,
+          step = _ref2.step;
+      var propValue = step[key];
+
+      if (propValue) {
+        if (key === 'filters' && !propValue.length) {
+          return '';
+        }
+
+        return "                ".concat(key, ": ").concat(value, ",\n");
+      }
+
+      return '';
+    }
+  }, {
     key: "render",
     value: function render() {
+      var _this = this;
+
       var _this$props = this.props,
           projectId = _this$props.projectId,
           readKey = _this$props.readKey;
@@ -26333,7 +31434,9 @@ function (_Component) {
           savedQuery = _this$props$ui.savedQuery,
           propertyNames = _this$props$ui.propertyNames,
           latest = _this$props$ui.latest,
-          percentile = _this$props$ui.percentile;
+          percentile = _this$props$ui.percentile,
+          steps = _this$props$ui.steps,
+          stepLabels = _this$props$ui.stepLabels;
       var params = [];
       params.push(this.renderIfDefined({
         key: 'analysisType',
@@ -26391,6 +31494,68 @@ function (_Component) {
         }));
       }
 
+      var stepLabelsString;
+
+      if (analysisType === 'funnel') {
+        params = [];
+        params.push(this.renderIfDefined({
+          key: 'analysisType',
+          value: "'".concat(analysisType, "'")
+        }));
+        var stepsParams = [];
+        steps.forEach(function (step) {
+          var paramsForStep = [];
+          paramsForStep.push("    {\n");
+          paramsForStep.push(_this.renderIfDefinedInStep({
+            key: 'actorProperty',
+            value: "'".concat(step.actorProperty, "'"),
+            step: step
+          }));
+          paramsForStep.push(_this.renderIfDefinedInStep({
+            key: 'eventCollection',
+            value: "'".concat(step.eventCollection, "'"),
+            step: step
+          }));
+          paramsForStep.push(_this.renderIfDefinedInStep({
+            key: 'timeframe',
+            value: "".concat(JSON.stringify(step.timeframe)),
+            step: step
+          }));
+          paramsForStep.push(_this.renderIfDefinedInStep({
+            key: 'timezone',
+            value: "".concat(step.timezone),
+            step: step
+          }));
+          paramsForStep.push(_this.renderIfDefinedInStep({
+            key: 'filters',
+            value: "".concat(JSON.stringify(step.filters)),
+            step: step
+          }));
+          paramsForStep.push(_this.renderIfDefinedInStep({
+            key: 'inverted',
+            value: "".concat(step.inverted),
+            step: step
+          }));
+          paramsForStep.push(_this.renderIfDefinedInStep({
+            key: 'optional',
+            value: "".concat(step.optional),
+            step: step
+          }));
+          paramsForStep.push(_this.renderIfDefinedInStep({
+            key: 'withActors',
+            value: "".concat(step.withActors),
+            step: step
+          }));
+          paramsForStep.push("              }");
+          stepsParams.push(paramsForStep.join(''));
+        });
+        params.push("            steps: [\n          ".concat(stepsParams.join(',\n          '), "\n            ]\n"));
+
+        if (stepLabels.length) {
+          stepLabelsString = ",\n          labels: ".concat(JSON.stringify(stepLabels));
+        }
+      }
+
       if (savedQuery && savedQuery.name && savedQuery.exists) {
         params.length = 0;
       }
@@ -26398,7 +31563,7 @@ function (_Component) {
       params.push(this.renderIfDefined({
         key: 'savedQueryName'
       }));
-      var code = "<html>\n    <head>\n      <meta charset=\"utf-8\">\n      <script crossorigin src=\"https://cdn.jsdelivr.net/npm/keen-analysis@3\"></script>\n      <link href=\"https://cdn.jsdelivr.net/npm/keen-dataviz@3/dist/keen-dataviz.min.css\" rel=\"stylesheet\" />\n      <script crossorigin src=\"https://cdn.jsdelivr.net/npm/keen-dataviz@3/dist/keen-dataviz.min.js\"></script>\n    </head>\n    <body>\n      <div id=\"demo_container\"></div>\n      <style>\n        #demo_container{\n          min-height: 300px;\n        }\n      </style>\n  \n      <script>\n        const chart = new KeenDataviz({\n          container: '#demo_container', // querySelector\n          title: false\n        });\n  \n        // Use keen-analysis.js to run a query\n        const client = new KeenAnalysis({\n          projectId: '".concat(projectId, "',\n          readKey: '").concat(readKey, "'\n        });\n  \n        client\n          .query({\n").concat(params.join(''), "          })\n          .then(function(results){\n            chart\n              .render(results);\n          })\n          .catch(function(error){\n            chart\n              .message(error.message);\n          });\n      </script>\n    </body>\n  </html>");
+      var code = "<html>\n    <head>\n      <meta charset=\"utf-8\">\n      <script crossorigin src=\"https://cdn.jsdelivr.net/npm/keen-analysis@3\"></script>\n      <link href=\"https://cdn.jsdelivr.net/npm/keen-dataviz@3/dist/keen-dataviz.min.css\" rel=\"stylesheet\" />\n      <script crossorigin src=\"https://cdn.jsdelivr.net/npm/keen-dataviz@3/dist/keen-dataviz.min.js\"></script>\n    </head>\n    <body>\n      <div id=\"demo_container\"></div>\n      <style>\n        #demo_container{\n          min-height: 300px;\n        }\n      </style>\n  \n      <script>\n        const chart = new KeenDataviz({\n          container: '#demo_container', // querySelector\n          title: false ".concat(stepLabels ? stepLabelsString : '', "\n        });\n  \n        // Use keen-analysis.js to run a query\n        const client = new KeenAnalysis({\n          projectId: '").concat(projectId, "',\n          readKey: '").concat(readKey, "'\n        });\n  \n        client\n          .query({\n").concat(params.join(''), "          })\n          .then(function(results){\n            chart\n              .render(results);\n          })\n          .catch(function(error){\n            chart\n              .message(error.message);\n          });\n      </script>\n    </body>\n  </html>");
       var prismedHtml = prism_core_default.a.highlight(code, prism_core_default.a.languages.javascript, 'javascript');
       return external_react_default.a.createElement(external_react_["Fragment"], null, external_react_default.a.createElement("div", {
         className: "container",
@@ -26420,68 +31585,6 @@ function (_Component) {
 }(external_react_["Component"]);
 
 /* harmony default export */ var explorer_EmbedHTML = (Object(external_react_redux_["connect"])(EmbedHTML_mapStateToProps, EmbedHTML_mapDispatchToProps)(EmbedHTML_EmbedHTML));
-// CONCATENATED MODULE: ./lib/js/app/utils/chartTypes.js
-var getQueryDataType = function getQueryDataType(query) {
-  var isInterval = typeof query.interval === 'string';
-  var isGroupBy = typeof query.groupBy === 'string' || query.groupBy instanceof Array && query.groupBy.length === 1;
-  var is2xGroupBy = query.groupBy instanceof Array && query.groupBy.length === 2;
-  var dataType;
-
-  if (query.analysisType === 'funnel') {
-    dataType = 'cat-ordinal';
-  } else if (query.analysisType === 'extraction') {
-    dataType = 'extraction';
-  } else if (query.analysisType === 'select_unique') {
-    dataType = 'nominal';
-  } // metric
-  else if (!isGroupBy && !isInterval && !is2xGroupBy) {
-      dataType = 'singular';
-    } // groupBy, no interval
-    else if (isGroupBy && !isInterval) {
-        dataType = 'categorical';
-      } // interval, no groupBy
-      else if (isInterval && !isGroupBy && !is2xGroupBy) {
-          dataType = 'chronological';
-        } // interval, groupBy
-        else if (isInterval && (isGroupBy || is2xGroupBy)) {
-            dataType = 'cat-chronological';
-          } // 2x groupBy
-          // TODO: research possible dataType options
-          else if (!isInterval && is2xGroupBy) {
-              dataType = 'categorical';
-            }
-
-  if (query.analysisType === 'extraction') {
-    dataType = 'extraction';
-  }
-
-  if (query.analysisType === 'funnel') {
-    dataType = 'funnel';
-  }
-
-  return dataType;
-};
-var getChartTypeOptions = function getChartTypeOptions(query) {
-  var dataTypes = {
-    'singular': ['metric'],
-    'categorical': ['bar', 'horizontal-bar', 'pie', 'donut', 'table'],
-    'cat-interval': ['area', 'bar', 'horizontal-bar', 'line', 'spline', 'area-spline', 'step', 'area-step', 'table'],
-    'cat-ordinal': ['area', 'bar', 'horizontal-bar', 'line', 'spline', 'area-spline', 'step', 'area-step', 'table'],
-    'chronological': ['area', 'bar', 'line', 'spline', 'area-spline', 'step', 'area-step', 'table'],
-    'cat-chronological': ['area', 'bar', 'horizontal-bar', 'line', 'spline', 'area-spline', 'step', 'area-step', 'table'],
-    'nominal': ['table'],
-    'extraction': ['table'],
-    'funnel': ['horizontal-bar', 'funnel', 'horizontal-funnel', 'funnel-3d', 'horizontal-funnel-3d', 'table']
-  };
-  var queryDataType = getQueryDataType(query);
-  return dataTypes[queryDataType].concat(['JSON']);
-};
-var responseSupportsChartType = function responseSupportsChartType(query, chartType) {
-  return getChartTypeOptions(query).includes(chartType);
-};
-var isTableChartType = function isTableChartType(chartType) {
-  return chartType == 'table';
-};
 // CONCATENATED MODULE: ./lib/js/app/utils/base64.js
 function b64EncodeUnicode(str) {
   // first we use encodeURIComponent to get percent-encoded UTF-8,
@@ -26497,38 +31600,36 @@ function b64DecodeUnicode(str) {
     return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
   }).join(''));
 }
-// CONCATENATED MODULE: ./lib/js/app/components/app.js
-function app_typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { app_typeof = function _typeof(obj) { return typeof obj; }; } else { app_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return app_typeof(obj); }
+// CONCATENATED MODULE: ./lib/js/app/components/appContainer.js
+function appContainer_typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { appContainer_typeof = function _typeof(obj) { return typeof obj; }; } else { appContainer_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return appContainer_typeof(obj); }
 
-function app_toConsumableArray(arr) { return app_arrayWithoutHoles(arr) || app_iterableToArray(arr) || app_nonIterableSpread(); }
+function appContainer_toConsumableArray(arr) { return appContainer_arrayWithoutHoles(arr) || appContainer_iterableToArray(arr) || appContainer_nonIterableSpread(); }
 
-function app_nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+function appContainer_nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
 
-function app_iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+function appContainer_iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
 
-function app_arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+function appContainer_arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
 
-function app_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { app_defineProperty(target, key, source[key]); }); } return target; }
+function appContainer_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { appContainer_defineProperty(target, key, source[key]); }); } return target; }
 
-function app_defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function appContainer_defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-function app_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function appContainer_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-function app_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+function appContainer_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
-function app_createClass(Constructor, protoProps, staticProps) { if (protoProps) app_defineProperties(Constructor.prototype, protoProps); if (staticProps) app_defineProperties(Constructor, staticProps); return Constructor; }
+function appContainer_createClass(Constructor, protoProps, staticProps) { if (protoProps) appContainer_defineProperties(Constructor.prototype, protoProps); if (staticProps) appContainer_defineProperties(Constructor, staticProps); return Constructor; }
 
-function app_possibleConstructorReturn(self, call) { if (call && (app_typeof(call) === "object" || typeof call === "function")) { return call; } return app_assertThisInitialized(self); }
+function appContainer_possibleConstructorReturn(self, call) { if (call && (appContainer_typeof(call) === "object" || typeof call === "function")) { return call; } return appContainer_assertThisInitialized(self); }
 
-function app_assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+function appContainer_assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
-function app_getPrototypeOf(o) { app_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return app_getPrototypeOf(o); }
+function appContainer_getPrototypeOf(o) { appContainer_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return appContainer_getPrototypeOf(o); }
 
-function app_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) app_setPrototypeOf(subClass, superClass); }
+function appContainer_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) appContainer_setPrototypeOf(subClass, superClass); }
 
-function app_setPrototypeOf(o, p) { app_setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return app_setPrototypeOf(o, p); }
-
-
+function appContainer_setPrototypeOf(o, p) { appContainer_setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return appContainer_setPrototypeOf(o, p); }
 
 
 
@@ -26556,13 +31657,14 @@ function app_setPrototypeOf(o, p) { app_setPrototypeOf = Object.setPrototypeOf |
 
 
 
- // import { getPropertyType } from '../utils/filter';
 
 
 
 
 
-var app_mapStateToProps = function mapStateToProps(state) {
+
+
+var appContainer_mapStateToProps = function mapStateToProps(state) {
   return {
     collections: state.collections,
     queries: state.queries,
@@ -26571,7 +31673,7 @@ var app_mapStateToProps = function mapStateToProps(state) {
   };
 };
 
-var app_mapDispatchToProps = {
+var appContainer_mapDispatchToProps = {
   fetchProject: client_fetchProject,
   fetchSchema: client_fetchSchema,
   query: client_query,
@@ -26586,19 +31688,19 @@ var defaultFeatures = {
   save: true
 };
 
-var app_App =
+var appContainer_App =
 /*#__PURE__*/
 function (_Component) {
-  app_inherits(App, _Component);
+  appContainer_inherits(App, _Component);
 
   function App(props) {
     var _this;
 
-    app_classCallCheck(this, App);
+    appContainer_classCallCheck(this, App);
 
-    _this = app_possibleConstructorReturn(this, app_getPrototypeOf(App).call(this, props));
+    _this = appContainer_possibleConstructorReturn(this, appContainer_getPrototypeOf(App).call(this, props));
 
-    var features = app_objectSpread({}, defaultFeatures, props.features || {});
+    var features = appContainer_objectSpread({}, defaultFeatures, props.features || {});
 
     _this.state = {
       features: features
@@ -26619,7 +31721,7 @@ function (_Component) {
     return _this;
   }
 
-  app_createClass(App, [{
+  appContainer_createClass(App, [{
     key: "componentDidMount",
     value: function componentDidMount() {
       this.props.fetchProject();
@@ -26712,7 +31814,7 @@ function (_Component) {
           percentile = _this$props$ui2.percentile,
           steps = _this$props$ui2.steps;
 
-      var queryParams = app_objectSpread({
+      var queryParams = appContainer_objectSpread({
         analysisType: analysisType,
         eventCollection: eventCollection,
         timeframe: timeframe,
@@ -26728,7 +31830,7 @@ function (_Component) {
       });
 
       if (analysisType === 'extraction') {
-        queryParams = app_objectSpread({}, queryParams, {
+        queryParams = appContainer_objectSpread({}, queryParams, {
           latest: latest,
           propertyNames: propertyNames
         });
@@ -26739,7 +31841,7 @@ function (_Component) {
       }
 
       if (analysisType === 'funnel') {
-        queryParams = app_objectSpread({}, queryParams, {
+        queryParams = appContainer_objectSpread({}, queryParams, {
           steps: steps
         });
       }
@@ -26751,24 +31853,23 @@ function (_Component) {
     value: function runQuery(payload) {
       var _this2 = this;
 
-      var params = app_objectSpread({}, this.convertFilterValuesToJsonValues(this.getQueryParams()));
+      var params = appContainer_objectSpread({}, this.convertFilterValuesToJsonValues(this.getQueryParams()));
 
       if (params.analysisType === 'funnel') {
         var updatedSteps = params.steps.map(function (step) {
-          return app_objectSpread({}, step, _this2.convertFilterValuesToJsonValues(step));
+          return appContainer_objectSpread({}, step, _this2.convertFilterValuesToJsonValues(step));
         });
-        params = app_objectSpread({}, params, {
-          steps: app_toConsumableArray(updatedSteps),
+        params = appContainer_objectSpread({}, params, {
+          steps: appContainer_toConsumableArray(updatedSteps),
           filters: undefined
         });
       }
 
-      this.props.query(app_objectSpread({}, payload, params));
+      this.props.query(appContainer_objectSpread({}, payload, params));
     }
   }, {
     key: "convertFilterValuesToJsonValues",
     value: function convertFilterValuesToJsonValues(params) {
-      var schema = this.props.collections && Object.keys(this.props.collections.schemas).length && this.props.collections.schemas[params.eventCollection];
       var filters = params.filters.map(function (_ref) {
         var propertyName = _ref.propertyName,
             propertyType = _ref.propertyType,
@@ -26784,6 +31885,8 @@ function (_Component) {
             filter: { propertyName, propertyType, operator, propertyValue },
           });
           */
+
+          return;
         }
 
         if (propertyType === 'String' || propertyType === 'Datetime' || operator === 'contains' || operator === 'not_contains') {
@@ -26833,8 +31936,8 @@ function (_Component) {
           propertyValue: value
         };
       });
-      return app_objectSpread({}, params, {
-        filters: app_toConsumableArray(filters)
+      return appContainer_objectSpread({}, params, {
+        filters: appContainer_toConsumableArray(filters)
       });
     }
   }, {
@@ -26921,7 +32024,6 @@ function (_Component) {
           activePanel = _this$props$ui5.activePanel,
           analysisType = _this$props$ui5.analysisType,
           eventCollection = _this$props$ui5.eventCollection,
-          showTargetProperty = _this$props$ui5.showTargetProperty,
           targetProperty = _this$props$ui5.targetProperty,
           interval = _this$props$ui5.interval,
           groupBy = _this$props$ui5.groupBy,
@@ -26956,9 +32058,28 @@ function (_Component) {
         };
       }
 
+      var chartTypesSorted = chartTypes.sort(function (a, b) {
+        if (a.toLowerCase() < b.toLowerCase()) {
+          return -1;
+        }
+
+        if (a.toLowerCase() > b.toLowerCase()) {
+          return 1;
+        }
+
+        return 0;
+      }).map(function (item) {
+        return {
+          label: item,
+          value: item
+        };
+      });
       var _this$props$keenAnaly = this.props.keenAnalysis.config,
           readKey = _this$props$keenAnaly.readKey,
           projectId = _this$props$keenAnaly.projectId;
+      var showTargetProperty = !!ANALYSIS_TYPES.find(function (item) {
+        return item.type === analysisType;
+      }).targetProperty;
       return external_react_default.a.createElement("div", {
         className: "keen-explorer"
       }, external_react_default.a.createElement("div", {
@@ -27036,10 +32157,7 @@ function (_Component) {
         }),
         onChange: function onChange(e) {
           updateUI({
-            analysisType: e.value,
-            showTargetProperty: !!ANALYSIS_TYPES.find(function (item) {
-              return item.type === e.label;
-            }).targetProperty
+            analysisType: e.value
           });
         },
         theme: getThemeForSelect
@@ -27100,7 +32218,7 @@ function (_Component) {
         queryParams: queryParams,
         client: app_client
       }))), external_react_default.a.createElement("div", {
-        className: "panel-content ".concat(activePanel !== PANEL_BROWSE ? 'hide' : '')
+        className: "panel-content panel-saved-queries ".concat(activePanel !== PANEL_BROWSE ? 'hide' : '')
       }, external_react_default.a.createElement(explorer_SavedQueryBrowser, {
         client: app_client
       }))), external_react_default.a.createElement("div", {
@@ -27151,12 +32269,7 @@ function (_Component) {
       }, external_react_default.a.createElement(external_react_select_default.a, {
         className: "select-chart-type",
         value: chartTypeSelected,
-        options: chartTypes.map(function (item) {
-          return {
-            label: item,
-            value: item
-          };
-        }),
+        options: chartTypesSorted,
         onChange: function onChange(e) {
           updateUI({
             chartType: e.value
@@ -27165,7 +32278,7 @@ function (_Component) {
         theme: getThemeForSelect
       }), chartTypeSelected && chartTypeSelected.value.indexOf('funnel') > -1 && external_react_default.a.createElement("div", {
         className: "chart-not-supported-note"
-      }, "Note: this chart type isn't supported in the dashboard builder yet."))), error && external_react_default.a.createElement("div", {
+      }, "Note: this chart type is not yet supported by the Dashboard Builder."))), error && external_react_default.a.createElement("div", {
         className: "error"
       }, error.body), external_react_default.a.createElement("div", {
         className: "action-buttons"
@@ -27189,17 +32302,18 @@ function (_Component) {
   return App;
 }(external_react_["Component"]);
 
-app_App.propTypes = {
+appContainer_App.propTypes = {
   todoText: external_prop_types_default.a.string //increment: PropTypes.func.isRequired
 
 };
-/* harmony default export */ var app = (Object(external_react_redux_["connect"])(app_mapStateToProps, app_mapDispatchToProps)(app_App));
+/* harmony default export */ var appContainer = (Object(external_react_redux_["connect"])(appContainer_mapStateToProps, appContainer_mapDispatchToProps)(appContainer_App));
 // CONCATENATED MODULE: ./lib/js/app/app.js
-function app_app_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { app_app_defineProperty(target, key, source[key]); }); } return target; }
+function app_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { app_defineProperty(target, key, source[key]); }); } return target; }
 
-function app_app_defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function app_defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-function app_app_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function app_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
 
 
 
@@ -27228,17 +32342,24 @@ var defaultConfig = {
   }
 };
 var app_client;
+var keenTrackingClient;
 var app_KeenExplorer = function KeenExplorer(props) {
-  app_app_classCallCheck(this, KeenExplorer);
+  app_classCallCheck(this, KeenExplorer);
 
-  var keenAnalysis = props.keenAnalysis;
+  var keenAnalysis = props.keenAnalysis,
+      keenTracking = props.keenTracking;
   app_client = keenAnalysis.instance || new external_keen_analysis_default.a(keenAnalysis.config);
+
+  if (keenTracking) {
+    keenTrackingClient = keenTracking.instance || new keen_tracking_default.a(keenTracking.config);
+  }
+
   external_react_dom_default.a.render(external_react_default.a.createElement(external_react_redux_["Provider"], {
     store: store
-  }, external_react_default.a.createElement(app, app_app_objectSpread({}, defaultConfig, props))), document.querySelector(props.container));
+  }, external_react_default.a.createElement(appContainer, app_objectSpread({}, defaultConfig, props))), document.querySelector(props.container));
 };
 app_KeenExplorer.version = package_0["a" /* version */];
-/* harmony default export */ var app_app = (app_KeenExplorer);
+/* harmony default export */ var app = (app_KeenExplorer);
 // CONCATENATED MODULE: ./lib/js/index.js
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "keenGlobals", function() { return keenGlobals; });
 /* concated harmony reexport KeenExplorer */__webpack_require__.d(__webpack_exports__, "KeenExplorer", function() { return app_KeenExplorer; });
@@ -27251,7 +32372,7 @@ if (typeof webpackKeenGlobals !== 'undefined') {
 
 
 
-/* harmony default export */ var js = __webpack_exports__["default"] = (app_app);
+/* harmony default export */ var js = __webpack_exports__["default"] = (app);
 
 /***/ })
 /******/ ]);
