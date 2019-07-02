@@ -15209,7 +15209,7 @@ module.exports = __webpack_require__(43);
 /* 165 */
 /***/ (function(module) {
 
-module.exports = {"a":"6.0.9"};
+module.exports = {"a":"6.0.10"};
 
 /***/ }),
 /* 166 */
@@ -25143,6 +25143,10 @@ var FILTER_OPERATORS = [{
   label: "\u2349 String does not contain",
   value: 'not_contains',
   dataTypes: ['String', 'Null']
+}, {
+  label: "\u229A Regex",
+  value: 'regex',
+  dataTypes: ['String']
 }, {
   label: "\u29C7 Matches any value in a list",
   value: 'in',
