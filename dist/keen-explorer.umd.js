@@ -15209,7 +15209,7 @@ module.exports = __webpack_require__(43);
 /* 165 */
 /***/ (function(module) {
 
-module.exports = {"a":"6.0.10"};
+module.exports = {"a":"6.0.11"};
 
 /***/ }),
 /* 166 */
@@ -31440,7 +31440,8 @@ function (_Component) {
           latest = _this$props$ui.latest,
           percentile = _this$props$ui.percentile,
           steps = _this$props$ui.steps,
-          stepLabels = _this$props$ui.stepLabels;
+          _this$props$ui$stepLa = _this$props$ui.stepLabels,
+          stepLabels = _this$props$ui$stepLa === void 0 ? '' : _this$props$ui$stepLa;
       var params = [];
       params.push(this.renderIfDefined({
         key: 'analysisType',
@@ -31468,7 +31469,7 @@ function (_Component) {
       }));
       params.push(this.renderIfDefined({
         key: 'limit',
-        value: "'".concat(limit, "'")
+        value: limit
       }));
       params.push(this.renderIfDefined({
         key: 'orderBy',
@@ -31567,7 +31568,7 @@ function (_Component) {
       params.push(this.renderIfDefined({
         key: 'savedQueryName'
       }));
-      var code = "<html>\n    <head>\n      <meta charset=\"utf-8\">\n      <script crossorigin src=\"https://cdn.jsdelivr.net/npm/keen-analysis@3\"></script>\n      <link href=\"https://cdn.jsdelivr.net/npm/keen-dataviz@3/dist/keen-dataviz.min.css\" rel=\"stylesheet\" />\n      <script crossorigin src=\"https://cdn.jsdelivr.net/npm/keen-dataviz@3/dist/keen-dataviz.min.js\"></script>\n    </head>\n    <body>\n      <div id=\"demo_container\"></div>\n      <style>\n        #demo_container{\n          min-height: 300px;\n        }\n      </style>\n  \n      <script>\n        const chart = new KeenDataviz({\n          container: '#demo_container', // querySelector\n          title: false ".concat(stepLabels ? stepLabelsString : '', "\n        });\n  \n        // Use keen-analysis.js to run a query\n        const client = new KeenAnalysis({\n          projectId: '").concat(projectId, "',\n          readKey: '").concat(readKey, "'\n        });\n  \n        client\n          .query({\n").concat(params.join(''), "          })\n          .then(function(results){\n            chart\n              .render(results);\n          })\n          .catch(function(error){\n            chart\n              .message(error.message);\n          });\n      </script>\n    </body>\n  </html>");
+      var code = "<html>\n    <head>\n      <meta charset=\"utf-8\">\n      <script crossorigin src=\"https://cdn.jsdelivr.net/npm/keen-analysis@3\"></script>\n      <link href=\"https://cdn.jsdelivr.net/npm/keen-dataviz@3/dist/keen-dataviz.min.css\" rel=\"stylesheet\" />\n      <script crossorigin src=\"https://cdn.jsdelivr.net/npm/keen-dataviz@3/dist/keen-dataviz.min.js\"></script>\n    </head>\n    <body>\n      <div id=\"demo_container\"></div>\n      <style>\n        #demo_container{\n          min-height: 300px;\n        }\n      </style>\n  \n      <script>\n        const chart = new KeenDataviz({\n          container: '#demo_container', // querySelector\n          title: false ".concat(stepLabels && stepLabelsString ? stepLabelsString : '', "\n        });\n  \n        // Use keen-analysis.js to run a query\n        const client = new KeenAnalysis({\n          projectId: '").concat(projectId, "',\n          readKey: '").concat(readKey, "'\n        });\n  \n        client\n          .query({\n").concat(params.join(''), "          })\n          .then(function(results){\n            chart\n              .render(results);\n          })\n          .catch(function(error){\n            chart\n              .message(error.message);\n          });\n      </script>\n    </body>\n  </html>");
       var prismedHtml = prism_core_default.a.highlight(code, prism_core_default.a.languages.javascript, 'javascript');
       return external_react_default.a.createElement(external_react_["Fragment"], null, external_react_default.a.createElement("div", {
         className: "container",
