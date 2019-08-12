@@ -1891,18 +1891,6 @@ li.rc-time-picker-panel-select-option-disabled:hover {
     margin: 1rem 0 0 0;
   }
 
-.keen-explorer .funnel .line-checkbox,.ReactModalPortal .funnel .line-checkbox,.rc-time-picker-panel .funnel .line-checkbox{
-    margin: 0.5rem 0 0 0;
-  }
-
-.keen-explorer .funnel .line-checkbox input,.ReactModalPortal .funnel .line-checkbox input,.rc-time-picker-panel .funnel .line-checkbox input{
-      margin-right: 0.5rem;
-    }
-
-.keen-explorer .funnel .line-checkbox label,.ReactModalPortal .funnel .line-checkbox label,.rc-time-picker-panel .funnel .line-checkbox label{
-      cursor: pointer;
-    }
-
 .keen-explorer .funnel .step-switch-position-buttons,.ReactModalPortal .funnel .step-switch-position-buttons,.rc-time-picker-panel .funnel .step-switch-position-buttons{
     float: left;
     margin: -0.5rem 0.8rem 0 0;
@@ -1916,6 +1904,18 @@ li.rc-time-picker-panel-select-option-disabled:hover {
 .keen-explorer .funnel .step-switch-position-buttons .move-down,.ReactModalPortal .funnel .step-switch-position-buttons .move-down,.rc-time-picker-panel .funnel .step-switch-position-buttons .move-down{
       margin-top: -0.3rem;
     }
+
+.keen-explorer .line-checkbox,.ReactModalPortal .line-checkbox,.rc-time-picker-panel .line-checkbox{
+  margin: 0.5rem 0 0 0;
+}
+
+.keen-explorer .line-checkbox input,.ReactModalPortal .line-checkbox input,.rc-time-picker-panel .line-checkbox input{
+    margin-right: 0.5rem;
+  }
+
+.keen-explorer .line-checkbox label,.ReactModalPortal .line-checkbox label,.rc-time-picker-panel .line-checkbox label{
+    cursor: pointer;
+  }
 
 .keen-explorer .keen-dataviz, .ReactModalPortal .keen-dataviz, .rc-time-picker-panel .keen-dataviz {
   font-family: inherit !important;

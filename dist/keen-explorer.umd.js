@@ -7,7 +7,7 @@
 		var a = typeof exports === 'object' ? factory(require("react"), require("react-redux"), require("react-select"), require("moment"), require("redux"), require("react-json-view"), require("react-dates"), require("rc-time-picker"), require("react-modal"), require("moment-timezone"), require("react-dom"), require("redux-devtools-extension"), require("redux-saga"), require("keen-analysis"), require("prop-types"), require("keen-dataviz")) : factory(root["react"], root["react-redux"], root["react-select"], root["moment"], root["redux"], root["react-json-view"], root["react-dates"], root["rc-time-picker"], root["react-modal"], root["moment-timezone"], root["react-dom"], root["redux-devtools-extension"], root["redux-saga"], root["keen-analysis"], root["prop-types"], root["keen-dataviz"]);
 		for(var i in a) (typeof exports === 'object' ? exports : root)[i] = a[i];
 	}
-})(window, function(__WEBPACK_EXTERNAL_MODULE__0__, __WEBPACK_EXTERNAL_MODULE__2__, __WEBPACK_EXTERNAL_MODULE__7__, __WEBPACK_EXTERNAL_MODULE__10__, __WEBPACK_EXTERNAL_MODULE__56__, __WEBPACK_EXTERNAL_MODULE__57__, __WEBPACK_EXTERNAL_MODULE__58__, __WEBPACK_EXTERNAL_MODULE__59__, __WEBPACK_EXTERNAL_MODULE__60__, __WEBPACK_EXTERNAL_MODULE__78__, __WEBPACK_EXTERNAL_MODULE__160__, __WEBPACK_EXTERNAL_MODULE__161__, __WEBPACK_EXTERNAL_MODULE__162__, __WEBPACK_EXTERNAL_MODULE__163__, __WEBPACK_EXTERNAL_MODULE__166__, __WEBPACK_EXTERNAL_MODULE__168__) {
+})(window, function(__WEBPACK_EXTERNAL_MODULE__0__, __WEBPACK_EXTERNAL_MODULE__2__, __WEBPACK_EXTERNAL_MODULE__7__, __WEBPACK_EXTERNAL_MODULE__11__, __WEBPACK_EXTERNAL_MODULE__56__, __WEBPACK_EXTERNAL_MODULE__57__, __WEBPACK_EXTERNAL_MODULE__58__, __WEBPACK_EXTERNAL_MODULE__59__, __WEBPACK_EXTERNAL_MODULE__60__, __WEBPACK_EXTERNAL_MODULE__78__, __WEBPACK_EXTERNAL_MODULE__160__, __WEBPACK_EXTERNAL_MODULE__161__, __WEBPACK_EXTERNAL_MODULE__162__, __WEBPACK_EXTERNAL_MODULE__163__, __WEBPACK_EXTERNAL_MODULE__166__, __WEBPACK_EXTERNAL_MODULE__168__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -237,12 +237,6 @@ module.exports = function (it) {
 
 /***/ }),
 /* 10 */
-/***/ (function(module, exports) {
-
-module.exports = __WEBPACK_EXTERNAL_MODULE__10__;
-
-/***/ }),
-/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var anObject = __webpack_require__(4);
@@ -262,6 +256,12 @@ exports.f = __webpack_require__(12) ? Object.defineProperty : function definePro
   return O;
 };
 
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports) {
+
+module.exports = __WEBPACK_EXTERNAL_MODULE__11__;
 
 /***/ }),
 /* 12 */
@@ -368,7 +368,7 @@ module.exports = function (it, key) {
 /* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var dP = __webpack_require__(11);
+var dP = __webpack_require__(10);
 var createDesc = __webpack_require__(33);
 module.exports = __webpack_require__(12) ? function (object, key, value) {
   return dP.f(object, key, createDesc(1, value));
@@ -633,7 +633,7 @@ if (__webpack_require__(12)) {
   var setSpecies = __webpack_require__(45);
   var arrayFill = __webpack_require__(100);
   var arrayCopyWithin = __webpack_require__(131);
-  var $DP = __webpack_require__(11);
+  var $DP = __webpack_require__(10);
   var $GOPD = __webpack_require__(22);
   var dP = $DP.f;
   var gOPD = $GOPD.f;
@@ -1102,7 +1102,7 @@ module.exports = function (it, S) {
 var META = __webpack_require__(34)('meta');
 var isObject = __webpack_require__(6);
 var has = __webpack_require__(17);
-var setDesc = __webpack_require__(11).f;
+var setDesc = __webpack_require__(10).f;
 var id = 0;
 var isExtensible = Object.isExtensible || function () {
   return true;
@@ -1432,7 +1432,7 @@ Duplex.prototype._destroy = function (err, cb) {
 /* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var def = __webpack_require__(11).f;
+var def = __webpack_require__(10).f;
 var has = __webpack_require__(17);
 var TAG = __webpack_require__(8)('toStringTag');
 
@@ -1468,7 +1468,7 @@ module.exports = function (key) {
 "use strict";
 
 var global = __webpack_require__(5);
-var dP = __webpack_require__(11);
+var dP = __webpack_require__(10);
 var DESCRIPTORS = __webpack_require__(12);
 var SPECIES = __webpack_require__(8)('species');
 
@@ -5109,7 +5109,7 @@ module.exports = function (it) {
 
 "use strict";
 
-var $defineProperty = __webpack_require__(11);
+var $defineProperty = __webpack_require__(10);
 var createDesc = __webpack_require__(33);
 
 module.exports = function (object, index, value) {
@@ -5383,7 +5383,7 @@ var toInteger = __webpack_require__(21);
 var toLength = __webpack_require__(9);
 var toIndex = __webpack_require__(140);
 var gOPN = __webpack_require__(39).f;
-var dP = __webpack_require__(11).f;
+var dP = __webpack_require__(10).f;
 var arrayFill = __webpack_require__(100);
 var setToStringTag = __webpack_require__(42);
 var ARRAY_BUFFER = 'ArrayBuffer';
@@ -7384,7 +7384,7 @@ var global = __webpack_require__(5);
 var core = __webpack_require__(13);
 var LIBRARY = __webpack_require__(35);
 var wksExt = __webpack_require__(81);
-var defineProperty = __webpack_require__(11).f;
+var defineProperty = __webpack_require__(10).f;
 module.exports = function (name) {
   var $Symbol = core.Symbol || (core.Symbol = LIBRARY ? {} : global.Symbol || {});
   if (name.charAt(0) != '_' && !(name in $Symbol)) defineProperty($Symbol, name, { value: wksExt.f(name) });
@@ -7418,7 +7418,7 @@ module.exports = function (object, names) {
 /* 117 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var dP = __webpack_require__(11);
+var dP = __webpack_require__(10);
 var anObject = __webpack_require__(4);
 var getKeys = __webpack_require__(36);
 
@@ -7761,7 +7761,7 @@ __webpack_require__(1)({
 /***/ (function(module, exports, __webpack_require__) {
 
 // 21.2.5.3 get RegExp.prototype.flags()
-if (__webpack_require__(12) && /./g.flags != 'g') __webpack_require__(11).f(RegExp.prototype, 'flags', {
+if (__webpack_require__(12) && /./g.flags != 'g') __webpack_require__(10).f(RegExp.prototype, 'flags', {
   configurable: true,
   get: __webpack_require__(65)
 });
@@ -8109,7 +8109,7 @@ module.exports = function (C, x) {
 
 "use strict";
 
-var dP = __webpack_require__(11).f;
+var dP = __webpack_require__(10).f;
 var create = __webpack_require__(38);
 var redefineAll = __webpack_require__(47);
 var ctx = __webpack_require__(26);
@@ -15209,7 +15209,7 @@ module.exports = __webpack_require__(43);
 /* 165 */
 /***/ (function(module) {
 
-module.exports = {"a":"6.0.11"};
+module.exports = {"a":"6.0.12"};
 
 /***/ }),
 /* 166 */
@@ -15478,7 +15478,7 @@ var createDesc = __webpack_require__(33);
 var _create = __webpack_require__(38);
 var gOPNExt = __webpack_require__(118);
 var $GOPD = __webpack_require__(22);
-var $DP = __webpack_require__(11);
+var $DP = __webpack_require__(10);
 var $keys = __webpack_require__(36);
 var gOPD = $GOPD.f;
 var dP = $DP.f;
@@ -15725,7 +15725,7 @@ $export($export.S, 'Object', { create: __webpack_require__(38) });
 
 var $export = __webpack_require__(1);
 // 19.1.2.4 / 15.2.3.6 Object.defineProperty(O, P, Attributes)
-$export($export.S + $export.F * !__webpack_require__(12), 'Object', { defineProperty: __webpack_require__(11).f });
+$export($export.S + $export.F * !__webpack_require__(12), 'Object', { defineProperty: __webpack_require__(10).f });
 
 
 /***/ }),
@@ -15938,7 +15938,7 @@ $export($export.P, 'Function', { bind: __webpack_require__(121) });
 /* 192 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var dP = __webpack_require__(11).f;
+var dP = __webpack_require__(10).f;
 var FProto = Function.prototype;
 var nameRE = /^\s*function ([^ (]*)/;
 var NAME = 'name';
@@ -15967,7 +15967,7 @@ var getPrototypeOf = __webpack_require__(40);
 var HAS_INSTANCE = __webpack_require__(8)('hasInstance');
 var FunctionProto = Function.prototype;
 // 19.2.3.6 Function.prototype[@@hasInstance](V)
-if (!(HAS_INSTANCE in FunctionProto)) __webpack_require__(11).f(FunctionProto, HAS_INSTANCE, { value: function (O) {
+if (!(HAS_INSTANCE in FunctionProto)) __webpack_require__(10).f(FunctionProto, HAS_INSTANCE, { value: function (O) {
   if (typeof this != 'function' || !isObject(O)) return false;
   if (!isObject(this.prototype)) return O instanceof this;
   // for environment w/o native `@@hasInstance` logic enough `instanceof`, but add this:
@@ -16010,7 +16010,7 @@ var toPrimitive = __webpack_require__(31);
 var fails = __webpack_require__(3);
 var gOPN = __webpack_require__(39).f;
 var gOPD = __webpack_require__(22).f;
-var dP = __webpack_require__(11).f;
+var dP = __webpack_require__(10).f;
 var $trim = __webpack_require__(63).trim;
 var NUMBER = 'Number';
 var $Number = global[NUMBER];
@@ -17573,7 +17573,7 @@ __webpack_require__(45)('Array');
 
 var global = __webpack_require__(5);
 var inheritIfRequired = __webpack_require__(88);
-var dP = __webpack_require__(11).f;
+var dP = __webpack_require__(10).f;
 var gOPN = __webpack_require__(39).f;
 var isRegExp = __webpack_require__(95);
 var $flags = __webpack_require__(65);
@@ -18463,7 +18463,7 @@ $export($export.S + $export.F * (NEW_TARGET_BUG || ARGS_BUG), 'Reflect', {
 /***/ (function(module, exports, __webpack_require__) {
 
 // 26.1.3 Reflect.defineProperty(target, propertyKey, attributes)
-var dP = __webpack_require__(11);
+var dP = __webpack_require__(10);
 var $export = __webpack_require__(1);
 var anObject = __webpack_require__(4);
 var toPrimitive = __webpack_require__(31);
@@ -18664,7 +18664,7 @@ $export($export.S, 'Reflect', {
 /***/ (function(module, exports, __webpack_require__) {
 
 // 26.1.13 Reflect.set(target, propertyKey, V [, receiver])
-var dP = __webpack_require__(11);
+var dP = __webpack_require__(10);
 var gOPD = __webpack_require__(22);
 var getPrototypeOf = __webpack_require__(40);
 var has = __webpack_require__(17);
@@ -19805,7 +19805,7 @@ if(false) {}
 
 exports = module.exports = __webpack_require__(72)(false);
 // Module
-exports.push([module.i, ".dev-body{\n  margin: 2rem auto;\n  width: 100%;\n  max-width: 1500px;\n}\n\n.dev-reload-button{\n  position: absolute;\n  left: 1rem;\n  top: 1rem;\n  color: #ccc;\n}\n\n.keen-explorer-template{\n  margin: 0 auto;\n  width: 100%;\n  max-width: 1500px;\n}\n\n.keen-explorer-template #keen-explorer-container{\n    padding: 1rem;\n  }\n\n.PresetDateRangePicker_panel {\n  padding: 0 22px 11px\n}\n\n.PresetDateRangePicker_button {\n  position: relative;\n  height: 100%;\n  text-align: center;\n  background: 0 0;\n  border: 2px solid #00a699;\n  color: #00a699;\n  padding: 4px 12px;\n  margin-right: 8px;\n  font: inherit;\n  font-weight: 700;\n  line-height: normal;\n  overflow: visible;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  cursor: pointer\n}\n\n.PresetDateRangePicker_button:active {\n  outline: 0\n}\n\n.PresetDateRangePicker_button__selected {\n  color: #fff;\n  background: #00a699\n}\n\n.SingleDatePickerInput {\n  display: inline-block;\n  background-color: #fff\n}\n\n.SingleDatePickerInput__withBorder {\n  border-radius: 2px;\n  border: 1px solid #dbdbdb\n}\n\n.SingleDatePickerInput__rtl {\n  direction: rtl\n}\n\n.SingleDatePickerInput__disabled {\n  background-color: #f2f2f2\n}\n\n.SingleDatePickerInput__block {\n  display: block\n}\n\n.SingleDatePickerInput__showClearDate {\n  padding-right: 30px\n}\n\n.SingleDatePickerInput_clearDate {\n  background: 0 0;\n  border: 0;\n  color: inherit;\n  font: inherit;\n  line-height: normal;\n  overflow: visible;\n  cursor: pointer;\n  padding: 10px;\n  margin: 0 10px 0 5px;\n  position: absolute;\n  right: 0;\n  top: 50%;\n  -webkit-transform: translateY(-50%);\n  transform: translateY(-50%)\n}\n\n.SingleDatePickerInput_clearDate__default:focus,\n.SingleDatePickerInput_clearDate__default:hover {\n  background: #dbdbdb;\n  border-radius: 50%\n}\n\n.SingleDatePickerInput_clearDate__small {\n  padding: 6px\n}\n\n.SingleDatePickerInput_clearDate__hide {\n  visibility: hidden\n}\n\n.SingleDatePickerInput_clearDate_svg {\n  fill: #82888a;\n  height: 12px;\n  width: 15px;\n  vertical-align: middle\n}\n\n.SingleDatePickerInput_clearDate_svg__small {\n  height: 9px\n}\n\n.SingleDatePickerInput_calendarIcon {\n  background: 0 0;\n  border: 0;\n  color: inherit;\n  font: inherit;\n  line-height: normal;\n  overflow: visible;\n  cursor: pointer;\n  display: inline-block;\n  vertical-align: middle;\n  padding: 10px;\n  margin: 0 5px 0 10px\n}\n\n.SingleDatePickerInput_calendarIcon_svg {\n  fill: #82888a;\n  height: 15px;\n  width: 14px;\n  vertical-align: middle\n}\n\n.SingleDatePicker {\n  position: relative;\n  display: inline-block\n}\n\n.SingleDatePicker__block {\n  display: block\n}\n\n.SingleDatePicker_picker {\n  z-index: 1;\n  background-color: #fff;\n  position: absolute\n}\n\n.SingleDatePicker_picker__rtl {\n  direction: rtl\n}\n\n.SingleDatePicker_picker__directionLeft {\n  left: 0\n}\n\n.SingleDatePicker_picker__directionRight {\n  right: 0\n}\n\n.SingleDatePicker_picker__portal {\n  background-color: rgba(0,0,0,.3);\n  position: fixed;\n  top: 0;\n  left: 0;\n  height: 100%;\n  width: 100%\n}\n\n.SingleDatePicker_picker__fullScreenPortal {\n  background-color: #fff\n}\n\n.SingleDatePicker_closeButton {\n  background: 0 0;\n  border: 0;\n  color: inherit;\n  font: inherit;\n  line-height: normal;\n  overflow: visible;\n  cursor: pointer;\n  position: absolute;\n  top: 0;\n  right: 0;\n  padding: 15px;\n  z-index: 2\n}\n\n.SingleDatePicker_closeButton:focus,\n.SingleDatePicker_closeButton:hover {\n  color: darken(#cacccd,10%);\n  text-decoration: none\n}\n\n.SingleDatePicker_closeButton_svg {\n  height: 15px;\n  width: 15px;\n  fill: #cacccd\n}\n\n.DayPickerKeyboardShortcuts_buttonReset {\n  background: 0 0;\n  border: 0;\n  border-radius: 0;\n  color: inherit;\n  font: inherit;\n  line-height: normal;\n  overflow: visible;\n  padding: 0;\n  cursor: pointer;\n  font-size: 14px\n}\n\n.DayPickerKeyboardShortcuts_buttonReset:active {\n  outline: 0\n}\n\n.DayPickerKeyboardShortcuts_show {\n  width: 33px;\n  height: 26px;\n  position: absolute;\n  z-index: 2\n}\n\n.DayPickerKeyboardShortcuts_show::before {\n  content: \"\";\n  display: block;\n  position: absolute\n}\n\n.DayPickerKeyboardShortcuts_show__bottomRight {\n  bottom: 0;\n  right: 0\n}\n\n.DayPickerKeyboardShortcuts_show__bottomRight::before {\n  border-top: 26px solid transparent;\n  border-right: 33px solid #00a699;\n  bottom: 0;\n  right: 0\n}\n\n.DayPickerKeyboardShortcuts_show__bottomRight:hover::before {\n  border-right: 33px solid #008489\n}\n\n.DayPickerKeyboardShortcuts_show__topRight {\n  top: 0;\n  right: 0\n}\n\n.DayPickerKeyboardShortcuts_show__topRight::before {\n  border-bottom: 26px solid transparent;\n  border-right: 33px solid #00a699;\n  top: 0;\n  right: 0\n}\n\n.DayPickerKeyboardShortcuts_show__topRight:hover::before {\n  border-right: 33px solid #008489\n}\n\n.DayPickerKeyboardShortcuts_show__topLeft {\n  top: 0;\n  left: 0\n}\n\n.DayPickerKeyboardShortcuts_show__topLeft::before {\n  border-bottom: 26px solid transparent;\n  border-left: 33px solid #00a699;\n  top: 0;\n  left: 0\n}\n\n.DayPickerKeyboardShortcuts_show__topLeft:hover::before {\n  border-left: 33px solid #008489\n}\n\n.DayPickerKeyboardShortcuts_showSpan {\n  color: #fff;\n  position: absolute\n}\n\n.DayPickerKeyboardShortcuts_showSpan__bottomRight {\n  bottom: 0;\n  right: 5px\n}\n\n.DayPickerKeyboardShortcuts_showSpan__topRight {\n  top: 1px;\n  right: 5px\n}\n\n.DayPickerKeyboardShortcuts_showSpan__topLeft {\n  top: 1px;\n  left: 5px\n}\n\n.DayPickerKeyboardShortcuts_panel {\n  overflow: auto;\n  background: #fff;\n  border: 1px solid #dbdbdb;\n  border-radius: 2px;\n  position: absolute;\n  top: 0;\n  bottom: 0;\n  right: 0;\n  left: 0;\n  z-index: 2;\n  padding: 22px;\n  margin: 33px;\n  text-align: left\n}\n\n.DayPickerKeyboardShortcuts_title {\n  font-size: 16px;\n  font-weight: 700;\n  margin: 0\n}\n\n.DayPickerKeyboardShortcuts_list {\n  list-style: none;\n  padding: 0;\n  font-size: 14px\n}\n\n.DayPickerKeyboardShortcuts_close {\n  position: absolute;\n  right: 22px;\n  top: 22px;\n  z-index: 2\n}\n\n.DayPickerKeyboardShortcuts_close:active {\n  outline: 0\n}\n\n.DayPickerKeyboardShortcuts_closeSvg {\n  height: 15px;\n  width: 15px;\n  fill: #cacccd\n}\n\n.DayPickerKeyboardShortcuts_closeSvg:focus,\n.DayPickerKeyboardShortcuts_closeSvg:hover {\n  fill: #82888a\n}\n\n.CalendarDay {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  cursor: pointer;\n  font-size: 14px;\n  text-align: center\n}\n\n.CalendarDay:active {\n  outline: 0\n}\n\n.CalendarDay__defaultCursor {\n  cursor: default\n}\n\n.CalendarDay__default {\n  border: 1px solid #e4e7e7;\n  color: #484848;\n  background: #fff\n}\n\n.CalendarDay__default:hover {\n  background: #e4e7e7;\n  border: 1px solid #e4e7e7;\n  color: inherit\n}\n\n.CalendarDay__hovered_offset {\n  background: #f4f5f5;\n  border: 1px double #e4e7e7;\n  color: inherit\n}\n\n.CalendarDay__outside {\n  border: 0;\n  background: #fff;\n  color: #484848\n}\n\n.CalendarDay__outside:hover {\n  border: 0\n}\n\n.CalendarDay__blocked_minimum_nights {\n  background: #fff;\n  border: 1px solid #eceeee;\n  color: #cacccd\n}\n\n.CalendarDay__blocked_minimum_nights:active,\n.CalendarDay__blocked_minimum_nights:hover {\n  background: #fff;\n  color: #cacccd\n}\n\n.CalendarDay__highlighted_calendar {\n  background: #ffe8bc;\n  color: #484848\n}\n\n.CalendarDay__highlighted_calendar:active,\n.CalendarDay__highlighted_calendar:hover {\n  background: #ffce71;\n  color: #484848\n}\n\n.CalendarDay__selected_span {\n  background: #66e2da;\n  border: 1px double #33dacd;\n  color: #fff\n}\n\n.CalendarDay__selected_span:active,\n.CalendarDay__selected_span:hover {\n  background: #33dacd;\n  border: 1px double #33dacd;\n  color: #fff\n}\n\n.CalendarDay__last_in_range,\n.CalendarDay__last_in_range:hover {\n  border-style: solid\n}\n\n.CalendarDay__selected,\n.CalendarDay__selected:active,\n.CalendarDay__selected:hover {\n  background: #00a699;\n  border: 1px double #00a699;\n  color: #fff\n}\n\n.CalendarDay__hovered_span,\n.CalendarDay__hovered_span:hover {\n  background: #b2f1ec;\n  border: 1px double #80e8e0;\n  color: #007a87\n}\n\n.CalendarDay__hovered_span:active {\n  background: #80e8e0;\n  border: 1px double #80e8e0;\n  color: #007a87\n}\n\n.CalendarDay__blocked_calendar,\n.CalendarDay__blocked_calendar:active,\n.CalendarDay__blocked_calendar:hover {\n  background: #cacccd;\n  border: 1px solid #cacccd;\n  color: #82888a\n}\n\n.CalendarDay__blocked_out_of_range,\n.CalendarDay__blocked_out_of_range:active,\n.CalendarDay__blocked_out_of_range:hover {\n  background: #fff;\n  border: 1px solid #e4e7e7;\n  color: #cacccd\n}\n\n.CalendarMonth {\n  background: #fff;\n  text-align: center;\n  vertical-align: top;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none\n}\n\n.CalendarMonth_table {\n  border-collapse: collapse;\n  border-spacing: 0\n}\n\n.CalendarMonth_verticalSpacing {\n  border-collapse: separate\n}\n\n.CalendarMonth_caption {\n  color: #484848;\n  font-size: 18px;\n  text-align: center;\n  padding-top: 22px;\n  padding-bottom: 37px;\n  caption-side: top;\n  caption-side: initial\n}\n\n.CalendarMonth_caption__verticalScrollable {\n  padding-top: 12px;\n  padding-bottom: 7px\n}\n\n.CalendarMonthGrid {\n  background: #fff;\n  text-align: left;\n  z-index: 0\n}\n\n.CalendarMonthGrid__animating {\n  z-index: 1\n}\n\n.CalendarMonthGrid__horizontal {\n  position: absolute;\n  left: 9px\n}\n\n.CalendarMonthGrid__vertical {\n  margin: 0 auto\n}\n\n.CalendarMonthGrid__vertical_scrollable {\n  margin: 0 auto;\n  overflow-y: scroll\n}\n\n.CalendarMonthGrid_month__horizontal {\n  display: inline-block;\n  vertical-align: top;\n  min-height: 100%\n}\n\n.CalendarMonthGrid_month__hideForAnimation {\n  position: absolute;\n  z-index: -1;\n  opacity: 0;\n  pointer-events: none\n}\n\n.CalendarMonthGrid_month__hidden {\n  visibility: hidden\n}\n\n.DayPickerNavigation {\n  position: relative;\n  z-index: 2\n}\n\n.DayPickerNavigation__horizontal {\n  height: 0\n}\n\n.DayPickerNavigation__verticalDefault {\n  position: absolute;\n  width: 100%;\n  height: 52px;\n  bottom: 0;\n  left: 0\n}\n\n.DayPickerNavigation__verticalScrollableDefault {\n  position: relative\n}\n\n.DayPickerNavigation_button {\n  cursor: pointer;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n  border: 0;\n  padding: 0;\n  margin: 0\n}\n\n.DayPickerNavigation_button__default {\n  border: 1px solid #e4e7e7;\n  background-color: #fff;\n  color: #757575\n}\n\n.DayPickerNavigation_button__default:focus,\n.DayPickerNavigation_button__default:hover {\n  border: 1px solid #c4c4c4\n}\n\n.DayPickerNavigation_button__default:active {\n  background: #f2f2f2\n}\n\n.DayPickerNavigation_button__disabled {\n  cursor: default;\n  border: 1px solid #f2f2f2\n}\n\n.DayPickerNavigation_button__disabled:focus,\n.DayPickerNavigation_button__disabled:hover {\n  border: 1px solid #f2f2f2\n}\n\n.DayPickerNavigation_button__disabled:active {\n  background: 0 0\n}\n\n.DayPickerNavigation_button__horizontalDefault {\n  position: absolute;\n  top: 18px;\n  line-height: .78;\n  border-radius: 3px;\n  padding: 6px 9px\n}\n\n.DayPickerNavigation_leftButton__horizontalDefault {\n  left: 22px\n}\n\n.DayPickerNavigation_rightButton__horizontalDefault {\n  right: 22px\n}\n\n.DayPickerNavigation_button__verticalDefault {\n  padding: 5px;\n  background: #fff;\n  -webkit-box-shadow: 0 0 5px 2px rgba(0,0,0,.1);\n          box-shadow: 0 0 5px 2px rgba(0,0,0,.1);\n  position: relative;\n  display: inline-block;\n  text-align: center;\n  height: 100%;\n  width: 50%\n}\n\n.DayPickerNavigation_nextButton__verticalDefault {\n  border-left: 0\n}\n\n.DayPickerNavigation_nextButton__verticalScrollableDefault {\n  width: 100%\n}\n\n.DayPickerNavigation_svg__horizontal {\n  height: 19px;\n  width: 19px;\n  fill: #82888a;\n  display: block\n}\n\n.DayPickerNavigation_svg__vertical {\n  height: 42px;\n  width: 42px;\n  fill: #484848\n}\n\n.DayPickerNavigation_svg__disabled {\n  fill: #f2f2f2\n}\n\n.DayPicker {\n  background: #fff;\n  position: relative;\n  text-align: left\n}\n\n.DayPicker__horizontal {\n  background: #fff\n}\n\n.DayPicker__verticalScrollable {\n  height: 100%\n}\n\n.DayPicker__hidden {\n  visibility: hidden\n}\n\n.DayPicker__withBorder {\n  -webkit-box-shadow: 0 2px 6px rgba(0,0,0,.05),0 0 0 1px rgba(0,0,0,.07);\n          box-shadow: 0 2px 6px rgba(0,0,0,.05),0 0 0 1px rgba(0,0,0,.07);\n  border-radius: 3px\n}\n\n.DayPicker_portal__horizontal {\n  -webkit-box-shadow: none;\n          box-shadow: none;\n  position: absolute;\n  left: 50%;\n  top: 50%\n}\n\n.DayPicker_portal__vertical {\n  position: static;\n  position: initial\n}\n\n.DayPicker_focusRegion {\n  outline: 0\n}\n\n.DayPicker_calendarInfo__horizontal,\n.DayPicker_wrapper__horizontal {\n  display: inline-block;\n  vertical-align: top\n}\n\n.DayPicker_weekHeaders {\n  position: relative\n}\n\n.DayPicker_weekHeaders__horizontal {\n  margin-left: 9px\n}\n\n.DayPicker_weekHeader {\n  color: #757575;\n  position: absolute;\n  top: 62px;\n  z-index: 2;\n  text-align: left\n}\n\n.DayPicker_weekHeader__vertical {\n  left: 50%\n}\n\n.DayPicker_weekHeader__verticalScrollable {\n  top: 0;\n  display: table-row;\n  border-bottom: 1px solid #dbdbdb;\n  background: #fff;\n  margin-left: 0;\n  left: 0;\n  width: 100%;\n  text-align: center\n}\n\n.DayPicker_weekHeader_ul {\n  list-style: none;\n  margin: 1px 0;\n  padding-left: 0;\n  padding-right: 0;\n  font-size: 14px\n}\n\n.DayPicker_weekHeader_li {\n  display: inline-block;\n  text-align: center\n}\n\n.DayPicker_transitionContainer {\n  position: relative;\n  overflow: hidden;\n  border-radius: 3px\n}\n\n.DayPicker_transitionContainer__horizontal {\n  -webkit-transition: height .2s ease-in-out;\n  -o-transition: height .2s ease-in-out;\n  transition: height .2s ease-in-out\n}\n\n.DayPicker_transitionContainer__vertical {\n  width: 100%\n}\n\n.DayPicker_transitionContainer__verticalScrollable {\n  padding-top: 20px;\n  height: 100%;\n  position: absolute;\n  top: 0;\n  bottom: 0;\n  right: 0;\n  left: 0;\n  overflow-y: scroll\n}\n\n.DateInput {\n  margin: 0;\n  padding: 0;\n  background: #fff;\n  position: relative;\n  display: inline-block;\n  width: 130px;\n  vertical-align: middle\n}\n\n.DateInput__small {\n  width: 97px\n}\n\n.DateInput__block {\n  width: 100%\n}\n\n.DateInput__disabled {\n  background: #f2f2f2;\n  color: #dbdbdb\n}\n\n.DateInput_input {\n  font-weight: 200;\n  font-size: 19px;\n  line-height: 24px;\n  color: #484848;\n  background-color: #fff;\n  width: 100%;\n  padding: 11px 11px 9px;\n  border: 0;\n  border-top: 0;\n  border-right: 0;\n  border-bottom: 2px solid transparent;\n  border-left: 0;\n  border-radius: 0\n}\n\n.DateInput_input__small {\n  font-size: 15px;\n  line-height: 18px;\n  letter-spacing: .2px;\n  padding: 7px 7px 5px\n}\n\n.DateInput_input__regular {\n  font-weight: auto\n}\n\n.DateInput_input__readOnly {\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none\n}\n\n.DateInput_input__focused {\n  outline: 0;\n  background: #fff;\n  border: 0;\n  border-top: 0;\n  border-right: 0;\n  border-bottom: 2px solid #008489;\n  border-left: 0\n}\n\n.DateInput_input__disabled {\n  background: #f2f2f2;\n  font-style: italic\n}\n\n.DateInput_screenReaderMessage {\n  border: 0;\n  clip: rect(0,0,0,0);\n  height: 1px;\n  margin: -1px;\n  overflow: hidden;\n  padding: 0;\n  position: absolute;\n  width: 1px\n}\n\n.DateInput_fang {\n  position: absolute;\n  width: 20px;\n  height: 10px;\n  left: 22px;\n  z-index: 2\n}\n\n.DateInput_fangShape {\n  fill: #fff\n}\n\n.DateInput_fangStroke {\n  stroke: #dbdbdb;\n  fill: transparent\n}\n\n.DateRangePickerInput {\n  background-color: #fff;\n  display: inline-block\n}\n\n.DateRangePickerInput__disabled {\n  background: #f2f2f2\n}\n\n.DateRangePickerInput__withBorder {\n  border-radius: 2px;\n  border: 1px solid #dbdbdb\n}\n\n.DateRangePickerInput__rtl {\n  direction: rtl\n}\n\n.DateRangePickerInput__block {\n  display: block\n}\n\n.DateRangePickerInput__showClearDates {\n  padding-right: 30px\n}\n\n.DateRangePickerInput_arrow {\n  display: inline-block;\n  vertical-align: middle;\n  color: #484848\n}\n\n.DateRangePickerInput_arrow_svg {\n  vertical-align: middle;\n  fill: #484848;\n  height: 24px;\n  width: 24px\n}\n\n.DateRangePickerInput_clearDates {\n  background: 0 0;\n  border: 0;\n  color: inherit;\n  font: inherit;\n  line-height: normal;\n  overflow: visible;\n  cursor: pointer;\n  padding: 10px;\n  margin: 0 10px 0 5px;\n  position: absolute;\n  right: 0;\n  top: 50%;\n  -webkit-transform: translateY(-50%);\n  transform: translateY(-50%)\n}\n\n.DateRangePickerInput_clearDates__small {\n  padding: 6px\n}\n\n.DateRangePickerInput_clearDates_default:focus,\n.DateRangePickerInput_clearDates_default:hover {\n  background: #dbdbdb;\n  border-radius: 50%\n}\n\n.DateRangePickerInput_clearDates__hide {\n  visibility: hidden\n}\n\n.DateRangePickerInput_clearDates_svg {\n  fill: #82888a;\n  height: 12px;\n  width: 15px;\n  vertical-align: middle\n}\n\n.DateRangePickerInput_clearDates_svg__small {\n  height: 9px\n}\n\n.DateRangePickerInput_calendarIcon {\n  background: 0 0;\n  border: 0;\n  color: inherit;\n  font: inherit;\n  line-height: normal;\n  overflow: visible;\n  cursor: pointer;\n  display: inline-block;\n  vertical-align: middle;\n  padding: 10px;\n  margin: 0 5px 0 10px\n}\n\n.DateRangePickerInput_calendarIcon_svg {\n  fill: #82888a;\n  height: 15px;\n  width: 14px;\n  vertical-align: middle\n}\n\n.DateRangePicker {\n  position: relative;\n  display: inline-block\n}\n\n.DateRangePicker__block {\n  display: block\n}\n\n.DateRangePicker_picker {\n  z-index: 1;\n  background-color: #fff;\n  position: absolute\n}\n\n.DateRangePicker_picker__rtl {\n  direction: rtl\n}\n\n.DateRangePicker_picker__directionLeft {\n  left: 0\n}\n\n.DateRangePicker_picker__directionRight {\n  right: 0\n}\n\n.DateRangePicker_picker__portal {\n  background-color: rgba(0,0,0,.3);\n  position: fixed;\n  top: 0;\n  left: 0;\n  height: 100%;\n  width: 100%\n}\n\n.DateRangePicker_picker__fullScreenPortal {\n  background-color: #fff\n}\n\n.DateRangePicker_closeButton {\n  background: 0 0;\n  border: 0;\n  color: inherit;\n  font: inherit;\n  line-height: normal;\n  overflow: visible;\n  cursor: pointer;\n  position: absolute;\n  top: 0;\n  right: 0;\n  padding: 15px;\n  z-index: 2\n}\n\n.DateRangePicker_closeButton:focus,\n.DateRangePicker_closeButton:hover {\n  color: darken(#cacccd,10%);\n  text-decoration: none\n}\n\n.DateRangePicker_closeButton_svg {\n  height: 15px;\n  width: 15px;\n  fill: #cacccd\n}\n\n.rc-time-picker {\n  display: inline-block;\n  position: relative;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n\n.rc-time-picker * {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n\n.rc-time-picker-clear {\n  position: absolute;\n  right: 6px;\n  cursor: pointer;\n  overflow: hidden;\n  width: 20px;\n  height: 20px;\n  text-align: center;\n  line-height: 20px;\n  top: 3px;\n  margin: 0;\n}\n\n.rc-time-picker-clear-icon:after {\n  content: \"x\";\n  font-size: 12px;\n  font-style: normal;\n  color: #aaa;\n  display: inline-block;\n  line-height: 1;\n  height: 20px;\n  width: 20px;\n  -webkit-transition: color 0.3s ease;\n  -o-transition: color 0.3s ease;\n  transition: color 0.3s ease;\n}\n\n.rc-time-picker-clear-icon:hover:after {\n  color: #666;\n}\n\n.rc-time-picker-input {\n  width: 100%;\n  position: relative;\n  display: inline-block;\n  padding: 4px 7px;\n  height: 28px;\n  cursor: text;\n  font-size: 12px;\n  line-height: 1.5;\n  color: #666;\n  background-color: #fff;\n  background-image: none;\n  border: 1px solid #d9d9d9;\n  border-radius: 4px;\n  -webkit-transition: border 0.2s cubic-bezier(0.645, 0.045, 0.355, 1), background 0.2s cubic-bezier(0.645, 0.045, 0.355, 1), -webkit-box-shadow 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);\n  transition: border 0.2s cubic-bezier(0.645, 0.045, 0.355, 1), background 0.2s cubic-bezier(0.645, 0.045, 0.355, 1), -webkit-box-shadow 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);\n  -o-transition: border 0.2s cubic-bezier(0.645, 0.045, 0.355, 1), background 0.2s cubic-bezier(0.645, 0.045, 0.355, 1), box-shadow 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);\n  transition: border 0.2s cubic-bezier(0.645, 0.045, 0.355, 1), background 0.2s cubic-bezier(0.645, 0.045, 0.355, 1), box-shadow 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);\n  transition: border 0.2s cubic-bezier(0.645, 0.045, 0.355, 1), background 0.2s cubic-bezier(0.645, 0.045, 0.355, 1), box-shadow 0.2s cubic-bezier(0.645, 0.045, 0.355, 1), -webkit-box-shadow 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);\n}\n\n.rc-time-picker-input[disabled] {\n  color: #ccc;\n  background: #f7f7f7;\n  cursor: not-allowed;\n}\n\n.rc-time-picker-panel {\n  z-index: 1070;\n  width: 170px;\n  position: absolute;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n\n.rc-time-picker-panel * {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n\n.rc-time-picker-panel-inner {\n  display: inline-block;\n  position: relative;\n  outline: none;\n  list-style: none;\n  font-size: 12px;\n  text-align: left;\n  background-color: #fff;\n  border-radius: 4px;\n  -webkit-box-shadow: 0 1px 5px #ccc;\n          box-shadow: 0 1px 5px #ccc;\n  background-clip: padding-box;\n  border: 1px solid #ccc;\n  line-height: 1.5;\n}\n\n.rc-time-picker-panel-narrow {\n  max-width: 113px;\n}\n\n.rc-time-picker-panel-input {\n  margin: 0;\n  padding: 0;\n  width: 100%;\n  cursor: auto;\n  line-height: 1.5;\n  outline: 0;\n  border: 1px solid transparent;\n}\n\n.rc-time-picker-panel-input-wrap {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  position: relative;\n  padding: 6px;\n  border-bottom: 1px solid #e9e9e9;\n}\n\n.rc-time-picker-panel-input-invalid {\n  border-color: red;\n}\n\n.rc-time-picker-panel-select {\n  float: left;\n  font-size: 12px;\n  border: 1px solid #e9e9e9;\n  border-width: 0 1px;\n  margin-left: -1px;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  width: 56px;\n  max-height: 144px;\n  overflow-y: auto;\n  position: relative;\n}\n\n.rc-time-picker-panel-select-active {\n  overflow-y: auto;\n}\n\n.rc-time-picker-panel-select:first-child {\n  border-left: 0;\n  margin-left: 0;\n}\n\n.rc-time-picker-panel-select:last-child {\n  border-right: 0;\n}\n\n.rc-time-picker-panel-select ul {\n  list-style: none;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  width: 100%;\n}\n\n.rc-time-picker-panel-select li {\n  list-style: none;\n  margin: 0;\n  padding: 0 0 0 16px;\n  width: 100%;\n  height: 24px;\n  line-height: 24px;\n  text-align: left;\n  cursor: pointer;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n\n.rc-time-picker-panel-select li:hover {\n  background: #edfaff;\n}\n\nli.rc-time-picker-panel-select-option-selected {\n  background: #f7f7f7;\n  font-weight: bold;\n}\n\nli.rc-time-picker-panel-select-option-disabled {\n  color: #ccc;\n}\n\nli.rc-time-picker-panel-select-option-disabled:hover {\n  background: transparent;\n  cursor: not-allowed;\n}\n\n.keen-explorer {\n  font-family: Montserrat, Tahoma, Arial;\n  font-size: 0.88rem;\n  font-size: 0.88rem;\n  color: #000;\n  color: #000;\n  display: -ms-flexbox;\n  display: flex;\n}\n\n.ReactModalPortal {\n  font-family: Montserrat, Tahoma, Arial;\n  font-size: 0.88rem;\n  font-size: 0.88rem;\n  color: #000;\n  color: #000;\n  display: -ms-flexbox;\n  display: flex;\n}\n\n.rc-time-picker-panel {\n  font-family: Montserrat, Tahoma, Arial;\n  font-size: 0.88rem;\n  font-size: 0.88rem;\n  color: #000;\n  color: #000;\n  display: -ms-flexbox;\n  display: flex;\n}\n\n.keen-explorer .extraction,.ReactModalPortal .extraction,.rc-time-picker-panel .extraction{\n  margin-top: 1rem;\n}\n\n.keen-explorer .extraction .first-label,.ReactModalPortal .extraction .first-label,.rc-time-picker-panel .extraction .first-label{\n    padding-top: 0;\n  }\n\n.keen-explorer .extraction .input-text,.ReactModalPortal .extraction .input-text,.rc-time-picker-panel .extraction .input-text{\n    width: 100%;\n  }\n\n.keen-explorer .extraction .bulk-panel,.ReactModalPortal .extraction .bulk-panel,.rc-time-picker-panel .extraction .bulk-panel{\n    margin-bottom: 1rem;\n  }\n\n.keen-explorer .percentile .input-text,.ReactModalPortal .percentile .input-text,.rc-time-picker-panel .percentile .input-text{\n    width: 100%;\n  }\n\n.keen-explorer .filters-container .list,.ReactModalPortal .filters-container .list,.rc-time-picker-panel .filters-container .list{\n    margin: 2rem 0;\n    width: 100%;\n\n  }\n\n.keen-explorer .filters-container .list .row,.ReactModalPortal .filters-container .list .row,.rc-time-picker-panel .filters-container .list .row{\n      display: -ms-flexbox;\n      display: flex;\n      width: 100%;\n      margin: 0 0 1rem;\n    }\n\n.keen-explorer .filters-container .list .row .row-part,.ReactModalPortal .filters-container .list .row .row-part,.rc-time-picker-panel .filters-container .list .row .row-part{\n        -ms-flex:1;\n            flex:1;\n        padding: 0 0.5rem;\n      }\n\n.keen-explorer .filters-container .list .row .row-part input{\n          padding: 0.55rem 0.7rem;\n          font-size: 0.88rem;\n          font-size: 0.88rem;\n          border-radius: 4px;\n          border: 1px solid #ccc;\n          width: 100%;\n        }\n\n.ReactModalPortal .filters-container .list .row .row-part input{\n          padding: 0.55rem 0.7rem;\n          font-size: 0.88rem;\n          font-size: 0.88rem;\n          border-radius: 4px;\n          border: 1px solid #ccc;\n          width: 100%;\n        }\n\n.rc-time-picker-panel .filters-container .list .row .row-part input{\n          padding: 0.55rem 0.7rem;\n          font-size: 0.88rem;\n          font-size: 0.88rem;\n          border-radius: 4px;\n          border: 1px solid #ccc;\n          width: 100%;\n        }\n\n.keen-explorer .filters-container .list .row .row-part .datetime-pickers,.ReactModalPortal .filters-container .list .row .row-part .datetime-pickers,.rc-time-picker-panel .filters-container .list .row .row-part .datetime-pickers{\n          display: -ms-flexbox;\n          display: flex;\n        }\n\n.keen-explorer .filters-container .list .row .row-part .datetime-pickers .DateInput,.ReactModalPortal .filters-container .list .row .row-part .datetime-pickers .DateInput,.rc-time-picker-panel .filters-container .list .row .row-part .datetime-pickers .DateInput{\n            width: 100%;\n          }\n\n.keen-explorer .filters-container .list .row .row-part .datetime-pickers .SingleDatePickerInput,.ReactModalPortal .filters-container .list .row .row-part .datetime-pickers .SingleDatePickerInput,.rc-time-picker-panel .filters-container .list .row .row-part .datetime-pickers .SingleDatePickerInput{\n            width: 100%;\n          }\n\n.keen-explorer .filters-container .list .row .row-part .datetime-pickers .SingleDatePicker,.ReactModalPortal .filters-container .list .row .row-part .datetime-pickers .SingleDatePicker,.rc-time-picker-panel .filters-container .list .row .row-part .datetime-pickers .SingleDatePicker{\n            -ms-flex: 1;\n                flex: 1;\n            margin-right: 0.1rem;\n          }\n\n.keen-explorer .filters-container .list .row .row-part .datetime-pickers .SingleDatePickerInput__withBorder,.ReactModalPortal .filters-container .list .row .row-part .datetime-pickers .SingleDatePickerInput__withBorder,.rc-time-picker-panel .filters-container .list .row .row-part .datetime-pickers .SingleDatePickerInput__withBorder{\n            border: 0;\n          }\n\n.keen-explorer .filters-container .list .row .row-part .datetime-pickers input.DateInput_input,.ReactModalPortal .filters-container .list .row .row-part .datetime-pickers input.DateInput_input,.rc-time-picker-panel .filters-container .list .row .row-part .datetime-pickers input.DateInput_input{\n            padding: 0.333rem;\n            text-align: center;\n            height: 2.3rem;\n          }\n\n.keen-explorer .filters-container .list .row .row-part .datetime-pickers .rc-time-picker,.ReactModalPortal .filters-container .list .row .row-part .datetime-pickers .rc-time-picker,.rc-time-picker-panel .filters-container .list .row .row-part .datetime-pickers .rc-time-picker{\n            -ms-flex: 1;\n                flex: 1;\n          }\n\n.keen-explorer .filters-container .list .row .row-part .datetime-pickers input.rc-time-picker-input,.ReactModalPortal .filters-container .list .row .row-part .datetime-pickers input.rc-time-picker-input,.rc-time-picker-panel .filters-container .list .row .row-part .datetime-pickers input.rc-time-picker-input{\n            padding: 0.3rem;\n            text-align: center;\n            height: auto;\n            line-height: auto;\n            height: 2.3rem;\n          }\n\n.keen-explorer .filters-container .list .row .row-part .within-inputs input,.ReactModalPortal .filters-container .list .row .row-part .within-inputs input,.rc-time-picker-panel .filters-container .list .row .row-part .within-inputs input{\n            margin-bottom: 0.2rem;\n          }\n\n.keen-explorer .filters-container .list .row .row-part .delete,.ReactModalPortal .filters-container .list .row .row-part .delete,.rc-time-picker-panel .filters-container .list .row .row-part .delete{\n          cursor: pointer;\n          display: -ms-flexbox;\n          display: flex;\n          -ms-flex-align: center;\n              align-items: center;\n          height: 100%;\n        }\n\n.keen-explorer .filters-container .list .row .row-part .delete i, .ReactModalPortal .filters-container .list .row .row-part .delete i, .rc-time-picker-panel .filters-container .list .row .row-part .delete i {\n            color: #ea7373;\n            font-size: 1rem;\n            padding: 0.5rem;\n          }\n\n.keen-explorer .filters-container .list .row .no-flex,.ReactModalPortal .filters-container .list .row .no-flex,.rc-time-picker-panel .filters-container .list .row .no-flex{\n        -ms-flex: 0;\n            flex: 0;\n      }\n\n.keen-explorer .filters-container .action-buttons,.ReactModalPortal .filters-container .action-buttons,.rc-time-picker-panel .filters-container .action-buttons{\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-align: center;\n        align-items: center;\n    -ms-flex-pack: end;\n        justify-content: flex-end;\n    margin-top: 0;\n  }\n\n.keen-explorer .filters-container .action-buttons .button-add-filter,.ReactModalPortal .filters-container .action-buttons .button-add-filter,.rc-time-picker-panel .filters-container .action-buttons .button-add-filter{\n      margin-right: 1rem;\n      cursor: pointer;\n      text-transform: uppercase;\n      padding: 1rem 2rem;\n      background: #eee;\n      border-radius: 0.3rem;\n    }\n\n.keen-explorer .filters-container .action-buttons .button-add-filter i, .ReactModalPortal .filters-container .action-buttons .button-add-filter i, .rc-time-picker-panel .filters-container .action-buttons .button-add-filter i {\n        margin-right: 1rem;\n      }\n\n.keen-explorer .filters-container .action-buttons .button-done{\n      cursor: pointer;\n      color: #fff;\n      background: #45b2e8;\n      background: #45b2e8;\n      text-transform: uppercase;\n      width: 10rem;\n      padding: 1rem;\n      text-align: center;\n      border-radius: 0.3rem;\n    }\n\n.ReactModalPortal .filters-container .action-buttons .button-done{\n      cursor: pointer;\n      color: #fff;\n      background: #45b2e8;\n      background: #45b2e8;\n      text-transform: uppercase;\n      width: 10rem;\n      padding: 1rem;\n      text-align: center;\n      border-radius: 0.3rem;\n    }\n\n.rc-time-picker-panel .filters-container .action-buttons .button-done{\n      cursor: pointer;\n      color: #fff;\n      background: #45b2e8;\n      background: #45b2e8;\n      text-transform: uppercase;\n      width: 10rem;\n      padding: 1rem;\n      text-align: center;\n      border-radius: 0.3rem;\n    }\n\n.keen-explorer .filters-container .action-buttons .button-done i,.ReactModalPortal .filters-container .action-buttons .button-done i,.rc-time-picker-panel .filters-container .action-buttons .button-done i{\n        margin-right: 1rem;\n      }\n\n@media screen and (max-width: 1000px) {\n      .keen-explorer .filters-container .list .row,.ReactModalPortal .filters-container .list .row,.rc-time-picker-panel .filters-container .list .row{\n        -ms-flex-direction: column;\n            flex-direction: column;\n      }\n        .keen-explorer .filters-container .list .row .row-part,.ReactModalPortal .filters-container .list .row .row-part,.rc-time-picker-panel .filters-container .list .row .row-part{\n          margin-bottom: 0.3rem;\n        }\n        .keen-explorer .filters-container .list .row .delete,.ReactModalPortal .filters-container .list .row .delete,.rc-time-picker-panel .filters-container .list .row .delete{\n          float: right;\n          padding-right: 1rem;\n        }\n}\n\n.keen-explorer .modal-main,.ReactModalPortal .modal-main,.rc-time-picker-panel .modal-main{\n  display:-ms-flexbox;\n  display:flex;\n  -ms-flex-direction: column;\n      flex-direction: column;\n  height: 100%;\n  width: 100%;\n}\n\n.keen-explorer .modal-main .header,.ReactModalPortal .modal-main .header,.rc-time-picker-panel .modal-main .header{\n    -ms-flex:0;\n        flex:0;\n    border-bottom: 1px solid #eee;\n    padding-bottom: 1rem;\n  }\n\n.keen-explorer .modal-main .header .title,.ReactModalPortal .modal-main .header .title,.rc-time-picker-panel .modal-main .header .title{\n        float: left;\n      }\n\n.keen-explorer .modal-main .header .x,.ReactModalPortal .modal-main .header .x,.rc-time-picker-panel .modal-main .header .x{\n        color: #565656;\n        float: right;\n        font-weight: bold;\n        cursor: pointer;\n        padding: 1rem;\n        margin: -2rem -1rem;\n        font-size: 2rem;\n      }\n\n.keen-explorer .modal-main .container,.ReactModalPortal .modal-main .container,.rc-time-picker-panel .modal-main .container{\n    -ms-flex:1;\n        flex:1;\n    padding: 1rem 0;\n    clear: both;\n    width: 100%;\n    overflow-y: scroll;\n    white-space: pre-wrap;\n  }\n\n.keen-explorer .modal-main .button-copy,.ReactModalPortal .modal-main .button-copy,.rc-time-picker-panel .modal-main .button-copy{\n    padding: 1rem;\n    width: 10rem;\n    text-align: center;\n    cursor: pointer;\n    background: #1e93d8;\n    color: #fff;\n    border-radius: 0.5rem;\n    margin-top: 1rem;\n  }\n\n.keen-explorer .modal-main .button-copy:active,.ReactModalPortal .modal-main .button-copy:active,.rc-time-picker-panel .modal-main .button-copy:active{\n    background: #30a1e4;\n  }\n\n.keen-explorer .ReactModal__Overlay,.ReactModalPortal .ReactModal__Overlay,.rc-time-picker-panel .ReactModal__Overlay{\n  z-index: 9999;\n}\n\n.keen-explorer .saved-query, .ReactModalPortal .saved-query, .rc-time-picker-panel .saved-query {\n  margin: 1rem 0;\n  border: 1px solid #e8e8e8;\n  background: #fcfcfc;\n  padding: 1rem;\n  border-radius: 0.3rem;\n}\n\n.keen-explorer .saved-query .input-name {\n    font-size: 0.88rem;\n    font-size: 0.88rem;\n    padding: 1rem;\n    border-radius: 0.3rem;\n    border: 1px solid #e8e8e8;\n    width: 100%;\n  }\n\n.ReactModalPortal .saved-query .input-name {\n    font-size: 0.88rem;\n    font-size: 0.88rem;\n    padding: 1rem;\n    border-radius: 0.3rem;\n    border: 1px solid #e8e8e8;\n    width: 100%;\n  }\n\n.rc-time-picker-panel .saved-query .input-name {\n    font-size: 0.88rem;\n    font-size: 0.88rem;\n    padding: 1rem;\n    border-radius: 0.3rem;\n    border: 1px solid #e8e8e8;\n    width: 100%;\n  }\n\n.keen-explorer .saved-query .resource-name,.ReactModalPortal .saved-query .resource-name,.rc-time-picker-panel .saved-query .resource-name{\n    padding: 1rem 0.2rem 0;\n    display: -ms-flexbox;\n    display: flex;\n    overflow: hidden;\n    font-size: 0.8rem;\n  }\n\n.keen-explorer .saved-query .resource-name .line, .ReactModalPortal .saved-query .resource-name .line, .rc-time-picker-panel .saved-query .resource-name .line {\n      -ms-flex: 1;\n          flex: 1;\n      white-space: nowrap;\n    }\n\n.keen-explorer .saved-query .resource-name .line span,.ReactModalPortal .saved-query .resource-name .line span,.rc-time-picker-panel .saved-query .resource-name .line span{\n        white-space: nowrap;\n        overflow: hidden;\n        -ms-flex: 1;\n            flex: 1;\n      }\n\n.keen-explorer .saved-query .resource-name .line i, .ReactModalPortal .saved-query .resource-name .line i, .rc-time-picker-panel .saved-query .resource-name .line i {\n        -ms-flex: 0;\n            flex: 0;\n      }\n\n.keen-explorer .saved-query .resource-name .line-label,.ReactModalPortal .saved-query .resource-name .line-label,.rc-time-picker-panel .saved-query .resource-name .line-label{\n      -ms-flex: 0;\n          flex: 0;\n      margin-right: 0.5rem;\n    }\n\n.keen-explorer .saved-query .cache, .ReactModalPortal .saved-query .cache, .rc-time-picker-panel .saved-query .cache {\n    padding: 1rem 0 0;\n    max-width: 12rem;\n  }\n\n.keen-explorer .saved-query .cache .line-checkbox,.ReactModalPortal .saved-query .cache .line-checkbox,.rc-time-picker-panel .saved-query .cache .line-checkbox{\n      display: -ms-flexbox;\n      display: flex;\n    }\n\n.keen-explorer .saved-query .cache .line-checkbox input,.ReactModalPortal .saved-query .cache .line-checkbox input,.rc-time-picker-panel .saved-query .cache .line-checkbox input{\n        margin-right: 0.5rem;\n        outline: none;\n      }\n\n.keen-explorer .saved-query .cache .line-checkbox label,.ReactModalPortal .saved-query .cache .line-checkbox label,.rc-time-picker-panel .saved-query .cache .line-checkbox label{\n        cursor: pointer;\n      }\n\n.keen-explorer .saved-query .cache .cache-toggle,.ReactModalPortal .saved-query .cache .cache-toggle,.rc-time-picker-panel .saved-query .cache .cache-toggle{\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-align: center;\n          align-items: center;\n      cursor: pointer;\n      color: #128296;\n    }\n\n.keen-explorer .saved-query .cache i, .ReactModalPortal .saved-query .cache i, .rc-time-picker-panel .saved-query .cache i {\n      font-size: 1.3rem;\n      margin-right: 0.6rem;\n    }\n\n.keen-explorer .saved-query .cache .fa-toggle-off,.ReactModalPortal .saved-query .cache .fa-toggle-off,.rc-time-picker-panel .saved-query .cache .fa-toggle-off{\n      color: #7b7b7b;\n    }\n\n.keen-explorer .saved-query .cache .cache-refresh,.ReactModalPortal .saved-query .cache .cache-refresh,.rc-time-picker-panel .saved-query .cache .cache-refresh{\n    }\n\n.keen-explorer .saved-query .button-copy,.ReactModalPortal .saved-query .button-copy,.rc-time-picker-panel .saved-query .button-copy{\n    padding: 0.7rem;\n    right: 0;\n    bottom: 0;\n    border: 0;\n    cursor: pointer;\n    display: inline;\n  }\n\n.keen-explorer .saved-query .buttons * {\n      margin-top: 1rem;\n      padding: 0.88rem calc(0.88rem*2);\n      border-radius: 0.3rem;\n      font-size: 0.88rem;\n      font-size: 0.88rem;\n      cursor: pointer;\n      text-transform: uppercase;\n      border: 0;\n      font-weight: 600;\n      font-weight: 600;\n    }\n\n.ReactModalPortal .saved-query .buttons * {\n      margin-top: 1rem;\n      padding: 0.88rem calc(0.88rem*2);\n      border-radius: 0.3rem;\n      font-size: 0.88rem;\n      font-size: 0.88rem;\n      cursor: pointer;\n      text-transform: uppercase;\n      border: 0;\n      font-weight: 600;\n      font-weight: 600;\n    }\n\n.rc-time-picker-panel .saved-query .buttons * {\n      margin-top: 1rem;\n      padding: 0.88rem calc(0.88rem*2);\n      border-radius: 0.3rem;\n      font-size: 0.88rem;\n      font-size: 0.88rem;\n      cursor: pointer;\n      text-transform: uppercase;\n      border: 0;\n      font-weight: 600;\n      font-weight: 600;\n    }\n\n.keen-explorer .saved-query .buttons .button-save{\n      color: #fff;\n      background: #45b2e8;\n      background: #45b2e8;\n    }\n\n.ReactModalPortal .saved-query .buttons .button-save{\n      color: #fff;\n      background: #45b2e8;\n      background: #45b2e8;\n    }\n\n.rc-time-picker-panel .saved-query .buttons .button-save{\n      color: #fff;\n      background: #45b2e8;\n      background: #45b2e8;\n    }\n\n.keen-explorer .saved-query .buttons .button-clone{\n      margin-left: 1rem;\n      color: #45b2e8;\n      color: #45b2e8;\n      background: transparent;\n      border: 1px solid #eee;\n    }\n\n.ReactModalPortal .saved-query .buttons .button-clone{\n      margin-left: 1rem;\n      color: #45b2e8;\n      color: #45b2e8;\n      background: transparent;\n      border: 1px solid #eee;\n    }\n\n.rc-time-picker-panel .saved-query .buttons .button-clone{\n      margin-left: 1rem;\n      color: #45b2e8;\n      color: #45b2e8;\n      background: transparent;\n      border: 1px solid #eee;\n    }\n\n.keen-explorer .saved-query .buttons .button-delete,.ReactModalPortal .saved-query .buttons .button-delete,.rc-time-picker-panel .saved-query .buttons .button-delete{\n      float: right;\n      color: #6f6c6c;\n      background: transparent;\n      border: 1px solid #eee;\n    }\n\n.keen-explorer .saved-query .button-copy:active,.ReactModalPortal .saved-query .button-copy:active,.rc-time-picker-panel .saved-query .button-copy:active{\n    background: #fff;\n  }\n\n.keen-explorer .saved-queries,.ReactModalPortal .saved-queries,.rc-time-picker-panel .saved-queries{\n  overflow: scroll;\n  min-height: 100%;\n  max-height: 44rem;\n  padding-right: 1rem;\n}\n\n.keen-explorer .saved-queries .input-filter,.ReactModalPortal .saved-queries .input-filter,.rc-time-picker-panel .saved-queries .input-filter{\n    width: 100%;\n    padding: 0.6rem;\n    font-size: 0.9rem;\n    border: 1px solid #ccc;\n    margin: .5rem 0;\n    border-radius: 0.3rem;\n  }\n\n.keen-explorer .saved-queries .item{\n    position: relative;\n    padding: 1rem 0.5rem;\n    cursor: pointer;\n    overflow: auto;\n    border-bottom: 1px solid #f3f3f3;\n    background: #fff;\n    background: #fff;\n  }\n\n.ReactModalPortal .saved-queries .item{\n    position: relative;\n    padding: 1rem 0.5rem;\n    cursor: pointer;\n    overflow: auto;\n    border-bottom: 1px solid #f3f3f3;\n    background: #fff;\n    background: #fff;\n  }\n\n.rc-time-picker-panel .saved-queries .item{\n    position: relative;\n    padding: 1rem 0.5rem;\n    cursor: pointer;\n    overflow: auto;\n    border-bottom: 1px solid #f3f3f3;\n    background: #fff;\n    background: #fff;\n  }\n\n.keen-explorer .saved-queries .item .name,.ReactModalPortal .saved-queries .item .name,.rc-time-picker-panel .saved-queries .item .name{\n      margin: 0rem 1rem 1rem 0;\n    }\n\n.keen-explorer .saved-queries .item .cached{\n      float: left;\n      color: #3ecf8e;\n      color: #3ecf8e;\n      text-transform: uppercase;\n    }\n\n.ReactModalPortal .saved-queries .item .cached{\n      float: left;\n      color: #3ecf8e;\n      color: #3ecf8e;\n      text-transform: uppercase;\n    }\n\n.rc-time-picker-panel .saved-queries .item .cached{\n      float: left;\n      color: #3ecf8e;\n      color: #3ecf8e;\n      text-transform: uppercase;\n    }\n\n.keen-explorer .saved-queries .item .cached *, .ReactModalPortal .saved-queries .item .cached *, .rc-time-picker-panel .saved-queries .item .cached * {\n        font-size: 0.7rem;\n      }\n\n.keen-explorer .saved-queries .item .data,.ReactModalPortal .saved-queries .item .data,.rc-time-picker-panel .saved-queries .item .data{\n      float: right;\n      font-size: 0.7rem;\n      color: rgba(0,0,0,0.5);\n    }\n\n.keen-explorer .saved-queries .item .button-delete,.ReactModalPortal .saved-queries .item .button-delete,.rc-time-picker-panel .saved-queries .item .button-delete{\n      position: absolute;\n      right: 0.2rem;\n      top: 0.2rem;\n      padding: 0.2rem;\n      color: rgba(0,0,0,0.2);\n    }\n\n.keen-explorer .saved-queries .active{\n    background: #fcfcfc;\n    background: #fcfcfc;\n  }\n\n.ReactModalPortal .saved-queries .active{\n    background: #fcfcfc;\n    background: #fcfcfc;\n  }\n\n.rc-time-picker-panel .saved-queries .active{\n    background: #fcfcfc;\n    background: #fcfcfc;\n  }\n\n.keen-explorer .funnel .content,.ReactModalPortal .funnel .content,.rc-time-picker-panel .funnel .content{\n    padding: 0.3rem 0.5rem;\n  }\n\n.keen-explorer .funnel .input-text,.ReactModalPortal .funnel .input-text,.rc-time-picker-panel .funnel .input-text{\n    width: 100%;\n  }\n\n.keen-explorer .funnel .button,.ReactModalPortal .funnel .button,.rc-time-picker-panel .funnel .button{\n    cursor: pointer;\n  }\n\n.keen-explorer .funnel .button-delete,.ReactModalPortal .funnel .button-delete,.rc-time-picker-panel .funnel .button-delete{\n    color: #797979;\n  }\n\n.keen-explorer .funnel .button-add,.ReactModalPortal .funnel .button-add,.rc-time-picker-panel .funnel .button-add{\n    margin-top: 1rem;\n    padding: 0.7rem;\n    background: #fdfdfd;\n    border: 1px solid #e8e8e8;\n    border-radius: 5px;\n    display: inline-block;\n  }\n\n.keen-explorer .funnel .button-add i,.ReactModalPortal .funnel .button-add i,.rc-time-picker-panel .funnel .button-add i{\n      margin-right: 0.3rem;\n    }\n\n.keen-explorer .funnel .line-options,.ReactModalPortal .funnel .line-options,.rc-time-picker-panel .funnel .line-options{\n    margin: 1rem 0 0 0;\n  }\n\n.keen-explorer .funnel .line-checkbox,.ReactModalPortal .funnel .line-checkbox,.rc-time-picker-panel .funnel .line-checkbox{\n    margin: 0.5rem 0 0 0;\n  }\n\n.keen-explorer .funnel .line-checkbox input,.ReactModalPortal .funnel .line-checkbox input,.rc-time-picker-panel .funnel .line-checkbox input{\n      margin-right: 0.5rem;\n    }\n\n.keen-explorer .funnel .line-checkbox label,.ReactModalPortal .funnel .line-checkbox label,.rc-time-picker-panel .funnel .line-checkbox label{\n      cursor: pointer;\n    }\n\n.keen-explorer .funnel .step-switch-position-buttons,.ReactModalPortal .funnel .step-switch-position-buttons,.rc-time-picker-panel .funnel .step-switch-position-buttons{\n    float: left;\n    margin: -0.5rem 0.8rem 0 0;\n    color: #797979;\n  }\n\n.keen-explorer .funnel .step-switch-position-buttons .move-up,.ReactModalPortal .funnel .step-switch-position-buttons .move-up,.rc-time-picker-panel .funnel .step-switch-position-buttons .move-up{\n      margin-top: 0.1rem;\n    }\n\n.keen-explorer .funnel .step-switch-position-buttons .move-down,.ReactModalPortal .funnel .step-switch-position-buttons .move-down,.rc-time-picker-panel .funnel .step-switch-position-buttons .move-down{\n      margin-top: -0.3rem;\n    }\n\n.keen-explorer .keen-dataviz, .ReactModalPortal .keen-dataviz, .rc-time-picker-panel .keen-dataviz {\n  font-family: inherit !important;\n}\n\n.keen-explorer .keen-dataviz .keen-c3-legend .legend-item-text, .ReactModalPortal .keen-dataviz .keen-c3-legend .legend-item-text, .rc-time-picker-panel .keen-dataviz .keen-c3-legend .legend-item-text {\n      font-size: 1em;\n    }\n\n.keen-explorer .keen-dataviz-container, .ReactModalPortal .keen-dataviz-container, .rc-time-picker-panel .keen-dataviz-container {\n  height: calc(100% - 3rem);\n  overflow: hidden;\n}\n\n.keen-explorer .keen-dataviz-container .keen-dataviz-execution-meta, .ReactModalPortal .keen-dataviz-container .keen-dataviz-execution-meta, .rc-time-picker-panel .keen-dataviz-container .keen-dataviz-execution-meta {\n    top: 1rem;\n  }\n\n.keen-explorer .keen-dataviz-metric-value,.ReactModalPortal .keen-dataviz-metric-value,.rc-time-picker-panel .keen-dataviz-metric-value{\n  font-size: 4rem !important;\n}\n\n.keen-explorer .keen-dataviz .c3 svg g text tspan, .ReactModalPortal .keen-dataviz .c3 svg g text tspan, .rc-time-picker-panel .keen-dataviz .c3 svg g text tspan {\n  font-size: 10px !important;\n}\n\n.keen-explorer .a-preview-collection,.ReactModalPortal .a-preview-collection,.rc-time-picker-panel .a-preview-collection{\n  padding: 0.5rem;\n  margin: 0;\n  cursor: pointer;\n  background: #fafafa;\n  border-radius: 0.3rem;\n}\n\n.keen-explorer .a-preview-collection i,.ReactModalPortal .a-preview-collection i,.rc-time-picker-panel .a-preview-collection i{\n    font-size: 0.8em;\n    margin-right: 0.2rem;\n  }\n\n.keen-explorer .preview-collection-content,.ReactModalPortal .preview-collection-content,.rc-time-picker-panel .preview-collection-content{\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-direction: row;\n      flex-direction: row;\n}\n\n.keen-explorer .preview-collection-content .input-filter,.ReactModalPortal .preview-collection-content .input-filter,.rc-time-picker-panel .preview-collection-content .input-filter{\n    width: 100%;\n    padding: 0.6rem;\n    font-size: 0.9rem;\n    border: 1px solid #ccc;\n    margin: .5rem 0;\n    border-radius: 0.3rem;\n  }\n\n.keen-explorer .preview-collection-content .list, .ReactModalPortal .preview-collection-content .list, .rc-time-picker-panel .preview-collection-content .list {\n    height: 100%;\n    overflow-y: scroll;\n    -ms-flex: 1;\n        flex: 1;\n  }\n\n.keen-explorer .preview-collection-content .list .item{\n      cursor: pointer;\n      padding: 1rem;\n      overflow: auto;\n      border-bottom: 1px solid #f3f3f3;\n      background: #fff;\n      background: #fff;\n    }\n\n.ReactModalPortal .preview-collection-content .list .item{\n      cursor: pointer;\n      padding: 1rem;\n      overflow: auto;\n      border-bottom: 1px solid #f3f3f3;\n      background: #fff;\n      background: #fff;\n    }\n\n.rc-time-picker-panel .preview-collection-content .list .item{\n      cursor: pointer;\n      padding: 1rem;\n      overflow: auto;\n      border-bottom: 1px solid #f3f3f3;\n      background: #fff;\n      background: #fff;\n    }\n\n.keen-explorer .preview-collection-content .list .active{\n      background: #fcfcfc;\n      background: #fcfcfc;\n    }\n\n.ReactModalPortal .preview-collection-content .list .active{\n      background: #fcfcfc;\n      background: #fcfcfc;\n    }\n\n.rc-time-picker-panel .preview-collection-content .list .active{\n      background: #fcfcfc;\n      background: #fcfcfc;\n    }\n\n.keen-explorer .preview-collection-content .content,.ReactModalPortal .preview-collection-content .content,.rc-time-picker-panel .preview-collection-content .content{\n    -ms-flex: 3;\n        flex: 3;\n    height: 100%;\n    padding: 0.5rem 0 0.5rem 1rem;\n  }\n\n.keen-explorer .preview-collection-content .content .tabs .tab,.ReactModalPortal .preview-collection-content .content .tabs .tab,.rc-time-picker-panel .preview-collection-content .content .tabs .tab{\n        -ms-flex: none;\n            flex: none;\n        padding: 1rem 1.5rem;\n      }\n\n.keen-explorer .preview-collection-content .content .tabs .tab-placeholder,.ReactModalPortal .preview-collection-content .content .tabs .tab-placeholder,.rc-time-picker-panel .preview-collection-content .content .tabs .tab-placeholder{\n        -ms-flex: 1;\n            flex: 1;\n        border-bottom: 1px solid #e8e8e8;\n      }\n\n.keen-explorer .preview-collection-content .content .tab-content,.ReactModalPortal .preview-collection-content .content .tab-content,.rc-time-picker-panel .preview-collection-content .content .tab-content{\n      height: 100%;\n      width: 100%;\n      overflow: scroll;\n      padding-bottom: 4rem;\n    }\n\n@media screen and (max-width: 900px) {\n\n  .keen-explorer .preview-collection-content,.ReactModalPortal .preview-collection-content,.rc-time-picker-panel .preview-collection-content{\n    -ms-flex-direction: column;\n        flex-direction: column;\n  }\n    .keen-explorer .preview-collection-content .list, .keen-explorer .preview-collection-content .content, .ReactModalPortal .preview-collection-content .list, .ReactModalPortal .preview-collection-content .content, .rc-time-picker-panel .preview-collection-content .list, .rc-time-picker-panel .preview-collection-content .content{\n      height: auto;\n      overflow-y: visible;\n      padding: 0;\n    }\n    .keen-explorer .preview-collection-content .content,.ReactModalPortal .preview-collection-content .content,.rc-time-picker-panel .preview-collection-content .content{\n      padding-top: 2rem;\n    }\n}\n\n.keen-explorer .preview .download-toggle-label,.ReactModalPortal .preview .download-toggle-label,.rc-time-picker-panel .preview .download-toggle-label{\n    padding: 1rem;\n    cursor: pointer;\n    height: -webkit-min-content;\n    height: -moz-min-content;\n    height: min-content;\n  }\n\n.keen-explorer .preview .download-toggle-label i,.ReactModalPortal .preview .download-toggle-label i,.rc-time-picker-panel .preview .download-toggle-label i{\n      margin-right: 0.5rem;\n    }\n\n.keen-explorer .preview .download-buttons,.ReactModalPortal .preview .download-buttons,.rc-time-picker-panel .preview .download-buttons{\n    position: absolute;\n    background: #fdfdfd;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: column;\n        flex-direction: column;\n    -webkit-box-shadow: 2px 3px 6px rgba(0,0,0,0.05);\n            box-shadow: 2px 3px 6px rgba(0,0,0,0.05);\n    margin-top: -2px;\n  }\n\n.keen-explorer .preview .download-buttons button, .ReactModalPortal .preview .download-buttons button, .rc-time-picker-panel .preview .download-buttons button {\n      border: 1px solid #f7f7f7;\n    }\n\n.keen-explorer .preview .download-buttons button:hover,.ReactModalPortal .preview .download-buttons button:hover,.rc-time-picker-panel .preview .download-buttons button:hover{\n      background: #fff;\n    }\n\n.keen-explorer .preview .download-buttons .button-download,.ReactModalPortal .preview .download-buttons .button-download,.rc-time-picker-panel .preview .download-buttons .button-download{\n      padding: 1rem 3rem;\n      height: -webkit-min-content;\n      height: -moz-min-content;\n      height: min-content;\n    }\n\n.keen-explorer .preview .button-embed-html,.ReactModalPortal .preview .button-embed-html,.rc-time-picker-panel .preview .button-embed-html{\n    height: -webkit-min-content;\n    height: -moz-min-content;\n    height: min-content;\n  }\n\n.keen-explorer * {\n    -webkit-box-sizing: border-box;\n            box-sizing: border-box;\n    font-size: 0.88rem;\n    font-size: 0.88rem;\n}\n\n.ReactModalPortal * {\n    -webkit-box-sizing: border-box;\n            box-sizing: border-box;\n    font-size: 0.88rem;\n    font-size: 0.88rem;\n}\n\n.rc-time-picker-panel * {\n    -webkit-box-sizing: border-box;\n            box-sizing: border-box;\n    font-size: 0.88rem;\n    font-size: 0.88rem;\n}\n\n.keen-explorer button,.ReactModalPortal button,.rc-time-picker-panel button{\n    margin: 2rem 0 0;\n    padding: 1rem;\n}\n\n.keen-explorer .label-main,.ReactModalPortal .label-main,.rc-time-picker-panel .label-main{\n    padding: 1rem 0 0.3rem;\n}\n\n.keen-explorer .hide,.ReactModalPortal .hide,.rc-time-picker-panel .hide{\n    display: none;\n}\n\n.keen-explorer input:focus {\n    outline: 2px solid #00bbde;\n    outline: 2px solid #00bbde;\n}\n\n.ReactModalPortal input:focus {\n    outline: 2px solid #00bbde;\n    outline: 2px solid #00bbde;\n}\n\n.rc-time-picker-panel input:focus {\n    outline: 2px solid #00bbde;\n    outline: 2px solid #00bbde;\n}\n\n.keen-explorer .panel-main,.ReactModalPortal .panel-main,.rc-time-picker-panel .panel-main{\n    -ms-flex: 1;\n        flex: 1;\n    min-width: 26rem;\n    -webkit-box-shadow: -3px 7px 11px rgba(0,0,0,0.1);\n            box-shadow: -3px 7px 11px rgba(0,0,0,0.1);\n    border-radius: 0.3rem;\n}\n\n.keen-explorer .panel-main .panel-buttons .button-new-query,.ReactModalPortal .panel-main .panel-buttons .button-new-query,.rc-time-picker-panel .panel-main .panel-buttons .button-new-query{\n        -ms-flex: none;\n            flex: none;\n        cursor: pointer;\n      }\n\n.keen-explorer .panel-main .panel-content,.ReactModalPortal .panel-main .panel-content,.rc-time-picker-panel .panel-main .panel-content{\n      padding: 1rem;\n    }\n\n.keen-explorer .panel-main .panel-content .event-collection .label-main,.ReactModalPortal .panel-main .panel-content .event-collection .label-main,.rc-time-picker-panel .panel-main .panel-content .event-collection .label-main{\n        padding-top: 0;\n      }\n\n.keen-explorer .panel-main .panel-saved-queries,.ReactModalPortal .panel-main .panel-saved-queries,.rc-time-picker-panel .panel-main .panel-saved-queries{\n      padding-right: 0;\n    }\n\n.keen-explorer .panel-main .panel-funnel .label-analysis-type, .ReactModalPortal .panel-main .panel-funnel .label-analysis-type, .rc-time-picker-panel .panel-main .panel-funnel .label-analysis-type {\n        padding-top: 0;\n      }\n\n.keen-explorer .result,.ReactModalPortal .result,.rc-time-picker-panel .result{\n    -ms-flex: 3;\n        flex: 3;\n    padding: 0 1.5rem;\n    overflow-x: hidden;\n}\n\n.keen-explorer .foldable,.ReactModalPortal .foldable,.rc-time-picker-panel .foldable{\n    margin-top: 0.5rem;\n    border: 1px solid #e8e8e8;\n    background: #fdfdfd;\n    padding: 0.5rem;\n    cursor: pointer;\n    border-radius: 5px;\n}\n\n.keen-explorer .foldable-active,.ReactModalPortal .foldable-active,.rc-time-picker-panel .foldable-active{\n      background: none;\n    }\n\n.keen-explorer .foldable .title,.ReactModalPortal .foldable .title,.rc-time-picker-panel .foldable .title{\n      padding: 0.5rem;\n    }\n\n.keen-explorer .foldable .title .foldable-icon,.ReactModalPortal .foldable .title .foldable-icon,.rc-time-picker-panel .foldable .title .foldable-icon{\n        float: right;\n      }\n\n.keen-explorer .foldable .content,.ReactModalPortal .foldable .content,.rc-time-picker-panel .foldable .content{\n      margin-top: 0.5rem;\n      padding: 0;\n    }\n\n.keen-explorer .foldable .tab-content,.ReactModalPortal .foldable .tab-content,.rc-time-picker-panel .foldable .tab-content{\n      border: 0;\n    }\n\n.keen-explorer .filters,.ReactModalPortal .filters,.rc-time-picker-panel .filters{\n    display: -ms-flexbox;\n    display: flex;\n}\n\n.keen-explorer .filters .title,.ReactModalPortal .filters .title,.rc-time-picker-panel .filters .title{\n      -ms-flex: 1;\n          flex: 1;\n    }\n\n.keen-explorer .filters .count,.ReactModalPortal .filters .count,.rc-time-picker-panel .filters .count{\n      -ms-flex-item-align: center;\n          align-self: center;\n      text-align: right;\n      padding: 0 0.5rem 0 0;\n    }\n\n.keen-explorer .optional,.ReactModalPortal .optional,.rc-time-picker-panel .optional{\n    margin-left: 1em;\n    font-size: 0.7em;\n    color:#ddd;\n    color: #737373;\n}\n\n.keen-explorer .group-by .label-main,.ReactModalPortal .group-by .label-main,.rc-time-picker-panel .group-by .label-main{\n      padding: 0 0 0.5rem;\n    }\n\n.keen-explorer .group-by .btn-plus, .keen-explorer .group-by .btn-minus, .ReactModalPortal .group-by .btn-plus, .ReactModalPortal .group-by .btn-minus, .rc-time-picker-panel .group-by .btn-plus, .rc-time-picker-panel .group-by .btn-minus{\n      margin-top: 1rem;\n      padding: 0.7rem;\n      background: #fdfdfd;\n      border: 1px solid #e8e8e8;\n      border-radius: 5px;\n      display: inline-block;\n    }\n\n.keen-explorer .group-by .options,.ReactModalPortal .group-by .options,.rc-time-picker-panel .group-by .options{\n      margin-top: 1rem;\n      display:-ms-flexbox;\n      display:flex;\n    }\n\n.keen-explorer .group-by .options .order-by,.ReactModalPortal .group-by .options .order-by,.rc-time-picker-panel .group-by .options .order-by{\n        width: 8em;\n        padding-right: 1rem;\n      }\n\n.keen-explorer .group-by .options .order-by .select,.ReactModalPortal .group-by .options .order-by .select,.rc-time-picker-panel .group-by .options .order-by .select{\n          width: 100%;\n        }\n\n.keen-explorer .group-by .options .limit,.ReactModalPortal .group-by .options .limit,.rc-time-picker-panel .group-by .options .limit{\n        width: 8em;\n      }\n\n.keen-explorer .group-by .options .limit .input,.ReactModalPortal .group-by .options .limit .input,.rc-time-picker-panel .group-by .options .limit .input{\n          width: 100%;\n        }\n\n.keen-explorer .group-by .additional-target-property,.ReactModalPortal .group-by .additional-target-property,.rc-time-picker-panel .group-by .additional-target-property{\n      margin-top: 1rem;\n      padding-top: 1rem;\n      border-top: 1px solid #f1f1f1;\n    }\n\n.keen-explorer .lets-go,.ReactModalPortal .lets-go,.rc-time-picker-panel .lets-go{\n    display:-ms-flexbox;\n    display:flex;\n    width: 100%;\n    height: 390px;\n    -ms-flex-pack: center;\n        justify-content: center;\n    -ms-flex-align: center;\n        align-items: center;\n    color: #9b9b9b;\n    background: #fafafa;\n}\n\n.keen-explorer .tabs,.ReactModalPortal .tabs,.rc-time-picker-panel .tabs{\n  display:-ms-flexbox;\n  display:flex;\n}\n\n.keen-explorer .tabs .tab,.ReactModalPortal .tabs .tab,.rc-time-picker-panel .tabs .tab{\n    -ms-flex: 1;\n        flex: 1;\n    padding: 1rem;\n    background: #fafafa;\n    cursor: pointer;\n    border: 1px solid #e8e8e8;\n    border-radius: 5px 5px 0 0;\n  }\n\n.keen-explorer .tabs .active,.ReactModalPortal .tabs .active,.rc-time-picker-panel .tabs .active{\n    background: #fff;\n    border-bottom: 1px solid #fff;\n  }\n\n.keen-explorer .panel-buttons .active,.ReactModalPortal .panel-buttons .active,.rc-time-picker-panel .panel-buttons .active{\n    border-right: 0;\n  }\n\n.keen-explorer .tab-content,.ReactModalPortal .tab-content,.rc-time-picker-panel .tab-content{\n  padding: 1rem;\n  border: 1px solid #e8e8e8;\n  border-top: none;\n}\n\n.keen-explorer .input-number{\n  font-size: 0.88rem;\n  font-size: 0.88rem;\n  padding: 0.5rem 0.6rem;\n  border-radius: 5px;\n  border: 1px solid #ccc;\n  font-weight: 400;\n  line-height: normal;\n}\n\n.ReactModalPortal .input-number{\n  font-size: 0.88rem;\n  font-size: 0.88rem;\n  padding: 0.5rem 0.6rem;\n  border-radius: 5px;\n  border: 1px solid #ccc;\n  font-weight: 400;\n  line-height: normal;\n}\n\n.rc-time-picker-panel .input-number{\n  font-size: 0.88rem;\n  font-size: 0.88rem;\n  padding: 0.5rem 0.6rem;\n  border-radius: 5px;\n  border: 1px solid #ccc;\n  font-weight: 400;\n  line-height: normal;\n}\n\n.keen-explorer .input-text{\n  font-size: 0.88rem;\n  font-size: 0.88rem;\n  padding: 0.5rem 0.6rem;\n  border-radius: 5px;\n  border: 1px solid #ccc;\n  font-weight: 400;\n  line-height: normal;\n}\n\n.ReactModalPortal .input-text{\n  font-size: 0.88rem;\n  font-size: 0.88rem;\n  padding: 0.5rem 0.6rem;\n  border-radius: 5px;\n  border: 1px solid #ccc;\n  font-weight: 400;\n  line-height: normal;\n}\n\n.rc-time-picker-panel .input-text{\n  font-size: 0.88rem;\n  font-size: 0.88rem;\n  padding: 0.5rem 0.6rem;\n  border-radius: 5px;\n  border: 1px solid #ccc;\n  font-weight: 400;\n  line-height: normal;\n}\n\n.keen-explorer .interval .standard-units,.ReactModalPortal .interval .standard-units,.rc-time-picker-panel .interval .standard-units{\n    width: 10rem;\n  }\n\n.keen-explorer .interval .line,.ReactModalPortal .interval .line,.rc-time-picker-panel .interval .line{\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-align: center;\n        align-items: center;\n  }\n\n.keen-explorer .interval .line .title,.ReactModalPortal .interval .line .title,.rc-time-picker-panel .interval .line .title{\n      margin-right: 1rem;\n    }\n\n.keen-explorer .interval .line .input-number,.ReactModalPortal .interval .line .input-number,.rc-time-picker-panel .interval .line .input-number{\n      width: 4rem;\n      margin-right: 0.5rem;\n    }\n\n.keen-explorer .interval .line .time-units,.ReactModalPortal .interval .line .time-units,.rc-time-picker-panel .interval .line .time-units{\n      width: 10rem;\n    }\n\n.keen-explorer .timeframe,.ReactModalPortal .timeframe,.rc-time-picker-panel .timeframe{\n  margin-bottom: 0.5rem;\n}\n\n.keen-explorer .timeframe .relative,.ReactModalPortal .timeframe .relative,.rc-time-picker-panel .timeframe .relative{\n    display:-ms-flexbox;\n    display:flex;\n  }\n\n.keen-explorer .timeframe .relative .relativity, .keen-explorer .timeframe .relative .input-number, .ReactModalPortal .timeframe .relative .relativity, .ReactModalPortal .timeframe .relative .input-number, .rc-time-picker-panel .timeframe .relative .relativity, .rc-time-picker-panel .timeframe .relative .input-number{\n      margin-right:0.5rem;\n    }\n\n.keen-explorer .timeframe .relative .relativity,.ReactModalPortal .timeframe .relative .relativity,.rc-time-picker-panel .timeframe .relative .relativity{\n      -ms-flex: 0;\n          flex: 0;\n      max-width:12rem;\n      min-width: 6rem;\n    }\n\n.keen-explorer .timeframe .relative .units,.ReactModalPortal .timeframe .relative .units,.rc-time-picker-panel .timeframe .relative .units{\n      -ms-flex: 0;\n          flex: 0;\n      max-width:12rem;\n      min-width: 6rem;\n    }\n\n.keen-explorer .timeframe .relative .input-number,.ReactModalPortal .timeframe .relative .input-number,.rc-time-picker-panel .timeframe .relative .input-number{\n      -ms-flex: 1;\n          flex: 1;\n      min-width: 6rem;\n    }\n\n.keen-explorer .timeframe .description,.ReactModalPortal .timeframe .description,.rc-time-picker-panel .timeframe .description{\n    margin-top: 0.5rem;\n    padding: 1rem;\n    background: #fafafa;\n  }\n\n.keen-explorer .timeframe .tabAbsolute .DateRangePickerInput_arrow,.ReactModalPortal .timeframe .tabAbsolute .DateRangePickerInput_arrow,.rc-time-picker-panel .timeframe .tabAbsolute .DateRangePickerInput_arrow{\n      display: none;\n    }\n\n.keen-explorer .timeframe .tabAbsolute .DateInput, .ReactModalPortal .timeframe .tabAbsolute .DateInput, .rc-time-picker-panel .timeframe .tabAbsolute .DateInput {\n      width: 8rem;\n      background: none;\n    }\n\n.keen-explorer .timeframe .tabAbsolute .DateInput_input {\n      padding: 0.5rem;\n      font-size: 0.88rem;\n      font-size: 0.88rem;\n      line-height: normal;\n      color:#000;\n      font-weight: normal;\n      border-radius: 5px;\n    }\n\n.ReactModalPortal .timeframe .tabAbsolute .DateInput_input {\n      padding: 0.5rem;\n      font-size: 0.88rem;\n      font-size: 0.88rem;\n      line-height: normal;\n      color:#000;\n      font-weight: normal;\n      border-radius: 5px;\n    }\n\n.rc-time-picker-panel .timeframe .tabAbsolute .DateInput_input {\n      padding: 0.5rem;\n      font-size: 0.88rem;\n      font-size: 0.88rem;\n      line-height: normal;\n      color:#000;\n      font-weight: normal;\n      border-radius: 5px;\n    }\n\n.keen-explorer .timeframe .tabAbsolute .rc-time-picker-input{\n      font-size: 0.88rem;\n      font-size: 0.88rem;\n      line-height: normal;\n      font-weight: normal;\n      color: #000;\n      height: 2.4rem;\n      width: 7rem;\n      border-radius: 5px;\n    }\n\n.ReactModalPortal .timeframe .tabAbsolute .rc-time-picker-input{\n      font-size: 0.88rem;\n      font-size: 0.88rem;\n      line-height: normal;\n      font-weight: normal;\n      color: #000;\n      height: 2.4rem;\n      width: 7rem;\n      border-radius: 5px;\n    }\n\n.rc-time-picker-panel .timeframe .tabAbsolute .rc-time-picker-input{\n      font-size: 0.88rem;\n      font-size: 0.88rem;\n      line-height: normal;\n      font-weight: normal;\n      color: #000;\n      height: 2.4rem;\n      width: 7rem;\n      border-radius: 5px;\n    }\n\n.keen-explorer .timeframe .tabAbsolute .line,.ReactModalPortal .timeframe .tabAbsolute .line,.rc-time-picker-panel .timeframe .tabAbsolute .line{\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-align: center;\n          align-items: center;\n      margin: 0.5rem;\n    }\n\n.keen-explorer .timeframe .tabAbsolute .line .title,.ReactModalPortal .timeframe .tabAbsolute .line .title,.rc-time-picker-panel .timeframe .tabAbsolute .line .title{\n        width: 4rem;\n      }\n\n.keen-explorer .timeframe .tabAbsolute .line .SingleDatePicker, .ReactModalPortal .timeframe .tabAbsolute .line .SingleDatePicker, .rc-time-picker-panel .timeframe .tabAbsolute .line .SingleDatePicker {\n        margin-right: 0.5rem;\n      }\n\n.keen-explorer .timeframe .tabAbsolute .line .SingleDatePickerInput__withBorder, .ReactModalPortal .timeframe .tabAbsolute .line .SingleDatePickerInput__withBorder, .rc-time-picker-panel .timeframe .tabAbsolute .line .SingleDatePickerInput__withBorder {\n        border-radius: 5px;\n        border: 1px solid #dbdbdb;\n      }\n\n.keen-explorer .rc-time-picker-panel .rc-time-picker-panel-inner,.ReactModalPortal .rc-time-picker-panel .rc-time-picker-panel-inner,.rc-time-picker-panel .rc-time-picker-panel .rc-time-picker-panel-inner{\n    -webkit-box-shadow: none;\n            box-shadow: none;\n    border-radius: 5px;\n  }\n\n.keen-explorer .rc-time-picker-panel .rc-time-picker-input{\n    font-size: 0.88rem;\n    font-size: 0.88rem;\n    line-height: normal;\n    font-weight: normal;\n    color: #000;\n    height: 2.4rem;\n    width: 8rem;\n    border-radius: 5px;\n  }\n\n.ReactModalPortal .rc-time-picker-panel .rc-time-picker-input{\n    font-size: 0.88rem;\n    font-size: 0.88rem;\n    line-height: normal;\n    font-weight: normal;\n    color: #000;\n    height: 2.4rem;\n    width: 8rem;\n    border-radius: 5px;\n  }\n\n.rc-time-picker-panel .rc-time-picker-panel .rc-time-picker-input{\n    font-size: 0.88rem;\n    font-size: 0.88rem;\n    line-height: normal;\n    font-weight: normal;\n    color: #000;\n    height: 2.4rem;\n    width: 8rem;\n    border-radius: 5px;\n  }\n\n.keen-explorer .rc-time-picker-panel .rc-time-picker-panel-select{\n    font-size: 0.88rem;\n    font-size: 0.88rem;\n  }\n\n.ReactModalPortal .rc-time-picker-panel .rc-time-picker-panel-select{\n    font-size: 0.88rem;\n    font-size: 0.88rem;\n  }\n\n.rc-time-picker-panel .rc-time-picker-panel .rc-time-picker-panel-select{\n    font-size: 0.88rem;\n    font-size: 0.88rem;\n  }\n\n.keen-explorer .rc-time-picker-panel .rc-time-picker-panel-select li,.ReactModalPortal .rc-time-picker-panel .rc-time-picker-panel-select li,.rc-time-picker-panel .rc-time-picker-panel .rc-time-picker-panel-select li{\n      height: 2rem;\n      line-height: 2rem;\n    }\n\n.keen-explorer .rc-time-picker-panel .rc-time-picker-panel-input{\n    font-size: 0.88rem;\n    font-size: 0.88rem;\n  }\n\n.ReactModalPortal .rc-time-picker-panel .rc-time-picker-panel-input{\n    font-size: 0.88rem;\n    font-size: 0.88rem;\n  }\n\n.rc-time-picker-panel .rc-time-picker-panel .rc-time-picker-panel-input{\n    font-size: 0.88rem;\n    font-size: 0.88rem;\n  }\n\n.keen-explorer .apiQueryUrl,.ReactModalPortal .apiQueryUrl,.rc-time-picker-panel .apiQueryUrl{\n  cursor: pointer;\n  padding: 1rem;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-align: center;\n      align-items: center;\n  width: 100%;\n  font-size: 0.8rem;\n}\n\n.keen-explorer .apiQueryUrl input,.ReactModalPortal .apiQueryUrl input,.rc-time-picker-panel .apiQueryUrl input{\n    -ms-flex: 1;\n        flex: 1;\n    margin: 0 1rem;\n  }\n\n.keen-explorer .fa-copy:active{\n  color: #00bbde;\n  color: #00bbde;\n}\n\n.ReactModalPortal .fa-copy:active{\n  color: #00bbde;\n  color: #00bbde;\n}\n\n.rc-time-picker-panel .fa-copy:active{\n  color: #00bbde;\n  color: #00bbde;\n}\n\n.keen-explorer .button-run-query{\n  font-size: 0.88rem;\n  font-size: 0.88rem;\n  text-transform: uppercase;\n  border-radius: 0.3rem;\n  background: #3ecf8e;\n  background: #3ecf8e;\n  color: #fff;\n  font-weight: 600;\n  font-weight: 600;\n  border: 0;\n  padding: 0.88rem calc(0.88rem*2);\n  padding: 0.88rem calc(0.88rem*2);\n  cursor: pointer;\n  margin: 0;\n}\n\n.ReactModalPortal .button-run-query{\n  font-size: 0.88rem;\n  font-size: 0.88rem;\n  text-transform: uppercase;\n  border-radius: 0.3rem;\n  background: #3ecf8e;\n  background: #3ecf8e;\n  color: #fff;\n  font-weight: 600;\n  font-weight: 600;\n  border: 0;\n  padding: 0.88rem calc(0.88rem*2);\n  padding: 0.88rem calc(0.88rem*2);\n  cursor: pointer;\n  margin: 0;\n}\n\n.rc-time-picker-panel .button-run-query{\n  font-size: 0.88rem;\n  font-size: 0.88rem;\n  text-transform: uppercase;\n  border-radius: 0.3rem;\n  background: #3ecf8e;\n  background: #3ecf8e;\n  color: #fff;\n  font-weight: 600;\n  font-weight: 600;\n  border: 0;\n  padding: 0.88rem calc(0.88rem*2);\n  padding: 0.88rem calc(0.88rem*2);\n  cursor: pointer;\n  margin: 0;\n}\n\n.keen-explorer .button-with-loading-spinner .loading-spinner,.ReactModalPortal .button-with-loading-spinner .loading-spinner,.rc-time-picker-panel .button-with-loading-spinner .loading-spinner{\n    display: inline-block;\n    margin: 0 0.5rem 0 -0.5rem;\n    padding: 0;\n  }\n\n.keen-explorer .button-with-loading-spinner .loading-spinner i, .ReactModalPortal .button-with-loading-spinner .loading-spinner i, .rc-time-picker-panel .button-with-loading-spinner .loading-spinner i {\n      margin: 0;\n      padding: 0;\n      font-size: 1rem;\n    }\n\n.keen-explorer .error,.ReactModalPortal .error,.rc-time-picker-panel .error{\n  padding: 1rem;\n  background: #ffe5e5;\n  margin: 1rem 0;\n}\n\n.keen-explorer .box-info,.ReactModalPortal .box-info,.rc-time-picker-panel .box-info{\n  padding: 1rem;\n  background: #f1faff;\n}\n\n.keen-explorer .tab-content .box-info,.ReactModalPortal .tab-content .box-info,.rc-time-picker-panel .tab-content .box-info{\n  margin: -1rem;\n}\n\n.keen-explorer .preview,.ReactModalPortal .preview,.rc-time-picker-panel .preview{\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-direction: row;\n      flex-direction: row;\n  -ms-flex-wrap: wrap;\n      flex-wrap: wrap;\n  background: #fafafa;\n}\n\n.keen-explorer .preview .loader,.ReactModalPortal .preview .loader,.rc-time-picker-panel .preview .loader{\n    width: 100%;\n    height: 340px;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-align: center;\n        align-items: center;\n    -ms-flex-pack: center;\n        justify-content: center;\n    font-size: 5rem;\n    color: #eee;\n  }\n\n.keen-explorer .preview .keen-dataviz-container, .keen-explorer .preview .react-json-view, .ReactModalPortal .preview .keen-dataviz-container, .ReactModalPortal .preview .react-json-view, .rc-time-picker-panel .preview .keen-dataviz-container, .rc-time-picker-panel .preview .react-json-view{\n    width: 100%;\n    height: 340px;\n    background: #fff;\n    overflow-y: scroll;\n  }\n\n.keen-explorer .preview .react-json-view,.ReactModalPortal .preview .react-json-view,.rc-time-picker-panel .preview .react-json-view{\n    padding: 1rem;\n  }\n\n.keen-explorer .preview .select-chart-type-container,.ReactModalPortal .preview .select-chart-type-container,.rc-time-picker-panel .preview .select-chart-type-container{\n    -ms-flex: 1;\n        flex: 1;\n    -ms-flex-order: 1;\n        order: 1;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-item-align: center;\n        align-self: center;\n    -ms-flex-direction: column;\n        flex-direction: column;\n    -ms-flex-pack: end;\n        justify-content: flex-end;\n    margin: 0.3rem;\n  }\n\n.keen-explorer .preview .select-chart-type, .ReactModalPortal .preview .select-chart-type, .rc-time-picker-panel .preview .select-chart-type {\n    -ms-flex: 1;\n        flex: 1;\n    width: 20rem;\n    -ms-flex-item-align: end;\n        align-self: flex-end;\n  }\n\n.keen-explorer .preview .chart-not-supported-note,.ReactModalPortal .preview .chart-not-supported-note,.rc-time-picker-panel .preview .chart-not-supported-note{\n    float: right;\n    text-align: right;\n    padding: 0.5rem;\n  }\n\n.keen-explorer .preview .button-download,.ReactModalPortal .preview .button-download,.rc-time-picker-panel .preview .button-download{\n    -ms-flex-order: 0;\n        order: 0;\n    background: transparent;\n    border: 0;\n    margin: 0;\n    cursor: pointer;\n    font-size: 0.8rem;\n  }\n\n.keen-explorer .preview .button-download i,.ReactModalPortal .preview .button-download i,.rc-time-picker-panel .preview .button-download i{\n      margin-right: 0.5rem;\n    }\n\n.keen-explorer .action-buttons,.ReactModalPortal .action-buttons,.rc-time-picker-panel .action-buttons{\n  margin-top: 1rem;\n}\n\n.keen-explorer .chartType,.ReactModalPortal .chartType,.rc-time-picker-panel .chartType{\n  margin-top: 1rem;\n}\n\n.keen-explorer .button-toggle{\n  margin-left: 1rem;\n  display: inline;\n  cursor: pointer;\n  border-radius: 0.3rem;\n  font-size: 0.88rem;\n  font-size: 0.88rem;\n  font-weight: 600;\n  font-weight: 600;\n  text-transform: uppercase;\n  color: #3ecf8e;\n  color: #3ecf8e;\n  color: #45b2e8;\n  color: #45b2e8;\n  background: #fcfcfc;\n  border: 1px solid #efefef;\n  border: 1px solid #efefef;\n  padding: 0.88rem calc(0.88rem*2);\n  padding: 0.88rem calc(0.88rem*2);\n}\n\n.ReactModalPortal .button-toggle{\n  margin-left: 1rem;\n  display: inline;\n  cursor: pointer;\n  border-radius: 0.3rem;\n  font-size: 0.88rem;\n  font-size: 0.88rem;\n  font-weight: 600;\n  font-weight: 600;\n  text-transform: uppercase;\n  color: #3ecf8e;\n  color: #3ecf8e;\n  color: #45b2e8;\n  color: #45b2e8;\n  background: #fcfcfc;\n  border: 1px solid #efefef;\n  border: 1px solid #efefef;\n  padding: 0.88rem calc(0.88rem*2);\n  padding: 0.88rem calc(0.88rem*2);\n}\n\n.rc-time-picker-panel .button-toggle{\n  margin-left: 1rem;\n  display: inline;\n  cursor: pointer;\n  border-radius: 0.3rem;\n  font-size: 0.88rem;\n  font-size: 0.88rem;\n  font-weight: 600;\n  font-weight: 600;\n  text-transform: uppercase;\n  color: #3ecf8e;\n  color: #3ecf8e;\n  color: #45b2e8;\n  color: #45b2e8;\n  background: #fcfcfc;\n  border: 1px solid #efefef;\n  border: 1px solid #efefef;\n  padding: 0.88rem calc(0.88rem*2);\n  padding: 0.88rem calc(0.88rem*2);\n}\n\n.keen-explorer .button-toggle i, .ReactModalPortal .button-toggle i, .rc-time-picker-panel .button-toggle i {\n    margin-left: 1rem;\n  }\n\n.keen-explorer .button-toggle-active, .ReactModalPortal .button-toggle-active, .rc-time-picker-panel .button-toggle-active {\n  background: rgb(255, 255, 255);\n}\n\n.keen-explorer .result-string,.ReactModalPortal .result-string,.rc-time-picker-panel .result-string{\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-pack: center;\n      justify-content: center;\n  -ms-flex-align: center;\n      align-items: center;\n}\n\n.keen-explorer .CalendarDay__selected {\n  background: #00bbde;\n  background: #00bbde;\n  border: 1px double #00bbde;\n  border: 1px double #00bbde;\n}\n\n.keen-explorer .CalendarDay__selected:active {\n  background: #00bbde;\n  background: #00bbde;\n  border: 1px double #00bbde;\n  border: 1px double #00bbde;\n}\n\n.keen-explorer .CalendarDay__selected:hover {\n  background: #00bbde;\n  background: #00bbde;\n  border: 1px double #00bbde;\n  border: 1px double #00bbde;\n}\n\n.ReactModalPortal .CalendarDay__selected {\n  background: #00bbde;\n  background: #00bbde;\n  border: 1px double #00bbde;\n  border: 1px double #00bbde;\n}\n\n.ReactModalPortal .CalendarDay__selected:active {\n  background: #00bbde;\n  background: #00bbde;\n  border: 1px double #00bbde;\n  border: 1px double #00bbde;\n}\n\n.ReactModalPortal .CalendarDay__selected:hover {\n  background: #00bbde;\n  background: #00bbde;\n  border: 1px double #00bbde;\n  border: 1px double #00bbde;\n}\n\n.rc-time-picker-panel .CalendarDay__selected {\n  background: #00bbde;\n  background: #00bbde;\n  border: 1px double #00bbde;\n  border: 1px double #00bbde;\n}\n\n.rc-time-picker-panel .CalendarDay__selected:active {\n  background: #00bbde;\n  background: #00bbde;\n  border: 1px double #00bbde;\n  border: 1px double #00bbde;\n}\n\n.rc-time-picker-panel .CalendarDay__selected:hover {\n  background: #00bbde;\n  background: #00bbde;\n  border: 1px double #00bbde;\n  border: 1px double #00bbde;\n}\n\n.keen-explorer .DayPickerKeyboardShortcuts_show__bottomRight::before{\n  border-right: 33px solid #00bbde;\n  border-right: 33px solid #00bbde;\n}\n\n.ReactModalPortal .DayPickerKeyboardShortcuts_show__bottomRight::before{\n  border-right: 33px solid #00bbde;\n  border-right: 33px solid #00bbde;\n}\n\n.rc-time-picker-panel .DayPickerKeyboardShortcuts_show__bottomRight::before{\n  border-right: 33px solid #00bbde;\n  border-right: 33px solid #00bbde;\n}\n\n.keen-explorer .DateInput_input__focused{\n  border-bottom: 2px solid #00bbde;\n  border-bottom: 2px solid #00bbde;\n}\n\n.ReactModalPortal .DateInput_input__focused{\n  border-bottom: 2px solid #00bbde;\n  border-bottom: 2px solid #00bbde;\n}\n\n.rc-time-picker-panel .DateInput_input__focused{\n  border-bottom: 2px solid #00bbde;\n  border-bottom: 2px solid #00bbde;\n}\n\n.keen-explorer .loading-spinner i, .ReactModalPortal .loading-spinner i, .rc-time-picker-panel .loading-spinner i {\n      font-size: 1.5rem;\n    }\n\n.keen-explorer .fa-spin, .ReactModalPortal .fa-spin, .rc-time-picker-panel .fa-spin {\n    -webkit-animation: fa-spin 1s infinite linear;\n            animation: fa-spin 1s infinite linear;\n}\n\n.keen-explorer .react-select-option,.ReactModalPortal .react-select-option,.rc-time-picker-panel .react-select-option{\n    padding: 0.7rem 1rem;\n}\n\n.keen-explorer .react-json-view .string-value,.ReactModalPortal .react-json-view .string-value,.rc-time-picker-panel .react-json-view .string-value{\n      word-break: break-word;\n    }\n\n@media screen and (max-width: 1000px) {\n  .keen-explorer{\n    -ms-flex-direction: column;\n        flex-direction: column;\n  }\n    .keen-explorer .panel{\n      -webkit-box-shadow: none;\n              box-shadow: none;\n      min-width: none;\n    }\n      .keen-explorer .panel .panel-content{\n        padding: 0 1rem;\n      }\n    .keen-explorer .result{\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: column;\n          flex-direction: column;\n    }\n      .keen-explorer .result .preview, .keen-explorer .result .lets-go{\n        -ms-flex-order: 1;\n            order: 1;\n      }\n      .keen-explorer .result .error{\n        margin-bottom: 0;\n      }\n      .keen-explorer .result .button-run-query{\n        -ms-flex-order: 0;\n            order: 0;\n      }\n      .keen-explorer .result .button-toggle {\n        -ms-flex-order: 3;\n            order: 3;\n      }\n      .keen-explorer .result .saved-query{\n        -ms-flex-order: 3;\n            order: 3;\n      }\n      .keen-explorer .result .action-buttons{\n        margin-bottom: 1rem;\n      }\n    .filters-container .delete{\n      margin-top: 0.5rem;\n    }\n}", ""]);
+exports.push([module.i, ".dev-body{\n  margin: 2rem auto;\n  width: 100%;\n  max-width: 1500px;\n}\n\n.dev-reload-button{\n  position: absolute;\n  left: 1rem;\n  top: 1rem;\n  color: #ccc;\n}\n\n.keen-explorer-template{\n  margin: 0 auto;\n  width: 100%;\n  max-width: 1500px;\n}\n\n.keen-explorer-template #keen-explorer-container{\n    padding: 1rem;\n  }\n\n.PresetDateRangePicker_panel {\n  padding: 0 22px 11px\n}\n\n.PresetDateRangePicker_button {\n  position: relative;\n  height: 100%;\n  text-align: center;\n  background: 0 0;\n  border: 2px solid #00a699;\n  color: #00a699;\n  padding: 4px 12px;\n  margin-right: 8px;\n  font: inherit;\n  font-weight: 700;\n  line-height: normal;\n  overflow: visible;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  cursor: pointer\n}\n\n.PresetDateRangePicker_button:active {\n  outline: 0\n}\n\n.PresetDateRangePicker_button__selected {\n  color: #fff;\n  background: #00a699\n}\n\n.SingleDatePickerInput {\n  display: inline-block;\n  background-color: #fff\n}\n\n.SingleDatePickerInput__withBorder {\n  border-radius: 2px;\n  border: 1px solid #dbdbdb\n}\n\n.SingleDatePickerInput__rtl {\n  direction: rtl\n}\n\n.SingleDatePickerInput__disabled {\n  background-color: #f2f2f2\n}\n\n.SingleDatePickerInput__block {\n  display: block\n}\n\n.SingleDatePickerInput__showClearDate {\n  padding-right: 30px\n}\n\n.SingleDatePickerInput_clearDate {\n  background: 0 0;\n  border: 0;\n  color: inherit;\n  font: inherit;\n  line-height: normal;\n  overflow: visible;\n  cursor: pointer;\n  padding: 10px;\n  margin: 0 10px 0 5px;\n  position: absolute;\n  right: 0;\n  top: 50%;\n  -webkit-transform: translateY(-50%);\n  transform: translateY(-50%)\n}\n\n.SingleDatePickerInput_clearDate__default:focus,\n.SingleDatePickerInput_clearDate__default:hover {\n  background: #dbdbdb;\n  border-radius: 50%\n}\n\n.SingleDatePickerInput_clearDate__small {\n  padding: 6px\n}\n\n.SingleDatePickerInput_clearDate__hide {\n  visibility: hidden\n}\n\n.SingleDatePickerInput_clearDate_svg {\n  fill: #82888a;\n  height: 12px;\n  width: 15px;\n  vertical-align: middle\n}\n\n.SingleDatePickerInput_clearDate_svg__small {\n  height: 9px\n}\n\n.SingleDatePickerInput_calendarIcon {\n  background: 0 0;\n  border: 0;\n  color: inherit;\n  font: inherit;\n  line-height: normal;\n  overflow: visible;\n  cursor: pointer;\n  display: inline-block;\n  vertical-align: middle;\n  padding: 10px;\n  margin: 0 5px 0 10px\n}\n\n.SingleDatePickerInput_calendarIcon_svg {\n  fill: #82888a;\n  height: 15px;\n  width: 14px;\n  vertical-align: middle\n}\n\n.SingleDatePicker {\n  position: relative;\n  display: inline-block\n}\n\n.SingleDatePicker__block {\n  display: block\n}\n\n.SingleDatePicker_picker {\n  z-index: 1;\n  background-color: #fff;\n  position: absolute\n}\n\n.SingleDatePicker_picker__rtl {\n  direction: rtl\n}\n\n.SingleDatePicker_picker__directionLeft {\n  left: 0\n}\n\n.SingleDatePicker_picker__directionRight {\n  right: 0\n}\n\n.SingleDatePicker_picker__portal {\n  background-color: rgba(0,0,0,.3);\n  position: fixed;\n  top: 0;\n  left: 0;\n  height: 100%;\n  width: 100%\n}\n\n.SingleDatePicker_picker__fullScreenPortal {\n  background-color: #fff\n}\n\n.SingleDatePicker_closeButton {\n  background: 0 0;\n  border: 0;\n  color: inherit;\n  font: inherit;\n  line-height: normal;\n  overflow: visible;\n  cursor: pointer;\n  position: absolute;\n  top: 0;\n  right: 0;\n  padding: 15px;\n  z-index: 2\n}\n\n.SingleDatePicker_closeButton:focus,\n.SingleDatePicker_closeButton:hover {\n  color: darken(#cacccd,10%);\n  text-decoration: none\n}\n\n.SingleDatePicker_closeButton_svg {\n  height: 15px;\n  width: 15px;\n  fill: #cacccd\n}\n\n.DayPickerKeyboardShortcuts_buttonReset {\n  background: 0 0;\n  border: 0;\n  border-radius: 0;\n  color: inherit;\n  font: inherit;\n  line-height: normal;\n  overflow: visible;\n  padding: 0;\n  cursor: pointer;\n  font-size: 14px\n}\n\n.DayPickerKeyboardShortcuts_buttonReset:active {\n  outline: 0\n}\n\n.DayPickerKeyboardShortcuts_show {\n  width: 33px;\n  height: 26px;\n  position: absolute;\n  z-index: 2\n}\n\n.DayPickerKeyboardShortcuts_show::before {\n  content: \"\";\n  display: block;\n  position: absolute\n}\n\n.DayPickerKeyboardShortcuts_show__bottomRight {\n  bottom: 0;\n  right: 0\n}\n\n.DayPickerKeyboardShortcuts_show__bottomRight::before {\n  border-top: 26px solid transparent;\n  border-right: 33px solid #00a699;\n  bottom: 0;\n  right: 0\n}\n\n.DayPickerKeyboardShortcuts_show__bottomRight:hover::before {\n  border-right: 33px solid #008489\n}\n\n.DayPickerKeyboardShortcuts_show__topRight {\n  top: 0;\n  right: 0\n}\n\n.DayPickerKeyboardShortcuts_show__topRight::before {\n  border-bottom: 26px solid transparent;\n  border-right: 33px solid #00a699;\n  top: 0;\n  right: 0\n}\n\n.DayPickerKeyboardShortcuts_show__topRight:hover::before {\n  border-right: 33px solid #008489\n}\n\n.DayPickerKeyboardShortcuts_show__topLeft {\n  top: 0;\n  left: 0\n}\n\n.DayPickerKeyboardShortcuts_show__topLeft::before {\n  border-bottom: 26px solid transparent;\n  border-left: 33px solid #00a699;\n  top: 0;\n  left: 0\n}\n\n.DayPickerKeyboardShortcuts_show__topLeft:hover::before {\n  border-left: 33px solid #008489\n}\n\n.DayPickerKeyboardShortcuts_showSpan {\n  color: #fff;\n  position: absolute\n}\n\n.DayPickerKeyboardShortcuts_showSpan__bottomRight {\n  bottom: 0;\n  right: 5px\n}\n\n.DayPickerKeyboardShortcuts_showSpan__topRight {\n  top: 1px;\n  right: 5px\n}\n\n.DayPickerKeyboardShortcuts_showSpan__topLeft {\n  top: 1px;\n  left: 5px\n}\n\n.DayPickerKeyboardShortcuts_panel {\n  overflow: auto;\n  background: #fff;\n  border: 1px solid #dbdbdb;\n  border-radius: 2px;\n  position: absolute;\n  top: 0;\n  bottom: 0;\n  right: 0;\n  left: 0;\n  z-index: 2;\n  padding: 22px;\n  margin: 33px;\n  text-align: left\n}\n\n.DayPickerKeyboardShortcuts_title {\n  font-size: 16px;\n  font-weight: 700;\n  margin: 0\n}\n\n.DayPickerKeyboardShortcuts_list {\n  list-style: none;\n  padding: 0;\n  font-size: 14px\n}\n\n.DayPickerKeyboardShortcuts_close {\n  position: absolute;\n  right: 22px;\n  top: 22px;\n  z-index: 2\n}\n\n.DayPickerKeyboardShortcuts_close:active {\n  outline: 0\n}\n\n.DayPickerKeyboardShortcuts_closeSvg {\n  height: 15px;\n  width: 15px;\n  fill: #cacccd\n}\n\n.DayPickerKeyboardShortcuts_closeSvg:focus,\n.DayPickerKeyboardShortcuts_closeSvg:hover {\n  fill: #82888a\n}\n\n.CalendarDay {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  cursor: pointer;\n  font-size: 14px;\n  text-align: center\n}\n\n.CalendarDay:active {\n  outline: 0\n}\n\n.CalendarDay__defaultCursor {\n  cursor: default\n}\n\n.CalendarDay__default {\n  border: 1px solid #e4e7e7;\n  color: #484848;\n  background: #fff\n}\n\n.CalendarDay__default:hover {\n  background: #e4e7e7;\n  border: 1px solid #e4e7e7;\n  color: inherit\n}\n\n.CalendarDay__hovered_offset {\n  background: #f4f5f5;\n  border: 1px double #e4e7e7;\n  color: inherit\n}\n\n.CalendarDay__outside {\n  border: 0;\n  background: #fff;\n  color: #484848\n}\n\n.CalendarDay__outside:hover {\n  border: 0\n}\n\n.CalendarDay__blocked_minimum_nights {\n  background: #fff;\n  border: 1px solid #eceeee;\n  color: #cacccd\n}\n\n.CalendarDay__blocked_minimum_nights:active,\n.CalendarDay__blocked_minimum_nights:hover {\n  background: #fff;\n  color: #cacccd\n}\n\n.CalendarDay__highlighted_calendar {\n  background: #ffe8bc;\n  color: #484848\n}\n\n.CalendarDay__highlighted_calendar:active,\n.CalendarDay__highlighted_calendar:hover {\n  background: #ffce71;\n  color: #484848\n}\n\n.CalendarDay__selected_span {\n  background: #66e2da;\n  border: 1px double #33dacd;\n  color: #fff\n}\n\n.CalendarDay__selected_span:active,\n.CalendarDay__selected_span:hover {\n  background: #33dacd;\n  border: 1px double #33dacd;\n  color: #fff\n}\n\n.CalendarDay__last_in_range,\n.CalendarDay__last_in_range:hover {\n  border-style: solid\n}\n\n.CalendarDay__selected,\n.CalendarDay__selected:active,\n.CalendarDay__selected:hover {\n  background: #00a699;\n  border: 1px double #00a699;\n  color: #fff\n}\n\n.CalendarDay__hovered_span,\n.CalendarDay__hovered_span:hover {\n  background: #b2f1ec;\n  border: 1px double #80e8e0;\n  color: #007a87\n}\n\n.CalendarDay__hovered_span:active {\n  background: #80e8e0;\n  border: 1px double #80e8e0;\n  color: #007a87\n}\n\n.CalendarDay__blocked_calendar,\n.CalendarDay__blocked_calendar:active,\n.CalendarDay__blocked_calendar:hover {\n  background: #cacccd;\n  border: 1px solid #cacccd;\n  color: #82888a\n}\n\n.CalendarDay__blocked_out_of_range,\n.CalendarDay__blocked_out_of_range:active,\n.CalendarDay__blocked_out_of_range:hover {\n  background: #fff;\n  border: 1px solid #e4e7e7;\n  color: #cacccd\n}\n\n.CalendarMonth {\n  background: #fff;\n  text-align: center;\n  vertical-align: top;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none\n}\n\n.CalendarMonth_table {\n  border-collapse: collapse;\n  border-spacing: 0\n}\n\n.CalendarMonth_verticalSpacing {\n  border-collapse: separate\n}\n\n.CalendarMonth_caption {\n  color: #484848;\n  font-size: 18px;\n  text-align: center;\n  padding-top: 22px;\n  padding-bottom: 37px;\n  caption-side: top;\n  caption-side: initial\n}\n\n.CalendarMonth_caption__verticalScrollable {\n  padding-top: 12px;\n  padding-bottom: 7px\n}\n\n.CalendarMonthGrid {\n  background: #fff;\n  text-align: left;\n  z-index: 0\n}\n\n.CalendarMonthGrid__animating {\n  z-index: 1\n}\n\n.CalendarMonthGrid__horizontal {\n  position: absolute;\n  left: 9px\n}\n\n.CalendarMonthGrid__vertical {\n  margin: 0 auto\n}\n\n.CalendarMonthGrid__vertical_scrollable {\n  margin: 0 auto;\n  overflow-y: scroll\n}\n\n.CalendarMonthGrid_month__horizontal {\n  display: inline-block;\n  vertical-align: top;\n  min-height: 100%\n}\n\n.CalendarMonthGrid_month__hideForAnimation {\n  position: absolute;\n  z-index: -1;\n  opacity: 0;\n  pointer-events: none\n}\n\n.CalendarMonthGrid_month__hidden {\n  visibility: hidden\n}\n\n.DayPickerNavigation {\n  position: relative;\n  z-index: 2\n}\n\n.DayPickerNavigation__horizontal {\n  height: 0\n}\n\n.DayPickerNavigation__verticalDefault {\n  position: absolute;\n  width: 100%;\n  height: 52px;\n  bottom: 0;\n  left: 0\n}\n\n.DayPickerNavigation__verticalScrollableDefault {\n  position: relative\n}\n\n.DayPickerNavigation_button {\n  cursor: pointer;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n  border: 0;\n  padding: 0;\n  margin: 0\n}\n\n.DayPickerNavigation_button__default {\n  border: 1px solid #e4e7e7;\n  background-color: #fff;\n  color: #757575\n}\n\n.DayPickerNavigation_button__default:focus,\n.DayPickerNavigation_button__default:hover {\n  border: 1px solid #c4c4c4\n}\n\n.DayPickerNavigation_button__default:active {\n  background: #f2f2f2\n}\n\n.DayPickerNavigation_button__disabled {\n  cursor: default;\n  border: 1px solid #f2f2f2\n}\n\n.DayPickerNavigation_button__disabled:focus,\n.DayPickerNavigation_button__disabled:hover {\n  border: 1px solid #f2f2f2\n}\n\n.DayPickerNavigation_button__disabled:active {\n  background: 0 0\n}\n\n.DayPickerNavigation_button__horizontalDefault {\n  position: absolute;\n  top: 18px;\n  line-height: .78;\n  border-radius: 3px;\n  padding: 6px 9px\n}\n\n.DayPickerNavigation_leftButton__horizontalDefault {\n  left: 22px\n}\n\n.DayPickerNavigation_rightButton__horizontalDefault {\n  right: 22px\n}\n\n.DayPickerNavigation_button__verticalDefault {\n  padding: 5px;\n  background: #fff;\n  -webkit-box-shadow: 0 0 5px 2px rgba(0,0,0,.1);\n          box-shadow: 0 0 5px 2px rgba(0,0,0,.1);\n  position: relative;\n  display: inline-block;\n  text-align: center;\n  height: 100%;\n  width: 50%\n}\n\n.DayPickerNavigation_nextButton__verticalDefault {\n  border-left: 0\n}\n\n.DayPickerNavigation_nextButton__verticalScrollableDefault {\n  width: 100%\n}\n\n.DayPickerNavigation_svg__horizontal {\n  height: 19px;\n  width: 19px;\n  fill: #82888a;\n  display: block\n}\n\n.DayPickerNavigation_svg__vertical {\n  height: 42px;\n  width: 42px;\n  fill: #484848\n}\n\n.DayPickerNavigation_svg__disabled {\n  fill: #f2f2f2\n}\n\n.DayPicker {\n  background: #fff;\n  position: relative;\n  text-align: left\n}\n\n.DayPicker__horizontal {\n  background: #fff\n}\n\n.DayPicker__verticalScrollable {\n  height: 100%\n}\n\n.DayPicker__hidden {\n  visibility: hidden\n}\n\n.DayPicker__withBorder {\n  -webkit-box-shadow: 0 2px 6px rgba(0,0,0,.05),0 0 0 1px rgba(0,0,0,.07);\n          box-shadow: 0 2px 6px rgba(0,0,0,.05),0 0 0 1px rgba(0,0,0,.07);\n  border-radius: 3px\n}\n\n.DayPicker_portal__horizontal {\n  -webkit-box-shadow: none;\n          box-shadow: none;\n  position: absolute;\n  left: 50%;\n  top: 50%\n}\n\n.DayPicker_portal__vertical {\n  position: static;\n  position: initial\n}\n\n.DayPicker_focusRegion {\n  outline: 0\n}\n\n.DayPicker_calendarInfo__horizontal,\n.DayPicker_wrapper__horizontal {\n  display: inline-block;\n  vertical-align: top\n}\n\n.DayPicker_weekHeaders {\n  position: relative\n}\n\n.DayPicker_weekHeaders__horizontal {\n  margin-left: 9px\n}\n\n.DayPicker_weekHeader {\n  color: #757575;\n  position: absolute;\n  top: 62px;\n  z-index: 2;\n  text-align: left\n}\n\n.DayPicker_weekHeader__vertical {\n  left: 50%\n}\n\n.DayPicker_weekHeader__verticalScrollable {\n  top: 0;\n  display: table-row;\n  border-bottom: 1px solid #dbdbdb;\n  background: #fff;\n  margin-left: 0;\n  left: 0;\n  width: 100%;\n  text-align: center\n}\n\n.DayPicker_weekHeader_ul {\n  list-style: none;\n  margin: 1px 0;\n  padding-left: 0;\n  padding-right: 0;\n  font-size: 14px\n}\n\n.DayPicker_weekHeader_li {\n  display: inline-block;\n  text-align: center\n}\n\n.DayPicker_transitionContainer {\n  position: relative;\n  overflow: hidden;\n  border-radius: 3px\n}\n\n.DayPicker_transitionContainer__horizontal {\n  -webkit-transition: height .2s ease-in-out;\n  -o-transition: height .2s ease-in-out;\n  transition: height .2s ease-in-out\n}\n\n.DayPicker_transitionContainer__vertical {\n  width: 100%\n}\n\n.DayPicker_transitionContainer__verticalScrollable {\n  padding-top: 20px;\n  height: 100%;\n  position: absolute;\n  top: 0;\n  bottom: 0;\n  right: 0;\n  left: 0;\n  overflow-y: scroll\n}\n\n.DateInput {\n  margin: 0;\n  padding: 0;\n  background: #fff;\n  position: relative;\n  display: inline-block;\n  width: 130px;\n  vertical-align: middle\n}\n\n.DateInput__small {\n  width: 97px\n}\n\n.DateInput__block {\n  width: 100%\n}\n\n.DateInput__disabled {\n  background: #f2f2f2;\n  color: #dbdbdb\n}\n\n.DateInput_input {\n  font-weight: 200;\n  font-size: 19px;\n  line-height: 24px;\n  color: #484848;\n  background-color: #fff;\n  width: 100%;\n  padding: 11px 11px 9px;\n  border: 0;\n  border-top: 0;\n  border-right: 0;\n  border-bottom: 2px solid transparent;\n  border-left: 0;\n  border-radius: 0\n}\n\n.DateInput_input__small {\n  font-size: 15px;\n  line-height: 18px;\n  letter-spacing: .2px;\n  padding: 7px 7px 5px\n}\n\n.DateInput_input__regular {\n  font-weight: auto\n}\n\n.DateInput_input__readOnly {\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none\n}\n\n.DateInput_input__focused {\n  outline: 0;\n  background: #fff;\n  border: 0;\n  border-top: 0;\n  border-right: 0;\n  border-bottom: 2px solid #008489;\n  border-left: 0\n}\n\n.DateInput_input__disabled {\n  background: #f2f2f2;\n  font-style: italic\n}\n\n.DateInput_screenReaderMessage {\n  border: 0;\n  clip: rect(0,0,0,0);\n  height: 1px;\n  margin: -1px;\n  overflow: hidden;\n  padding: 0;\n  position: absolute;\n  width: 1px\n}\n\n.DateInput_fang {\n  position: absolute;\n  width: 20px;\n  height: 10px;\n  left: 22px;\n  z-index: 2\n}\n\n.DateInput_fangShape {\n  fill: #fff\n}\n\n.DateInput_fangStroke {\n  stroke: #dbdbdb;\n  fill: transparent\n}\n\n.DateRangePickerInput {\n  background-color: #fff;\n  display: inline-block\n}\n\n.DateRangePickerInput__disabled {\n  background: #f2f2f2\n}\n\n.DateRangePickerInput__withBorder {\n  border-radius: 2px;\n  border: 1px solid #dbdbdb\n}\n\n.DateRangePickerInput__rtl {\n  direction: rtl\n}\n\n.DateRangePickerInput__block {\n  display: block\n}\n\n.DateRangePickerInput__showClearDates {\n  padding-right: 30px\n}\n\n.DateRangePickerInput_arrow {\n  display: inline-block;\n  vertical-align: middle;\n  color: #484848\n}\n\n.DateRangePickerInput_arrow_svg {\n  vertical-align: middle;\n  fill: #484848;\n  height: 24px;\n  width: 24px\n}\n\n.DateRangePickerInput_clearDates {\n  background: 0 0;\n  border: 0;\n  color: inherit;\n  font: inherit;\n  line-height: normal;\n  overflow: visible;\n  cursor: pointer;\n  padding: 10px;\n  margin: 0 10px 0 5px;\n  position: absolute;\n  right: 0;\n  top: 50%;\n  -webkit-transform: translateY(-50%);\n  transform: translateY(-50%)\n}\n\n.DateRangePickerInput_clearDates__small {\n  padding: 6px\n}\n\n.DateRangePickerInput_clearDates_default:focus,\n.DateRangePickerInput_clearDates_default:hover {\n  background: #dbdbdb;\n  border-radius: 50%\n}\n\n.DateRangePickerInput_clearDates__hide {\n  visibility: hidden\n}\n\n.DateRangePickerInput_clearDates_svg {\n  fill: #82888a;\n  height: 12px;\n  width: 15px;\n  vertical-align: middle\n}\n\n.DateRangePickerInput_clearDates_svg__small {\n  height: 9px\n}\n\n.DateRangePickerInput_calendarIcon {\n  background: 0 0;\n  border: 0;\n  color: inherit;\n  font: inherit;\n  line-height: normal;\n  overflow: visible;\n  cursor: pointer;\n  display: inline-block;\n  vertical-align: middle;\n  padding: 10px;\n  margin: 0 5px 0 10px\n}\n\n.DateRangePickerInput_calendarIcon_svg {\n  fill: #82888a;\n  height: 15px;\n  width: 14px;\n  vertical-align: middle\n}\n\n.DateRangePicker {\n  position: relative;\n  display: inline-block\n}\n\n.DateRangePicker__block {\n  display: block\n}\n\n.DateRangePicker_picker {\n  z-index: 1;\n  background-color: #fff;\n  position: absolute\n}\n\n.DateRangePicker_picker__rtl {\n  direction: rtl\n}\n\n.DateRangePicker_picker__directionLeft {\n  left: 0\n}\n\n.DateRangePicker_picker__directionRight {\n  right: 0\n}\n\n.DateRangePicker_picker__portal {\n  background-color: rgba(0,0,0,.3);\n  position: fixed;\n  top: 0;\n  left: 0;\n  height: 100%;\n  width: 100%\n}\n\n.DateRangePicker_picker__fullScreenPortal {\n  background-color: #fff\n}\n\n.DateRangePicker_closeButton {\n  background: 0 0;\n  border: 0;\n  color: inherit;\n  font: inherit;\n  line-height: normal;\n  overflow: visible;\n  cursor: pointer;\n  position: absolute;\n  top: 0;\n  right: 0;\n  padding: 15px;\n  z-index: 2\n}\n\n.DateRangePicker_closeButton:focus,\n.DateRangePicker_closeButton:hover {\n  color: darken(#cacccd,10%);\n  text-decoration: none\n}\n\n.DateRangePicker_closeButton_svg {\n  height: 15px;\n  width: 15px;\n  fill: #cacccd\n}\n\n.rc-time-picker {\n  display: inline-block;\n  position: relative;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n\n.rc-time-picker * {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n\n.rc-time-picker-clear {\n  position: absolute;\n  right: 6px;\n  cursor: pointer;\n  overflow: hidden;\n  width: 20px;\n  height: 20px;\n  text-align: center;\n  line-height: 20px;\n  top: 3px;\n  margin: 0;\n}\n\n.rc-time-picker-clear-icon:after {\n  content: \"x\";\n  font-size: 12px;\n  font-style: normal;\n  color: #aaa;\n  display: inline-block;\n  line-height: 1;\n  height: 20px;\n  width: 20px;\n  -webkit-transition: color 0.3s ease;\n  -o-transition: color 0.3s ease;\n  transition: color 0.3s ease;\n}\n\n.rc-time-picker-clear-icon:hover:after {\n  color: #666;\n}\n\n.rc-time-picker-input {\n  width: 100%;\n  position: relative;\n  display: inline-block;\n  padding: 4px 7px;\n  height: 28px;\n  cursor: text;\n  font-size: 12px;\n  line-height: 1.5;\n  color: #666;\n  background-color: #fff;\n  background-image: none;\n  border: 1px solid #d9d9d9;\n  border-radius: 4px;\n  -webkit-transition: border 0.2s cubic-bezier(0.645, 0.045, 0.355, 1), background 0.2s cubic-bezier(0.645, 0.045, 0.355, 1), -webkit-box-shadow 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);\n  transition: border 0.2s cubic-bezier(0.645, 0.045, 0.355, 1), background 0.2s cubic-bezier(0.645, 0.045, 0.355, 1), -webkit-box-shadow 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);\n  -o-transition: border 0.2s cubic-bezier(0.645, 0.045, 0.355, 1), background 0.2s cubic-bezier(0.645, 0.045, 0.355, 1), box-shadow 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);\n  transition: border 0.2s cubic-bezier(0.645, 0.045, 0.355, 1), background 0.2s cubic-bezier(0.645, 0.045, 0.355, 1), box-shadow 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);\n  transition: border 0.2s cubic-bezier(0.645, 0.045, 0.355, 1), background 0.2s cubic-bezier(0.645, 0.045, 0.355, 1), box-shadow 0.2s cubic-bezier(0.645, 0.045, 0.355, 1), -webkit-box-shadow 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);\n}\n\n.rc-time-picker-input[disabled] {\n  color: #ccc;\n  background: #f7f7f7;\n  cursor: not-allowed;\n}\n\n.rc-time-picker-panel {\n  z-index: 1070;\n  width: 170px;\n  position: absolute;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n\n.rc-time-picker-panel * {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n\n.rc-time-picker-panel-inner {\n  display: inline-block;\n  position: relative;\n  outline: none;\n  list-style: none;\n  font-size: 12px;\n  text-align: left;\n  background-color: #fff;\n  border-radius: 4px;\n  -webkit-box-shadow: 0 1px 5px #ccc;\n          box-shadow: 0 1px 5px #ccc;\n  background-clip: padding-box;\n  border: 1px solid #ccc;\n  line-height: 1.5;\n}\n\n.rc-time-picker-panel-narrow {\n  max-width: 113px;\n}\n\n.rc-time-picker-panel-input {\n  margin: 0;\n  padding: 0;\n  width: 100%;\n  cursor: auto;\n  line-height: 1.5;\n  outline: 0;\n  border: 1px solid transparent;\n}\n\n.rc-time-picker-panel-input-wrap {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  position: relative;\n  padding: 6px;\n  border-bottom: 1px solid #e9e9e9;\n}\n\n.rc-time-picker-panel-input-invalid {\n  border-color: red;\n}\n\n.rc-time-picker-panel-select {\n  float: left;\n  font-size: 12px;\n  border: 1px solid #e9e9e9;\n  border-width: 0 1px;\n  margin-left: -1px;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  width: 56px;\n  max-height: 144px;\n  overflow-y: auto;\n  position: relative;\n}\n\n.rc-time-picker-panel-select-active {\n  overflow-y: auto;\n}\n\n.rc-time-picker-panel-select:first-child {\n  border-left: 0;\n  margin-left: 0;\n}\n\n.rc-time-picker-panel-select:last-child {\n  border-right: 0;\n}\n\n.rc-time-picker-panel-select ul {\n  list-style: none;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  width: 100%;\n}\n\n.rc-time-picker-panel-select li {\n  list-style: none;\n  margin: 0;\n  padding: 0 0 0 16px;\n  width: 100%;\n  height: 24px;\n  line-height: 24px;\n  text-align: left;\n  cursor: pointer;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n\n.rc-time-picker-panel-select li:hover {\n  background: #edfaff;\n}\n\nli.rc-time-picker-panel-select-option-selected {\n  background: #f7f7f7;\n  font-weight: bold;\n}\n\nli.rc-time-picker-panel-select-option-disabled {\n  color: #ccc;\n}\n\nli.rc-time-picker-panel-select-option-disabled:hover {\n  background: transparent;\n  cursor: not-allowed;\n}\n\n.keen-explorer {\n  font-family: Montserrat, Tahoma, Arial;\n  font-size: 0.88rem;\n  font-size: 0.88rem;\n  color: #000;\n  color: #000;\n  display: -ms-flexbox;\n  display: flex;\n}\n\n.ReactModalPortal {\n  font-family: Montserrat, Tahoma, Arial;\n  font-size: 0.88rem;\n  font-size: 0.88rem;\n  color: #000;\n  color: #000;\n  display: -ms-flexbox;\n  display: flex;\n}\n\n.rc-time-picker-panel {\n  font-family: Montserrat, Tahoma, Arial;\n  font-size: 0.88rem;\n  font-size: 0.88rem;\n  color: #000;\n  color: #000;\n  display: -ms-flexbox;\n  display: flex;\n}\n\n.keen-explorer .extraction,.ReactModalPortal .extraction,.rc-time-picker-panel .extraction{\n  margin-top: 1rem;\n}\n\n.keen-explorer .extraction .first-label,.ReactModalPortal .extraction .first-label,.rc-time-picker-panel .extraction .first-label{\n    padding-top: 0;\n  }\n\n.keen-explorer .extraction .input-text,.ReactModalPortal .extraction .input-text,.rc-time-picker-panel .extraction .input-text{\n    width: 100%;\n  }\n\n.keen-explorer .extraction .bulk-panel,.ReactModalPortal .extraction .bulk-panel,.rc-time-picker-panel .extraction .bulk-panel{\n    margin-bottom: 1rem;\n  }\n\n.keen-explorer .percentile .input-text,.ReactModalPortal .percentile .input-text,.rc-time-picker-panel .percentile .input-text{\n    width: 100%;\n  }\n\n.keen-explorer .filters-container .list,.ReactModalPortal .filters-container .list,.rc-time-picker-panel .filters-container .list{\n    margin: 2rem 0;\n    width: 100%;\n\n  }\n\n.keen-explorer .filters-container .list .row,.ReactModalPortal .filters-container .list .row,.rc-time-picker-panel .filters-container .list .row{\n      display: -ms-flexbox;\n      display: flex;\n      width: 100%;\n      margin: 0 0 1rem;\n    }\n\n.keen-explorer .filters-container .list .row .row-part,.ReactModalPortal .filters-container .list .row .row-part,.rc-time-picker-panel .filters-container .list .row .row-part{\n        -ms-flex:1;\n            flex:1;\n        padding: 0 0.5rem;\n      }\n\n.keen-explorer .filters-container .list .row .row-part input{\n          padding: 0.55rem 0.7rem;\n          font-size: 0.88rem;\n          font-size: 0.88rem;\n          border-radius: 4px;\n          border: 1px solid #ccc;\n          width: 100%;\n        }\n\n.ReactModalPortal .filters-container .list .row .row-part input{\n          padding: 0.55rem 0.7rem;\n          font-size: 0.88rem;\n          font-size: 0.88rem;\n          border-radius: 4px;\n          border: 1px solid #ccc;\n          width: 100%;\n        }\n\n.rc-time-picker-panel .filters-container .list .row .row-part input{\n          padding: 0.55rem 0.7rem;\n          font-size: 0.88rem;\n          font-size: 0.88rem;\n          border-radius: 4px;\n          border: 1px solid #ccc;\n          width: 100%;\n        }\n\n.keen-explorer .filters-container .list .row .row-part .datetime-pickers,.ReactModalPortal .filters-container .list .row .row-part .datetime-pickers,.rc-time-picker-panel .filters-container .list .row .row-part .datetime-pickers{\n          display: -ms-flexbox;\n          display: flex;\n        }\n\n.keen-explorer .filters-container .list .row .row-part .datetime-pickers .DateInput,.ReactModalPortal .filters-container .list .row .row-part .datetime-pickers .DateInput,.rc-time-picker-panel .filters-container .list .row .row-part .datetime-pickers .DateInput{\n            width: 100%;\n          }\n\n.keen-explorer .filters-container .list .row .row-part .datetime-pickers .SingleDatePickerInput,.ReactModalPortal .filters-container .list .row .row-part .datetime-pickers .SingleDatePickerInput,.rc-time-picker-panel .filters-container .list .row .row-part .datetime-pickers .SingleDatePickerInput{\n            width: 100%;\n          }\n\n.keen-explorer .filters-container .list .row .row-part .datetime-pickers .SingleDatePicker,.ReactModalPortal .filters-container .list .row .row-part .datetime-pickers .SingleDatePicker,.rc-time-picker-panel .filters-container .list .row .row-part .datetime-pickers .SingleDatePicker{\n            -ms-flex: 1;\n                flex: 1;\n            margin-right: 0.1rem;\n          }\n\n.keen-explorer .filters-container .list .row .row-part .datetime-pickers .SingleDatePickerInput__withBorder,.ReactModalPortal .filters-container .list .row .row-part .datetime-pickers .SingleDatePickerInput__withBorder,.rc-time-picker-panel .filters-container .list .row .row-part .datetime-pickers .SingleDatePickerInput__withBorder{\n            border: 0;\n          }\n\n.keen-explorer .filters-container .list .row .row-part .datetime-pickers input.DateInput_input,.ReactModalPortal .filters-container .list .row .row-part .datetime-pickers input.DateInput_input,.rc-time-picker-panel .filters-container .list .row .row-part .datetime-pickers input.DateInput_input{\n            padding: 0.333rem;\n            text-align: center;\n            height: 2.3rem;\n          }\n\n.keen-explorer .filters-container .list .row .row-part .datetime-pickers .rc-time-picker,.ReactModalPortal .filters-container .list .row .row-part .datetime-pickers .rc-time-picker,.rc-time-picker-panel .filters-container .list .row .row-part .datetime-pickers .rc-time-picker{\n            -ms-flex: 1;\n                flex: 1;\n          }\n\n.keen-explorer .filters-container .list .row .row-part .datetime-pickers input.rc-time-picker-input,.ReactModalPortal .filters-container .list .row .row-part .datetime-pickers input.rc-time-picker-input,.rc-time-picker-panel .filters-container .list .row .row-part .datetime-pickers input.rc-time-picker-input{\n            padding: 0.3rem;\n            text-align: center;\n            height: auto;\n            line-height: auto;\n            height: 2.3rem;\n          }\n\n.keen-explorer .filters-container .list .row .row-part .within-inputs input,.ReactModalPortal .filters-container .list .row .row-part .within-inputs input,.rc-time-picker-panel .filters-container .list .row .row-part .within-inputs input{\n            margin-bottom: 0.2rem;\n          }\n\n.keen-explorer .filters-container .list .row .row-part .delete,.ReactModalPortal .filters-container .list .row .row-part .delete,.rc-time-picker-panel .filters-container .list .row .row-part .delete{\n          cursor: pointer;\n          display: -ms-flexbox;\n          display: flex;\n          -ms-flex-align: center;\n              align-items: center;\n          height: 100%;\n        }\n\n.keen-explorer .filters-container .list .row .row-part .delete i, .ReactModalPortal .filters-container .list .row .row-part .delete i, .rc-time-picker-panel .filters-container .list .row .row-part .delete i {\n            color: #ea7373;\n            font-size: 1rem;\n            padding: 0.5rem;\n          }\n\n.keen-explorer .filters-container .list .row .no-flex,.ReactModalPortal .filters-container .list .row .no-flex,.rc-time-picker-panel .filters-container .list .row .no-flex{\n        -ms-flex: 0;\n            flex: 0;\n      }\n\n.keen-explorer .filters-container .action-buttons,.ReactModalPortal .filters-container .action-buttons,.rc-time-picker-panel .filters-container .action-buttons{\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-align: center;\n        align-items: center;\n    -ms-flex-pack: end;\n        justify-content: flex-end;\n    margin-top: 0;\n  }\n\n.keen-explorer .filters-container .action-buttons .button-add-filter,.ReactModalPortal .filters-container .action-buttons .button-add-filter,.rc-time-picker-panel .filters-container .action-buttons .button-add-filter{\n      margin-right: 1rem;\n      cursor: pointer;\n      text-transform: uppercase;\n      padding: 1rem 2rem;\n      background: #eee;\n      border-radius: 0.3rem;\n    }\n\n.keen-explorer .filters-container .action-buttons .button-add-filter i, .ReactModalPortal .filters-container .action-buttons .button-add-filter i, .rc-time-picker-panel .filters-container .action-buttons .button-add-filter i {\n        margin-right: 1rem;\n      }\n\n.keen-explorer .filters-container .action-buttons .button-done{\n      cursor: pointer;\n      color: #fff;\n      background: #45b2e8;\n      background: #45b2e8;\n      text-transform: uppercase;\n      width: 10rem;\n      padding: 1rem;\n      text-align: center;\n      border-radius: 0.3rem;\n    }\n\n.ReactModalPortal .filters-container .action-buttons .button-done{\n      cursor: pointer;\n      color: #fff;\n      background: #45b2e8;\n      background: #45b2e8;\n      text-transform: uppercase;\n      width: 10rem;\n      padding: 1rem;\n      text-align: center;\n      border-radius: 0.3rem;\n    }\n\n.rc-time-picker-panel .filters-container .action-buttons .button-done{\n      cursor: pointer;\n      color: #fff;\n      background: #45b2e8;\n      background: #45b2e8;\n      text-transform: uppercase;\n      width: 10rem;\n      padding: 1rem;\n      text-align: center;\n      border-radius: 0.3rem;\n    }\n\n.keen-explorer .filters-container .action-buttons .button-done i,.ReactModalPortal .filters-container .action-buttons .button-done i,.rc-time-picker-panel .filters-container .action-buttons .button-done i{\n        margin-right: 1rem;\n      }\n\n@media screen and (max-width: 1000px) {\n      .keen-explorer .filters-container .list .row,.ReactModalPortal .filters-container .list .row,.rc-time-picker-panel .filters-container .list .row{\n        -ms-flex-direction: column;\n            flex-direction: column;\n      }\n        .keen-explorer .filters-container .list .row .row-part,.ReactModalPortal .filters-container .list .row .row-part,.rc-time-picker-panel .filters-container .list .row .row-part{\n          margin-bottom: 0.3rem;\n        }\n        .keen-explorer .filters-container .list .row .delete,.ReactModalPortal .filters-container .list .row .delete,.rc-time-picker-panel .filters-container .list .row .delete{\n          float: right;\n          padding-right: 1rem;\n        }\n}\n\n.keen-explorer .modal-main,.ReactModalPortal .modal-main,.rc-time-picker-panel .modal-main{\n  display:-ms-flexbox;\n  display:flex;\n  -ms-flex-direction: column;\n      flex-direction: column;\n  height: 100%;\n  width: 100%;\n}\n\n.keen-explorer .modal-main .header,.ReactModalPortal .modal-main .header,.rc-time-picker-panel .modal-main .header{\n    -ms-flex:0;\n        flex:0;\n    border-bottom: 1px solid #eee;\n    padding-bottom: 1rem;\n  }\n\n.keen-explorer .modal-main .header .title,.ReactModalPortal .modal-main .header .title,.rc-time-picker-panel .modal-main .header .title{\n        float: left;\n      }\n\n.keen-explorer .modal-main .header .x,.ReactModalPortal .modal-main .header .x,.rc-time-picker-panel .modal-main .header .x{\n        color: #565656;\n        float: right;\n        font-weight: bold;\n        cursor: pointer;\n        padding: 1rem;\n        margin: -2rem -1rem;\n        font-size: 2rem;\n      }\n\n.keen-explorer .modal-main .container,.ReactModalPortal .modal-main .container,.rc-time-picker-panel .modal-main .container{\n    -ms-flex:1;\n        flex:1;\n    padding: 1rem 0;\n    clear: both;\n    width: 100%;\n    overflow-y: scroll;\n    white-space: pre-wrap;\n  }\n\n.keen-explorer .modal-main .button-copy,.ReactModalPortal .modal-main .button-copy,.rc-time-picker-panel .modal-main .button-copy{\n    padding: 1rem;\n    width: 10rem;\n    text-align: center;\n    cursor: pointer;\n    background: #1e93d8;\n    color: #fff;\n    border-radius: 0.5rem;\n    margin-top: 1rem;\n  }\n\n.keen-explorer .modal-main .button-copy:active,.ReactModalPortal .modal-main .button-copy:active,.rc-time-picker-panel .modal-main .button-copy:active{\n    background: #30a1e4;\n  }\n\n.keen-explorer .ReactModal__Overlay,.ReactModalPortal .ReactModal__Overlay,.rc-time-picker-panel .ReactModal__Overlay{\n  z-index: 9999;\n}\n\n.keen-explorer .saved-query, .ReactModalPortal .saved-query, .rc-time-picker-panel .saved-query {\n  margin: 1rem 0;\n  border: 1px solid #e8e8e8;\n  background: #fcfcfc;\n  padding: 1rem;\n  border-radius: 0.3rem;\n}\n\n.keen-explorer .saved-query .input-name {\n    font-size: 0.88rem;\n    font-size: 0.88rem;\n    padding: 1rem;\n    border-radius: 0.3rem;\n    border: 1px solid #e8e8e8;\n    width: 100%;\n  }\n\n.ReactModalPortal .saved-query .input-name {\n    font-size: 0.88rem;\n    font-size: 0.88rem;\n    padding: 1rem;\n    border-radius: 0.3rem;\n    border: 1px solid #e8e8e8;\n    width: 100%;\n  }\n\n.rc-time-picker-panel .saved-query .input-name {\n    font-size: 0.88rem;\n    font-size: 0.88rem;\n    padding: 1rem;\n    border-radius: 0.3rem;\n    border: 1px solid #e8e8e8;\n    width: 100%;\n  }\n\n.keen-explorer .saved-query .resource-name,.ReactModalPortal .saved-query .resource-name,.rc-time-picker-panel .saved-query .resource-name{\n    padding: 1rem 0.2rem 0;\n    display: -ms-flexbox;\n    display: flex;\n    overflow: hidden;\n    font-size: 0.8rem;\n  }\n\n.keen-explorer .saved-query .resource-name .line, .ReactModalPortal .saved-query .resource-name .line, .rc-time-picker-panel .saved-query .resource-name .line {\n      -ms-flex: 1;\n          flex: 1;\n      white-space: nowrap;\n    }\n\n.keen-explorer .saved-query .resource-name .line span,.ReactModalPortal .saved-query .resource-name .line span,.rc-time-picker-panel .saved-query .resource-name .line span{\n        white-space: nowrap;\n        overflow: hidden;\n        -ms-flex: 1;\n            flex: 1;\n      }\n\n.keen-explorer .saved-query .resource-name .line i, .ReactModalPortal .saved-query .resource-name .line i, .rc-time-picker-panel .saved-query .resource-name .line i {\n        -ms-flex: 0;\n            flex: 0;\n      }\n\n.keen-explorer .saved-query .resource-name .line-label,.ReactModalPortal .saved-query .resource-name .line-label,.rc-time-picker-panel .saved-query .resource-name .line-label{\n      -ms-flex: 0;\n          flex: 0;\n      margin-right: 0.5rem;\n    }\n\n.keen-explorer .saved-query .cache, .ReactModalPortal .saved-query .cache, .rc-time-picker-panel .saved-query .cache {\n    padding: 1rem 0 0;\n    max-width: 12rem;\n  }\n\n.keen-explorer .saved-query .cache .line-checkbox,.ReactModalPortal .saved-query .cache .line-checkbox,.rc-time-picker-panel .saved-query .cache .line-checkbox{\n      display: -ms-flexbox;\n      display: flex;\n    }\n\n.keen-explorer .saved-query .cache .line-checkbox input,.ReactModalPortal .saved-query .cache .line-checkbox input,.rc-time-picker-panel .saved-query .cache .line-checkbox input{\n        margin-right: 0.5rem;\n        outline: none;\n      }\n\n.keen-explorer .saved-query .cache .line-checkbox label,.ReactModalPortal .saved-query .cache .line-checkbox label,.rc-time-picker-panel .saved-query .cache .line-checkbox label{\n        cursor: pointer;\n      }\n\n.keen-explorer .saved-query .cache .cache-toggle,.ReactModalPortal .saved-query .cache .cache-toggle,.rc-time-picker-panel .saved-query .cache .cache-toggle{\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-align: center;\n          align-items: center;\n      cursor: pointer;\n      color: #128296;\n    }\n\n.keen-explorer .saved-query .cache i, .ReactModalPortal .saved-query .cache i, .rc-time-picker-panel .saved-query .cache i {\n      font-size: 1.3rem;\n      margin-right: 0.6rem;\n    }\n\n.keen-explorer .saved-query .cache .fa-toggle-off,.ReactModalPortal .saved-query .cache .fa-toggle-off,.rc-time-picker-panel .saved-query .cache .fa-toggle-off{\n      color: #7b7b7b;\n    }\n\n.keen-explorer .saved-query .cache .cache-refresh,.ReactModalPortal .saved-query .cache .cache-refresh,.rc-time-picker-panel .saved-query .cache .cache-refresh{\n    }\n\n.keen-explorer .saved-query .button-copy,.ReactModalPortal .saved-query .button-copy,.rc-time-picker-panel .saved-query .button-copy{\n    padding: 0.7rem;\n    right: 0;\n    bottom: 0;\n    border: 0;\n    cursor: pointer;\n    display: inline;\n  }\n\n.keen-explorer .saved-query .buttons * {\n      margin-top: 1rem;\n      padding: 0.88rem calc(0.88rem*2);\n      border-radius: 0.3rem;\n      font-size: 0.88rem;\n      font-size: 0.88rem;\n      cursor: pointer;\n      text-transform: uppercase;\n      border: 0;\n      font-weight: 600;\n      font-weight: 600;\n    }\n\n.ReactModalPortal .saved-query .buttons * {\n      margin-top: 1rem;\n      padding: 0.88rem calc(0.88rem*2);\n      border-radius: 0.3rem;\n      font-size: 0.88rem;\n      font-size: 0.88rem;\n      cursor: pointer;\n      text-transform: uppercase;\n      border: 0;\n      font-weight: 600;\n      font-weight: 600;\n    }\n\n.rc-time-picker-panel .saved-query .buttons * {\n      margin-top: 1rem;\n      padding: 0.88rem calc(0.88rem*2);\n      border-radius: 0.3rem;\n      font-size: 0.88rem;\n      font-size: 0.88rem;\n      cursor: pointer;\n      text-transform: uppercase;\n      border: 0;\n      font-weight: 600;\n      font-weight: 600;\n    }\n\n.keen-explorer .saved-query .buttons .button-save{\n      color: #fff;\n      background: #45b2e8;\n      background: #45b2e8;\n    }\n\n.ReactModalPortal .saved-query .buttons .button-save{\n      color: #fff;\n      background: #45b2e8;\n      background: #45b2e8;\n    }\n\n.rc-time-picker-panel .saved-query .buttons .button-save{\n      color: #fff;\n      background: #45b2e8;\n      background: #45b2e8;\n    }\n\n.keen-explorer .saved-query .buttons .button-clone{\n      margin-left: 1rem;\n      color: #45b2e8;\n      color: #45b2e8;\n      background: transparent;\n      border: 1px solid #eee;\n    }\n\n.ReactModalPortal .saved-query .buttons .button-clone{\n      margin-left: 1rem;\n      color: #45b2e8;\n      color: #45b2e8;\n      background: transparent;\n      border: 1px solid #eee;\n    }\n\n.rc-time-picker-panel .saved-query .buttons .button-clone{\n      margin-left: 1rem;\n      color: #45b2e8;\n      color: #45b2e8;\n      background: transparent;\n      border: 1px solid #eee;\n    }\n\n.keen-explorer .saved-query .buttons .button-delete,.ReactModalPortal .saved-query .buttons .button-delete,.rc-time-picker-panel .saved-query .buttons .button-delete{\n      float: right;\n      color: #6f6c6c;\n      background: transparent;\n      border: 1px solid #eee;\n    }\n\n.keen-explorer .saved-query .button-copy:active,.ReactModalPortal .saved-query .button-copy:active,.rc-time-picker-panel .saved-query .button-copy:active{\n    background: #fff;\n  }\n\n.keen-explorer .saved-queries,.ReactModalPortal .saved-queries,.rc-time-picker-panel .saved-queries{\n  overflow: scroll;\n  min-height: 100%;\n  max-height: 44rem;\n  padding-right: 1rem;\n}\n\n.keen-explorer .saved-queries .input-filter,.ReactModalPortal .saved-queries .input-filter,.rc-time-picker-panel .saved-queries .input-filter{\n    width: 100%;\n    padding: 0.6rem;\n    font-size: 0.9rem;\n    border: 1px solid #ccc;\n    margin: .5rem 0;\n    border-radius: 0.3rem;\n  }\n\n.keen-explorer .saved-queries .item{\n    position: relative;\n    padding: 1rem 0.5rem;\n    cursor: pointer;\n    overflow: auto;\n    border-bottom: 1px solid #f3f3f3;\n    background: #fff;\n    background: #fff;\n  }\n\n.ReactModalPortal .saved-queries .item{\n    position: relative;\n    padding: 1rem 0.5rem;\n    cursor: pointer;\n    overflow: auto;\n    border-bottom: 1px solid #f3f3f3;\n    background: #fff;\n    background: #fff;\n  }\n\n.rc-time-picker-panel .saved-queries .item{\n    position: relative;\n    padding: 1rem 0.5rem;\n    cursor: pointer;\n    overflow: auto;\n    border-bottom: 1px solid #f3f3f3;\n    background: #fff;\n    background: #fff;\n  }\n\n.keen-explorer .saved-queries .item .name,.ReactModalPortal .saved-queries .item .name,.rc-time-picker-panel .saved-queries .item .name{\n      margin: 0rem 1rem 1rem 0;\n    }\n\n.keen-explorer .saved-queries .item .cached{\n      float: left;\n      color: #3ecf8e;\n      color: #3ecf8e;\n      text-transform: uppercase;\n    }\n\n.ReactModalPortal .saved-queries .item .cached{\n      float: left;\n      color: #3ecf8e;\n      color: #3ecf8e;\n      text-transform: uppercase;\n    }\n\n.rc-time-picker-panel .saved-queries .item .cached{\n      float: left;\n      color: #3ecf8e;\n      color: #3ecf8e;\n      text-transform: uppercase;\n    }\n\n.keen-explorer .saved-queries .item .cached *, .ReactModalPortal .saved-queries .item .cached *, .rc-time-picker-panel .saved-queries .item .cached * {\n        font-size: 0.7rem;\n      }\n\n.keen-explorer .saved-queries .item .data,.ReactModalPortal .saved-queries .item .data,.rc-time-picker-panel .saved-queries .item .data{\n      float: right;\n      font-size: 0.7rem;\n      color: rgba(0,0,0,0.5);\n    }\n\n.keen-explorer .saved-queries .item .button-delete,.ReactModalPortal .saved-queries .item .button-delete,.rc-time-picker-panel .saved-queries .item .button-delete{\n      position: absolute;\n      right: 0.2rem;\n      top: 0.2rem;\n      padding: 0.2rem;\n      color: rgba(0,0,0,0.2);\n    }\n\n.keen-explorer .saved-queries .active{\n    background: #fcfcfc;\n    background: #fcfcfc;\n  }\n\n.ReactModalPortal .saved-queries .active{\n    background: #fcfcfc;\n    background: #fcfcfc;\n  }\n\n.rc-time-picker-panel .saved-queries .active{\n    background: #fcfcfc;\n    background: #fcfcfc;\n  }\n\n.keen-explorer .funnel .content,.ReactModalPortal .funnel .content,.rc-time-picker-panel .funnel .content{\n    padding: 0.3rem 0.5rem;\n  }\n\n.keen-explorer .funnel .input-text,.ReactModalPortal .funnel .input-text,.rc-time-picker-panel .funnel .input-text{\n    width: 100%;\n  }\n\n.keen-explorer .funnel .button,.ReactModalPortal .funnel .button,.rc-time-picker-panel .funnel .button{\n    cursor: pointer;\n  }\n\n.keen-explorer .funnel .button-delete,.ReactModalPortal .funnel .button-delete,.rc-time-picker-panel .funnel .button-delete{\n    color: #797979;\n  }\n\n.keen-explorer .funnel .button-add,.ReactModalPortal .funnel .button-add,.rc-time-picker-panel .funnel .button-add{\n    margin-top: 1rem;\n    padding: 0.7rem;\n    background: #fdfdfd;\n    border: 1px solid #e8e8e8;\n    border-radius: 5px;\n    display: inline-block;\n  }\n\n.keen-explorer .funnel .button-add i,.ReactModalPortal .funnel .button-add i,.rc-time-picker-panel .funnel .button-add i{\n      margin-right: 0.3rem;\n    }\n\n.keen-explorer .funnel .line-options,.ReactModalPortal .funnel .line-options,.rc-time-picker-panel .funnel .line-options{\n    margin: 1rem 0 0 0;\n  }\n\n.keen-explorer .funnel .step-switch-position-buttons,.ReactModalPortal .funnel .step-switch-position-buttons,.rc-time-picker-panel .funnel .step-switch-position-buttons{\n    float: left;\n    margin: -0.5rem 0.8rem 0 0;\n    color: #797979;\n  }\n\n.keen-explorer .funnel .step-switch-position-buttons .move-up,.ReactModalPortal .funnel .step-switch-position-buttons .move-up,.rc-time-picker-panel .funnel .step-switch-position-buttons .move-up{\n      margin-top: 0.1rem;\n    }\n\n.keen-explorer .funnel .step-switch-position-buttons .move-down,.ReactModalPortal .funnel .step-switch-position-buttons .move-down,.rc-time-picker-panel .funnel .step-switch-position-buttons .move-down{\n      margin-top: -0.3rem;\n    }\n\n.keen-explorer .line-checkbox,.ReactModalPortal .line-checkbox,.rc-time-picker-panel .line-checkbox{\n  margin: 0.5rem 0 0 0;\n}\n\n.keen-explorer .line-checkbox input,.ReactModalPortal .line-checkbox input,.rc-time-picker-panel .line-checkbox input{\n    margin-right: 0.5rem;\n  }\n\n.keen-explorer .line-checkbox label,.ReactModalPortal .line-checkbox label,.rc-time-picker-panel .line-checkbox label{\n    cursor: pointer;\n  }\n\n.keen-explorer .keen-dataviz, .ReactModalPortal .keen-dataviz, .rc-time-picker-panel .keen-dataviz {\n  font-family: inherit !important;\n}\n\n.keen-explorer .keen-dataviz .keen-c3-legend .legend-item-text, .ReactModalPortal .keen-dataviz .keen-c3-legend .legend-item-text, .rc-time-picker-panel .keen-dataviz .keen-c3-legend .legend-item-text {\n      font-size: 1em;\n    }\n\n.keen-explorer .keen-dataviz-container, .ReactModalPortal .keen-dataviz-container, .rc-time-picker-panel .keen-dataviz-container {\n  height: calc(100% - 3rem);\n  overflow: hidden;\n}\n\n.keen-explorer .keen-dataviz-container .keen-dataviz-execution-meta, .ReactModalPortal .keen-dataviz-container .keen-dataviz-execution-meta, .rc-time-picker-panel .keen-dataviz-container .keen-dataviz-execution-meta {\n    top: 1rem;\n  }\n\n.keen-explorer .keen-dataviz-metric-value,.ReactModalPortal .keen-dataviz-metric-value,.rc-time-picker-panel .keen-dataviz-metric-value{\n  font-size: 4rem !important;\n}\n\n.keen-explorer .keen-dataviz .c3 svg g text tspan, .ReactModalPortal .keen-dataviz .c3 svg g text tspan, .rc-time-picker-panel .keen-dataviz .c3 svg g text tspan {\n  font-size: 10px !important;\n}\n\n.keen-explorer .a-preview-collection,.ReactModalPortal .a-preview-collection,.rc-time-picker-panel .a-preview-collection{\n  padding: 0.5rem;\n  margin: 0;\n  cursor: pointer;\n  background: #fafafa;\n  border-radius: 0.3rem;\n}\n\n.keen-explorer .a-preview-collection i,.ReactModalPortal .a-preview-collection i,.rc-time-picker-panel .a-preview-collection i{\n    font-size: 0.8em;\n    margin-right: 0.2rem;\n  }\n\n.keen-explorer .preview-collection-content,.ReactModalPortal .preview-collection-content,.rc-time-picker-panel .preview-collection-content{\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-direction: row;\n      flex-direction: row;\n}\n\n.keen-explorer .preview-collection-content .input-filter,.ReactModalPortal .preview-collection-content .input-filter,.rc-time-picker-panel .preview-collection-content .input-filter{\n    width: 100%;\n    padding: 0.6rem;\n    font-size: 0.9rem;\n    border: 1px solid #ccc;\n    margin: .5rem 0;\n    border-radius: 0.3rem;\n  }\n\n.keen-explorer .preview-collection-content .list, .ReactModalPortal .preview-collection-content .list, .rc-time-picker-panel .preview-collection-content .list {\n    height: 100%;\n    overflow-y: scroll;\n    -ms-flex: 1;\n        flex: 1;\n  }\n\n.keen-explorer .preview-collection-content .list .item{\n      cursor: pointer;\n      padding: 1rem;\n      overflow: auto;\n      border-bottom: 1px solid #f3f3f3;\n      background: #fff;\n      background: #fff;\n    }\n\n.ReactModalPortal .preview-collection-content .list .item{\n      cursor: pointer;\n      padding: 1rem;\n      overflow: auto;\n      border-bottom: 1px solid #f3f3f3;\n      background: #fff;\n      background: #fff;\n    }\n\n.rc-time-picker-panel .preview-collection-content .list .item{\n      cursor: pointer;\n      padding: 1rem;\n      overflow: auto;\n      border-bottom: 1px solid #f3f3f3;\n      background: #fff;\n      background: #fff;\n    }\n\n.keen-explorer .preview-collection-content .list .active{\n      background: #fcfcfc;\n      background: #fcfcfc;\n    }\n\n.ReactModalPortal .preview-collection-content .list .active{\n      background: #fcfcfc;\n      background: #fcfcfc;\n    }\n\n.rc-time-picker-panel .preview-collection-content .list .active{\n      background: #fcfcfc;\n      background: #fcfcfc;\n    }\n\n.keen-explorer .preview-collection-content .content,.ReactModalPortal .preview-collection-content .content,.rc-time-picker-panel .preview-collection-content .content{\n    -ms-flex: 3;\n        flex: 3;\n    height: 100%;\n    padding: 0.5rem 0 0.5rem 1rem;\n  }\n\n.keen-explorer .preview-collection-content .content .tabs .tab,.ReactModalPortal .preview-collection-content .content .tabs .tab,.rc-time-picker-panel .preview-collection-content .content .tabs .tab{\n        -ms-flex: none;\n            flex: none;\n        padding: 1rem 1.5rem;\n      }\n\n.keen-explorer .preview-collection-content .content .tabs .tab-placeholder,.ReactModalPortal .preview-collection-content .content .tabs .tab-placeholder,.rc-time-picker-panel .preview-collection-content .content .tabs .tab-placeholder{\n        -ms-flex: 1;\n            flex: 1;\n        border-bottom: 1px solid #e8e8e8;\n      }\n\n.keen-explorer .preview-collection-content .content .tab-content,.ReactModalPortal .preview-collection-content .content .tab-content,.rc-time-picker-panel .preview-collection-content .content .tab-content{\n      height: 100%;\n      width: 100%;\n      overflow: scroll;\n      padding-bottom: 4rem;\n    }\n\n@media screen and (max-width: 900px) {\n\n  .keen-explorer .preview-collection-content,.ReactModalPortal .preview-collection-content,.rc-time-picker-panel .preview-collection-content{\n    -ms-flex-direction: column;\n        flex-direction: column;\n  }\n    .keen-explorer .preview-collection-content .list, .keen-explorer .preview-collection-content .content, .ReactModalPortal .preview-collection-content .list, .ReactModalPortal .preview-collection-content .content, .rc-time-picker-panel .preview-collection-content .list, .rc-time-picker-panel .preview-collection-content .content{\n      height: auto;\n      overflow-y: visible;\n      padding: 0;\n    }\n    .keen-explorer .preview-collection-content .content,.ReactModalPortal .preview-collection-content .content,.rc-time-picker-panel .preview-collection-content .content{\n      padding-top: 2rem;\n    }\n}\n\n.keen-explorer .preview .download-toggle-label,.ReactModalPortal .preview .download-toggle-label,.rc-time-picker-panel .preview .download-toggle-label{\n    padding: 1rem;\n    cursor: pointer;\n    height: -webkit-min-content;\n    height: -moz-min-content;\n    height: min-content;\n  }\n\n.keen-explorer .preview .download-toggle-label i,.ReactModalPortal .preview .download-toggle-label i,.rc-time-picker-panel .preview .download-toggle-label i{\n      margin-right: 0.5rem;\n    }\n\n.keen-explorer .preview .download-buttons,.ReactModalPortal .preview .download-buttons,.rc-time-picker-panel .preview .download-buttons{\n    position: absolute;\n    background: #fdfdfd;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: column;\n        flex-direction: column;\n    -webkit-box-shadow: 2px 3px 6px rgba(0,0,0,0.05);\n            box-shadow: 2px 3px 6px rgba(0,0,0,0.05);\n    margin-top: -2px;\n  }\n\n.keen-explorer .preview .download-buttons button, .ReactModalPortal .preview .download-buttons button, .rc-time-picker-panel .preview .download-buttons button {\n      border: 1px solid #f7f7f7;\n    }\n\n.keen-explorer .preview .download-buttons button:hover,.ReactModalPortal .preview .download-buttons button:hover,.rc-time-picker-panel .preview .download-buttons button:hover{\n      background: #fff;\n    }\n\n.keen-explorer .preview .download-buttons .button-download,.ReactModalPortal .preview .download-buttons .button-download,.rc-time-picker-panel .preview .download-buttons .button-download{\n      padding: 1rem 3rem;\n      height: -webkit-min-content;\n      height: -moz-min-content;\n      height: min-content;\n    }\n\n.keen-explorer .preview .button-embed-html,.ReactModalPortal .preview .button-embed-html,.rc-time-picker-panel .preview .button-embed-html{\n    height: -webkit-min-content;\n    height: -moz-min-content;\n    height: min-content;\n  }\n\n.keen-explorer * {\n    -webkit-box-sizing: border-box;\n            box-sizing: border-box;\n    font-size: 0.88rem;\n    font-size: 0.88rem;\n}\n\n.ReactModalPortal * {\n    -webkit-box-sizing: border-box;\n            box-sizing: border-box;\n    font-size: 0.88rem;\n    font-size: 0.88rem;\n}\n\n.rc-time-picker-panel * {\n    -webkit-box-sizing: border-box;\n            box-sizing: border-box;\n    font-size: 0.88rem;\n    font-size: 0.88rem;\n}\n\n.keen-explorer button,.ReactModalPortal button,.rc-time-picker-panel button{\n    margin: 2rem 0 0;\n    padding: 1rem;\n}\n\n.keen-explorer .label-main,.ReactModalPortal .label-main,.rc-time-picker-panel .label-main{\n    padding: 1rem 0 0.3rem;\n}\n\n.keen-explorer .hide,.ReactModalPortal .hide,.rc-time-picker-panel .hide{\n    display: none;\n}\n\n.keen-explorer input:focus {\n    outline: 2px solid #00bbde;\n    outline: 2px solid #00bbde;\n}\n\n.ReactModalPortal input:focus {\n    outline: 2px solid #00bbde;\n    outline: 2px solid #00bbde;\n}\n\n.rc-time-picker-panel input:focus {\n    outline: 2px solid #00bbde;\n    outline: 2px solid #00bbde;\n}\n\n.keen-explorer .panel-main,.ReactModalPortal .panel-main,.rc-time-picker-panel .panel-main{\n    -ms-flex: 1;\n        flex: 1;\n    min-width: 26rem;\n    -webkit-box-shadow: -3px 7px 11px rgba(0,0,0,0.1);\n            box-shadow: -3px 7px 11px rgba(0,0,0,0.1);\n    border-radius: 0.3rem;\n}\n\n.keen-explorer .panel-main .panel-buttons .button-new-query,.ReactModalPortal .panel-main .panel-buttons .button-new-query,.rc-time-picker-panel .panel-main .panel-buttons .button-new-query{\n        -ms-flex: none;\n            flex: none;\n        cursor: pointer;\n      }\n\n.keen-explorer .panel-main .panel-content,.ReactModalPortal .panel-main .panel-content,.rc-time-picker-panel .panel-main .panel-content{\n      padding: 1rem;\n    }\n\n.keen-explorer .panel-main .panel-content .event-collection .label-main,.ReactModalPortal .panel-main .panel-content .event-collection .label-main,.rc-time-picker-panel .panel-main .panel-content .event-collection .label-main{\n        padding-top: 0;\n      }\n\n.keen-explorer .panel-main .panel-saved-queries,.ReactModalPortal .panel-main .panel-saved-queries,.rc-time-picker-panel .panel-main .panel-saved-queries{\n      padding-right: 0;\n    }\n\n.keen-explorer .panel-main .panel-funnel .label-analysis-type, .ReactModalPortal .panel-main .panel-funnel .label-analysis-type, .rc-time-picker-panel .panel-main .panel-funnel .label-analysis-type {\n        padding-top: 0;\n      }\n\n.keen-explorer .result,.ReactModalPortal .result,.rc-time-picker-panel .result{\n    -ms-flex: 3;\n        flex: 3;\n    padding: 0 1.5rem;\n    overflow-x: hidden;\n}\n\n.keen-explorer .foldable,.ReactModalPortal .foldable,.rc-time-picker-panel .foldable{\n    margin-top: 0.5rem;\n    border: 1px solid #e8e8e8;\n    background: #fdfdfd;\n    padding: 0.5rem;\n    cursor: pointer;\n    border-radius: 5px;\n}\n\n.keen-explorer .foldable-active,.ReactModalPortal .foldable-active,.rc-time-picker-panel .foldable-active{\n      background: none;\n    }\n\n.keen-explorer .foldable .title,.ReactModalPortal .foldable .title,.rc-time-picker-panel .foldable .title{\n      padding: 0.5rem;\n    }\n\n.keen-explorer .foldable .title .foldable-icon,.ReactModalPortal .foldable .title .foldable-icon,.rc-time-picker-panel .foldable .title .foldable-icon{\n        float: right;\n      }\n\n.keen-explorer .foldable .content,.ReactModalPortal .foldable .content,.rc-time-picker-panel .foldable .content{\n      margin-top: 0.5rem;\n      padding: 0;\n    }\n\n.keen-explorer .foldable .tab-content,.ReactModalPortal .foldable .tab-content,.rc-time-picker-panel .foldable .tab-content{\n      border: 0;\n    }\n\n.keen-explorer .filters,.ReactModalPortal .filters,.rc-time-picker-panel .filters{\n    display: -ms-flexbox;\n    display: flex;\n}\n\n.keen-explorer .filters .title,.ReactModalPortal .filters .title,.rc-time-picker-panel .filters .title{\n      -ms-flex: 1;\n          flex: 1;\n    }\n\n.keen-explorer .filters .count,.ReactModalPortal .filters .count,.rc-time-picker-panel .filters .count{\n      -ms-flex-item-align: center;\n          align-self: center;\n      text-align: right;\n      padding: 0 0.5rem 0 0;\n    }\n\n.keen-explorer .optional,.ReactModalPortal .optional,.rc-time-picker-panel .optional{\n    margin-left: 1em;\n    font-size: 0.7em;\n    color:#ddd;\n    color: #737373;\n}\n\n.keen-explorer .group-by .label-main,.ReactModalPortal .group-by .label-main,.rc-time-picker-panel .group-by .label-main{\n      padding: 0 0 0.5rem;\n    }\n\n.keen-explorer .group-by .btn-plus, .keen-explorer .group-by .btn-minus, .ReactModalPortal .group-by .btn-plus, .ReactModalPortal .group-by .btn-minus, .rc-time-picker-panel .group-by .btn-plus, .rc-time-picker-panel .group-by .btn-minus{\n      margin-top: 1rem;\n      padding: 0.7rem;\n      background: #fdfdfd;\n      border: 1px solid #e8e8e8;\n      border-radius: 5px;\n      display: inline-block;\n    }\n\n.keen-explorer .group-by .options,.ReactModalPortal .group-by .options,.rc-time-picker-panel .group-by .options{\n      margin-top: 1rem;\n      display:-ms-flexbox;\n      display:flex;\n    }\n\n.keen-explorer .group-by .options .order-by,.ReactModalPortal .group-by .options .order-by,.rc-time-picker-panel .group-by .options .order-by{\n        width: 8em;\n        padding-right: 1rem;\n      }\n\n.keen-explorer .group-by .options .order-by .select,.ReactModalPortal .group-by .options .order-by .select,.rc-time-picker-panel .group-by .options .order-by .select{\n          width: 100%;\n        }\n\n.keen-explorer .group-by .options .limit,.ReactModalPortal .group-by .options .limit,.rc-time-picker-panel .group-by .options .limit{\n        width: 8em;\n      }\n\n.keen-explorer .group-by .options .limit .input,.ReactModalPortal .group-by .options .limit .input,.rc-time-picker-panel .group-by .options .limit .input{\n          width: 100%;\n        }\n\n.keen-explorer .group-by .additional-target-property,.ReactModalPortal .group-by .additional-target-property,.rc-time-picker-panel .group-by .additional-target-property{\n      margin-top: 1rem;\n      padding-top: 1rem;\n      border-top: 1px solid #f1f1f1;\n    }\n\n.keen-explorer .lets-go,.ReactModalPortal .lets-go,.rc-time-picker-panel .lets-go{\n    display:-ms-flexbox;\n    display:flex;\n    width: 100%;\n    height: 390px;\n    -ms-flex-pack: center;\n        justify-content: center;\n    -ms-flex-align: center;\n        align-items: center;\n    color: #9b9b9b;\n    background: #fafafa;\n}\n\n.keen-explorer .tabs,.ReactModalPortal .tabs,.rc-time-picker-panel .tabs{\n  display:-ms-flexbox;\n  display:flex;\n}\n\n.keen-explorer .tabs .tab,.ReactModalPortal .tabs .tab,.rc-time-picker-panel .tabs .tab{\n    -ms-flex: 1;\n        flex: 1;\n    padding: 1rem;\n    background: #fafafa;\n    cursor: pointer;\n    border: 1px solid #e8e8e8;\n    border-radius: 5px 5px 0 0;\n  }\n\n.keen-explorer .tabs .active,.ReactModalPortal .tabs .active,.rc-time-picker-panel .tabs .active{\n    background: #fff;\n    border-bottom: 1px solid #fff;\n  }\n\n.keen-explorer .panel-buttons .active,.ReactModalPortal .panel-buttons .active,.rc-time-picker-panel .panel-buttons .active{\n    border-right: 0;\n  }\n\n.keen-explorer .tab-content,.ReactModalPortal .tab-content,.rc-time-picker-panel .tab-content{\n  padding: 1rem;\n  border: 1px solid #e8e8e8;\n  border-top: none;\n}\n\n.keen-explorer .input-number{\n  font-size: 0.88rem;\n  font-size: 0.88rem;\n  padding: 0.5rem 0.6rem;\n  border-radius: 5px;\n  border: 1px solid #ccc;\n  font-weight: 400;\n  line-height: normal;\n}\n\n.ReactModalPortal .input-number{\n  font-size: 0.88rem;\n  font-size: 0.88rem;\n  padding: 0.5rem 0.6rem;\n  border-radius: 5px;\n  border: 1px solid #ccc;\n  font-weight: 400;\n  line-height: normal;\n}\n\n.rc-time-picker-panel .input-number{\n  font-size: 0.88rem;\n  font-size: 0.88rem;\n  padding: 0.5rem 0.6rem;\n  border-radius: 5px;\n  border: 1px solid #ccc;\n  font-weight: 400;\n  line-height: normal;\n}\n\n.keen-explorer .input-text{\n  font-size: 0.88rem;\n  font-size: 0.88rem;\n  padding: 0.5rem 0.6rem;\n  border-radius: 5px;\n  border: 1px solid #ccc;\n  font-weight: 400;\n  line-height: normal;\n}\n\n.ReactModalPortal .input-text{\n  font-size: 0.88rem;\n  font-size: 0.88rem;\n  padding: 0.5rem 0.6rem;\n  border-radius: 5px;\n  border: 1px solid #ccc;\n  font-weight: 400;\n  line-height: normal;\n}\n\n.rc-time-picker-panel .input-text{\n  font-size: 0.88rem;\n  font-size: 0.88rem;\n  padding: 0.5rem 0.6rem;\n  border-radius: 5px;\n  border: 1px solid #ccc;\n  font-weight: 400;\n  line-height: normal;\n}\n\n.keen-explorer .interval .standard-units,.ReactModalPortal .interval .standard-units,.rc-time-picker-panel .interval .standard-units{\n    width: 10rem;\n  }\n\n.keen-explorer .interval .line,.ReactModalPortal .interval .line,.rc-time-picker-panel .interval .line{\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-align: center;\n        align-items: center;\n  }\n\n.keen-explorer .interval .line .title,.ReactModalPortal .interval .line .title,.rc-time-picker-panel .interval .line .title{\n      margin-right: 1rem;\n    }\n\n.keen-explorer .interval .line .input-number,.ReactModalPortal .interval .line .input-number,.rc-time-picker-panel .interval .line .input-number{\n      width: 4rem;\n      margin-right: 0.5rem;\n    }\n\n.keen-explorer .interval .line .time-units,.ReactModalPortal .interval .line .time-units,.rc-time-picker-panel .interval .line .time-units{\n      width: 10rem;\n    }\n\n.keen-explorer .timeframe,.ReactModalPortal .timeframe,.rc-time-picker-panel .timeframe{\n  margin-bottom: 0.5rem;\n}\n\n.keen-explorer .timeframe .relative,.ReactModalPortal .timeframe .relative,.rc-time-picker-panel .timeframe .relative{\n    display:-ms-flexbox;\n    display:flex;\n  }\n\n.keen-explorer .timeframe .relative .relativity, .keen-explorer .timeframe .relative .input-number, .ReactModalPortal .timeframe .relative .relativity, .ReactModalPortal .timeframe .relative .input-number, .rc-time-picker-panel .timeframe .relative .relativity, .rc-time-picker-panel .timeframe .relative .input-number{\n      margin-right:0.5rem;\n    }\n\n.keen-explorer .timeframe .relative .relativity,.ReactModalPortal .timeframe .relative .relativity,.rc-time-picker-panel .timeframe .relative .relativity{\n      -ms-flex: 0;\n          flex: 0;\n      max-width:12rem;\n      min-width: 6rem;\n    }\n\n.keen-explorer .timeframe .relative .units,.ReactModalPortal .timeframe .relative .units,.rc-time-picker-panel .timeframe .relative .units{\n      -ms-flex: 0;\n          flex: 0;\n      max-width:12rem;\n      min-width: 6rem;\n    }\n\n.keen-explorer .timeframe .relative .input-number,.ReactModalPortal .timeframe .relative .input-number,.rc-time-picker-panel .timeframe .relative .input-number{\n      -ms-flex: 1;\n          flex: 1;\n      min-width: 6rem;\n    }\n\n.keen-explorer .timeframe .description,.ReactModalPortal .timeframe .description,.rc-time-picker-panel .timeframe .description{\n    margin-top: 0.5rem;\n    padding: 1rem;\n    background: #fafafa;\n  }\n\n.keen-explorer .timeframe .tabAbsolute .DateRangePickerInput_arrow,.ReactModalPortal .timeframe .tabAbsolute .DateRangePickerInput_arrow,.rc-time-picker-panel .timeframe .tabAbsolute .DateRangePickerInput_arrow{\n      display: none;\n    }\n\n.keen-explorer .timeframe .tabAbsolute .DateInput, .ReactModalPortal .timeframe .tabAbsolute .DateInput, .rc-time-picker-panel .timeframe .tabAbsolute .DateInput {\n      width: 8rem;\n      background: none;\n    }\n\n.keen-explorer .timeframe .tabAbsolute .DateInput_input {\n      padding: 0.5rem;\n      font-size: 0.88rem;\n      font-size: 0.88rem;\n      line-height: normal;\n      color:#000;\n      font-weight: normal;\n      border-radius: 5px;\n    }\n\n.ReactModalPortal .timeframe .tabAbsolute .DateInput_input {\n      padding: 0.5rem;\n      font-size: 0.88rem;\n      font-size: 0.88rem;\n      line-height: normal;\n      color:#000;\n      font-weight: normal;\n      border-radius: 5px;\n    }\n\n.rc-time-picker-panel .timeframe .tabAbsolute .DateInput_input {\n      padding: 0.5rem;\n      font-size: 0.88rem;\n      font-size: 0.88rem;\n      line-height: normal;\n      color:#000;\n      font-weight: normal;\n      border-radius: 5px;\n    }\n\n.keen-explorer .timeframe .tabAbsolute .rc-time-picker-input{\n      font-size: 0.88rem;\n      font-size: 0.88rem;\n      line-height: normal;\n      font-weight: normal;\n      color: #000;\n      height: 2.4rem;\n      width: 7rem;\n      border-radius: 5px;\n    }\n\n.ReactModalPortal .timeframe .tabAbsolute .rc-time-picker-input{\n      font-size: 0.88rem;\n      font-size: 0.88rem;\n      line-height: normal;\n      font-weight: normal;\n      color: #000;\n      height: 2.4rem;\n      width: 7rem;\n      border-radius: 5px;\n    }\n\n.rc-time-picker-panel .timeframe .tabAbsolute .rc-time-picker-input{\n      font-size: 0.88rem;\n      font-size: 0.88rem;\n      line-height: normal;\n      font-weight: normal;\n      color: #000;\n      height: 2.4rem;\n      width: 7rem;\n      border-radius: 5px;\n    }\n\n.keen-explorer .timeframe .tabAbsolute .line,.ReactModalPortal .timeframe .tabAbsolute .line,.rc-time-picker-panel .timeframe .tabAbsolute .line{\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-align: center;\n          align-items: center;\n      margin: 0.5rem;\n    }\n\n.keen-explorer .timeframe .tabAbsolute .line .title,.ReactModalPortal .timeframe .tabAbsolute .line .title,.rc-time-picker-panel .timeframe .tabAbsolute .line .title{\n        width: 4rem;\n      }\n\n.keen-explorer .timeframe .tabAbsolute .line .SingleDatePicker, .ReactModalPortal .timeframe .tabAbsolute .line .SingleDatePicker, .rc-time-picker-panel .timeframe .tabAbsolute .line .SingleDatePicker {\n        margin-right: 0.5rem;\n      }\n\n.keen-explorer .timeframe .tabAbsolute .line .SingleDatePickerInput__withBorder, .ReactModalPortal .timeframe .tabAbsolute .line .SingleDatePickerInput__withBorder, .rc-time-picker-panel .timeframe .tabAbsolute .line .SingleDatePickerInput__withBorder {\n        border-radius: 5px;\n        border: 1px solid #dbdbdb;\n      }\n\n.keen-explorer .rc-time-picker-panel .rc-time-picker-panel-inner,.ReactModalPortal .rc-time-picker-panel .rc-time-picker-panel-inner,.rc-time-picker-panel .rc-time-picker-panel .rc-time-picker-panel-inner{\n    -webkit-box-shadow: none;\n            box-shadow: none;\n    border-radius: 5px;\n  }\n\n.keen-explorer .rc-time-picker-panel .rc-time-picker-input{\n    font-size: 0.88rem;\n    font-size: 0.88rem;\n    line-height: normal;\n    font-weight: normal;\n    color: #000;\n    height: 2.4rem;\n    width: 8rem;\n    border-radius: 5px;\n  }\n\n.ReactModalPortal .rc-time-picker-panel .rc-time-picker-input{\n    font-size: 0.88rem;\n    font-size: 0.88rem;\n    line-height: normal;\n    font-weight: normal;\n    color: #000;\n    height: 2.4rem;\n    width: 8rem;\n    border-radius: 5px;\n  }\n\n.rc-time-picker-panel .rc-time-picker-panel .rc-time-picker-input{\n    font-size: 0.88rem;\n    font-size: 0.88rem;\n    line-height: normal;\n    font-weight: normal;\n    color: #000;\n    height: 2.4rem;\n    width: 8rem;\n    border-radius: 5px;\n  }\n\n.keen-explorer .rc-time-picker-panel .rc-time-picker-panel-select{\n    font-size: 0.88rem;\n    font-size: 0.88rem;\n  }\n\n.ReactModalPortal .rc-time-picker-panel .rc-time-picker-panel-select{\n    font-size: 0.88rem;\n    font-size: 0.88rem;\n  }\n\n.rc-time-picker-panel .rc-time-picker-panel .rc-time-picker-panel-select{\n    font-size: 0.88rem;\n    font-size: 0.88rem;\n  }\n\n.keen-explorer .rc-time-picker-panel .rc-time-picker-panel-select li,.ReactModalPortal .rc-time-picker-panel .rc-time-picker-panel-select li,.rc-time-picker-panel .rc-time-picker-panel .rc-time-picker-panel-select li{\n      height: 2rem;\n      line-height: 2rem;\n    }\n\n.keen-explorer .rc-time-picker-panel .rc-time-picker-panel-input{\n    font-size: 0.88rem;\n    font-size: 0.88rem;\n  }\n\n.ReactModalPortal .rc-time-picker-panel .rc-time-picker-panel-input{\n    font-size: 0.88rem;\n    font-size: 0.88rem;\n  }\n\n.rc-time-picker-panel .rc-time-picker-panel .rc-time-picker-panel-input{\n    font-size: 0.88rem;\n    font-size: 0.88rem;\n  }\n\n.keen-explorer .apiQueryUrl,.ReactModalPortal .apiQueryUrl,.rc-time-picker-panel .apiQueryUrl{\n  cursor: pointer;\n  padding: 1rem;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-align: center;\n      align-items: center;\n  width: 100%;\n  font-size: 0.8rem;\n}\n\n.keen-explorer .apiQueryUrl input,.ReactModalPortal .apiQueryUrl input,.rc-time-picker-panel .apiQueryUrl input{\n    -ms-flex: 1;\n        flex: 1;\n    margin: 0 1rem;\n  }\n\n.keen-explorer .fa-copy:active{\n  color: #00bbde;\n  color: #00bbde;\n}\n\n.ReactModalPortal .fa-copy:active{\n  color: #00bbde;\n  color: #00bbde;\n}\n\n.rc-time-picker-panel .fa-copy:active{\n  color: #00bbde;\n  color: #00bbde;\n}\n\n.keen-explorer .button-run-query{\n  font-size: 0.88rem;\n  font-size: 0.88rem;\n  text-transform: uppercase;\n  border-radius: 0.3rem;\n  background: #3ecf8e;\n  background: #3ecf8e;\n  color: #fff;\n  font-weight: 600;\n  font-weight: 600;\n  border: 0;\n  padding: 0.88rem calc(0.88rem*2);\n  padding: 0.88rem calc(0.88rem*2);\n  cursor: pointer;\n  margin: 0;\n}\n\n.ReactModalPortal .button-run-query{\n  font-size: 0.88rem;\n  font-size: 0.88rem;\n  text-transform: uppercase;\n  border-radius: 0.3rem;\n  background: #3ecf8e;\n  background: #3ecf8e;\n  color: #fff;\n  font-weight: 600;\n  font-weight: 600;\n  border: 0;\n  padding: 0.88rem calc(0.88rem*2);\n  padding: 0.88rem calc(0.88rem*2);\n  cursor: pointer;\n  margin: 0;\n}\n\n.rc-time-picker-panel .button-run-query{\n  font-size: 0.88rem;\n  font-size: 0.88rem;\n  text-transform: uppercase;\n  border-radius: 0.3rem;\n  background: #3ecf8e;\n  background: #3ecf8e;\n  color: #fff;\n  font-weight: 600;\n  font-weight: 600;\n  border: 0;\n  padding: 0.88rem calc(0.88rem*2);\n  padding: 0.88rem calc(0.88rem*2);\n  cursor: pointer;\n  margin: 0;\n}\n\n.keen-explorer .button-with-loading-spinner .loading-spinner,.ReactModalPortal .button-with-loading-spinner .loading-spinner,.rc-time-picker-panel .button-with-loading-spinner .loading-spinner{\n    display: inline-block;\n    margin: 0 0.5rem 0 -0.5rem;\n    padding: 0;\n  }\n\n.keen-explorer .button-with-loading-spinner .loading-spinner i, .ReactModalPortal .button-with-loading-spinner .loading-spinner i, .rc-time-picker-panel .button-with-loading-spinner .loading-spinner i {\n      margin: 0;\n      padding: 0;\n      font-size: 1rem;\n    }\n\n.keen-explorer .error,.ReactModalPortal .error,.rc-time-picker-panel .error{\n  padding: 1rem;\n  background: #ffe5e5;\n  margin: 1rem 0;\n}\n\n.keen-explorer .box-info,.ReactModalPortal .box-info,.rc-time-picker-panel .box-info{\n  padding: 1rem;\n  background: #f1faff;\n}\n\n.keen-explorer .tab-content .box-info,.ReactModalPortal .tab-content .box-info,.rc-time-picker-panel .tab-content .box-info{\n  margin: -1rem;\n}\n\n.keen-explorer .preview,.ReactModalPortal .preview,.rc-time-picker-panel .preview{\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-direction: row;\n      flex-direction: row;\n  -ms-flex-wrap: wrap;\n      flex-wrap: wrap;\n  background: #fafafa;\n}\n\n.keen-explorer .preview .loader,.ReactModalPortal .preview .loader,.rc-time-picker-panel .preview .loader{\n    width: 100%;\n    height: 340px;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-align: center;\n        align-items: center;\n    -ms-flex-pack: center;\n        justify-content: center;\n    font-size: 5rem;\n    color: #eee;\n  }\n\n.keen-explorer .preview .keen-dataviz-container, .keen-explorer .preview .react-json-view, .ReactModalPortal .preview .keen-dataviz-container, .ReactModalPortal .preview .react-json-view, .rc-time-picker-panel .preview .keen-dataviz-container, .rc-time-picker-panel .preview .react-json-view{\n    width: 100%;\n    height: 340px;\n    background: #fff;\n    overflow-y: scroll;\n  }\n\n.keen-explorer .preview .react-json-view,.ReactModalPortal .preview .react-json-view,.rc-time-picker-panel .preview .react-json-view{\n    padding: 1rem;\n  }\n\n.keen-explorer .preview .select-chart-type-container,.ReactModalPortal .preview .select-chart-type-container,.rc-time-picker-panel .preview .select-chart-type-container{\n    -ms-flex: 1;\n        flex: 1;\n    -ms-flex-order: 1;\n        order: 1;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-item-align: center;\n        align-self: center;\n    -ms-flex-direction: column;\n        flex-direction: column;\n    -ms-flex-pack: end;\n        justify-content: flex-end;\n    margin: 0.3rem;\n  }\n\n.keen-explorer .preview .select-chart-type, .ReactModalPortal .preview .select-chart-type, .rc-time-picker-panel .preview .select-chart-type {\n    -ms-flex: 1;\n        flex: 1;\n    width: 20rem;\n    -ms-flex-item-align: end;\n        align-self: flex-end;\n  }\n\n.keen-explorer .preview .chart-not-supported-note,.ReactModalPortal .preview .chart-not-supported-note,.rc-time-picker-panel .preview .chart-not-supported-note{\n    float: right;\n    text-align: right;\n    padding: 0.5rem;\n  }\n\n.keen-explorer .preview .button-download,.ReactModalPortal .preview .button-download,.rc-time-picker-panel .preview .button-download{\n    -ms-flex-order: 0;\n        order: 0;\n    background: transparent;\n    border: 0;\n    margin: 0;\n    cursor: pointer;\n    font-size: 0.8rem;\n  }\n\n.keen-explorer .preview .button-download i,.ReactModalPortal .preview .button-download i,.rc-time-picker-panel .preview .button-download i{\n      margin-right: 0.5rem;\n    }\n\n.keen-explorer .action-buttons,.ReactModalPortal .action-buttons,.rc-time-picker-panel .action-buttons{\n  margin-top: 1rem;\n}\n\n.keen-explorer .chartType,.ReactModalPortal .chartType,.rc-time-picker-panel .chartType{\n  margin-top: 1rem;\n}\n\n.keen-explorer .button-toggle{\n  margin-left: 1rem;\n  display: inline;\n  cursor: pointer;\n  border-radius: 0.3rem;\n  font-size: 0.88rem;\n  font-size: 0.88rem;\n  font-weight: 600;\n  font-weight: 600;\n  text-transform: uppercase;\n  color: #3ecf8e;\n  color: #3ecf8e;\n  color: #45b2e8;\n  color: #45b2e8;\n  background: #fcfcfc;\n  border: 1px solid #efefef;\n  border: 1px solid #efefef;\n  padding: 0.88rem calc(0.88rem*2);\n  padding: 0.88rem calc(0.88rem*2);\n}\n\n.ReactModalPortal .button-toggle{\n  margin-left: 1rem;\n  display: inline;\n  cursor: pointer;\n  border-radius: 0.3rem;\n  font-size: 0.88rem;\n  font-size: 0.88rem;\n  font-weight: 600;\n  font-weight: 600;\n  text-transform: uppercase;\n  color: #3ecf8e;\n  color: #3ecf8e;\n  color: #45b2e8;\n  color: #45b2e8;\n  background: #fcfcfc;\n  border: 1px solid #efefef;\n  border: 1px solid #efefef;\n  padding: 0.88rem calc(0.88rem*2);\n  padding: 0.88rem calc(0.88rem*2);\n}\n\n.rc-time-picker-panel .button-toggle{\n  margin-left: 1rem;\n  display: inline;\n  cursor: pointer;\n  border-radius: 0.3rem;\n  font-size: 0.88rem;\n  font-size: 0.88rem;\n  font-weight: 600;\n  font-weight: 600;\n  text-transform: uppercase;\n  color: #3ecf8e;\n  color: #3ecf8e;\n  color: #45b2e8;\n  color: #45b2e8;\n  background: #fcfcfc;\n  border: 1px solid #efefef;\n  border: 1px solid #efefef;\n  padding: 0.88rem calc(0.88rem*2);\n  padding: 0.88rem calc(0.88rem*2);\n}\n\n.keen-explorer .button-toggle i, .ReactModalPortal .button-toggle i, .rc-time-picker-panel .button-toggle i {\n    margin-left: 1rem;\n  }\n\n.keen-explorer .button-toggle-active, .ReactModalPortal .button-toggle-active, .rc-time-picker-panel .button-toggle-active {\n  background: rgb(255, 255, 255);\n}\n\n.keen-explorer .result-string,.ReactModalPortal .result-string,.rc-time-picker-panel .result-string{\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-pack: center;\n      justify-content: center;\n  -ms-flex-align: center;\n      align-items: center;\n}\n\n.keen-explorer .CalendarDay__selected {\n  background: #00bbde;\n  background: #00bbde;\n  border: 1px double #00bbde;\n  border: 1px double #00bbde;\n}\n\n.keen-explorer .CalendarDay__selected:active {\n  background: #00bbde;\n  background: #00bbde;\n  border: 1px double #00bbde;\n  border: 1px double #00bbde;\n}\n\n.keen-explorer .CalendarDay__selected:hover {\n  background: #00bbde;\n  background: #00bbde;\n  border: 1px double #00bbde;\n  border: 1px double #00bbde;\n}\n\n.ReactModalPortal .CalendarDay__selected {\n  background: #00bbde;\n  background: #00bbde;\n  border: 1px double #00bbde;\n  border: 1px double #00bbde;\n}\n\n.ReactModalPortal .CalendarDay__selected:active {\n  background: #00bbde;\n  background: #00bbde;\n  border: 1px double #00bbde;\n  border: 1px double #00bbde;\n}\n\n.ReactModalPortal .CalendarDay__selected:hover {\n  background: #00bbde;\n  background: #00bbde;\n  border: 1px double #00bbde;\n  border: 1px double #00bbde;\n}\n\n.rc-time-picker-panel .CalendarDay__selected {\n  background: #00bbde;\n  background: #00bbde;\n  border: 1px double #00bbde;\n  border: 1px double #00bbde;\n}\n\n.rc-time-picker-panel .CalendarDay__selected:active {\n  background: #00bbde;\n  background: #00bbde;\n  border: 1px double #00bbde;\n  border: 1px double #00bbde;\n}\n\n.rc-time-picker-panel .CalendarDay__selected:hover {\n  background: #00bbde;\n  background: #00bbde;\n  border: 1px double #00bbde;\n  border: 1px double #00bbde;\n}\n\n.keen-explorer .DayPickerKeyboardShortcuts_show__bottomRight::before{\n  border-right: 33px solid #00bbde;\n  border-right: 33px solid #00bbde;\n}\n\n.ReactModalPortal .DayPickerKeyboardShortcuts_show__bottomRight::before{\n  border-right: 33px solid #00bbde;\n  border-right: 33px solid #00bbde;\n}\n\n.rc-time-picker-panel .DayPickerKeyboardShortcuts_show__bottomRight::before{\n  border-right: 33px solid #00bbde;\n  border-right: 33px solid #00bbde;\n}\n\n.keen-explorer .DateInput_input__focused{\n  border-bottom: 2px solid #00bbde;\n  border-bottom: 2px solid #00bbde;\n}\n\n.ReactModalPortal .DateInput_input__focused{\n  border-bottom: 2px solid #00bbde;\n  border-bottom: 2px solid #00bbde;\n}\n\n.rc-time-picker-panel .DateInput_input__focused{\n  border-bottom: 2px solid #00bbde;\n  border-bottom: 2px solid #00bbde;\n}\n\n.keen-explorer .loading-spinner i, .ReactModalPortal .loading-spinner i, .rc-time-picker-panel .loading-spinner i {\n      font-size: 1.5rem;\n    }\n\n.keen-explorer .fa-spin, .ReactModalPortal .fa-spin, .rc-time-picker-panel .fa-spin {\n    -webkit-animation: fa-spin 1s infinite linear;\n            animation: fa-spin 1s infinite linear;\n}\n\n.keen-explorer .react-select-option,.ReactModalPortal .react-select-option,.rc-time-picker-panel .react-select-option{\n    padding: 0.7rem 1rem;\n}\n\n.keen-explorer .react-json-view .string-value,.ReactModalPortal .react-json-view .string-value,.rc-time-picker-panel .react-json-view .string-value{\n      word-break: break-word;\n    }\n\n@media screen and (max-width: 1000px) {\n  .keen-explorer{\n    -ms-flex-direction: column;\n        flex-direction: column;\n  }\n    .keen-explorer .panel{\n      -webkit-box-shadow: none;\n              box-shadow: none;\n      min-width: none;\n    }\n      .keen-explorer .panel .panel-content{\n        padding: 0 1rem;\n      }\n    .keen-explorer .result{\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-direction: column;\n          flex-direction: column;\n    }\n      .keen-explorer .result .preview, .keen-explorer .result .lets-go{\n        -ms-flex-order: 1;\n            order: 1;\n      }\n      .keen-explorer .result .error{\n        margin-bottom: 0;\n      }\n      .keen-explorer .result .button-run-query{\n        -ms-flex-order: 0;\n            order: 0;\n      }\n      .keen-explorer .result .button-toggle {\n        -ms-flex-order: 3;\n            order: 3;\n      }\n      .keen-explorer .result .saved-query{\n        -ms-flex-order: 3;\n            order: 3;\n      }\n      .keen-explorer .result .action-buttons{\n        margin-bottom: 1rem;\n      }\n    .filters-container .delete{\n      margin-top: 0.5rem;\n    }\n}", ""]);
 
 
 
@@ -24949,7 +24949,7 @@ var queries_queries = function queries() {
 
 /* harmony default export */ var reducers_queries = (queries_queries);
 // EXTERNAL MODULE: external "moment"
-var external_moment_ = __webpack_require__(10);
+var external_moment_ = __webpack_require__(11);
 var external_moment_default = /*#__PURE__*/__webpack_require__.n(external_moment_);
 
 // CONCATENATED MODULE: ./lib/js/app/consts.js
@@ -25328,6 +25328,7 @@ var ui_defaultState = {
   limit: undefined,
   latest: EXTRACTION_PREVIEW_EVENTS_DEFAULT,
   email: '',
+  contentEncoding: undefined,
   propertyNames: [],
   interval: undefined,
   numberOfGroupByProps: 1,
@@ -26726,7 +26727,7 @@ regeneratorRuntime.mark(sagas_fetchSchema),
 regeneratorRuntime.mark(sagas_fetchRecentEvents),
     _marked4 =
 /*#__PURE__*/
-regeneratorRuntime.mark(query),
+regeneratorRuntime.mark(sagas_query),
     _marked5 =
 /*#__PURE__*/
 regeneratorRuntime.mark(saveQuery),
@@ -26945,7 +26946,7 @@ function sagas_fetchRecentEvents(_ref2) {
   }, _marked3, null, [[1, 9]]);
 }
 
-function query(_ref3) {
+function sagas_query(_ref3) {
   var payload, responseBody;
   return regeneratorRuntime.wrap(function query$(_context4) {
     while (1) {
@@ -27137,7 +27138,7 @@ function watchFetchProject() {
 
         case 8:
           _context8.next = 10;
-          return takeLatest$1('CLIENT_RUN_QUERY', query);
+          return takeLatest$1('CLIENT_RUN_QUERY', sagas_query);
 
         case 10:
           _context8.next = 12;
@@ -27188,10 +27189,6 @@ var external_react_select_default = /*#__PURE__*/__webpack_require__.n(external_
 var external_react_modal_ = __webpack_require__(60);
 var external_react_modal_default = /*#__PURE__*/__webpack_require__.n(external_react_modal_);
 
-// EXTERNAL MODULE: ./node_modules/csv-parse/lib/es5/sync.js
-var sync = __webpack_require__(167);
-var sync_default = /*#__PURE__*/__webpack_require__.n(sync);
-
 // CONCATENATED MODULE: ./lib/js/app/utils/style.js
 function style_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { style_defineProperty(target, key, source[key]); }); } return target; }
 
@@ -27203,6 +27200,176 @@ var getThemeForSelect = function getThemeForSelect(theme) {
       primary25: '#f4f6f7',
       primary: '#00bbde'
     })
+  });
+};
+// EXTERNAL MODULE: ./node_modules/csv-parse/lib/es5/sync.js
+var sync = __webpack_require__(167);
+var sync_default = /*#__PURE__*/__webpack_require__.n(sync);
+
+// CONCATENATED MODULE: ./lib/js/app/utils/filter.js
+function filter_toConsumableArray(arr) { return filter_arrayWithoutHoles(arr) || filter_iterableToArray(arr) || filter_nonIterableSpread(); }
+
+function filter_nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function filter_iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function filter_arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
+function filter_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { filter_defineProperty(target, key, source[key]); }); } return target; }
+
+function filter_defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+var filter_convertDateToString = function convertDateToString(valueSelected) {
+  var value = valueSelected || external_moment_default()(external_moment_default()().format('YYYY-MM-DD'));
+  var valueConverted = "".concat(value.format('YYYY-MM-DD'), "T").concat(value.format('HH:mm'), ":00.000Z");
+  return valueConverted;
+};
+var translateDeprecatedCharts = function translateDeprecatedCharts(chartType) {
+  var map = {
+    areachart: 'area',
+    barchart: 'horizontal-bar',
+    columnchart: 'bar',
+    linechart: 'line',
+    piechart: 'pie'
+  };
+  return map[chartType] || chartType || 'JSON';
+};
+var getPropertyType = function getPropertyType(_ref) {
+  var schema = _ref.schema,
+      filter = _ref.filter;
+  var propertyName = filter.propertyName,
+      operator = filter.operator;
+  var propertyValue = filter.propertyValue,
+      propertyType = filter.propertyType;
+  var types = {
+    string: 'String',
+    num: 'Number',
+    datetime: 'Datetime',
+    list: 'List',
+    "null": 'Null',
+    bool: 'Boolean'
+  };
+
+  if (propertyType) {
+    return propertyType;
+  }
+
+  var typeFromSchema = schema && schema[propertyName] || {};
+  propertyType = types[typeFromSchema];
+
+  if (operator === 'exists') {
+    propertyType = 'Boolean';
+  }
+
+  return propertyType;
+};
+var getTypeAndValue = function getTypeAndValue(_ref2) {
+  var filter = _ref2.filter,
+      eventCollection = _ref2.eventCollection,
+      schemas = _ref2.schemas;
+  var propertyName = filter.property_name,
+      operator = filter.operator,
+      propertyValue = filter.property_value;
+  var schemasFromProps = schemas && Object.keys(schemas).length && schemas || {};
+  var schema = schemasFromProps && schemasFromProps[eventCollection];
+  var propertyType = getPropertyType({
+    schema: schema,
+    filter: {
+      propertyName: propertyName,
+      operator: operator,
+      propertyValue: propertyValue
+    }
+  });
+  return {
+    propertyValue: propertyValue,
+    propertyType: propertyType
+  };
+};
+var filter_getPropertyValue = function getPropertyValue(_ref3) {
+  var propertyType = _ref3.propertyType,
+      filter = _ref3.filter;
+  var propertyValue = filter.propertyValue;
+
+  if (propertyType === 'Datetime') {
+    var coercedDate = new Date(propertyValue);
+
+    if (coercedDate !== null && coercedDate.toString() !== 'Invalid Date') {
+      propertyValue = external_moment_default()(propertyValue);
+    }
+  }
+
+  if (typeof propertyValue !== 'undefined') {
+    if (['true', 'false'].includes(propertyValue.toString().toLowerCase())) {
+      propertyValue = propertyValue.toString().toLowerCase();
+    }
+  }
+
+  return propertyValue;
+};
+var filter_convertFilterValuesToJsonValues = function convertFilterValuesToJsonValues(params) {
+  var filters = params.filters.map(function (_ref4) {
+    var propertyName = _ref4.propertyName,
+        propertyType = _ref4.propertyType,
+        operator = _ref4.operator,
+        propertyValue = _ref4.propertyValue;
+    var value;
+
+    if (!propertyType) {
+      console.log('no prop type in filter', params);
+      return;
+    }
+
+    if (propertyType === 'String' || propertyType === 'Datetime' || operator === 'contains' || operator === 'not_contains') {
+      value = propertyValue;
+    }
+
+    if (propertyType === 'Boolean' || operator === 'exists') {
+      value = propertyValue === 'true';
+    } else if (operator === 'in') {
+      value = sync_default()(propertyValue, {
+        quote: '"',
+        ltrim: true,
+        rtrim: true,
+        delimiter: ','
+      })[0];
+
+      if (propertyType === 'Number') {
+        value = value.map(function (val) {
+          return val.replace(/['"]+/g, '');
+        }); // backwards compatible '1', '2'...
+      }
+    } else if (propertyType === 'Number') {
+      value = parseFloat(propertyValue);
+    } else if (propertyType === 'List') {
+      value = propertyValue;
+
+      if (operator === 'within') {
+        var _long = parseFloat(propertyValue.coordinates[0] || 0);
+
+        var lat = parseFloat(propertyValue.coordinates[1] || 0);
+        var radius = parseFloat(propertyValue.maxDistanceMiles || 0);
+        value = {
+          coordinates: [_long, lat],
+          maxDistanceMiles: radius
+        };
+      }
+    }
+
+    if (operator === 'Null') {
+      value = null;
+    }
+
+    return {
+      propertyName: propertyName,
+      propertyType: propertyType,
+      operator: operator,
+      propertyValue: value
+    };
+  });
+  return filter_objectSpread({}, params, {
+    filters: filter_toConsumableArray(filters)
   });
 };
 // CONCATENATED MODULE: ./lib/js/app/components/explorer/shared/Option.js
@@ -27260,17 +27427,94 @@ var ReactSelect_ReactSelect = function ReactSelect(props) {
 
 /* harmony default export */ var shared_ReactSelect = (ReactSelect_ReactSelect);
 // CONCATENATED MODULE: ./lib/js/app/redux/actionCreators/ui.js
+function actionCreators_ui_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { actionCreators_ui_defineProperty(target, key, source[key]); }); } return target; }
+
+function actionCreators_ui_defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
 var ui_updateUI = function updateUI(payload) {
   return {
     type: 'UI_UPDATE',
     payload: payload
   };
 };
-var ui_updateStepUI = function updateStepUI(_ref) {
-  var step = _ref.step,
-      payload = _ref.payload,
-      _ref$rootPayload = _ref.rootPayload,
-      rootPayload = _ref$rootPayload === void 0 ? {} : _ref$rootPayload;
+var ui_updateUISavedQuery = function updateUISavedQuery(_ref) {
+  var item = _ref.item,
+      schemas = _ref.schemas;
+  var query = item.query,
+      metadata = item.metadata;
+  var stepLabels = [''];
+
+  if (query.analysis_type === 'funnel') {
+    stepLabels = metadata.visualization.step_labels || [''];
+  }
+
+  var chartType = translateDeprecatedCharts(metadata.visualization.chart_type);
+  return {
+    type: 'UI_UPDATE',
+    payload: {
+      panelSave: true,
+      autoload: true,
+      analysisType: query.analysis_type,
+      eventCollection: query.event_collection,
+      timezone: query.timezone,
+      targetProperty: query.target_property,
+      timeframe: query.timeframe,
+      groupBy: query.group_by,
+      orderBy: query.order_by && query.order_by.direction && {
+        property_name: 'result',
+        direction: query.order_by.direction
+      },
+      interval: query.interval,
+      filters: (query.filters || []).map(function (itemFilter) {
+        return actionCreators_ui_objectSpread({
+          propertyName: itemFilter.property_name,
+          operator: itemFilter.operator
+        }, getTypeAndValue({
+          filter: itemFilter,
+          eventCollection: query.event_collection,
+          schemas: schemas
+        }));
+      }),
+      chartType: chartType,
+      savedQuery: {
+        name: item.query_name,
+        displayName: metadata.display_name,
+        exists: true,
+        cache: !!item.refresh_rate,
+        refreshRate: item.refresh_rate / 60 / 60,
+        autoload: undefined
+      },
+      steps: (query.steps || []).map(function (item) {
+        return {
+          actorProperty: item.actor_property,
+          eventCollection: item.event_collection,
+          filters: (item.filters || []).map(function (filteritem) {
+            return actionCreators_ui_objectSpread({
+              propertyName: filteritem.property_name,
+              operator: filteritem.operator
+            }, getTypeAndValue({
+              filter: filteritem,
+              eventCollection: query.event_collection,
+              schemas: schemas
+            }));
+          }),
+          inverted: item.inverted,
+          optional: item.optional,
+          timeframe: item.timeframe,
+          timezone: item.timezone,
+          withActors: item.with_actors
+        };
+      }),
+      stepLabels: stepLabels
+    }
+  };
+};
+var ui_updateStepUI = function updateStepUI(_ref2) {
+  var step = _ref2.step,
+      payload = _ref2.payload,
+      _ref2$rootPayload = _ref2.rootPayload,
+      rootPayload = _ref2$rootPayload === void 0 ? {} : _ref2$rootPayload;
   return {
     type: 'UI_STEP_UPDATE',
     step: step,
@@ -27318,27 +27562,27 @@ var ui_updateFilter = function updateFilter(payload) {
     payload: payload
   };
 };
-var ui_addStepFilter = function addStepFilter(_ref2) {
-  var step = _ref2.step,
-      payload = _ref2.payload;
+var ui_addStepFilter = function addStepFilter(_ref3) {
+  var step = _ref3.step,
+      payload = _ref3.payload;
   return {
     type: 'ADD_STEP_FILTER',
     step: step,
     payload: payload
   };
 };
-var ui_deleteStepFilter = function deleteStepFilter(_ref3) {
-  var step = _ref3.step,
-      payload = _ref3.payload;
+var ui_deleteStepFilter = function deleteStepFilter(_ref4) {
+  var step = _ref4.step,
+      payload = _ref4.payload;
   return {
     type: 'DELETE_STEP_FILTER',
     step: step,
     payload: payload
   };
 };
-var ui_updateStepFilter = function updateStepFilter(_ref4) {
-  var step = _ref4.step,
-      payload = _ref4.payload;
+var ui_updateStepFilter = function updateStepFilter(_ref5) {
+  var step = _ref5.step,
+      payload = _ref5.payload;
   return {
     type: 'UPDATE_STEP_FILTER',
     step: step,
@@ -28407,12 +28651,14 @@ function Extraction_setPrototypeOf(o, p) { Extraction_setPrototypeOf = Object.se
 
 
 
+
 var Extraction_mapStateToProps = function mapStateToProps(state) {
   return {
     extractionFields: state.ui.extractionFields,
     extractionActiveTab: state.ui.extractionActiveTab,
     latest: state.ui.latest,
     email: state.ui.email,
+    contentEncoding: state.ui.contentEncoding,
     propertyNames: state.ui.propertyNames,
     schemas: state.collections.schemas,
     eventCollection: state.ui.eventCollection
@@ -28422,7 +28668,6 @@ var Extraction_mapStateToProps = function mapStateToProps(state) {
 var Extraction_mapDispatchToProps = {
   updateUI: ui_updateUI
 };
-
 
 var Extraction_Extraction =
 /*#__PURE__*/
@@ -28461,6 +28706,7 @@ function (_Component) {
     value: function renderBulkPanel() {
       var _this$props2 = this.props,
           email = _this$props2.email,
+          contentEncoding = _this$props2.contentEncoding,
           updateUI = _this$props2.updateUI;
       return external_react_default.a.createElement("div", {
         className: "bulk-panel"
@@ -28477,7 +28723,32 @@ function (_Component) {
             email: e.target.value
           });
         }
-      }));
+      }), external_react_default.a.createElement("div", {
+        className: "line-checkbox line-label"
+      }, external_react_default.a.createElement("input", {
+        type: "checkbox",
+        className: "input-checkbox",
+        value: "gzip",
+        id: "content_encoding",
+        name: "content_encoding",
+        checked: !!contentEncoding,
+        onChange: function onChange(e) {
+          console.log();
+
+          if (e.target.checked) {
+            updateUI({
+              contentEncoding: e.target.value
+            });
+            return;
+          }
+
+          updateUI({
+            contentEncoding: undefined
+          });
+        }
+      }), external_react_default.a.createElement("label", {
+        htmlFor: "content_encoding"
+      }, "GZIP")));
     }
   }, {
     key: "render",
@@ -28667,102 +28938,6 @@ function (_Component) {
 }(external_react_["Component"]);
 
 /* harmony default export */ var explorer_Percentile = (Object(external_react_redux_["connect"])(Percentile_mapStateToProps, Percentile_mapDispatchToProps)(Percentile_Percentile));
-// CONCATENATED MODULE: ./lib/js/app/utils/filter.js
-function filter_typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { filter_typeof = function _typeof(obj) { return typeof obj; }; } else { filter_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return filter_typeof(obj); }
-
-
-var filter_getPropertyType = function getPropertyType(_ref) {
-  var schema = _ref.schema,
-      filter = _ref.filter;
-  var propertyName = filter.propertyName,
-      operator = filter.operator;
-  var propertyValue = filter.propertyValue,
-      propertyType = filter.propertyType;
-  var types = {
-    'string': 'String',
-    'num': 'Number',
-    'datetime': 'Datetime',
-    'list': 'List',
-    'null': 'Null',
-    'bool': 'Boolean'
-  };
-
-  if (propertyType) {
-    return propertyType;
-  }
-
-  var typeFromSchema = schema && schema[propertyName] || {};
-  propertyType = types[typeFromSchema];
-
-  if (operator === 'exists') {
-    propertyType = 'Boolean';
-  }
-
-  return propertyType;
-
-  if (!propertyValue) {
-    propertyType = 'Null';
-    propertyValue = 'Null';
-  }
-
-  if (operator === 'contains' || operator === 'not_contains') {
-    propertyType = 'String';
-  }
-
-  if (operator === 'exists' && ['true', 'false'].includes(propertyValue.toString().toLowerCase())) {
-    propertyType = 'Boolean';
-    propertyValue = propertyValue.toString().toLowerCase();
-  }
-
-  if (operator === 'in') {
-    propertyType = 'List';
-  }
-
-  if (operator === 'within') {
-    propertyType = 'List';
-  }
-
-  console.log(filter_typeof(propertyValue), propertyValue);
-
-  if (typeof propertyValue === 'string') {
-    var coercedDate = new Date(propertyValue);
-
-    if (coercedDate !== null && coercedDate.toString() !== 'Invalid Date') {
-      propertyValue = external_moment_default()(propertyValue);
-      propertyType = 'Datetime';
-    }
-  }
-
-  if (typeof propertyValue === 'number') {
-    propertyType = 'Number';
-  }
-
-  console.log(propertyName, propertyType, operator, propertyValue);
-  return propertyType;
-};
-var filter_getPropertyValue = function getPropertyValue(_ref2) {
-  var propertyType = _ref2.propertyType,
-      filter = _ref2.filter;
-  var propertyName = filter.propertyName,
-      operator = filter.operator;
-  var propertyValue = filter.propertyValue;
-
-  if (propertyType === 'Datetime') {
-    var coercedDate = new Date(propertyValue);
-
-    if (coercedDate !== null && coercedDate.toString() !== 'Invalid Date') {
-      propertyValue = external_moment_default()(propertyValue);
-    }
-  }
-
-  if (typeof propertyValue !== 'undefined') {
-    if (['true', 'false'].includes(propertyValue.toString().toLowerCase())) {
-      propertyValue = propertyValue.toString().toLowerCase();
-    }
-  }
-
-  return propertyValue;
-};
 // CONCATENATED MODULE: ./lib/js/app/components/explorer/Filters.js
 function Filters_typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { Filters_typeof = function _typeof(obj) { return typeof obj; }; } else { Filters_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return Filters_typeof(obj); }
 
@@ -28905,58 +29080,12 @@ function (_Component) {
         modalFilters: false
       });
     }
-    /*
-    componentWillUnmount() {
-      console.log('will un moubt');
-       const { oldFilters, save } = this.state;
-      const { filters, funnel, step } = this.props;
-      console.log(save);
-       let validFilters = filters.filter(filter => !!filter.propertyName);
-       if (JSON.stringify(oldFilters) !== JSON.stringify(validFilters) && !save) {
-        console.log('return to original');
-        validFilters = [...oldFilters];
-        console.log('got here', validFilters);
-      }
-       if (funnel) {
-        updateStepUI({
-          step,
-          payload: {
-            filters: [...validFilters],
-          },
-          rootPayload: {
-          },
-        });
-        return;
-      }
-      updateUI({
-        filters: [...validFilters],
-      });
-    }
-      done() {
-      const { onCloseModal } = this.props;
-      this.setState({
-        save: true,
-      }, () => {
-        onCloseModal();
-      });
-    }
-    */
-
-  }, {
-    key: "convertDateToString",
-    value: function convertDateToString(valueSelected) {
-      var value = valueSelected || external_moment_default()(external_moment_default()().format('YYYY-MM-DD'));
-      var valueConverted = "".concat(value.format('YYYY-MM-DD'), "T").concat(value.format('HH:mm'), ":00.000Z");
-      return valueConverted;
-    }
   }, {
     key: "renderFilterValue",
     value: function renderFilterValue(_ref) {
       var _this2 = this;
 
-      var item = _ref.item,
-          step = _ref.step,
-          operator = _ref.operator,
+      var operator = _ref.operator,
           propertyType = _ref.propertyType,
           propertyValue = _ref.propertyValue,
           _onChange = _ref.onChange;
@@ -28997,7 +29126,7 @@ function (_Component) {
         }, external_react_default.a.createElement(external_react_dates_["SingleDatePicker"], {
           date: startDate,
           onDateChange: function onDateChange(valueSelected) {
-            var valueConverted = _this2.convertDateToString(valueSelected);
+            var valueConverted = filter_convertDateToString(valueSelected);
 
             _onChange(valueConverted);
           },
@@ -29018,7 +29147,7 @@ function (_Component) {
           minuteStep: 15,
           value: startDate,
           onChange: function onChange(valueSelected) {
-            var valueConverted = _this2.convertDateToString(valueSelected);
+            var valueConverted = filter_convertDateToString(valueSelected);
 
             _onChange(valueConverted);
           }
@@ -29082,8 +29211,6 @@ function (_Component) {
         if (propertyType === 'Number') {
           placeholder = '1, 2, 3, 4';
         }
-
-        ;
       }
 
       return external_react_default.a.createElement("input", {
@@ -29129,7 +29256,7 @@ function (_Component) {
       }
 
       filters = filters.map(function (filter) {
-        var propertyType = filter_getPropertyType({
+        var propertyType = getPropertyType({
           schema: schema,
           filter: filter
         });
@@ -30213,9 +30340,7 @@ function ActorProperty_setPrototypeOf(o, p) { ActorProperty_setPrototypeOf = Obj
 
 
 
-var ActorProperty_mapStateToProps = function mapStateToProps(state
-/*, ownProps*/
-) {
+var ActorProperty_mapStateToProps = function mapStateToProps(state) {
   return {
     schemas: state.collections.schemas,
     steps: state.ui.steps
@@ -30563,10 +30688,6 @@ var queries_resetResults = function resetResults() {
 // CONCATENATED MODULE: ./lib/js/app/components/explorer/SavedQueryBrowser.js
 function SavedQueryBrowser_typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { SavedQueryBrowser_typeof = function _typeof(obj) { return typeof obj; }; } else { SavedQueryBrowser_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return SavedQueryBrowser_typeof(obj); }
 
-function SavedQueryBrowser_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { SavedQueryBrowser_defineProperty(target, key, source[key]); }); } return target; }
-
-function SavedQueryBrowser_defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 function SavedQueryBrowser_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function SavedQueryBrowser_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -30590,7 +30711,6 @@ function SavedQueryBrowser_setPrototypeOf(o, p) { SavedQueryBrowser_setPrototype
 
 
 
-
 var SavedQueryBrowser_mapStateToProps = function mapStateToProps(state) {
   return {
     savedQueries: state.queries.saved,
@@ -30603,6 +30723,7 @@ var SavedQueryBrowser_mapStateToProps = function mapStateToProps(state) {
 var SavedQueryBrowser_mapDispatchToProps = {
   updateSavedQueries: updateSavedQueries,
   updateUI: ui_updateUI,
+  updateUISavedQuery: ui_updateUISavedQuery,
   fetchSavedQueries: client_fetchSavedQueries,
   resetResults: queries_resetResults,
   deleteQuery: client_deleteQuery
@@ -30632,6 +30753,25 @@ function (_Component) {
       this.props.fetchSavedQueries();
     }
   }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(prevProps) {
+      var _this$props = this.props,
+          savedQueries = _this$props.savedQueries,
+          savedQuery = _this$props.savedQuery,
+          updateUISavedQuery = _this$props.updateUISavedQuery;
+
+      if (!prevProps.savedQueries.length && savedQueries.length && savedQuery.autoload) {
+        console.log(savedQueries);
+        var item = savedQueries.find(function (item) {
+          return item.query_name === savedQuery.query_name;
+        });
+        updateUISavedQuery({
+          item: item,
+          schemas: this.props.schemas
+        });
+      }
+    }
+  }, {
     key: "getName",
     value: function getName(item) {
       if (item.metadata && item.metadata.display_name) {
@@ -30648,34 +30788,10 @@ function (_Component) {
       });
     }
   }, {
-    key: "getTypeAndValue",
-    value: function getTypeAndValue(_ref) {
-      var filter = _ref.filter,
-          eventCollection = _ref.eventCollection;
-      var propertyName = filter.property_name,
-          operator = filter.operator,
-          propertyValue = filter.property_value;
-      var schemas = this.props.schemas;
-      var schemasFromProps = schemas && Object.keys(schemas).length && schemas || {};
-      var schema = schemasFromProps && schemasFromProps[eventCollection];
-      var propertyType = filter_getPropertyType({
-        schema: schema,
-        filter: {
-          propertyName: propertyName,
-          operator: operator,
-          propertyValue: propertyValue
-        }
-      });
-      return {
-        propertyValue: propertyValue,
-        propertyType: propertyType
-      };
-    }
-  }, {
     key: "confirmDeleteQuery",
-    value: function confirmDeleteQuery(_ref2) {
-      var e = _ref2.e,
-          query_name = _ref2.query_name;
+    value: function confirmDeleteQuery(_ref) {
+      var e = _ref.e,
+          query_name = _ref.query_name;
       e.stopPropagation();
 
       if (confirm("Delete query \"".concat(query_name, "\"?"))) {
@@ -30689,23 +30805,12 @@ function (_Component) {
     value: function render() {
       var _this2 = this;
 
-      var _this$props = this.props,
-          savedQueries = _this$props.savedQueries,
-          savedQuery = _this$props.savedQuery,
-          updateUI = _this$props.updateUI,
-          resetResults = _this$props.resetResults;
-
-      var translateDeprecatedCharts = function translateDeprecatedCharts(chartType) {
-        var map = {
-          areachart: 'area',
-          barchart: 'horizontal-bar',
-          columnchart: 'bar',
-          linechart: 'line',
-          piechart: 'pie'
-        };
-        return map[chartType] || chartType || 'JSON';
-      };
-
+      var _this$props2 = this.props,
+          savedQueries = _this$props2.savedQueries,
+          savedQuery = _this$props2.savedQuery,
+          updateUI = _this$props2.updateUI,
+          updateUISavedQuery = _this$props2.updateUISavedQuery,
+          resetResults = _this$props2.resetResults;
       var activeSavedQuery = savedQuery && savedQuery.name;
       var _this$state = this.state,
           filter = _this$state.filter,
@@ -30743,15 +30848,7 @@ function (_Component) {
           key: item.query_name,
           className: "item ".concat(activeSavedQuery === item.query_name && 'active'),
           onClick: function onClick() {
-            var query = item.query,
-                metadata = item.metadata;
-            var stepLabels = [''];
-
-            if (query.analysis_type === 'funnel') {
-              stepLabels = metadata.visualization.step_labels || [''];
-            }
-
-            var chartType = translateDeprecatedCharts(metadata.visualization.chart_type);
+            var query = item.query;
             resetResults();
 
             if (query.analysis_type === 'multi_analysis') {
@@ -30763,58 +30860,9 @@ function (_Component) {
               return;
             }
 
-            updateUI({
-              panelSave: true,
-              autoload: true,
-              analysisType: query.analysis_type,
-              eventCollection: query.event_collection,
-              timezone: query.timezone,
-              targetProperty: query.target_property,
-              timeframe: query.timeframe,
-              groupBy: query.group_by,
-              orderBy: query.order_by && query.order_by.direction && {
-                property_name: 'result',
-                direction: query.order_by.direction
-              },
-              interval: query.interval,
-              filters: (query.filters || []).map(function (item) {
-                return SavedQueryBrowser_objectSpread({
-                  propertyName: item.property_name,
-                  operator: item.operator
-                }, _this2.getTypeAndValue({
-                  filter: item,
-                  eventCollection: query.event_collection
-                }));
-              }),
-              chartType: chartType,
-              savedQuery: {
-                name: item.query_name,
-                displayName: metadata.display_name,
-                exists: true,
-                cache: !!item.refresh_rate,
-                refreshRate: item.refresh_rate / 60 / 60
-              },
-              steps: (query.steps || []).map(function (item) {
-                return {
-                  actorProperty: item.actor_property,
-                  eventCollection: item.event_collection,
-                  filters: (item.filters || []).map(function (filteritem) {
-                    return SavedQueryBrowser_objectSpread({
-                      propertyName: filteritem.property_name,
-                      operator: filteritem.operator
-                    }, _this2.getTypeAndValue({
-                      filter: filteritem,
-                      eventCollection: query.event_collection
-                    }));
-                  }),
-                  inverted: item.inverted,
-                  optional: item.optional,
-                  timeframe: item.timeframe,
-                  timezone: item.timezone,
-                  withActors: item.with_actors
-                };
-              }),
-              stepLabels: stepLabels
+            updateUISavedQuery({
+              item: item,
+              schemas: _this2.props.schemas
             });
           }
         }, external_react_default.a.createElement("div", {
@@ -30960,20 +31008,6 @@ function (_Component) {
       document.addEventListener('click', this.handleClick, false);
     }
   }, {
-    key: "componentWillUnmount",
-    value: function componentWillUnmount() {
-      document.removeEventListener('click', this.handleClick, false);
-    }
-  }, {
-    key: "handleClick",
-    value: function handleClick(e) {
-      if (!this.downloadToggleRef.current.contains(e.target)) {
-        this.setState({
-          showDownloadButtons: false
-        });
-      }
-    }
-  }, {
     key: "componentDidUpdate",
     value: function componentDidUpdate(prevProps) {
       if (prevProps.queryName !== this.props.queryName) {
@@ -30988,14 +31022,27 @@ function (_Component) {
           timezone = _this$props.timezone;
 
       if (prevProps.analysisType !== analysisType || prevProps.stepLabels.toString() !== stepLabels.toString() || prevProps.type !== type || prevProps.timezone !== timezone || JSON.stringify(prevProps.results) !== JSON.stringify(results)) {
-        console.log('regenerate chart');
         this.generateChart();
       }
+    }
+  }, {
+    key: "componentWillUnmount",
+    value: function componentWillUnmount() {
+      document.removeEventListener('click', this.handleClick, false);
     }
   }, {
     key: "getData",
     value: function getData() {
       return this.dataviz && this.dataviz.dataset && this.dataviz.dataset.matrix;
+    }
+  }, {
+    key: "handleClick",
+    value: function handleClick(e) {
+      if (!this.downloadToggleRef.current.contains(e.target)) {
+        this.setState({
+          showDownloadButtons: false
+        });
+      }
     }
   }, {
     key: "generateChart",
@@ -31736,6 +31783,7 @@ function (_Component) {
 
       if (searchParams) {
         var UIencodedState = searchParams.get('state');
+        var savedQueryName = searchParams.get('saved_query');
 
         if (UIencodedState) {
           var preloadState = JSON.parse(b64DecodeUnicode(UIencodedState));
@@ -31746,6 +31794,16 @@ function (_Component) {
           }
 
           this.props.updateUI(preloadState);
+        }
+
+        if (savedQueryName) {
+          this.props.updateUI({
+            savedQuery: {
+              query_name: savedQueryName,
+              autoload: true
+            },
+            activePanel: 1
+          });
         }
       }
     }
@@ -31763,6 +31821,7 @@ function (_Component) {
 
       if (UIencodedState !== UIencodedStateOld) {
         search_params.set('state', UIencodedState);
+        search_params["delete"]('saved_query');
         url.search = search_params.toString();
         history.pushState({}, '', url.toString());
       }
@@ -31815,6 +31874,7 @@ function (_Component) {
           latest = _this$props$ui2.latest,
           propertyNames = _this$props$ui2.propertyNames,
           email = _this$props$ui2.email,
+          contentEncoding = _this$props$ui2.contentEncoding,
           extractionActiveTab = _this$props$ui2.extractionActiveTab,
           percentile = _this$props$ui2.percentile,
           steps = _this$props$ui2.steps;
@@ -31842,6 +31902,7 @@ function (_Component) {
 
         if (extractionActiveTab === TAB_EXTRACTION_BULK) {
           queryParams.email = email;
+          queryParams.content_encoding = contentEncoding;
         }
       }
 
@@ -31856,13 +31917,11 @@ function (_Component) {
   }, {
     key: "runQuery",
     value: function runQuery(payload) {
-      var _this2 = this;
-
-      var params = appContainer_objectSpread({}, this.convertFilterValuesToJsonValues(this.getQueryParams()));
+      var params = appContainer_objectSpread({}, filter_convertFilterValuesToJsonValues(this.getQueryParams()));
 
       if (params.analysisType === 'funnel') {
         var updatedSteps = params.steps.map(function (step) {
-          return appContainer_objectSpread({}, step, _this2.convertFilterValuesToJsonValues(step));
+          return appContainer_objectSpread({}, step, filter_convertFilterValuesToJsonValues(step));
         });
         params = appContainer_objectSpread({}, params, {
           steps: appContainer_toConsumableArray(updatedSteps),
@@ -31873,84 +31932,11 @@ function (_Component) {
       this.props.query(appContainer_objectSpread({}, payload, params));
     }
   }, {
-    key: "convertFilterValuesToJsonValues",
-    value: function convertFilterValuesToJsonValues(params) {
-      var filters = params.filters.map(function (_ref) {
-        var propertyName = _ref.propertyName,
-            propertyType = _ref.propertyType,
-            operator = _ref.operator,
-            propertyValue = _ref.propertyValue;
-        var value;
-
-        if (!propertyType) {
-          console.log('no prop type in filter', params);
-          /*
-          propertyType = getPropertyType({
-            schema,
-            filter: { propertyName, propertyType, operator, propertyValue },
-          });
-          */
-
-          return;
-        }
-
-        if (propertyType === 'String' || propertyType === 'Datetime' || operator === 'contains' || operator === 'not_contains') {
-          value = propertyValue;
-        }
-
-        if (propertyType === 'Boolean' || operator === 'exists') {
-          value = propertyValue === 'true';
-        } else if (operator === 'in') {
-          value = sync_default()(propertyValue, {
-            quote: '"',
-            ltrim: true,
-            rtrim: true,
-            delimiter: ','
-          })[0];
-
-          if (propertyType === 'Number') {
-            value = value.map(function (val) {
-              return val.replace(/['"]+/g, '');
-            }); // backwards compatible '1', '2'...
-          }
-        } else if (propertyType === 'Number') {
-          value = parseFloat(propertyValue);
-        } else if (propertyType === 'List') {
-          value = propertyValue;
-
-          if (operator === 'within') {
-            var _long = parseFloat(propertyValue.coordinates[0] || 0);
-
-            var lat = parseFloat(propertyValue.coordinates[1] || 0);
-            var radius = parseFloat(propertyValue.maxDistanceMiles || 0);
-            value = {
-              coordinates: [_long, lat],
-              maxDistanceMiles: radius
-            };
-          }
-        }
-
-        if (operator === 'Null') {
-          value = null;
-        }
-
-        return {
-          propertyName: propertyName,
-          propertyType: propertyType,
-          operator: operator,
-          propertyValue: value
-        };
-      });
-      return appContainer_objectSpread({}, params, {
-        filters: appContainer_toConsumableArray(filters)
-      });
-    }
-  }, {
     key: "renderFiltersFoldable",
     value: function renderFiltersFoldable() {
-      var _ref2 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
-          step = _ref2.step,
-          funnel = _ref2.funnel;
+      var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+          step = _ref.step,
+          funnel = _ref.funnel;
 
       var updateUI = this.props.updateUI;
       var _this$props$ui3 = this.props.ui,
@@ -32014,7 +32000,7 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this3 = this;
+      var _this2 = this;
 
       var _this$props2 = this.props,
           queries = _this$props2.queries,
@@ -32184,7 +32170,7 @@ function (_Component) {
         }), external_react_default.a.createElement(explorer_Timeframe, {
           funnel: true,
           step: index
-        }), _this3.renderFiltersFoldable({
+        }), _this2.renderFiltersFoldable({
           funnel: true,
           step: index
         }));
@@ -32290,7 +32276,7 @@ function (_Component) {
       }, external_react_default.a.createElement("button", {
         className: "button-run-query button-with-loading-spinner",
         onClick: function onClick() {
-          return _this3.runQuery();
+          return _this2.runQuery();
         }
       }, fetching && external_react_default.a.createElement(shared_LoadingSpinner, null), !(analysisType === 'extraction' && extractionActiveTab === TAB_EXTRACTION_BULK) && external_react_default.a.createElement(external_react_["Fragment"], null, "Run Query"), analysisType === 'extraction' && extractionActiveTab === TAB_EXTRACTION_BULK && external_react_default.a.createElement(external_react_["Fragment"], null, "Extract to Email")), features.save && analysisType !== 'extraction' && external_react_default.a.createElement("div", {
         className: "button-toggle ".concat(panelSave ? 'button-toggle-active' : ''),
