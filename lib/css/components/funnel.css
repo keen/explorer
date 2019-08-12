@@ -25,15 +25,6 @@
   .line-options{
     margin: 1rem 0 0 0;
   }
-  .line-checkbox{
-    margin: 0.5rem 0 0 0;
-    input{
-      margin-right: 0.5rem;
-    }
-    label{
-      cursor: pointer;
-    }
-  }
   .step-switch-position-buttons{
     float: left;
     margin: -0.5rem 0.8rem 0 0;
@@ -44,5 +35,15 @@
     .move-down{
       margin-top: -0.3rem;
     }
+  }
+}
+
+.line-checkbox{
+  margin: 0.5rem 0 0 0;
+  input{
+    margin-right: 0.5rem;
+  }
+  label{
+    cursor: pointer;
   }
 }
