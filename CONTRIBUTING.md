@@ -47,4 +47,9 @@ Fetch the branch and/or deploy to staging to test the following:
 
 ```
 
-Thanks for contributing!
+## Publishing on the NPM
+
+```ssh
+# create new tag - patch | minor | major (SEMVER)
+$ npm version patch
+```
