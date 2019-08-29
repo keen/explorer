@@ -1,3 +1,24 @@
+# We <3 Contributions!
+
+This is an open source project and we love involvement from the community! Hit us up with pull requests and issues.
+
+Run the following commands to install and build this project:
+
+```ssh
+# Clone the repo
+git clone https://github.com/keen/explorer.git && cd explorer
+
+# Install project dependencies
+npm install
+
+# Start a dev server
+npm run start
+
+# Build project with webpack
+npm run build
+
+```
+
 ## Submitting a Pull Request
 
 Use the template below. If certain testing steps are not relevant, specify that in the PR. If additional checks are needed, add 'em! Please run through all testing steps before asking for a review.
@@ -26,4 +47,9 @@ Fetch the branch and/or deploy to staging to test the following:
 
 ```
 
-Thanks for contributing!
+## Publishing on the NPM
+
+```ssh
+# create new tag - patch | minor | major (SEMVER)
+$ npm version patch
+```
