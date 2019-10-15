@@ -7,7 +7,7 @@
 		var a = typeof exports === 'object' ? factory(require("react"), require("react-redux"), require("prop-types"), require("react-select"), require("moment"), require("redux"), require("react-json-view"), require("react-dates"), require("rc-time-picker"), require("react-modal"), require("moment-timezone"), require("react-dom"), require("redux-devtools-extension"), require("redux-saga"), require("keen-analysis"), require("keen-dataviz")) : factory(root["react"], root["react-redux"], root["prop-types"], root["react-select"], root["moment"], root["redux"], root["react-json-view"], root["react-dates"], root["rc-time-picker"], root["react-modal"], root["moment-timezone"], root["react-dom"], root["redux-devtools-extension"], root["redux-saga"], root["keen-analysis"], root["keen-dataviz"]);
 		for(var i in a) (typeof exports === 'object' ? exports : root)[i] = a[i];
 	}
-})(window, function(__WEBPACK_EXTERNAL_MODULE__0__, __WEBPACK_EXTERNAL_MODULE__2__, __WEBPACK_EXTERNAL_MODULE__7__, __WEBPACK_EXTERNAL_MODULE__8__, __WEBPACK_EXTERNAL_MODULE__12__, __WEBPACK_EXTERNAL_MODULE__57__, __WEBPACK_EXTERNAL_MODULE__58__, __WEBPACK_EXTERNAL_MODULE__59__, __WEBPACK_EXTERNAL_MODULE__60__, __WEBPACK_EXTERNAL_MODULE__61__, __WEBPACK_EXTERNAL_MODULE__79__, __WEBPACK_EXTERNAL_MODULE__161__, __WEBPACK_EXTERNAL_MODULE__162__, __WEBPACK_EXTERNAL_MODULE__163__, __WEBPACK_EXTERNAL_MODULE__164__, __WEBPACK_EXTERNAL_MODULE__168__) {
+})(window, function(__WEBPACK_EXTERNAL_MODULE__0__, __WEBPACK_EXTERNAL_MODULE__2__, __WEBPACK_EXTERNAL_MODULE__7__, __WEBPACK_EXTERNAL_MODULE__8__, __WEBPACK_EXTERNAL_MODULE__10__, __WEBPACK_EXTERNAL_MODULE__57__, __WEBPACK_EXTERNAL_MODULE__58__, __WEBPACK_EXTERNAL_MODULE__59__, __WEBPACK_EXTERNAL_MODULE__60__, __WEBPACK_EXTERNAL_MODULE__61__, __WEBPACK_EXTERNAL_MODULE__79__, __WEBPACK_EXTERNAL_MODULE__161__, __WEBPACK_EXTERNAL_MODULE__162__, __WEBPACK_EXTERNAL_MODULE__163__, __WEBPACK_EXTERNAL_MODULE__164__, __WEBPACK_EXTERNAL_MODULE__168__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -231,6 +231,12 @@ $exports.store = store;
 
 /***/ }),
 /* 10 */
+/***/ (function(module, exports) {
+
+module.exports = __WEBPACK_EXTERNAL_MODULE__10__;
+
+/***/ }),
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 7.1.15 ToLength
@@ -242,7 +248,7 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var anObject = __webpack_require__(4);
@@ -262,12 +268,6 @@ exports.f = __webpack_require__(13) ? Object.defineProperty : function definePro
   return O;
 };
 
-
-/***/ }),
-/* 12 */
-/***/ (function(module, exports) {
-
-module.exports = __WEBPACK_EXTERNAL_MODULE__12__;
 
 /***/ }),
 /* 13 */
@@ -374,7 +374,7 @@ module.exports = function (it, key) {
 /* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var dP = __webpack_require__(11);
+var dP = __webpack_require__(12);
 var createDesc = __webpack_require__(34);
 module.exports = __webpack_require__(13) ? function (object, key, value) {
   return dP.f(object, key, createDesc(1, value));
@@ -476,7 +476,7 @@ module.exports = function (KEY, exec) {
 var ctx = __webpack_require__(27);
 var IObject = __webpack_require__(51);
 var toObject = __webpack_require__(16);
-var toLength = __webpack_require__(10);
+var toLength = __webpack_require__(11);
 var asc = __webpack_require__(262);
 module.exports = function (TYPE, $create) {
   var IS_MAP = TYPE == 1;
@@ -615,7 +615,7 @@ if (__webpack_require__(13)) {
   var hide = __webpack_require__(19);
   var redefineAll = __webpack_require__(48);
   var toInteger = __webpack_require__(22);
-  var toLength = __webpack_require__(10);
+  var toLength = __webpack_require__(11);
   var toIndex = __webpack_require__(141);
   var toAbsoluteIndex = __webpack_require__(38);
   var toPrimitive = __webpack_require__(32);
@@ -639,7 +639,7 @@ if (__webpack_require__(13)) {
   var setSpecies = __webpack_require__(46);
   var arrayFill = __webpack_require__(101);
   var arrayCopyWithin = __webpack_require__(132);
-  var $DP = __webpack_require__(11);
+  var $DP = __webpack_require__(12);
   var $GOPD = __webpack_require__(23);
   var dP = $DP.f;
   var gOPD = $GOPD.f;
@@ -1108,7 +1108,7 @@ module.exports = function (it, S) {
 var META = __webpack_require__(35)('meta');
 var isObject = __webpack_require__(6);
 var has = __webpack_require__(18);
-var setDesc = __webpack_require__(11).f;
+var setDesc = __webpack_require__(12).f;
 var id = 0;
 var isExtensible = Object.isExtensible || function () {
   return true;
@@ -1438,7 +1438,7 @@ Duplex.prototype._destroy = function (err, cb) {
 /* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var def = __webpack_require__(11).f;
+var def = __webpack_require__(12).f;
 var has = __webpack_require__(18);
 var TAG = __webpack_require__(9)('toStringTag');
 
@@ -1474,7 +1474,7 @@ module.exports = function (key) {
 "use strict";
 
 var global = __webpack_require__(5);
-var dP = __webpack_require__(11);
+var dP = __webpack_require__(12);
 var DESCRIPTORS = __webpack_require__(13);
 var SPECIES = __webpack_require__(9)('species');
 
@@ -3560,7 +3560,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__61__;
 // false -> Array#indexOf
 // true  -> Array#includes
 var toIObject = __webpack_require__(20);
-var toLength = __webpack_require__(10);
+var toLength = __webpack_require__(11);
 var toAbsoluteIndex = __webpack_require__(38);
 module.exports = function (IS_INCLUDES) {
   return function ($this, el, fromIndex) {
@@ -3812,7 +3812,7 @@ var ctx = __webpack_require__(27);
 var call = __webpack_require__(130);
 var isArrayIter = __webpack_require__(98);
 var anObject = __webpack_require__(4);
-var toLength = __webpack_require__(10);
+var toLength = __webpack_require__(11);
 var getIterFn = __webpack_require__(100);
 var BREAK = {};
 var RETURN = {};
@@ -5115,7 +5115,7 @@ module.exports = function (it) {
 
 "use strict";
 
-var $defineProperty = __webpack_require__(11);
+var $defineProperty = __webpack_require__(12);
 var createDesc = __webpack_require__(34);
 
 module.exports = function (object, index, value) {
@@ -5147,7 +5147,7 @@ module.exports = __webpack_require__(14).getIteratorMethod = function (it) {
 
 var toObject = __webpack_require__(16);
 var toAbsoluteIndex = __webpack_require__(38);
-var toLength = __webpack_require__(10);
+var toLength = __webpack_require__(11);
 module.exports = function fill(value /* , start = 0, end = @length */) {
   var O = toObject(this);
   var length = toLength(O.length);
@@ -5386,10 +5386,10 @@ var redefineAll = __webpack_require__(48);
 var fails = __webpack_require__(3);
 var anInstance = __webpack_require__(47);
 var toInteger = __webpack_require__(22);
-var toLength = __webpack_require__(10);
+var toLength = __webpack_require__(11);
 var toIndex = __webpack_require__(141);
 var gOPN = __webpack_require__(40).f;
-var dP = __webpack_require__(11).f;
+var dP = __webpack_require__(12).f;
 var arrayFill = __webpack_require__(101);
 var setToStringTag = __webpack_require__(43);
 var ARRAY_BUFFER = 'ArrayBuffer';
@@ -7390,7 +7390,7 @@ var global = __webpack_require__(5);
 var core = __webpack_require__(14);
 var LIBRARY = __webpack_require__(36);
 var wksExt = __webpack_require__(82);
-var defineProperty = __webpack_require__(11).f;
+var defineProperty = __webpack_require__(12).f;
 module.exports = function (name) {
   var $Symbol = core.Symbol || (core.Symbol = LIBRARY ? {} : global.Symbol || {});
   if (name.charAt(0) != '_' && !(name in $Symbol)) defineProperty($Symbol, name, { value: wksExt.f(name) });
@@ -7424,7 +7424,7 @@ module.exports = function (object, names) {
 /* 118 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var dP = __webpack_require__(11);
+var dP = __webpack_require__(12);
 var anObject = __webpack_require__(4);
 var getKeys = __webpack_require__(37);
 
@@ -7677,7 +7677,7 @@ module.exports = function (iterator, fn, value, entries) {
 var aFunction = __webpack_require__(28);
 var toObject = __webpack_require__(16);
 var IObject = __webpack_require__(51);
-var toLength = __webpack_require__(10);
+var toLength = __webpack_require__(11);
 
 module.exports = function (that, callbackfn, aLen, memo, isRight) {
   aFunction(callbackfn);
@@ -7713,7 +7713,7 @@ module.exports = function (that, callbackfn, aLen, memo, isRight) {
 
 var toObject = __webpack_require__(16);
 var toAbsoluteIndex = __webpack_require__(38);
-var toLength = __webpack_require__(10);
+var toLength = __webpack_require__(11);
 
 module.exports = [].copyWithin || function copyWithin(target /* = 0 */, start /* = 0, end = @length */) {
   var O = toObject(this);
@@ -7767,7 +7767,7 @@ __webpack_require__(1)({
 /***/ (function(module, exports, __webpack_require__) {
 
 // 21.2.5.3 get RegExp.prototype.flags()
-if (__webpack_require__(13) && /./g.flags != 'g') __webpack_require__(11).f(RegExp.prototype, 'flags', {
+if (__webpack_require__(13) && /./g.flags != 'g') __webpack_require__(12).f(RegExp.prototype, 'flags', {
   configurable: true,
   get: __webpack_require__(66)
 });
@@ -8115,7 +8115,7 @@ module.exports = function (C, x) {
 
 "use strict";
 
-var dP = __webpack_require__(11).f;
+var dP = __webpack_require__(12).f;
 var create = __webpack_require__(39);
 var redefineAll = __webpack_require__(48);
 var ctx = __webpack_require__(27);
@@ -8358,7 +8358,7 @@ module.exports = {
 
 // https://tc39.github.io/ecma262/#sec-toindex
 var toInteger = __webpack_require__(22);
-var toLength = __webpack_require__(10);
+var toLength = __webpack_require__(11);
 module.exports = function (it) {
   if (it === undefined) return 0;
   var number = toInteger(it);
@@ -8389,7 +8389,7 @@ module.exports = Reflect && Reflect.ownKeys || function ownKeys(it) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // https://github.com/tc39/proposal-string-pad-start-end
-var toLength = __webpack_require__(10);
+var toLength = __webpack_require__(11);
 var repeat = __webpack_require__(90);
 var defined = __webpack_require__(30);
 
@@ -15215,7 +15215,7 @@ module.exports = __webpack_require__(43);
 /* 166 */
 /***/ (function(module) {
 
-module.exports = {"a":"6.0.14"};
+module.exports = {"a":"6.0.15"};
 
 /***/ }),
 /* 167 */
@@ -15478,7 +15478,7 @@ var createDesc = __webpack_require__(34);
 var _create = __webpack_require__(39);
 var gOPNExt = __webpack_require__(119);
 var $GOPD = __webpack_require__(23);
-var $DP = __webpack_require__(11);
+var $DP = __webpack_require__(12);
 var $keys = __webpack_require__(37);
 var gOPD = $GOPD.f;
 var dP = $DP.f;
@@ -15725,7 +15725,7 @@ $export($export.S, 'Object', { create: __webpack_require__(39) });
 
 var $export = __webpack_require__(1);
 // 19.1.2.4 / 15.2.3.6 Object.defineProperty(O, P, Attributes)
-$export($export.S + $export.F * !__webpack_require__(13), 'Object', { defineProperty: __webpack_require__(11).f });
+$export($export.S + $export.F * !__webpack_require__(13), 'Object', { defineProperty: __webpack_require__(12).f });
 
 
 /***/ }),
@@ -15938,7 +15938,7 @@ $export($export.P, 'Function', { bind: __webpack_require__(122) });
 /* 192 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var dP = __webpack_require__(11).f;
+var dP = __webpack_require__(12).f;
 var FProto = Function.prototype;
 var nameRE = /^\s*function ([^ (]*)/;
 var NAME = 'name';
@@ -15967,7 +15967,7 @@ var getPrototypeOf = __webpack_require__(41);
 var HAS_INSTANCE = __webpack_require__(9)('hasInstance');
 var FunctionProto = Function.prototype;
 // 19.2.3.6 Function.prototype[@@hasInstance](V)
-if (!(HAS_INSTANCE in FunctionProto)) __webpack_require__(11).f(FunctionProto, HAS_INSTANCE, { value: function (O) {
+if (!(HAS_INSTANCE in FunctionProto)) __webpack_require__(12).f(FunctionProto, HAS_INSTANCE, { value: function (O) {
   if (typeof this != 'function' || !isObject(O)) return false;
   if (!isObject(this.prototype)) return O instanceof this;
   // for environment w/o native `@@hasInstance` logic enough `instanceof`, but add this:
@@ -16010,7 +16010,7 @@ var toPrimitive = __webpack_require__(32);
 var fails = __webpack_require__(3);
 var gOPN = __webpack_require__(40).f;
 var gOPD = __webpack_require__(23).f;
-var dP = __webpack_require__(11).f;
+var dP = __webpack_require__(12).f;
 var $trim = __webpack_require__(64).trim;
 var NUMBER = 'Number';
 var $Number = global[NUMBER];
@@ -16664,7 +16664,7 @@ $export($export.S + $export.F * (!!$fromCodePoint && $fromCodePoint.length != 1)
 
 var $export = __webpack_require__(1);
 var toIObject = __webpack_require__(20);
-var toLength = __webpack_require__(10);
+var toLength = __webpack_require__(11);
 
 $export($export.S, 'String', {
   // 21.1.2.4 String.raw(callSite, ...substitutions)
@@ -16744,7 +16744,7 @@ $export($export.P, 'String', {
 // 21.1.3.6 String.prototype.endsWith(searchString [, endPosition])
 
 var $export = __webpack_require__(1);
-var toLength = __webpack_require__(10);
+var toLength = __webpack_require__(11);
 var context = __webpack_require__(95);
 var ENDS_WITH = 'endsWith';
 var $endsWith = ''[ENDS_WITH];
@@ -16802,7 +16802,7 @@ $export($export.P, 'String', {
 // 21.1.3.18 String.prototype.startsWith(searchString [, position ])
 
 var $export = __webpack_require__(1);
-var toLength = __webpack_require__(10);
+var toLength = __webpack_require__(11);
 var context = __webpack_require__(95);
 var STARTS_WITH = 'startsWith';
 var $startsWith = ''[STARTS_WITH];
@@ -17146,7 +17146,7 @@ var $export = __webpack_require__(1);
 var toObject = __webpack_require__(16);
 var call = __webpack_require__(130);
 var isArrayIter = __webpack_require__(98);
-var toLength = __webpack_require__(10);
+var toLength = __webpack_require__(11);
 var createProperty = __webpack_require__(99);
 var getIterFn = __webpack_require__(100);
 
@@ -17234,7 +17234,7 @@ var $export = __webpack_require__(1);
 var html = __webpack_require__(86);
 var cof = __webpack_require__(29);
 var toAbsoluteIndex = __webpack_require__(38);
-var toLength = __webpack_require__(10);
+var toLength = __webpack_require__(11);
 var arraySlice = [].slice;
 
 // fallback for not array-like ES3 strings and DOM objects
@@ -17474,7 +17474,7 @@ $export($export.P + $export.F * (NEGATIVE_ZERO || !__webpack_require__(21)($nati
 var $export = __webpack_require__(1);
 var toIObject = __webpack_require__(20);
 var toInteger = __webpack_require__(22);
-var toLength = __webpack_require__(10);
+var toLength = __webpack_require__(11);
 var $native = [].lastIndexOf;
 var NEGATIVE_ZERO = !!$native && 1 / [1].lastIndexOf(1, -0) < 0;
 
@@ -17573,7 +17573,7 @@ __webpack_require__(46)('Array');
 
 var global = __webpack_require__(5);
 var inheritIfRequired = __webpack_require__(89);
-var dP = __webpack_require__(11).f;
+var dP = __webpack_require__(12).f;
 var gOPN = __webpack_require__(40).f;
 var isRegExp = __webpack_require__(96);
 var $flags = __webpack_require__(66);
@@ -17656,7 +17656,7 @@ if (__webpack_require__(3)(function () { return $toString.call({ source: 'a', fl
 
 
 var anObject = __webpack_require__(4);
-var toLength = __webpack_require__(10);
+var toLength = __webpack_require__(11);
 var advanceStringIndex = __webpack_require__(104);
 var regExpExec = __webpack_require__(67);
 
@@ -17704,7 +17704,7 @@ __webpack_require__(68)('match', 1, function (defined, MATCH, $match, maybeCallN
 
 var anObject = __webpack_require__(4);
 var toObject = __webpack_require__(16);
-var toLength = __webpack_require__(10);
+var toLength = __webpack_require__(11);
 var toInteger = __webpack_require__(22);
 var advanceStringIndex = __webpack_require__(104);
 var regExpExec = __webpack_require__(67);
@@ -17869,7 +17869,7 @@ var isRegExp = __webpack_require__(96);
 var anObject = __webpack_require__(4);
 var speciesConstructor = __webpack_require__(54);
 var advanceStringIndex = __webpack_require__(104);
-var toLength = __webpack_require__(10);
+var toLength = __webpack_require__(11);
 var callRegExpExec = __webpack_require__(67);
 var regexpExec = __webpack_require__(103);
 var fails = __webpack_require__(3);
@@ -18232,7 +18232,7 @@ var $typed = __webpack_require__(72);
 var buffer = __webpack_require__(106);
 var anObject = __webpack_require__(4);
 var toAbsoluteIndex = __webpack_require__(38);
-var toLength = __webpack_require__(10);
+var toLength = __webpack_require__(11);
 var isObject = __webpack_require__(6);
 var ArrayBuffer = __webpack_require__(5).ArrayBuffer;
 var speciesConstructor = __webpack_require__(54);
@@ -18463,7 +18463,7 @@ $export($export.S + $export.F * (NEW_TARGET_BUG || ARGS_BUG), 'Reflect', {
 /***/ (function(module, exports, __webpack_require__) {
 
 // 26.1.3 Reflect.defineProperty(target, propertyKey, attributes)
-var dP = __webpack_require__(11);
+var dP = __webpack_require__(12);
 var $export = __webpack_require__(1);
 var anObject = __webpack_require__(4);
 var toPrimitive = __webpack_require__(32);
@@ -18664,7 +18664,7 @@ $export($export.S, 'Reflect', {
 /***/ (function(module, exports, __webpack_require__) {
 
 // 26.1.13 Reflect.set(target, propertyKey, V [, receiver])
-var dP = __webpack_require__(11);
+var dP = __webpack_require__(12);
 var gOPD = __webpack_require__(23);
 var getPrototypeOf = __webpack_require__(41);
 var has = __webpack_require__(18);
@@ -24951,7 +24951,7 @@ var queries_queries = function queries() {
 
 /* harmony default export */ var reducers_queries = (queries_queries);
 // EXTERNAL MODULE: external "moment"
-var external_moment_ = __webpack_require__(12);
+var external_moment_ = __webpack_require__(10);
 var external_moment_default = /*#__PURE__*/__webpack_require__.n(external_moment_);
 
 // CONCATENATED MODULE: ./lib/js/app/consts.js
@@ -28581,7 +28581,8 @@ function (_Component) {
         date: startDate,
         onDateChange: function onDateChange(valueSelected) {
           if (!valueSelected) return;
-          var valueConverted = Timeframe_convertDateToString(valueSelected);
+          var valueSelectedWithTimeReset = external_moment_default.a.utc(valueSelected).startOf('day');
+          var valueConverted = Timeframe_convertDateToString(valueSelectedWithTimeReset);
           update(Timeframe_objectSpread({}, timeframe, {
             start: valueConverted
           }));
@@ -28616,7 +28617,8 @@ function (_Component) {
         date: endDate,
         onDateChange: function onDateChange(valueSelected) {
           if (!valueSelected) return;
-          var valueConverted = Timeframe_convertDateToString(valueSelected);
+          var valueSelectedWithTimeReset = external_moment_default.a.utc(valueSelected).startOf('day');
+          var valueConverted = Timeframe_convertDateToString(valueSelectedWithTimeReset);
           update(Timeframe_objectSpread({}, timeframe, {
             end: valueConverted
           }));
