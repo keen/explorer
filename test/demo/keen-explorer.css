@@ -1942,6 +1942,10 @@ li.rc-time-picker-panel-select-option-disabled:hover {
   font-size: 10px !important;
 }
 
+.keen-explorer .c3-circle, .ReactModalPortal .c3-circle, .rc-time-picker-panel .c3-circle {
+  fill: currentColor;
+}
+
 .keen-explorer .a-preview-collection,.ReactModalPortal .a-preview-collection,.rc-time-picker-panel .a-preview-collection{
   padding: 0.5rem;
   margin: 0;
