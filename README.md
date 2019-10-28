@@ -83,7 +83,7 @@ const myExplorer = new KeenExplorer({
 
 #### Get your project ID & API keys
 
-If you haven’t done so already, [login to Keen IO to create a project](https://keen.io/add-project) for your app. You'll need a [Keen IO account](https://keen.io/signup?s=explorer) to create a project. The Project ID and API Keys are available on the Project Overview page. You will need these for the next steps.
+If you don't have an account [talk to our team](https://try.keen.io/contact) to get started today. If you do, [login to Keen IO to create a project](https://keen.io/add-project) for your app. The Project ID and API Keys are available on the Project Overview page. You will need these for the next steps.
 
 ## Custom builds of the Explorer
 
