@@ -40,6 +40,27 @@ const myExplorer = new KeenExplorer({
     // OPTIONAL configuration for KeenDataviz
     // https://github.com/keen/keen-dataviz.js
   }
+
+  // Customize explorer UI
+  // Default configuration:
+  components: {
+    eventCollection: true,
+    previewCollections: true,
+    analysisType: true,
+    timeframe: true,
+    timezone: true,
+    filters: true,
+    groupBy: true,
+    interval: true,
+    apiQueryUrl: true,
+    actorProperty: true,
+    step: true,
+    savedQueryBrowser: true,
+    results: true,
+    saveButton: true,
+    downloadButton: true,
+    embedButton: true,
+  },
 });
 ```
 

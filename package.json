@@ -27,7 +27,7 @@
     "csv-parse": "^4.4.1",
     "json-stable-stringify": "1.0.0",
     "keen-analysis": "^3.4.2",
-    "keen-dataviz": "^3.12.1",
+    "keen-dataviz": "^3.13.6",
     "keen-tracking": "^4.4.0",
     "moment": "^2.22.2",
     "moment-timezone": "^0.5.21",
