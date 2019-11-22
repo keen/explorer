@@ -15215,7 +15215,7 @@ module.exports = __webpack_require__(43);
 /* 166 */
 /***/ (function(module) {
 
-module.exports = {"a":"6.0.16"};
+module.exports = {"a":"6.0.17"};
 
 /***/ }),
 /* 167 */
@@ -32078,7 +32078,7 @@ function (_Component) {
         groupBy: groupBy,
         orderBy: orderBy,
         limit: limit,
-        percentile: percentile
+        percentile: parseInt(percentile)
       });
 
       if (analysisType === 'extraction') {
