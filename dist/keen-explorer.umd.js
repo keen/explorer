@@ -15215,7 +15215,7 @@ module.exports = __webpack_require__(43);
 /* 166 */
 /***/ (function(module) {
 
-module.exports = {"a":"6.0.17"};
+module.exports = {"a":"6.0.18"};
 
 /***/ }),
 /* 167 */
@@ -32279,7 +32279,7 @@ function (_Component) {
             activePanel: PANEL_NEW_QUERY
           });
         }
-      }, "Query"), components.SavedQueryBrowser && external_react_default.a.createElement("div", {
+      }, "Query"), components.savedQueryBrowser && external_react_default.a.createElement("div", {
         className: "tab button ".concat(activePanel === PANEL_BROWSE ? "active" : ""),
         onClick: function onClick() {
           return updateUI({
