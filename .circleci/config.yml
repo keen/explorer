@@ -13,10 +13,11 @@ jobs:
           fingerprints:
             - $FINGER_PRINT
       - run:
-          name: Setup source control
-          command:
-            - git config user.email "developer@keen.io"
-            - git config user.name "Keen Developer"
+          name: Setup GIT email
+          command: git config user.email "developer@keen.io"
+      - run:
+          name: Setup GIT user
+          command: git config user.name "Keen Developer"
       - checkout
       - run:
           name: Install dependencies
