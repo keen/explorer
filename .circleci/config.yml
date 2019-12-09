@@ -47,10 +47,10 @@ workflows:
     jobs:
       - build
       - publish:
-          filters:
-            tags:
-              only: /.*/
-            branches:
-              ignore: /.*/
+          # filters:
+          #   tags:
+          #     only: /.*/
+          #   branches:
+          #     ignore: /.*/
           requires:
             - build
