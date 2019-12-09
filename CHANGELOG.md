@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [6.0.22](https://github.com/keen/explorer/compare/v6.0.21...v6.0.22) (2019-12-09)
+
 ### [6.0.21](https://github.com/keen/explorer/compare/v6.0.20...v6.0.21) (2019-12-09)
 
 ### [6.0.20](https://github.com/keen/explorer/compare/v6.0.18...v6.0.20) (2019-12-09)
