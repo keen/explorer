@@ -1,16 +1,72 @@
-version: 2
-jobs:
-  build:
+version: 2.1
+
+executors:
+  nodejs:
     docker:
-      - image: 'circleci/node:latest'
+      - image: circleci/node:latest
+
+jobs:
+  publish:
+    executor: nodejs
+    working_directory: ~/tmp
     steps:
       - checkout
+      - attach_workspace:
+          at: ~/tmp/dist
+      - run:
+          name: Authenticate with registry
+          command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc
+      - run:
+          name: Publish
+          command: npm publish
+  build:
+    executor: nodejs
+    working_directory: ~/tmp
+    steps:
+      - checkout
+      - restore_cache:
+          key: npm-deps-{{ arch }}-{{ .Branch }}-{{ checksum "package-lock.json" }}
       - run:
           name: Install dependencies
           command: npm install
+      - save_cache:
+          key: npm-deps-{{ arch }}-{{ .Branch }}-{{ checksum "package-lock.json" }}
+          paths:
+            - ./node_modules
       - run:
           name: Lint
           command: npm run lint
       - run:
           name: Build
           command: npm run build
+      - persist_to_workspace:
+          root: dist
+          paths:
+            - "*"
+
+workflows:
+  version: 2
+  ci:
+    jobs:
+      - build:
+          filters:
+            branches:
+              only: /.*/
+            tags:
+              ignore: /.*/
+  publish:
+    jobs:
+      - build:
+          filters:
+            tags:
+              only: /.*/
+            branches:
+              ignore: /.*/
+      - publish:
+          filters:
+            tags:
+              only: /.*/
+            branches:
+              ignore: /.*/
+          requires:
+            - build

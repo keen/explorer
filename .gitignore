@@ -4,6 +4,6 @@
 .DS_Store
 
 node_modules
-
+dist
 demo-config.js
 .idea/
