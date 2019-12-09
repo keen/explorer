@@ -6,6 +6,19 @@ executors:
       - image: circleci/node:latest
 
 jobs:
+  create_version:
+    executor: nodejs
+    steps:
+      - add_ssh_keys:
+          fingerprints:
+            - $FINGER_PRINT
+      - checkout
+      - run:
+          name: Install dependencies
+          command: npm ci
+      - run:
+          name: Create release
+          command: npm run release
   publish:
     executor: nodejs
     working_directory: ~/tmp
@@ -46,27 +59,37 @@ jobs:
 
 workflows:
   version: 2
-  ci:
+  create_version:
     jobs:
-      - build:
+      - build
+      - create_version:
           filters:
             branches:
-              only: /.*/
+              only:
+                - chore/relese-test
             tags:
               ignore: /.*/
-  publish:
-    jobs:
-      - build:
-          filters:
-            tags:
-              only: /.*/
-            branches:
-              ignore: /.*/
-      - publish:
-          filters:
-            tags:
-              only: /.*/
-            branches:
-              ignore: /.*/
-          requires:
-            - build
+  # ci:
+  #   jobs:
+  #     - build:
+  #         filters:
+  #           branches:
+  #             only: /.*/
+  #           tags:
+  #             ignore: /.*/
+  # publish:
+  #   jobs:
+  #     - build:
+  #         filters:
+  #           tags:
+  #             only: /.*/
+  #           branches:
+  #             ignore: /.*/
+  #     - publish:
+  #         filters:
+  #           tags:
+  #             only: /.*/
+  #           branches:
+  #             ignore: /.*/
+  #         requires:
+  #           - build

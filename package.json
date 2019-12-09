@@ -22,7 +22,7 @@
     "version": "npm run build && git add .",
     "lint": "eslint lib/**/*.js --quiet",
     "circular": "madge --circular ./lib/**/*",
-    "release": "standard-version && git push --follow-tags",
+    "release": "standard-version",
     "commit": "npx git-cz",
     "profile": "BUNDLE=1 OPTIMIZE_MINIMIZE=1 webpack --profile --json > stats.json",
     "analyze": "BUNDLE=1 OPTIMIZE_MINIMIZE=1 webpack-bundle-analyzer stats.json dist"
