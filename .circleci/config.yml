@@ -43,19 +43,23 @@ jobs:
 
 workflows:
   version: 2
-  build-and-publish:
+  ci:
     jobs:
       - build:
           filters:
-            tags:
-              only: /.*/
             branches:
               only: /.*/
-      - publish:
-          filters:
-            tags:
-              only: /.*/
-            branches:
-              ignore: /.*/
-          requires:
-            - build
+    publish:
+      jobs:
+        - build:
+            filters:
+              tags:
+                only: /.*/
+        - publish:
+            filters:
+              tags:
+                only: /.*/
+              branches:
+                ignore: /.*/
+            requires:
+              - build
