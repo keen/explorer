@@ -17,9 +17,17 @@
     "build:css": "node_modules/postcss-cli/bin/postcss lib/css/index.css -o dist/keen-explorer.css --config postcss.config.js",
     "build:css:min": "OPTIMIZE_MINIMIZE=1 node_modules/postcss-cli/bin/postcss lib/css/index.css -o dist/keen-explorer.min.css --config postcss.config.js",
     "version": "npm run build && git add .",
+    "lint": "eslint lib/**/*.js --quiet",
+    "circular": "madge --circular ./lib/**/*",
+    "commit": "npx git-cz",
     "postversion": "git push && git push --tags && npm publish",
     "profile": "BUNDLE=1 OPTIMIZE_MINIMIZE=1 webpack --profile --json > stats.json",
     "analyze": "BUNDLE=1 OPTIMIZE_MINIMIZE=1 webpack-bundle-analyzer stats.json dist"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   },
   "dependencies": {
     "@babel/polyfill": "^7.2.5",
@@ -56,10 +64,12 @@
     "autoprefixer": "^8.2.0",
     "babel-loader": "^8.0.5",
     "babel-plugin-prismjs": "^1.0.2",
+    "commitizen": "^4.0.3",
     "concurrently": "^3.5.1",
     "connect-history-api-fallback": "0.0.5",
     "css-loader": "^2.1.0",
     "cssnano": "^3.10.0",
+    "cz-conventional-changelog": "^3.0.2",
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.8.0",
     "eslint": "^4.19.1",
@@ -69,6 +79,7 @@
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.7.0",
     "gh-pages": "^2.0.1",
+    "git-cz": "^3.3.0",
     "html-loader": "^0.5.5",
     "html-webpack-plugin": "^3.2.0",
     "imports-loader": "^0.8.0",
