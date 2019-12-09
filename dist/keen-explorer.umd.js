@@ -15215,7 +15215,7 @@ module.exports = __webpack_require__(43);
 /* 166 */
 /***/ (function(module) {
 
-module.exports = {"a":"6.0.18"};
+module.exports = {"a":"6.0.19"};
 
 /***/ }),
 /* 167 */
@@ -27810,6 +27810,13 @@ function (_Component) {
   }
 
   _createClass(SelectTargetProperty, [{
+    key: "componentWillUnmount",
+    value: function componentWillUnmount() {
+      this.props.updateUI({
+        targetProperty: undefined
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this$props = this.props,
@@ -29066,11 +29073,18 @@ function (_Component) {
   }
 
   Percentile_createClass(Percentile, [{
+    key: "componentWillUnmount",
+    value: function componentWillUnmount() {
+      this.props.updateUI({
+        percentile: undefined
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this$props = this.props,
           _this$props$percentil = _this$props.percentile,
-          percentile = _this$props$percentil === void 0 ? '' : _this$props$percentil,
+          percentile = _this$props$percentil === void 0 ? undefined : _this$props$percentil,
           updateUI = _this$props.updateUI;
       return external_react_default.a.createElement("div", {
         className: "percentile"
@@ -29083,8 +29097,10 @@ function (_Component) {
         placeholder: "Ex. 33",
         onChange: function onChange(e) {
           var value = parseInt(e.target.value);
+          var isNumber = !isNaN(value);
+          value = isNumber ? value : '';
 
-          if (value > 100) {
+          if (isNumber && value > 100) {
             value = 100;
           }
 
@@ -30690,6 +30706,10 @@ function (_Component) {
         queryParams.timezone = undefined;
       }
 
+      if (!isNaN(queryParams.percentile)) {
+        queryParams.percentile = parseInt(queryParams.percentile);
+      }
+
       this.props.saveQuery({
         name: name,
         body: {
@@ -32078,7 +32098,7 @@ function (_Component) {
         groupBy: groupBy,
         orderBy: orderBy,
         limit: limit,
-        percentile: parseInt(percentile)
+        percentile: percentile
       });
 
       if (analysisType === 'extraction') {
@@ -32541,6 +32561,7 @@ app_KeenExplorer.version = package_0["a" /* version */];
 // CONCATENATED MODULE: ./lib/js/index.js
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "keenGlobals", function() { return keenGlobals; });
 /* concated harmony reexport KeenExplorer */__webpack_require__.d(__webpack_exports__, "KeenExplorer", function() { return app_KeenExplorer; });
+/* eslint-disable */
 // only for DEV mode
 var keenGlobals = undefined;
 
