@@ -65,12 +65,14 @@ workflows:
           filters:
             branches:
               only:
-                - chore/relese-test
+                - chore/release-test
+            tags:
+              ignore: /.*/
       - create_version:
           filters:
             branches:
               only:
-                - chore/relese-test
+                - chore/release-test
             tags:
               ignore: /.*/
           requires:
