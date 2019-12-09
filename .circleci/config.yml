@@ -11,7 +11,12 @@ jobs:
     steps:
       - add_ssh_keys:
           fingerprints:
-            - "dd:d0:e5:85:db:22:90:d3:89:40:20:2c:6a:47:e6:b7"
+            - $FINGER_PRINT
+      - run:
+          name: Setup source control
+          command:
+            - git config user.email "developer@keen.io"
+            - git config user.name "Keen Developer"
       - checkout
       - run:
           name: Install dependencies
