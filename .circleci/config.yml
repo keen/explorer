@@ -6,6 +6,28 @@ executors:
       - image: circleci/node:latest
 
 jobs:
+  create_version:
+    executor: nodejs
+    steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "79:d9:37:f7:b9:63:5a:f4:35:d4:ad:b2:72:5d:34:a9"
+      - run:
+          name: Setup GIT email
+          command: git config --global user.email "developer@keen.io"
+      - run:
+          name: Setup GIT user
+          command: git config --global user.name "Keen Developer"
+      - checkout
+      - run:
+          name: Install dependencies
+          command: npm ci
+      - run:
+          name: Create release
+          command: npm run release
+      - run:
+          name: Push changes
+          command: git push --follow-tags origin ${CIRCLE_BRANCH}
   publish:
     executor: nodejs
     working_directory: ~/tmp
@@ -46,6 +68,15 @@ jobs:
 
 workflows:
   version: 2
+  create_version:
+    jobs:
+      - create_version:
+          filters:
+            branches:
+              only:
+                - master
+            tags:
+              ignore: /.*/
   ci:
     jobs:
       - build:
