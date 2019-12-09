@@ -11,7 +11,7 @@ jobs:
     steps:
       - add_ssh_keys:
           fingerprints:
-            - "79:d9:37:f7:b9:63:5a:f4:35:d4:ad:b2:72:5d:34:a9"
+            - $FINGER_PRINT
       - run:
           name: Setup GIT email
           command: git config --global user.email "developer@keen.io"
@@ -25,6 +25,9 @@ jobs:
       - run:
           name: Create release
           command: npm run release
+      - run:
+          name: Push changes
+          command: git push --follow-tags origin ${CIRCLE_BRANCH}
   publish:
     executor: nodejs
     working_directory: ~/tmp
@@ -67,13 +70,6 @@ workflows:
   version: 2
   create_version:
     jobs:
-      - build:
-          filters:
-            branches:
-              only:
-                - chore/release-test
-            tags:
-              ignore: /.*/
       - create_version:
           filters:
             branches:
