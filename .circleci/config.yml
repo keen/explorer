@@ -11,7 +11,7 @@ jobs:
     steps:
       - add_ssh_keys:
           fingerprints:
-            - $FINGER_PRINT
+            - "dd:d0:e5:85:db:22:90:d3:89:40:20:2c:6a:47:e6:b7"
       - run:
           name: Setup GIT
           command: git config --global -l
