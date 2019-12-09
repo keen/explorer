@@ -1,12 +1,15 @@
 {
   "name": "keen-explorer",
   "description": "Data Explorer by Keen IO",
-  "version": "6.0.19",
+  "version": "6.0.24",
   "license": "MIT",
   "bucket-name": "keen-js",
   "main": "dist/keen-explorer.umd.js",
   "browser": "dist/keen-explorer.umd.js",
   "style": "dist/keen-explorer.css",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "start": "concurrently --kill-others \"NODE_ENV=development webpack-dev-server\" \"npm run postcss-watch\"",
     "postcss-watch": "node_modules/postcss-cli/bin/postcss lib/css/index.css -o test/demo/keen-explorer.css --watch --config postcss.config.js",
@@ -19,8 +22,8 @@
     "version": "npm run build && git add .",
     "lint": "eslint lib/**/*.js --quiet",
     "circular": "madge --circular ./lib/**/*",
+    "release": "standard-version && git push --follow-tags",
     "commit": "npx git-cz",
-    "postversion": "git push && git push --tags && npm publish",
     "profile": "BUNDLE=1 OPTIMIZE_MINIMIZE=1 webpack --profile --json > stats.json",
     "analyze": "BUNDLE=1 OPTIMIZE_MINIMIZE=1 webpack-bundle-analyzer stats.json dist"
   },
@@ -100,6 +103,7 @@
     "regenerator-runtime": "^0.11.1",
     "replace-in-file": "^3.4.0",
     "run-sequence": "~1.0.1",
+    "standard-version": "^7.0.1",
     "stringify": "~3.0.0",
     "style-loader": "^0.20.3",
     "webpack": "^4.29.0",
