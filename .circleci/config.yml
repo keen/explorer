@@ -77,8 +77,6 @@ workflows:
                 - chore/release-test
             tags:
               ignore: /.*/
-          requires:
-            - build
   # ci:
   #   jobs:
   #     - build:
