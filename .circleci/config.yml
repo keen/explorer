@@ -15,7 +15,7 @@ jobs:
           at: ~/tmp/dist
       - run:
           name: Publish
-          command: npm publish --dry-run
+          command: npm publish
   build:
     executor: nodejs
     working_directory: ~/tmp
@@ -47,10 +47,10 @@ workflows:
     jobs:
       - build
       - publish:
-          # filters:
-          #   tags:
-          #     only: /.*/
-          #   branches:
-          #     ignore: /.*/
+          filters:
+            tags:
+              only: /.*/
+            branches:
+              ignore: /.*/
           requires:
             - build
