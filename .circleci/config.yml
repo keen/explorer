@@ -66,8 +66,6 @@ workflows:
             branches:
               only:
                 - chore/relese-test
-            tags:
-              ignore: /.*/
       - create_version:
           filters:
             branches:
