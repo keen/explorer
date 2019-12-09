@@ -13,6 +13,9 @@ jobs:
           fingerprints:
             - $FINGER_PRINT
       - run:
+          name: Setup GIT
+          command: git config --global -l
+      - run:
           name: Setup GIT email
           command: git config user.email "developer@keen.io"
       - run:
