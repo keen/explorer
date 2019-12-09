@@ -49,17 +49,17 @@ workflows:
           filters:
             branches:
               only: /.*/
-    publish:
-      jobs:
-        - build:
-            filters:
-              tags:
-                only: /.*/
-        - publish:
-            filters:
-              tags:
-                only: /.*/
-              branches:
-                ignore: /.*/
-            requires:
-              - build
+  publish:
+    jobs:
+      - build:
+          filters:
+            tags:
+              only: /.*/
+      - publish:
+          filters:
+            tags:
+              only: /.*/
+            branches:
+              ignore: /.*/
+          requires:
+            - build
