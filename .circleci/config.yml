@@ -14,6 +14,9 @@ jobs:
       - attach_workspace:
           at: ~/tmp/dist
       - run:
+          name: Authenticate with registry
+          command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc
+      - run:
           name: Publish
           command: npm publish
   build:
