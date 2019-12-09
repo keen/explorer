@@ -69,6 +69,8 @@ workflows:
                 - chore/relese-test
             tags:
               ignore: /.*/
+          requires:
+            - build
   # ci:
   #   jobs:
   #     - build:
