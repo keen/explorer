@@ -61,7 +61,13 @@ workflows:
   version: 2
   create_version:
     jobs:
-      - build
+      - build:
+          filters:
+            branches:
+              only:
+                - chore/relese-test
+            tags:
+              ignore: /.*/
       - create_version:
           filters:
             branches:
