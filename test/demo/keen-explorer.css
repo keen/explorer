@@ -1250,8 +1250,8 @@ li.rc-time-picker-panel-select-option-disabled:hover {
 
 .keen-explorer {
   font-family: Montserrat, Tahoma, Arial;
-  font-size: 0.88rem;
-  font-size: 0.88rem;
+  font-size: 0.875rem;
+  font-size: 0.875rem;
   color: #000;
   color: #000;
   display: -ms-flexbox;
@@ -1260,8 +1260,8 @@ li.rc-time-picker-panel-select-option-disabled:hover {
 
 .ReactModalPortal {
   font-family: Montserrat, Tahoma, Arial;
-  font-size: 0.88rem;
-  font-size: 0.88rem;
+  font-size: 0.875rem;
+  font-size: 0.875rem;
   color: #000;
   color: #000;
   display: -ms-flexbox;
@@ -1270,8 +1270,8 @@ li.rc-time-picker-panel-select-option-disabled:hover {
 
 .rc-time-picker-panel {
   font-family: Montserrat, Tahoma, Arial;
-  font-size: 0.88rem;
-  font-size: 0.88rem;
+  font-size: 0.875rem;
+  font-size: 0.875rem;
   color: #000;
   color: #000;
   display: -ms-flexbox;
@@ -1319,8 +1319,8 @@ li.rc-time-picker-panel-select-option-disabled:hover {
 
 .keen-explorer .filters-container .list .row .row-part input{
           padding: 0.55rem 0.7rem;
-          font-size: 0.88rem;
-          font-size: 0.88rem;
+          font-size: 0.875rem;
+          font-size: 0.875rem;
           border-radius: 4px;
           border: 1px solid #ccc;
           width: 100%;
@@ -1328,8 +1328,8 @@ li.rc-time-picker-panel-select-option-disabled:hover {
 
 .ReactModalPortal .filters-container .list .row .row-part input{
           padding: 0.55rem 0.7rem;
-          font-size: 0.88rem;
-          font-size: 0.88rem;
+          font-size: 0.875rem;
+          font-size: 0.875rem;
           border-radius: 4px;
           border: 1px solid #ccc;
           width: 100%;
@@ -1337,8 +1337,8 @@ li.rc-time-picker-panel-select-option-disabled:hover {
 
 .rc-time-picker-panel .filters-container .list .row .row-part input{
           padding: 0.55rem 0.7rem;
-          font-size: 0.88rem;
-          font-size: 0.88rem;
+          font-size: 0.875rem;
+          font-size: 0.875rem;
           border-radius: 4px;
           border: 1px solid #ccc;
           width: 100%;
@@ -1555,8 +1555,8 @@ li.rc-time-picker-panel-select-option-disabled:hover {
 }
 
 .keen-explorer .saved-query .input-name {
-    font-size: 0.88rem;
-    font-size: 0.88rem;
+    font-size: 0.875rem;
+    font-size: 0.875rem;
     padding: 1rem;
     border-radius: 0.3rem;
     border: 1px solid #e8e8e8;
@@ -1564,8 +1564,8 @@ li.rc-time-picker-panel-select-option-disabled:hover {
   }
 
 .ReactModalPortal .saved-query .input-name {
-    font-size: 0.88rem;
-    font-size: 0.88rem;
+    font-size: 0.875rem;
+    font-size: 0.875rem;
     padding: 1rem;
     border-radius: 0.3rem;
     border: 1px solid #e8e8e8;
@@ -1573,8 +1573,8 @@ li.rc-time-picker-panel-select-option-disabled:hover {
   }
 
 .rc-time-picker-panel .saved-query .input-name {
-    font-size: 0.88rem;
-    font-size: 0.88rem;
+    font-size: 0.875rem;
+    font-size: 0.875rem;
     padding: 1rem;
     border-radius: 0.3rem;
     border: 1px solid #e8e8e8;
@@ -1666,8 +1666,8 @@ li.rc-time-picker-panel-select-option-disabled:hover {
       margin-top: 1rem;
       padding: 0.88rem calc(0.88rem*2);
       border-radius: 0.3rem;
-      font-size: 0.88rem;
-      font-size: 0.88rem;
+      font-size: 0.875rem;
+      font-size: 0.875rem;
       cursor: pointer;
       text-transform: uppercase;
       border: 0;
@@ -1679,8 +1679,8 @@ li.rc-time-picker-panel-select-option-disabled:hover {
       margin-top: 1rem;
       padding: 0.88rem calc(0.88rem*2);
       border-radius: 0.3rem;
-      font-size: 0.88rem;
-      font-size: 0.88rem;
+      font-size: 0.875rem;
+      font-size: 0.875rem;
       cursor: pointer;
       text-transform: uppercase;
       border: 0;
@@ -1692,8 +1692,8 @@ li.rc-time-picker-panel-select-option-disabled:hover {
       margin-top: 1rem;
       padding: 0.88rem calc(0.88rem*2);
       border-radius: 0.3rem;
-      font-size: 0.88rem;
-      font-size: 0.88rem;
+      font-size: 0.875rem;
+      font-size: 0.875rem;
       cursor: pointer;
       text-transform: uppercase;
       border: 0;
@@ -2114,22 +2114,22 @@ li.rc-time-picker-panel-select-option-disabled:hover {
 .keen-explorer * {
     -webkit-box-sizing: border-box;
             box-sizing: border-box;
-    font-size: 0.88rem;
-    font-size: 0.88rem;
+    font-size: 0.875rem;
+    font-size: 0.875rem;
 }
 
 .ReactModalPortal * {
     -webkit-box-sizing: border-box;
             box-sizing: border-box;
-    font-size: 0.88rem;
-    font-size: 0.88rem;
+    font-size: 0.875rem;
+    font-size: 0.875rem;
 }
 
 .rc-time-picker-panel * {
     -webkit-box-sizing: border-box;
             box-sizing: border-box;
-    font-size: 0.88rem;
-    font-size: 0.88rem;
+    font-size: 0.875rem;
+    font-size: 0.875rem;
 }
 
 .keen-explorer button,.ReactModalPortal button,.rc-time-picker-panel button{
@@ -2338,8 +2338,8 @@ li.rc-time-picker-panel-select-option-disabled:hover {
 }
 
 .keen-explorer .input-number{
-  font-size: 0.88rem;
-  font-size: 0.88rem;
+  font-size: 0.875rem;
+  font-size: 0.875rem;
   padding: 0.5rem 0.6rem;
   border-radius: 5px;
   border: 1px solid #ccc;
@@ -2348,8 +2348,8 @@ li.rc-time-picker-panel-select-option-disabled:hover {
 }
 
 .ReactModalPortal .input-number{
-  font-size: 0.88rem;
-  font-size: 0.88rem;
+  font-size: 0.875rem;
+  font-size: 0.875rem;
   padding: 0.5rem 0.6rem;
   border-radius: 5px;
   border: 1px solid #ccc;
@@ -2358,8 +2358,8 @@ li.rc-time-picker-panel-select-option-disabled:hover {
 }
 
 .rc-time-picker-panel .input-number{
-  font-size: 0.88rem;
-  font-size: 0.88rem;
+  font-size: 0.875rem;
+  font-size: 0.875rem;
   padding: 0.5rem 0.6rem;
   border-radius: 5px;
   border: 1px solid #ccc;
@@ -2368,8 +2368,8 @@ li.rc-time-picker-panel-select-option-disabled:hover {
 }
 
 .keen-explorer .input-text{
-  font-size: 0.88rem;
-  font-size: 0.88rem;
+  font-size: 0.875rem;
+  font-size: 0.875rem;
   padding: 0.5rem 0.6rem;
   border-radius: 5px;
   border: 1px solid #ccc;
@@ -2378,8 +2378,8 @@ li.rc-time-picker-panel-select-option-disabled:hover {
 }
 
 .ReactModalPortal .input-text{
-  font-size: 0.88rem;
-  font-size: 0.88rem;
+  font-size: 0.875rem;
+  font-size: 0.875rem;
   padding: 0.5rem 0.6rem;
   border-radius: 5px;
   border: 1px solid #ccc;
@@ -2388,8 +2388,8 @@ li.rc-time-picker-panel-select-option-disabled:hover {
 }
 
 .rc-time-picker-panel .input-text{
-  font-size: 0.88rem;
-  font-size: 0.88rem;
+  font-size: 0.875rem;
+  font-size: 0.875rem;
   padding: 0.5rem 0.6rem;
   border-radius: 5px;
   border: 1px solid #ccc;
@@ -2471,8 +2471,8 @@ li.rc-time-picker-panel-select-option-disabled:hover {
 
 .keen-explorer .timeframe .tabAbsolute .DateInput_input {
       padding: 0.5rem;
-      font-size: 0.88rem;
-      font-size: 0.88rem;
+      font-size: 0.875rem;
+      font-size: 0.875rem;
       line-height: normal;
       color:#000;
       font-weight: normal;
@@ -2481,8 +2481,8 @@ li.rc-time-picker-panel-select-option-disabled:hover {
 
 .ReactModalPortal .timeframe .tabAbsolute .DateInput_input {
       padding: 0.5rem;
-      font-size: 0.88rem;
-      font-size: 0.88rem;
+      font-size: 0.875rem;
+      font-size: 0.875rem;
       line-height: normal;
       color:#000;
       font-weight: normal;
@@ -2491,8 +2491,8 @@ li.rc-time-picker-panel-select-option-disabled:hover {
 
 .rc-time-picker-panel .timeframe .tabAbsolute .DateInput_input {
       padding: 0.5rem;
-      font-size: 0.88rem;
-      font-size: 0.88rem;
+      font-size: 0.875rem;
+      font-size: 0.875rem;
       line-height: normal;
       color:#000;
       font-weight: normal;
@@ -2500,8 +2500,8 @@ li.rc-time-picker-panel-select-option-disabled:hover {
     }
 
 .keen-explorer .timeframe .tabAbsolute .rc-time-picker-input{
-      font-size: 0.88rem;
-      font-size: 0.88rem;
+      font-size: 0.875rem;
+      font-size: 0.875rem;
       line-height: normal;
       font-weight: normal;
       color: #000;
@@ -2511,8 +2511,8 @@ li.rc-time-picker-panel-select-option-disabled:hover {
     }
 
 .ReactModalPortal .timeframe .tabAbsolute .rc-time-picker-input{
-      font-size: 0.88rem;
-      font-size: 0.88rem;
+      font-size: 0.875rem;
+      font-size: 0.875rem;
       line-height: normal;
       font-weight: normal;
       color: #000;
@@ -2522,8 +2522,8 @@ li.rc-time-picker-panel-select-option-disabled:hover {
     }
 
 .rc-time-picker-panel .timeframe .tabAbsolute .rc-time-picker-input{
-      font-size: 0.88rem;
-      font-size: 0.88rem;
+      font-size: 0.875rem;
+      font-size: 0.875rem;
       line-height: normal;
       font-weight: normal;
       color: #000;
@@ -2560,8 +2560,8 @@ li.rc-time-picker-panel-select-option-disabled:hover {
   }
 
 .keen-explorer .rc-time-picker-panel .rc-time-picker-input{
-    font-size: 0.88rem;
-    font-size: 0.88rem;
+    font-size: 0.875rem;
+    font-size: 0.875rem;
     line-height: normal;
     font-weight: normal;
     color: #000;
@@ -2571,8 +2571,8 @@ li.rc-time-picker-panel-select-option-disabled:hover {
   }
 
 .ReactModalPortal .rc-time-picker-panel .rc-time-picker-input{
-    font-size: 0.88rem;
-    font-size: 0.88rem;
+    font-size: 0.875rem;
+    font-size: 0.875rem;
     line-height: normal;
     font-weight: normal;
     color: #000;
@@ -2582,8 +2582,8 @@ li.rc-time-picker-panel-select-option-disabled:hover {
   }
 
 .rc-time-picker-panel .rc-time-picker-panel .rc-time-picker-input{
-    font-size: 0.88rem;
-    font-size: 0.88rem;
+    font-size: 0.875rem;
+    font-size: 0.875rem;
     line-height: normal;
     font-weight: normal;
     color: #000;
@@ -2593,18 +2593,18 @@ li.rc-time-picker-panel-select-option-disabled:hover {
   }
 
 .keen-explorer .rc-time-picker-panel .rc-time-picker-panel-select{
-    font-size: 0.88rem;
-    font-size: 0.88rem;
+    font-size: 0.875rem;
+    font-size: 0.875rem;
   }
 
 .ReactModalPortal .rc-time-picker-panel .rc-time-picker-panel-select{
-    font-size: 0.88rem;
-    font-size: 0.88rem;
+    font-size: 0.875rem;
+    font-size: 0.875rem;
   }
 
 .rc-time-picker-panel .rc-time-picker-panel .rc-time-picker-panel-select{
-    font-size: 0.88rem;
-    font-size: 0.88rem;
+    font-size: 0.875rem;
+    font-size: 0.875rem;
   }
 
 .keen-explorer .rc-time-picker-panel .rc-time-picker-panel-select li,.ReactModalPortal .rc-time-picker-panel .rc-time-picker-panel-select li,.rc-time-picker-panel .rc-time-picker-panel .rc-time-picker-panel-select li{
@@ -2613,18 +2613,18 @@ li.rc-time-picker-panel-select-option-disabled:hover {
     }
 
 .keen-explorer .rc-time-picker-panel .rc-time-picker-panel-input{
-    font-size: 0.88rem;
-    font-size: 0.88rem;
+    font-size: 0.875rem;
+    font-size: 0.875rem;
   }
 
 .ReactModalPortal .rc-time-picker-panel .rc-time-picker-panel-input{
-    font-size: 0.88rem;
-    font-size: 0.88rem;
+    font-size: 0.875rem;
+    font-size: 0.875rem;
   }
 
 .rc-time-picker-panel .rc-time-picker-panel .rc-time-picker-panel-input{
-    font-size: 0.88rem;
-    font-size: 0.88rem;
+    font-size: 0.875rem;
+    font-size: 0.875rem;
   }
 
 .keen-explorer .apiQueryUrl,.ReactModalPortal .apiQueryUrl,.rc-time-picker-panel .apiQueryUrl{
@@ -2660,8 +2660,8 @@ li.rc-time-picker-panel-select-option-disabled:hover {
 }
 
 .keen-explorer .button-run-query{
-  font-size: 0.88rem;
-  font-size: 0.88rem;
+  font-size: 0.875rem;
+  font-size: 0.875rem;
   text-transform: uppercase;
   border-radius: 0.3rem;
   background: #3ecf8e;
@@ -2670,15 +2670,15 @@ li.rc-time-picker-panel-select-option-disabled:hover {
   font-weight: 600;
   font-weight: 600;
   border: 0;
-  padding: 0.88rem calc(0.88rem*2);
-  padding: 0.88rem calc(0.88rem*2);
+  padding: 0.875rem calc(0.875rem*2);
+  padding: 0.875rem calc(0.875rem*2);
   cursor: pointer;
   margin: 0;
 }
 
 .ReactModalPortal .button-run-query{
-  font-size: 0.88rem;
-  font-size: 0.88rem;
+  font-size: 0.875rem;
+  font-size: 0.875rem;
   text-transform: uppercase;
   border-radius: 0.3rem;
   background: #3ecf8e;
@@ -2687,15 +2687,15 @@ li.rc-time-picker-panel-select-option-disabled:hover {
   font-weight: 600;
   font-weight: 600;
   border: 0;
-  padding: 0.88rem calc(0.88rem*2);
-  padding: 0.88rem calc(0.88rem*2);
+  padding: 0.875rem calc(0.875rem*2);
+  padding: 0.875rem calc(0.875rem*2);
   cursor: pointer;
   margin: 0;
 }
 
 .rc-time-picker-panel .button-run-query{
-  font-size: 0.88rem;
-  font-size: 0.88rem;
+  font-size: 0.875rem;
+  font-size: 0.875rem;
   text-transform: uppercase;
   border-radius: 0.3rem;
   background: #3ecf8e;
@@ -2704,8 +2704,8 @@ li.rc-time-picker-panel-select-option-disabled:hover {
   font-weight: 600;
   font-weight: 600;
   border: 0;
-  padding: 0.88rem calc(0.88rem*2);
-  padding: 0.88rem calc(0.88rem*2);
+  padding: 0.875rem calc(0.875rem*2);
+  padding: 0.875rem calc(0.875rem*2);
   cursor: pointer;
   margin: 0;
 }
@@ -2828,8 +2828,8 @@ li.rc-time-picker-panel-select-option-disabled:hover {
   display: inline;
   cursor: pointer;
   border-radius: 0.3rem;
-  font-size: 0.88rem;
-  font-size: 0.88rem;
+  font-size: 0.875rem;
+  font-size: 0.875rem;
   font-weight: 600;
   font-weight: 600;
   text-transform: uppercase;
@@ -2840,8 +2840,8 @@ li.rc-time-picker-panel-select-option-disabled:hover {
   background: #fcfcfc;
   border: 1px solid #efefef;
   border: 1px solid #efefef;
-  padding: 0.88rem calc(0.88rem*2);
-  padding: 0.88rem calc(0.88rem*2);
+  padding: 0.875rem calc(0.875rem*2);
+  padding: 0.875rem calc(0.875rem*2);
 }
 
 .ReactModalPortal .button-toggle{
@@ -2849,8 +2849,8 @@ li.rc-time-picker-panel-select-option-disabled:hover {
   display: inline;
   cursor: pointer;
   border-radius: 0.3rem;
-  font-size: 0.88rem;
-  font-size: 0.88rem;
+  font-size: 0.875rem;
+  font-size: 0.875rem;
   font-weight: 600;
   font-weight: 600;
   text-transform: uppercase;
@@ -2861,8 +2861,8 @@ li.rc-time-picker-panel-select-option-disabled:hover {
   background: #fcfcfc;
   border: 1px solid #efefef;
   border: 1px solid #efefef;
-  padding: 0.88rem calc(0.88rem*2);
-  padding: 0.88rem calc(0.88rem*2);
+  padding: 0.875rem calc(0.875rem*2);
+  padding: 0.875rem calc(0.875rem*2);
 }
 
 .rc-time-picker-panel .button-toggle{
@@ -2870,8 +2870,8 @@ li.rc-time-picker-panel-select-option-disabled:hover {
   display: inline;
   cursor: pointer;
   border-radius: 0.3rem;
-  font-size: 0.88rem;
-  font-size: 0.88rem;
+  font-size: 0.875rem;
+  font-size: 0.875rem;
   font-weight: 600;
   font-weight: 600;
   text-transform: uppercase;
@@ -2882,8 +2882,8 @@ li.rc-time-picker-panel-select-option-disabled:hover {
   background: #fcfcfc;
   border: 1px solid #efefef;
   border: 1px solid #efefef;
-  padding: 0.88rem calc(0.88rem*2);
-  padding: 0.88rem calc(0.88rem*2);
+  padding: 0.875rem calc(0.875rem*2);
+  padding: 0.875rem calc(0.875rem*2);
 }
 
 .keen-explorer .button-toggle i, .ReactModalPortal .button-toggle i, .rc-time-picker-panel .button-toggle i {
