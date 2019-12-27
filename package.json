@@ -1,12 +1,15 @@
 {
   "name": "keen-explorer",
   "description": "Data Explorer by Keen IO",
-  "version": "6.0.18",
+  "version": "6.0.25",
   "license": "MIT",
   "bucket-name": "keen-js",
   "main": "dist/keen-explorer.umd.js",
   "browser": "dist/keen-explorer.umd.js",
   "style": "dist/keen-explorer.css",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "start": "concurrently --kill-others \"NODE_ENV=development webpack-dev-server\" \"npm run postcss-watch\"",
     "postcss-watch": "node_modules/postcss-cli/bin/postcss lib/css/index.css -o test/demo/keen-explorer.css --watch --config postcss.config.js",
@@ -17,9 +20,23 @@
     "build:css": "node_modules/postcss-cli/bin/postcss lib/css/index.css -o dist/keen-explorer.css --config postcss.config.js",
     "build:css:min": "OPTIMIZE_MINIMIZE=1 node_modules/postcss-cli/bin/postcss lib/css/index.css -o dist/keen-explorer.min.css --config postcss.config.js",
     "version": "npm run build && git add .",
-    "postversion": "git push && git push --tags && npm publish",
-    "profile": "BUNDLE=1 OPTIMIZE_MINIMIZE=1 webpack --profile --json > stats.json",
-    "analyze": "BUNDLE=1 OPTIMIZE_MINIMIZE=1 webpack-bundle-analyzer stats.json dist"
+    "lint": "eslint lib/**/*.js --quiet",
+    "circular": "madge --circular ./lib/**/*",
+    "release": "standard-version && git push --follow-tags",
+    "commit": "npx git-cz"
+  },
+  "jest": {
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
+    ],
+    "setupFiles": [
+      "<rootDir>/jestSetup.js"
+    ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   },
   "dependencies": {
     "@babel/polyfill": "^7.2.5",
@@ -56,12 +73,15 @@
     "autoprefixer": "^8.2.0",
     "babel-loader": "^8.0.5",
     "babel-plugin-prismjs": "^1.0.2",
+    "commitizen": "^4.0.3",
     "concurrently": "^3.5.1",
     "connect-history-api-fallback": "0.0.5",
     "css-loader": "^2.1.0",
     "cssnano": "^3.10.0",
+    "cz-conventional-changelog": "^3.0.2",
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.8.0",
+    "enzyme-to-json": "^3.4.3",
     "eslint": "^4.19.1",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-loader": "^2.0.0",
@@ -69,11 +89,13 @@
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.7.0",
     "gh-pages": "^2.0.1",
+    "git-cz": "^3.3.0",
     "html-loader": "^0.5.5",
     "html-webpack-plugin": "^3.2.0",
     "imports-loader": "^0.8.0",
     "jest": "^22.4.3",
     "jest-environment-jsdom-c3": "^2.0.0",
+    "jest-fetch-mock": "^2.1.2",
     "nock": "^9.2.6",
     "postcss": "^6.0.23",
     "postcss-cli": "^5.0.1",
@@ -89,6 +111,7 @@
     "regenerator-runtime": "^0.11.1",
     "replace-in-file": "^3.4.0",
     "run-sequence": "~1.0.1",
+    "standard-version": "^7.0.1",
     "stringify": "~3.0.0",
     "style-loader": "^0.20.3",
     "webpack": "^4.29.0",
