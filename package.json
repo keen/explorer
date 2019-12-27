@@ -22,7 +22,7 @@
     "version": "npm run build && git add .",
     "lint": "eslint lib/**/*.js --quiet",
     "circular": "madge --circular ./lib/**/*",
-    "release": "standard-version && git push --follow-tags",
+    "release": "standard-version",
     "commit": "npx git-cz"
   },
   "jest": {
