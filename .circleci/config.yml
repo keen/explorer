@@ -27,7 +27,7 @@ jobs:
           command: npm run release
       - run:
           name: Push changes
-          command: git push --follow-tags origin ${CIRCLE_BRANCH}
+          command: git push --follow-tags --set-upstream origin ${CIRCLE_BRANCH}
   publish:
     executor: nodejs
     working_directory: ~/tmp
