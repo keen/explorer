@@ -1615,12 +1615,15 @@ li.rc-time-picker-panel-select-option-disabled:hover {
 
 .keen-explorer .saved-query .cache, .ReactModalPortal .saved-query .cache, .rc-time-picker-panel .saved-query .cache {
     padding: 1rem 0 0;
-    max-width: 12rem;
+    max-width: 16rem;
   }
 
 .keen-explorer .saved-query .cache .line-checkbox,.ReactModalPortal .saved-query .cache .line-checkbox,.rc-time-picker-panel .saved-query .cache .line-checkbox{
       display: -ms-flexbox;
       display: flex;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+
     }
 
 .keen-explorer .saved-query .cache .line-checkbox input,.ReactModalPortal .saved-query .cache .line-checkbox input,.rc-time-picker-panel .saved-query .cache .line-checkbox input{
@@ -1631,6 +1634,52 @@ li.rc-time-picker-panel-select-option-disabled:hover {
 .keen-explorer .saved-query .cache .line-checkbox label,.ReactModalPortal .saved-query .cache .line-checkbox label,.rc-time-picker-panel .saved-query .cache .line-checkbox label{
         cursor: pointer;
       }
+
+.keen-explorer .saved-query .cache .line-checkbox .cache-limit, .ReactModalPortal .saved-query .cache .line-checkbox .cache-limit, .rc-time-picker-panel .saved-query .cache .line-checkbox .cache-limit {
+        color: #27566D;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-direction: row;
+            flex-direction: row;
+      }
+
+.keen-explorer .saved-query .cache .line-checkbox .cache-limit div, .ReactModalPortal .saved-query .cache .line-checkbox .cache-limit div, .rc-time-picker-panel .saved-query .cache .line-checkbox .cache-limit div {
+          position: relative;
+        }
+
+.keen-explorer .saved-query .cache .line-checkbox .cache-limit svg, .ReactModalPortal .saved-query .cache .line-checkbox .cache-limit svg, .rc-time-picker-panel .saved-query .cache .line-checkbox .cache-limit svg {
+          margin: 0.1rem 0.4rem 0;
+        }
+
+.keen-explorer .saved-query .cache .line-checkbox .cache-limit .tooltip, .ReactModalPortal .saved-query .cache .line-checkbox .cache-limit .tooltip, .rc-time-picker-panel .saved-query .cache .line-checkbox .cache-limit .tooltip {
+          position: absolute;
+          top: 25px;
+          left: -20px;
+          width: 350px;
+          padding: 0 15px;
+          background: #fff;
+          -webkit-box-shadow: 0 5px 24px 0 rgba(29,39,41,0.15);
+                  box-shadow: 0 5px 24px 0 rgba(29,39,41,0.15);
+          font-size: 14px;
+          line-height: 17px;
+          z-index: 100;
+          opacity: 1
+        }
+
+.keen-explorer .saved-query .cache .line-checkbox .cache-limit .tooltip:after, .ReactModalPortal .saved-query .cache .line-checkbox .cache-limit .tooltip:after, .rc-time-picker-panel .saved-query .cache .line-checkbox .cache-limit .tooltip:after {
+  bottom: 100%;
+  left: 10%;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+  border-color: rgba(136, 183, 213, 0);
+  border-bottom-color: #fff;
+  border-width: 5px;
+  margin-left: -5px;
+}
 
 .keen-explorer .saved-query .cache .cache-toggle,.ReactModalPortal .saved-query .cache .cache-toggle,.rc-time-picker-panel .saved-query .cache .cache-toggle{
       display: -ms-flexbox;
