@@ -113,7 +113,7 @@
     "build:css:min": "OPTIMIZE_MINIMIZE=1 node_modules/postcss-cli/bin/postcss lib/styles/base.css -o dist/keen-explorer.min.css --config postcss.config.js",
     "postcss-watch": "node_modules/postcss-cli/bin/postcss lib/styles/base.css -o test/demo/keen-explorer.css --watch --config postcss.config.js",
     "postversion": "git push && git push --tags",
-    "preversion": "npm run build && npm run test",
+    "preversion": "npm run build",
     "profile": "webpack --profile --json > stats.json",
     "start": "concurrently --kill-others \"NODE_ENV=development webpack-dev-server\" \"npm run postcss-watch\"",
     "test": "NODE_ENV=test jest",
