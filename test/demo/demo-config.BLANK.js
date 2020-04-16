@@ -1,7 +1,7 @@
 const demoConfig = {
   projectId: 'YOUR_PROJECT_ID',
-  readKey: 'YOUR_READ_KEY ',
-  writeKey: 'YOUR_WRITE_KEY ',
+  readKey: 'YOUR_READ_KEY',
+  writeKey: 'YOUR_WRITE_KEY',
   masterKey: 'YOUR_MASTER_KEY',
 };
 
