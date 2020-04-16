@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [6.1.0](https://github.com/keen/explorer/compare/v6.0.28...v6.1.0) (2020-04-16)
+
+
+### Features
+
+* 🎸 cache query limits ([48e30b0](https://github.com/keen/explorer/commit/48e30b0f4bda9ce25ecb464fd28e42a263881d4e)), closes [#244](https://github.com/keen/explorer/issues/244)
+
+
+### Bug Fixes
+
+* 🐛 Export datasets fix ([109d055](https://github.com/keen/explorer/commit/109d055088a59e29652833dcccfa28fab14c1c5f))
+
 ### [6.0.28](https://github.com/keen/explorer/compare/v6.0.27...v6.0.28) (2020-01-09)
 
 ### [6.0.27](https://github.com/keen/explorer/compare/v6.0.26...v6.0.27) (2019-12-30)
