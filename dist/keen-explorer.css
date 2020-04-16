@@ -3258,6 +3258,10 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
   border-top: 0;
   padding: 5px 10px;
   height: 32px;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: row;
+      flex-direction: row;
 }
 
 #keen-explorer .cache-toggle label,
@@ -3276,6 +3280,52 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
 #keen-explorer .cache-toggle input[name="cache"] {
     margin-right: 5px;
   }
+
+#keen-explorer .cache-toggle .cache-limit {
+    color: #27566D;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: row;
+        flex-direction: row;
+  }
+
+#keen-explorer .cache-toggle .cache-limit div {
+      position: relative;
+    }
+
+#keen-explorer .cache-toggle .cache-limit svg {
+      margin: 0.1rem 0.4rem 0;
+    }
+
+#keen-explorer .cache-toggle .cache-limit .tooltip {
+      position: absolute;
+      top: 25px;
+      left: -23px;
+      width: 350px;
+      padding: 15px 15px 5px 15px;
+      background: #fff;
+      -webkit-box-shadow: 0 5px 24px 0 rgba(29,39,41,0.15);
+              box-shadow: 0 5px 24px 0 rgba(29,39,41,0.15);
+      font-size: 14px;
+      line-height: 17px;
+      z-index: 100;
+      opacity: 1
+    }
+
+#keen-explorer .cache-toggle .cache-limit .tooltip:after {
+  bottom: 100%;
+  left: 10%;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+  border-color: rgba(136, 183, 213, 0);
+  border-bottom-color: #fff;
+  border-width: 5px;
+  margin-left: -5px;
+}
 
 #keen-explorer .cache-toggle.inactive label {
     color: #A2A2A2;
