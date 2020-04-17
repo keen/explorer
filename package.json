@@ -1,28 +1,4 @@
 {
-  "_from": "keen-explorer@4",
-  "_id": "keen-explorer@4.0.9",
-  "_inBundle": false,
-  "_integrity": "sha512-9Q5uyTyfne5ssxiR8sdqKG4axFhiSODaj4SrW26wfHAl/u3yYqZEXbLOq5oZtDNwZIHG0vSGC2vWkUuAzDzBHg==",
-  "_location": "/keen-explorer",
-  "_phantomChildren": {},
-  "_requested": {
-    "type": "range",
-    "registry": true,
-    "raw": "keen-explorer@4",
-    "name": "keen-explorer",
-    "escapedName": "keen-explorer",
-    "rawSpec": "4",
-    "saveSpec": null,
-    "fetchSpec": "4"
-  },
-  "_requiredBy": [
-    "#USER",
-    "/"
-  ],
-  "_resolved": "https://registry.npmjs.org/keen-explorer/-/keen-explorer-4.0.9.tgz",
-  "_shasum": "687031593e6cb5b23ac78f7c0f6107067dd77be8",
-  "_spec": "keen-explorer@4",
-  "_where": "/Users/adamk/Desktop/my/explorer4",
   "browser": "dist/keen-explorer.umd.js",
   "bucket-name": "keen-js",
   "bugs": {
@@ -101,6 +77,9 @@
   "license": "MIT",
   "main": "dist/keen-explorer.umd.js",
   "name": "keen-explorer",
+  "files": [
+    "dist"
+  ],
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/keen/explorer.git"
