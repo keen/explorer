@@ -13,6 +13,8 @@ All notable changes to this project will be documented in this file. See [standa
 
 * 🎸 cache query limits ([48e30b0](https://github.com/keen/explorer/commit/48e30b0f4bda9ce25ecb464fd28e42a263881d4e)), closes [#244](https://github.com/keen/explorer/issues/244)
 
+### [6.0.29](https://github.com/keen/explorer/compare/v6.0.28...v6.0.29) (2020-03-02)
+
 
 ### Bug Fixes
 
