@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [6.1.4](https://github.com/keen/explorer/compare/v6.1.3...v6.1.4) (2020-05-05)
+
+
+### Bug Fixes
+
+* 🐛 embed code ([7381a4d](https://github.com/keen/explorer/commit/7381a4d287c6194433e91b304a5c7dff409cb6bf))
+* 🐛 Filters issue with "in" operator ([aa2b71d](https://github.com/keen/explorer/commit/aa2b71d6d9c622638bbfa7a402086adf5ca07e5e))
+* 🐛 Fix for displaying queries created on API level ([b7ddb99](https://github.com/keen/explorer/commit/b7ddb99f00dfffc0232c002223d92357f08e78f5))
+
 ### [6.1.3](https://github.com/keen/explorer/compare/v6.1.2...v6.1.3) (2020-04-22)
 
 
