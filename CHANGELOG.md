@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [6.2.0](https://github.com/keen/explorer/compare/v6.0.25...v6.2.0) (2020-05-12)
+
+
+### Features
+
+* 🎸 cache query limits ([48e30b0](https://github.com/keen/explorer/commit/48e30b0f4bda9ce25ecb464fd28e42a263881d4e)), closes [#244](https://github.com/keen/explorer/issues/244)
+
+
+### Bug Fixes
+
+* 🐛 change date to user_last_modified_date ([2c1994f](https://github.com/keen/explorer/commit/2c1994f9306fbc9f87f9c2407bd1832abd15afbf))
+* 🐛 embed code ([7381a4d](https://github.com/keen/explorer/commit/7381a4d287c6194433e91b304a5c7dff409cb6bf))
+* 🐛 Export datasets fix ([109d055](https://github.com/keen/explorer/commit/109d055088a59e29652833dcccfa28fab14c1c5f))
+* 🐛 Filters issue with "in" operator ([aa2b71d](https://github.com/keen/explorer/commit/aa2b71d6d9c622638bbfa7a402086adf5ca07e5e))
+* 🐛 Fix for displaying queries created on API level ([b7ddb99](https://github.com/keen/explorer/commit/b7ddb99f00dfffc0232c002223d92357f08e78f5))
+* 🐛 issue with parsing filters value ([a584eae](https://github.com/keen/explorer/commit/a584eae3f25c4ab832832c55069e78ab62d1f9be))
+* 🐛 remove sortedGroups param ([2c66385](https://github.com/keen/explorer/commit/2c66385f829a6e9d37adea172c6bdc6bd92c736e))
+* 🐛 save query error handlers ([dce713d](https://github.com/keen/explorer/commit/dce713d424abdff5f1a824b8c5b71d7126e80af8))
+
 ### [6.1.4](https://github.com/keen/explorer/compare/v6.1.3...v6.1.4) (2020-05-05)
 
 
