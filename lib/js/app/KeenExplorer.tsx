@@ -16,6 +16,7 @@ import rootSaga from './redux/sagas';
 import { version } from '../../../package.json';
 
 import App from './components/App';
+import { AppContext } from './contexts';
 
 const sagaMiddleware = createSagaMiddleware();
 const composeEnhancers = composeWithDevTools({});
@@ -49,12 +50,14 @@ export class KeenExplorer {
 
     ReactDOM.render(
       <Provider store={store}>
+        <AppContext.Provider value={{ keenAnalysis: client }}>
         <App
           {...{
             ...defaultConfig,
             ...props,
           }}
         />
+        </AppContext.Provider>
       </Provider>,
       document.querySelector(props.container)
     );

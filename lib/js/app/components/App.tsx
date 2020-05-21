@@ -42,6 +42,8 @@ import JsonView from './explorer/JsonView';
 import Foldable from './explorer/Foldable';
 import EmbedHTML from './explorer/EmbedHTML';
 
+import SaveQuery from './SaveQuery';
+
 import LoadingSpinner from './explorer/shared/LoadingSpinner';
 
 import { getChartTypeOptions } from '../utils/chartTypes';
@@ -737,7 +739,9 @@ class App extends Component {
               )}
 
               {features.save && panelSave && (
-                <SavedQuery client={client} queryParams={queryParams} />
+                <>
+                  <SavedQuery client={client} queryParams={queryParams} />
+                </>
               )}
             </div>
           </div>

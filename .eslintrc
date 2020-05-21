@@ -1,9 +1,0 @@
-{
-  "extends": ["airbnb"],
-  "rules": {
-    "react/jsx-filename-extension": ["ignore"],
-    "jsx-a11y/click-events-have-key-events": ["ignore"],
-    "jsx-a11y/no-static-element-interactions": ["ignore"],
-    "jsx-quotes": ["error", "prefer-single"]
-  }
-}

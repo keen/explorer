@@ -62,6 +62,10 @@ class SavedQuery extends Component {
       return;
     }
 
+    if (analysisType === 'extraction' && queryParams.propertyNames) {
+      delete queryParams.propertyNames;
+    }
+
     let stepLabels;
     if (analysisType === 'funnel') {
       if (uiStepLabels && uiStepLabels.length && uiStepLabels[0]) {

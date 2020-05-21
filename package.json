@@ -40,6 +40,7 @@
     }
   },
   "dependencies": {
+    "@types/react-dom": "^16.9.8",
     "classnames": "2.1.2",
     "core-js": "^3.6.5",
     "csv-parse": "^4.8.7",
@@ -73,6 +74,9 @@
     "@babel/preset-env": "^7.4.3",
     "@babel/preset-react": "^7.0.0",
     "@babel/preset-typescript": "^7.9.0",
+    "@types/react": "^16.9.35",
+    "@typescript-eslint/eslint-plugin": "^2.34.0",
+    "@typescript-eslint/parser": "^2.34.0",
     "autoprefixer": "^8.2.0",
     "babel-loader": "^8.0.5",
     "babel-plugin-prismjs": "^1.0.2",
@@ -87,8 +91,9 @@
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.8.0",
     "enzyme-to-json": "^3.4.3",
-    "eslint": "^4.19.1",
+    "eslint": "^7.0.0",
     "eslint-config-airbnb": "^16.1.0",
+    "eslint-config-prettier": "^6.11.0",
     "eslint-loader": "^2.0.0",
     "eslint-plugin-import": "^2.11.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
