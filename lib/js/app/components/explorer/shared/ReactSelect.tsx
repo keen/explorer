@@ -1,9 +1,9 @@
-
+// @ts-nocheck
 import React from 'react';
 import Select, { createFilter, components } from 'react-select';
 import Option from './Option';
 
-const Input = props => <components.Input {...props} autofill='off' />;
+const Input = (props) => <components.Input {...props} autofill="off" />;
 
 const ReactSelect = (props) => {
   if (props.options.length > 200) {
@@ -19,11 +19,7 @@ const ReactSelect = (props) => {
     );
   }
 
-  return (
-    <Select
-      {...props}
-    />
-  );
+  return <Select {...props} />;
 };
 
 export default ReactSelect;

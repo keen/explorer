@@ -1,12 +1,14 @@
 {
-  "presets": ["@babel/preset-env", "@babel/preset-react"],
+  "presets": [
+    ["@babel/preset-env", { "useBuiltIns": "usage", "corejs": 3 }],
+    "@babel/preset-react",
+  ],
   "plugins": [
-  ["prismjs", {
-    "languages": ["javascript", "css", "markup"],
-    "plugins": ["line-numbers"],
-    "theme": "default",
-    "css": true
-  }],
-  ["@babel/plugin-proposal-object-rest-spread"]
+    ["prismjs", {
+      "languages": ["javascript", "css", "markup"],
+      "plugins": ["line-numbers"],
+      "theme": "default",
+      "css": true
+    }],
   ]
 }

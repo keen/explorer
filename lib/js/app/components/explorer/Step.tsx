@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
@@ -9,14 +10,12 @@ import {
   deleteStep,
 } from '../../redux/actionCreators/ui';
 
-const mapStateToProps = state => (
-  {
-    activeStep: state.ui.activeStep,
-    stepLabels: state.ui.stepLabels,
-    steps: state.ui.steps,
-    stepLabels: state.ui.stepLabels,
-  }
-);
+const mapStateToProps = (state) => ({
+  activeStep: state.ui.activeStep,
+  stepLabels: state.ui.stepLabels,
+  steps: state.ui.steps,
+  stepLabels: state.ui.stepLabels,
+});
 
 const mapDispatchToProps = {
   updateUI,
@@ -44,7 +43,8 @@ class Step extends Component {
 
     const currentStep = steps[index];
 
-    const labelValue = (stepLabels && stepLabels[index]) || currentStep.eventCollection;
+    const labelValue =
+      (stepLabels && stepLabels[index]) || currentStep.eventCollection;
 
     const swapArrayElements = (arr, indexA, indexB) => {
       const temp = arr[indexA];
@@ -54,11 +54,7 @@ class Step extends Component {
     };
 
     return (
-      <div
-        className={
-          `step ${index === activeStep ? 'active-step' : ''}`
-        }
-      >
+      <div className={`step ${index === activeStep ? 'active-step' : ''}`}>
         <FoldableStep
           title={`Step ${index + 1}`}
           defaultActive={index === activeStep}
@@ -67,20 +63,22 @@ class Step extends Component {
               activeStep: active ? index : undefined,
             });
           }}
-          onClose={
-            () => {
-              updateUI({
-                activeStep: undefined,
-              });
-            }
-          }
+          onClose={() => {
+            updateUI({
+              activeStep: undefined,
+            });
+          }}
           onDelete={() => {
             deleteStep(index);
           }}
           onClickDown={() => {
             if (index === steps.length - 1) return;
             const swappedSteps = swapArrayElements(steps, index, index + 1);
-            const swappedStepLabels = swapArrayElements(stepLabels, index, index + 1);
+            const swappedStepLabels = swapArrayElements(
+              stepLabels,
+              index,
+              index + 1
+            );
             updateUI({
               steps: swappedSteps,
               stepLabels: swappedStepLabels,
@@ -90,7 +88,11 @@ class Step extends Component {
           onClickUp={() => {
             if (index === 0) return;
             const swappedSteps = swapArrayElements(steps, index, index - 1);
-            const swappedStepLabels = swapArrayElements(stepLabels, index, index - 1);
+            const swappedStepLabels = swapArrayElements(
+              stepLabels,
+              index,
+              index - 1
+            );
             updateUI({
               steps: swappedSteps,
               stepLabels: swappedStepLabels,
@@ -98,14 +100,13 @@ class Step extends Component {
             });
           }}
         >
-
           {children}
 
-          <div className='label-main first-label'>Label</div>
+          <div className="label-main first-label">Label</div>
           <input
-            className='input-text'
-            placeholder='Eg. Customers this month'
-            type='text'
+            className="input-text"
+            placeholder="Eg. Customers this month"
+            type="text"
             value={labelValue}
             onChange={(e) => {
               updateUI({
@@ -119,12 +120,10 @@ class Step extends Component {
             }}
           />
 
-          <div className='line-options'>
-            <div
-              className='line-checkbox'
-            >
+          <div className="line-options">
+            <div className="line-checkbox">
               <input
-                type='checkbox'
+                type="checkbox"
                 id={`step${index}_optional_step`}
                 checked={currentStep.optional}
                 onChange={(e) => {
@@ -137,12 +136,13 @@ class Step extends Component {
                   });
                 }}
               />
-              <label htmlFor={`step${index}_optional_step`}>Optional Step</label>
+              <label htmlFor={`step${index}_optional_step`}>
+                Optional Step
+              </label>
             </div>
-            <div
-              className='line-checkbox'>
+            <div className="line-checkbox">
               <input
-                type='checkbox'
+                type="checkbox"
                 id={`step${index}_inverted_step`}
                 checked={currentStep.inverted}
                 onChange={(e) => {
@@ -155,13 +155,13 @@ class Step extends Component {
                   });
                 }}
               />
-              <label htmlFor={`step${index}_inverted_step`}>Inverted Step</label>
+              <label htmlFor={`step${index}_inverted_step`}>
+                Inverted Step
+              </label>
             </div>
-            <div
-              className='line-checkbox'
-            >
+            <div className="line-checkbox">
               <input
-                type='checkbox'
+                type="checkbox"
                 id={`step${index}_with_actors_step`}
                 checked={currentStep.withActors}
                 onChange={(e) => {
@@ -174,7 +174,9 @@ class Step extends Component {
                   });
                 }}
               />
-              <label htmlFor={`step${index}_with_actors_step`}>With Actors</label>
+              <label htmlFor={`step${index}_with_actors_step`}>
+                With Actors
+              </label>
             </div>
           </div>
         </FoldableStep>
@@ -183,7 +185,4 @@ class Step extends Component {
   }
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(Step);
+export default connect(mapStateToProps, mapDispatchToProps)(Step);

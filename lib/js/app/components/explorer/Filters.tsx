@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { Component, Fragment } from 'react';
 import Select from 'react-select';
 import { connect } from 'react-redux';
@@ -34,14 +35,12 @@ import {
   DEFAULT_TIMEFRAME_ABSOLUTE_VALUE,
 } from '../../consts';
 
-const mapStateToProps = state => (
-  {
-    schemas: state.collections.schemas,
-    eventCollection: state.ui.eventCollection,
-    filters: state.ui.filters,
-    steps: state.ui.steps,
-  }
-);
+const mapStateToProps = (state) => ({
+  schemas: state.collections.schemas,
+  eventCollection: state.ui.eventCollection,
+  filters: state.ui.filters,
+  steps: state.ui.steps,
+});
 
 const mapDispatchToProps = {
   fetchSchema,
@@ -85,22 +84,14 @@ class Filters extends Component {
   }
 
   done() {
-    let {
-      filters,
-    } = this.props;
-    const {
-      funnel,
-      step,
-      steps,
-      updateStepUI,
-      updateUI,
-    } = this.props;
+    let { filters } = this.props;
+    const { funnel, step, steps, updateStepUI, updateUI } = this.props;
 
     if (funnel) {
       filters = steps[step].filters || [];
     }
 
-    const validFilters = filters.filter(filter => !!filter.propertyName);
+    const validFilters = filters.filter((filter) => !!filter.propertyName);
 
     if (funnel) {
       updateStepUI({
@@ -120,70 +111,67 @@ class Filters extends Component {
     });
   }
 
-  renderFilterValue({
-    operator,
-    propertyType,
-    propertyValue,
-    onChange,
-  }) {
-    const {
-      startDateFocused,
-    } = this.state;
+  renderFilterValue({ operator, propertyType, propertyValue, onChange }) {
+    const { startDateFocused } = this.state;
 
-    const BooleanOptions = ['true', 'false'].map(item => ({
+    const BooleanOptions = ['true', 'false'].map((item) => ({
       label: item,
       value: item,
     }));
 
-    if (operator === 'exists'
-    || propertyType === 'Boolean'
-    ) {
-      return (<Select
-        value={{
-          label: propertyValue,
-          value: propertyValue,
-        }}
-        options={BooleanOptions}
-        onChange={({ value }) => {
-          onChange(value);
-        }}
-        theme={getThemeForSelect}
-      />);
+    if (operator === 'exists' || propertyType === 'Boolean') {
+      return (
+        <Select
+          value={{
+            label: propertyValue,
+            value: propertyValue,
+          }}
+          options={BooleanOptions}
+          onChange={({ value }) => {
+            onChange(value);
+          }}
+          theme={getThemeForSelect}
+        />
+      );
     }
 
     const falseFunc = () => false; // https://github.com/airbnb/react-dates/issues/239
-    const startDate = moment.utc(propertyValue || DEFAULT_TIMEFRAME_ABSOLUTE_VALUE);
+    const startDate = moment.utc(
+      propertyValue || DEFAULT_TIMEFRAME_ABSOLUTE_VALUE
+    );
 
-    if (propertyType === 'Datetime'
-    ) {
-      return (<div className='datetime-pickers'>
-        <SingleDatePicker
-          date={startDate}
-          onDateChange={(valueSelected) => {
+    if (propertyType === 'Datetime') {
+      return (
+        <div className="datetime-pickers">
+          <SingleDatePicker
+            date={startDate}
+            onDateChange={(valueSelected) => {
               const valueConverted = convertDateToString(valueSelected);
               onChange(valueConverted);
             }}
-          focused={startDateFocused}
-          onFocusChange={({ focused }) => this.setState({ startDateFocused: focused })}
-          isOutsideRange={falseFunc}
-          id='your_unique_id'
-          numberOfMonths={1}
-          displayFormat={'YYYY-MM-DD'}
-        />
-        <TimePicker
-          use12Hours={true}
-          showSecond={false}
-          value={startDate}
-          onChange={(valueSelected) => {
-            const valueConverted = convertDateToString(valueSelected);
-            onChange(valueConverted);
-          }}
-        />
-      </div>);
+            focused={startDateFocused}
+            onFocusChange={({ focused }) =>
+              this.setState({ startDateFocused: focused })
+            }
+            isOutsideRange={falseFunc}
+            id="your_unique_id"
+            numberOfMonths={1}
+            displayFormat={'YYYY-MM-DD'}
+          />
+          <TimePicker
+            use12Hours={true}
+            showSecond={false}
+            value={startDate}
+            onChange={(valueSelected) => {
+              const valueConverted = convertDateToString(valueSelected);
+              onChange(valueConverted);
+            }}
+          />
+        </div>
+      );
     }
 
-    if (operator === 'within'
-    ) {
+    if (operator === 'within') {
       let newPropertyValue = {
         coordinates: [undefined, undefined],
         maxDistanceMiles: undefined,
@@ -197,41 +185,43 @@ class Filters extends Component {
       const lat = newPropertyValue.coordinates[1] || '';
       const radius = newPropertyValue.maxDistanceMiles || '';
 
-      return (<div className='within-inputs'>
-        <input
-          placeholder='Longitude'
-          type='text'
-          onChange={(e) => {
-            onChange({
-              coordinates: [e.target.value, lat],
-              maxDistanceMiles: radius,
-            });
-          }}
-          value={long}
-         />
-        <input
-          placeholder='Latitude'
-          type='text'
-          onChange={(e) => {
-            onChange({
-              coordinates: [long, e.target.value],
-              maxDistanceMiles: radius,
-            });
-          }}
-          value={lat}
-        />
-        <input
-          placeholder='Radius [in miles]'
-          type='text'
-          onChange={(e) => {
-            onChange({
-              coordinates: [long, lat],
-              maxDistanceMiles: e.target.value,
-            });
-          }}
-          value={radius}
-        />
-      </div>);
+      return (
+        <div className="within-inputs">
+          <input
+            placeholder="Longitude"
+            type="text"
+            onChange={(e) => {
+              onChange({
+                coordinates: [e.target.value, lat],
+                maxDistanceMiles: radius,
+              });
+            }}
+            value={long}
+          />
+          <input
+            placeholder="Latitude"
+            type="text"
+            onChange={(e) => {
+              onChange({
+                coordinates: [long, e.target.value],
+                maxDistanceMiles: radius,
+              });
+            }}
+            value={lat}
+          />
+          <input
+            placeholder="Radius [in miles]"
+            type="text"
+            onChange={(e) => {
+              onChange({
+                coordinates: [long, lat],
+                maxDistanceMiles: e.target.value,
+              });
+            }}
+            value={radius}
+          />
+        </div>
+      );
     }
 
     let placeholder;
@@ -243,14 +233,16 @@ class Filters extends Component {
       }
     }
 
-    return (<input
-      placeholder={placeholder}
-      type='text'
-      onChange={(e) => {
-        onChange(e.target.value);
-      }}
-      value={propertyValue}
-    />);
+    return (
+      <input
+        placeholder={placeholder}
+        type="text"
+        onChange={(e) => {
+          onChange(e.target.value);
+        }}
+        value={propertyValue}
+      />
+    );
   }
 
   render() {
@@ -286,9 +278,7 @@ class Filters extends Component {
     }
 
     if (!Object.keys(schema).length) {
-      return (
-        <div className='box-info'>Choose an event collection first</div>
-      );
+      return <div className="box-info">Choose an event collection first</div>;
     }
     filters = filters.map((filter) => {
       const propertyType = getPropertyType({
@@ -308,17 +298,20 @@ class Filters extends Component {
 
     const schemaProps = Object.keys(schema)
       .sort((a, b) => {
-        if (a.toLowerCase() < b.toLowerCase()) { return -1; }
-        if (a.toLowerCase() > b.toLowerCase()) { return 1; }
+        if (a.toLowerCase() < b.toLowerCase()) {
+          return -1;
+        }
+        if (a.toLowerCase() > b.toLowerCase()) {
+          return 1;
+        }
         return 0;
       })
-      .map(colItem => ({ label: colItem, value: colItem }));
+      .map((colItem) => ({ label: colItem, value: colItem }));
 
     return (
       <div>
-      <div className='list'>
-        {
-          filters.map((item, index) => {
+        <div className="list">
+          {filters.map((item, index) => {
             const {
               propertyName,
               propertyType,
@@ -326,20 +319,21 @@ class Filters extends Component {
               operator,
             } = item;
 
-            const dataType = propertyType || schemaPropConvert(schema[propertyName]);
-            const filterOperators = FILTER_OPERATORS.filter(item => item.dataTypes.includes(dataType));
+            const dataType =
+              propertyType || schemaPropConvert(schema[propertyName]);
+            const filterOperators = FILTER_OPERATORS.filter((item) =>
+              item.dataTypes.includes(dataType)
+            );
 
             return (
-              <div className='row' key={index}>
-                <div className='row-part'>
+              <div className="row" key={index}>
+                <div className="row-part">
                   <ReactSelect
                     value={{
                       label: propertyName,
                       value: propertyName,
                     }}
-                    options={
-                      schemaProps
-                    }
+                    options={schemaProps}
                     onChange={(e) => {
                       if (funnel) {
                         updateStepFilter({
@@ -368,7 +362,7 @@ class Filters extends Component {
                   />
                 </div>
 
-                <div className='row-part'>
+                <div className="row-part">
                   <Select
                     value={{
                       label: propertyType,
@@ -405,7 +399,7 @@ class Filters extends Component {
                   />
                 </div>
 
-                <div className='row-part'>
+                <div className="row-part">
                   <Select
                     value={{
                       label: operator,
@@ -445,15 +439,14 @@ class Filters extends Component {
                   />
                 </div>
 
-                <div className='row-part'>
-                  {
-                    this.renderFilterValue({
-                      item,
-                      step,
-                      operator,
-                      propertyType,
-                      propertyValue,
-                      onChange: (value) => {
+                <div className="row-part">
+                  {this.renderFilterValue({
+                    item,
+                    step,
+                    operator,
+                    propertyType,
+                    propertyValue,
+                    onChange: (value) => {
                       if (funnel) {
                         updateStepFilter({
                           step,
@@ -475,14 +468,12 @@ class Filters extends Component {
                         },
                       });
                     },
-
-                    })
-                  }
+                  })}
                 </div>
 
-                <div className='row-part no-flex'>
+                <div className="row-part no-flex">
                   <a
-                    className='delete'
+                    className="delete"
                     onClick={() => {
                       if (funnel) {
                         deleteStepFilter({
@@ -496,42 +487,36 @@ class Filters extends Component {
                       deleteFilter(index);
                     }}
                   >
-                    <i className='fas fa-times'></i>
+                    <i className="fas fa-times"></i>
                   </a>
                 </div>
-
               </div>
             );
-          })
-        }
+          })}
         </div>
-        <div className='action-buttons'>
-        <div
-          className='button-add-filter'
-          onClick={() => {
-            if (funnel) {
-              addStepFilter({
-                step,
-              });
-              return;
-            }
-            addFilter();
-          }}>
-            <i className='fas fa-plus' /> Add filter
-        </div>
-        <div
-            className='button button-done'
-            onClick={() => this.done()}
+        <div className="action-buttons">
+          <div
+            className="button-add-filter"
+            onClick={() => {
+              if (funnel) {
+                addStepFilter({
+                  step,
+                });
+                return;
+              }
+              addFilter();
+            }}
           >
-            <i className='fas fa-check-circle' />
-            Done</div>
+            <i className="fas fa-plus" /> Add filter
+          </div>
+          <div className="button button-done" onClick={() => this.done()}>
+            <i className="fas fa-check-circle" />
+            Done
+          </div>
+        </div>
       </div>
-      </div>
-    )
+    );
   }
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(Filters);
+export default connect(mapStateToProps, mapDispatchToProps)(Filters);

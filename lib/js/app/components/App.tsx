@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import Select from 'react-select';
@@ -45,10 +46,7 @@ import LoadingSpinner from './explorer/shared/LoadingSpinner';
 
 import { getChartTypeOptions } from '../utils/chartTypes';
 
-import {
-  b64EncodeUnicode,
-  b64DecodeUnicode,
-} from '../utils/base64';
+import { b64EncodeUnicode, b64DecodeUnicode } from '../utils/base64';
 
 import {
   ANALYSIS_TYPES,
@@ -58,7 +56,7 @@ import {
   DEFAULT_STANDARD_INTERVAL,
 } from '../consts';
 
-import { client } from '..';
+import { client } from '../KeenExplorer';
 
 const mapStateToProps = (state, props) => ({
   collections: state.collections,
@@ -95,7 +93,7 @@ class App extends Component {
     };
     const appState = {
       features,
-    }
+    };
     if (localStorage) {
       const { projectId } = props.keenAnalysis.config;
       if (!localStorage.projectId || localStorage.projectId !== projectId) {
@@ -115,7 +113,7 @@ class App extends Component {
     Modal.setAppElement(this.props.container);
 
     if (this.state.isProjectChanged) return;
-    
+
     const url = new URL(window.location.href);
     const searchParams = new URLSearchParams(url.search);
     if (searchParams) {
@@ -177,8 +175,10 @@ class App extends Component {
       eventCollection = steps[0] && steps[0].eventCollection;
     }
 
-    if (prevProps.collections.items.length !== this.props.collections.items.length
-      && !Object.keys(this.props.collections.schemas).length
+    if (
+      prevProps.collections.items.length !==
+        this.props.collections.items.length &&
+      !Object.keys(this.props.collections.schemas).length
     ) {
       fetchSchema({
         eventCollection,
@@ -243,7 +243,7 @@ class App extends Component {
       queryParams = {
         ...queryParams,
         latest,
-        // propertyNames, // API is not set to work with it
+        propertyNames, // API is not set to work with it
       };
 
       if (extractionActiveTab === TAB_EXTRACTION_BULK) {
@@ -268,15 +268,13 @@ class App extends Component {
     };
 
     if (params.analysisType === 'funnel') {
-      const updatedSteps = params.steps.map(step => ({
+      const updatedSteps = params.steps.map((step) => ({
         ...step,
         ...convertFilterValuesToJsonValues(step),
       }));
       params = {
         ...params,
-        steps: [
-          ...updatedSteps,
-        ],
+        steps: [...updatedSteps],
         filters: undefined,
       };
     }
@@ -289,17 +287,9 @@ class App extends Component {
   }
 
   renderFiltersFoldable({ step, funnel } = {}) {
-    const {
-      updateUI,
-    } = this.props;
-    const {
-      modalFilters,
-      steps,
-    } = this.props.ui;
-    let {
-      filters,
-      eventCollection,
-    } = this.props.ui;
+    const { updateUI } = this.props;
+    const { modalFilters, steps } = this.props.ui;
+    let { filters, eventCollection } = this.props.ui;
 
     if (funnel) {
       filters = steps[step].filters;
@@ -316,33 +306,31 @@ class App extends Component {
       <Fragment>
         <div
           onClick={() => {
-          if (!eventCollection) {
-            return;
-          }
-          updateUI({
-            modalFilters: true,
-          });
+            if (!eventCollection) {
+              return;
+            }
+            updateUI({
+              modalFilters: true,
+            });
           }}
-          className='filters foldable'
+          className="filters foldable"
         >
-          <div className='title'>Filters</div>
-          { !!filters.length &&
-          <div className='count'>{filters.length}</div>
-          }
+          <div className="title">Filters</div>
+          {!!filters.length && <div className="count">{filters.length}</div>}
         </div>
         <Modal
           isOpen={modalFilters}
           onRequestClose={() => onCloseModal()}
-          contentLabel=''
+          contentLabel=""
           style={{
             overlay: {
               backgroundColor: 'rgba(0, 0, 0, 0.3)',
             },
           }}
         >
-          <div className='filters-container modal-main'>
-            <div className='header'>
-              <div className='title'>Filters</div>
+          <div className="filters-container modal-main">
+            <div className="header">
+              <div className="title">Filters</div>
             </div>
             <Filters
               funnel={funnel}
@@ -368,11 +356,9 @@ class App extends Component {
       saveStateToLocalStorage,
 
       //UI components
-      components
+      components,
     } = this.props;
-    const {
-      features,
-    } = this.state;
+    const { features } = this.state;
     const {
       activePanel,
       analysisType,
@@ -403,8 +389,10 @@ class App extends Component {
     const chartTypes = getChartTypeOptions(queryParams);
     const hasResults = queries && queries.results;
 
-    let chartTypeSelected = chartTypes.length
-      && { label: chartTypes[0], value: chartTypes[0] };
+    let chartTypeSelected = chartTypes.length && {
+      label: chartTypes[0],
+      value: chartTypes[0],
+    };
 
     if (chartType) {
       chartTypeSelected = { label: chartType, value: chartType };
@@ -412,18 +400,21 @@ class App extends Component {
 
     const chartTypesSorted = chartTypes
       .sort((a, b) => {
-        if (a.toLowerCase() < b.toLowerCase()) { return -1; }
-        if (a.toLowerCase() > b.toLowerCase()) { return 1; }
+        if (a.toLowerCase() < b.toLowerCase()) {
+          return -1;
+        }
+        if (a.toLowerCase() > b.toLowerCase()) {
+          return 1;
+        }
         return 0;
       })
-      .map(item => ({ label: item, value: item }));
+      .map((item) => ({ label: item, value: item }));
 
-    const {
-      readKey,
-      projectId,
-    } = this.props.keenAnalysis.config;
+    const { readKey, projectId } = this.props.keenAnalysis.config;
 
-    const showTargetProperty = !!ANALYSIS_TYPES.find(item => item.type === analysisType).targetProperty;
+    const showTargetProperty = !!ANALYSIS_TYPES.find(
+      (item) => item.type === analysisType
+    ).targetProperty;
 
     return (
       <div className="keen-explorer">
@@ -439,11 +430,11 @@ class App extends Component {
             </div>
             <div
               className={`tab button ${
-                activePanel === PANEL_NEW_QUERY ? "active" : ""
+                activePanel === PANEL_NEW_QUERY ? 'active' : ''
               }`}
               onClick={() =>
                 updateUI({
-                  activePanel: PANEL_NEW_QUERY
+                  activePanel: PANEL_NEW_QUERY,
                 })
               }
             >
@@ -452,11 +443,11 @@ class App extends Component {
             {components.savedQueryBrowser && (
               <div
                 className={`tab button ${
-                  activePanel === PANEL_BROWSE ? "active" : ""
+                  activePanel === PANEL_BROWSE ? 'active' : ''
                 }`}
                 onClick={() =>
                   updateUI({
-                    activePanel: PANEL_BROWSE
+                    activePanel: PANEL_BROWSE,
                   })
                 }
               >
@@ -466,10 +457,10 @@ class App extends Component {
           </div>
           <div
             className={`panel-content ${
-              activePanel !== PANEL_NEW_QUERY ? "hide" : ""
+              activePanel !== PANEL_NEW_QUERY ? 'hide' : ''
             } panel-${analysisType}`}
           >
-            {analysisType !== "funnel" && components.eventCollection && (
+            {analysisType !== 'funnel' && components.eventCollection && (
               <EventCollection
                 saveStateToLocalStorage={
                   saveStateToLocalStorage.eventCollection
@@ -479,13 +470,13 @@ class App extends Component {
 
             {components.previewCollections &&
               previewCollection &&
-              analysisType !== "funnel" && (
+              analysisType !== 'funnel' && (
                 <Fragment>
                   <div
                     className="a-preview-collection"
                     onClick={() => {
                       updateUI({
-                        modalPreviewCollection: true
+                        modalPreviewCollection: true,
                       });
                     }}
                   >
@@ -495,13 +486,13 @@ class App extends Component {
                     isOpen={modalPreviewCollection}
                     onRequestClose={() => {
                       updateUI({
-                        modalPreviewCollection: false
+                        modalPreviewCollection: false,
                       });
                     }}
                     style={{
                       overlay: {
-                        backgroundColor: "rgba(0, 0, 0, 0.3)"
-                      }
+                        backgroundColor: 'rgba(0, 0, 0, 0.3)',
+                      },
                     }}
                   >
                     <div className="modal-main">
@@ -511,7 +502,7 @@ class App extends Component {
                           className="x"
                           onClick={() => {
                             updateUI({
-                              modalPreviewCollection: false
+                              modalPreviewCollection: false,
                             });
                           }}
                         >
@@ -531,13 +522,13 @@ class App extends Component {
                 </div>
                 <Select
                   value={selectedAnalysisType}
-                  options={ANALYSIS_TYPES.map(item => ({
+                  options={ANALYSIS_TYPES.map((item) => ({
                     label: item.type,
-                    value: item.type
+                    value: item.type,
                   }))}
-                  onChange={e => {
+                  onChange={(e) => {
                     updateUI({
-                      analysisType: e.value
+                      analysisType: e.value,
                     });
                   }}
                   theme={getThemeForSelect}
@@ -552,11 +543,11 @@ class App extends Component {
               />
             )}
 
-            {analysisType === "extraction" && eventCollection && <Extraction />}
+            {analysisType === 'extraction' && eventCollection && <Extraction />}
 
-            {analysisType === "percentile" && eventCollection && <Percentile />}
+            {analysisType === 'percentile' && eventCollection && <Percentile />}
 
-            {analysisType === "funnel" && steps && (
+            {analysisType === 'funnel' && steps && (
               <div className="funnel">
                 {steps.map((step, index) => {
                   return (
@@ -566,7 +557,7 @@ class App extends Component {
                       <Timeframe funnel={true} step={index} />
                       {this.renderFiltersFoldable({
                         funnel: true,
-                        step: index
+                        step: index,
                       })}
                     </Step>
                   );
@@ -577,7 +568,7 @@ class App extends Component {
               </div>
             )}
 
-            {analysisType !== "funnel" && (
+            {analysisType !== 'funnel' && (
               <Fragment>
                 {components.timeframe && (
                   <Timeframe componentTimezone={components.timezone} />
@@ -586,7 +577,7 @@ class App extends Component {
               </Fragment>
             )}
 
-            {analysisType !== "extraction" && analysisType !== "funnel" && (
+            {analysisType !== 'extraction' && analysisType !== 'funnel' && (
               <Fragment>
                 {components.groupBy && (
                   <Foldable
@@ -597,7 +588,7 @@ class App extends Component {
                         groupBy: undefined,
                         orderBy: undefined,
                         limit: undefined,
-                        numberOfGroupByProps: 1
+                        numberOfGroupByProps: 1,
                       });
                     }}
                   >
@@ -611,12 +602,12 @@ class App extends Component {
                     defaultActive={!!interval}
                     onOpen={() => {
                       updateUI({
-                        interval: DEFAULT_STANDARD_INTERVAL
+                        interval: DEFAULT_STANDARD_INTERVAL,
                       });
                     }}
                     onClose={() => {
                       updateUI({
-                        interval: undefined
+                        interval: undefined,
                       });
                     }}
                   >
@@ -633,7 +624,7 @@ class App extends Component {
 
           <div
             className={`panel-content panel-saved-queries ${
-              activePanel !== PANEL_BROWSE ? "hide" : ""
+              activePanel !== PANEL_BROWSE ? 'hide' : ''
             }`}
           >
             <SavedQueryBrowser client={client} features={features} />
@@ -646,16 +637,18 @@ class App extends Component {
 
             {hasResults && (
               <div className="preview">
-                {chartType === "JSON" && <JsonView />}
-                {chartType !== "JSON" && (
+                {chartType === 'JSON' && <JsonView />}
+                {chartType !== 'JSON' && (
                   <Fragment>
-                    <Dataviz componentDownloadButton={components.downloadButton} />
+                    <Dataviz
+                      componentDownloadButton={components.downloadButton}
+                    />
                     {components.embedButton && (
                       <button
                         className="button-download button-embed-html"
                         onClick={() => {
                           updateUI({
-                            modalEmbedHTML: true
+                            modalEmbedHTML: true,
                           });
                         }}
                       >
@@ -666,13 +659,13 @@ class App extends Component {
                       isOpen={modalEmbedHTML}
                       onRequestClose={() => {
                         updateUI({
-                          modalEmbedHTML: false
+                          modalEmbedHTML: false,
                         });
                       }}
                       style={{
                         overlay: {
-                          backgroundColor: "rgba(0, 0, 0, 0.3)"
-                        }
+                          backgroundColor: 'rgba(0, 0, 0, 0.3)',
+                        },
                       }}
                     >
                       <div className="modal-main">
@@ -682,7 +675,7 @@ class App extends Component {
                             className="x"
                             onClick={() => {
                               updateUI({
-                                modalEmbedHTML: false
+                                modalEmbedHTML: false,
                               });
                             }}
                           >
@@ -699,9 +692,9 @@ class App extends Component {
                     className="select-chart-type"
                     value={chartTypeSelected}
                     options={chartTypesSorted}
-                    onChange={e => {
+                    onChange={(e) => {
                       updateUI({
-                        chartType: e.value
+                        chartType: e.value,
                       });
                     }}
                     theme={getThemeForSelect}
@@ -722,10 +715,10 @@ class App extends Component {
               >
                 {fetching && <LoadingSpinner />}
                 {!(
-                  analysisType === "extraction" &&
+                  analysisType === 'extraction' &&
                   extractionActiveTab === TAB_EXTRACTION_BULK
                 ) && <Fragment>Run Query</Fragment>}
-                {analysisType === "extraction" &&
+                {analysisType === 'extraction' &&
                   extractionActiveTab === TAB_EXTRACTION_BULK && (
                     <Fragment>Extract to Email</Fragment>
                   )}
@@ -735,7 +728,7 @@ class App extends Component {
                 // && analysisType !== 'extraction' // Saving extraction possible but without propertyNames array
                 <div
                   className={`button-toggle ${
-                    panelSave ? "button-toggle-active" : ""
+                    panelSave ? 'button-toggle-active' : ''
                   }`}
                   onClick={() => togglePanelSave()}
                 >
@@ -752,13 +745,8 @@ class App extends Component {
       </div>
     );
   }
-
 }
 
-App.propTypes = {
-};
+App.propTypes = {};
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);

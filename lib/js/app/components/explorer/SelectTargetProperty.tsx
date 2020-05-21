@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 
@@ -6,7 +7,7 @@ import ReactSelect from './shared/ReactSelect';
 import { getThemeForSelect } from '../../utils/style';
 import { updateUI } from '../../redux/actionCreators/ui';
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   schemas: state.collections.schemas,
   eventCollection: state.ui.eventCollection,
 });
@@ -16,7 +17,6 @@ const mapDispatchToProps = {
 };
 
 class SelectTargetProperty extends Component {
-
   componentWillUnmount() {
     this.props.updateUI({
       targetProperty: undefined,
@@ -35,23 +35,25 @@ class SelectTargetProperty extends Component {
 
     const sortedSchemaProps = Object.keys(schema)
       .sort((a, b) => {
-        if (a.toLowerCase() < b.toLowerCase()) { return -1; }
-        if (a.toLowerCase() > b.toLowerCase()) { return 1; }
+        if (a.toLowerCase() < b.toLowerCase()) {
+          return -1;
+        }
+        if (a.toLowerCase() > b.toLowerCase()) {
+          return 1;
+        }
         return 0;
       })
-      .map(item => ({ label: item, value: item }));
+      .map((item) => ({ label: item, value: item }));
 
     return (
       <Fragment>
-        <div className='label-main'>Target property</div>
+        <div className="label-main">Target property</div>
         <ReactSelect
           value={this.props.value}
           options={sortedSchemaProps}
-          onChange={
-            (value) => {
-              updateUI({ targetProperty: value.value });
-            }
-          }
+          onChange={(value) => {
+            updateUI({ targetProperty: value.value });
+          }}
           theme={getThemeForSelect}
         />
       </Fragment>
@@ -61,5 +63,5 @@ class SelectTargetProperty extends Component {
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(SelectTargetProperty);

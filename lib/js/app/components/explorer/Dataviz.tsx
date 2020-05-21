@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import KeenDataviz from 'keen-dataviz';
@@ -10,7 +11,7 @@ import { exportToJson } from '../../utils/json';
 
 import { TIMEZONES } from '../../consts';
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   results: state.queries.results,
   type: state.ui.chartType,
   queryName: state.ui.savedQuery.name,
@@ -42,19 +43,13 @@ class DatavizComponent extends Component {
       return;
     }
 
-    const {
-      results,
-      type,
-      analysisType,
-      stepLabels,
-      timezone,
-    } = this.props;
+    const { results, type, analysisType, stepLabels, timezone } = this.props;
     if (
-      prevProps.analysisType !== analysisType
-      || prevProps.stepLabels.toString() !== stepLabels.toString()
-      || prevProps.type !== type
-      || prevProps.timezone !== timezone
-      || JSON.stringify(prevProps.results) !== JSON.stringify(results)
+      prevProps.analysisType !== analysisType ||
+      prevProps.stepLabels.toString() !== stepLabels.toString() ||
+      prevProps.type !== type ||
+      prevProps.timezone !== timezone ||
+      JSON.stringify(prevProps.results) !== JSON.stringify(results)
     ) {
       this.generateChart();
     }
@@ -77,13 +72,7 @@ class DatavizComponent extends Component {
   }
 
   generateChart() {
-    const {
-      results,
-      type,
-      analysisType,
-      stepLabels,
-      timezone,
-    } = this.props;
+    const { results, type, analysisType, stepLabels, timezone } = this.props;
 
     if (results) {
       if (typeof results.result === 'string') {
@@ -112,8 +101,9 @@ class DatavizComponent extends Component {
         };
       }
 
-      const timezoneByValue = TIMEZONES.find(item => item.value === timezone);
-      const timezoneString = (timezoneByValue && timezoneByValue.label) || 'UTC';
+      const timezoneByValue = TIMEZONES.find((item) => item.value === timezone);
+      const timezoneString =
+        (timezoneByValue && timezoneByValue.label) || 'UTC';
 
       if (this.dataviz) {
         this.dataviz.destroy();
@@ -128,8 +118,7 @@ class DatavizComponent extends Component {
           results,
           funnel,
           labels, // funnel step labels
-          onrendered: () => {
-          },
+          onrendered: () => {},
           table: {
             mapDates: (value) => {
               return moment
@@ -159,9 +148,12 @@ class DatavizComponent extends Component {
   }
 
   exportToPNG() {
-    return this.dataviz && this.dataviz.exportImage({
-      bgcolor: 'white',
-    });
+    return (
+      this.dataviz &&
+      this.dataviz.exportImage({
+        bgcolor: 'white',
+      })
+    );
   }
 
   render() {
@@ -169,81 +161,73 @@ class DatavizComponent extends Component {
       results,
       modalEmbedHTML,
       modalFilters,
-      componentDownloadButton
+      componentDownloadButton,
     } = this.props;
 
-    const {
-      showDownloadButtons,
-    } = this.state;
+    const { showDownloadButtons } = this.state;
 
     const filename = this.props.queryName || 'untitled-query';
 
-    const resultIsString = (typeof results.result === 'string');
+    const resultIsString = typeof results.result === 'string';
 
     return (
       <Fragment>
-        {
-          !resultIsString &&
+        {!resultIsString && (
           <div
-            className={
-              `keen-dataviz-container ${modalEmbedHTML || modalFilters ? 'hide' : ''}`
-            }
-            id='keen-dataviz-container'
+            className={`keen-dataviz-container ${
+              modalEmbedHTML || modalFilters ? 'hide' : ''
+            }`}
+            id="keen-dataviz-container"
           />
-        }
-        {
-          resultIsString &&
-          <div className={
-            `keen-dataviz-container ${modalEmbedHTML || modalFilters ? 'hide' : ''} result-string`
-          }>
-            <div>{ results.result }</div>
-          </div>
-        }
-
-        {
-          componentDownloadButton &&
-          <div className='download-toggle' ref={this.downloadToggleRef}>
+        )}
+        {resultIsString && (
           <div
-            role='presentation'
-            className='download-toggle-label'
-            onClick={() => {
-              this.setState({
-                showDownloadButtons: !showDownloadButtons,
-              });
-            }}
+            className={`keen-dataviz-container ${
+              modalEmbedHTML || modalFilters ? 'hide' : ''
+            } result-string`}
           >
-            <i className='fas fa-download' />
-            Download
+            <div>{results.result}</div>
           </div>
-          {
-            showDownloadButtons &&
-            <div
-              className='download-buttons'
-            >
-              <button
-                className='button-download button-download-csv'
-                onClick={() => exportToCsv(this.getData(), filename)}
-              >
-                CSV
-              </button>
-              <button
-                className='button-download button-download-json'
-                onClick={() => exportToJson(results, filename)}
-              >
-                JSON
-              </button>
-              <button
-                className='button-download button-download-png'
-                onClick={() => this.exportToPNG()}
-              >
-                PNG
-              </button>
-            </div>
-          }
-          
-        </div>
-        }
+        )}
 
+        {componentDownloadButton && (
+          <div className="download-toggle" ref={this.downloadToggleRef}>
+            <div
+              role="presentation"
+              className="download-toggle-label"
+              onClick={() => {
+                this.setState({
+                  showDownloadButtons: !showDownloadButtons,
+                });
+              }}
+            >
+              <i className="fas fa-download" />
+              Download
+            </div>
+            {showDownloadButtons && (
+              <div className="download-buttons">
+                <button
+                  className="button-download button-download-csv"
+                  onClick={() => exportToCsv(this.getData(), filename)}
+                >
+                  CSV
+                </button>
+                <button
+                  className="button-download button-download-json"
+                  onClick={() => exportToJson(results, filename)}
+                >
+                  JSON
+                </button>
+                <button
+                  className="button-download button-download-png"
+                  onClick={() => this.exportToPNG()}
+                >
+                  PNG
+                </button>
+              </div>
+            )}
+          </div>
+        )}
       </Fragment>
     );
   }
@@ -258,7 +242,4 @@ DatavizComponent.propTypes = {
   modalFilters: PropTypes.bool.isRequired,
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(DatavizComponent);
+export default connect(mapStateToProps, mapDispatchToProps)(DatavizComponent);

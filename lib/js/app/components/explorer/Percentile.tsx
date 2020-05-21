@@ -1,13 +1,12 @@
+// @ts-nocheck
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import { updateUI } from '../../redux/actionCreators/ui';
 
-const mapStateToProps = state => (
-  {
-    percentile: state.ui.percentile,
-  }
-);
+const mapStateToProps = (state) => ({
+  percentile: state.ui.percentile,
+});
 
 const mapDispatchToProps = {
   updateUI,
@@ -21,21 +20,16 @@ class Percentile extends Component {
   }
 
   render() {
-    const {
-      percentile = undefined,
-      updateUI,
-    } = this.props;
+    const { percentile = undefined, updateUI } = this.props;
 
     return (
-      <div className='percentile'>
-        <div className='label-main'>
-          Percentile value
-        </div>
+      <div className="percentile">
+        <div className="label-main">Percentile value</div>
         <input
-          type='number'
-          className='input-text'
+          type="number"
+          className="input-text"
           value={percentile}
-          placeholder='Ex. 33'
+          placeholder="Ex. 33"
           onChange={(e) => {
             let value = parseInt(e.target.value);
             const isNumber = !isNaN(value);
@@ -51,11 +45,8 @@ class Percentile extends Component {
           }}
         />
       </div>
-    )
+    );
   }
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(Percentile);
+export default connect(mapStateToProps, mapDispatchToProps)(Percentile);

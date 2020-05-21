@@ -1,8 +1,9 @@
+// @ts-nocheck
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import ReactJson from 'react-json-view';
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   results: state.queries.results,
 });
 
@@ -13,7 +14,7 @@ class JsonView extends Component {
       <ReactJson
         src={this.props.results}
         style={{
-          'fontFamily': 'inherit',
+          fontFamily: 'inherit',
         }}
         collapsed={true}
         displayDataTypes={false}
@@ -23,7 +24,4 @@ class JsonView extends Component {
   }
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(JsonView);
+export default connect(mapStateToProps, mapDispatchToProps)(JsonView);

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment-timezone';
@@ -6,17 +7,14 @@ import {
   resetResults,
 } from '../../redux/actionCreators/queries';
 
-import {
-  updateUI,
-  updateUISavedQuery,
-} from '../../redux/actionCreators/ui';
+import { updateUI, updateUISavedQuery } from '../../redux/actionCreators/ui';
 
 import {
   fetchSavedQueries,
   deleteQuery,
 } from '../../redux/actionCreators/client';
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   savedQueries: state.queries.saved,
   savedQuery: state.ui.savedQuery,
   timezone: state.ui.timezone,
@@ -60,8 +58,14 @@ class SavedQueryBrowser extends Component {
       // dispatchers
       updateUISavedQuery,
     } = this.props;
-    if (!prevProps.savedQueries.length && savedQueries.length && savedQuery.autoload) {
-      const item = savedQueries.find(item => item.query_name === savedQuery.query_name);
+    if (
+      !prevProps.savedQueries.length &&
+      savedQueries.length &&
+      savedQuery.autoload
+    ) {
+      const item = savedQueries.find(
+        (item) => item.query_name === savedQuery.query_name
+      );
       updateUISavedQuery({ item, schemas: this.props.schemas });
     }
   }
@@ -95,36 +99,40 @@ class SavedQueryBrowser extends Component {
 
     const activeSavedQuery = savedQuery && savedQuery.name;
 
-    const {
-      filter,
-      error,
-    } = this.state;
+    const { filter, error } = this.state;
 
     return (
-      <div className='saved-queries'>
-        { error && <div className='error'>{error}</div>}
+      <div className="saved-queries">
+        {error && <div className="error">{error}</div>}
         <input
-          className='input-filter'
-          placeholder='Search...'
-          type='text'
+          className="input-filter"
+          placeholder="Search..."
+          type="text"
           value={filter}
-          onChange={e => this.updateFilter(e)}
+          onChange={(e) => this.updateFilter(e)}
         />
-        { savedQueries
-          .filter(item => getName(item).toLowerCase().indexOf(filter.toLowerCase()) >= 0)
+        {savedQueries
+          .filter(
+            (item) =>
+              getName(item).toLowerCase().indexOf(filter.toLowerCase()) >= 0
+          )
           .sort((itemA, itemB) => {
             const a = getName(itemA);
             const b = getName(itemB);
-            if (a.toLowerCase() < b.toLowerCase()) { return -1; }
-            if (a.toLowerCase() > b.toLowerCase()) { return 1; }
+            if (a.toLowerCase() < b.toLowerCase()) {
+              return -1;
+            }
+            if (a.toLowerCase() > b.toLowerCase()) {
+              return 1;
+            }
             return 0;
           })
-          .map(item => (
+          .map((item) => (
             <div
               key={item.query_name}
-              className={
-                `item ${activeSavedQuery === item.query_name && 'active'}`
-              }
+              className={`item ${
+                activeSavedQuery === item.query_name && 'active'
+              }`}
               onClick={() => {
                 const { query } = item;
                 resetResults();
@@ -139,34 +147,32 @@ class SavedQueryBrowser extends Component {
                 updateUISavedQuery({ item, schemas: this.props.schemas });
               }}
             >
-              <div className='name'>
-                {getName(item)}
+              <div className="name">{getName(item)}</div>
+              <div className="cached">
+                {!!item.refresh_rate && <span>Cached</span>}
               </div>
-              <div className='cached'>
-                {!!item.refresh_rate &&
-                  <span>Cached</span>
-                }
-              </div>
-              <div className='data'>
-                {moment(item.user_last_modified_date).format('MMMM Do YYYY, h:mm:ss a')} 
+              <div className="data">
+                {moment(item.user_last_modified_date).format(
+                  'MMMM Do YYYY, h:mm:ss a'
+                )}
               </div>
 
-              { features && features.save &&
+              {features && features.save && (
                 <i
-                  onClick={e => this.confirmDeleteQuery({
-                    e,
-                    query_name: item.query_name,
-                  })}
-                  className='fas fa-times button-delete'
+                  onClick={(e) =>
+                    this.confirmDeleteQuery({
+                      e,
+                      query_name: item.query_name,
+                    })
+                  }
+                  className="fas fa-times button-delete"
                 />
-              }
-            </div>))}
+              )}
+            </div>
+          ))}
       </div>
     );
   }
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(SavedQueryBrowser);
+export default connect(mapStateToProps, mapDispatchToProps)(SavedQueryBrowser);

@@ -53,15 +53,15 @@
     margin: 2rem 0 0;
     padding: 1rem;
   }
-  
+
   .label-main{
     padding: 1rem 0 0.3rem;
   }
-  
+
   .hide{
     display: none;
   }
-  
+
   input:focus {
     outline: 2px solid var(--color-link-active);
   }

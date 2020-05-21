@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { Component } from 'react';
 
 export default class Foldable extends Component {
@@ -17,11 +18,7 @@ export default class Foldable extends Component {
   }
 
   onChange() {
-    const {
-      onOpen,
-      onClose,
-      onChange,
-    } = this.props;
+    const { onOpen, onClose, onChange } = this.props;
     const { active } = this.state;
     if (onChange) {
       onChange(active);
@@ -39,26 +36,18 @@ export default class Foldable extends Component {
     const { active } = this.state;
 
     return (
-      <div
-        className={
-          `foldable ${active && 'foldable-active'}`
-        }>
+      <div className={`foldable ${active && 'foldable-active'}`}>
         <div
-          className='title'
-          onClick={ () => {
-             this.setState({ active: !active },
-             () => this.onChange() );
-           } }
-         >
-           <span>{ title }</span>
-           <div className='foldable-icon'>{ active ? '-' : '+' }</div>
-         </div>
-         { active &&
-           <div className='content'>
-            {this.props.children}
-           </div>
-        }
+          className="title"
+          onClick={() => {
+            this.setState({ active: !active }, () => this.onChange());
+          }}
+        >
+          <span>{title}</span>
+          <div className="foldable-icon">{active ? '-' : '+'}</div>
+        </div>
+        {active && <div className="content">{this.props.children}</div>}
       </div>
-    )
+    );
   }
 }

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { createStore, applyMiddleware } from 'redux';
@@ -18,9 +19,10 @@ import App from './components/App';
 
 const sagaMiddleware = createSagaMiddleware();
 const composeEnhancers = composeWithDevTools({});
-const store = createStore(rootReducer, /* preloadedState, */ composeEnhancers(
-  applyMiddleware(sagaMiddleware),
-));
+const store = createStore(
+  rootReducer,
+  /* preloadedState, */ composeEnhancers(applyMiddleware(sagaMiddleware))
+);
 
 sagaMiddleware.run(rootSaga);
 
@@ -41,7 +43,8 @@ export class KeenExplorer {
     client = keenAnalysis.instance || new KeenAnalysis(keenAnalysis.config);
 
     if (keenTracking) {
-      keenTrackingClient = keenTracking.instance || new KeenTracking(keenTracking.config);
+      keenTrackingClient =
+        keenTracking.instance || new KeenTracking(keenTracking.config);
     }
 
     ReactDOM.render(
@@ -53,7 +56,7 @@ export class KeenExplorer {
           }}
         />
       </Provider>,
-      document.querySelector(props.container),
+      document.querySelector(props.container)
     );
   }
 }

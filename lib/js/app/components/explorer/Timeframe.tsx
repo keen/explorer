@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { Component, Fragment } from 'react';
 import Select from 'react-select';
 import moment from 'moment';
@@ -8,10 +9,7 @@ import TimePicker from 'rc-time-picker';
 
 import { getThemeForSelect } from '../../utils/style';
 
-import {
-  updateUI,
-  updateStepUI,
-} from '../../redux/actionCreators/ui';
+import { updateUI, updateStepUI } from '../../redux/actionCreators/ui';
 
 import {
   RELATIVITY_UNITS,
@@ -23,13 +21,11 @@ import {
   TIMEZONES,
 } from '../../consts';
 
-const mapStateToProps = state => (
-  {
-    timeframe: state.ui.timeframe,
-    timezone: state.ui.timezone,
-    steps: state.ui.steps,
-  }
-);
+const mapStateToProps = (state) => ({
+  timeframe: state.ui.timeframe,
+  timezone: state.ui.timezone,
+  steps: state.ui.steps,
+});
 
 const mapDispatchToProps = {
   updateUI,
@@ -38,7 +34,9 @@ const mapDispatchToProps = {
 
 const convertDateToString = (valueSelected) => {
   const value = valueSelected || moment(moment().format('YYYY-MM-DD'));
-  const valueConverted = `${value.format('YYYY-MM-DD')}T${value.format('HH:mm')}:00.000Z`;
+  const valueConverted = `${value.format('YYYY-MM-DD')}T${value.format(
+    'HH:mm'
+  )}:00.000Z`;
   return valueConverted;
 };
 
@@ -49,18 +47,10 @@ class Timeframe extends Component {
   }
 
   renderRelative() {
-    let {
-      timeframe = DEFAULT_TIMEFRAME_RELATIVE_VALUE,
-    } = this.props;
-    const {
-      steps,
-      funnel,
-      step,
-      updateUI,
-      updateStepUI,
-    } = this.props;
+    let { timeframe = DEFAULT_TIMEFRAME_RELATIVE_VALUE } = this.props;
+    const { steps, funnel, step, updateUI, updateStepUI } = this.props;
 
-   // if (typeof timeframe === 'object') return;
+    // if (typeof timeframe === 'object') return;
 
     if (funnel) {
       timeframe = steps[step].timeframe;
@@ -79,8 +69,7 @@ class Timeframe extends Component {
         defaultUnit = 1;
         timeframeUnits = 'days';
       }
-      if (timeframe === 'yesterday'
-      || timeframe === 'previous_day') {
+      if (timeframe === 'yesterday' || timeframe === 'previous_day') {
         defaultRelativity = 'previous';
         defaultUnit = 1;
         timeframeUnits = 'days';
@@ -142,69 +131,59 @@ class Timeframe extends Component {
 
     return (
       <Fragment>
-        <div className='relative'>
+        <div className="relative">
           <Select
             value={{
               label: relativity,
               value: relativity,
             }}
-            options={RELATIVITY_UNITS.map(item => ({ label: item, value: item }))}
+            options={RELATIVITY_UNITS.map((item) => ({
+              label: item,
+              value: item,
+            }))}
             onChange={(selectedRelativity) => {
-                update({
-                  timeframe: `${selectedRelativity.value}_${numberOfUnits}_${units}`,
-                });
+              update({
+                timeframe: `${selectedRelativity.value}_${numberOfUnits}_${units}`,
+              });
             }}
-            className='relativity'
+            className="relativity"
             theme={getThemeForSelect}
           />
           <input
-            type='number'
+            type="number"
             value={numberOfUnits}
             onChange={(e) => {
               update({
                 timeframe: `${relativity}_${e.target.value}_${units}`,
               });
             }}
-            placeholder='Eg. 1'
-            className='input-number'
+            placeholder="Eg. 1"
+            className="input-number"
           />
           <Select
             value={{
               label: units,
               value: units,
             }}
-            options={TIME_UNITS.map(item => ({ label: item, value: item }))}
+            options={TIME_UNITS.map((item) => ({ label: item, value: item }))}
             onChange={(selectedTimeUnits) => {
               update({
                 timeframe: `${relativity}_${numberOfUnits}_${selectedTimeUnits.value}`,
               });
             }}
-            className='units'
+            className="units"
             theme={getThemeForSelect}
           />
         </div>
-        <div className='description'>
-          {description}
-        </div>
+        <div className="description">{description}</div>
       </Fragment>
     );
   }
 
   renderAbsolute() {
-    let {
-      timeframe = DEFAULT_TIMEFRAME_ABSOLUTE_VALUE,
-    } = this.props;
-    const {
-      funnel,
-      step,
-      steps,
-      updateUI,
-      updateStepUI,
-    } = this.props;
-    const {
-      startDateFocused,
-      endDateFocused,
-    } = this.state;
+    let { timeframe = DEFAULT_TIMEFRAME_ABSOLUTE_VALUE } = this.props;
+    const { funnel, step, steps, updateUI, updateStepUI } = this.props;
+    const { startDateFocused, endDateFocused } = this.state;
     const falseFunc = () => false; // https://github.com/airbnb/react-dates/issues/239
 
     if (funnel) {
@@ -213,7 +192,8 @@ class Timeframe extends Component {
 
     const testDate = new Date(Date.UTC(2012, 11, 12, 3, 0, 0));
     const dateString = testDate.toLocaleTimeString();
-    const use12HoursDateFormat = (dateString.match(/am|pm/i) || testDate.toString().match(/am|pm/i));
+    const use12HoursDateFormat =
+      dateString.match(/am|pm/i) || testDate.toString().match(/am|pm/i);
 
     const startDate = moment.utc(timeframe.start);
     const endDate = moment.utc(timeframe.end);
@@ -238,26 +218,32 @@ class Timeframe extends Component {
     };
 
     return (
-      <div className='tabAbsolute'>
-        <div className='line'>
-          <div className='title'>Start</div>
+      <div className="tabAbsolute">
+        <div className="line">
+          <div className="title">Start</div>
           <SingleDatePicker
             date={startDate}
             onDateChange={(valueSelected) => {
               if (!valueSelected) return;
-              const valueSelectedWithTimeReset = moment.utc(valueSelected).startOf('day');
-              const valueConverted = convertDateToString(valueSelectedWithTimeReset);
+              const valueSelectedWithTimeReset = moment
+                .utc(valueSelected)
+                .startOf('day');
+              const valueConverted = convertDateToString(
+                valueSelectedWithTimeReset
+              );
               update({
-                  ...timeframe,
-                  start: valueConverted,
+                ...timeframe,
+                start: valueConverted,
               });
             }}
             focused={startDateFocused}
-            onFocusChange={({ focused }) => this.setState({ startDateFocused: focused })}
+            onFocusChange={({ focused }) =>
+              this.setState({ startDateFocused: focused })
+            }
             isOutsideRange={falseFunc}
-            id='your_unique_id'
+            id="your_unique_id"
             numberOfMonths={1}
-            displayFormat='YYYY-MM-DD'
+            displayFormat="YYYY-MM-DD"
           />
           <TimePicker
             use12Hours={use12HoursDateFormat}
@@ -266,31 +252,37 @@ class Timeframe extends Component {
             onChange={(valueSelected) => {
               const valueConverted = convertDateToString(valueSelected);
               update({
-                  ...timeframe,
-                  start: valueConverted,
+                ...timeframe,
+                start: valueConverted,
               });
             }}
           />
         </div>
-        <div className='line'>
-          <div className='title'>End</div>
+        <div className="line">
+          <div className="title">End</div>
           <SingleDatePicker
             date={endDate}
             onDateChange={(valueSelected) => {
               if (!valueSelected) return;
-              const valueSelectedWithTimeReset = moment.utc(valueSelected).startOf('day');
-              const valueConverted = convertDateToString(valueSelectedWithTimeReset);
+              const valueSelectedWithTimeReset = moment
+                .utc(valueSelected)
+                .startOf('day');
+              const valueConverted = convertDateToString(
+                valueSelectedWithTimeReset
+              );
               update({
-                  ...timeframe,
-                  end: valueConverted,
+                ...timeframe,
+                end: valueConverted,
               });
             }}
             focused={endDateFocused}
-            onFocusChange={({ focused }) => this.setState({ endDateFocused: focused })}
+            onFocusChange={({ focused }) =>
+              this.setState({ endDateFocused: focused })
+            }
             isOutsideRange={falseFunc}
-            id='your_unique_id2'
+            id="your_unique_id2"
             numberOfMonths={1}
-            displayFormat='YYYY-MM-DD'
+            displayFormat="YYYY-MM-DD"
           />
           <TimePicker
             use12Hours={use12HoursDateFormat}
@@ -299,8 +291,8 @@ class Timeframe extends Component {
             onChange={(valueSelected) => {
               const valueConverted = convertDateToString(valueSelected);
               update({
-                  ...timeframe,
-                  end: valueConverted,
+                ...timeframe,
+                end: valueConverted,
               });
             }}
           />
@@ -323,11 +315,7 @@ class Timeframe extends Component {
       updateStepUI,
     } = this.props;
 
-    let {
-      timeframe,
-      timezone,
-      componentTimezone
-    } = this.props;
+    let { timeframe, timezone, componentTimezone } = this.props;
 
     if (funnel) {
       timeframe = steps[step].timeframe;
@@ -344,46 +332,54 @@ class Timeframe extends Component {
       timeframeActiveTab = TAB_TIMEFRAME_ABSOLUTE;
     }
 
-    const timezoneOption = (timezone !== 0 && TIMEZONES.find(item => item.value === timezone)) || {
+    const timezoneOption = (timezone !== 0 &&
+      TIMEZONES.find((item) => item.value === timezone)) || {
       label: 'UTC',
       value: 0,
     };
 
-    const sortedTimezones = TIMEZONES
-      .sort((itemA, itemB) => {
-        const a = itemA.label;
-        const b = itemB.label;
-        if (a.toLowerCase() < b.toLowerCase()) { return -1; }
-        if (a.toLowerCase() > b.toLowerCase()) { return 1; }
-        return 0;
-      });
+    const sortedTimezones = TIMEZONES.sort((itemA, itemB) => {
+      const a = itemA.label;
+      const b = itemB.label;
+      if (a.toLowerCase() < b.toLowerCase()) {
+        return -1;
+      }
+      if (a.toLowerCase() > b.toLowerCase()) {
+        return 1;
+      }
+      return 0;
+    });
 
     return (
       <Fragment>
-        <div className='timeframe'>
-          <div className='label-main'>Timeframe</div>
-          <div className='tabs'>
+        <div className="timeframe">
+          <div className="label-main">Timeframe</div>
+          <div className="tabs">
             <div
-              className={`tab ${timeframeActiveTab === TAB_TIMEFRAME_RELATIVE ? 'active' : ''}`}
+              className={`tab ${
+                timeframeActiveTab === TAB_TIMEFRAME_RELATIVE ? 'active' : ''
+              }`}
               onClick={() => {
-              if (funnel) {
-                updateStepUI({
-                  step,
-                  payload: {
-                    timeframe: DEFAULT_TIMEFRAME_RELATIVE_VALUE,
-                  },
+                if (funnel) {
+                  updateStepUI({
+                    step,
+                    payload: {
+                      timeframe: DEFAULT_TIMEFRAME_RELATIVE_VALUE,
+                    },
+                  });
+                  return;
+                }
+                updateUI({
+                  timeframe: DEFAULT_TIMEFRAME_RELATIVE_VALUE,
                 });
-                return;
-              }
-              updateUI({
-                timeframe: DEFAULT_TIMEFRAME_RELATIVE_VALUE,
-              });
-            }}
+              }}
             >
               Relative
             </div>
             <div
-              className={`tab ${timeframeActiveTab === TAB_TIMEFRAME_ABSOLUTE ? 'active' : ''}`}
+              className={`tab ${
+                timeframeActiveTab === TAB_TIMEFRAME_ABSOLUTE ? 'active' : ''
+              }`}
               onClick={() => {
                 if (funnel) {
                   updateStepUI({
@@ -394,55 +390,51 @@ class Timeframe extends Component {
                   });
                   return;
                 }
-          
+
                 updateUI({
                   timeframe: {
                     ...DEFAULT_TIMEFRAME_ABSOLUTE_VALUE,
                   },
-              });
-            }}
+                });
+              }}
             >
               Absolute
             </div>
           </div>
-          <div
-            className='tab-content'
-          >
-            { timeframeActiveTab === TAB_TIMEFRAME_RELATIVE && this.renderRelative() }
-            { timeframeActiveTab === TAB_TIMEFRAME_ABSOLUTE && this.renderAbsolute() }
+          <div className="tab-content">
+            {timeframeActiveTab === TAB_TIMEFRAME_RELATIVE &&
+              this.renderRelative()}
+            {timeframeActiveTab === TAB_TIMEFRAME_ABSOLUTE &&
+              this.renderAbsolute()}
           </div>
         </div>
-        {
-          componentTimezone &&
+        {componentTimezone && (
           <Select
-          value={{
-            label: `Timezone: ${timezoneOption.label}`,
-            value: timezoneOption.value,
-          }}
-          options={sortedTimezones}
-          onChange={(e) => {
-            localStorage.setItem('timezone', e.value);
-            updateUI({
-              timezone: e.value,
-            });
-            if (funnel) {
-              updateStepUI({
-                step,
-                payload: {
-                  timezone: e.value,
-                },
+            value={{
+              label: `Timezone: ${timezoneOption.label}`,
+              value: timezoneOption.value,
+            }}
+            options={sortedTimezones}
+            onChange={(e) => {
+              localStorage.setItem('timezone', e.value);
+              updateUI({
+                timezone: e.value,
               });
-            }
-          }}
-          theme={getThemeForSelect}
-        />
-        }
+              if (funnel) {
+                updateStepUI({
+                  step,
+                  payload: {
+                    timezone: e.value,
+                  },
+                });
+              }
+            }}
+            theme={getThemeForSelect}
+          />
+        )}
       </Fragment>
     );
   }
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(Timeframe);
+export default connect(mapStateToProps, mapDispatchToProps)(Timeframe);
