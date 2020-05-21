@@ -46,7 +46,7 @@ import SaveQuery from './SaveQuery';
 
 import LoadingSpinner from './explorer/shared/LoadingSpinner';
 
-import { getChartTypeOptions } from '../utils/chartTypes';
+import { getChartTypeOptions } from '../utils/ChartTypes';
 
 import { b64EncodeUnicode, b64DecodeUnicode } from '../utils/base64';
 
@@ -741,6 +741,7 @@ class App extends Component {
               {features.save && panelSave && (
                 <>
                   <SavedQuery client={client} queryParams={queryParams} />
+                  <SaveQuery />
                 </>
               )}
             </div>
