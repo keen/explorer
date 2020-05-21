@@ -46,7 +46,7 @@ import SaveQuery from './SaveQuery';
 
 import LoadingSpinner from './explorer/shared/LoadingSpinner';
 
-import { getChartTypeOptions } from '../utils/ChartTypes';
+import { getChartTypeOptions } from '../utils/charts';
 
 import { b64EncodeUnicode, b64DecodeUnicode } from '../utils/base64';
 
