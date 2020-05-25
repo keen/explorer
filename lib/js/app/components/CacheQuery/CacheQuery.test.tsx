@@ -1,7 +1,8 @@
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 
 import CacheQuery from './CacheQuery';
+import text from './text.json';
 
 test('calls "onCacheChange" handler', () => {
   const mockFn = jest.fn();
@@ -18,6 +19,37 @@ test('calls "onCacheChange" handler', () => {
   fireEvent.click(checkbox);
 
   expect(mockFn).toHaveBeenCalled();
+});
+
+test('shows cache limit reached information', () => {
+  const mockFn = jest.fn();
+  render(
+    <CacheQuery
+      onCacheChange={mockFn}
+      onRefreshRateChange={jest.fn()}
+      isLimited={true}
+      isCached={true}
+    />
+  );
+
+  expect(screen.getByText('Cached queries limit')).toBeInTheDocument();
+});
+
+test('shows tooltip with cache limit information', () => {
+  const mockFn = jest.fn();
+  const { container } = render(
+    <CacheQuery
+      onCacheChange={mockFn}
+      onRefreshRateChange={jest.fn()}
+      isLimited={true}
+      isCached={true}
+    />
+  );
+
+  const cacheInformation = container.querySelector('[data-test="cache-limit"]');
+  fireEvent.mouseEnter(cacheInformation);
+
+  expect(screen.getByText(text.limitReachedMessage)).toBeInTheDocument();
 });
 
 test('shows refresh settings when caching is enabled', () => {
