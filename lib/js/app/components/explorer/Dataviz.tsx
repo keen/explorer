@@ -9,12 +9,14 @@ import PropTypes from 'prop-types';
 import { exportToCsv } from '../../utils/csv';
 import { exportToJson } from '../../utils/json';
 
+import { getSavedQueryName } from '../../modules/savedQuery';
+
 import { TIMEZONES } from '../../consts';
 
 const mapStateToProps = (state) => ({
   results: state.queries.results,
   type: state.ui.chartType,
-  queryName: state.ui.savedQuery.name,
+  queryName: getSavedQueryName(state),
   modalEmbedHTML: state.ui.modalEmbedHTML,
   modalFilters: state.ui.modalFilters,
   analysisType: state.ui.analysisType,

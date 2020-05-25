@@ -51,12 +51,12 @@ export class KeenExplorer {
     ReactDOM.render(
       <Provider store={store}>
         <AppContext.Provider value={{ keenAnalysis: client }}>
-        <App
-          {...{
-            ...defaultConfig,
-            ...props,
-          }}
-        />
+          <App
+            {...{
+              ...defaultConfig,
+              ...props,
+            }}
+          />
         </AppContext.Provider>
       </Provider>,
       document.querySelector(props.container)

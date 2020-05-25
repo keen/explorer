@@ -13,7 +13,7 @@
   "scripts": {
     "start": "concurrently --kill-others \"NODE_ENV=development webpack-dev-server\" \"npm run postcss-watch\"",
     "postcss-watch": "node_modules/postcss-cli/bin/postcss lib/css/index.css -o test/demo/keen-explorer.css --watch --config postcss.config.js",
-    "test": "NODE_ENV=test jest",
+    "test": "jest",
     "test:watch": "NODE_ENV=test jest --watch",
     "build": "NODE_ENV=production webpack --config webpack.config.prod.js -p && npm run build:bundle && npm run build:css && npm run build:css:min",
     "build:bundle": "NODE_ENV=production BUNDLE=1 webpack --config webpack.config.prod.js -p && NODE_ENV=production OPTIMIZE_MINIMIZE=1 BUNDLE=1 webpack --config webpack.config.prod.js -p ",
@@ -26,20 +26,16 @@
     "release": "standard-version",
     "commit": "npx git-cz"
   },
-  "jest": {
-    "snapshotSerializers": [
-      "enzyme-to-json/serializer"
-    ],
-    "setupFiles": [
-      "<rootDir>/jestSetup.js"
-    ]
-  },
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
   },
   "dependencies": {
+    "@keen.io/colors": "^0.1.2",
+    "@keen.io/forms": "^0.3.5",
+    "@keen.io/icons": "^0.4.0",
+    "@keen.io/ui-core": "^0.15.1",
     "@types/react-dom": "^16.9.8",
     "classnames": "2.1.2",
     "core-js": "^3.6.5",
@@ -61,12 +57,13 @@
     "react-highlight": "^0.9.0",
     "react-json-view": "^1.19.1",
     "react-modal": "^3.8.1",
-    "react-redux": "^6.0.0",
+    "react-redux": "^7.2.0",
     "react-select": "^3.0.4",
     "redux": "^4.0.1",
     "redux-devtools-extension": "^2.13.7",
     "redux-saga": "^1.0.0",
-    "string": "^2.0.1"
+    "string": "^2.0.1",
+    "styled-components": "^5.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.4.3",
@@ -74,7 +71,12 @@
     "@babel/preset-env": "^7.4.3",
     "@babel/preset-react": "^7.0.0",
     "@babel/preset-typescript": "^7.9.0",
+    "@testing-library/jest-dom": "^5.8.0",
+    "@testing-library/react": "^10.0.4",
+    "@types/jest": "^25.2.3",
     "@types/react": "^16.9.35",
+    "@types/react-redux": "^7.1.9",
+    "@types/styled-components": "^5.1.0",
     "@typescript-eslint/eslint-plugin": "^2.34.0",
     "@typescript-eslint/parser": "^2.34.0",
     "autoprefixer": "^8.2.0",
@@ -103,8 +105,9 @@
     "html-loader": "^0.5.5",
     "html-webpack-plugin": "^4.3.0",
     "imports-loader": "^0.8.0",
-    "jest": "^22.4.3",
+    "jest": "^26.0.1",
     "jest-environment-jsdom-c3": "^2.0.0",
+    "jest-environment-jsdom-sixteen": "^1.0.3",
     "jest-fetch-mock": "^2.1.2",
     "nock": "^9.2.6",
     "postcss": "^6.0.23",
@@ -119,12 +122,14 @@
     "react-addons-test-utils": "^15.6.2",
     "react-test-renderer": "^15.6.2",
     "redux-devtools": "^3.5.0",
+    "redux-saga-testing": "^2.0.0",
     "regenerator-runtime": "^0.13.5",
     "replace-in-file": "^3.4.0",
     "run-sequence": "~1.0.1",
     "standard-version": "^7.0.1",
     "stringify": "~3.0.0",
     "style-loader": "^0.20.3",
+    "ts-jest": "^26.0.0",
     "ts-loader": "^7.0.4",
     "typescript": "^3.9.3",
     "webpack": "^4.43.0",

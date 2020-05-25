@@ -9,6 +9,8 @@ import {
 
 import { updateUI, updateUISavedQuery } from '../../redux/actionCreators/ui';
 
+import { selectSavedQuery } from '../../modules/savedQuery';
+
 import {
   fetchSavedQueries,
   deleteQuery,
@@ -16,7 +18,7 @@ import {
 
 const mapStateToProps = (state) => ({
   savedQueries: state.queries.saved,
-  savedQuery: state.ui.savedQuery,
+  savedQuery: state.savedQuery,
   timezone: state.ui.timezone,
   schemas: state.collections.schemas,
 });
@@ -28,6 +30,7 @@ const mapDispatchToProps = {
   fetchSavedQueries,
   resetResults,
   deleteQuery,
+  selectSavedQuery,
 };
 
 const getName = (item) => {
@@ -94,6 +97,7 @@ class SavedQueryBrowser extends Component {
       // dispatchers
       updateUI,
       updateUISavedQuery,
+      selectSavedQuery,
       resetResults,
     } = this.props;
 
@@ -144,6 +148,7 @@ class SavedQueryBrowser extends Component {
                   });
                   return;
                 }
+                selectSavedQuery(item.query_name);
                 updateUISavedQuery({ item, schemas: this.props.schemas });
               }}
             >

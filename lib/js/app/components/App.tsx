@@ -12,6 +12,8 @@ import SelectTargetProperty from './explorer/SelectTargetProperty';
 import {
   fetchProject,
   fetchSchema,
+  saveQuery,
+  deleteQuery,
   query,
 } from '../redux/actionCreators/client';
 
@@ -22,6 +24,10 @@ import {
   togglePanelSave,
   addStep,
 } from '../redux/actionCreators/ui';
+
+import { createNewQuery } from '../modules/queries';
+import { resetSavedQuery } from '../modules/savedQuery';
+import { persistState, loadPersitedState } from '../modules/app';
 
 import EventCollection from './explorer/EventCollection';
 import PreviewCollection from './explorer/PreviewCollection';
@@ -34,7 +40,6 @@ import Interval from './explorer/Interval';
 import APIQueryURL from './explorer/APIQueryURL';
 import Step from './explorer/Step';
 import ActorProperty from './explorer/ActorProperty';
-import SavedQuery from './explorer/SavedQuery';
 import SavedQueryBrowser from './explorer/SavedQueryBrowser';
 
 import Dataviz from './explorer/Dataviz';
@@ -42,13 +47,13 @@ import JsonView from './explorer/JsonView';
 import Foldable from './explorer/Foldable';
 import EmbedHTML from './explorer/EmbedHTML';
 
-import SaveQuery from './SaveQuery';
+import QuerySettings from './QuerySettings';
 
 import LoadingSpinner from './explorer/shared/LoadingSpinner';
 
 import { getChartTypeOptions } from '../utils/charts';
 
-import { b64EncodeUnicode, b64DecodeUnicode } from '../utils/base64';
+import { composeQueryParams } from '../utils/transforms';
 
 import {
   ANALYSIS_TYPES,
@@ -64,6 +69,7 @@ const mapStateToProps = (state, props) => ({
   collections: state.collections,
   queries: state.queries,
   ui: state.ui,
+  savedQuery: state.savedQuery,
   steps: state.ui.steps,
   components: {
     ...state.ui.components,
@@ -74,6 +80,12 @@ const mapStateToProps = (state, props) => ({
 const mapDispatchToProps = {
   fetchProject,
   fetchSchema,
+  saveQuery,
+  deleteQuery,
+  persistState,
+  loadPersitedState,
+  resetSavedQuery,
+  createNewQuery,
   query,
   updateUI,
   updateStepUI,
@@ -115,59 +127,21 @@ class App extends Component {
     Modal.setAppElement(this.props.container);
 
     if (this.state.isProjectChanged) return;
-
-    const url = new URL(window.location.href);
-    const searchParams = new URLSearchParams(url.search);
-    if (searchParams) {
-      const UIencodedState = searchParams.get('state');
-      const savedQueryName = searchParams.get('saved_query');
-      if (UIencodedState) {
-        const preloadState = JSON.parse(b64DecodeUnicode(UIencodedState));
-        if (preloadState.analysisType !== 'extraction') {
-          // don't autoload extractions
-          preloadState.autoload = true;
-        }
-        this.props.updateUI(preloadState);
-      }
-      if (savedQueryName) {
-        this.props.updateUI({
-          savedQuery: {
-            query_name: savedQueryName,
-            autoload: true,
-          },
-          activePanel: 1,
-        });
-      }
-    }
+    this.props.loadPersitedState();
   }
 
   componentDidUpdate(prevProps) {
-    const {
-      // state
-      ui,
+    const { ui, fetchSchema } = this.props;
 
-      // dispatchers
-      fetchSchema,
-    } = this.props;
-    const UIencodedState = b64EncodeUnicode(JSON.stringify(ui));
-    const url = new URL(window.location.href);
-    const query_string = url.search;
-    const search_params = new URLSearchParams(query_string);
-    const UIencodedStateOld = search_params.get('state');
-    if (UIencodedState !== UIencodedStateOld) {
-      search_params.set('state', UIencodedState);
-      search_params.delete('saved_query');
-      url.search = search_params.toString();
-      history.pushState({}, '', url.toString());
-    }
+    this.props.persistState();
 
     const {
       autoload,
-      savedQuery,
 
       analysisType,
       steps,
     } = this.props.ui;
+    const { savedQuery } = this.props;
     let {
       // ui state
       eventCollection,
@@ -425,6 +399,8 @@ class App extends Component {
             <div
               className="tab button button-new-query"
               onClick={() => {
+                this.props.createNewQuery();
+                this.props.resetSavedQuery();
                 resetUI();
               }}
             >
@@ -739,10 +715,34 @@ class App extends Component {
               )}
 
               {features.save && panelSave && (
-                <>
-                  <SavedQuery client={client} queryParams={queryParams} />
-                  <SaveQuery />
-                </>
+                <QuerySettings
+                  onDelete={(name) => {
+                    this.props.deleteQuery({ name });
+                  }}
+                  onSave={(name, refreshRate) => {
+                    const params = composeQueryParams(
+                      this.props.ui.analysisType,
+                      queryParams
+                    );
+
+                    const body = {
+                      query: convertFilterValuesToJsonValues(params),
+                      metadata: {
+                        displayName: name,
+                        visualization: {
+                          chartType: this.props.ui.chartType,
+                          stepLabels: this.props.ui.stepLabels || [],
+                        },
+                      },
+                      refreshRate: refreshRate * 60 * 60,
+                    };
+
+                    this.props.saveQuery({
+                      name,
+                      body,
+                    });
+                  }}
+                />
               )}
             </div>
           </div>

@@ -44,12 +44,17 @@
   @import "./components/previewCollection.css";
   @import "./components/preview.css";
 
-  * {
+  /* * {
     box-sizing: border-box;
     font-size: var(--font-size);
   }
 
   button{
+    margin: 2rem 0 0;
+    padding: 1rem;
+  } */
+
+  .button-download {
     margin: 2rem 0 0;
     padding: 1rem;
   }

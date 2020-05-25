@@ -59,6 +59,9 @@ jobs:
           name: Lint
           command: npm run lint
       - run:
+          name: Unit Tests
+          command: npm run test          
+      - run:
           name: Build
           command: npm run build
       - persist_to_workspace:

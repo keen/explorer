@@ -2096,25 +2096,17 @@ li.rc-time-picker-panel-select-option-disabled:hover {
     height: min-content;
   }
 
-.keen-explorer * {
+/* * {
     box-sizing: border-box;
-    font-size: 0.875rem;
-    font-size: 0.875rem;
-}
+    font-size: var(--font-size);
+  }
 
-.ReactModalPortal * {
-    box-sizing: border-box;
-    font-size: 0.875rem;
-    font-size: 0.875rem;
-}
+  button{
+    margin: 2rem 0 0;
+    padding: 1rem;
+  } */
 
-.rc-time-picker-panel * {
-    box-sizing: border-box;
-    font-size: 0.875rem;
-    font-size: 0.875rem;
-}
-
-.keen-explorer button,.ReactModalPortal button,.rc-time-picker-panel button{
+.keen-explorer .button-download, .ReactModalPortal .button-download, .rc-time-picker-panel .button-download {
     margin: 2rem 0 0;
     padding: 1rem;
 }
