@@ -27,7 +27,7 @@ describe('persistState() - equal states', () => {
   windowSpy.mockImplementation(() => ({
     location: {
       href: `http://keen-explorer.io?${URL_STATE}=${persistedState}`,
-    },
+    } as any,
   }));
 
   it('should get query creator state', (result) => {
@@ -63,7 +63,7 @@ describe('loadPersitedState()', () => {
   windowSpy.mockImplementation(() => ({
     location: {
       href: `http://keen-explorer.io?${URL_STATE}=${persistedState}`,
-    },
+    } as any,
   }));
 
   it('should dispatch action to update query creator', (result) => {
