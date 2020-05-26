@@ -24,10 +24,11 @@ describe('persistState() - equal states', () => {
 
   const persistedState = b64EncodeUnicode(JSON.stringify(storeState));
 
+  // @ts-ignore
   windowSpy.mockImplementation(() => ({
     location: {
       href: `http://keen-explorer.io?${URL_STATE}=${persistedState}`,
-    } as Location,
+    },
   }));
 
   it('should get query creator state', (result) => {
@@ -60,10 +61,11 @@ describe('loadPersitedState()', () => {
 
   const persistedState = b64EncodeUnicode(JSON.stringify(storeState));
 
+  // @ts-ignore
   windowSpy.mockImplementation(() => ({
     location: {
       href: `http://keen-explorer.io?${URL_STATE}=${persistedState}`,
-    } as Location,
+    },
   }));
 
   it('should dispatch action to update query creator', (result) => {
