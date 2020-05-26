@@ -1763,6 +1763,7 @@ li.rc-time-picker-panel-select-option-disabled:hover {
     border: 1px solid #ccc;
     margin: .5rem 0;
     border-radius: 0.3rem;
+    box-sizing: border-box;
   }
 
 .keen-explorer .saved-queries .item{
@@ -1966,6 +1967,7 @@ li.rc-time-picker-panel-select-option-disabled:hover {
     border: 1px solid #ccc;
     margin: .5rem 0;
     border-radius: 0.3rem;
+    box-sizing: border-box;
   }
 
 .keen-explorer .preview-collection-content .list, .ReactModalPortal .preview-collection-content .list, .rc-time-picker-panel .preview-collection-content .list {

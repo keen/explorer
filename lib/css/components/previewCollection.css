@@ -20,6 +20,7 @@
     border: 1px solid #ccc;
     margin: .5rem 0;
     border-radius: 0.3rem;
+    box-sizing: border-box;
   }
   .list {
     height: 100%;

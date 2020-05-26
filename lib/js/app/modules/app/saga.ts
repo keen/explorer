@@ -21,7 +21,7 @@ export function* loadPersitedState() {
   if (searchParams) {
     const persistedState = searchParams.get(URL_STATE);
 
-    if (persistState) {
+    if (persistedState) {
       const { userInterface, savedQuery } = JSON.parse(
         b64DecodeUnicode(persistedState)
       );

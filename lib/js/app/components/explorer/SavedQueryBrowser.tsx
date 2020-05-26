@@ -79,15 +79,6 @@ class SavedQueryBrowser extends Component {
     });
   }
 
-  confirmDeleteQuery({ e, query_name }) {
-    e.stopPropagation();
-    if (confirm(`Delete query "${query_name}"?`)) {
-      this.props.deleteQuery({
-        name: query_name,
-      });
-    }
-  }
-
   render() {
     const {
       features,
@@ -164,12 +155,12 @@ class SavedQueryBrowser extends Component {
 
               {features && features.save && (
                 <i
-                  onClick={(e) =>
-                    this.confirmDeleteQuery({
-                      e,
-                      query_name: item.query_name,
-                    })
-                  }
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    this.props.deleteQuery({
+                      name: item.query_name,
+                    });
+                  }}
                   className="fas fa-times button-delete"
                 />
               )}

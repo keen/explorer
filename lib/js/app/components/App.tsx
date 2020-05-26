@@ -48,6 +48,7 @@ import Foldable from './explorer/Foldable';
 import EmbedHTML from './explorer/EmbedHTML';
 
 import QuerySettings from './QuerySettings';
+import Confirm from './Confirm';
 
 import LoadingSpinner from './explorer/shared/LoadingSpinner';
 
@@ -747,6 +748,7 @@ class App extends Component {
             </div>
           </div>
         )}
+        <Confirm />
       </div>
     );
   }

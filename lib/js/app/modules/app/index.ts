@@ -1,4 +1,25 @@
 import { appSaga } from './saga';
-import { persistState, loadPersitedState } from './actions';
+import { appReducer } from './reducer';
+import {
+  showConfirmation,
+  hideConfirmation,
+  acceptConfirmation,
+  persistState,
+  loadPersitedState,
+} from './actions';
+import { getConfirmation } from './selectors';
+import { HIDE_CONFIRMATION, ACCEPT_CONFIRMATION } from './constants';
+import { ReducerState } from './types';
 
-export { appSaga, persistState, loadPersitedState };
+export {
+  appReducer,
+  appSaga,
+  showConfirmation,
+  hideConfirmation,
+  acceptConfirmation,
+  persistState,
+  loadPersitedState,
+  getConfirmation,
+  ReducerState,
+};
+export { HIDE_CONFIRMATION, ACCEPT_CONFIRMATION };
