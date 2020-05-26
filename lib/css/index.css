@@ -37,22 +37,12 @@
   @import "./components/percentile.css";
   @import "./components/filters.css";
   @import "./components/modal.css";
-  @import "./components/savedQuery.css";
   @import "./components/savedQueries.css";
   @import "./components/funnel.css";
   @import "./components/dataviz.css";
   @import "./components/previewCollection.css";
   @import "./components/preview.css";
 
-  /* * {
-    box-sizing: border-box;
-    font-size: var(--font-size);
-  }
-
-  button{
-    margin: 2rem 0 0;
-    padding: 1rem;
-  } */
 
   .button-download {
     margin: 2rem 0 0;

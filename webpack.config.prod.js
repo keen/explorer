@@ -30,4 +30,8 @@ module.exports = merge(commonConfig, {
   optimization: {
      minimize: !!process.env.OPTIMIZE_MINIMIZE,
    },
+
+   plugins: [
+     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+  ]
 });
