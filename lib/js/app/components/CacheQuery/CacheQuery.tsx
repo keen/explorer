@@ -1,12 +1,13 @@
 import React, { FC, useMemo, useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
-import { Checkbox, Label, Select, Tooltip } from '@keen.io/ui-core';
+import { Checkbox, Select, Tooltip } from '@keen.io/ui-core';
 import { Icon } from '@keen.io/icons';
 import { colors } from '@keen.io/colors';
-import { FieldGroup } from '@keen.io/forms';
 
 import {
-  CacheLabel,
+  Container,
+  CacheSwitch,
+  Label,
   CacheLimit,
   RefreshSettings,
   LimitReached,
@@ -65,15 +66,28 @@ const CacheQuery: FC<Props> = ({
   );
 
   return (
-    <div>
-      <CacheLabel htmlFor={CHECKBOX_ID} disabled={isLimited && !isCached}>
+    <Container>
+      <CacheSwitch htmlFor={CHECKBOX_ID} disabled={isLimited && !isCached}>
         <Checkbox
           id={CHECKBOX_ID}
           checked={isCached}
           onChange={() => onCacheChange(!isCached)}
         />
-        Cache
-      </CacheLabel>
+        <Label>Cache</Label>
+      </CacheSwitch>
+      {isCached && (
+        <RefreshSettings data-test="refresh-settings">
+            <div>{text.refreshInterval}</div>
+            <Select
+              placeholder={text.refreshRatePlaceholder}
+              value={refreshRate && { label: refreshRate, value: refreshRate }}
+              onChange={({ value }: { value: number }) =>
+                onRefreshRateChange(value)
+              }
+              options={refreshRates}
+            />
+        </RefreshSettings>
+      )}
       {isLimited && (
         <CacheLimit>
           {text.queriesLimit}
@@ -98,22 +112,7 @@ const CacheQuery: FC<Props> = ({
           </LimitReached>
         </CacheLimit>
       )}
-      {isCached && (
-        <RefreshSettings data-test="refresh-settings">
-          <FieldGroup>
-            <Label>{text.refreshInterval}</Label>
-            <Select
-              placeholder={text.refreshRatePlaceholder}
-              value={refreshRate && { label: refreshRate, value: refreshRate }}
-              onChange={({ value }: { value: number }) =>
-                onRefreshRateChange(value)
-              }
-              options={refreshRates}
-            />
-          </FieldGroup>
-        </RefreshSettings>
-      )}
-    </div>
+    </Container>
   );
 };
 

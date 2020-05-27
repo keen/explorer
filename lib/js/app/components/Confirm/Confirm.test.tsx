@@ -73,9 +73,7 @@ test('allows user to close modal by clicking "cancel" label', () => {
     },
   };
 
-  const {
-    store,
-  } = render(storeState);
+  const { store } = render(storeState);
   const close = screen.getByText('Cancel');
 
   fireEvent.click(close);

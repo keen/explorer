@@ -2,15 +2,35 @@ import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import { colors } from '@keen.io/colors';
 
-export const CacheLabel = styled.label<{
+export const Container = styled.div`
+  display: flex;
+  height: 40px;
+`;
+
+export const CacheSwitch = styled.label<{
   disabled: boolean;
 }>`
+  display: flex;
+  align-items: center;
+  margin-right: 5px;
+
+  font-size: 14px;
+  font-family: 'Lato Regular', sans-serif;
   color: ${(props) =>
-    props.disabled ? colors.gray['500'] : colors.blue['500']};
+    props.disabled ? colors.gray['500'] : colors.black['500']};
+`;
+
+export const Label = styled.div`
+  margin-left: 5px;
 `;
 
 export const RefreshSettings = styled.div`
-  max-width: 240px;
+  display: flex;
+  align-items: center;
+
+  font-size: 14px;
+  font-family: 'Lato Regular', sans-serif;
+  color: ${colors.black['500']};
 `;
 
 export const LimitReached = styled.div`

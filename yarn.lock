@@ -1237,6 +1237,11 @@
   resolved "https://registry.yarnpkg.com/@keen.io/colors/-/colors-0.1.2.tgz#f2dc9d9f3685756ceee0aad3bb135d85fa3d7166"
   integrity sha512-t1CRi5ZiFi7sc2nqSFFpbSIzrn9GV14M9MS1vO/1Z1ue/S2B3zYoYNZ6C5MLpSnMahxp1ImAuoB5FRNOTQSvZg==
 
+"@keen.io/colors@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@keen.io/colors/-/colors-0.2.0.tgz#664410305fb097308e0303c4fcce33a971a50995"
+  integrity sha512-i0z4ZXy91oeJXlhT5Gx7Kpsin0z1CNRi/FnKLs4udg+XdptSWXdv9ltVf2Un7ACzSufTIBHPcEeff3cYzRW0pg==
+
 "@keen.io/forms@^0.3.5":
   version "0.3.5"
   resolved "https://registry.yarnpkg.com/@keen.io/forms/-/forms-0.3.5.tgz#3b42816bc72f2abdf8f124572edb755c5bee399c"
@@ -1268,6 +1273,14 @@
     "@keen.io/colors" "^0.1.2"
     react "^16.12.0"
 
+"@keen.io/icons@^0.4.2":
+  version "0.4.2"
+  resolved "https://registry.yarnpkg.com/@keen.io/icons/-/icons-0.4.2.tgz#e408a308036842f348c16e2c550216342eeaa200"
+  integrity sha512-MqmZm5PUhU9UrXEyXVMSRIPm5qLiIevTqPZkxx/mOG1RxFh950x/PPV0LXSrb9ldbvJ14VXVMxQJuunCSec87w==
+  dependencies:
+    "@keen.io/colors" "^0.2.0"
+    react "^16.12.0"
+
 "@keen.io/ui-core@^0.15.1":
   version "0.15.1"
   resolved "https://registry.yarnpkg.com/@keen.io/ui-core/-/ui-core-0.15.1.tgz#0dd49cb55785014fb6dc2f7da4eb3ebbdc55867e"
@@ -1275,6 +1288,23 @@
   dependencies:
     "@keen.io/colors" "^0.1.2"
     "@keen.io/icons" "^0.4.1"
+    color "^3.1.2"
+    framer-motion "^1.10.3"
+    polished "^3.4.4"
+    react "^16.12.0"
+    react-dom "^16.12.0"
+    react-select "^3.1.0"
+    styled-components "5.1.0"
+    styled-system "5.1.5"
+    webfontloader "^1.6.28"
+
+"@keen.io/ui-core@^0.16.0":
+  version "0.16.0"
+  resolved "https://registry.yarnpkg.com/@keen.io/ui-core/-/ui-core-0.16.0.tgz#41906a32662d35cbbd39a0d2360246300c955e46"
+  integrity sha512-71LrVo/SFqEHLTPI7mz/XcRDMqgYYtl8sDLbDXANSEH9nEI3Frf+uJSkuonFwMKZoAHcjw/t9NiOo0xbM6DnmQ==
+  dependencies:
+    "@keen.io/colors" "^0.2.0"
+    "@keen.io/icons" "^0.4.2"
     color "^3.1.2"
     framer-motion "^1.10.3"
     polished "^3.4.4"

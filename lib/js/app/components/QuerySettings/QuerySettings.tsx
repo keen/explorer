@@ -2,9 +2,10 @@ import React, { FC, useCallback, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Alert, Button, Input } from '@keen.io/ui-core';
 
-import { Container, ButtonGroup } from './QuerySettings.styles';
+import { Container, Title, Settings, QueryName, Actions } from './QuerySettings.styles';
 
 import CacheQuery, { REFRESH_MINIMUM } from '../CacheQuery';
+import Label from '../Label';
 import SaveQuery from '../SaveQuery';
 
 import {
@@ -14,6 +15,8 @@ import {
 } from '../../modules/savedQuery';
 import { getQueriesSaving, getQueriesLimit } from '../../modules/queries';
 import { slugify, copyToClipboard } from '../../utils/text';
+
+import text from './text.json';
 
 import { QueryError } from './types';
 
@@ -45,9 +48,13 @@ const QuerySettings: FC<Props> = ({ onSave, onDelete }) => {
 
   return (
     <Container>
+      <Settings>
+      <Title>{text.querySettings}</Title>
+      <QueryName>
+      <Label>{text.queryName}</Label>
       <Input
         value={savedQuery.displayName}
-        placeholder="Give your query a name..."
+        placeholder={text.queryNamePlaceholder}
         onChange={(e) => {
           const value = e.currentTarget.value;
           dispatch(
@@ -64,6 +71,7 @@ const QuerySettings: FC<Props> = ({ onSave, onDelete }) => {
           Saved query resource name: {savedQuery.name}
         </div>
       )}
+      </QueryName>
       <CacheQuery
         onCacheChange={(cached) =>
           dispatch(
@@ -85,7 +93,8 @@ const QuerySettings: FC<Props> = ({ onSave, onDelete }) => {
         isCached={savedQuery.cached}
       />
       {error && <Alert type="error">{error}</Alert>}
-      <ButtonGroup>
+      </Settings>
+      <Actions>
         <SaveQuery
           onSave={saveHandler}
           isSaving={isSaving}
@@ -95,24 +104,24 @@ const QuerySettings: FC<Props> = ({ onSave, onDelete }) => {
           <>
             <Button
               variant="secondary"
-              size="large"
+              style="outline"
               onClick={() => {
                 setError(null);
                 dispatch(resetSavedQuery());
               }}
             >
-              Clone
+              {text.clone}
             </Button>
             <Button
-              variant="secondary"
-              size="large"
+              variant="danger"
+              style="outline"
               onClick={() => onDelete(savedQuery.name)}
             >
-              Delete
+              {text.delete}
             </Button>
           </>
         )}
-      </ButtonGroup>
+      </Actions>
     </Container>
   );
 };

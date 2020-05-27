@@ -1,26 +1,22 @@
 import React, { FC } from 'react';
 import { Button, FadeLoader } from '@keen.io/ui-core';
-import { Icon } from '@keen.io/icons';
 
 type Props = {
+  /** Save query event handler */
   onSave: () => void;
+  /** Saving progress indicator */
   isSaving: boolean;
+  /** Query persistance state */
   isExist: boolean;
 };
 
 const SaveQuery: FC<Props> = ({ onSave, isExist, isSaving }) => (
   <Button
-    variant="success"
-    size="large"
+    variant="secondary"
+    style={isExist ? 'outline' : 'solid'}
     isDisabled={isSaving}
     onClick={onSave}
-    icon={
-      isSaving ? (
-        <FadeLoader />
-      ) : (
-        <Icon type="button-arrow" width={32} height={32} />
-      )
-    }
+    icon={isSaving && <FadeLoader />}
   >
     {isExist ? 'Update' : 'Save'}
   </Button>

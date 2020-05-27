@@ -21,7 +21,6 @@ import {
   updateUI,
   updateStepUI,
   resetUI,
-  togglePanelSave,
   addStep,
 } from '../redux/actionCreators/ui';
 
@@ -33,7 +32,7 @@ import EventCollection from './explorer/EventCollection';
 import PreviewCollection from './explorer/PreviewCollection';
 import Timeframe from './explorer/Timeframe';
 import Extraction from './explorer/Extraction';
-import Percentile from './explorer/Percentile';
+import { Percentile } from './QueryCreator';
 import Filters from './explorer/Filters';
 import GroupBy from './explorer/GroupBy';
 import Interval from './explorer/Interval';
@@ -48,9 +47,10 @@ import Foldable from './explorer/Foldable';
 import EmbedHTML from './explorer/EmbedHTML';
 
 import QuerySettings from './QuerySettings';
+import RunQuery from './RunQuery';
 import Confirm from './Confirm';
 
-import LoadingSpinner from './explorer/shared/LoadingSpinner';
+import { QueryActions, SettingsContainer } from './App.styles';
 
 import { getChartTypeOptions } from '../utils/charts';
 
@@ -91,7 +91,6 @@ const mapDispatchToProps = {
   updateUI,
   updateStepUI,
   resetUI,
-  togglePanelSave,
   addStep,
 };
 
@@ -241,7 +240,7 @@ class App extends Component {
 
   runQuery(payload) {
     let params = {
-      ...convertFilterValuesToJsonValues(this.getQueryParams()),
+      ...this.getQueryParams(),
     };
 
     if (params.analysisType === 'funnel') {
@@ -325,7 +324,6 @@ class App extends Component {
       queries,
       updateUI,
       resetUI,
-      togglePanelSave,
       addStep,
 
       // from config props
@@ -348,7 +346,6 @@ class App extends Component {
       modalPreviewCollection,
       error,
       fetching,
-      panelSave,
       extractionActiveTab,
       steps,
     } = this.props.ui;
@@ -524,7 +521,21 @@ class App extends Component {
 
             {analysisType === 'extraction' && eventCollection && <Extraction />}
 
-            {analysisType === 'percentile' && eventCollection && <Percentile />}
+            {analysisType === 'percentile' && eventCollection && (
+              <Percentile
+                value={this.props.ui.percentile}
+                onReset={() =>
+                  updateUI({
+                    percentile: undefined,
+                  })
+                }
+                onChange={(value) => {
+                  updateUI({
+                    percentile: value,
+                  });
+                }}
+              />
+            )}
 
             {analysisType === 'funnel' && steps && (
               <div className="funnel">
@@ -686,66 +697,45 @@ class App extends Component {
               <div className="error">{error.body}</div>
             )}
 
-            <div className="action-buttons">
-              <button
-                className="button-run-query button-with-loading-spinner"
-                onClick={() => this.runQuery()}
-                data-tracker="runQuery"
-              >
-                {fetching && <LoadingSpinner />}
-                {!(
-                  analysisType === 'extraction' &&
-                  extractionActiveTab === TAB_EXTRACTION_BULK
-                ) && <Fragment>Run Query</Fragment>}
+            <QueryActions>
+              <RunQuery isLoading={fetching} onClick={() => this.runQuery()}>
                 {analysisType === 'extraction' &&
-                  extractionActiveTab === TAB_EXTRACTION_BULK && (
-                    <Fragment>Extract to Email</Fragment>
-                  )}
-              </button>
+                extractionActiveTab === TAB_EXTRACTION_BULK
+                  ? 'Extract to Email'
+                  : 'Run Query'}
+              </RunQuery>
+              <SettingsContainer>
+              <QuerySettings
+                onDelete={(name) => {
+                  this.props.deleteQuery({ name });
+                }}
+                onSave={(name, refreshRate) => {
+                  const params = composeQueryParams(
+                    this.props.ui.analysisType,
+                    queryParams
+                  );
 
-              {components.saveButton && features.save && (
-                // && analysisType !== 'extraction' // Saving extraction possible but without propertyNames array
-                <div
-                  className={`button-toggle ${
-                    panelSave ? 'button-toggle-active' : ''
-                  }`}
-                  onClick={() => togglePanelSave()}
-                >
-                  Save Query
-                </div>
-              )}
-
-              {features.save && panelSave && (
-                <QuerySettings
-                  onDelete={(name) => {
-                    this.props.deleteQuery({ name });
-                  }}
-                  onSave={(name, refreshRate) => {
-                    const params = composeQueryParams(
-                      this.props.ui.analysisType,
-                      queryParams
-                    );
-
-                    const body = {
-                      query: convertFilterValuesToJsonValues(params),
-                      metadata: {
-                        displayName: name,
-                        visualization: {
-                          chartType: this.props.ui.chartType,
-                          stepLabels: this.props.ui.stepLabels || [],
-                        },
+                  const body = {
+                    query: convertFilterValuesToJsonValues(params),
+                    metadata: {
+                      displayName: name,
+                      visualization: {
+                        chartType: this.props.ui.chartType,
+                        stepLabels: this.props.ui.stepLabels || [],
                       },
-                      refreshRate: refreshRate * 60 * 60,
-                    };
+                    },
+                    refreshRate: refreshRate * 60 * 60,
+                  };
 
-                    this.props.saveQuery({
-                      name,
-                      body,
-                    });
-                  }}
-                />
-              )}
-            </div>
+                  this.props.saveQuery({
+                    name,
+                    body,
+                  });
+                }}
+              />
+              </SettingsContainer>
+            </QueryActions>
+
           </div>
         )}
         <Confirm />

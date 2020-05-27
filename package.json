@@ -35,7 +35,7 @@
     "@keen.io/colors": "^0.1.2",
     "@keen.io/forms": "^0.3.5",
     "@keen.io/icons": "^0.4.0",
-    "@keen.io/ui-core": "^0.15.1",
+    "@keen.io/ui-core": "^0.16.0",
     "@types/react-dom": "^16.9.8",
     "classnames": "2.1.2",
     "core-js": "^3.6.5",

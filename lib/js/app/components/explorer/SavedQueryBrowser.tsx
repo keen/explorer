@@ -140,6 +140,7 @@ class SavedQueryBrowser extends Component {
                   return;
                 }
                 selectSavedQuery(item.query_name);
+
                 updateUISavedQuery({ item, schemas: this.props.schemas });
               }}
             >

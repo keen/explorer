@@ -232,6 +232,7 @@
   border: 1px solid #ccc;
   font-weight: 400;
   line-height: normal;
+  box-sizing: border-box;
 }
 
 .interval{
@@ -297,6 +298,7 @@
       color:#000;
       font-weight: normal;
       border-radius: 5px;
+      box-sizing: border-box;
     }
     .rc-time-picker-input{
       font-size: var(--font-size);

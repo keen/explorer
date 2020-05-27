@@ -1,0 +1,7 @@
+{
+  "clone": "Clone",
+  "delete": "Delete",
+  "querySettings": "Query settings",
+  "queryName": "Query name",
+  "queryNamePlaceholder": "Give your query a name..."
+}
