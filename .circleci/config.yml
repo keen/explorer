@@ -47,17 +47,20 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: npm-deps-{{ arch }}-{{ .Branch }}-{{ checksum "package-lock.json" }}
+          key: npm-deps-{{ arch }}-{{ .Branch }}-{{ checksum "yarn.lock" }}
       - run:
           name: Install dependencies
           command: npm install
       - save_cache:
-          key: npm-deps-{{ arch }}-{{ .Branch }}-{{ checksum "package-lock.json" }}
+          key: npm-deps-{{ arch }}-{{ .Branch }}-{{ checksum "yarn.lock" }}
           paths:
             - ./node_modules
       - run:
           name: Lint
           command: npm run lint
+      - run:
+          name: Unit Tests
+          command: npm run test
       - run:
           name: Build
           command: npm run build

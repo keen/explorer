@@ -1,0 +1,8 @@
+{
+  "disableMessage": "Disable caching for other queries or contact us to extend the plan at team@keen.io",
+  "limitReachedMessage": "You have reached the limit of cached queries for your organization.",
+  "refreshInterval": "- Refresh interval (hours)",
+  "queriesLimit": "Cached queries limit",
+  "cache": "Cache",
+  "refreshRatePlaceholder": "Set refresh rate"
+}

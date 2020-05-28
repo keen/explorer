@@ -18,15 +18,6 @@ import { version } from '../../../package.json';
 import App from './components/App';
 import { AppContext } from './contexts';
 
-const sagaMiddleware = createSagaMiddleware();
-const composeEnhancers = composeWithDevTools({});
-const store = createStore(
-  rootReducer,
-  /* preloadedState, */ composeEnhancers(applyMiddleware(sagaMiddleware))
-);
-
-sagaMiddleware.run(rootSaga);
-
 const defaultConfig = {
   previewCollection: true,
   saveStateToLocalStorage: {
@@ -48,15 +39,28 @@ export class KeenExplorer {
         keenTracking.instance || new KeenTracking(keenTracking.config);
     }
 
+    const sagaMiddleware = createSagaMiddleware({
+      context: {
+        keenClient: client,
+      },
+    });
+    const composeEnhancers = composeWithDevTools({});
+    const store = createStore(
+      rootReducer,
+      composeEnhancers(applyMiddleware(sagaMiddleware))
+    );
+
+    sagaMiddleware.run(rootSaga);
+
     ReactDOM.render(
       <Provider store={store}>
         <AppContext.Provider value={{ keenAnalysis: client }}>
-        <App
-          {...{
-            ...defaultConfig,
-            ...props,
-          }}
-        />
+          <App
+            {...{
+              ...defaultConfig,
+              ...props,
+            }}
+          />
         </AppContext.Provider>
       </Provider>,
       document.querySelector(props.container)

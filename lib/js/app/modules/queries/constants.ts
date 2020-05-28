@@ -1,0 +1,1 @@
+export const CREATE_NEW_QUERY = 'CREATE_NEW_QUERY';

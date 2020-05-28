@@ -9,6 +9,8 @@ import {
 
 import { updateUI, updateUISavedQuery } from '../../redux/actionCreators/ui';
 
+import { selectSavedQuery } from '../../modules/savedQuery';
+
 import {
   fetchSavedQueries,
   deleteQuery,
@@ -16,7 +18,7 @@ import {
 
 const mapStateToProps = (state) => ({
   savedQueries: state.queries.saved,
-  savedQuery: state.ui.savedQuery,
+  savedQuery: state.savedQuery,
   timezone: state.ui.timezone,
   schemas: state.collections.schemas,
 });
@@ -28,6 +30,7 @@ const mapDispatchToProps = {
   fetchSavedQueries,
   resetResults,
   deleteQuery,
+  selectSavedQuery,
 };
 
 const getName = (item) => {
@@ -76,15 +79,6 @@ class SavedQueryBrowser extends Component {
     });
   }
 
-  confirmDeleteQuery({ e, query_name }) {
-    e.stopPropagation();
-    if (confirm(`Delete query "${query_name}"?`)) {
-      this.props.deleteQuery({
-        name: query_name,
-      });
-    }
-  }
-
   render() {
     const {
       features,
@@ -94,6 +88,7 @@ class SavedQueryBrowser extends Component {
       // dispatchers
       updateUI,
       updateUISavedQuery,
+      selectSavedQuery,
       resetResults,
     } = this.props;
 
@@ -144,6 +139,8 @@ class SavedQueryBrowser extends Component {
                   });
                   return;
                 }
+                selectSavedQuery(item.query_name);
+
                 updateUISavedQuery({ item, schemas: this.props.schemas });
               }}
             >
@@ -159,12 +156,12 @@ class SavedQueryBrowser extends Component {
 
               {features && features.save && (
                 <i
-                  onClick={(e) =>
-                    this.confirmDeleteQuery({
-                      e,
-                      query_name: item.query_name,
-                    })
-                  }
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    this.props.deleteQuery({
+                      name: item.query_name,
+                    });
+                  }}
                   className="fas fa-times button-delete"
                 />
               )}
