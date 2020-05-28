@@ -705,37 +705,36 @@ class App extends Component {
                   : 'Run Query'}
               </RunQuery>
               <SettingsContainer>
-              <QuerySettings
-                onDelete={(name) => {
-                  this.props.deleteQuery({ name });
-                }}
-                onSave={(name, refreshRate) => {
-                  const params = composeQueryParams(
-                    this.props.ui.analysisType,
-                    queryParams
-                  );
+                <QuerySettings
+                  onDelete={(name) => {
+                    this.props.deleteQuery({ name });
+                  }}
+                  onSave={(name, refreshRate) => {
+                    const params = composeQueryParams(
+                      this.props.ui.analysisType,
+                      queryParams
+                    );
 
-                  const body = {
-                    query: convertFilterValuesToJsonValues(params),
-                    metadata: {
-                      displayName: name,
-                      visualization: {
-                        chartType: this.props.ui.chartType,
-                        stepLabels: this.props.ui.stepLabels || [],
+                    const body = {
+                      query: convertFilterValuesToJsonValues(params),
+                      metadata: {
+                        displayName: name,
+                        visualization: {
+                          chartType: this.props.ui.chartType,
+                          stepLabels: this.props.ui.stepLabels || [],
+                        },
                       },
-                    },
-                    refreshRate: refreshRate * 60 * 60,
-                  };
+                      refreshRate: refreshRate * 60 * 60,
+                    };
 
-                  this.props.saveQuery({
-                    name,
-                    body,
-                  });
-                }}
-              />
+                    this.props.saveQuery({
+                      name,
+                      body,
+                    });
+                  }}
+                />
               </SettingsContainer>
             </QueryActions>
-
           </div>
         )}
         <Confirm />

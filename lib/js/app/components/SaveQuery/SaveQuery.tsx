@@ -12,6 +12,7 @@ type Props = {
 
 const SaveQuery: FC<Props> = ({ onSave, isExist, isSaving }) => (
   <Button
+    data-test="save-query"
     variant="secondary"
     style={isExist ? 'outline' : 'solid'}
     isDisabled={isSaving}

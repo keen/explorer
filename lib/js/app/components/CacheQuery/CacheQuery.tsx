@@ -1,15 +1,16 @@
 import React, { FC, useMemo, useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
-import { Checkbox, Select, Tooltip } from '@keen.io/ui-core';
+import { Checkbox, Select, Tooltip, Label } from '@keen.io/ui-core';
 import { Icon } from '@keen.io/icons';
 import { colors } from '@keen.io/colors';
 
 import {
   Container,
   CacheSwitch,
-  Label,
   CacheLimit,
+  CheckboxLabel,
   RefreshSettings,
+  SelectContainer,
   LimitReached,
   TooltipMotion,
   TooltipContent,
@@ -73,12 +74,16 @@ const CacheQuery: FC<Props> = ({
           checked={isCached}
           onChange={() => onCacheChange(!isCached)}
         />
-        <Label>Cache</Label>
+        <CheckboxLabel>
+          <Label variant="secondary">{text.cache}</Label>
+        </CheckboxLabel>
       </CacheSwitch>
       {isCached && (
         <RefreshSettings data-test="refresh-settings">
-            <div>{text.refreshInterval}</div>
+          <div>{text.refreshInterval}</div>
+          <SelectContainer>
             <Select
+              variant="solid"
               placeholder={text.refreshRatePlaceholder}
               value={refreshRate && { label: refreshRate, value: refreshRate }}
               onChange={({ value }: { value: number }) =>
@@ -86,6 +91,7 @@ const CacheQuery: FC<Props> = ({
               }
               options={refreshRates}
             />
+          </SelectContainer>
         </RefreshSettings>
       )}
       {isLimited && (

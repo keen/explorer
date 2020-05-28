@@ -1,11 +1,19 @@
 import React, { FC, useCallback, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Alert, Button, Input } from '@keen.io/ui-core';
+import { Button, Input, Label } from '@keen.io/ui-core';
 
-import { Container, Title, Settings, QueryName, Actions } from './QuerySettings.styles';
+import {
+  Container,
+  Title,
+  Settings,
+  QueryName,
+  ResourceName,
+  ResourceMessage,
+  Actions,
+  InputContainer,
+} from './QuerySettings.styles';
 
 import CacheQuery, { REFRESH_MINIMUM } from '../CacheQuery';
-import Label from '../Label';
 import SaveQuery from '../SaveQuery';
 
 import {
@@ -49,50 +57,58 @@ const QuerySettings: FC<Props> = ({ onSave, onDelete }) => {
   return (
     <Container>
       <Settings>
-      <Title>{text.querySettings}</Title>
-      <QueryName>
-      <Label>{text.queryName}</Label>
-      <Input
-        value={savedQuery.displayName}
-        placeholder={text.queryNamePlaceholder}
-        onChange={(e) => {
-          const value = e.currentTarget.value;
-          dispatch(
-            updateSaveQuery({
-              name: slugify(value),
-              displayName: value,
-              exists: false,
-            })
-          );
-        }}
-      />
-      {savedQuery.name && (
-        <div onClick={() => copyToClipboard(savedQuery.name)}>
-          Saved query resource name: {savedQuery.name}
-        </div>
-      )}
-      </QueryName>
-      <CacheQuery
-        onCacheChange={(cached) =>
-          dispatch(
-            updateSaveQuery({
-              cached,
-              refreshRate: cached ? REFRESH_MINIMUM : 0,
-            })
-          )
-        }
-        onRefreshRateChange={(refreshRate) =>
-          dispatch(
-            updateSaveQuery({
-              refreshRate,
-            })
-          )
-        }
-        isLimited={limitedQueries}
-        refreshRate={savedQuery.refreshRate}
-        isCached={savedQuery.cached}
-      />
-      {error && <Alert type="error">{error}</Alert>}
+        <Title>{text.querySettings}</Title>
+        <QueryName>
+          <Label variant="secondary">{text.queryName}</Label>
+          <InputContainer>
+            <Input
+              type="text"
+              data-test="query-name"
+              value={savedQuery.displayName}
+              placeholder={text.queryNamePlaceholder}
+              hasError={!!error}
+              variant="solid"
+              onChange={(e) => {
+                const value = e.currentTarget.value;
+                dispatch(
+                  updateSaveQuery({
+                    name: slugify(value),
+                    displayName: value,
+                    exists: false,
+                  })
+                );
+              }}
+            />
+          </InputContainer>
+        </QueryName>
+        {savedQuery.name && (
+          <ResourceName onClick={() => copyToClipboard(savedQuery.name)}>
+            <Label variant="secondary">
+              <ResourceMessage>{text.resourceName}</ResourceMessage>{' '}
+              {savedQuery.name}
+            </Label>
+          </ResourceName>
+        )}
+        <CacheQuery
+          onCacheChange={(cached) =>
+            dispatch(
+              updateSaveQuery({
+                cached,
+                refreshRate: cached ? REFRESH_MINIMUM : 0,
+              })
+            )
+          }
+          onRefreshRateChange={(refreshRate) =>
+            dispatch(
+              updateSaveQuery({
+                refreshRate,
+              })
+            )
+          }
+          isLimited={limitedQueries}
+          refreshRate={savedQuery.refreshRate}
+          isCached={savedQuery.cached}
+        />
       </Settings>
       <Actions>
         <SaveQuery

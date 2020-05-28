@@ -1,6 +1,7 @@
 {
   "clone": "Clone",
   "delete": "Delete",
+  "resourceName": "Saved query resource name:",
   "querySettings": "Query settings",
   "queryName": "Query name",
   "queryNamePlaceholder": "Give your query a name..."

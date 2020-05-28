@@ -5,9 +5,7 @@ import RunQuery from './RunQuery';
 
 test('calls "onClick" handler', () => {
   const mockFn = jest.fn();
-  const { container } = render(
-    <RunQuery onClick={mockFn} isLoading={false} />
-  );
+  const { container } = render(<RunQuery onClick={mockFn} isLoading={false} />);
 
   const button = container.querySelector('button');
   fireEvent.click(button);

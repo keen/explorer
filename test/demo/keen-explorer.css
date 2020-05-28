@@ -1341,6 +1341,7 @@ li.rc-time-picker-panel-select-option-disabled:hover {
             padding: 0.333rem;
             text-align: center;
             height: 2.3rem;
+            box-sizing: border-box;
           }
 
 .keen-explorer .filters-container .list .row .row-part .datetime-pickers .rc-time-picker,.ReactModalPortal .filters-container .list .row .row-part .datetime-pickers .rc-time-picker,.rc-time-picker-panel .filters-container .list .row .row-part .datetime-pickers .rc-time-picker{
@@ -2083,6 +2084,7 @@ li.rc-time-picker-panel-select-option-disabled:hover {
   border: 1px solid #ccc;
   font-weight: 400;
   line-height: normal;
+  box-sizing: border-box;
 }
 
 .ReactModalPortal .input-text{
@@ -2093,6 +2095,7 @@ li.rc-time-picker-panel-select-option-disabled:hover {
   border: 1px solid #ccc;
   font-weight: 400;
   line-height: normal;
+  box-sizing: border-box;
 }
 
 .rc-time-picker-panel .input-text{
@@ -2103,6 +2106,7 @@ li.rc-time-picker-panel-select-option-disabled:hover {
   border: 1px solid #ccc;
   font-weight: 400;
   line-height: normal;
+  box-sizing: border-box;
 }
 
 .keen-explorer .interval .standard-units,.ReactModalPortal .interval .standard-units,.rc-time-picker-panel .interval .standard-units{
@@ -2179,6 +2183,7 @@ li.rc-time-picker-panel-select-option-disabled:hover {
       color:#000;
       font-weight: normal;
       border-radius: 5px;
+      box-sizing: border-box;
     }
 
 .ReactModalPortal .timeframe .tabAbsolute .DateInput_input {
@@ -2189,6 +2194,7 @@ li.rc-time-picker-panel-select-option-disabled:hover {
       color:#000;
       font-weight: normal;
       border-radius: 5px;
+      box-sizing: border-box;
     }
 
 .rc-time-picker-panel .timeframe .tabAbsolute .DateInput_input {
@@ -2199,6 +2205,7 @@ li.rc-time-picker-panel-select-option-disabled:hover {
       color:#000;
       font-weight: normal;
       border-radius: 5px;
+      box-sizing: border-box;
     }
 
 .keen-explorer .timeframe .tabAbsolute .rc-time-picker-input{
@@ -2333,11 +2340,12 @@ li.rc-time-picker-panel-select-option-disabled:hover {
   align-items: center;
   width: 100%;
   font-size: 0.8rem;
+  box-sizing: border-box;
 }
 
 .keen-explorer .apiQueryUrl input,.ReactModalPortal .apiQueryUrl input,.rc-time-picker-panel .apiQueryUrl input{
     flex: 1;
-    margin: 0 1rem;
+    margin: 0 10px;
   }
 
 .keen-explorer .fa-copy:active{

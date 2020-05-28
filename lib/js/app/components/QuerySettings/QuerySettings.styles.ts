@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { transparentize } from 'polished';
 import { colors } from '@keen.io/colors';
 
 export const Container = styled.div`
@@ -10,7 +11,7 @@ export const Title = styled.div`
   font-size: 16px;
   font-family: 'Lato Bold', sans-serif;
   color: ${colors.black['500']};
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 `;
 
 export const Settings = styled.div`
@@ -22,6 +23,21 @@ export const Settings = styled.div`
 export const QueryName = styled.div`
   display: flex;
   align-items: center;
+  margin-bottom: 20px;
+`;
+
+export const ResourceName = styled.div`
+  cursor: pointer;
+  margin-bottom: 20px;
+`;
+
+export const ResourceMessage = styled.span`
+  color: ${transparentize(0.5, colors.black['500'])};
+`;
+
+export const InputContainer = styled.div`
+  margin: 0 10px;
+  width: 400px;
 `;
 
 export const Actions = styled.div`
