@@ -11487,10 +11487,10 @@ q@^1.1.2, q@^1.5.1:
   resolved "https://registry.yarnpkg.com/q/-/q-1.5.1.tgz#7e32f75b41381291d04611f1bf14109ac00651d7"
   integrity sha1-fjL3W0E4EpHQRhHxvxQQmsAGUdc=
 
-qs@2.2.3:
-  version "2.2.3"
-  resolved "https://registry.yarnpkg.com/qs/-/qs-2.2.3.tgz#6139c1f47960eff5655e56aab0ef9f6dd16d4eeb"
-  integrity sha1-YTnB9Hlg7/VlXlaqsO+fbdFtTus=
+qs@6.0.4:
+  version "6.0.4"
+  resolved "https://registry.yarnpkg.com/qs/-/qs-6.0.4.tgz#51019d84720c939b82737e84556a782338ecea7b"
+  integrity sha1-UQGdhHIMk5uCc36EVWp4Izjs6ns=
 
 qs@6.7.0:
   version "6.7.0"
