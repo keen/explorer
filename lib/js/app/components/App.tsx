@@ -203,7 +203,6 @@ class App extends Component {
       analysisType,
       eventCollection,
       timeframe,
-      timezone,
       ...{
         interval,
         targetProperty,
@@ -213,6 +212,7 @@ class App extends Component {
         limit,
         percentile,
       },
+      ...(timezone ? { timezone } : {})
     };
 
     if (analysisType === 'extraction') {
