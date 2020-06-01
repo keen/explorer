@@ -1,3 +1,5 @@
-import { Percentile } from './components';
+import QueryCreator from './QueryCreator';
+import { Percentile, EventCollection } from './components';
 
-export { Percentile };
+export { Percentile, EventCollection };
+export default QueryCreator;

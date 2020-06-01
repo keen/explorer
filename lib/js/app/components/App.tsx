@@ -26,6 +26,7 @@ import {
 
 import { createNewQuery } from '../modules/queries';
 import { resetSavedQuery } from '../modules/savedQuery';
+import { getEventCollection, getAnalysis } from '../modules/queryCreator';
 import { persistState, loadPersitedState } from '../modules/app';
 
 import EventCollection from './explorer/EventCollection';
@@ -47,6 +48,7 @@ import Foldable from './explorer/Foldable';
 import EmbedHTML from './explorer/EmbedHTML';
 
 import QuerySettings from './QuerySettings';
+import QueryCreator from './QueryCreator';
 import RunQuery from './RunQuery';
 import Confirm from './Confirm';
 
@@ -67,6 +69,10 @@ import {
 import { client } from '../KeenExplorer';
 
 const mapStateToProps = (state, props) => ({
+  queryCreator: {
+    eventCollection: getEventCollection(state),
+    analysisType: getAnalysis(state),
+  },
   collections: state.collections,
   queries: state.queries,
   ui: state.ui,
@@ -180,8 +186,6 @@ class App extends Component {
 
   getQueryParams() {
     const {
-      analysisType,
-      eventCollection,
       targetProperty,
       timeframe,
       timezone,
@@ -198,6 +202,8 @@ class App extends Component {
       percentile,
       steps,
     } = this.props.ui;
+
+    const { analysisType, eventCollection } = this.props.queryCreator;
 
     let queryParams = {
       analysisType,
@@ -436,28 +442,30 @@ class App extends Component {
               activePanel !== PANEL_NEW_QUERY ? 'hide' : ''
             } panel-${analysisType}`}
           >
+            <QueryCreator
+              onPreviewCollection={() => {
+                updateUI({
+                  modalPreviewCollection: true,
+                });
+              }}
+              collections={this.props.collections.items.map(
+                (item) => item.name
+              )}
+            />
             {analysisType !== 'funnel' && components.eventCollection && (
-              <EventCollection
-                saveStateToLocalStorage={
-                  saveStateToLocalStorage.eventCollection
-                }
-              />
+              <>
+                <EventCollection
+                  saveStateToLocalStorage={
+                    saveStateToLocalStorage.eventCollection
+                  }
+                />
+              </>
             )}
 
             {components.previewCollections &&
               previewCollection &&
               analysisType !== 'funnel' && (
-                <Fragment>
-                  <div
-                    className="a-preview-collection"
-                    onClick={() => {
-                      updateUI({
-                        modalPreviewCollection: true,
-                      });
-                    }}
-                  >
-                    <i className="fas fa-search" /> Preview Collections
-                  </div>
+                <>
                   <Modal
                     isOpen={modalPreviewCollection}
                     onRequestClose={() => {
@@ -488,7 +496,7 @@ class App extends Component {
                       <PreviewCollection />
                     </div>
                   </Modal>
-                </Fragment>
+                </>
               )}
 
             {components.analysisType && (

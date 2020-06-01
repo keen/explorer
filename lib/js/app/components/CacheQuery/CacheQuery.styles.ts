@@ -14,6 +14,7 @@ export const CacheSwitch = styled.label<{
   display: flex;
   align-items: center;
   margin-right: 5px;
+  margin-bottom: 0;
 
   font-size: 14px;
   font-family: 'Lato Regular', sans-serif;

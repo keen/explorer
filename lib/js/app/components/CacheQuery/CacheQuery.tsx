@@ -75,7 +75,9 @@ const CacheQuery: FC<Props> = ({
           onChange={() => onCacheChange(!isCached)}
         />
         <CheckboxLabel>
-          <Label variant="secondary">{text.cache}</Label>
+          <Label variant="secondary" htmlFor={CHECKBOX_ID}>
+            {text.cache}
+          </Label>
         </CheckboxLabel>
       </CacheSwitch>
       {isCached && (
