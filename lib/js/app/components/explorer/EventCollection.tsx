@@ -79,6 +79,7 @@ class EventCollection extends Component {
           placeholder={placeholder}
           autoFocus={!hasValue}
           value={selectedEventCollection}
+          filterOption={({ label }, input) => label.includes(input)}
           components={{
             Input,
           }}
