@@ -9,9 +9,11 @@
 		"esModuleInterop": true,
     "module": "esnext",
     "target": "es6",
-    "jsx": "react"
+    "jsx": "react",
+		"typeRoots": [ "./types", "./node_modules/@types"]
 	},
   "include": [
   	"./lib/**/*"
-  ]
+  ],
+	 "exclude": ["node_modules", "typings"]
 }

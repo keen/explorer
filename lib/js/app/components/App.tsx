@@ -26,14 +26,14 @@ import {
 
 import { createNewQuery } from '../modules/queries';
 import { resetSavedQuery } from '../modules/savedQuery';
-import { getEventCollection, getAnalysis } from '../modules/queryCreator';
+import QueryCreator from '../queryCreator';
 import { persistState, loadPersitedState } from '../modules/app';
 
 import EventCollection from './explorer/EventCollection';
 import PreviewCollection from './explorer/PreviewCollection';
 import Timeframe from './explorer/Timeframe';
 import Extraction from './explorer/Extraction';
-import { Percentile } from './QueryCreator';
+import { Percentile } from '../queryCreator/components';
 import Filters from './explorer/Filters';
 import GroupBy from './explorer/GroupBy';
 import Interval from './explorer/Interval';
@@ -48,7 +48,6 @@ import Foldable from './explorer/Foldable';
 import EmbedHTML from './explorer/EmbedHTML';
 
 import QuerySettings from './QuerySettings';
-import QueryCreator from './QueryCreator';
 import RunQuery from './RunQuery';
 import Confirm from './Confirm';
 
@@ -69,10 +68,6 @@ import {
 import { client } from '../KeenExplorer';
 
 const mapStateToProps = (state, props) => ({
-  queryCreator: {
-    eventCollection: getEventCollection(state),
-    analysisType: getAnalysis(state),
-  },
   collections: state.collections,
   queries: state.queries,
   ui: state.ui,
@@ -111,6 +106,7 @@ class App extends Component {
       ...defaultFeatures,
       ...(props.features || {}),
     };
+
     const appState = {
       features,
     };
@@ -186,6 +182,8 @@ class App extends Component {
 
   getQueryParams() {
     const {
+      analysisType,
+      eventCollection,
       targetProperty,
       timeframe,
       timezone,
@@ -202,8 +200,6 @@ class App extends Component {
       percentile,
       steps,
     } = this.props.ui;
-
-    const { analysisType, eventCollection } = this.props.queryCreator;
 
     let queryParams = {
       analysisType,
@@ -443,14 +439,9 @@ class App extends Component {
             } panel-${analysisType}`}
           >
             <QueryCreator
-              onPreviewCollection={() => {
-                updateUI({
-                  modalPreviewCollection: true,
-                });
-              }}
-              collections={this.props.collections.items.map(
-                (item) => item.name
-              )}
+              projectId={this.props.keenAnalysis.config.projectId}
+              readKey={this.props.keenAnalysis.config.readKey}
+              masterKey={this.props.keenAnalysis.config.masterKey}
             />
             {analysisType !== 'funnel' && components.eventCollection && (
               <>

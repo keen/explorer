@@ -1,7 +1,6 @@
 import { takeLatest, put, select } from 'redux-saga/effects';
 
 import { getSavedQuery, updateSaveQuery } from '../savedQuery';
-import { getQueryCreator } from '../queryCreator';
 
 import { updateUI } from '../../redux/actionCreators/ui';
 
@@ -37,7 +36,8 @@ export function* loadPersitedState() {
 }
 
 export function* persistState() {
-  const userInterface = yield select(getQueryCreator);
+  const state = yield select();
+  const userInterface = state.ui;
   const savedQuery = yield select(getSavedQuery);
 
   const stateToPersist = b64EncodeUnicode(
