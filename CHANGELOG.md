@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [7.0.1](https://github.com/keen/explorer/compare/v7.0.0...v7.0.1) (2020-06-03)
+
+
+### Bug Fixes
+
+* 🐛 Fix for react-select search problems ([d4886bc](https://github.com/keen/explorer/commit/d4886bc79f52faa31cb07146a0913a031ddb90fb))
+* 🐛 Fix for timezone error when query created from API ([984f312](https://github.com/keen/explorer/commit/984f312e32050a546bbf6c528bf5ab960171dcd6))
+* 🐛 undefined filters for funnels ([5009998](https://github.com/keen/explorer/commit/5009998596c76b83c5f72b4632d3eb03a16fdf44))
+
 ## [7.0.0](https://github.com/keen/explorer/compare/v6.3.0...v7.0.0) (2020-05-28)
 
 ## [6.3.0](https://github.com/keen/explorer/compare/v6.0.28...v6.3.0) (2020-05-28)
