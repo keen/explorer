@@ -7,3 +7,4 @@ node_modules
 dist
 config.js
 .idea/
+.package-lock.json
