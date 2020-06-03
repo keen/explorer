@@ -1,4 +1,4 @@
-import React, { FC, useMemo } from 'react';
+import React, { FC, useMemo, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { Label, Select } from '@keen.io/ui-core';
 
@@ -11,9 +11,11 @@ type Props = {
   collection: string;
   /** Collection change event handler */
   onChange: (collection: string) => void;
+  /** Reset event handler */
+  onReset?: () => void;
 };
 
-const EventCollection: FC<Props> = ({ collection, onChange }) => {
+const EventCollection: FC<Props> = ({ collection, onChange, onReset }) => {
   const collections = useSelector(getEventsCollections);
   const options = useMemo(
     () =>
@@ -23,6 +25,12 @@ const EventCollection: FC<Props> = ({ collection, onChange }) => {
       })),
     [collections]
   );
+
+  useEffect(() => {
+    return () => {
+      if (onReset) onReset();
+    };
+  }, []);
 
   return (
     <>

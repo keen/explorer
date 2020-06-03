@@ -4,23 +4,25 @@ import {
   SELECT_TARGET_PROPERTY,
   SET_PERCENTILE,
   SET_TIMEFRAME,
+  SELECT_TIMEZONE,
+  ADD_FUNNEL_STEP,
+  REMOVE_FUNNEL_STEP,
+  UPDATE_FUNNEL_STEP,
+  UPDATE_FUNNEL_STEP_EVENT_COLLECTION,
+  CHANGE_FUNNEL_STEPS_ORDER,
 } from './constants';
 
+import { Timezones, Timeframe, FunnelStep } from '../../types';
 import { Analysis } from '../../../types';
-
-export type Timeframe =
-  | string
-  | {
-      start: string;
-      end: string;
-    };
 
 export type ReducerState = {
   eventCollection?: string;
   targetProperty?: string;
   percentile?: number;
+  timezone?: number | Timezones;
   timeframe: Timeframe;
   analysis: Analysis;
+  steps: FunnelStep[];
 };
 
 export interface SelectEventCollectionAction {
@@ -44,6 +46,13 @@ export interface SelectTargetPropertyAction {
   };
 }
 
+export interface SelectTimezoneAction {
+  type: typeof SELECT_TIMEZONE;
+  payload: {
+    timezone: number | Timezones;
+  };
+}
+
 export interface SetPercentileAction {
   type: typeof SET_PERCENTILE;
   payload: {
@@ -58,9 +67,49 @@ export interface SetTimeframeAction {
   };
 }
 
+export interface AddFunnelStepAction {
+  type: typeof ADD_FUNNEL_STEP;
+}
+
+export interface RemoveFunnelStepAction {
+  type: typeof REMOVE_FUNNEL_STEP;
+  payload: {
+    index: number;
+  };
+}
+
+export interface UpdateFunnelStepAction {
+  type: typeof UPDATE_FUNNEL_STEP;
+  payload: {
+    index: number;
+    properties: Partial<FunnelStep>;
+  };
+}
+
+export interface UpdateFunnelStepEventCollectionAction {
+  type: typeof UPDATE_FUNNEL_STEP_EVENT_COLLECTION;
+  payload: {
+    name: string;
+  };
+}
+
+export interface ChangeFunnelStepsOrderAction {
+  type: typeof CHANGE_FUNNEL_STEPS_ORDER;
+  payload: {
+    index: number;
+    updatedIndex: number;
+  };
+}
+
 export type QueryActions =
   | SelectEventCollectionAction
   | SelectAnalysisAction
   | SelectTargetPropertyAction
   | SetPercentileAction
-  | SetTimeframeAction;
+  | SetTimeframeAction
+  | SelectTimezoneAction
+  | AddFunnelStepAction
+  | UpdateFunnelStepAction
+  | RemoveFunnelStepAction
+  | UpdateFunnelStepEventCollectionAction
+  | ChangeFunnelStepsOrderAction;

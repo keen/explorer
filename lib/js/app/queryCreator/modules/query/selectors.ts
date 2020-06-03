@@ -13,3 +13,7 @@ export const getTargetProperty = (state: AppState) =>
 export const getPercentile = (state: AppState) => state.query.percentile;
 
 export const getTimeframe = (state: AppState) => state.query.timeframe;
+
+export const getTimezone = (state: AppState) => state.query.timezone;
+
+export const getFunnelSteps = (state: AppState) => state.query.steps;

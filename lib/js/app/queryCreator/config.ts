@@ -40,4 +40,18 @@ export const FIELDS_CONFIG: QueryCreatorConfig = {
     'extraction',
     'select_unique',
   ],
+  timezone: [
+    'sum',
+    'average',
+    'count',
+    'count_unique',
+    'maximum',
+    'minimum',
+    'median',
+    'percentile',
+    'standard_deviation',
+    'extraction',
+    'select_unique',
+  ],
+  steps: ['funnel'],
 };

@@ -1,7 +1,5 @@
 {
   "label": "Timeframe",
   "relative": "Relative",
-  "absolute": "Absolute",
-  "relativityPlaceholder": "Relativity",
-  "unitsPlaceholder": "Units"
+  "absolute": "Absolute"
 }

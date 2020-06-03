@@ -11,7 +11,9 @@ import {
   EventCollection,
   TargetProperty,
   Timeframe,
+  Timezone,
   Percentile,
+  FunnelSteps,
 } from './components';
 import { showField } from './utils/showField';
 
@@ -45,6 +47,7 @@ const App: FC<Props> = ({ onPreviewCollection }) => {
         <FieldGroup data-test="event-collection">
           <EventCollection
             collection={collection}
+            onReset={() => dispatch(selectEventCollection(null))}
             onChange={(collection) =>
               dispatch(selectEventCollection(collection))
             }
@@ -82,12 +85,17 @@ const App: FC<Props> = ({ onPreviewCollection }) => {
       {showField('timeframe', analysis) && (
         <FieldGroup>
           <Timeframe
+            id="timeframe"
             value={timeframe}
             onReset={() => dispatch(setTimeframe(DEFAULT_TIMEFRAME))}
             onChange={(timeframe) => dispatch(setTimeframe(timeframe))}
           />
         </FieldGroup>
       )}
+      {showField('timezone', analysis) && typeof timeframe === 'string' && (
+        <Timezone />
+      )}
+      {showField('steps', analysis) && <FunnelSteps />}
     </div>
   );
 };
