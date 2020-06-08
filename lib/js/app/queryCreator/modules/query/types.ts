@@ -4,6 +4,7 @@ import {
   SELECT_TARGET_PROPERTY,
   SET_PERCENTILE,
   SET_TIMEFRAME,
+  SET_GROUP_BY,
   SELECT_TIMEZONE,
   ADD_FUNNEL_STEP,
   REMOVE_FUNNEL_STEP,
@@ -20,6 +21,7 @@ export type ReducerState = {
   targetProperty?: string;
   percentile?: number;
   timezone?: number | Timezones;
+  groupBy?: string | string[];
   timeframe: Timeframe;
   analysis: Analysis;
   steps: FunnelStep[];
@@ -67,6 +69,13 @@ export interface SetTimeframeAction {
   };
 }
 
+export interface SetGroupByAction {
+  type: typeof SET_GROUP_BY;
+  payload: {
+    groupBy: string | string[] | undefined;
+  };
+}
+
 export interface AddFunnelStepAction {
   type: typeof ADD_FUNNEL_STEP;
 }
@@ -106,6 +115,7 @@ export type QueryActions =
   | SelectAnalysisAction
   | SelectTargetPropertyAction
   | SetPercentileAction
+  | SetGroupByAction
   | SetTimeframeAction
   | SelectTimezoneAction
   | AddFunnelStepAction

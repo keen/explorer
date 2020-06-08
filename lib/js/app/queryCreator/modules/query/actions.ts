@@ -4,6 +4,7 @@ import {
   SELECT_TARGET_PROPERTY,
   SET_PERCENTILE,
   SET_TIMEFRAME,
+  SET_GROUP_BY,
   SELECT_TIMEZONE,
   ADD_FUNNEL_STEP,
   UPDATE_FUNNEL_STEP_EVENT_COLLECTION,
@@ -47,6 +48,13 @@ export const setPercentile = (percentile: number): QueryActions => ({
   type: SET_PERCENTILE,
   payload: {
     percentile,
+  },
+});
+
+export const setGroupBy = (groupBy?: string | string[]): QueryActions => ({
+  type: SET_GROUP_BY,
+  payload: {
+    groupBy,
   },
 });
 

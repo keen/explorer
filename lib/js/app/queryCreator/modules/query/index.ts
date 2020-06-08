@@ -6,6 +6,7 @@ import {
   getTargetProperty,
   getTimeframe,
   getTimezone,
+  getGroupBy,
   getFunnelSteps,
 } from './selectors';
 
@@ -15,6 +16,7 @@ import {
   selectTimezone,
   selectAnalysis,
   setPercentile,
+  setGroupBy,
   setTimeframe,
   addFunnelStep,
   updateFunnelStep,
@@ -41,8 +43,10 @@ export {
   getTargetProperty,
   getAnalysis,
   getTimezone,
+  getGroupBy,
   getTimeframe,
   setTimeframe,
+  setGroupBy,
   setPercentile,
   selectTimezone,
   addFunnelStep,

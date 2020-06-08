@@ -5,6 +5,7 @@ import {
   SELECT_TARGET_PROPERTY,
   SET_PERCENTILE,
   SET_TIMEFRAME,
+  SET_GROUP_BY,
   DEFAULT_ANALYSIS,
   DEFAULT_TIMEFRAME,
   ADD_FUNNEL_STEP,
@@ -54,6 +55,11 @@ export const queryReducer = (
       return {
         ...state,
         steps: [...state.steps, DEFAULT_FUNNEL_STEP],
+      };
+    case SET_GROUP_BY:
+      return {
+        ...state,
+        groupBy: action.payload.groupBy,
       };
     case SET_TIMEFRAME:
       return {

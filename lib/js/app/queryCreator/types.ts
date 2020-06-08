@@ -15,6 +15,7 @@ export type CreatorFields =
   | 'percentile'
   | 'timeframe'
   | 'timezone'
+  | 'groupBy'
   | 'steps';
 
 type FieldRule = ('*' | Analysis)[];

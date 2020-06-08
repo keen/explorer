@@ -9,6 +9,7 @@ import { PreviewCollections, PreviewLabel } from './App.styles';
 import {
   Analysis,
   EventCollection,
+  GroupBy,
   TargetProperty,
   Timeframe,
   Timezone,
@@ -96,6 +97,7 @@ const App: FC<Props> = ({ onPreviewCollection }) => {
         <Timezone />
       )}
       {showField('steps', analysis) && <FunnelSteps />}
+      {showField('groupBy', analysis) && <GroupBy collection={collection} />}
     </div>
   );
 };
