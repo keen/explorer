@@ -1,106 +1,24 @@
 version: 2.1
-
 executors:
-  nodejs:
+  node:
     docker:
-      - image: circleci/node:latest
-
-jobs:
-  create_version:
-    executor: nodejs
-    steps:
-      - add_ssh_keys:
-          fingerprints:
-            - "6c:1d:47:ff:53:61:27:ad:ea:a4:10:da:d9:e9:08:ce"
-      - run:
-          name: Setup GIT email
-          command: git config --global user.email "developer@keen.io"
-      - run:
-          name: Setup GIT user
-          command: git config --global user.name "Keen Developer"
-      - checkout
-      - run:
-          name: Install dependencies
-          command: yarn
-      - run:
-          name: Create release
-          command: yarn release
-      - run:
-          name: Push changes
-          command: git push --follow-tags --set-upstream origin ${CIRCLE_BRANCH}
-  publish:
-    executor: nodejs
-    working_directory: ~/tmp
-    steps:
-      - checkout
-      - attach_workspace:
-          at: ~/tmp/dist
-      - run:
-          name: Authenticate with registry
-          command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc
-      - run:
-          name: Publish
-          command: yarn publish
-  build:
-    executor: nodejs
-    working_directory: ~/tmp
-    steps:
-      - checkout
-      - restore_cache:
-          key: npm-deps-{{ arch }}-{{ .Branch }}-{{ checksum "yarn.lock" }}
-      - run:
-          name: Install dependencies
-          command: yarn install
-      - save_cache:
-          key: npm-deps-{{ arch }}-{{ .Branch }}-{{ checksum "yarn.lock" }}
-          paths:
-            - ./node_modules
-      - run:
-          name: Lint
-          command: yarn lint
-      - run:
-          name: Unit Tests
-          command: yarn test:ci
-      - run:
-          name: Build
-          command: yarn build
-      - persist_to_workspace:
-          root: dist
-          paths:
-            - "*"
-
+      - image: circleci/node:10
 workflows:
   version: 2
-  create_version:
+  build_and_test:
     jobs:
-      - create_version:
-          filters:
-            branches:
-              only:
-                - master
-            tags:
-              ignore: /.*/
-  ci:
-    jobs:
-      - build:
-          filters:
-            branches:
-              only: /.*/
-            tags:
-              ignore: /.*/
-  publish:
-    jobs:
-      - build:
-          filters:
-            tags:
-              only: /.*/
-            branches:
-              ignore: /.*/
-      - publish:
-          filters:
-            tags:
-              only: /.*/
-            branches:
-              ignore: /.*/
-          requires:
-            - build
+      - build
+      - test
+jobs:
+  build:
+    executor: node
+    steps:
+      - checkout
+      - run: npm install
+      - run: npm run build
+  test:
+    executor: node
+    steps:
+      - checkout
+      - run: npm install
+      - run: npm run test
