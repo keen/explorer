@@ -21,6 +21,7 @@ export const initialState: ReducerState = {
   targetProperty: null,
   percentile: null,
   timezone: undefined,
+  groupBy: ['lola', 'demon'],
   timeframe: DEFAULT_TIMEFRAME,
   analysis: DEFAULT_ANALYSIS,
   steps: [],
@@ -30,6 +31,7 @@ export const queryReducer = (
   state: ReducerState = initialState,
   action: QueryActions
 ) => {
+      console.log(state, 'STATE');
   switch (action.type) {
     case UPDATE_FUNNEL_STEP:
       return {
