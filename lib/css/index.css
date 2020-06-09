@@ -37,31 +37,26 @@
   @import "./components/percentile.css";
   @import "./components/filters.css";
   @import "./components/modal.css";
-  @import "./components/savedQuery.css";
   @import "./components/savedQueries.css";
   @import "./components/funnel.css";
   @import "./components/dataviz.css";
   @import "./components/previewCollection.css";
   @import "./components/preview.css";
 
-  * {
-    box-sizing: border-box;
-    font-size: var(--font-size);
-  }
 
-  button{
+  .button-download {
     margin: 2rem 0 0;
     padding: 1rem;
   }
-  
+
   .label-main{
     padding: 1rem 0 0.3rem;
   }
-  
+
   .hide{
     display: none;
   }
-  
+
   input:focus {
     outline: 2px solid var(--color-link-active);
   }
@@ -237,6 +232,7 @@
   border: 1px solid #ccc;
   font-weight: 400;
   line-height: normal;
+  box-sizing: border-box;
 }
 
 .interval{
@@ -302,6 +298,7 @@
       color:#000;
       font-weight: normal;
       border-radius: 5px;
+      box-sizing: border-box;
     }
     .rc-time-picker-input{
       font-size: var(--font-size);
@@ -363,9 +360,10 @@
   align-items: center;
   width: 100%;
   font-size: 0.8rem;
+  box-sizing: border-box;
   input{
     flex: 1;
-    margin: 0 1rem;
+    margin: 0 10px;
   }
 }
 

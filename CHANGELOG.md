@@ -2,6 +2,65 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [7.0.1](https://github.com/keen/explorer/compare/v7.0.0...v7.0.1) (2020-06-03)
+
+
+### Bug Fixes
+
+* 🐛 Fix for react-select search problems ([d4886bc](https://github.com/keen/explorer/commit/d4886bc79f52faa31cb07146a0913a031ddb90fb))
+* 🐛 Fix for timezone error when query created from API ([984f312](https://github.com/keen/explorer/commit/984f312e32050a546bbf6c528bf5ab960171dcd6))
+* 🐛 undefined filters for funnels ([5009998](https://github.com/keen/explorer/commit/5009998596c76b83c5f72b4632d3eb03a16fdf44))
+
+## [7.0.0](https://github.com/keen/explorer/compare/v6.3.0...v7.0.0) (2020-05-28)
+
+## [6.3.0](https://github.com/keen/explorer/compare/v6.0.28...v6.3.0) (2020-05-28)
+
+
+### Features
+
+* 🎸 cache query limits ([48e30b0](https://github.com/keen/explorer/commit/48e30b0f4bda9ce25ecb464fd28e42a263881d4e)), closes [#244](https://github.com/keen/explorer/issues/244)
+* 🎸 fix tests ([17cc37c](https://github.com/keen/explorer/commit/17cc37c8e5f9420eb9efd5d8fd977c56d7d1a4fa))
+* 🎸 saved queries ([a826c0d](https://github.com/keen/explorer/commit/a826c0db141d6945420e709a467d0cfea9d01dc2))
+
+
+### Bug Fixes
+
+* 🐛 change date to user_last_modified_date ([2c1994f](https://github.com/keen/explorer/commit/2c1994f9306fbc9f87f9c2407bd1832abd15afbf))
+* 🐛 embed code ([7381a4d](https://github.com/keen/explorer/commit/7381a4d287c6194433e91b304a5c7dff409cb6bf))
+* 🐛 Export datasets fix ([109d055](https://github.com/keen/explorer/commit/109d055088a59e29652833dcccfa28fab14c1c5f))
+* 🐛 Filters issue with "in" operator ([aa2b71d](https://github.com/keen/explorer/commit/aa2b71d6d9c622638bbfa7a402086adf5ca07e5e))
+* 🐛 Fix for displaying queries created on API level ([b7ddb99](https://github.com/keen/explorer/commit/b7ddb99f00dfffc0232c002223d92357f08e78f5))
+* 🐛 issue with parsing filters value ([a584eae](https://github.com/keen/explorer/commit/a584eae3f25c4ab832832c55069e78ab62d1f9be))
+* 🐛 save query error handlers ([dce713d](https://github.com/keen/explorer/commit/dce713d424abdff5f1a824b8c5b71d7126e80af8))
+
+## [6.2.0](https://github.com/keen/explorer/compare/v6.0.25...v6.2.0) (2020-05-12)
+
+
+### Features
+
+* 🎸 cache query limits ([48e30b0](https://github.com/keen/explorer/commit/48e30b0f4bda9ce25ecb464fd28e42a263881d4e)), closes [#244](https://github.com/keen/explorer/issues/244)
+
+
+### Bug Fixes
+
+* 🐛 change date to user_last_modified_date ([2c1994f](https://github.com/keen/explorer/commit/2c1994f9306fbc9f87f9c2407bd1832abd15afbf))
+* 🐛 embed code ([7381a4d](https://github.com/keen/explorer/commit/7381a4d287c6194433e91b304a5c7dff409cb6bf))
+* 🐛 Export datasets fix ([109d055](https://github.com/keen/explorer/commit/109d055088a59e29652833dcccfa28fab14c1c5f))
+* 🐛 Filters issue with "in" operator ([aa2b71d](https://github.com/keen/explorer/commit/aa2b71d6d9c622638bbfa7a402086adf5ca07e5e))
+* 🐛 Fix for displaying queries created on API level ([b7ddb99](https://github.com/keen/explorer/commit/b7ddb99f00dfffc0232c002223d92357f08e78f5))
+* 🐛 issue with parsing filters value ([a584eae](https://github.com/keen/explorer/commit/a584eae3f25c4ab832832c55069e78ab62d1f9be))
+* 🐛 remove sortedGroups param ([2c66385](https://github.com/keen/explorer/commit/2c66385f829a6e9d37adea172c6bdc6bd92c736e))
+* 🐛 save query error handlers ([dce713d](https://github.com/keen/explorer/commit/dce713d424abdff5f1a824b8c5b71d7126e80af8))
+
+### [6.1.4](https://github.com/keen/explorer/compare/v6.1.3...v6.1.4) (2020-05-05)
+
+
+### Bug Fixes
+
+* 🐛 embed code ([7381a4d](https://github.com/keen/explorer/commit/7381a4d287c6194433e91b304a5c7dff409cb6bf))
+* 🐛 Filters issue with "in" operator ([aa2b71d](https://github.com/keen/explorer/commit/aa2b71d6d9c622638bbfa7a402086adf5ca07e5e))
+* 🐛 Fix for displaying queries created on API level ([b7ddb99](https://github.com/keen/explorer/commit/b7ddb99f00dfffc0232c002223d92357f08e78f5))
+
 ### [6.1.3](https://github.com/keen/explorer/compare/v6.1.2...v6.1.3) (2020-04-22)
 
 

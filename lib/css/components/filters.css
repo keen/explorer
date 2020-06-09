@@ -37,6 +37,7 @@
             padding: 0.333rem;
             text-align: center;
             height: 2.3rem;
+            box-sizing: border-box;
           }
           .rc-time-picker{
             flex: 1;

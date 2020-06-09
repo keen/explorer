@@ -1,0 +1,17 @@
+{
+	"compilerOptions": {
+		"target": "esnext",
+		"moduleResolution": "node",
+		"allowJs": true,
+    "resolveJsonModule": true,
+		"importHelpers": true,
+		"allowSyntheticDefaultImports": true,
+		"esModuleInterop": true,
+    "module": "esnext",
+    "target": "es6",
+    "jsx": "react"
+	},
+  "include": [
+  	"./lib/**/*"
+  ]
+}
