@@ -14,6 +14,7 @@
     "start": "concurrently --kill-others \"NODE_ENV=development webpack-dev-server\" \"npm run postcss-watch\"",
     "postcss-watch": "node_modules/postcss-cli/bin/postcss lib/css/index.css -o test/demo/keen-explorer.css --watch --config postcss.config.js",
     "test": "jest",
+    "test:ci": "jest -w 1",
     "test:watch": "NODE_ENV=test jest --watch",
     "build": "NODE_ENV=production webpack --config webpack.config.prod.js -p && npm run build:bundle && npm run build:css && npm run build:css:min",
     "build:bundle": "NODE_ENV=production BUNDLE=1 webpack --config webpack.config.prod.js -p && NODE_ENV=production OPTIMIZE_MINIMIZE=1 BUNDLE=1 webpack --config webpack.config.prod.js -p ",
