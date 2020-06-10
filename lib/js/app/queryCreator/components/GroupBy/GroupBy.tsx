@@ -93,7 +93,7 @@ const GroupBy: FC<Props> = ({ collection }) => {
             style="outline"
             onClick={() => groupDispatcher(removeGroup(idx))}
           >
-            Remove
+            {text.removeGroup}
           </Button>
           <Select
             variant="solid"
@@ -111,7 +111,7 @@ const GroupBy: FC<Props> = ({ collection }) => {
         style="outline"
         onClick={() => groupDispatcher(addGroup())}
       >
-        Add Group
+        {text.addGroup}
       </Button>
     </>
   );

@@ -1,3 +1,4 @@
 {
-  "placeholder": "Select timezone"
+  "placeholder": "Select timezone",
+  "label": "Timezone"
 }

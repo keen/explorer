@@ -66,4 +66,16 @@ export const FIELDS_CONFIG: QueryCreatorConfig = {
     'standard_deviation',
     'select_unique',
   ],
+  orderBy: [
+    'sum',
+    'average',
+    'count',
+    'count_unique',
+    'maximum',
+    'minimum',
+    'median',
+    'percentile',
+    'standard_deviation',
+    'select_unique',
+  ],
 };

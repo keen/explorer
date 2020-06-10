@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Select } from '@keen.io/ui-core';
+import { Select, Label } from '@keen.io/ui-core';
 
 import { getTimezoneValue } from './utils/getTimezoneValue';
 import { TIMEZONES } from './constants';
@@ -31,8 +31,10 @@ const Timezone: FC<{}> = () => {
 
   return (
     <>
+      <Label htmlFor="timezone">{text.label}</Label>
       <Select
         variant="solid"
+        inputId="timezone"
         placeholder={text.placeholder}
         onChange={({ value }: { value: Timezones }) =>
           dispatch(selectTimezone(value))

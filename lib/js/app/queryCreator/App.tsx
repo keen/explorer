@@ -10,6 +10,7 @@ import {
   Analysis,
   EventCollection,
   GroupBy,
+  OrderBy,
   TargetProperty,
   Timeframe,
   Timezone,
@@ -98,6 +99,7 @@ const App: FC<Props> = ({ onPreviewCollection }) => {
       )}
       {showField('steps', analysis) && <FunnelSteps />}
       {showField('groupBy', analysis) && <GroupBy collection={collection} />}
+      {showField('orderBy', analysis) && <OrderBy />}
     </div>
   );
 };

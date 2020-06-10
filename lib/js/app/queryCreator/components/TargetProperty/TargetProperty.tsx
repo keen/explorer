@@ -46,9 +46,10 @@ const TargetProperty: FC<Props> = ({ collection }) => {
 
   return (
     <>
-      <Label>{text.label}</Label>
+      <Label htmlFor="target-property">{text.label}</Label>
       <Select
         variant="solid"
+        inputId="target-property"
         placeholder={text.placeholder}
         onChange={({ value }: { value: string }) =>
           dispatch(selectTargetProperty(value))

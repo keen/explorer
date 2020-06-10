@@ -21,7 +21,7 @@ export const initialState: ReducerState = {
   targetProperty: null,
   percentile: null,
   timezone: undefined,
-  groupBy: ['lola', 'demon'],
+  groupBy: undefined,
   timeframe: DEFAULT_TIMEFRAME,
   analysis: DEFAULT_ANALYSIS,
   steps: [],

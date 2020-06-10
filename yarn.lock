@@ -846,6 +846,13 @@
     core-js-pure "^3.0.0"
     regenerator-runtime "^0.13.4"
 
+"@babel/runtime@^7.10.2":
+  version "7.10.2"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.10.2.tgz#d103f21f2602497d38348a32e008637d506db839"
+  integrity sha512-6sF3uQw2ivImfVIl62RZ7MXhO2tap69WeWK57vAaimT6AZbE4FbqjdEJIN1UqoD6wI6B+1n9UiagafH1sxjOtg==
+  dependencies:
+    regenerator-runtime "^0.13.4"
+
 "@babel/runtime@^7.4.4", "@babel/runtime@^7.4.5", "@babel/runtime@^7.5.5", "@babel/runtime@^7.6.3", "@babel/runtime@^7.7.2", "@babel/runtime@^7.7.4", "@babel/runtime@^7.8.4", "@babel/runtime@^7.8.7", "@babel/runtime@^7.9.2", "@babel/runtime@^7.9.6":
   version "7.9.6"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.9.6.tgz#a9102eb5cadedf3f31d08a9ecf294af7827ea29f"
@@ -1290,10 +1297,10 @@
     styled-system "5.1.5"
     webfontloader "^1.6.28"
 
-"@keen.io/ui-core@^0.17.1":
-  version "0.17.1"
-  resolved "https://registry.yarnpkg.com/@keen.io/ui-core/-/ui-core-0.17.1.tgz#f7755c7dc6ffddafec586950fba98438b0c83061"
-  integrity sha512-lfaURC+s32VZWIVK123Chsb0xM8f36kX5jICYK+Gr1i+FtZ3vDfIZsEfmnekg1vM4UQQJAXHZXFuvWDECyYNUA==
+"@keen.io/ui-core@^0.19.0":
+  version "0.19.0"
+  resolved "https://registry.yarnpkg.com/@keen.io/ui-core/-/ui-core-0.19.0.tgz#dbc67b3f87ac6476b2f5da8acd5bd32ec547cac3"
+  integrity sha512-GhPKP+9Mm1k0oa/Egrqh9eGYJtb287x9ovFYxlzo1gu7M0a7Bg3kZeZo8e49plz+zxF+wR4jLHyM79dvpFg4hQ==
   dependencies:
     "@keen.io/colors" "^0.2.0"
     "@keen.io/icons" "^0.4.2"
@@ -1488,6 +1495,16 @@
   dependencies:
     "@styled-system/core" "^5.1.2"
     "@styled-system/css" "^5.1.5"
+
+"@testing-library/dom@>=5":
+  version "7.11.0"
+  resolved "https://registry.yarnpkg.com/@testing-library/dom/-/dom-7.11.0.tgz#db8678bc55aef7cd6091d1510e8d0949d77d79fd"
+  integrity sha512-2j+zfA6dwnzozReA2XrbZs3e9DD9UdetONrWmumIY2QdGH0h08hRW+SaLE8kIytM6KPO5yzypHZhK5AZNFEtiw==
+  dependencies:
+    "@babel/runtime" "^7.10.2"
+    aria-query "^4.0.2"
+    dom-accessibility-api "^0.4.5"
+    pretty-format "^25.5.0"
 
 "@testing-library/dom@^7.2.2":
   version "7.5.7"
@@ -4956,6 +4973,11 @@ dom-accessibility-api@^0.4.4:
   version "0.4.4"
   resolved "https://registry.yarnpkg.com/dom-accessibility-api/-/dom-accessibility-api-0.4.4.tgz#c2f9fb8b591bc19581e7ef3e6fe35baf1967c498"
   integrity sha512-XBM62jdDc06IXSujkqw6BugEWiDkp6jphtzVJf1kgPQGvfzaU7/jRtRSF/mxc8DBCIm2LS3bN1dCa5Sfxx982A==
+
+dom-accessibility-api@^0.4.5:
+  version "0.4.5"
+  resolved "https://registry.yarnpkg.com/dom-accessibility-api/-/dom-accessibility-api-0.4.5.tgz#d9c1cefa89f509d8cf132ab5d250004d755e76e3"
+  integrity sha512-HcPDilI95nKztbVikaN2vzwvmv0sE8Y2ZJFODy/m15n7mGXLeOKGiys9qWVbFbh+aq/KYj2lqMLybBOkYAEXqg==
 
 dom-align@^1.7.0:
   version "1.12.0"
@@ -11826,6 +11848,13 @@ react-redux@^7.2.0:
     loose-envify "^1.4.0"
     prop-types "^15.7.2"
     react-is "^16.9.0"
+
+react-select-event@^4.1.4:
+  version "4.1.4"
+  resolved "https://registry.yarnpkg.com/react-select-event/-/react-select-event-4.1.4.tgz#e0aedcf54d1152ce7742b06d81c4cc27d65e1e32"
+  integrity sha512-GDoyzB/oTEOy/DC2OhSAlcxcys4ULn3W4Rp/H0EypsPFhVe82gO7RUBRZHN3CarqeUdhhLVU0ko2k0eZyhD51A==
+  dependencies:
+    "@testing-library/dom" ">=5"
 
 react-select@^3.0.4, react-select@^3.1.0:
   version "3.1.0"
