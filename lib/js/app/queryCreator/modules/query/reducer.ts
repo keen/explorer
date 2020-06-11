@@ -6,6 +6,7 @@ import {
   SET_PERCENTILE,
   SET_TIMEFRAME,
   SET_GROUP_BY,
+  SET_ORDER_BY,
   DEFAULT_ANALYSIS,
   DEFAULT_TIMEFRAME,
   ADD_FUNNEL_STEP,
@@ -22,6 +23,7 @@ export const initialState: ReducerState = {
   percentile: null,
   timezone: undefined,
   groupBy: undefined,
+  orderBy: undefined,
   timeframe: DEFAULT_TIMEFRAME,
   analysis: DEFAULT_ANALYSIS,
   steps: [],
@@ -31,7 +33,6 @@ export const queryReducer = (
   state: ReducerState = initialState,
   action: QueryActions
 ) => {
-      console.log(state, 'STATE');
   switch (action.type) {
     case UPDATE_FUNNEL_STEP:
       return {
@@ -57,6 +58,11 @@ export const queryReducer = (
       return {
         ...state,
         steps: [...state.steps, DEFAULT_FUNNEL_STEP],
+      };
+    case SET_ORDER_BY:
+      return {
+        ...state,
+        orderBy: action.payload.orderBy,
       };
     case SET_GROUP_BY:
       return {

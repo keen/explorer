@@ -1,6 +1,12 @@
 import { groupByReducer, initialState } from './reducer';
 
-import { setGroups, addGroup, removeGroup, selectGroupProperty, resetGroups } from './actions';
+import {
+  setGroups,
+  addGroup,
+  removeGroup,
+  selectGroupProperty,
+  resetGroups,
+} from './actions';
 
 test('set groups', () => {
   const groups = ['city'];

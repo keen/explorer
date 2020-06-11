@@ -1,25 +1,124 @@
-import React, { FC } from 'react';
-import { useSelector } from 'react-redux';
-import { Label } from '@keen.io/ui-core';
+import React, { FC, useMemo, useRef, useEffect, useCallback } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import shallowEqual from 'shallowequal';
+import { Button, Label, Select } from '@keen.io/ui-core';
 
-import { getGroupBy } from '../../modules/query';
+import { serializeOrderBy } from './utils/serializeOrderBy';
+import text from './text.json';
+
+import { setOrderBy, getGroupBy, getOrderBy } from '../../modules/query';
+
+import {
+  ORDER_OPTIONS,
+  DIRECTION_OPTIONS,
+  DIRECTION_LABELS,
+  DEFAULT_ORDER_SETTINGS,
+} from './constants';
+
+import { AppState, OrderBy as OrderBySettings } from '../../types';
 
 type Props = {};
 
 const OrderBy: FC<Props> = () => {
-  const groupBy = useSelector(getGroupBy);
+  const dispatch = useDispatch();
+  const groups: string[] = useSelector((state: AppState) => {
+    const groupBy = getGroupBy(state);
+    if (groupBy) {
+      if (Array.isArray(groupBy)) return groupBy;
+      if (typeof groupBy === 'string') return [groupBy];
+    }
+    return [];
+  }, shallowEqual);
 
-  const notEmptyGroups = Array.isArray(groupBy) && groupBy.length;
-  const showOrderOptions = notEmptyGroups || groupBy;
+  const orderBy = useSelector((state: AppState) => {
+    const orderSettings = getOrderBy(state);
+    return serializeOrderBy(orderSettings);
+  });
+
+  const options = useMemo(() => {
+    return [
+      ...ORDER_OPTIONS,
+      ...groups.map((groupProperty) => ({
+        label: groupProperty,
+        value: groupProperty,
+      })),
+    ];
+  }, [groups]);
+
+  const orderRef = useRef(orderBy);
+
+  const updateOrderBy = useCallback(
+    (orderSettings: OrderBySettings, index: number) => {
+      const orderBySettings = orderBy.map((order, idx) => {
+        if (idx === index) return orderSettings;
+        return order;
+      });
+      dispatch(setOrderBy(orderBySettings));
+    },
+    [orderBy]
+  );
+
+  useEffect(() => {
+    if (!shallowEqual(orderBy, orderRef.current)) {
+      dispatch(setOrderBy(orderBy));
+    }
+    orderRef.current = orderBy;
+  }, [orderBy]);
+
+  const showOrderOptions = groups.length;
 
   return (
     <>
-    <Label>order by</Label>
-    {showOrderOptions ? (
-      'show options'
-    ) : (
-      'set groupBy'
-    )}
+      <Label>order by</Label>
+      {showOrderOptions ? (
+        <div>
+          <Button
+            variant="secondary"
+            style="outline"
+            onClick={() =>
+              dispatch(setOrderBy([...orderBy, DEFAULT_ORDER_SETTINGS]))
+            }
+          >
+            Add order settings
+          </Button>
+          {orderBy.map(({ propertyName, direction }, idx) => (
+            <div key={idx}>
+              <Select
+                inputId={`${idx}-order-property`}
+                variant="solid"
+                options={options}
+                onChange={({ value }: { value: string }) => {
+                  const orderSettings = { propertyName: value, direction };
+                  updateOrderBy(orderSettings as OrderBySettings, idx);
+                }}
+                placeholder={text.propetyPlaceholder}
+                value={
+                  propertyName
+                    ? { label: propertyName, value: propertyName }
+                    : null
+                }
+              />
+              <Select
+                inputId={`${idx}-order-direction`}
+                variant="solid"
+                options={DIRECTION_OPTIONS}
+                onChange={({ value }: { value: string }) => {
+                  const orderSettings = { propertyName, direction: value };
+                  updateOrderBy(orderSettings as OrderBySettings, idx);
+                }}
+                placeholder={text.directionPlaceholder}
+                value={
+                  direction
+                    ? { label: DIRECTION_LABELS[direction], value: direction }
+                    : null
+                }
+              />
+            </div>
+          ))}
+        </div>
+      ) : (
+        text.specifyGroupBy
+      )}
     </>
   );
 };

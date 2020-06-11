@@ -19,3 +19,5 @@ export const getTimezone = (state: AppState) => state.query.timezone;
 export const getFunnelSteps = (state: AppState) => state.query.steps;
 
 export const getGroupBy = (state: AppState) => state.query.groupBy;
+
+export const getOrderBy = (state: AppState) => state.query.orderBy;

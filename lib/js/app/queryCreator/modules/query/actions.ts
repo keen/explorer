@@ -5,6 +5,7 @@ import {
   SET_PERCENTILE,
   SET_TIMEFRAME,
   SET_GROUP_BY,
+  SET_ORDER_BY,
   SELECT_TIMEZONE,
   ADD_FUNNEL_STEP,
   UPDATE_FUNNEL_STEP_EVENT_COLLECTION,
@@ -13,7 +14,7 @@ import {
 } from './constants';
 
 import { QueryActions } from './types';
-import { Timezones, Timeframe, FunnelStep } from '../../types';
+import { Timezones, Timeframe, OrderBy, FunnelStep } from '../../types';
 import { Analysis } from '../../../types';
 
 export const selectEventCollection = (name: string): QueryActions => ({
@@ -55,6 +56,13 @@ export const setGroupBy = (groupBy?: string | string[]): QueryActions => ({
   type: SET_GROUP_BY,
   payload: {
     groupBy,
+  },
+});
+
+export const setOrderBy = (orderBy?: OrderBy[]): QueryActions => ({
+  type: SET_ORDER_BY,
+  payload: {
+    orderBy,
   },
 });
 

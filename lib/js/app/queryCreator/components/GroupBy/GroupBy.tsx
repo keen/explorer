@@ -56,7 +56,7 @@ const GroupBy: FC<Props> = ({ collection }) => {
 
   useEffect(() => {
     return () => dispatch(setGroupBy(undefined));
-  }, [])
+  }, []);
 
   useEffect(() => {
     if (collection) groupDispatcher(resetGroups());

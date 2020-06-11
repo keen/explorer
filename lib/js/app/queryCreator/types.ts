@@ -23,6 +23,11 @@ type FieldRule = ('*' | Analysis)[];
 
 export type QueryCreatorConfig = Record<CreatorFields, FieldRule>;
 
+export type OrderBy = {
+  propertyName: string;
+  direction: 'ASC' | 'DESC';
+};
+
 export type Timeframe =
   | string
   | {

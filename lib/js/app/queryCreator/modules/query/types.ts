@@ -5,6 +5,7 @@ import {
   SET_PERCENTILE,
   SET_TIMEFRAME,
   SET_GROUP_BY,
+  SET_ORDER_BY,
   SELECT_TIMEZONE,
   ADD_FUNNEL_STEP,
   REMOVE_FUNNEL_STEP,
@@ -13,7 +14,7 @@ import {
   CHANGE_FUNNEL_STEPS_ORDER,
 } from './constants';
 
-import { Timezones, Timeframe, FunnelStep } from '../../types';
+import { Timezones, Timeframe, OrderBy, FunnelStep } from '../../types';
 import { Analysis } from '../../../types';
 
 export type ReducerState = {
@@ -22,6 +23,7 @@ export type ReducerState = {
   percentile?: number;
   timezone?: number | Timezones;
   groupBy?: string | string[];
+  orderBy?: string | OrderBy | OrderBy[];
   timeframe: Timeframe;
   analysis: Analysis;
   steps: FunnelStep[];
@@ -76,6 +78,13 @@ export interface SetGroupByAction {
   };
 }
 
+export interface SetOrderByAction {
+  type: typeof SET_ORDER_BY;
+  payload: {
+    orderBy: OrderBy[] | undefined;
+  };
+}
+
 export interface AddFunnelStepAction {
   type: typeof ADD_FUNNEL_STEP;
 }
@@ -116,6 +125,7 @@ export type QueryActions =
   | SelectTargetPropertyAction
   | SetPercentileAction
   | SetGroupByAction
+  | SetOrderByAction
   | SetTimeframeAction
   | SelectTimezoneAction
   | AddFunnelStepAction
