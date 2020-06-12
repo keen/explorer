@@ -8,4 +8,4 @@ dist
 config.js
 .idea/
 .package-lock.json
-.nprmc
+.npmrc
