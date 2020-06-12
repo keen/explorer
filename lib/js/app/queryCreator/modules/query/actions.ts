@@ -6,6 +6,7 @@ import {
   SET_TIMEFRAME,
   SET_GROUP_BY,
   SET_ORDER_BY,
+  SET_LIMIT,
   SELECT_TIMEZONE,
   ADD_FUNNEL_STEP,
   UPDATE_FUNNEL_STEP_EVENT_COLLECTION,
@@ -63,6 +64,13 @@ export const setOrderBy = (orderBy?: OrderBy[]): QueryActions => ({
   type: SET_ORDER_BY,
   payload: {
     orderBy,
+  },
+});
+
+export const setLimit = (limit?: number): QueryActions => ({
+  type: SET_LIMIT,
+  payload: {
+    limit,
   },
 });
 

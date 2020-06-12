@@ -7,6 +7,7 @@ import { colors } from '@keen.io/colors';
 import { PreviewCollections, PreviewLabel } from './App.styles';
 
 import {
+  Accordion,
   Analysis,
   EventCollection,
   GroupBy,
@@ -98,8 +99,16 @@ const App: FC<Props> = ({ onPreviewCollection }) => {
         <Timezone />
       )}
       {showField('steps', analysis) && <FunnelSteps />}
-      {showField('groupBy', analysis) && <GroupBy collection={collection} />}
-      {showField('orderBy', analysis) && <OrderBy />}
+      {showField('groupBy', analysis) && (
+        <Accordion renderHeader={() => <div>Group By</div>}>
+          <GroupBy collection={collection} />
+        </Accordion>
+      )}
+      {showField('orderBy', analysis) && (
+        <Accordion renderHeader={() => <div>Order By</div>}>
+          <OrderBy />
+        </Accordion>
+      )}
     </div>
   );
 };

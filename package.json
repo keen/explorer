@@ -42,6 +42,7 @@
     "core-js": "^3.6.5",
     "csv-parse": "^4.8.7",
     "csv-stringify": "^5.3.6",
+    "framer-motion": "^1.11.0",
     "json-stable-stringify": "1.0.0",
     "keen-analysis": "^3.4.2",
     "keen-dataviz": "^3.13.6",

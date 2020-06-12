@@ -1,7 +1,9 @@
 import React, { FC, useMemo, useRef, useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import shallowEqual from 'shallowequal';
-import { Button, Label, Select } from '@keen.io/ui-core';
+import { Button, Select } from '@keen.io/ui-core';
+import { Icon } from '@keen.io/icons';
+import { colors } from '@keen.io/colors';
 
 import { serializeOrderBy } from './utils/serializeOrderBy';
 import text from './text.json';
@@ -58,6 +60,14 @@ const OrderBy: FC<Props> = () => {
     [orderBy]
   );
 
+  const removeOrderBy = useCallback(
+    (index: number) => {
+      const orderBySettings = orderBy.filter((_order, idx) => index !== idx);
+      dispatch(setOrderBy(orderBySettings));
+    },
+    [orderBy]
+  );
+
   useEffect(() => {
     if (!shallowEqual(orderBy, orderRef.current)) {
       dispatch(setOrderBy(orderBy));
@@ -69,7 +79,6 @@ const OrderBy: FC<Props> = () => {
 
   return (
     <>
-      <Label>order by</Label>
       {showOrderOptions ? (
         <div>
           <Button
@@ -83,6 +92,9 @@ const OrderBy: FC<Props> = () => {
           </Button>
           {orderBy.map(({ propertyName, direction }, idx) => (
             <div key={idx}>
+              <div onClick={() => removeOrderBy(idx)}>
+                <Icon type="close" fill={colors.blue['500']} />
+              </div>
               <Select
                 inputId={`${idx}-order-property`}
                 variant="solid"

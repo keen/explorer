@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useRef, useMemo, useReducer } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import shallowEqual from 'shallowequal';
-import { Button, Label, Select } from '@keen.io/ui-core';
+import { Button, Select, Label } from '@keen.io/ui-core';
 
 import {
   addGroup,
@@ -84,7 +84,6 @@ const GroupBy: FC<Props> = ({ collection }) => {
 
   return (
     <>
-      <Label>{text.groupBy}</Label>
       {state.map((property, idx) => (
         <div key={idx}>
           <Label>Group {idx + 1}</Label>

@@ -6,6 +6,7 @@ import {
   SET_TIMEFRAME,
   SET_GROUP_BY,
   SET_ORDER_BY,
+  SET_LIMIT,
   SELECT_TIMEZONE,
   ADD_FUNNEL_STEP,
   REMOVE_FUNNEL_STEP,
@@ -24,6 +25,7 @@ export type ReducerState = {
   timezone?: number | Timezones;
   groupBy?: string | string[];
   orderBy?: string | OrderBy | OrderBy[];
+  limit?: number;
   timeframe: Timeframe;
   analysis: Analysis;
   steps: FunnelStep[];
@@ -85,6 +87,13 @@ export interface SetOrderByAction {
   };
 }
 
+export interface SetLimitAction {
+  type: typeof SET_LIMIT;
+  payload: {
+    limit: number | undefined;
+  };
+}
+
 export interface AddFunnelStepAction {
   type: typeof ADD_FUNNEL_STEP;
 }
@@ -126,6 +135,7 @@ export type QueryActions =
   | SetPercentileAction
   | SetGroupByAction
   | SetOrderByAction
+  | SetLimitAction
   | SetTimeframeAction
   | SelectTimezoneAction
   | AddFunnelStepAction

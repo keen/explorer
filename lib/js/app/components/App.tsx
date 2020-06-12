@@ -214,7 +214,7 @@ class App extends Component {
         limit,
         percentile,
       },
-      ...(timezone ? { timezone } : {})
+      ...(timezone ? { timezone } : {}),
     };
 
     if (analysisType === 'extraction') {

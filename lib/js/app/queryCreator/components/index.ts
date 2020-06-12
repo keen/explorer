@@ -7,8 +7,10 @@ import Timezone from './Timezone';
 import GroupBy from './GroupBy';
 import OrderBy from './OrderBy';
 import FunnelSteps from './FunnelSteps';
+import Accordion from './Accordion';
 
 export {
+  Accordion,
   Analysis,
   Percentile,
   GroupBy,

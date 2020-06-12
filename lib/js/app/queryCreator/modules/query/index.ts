@@ -8,6 +8,7 @@ import {
   getTimezone,
   getGroupBy,
   getOrderBy,
+  getLimit,
   getFunnelSteps,
 } from './selectors';
 
@@ -19,6 +20,7 @@ import {
   setPercentile,
   setGroupBy,
   setOrderBy,
+  setLimit,
   setTimeframe,
   addFunnelStep,
   updateFunnelStep,
@@ -47,10 +49,12 @@ export {
   getTimezone,
   getGroupBy,
   getOrderBy,
+  getLimit,
   getTimeframe,
   setTimeframe,
   setGroupBy,
   setOrderBy,
+  setLimit,
   setPercentile,
   selectTimezone,
   addFunnelStep,
