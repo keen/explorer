@@ -433,11 +433,6 @@
   color: #fff
 }
 
-.CalendarDay__last_in_range,
-.CalendarDay__last_in_range:hover {
-  border-style: solid
-}
-
 .CalendarDay__selected,
 .CalendarDay__selected:active,
 .CalendarDay__selected:hover {
@@ -473,6 +468,16 @@
   background: #fff;
   border: 1px solid #e4e7e7;
   color: #cacccd
+}
+
+.CalendarDay__hovered_start_first_possible_end {
+  background: #eceeee;
+  border: 1px double #eceeee
+}
+
+.CalendarDay__hovered_start_blocked_min_nights {
+  background: #eceeee;
+  border: 1px double #e4e7e7
 }
 
 .CalendarMonth {
@@ -524,13 +529,9 @@
   left: 9px
 }
 
-.CalendarMonthGrid__vertical {
-  margin: 0 auto
-}
-
+.CalendarMonthGrid__vertical,
 .CalendarMonthGrid__vertical_scrollable {
-  margin: 0 auto;
-  overflow-y: scroll
+  margin: 0 auto
 }
 
 .CalendarMonthGrid_month__horizontal {
@@ -559,6 +560,10 @@
   height: 0
 }
 
+.DayPickerNavigation__verticalScrollable_prevNav {
+  z-index: 1
+}
+
 .DayPickerNavigation__verticalDefault {
   position: absolute;
   width: 100%;
@@ -569,6 +574,17 @@
 
 .DayPickerNavigation__verticalScrollableDefault {
   position: relative
+}
+
+.DayPickerNavigation__bottom {
+  height: auto
+}
+
+.DayPickerNavigation__bottomDefault {
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  display: flex;
+  justify-content: space-between
 }
 
 .DayPickerNavigation_button {
@@ -619,6 +635,11 @@
   padding: 6px 9px
 }
 
+.DayPickerNavigation_bottomButton__horizontalDefault {
+  position: static;
+  margin: -10px 22px 30px
+}
+
 .DayPickerNavigation_leftButton__horizontalDefault {
   left: 22px
 }
@@ -642,7 +663,8 @@
   border-left: 0
 }
 
-.DayPickerNavigation_nextButton__verticalScrollableDefault {
+.DayPickerNavigation_nextButton__verticalScrollableDefault,
+.DayPickerNavigation_prevButton__verticalScrollableDefault {
   width: 100%
 }
 
