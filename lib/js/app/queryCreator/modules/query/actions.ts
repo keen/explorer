@@ -7,6 +7,7 @@ import {
   SET_TIMEFRAME,
   SET_GROUP_BY,
   SET_ORDER_BY,
+  SET_PROPERTY_NAMES,
   SET_LIMIT,
   SELECT_TIMEZONE,
   ADD_FUNNEL_STEP,
@@ -23,6 +24,13 @@ export const setQuery = (query: Partial<Query>): QueryActions => ({
   type: SET_QUERY,
   payload: {
     query,
+  },
+});
+
+export const setPropertyNames = (propertyNames: string[]) => ({
+  type: SET_PROPERTY_NAMES,
+  payload: {
+    propertyNames,
   },
 });
 

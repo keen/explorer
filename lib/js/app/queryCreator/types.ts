@@ -18,7 +18,8 @@ export type CreatorFields =
   | 'groupBy'
   | 'orderBy'
   | 'limit'
-  | 'steps';
+  | 'steps'
+  | 'propertyNames';
 
 type FieldRule = ('*' | Analysis)[];
 

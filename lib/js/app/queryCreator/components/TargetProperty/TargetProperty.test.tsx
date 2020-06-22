@@ -26,7 +26,7 @@ const render = (storeState: any = {}, props: any = {}) => {
 test('allows user to select target property', async () => {
   const storeState = {
     query: {
-      targetProperty: null,
+      targetProperty: 'date',
     },
     events: {
       schemas: {
@@ -56,7 +56,7 @@ test('allows user to select target property', async () => {
 test('reset target property settings', async () => {
   const storeState = {
     query: {
-      targetProperty: null,
+      targetProperty: 'date',
     },
     events: {
       schemas: {

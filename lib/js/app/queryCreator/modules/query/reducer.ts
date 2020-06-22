@@ -4,6 +4,7 @@ import {
   SELECT_TIMEZONE,
   SELECT_TARGET_PROPERTY,
   SET_QUERY,
+  SET_PROPERTY_NAMES,
   SET_PERCENTILE,
   SET_TIMEFRAME,
   SET_GROUP_BY,
@@ -41,6 +42,11 @@ export const queryReducer = (
         ...initialState,
         ...action.payload.query,
       };
+    case SET_PROPERTY_NAMES:
+        return {
+          ...state,
+          propertyNames: action.payload.propertyNames,
+        }
     case UPDATE_FUNNEL_STEP:
       return {
         ...state,

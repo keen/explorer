@@ -9,11 +9,13 @@ import OrderBy from './OrderBy';
 import FunnelSteps from './FunnelSteps';
 import Limit from './Limit';
 import Accordion from './Accordion';
+import Extraction from './Extraction';
 
 export {
   Accordion,
   Analysis,
   Percentile,
+  Extraction,
   GroupBy,
   OrderBy,
   TargetProperty,

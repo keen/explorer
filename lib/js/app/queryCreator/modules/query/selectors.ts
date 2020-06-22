@@ -23,3 +23,5 @@ export const getGroupBy = (state: AppState) => state.query.groupBy;
 export const getOrderBy = (state: AppState) => state.query.orderBy;
 
 export const getLimit = (state: AppState) => state.query.limit;
+
+export const getExtractionPropertyNames = (state: AppState) => state.query.propertyNames;

@@ -10,6 +10,7 @@ import {
   Accordion,
   Analysis,
   EventCollection,
+  Extraction,
   GroupBy,
   OrderBy,
   TargetProperty,
@@ -72,6 +73,7 @@ const App: FC<Props> = ({ onPreviewCollection }) => {
           dispatch(selectAnalysis(updatedAnalysis))
         }
       />
+      {analysis === 'extraction' && <Extraction collection={collection} />}
       {showField('targetProperty', analysis) && (
         <FieldGroup>
           <TargetProperty collection={collection} />

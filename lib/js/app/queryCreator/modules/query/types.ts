@@ -8,6 +8,7 @@ import {
   SET_GROUP_BY,
   SET_ORDER_BY,
   SET_LIMIT,
+  SET_PROPERTY_NAMES,
   SELECT_TIMEZONE,
   ADD_FUNNEL_STEP,
   REMOVE_FUNNEL_STEP,
@@ -29,7 +30,8 @@ export type ReducerState = {
   limit?: number;
   timeframe: Timeframe;
   analysisType: Analysis;
-  steps: FunnelStep[];
+  steps?: FunnelStep[];
+  propertyNames?: string | string[];
 };
 
 export interface SetQuery {
@@ -72,6 +74,13 @@ export interface SetPercentileAction {
   payload: {
     percentile: number;
   };
+}
+
+export interface SetPropertyNamesAction {
+  type: typeof SET_PROPERTY_NAMES;
+  payload: {
+    propertyNames: string[];
+  }
 }
 
 export interface SetTimeframeAction {
@@ -145,6 +154,7 @@ export type QueryActions =
   | SetGroupByAction
   | SetOrderByAction
   | SetLimitAction
+  | SetPropertyNamesAction
   | SetTimeframeAction
   | SelectTimezoneAction
   | AddFunnelStepAction
