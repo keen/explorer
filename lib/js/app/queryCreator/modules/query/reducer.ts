@@ -3,6 +3,7 @@ import {
   SELECT_ANALYSIS,
   SELECT_TIMEZONE,
   SELECT_TARGET_PROPERTY,
+  SET_QUERY,
   SET_PERCENTILE,
   SET_TIMEFRAME,
   SET_GROUP_BY,
@@ -26,7 +27,7 @@ export const initialState: ReducerState = {
   orderBy: undefined,
   limit: undefined,
   timeframe: DEFAULT_TIMEFRAME,
-  analysis: DEFAULT_ANALYSIS,
+  analysisType: DEFAULT_ANALYSIS,
   steps: [],
 };
 
@@ -35,6 +36,11 @@ export const queryReducer = (
   action: QueryActions
 ) => {
   switch (action.type) {
+    case SET_QUERY:
+      return {
+        ...initialState,
+        ...action.payload.query,
+      };
     case UPDATE_FUNNEL_STEP:
       return {
         ...state,
@@ -93,7 +99,7 @@ export const queryReducer = (
     case SELECT_ANALYSIS:
       return {
         ...state,
-        analysis: action.payload.analysis,
+        analysisType: action.payload.analysis,
       };
     case SELECT_EVENT_COLLECTION:
       return {

@@ -4,18 +4,18 @@ import { ReducerState as QueryState } from '../modules/query';
 import { FIELDS_CONFIG } from '../config';
 
 export const transformToQuery = (query: QueryState) => {
-  const { analysis, ...queryProperties } = query;
-  const queryCopy = {  ...queryProperties };
+  const { analysisType, ...queryProperties } = query;
+  const queryCopy = { ...queryProperties };
 
   Object.keys(queryProperties).forEach((fieldName) => {
     const fieldConfig = FIELDS_CONFIG[fieldName];
-    if (!fieldConfig.includes(analysis)) {
+    if (fieldConfig && !fieldConfig.includes(analysisType)) {
       delete queryCopy[fieldName];
     }
   });
 
-  return {
-    analysis,
-    ...snakeCase(queryCopy),
-  };
+  return snakeCase({
+    analysisType,
+    ...queryCopy,
+  });
 };

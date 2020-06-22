@@ -14,6 +14,7 @@ import {
 } from './selectors';
 
 import {
+  setQuery,
   selectEventCollection,
   selectTargetProperty,
   selectTimezone,
@@ -57,6 +58,7 @@ export {
   setGroupBy,
   setOrderBy,
   setLimit,
+  setQuery,
   setPercentile,
   selectTimezone,
   addFunnelStep,

@@ -5,6 +5,7 @@ import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import createSagaMiddleware from 'redux-saga';
+import { getPubSub } from '@keen.io/pubsub';
 import KeenAnalysis from 'keen-analysis';
 import KeenTracking from 'keen-tracking';
 
@@ -42,6 +43,7 @@ export class KeenExplorer {
     const sagaMiddleware = createSagaMiddleware({
       context: {
         keenClient: client,
+        pubsub: getPubSub(),
       },
     });
     const composeEnhancers = composeWithDevTools({});

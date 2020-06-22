@@ -1,7 +1,9 @@
-import { takeLatest, select, put } from 'redux-saga/effects';
+import { takeLatest, select, getContext, put } from 'redux-saga/effects';
 
 import { updateSaveQuery } from './actions';
 import { convertMilisecondsToMinutes } from './utils';
+
+import { SET_QUERY_EVENT } from '../../queryCreator';
 
 import { SELECT_SAVED_QUERY } from './constants';
 
@@ -11,10 +13,11 @@ import { SelectSavedQueryAction } from './types';
 
 function* selectSavedQuery({ payload }: SelectSavedQueryAction) {
   const { name } = payload;
+  const pubsub = yield getContext('pubsub');
   const savedQueries = yield select(getSavedQueries);
 
   try {
-    const { query_name, refresh_rate, metadata } = savedQueries.find(
+    const { query_name, refresh_rate, metadata, query } = savedQueries.find(
       ({ query_name }) => query_name === name
     );
     const savedQuery = {
@@ -24,6 +27,8 @@ function* selectSavedQuery({ payload }: SelectSavedQueryAction) {
       refreshRate: convertMilisecondsToMinutes(refresh_rate),
       exists: true,
     };
+
+    pubsub.publish(SET_QUERY_EVENT, { query });
 
     yield put(updateSaveQuery(savedQuery));
   } catch (err) {

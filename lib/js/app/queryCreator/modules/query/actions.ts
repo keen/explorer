@@ -1,4 +1,5 @@
 import {
+  SET_QUERY,
   SELECT_EVENT_COLLECTION,
   SELECT_ANALYSIS,
   SELECT_TARGET_PROPERTY,
@@ -14,9 +15,16 @@ import {
   REMOVE_FUNNEL_STEP,
 } from './constants';
 
-import { QueryActions } from './types';
+import { QueryActions, ReducerState as Query } from './types';
 import { Timezones, Timeframe, OrderBy, FunnelStep } from '../../types';
 import { Analysis } from '../../../types';
+
+export const setQuery = (query: Partial<Query>): QueryActions => ({
+  type: SET_QUERY,
+  payload: {
+    query,
+  },
+});
 
 export const selectEventCollection = (name: string): QueryActions => ({
   type: SELECT_EVENT_COLLECTION,

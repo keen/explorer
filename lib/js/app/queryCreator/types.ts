@@ -9,7 +9,7 @@ export type AppState = {
 };
 
 export type CreatorFields =
-  | 'analysis'
+  | 'analysisType'
   | 'eventCollection'
   | 'targetProperty'
   | 'percentile'

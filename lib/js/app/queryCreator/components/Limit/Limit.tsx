@@ -12,21 +12,18 @@ const Limit: FC<Props> = () => {
   const dispatch = useDispatch();
   const limit = useSelector(getLimit);
 
-  const changeHandler = useCallback(
-    (eventValue) => {
-      if (eventValue) {
-        const limitValue = parseInt(eventValue);
-        dispatch(setLimit(limitValue));
-      } else {
-        dispatch(setLimit(undefined));
-      }
-    },
-    []
-  );
+  const changeHandler = useCallback((eventValue) => {
+    if (eventValue) {
+      const limitValue = parseInt(eventValue);
+      dispatch(setLimit(limitValue));
+    } else {
+      dispatch(setLimit(undefined));
+    }
+  }, []);
 
   useEffect(() => {
-    return () =>   dispatch(setLimit(undefined));
-  }, [])
+    return () => dispatch(setLimit(undefined));
+  }, []);
 
   return (
     <>
@@ -35,11 +32,11 @@ const Limit: FC<Props> = () => {
         type="number"
         id="limit"
         variant="solid"
-        value={limit}
+        value={limit ? limit : undefined}
         onChange={(e) => changeHandler(e.target.value)}
       />
     </>
   );
-}
+};
 
 export default Limit;

@@ -1,4 +1,4 @@
-import React, { FC, useMemo, useEffect, useCallback } from 'react';
+import React, { FC, useMemo, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Label, Select, Button, Checkbox, Title } from '@keen.io/ui-core';
 import { FieldGroup } from '@keen.io/forms';
@@ -61,16 +61,6 @@ const FunnelStep: FC<Props> = ({
     return [];
   }, [collectionSchema]);
 
-  useEffect(() => {
-    if (actorProperty) {
-      dispatch(
-        updateStep({
-          actorProperty: undefined,
-        })
-      );
-    }
-  }, [eventCollection]);
-
   const updateStep = useCallback(
     (step: Partial<FunnelStep>) => dispatch(updateFunnelStep(index, step)),
     [index]
@@ -83,7 +73,7 @@ const FunnelStep: FC<Props> = ({
         collection={eventCollection}
         onChange={(collection) => {
           dispatch(updateFunnelStepEventCollection(collection));
-          updateStep({ eventCollection: collection });
+          updateStep({ eventCollection: collection, actorProperty: undefined });
         }}
       />
       <FieldGroup>

@@ -1280,10 +1280,10 @@
     "@keen.io/colors" "^0.2.0"
     react "^16.12.0"
 
-"@keen.io/pubsub@^0.1.0":
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/@keen.io/pubsub/-/pubsub-0.1.0.tgz#655f9c5557e15a5bb2a7d25751d9511df59cdc7d"
-  integrity sha512-r9FtVqX282x8LRbUGH1pZirQTpR4jgSSyHvtOyeOSRuv+VKor3bGbT5zH7cAt+tWW6trBPkX4pvnmr12nt0kPQ==
+"@keen.io/pubsub@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@keen.io/pubsub/-/pubsub-0.2.0.tgz#7d2f1d903d12e11ddff8e150ec8e53475fca2327"
+  integrity sha512-SIPrwH2MTGaVaRqEEa0Nd1/RPOcX2QFxBSIiQvZ0U7DxMkt4MbDmpZHgYTsBRwJ1PAXvC27KQqTrjentgctS3w==
 
 "@keen.io/ui-core@^0.17.0":
   version "0.17.0"

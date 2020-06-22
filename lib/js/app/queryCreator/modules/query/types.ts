@@ -1,4 +1,5 @@
 import {
+  SET_QUERY,
   SELECT_EVENT_COLLECTION,
   SELECT_ANALYSIS,
   SELECT_TARGET_PROPERTY,
@@ -27,9 +28,16 @@ export type ReducerState = {
   orderBy?: string | OrderBy | OrderBy[];
   limit?: number;
   timeframe: Timeframe;
-  analysis: Analysis;
+  analysisType: Analysis;
   steps: FunnelStep[];
 };
+
+export interface SetQuery {
+  type: typeof SET_QUERY;
+  payload: {
+    query: Partial<ReducerState>;
+  };
+}
 
 export interface SelectEventCollectionAction {
   type: typeof SELECT_EVENT_COLLECTION;
@@ -129,6 +137,7 @@ export interface ChangeFunnelStepsOrderAction {
 }
 
 export type QueryActions =
+  | SetQuery
   | SelectEventCollectionAction
   | SelectAnalysisAction
   | SelectTargetPropertyAction

@@ -1,7 +1,7 @@
 import { QueryCreatorConfig } from './types';
 
 export const FIELDS_CONFIG: QueryCreatorConfig = {
-  analysis: ['*'],
+  analysisType: ['*'],
   eventCollection: [
     'sum',
     'average',

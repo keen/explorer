@@ -110,9 +110,7 @@ const App: FC<Props> = ({ onPreviewCollection }) => {
           <OrderBy />
         </Accordion>
       )}
-      {showField('limit', analysis) && (
-        <Limit />
-      )}
+      {showField('limit', analysis) && <Limit />}
     </div>
   );
 };
