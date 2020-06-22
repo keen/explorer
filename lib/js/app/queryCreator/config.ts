@@ -90,7 +90,6 @@ export const FIELDS_CONFIG: QueryCreatorConfig = {
     'standard_deviation',
     'select_unique',
   ],
-  propertyNames: [
-    'extraction',
-  ],
+  propertyNames: ['extraction'],
+  latest: ['extraction'],
 };

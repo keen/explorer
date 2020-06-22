@@ -5,6 +5,8 @@ import {
   SELECT_TARGET_PROPERTY,
   SET_QUERY,
   SET_PROPERTY_NAMES,
+  SET_LIMIT,
+  SET_EXTRACTION_LIMIT,
   SET_PERCENTILE,
   SET_TIMEFRAME,
   SET_GROUP_BY,
@@ -42,11 +44,21 @@ export const queryReducer = (
         ...initialState,
         ...action.payload.query,
       };
+      case SET_LIMIT:
+      return {
+        ...state,
+        limit: action.payload.limit,
+      };
+      case SET_EXTRACTION_LIMIT:
+      return {
+        ...state,
+        latest: action.payload.limit,
+      };
     case SET_PROPERTY_NAMES:
-        return {
-          ...state,
-          propertyNames: action.payload.propertyNames,
-        }
+      return {
+        ...state,
+        propertyNames: action.payload.propertyNames,
+      };
     case UPDATE_FUNNEL_STEP:
       return {
         ...state,

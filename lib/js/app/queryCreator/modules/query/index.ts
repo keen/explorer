@@ -11,6 +11,7 @@ import {
   getOrderBy,
   getLimit,
   getFunnelSteps,
+  getExtractionLimit,
   getExtractionPropertyNames,
 } from './selectors';
 
@@ -24,6 +25,7 @@ import {
   setGroupBy,
   setOrderBy,
   setLimit,
+  setExtractionLimit,
   setPropertyNames,
   setTimeframe,
   addFunnelStep,
@@ -50,6 +52,7 @@ export {
   getFunnelSteps,
   getEventCollection,
   getTargetProperty,
+  getExtractionLimit,
   getExtractionPropertyNames,
   getAnalysis,
   getTimezone,
@@ -61,6 +64,7 @@ export {
   setGroupBy,
   setOrderBy,
   setLimit,
+  setExtractionLimit,
   setQuery,
   setPropertyNames,
   setPercentile,

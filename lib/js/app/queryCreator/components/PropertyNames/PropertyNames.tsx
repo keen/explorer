@@ -1,4 +1,4 @@
-import React,{ FC, useMemo } from 'react';
+import React, { FC, useMemo } from 'react';
 import Select from 'react-select';
 import { useSelector } from 'react-redux';
 import shallowEqual from 'shallowequal';
@@ -18,10 +18,7 @@ type Props = {
   onSelect: (properties?: string[]) => void;
 };
 
-const PropertyNames: FC<Props> = ({
-  collection,
-  onSelect,
-}) => {
+const PropertyNames: FC<Props> = ({ collection, onSelect }) => {
   const collectionSchema = useSelector((state: AppState) =>
     getCollectionSchema(state, collection)
   );
@@ -46,13 +43,25 @@ const PropertyNames: FC<Props> = ({
     return [];
   }, [collectionSchema]);
 
+  const currentProperties = useMemo(() => {
+    if (propertyNames) {
+      return propertyNames.map((property) => ({
+        label: property,
+        value: property,
+      }));
+    }
+
+    return [];
+  }, [propertyNames]);
+
+  console.log(collection, options, currentProperties, propertyNames);
 
   return (
-    <div>
+    <>
       <Label>{text.label}</Label>
       <Select
         isMulti
-        onChange={(values) => {
+        onChange={(values: { label: string; value: string }[]) => {
           if (values) {
             const selectedProperties = values.map(({ value }) => value);
             onSelect(selectedProperties);
@@ -60,13 +69,10 @@ const PropertyNames: FC<Props> = ({
             onSelect(undefined);
           }
         }}
-        value={propertyNames ? propertyNames.map((name) => ({
-          label: name,
-          value: name
-        })): null}
+        value={currentProperties}
         options={options}
       />
-    </div>
+    </>
   );
 };
 

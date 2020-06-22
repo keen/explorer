@@ -8,6 +8,7 @@ import {
   SET_GROUP_BY,
   SET_ORDER_BY,
   SET_LIMIT,
+  SET_EXTRACTION_LIMIT,
   SET_PROPERTY_NAMES,
   SELECT_TIMEZONE,
   ADD_FUNNEL_STEP,
@@ -32,12 +33,20 @@ export type ReducerState = {
   analysisType: Analysis;
   steps?: FunnelStep[];
   propertyNames?: string | string[];
+  latest?: number;
 };
 
 export interface SetQuery {
   type: typeof SET_QUERY;
   payload: {
     query: Partial<ReducerState>;
+  };
+}
+
+export interface SetExtractionLimitAction {
+  type: typeof SET_EXTRACTION_LIMIT;
+  payload: {
+    limit: number;
   };
 }
 
@@ -80,7 +89,7 @@ export interface SetPropertyNamesAction {
   type: typeof SET_PROPERTY_NAMES;
   payload: {
     propertyNames: string[];
-  }
+  };
 }
 
 export interface SetTimeframeAction {
@@ -154,6 +163,7 @@ export type QueryActions =
   | SetGroupByAction
   | SetOrderByAction
   | SetLimitAction
+  | SetExtractionLimitAction
   | SetPropertyNamesAction
   | SetTimeframeAction
   | SelectTimezoneAction

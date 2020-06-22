@@ -19,7 +19,8 @@ export type CreatorFields =
   | 'orderBy'
   | 'limit'
   | 'steps'
-  | 'propertyNames';
+  | 'propertyNames'
+  | 'latest';
 
 type FieldRule = ('*' | Analysis)[];
 

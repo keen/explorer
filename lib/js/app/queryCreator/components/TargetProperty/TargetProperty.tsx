@@ -33,7 +33,10 @@ const TargetProperty: FC<Props> = ({ collection }) => {
   }, [collectionSchema]);
 
   useEffect(() => {
-    if (collectionSchema && !Object.keys(collectionSchema).includes(targetProperty)) {
+    if (
+      collectionSchema &&
+      !Object.keys(collectionSchema).includes(targetProperty)
+    ) {
       dispatch(selectTargetProperty(null));
     }
 

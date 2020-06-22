@@ -9,6 +9,7 @@ import {
   SET_ORDER_BY,
   SET_PROPERTY_NAMES,
   SET_LIMIT,
+  SET_EXTRACTION_LIMIT,
   SELECT_TIMEZONE,
   ADD_FUNNEL_STEP,
   UPDATE_FUNNEL_STEP_EVENT_COLLECTION,
@@ -85,6 +86,13 @@ export const setOrderBy = (orderBy?: OrderBy[]): QueryActions => ({
 
 export const setLimit = (limit?: number): QueryActions => ({
   type: SET_LIMIT,
+  payload: {
+    limit,
+  },
+});
+
+export const setExtractionLimit = (limit?: number): QueryActions => ({
+  type: SET_EXTRACTION_LIMIT,
   payload: {
     limit,
   },
