@@ -1,10 +1,6 @@
 import { Analysis } from '../types';
 
 export const composeQueryParams = (analysis: Analysis, queryParams: any) => {
-  if (queryParams.propertyNames) {
-    delete queryParams.propertyNames;
-  }
-
   if (analysis === 'funnel') {
     queryParams.eventCollection = undefined;
     queryParams.filters = undefined;
