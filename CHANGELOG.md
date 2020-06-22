@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [7.1.0](https://github.com/keen/explorer/compare/v7.0.3...v7.1.0) (2020-06-22)
+
+
+### Features
+
+* 🎸 add support for property_names in extraction analysis ([6b1e688](https://github.com/keen/explorer/commit/6b1e688bc012ea306ffce68269e3f53a67ffe89f))
+
 ### [7.0.3](https://github.com/keen/explorer/compare/v7.0.2...v7.0.3) (2020-06-17)
 
 ### [7.0.2](https://github.com/keen/explorer/compare/v7.0.1...v7.0.2) (2020-06-09)
