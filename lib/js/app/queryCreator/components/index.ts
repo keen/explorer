@@ -7,6 +7,7 @@ import Timezone from './Timezone';
 import GroupBy from './GroupBy';
 import OrderBy from './OrderBy';
 import FunnelSteps from './FunnelSteps';
+import Limit from './Limit';
 import Accordion from './Accordion';
 
 export {
@@ -18,6 +19,7 @@ export {
   TargetProperty,
   Timeframe,
   Timezone,
+  Limit,
   EventCollection,
   FunnelSteps,
 };

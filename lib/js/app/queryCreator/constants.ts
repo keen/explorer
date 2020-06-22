@@ -1,6 +1,8 @@
 export const SELECT_EVENT_COLLECTION = '@query-creator/SELECT_EVENT_COLLECTION';
 export const SELECT_ANALYSIS = '@query-creator/SELECT_ANALYSIS';
 
+export const QUERY_CREATOR_TOPIC = '@keen/query-creator';
+
 export const DEFAULT_ANALYSIS = 'count';
 
 import { Analysis } from '../types';

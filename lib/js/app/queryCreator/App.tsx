@@ -15,6 +15,7 @@ import {
   TargetProperty,
   Timeframe,
   Timezone,
+  Limit,
   Percentile,
   FunnelSteps,
 } from './components';
@@ -108,6 +109,9 @@ const App: FC<Props> = ({ onPreviewCollection }) => {
         <Accordion renderHeader={() => <div>Order By</div>}>
           <OrderBy />
         </Accordion>
+      )}
+      {showField('limit', analysis) && (
+        <Limit />
       )}
     </div>
   );

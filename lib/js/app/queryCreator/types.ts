@@ -17,6 +17,7 @@ export type CreatorFields =
   | 'timezone'
   | 'groupBy'
   | 'orderBy'
+  | 'limit'
   | 'steps';
 
 type FieldRule = ('*' | Analysis)[];

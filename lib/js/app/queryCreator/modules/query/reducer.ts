@@ -24,6 +24,7 @@ export const initialState: ReducerState = {
   timezone: undefined,
   groupBy: undefined,
   orderBy: undefined,
+  limit: undefined,
   timeframe: DEFAULT_TIMEFRAME,
   analysis: DEFAULT_ANALYSIS,
   steps: [],

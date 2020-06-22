@@ -1,6 +1,6 @@
 import { AppState } from '../../types';
 
-export const getQueryCreator = (state: any) => state.ui;
+export const getQuery = (state: AppState) => state.query;
 
 export const getAnalysis = (state: AppState) => state.query.analysis;
 

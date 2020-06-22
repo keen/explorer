@@ -1,5 +1,6 @@
 import { queryReducer } from './reducer';
 import {
+  getQuery,
   getEventCollection,
   getAnalysis,
   getPercentile,
@@ -41,6 +42,7 @@ import {
 
 export {
   queryReducer,
+  getQuery,
   getPercentile,
   getFunnelSteps,
   getEventCollection,

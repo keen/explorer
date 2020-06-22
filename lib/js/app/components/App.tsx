@@ -442,6 +442,9 @@ class App extends Component {
               projectId={this.props.keenAnalysis.config.projectId}
               readKey={this.props.keenAnalysis.config.readKey}
               masterKey={this.props.keenAnalysis.config.masterKey}
+              onUpdateQuery={(q) => {
+                console.log('Query', q);
+              }}
             />
             {analysisType !== 'funnel' && components.eventCollection && (
               <>

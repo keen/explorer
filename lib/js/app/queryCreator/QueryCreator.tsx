@@ -1,6 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { createStore, applyMiddleware, Store } from 'redux';
+import { createStore, applyMiddleware, Store, Unsubscribe } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 import KeenAnalysis from 'keen-analysis';
 
@@ -9,6 +9,8 @@ import rootSaga from './saga';
 import rootReducer from './reducer';
 
 import { appStart } from './modules/app';
+import { getQuery } from './modules/query';
+import { transformToQuery } from './utils/transformToQuery';
 
 type Props = {
   /** Keen project identifer */
@@ -17,11 +19,15 @@ type Props = {
   readKey: string;
   /** Keen master access key */
   masterKey: string;
+  /** Update query event handler */
+  onUpdateQuery?: (query: Object) => void;
 };
 
 class QueryCreator extends React.Component<Props> {
   /** Query Creator store */
   store: Store;
+
+  subscription: Unsubscribe;
 
   constructor(props: Props) {
     super(props);
@@ -41,6 +47,21 @@ class QueryCreator extends React.Component<Props> {
 
     sagaMiddleware.run(rootSaga);
     this.store.dispatch(appStart());
+
+    this.runQueryListener();
+  }
+
+  componentWillUnmount() {
+    if (this.subscription) this.subscription();
+  }
+
+  runQueryListener = () => {
+    const { onUpdateQuery } = this.props;
+    this.subscription = this.store.subscribe(() => {
+      const state = this.store.getState();
+      const query = getQuery(state);
+      if (onUpdateQuery) onUpdateQuery(transformToQuery(query));
+    });
   }
 
   render() {
