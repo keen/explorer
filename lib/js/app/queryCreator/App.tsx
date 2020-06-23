@@ -13,6 +13,7 @@ import {
   Extraction,
   GroupBy,
   OrderBy,
+  Interval,
   TargetProperty,
   Timeframe,
   Timezone,
@@ -112,6 +113,7 @@ const App: FC<Props> = ({ onPreviewCollection }) => {
           <OrderBy />
         </Accordion>
       )}
+      {showField('interval', analysis) && <Interval />}
       {showField('limit', analysis) && <Limit />}
     </div>
   );

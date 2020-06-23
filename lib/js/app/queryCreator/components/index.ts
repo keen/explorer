@@ -6,6 +6,7 @@ import Timeframe from './Timeframe';
 import Timezone from './Timezone';
 import GroupBy from './GroupBy';
 import OrderBy from './OrderBy';
+import Interval from './Interval';
 import FunnelSteps from './FunnelSteps';
 import Limit from './Limit';
 import Accordion from './Accordion';
@@ -18,6 +19,7 @@ export {
   Extraction,
   GroupBy,
   OrderBy,
+  Interval,
   TargetProperty,
   Timeframe,
   Timezone,

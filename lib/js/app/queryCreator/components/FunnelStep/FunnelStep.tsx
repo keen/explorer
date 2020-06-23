@@ -147,7 +147,6 @@ const FunnelStep: FC<Props> = ({
           {text.withActorsLabel}
         </Label>
       </div>
-
       <Button variant="danger" style="outline" onClick={onRemove}>
         {text.removeStep}
       </Button>

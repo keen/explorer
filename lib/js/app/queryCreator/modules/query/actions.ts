@@ -9,6 +9,7 @@ import {
   SET_ORDER_BY,
   SET_PROPERTY_NAMES,
   SET_LIMIT,
+  SET_INTERVAL,
   SET_EXTRACTION_LIMIT,
   SET_EXTRACTION_RECIPIENT_EMAIL,
   SET_EXTRACTION_CONTENT_ENCODING,
@@ -63,6 +64,13 @@ export const selectTimezone = (timezone: number | Timezones): QueryActions => ({
   type: SELECT_TIMEZONE,
   payload: {
     timezone,
+  },
+});
+
+export const setInterval = (interval: string): QueryActions => ({
+  type: SET_INTERVAL,
+  payload: {
+    interval,
   },
 });
 

@@ -14,6 +14,7 @@ import {
   addFunnelStep,
   setGroupBy,
   setOrderBy,
+  setInterval,
   selectAnalysis,
   selectTargetProperty,
   selectEventCollection,
@@ -112,6 +113,14 @@ test('set query order by properties', () => {
   const state = queryReducer(initialState, action);
 
   expect(state.orderBy).toEqual(orderBy);
+});
+
+test('set query interval', () => {
+  const interval = 'monthly';
+  const action = setInterval(interval);
+  const state = queryReducer(initialState, action);
+
+  expect(state.interval).toEqual(interval);
 });
 
 test('set group by properties', () => {

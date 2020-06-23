@@ -78,6 +78,18 @@ export const FIELDS_CONFIG: QueryCreatorConfig = {
     'standard_deviation',
     'select_unique',
   ],
+  interval: [
+    'sum',
+    'average',
+    'count',
+    'count_unique',
+    'maximum',
+    'minimum',
+    'median',
+    'percentile',
+    'standard_deviation',
+    'select_unique',
+  ],
   limit: [
     'sum',
     'average',
@@ -90,6 +102,8 @@ export const FIELDS_CONFIG: QueryCreatorConfig = {
     'standard_deviation',
     'select_unique',
   ],
+  email: ['extraction'],
+  contentEncoding: ['extraction'],
   propertyNames: ['extraction'],
   latest: ['extraction'],
 };

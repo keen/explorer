@@ -7,6 +7,7 @@ export const SELECT_TARGET_PROPERTY = '@query-creator/SELECT_TARGET_PROPERTY';
 export const SET_PERCENTILE = '@query-creator/SET_PERCENTILE';
 export const SET_TIMEFRAME = '@query-creator/SET_TIMEFRAME';
 export const SET_GROUP_BY = '@query-creator/SET_GROUP_BY';
+export const SET_INTERVAL = '@query-creator/SET_INTERVAL';
 export const SET_ORDER_BY = '@query-creator/SET_ORDER_BY';
 export const SET_LIMIT = '@query-creator/SET_LIMIT';
 export const RESET_EXTRACTION = '@query-creator/RESET_EXTRACTION';

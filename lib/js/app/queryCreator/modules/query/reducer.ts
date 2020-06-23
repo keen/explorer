@@ -12,6 +12,7 @@ import {
   SET_PERCENTILE,
   SET_TIMEFRAME,
   SET_GROUP_BY,
+  SET_INTERVAL,
   SET_ORDER_BY,
   DEFAULT_ANALYSIS,
   DEFAULT_TIMEFRAME,
@@ -32,6 +33,7 @@ export const initialState: ReducerState = {
   groupBy: undefined,
   orderBy: undefined,
   limit: undefined,
+  interval: undefined,
   timeframe: DEFAULT_TIMEFRAME,
   analysisType: DEFAULT_ANALYSIS,
   steps: [],
@@ -63,6 +65,11 @@ export const queryReducer = (
       return {
         ...state,
         limit: action.payload.limit,
+      };
+    case SET_INTERVAL:
+      return {
+        ...state,
+        interval: action.payload.interval,
       };
     case SET_EXTRACTION_LIMIT:
       return {

@@ -7,6 +7,7 @@ import {
   SET_TIMEFRAME,
   SET_GROUP_BY,
   SET_ORDER_BY,
+  SET_INTERVAL,
   SET_LIMIT,
   SET_EXTRACTION_LIMIT,
   SET_EXTRACTION_RECIPIENT_EMAIL,
@@ -33,6 +34,7 @@ export type ReducerState = {
   orderBy?: string | OrderBy | OrderBy[];
   limit?: number;
   timeframe: Timeframe;
+  interval?: string;
   analysisType: Analysis;
   steps?: FunnelStep[];
   propertyNames?: string | string[];
@@ -129,6 +131,13 @@ export interface SetGroupByAction {
   };
 }
 
+export interface SetIntervalAction {
+  type: typeof SET_INTERVAL;
+  payload: {
+    interval: string | undefined;
+  };
+}
+
 export interface SetOrderByAction {
   type: typeof SET_ORDER_BY;
   payload: {
@@ -185,6 +194,7 @@ export type QueryActions =
   | SetPercentileAction
   | SetGroupByAction
   | SetOrderByAction
+  | SetIntervalAction
   | SetLimitAction
   | SetExtractionLimitAction
   | SetExtractionRecipientEmailAction

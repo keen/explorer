@@ -15,12 +15,15 @@ export type CreatorFields =
   | 'percentile'
   | 'timeframe'
   | 'timezone'
+  | 'interval'
   | 'groupBy'
   | 'orderBy'
   | 'limit'
   | 'steps'
   | 'propertyNames'
-  | 'latest';
+  | 'latest'
+  | 'email'
+  | 'contentEncoding';
 
 type FieldRule = ('*' | Analysis)[];
 

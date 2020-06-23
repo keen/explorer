@@ -54,8 +54,6 @@ const PropertyNames: FC<Props> = ({ collection, onSelect }) => {
     return [];
   }, [propertyNames]);
 
-  console.log(collection, options, currentProperties, propertyNames);
-
   return (
     <>
       <Label>{text.label}</Label>
