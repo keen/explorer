@@ -9,7 +9,12 @@ export const SET_TIMEFRAME = '@query-creator/SET_TIMEFRAME';
 export const SET_GROUP_BY = '@query-creator/SET_GROUP_BY';
 export const SET_ORDER_BY = '@query-creator/SET_ORDER_BY';
 export const SET_LIMIT = '@query-creator/SET_LIMIT';
+export const RESET_EXTRACTION = '@query-creator/RESET_EXTRACTION';
 export const SET_EXTRACTION_LIMIT = '@query-creator/SET_EXTRACTION_LIMIT';
+export const SET_EXTRACTION_RECIPIENT_EMAIL =
+  '@query-creator/SET_EXTRACTION_RECIPIENT_EMAIL';
+export const SET_EXTRACTION_CONTENT_ENCODING =
+  '@query-creator/SET_EXTRACTION_CONTENT_ENCODING';
 export const SET_PROPERTY_NAMES = '@query-creator/SET_PROPERTY_NAMES';
 export const SELECT_TIMEZONE = '@query-creator/SELECT_TIMEZONE';
 export const ADD_FUNNEL_STEP = '@query-creator/ADD_FUNNEL_STEP';

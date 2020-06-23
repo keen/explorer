@@ -12,6 +12,8 @@ import {
   getLimit,
   getFunnelSteps,
   getExtractionLimit,
+  getExtractionEmail,
+  getExtractionEncoding,
   getExtractionPropertyNames,
 } from './selectors';
 
@@ -26,12 +28,15 @@ import {
   setOrderBy,
   setLimit,
   setExtractionLimit,
+  setExtractionRecipientEmail,
+  setExtractionContentEncoding,
   setPropertyNames,
   setTimeframe,
   addFunnelStep,
   updateFunnelStep,
   updateFunnelStepEventCollection,
   removeFunnelStep,
+  resetExtraction,
 } from './actions';
 
 import {
@@ -53,6 +58,8 @@ export {
   getEventCollection,
   getTargetProperty,
   getExtractionLimit,
+  getExtractionEmail,
+  getExtractionEncoding,
   getExtractionPropertyNames,
   getAnalysis,
   getTimezone,
@@ -65,6 +72,8 @@ export {
   setOrderBy,
   setLimit,
   setExtractionLimit,
+  setExtractionRecipientEmail,
+  setExtractionContentEncoding,
   setQuery,
   setPropertyNames,
   setPercentile,
@@ -76,6 +85,7 @@ export {
   selectEventCollection,
   selectTargetProperty,
   selectAnalysis,
+  resetExtraction,
 };
 export {
   SelectEventCollectionAction,

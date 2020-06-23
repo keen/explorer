@@ -28,3 +28,8 @@ export const getExtractionPropertyNames = (state: AppState) =>
   state.query.propertyNames;
 
 export const getExtractionLimit = (state: AppState) => state.query.latest;
+
+export const getExtractionEmail = (state: AppState) => state.query.email;
+
+export const getExtractionEncoding = (state: AppState) =>
+  state.query.contentEncoding;

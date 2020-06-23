@@ -1,4 +1,5 @@
 {
   "limitLabel": "Limit",
-  "limitPlaceholder": "Set extraction limit"
+  "limitPlaceholder": "Set extraction limit",
+  "emailLabel": "Email"
 }

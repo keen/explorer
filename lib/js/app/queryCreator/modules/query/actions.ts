@@ -10,11 +10,14 @@ import {
   SET_PROPERTY_NAMES,
   SET_LIMIT,
   SET_EXTRACTION_LIMIT,
+  SET_EXTRACTION_RECIPIENT_EMAIL,
+  SET_EXTRACTION_CONTENT_ENCODING,
   SELECT_TIMEZONE,
   ADD_FUNNEL_STEP,
   UPDATE_FUNNEL_STEP_EVENT_COLLECTION,
   UPDATE_FUNNEL_STEP,
   REMOVE_FUNNEL_STEP,
+  RESET_EXTRACTION,
 } from './constants';
 
 import { QueryActions, ReducerState as Query } from './types';
@@ -28,7 +31,7 @@ export const setQuery = (query: Partial<Query>): QueryActions => ({
   },
 });
 
-export const setPropertyNames = (propertyNames: string[]) => ({
+export const setPropertyNames = (propertyNames: string[]): QueryActions => ({
   type: SET_PROPERTY_NAMES,
   payload: {
     propertyNames,
@@ -96,6 +99,26 @@ export const setExtractionLimit = (limit?: number): QueryActions => ({
   payload: {
     limit,
   },
+});
+
+export const setExtractionRecipientEmail = (email?: string): QueryActions => ({
+  type: SET_EXTRACTION_RECIPIENT_EMAIL,
+  payload: {
+    email,
+  },
+});
+
+export const setExtractionContentEncoding = (
+  contentEncoding?: string
+): QueryActions => ({
+  type: SET_EXTRACTION_CONTENT_ENCODING,
+  payload: {
+    contentEncoding,
+  },
+});
+
+export const resetExtraction = (): QueryActions => ({
+  type: RESET_EXTRACTION,
 });
 
 export const setTimeframe = (timeframe: Timeframe): QueryActions => ({

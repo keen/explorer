@@ -7,6 +7,8 @@ import {
   SET_PROPERTY_NAMES,
   SET_LIMIT,
   SET_EXTRACTION_LIMIT,
+  SET_EXTRACTION_RECIPIENT_EMAIL,
+  SET_EXTRACTION_CONTENT_ENCODING,
   SET_PERCENTILE,
   SET_TIMEFRAME,
   SET_GROUP_BY,
@@ -17,6 +19,7 @@ import {
   REMOVE_FUNNEL_STEP,
   UPDATE_FUNNEL_STEP,
   DEFAULT_FUNNEL_STEP,
+  RESET_EXTRACTION,
 } from './constants';
 
 import { ReducerState, QueryActions } from './types';
@@ -32,6 +35,10 @@ export const initialState: ReducerState = {
   timeframe: DEFAULT_TIMEFRAME,
   analysisType: DEFAULT_ANALYSIS,
   steps: [],
+  propertyNames: undefined,
+  latest: undefined,
+  email: undefined,
+  contentEncoding: undefined,
 };
 
 export const queryReducer = (
@@ -39,6 +46,14 @@ export const queryReducer = (
   action: QueryActions
 ) => {
   switch (action.type) {
+    case RESET_EXTRACTION:
+      return {
+        ...state,
+        propertyNames: undefined,
+        latest: undefined,
+        email: undefined,
+        contentEncoding: undefined,
+      };
     case SET_QUERY:
       return {
         ...initialState,
@@ -53,6 +68,16 @@ export const queryReducer = (
       return {
         ...state,
         latest: action.payload.limit,
+      };
+    case SET_EXTRACTION_RECIPIENT_EMAIL:
+      return {
+        ...state,
+        email: action.payload.email,
+      };
+    case SET_EXTRACTION_CONTENT_ENCODING:
+      return {
+        ...state,
+        contentEncoding: action.payload.contentEncoding,
       };
     case SET_PROPERTY_NAMES:
       return {

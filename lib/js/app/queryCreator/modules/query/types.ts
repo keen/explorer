@@ -9,6 +9,8 @@ import {
   SET_ORDER_BY,
   SET_LIMIT,
   SET_EXTRACTION_LIMIT,
+  SET_EXTRACTION_RECIPIENT_EMAIL,
+  SET_EXTRACTION_CONTENT_ENCODING,
   SET_PROPERTY_NAMES,
   SELECT_TIMEZONE,
   ADD_FUNNEL_STEP,
@@ -16,6 +18,7 @@ import {
   UPDATE_FUNNEL_STEP,
   UPDATE_FUNNEL_STEP_EVENT_COLLECTION,
   CHANGE_FUNNEL_STEPS_ORDER,
+  RESET_EXTRACTION,
 } from './constants';
 
 import { Timezones, Timeframe, OrderBy, FunnelStep } from '../../types';
@@ -34,6 +37,8 @@ export type ReducerState = {
   steps?: FunnelStep[];
   propertyNames?: string | string[];
   latest?: number;
+  email?: string;
+  contentEncoding?: string;
 };
 
 export interface SetQuery {
@@ -48,6 +53,24 @@ export interface SetExtractionLimitAction {
   payload: {
     limit: number;
   };
+}
+
+export interface SetExtractionRecipientEmailAction {
+  type: typeof SET_EXTRACTION_RECIPIENT_EMAIL;
+  payload: {
+    email: string;
+  };
+}
+
+export interface SetExtractionContentEncodingAction {
+  type: typeof SET_EXTRACTION_CONTENT_ENCODING;
+  payload: {
+    contentEncoding: string;
+  };
+}
+
+export interface ResetExtractionAction {
+  type: typeof RESET_EXTRACTION;
 }
 
 export interface SelectEventCollectionAction {
@@ -164,6 +187,8 @@ export type QueryActions =
   | SetOrderByAction
   | SetLimitAction
   | SetExtractionLimitAction
+  | SetExtractionRecipientEmailAction
+  | SetExtractionContentEncodingAction
   | SetPropertyNamesAction
   | SetTimeframeAction
   | SelectTimezoneAction
@@ -171,4 +196,5 @@ export type QueryActions =
   | UpdateFunnelStepAction
   | RemoveFunnelStepAction
   | UpdateFunnelStepEventCollectionAction
-  | ChangeFunnelStepsOrderAction;
+  | ChangeFunnelStepsOrderAction
+  | ResetExtractionAction;
