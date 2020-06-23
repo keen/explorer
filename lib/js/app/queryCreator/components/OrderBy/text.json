@@ -1,5 +1,7 @@
 {
   "specifyGroupBy": "You must specify groupBy settings to use orderBy",
   "propetyPlaceholder": "Select order property",
-  "directionPlaceholder": "Select order direction"
+  "propetyLabel": "Property",
+  "directionPlaceholder": "Select order direction",
+  "directionLabel": "Direction"
 }

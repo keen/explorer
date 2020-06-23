@@ -44,12 +44,12 @@ export const queryReducer = (
         ...initialState,
         ...action.payload.query,
       };
-      case SET_LIMIT:
+    case SET_LIMIT:
       return {
         ...state,
         limit: action.payload.limit,
       };
-      case SET_EXTRACTION_LIMIT:
+    case SET_EXTRACTION_LIMIT:
       return {
         ...state,
         latest: action.payload.limit,

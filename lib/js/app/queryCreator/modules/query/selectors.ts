@@ -27,5 +27,4 @@ export const getLimit = (state: AppState) => state.query.limit;
 export const getExtractionPropertyNames = (state: AppState) =>
   state.query.propertyNames;
 
-  export const getExtractionLimit = (state: AppState) =>
-    state.query.latest;
+export const getExtractionLimit = (state: AppState) => state.query.latest;

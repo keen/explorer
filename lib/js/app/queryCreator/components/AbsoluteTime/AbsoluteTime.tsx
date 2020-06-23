@@ -35,7 +35,7 @@ const AbsoluteTime: FC<Props> = memo(({ id, start, end, onChange }) => {
   const use12Hours = useMemo(() => use12HoursDateFormat(), []);
 
   return (
-    <Container>
+    <Container data-testid="absolute-time">
       <div>
         <Label>{text.startDate}</Label>
         <SingleDatePicker

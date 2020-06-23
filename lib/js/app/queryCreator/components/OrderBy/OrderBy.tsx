@@ -1,7 +1,7 @@
 import React, { FC, useMemo, useRef, useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import shallowEqual from 'shallowequal';
-import { Button, Select } from '@keen.io/ui-core';
+import { Button, Select, Label } from '@keen.io/ui-core';
 import { Icon } from '@keen.io/icons';
 import { colors } from '@keen.io/colors';
 
@@ -92,9 +92,15 @@ const OrderBy: FC<Props> = () => {
           </Button>
           {orderBy.map(({ propertyName, direction }, idx) => (
             <div key={idx}>
-              <div onClick={() => removeOrderBy(idx)}>
+              <div
+                data-testid={`orderby-remove-${idx}`}
+                onClick={() => removeOrderBy(idx)}
+              >
                 <Icon type="close" fill={colors.blue['500']} />
               </div>
+              <Label htmlFor={`${idx}-order-property`}>
+                {text.propetyLabel}
+              </Label>
               <Select
                 inputId={`${idx}-order-property`}
                 variant="solid"
@@ -110,6 +116,9 @@ const OrderBy: FC<Props> = () => {
                     : null
                 }
               />
+              <Label htmlFor={`${idx}-order-direction`}>
+                {text.directionLabel}
+              </Label>
               <Select
                 inputId={`${idx}-order-direction`}
                 variant="solid"

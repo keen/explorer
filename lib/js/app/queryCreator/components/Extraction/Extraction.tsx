@@ -7,7 +7,11 @@ import Email from '../Email';
 
 import text from './text.json';
 
-import { setPropertyNames, setExtractionLimit, getExtractionLimit } from '../../modules/query';
+import {
+  setPropertyNames,
+  setExtractionLimit,
+  getExtractionLimit,
+} from '../../modules/query';
 import { DEFAULT_LIMIT } from './constants';
 
 type Props = {
@@ -19,17 +23,14 @@ const Extraction: FC<Props> = ({ collection }) => {
   const dispatch = useDispatch();
   const extractionLimit = useSelector(getExtractionLimit);
 
-  const changeLimitHandler = useCallback(
-    (eventValue) => {
-      if (eventValue) {
-        const value = parseInt(eventValue);
-        dispatch(setExtractionLimit(value));
-      } else {
-          dispatch(setExtractionLimit(DEFAULT_LIMIT));
-      }
-    },
-    []
-  );
+  const changeLimitHandler = useCallback((eventValue) => {
+    if (eventValue) {
+      const value = parseInt(eventValue);
+      dispatch(setExtractionLimit(value));
+    } else {
+      dispatch(setExtractionLimit(DEFAULT_LIMIT));
+    }
+  }, []);
 
   return (
     <div>
@@ -39,14 +40,14 @@ const Extraction: FC<Props> = ({ collection }) => {
         onSelect={(properties) => dispatch(setPropertyNames(properties))}
       />
       <div>
-      <Label>{text.limitLabel}</Label>
-      <Input
-        type="number"
-        variant="solid"
-        value={extractionLimit}
-        placeholder={text.limitPlaceholder}
-        onChange={(e) => changeLimitHandler(e.target.value)}
-      />
+        <Label>{text.limitLabel}</Label>
+        <Input
+          type="number"
+          variant="solid"
+          value={extractionLimit}
+          placeholder={text.limitPlaceholder}
+          onChange={(e) => changeLimitHandler(e.target.value)}
+        />
       </div>
       <Email />
     </div>

@@ -38,7 +38,7 @@ const RelativeTime: FC<Props> = ({ relativity, value, units, onChange }) => {
   );
 
   return (
-    <div>
+    <div data-testid="relative-time">
       <Select
         onChange={({ value: updatedRelativity }: { value: string }) =>
           onChange(`${updatedRelativity}_${value}_${units}`)
