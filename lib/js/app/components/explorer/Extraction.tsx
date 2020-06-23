@@ -195,6 +195,11 @@ class Extraction extends Component {
               if (value > max) {
                 value = max;
               }
+
+              if (value) {
+                value = parseInt(value);
+              }
+
               updateUI({
                 latest: value,
               });
