@@ -9,8 +9,10 @@ import {
 } from './modules/app';
 
 import {
+  SetQueryAction,
   SelectEventCollectionAction,
   UpdateFunnelStepEventCollectionAction,
+  SET_QUERY,
   SELECT_EVENT_COLLECTION,
   UPDATE_FUNNEL_STEP_EVENT_COLLECTION,
 } from './modules/query';
@@ -71,8 +73,17 @@ function* selectCollection(
   }
 }
 
+function* setQuery(action: SetQueryAction) {
+  const {
+    payload: { query },
+  } = action;
+  if (query.eventCollection)
+    yield put(fetchCollectionSchema(query.eventCollection));
+}
+
 function* watcher() {
   yield takeLatest(APP_START, appStart);
+  yield takeLatest(SET_QUERY, setQuery);
   yield takeLatest(FETCH_PROJECT_DETAILS, fetchProject);
   yield takeLatest(FETCH_COLLECTION_SCHEMA, fetchSchema);
   yield takeLatest(UPDATE_FUNNEL_STEP_EVENT_COLLECTION, selectCollection);

@@ -1,17 +1,13 @@
-import { takeLatest, put, select } from 'redux-saga/effects';
+import { takeLatest, put, select, getContext } from 'redux-saga/effects';
 
 import { getSavedQuery, updateSaveQuery } from '../savedQuery';
 
-import { updateUI } from '../../redux/actionCreators/ui';
-
 import { b64EncodeUnicode, b64DecodeUnicode } from '../../utils/base64';
+import { SET_QUERY_EVENT } from '../../queryCreator';
 
-import {
-  SET_STATE_IN_URL,
-  LOAD_STATE_FROM_URL,
-  URL_STATE,
-  AUTOLOAD_DISABLED,
-} from './constants';
+import { PersistStateAction } from './types';
+
+import { SET_STATE_IN_URL, LOAD_STATE_FROM_URL, URL_STATE } from './constants';
 
 export function* loadPersitedState() {
   const url = new URL(window.location.href);
@@ -21,29 +17,29 @@ export function* loadPersitedState() {
     const persistedState = searchParams.get(URL_STATE);
 
     if (persistedState) {
-      const { userInterface, savedQuery } = JSON.parse(
+      const { query, savedQuery } = JSON.parse(
         b64DecodeUnicode(persistedState)
       );
 
-      userInterface.autoload = !AUTOLOAD_DISABLED.includes(
-        userInterface.analysisType
-      );
-
-      if (userInterface) yield put(updateUI(userInterface));
+      if (query) {
+        const pubsub = yield getContext('pubsub');
+        pubsub.publish(SET_QUERY_EVENT, { query });
+      }
       if (savedQuery) yield put(updateSaveQuery(savedQuery));
     }
   }
 }
 
-export function* persistState() {
-  const state = yield select();
-  const userInterface = state.ui;
+export function* persistState(action: PersistStateAction) {
+  const {
+    payload: { state },
+  } = action;
   const savedQuery = yield select(getSavedQuery);
 
   const stateToPersist = b64EncodeUnicode(
     JSON.stringify({
       savedQuery,
-      userInterface,
+      ...state,
     })
   );
 

@@ -5,9 +5,11 @@ import {
   hideConfirmation,
   acceptConfirmation,
   persistState,
+  setVisualizationType,
   loadPersitedState,
 } from './actions';
-import { getConfirmation } from './selectors';
+import { getConfirmation, getVisualizationType } from './selectors';
+
 import { HIDE_CONFIRMATION, ACCEPT_CONFIRMATION } from './constants';
 import { ReducerState } from './types';
 
@@ -19,7 +21,9 @@ export {
   acceptConfirmation,
   persistState,
   loadPersitedState,
+  setVisualizationType,
   getConfirmation,
+  getVisualizationType,
   ReducerState,
 };
 export { HIDE_CONFIRMATION, ACCEPT_CONFIRMATION };

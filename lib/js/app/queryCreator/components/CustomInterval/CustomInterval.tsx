@@ -23,7 +23,7 @@ const CustomInterval: FC<Props> = ({ interval, onChange }) => {
       })),
     []
   );
-  
+
   const valueChangeHandler = useCallback(
     (eventValue) => {
       if (eventValue) {
@@ -37,7 +37,7 @@ const CustomInterval: FC<Props> = ({ interval, onChange }) => {
   );
 
   return (
-    <div>
+    <div data-testid="custom-interval">
       <div>{text.mainLabel}</div>
       <Input
         type="number"

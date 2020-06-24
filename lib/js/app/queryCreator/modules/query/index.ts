@@ -42,12 +42,14 @@ import {
 } from './actions';
 
 import {
+  SET_QUERY,
   SELECT_EVENT_COLLECTION,
   UPDATE_FUNNEL_STEP_EVENT_COLLECTION,
   DEFAULT_TIMEFRAME,
 } from './constants';
 import {
   ReducerState,
+  SetQueryAction,
   SelectEventCollectionAction,
   UpdateFunnelStepEventCollectionAction,
 } from './types';
@@ -92,11 +94,13 @@ export {
   resetExtraction,
 };
 export {
+  SetQueryAction,
   SelectEventCollectionAction,
   UpdateFunnelStepEventCollectionAction,
   ReducerState,
 };
 export {
+  SET_QUERY,
   SELECT_EVENT_COLLECTION,
   UPDATE_FUNNEL_STEP_EVENT_COLLECTION,
   DEFAULT_TIMEFRAME,

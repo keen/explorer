@@ -1,21 +1,45 @@
-import { CREATE_NEW_QUERY } from './constants';
+import {
+  CREATE_NEW_QUERY,
+  RUN_QUERY,
+  RUN_QUERY_ERROR,
+  RUN_QUERY_SUCCESS,
+} from './constants';
 
 export type ReducerState = {
-  saved: SavedQueryAPI[];
+  results: any;
+  isLoading: boolean;
   isSavingQuery: boolean;
+  saved: any[];
   isLimited: boolean;
 };
 
-type SavedQueryAPI = {
-  query_name: string;
-  refresh_rate: number;
-  metadata: {
-    display_name: string;
+export interface RunQueryAction {
+  type: typeof RUN_QUERY;
+  payload: {
+    body: Object;
   };
-};
+}
+
+export interface RunQuerySuccessAction {
+  type: typeof RUN_QUERY_SUCCESS;
+  payload: {
+    results: Object;
+  };
+}
+
+export interface RunQueryErrorAction {
+  type: typeof RUN_QUERY_ERROR;
+  payload: {
+    error: Error;
+  };
+}
 
 export interface CreateNewQueryAction {
   type: typeof CREATE_NEW_QUERY;
 }
 
-export type QueriesActions = CreateNewQueryAction;
+export type QueriesActions =
+  | RunQueryAction
+  | RunQueryErrorAction
+  | RunQuerySuccessAction
+  | CreateNewQueryAction;

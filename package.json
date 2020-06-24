@@ -34,6 +34,7 @@
   },
   "dependencies": {
     "@keen.io/colors": "^0.1.2",
+    "@keen.io/dataviz": "^0.5.12",
     "@keen.io/forms": "^0.3.7",
     "@keen.io/icons": "^0.4.0",
     "@keen.io/pubsub": "^0.2.0",

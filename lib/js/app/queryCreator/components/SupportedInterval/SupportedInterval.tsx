@@ -23,7 +23,7 @@ const SupportedInterval: FC<Props> = ({ interval, onChange }) => {
   );
 
   return (
-    <div>
+    <div data-testid="supported-interval">
       <>
         <Label htmlFor="interval">{text.label}</Label>
         <Select

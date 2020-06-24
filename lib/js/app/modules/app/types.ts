@@ -1,6 +1,7 @@
 import {
   SET_STATE_IN_URL,
   LOAD_STATE_FROM_URL,
+  SET_VISUALIZATION_TYPE,
   SHOW_CONFIRMATION,
   HIDE_CONFIRMATION,
   ACCEPT_CONFIRMATION,
@@ -14,10 +15,23 @@ export type ReducerState = {
     visible: boolean;
     meta?: Record<string, any>;
   };
+  visualization: {
+    type: string | null;
+  };
 };
+
+export interface SetVisualizationType {
+  type: typeof SET_VISUALIZATION_TYPE;
+  payload: {
+    type: string;
+  };
+}
 
 export interface PersistStateAction {
   type: typeof SET_STATE_IN_URL;
+  payload: {
+    state: Object;
+  };
 }
 
 export interface LoadPersistedStateAction {
@@ -45,4 +59,5 @@ export type AppActions =
   | LoadPersistedStateAction
   | ShowConfirmationAction
   | HideConfirmationAction
-  | AcceptConfirmationAction;
+  | AcceptConfirmationAction
+  | SetVisualizationType;
