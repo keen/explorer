@@ -8,5 +8,3 @@ export const ACCEPT_CONFIRMATION = 'ACCEPT_CONFIRMATION';
 export const SET_VISUALIZATION_TYPE = 'SET_VISUALIZATION_TYPE';
 
 export const URL_STATE = 'state';
-
-export const AUTOLOAD_DISABLED: Analysis[] = ['extraction'];

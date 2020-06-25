@@ -11,3 +11,5 @@ export const getQueryPerformState = ({ queries }: AppState) =>
 export const getQueriesLimit = ({ queries }: AppState) => queries.isLimited;
 
 export const getQueryResults = ({ queries }: AppState) => queries.results;
+
+export const getError = ({ queries }: AppState) => queries.error;

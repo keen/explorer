@@ -2,6 +2,8 @@
 import React, { FC } from 'react';
 import ReactJson from 'react-json-view';
 
+import { Container } from './JSONView.styles';
+
 type Props = {
   /** Query execution results */
   analysisResults: Object;
@@ -9,15 +11,17 @@ type Props = {
 
 const JSONView: FC<Props> = ({ analysisResults }) => {
   return (
-    <ReactJson
-      src={analysisResults}
-      style={{
-        fontFamily: 'inherit',
-      }}
-      collapsed={true}
-      displayDataTypes={false}
-      sortKeys={true}
-    />
+    <Container>
+      <ReactJson
+        src={analysisResults}
+        style={{
+          fontFamily: 'inherit',
+        }}
+        collapsed={true}
+        displayDataTypes={false}
+        sortKeys={true}
+      />
+    </Container>
   );
 };
 

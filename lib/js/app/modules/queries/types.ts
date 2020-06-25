@@ -11,6 +11,7 @@ export type ReducerState = {
   isSavingQuery: boolean;
   saved: any[];
   isLimited: boolean;
+  error: Error | null;
 };
 
 export interface RunQueryAction {

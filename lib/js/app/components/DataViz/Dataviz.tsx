@@ -1,7 +1,9 @@
-import React, { FC, useRef, useEffect } from 'react';
+import React, { useRef, useEffect, forwardRef } from 'react';
 import { KeenDataviz } from '@keen.io/dataviz';
 
 import { VisulizationContainer } from './DataViz.styles';
+
+import { CONTAINER_ID } from './constants';
 
 type Props = {
   /** Query execution results */
@@ -10,25 +12,27 @@ type Props = {
   visualization: string;
 };
 
-const Dataviz: FC<Props> = ({ analysisResults, visualization }) => {
-  const container = useRef(null);
-  const datavizRef = useRef(null);
+const Dataviz = forwardRef<HTMLDivElement, Props>(
+  ({ analysisResults, visualization }, containerRef) => {
+    const datavizRef = useRef(null);
 
-  useEffect(() => {
-    if (datavizRef.current) datavizRef.current.destroy();
+    useEffect(() => {
+      if (datavizRef.current) datavizRef.current.destroy();
 
-    datavizRef.current = new KeenDataviz({
-      container: container.current,
-      type: visualization as any,
-    }).render(analysisResults);
-  }, [visualization, analysisResults]);
+      console.log('renderuj charcik', visualization, analysisResults);
 
-  return (
-    <div>
-      <VisulizationContainer ref={container} />
-      dataviz
-    </div>
-  );
-};
+      datavizRef.current = new KeenDataviz({
+        container: `#${CONTAINER_ID}`,
+        type: visualization as any,
+      }).render(analysisResults);
+    }, [visualization, analysisResults, containerRef]);
+
+    return (
+      <div>
+        <VisulizationContainer id={CONTAINER_ID} ref={containerRef} />
+      </div>
+    );
+  }
+);
 
 export default Dataviz;

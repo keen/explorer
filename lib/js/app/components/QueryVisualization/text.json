@@ -1,4 +1,7 @@
 {
   "visualizationLabel": "Visualization",
-  "visualizationPlaceholder": "Select widget"
+  "visualizationPlaceholder": "Select widget",
+  "exportImageLabel": "Export to image",
+  "exportJSONLabel": "Export to JSON",
+  "exportCSVLabel": "Export to CSV"
 }

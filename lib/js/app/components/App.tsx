@@ -1,10 +1,8 @@
 // @ts-nocheck
 import React, { Component, Fragment } from 'react';
-import Select from 'react-select';
 import Modal from 'react-modal';
 import { connect } from 'react-redux';
-
-import { getThemeForSelect } from '../utils/style';
+import { Alert } from '@keen.io/ui-core';
 
 import {
   fetchProject,
@@ -23,6 +21,8 @@ import {
 import {
   createNewQuery,
   runQuery,
+  getError,
+  getQueryResults,
   getQueryPerformState,
 } from '../modules/queries';
 import { resetSavedQuery } from '../modules/savedQuery';
@@ -32,18 +32,13 @@ import { persistState, loadPersitedState } from '../modules/app';
 import APIQueryURL from './explorer/APIQueryURL';
 import SavedQueryBrowser from './explorer/SavedQueryBrowser';
 
-import Dataviz from './explorer/Dataviz';
-import JsonView from './explorer/JsonView';
-import EmbedHTML from './explorer/EmbedHTML';
-
 import QuerySettings from './QuerySettings';
 import QueryVisualization from './QueryVisualization';
+import VisualizationPlaceholder from './VisualizationPlaceholder';
 import RunQuery, { runQueryLabel } from './RunQuery';
 import Confirm from './Confirm';
 
 import { QueryActions, SettingsContainer } from './App.styles';
-
-import { getChartTypeOptions } from '../utils/charts';
 
 import { PANEL_NEW_QUERY, PANEL_BROWSE } from '../consts';
 
@@ -56,6 +51,8 @@ const mapStateToProps = (state, props) => ({
   ui: state.ui,
   savedQuery: state.savedQuery,
   isQueryLoading: getQueryPerformState(state),
+  queryResults: getQueryResults(state),
+  queryError: getError(state),
   steps: state.ui.steps,
   components: {
     ...state.ui.components,
@@ -117,29 +114,6 @@ class App extends Component {
     this.props.loadPersitedState();
   }
 
-  componentDidUpdate() {
-    const { ui, fetchSchema } = this.props;
-
-    const { autoload, eventCollection } = this.props.ui;
-    const { savedQuery } = this.props;
-
-    if (autoload) {
-      ui.autoload = false;
-      updateUI({
-        autoload: false,
-      });
-
-      fetchSchema({
-        eventCollection,
-      });
-
-      const savedQueryName = savedQuery && savedQuery.name;
-      this.runQuery({
-        savedQueryName,
-      });
-    }
-  }
-
   runQuery(payload) {
     console.log('RUN QUERY', payload);
     this.props.runQuery({
@@ -161,35 +135,9 @@ class App extends Component {
       analysisType,
       chartType,
       modalEmbedHTML,
-      error,
-      fetching,
+      queryError,
       extractionActiveTab,
     } = this.props.ui;
-
-    const queryParams = this.state.query;
-    const chartTypes = getChartTypeOptions(queryParams);
-    const hasResults = queries && queries.results;
-
-    let chartTypeSelected = chartTypes.length && {
-      label: chartTypes[0],
-      value: chartTypes[0],
-    };
-
-    if (chartType) {
-      chartTypeSelected = { label: chartType, value: chartType };
-    }
-
-    const chartTypesSorted = chartTypes
-      .sort((a, b) => {
-        if (a.toLowerCase() < b.toLowerCase()) {
-          return -1;
-        }
-        if (a.toLowerCase() > b.toLowerCase()) {
-          return 1;
-        }
-        return 0;
-      })
-      .map((item) => ({ label: item, value: item }));
 
     const { readKey, projectId } = this.props.keenAnalysis.config;
 
@@ -250,7 +198,7 @@ class App extends Component {
               }}
             />
             {components.apiQueryUrl && (
-              <APIQueryURL queryParams={queryParams} client={client} />
+              <APIQueryURL queryParams={this.state.query} client={client} />
             )}
           </div>
           <div
@@ -262,115 +210,52 @@ class App extends Component {
           </div>
         </div>
 
-        {components.results && (
-          <div className="result">
-            {!hasResults && <div className="lets-go">Let's go exploring!</div>}
-            {hasResults && <QueryVisualization query={this.state.query} />}
-            {hasResults && (
-              <div className="preview">
-                {chartType === 'JSON' && <JsonView />}
-                {chartType !== 'JSON' && (
-                  <Fragment>
-                    {components.embedButton && (
-                      <button
-                        className="button-download button-embed-html"
-                        onClick={() => {
-                          updateUI({
-                            modalEmbedHTML: true,
-                          });
-                        }}
-                      >
-                        <i className="fas fa-code" /> Embed HTML
-                      </button>
-                    )}
-                    <Modal
-                      isOpen={modalEmbedHTML}
-                      onRequestClose={() => {
-                        updateUI({
-                          modalEmbedHTML: false,
-                        });
-                      }}
-                      style={{
-                        overlay: {
-                          backgroundColor: 'rgba(0, 0, 0, 0.3)',
-                        },
-                      }}
-                    >
-                      <div className="modal-main">
-                        <div className="header">
-                          <div className="title">Embed HTML</div>
-                          <div
-                            className="x"
-                            onClick={() => {
-                              updateUI({
-                                modalEmbedHTML: false,
-                              });
-                            }}
-                          >
-                            x
-                          </div>
-                        </div>
-                        <EmbedHTML projectId={projectId} readKey={readKey} />
-                      </div>
-                    </Modal>
-                  </Fragment>
-                )}
-                <div className="select-chart-type-container">
-                  <Select
-                    className="select-chart-type"
-                    value={chartTypeSelected}
-                    options={chartTypesSorted}
-                    onChange={(e) => {
-                      updateUI({
-                        chartType: e.value,
-                      });
-                    }}
-                    theme={getThemeForSelect}
-                  />
-                </div>
-              </div>
-            )}
-
-            {true ||
-              (error && Object.keys(error).length !== 0 && (
-                <div className="error">{error.body}</div>
-              ))}
-
-            <QueryActions>
-              <RunQuery
-                isLoading={this.props.isQueryLoading}
-                onClick={() => this.runQuery(this.state.query)}
-              >
-                {runQueryLabel(this.state.query)}
-              </RunQuery>
-              <SettingsContainer>
-                <QuerySettings
-                  onDelete={(name) => {
-                    this.props.deleteQuery({ name });
-                  }}
-                  onSave={(name, refreshRate) => {
-                    const body = {
-                      query: this.state.query,
-                      metadata: {
-                        displayName: name,
-                        visualization: {
-                          chartType: this.props.ui.chartType,
-                          stepLabels: this.props.ui.stepLabels || [],
-                        },
+        <div className="result">
+          {this.props.queryResults ? (
+            <QueryVisualization
+              query={this.state.query}
+              queryResults={this.props.queryResults}
+            />
+          ) : (
+            <VisualizationPlaceholder isLoading={this.props.isQueryLoading} />
+          )}
+          {this.props.queryError && (
+            <Alert type="error">{this.props.queryError.body}</Alert>
+          )}
+          <QueryActions>
+            <RunQuery
+              isLoading={this.props.isQueryLoading}
+              onClick={() => this.runQuery(this.state.query)}
+            >
+              {runQueryLabel(this.state.query)}
+            </RunQuery>
+            <SettingsContainer>
+              <QuerySettings
+                onDelete={(name) => {
+                  this.props.deleteQuery({ name });
+                }}
+                onSave={(name, refreshRate) => {
+                  const body = {
+                    query: this.state.query,
+                    metadata: {
+                      displayName: name,
+                      visualization: {
+                        chartType: this.props.ui.chartType,
+                        stepLabels: this.props.ui.stepLabels || [],
                       },
-                      refreshRate: refreshRate * 60 * 60,
-                    };
+                    },
+                    refreshRate: refreshRate * 60 * 60,
+                  };
 
-                    this.props.saveQuery({
-                      name,
-                      body,
-                    });
-                  }}
-                />
-              </SettingsContainer>
-            </QueryActions>
-          </div>
-        )}
+                  this.props.saveQuery({
+                    name,
+                    body,
+                  });
+                }}
+              />
+            </SettingsContainer>
+          </QueryActions>
+        </div>
         <Confirm />
       </div>
     );

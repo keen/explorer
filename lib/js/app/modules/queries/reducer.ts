@@ -8,6 +8,7 @@ export const initialState: ReducerState = {
   isSavingQuery: false,
   saved: [],
   isLimited: false,
+  error: null,
 };
 
 export const queriesReducer = (
@@ -82,6 +83,7 @@ export const queriesReducer = (
     case RUN_QUERY: {
       return {
         ...state,
+        error: null,
         isLoading: true,
       };
     }
@@ -89,6 +91,7 @@ export const queriesReducer = (
       return {
         ...state,
         isLoading: false,
+        error: action.payload.error,
       };
     }
     case RUN_QUERY_SUCCESS: {
