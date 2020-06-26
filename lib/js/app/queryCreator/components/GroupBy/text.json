@@ -2,5 +2,6 @@
   "groupBy": "Group by",
   "removeGroup": "Remove",
   "addGroup": "Add Group",
-  "placeholder": "Select property"
+  "placeholder": "Select property",
+  "label": "Property"
 }

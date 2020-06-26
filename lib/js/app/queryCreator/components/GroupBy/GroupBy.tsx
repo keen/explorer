@@ -53,13 +53,17 @@ const GroupBy: FC<Props> = ({ collection }) => {
 
   const [state, groupDispatcher] = useReducer(groupByReducer, groups);
   const stateRef = useRef(state);
+  const collectionRef = useRef(collection);
 
   useEffect(() => {
     return () => dispatch(setGroupBy(undefined));
   }, []);
 
   useEffect(() => {
-    if (collection) groupDispatcher(resetGroups());
+   if (collection !== collectionRef.current) {
+     collectionRef.current = collection;
+     groupDispatcher(resetGroups());
+   }
   }, [collection]);
 
   useEffect(() => {
@@ -88,13 +92,16 @@ const GroupBy: FC<Props> = ({ collection }) => {
         <div key={idx}>
           <Label>Group {idx + 1}</Label>
           <Button
+            data-testid={`group-remove-button-${idx}`}
             variant="danger"
             style="outline"
             onClick={() => groupDispatcher(removeGroup(idx))}
           >
             {text.removeGroup}
           </Button>
+          <Label htmlFor={`select-property-${idx}`}>{text.label}</Label>
           <Select
+            inputId={`select-property-${idx}`}
             variant="solid"
             placeholder={text.placeholder}
             options={options}

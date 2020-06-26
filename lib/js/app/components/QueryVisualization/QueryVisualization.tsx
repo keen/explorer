@@ -37,7 +37,7 @@ const QueryVisualization: FC<Props> = ({ queryResults, query }) => {
 
   const visualizations = useMemo(
     () => getVisualizations(query).sort(sortVisualizations),
-    []
+    [query]
   );
   const options = useMemo(
     () =>
