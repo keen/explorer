@@ -20,6 +20,7 @@ import {
   Limit,
   Percentile,
   FunnelSteps,
+  Filters
 } from './components';
 import { showField } from './utils/showField';
 
@@ -115,6 +116,7 @@ const App: FC<Props> = ({ onPreviewCollection }) => {
       )}
       {showField('interval', analysis) && <Interval />}
       {showField('limit', analysis) && <Limit />}
+      {showField('filters', analysis) && <Filters collection={collection} />}
     </div>
   );
 };

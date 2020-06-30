@@ -153,7 +153,7 @@ class App extends Component {
       eventCollection = steps[0] && steps[0].eventCollection;
     }
 
-    if (
+    if ( prevProps.collections.items && this.props.collections.items &&
       prevProps.collections.items.length !==
         this.props.collections.items.length &&
       !Object.keys(this.props.collections.schemas).length
@@ -256,7 +256,7 @@ class App extends Component {
         filters: undefined,
       };
     }
-
+    console.log('runquery', {params}, convertFilterValuesToJsonValues(params));
     this.props.query({
       ...payload,
       ...params,
@@ -439,6 +439,7 @@ class App extends Component {
             } panel-${analysisType}`}
           >
             <QueryCreator
+              // collections={collections}
               projectId={this.props.keenAnalysis.config.projectId}
               readKey={this.props.keenAnalysis.config.readKey}
               masterKey={this.props.keenAnalysis.config.masterKey}

@@ -4,7 +4,7 @@ import { Analysis } from '../../types';
 import { FIELDS_CONFIG } from '../config';
 
 export const showField = (fieldName: CreatorFields, analysis: Analysis) => {
-  const fieldRule = FIELDS_CONFIG[fieldName];
+  const fieldRule = FIELDS_CONFIG[fieldName]; console.log(fieldName, {fieldRule}, fieldRule.includes('*'));
   if (fieldRule.includes('*')) return true;
   return fieldRule.includes(analysis);
 };

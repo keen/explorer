@@ -106,4 +106,5 @@ export const FIELDS_CONFIG: QueryCreatorConfig = {
   contentEncoding: ['extraction'],
   propertyNames: ['extraction'],
   latest: ['extraction'],
+  filters: ['*'],
 };
