@@ -4,6 +4,7 @@ import {
   SHOW_CONFIRMATION,
   HIDE_CONFIRMATION,
   ACCEPT_CONFIRMATION,
+  SET_VISUALIZATION_TYPE,
 } from './constants';
 
 export const initialState: ReducerState = {
@@ -12,6 +13,9 @@ export const initialState: ReducerState = {
     action: null,
     meta: null,
   },
+  visualization: {
+    type: null,
+  },
 };
 
 export const appReducer = (
@@ -19,6 +23,14 @@ export const appReducer = (
   action: AppActions
 ) => {
   switch (action.type) {
+    case SET_VISUALIZATION_TYPE:
+      return {
+        ...state,
+        visualization: {
+          ...state.visualization,
+          type: action.payload.type,
+        },
+      };
     case ACCEPT_CONFIRMATION:
     case HIDE_CONFIRMATION:
       return {

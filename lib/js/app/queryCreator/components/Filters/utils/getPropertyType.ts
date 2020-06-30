@@ -1,4 +1,4 @@
-import { DATA_TYPES } from '../contants';
+import { DATA_TYPES } from '../constants';
 import { Filter , PropertyType} from '../../../types';
 
 export const getPropertyType = ({ schema, filter }: {schema: any, filter: Filter}) => {

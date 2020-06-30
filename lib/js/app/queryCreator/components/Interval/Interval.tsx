@@ -35,10 +35,16 @@ const Interval: FC<Props> = () => {
   return (
     <div>
       <ul>
-        <li onClick={() => dispatch(setInterval(DEFAULT_STANDARD_INTERVAL))}>
+        <li
+          data-testid="supported-interval-tab"
+          onClick={() => dispatch(setInterval(DEFAULT_STANDARD_INTERVAL))}
+        >
           {text.standard}
         </li>
-        <li onClick={() => dispatch(setInterval(DEFAULT_CUSTOM_INTERVAL))}>
+        <li
+          data-testid="custom-interval-tab"
+          onClick={() => dispatch(setInterval(DEFAULT_CUSTOM_INTERVAL))}
+        >
           {text.custom}
         </li>
       </ul>

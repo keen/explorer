@@ -116,7 +116,11 @@ const App: FC<Props> = ({ onPreviewCollection }) => {
       )}
       {showField('interval', analysis) && <Interval />}
       {showField('limit', analysis) && <Limit />}
-      {showField('filters', analysis) && <Filters collection={collection} />}
+      {showField('filters', analysis) && (
+        <Accordion renderHeader={() => <div>Filters</div>}>
+          <Filters collection={collection} />
+        </Accordion>
+      )}
     </div>
   );
 };

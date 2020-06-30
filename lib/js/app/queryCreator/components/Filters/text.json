@@ -1,3 +1,5 @@
 {
-  "filters": "Filters"
+  "filters": "Filters",
+  "addFilter": "Add Filter",
+  "resetFilters": "Reset Filters"
 }

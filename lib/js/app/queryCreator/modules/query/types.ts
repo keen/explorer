@@ -43,7 +43,7 @@ export type ReducerState = {
   contentEncoding?: string;
 };
 
-export interface SetQuery {
+export interface SetQueryAction {
   type: typeof SET_QUERY;
   payload: {
     query: Partial<ReducerState>;
@@ -187,7 +187,7 @@ export interface ChangeFunnelStepsOrderAction {
 }
 
 export type QueryActions =
-  | SetQuery
+  | SetQueryAction
   | SelectEventCollectionAction
   | SelectAnalysisAction
   | SelectTargetPropertyAction

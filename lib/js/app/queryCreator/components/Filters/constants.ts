@@ -1,3 +1,10 @@
+export const ADD_FILTER= '@filter/ADD_FILTER';
+export const UPDATE_FILTER = '@filter/UPDATE_FILTER';
+export const REMOVE_FILTER = '@filter/REMOVE_FILTER';
+export const RESET_FILTERS = '@filter/RESET_FILTERS';
+
+
+
 // export const DATA_TYPES = [
 //   'String',
 //   'Number',

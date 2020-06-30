@@ -4,12 +4,23 @@ import {
   SHOW_CONFIRMATION,
   HIDE_CONFIRMATION,
   ACCEPT_CONFIRMATION,
+  SET_VISUALIZATION_TYPE,
 } from './constants';
 
 import { AppActions, Confirmation } from './types';
 
-export const persistState = (): AppActions => ({
+export const persistState = (state: Object): AppActions => ({
   type: SET_STATE_IN_URL,
+  payload: {
+    state,
+  },
+});
+
+export const setVisualizationType = (type: string): AppActions => ({
+  type: SET_VISUALIZATION_TYPE,
+  payload: {
+    type,
+  },
 });
 
 export const loadPersitedState = (): AppActions => ({
