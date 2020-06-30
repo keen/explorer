@@ -240,7 +240,7 @@ class App extends Component {
 
   runQuery(payload) {
     let params = {
-      ...this.getQueryParams(),
+      ...convertFilterValuesToJsonValues(this.getQueryParams()),
     };
 
     if (params.analysisType === 'funnel') {
