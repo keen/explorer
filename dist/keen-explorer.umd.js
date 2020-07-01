@@ -9613,7 +9613,7 @@ var ExtractionOptions = function (_React$Component) {
       return schema.sortedProperties.map(function (property) {
         return {
           value: property,
-          selected: _this2.props.property_names.indexOf(property) > -1
+          selected: _this2.props.property_names && _this2.props.property_names.indexOf(property) > -1
         };
       });
     }
