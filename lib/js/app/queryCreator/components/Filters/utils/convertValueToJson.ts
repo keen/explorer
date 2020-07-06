@@ -1,4 +1,5 @@
-export const parseValueToJson = (value: string) => {
+export const convertValueToJson = (value: string) => {
+  if (typeof value !== 'string') return value;
   const result = value
   .split(',')
   .map(item => {

@@ -3,6 +3,7 @@ import {
   UPDATE_FILTER,
   REMOVE_FILTER,
   RESET_FILTERS,
+  SET_FILTERS
 } from './constants';
 
 import { FiltersActions } from './types';
@@ -12,11 +13,11 @@ export const addFilter = (): FiltersActions => ({
   type: ADD_FILTER
 });
 
-export const updateFilter = (index: number, filter: Filter): FiltersActions => ({
+export const updateFilter = (index: number, value: Partial<Filter>): FiltersActions => ({
   type: UPDATE_FILTER,
   payload: {
     index,
-    filter
+    value
   }
 });
 
@@ -28,3 +29,8 @@ export const removeFilter = (index: number): FiltersActions => ({
 export const resetFilters = (): FiltersActions => ({
   type: RESET_FILTERS
 });
+
+export const setFilters = (filters: Filter[]): FiltersActions => ({
+  type: SET_FILTERS,
+  payload: { filters }
+})
