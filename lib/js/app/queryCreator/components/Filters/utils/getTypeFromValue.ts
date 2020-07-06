@@ -12,6 +12,7 @@ const isList = (value) => {
 }
 
 export const getTypeFromValue = (filter: Filter) => {
+  if (!filter) return null;
   const { propertyValue, operator } = filter;
   switch(getType(propertyValue)) {
     case 'object':

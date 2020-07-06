@@ -26,7 +26,8 @@ import { AppState, PropertyType, Operator, Filter } from '../../types';
 
 import { DATA_TYPES, FILTER_OPERATORS, DEFAULT_TIMEFRAME_ABSOLUTE_VALUE } from './constants';
 
-import { convertDateToString, convertValueToJson } from './utils';
+import { convertDateToString, convertValueToJson, getTypeFromValue, convertSchemaProp } from './utils';
+import { SchemaProp } from './types';
 
 type Props = {
   /** Collection name */
@@ -40,7 +41,7 @@ type Props = {
 const Filters: FC<Props> = ({ collection, filters }) => {
   const collectionSchema = useSelector((state: AppState) =>
     getCollectionSchema(state, collection)
-  );
+  ); console.log('----- colllection schema', {collectionSchema});
 
   const options = useMemo(() => {
     if (collectionSchema) {
@@ -196,8 +197,14 @@ const Filters: FC<Props> = ({ collection, filters }) => {
         value={filter?.propertyValue || ''}
         onChange={(e) => filtersDispatcher(updateFilter(idx, { propertyValue: e.target.value }))}
       />
-    )
+    );
   }
+
+  const getPropertyType = (item: Filter) => {
+    const propertyType = item?.propertyType || getTypeFromValue(item);
+    return propertyType ? { label: propertyType, value: propertyType } : null;
+  }
+
   console.log({state});
   state.forEach(item => item?.propertyValue && console.log(convertValueToJson(item.propertyValue)));
   return (
@@ -208,7 +215,12 @@ const Filters: FC<Props> = ({ collection, filters }) => {
           variant="solid"
           placeholder={'Select property name'}
           options={options}
-          onChange={({ value }: { value: string }) => filtersDispatcher(updateFilter(idx, { propertyName: value }))}
+          onChange={({ value }: { value: string }) => {
+              filtersDispatcher(updateFilter(idx, { propertyName: value }));
+              const schemaProp = collectionSchema[value];
+              if (schemaProp) filtersDispatcher(updateFilter(idx, { propertyType: convertSchemaProp(schemaProp as SchemaProp) as PropertyType })); 
+            }
+          }
           value={item?.propertyName ? {label: item.propertyName, value: item.propertyName} : null}
         />
         <Select
@@ -227,7 +239,7 @@ const Filters: FC<Props> = ({ collection, filters }) => {
             }
           }
           }
-          value={item?.propertyType ? {label: item.propertyType, value: item.propertyType} : null}
+          value={getPropertyType(item)}
         />
         <Select
           variant="solid"

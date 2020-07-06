@@ -44,3 +44,13 @@ export type FiltersActions =
   | RemoveFilterAction
   | ResetFiltersAction
   | SetFiltersAction;
+
+  export type SchemaProp =
+  | 'num'
+  | 'string'
+  | 'bool'
+  | 'datetime'
+  | 'null'
+  | 'list'
+  | 'geo'
+  | 'array';
