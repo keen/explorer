@@ -11,7 +11,43 @@ import {
   DELETE_QUERY,
   DELETE_QUERY_ERROR,
   DELETE_QUERY_SUCCESS,
+  SAVE_QUERY,
+  SAVE_QUERY_ERROR,
+  SAVE_QUERY_SUCCESS,
+  SET_CACHE_QUERY_LIMIT,
+  SET_CACHE_QUERY_LIMIT_ERROR,
 } from './constants';
+
+export const setQueryCacheLimit = (limitReached: boolean): QueriesActions => ({
+  type: SET_CACHE_QUERY_LIMIT,
+  payload: { limitReached },
+});
+
+export const setQueryCacheLimitError = (error: Error): QueriesActions => ({
+  type: SET_CACHE_QUERY_LIMIT_ERROR,
+  payload: { error },
+});
+
+export const saveQuery = (name: string, body: Object): QueriesActions => ({
+  type: SAVE_QUERY,
+  payload: { name, body },
+});
+
+export const saveQuerySuccess = (
+  queryName: string,
+  body: Object
+): QueriesActions => ({
+  type: SAVE_QUERY_SUCCESS,
+  payload: {
+    queryName,
+    body,
+  },
+});
+
+export const saveQueryError = (error: Error): QueriesActions => ({
+  type: SAVE_QUERY_ERROR,
+  payload: { error },
+});
 
 export const deleteQuery = (queryName: string): QueriesActions => ({
   type: DELETE_QUERY,

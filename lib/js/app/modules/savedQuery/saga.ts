@@ -1,13 +1,13 @@
 import { takeLatest, select, getContext, put } from 'redux-saga/effects';
 
-import { updateSaveQuery } from './actions';
+import { updateSaveQuery, saveQuerySuccess } from './actions';
 import { convertMilisecondsToMinutes } from './utils';
 
 import { SET_QUERY_EVENT } from '../../queryCreator';
 
 import { SELECT_SAVED_QUERY } from './constants';
 
-import { getSavedQueries } from '../queries';
+import { getSavedQueries, SAVE_QUERY_SUCCESS } from '../queries';
 
 import { SelectSavedQueryAction } from './types';
 
@@ -36,6 +36,11 @@ function* selectSavedQuery({ payload }: SelectSavedQueryAction) {
   }
 }
 
+function* saveQuerySuccessHandler() {
+  yield put(saveQuerySuccess());
+}
+
 export function* savedQuerySaga() {
   yield takeLatest(SELECT_SAVED_QUERY, selectSavedQuery);
+  yield takeLatest(SAVE_QUERY_SUCCESS, saveQuerySuccessHandler);
 }

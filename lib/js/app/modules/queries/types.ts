@@ -9,6 +9,11 @@ import {
   DELETE_QUERY,
   DELETE_QUERY_ERROR,
   DELETE_QUERY_SUCCESS,
+  SAVE_QUERY,
+  SAVE_QUERY_ERROR,
+  SAVE_QUERY_SUCCESS,
+  SET_CACHE_QUERY_LIMIT,
+  SET_CACHE_QUERY_LIMIT_ERROR,
 } from './constants';
 
 export type ReducerState = {
@@ -19,6 +24,43 @@ export type ReducerState = {
   isLimited: boolean;
   error: Error | null;
 };
+
+export interface SetCacheQueryLimitAction {
+  type: typeof SET_CACHE_QUERY_LIMIT;
+  payload: {
+    limitReached: boolean;
+  };
+}
+
+export interface SetCacheQueryLimitErrorAction {
+  type: typeof SET_CACHE_QUERY_LIMIT_ERROR;
+  payload: {
+    error: Error;
+  };
+}
+
+export interface SaveQueryAction {
+  type: typeof SAVE_QUERY;
+  payload: {
+    name: string;
+    body: Object;
+  };
+}
+
+export interface SaveQuerySuccessAction {
+  type: typeof SAVE_QUERY_SUCCESS;
+  payload: {
+    queryName: string;
+    body: Object;
+  };
+}
+
+export interface SaveQueryErrorAction {
+  type: typeof SAVE_QUERY_ERROR;
+  payload: {
+    error: Error;
+  };
+}
 
 export interface DeleteQueryAction {
   type: typeof DELETE_QUERY;
@@ -85,6 +127,11 @@ export interface CreateNewQueryAction {
 }
 
 export type QueriesActions =
+  | SetCacheQueryLimitAction
+  | SetCacheQueryLimitErrorAction
+  | SaveQueryAction
+  | SaveQuerySuccessAction
+  | SaveQueryErrorAction
   | DeleteQueryAction
   | DeleteQuerySuccessAction
   | DeleteQueryErrorAction

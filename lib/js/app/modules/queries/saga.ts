@@ -3,10 +3,14 @@ import { takeLatest, getContext, take, put } from 'redux-saga/effects';
 import {
   runQueryError,
   runQuerySuccess,
+  saveQuerySuccess,
+  saveQueryError,
   getSavedQueriesSuccess,
   getSavedQueriesError,
   deleteQuerySuccess,
   deleteQueryError,
+  setQueryCacheLimit,
+  setQueryCacheLimitError,
 } from './actions';
 
 import {
@@ -16,9 +20,17 @@ import {
 } from '../../modules/app';
 import { resetSavedQuery } from '../../modules/savedQuery';
 
-import { RunQueryAction, DeleteQueryAction } from './types';
+import { RunQueryAction, DeleteQueryAction, SaveQueryAction } from './types';
 
-import { RUN_QUERY, DELETE_QUERY, GET_SAVED_QUERIES } from './constants';
+import {
+  RUN_QUERY,
+  DELETE_QUERY,
+  DELETE_QUERY_SUCCESS,
+  SAVE_QUERY,
+  GET_SAVED_QUERIES,
+  SAVE_QUERY_SUCCESS,
+  ERRORS,
+} from './constants';
 
 function* runQuery(action: RunQueryAction) {
   try {
@@ -31,6 +43,33 @@ function* runQuery(action: RunQueryAction) {
     yield put(runQuerySuccess(responseBody));
   } catch (error) {
     yield put(runQueryError(error));
+  }
+}
+
+function* saveQuery({ payload }: SaveQueryAction) {
+  try {
+    const { name, body } = payload;
+    const client = yield getContext('keenClient');
+    const responseBody = yield client.put({
+      url: client.url('queries', 'saved', name),
+      apiKey: client.config.masterKey,
+      params: body,
+    });
+    yield put(saveQuerySuccess(name, responseBody));
+  } catch (error) {
+    const { status, error_code } = error;
+    if (
+      (status >= 400 &&
+        status < 500 &&
+        error_code === ERRORS.OVER_LIMIT_ERROR) ||
+      error_code === ERRORS.TOO_MANY_QUERIES
+    ) {
+      yield put({
+        type: 'ABOVE_CACHE_QUERY_LIMIT',
+      });
+    }
+
+    yield put(saveQueryError(error));
   }
 }
 
@@ -71,8 +110,36 @@ function* fetchSavedQueries() {
   }
 }
 
+function* checkCacheLimits() {
+  try {
+    const client = yield getContext('keenClient');
+    const url = client.url('/3.0/projects/{projectId}/organization-usage', {
+      api_key: client.config.masterKey,
+    });
+    const responseBody = yield fetch(url).then((response) => response.json());
+    if (responseBody) {
+      const {
+        cached_queries: { limited, limit, current_usage },
+      } = responseBody;
+
+      const limitReached = limited && current_usage >= limit;
+      yield put(setQueryCacheLimit(limitReached));
+    }
+  } catch (error) {
+    yield put(setQueryCacheLimitError(error));
+  }
+}
+
 export function* queriesSaga() {
   yield takeLatest(RUN_QUERY, runQuery);
   yield takeLatest(DELETE_QUERY, deleteQuery);
-  yield takeLatest(GET_SAVED_QUERIES, fetchSavedQueries);
+  yield takeLatest(SAVE_QUERY, saveQuery);
+  yield takeLatest(
+    [GET_SAVED_QUERIES, SAVE_QUERY_SUCCESS, DELETE_QUERY_SUCCESS],
+    fetchSavedQueries
+  );
+  yield takeLatest(
+    [SAVE_QUERY_SUCCESS, DELETE_QUERY_SUCCESS],
+    checkCacheLimits
+  );
 }

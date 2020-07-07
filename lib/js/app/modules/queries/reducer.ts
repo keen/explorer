@@ -1,4 +1,4 @@
-import { ReducerState } from './types';
+import { ReducerState, QueriesActions } from './types';
 
 import {
   RUN_QUERY,
@@ -6,6 +6,11 @@ import {
   RUN_QUERY_SUCCESS,
   GET_SAVED_QUERIES_SUCCESS,
   DELETE_QUERY_SUCCESS,
+  SAVE_QUERY,
+  SAVE_QUERY_SUCCESS,
+  SAVE_QUERY_ERROR,
+  SET_CACHE_QUERY_LIMIT,
+  SET_CACHE_QUERY_LIMIT_ERROR,
 } from './constants';
 
 export const initialState: ReducerState = {
@@ -19,58 +24,35 @@ export const initialState: ReducerState = {
 
 export const queriesReducer = (
   state: ReducerState = initialState,
-  action: any
+  action: QueriesActions
 ) => {
   switch (action.type) {
-    case 'CLIENT_SAVE_QUERY':
+    case SAVE_QUERY:
       return {
         ...state,
+        error: null,
         isSavingQuery: true,
       };
-
-    case 'CLIENT_SAVE_QUERY_SUCCESS':
+    case SAVE_QUERY_SUCCESS:
       return {
         ...state,
         isSavingQuery: false,
-        results: initialState.results,
       };
-
-    case 'CLIENT_SAVE_QUERY_ERROR':
+    case SAVE_QUERY_ERROR:
       return {
         ...state,
         isSavingQuery: false,
-        results: initialState.results,
       };
-
-    case 'UPDATE_ACTIVE_SAVED_QUERY':
+    case SET_CACHE_QUERY_LIMIT:
       return {
         ...state,
-        activeSavedQuery: action.payload,
-      };
-
-    case 'RESET_UI':
-      return {
-        ...state,
-        results: initialState.results,
-      };
-    case 'QUERY_RESET_RESULTS':
-      return {
-        ...state,
-        results: initialState.results,
-      };
-
-    case 'ABOVE_CACHE_QUERY_LIMIT':
-      return {
-        ...state,
-        isLimited: true,
+        isLimited: action.payload.limitReached,
         isSavingQuery: false,
       };
-
-    case 'BELOW_CACHE_QUERY_LIMIT':
+    case SET_CACHE_QUERY_LIMIT_ERROR:
       return {
         ...state,
-        isLimited: false,
-        isSavingQuery: false,
+        error: action.payload.error,
       };
     case DELETE_QUERY_SUCCESS:
       return {

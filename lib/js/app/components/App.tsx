@@ -5,16 +5,13 @@ import { connect } from 'react-redux';
 import { Alert } from '@keen.io/ui-core';
 import { getPubSub } from '@keen.io/pubsub';
 
-import {
-  fetchProject,
-  fetchSchema,
-  saveQuery,
-} from '../redux/actionCreators/client';
+import { fetchProject, fetchSchema } from '../redux/actionCreators/client';
 
 import {
   createNewQuery,
   runQuery,
   deleteQuery,
+  saveQuery,
   getError,
   fetchSavedQueries,
   getSavedQueries,
@@ -96,7 +93,6 @@ class App extends Component {
   componentDidMount() {
     this.props.fetchProject();
     this.props.fetchSavedQueries();
-
     this.props.loadPersitedState();
   }
 
@@ -159,18 +155,11 @@ class App extends Component {
                     query: this.state.query,
                     metadata: {
                       displayName: name,
-                      visualization: {
-                        chartType: this.props.ui.chartType,
-                        stepLabels: this.props.ui.stepLabels || [],
-                      },
                     },
                     refreshRate: refreshRate * 60 * 60,
                   };
 
-                  this.props.saveQuery({
-                    name,
-                    body,
-                  });
+                  this.props.saveQuery(name, body);
                 }}
               />
             </SettingsContainer>

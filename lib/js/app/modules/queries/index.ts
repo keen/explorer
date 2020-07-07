@@ -4,6 +4,7 @@ import {
   createNewQuery,
   runQuery,
   deleteQuery,
+  saveQuery,
   getSavedQueries as fetchSavedQueries,
 } from './actions';
 import {
@@ -15,11 +16,14 @@ import {
   getQueryPerformState,
 } from './selectors';
 
+import { SAVE_QUERY_SUCCESS } from './constants';
+
 import { queriesSaga } from './saga';
 
 export {
   ReducerState,
   fetchSavedQueries,
+  saveQuery,
   getError,
   getQueryResults,
   getQueryPerformState,
@@ -31,4 +35,5 @@ export {
   runQuery,
   deleteQuery,
   queriesSaga,
+  SAVE_QUERY_SUCCESS,
 };
