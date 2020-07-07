@@ -8,7 +8,25 @@ import {
   GET_SAVED_QUERIES,
   GET_SAVED_QUERIES_ERROR,
   GET_SAVED_QUERIES_SUCCESS,
+  DELETE_QUERY,
+  DELETE_QUERY_ERROR,
+  DELETE_QUERY_SUCCESS,
 } from './constants';
+
+export const deleteQuery = (queryName: string): QueriesActions => ({
+  type: DELETE_QUERY,
+  payload: { queryName },
+});
+
+export const deleteQuerySuccess = (queryName: string): QueriesActions => ({
+  type: DELETE_QUERY_SUCCESS,
+  payload: { queryName },
+});
+
+export const deleteQueryError = (error: Error): QueriesActions => ({
+  type: DELETE_QUERY_ERROR,
+  payload: { error },
+});
 
 export const createNewQuery = (): QueriesActions => ({
   type: CREATE_NEW_QUERY,

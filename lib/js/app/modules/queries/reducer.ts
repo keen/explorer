@@ -5,6 +5,7 @@ import {
   RUN_QUERY_ERROR,
   RUN_QUERY_SUCCESS,
   GET_SAVED_QUERIES_SUCCESS,
+  DELETE_QUERY_SUCCESS,
 } from './constants';
 
 export const initialState: ReducerState = {
@@ -41,14 +42,6 @@ export const queriesReducer = (
         results: initialState.results,
       };
 
-    case 'CLIENT_DELETE_QUERY_SUCCESS':
-      return {
-        ...state,
-        saved: state.saved.filter(
-          (item) => item.query_name !== action.payload.name
-        ),
-      };
-
     case 'UPDATE_ACTIVE_SAVED_QUERY':
       return {
         ...state,
@@ -79,7 +72,13 @@ export const queriesReducer = (
         isLimited: false,
         isSavingQuery: false,
       };
-
+    case DELETE_QUERY_SUCCESS:
+      return {
+        ...state,
+        saved: state.saved.filter(
+          (item) => item.query_name !== action.payload.queryName
+        ),
+      };
     case GET_SAVED_QUERIES_SUCCESS:
       return {
         ...state,

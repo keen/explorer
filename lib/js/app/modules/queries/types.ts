@@ -6,6 +6,9 @@ import {
   GET_SAVED_QUERIES,
   GET_SAVED_QUERIES_ERROR,
   GET_SAVED_QUERIES_SUCCESS,
+  DELETE_QUERY,
+  DELETE_QUERY_ERROR,
+  DELETE_QUERY_SUCCESS,
 } from './constants';
 
 export type ReducerState = {
@@ -16,6 +19,27 @@ export type ReducerState = {
   isLimited: boolean;
   error: Error | null;
 };
+
+export interface DeleteQueryAction {
+  type: typeof DELETE_QUERY;
+  payload: {
+    queryName: string;
+  };
+}
+
+export interface DeleteQuerySuccessAction {
+  type: typeof DELETE_QUERY_SUCCESS;
+  payload: {
+    queryName: string;
+  };
+}
+
+export interface DeleteQueryErrorAction {
+  type: typeof DELETE_QUERY_ERROR;
+  payload: {
+    error: Error;
+  };
+}
 
 export interface GetSavedQueriesAction {
   type: typeof GET_SAVED_QUERIES;
@@ -61,6 +85,9 @@ export interface CreateNewQueryAction {
 }
 
 export type QueriesActions =
+  | DeleteQueryAction
+  | DeleteQuerySuccessAction
+  | DeleteQueryErrorAction
   | RunQueryAction
   | RunQueryErrorAction
   | RunQuerySuccessAction

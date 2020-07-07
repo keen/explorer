@@ -1,27 +1,20 @@
 // @ts-nocheck
 import React, { Component } from 'react';
 import camelCase from 'camelcase-keys';
-import Modal from 'react-modal';
 import { connect } from 'react-redux';
 import { Alert } from '@keen.io/ui-core';
+import { getPubSub } from '@keen.io/pubsub';
 
 import {
   fetchProject,
   fetchSchema,
   saveQuery,
-  deleteQuery,
 } from '../redux/actionCreators/client';
-
-import {
-  updateUI,
-  updateStepUI,
-  resetUI,
-  addStep,
-} from '../redux/actionCreators/ui';
 
 import {
   createNewQuery,
   runQuery,
+  deleteQuery,
   getError,
   fetchSavedQueries,
   getSavedQueries,
@@ -30,7 +23,9 @@ import {
 } from '../modules/queries';
 import { resetSavedQuery, selectSavedQuery } from '../modules/savedQuery';
 
-import QueryCreator from '../queryCreator';
+import QueryCreator, {
+  NEW_QUERY_EVENT as CREATOR_NEW_QUERY_EVENT,
+} from '../queryCreator';
 import QueryBrowser from '../queryBrowser';
 
 import { persistState, loadPersitedState } from '../modules/app';
@@ -45,6 +40,8 @@ import Confirm from './Confirm';
 
 import { QueryActions, SettingsContainer } from './App.styles';
 
+import { NEW_QUERY_EVENT } from '../consts';
+
 import { client } from '../KeenExplorer';
 
 const mapStateToProps = (state, props) => ({
@@ -52,16 +49,10 @@ const mapStateToProps = (state, props) => ({
   queries: state.queries,
   savedQueries: camelCase(getSavedQueries(state), { deep: true }),
   eventCollection: state.ui.eventCollection,
-  ui: state.ui,
   savedQuery: state.savedQuery,
   isQueryLoading: getQueryPerformState(state),
   queryResults: getQueryResults(state),
   queryError: getError(state),
-  steps: state.ui.steps,
-  components: {
-    ...state.ui.components,
-    ...props.components,
-  },
 });
 
 const mapDispatchToProps = {
@@ -76,63 +67,43 @@ const mapDispatchToProps = {
   selectSavedQuery,
   createNewQuery,
   runQuery,
-  updateUI,
-  updateStepUI,
-  resetUI,
-  addStep,
-};
-
-const defaultFeatures = {
-  save: true,
 };
 
 class App extends Component {
   constructor(props) {
     super(props);
-    const features = {
-      ...defaultFeatures,
-      ...(props.features || {}),
-    };
-
-    const appState = {
-      features,
+    this.state = {
       query: {},
     };
 
-    if (localStorage) {
-      const { projectId } = props.keenAnalysis.config;
-      if (!localStorage.projectId || localStorage.projectId !== projectId) {
-        localStorage.setItem('projectId', projectId);
-        localStorage.removeItem('eventCollection');
-        props.updateUI({
-          eventCollection: undefined,
-        });
-        appState.isProjectChanged = true;
+    const pubsub = getPubSub();
+    this.subscriptionDispose = pubsub.subscribe((eventName: string) => {
+      switch (eventName) {
+        case NEW_QUERY_EVENT:
+          pubsub.publish(CREATOR_NEW_QUERY_EVENT);
+          this.props.resetSavedQuery();
+          break;
+        default:
+          break;
       }
-    }
-    this.state = appState;
+    });
+  }
+
+  componentWillUnmount() {
+    if (this.subscriptionDispose) this.subscriptionDispose();
   }
 
   componentDidMount() {
     this.props.fetchProject();
     this.props.fetchSavedQueries();
 
-    if (this.state.isProjectChanged) return;
     this.props.loadPersitedState();
-  }
-
-  runQuery(payload) {
-    console.log('RUN QUERY', payload);
-    this.props.runQuery({
-      ...payload,
-    });
   }
 
   render() {
     const {
-      //UI components
-      components,
-    } = this.props;
+      config: { projectId, readKey, masterKey },
+    } = this.props.keenAnalysis;
 
     return (
       <div>
@@ -141,24 +112,22 @@ class App extends Component {
             this.props.selectSavedQuery(queryName);
           }}
           onDeleteQuery={(queryName) => {
-            this.props.deleteQuery({ name: queryName });
+            this.props.deleteQuery(queryName);
           }}
           queries={this.props.savedQueries}
         />
         <div>
           <QueryCreator
-            projectId={this.props.keenAnalysis.config.projectId}
-            readKey={this.props.keenAnalysis.config.readKey}
-            masterKey={this.props.keenAnalysis.config.masterKey}
+            projectId={projectId}
+            readKey={readKey}
+            masterKey={masterKey}
             onUpdateQuery={(query) => {
-              console.log(query, 'query');
+              console.log(query, '--- query update');
               this.setState({ query });
               this.props.persistState({ query });
             }}
           />
-          {components.apiQueryUrl && (
-            <APIQueryURL queryParams={this.state.query} client={client} />
-          )}
+          <APIQueryURL queryParams={this.state.query} client={client} />
         </div>
 
         <div className="result">
@@ -176,14 +145,14 @@ class App extends Component {
           <QueryActions>
             <RunQuery
               isLoading={this.props.isQueryLoading}
-              onClick={() => this.runQuery(this.state.query)}
+              onClick={() => this.props.runQuery(this.state.query)}
             >
               {runQueryLabel(this.state.query)}
             </RunQuery>
             <SettingsContainer>
               <QuerySettings
                 onDelete={(name) => {
-                  this.props.deleteQuery({ name });
+                  this.props.deleteQuery(name);
                 }}
                 onSave={(name, refreshRate) => {
                   const body = {
@@ -212,7 +181,5 @@ class App extends Component {
     );
   }
 }
-
-App.propTypes = {};
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

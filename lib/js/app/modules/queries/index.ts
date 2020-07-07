@@ -3,6 +3,7 @@ import { queriesReducer } from './reducer';
 import {
   createNewQuery,
   runQuery,
+  deleteQuery,
   getSavedQueries as fetchSavedQueries,
 } from './actions';
 import {
@@ -28,5 +29,6 @@ export {
   createNewQuery,
   queriesReducer,
   runQuery,
+  deleteQuery,
   queriesSaga,
 };

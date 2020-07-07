@@ -32,7 +32,7 @@ const QueryItem: FC<Props> = ({
   } = settings;
 
   return (
-    <div>
+    <div role="presentation">
       <div onClick={() => onSelect(queryName)}>{getQueryName(settings)}</div>
       <div>
         <span onClick={() => onEnableAnalysisFilter(analysisType)}>
