@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [7.1.2](https://github.com/keen/explorer/compare/v7.1.1...v7.1.2) (2020-07-01)
+
+
+### Bug Fixes
+
+* 🐛 convert filter values ([e7dc698](https://github.com/keen/explorer/commit/e7dc698624a9c9060834c0c4a1d5b9531b522649))
+* 🐛 specify propertyType if missing ([7718b52](https://github.com/keen/explorer/commit/7718b522130de43b9c87922ff090602184b11c57))
+
 ### [7.1.1](https://github.com/keen/explorer/compare/v7.1.0...v7.1.1) (2020-06-23)
 
 
