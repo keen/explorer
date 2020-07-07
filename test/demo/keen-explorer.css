@@ -1,30 +1,6 @@
-.dev-body{
-  margin: 2rem auto;
-  width: 100%;
-  max-width: 1500px;
-}
-
-.dev-reload-button{
-  position: absolute;
-  left: 1rem;
-  top: 1rem;
-  color: #ccc;
-}
-
-.keen-explorer-template{
-  margin: 0 auto;
-  width: 100%;
-  max-width: 1500px;
-}
-
-.keen-explorer-template #keen-explorer-container{
-    padding: 1rem;
-  }
-
 .PresetDateRangePicker_panel {
   padding: 0 22px 11px
 }
-
 .PresetDateRangePicker_button {
   position: relative;
   height: 100%;
@@ -41,42 +17,33 @@
   box-sizing: border-box;
   cursor: pointer
 }
-
 .PresetDateRangePicker_button:active {
   outline: 0
 }
-
 .PresetDateRangePicker_button__selected {
   color: #fff;
   background: #00a699
 }
-
 .SingleDatePickerInput {
   display: inline-block;
   background-color: #fff
 }
-
 .SingleDatePickerInput__withBorder {
   border-radius: 2px;
   border: 1px solid #dbdbdb
 }
-
 .SingleDatePickerInput__rtl {
   direction: rtl
 }
-
 .SingleDatePickerInput__disabled {
   background-color: #f2f2f2
 }
-
 .SingleDatePickerInput__block {
   display: block
 }
-
 .SingleDatePickerInput__showClearDate {
   padding-right: 30px
 }
-
 .SingleDatePickerInput_clearDate {
   background: 0 0;
   border: 0;
@@ -92,32 +59,26 @@
   top: 50%;
   transform: translateY(-50%)
 }
-
 .SingleDatePickerInput_clearDate__default:focus,
 .SingleDatePickerInput_clearDate__default:hover {
   background: #dbdbdb;
   border-radius: 50%
 }
-
 .SingleDatePickerInput_clearDate__small {
   padding: 6px
 }
-
 .SingleDatePickerInput_clearDate__hide {
   visibility: hidden
 }
-
 .SingleDatePickerInput_clearDate_svg {
   fill: #82888a;
   height: 12px;
   width: 15px;
   vertical-align: middle
 }
-
 .SingleDatePickerInput_clearDate_svg__small {
   height: 9px
 }
-
 .SingleDatePickerInput_calendarIcon {
   background: 0 0;
   border: 0;
@@ -131,41 +92,33 @@
   padding: 10px;
   margin: 0 5px 0 10px
 }
-
 .SingleDatePickerInput_calendarIcon_svg {
   fill: #82888a;
   height: 15px;
   width: 14px;
   vertical-align: middle
 }
-
 .SingleDatePicker {
   position: relative;
   display: inline-block
 }
-
 .SingleDatePicker__block {
   display: block
 }
-
 .SingleDatePicker_picker {
   z-index: 1;
   background-color: #fff;
   position: absolute
 }
-
 .SingleDatePicker_picker__rtl {
   direction: rtl
 }
-
 .SingleDatePicker_picker__directionLeft {
   left: 0
 }
-
 .SingleDatePicker_picker__directionRight {
   right: 0
 }
-
 .SingleDatePicker_picker__portal {
   background-color: rgba(0,0,0,.3);
   position: fixed;
@@ -174,11 +127,9 @@
   height: 100%;
   width: 100%
 }
-
 .SingleDatePicker_picker__fullScreenPortal {
   background-color: #fff
 }
-
 .SingleDatePicker_closeButton {
   background: 0 0;
   border: 0;
@@ -193,19 +144,16 @@
   padding: 15px;
   z-index: 2
 }
-
 .SingleDatePicker_closeButton:focus,
 .SingleDatePicker_closeButton:hover {
   color: darken(#cacccd,10%);
   text-decoration: none
 }
-
 .SingleDatePicker_closeButton_svg {
   height: 15px;
   width: 15px;
   fill: #cacccd
 }
-
 .DayPickerKeyboardShortcuts_buttonReset {
   background: 0 0;
   border: 0;
@@ -218,92 +166,75 @@
   cursor: pointer;
   font-size: 14px
 }
-
 .DayPickerKeyboardShortcuts_buttonReset:active {
   outline: 0
 }
-
 .DayPickerKeyboardShortcuts_show {
   width: 33px;
   height: 26px;
   position: absolute;
   z-index: 2
 }
-
 .DayPickerKeyboardShortcuts_show::before {
   content: "";
   display: block;
   position: absolute
 }
-
 .DayPickerKeyboardShortcuts_show__bottomRight {
   bottom: 0;
   right: 0
 }
-
 .DayPickerKeyboardShortcuts_show__bottomRight::before {
   border-top: 26px solid transparent;
   border-right: 33px solid #00a699;
   bottom: 0;
   right: 0
 }
-
 .DayPickerKeyboardShortcuts_show__bottomRight:hover::before {
   border-right: 33px solid #008489
 }
-
 .DayPickerKeyboardShortcuts_show__topRight {
   top: 0;
   right: 0
 }
-
 .DayPickerKeyboardShortcuts_show__topRight::before {
   border-bottom: 26px solid transparent;
   border-right: 33px solid #00a699;
   top: 0;
   right: 0
 }
-
 .DayPickerKeyboardShortcuts_show__topRight:hover::before {
   border-right: 33px solid #008489
 }
-
 .DayPickerKeyboardShortcuts_show__topLeft {
   top: 0;
   left: 0
 }
-
 .DayPickerKeyboardShortcuts_show__topLeft::before {
   border-bottom: 26px solid transparent;
   border-left: 33px solid #00a699;
   top: 0;
   left: 0
 }
-
 .DayPickerKeyboardShortcuts_show__topLeft:hover::before {
   border-left: 33px solid #008489
 }
-
 .DayPickerKeyboardShortcuts_showSpan {
   color: #fff;
   position: absolute
 }
-
 .DayPickerKeyboardShortcuts_showSpan__bottomRight {
   bottom: 0;
   right: 5px
 }
-
 .DayPickerKeyboardShortcuts_showSpan__topRight {
   top: 1px;
   right: 5px
 }
-
 .DayPickerKeyboardShortcuts_showSpan__topLeft {
   top: 1px;
   left: 5px
 }
-
 .DayPickerKeyboardShortcuts_panel {
   overflow: auto;
   background: #fff;
@@ -319,120 +250,99 @@
   margin: 33px;
   text-align: left
 }
-
 .DayPickerKeyboardShortcuts_title {
   font-size: 16px;
   font-weight: 700;
   margin: 0
 }
-
 .DayPickerKeyboardShortcuts_list {
   list-style: none;
   padding: 0;
   font-size: 14px
 }
-
 .DayPickerKeyboardShortcuts_close {
   position: absolute;
   right: 22px;
   top: 22px;
   z-index: 2
 }
-
 .DayPickerKeyboardShortcuts_close:active {
   outline: 0
 }
-
 .DayPickerKeyboardShortcuts_closeSvg {
   height: 15px;
   width: 15px;
   fill: #cacccd
 }
-
 .DayPickerKeyboardShortcuts_closeSvg:focus,
 .DayPickerKeyboardShortcuts_closeSvg:hover {
   fill: #82888a
 }
-
 .CalendarDay {
   box-sizing: border-box;
   cursor: pointer;
   font-size: 14px;
   text-align: center
 }
-
 .CalendarDay:active {
   outline: 0
 }
-
 .CalendarDay__defaultCursor {
   cursor: default
 }
-
 .CalendarDay__default {
   border: 1px solid #e4e7e7;
   color: #484848;
   background: #fff
 }
-
 .CalendarDay__default:hover {
   background: #e4e7e7;
   border: 1px solid #e4e7e7;
   color: inherit
 }
-
 .CalendarDay__hovered_offset {
   background: #f4f5f5;
   border: 1px double #e4e7e7;
   color: inherit
 }
-
 .CalendarDay__outside {
   border: 0;
   background: #fff;
   color: #484848
 }
-
 .CalendarDay__outside:hover {
   border: 0
 }
-
 .CalendarDay__blocked_minimum_nights {
   background: #fff;
   border: 1px solid #eceeee;
   color: #cacccd
 }
-
 .CalendarDay__blocked_minimum_nights:active,
 .CalendarDay__blocked_minimum_nights:hover {
   background: #fff;
   color: #cacccd
 }
-
 .CalendarDay__highlighted_calendar {
   background: #ffe8bc;
   color: #484848
 }
-
 .CalendarDay__highlighted_calendar:active,
 .CalendarDay__highlighted_calendar:hover {
   background: #ffce71;
   color: #484848
 }
-
 .CalendarDay__selected_span {
   background: #66e2da;
   border: 1px double #33dacd;
   color: #fff
 }
-
 .CalendarDay__selected_span:active,
 .CalendarDay__selected_span:hover {
   background: #33dacd;
   border: 1px double #33dacd;
   color: #fff
 }
-
 .CalendarDay__selected,
 .CalendarDay__selected:active,
 .CalendarDay__selected:hover {
@@ -440,20 +350,17 @@
   border: 1px double #00a699;
   color: #fff
 }
-
 .CalendarDay__hovered_span,
 .CalendarDay__hovered_span:hover {
   background: #b2f1ec;
   border: 1px double #80e8e0;
   color: #007a87
 }
-
 .CalendarDay__hovered_span:active {
   background: #80e8e0;
   border: 1px double #80e8e0;
   color: #007a87
 }
-
 .CalendarDay__blocked_calendar,
 .CalendarDay__blocked_calendar:active,
 .CalendarDay__blocked_calendar:hover {
@@ -461,7 +368,6 @@
   border: 1px solid #cacccd;
   color: #82888a
 }
-
 .CalendarDay__blocked_out_of_range,
 .CalendarDay__blocked_out_of_range:active,
 .CalendarDay__blocked_out_of_range:hover {
@@ -469,17 +375,14 @@
   border: 1px solid #e4e7e7;
   color: #cacccd
 }
-
 .CalendarDay__hovered_start_first_possible_end {
   background: #eceeee;
   border: 1px double #eceeee
 }
-
 .CalendarDay__hovered_start_blocked_min_nights {
   background: #eceeee;
   border: 1px double #e4e7e7
 }
-
 .CalendarMonth {
   background: #fff;
   text-align: center;
@@ -489,16 +392,13 @@
   -ms-user-select: none;
   user-select: none
 }
-
 .CalendarMonth_table {
   border-collapse: collapse;
   border-spacing: 0
 }
-
 .CalendarMonth_verticalSpacing {
   border-collapse: separate
 }
-
 .CalendarMonth_caption {
   color: #484848;
   font-size: 18px;
@@ -508,62 +408,50 @@
   caption-side: top;
   caption-side: initial
 }
-
 .CalendarMonth_caption__verticalScrollable {
   padding-top: 12px;
   padding-bottom: 7px
 }
-
 .CalendarMonthGrid {
   background: #fff;
   text-align: left;
   z-index: 0
 }
-
 .CalendarMonthGrid__animating {
   z-index: 1
 }
-
 .CalendarMonthGrid__horizontal {
   position: absolute;
   left: 9px
 }
-
 .CalendarMonthGrid__vertical,
 .CalendarMonthGrid__vertical_scrollable {
   margin: 0 auto
 }
-
 .CalendarMonthGrid_month__horizontal {
   display: inline-block;
   vertical-align: top;
   min-height: 100%
 }
-
 .CalendarMonthGrid_month__hideForAnimation {
   position: absolute;
   z-index: -1;
   opacity: 0;
   pointer-events: none
 }
-
 .CalendarMonthGrid_month__hidden {
   visibility: hidden
 }
-
 .DayPickerNavigation {
   position: relative;
   z-index: 2
 }
-
 .DayPickerNavigation__horizontal {
   height: 0
 }
-
 .DayPickerNavigation__verticalScrollable_prevNav {
   z-index: 1
 }
-
 .DayPickerNavigation__verticalDefault {
   position: absolute;
   width: 100%;
@@ -571,22 +459,18 @@
   bottom: 0;
   left: 0
 }
-
 .DayPickerNavigation__verticalScrollableDefault {
   position: relative
 }
-
 .DayPickerNavigation__bottom {
   height: auto
 }
-
 .DayPickerNavigation__bottomDefault {
   -webkit-box-pack: justify;
   -ms-flex-pack: justify;
   display: flex;
   justify-content: space-between
 }
-
 .DayPickerNavigation_button {
   cursor: pointer;
   -webkit-user-select: none;
@@ -597,36 +481,29 @@
   padding: 0;
   margin: 0
 }
-
 .DayPickerNavigation_button__default {
   border: 1px solid #e4e7e7;
   background-color: #fff;
   color: #757575
 }
-
 .DayPickerNavigation_button__default:focus,
 .DayPickerNavigation_button__default:hover {
   border: 1px solid #c4c4c4
 }
-
 .DayPickerNavigation_button__default:active {
   background: #f2f2f2
 }
-
 .DayPickerNavigation_button__disabled {
   cursor: default;
   border: 1px solid #f2f2f2
 }
-
 .DayPickerNavigation_button__disabled:focus,
 .DayPickerNavigation_button__disabled:hover {
   border: 1px solid #f2f2f2
 }
-
 .DayPickerNavigation_button__disabled:active {
   background: 0 0
 }
-
 .DayPickerNavigation_button__horizontalDefault {
   position: absolute;
   top: 18px;
@@ -634,20 +511,16 @@
   border-radius: 3px;
   padding: 6px 9px
 }
-
 .DayPickerNavigation_bottomButton__horizontalDefault {
   position: static;
   margin: -10px 22px 30px
 }
-
 .DayPickerNavigation_leftButton__horizontalDefault {
   left: 22px
 }
-
 .DayPickerNavigation_rightButton__horizontalDefault {
   right: 22px
 }
-
 .DayPickerNavigation_button__verticalDefault {
   padding: 5px;
   background: #fff;
@@ -658,86 +531,69 @@
   height: 100%;
   width: 50%
 }
-
 .DayPickerNavigation_nextButton__verticalDefault {
   border-left: 0
 }
-
 .DayPickerNavigation_nextButton__verticalScrollableDefault,
 .DayPickerNavigation_prevButton__verticalScrollableDefault {
   width: 100%
 }
-
 .DayPickerNavigation_svg__horizontal {
   height: 19px;
   width: 19px;
   fill: #82888a;
   display: block
 }
-
 .DayPickerNavigation_svg__vertical {
   height: 42px;
   width: 42px;
   fill: #484848
 }
-
 .DayPickerNavigation_svg__disabled {
   fill: #f2f2f2
 }
-
 .DayPicker {
   background: #fff;
   position: relative;
   text-align: left
 }
-
 .DayPicker__horizontal {
   background: #fff
 }
-
 .DayPicker__verticalScrollable {
   height: 100%
 }
-
 .DayPicker__hidden {
   visibility: hidden
 }
-
 .DayPicker__withBorder {
   box-shadow: 0 2px 6px rgba(0,0,0,.05),0 0 0 1px rgba(0,0,0,.07);
   border-radius: 3px
 }
-
 .DayPicker_portal__horizontal {
   box-shadow: none;
   position: absolute;
   left: 50%;
   top: 50%
 }
-
 .DayPicker_portal__vertical {
   position: static;
   position: initial
 }
-
 .DayPicker_focusRegion {
   outline: 0
 }
-
 .DayPicker_calendarInfo__horizontal,
 .DayPicker_wrapper__horizontal {
   display: inline-block;
   vertical-align: top
 }
-
 .DayPicker_weekHeaders {
   position: relative
 }
-
 .DayPicker_weekHeaders__horizontal {
   margin-left: 9px
 }
-
 .DayPicker_weekHeader {
   color: #757575;
   position: absolute;
@@ -745,11 +601,9 @@
   z-index: 2;
   text-align: left
 }
-
 .DayPicker_weekHeader__vertical {
   left: 50%
 }
-
 .DayPicker_weekHeader__verticalScrollable {
   top: 0;
   display: table-row;
@@ -760,7 +614,6 @@
   width: 100%;
   text-align: center
 }
-
 .DayPicker_weekHeader_ul {
   list-style: none;
   margin: 1px 0;
@@ -768,26 +621,21 @@
   padding-right: 0;
   font-size: 14px
 }
-
 .DayPicker_weekHeader_li {
   display: inline-block;
   text-align: center
 }
-
 .DayPicker_transitionContainer {
   position: relative;
   overflow: hidden;
   border-radius: 3px
 }
-
 .DayPicker_transitionContainer__horizontal {
   transition: height .2s ease-in-out
 }
-
 .DayPicker_transitionContainer__vertical {
   width: 100%
 }
-
 .DayPicker_transitionContainer__verticalScrollable {
   padding-top: 20px;
   height: 100%;
@@ -798,7 +646,6 @@
   left: 0;
   overflow-y: scroll
 }
-
 .DateInput {
   margin: 0;
   padding: 0;
@@ -808,20 +655,16 @@
   width: 130px;
   vertical-align: middle
 }
-
 .DateInput__small {
   width: 97px
 }
-
 .DateInput__block {
   width: 100%
 }
-
 .DateInput__disabled {
   background: #f2f2f2;
   color: #dbdbdb
 }
-
 .DateInput_input {
   font-weight: 200;
   font-size: 19px;
@@ -837,25 +680,21 @@
   border-left: 0;
   border-radius: 0
 }
-
 .DateInput_input__small {
   font-size: 15px;
   line-height: 18px;
   letter-spacing: .2px;
   padding: 7px 7px 5px
 }
-
 .DateInput_input__regular {
   font-weight: auto
 }
-
 .DateInput_input__readOnly {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none
 }
-
 .DateInput_input__focused {
   outline: 0;
   background: #fff;
@@ -865,12 +704,10 @@
   border-bottom: 2px solid #008489;
   border-left: 0
 }
-
 .DateInput_input__disabled {
   background: #f2f2f2;
   font-style: italic
 }
-
 .DateInput_screenReaderMessage {
   border: 0;
   clip: rect(0,0,0,0);
@@ -881,7 +718,6 @@
   position: absolute;
   width: 1px
 }
-
 .DateInput_fang {
   position: absolute;
   width: 20px;
@@ -889,55 +725,44 @@
   left: 22px;
   z-index: 2
 }
-
 .DateInput_fangShape {
   fill: #fff
 }
-
 .DateInput_fangStroke {
   stroke: #dbdbdb;
   fill: transparent
 }
-
 .DateRangePickerInput {
   background-color: #fff;
   display: inline-block
 }
-
 .DateRangePickerInput__disabled {
   background: #f2f2f2
 }
-
 .DateRangePickerInput__withBorder {
   border-radius: 2px;
   border: 1px solid #dbdbdb
 }
-
 .DateRangePickerInput__rtl {
   direction: rtl
 }
-
 .DateRangePickerInput__block {
   display: block
 }
-
 .DateRangePickerInput__showClearDates {
   padding-right: 30px
 }
-
 .DateRangePickerInput_arrow {
   display: inline-block;
   vertical-align: middle;
   color: #484848
 }
-
 .DateRangePickerInput_arrow_svg {
   vertical-align: middle;
   fill: #484848;
   height: 24px;
   width: 24px
 }
-
 .DateRangePickerInput_clearDates {
   background: 0 0;
   border: 0;
@@ -953,32 +778,26 @@
   top: 50%;
   transform: translateY(-50%)
 }
-
 .DateRangePickerInput_clearDates__small {
   padding: 6px
 }
-
 .DateRangePickerInput_clearDates_default:focus,
 .DateRangePickerInput_clearDates_default:hover {
   background: #dbdbdb;
   border-radius: 50%
 }
-
 .DateRangePickerInput_clearDates__hide {
   visibility: hidden
 }
-
 .DateRangePickerInput_clearDates_svg {
   fill: #82888a;
   height: 12px;
   width: 15px;
   vertical-align: middle
 }
-
 .DateRangePickerInput_clearDates_svg__small {
   height: 9px
 }
-
 .DateRangePickerInput_calendarIcon {
   background: 0 0;
   border: 0;
@@ -992,41 +811,33 @@
   padding: 10px;
   margin: 0 5px 0 10px
 }
-
 .DateRangePickerInput_calendarIcon_svg {
   fill: #82888a;
   height: 15px;
   width: 14px;
   vertical-align: middle
 }
-
 .DateRangePicker {
   position: relative;
   display: inline-block
 }
-
 .DateRangePicker__block {
   display: block
 }
-
 .DateRangePicker_picker {
   z-index: 1;
   background-color: #fff;
   position: absolute
 }
-
 .DateRangePicker_picker__rtl {
   direction: rtl
 }
-
 .DateRangePicker_picker__directionLeft {
   left: 0
 }
-
 .DateRangePicker_picker__directionRight {
   right: 0
 }
-
 .DateRangePicker_picker__portal {
   background-color: rgba(0,0,0,.3);
   position: fixed;
@@ -1035,11 +846,9 @@
   height: 100%;
   width: 100%
 }
-
 .DateRangePicker_picker__fullScreenPortal {
   background-color: #fff
 }
-
 .DateRangePicker_closeButton {
   background: 0 0;
   border: 0;
@@ -1054,29 +863,24 @@
   padding: 15px;
   z-index: 2
 }
-
 .DateRangePicker_closeButton:focus,
 .DateRangePicker_closeButton:hover {
   color: darken(#cacccd,10%);
   text-decoration: none
 }
-
 .DateRangePicker_closeButton_svg {
   height: 15px;
   width: 15px;
   fill: #cacccd
 }
-
 .rc-time-picker {
   display: inline-block;
   position: relative;
   box-sizing: border-box;
 }
-
 .rc-time-picker * {
   box-sizing: border-box;
 }
-
 .rc-time-picker-clear {
   position: absolute;
   right: 6px;
@@ -1089,7 +893,6 @@
   top: 3px;
   margin: 0;
 }
-
 .rc-time-picker-clear-icon:after {
   content: "x";
   font-size: 12px;
@@ -1101,11 +904,9 @@
   width: 20px;
   transition: color 0.3s ease;
 }
-
 .rc-time-picker-clear-icon:hover:after {
   color: #666;
 }
-
 .rc-time-picker-input {
   width: 100%;
   position: relative;
@@ -1122,24 +923,20 @@
   border-radius: 4px;
   transition: border 0.2s cubic-bezier(0.645, 0.045, 0.355, 1), background 0.2s cubic-bezier(0.645, 0.045, 0.355, 1), box-shadow 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
 }
-
 .rc-time-picker-input[disabled] {
   color: #ccc;
   background: #f7f7f7;
   cursor: not-allowed;
 }
-
 .rc-time-picker-panel {
   z-index: 1070;
   width: 170px;
   position: absolute;
   box-sizing: border-box;
 }
-
 .rc-time-picker-panel * {
   box-sizing: border-box;
 }
-
 .rc-time-picker-panel-inner {
   display: inline-block;
   position: relative;
@@ -1154,11 +951,9 @@
   border: 1px solid #ccc;
   line-height: 1.5;
 }
-
 .rc-time-picker-panel-narrow {
   max-width: 113px;
 }
-
 .rc-time-picker-panel-input {
   margin: 0;
   padding: 0;
@@ -1168,18 +963,15 @@
   outline: 0;
   border: 1px solid transparent;
 }
-
 .rc-time-picker-panel-input-wrap {
   box-sizing: border-box;
   position: relative;
   padding: 6px;
   border-bottom: 1px solid #e9e9e9;
 }
-
 .rc-time-picker-panel-input-invalid {
   border-color: red;
 }
-
 .rc-time-picker-panel-select {
   float: left;
   font-size: 12px;
@@ -1192,20 +984,16 @@
   overflow-y: auto;
   position: relative;
 }
-
 .rc-time-picker-panel-select-active {
   overflow-y: auto;
 }
-
 .rc-time-picker-panel-select:first-child {
   border-left: 0;
   margin-left: 0;
 }
-
 .rc-time-picker-panel-select:last-child {
   border-right: 0;
 }
-
 .rc-time-picker-panel-select ul {
   list-style: none;
   box-sizing: border-box;
@@ -1213,7 +1001,6 @@
   padding: 0;
   width: 100%;
 }
-
 .rc-time-picker-panel-select li {
   list-style: none;
   margin: 0;
@@ -1228,1533 +1015,17 @@
       -ms-user-select: none;
           user-select: none;
 }
-
 .rc-time-picker-panel-select li:hover {
   background: #edfaff;
 }
-
 li.rc-time-picker-panel-select-option-selected {
   background: #f7f7f7;
   font-weight: bold;
 }
-
 li.rc-time-picker-panel-select-option-disabled {
   color: #ccc;
 }
-
 li.rc-time-picker-panel-select-option-disabled:hover {
   background: transparent;
   cursor: not-allowed;
-}
-
-.keen-explorer {
-  font-family: Montserrat, Tahoma, Arial;
-  font-size: 0.875rem;
-  font-size: 0.875rem;
-  color: #000;
-  color: #000;
-  display: flex;
-}
-
-.ReactModalPortal {
-  font-family: Montserrat, Tahoma, Arial;
-  font-size: 0.875rem;
-  font-size: 0.875rem;
-  color: #000;
-  color: #000;
-  display: flex;
-}
-
-.rc-time-picker-panel {
-  font-family: Montserrat, Tahoma, Arial;
-  font-size: 0.875rem;
-  font-size: 0.875rem;
-  color: #000;
-  color: #000;
-  display: flex;
-}
-
-.keen-explorer .extraction,.ReactModalPortal .extraction,.rc-time-picker-panel .extraction{
-  margin-top: 1rem;
-}
-
-.keen-explorer .extraction .first-label,.ReactModalPortal .extraction .first-label,.rc-time-picker-panel .extraction .first-label{
-    padding-top: 0;
-  }
-
-.keen-explorer .extraction .input-text,.ReactModalPortal .extraction .input-text,.rc-time-picker-panel .extraction .input-text{
-    width: 100%;
-  }
-
-.keen-explorer .extraction .bulk-panel,.ReactModalPortal .extraction .bulk-panel,.rc-time-picker-panel .extraction .bulk-panel{
-    margin-bottom: 1rem;
-  }
-
-.keen-explorer .percentile .input-text,.ReactModalPortal .percentile .input-text,.rc-time-picker-panel .percentile .input-text{
-    width: 100%;
-  }
-
-.keen-explorer .filters-container .list,.ReactModalPortal .filters-container .list,.rc-time-picker-panel .filters-container .list{
-    margin: 2rem 0;
-    width: 100%;
-
-  }
-
-.keen-explorer .filters-container .list .row,.ReactModalPortal .filters-container .list .row,.rc-time-picker-panel .filters-container .list .row{
-      display: flex;
-      width: 100%;
-      margin: 0 0 1rem;
-    }
-
-.keen-explorer .filters-container .list .row .row-part,.ReactModalPortal .filters-container .list .row .row-part,.rc-time-picker-panel .filters-container .list .row .row-part{
-        flex:1;
-        padding: 0 0.5rem;
-      }
-
-.keen-explorer .filters-container .list .row .row-part input{
-          padding: 0.55rem 0.7rem;
-          font-size: 0.875rem;
-          font-size: 0.875rem;
-          border-radius: 4px;
-          border: 1px solid #ccc;
-          width: 100%;
-        }
-
-.ReactModalPortal .filters-container .list .row .row-part input{
-          padding: 0.55rem 0.7rem;
-          font-size: 0.875rem;
-          font-size: 0.875rem;
-          border-radius: 4px;
-          border: 1px solid #ccc;
-          width: 100%;
-        }
-
-.rc-time-picker-panel .filters-container .list .row .row-part input{
-          padding: 0.55rem 0.7rem;
-          font-size: 0.875rem;
-          font-size: 0.875rem;
-          border-radius: 4px;
-          border: 1px solid #ccc;
-          width: 100%;
-        }
-
-.keen-explorer .filters-container .list .row .row-part .datetime-pickers,.ReactModalPortal .filters-container .list .row .row-part .datetime-pickers,.rc-time-picker-panel .filters-container .list .row .row-part .datetime-pickers{
-          display: flex;
-        }
-
-.keen-explorer .filters-container .list .row .row-part .datetime-pickers .DateInput,.ReactModalPortal .filters-container .list .row .row-part .datetime-pickers .DateInput,.rc-time-picker-panel .filters-container .list .row .row-part .datetime-pickers .DateInput{
-            width: 100%;
-          }
-
-.keen-explorer .filters-container .list .row .row-part .datetime-pickers .SingleDatePickerInput,.ReactModalPortal .filters-container .list .row .row-part .datetime-pickers .SingleDatePickerInput,.rc-time-picker-panel .filters-container .list .row .row-part .datetime-pickers .SingleDatePickerInput{
-            width: 100%;
-          }
-
-.keen-explorer .filters-container .list .row .row-part .datetime-pickers .SingleDatePicker,.ReactModalPortal .filters-container .list .row .row-part .datetime-pickers .SingleDatePicker,.rc-time-picker-panel .filters-container .list .row .row-part .datetime-pickers .SingleDatePicker{
-            flex: 1;
-            margin-right: 0.1rem;
-          }
-
-.keen-explorer .filters-container .list .row .row-part .datetime-pickers .SingleDatePickerInput__withBorder,.ReactModalPortal .filters-container .list .row .row-part .datetime-pickers .SingleDatePickerInput__withBorder,.rc-time-picker-panel .filters-container .list .row .row-part .datetime-pickers .SingleDatePickerInput__withBorder{
-            border: 0;
-          }
-
-.keen-explorer .filters-container .list .row .row-part .datetime-pickers input.DateInput_input,.ReactModalPortal .filters-container .list .row .row-part .datetime-pickers input.DateInput_input,.rc-time-picker-panel .filters-container .list .row .row-part .datetime-pickers input.DateInput_input{
-            padding: 0.333rem;
-            text-align: center;
-            height: 2.3rem;
-            box-sizing: border-box;
-          }
-
-.keen-explorer .filters-container .list .row .row-part .datetime-pickers .rc-time-picker,.ReactModalPortal .filters-container .list .row .row-part .datetime-pickers .rc-time-picker,.rc-time-picker-panel .filters-container .list .row .row-part .datetime-pickers .rc-time-picker{
-            flex: 1;
-          }
-
-.keen-explorer .filters-container .list .row .row-part .datetime-pickers input.rc-time-picker-input,.ReactModalPortal .filters-container .list .row .row-part .datetime-pickers input.rc-time-picker-input,.rc-time-picker-panel .filters-container .list .row .row-part .datetime-pickers input.rc-time-picker-input{
-            padding: 0.3rem;
-            text-align: center;
-            height: auto;
-            line-height: auto;
-            height: 2.3rem;
-          }
-
-.keen-explorer .filters-container .list .row .row-part .within-inputs input,.ReactModalPortal .filters-container .list .row .row-part .within-inputs input,.rc-time-picker-panel .filters-container .list .row .row-part .within-inputs input{
-            margin-bottom: 0.2rem;
-          }
-
-.keen-explorer .filters-container .list .row .row-part .delete,.ReactModalPortal .filters-container .list .row .row-part .delete,.rc-time-picker-panel .filters-container .list .row .row-part .delete{
-          cursor: pointer;
-          display: flex;
-          align-items: center;
-          height: 100%;
-        }
-
-.keen-explorer .filters-container .list .row .row-part .delete i, .ReactModalPortal .filters-container .list .row .row-part .delete i, .rc-time-picker-panel .filters-container .list .row .row-part .delete i {
-            color: #ea7373;
-            font-size: 1rem;
-            padding: 0.5rem;
-          }
-
-.keen-explorer .filters-container .list .row .no-flex,.ReactModalPortal .filters-container .list .row .no-flex,.rc-time-picker-panel .filters-container .list .row .no-flex{
-        flex: 0;
-      }
-
-.keen-explorer .filters-container .action-buttons,.ReactModalPortal .filters-container .action-buttons,.rc-time-picker-panel .filters-container .action-buttons{
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    margin-top: 0;
-  }
-
-.keen-explorer .filters-container .action-buttons .button-add-filter,.ReactModalPortal .filters-container .action-buttons .button-add-filter,.rc-time-picker-panel .filters-container .action-buttons .button-add-filter{
-      margin-right: 1rem;
-      cursor: pointer;
-      text-transform: uppercase;
-      padding: 1rem 2rem;
-      background: #eee;
-      border-radius: 0.3rem;
-    }
-
-.keen-explorer .filters-container .action-buttons .button-add-filter i, .ReactModalPortal .filters-container .action-buttons .button-add-filter i, .rc-time-picker-panel .filters-container .action-buttons .button-add-filter i {
-        margin-right: 1rem;
-      }
-
-.keen-explorer .filters-container .action-buttons .button-done{
-      cursor: pointer;
-      color: #fff;
-      background: #45b2e8;
-      background: #45b2e8;
-      text-transform: uppercase;
-      width: 10rem;
-      padding: 1rem;
-      text-align: center;
-      border-radius: 0.3rem;
-    }
-
-.ReactModalPortal .filters-container .action-buttons .button-done{
-      cursor: pointer;
-      color: #fff;
-      background: #45b2e8;
-      background: #45b2e8;
-      text-transform: uppercase;
-      width: 10rem;
-      padding: 1rem;
-      text-align: center;
-      border-radius: 0.3rem;
-    }
-
-.rc-time-picker-panel .filters-container .action-buttons .button-done{
-      cursor: pointer;
-      color: #fff;
-      background: #45b2e8;
-      background: #45b2e8;
-      text-transform: uppercase;
-      width: 10rem;
-      padding: 1rem;
-      text-align: center;
-      border-radius: 0.3rem;
-    }
-
-.keen-explorer .filters-container .action-buttons .button-done i,.ReactModalPortal .filters-container .action-buttons .button-done i,.rc-time-picker-panel .filters-container .action-buttons .button-done i{
-        margin-right: 1rem;
-      }
-
-@media screen and (max-width: 1000px) {
-      .keen-explorer .filters-container .list .row,.ReactModalPortal .filters-container .list .row,.rc-time-picker-panel .filters-container .list .row{
-        flex-direction: column;
-      }
-        .keen-explorer .filters-container .list .row .row-part,.ReactModalPortal .filters-container .list .row .row-part,.rc-time-picker-panel .filters-container .list .row .row-part{
-          margin-bottom: 0.3rem;
-        }
-        .keen-explorer .filters-container .list .row .delete,.ReactModalPortal .filters-container .list .row .delete,.rc-time-picker-panel .filters-container .list .row .delete{
-          float: right;
-          padding-right: 1rem;
-        }
-}
-
-.keen-explorer .modal-main,.ReactModalPortal .modal-main,.rc-time-picker-panel .modal-main{
-  display:flex;
-  flex-direction: column;
-  height: 100%;
-  width: 100%;
-}
-
-.keen-explorer .modal-main .header,.ReactModalPortal .modal-main .header,.rc-time-picker-panel .modal-main .header{
-    flex:0;
-    border-bottom: 1px solid #eee;
-    padding-bottom: 1rem;
-  }
-
-.keen-explorer .modal-main .header .title,.ReactModalPortal .modal-main .header .title,.rc-time-picker-panel .modal-main .header .title{
-        float: left;
-      }
-
-.keen-explorer .modal-main .header .x,.ReactModalPortal .modal-main .header .x,.rc-time-picker-panel .modal-main .header .x{
-        color: #565656;
-        float: right;
-        font-weight: bold;
-        cursor: pointer;
-        padding: 1rem;
-        margin: -2rem -1rem;
-        font-size: 2rem;
-      }
-
-.keen-explorer .modal-main .container,.ReactModalPortal .modal-main .container,.rc-time-picker-panel .modal-main .container{
-    flex:1;
-    padding: 1rem 0;
-    clear: both;
-    width: 100%;
-    overflow-y: scroll;
-    white-space: pre-wrap;
-  }
-
-.keen-explorer .modal-main .button-copy,.ReactModalPortal .modal-main .button-copy,.rc-time-picker-panel .modal-main .button-copy{
-    padding: 1rem;
-    width: 10rem;
-    text-align: center;
-    cursor: pointer;
-    background: #1e93d8;
-    color: #fff;
-    border-radius: 0.5rem;
-    margin-top: 1rem;
-  }
-
-.keen-explorer .modal-main .button-copy:active,.ReactModalPortal .modal-main .button-copy:active,.rc-time-picker-panel .modal-main .button-copy:active{
-    background: #30a1e4;
-  }
-
-.keen-explorer .ReactModal__Overlay,.ReactModalPortal .ReactModal__Overlay,.rc-time-picker-panel .ReactModal__Overlay{
-  z-index: 9999;
-}
-
-.keen-explorer .saved-queries,.ReactModalPortal .saved-queries,.rc-time-picker-panel .saved-queries{
-  overflow: scroll;
-  min-height: 100%;
-  max-height: 44rem;
-  padding-right: 1rem;
-}
-
-.keen-explorer .saved-queries .input-filter,.ReactModalPortal .saved-queries .input-filter,.rc-time-picker-panel .saved-queries .input-filter{
-    width: 100%;
-    padding: 0.6rem;
-    font-size: 0.9rem;
-    border: 1px solid #ccc;
-    margin: .5rem 0;
-    border-radius: 0.3rem;
-    box-sizing: border-box;
-  }
-
-.keen-explorer .saved-queries .item{
-    position: relative;
-    padding: 1rem 0.5rem;
-    cursor: pointer;
-    overflow: auto;
-    border-bottom: 1px solid #f3f3f3;
-    background: #fff;
-    background: #fff;
-  }
-
-.ReactModalPortal .saved-queries .item{
-    position: relative;
-    padding: 1rem 0.5rem;
-    cursor: pointer;
-    overflow: auto;
-    border-bottom: 1px solid #f3f3f3;
-    background: #fff;
-    background: #fff;
-  }
-
-.rc-time-picker-panel .saved-queries .item{
-    position: relative;
-    padding: 1rem 0.5rem;
-    cursor: pointer;
-    overflow: auto;
-    border-bottom: 1px solid #f3f3f3;
-    background: #fff;
-    background: #fff;
-  }
-
-.keen-explorer .saved-queries .item .name,.ReactModalPortal .saved-queries .item .name,.rc-time-picker-panel .saved-queries .item .name{
-      margin: 0rem 1rem 1rem 0;
-    }
-
-.keen-explorer .saved-queries .item .cached{
-      float: left;
-      color: #3ecf8e;
-      color: #3ecf8e;
-      text-transform: uppercase;
-    }
-
-.ReactModalPortal .saved-queries .item .cached{
-      float: left;
-      color: #3ecf8e;
-      color: #3ecf8e;
-      text-transform: uppercase;
-    }
-
-.rc-time-picker-panel .saved-queries .item .cached{
-      float: left;
-      color: #3ecf8e;
-      color: #3ecf8e;
-      text-transform: uppercase;
-    }
-
-.keen-explorer .saved-queries .item .cached *, .ReactModalPortal .saved-queries .item .cached *, .rc-time-picker-panel .saved-queries .item .cached * {
-        font-size: 0.7rem;
-      }
-
-.keen-explorer .saved-queries .item .data,.ReactModalPortal .saved-queries .item .data,.rc-time-picker-panel .saved-queries .item .data{
-      float: right;
-      font-size: 0.7rem;
-      color: rgba(0,0,0,0.5);
-    }
-
-.keen-explorer .saved-queries .item .button-delete,.ReactModalPortal .saved-queries .item .button-delete,.rc-time-picker-panel .saved-queries .item .button-delete{
-      position: absolute;
-      right: 0.2rem;
-      top: 0.2rem;
-      padding: 0.2rem;
-      color: rgba(0,0,0,0.2);
-    }
-
-.keen-explorer .saved-queries .active{
-    background: #fcfcfc;
-    background: #fcfcfc;
-  }
-
-.ReactModalPortal .saved-queries .active{
-    background: #fcfcfc;
-    background: #fcfcfc;
-  }
-
-.rc-time-picker-panel .saved-queries .active{
-    background: #fcfcfc;
-    background: #fcfcfc;
-  }
-
-.keen-explorer .funnel .content,.ReactModalPortal .funnel .content,.rc-time-picker-panel .funnel .content{
-    padding: 0.3rem 0.5rem;
-  }
-
-.keen-explorer .funnel .input-text,.ReactModalPortal .funnel .input-text,.rc-time-picker-panel .funnel .input-text{
-    width: 100%;
-  }
-
-.keen-explorer .funnel .button,.ReactModalPortal .funnel .button,.rc-time-picker-panel .funnel .button{
-    cursor: pointer;
-  }
-
-.keen-explorer .funnel .button-delete,.ReactModalPortal .funnel .button-delete,.rc-time-picker-panel .funnel .button-delete{
-    color: #797979;
-  }
-
-.keen-explorer .funnel .button-add,.ReactModalPortal .funnel .button-add,.rc-time-picker-panel .funnel .button-add{
-    margin-top: 1rem;
-    padding: 0.7rem;
-    background: #fdfdfd;
-    border: 1px solid #e8e8e8;
-    border-radius: 5px;
-    display: inline-block;
-  }
-
-.keen-explorer .funnel .button-add i,.ReactModalPortal .funnel .button-add i,.rc-time-picker-panel .funnel .button-add i{
-      margin-right: 0.3rem;
-    }
-
-.keen-explorer .funnel .line-options,.ReactModalPortal .funnel .line-options,.rc-time-picker-panel .funnel .line-options{
-    margin: 1rem 0 0 0;
-  }
-
-.keen-explorer .funnel .step-switch-position-buttons,.ReactModalPortal .funnel .step-switch-position-buttons,.rc-time-picker-panel .funnel .step-switch-position-buttons{
-    float: left;
-    margin: -0.5rem 0.8rem 0 0;
-    color: #797979;
-  }
-
-.keen-explorer .funnel .step-switch-position-buttons .move-up,.ReactModalPortal .funnel .step-switch-position-buttons .move-up,.rc-time-picker-panel .funnel .step-switch-position-buttons .move-up{
-      margin-top: 0.1rem;
-    }
-
-.keen-explorer .funnel .step-switch-position-buttons .move-down,.ReactModalPortal .funnel .step-switch-position-buttons .move-down,.rc-time-picker-panel .funnel .step-switch-position-buttons .move-down{
-      margin-top: -0.3rem;
-    }
-
-.keen-explorer .line-checkbox,.ReactModalPortal .line-checkbox,.rc-time-picker-panel .line-checkbox{
-  margin: 0.5rem 0 0 0;
-}
-
-.keen-explorer .line-checkbox input,.ReactModalPortal .line-checkbox input,.rc-time-picker-panel .line-checkbox input{
-    margin-right: 0.5rem;
-  }
-
-.keen-explorer .line-checkbox label,.ReactModalPortal .line-checkbox label,.rc-time-picker-panel .line-checkbox label{
-    cursor: pointer;
-  }
-
-.keen-explorer .keen-dataviz, .ReactModalPortal .keen-dataviz, .rc-time-picker-panel .keen-dataviz {
-  font-family: inherit !important;
-}
-
-.keen-explorer .keen-dataviz .keen-c3-legend .legend-item-text, .ReactModalPortal .keen-dataviz .keen-c3-legend .legend-item-text, .rc-time-picker-panel .keen-dataviz .keen-c3-legend .legend-item-text {
-      font-size: 1em;
-    }
-
-.keen-explorer .keen-dataviz-container, .ReactModalPortal .keen-dataviz-container, .rc-time-picker-panel .keen-dataviz-container {
-  height: calc(100% - 3rem);
-  overflow: hidden;
-}
-
-.keen-explorer .keen-dataviz-container .keen-dataviz-execution-meta, .ReactModalPortal .keen-dataviz-container .keen-dataviz-execution-meta, .rc-time-picker-panel .keen-dataviz-container .keen-dataviz-execution-meta {
-    top: 1rem;
-  }
-
-.keen-explorer .keen-dataviz-metric-value,.ReactModalPortal .keen-dataviz-metric-value,.rc-time-picker-panel .keen-dataviz-metric-value{
-  font-size: 4rem !important;
-}
-
-.keen-explorer .keen-dataviz .c3 svg g text tspan, .ReactModalPortal .keen-dataviz .c3 svg g text tspan, .rc-time-picker-panel .keen-dataviz .c3 svg g text tspan {
-  font-size: 10px !important;
-}
-
-.keen-explorer .c3-circle, .ReactModalPortal .c3-circle, .rc-time-picker-panel .c3-circle {
-  fill: currentColor;
-}
-
-.keen-explorer .a-preview-collection,.ReactModalPortal .a-preview-collection,.rc-time-picker-panel .a-preview-collection{
-  padding: 0.5rem;
-  margin: 0;
-  cursor: pointer;
-  background: #fafafa;
-  border-radius: 0.3rem;
-}
-
-.keen-explorer .a-preview-collection i,.ReactModalPortal .a-preview-collection i,.rc-time-picker-panel .a-preview-collection i{
-    font-size: 0.8em;
-    margin-right: 0.2rem;
-  }
-
-.keen-explorer .preview-collection-content,.ReactModalPortal .preview-collection-content,.rc-time-picker-panel .preview-collection-content{
-  display: flex;
-  flex-direction: row;
-}
-
-.keen-explorer .preview-collection-content .input-filter,.ReactModalPortal .preview-collection-content .input-filter,.rc-time-picker-panel .preview-collection-content .input-filter{
-    width: 100%;
-    padding: 0.6rem;
-    font-size: 0.9rem;
-    border: 1px solid #ccc;
-    margin: .5rem 0;
-    border-radius: 0.3rem;
-    box-sizing: border-box;
-  }
-
-.keen-explorer .preview-collection-content .list, .ReactModalPortal .preview-collection-content .list, .rc-time-picker-panel .preview-collection-content .list {
-    height: 100%;
-    overflow-y: scroll;
-    flex: 1;
-  }
-
-.keen-explorer .preview-collection-content .list .item{
-      cursor: pointer;
-      padding: 1rem;
-      overflow: auto;
-      border-bottom: 1px solid #f3f3f3;
-      background: #fff;
-      background: #fff;
-    }
-
-.ReactModalPortal .preview-collection-content .list .item{
-      cursor: pointer;
-      padding: 1rem;
-      overflow: auto;
-      border-bottom: 1px solid #f3f3f3;
-      background: #fff;
-      background: #fff;
-    }
-
-.rc-time-picker-panel .preview-collection-content .list .item{
-      cursor: pointer;
-      padding: 1rem;
-      overflow: auto;
-      border-bottom: 1px solid #f3f3f3;
-      background: #fff;
-      background: #fff;
-    }
-
-.keen-explorer .preview-collection-content .list .active{
-      background: #fcfcfc;
-      background: #fcfcfc;
-    }
-
-.ReactModalPortal .preview-collection-content .list .active{
-      background: #fcfcfc;
-      background: #fcfcfc;
-    }
-
-.rc-time-picker-panel .preview-collection-content .list .active{
-      background: #fcfcfc;
-      background: #fcfcfc;
-    }
-
-.keen-explorer .preview-collection-content .content,.ReactModalPortal .preview-collection-content .content,.rc-time-picker-panel .preview-collection-content .content{
-    flex: 3;
-    height: 100%;
-    padding: 0.5rem 0 0.5rem 1rem;
-  }
-
-.keen-explorer .preview-collection-content .content .tabs .tab,.ReactModalPortal .preview-collection-content .content .tabs .tab,.rc-time-picker-panel .preview-collection-content .content .tabs .tab{
-        flex: none;
-        padding: 1rem 1.5rem;
-      }
-
-.keen-explorer .preview-collection-content .content .tabs .tab-placeholder,.ReactModalPortal .preview-collection-content .content .tabs .tab-placeholder,.rc-time-picker-panel .preview-collection-content .content .tabs .tab-placeholder{
-        flex: 1;
-        border-bottom: 1px solid #e8e8e8;
-      }
-
-.keen-explorer .preview-collection-content .content .tab-content,.ReactModalPortal .preview-collection-content .content .tab-content,.rc-time-picker-panel .preview-collection-content .content .tab-content{
-      height: 100%;
-      width: 100%;
-      overflow: scroll;
-      padding-bottom: 4rem;
-    }
-
-@media screen and (max-width: 900px) {
-
-  .keen-explorer .preview-collection-content,.ReactModalPortal .preview-collection-content,.rc-time-picker-panel .preview-collection-content{
-    flex-direction: column;
-  }
-    .keen-explorer .preview-collection-content .list, .keen-explorer .preview-collection-content .content, .ReactModalPortal .preview-collection-content .list, .ReactModalPortal .preview-collection-content .content, .rc-time-picker-panel .preview-collection-content .list, .rc-time-picker-panel .preview-collection-content .content{
-      height: auto;
-      overflow-y: visible;
-      padding: 0;
-    }
-    .keen-explorer .preview-collection-content .content,.ReactModalPortal .preview-collection-content .content,.rc-time-picker-panel .preview-collection-content .content{
-      padding-top: 2rem;
-    }
-}
-
-.keen-explorer .preview .download-toggle-label,.ReactModalPortal .preview .download-toggle-label,.rc-time-picker-panel .preview .download-toggle-label{
-    padding: 1rem;
-    cursor: pointer;
-    height: -webkit-min-content;
-    height: -moz-min-content;
-    height: min-content;
-  }
-
-.keen-explorer .preview .download-toggle-label i,.ReactModalPortal .preview .download-toggle-label i,.rc-time-picker-panel .preview .download-toggle-label i{
-      margin-right: 0.5rem;
-    }
-
-.keen-explorer .preview .download-buttons,.ReactModalPortal .preview .download-buttons,.rc-time-picker-panel .preview .download-buttons{
-    position: absolute;
-    background: #fdfdfd;
-    display: flex;
-    flex-direction: column;
-    box-shadow: 2px 3px 6px rgba(0,0,0,0.05);
-    margin-top: -2px;
-  }
-
-.keen-explorer .preview .download-buttons button, .ReactModalPortal .preview .download-buttons button, .rc-time-picker-panel .preview .download-buttons button {
-      border: 1px solid #f7f7f7;
-    }
-
-.keen-explorer .preview .download-buttons button:hover,.ReactModalPortal .preview .download-buttons button:hover,.rc-time-picker-panel .preview .download-buttons button:hover{
-      background: #fff;
-    }
-
-.keen-explorer .preview .download-buttons .button-download,.ReactModalPortal .preview .download-buttons .button-download,.rc-time-picker-panel .preview .download-buttons .button-download{
-      padding: 1rem 3rem;
-      height: -webkit-min-content;
-      height: -moz-min-content;
-      height: min-content;
-    }
-
-.keen-explorer .preview .button-embed-html,.ReactModalPortal .preview .button-embed-html,.rc-time-picker-panel .preview .button-embed-html{
-    height: -webkit-min-content;
-    height: -moz-min-content;
-    height: min-content;
-  }
-
-.keen-explorer .button-download, .ReactModalPortal .button-download, .rc-time-picker-panel .button-download {
-    margin: 2rem 0 0;
-    padding: 1rem;
-}
-
-.keen-explorer .label-main,.ReactModalPortal .label-main,.rc-time-picker-panel .label-main{
-    padding: 1rem 0 0.3rem;
-}
-
-.keen-explorer .hide,.ReactModalPortal .hide,.rc-time-picker-panel .hide{
-    display: none;
-}
-
-.keen-explorer input:focus {
-    outline: 2px solid #00bbde;
-    outline: 2px solid #00bbde;
-}
-
-.ReactModalPortal input:focus {
-    outline: 2px solid #00bbde;
-    outline: 2px solid #00bbde;
-}
-
-.rc-time-picker-panel input:focus {
-    outline: 2px solid #00bbde;
-    outline: 2px solid #00bbde;
-}
-
-.keen-explorer .panel-main,.ReactModalPortal .panel-main,.rc-time-picker-panel .panel-main{
-    flex: 1;
-    min-width: 26rem;
-    box-shadow: -3px 7px 11px rgba(0,0,0,0.1);
-    border-radius: 0.3rem;
-}
-
-.keen-explorer .panel-main .panel-buttons .button-new-query,.ReactModalPortal .panel-main .panel-buttons .button-new-query,.rc-time-picker-panel .panel-main .panel-buttons .button-new-query{
-        flex: none;
-        cursor: pointer;
-      }
-
-.keen-explorer .panel-main .panel-content,.ReactModalPortal .panel-main .panel-content,.rc-time-picker-panel .panel-main .panel-content{
-      padding: 1rem;
-    }
-
-.keen-explorer .panel-main .panel-content .event-collection .label-main,.ReactModalPortal .panel-main .panel-content .event-collection .label-main,.rc-time-picker-panel .panel-main .panel-content .event-collection .label-main{
-        padding-top: 0;
-      }
-
-.keen-explorer .panel-main .panel-saved-queries,.ReactModalPortal .panel-main .panel-saved-queries,.rc-time-picker-panel .panel-main .panel-saved-queries{
-      padding-right: 0;
-    }
-
-.keen-explorer .panel-main .panel-funnel .label-analysis-type, .ReactModalPortal .panel-main .panel-funnel .label-analysis-type, .rc-time-picker-panel .panel-main .panel-funnel .label-analysis-type {
-        padding-top: 0;
-      }
-
-.keen-explorer .result,.ReactModalPortal .result,.rc-time-picker-panel .result{
-    flex: 3;
-    padding: 0 1.5rem;
-    overflow-x: hidden;
-}
-
-.keen-explorer .foldable,.ReactModalPortal .foldable,.rc-time-picker-panel .foldable{
-    margin-top: 0.5rem;
-    border: 1px solid #e8e8e8;
-    background: #fdfdfd;
-    padding: 0.5rem;
-    cursor: pointer;
-    border-radius: 5px;
-}
-
-.keen-explorer .foldable-active,.ReactModalPortal .foldable-active,.rc-time-picker-panel .foldable-active{
-      background: none;
-    }
-
-.keen-explorer .foldable .title,.ReactModalPortal .foldable .title,.rc-time-picker-panel .foldable .title{
-      padding: 0.5rem;
-    }
-
-.keen-explorer .foldable .title .foldable-icon,.ReactModalPortal .foldable .title .foldable-icon,.rc-time-picker-panel .foldable .title .foldable-icon{
-        float: right;
-      }
-
-.keen-explorer .foldable .content,.ReactModalPortal .foldable .content,.rc-time-picker-panel .foldable .content{
-      margin-top: 0.5rem;
-      padding: 0;
-    }
-
-.keen-explorer .foldable .tab-content,.ReactModalPortal .foldable .tab-content,.rc-time-picker-panel .foldable .tab-content{
-      border: 0;
-    }
-
-.keen-explorer .filters,.ReactModalPortal .filters,.rc-time-picker-panel .filters{
-    display: flex;
-}
-
-.keen-explorer .filters .title,.ReactModalPortal .filters .title,.rc-time-picker-panel .filters .title{
-      flex: 1;
-    }
-
-.keen-explorer .filters .count,.ReactModalPortal .filters .count,.rc-time-picker-panel .filters .count{
-      align-self: center;
-      text-align: right;
-      padding: 0 0.5rem 0 0;
-    }
-
-.keen-explorer .optional,.ReactModalPortal .optional,.rc-time-picker-panel .optional{
-    margin-left: 1em;
-    font-size: 0.7em;
-    color:#ddd;
-    color: #737373;
-}
-
-.keen-explorer .group-by .label-main,.ReactModalPortal .group-by .label-main,.rc-time-picker-panel .group-by .label-main{
-      padding: 0 0 0.5rem;
-    }
-
-.keen-explorer .group-by .btn-plus, .keen-explorer .group-by .btn-minus, .ReactModalPortal .group-by .btn-plus, .ReactModalPortal .group-by .btn-minus, .rc-time-picker-panel .group-by .btn-plus, .rc-time-picker-panel .group-by .btn-minus{
-      margin-top: 1rem;
-      padding: 0.7rem;
-      background: #fdfdfd;
-      border: 1px solid #e8e8e8;
-      border-radius: 5px;
-      display: inline-block;
-    }
-
-.keen-explorer .group-by .options,.ReactModalPortal .group-by .options,.rc-time-picker-panel .group-by .options{
-      margin-top: 1rem;
-      display:flex;
-    }
-
-.keen-explorer .group-by .options .order-by,.ReactModalPortal .group-by .options .order-by,.rc-time-picker-panel .group-by .options .order-by{
-        width: 8em;
-        padding-right: 1rem;
-      }
-
-.keen-explorer .group-by .options .order-by .select,.ReactModalPortal .group-by .options .order-by .select,.rc-time-picker-panel .group-by .options .order-by .select{
-          width: 100%;
-        }
-
-.keen-explorer .group-by .options .limit,.ReactModalPortal .group-by .options .limit,.rc-time-picker-panel .group-by .options .limit{
-        width: 8em;
-      }
-
-.keen-explorer .group-by .options .limit .input,.ReactModalPortal .group-by .options .limit .input,.rc-time-picker-panel .group-by .options .limit .input{
-          width: 100%;
-        }
-
-.keen-explorer .group-by .additional-target-property,.ReactModalPortal .group-by .additional-target-property,.rc-time-picker-panel .group-by .additional-target-property{
-      margin-top: 1rem;
-      padding-top: 1rem;
-      border-top: 1px solid #f1f1f1;
-    }
-
-.keen-explorer .lets-go,.ReactModalPortal .lets-go,.rc-time-picker-panel .lets-go{
-    display:flex;
-    width: 100%;
-    height: 390px;
-    justify-content: center;
-    align-items: center;
-    color: #9b9b9b;
-    background: #fafafa;
-}
-
-.keen-explorer .tabs,.ReactModalPortal .tabs,.rc-time-picker-panel .tabs{
-  display:flex;
-}
-
-.keen-explorer .tabs .tab,.ReactModalPortal .tabs .tab,.rc-time-picker-panel .tabs .tab{
-    flex: 1;
-    padding: 1rem;
-    background: #fafafa;
-    cursor: pointer;
-    border: 1px solid #e8e8e8;
-    border-radius: 5px 5px 0 0;
-  }
-
-.keen-explorer .tabs .active,.ReactModalPortal .tabs .active,.rc-time-picker-panel .tabs .active{
-    background: #fff;
-    border-bottom: 1px solid #fff;
-  }
-
-.keen-explorer .panel-buttons .active,.ReactModalPortal .panel-buttons .active,.rc-time-picker-panel .panel-buttons .active{
-    border-right: 0;
-  }
-
-.keen-explorer .tab-content,.ReactModalPortal .tab-content,.rc-time-picker-panel .tab-content{
-  padding: 1rem;
-  border: 1px solid #e8e8e8;
-  border-top: none;
-}
-
-.keen-explorer .input-number{
-  font-size: 0.875rem;
-  font-size: 0.875rem;
-  padding: 0.5rem 0.6rem;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  font-weight: 400;
-  line-height: normal;
-}
-
-.ReactModalPortal .input-number{
-  font-size: 0.875rem;
-  font-size: 0.875rem;
-  padding: 0.5rem 0.6rem;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  font-weight: 400;
-  line-height: normal;
-}
-
-.rc-time-picker-panel .input-number{
-  font-size: 0.875rem;
-  font-size: 0.875rem;
-  padding: 0.5rem 0.6rem;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  font-weight: 400;
-  line-height: normal;
-}
-
-.keen-explorer .input-text{
-  font-size: 0.875rem;
-  font-size: 0.875rem;
-  padding: 0.5rem 0.6rem;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  font-weight: 400;
-  line-height: normal;
-  box-sizing: border-box;
-}
-
-.ReactModalPortal .input-text{
-  font-size: 0.875rem;
-  font-size: 0.875rem;
-  padding: 0.5rem 0.6rem;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  font-weight: 400;
-  line-height: normal;
-  box-sizing: border-box;
-}
-
-.rc-time-picker-panel .input-text{
-  font-size: 0.875rem;
-  font-size: 0.875rem;
-  padding: 0.5rem 0.6rem;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  font-weight: 400;
-  line-height: normal;
-  box-sizing: border-box;
-}
-
-.keen-explorer .interval .standard-units,.ReactModalPortal .interval .standard-units,.rc-time-picker-panel .interval .standard-units{
-    width: 10rem;
-  }
-
-.keen-explorer .interval .line,.ReactModalPortal .interval .line,.rc-time-picker-panel .interval .line{
-    display: flex;
-    align-items: center;
-  }
-
-.keen-explorer .interval .line .title,.ReactModalPortal .interval .line .title,.rc-time-picker-panel .interval .line .title{
-      margin-right: 1rem;
-    }
-
-.keen-explorer .interval .line .input-number,.ReactModalPortal .interval .line .input-number,.rc-time-picker-panel .interval .line .input-number{
-      width: 4rem;
-      margin-right: 0.5rem;
-    }
-
-.keen-explorer .interval .line .time-units,.ReactModalPortal .interval .line .time-units,.rc-time-picker-panel .interval .line .time-units{
-      width: 10rem;
-    }
-
-.keen-explorer .timeframe,.ReactModalPortal .timeframe,.rc-time-picker-panel .timeframe{
-  margin-bottom: 0.5rem;
-}
-
-.keen-explorer .timeframe .relative,.ReactModalPortal .timeframe .relative,.rc-time-picker-panel .timeframe .relative{
-    display:flex;
-  }
-
-.keen-explorer .timeframe .relative .relativity, .keen-explorer .timeframe .relative .input-number, .ReactModalPortal .timeframe .relative .relativity, .ReactModalPortal .timeframe .relative .input-number, .rc-time-picker-panel .timeframe .relative .relativity, .rc-time-picker-panel .timeframe .relative .input-number{
-      margin-right:0.5rem;
-    }
-
-.keen-explorer .timeframe .relative .relativity,.ReactModalPortal .timeframe .relative .relativity,.rc-time-picker-panel .timeframe .relative .relativity{
-      flex: 0;
-      max-width:12rem;
-      min-width: 6rem;
-    }
-
-.keen-explorer .timeframe .relative .units,.ReactModalPortal .timeframe .relative .units,.rc-time-picker-panel .timeframe .relative .units{
-      flex: 0;
-      max-width:12rem;
-      min-width: 6rem;
-    }
-
-.keen-explorer .timeframe .relative .input-number,.ReactModalPortal .timeframe .relative .input-number,.rc-time-picker-panel .timeframe .relative .input-number{
-      flex: 1;
-      min-width: 6rem;
-    }
-
-.keen-explorer .timeframe .description,.ReactModalPortal .timeframe .description,.rc-time-picker-panel .timeframe .description{
-    margin-top: 0.5rem;
-    padding: 1rem;
-    background: #fafafa;
-  }
-
-.keen-explorer .timeframe .tabAbsolute .DateRangePickerInput_arrow,.ReactModalPortal .timeframe .tabAbsolute .DateRangePickerInput_arrow,.rc-time-picker-panel .timeframe .tabAbsolute .DateRangePickerInput_arrow{
-      display: none;
-    }
-
-.keen-explorer .timeframe .tabAbsolute .DateInput, .ReactModalPortal .timeframe .tabAbsolute .DateInput, .rc-time-picker-panel .timeframe .tabAbsolute .DateInput {
-      width: 8rem;
-      background: none;
-    }
-
-.keen-explorer .timeframe .tabAbsolute .DateInput_input {
-      padding: 0.5rem;
-      font-size: 0.875rem;
-      font-size: 0.875rem;
-      line-height: normal;
-      color:#000;
-      font-weight: normal;
-      border-radius: 5px;
-      box-sizing: border-box;
-    }
-
-.ReactModalPortal .timeframe .tabAbsolute .DateInput_input {
-      padding: 0.5rem;
-      font-size: 0.875rem;
-      font-size: 0.875rem;
-      line-height: normal;
-      color:#000;
-      font-weight: normal;
-      border-radius: 5px;
-      box-sizing: border-box;
-    }
-
-.rc-time-picker-panel .timeframe .tabAbsolute .DateInput_input {
-      padding: 0.5rem;
-      font-size: 0.875rem;
-      font-size: 0.875rem;
-      line-height: normal;
-      color:#000;
-      font-weight: normal;
-      border-radius: 5px;
-      box-sizing: border-box;
-    }
-
-.keen-explorer .timeframe .tabAbsolute .rc-time-picker-input{
-      font-size: 0.875rem;
-      font-size: 0.875rem;
-      line-height: normal;
-      font-weight: normal;
-      color: #000;
-      height: 2.4rem;
-      width: 7rem;
-      border-radius: 5px;
-    }
-
-.ReactModalPortal .timeframe .tabAbsolute .rc-time-picker-input{
-      font-size: 0.875rem;
-      font-size: 0.875rem;
-      line-height: normal;
-      font-weight: normal;
-      color: #000;
-      height: 2.4rem;
-      width: 7rem;
-      border-radius: 5px;
-    }
-
-.rc-time-picker-panel .timeframe .tabAbsolute .rc-time-picker-input{
-      font-size: 0.875rem;
-      font-size: 0.875rem;
-      line-height: normal;
-      font-weight: normal;
-      color: #000;
-      height: 2.4rem;
-      width: 7rem;
-      border-radius: 5px;
-    }
-
-.keen-explorer .timeframe .tabAbsolute .line,.ReactModalPortal .timeframe .tabAbsolute .line,.rc-time-picker-panel .timeframe .tabAbsolute .line{
-      display: flex;
-      align-items: center;
-      margin: 0.5rem;
-    }
-
-.keen-explorer .timeframe .tabAbsolute .line .title,.ReactModalPortal .timeframe .tabAbsolute .line .title,.rc-time-picker-panel .timeframe .tabAbsolute .line .title{
-        width: 4rem;
-      }
-
-.keen-explorer .timeframe .tabAbsolute .line .SingleDatePicker, .ReactModalPortal .timeframe .tabAbsolute .line .SingleDatePicker, .rc-time-picker-panel .timeframe .tabAbsolute .line .SingleDatePicker {
-        margin-right: 0.5rem;
-      }
-
-.keen-explorer .timeframe .tabAbsolute .line .SingleDatePickerInput__withBorder, .ReactModalPortal .timeframe .tabAbsolute .line .SingleDatePickerInput__withBorder, .rc-time-picker-panel .timeframe .tabAbsolute .line .SingleDatePickerInput__withBorder {
-        border-radius: 5px;
-        border: 1px solid #dbdbdb;
-      }
-
-.keen-explorer .rc-time-picker-panel .rc-time-picker-panel-inner,.ReactModalPortal .rc-time-picker-panel .rc-time-picker-panel-inner,.rc-time-picker-panel .rc-time-picker-panel .rc-time-picker-panel-inner{
-    box-shadow: none;
-    border-radius: 5px;
-  }
-
-.keen-explorer .rc-time-picker-panel .rc-time-picker-input{
-    font-size: 0.875rem;
-    font-size: 0.875rem;
-    line-height: normal;
-    font-weight: normal;
-    color: #000;
-    height: 2.4rem;
-    width: 8rem;
-    border-radius: 5px;
-  }
-
-.ReactModalPortal .rc-time-picker-panel .rc-time-picker-input{
-    font-size: 0.875rem;
-    font-size: 0.875rem;
-    line-height: normal;
-    font-weight: normal;
-    color: #000;
-    height: 2.4rem;
-    width: 8rem;
-    border-radius: 5px;
-  }
-
-.rc-time-picker-panel .rc-time-picker-panel .rc-time-picker-input{
-    font-size: 0.875rem;
-    font-size: 0.875rem;
-    line-height: normal;
-    font-weight: normal;
-    color: #000;
-    height: 2.4rem;
-    width: 8rem;
-    border-radius: 5px;
-  }
-
-.keen-explorer .rc-time-picker-panel .rc-time-picker-panel-select{
-    font-size: 0.875rem;
-    font-size: 0.875rem;
-  }
-
-.ReactModalPortal .rc-time-picker-panel .rc-time-picker-panel-select{
-    font-size: 0.875rem;
-    font-size: 0.875rem;
-  }
-
-.rc-time-picker-panel .rc-time-picker-panel .rc-time-picker-panel-select{
-    font-size: 0.875rem;
-    font-size: 0.875rem;
-  }
-
-.keen-explorer .rc-time-picker-panel .rc-time-picker-panel-select li,.ReactModalPortal .rc-time-picker-panel .rc-time-picker-panel-select li,.rc-time-picker-panel .rc-time-picker-panel .rc-time-picker-panel-select li{
-      height: 2rem;
-      line-height: 2rem;
-    }
-
-.keen-explorer .rc-time-picker-panel .rc-time-picker-panel-input{
-    font-size: 0.875rem;
-    font-size: 0.875rem;
-  }
-
-.ReactModalPortal .rc-time-picker-panel .rc-time-picker-panel-input{
-    font-size: 0.875rem;
-    font-size: 0.875rem;
-  }
-
-.rc-time-picker-panel .rc-time-picker-panel .rc-time-picker-panel-input{
-    font-size: 0.875rem;
-    font-size: 0.875rem;
-  }
-
-.keen-explorer .apiQueryUrl,.ReactModalPortal .apiQueryUrl,.rc-time-picker-panel .apiQueryUrl{
-  cursor: pointer;
-  padding: 1rem;
-  display: flex;
-  align-items: center;
-  width: 100%;
-  font-size: 0.8rem;
-  box-sizing: border-box;
-}
-
-.keen-explorer .apiQueryUrl input,.ReactModalPortal .apiQueryUrl input,.rc-time-picker-panel .apiQueryUrl input{
-    flex: 1;
-    margin: 0 10px;
-  }
-
-.keen-explorer .fa-copy:active{
-  color: #00bbde;
-  color: #00bbde;
-}
-
-.ReactModalPortal .fa-copy:active{
-  color: #00bbde;
-  color: #00bbde;
-}
-
-.rc-time-picker-panel .fa-copy:active{
-  color: #00bbde;
-  color: #00bbde;
-}
-
-.keen-explorer .button-run-query{
-  font-size: 0.875rem;
-  font-size: 0.875rem;
-  text-transform: uppercase;
-  border-radius: 0.3rem;
-  background: #3ecf8e;
-  background: #3ecf8e;
-  color: #fff;
-  font-weight: 600;
-  font-weight: 600;
-  border: 0;
-  padding: 0.875rem calc(0.875rem*2);
-  padding: 0.875rem calc(0.875rem*2);
-  cursor: pointer;
-  margin: 0;
-}
-
-.ReactModalPortal .button-run-query{
-  font-size: 0.875rem;
-  font-size: 0.875rem;
-  text-transform: uppercase;
-  border-radius: 0.3rem;
-  background: #3ecf8e;
-  background: #3ecf8e;
-  color: #fff;
-  font-weight: 600;
-  font-weight: 600;
-  border: 0;
-  padding: 0.875rem calc(0.875rem*2);
-  padding: 0.875rem calc(0.875rem*2);
-  cursor: pointer;
-  margin: 0;
-}
-
-.rc-time-picker-panel .button-run-query{
-  font-size: 0.875rem;
-  font-size: 0.875rem;
-  text-transform: uppercase;
-  border-radius: 0.3rem;
-  background: #3ecf8e;
-  background: #3ecf8e;
-  color: #fff;
-  font-weight: 600;
-  font-weight: 600;
-  border: 0;
-  padding: 0.875rem calc(0.875rem*2);
-  padding: 0.875rem calc(0.875rem*2);
-  cursor: pointer;
-  margin: 0;
-}
-
-.keen-explorer .button-with-loading-spinner .loading-spinner,.ReactModalPortal .button-with-loading-spinner .loading-spinner,.rc-time-picker-panel .button-with-loading-spinner .loading-spinner{
-    display: inline-block;
-    margin: 0 0.5rem 0 -0.5rem;
-    padding: 0;
-  }
-
-.keen-explorer .button-with-loading-spinner .loading-spinner i, .ReactModalPortal .button-with-loading-spinner .loading-spinner i, .rc-time-picker-panel .button-with-loading-spinner .loading-spinner i {
-      margin: 0;
-      padding: 0;
-      font-size: 1rem;
-    }
-
-.keen-explorer .error,.ReactModalPortal .error,.rc-time-picker-panel .error{
-  padding: 1rem;
-  background: #ffe5e5;
-  margin: 1rem 0;
-}
-
-.keen-explorer .box-info,.ReactModalPortal .box-info,.rc-time-picker-panel .box-info{
-  padding: 1rem;
-  background: #f1faff;
-}
-
-.keen-explorer .tab-content .box-info,.ReactModalPortal .tab-content .box-info,.rc-time-picker-panel .tab-content .box-info{
-  margin: -1rem;
-}
-
-.keen-explorer .preview,.ReactModalPortal .preview,.rc-time-picker-panel .preview{
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  background: #fafafa;
-}
-
-.keen-explorer .preview .loader,.ReactModalPortal .preview .loader,.rc-time-picker-panel .preview .loader{
-    width: 100%;
-    height: 340px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 5rem;
-    color: #eee;
-  }
-
-.keen-explorer .preview .keen-dataviz-container, .keen-explorer .preview .react-json-view, .ReactModalPortal .preview .keen-dataviz-container, .ReactModalPortal .preview .react-json-view, .rc-time-picker-panel .preview .keen-dataviz-container, .rc-time-picker-panel .preview .react-json-view{
-    width: 100%;
-    height: 340px;
-    background: #fff;
-    overflow-y: scroll;
-  }
-
-.keen-explorer .preview .react-json-view,.ReactModalPortal .preview .react-json-view,.rc-time-picker-panel .preview .react-json-view{
-    padding: 1rem;
-  }
-
-.keen-explorer .preview .select-chart-type-container,.ReactModalPortal .preview .select-chart-type-container,.rc-time-picker-panel .preview .select-chart-type-container{
-    flex: 1;
-    order: 1;
-    display: flex;
-    align-self: center;
-    flex-direction: column;
-    justify-content: flex-end;
-    margin: 0.3rem;
-  }
-
-.keen-explorer .preview .select-chart-type, .ReactModalPortal .preview .select-chart-type, .rc-time-picker-panel .preview .select-chart-type {
-    flex: 1;
-    width: 20rem;
-    align-self: flex-end;
-  }
-
-.keen-explorer .preview .chart-not-supported-note,.ReactModalPortal .preview .chart-not-supported-note,.rc-time-picker-panel .preview .chart-not-supported-note{
-    float: right;
-    text-align: right;
-    padding: 0.5rem;
-  }
-
-.keen-explorer .preview .button-download,.ReactModalPortal .preview .button-download,.rc-time-picker-panel .preview .button-download{
-    order: 0;
-    background: transparent;
-    border: 0;
-    margin: 0;
-    cursor: pointer;
-    font-size: 0.8rem;
-  }
-
-.keen-explorer .preview .button-download i,.ReactModalPortal .preview .button-download i,.rc-time-picker-panel .preview .button-download i{
-      margin-right: 0.5rem;
-    }
-
-.keen-explorer .action-buttons,.ReactModalPortal .action-buttons,.rc-time-picker-panel .action-buttons{
-  margin-top: 1rem;
-}
-
-.keen-explorer .chartType,.ReactModalPortal .chartType,.rc-time-picker-panel .chartType{
-  margin-top: 1rem;
-}
-
-.keen-explorer .button-toggle{
-  margin-left: 1rem;
-  display: inline;
-  cursor: pointer;
-  border-radius: 0.3rem;
-  font-size: 0.875rem;
-  font-size: 0.875rem;
-  font-weight: 600;
-  font-weight: 600;
-  text-transform: uppercase;
-  color: #3ecf8e;
-  color: #3ecf8e;
-  color: #45b2e8;
-  color: #45b2e8;
-  background: #fcfcfc;
-  border: 1px solid #efefef;
-  border: 1px solid #efefef;
-  padding: 0.875rem calc(0.875rem*2);
-  padding: 0.875rem calc(0.875rem*2);
-}
-
-.ReactModalPortal .button-toggle{
-  margin-left: 1rem;
-  display: inline;
-  cursor: pointer;
-  border-radius: 0.3rem;
-  font-size: 0.875rem;
-  font-size: 0.875rem;
-  font-weight: 600;
-  font-weight: 600;
-  text-transform: uppercase;
-  color: #3ecf8e;
-  color: #3ecf8e;
-  color: #45b2e8;
-  color: #45b2e8;
-  background: #fcfcfc;
-  border: 1px solid #efefef;
-  border: 1px solid #efefef;
-  padding: 0.875rem calc(0.875rem*2);
-  padding: 0.875rem calc(0.875rem*2);
-}
-
-.rc-time-picker-panel .button-toggle{
-  margin-left: 1rem;
-  display: inline;
-  cursor: pointer;
-  border-radius: 0.3rem;
-  font-size: 0.875rem;
-  font-size: 0.875rem;
-  font-weight: 600;
-  font-weight: 600;
-  text-transform: uppercase;
-  color: #3ecf8e;
-  color: #3ecf8e;
-  color: #45b2e8;
-  color: #45b2e8;
-  background: #fcfcfc;
-  border: 1px solid #efefef;
-  border: 1px solid #efefef;
-  padding: 0.875rem calc(0.875rem*2);
-  padding: 0.875rem calc(0.875rem*2);
-}
-
-.keen-explorer .button-toggle i, .ReactModalPortal .button-toggle i, .rc-time-picker-panel .button-toggle i {
-    margin-left: 1rem;
-  }
-
-.keen-explorer .button-toggle-active, .ReactModalPortal .button-toggle-active, .rc-time-picker-panel .button-toggle-active {
-  background: rgb(255, 255, 255);
-}
-
-.keen-explorer .result-string,.ReactModalPortal .result-string,.rc-time-picker-panel .result-string{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.keen-explorer .CalendarDay__selected {
-  background: #00bbde;
-  background: #00bbde;
-  border: 1px double #00bbde;
-  border: 1px double #00bbde;
-}
-
-.keen-explorer .CalendarDay__selected:active {
-  background: #00bbde;
-  background: #00bbde;
-  border: 1px double #00bbde;
-  border: 1px double #00bbde;
-}
-
-.keen-explorer .CalendarDay__selected:hover {
-  background: #00bbde;
-  background: #00bbde;
-  border: 1px double #00bbde;
-  border: 1px double #00bbde;
-}
-
-.ReactModalPortal .CalendarDay__selected {
-  background: #00bbde;
-  background: #00bbde;
-  border: 1px double #00bbde;
-  border: 1px double #00bbde;
-}
-
-.ReactModalPortal .CalendarDay__selected:active {
-  background: #00bbde;
-  background: #00bbde;
-  border: 1px double #00bbde;
-  border: 1px double #00bbde;
-}
-
-.ReactModalPortal .CalendarDay__selected:hover {
-  background: #00bbde;
-  background: #00bbde;
-  border: 1px double #00bbde;
-  border: 1px double #00bbde;
-}
-
-.rc-time-picker-panel .CalendarDay__selected {
-  background: #00bbde;
-  background: #00bbde;
-  border: 1px double #00bbde;
-  border: 1px double #00bbde;
-}
-
-.rc-time-picker-panel .CalendarDay__selected:active {
-  background: #00bbde;
-  background: #00bbde;
-  border: 1px double #00bbde;
-  border: 1px double #00bbde;
-}
-
-.rc-time-picker-panel .CalendarDay__selected:hover {
-  background: #00bbde;
-  background: #00bbde;
-  border: 1px double #00bbde;
-  border: 1px double #00bbde;
-}
-
-.keen-explorer .DayPickerKeyboardShortcuts_show__bottomRight::before{
-  border-right: 33px solid #00bbde;
-  border-right: 33px solid #00bbde;
-}
-
-.ReactModalPortal .DayPickerKeyboardShortcuts_show__bottomRight::before{
-  border-right: 33px solid #00bbde;
-  border-right: 33px solid #00bbde;
-}
-
-.rc-time-picker-panel .DayPickerKeyboardShortcuts_show__bottomRight::before{
-  border-right: 33px solid #00bbde;
-  border-right: 33px solid #00bbde;
-}
-
-.keen-explorer .DateInput_input__focused{
-  border-bottom: 2px solid #00bbde;
-  border-bottom: 2px solid #00bbde;
-}
-
-.ReactModalPortal .DateInput_input__focused{
-  border-bottom: 2px solid #00bbde;
-  border-bottom: 2px solid #00bbde;
-}
-
-.rc-time-picker-panel .DateInput_input__focused{
-  border-bottom: 2px solid #00bbde;
-  border-bottom: 2px solid #00bbde;
-}
-
-.keen-explorer .loading-spinner i, .ReactModalPortal .loading-spinner i, .rc-time-picker-panel .loading-spinner i {
-      font-size: 1.5rem;
-    }
-
-.keen-explorer .fa-spin, .ReactModalPortal .fa-spin, .rc-time-picker-panel .fa-spin {
-    -webkit-animation: fa-spin 1s infinite linear;
-            animation: fa-spin 1s infinite linear;
-}
-
-.keen-explorer .react-select-option,.ReactModalPortal .react-select-option,.rc-time-picker-panel .react-select-option{
-    padding: 0.7rem 1rem;
-}
-
-.keen-explorer .react-json-view .string-value,.ReactModalPortal .react-json-view .string-value,.rc-time-picker-panel .react-json-view .string-value{
-      word-break: break-word;
-    }
-
-@media screen and (max-width: 1000px) {
-  .keen-explorer{
-    flex-direction: column;
-  }
-    .keen-explorer .panel{
-      box-shadow: none;
-      min-width: none;
-    }
-      .keen-explorer .panel .panel-content{
-        padding: 0 1rem;
-      }
-    .keen-explorer .result{
-      display: flex;
-      flex-direction: column;
-    }
-      .keen-explorer .result .preview, .keen-explorer .result .lets-go{
-        order: 1;
-      }
-      .keen-explorer .result .error{
-        margin-bottom: 0;
-      }
-      .keen-explorer .result .button-run-query{
-        order: 0;
-      }
-      .keen-explorer .result .button-toggle {
-        order: 3;
-      }
-      .keen-explorer .result .saved-query{
-        order: 3;
-      }
-      .keen-explorer .result .action-buttons{
-        margin-bottom: 1rem;
-      }
-    .filters-container .delete{
-      margin-top: 0.5rem;
-    }
 }
