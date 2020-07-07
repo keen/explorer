@@ -1,5 +1,6 @@
 // @ts-nocheck
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
+import camelCase from 'camelcase-keys';
 import Modal from 'react-modal';
 import { connect } from 'react-redux';
 import { Alert } from '@keen.io/ui-core';
@@ -22,15 +23,19 @@ import {
   createNewQuery,
   runQuery,
   getError,
+  fetchSavedQueries,
+  getSavedQueries,
   getQueryResults,
   getQueryPerformState,
 } from '../modules/queries';
-import { resetSavedQuery } from '../modules/savedQuery';
+import { resetSavedQuery, selectSavedQuery } from '../modules/savedQuery';
+
 import QueryCreator from '../queryCreator';
+import QueryBrowser from '../queryBrowser';
+
 import { persistState, loadPersitedState } from '../modules/app';
 
 import APIQueryURL from './explorer/APIQueryURL';
-import SavedQueryBrowser from './explorer/SavedQueryBrowser';
 
 import QuerySettings from './QuerySettings';
 import QueryVisualization from './QueryVisualization';
@@ -40,13 +45,12 @@ import Confirm from './Confirm';
 
 import { QueryActions, SettingsContainer } from './App.styles';
 
-import { PANEL_NEW_QUERY, PANEL_BROWSE } from '../consts';
-
 import { client } from '../KeenExplorer';
 
 const mapStateToProps = (state, props) => ({
   collections: state.collections,
   queries: state.queries,
+  savedQueries: camelCase(getSavedQueries(state), { deep: true }),
   eventCollection: state.ui.eventCollection,
   ui: state.ui,
   savedQuery: state.savedQuery,
@@ -64,10 +68,12 @@ const mapDispatchToProps = {
   fetchProject,
   fetchSchema,
   saveQuery,
+  fetchSavedQueries,
   deleteQuery,
   persistState,
   loadPersitedState,
   resetSavedQuery,
+  selectSavedQuery,
   createNewQuery,
   runQuery,
   updateUI,
@@ -109,6 +115,7 @@ class App extends Component {
 
   componentDidMount() {
     this.props.fetchProject();
+    this.props.fetchSavedQueries();
 
     if (this.state.isProjectChanged) return;
     this.props.loadPersitedState();
@@ -123,91 +130,35 @@ class App extends Component {
 
   render() {
     const {
-      queries,
-      updateUI,
-      resetUI,
       //UI components
       components,
     } = this.props;
-    const { features } = this.state;
-    const {
-      activePanel,
-      analysisType,
-      chartType,
-      modalEmbedHTML,
-      queryError,
-      extractionActiveTab,
-    } = this.props.ui;
-
-    const { readKey, projectId } = this.props.keenAnalysis.config;
 
     return (
-      <div className="keen-explorer">
-        <div className="panel-main">
-          <div className="panel-buttons tabs">
-            <div
-              className="tab button button-new-query"
-              onClick={() => {
-                this.props.createNewQuery();
-                this.props.resetSavedQuery();
-                resetUI();
-              }}
-            >
-              <i className="fa fa-plus" />
-            </div>
-            <div
-              className={`tab button ${
-                activePanel === PANEL_NEW_QUERY ? 'active' : ''
-              }`}
-              onClick={() =>
-                updateUI({
-                  activePanel: PANEL_NEW_QUERY,
-                })
-              }
-            >
-              Query
-            </div>
-            {components.savedQueryBrowser && (
-              <div
-                className={`tab button ${
-                  activePanel === PANEL_BROWSE ? 'active' : ''
-                }`}
-                onClick={() =>
-                  updateUI({
-                    activePanel: PANEL_BROWSE,
-                  })
-                }
-              >
-                Browse
-              </div>
-            )}
-          </div>
-          <div
-            className={`panel-content ${
-              activePanel !== PANEL_NEW_QUERY ? 'hide' : ''
-            } panel-${analysisType}`}
-          >
-            <QueryCreator
-              projectId={this.props.keenAnalysis.config.projectId}
-              readKey={this.props.keenAnalysis.config.readKey}
-              masterKey={this.props.keenAnalysis.config.masterKey}
-              onUpdateQuery={(query) => {
-                console.log(query, 'query');
-                this.setState({ query });
-                this.props.persistState({ query });
-              }}
-            />
-            {components.apiQueryUrl && (
-              <APIQueryURL queryParams={this.state.query} client={client} />
-            )}
-          </div>
-          <div
-            className={`panel-content panel-saved-queries ${
-              activePanel !== PANEL_BROWSE ? 'hide' : ''
-            }`}
-          >
-            <SavedQueryBrowser client={client} features={features} />
-          </div>
+      <div>
+        <QueryBrowser
+          onSelectQuery={(queryName) => {
+            this.props.selectSavedQuery(queryName);
+          }}
+          onDeleteQuery={(queryName) => {
+            this.props.deleteQuery({ name: queryName });
+          }}
+          queries={this.props.savedQueries}
+        />
+        <div>
+          <QueryCreator
+            projectId={this.props.keenAnalysis.config.projectId}
+            readKey={this.props.keenAnalysis.config.readKey}
+            masterKey={this.props.keenAnalysis.config.masterKey}
+            onUpdateQuery={(query) => {
+              console.log(query, 'query');
+              this.setState({ query });
+              this.props.persistState({ query });
+            }}
+          />
+          {components.apiQueryUrl && (
+            <APIQueryURL queryParams={this.state.query} client={client} />
+          )}
         </div>
 
         <div className="result">

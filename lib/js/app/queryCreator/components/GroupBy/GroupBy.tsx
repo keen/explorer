@@ -60,10 +60,10 @@ const GroupBy: FC<Props> = ({ collection }) => {
   }, []);
 
   useEffect(() => {
-   if (collection !== collectionRef.current) {
-     collectionRef.current = collection;
-     groupDispatcher(resetGroups());
-   }
+    if (collection !== collectionRef.current) {
+      collectionRef.current = collection;
+      groupDispatcher(resetGroups());
+    }
   }, [collection]);
 
   useEffect(() => {

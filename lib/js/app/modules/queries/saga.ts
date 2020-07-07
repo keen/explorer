@@ -1,9 +1,14 @@
 import { takeLatest, getContext, put } from 'redux-saga/effects';
 
-import { runQueryError, runQuerySuccess } from './actions';
+import {
+  runQueryError,
+  runQuerySuccess,
+  getSavedQueriesSuccess,
+  getSavedQueriesError,
+} from './actions';
 import { RunQueryAction } from './types';
 
-import { RUN_QUERY } from './constants';
+import { RUN_QUERY, GET_SAVED_QUERIES } from './constants';
 
 function* runQuery(action: RunQueryAction) {
   try {
@@ -19,6 +24,21 @@ function* runQuery(action: RunQueryAction) {
   }
 }
 
+function* fetchSavedQueries() {
+  try {
+    const client = yield getContext('keenClient');
+    const responseBody = yield client
+      .get(client.url('queries', 'saved'))
+      .auth(client.masterKey())
+      .send();
+
+    yield put(getSavedQueriesSuccess(responseBody));
+  } catch (error) {
+    yield put(getSavedQueriesError(error));
+  }
+}
+
 export function* queriesSaga() {
   yield takeLatest(RUN_QUERY, runQuery);
+  yield takeLatest(GET_SAVED_QUERIES, fetchSavedQueries);
 }

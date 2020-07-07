@@ -18,9 +18,6 @@ const Dataviz = forwardRef<HTMLDivElement, Props>(
 
     useEffect(() => {
       if (datavizRef.current) datavizRef.current.destroy();
-
-      console.log('renderuj charcik', visualization, analysisResults);
-
       datavizRef.current = new KeenDataviz({
         container: `#${CONTAINER_ID}`,
         type: visualization as any,

@@ -1,6 +1,11 @@
 import { ReducerState } from './types';
 
-import { RUN_QUERY, RUN_QUERY_ERROR, RUN_QUERY_SUCCESS } from './constants';
+import {
+  RUN_QUERY,
+  RUN_QUERY_ERROR,
+  RUN_QUERY_SUCCESS,
+  GET_SAVED_QUERIES_SUCCESS,
+} from './constants';
 
 export const initialState: ReducerState = {
   results: null,
@@ -34,12 +39,6 @@ export const queriesReducer = (
         ...state,
         isSavingQuery: false,
         results: initialState.results,
-      };
-
-    case 'CLIENT_FETCH_SAVED_QUERIES_SUCCESS':
-      return {
-        ...state,
-        saved: action.payload,
       };
 
     case 'CLIENT_DELETE_QUERY_SUCCESS':
@@ -79,6 +78,12 @@ export const queriesReducer = (
         ...state,
         isLimited: false,
         isSavingQuery: false,
+      };
+
+    case GET_SAVED_QUERIES_SUCCESS:
+      return {
+        ...state,
+        saved: action.payload.queries,
       };
     case RUN_QUERY: {
       return {

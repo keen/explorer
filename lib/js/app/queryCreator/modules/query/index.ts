@@ -20,6 +20,7 @@ import {
 
 import {
   setQuery,
+  resetQuery,
   selectEventCollection,
   selectTargetProperty,
   selectTimezone,
@@ -92,6 +93,7 @@ export {
   selectTargetProperty,
   selectAnalysis,
   resetExtraction,
+  resetQuery,
 };
 export {
   SetQueryAction,

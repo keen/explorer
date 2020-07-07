@@ -10,11 +10,11 @@ import rootSaga from './saga';
 import rootReducer from './reducer';
 
 import { appStart } from './modules/app';
-import { getQuery, setQuery } from './modules/query';
+import { getQuery, setQuery, resetQuery } from './modules/query';
 import { transformToQuery } from './utils/transformToQuery';
 import { serializeQuery } from './utils/serializeQuery';
 
-import { SET_QUERY_EVENT } from './constants';
+import { SET_QUERY_EVENT, NEW_QUERY_EVENT } from './constants';
 
 type Props = {
   /** Keen project identifer */
@@ -80,6 +80,9 @@ class QueryCreator extends React.Component<Props> {
     this.setQuerySubscription = this.pubsub.subscribe(
       (eventName: string, meta: any) => {
         switch (eventName) {
+          case NEW_QUERY_EVENT:
+            this.store.dispatch(resetQuery());
+            break;
           case SET_QUERY_EVENT:
             const { query } = meta;
             const serializedQuery = serializeQuery(query);

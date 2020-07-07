@@ -1,6 +1,10 @@
 import { ReducerState } from './types';
 import { queriesReducer } from './reducer';
-import { createNewQuery, runQuery } from './actions';
+import {
+  createNewQuery,
+  runQuery,
+  getSavedQueries as fetchSavedQueries,
+} from './actions';
 import {
   getError,
   getSavedQueries,
@@ -14,6 +18,7 @@ import { queriesSaga } from './saga';
 
 export {
   ReducerState,
+  fetchSavedQueries,
   getError,
   getQueryResults,
   getQueryPerformState,

@@ -20,6 +20,7 @@ import {
   UPDATE_FUNNEL_STEP_EVENT_COLLECTION,
   CHANGE_FUNNEL_STEPS_ORDER,
   RESET_EXTRACTION,
+  RESET_QUERY,
 } from './constants';
 
 import { Timezones, Timeframe, OrderBy, FunnelStep } from '../../types';
@@ -48,6 +49,10 @@ export interface SetQueryAction {
   payload: {
     query: Partial<ReducerState>;
   };
+}
+
+export interface ResetQueryAction {
+  type: typeof RESET_QUERY;
 }
 
 export interface SetExtractionLimitAction {
@@ -188,6 +193,7 @@ export interface ChangeFunnelStepsOrderAction {
 
 export type QueryActions =
   | SetQueryAction
+  | ResetQueryAction
   | SelectEventCollectionAction
   | SelectAnalysisAction
   | SelectTargetPropertyAction

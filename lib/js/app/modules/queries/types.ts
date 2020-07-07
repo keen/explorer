@@ -3,6 +3,9 @@ import {
   RUN_QUERY,
   RUN_QUERY_ERROR,
   RUN_QUERY_SUCCESS,
+  GET_SAVED_QUERIES,
+  GET_SAVED_QUERIES_ERROR,
+  GET_SAVED_QUERIES_SUCCESS,
 } from './constants';
 
 export type ReducerState = {
@@ -13,6 +16,24 @@ export type ReducerState = {
   isLimited: boolean;
   error: Error | null;
 };
+
+export interface GetSavedQueriesAction {
+  type: typeof GET_SAVED_QUERIES;
+}
+
+export interface GetSavedQueriesSuccessAction {
+  type: typeof GET_SAVED_QUERIES_SUCCESS;
+  payload: {
+    queries: Object;
+  };
+}
+
+export interface GetSavedQueriesErrorAction {
+  type: typeof GET_SAVED_QUERIES_ERROR;
+  payload: {
+    error: Error;
+  };
+}
 
 export interface RunQueryAction {
   type: typeof RUN_QUERY;
@@ -43,4 +64,7 @@ export type QueriesActions =
   | RunQueryAction
   | RunQueryErrorAction
   | RunQuerySuccessAction
+  | GetSavedQueriesAction
+  | GetSavedQueriesSuccessAction
+  | GetSavedQueriesErrorAction
   | CreateNewQueryAction;

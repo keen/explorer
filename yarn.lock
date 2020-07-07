@@ -1246,13 +1246,13 @@
     "@types/yargs" "^15.0.0"
     chalk "^4.0.0"
 
-"@keen.io/charts@^0.8.1":
-  version "0.8.1"
-  resolved "https://registry.yarnpkg.com/@keen.io/charts/-/charts-0.8.1.tgz#3fb9afe4919818188d59e1ac952c46db16dbd5fe"
-  integrity sha512-UiO0eS1TnmxH1K+kh0eVGQtbNVy5EQzxqeiSYotsDyefm3DuQQnsZ1qHkAJK0x7GVBrEfQcnAEf0er7LOwnLgA==
+"@keen.io/charts@^0.8.3":
+  version "0.8.3"
+  resolved "https://registry.yarnpkg.com/@keen.io/charts/-/charts-0.8.3.tgz#d9957f0d0ecacb24801a590bbfd10794b8674cf1"
+  integrity sha512-l0MIhQdCLRU/EwkN2ViY1qWzmLCBnm05IoEgkRBi0UoBELIZAOa0NSMC3NNFwNGiMxhIYz6UND/KJkL+0AGpFg==
   dependencies:
     "@keen.io/colors" "^0.2.0"
-    "@keen.io/ui-core" "^0.21.0"
+    "@keen.io/ui-core" "^0.22.0"
     d3-array "^2.4.0"
     d3-axis "^1.0.12"
     d3-drag "^1.2.5"
@@ -1285,15 +1285,18 @@
   resolved "https://registry.yarnpkg.com/@keen.io/colors/-/colors-0.2.0.tgz#664410305fb097308e0303c4fcce33a971a50995"
   integrity sha512-i0z4ZXy91oeJXlhT5Gx7Kpsin0z1CNRi/FnKLs4udg+XdptSWXdv9ltVf2Un7ACzSufTIBHPcEeff3cYzRW0pg==
 
-"@keen.io/dataviz@^0.5.12":
-  version "0.5.12"
-  resolved "https://registry.yarnpkg.com/@keen.io/dataviz/-/dataviz-0.5.12.tgz#e47074197245be8654366414151c96fc61f2c1a9"
-  integrity sha512-q4Y/WWln/rqLqB0QkFJ1hhRsD8R/1O2u4edLZP34wyDU30WzHiv5i104pGaJCEm2ycpkLWCjWM4TzFN6XTSYPw==
+"@keen.io/dataviz@^0.7.0":
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/@keen.io/dataviz/-/dataviz-0.7.0.tgz#d9b2b03375eaa7c192e4fbfc0ad03b8ec7b1eba7"
+  integrity sha512-/lkFd35CX15u5rDGPJvHOjZMku4FUebeT7lTBEQ9UC5kYQJuaLlgoqRVgzjKx/EX83sfKXexCW0eCJPk051rsQ==
   dependencies:
-    "@keen.io/charts" "^0.8.1"
-    "@keen.io/parser" "^0.2.26"
-    "@keen.io/widgets" "^0.8.1"
+    "@keen.io/charts" "^0.8.3"
+    "@keen.io/colors" "^0.2.0"
+    "@keen.io/parser" "^0.2.28"
+    "@keen.io/widgets" "^0.8.3"
     deepmerge "4.2.2"
+    dom-to-image "^2.6.0"
+    file-saver "^2.0.2"
     react "^16.12.0"
     react-dom "^16.12.0"
 
@@ -1332,6 +1335,13 @@
   version "0.2.26"
   resolved "https://registry.yarnpkg.com/@keen.io/parser/-/parser-0.2.26.tgz#6d50a2ac7d492742bb37d0e964123498fba42859"
   integrity sha512-NNaqAduDGlatgXqUrjMM0L4FLIx2heM9AseeIPTCjXMNnVDp1efgEhmQAUFxjpaimpAFionGaqp1GvMA2+8Njw==
+  dependencies:
+    d3-time-format "^2.2.3"
+
+"@keen.io/parser@^0.2.28":
+  version "0.2.28"
+  resolved "https://registry.yarnpkg.com/@keen.io/parser/-/parser-0.2.28.tgz#fc0d288524695adc2fd36c06a5b871263fdd1fae"
+  integrity sha512-AGPWIK7ytEPOeotsLP+35zX+wjcBbKpmVtEbm3H6thp0rnWnTI+vYm2Qaw9mfvAsRPBhpi+piJeauZuwYnp/og==
   dependencies:
     d3-time-format "^2.2.3"
 
@@ -1374,14 +1384,31 @@
     styled-system "5.1.5"
     webfontloader "^1.6.28"
 
-"@keen.io/widgets@^0.8.1":
-  version "0.8.1"
-  resolved "https://registry.yarnpkg.com/@keen.io/widgets/-/widgets-0.8.1.tgz#491d958ef1f334fc19f00e3cbb476f9e5900110c"
-  integrity sha512-+bZfULbLz/mPxrmqG8EUul4tlpTC7uX+tZitYhzedfETWe8HOGSmp9IcSnKVzBrly/VDZ0rg/n1EUFH05tXR/A==
+"@keen.io/ui-core@^0.22.0":
+  version "0.22.0"
+  resolved "https://registry.yarnpkg.com/@keen.io/ui-core/-/ui-core-0.22.0.tgz#231532344f9533dd0c104eedbe677d3253de3bd8"
+  integrity sha512-FaSE6mZDGvxdf6ULNaP49yaqMMyPhMOEsCHPCr2zinN+EkHNqvDq/r9vLPGc4C3zxFHnnLufRu9n7SrD/qyCtg==
   dependencies:
-    "@keen.io/charts" "^0.8.1"
     "@keen.io/colors" "^0.2.0"
-    "@keen.io/ui-core" "^0.21.0"
+    "@keen.io/icons" "^0.4.2"
+    color "^3.1.2"
+    framer-motion "^1.10.3"
+    polished "^3.4.4"
+    react "^16.12.0"
+    react-dom "^16.12.0"
+    react-select "^3.1.0"
+    styled-components "5.1.0"
+    styled-system "5.1.5"
+    webfontloader "^1.6.28"
+
+"@keen.io/widgets@^0.8.3":
+  version "0.8.3"
+  resolved "https://registry.yarnpkg.com/@keen.io/widgets/-/widgets-0.8.3.tgz#d0f4d8b918b527465b906a14527c5a4b636ae3c6"
+  integrity sha512-eTmhyRBU4E+no+6S7UapBgjne2Nae1jSOcTKo6LSXMOjlg9Fgv+sw+VnK/A3iC7ZUWcZS0Lk/XKsdX4yL5Vgew==
+  dependencies:
+    "@keen.io/charts" "^0.8.3"
+    "@keen.io/colors" "^0.2.0"
+    "@keen.io/ui-core" "^0.22.0"
     react "^16.12.0"
     react-dom "^16.12.0"
     styled-components "5.1.0"
