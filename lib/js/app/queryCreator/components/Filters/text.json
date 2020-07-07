@@ -2,5 +2,6 @@
   "filters": "Filters",
   "addFilter": "Add Filter",
   "removeFilter": "Remove Filter",
-  "resetFilters": "Reset Filters"
+  "resetFilters": "Reset Filters",
+  "done": "Done"
 }

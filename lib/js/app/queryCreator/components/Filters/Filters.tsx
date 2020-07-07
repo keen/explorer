@@ -1,12 +1,9 @@
-import React, { FC, useEffect, useRef, useState, useMemo, useReducer } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-// import React, { FC, useEffect, useRef, useMemo, useReducer } from 'react';
+import React, { FC, useEffect, useRef, useMemo, useReducer } from 'react';
+import { useSelector } from 'react-redux';
 import shallowEqual from 'shallowequal';
-import moment from 'moment';
-import 'react-dates/initialize';
-import { SingleDatePicker } from 'react-dates';
-import TimePicker from 'rc-time-picker';
-import { Button, Select, Label, Input } from '@keen.io/ui-core';
+import { Button, Select, Input } from '@keen.io/ui-core';
+import { DatePicker } from './DatePicker';
+import { GeoCoordinates } from './GeoCoordinates';
 
 import {
   addFilter,
@@ -15,19 +12,17 @@ import {
   resetFilters,
   setFilters
 } from './actions';
+import { getCollectionSchema } from '../../modules/events';
 
 import { filtersReducer } from './reducer';
 
-import { getCollectionSchema } from '../../modules/events';
-
-import text from './text.json';
+import { DATA_TYPES, FILTER_OPERATORS, DEFAULT_TIMEFRAME_ABSOLUTE_VALUE } from './constants';
+import { convertFilters, getTypeFromValue, convertSchemaProp } from './utils';
 
 import { AppState, PropertyType, Operator, Filter } from '../../types';
-
-import { DATA_TYPES, FILTER_OPERATORS, DEFAULT_TIMEFRAME_ABSOLUTE_VALUE } from './constants';
-
-import { convertDateToString, convertValueToJson, getTypeFromValue, convertSchemaProp } from './utils';
 import { SchemaProp } from './types';
+
+import text from './text.json';
 
 type Props = {
   /** Collection name */
@@ -41,7 +36,7 @@ type Props = {
 const Filters: FC<Props> = ({ collection, filters }) => {
   const collectionSchema = useSelector((state: AppState) =>
     getCollectionSchema(state, collection)
-  ); console.log('----- colllection schema', {collectionSchema});
+  );
 
   const options = useMemo(() => {
     if (collectionSchema) {
@@ -54,8 +49,6 @@ const Filters: FC<Props> = ({ collection, filters }) => {
     return [];
   }, [collectionSchema]);
 
-  const [startFocus, setStartFocus] = useState(false);
-
   const dataTypes = Object.keys(DATA_TYPES).map(item => ({ label: DATA_TYPES[item], value: DATA_TYPES[item] }));
 
   const getOperatorOptions = (type?: PropertyType) => {
@@ -65,13 +58,12 @@ const Filters: FC<Props> = ({ collection, filters }) => {
   }
 
   const [state, filtersDispatcher] = useReducer(filtersReducer, []);
+  const stateRef = useRef(state);
 
   const filtersRef = useRef(filters);
 
   useEffect(() => {
-    console.log('---------------------------');
     const localFilters = state.filter((v) => v !== null);
-    console.log({filters}, {localFilters}, filtersRef.current, !shallowEqual(filters, filtersRef.current), !shallowEqual(filters, localFilters));
     if (
       !shallowEqual(filters, filtersRef.current) &&
       !shallowEqual(filters, localFilters)
@@ -81,6 +73,25 @@ const Filters: FC<Props> = ({ collection, filters }) => {
     filtersRef.current = filters;
   }, [filters])
 
+  useEffect(() => {
+    if (!shallowEqual(state, stateRef.current)) {
+      stateRef.current = state; console.log('use state');
+    }
+  }, [state])
+
+  const getInputValue = (filter: Filter) => {
+    if (filter?.propertyValue && typeof filter?.propertyValue === 'string') return filter.propertyValue;
+    return '';
+  };
+
+  const getSelectValue = (options: any, filter: Filter) => {
+    if (filter?.propertyValue) {
+      const value = options.filter(option => option.value === filter.propertyValue);
+      return value.length ? { label: filter.propertyValue, value: filter.propertyValue } : null;
+    }
+    return null;
+  }
+
   const renderFilterValue = (idx: number, filter:Filter) => {
     if (filter?.propertyType === DATA_TYPES['num']) {
       return (
@@ -88,7 +99,7 @@ const Filters: FC<Props> = ({ collection, filters }) => {
           type="number"
           variant="solid"
           placeholder="Value"
-          value={filter?.propertyValue || ''}
+          value={getInputValue(filter)}
           onChange={(e) => filtersDispatcher(updateFilter(idx, { propertyValue: e.target.value }))}
         />
       );
@@ -106,87 +117,44 @@ const Filters: FC<Props> = ({ collection, filters }) => {
           placeholder={'Select property type'}
           options={BooleanOptions}
           onChange={({ value }: { value: string }) => filtersDispatcher(updateFilter(idx, { propertyValue: value }))}
-          value={filter?.propertyValue ? {label: filter.propertyValue, value: filter.propertyValue} : null}
+          value={getSelectValue(BooleanOptions, filter)}
         />
       );
     }
 
     if (filter?.propertyType === DATA_TYPES['null']) {
+      // filtersDispatcher(updateFilter(idx, { propertyValue: null }));
       return (
       <Input
         disabled
         variant="solid"
-        value={''}
+        value={'null'}
       />
       );
     }
 
     if (filter?.propertyType === DATA_TYPES['datetime']) {
-      const startDate = moment.utc(filter?.propertyValue || DEFAULT_TIMEFRAME_ABSOLUTE_VALUE);
+      const initialDate = filter?.propertyValue || DEFAULT_TIMEFRAME_ABSOLUTE_VALUE
+      // filtersDispatcher(updateFilter(idx, { propertyValue: initialDate }));
       return (
-        <>
-        <SingleDatePicker
-          date={startDate}
-          onDateChange={(value) => {
-            const valueConverted = convertDateToString(value);
-            filtersDispatcher(updateFilter(idx, { propertyValue: valueConverted }));
-          }}
-          focused={startFocus}
-          onFocusChange={({ focused }) => setStartFocus(focused)}
-          isOutsideRange={() => false}
-          id={`date-picker-${idx}`}
-          numberOfMonths={1}
-          displayFormat={'YYYY-MM-DD'}
+        <DatePicker
+          idx={idx}
+          initialDate={initialDate}
+          onChange={
+            (idx, value) => filtersDispatcher(updateFilter(idx, { propertyValue: value }))
+          }
         />
-        <TimePicker
-          use12Hours
-          showSecond={false}
-          value={startDate}
-          onChange={(value) => {
-            const valueConverted = convertDateToString(value);
-            filtersDispatcher(updateFilter(idx, { propertyValue: valueConverted }));
-          }}
-        />
-      </>
-      );
+      )
     }
 
     if (filter?.operator === 'within') {
-      let newPropertyValue = {
-        coordinates: [undefined, undefined],
-        maxDistanceMiles: undefined,
-      };
-      if (filter?.propertyValue) {
-        newPropertyValue = {
-          ...filter.propertyValue
-        }
-      }
-      const [ long = '', lat = '' ] = newPropertyValue?.coordinates;
-      const radius = newPropertyValue?.maxDistanceMiles || '';
+      // filtersDispatcher(updateFilter(idx, { propertyValue: '' }));
       return (
-        <>
-        <Input
-          type="number"
-          variant="solid"
-          placeholder="Longitude"
-          value={long}
-          onChange={(e) => filtersDispatcher(updateFilter(idx, { propertyValue: { coordinates: [e.target.value, lat], maxDistanceMiles: radius }}))}
+        <GeoCoordinates
+          idx={idx}
+          filter={filter}
+          onChange={(idx, value) => filtersDispatcher(updateFilter(idx, {propertyValue: value}))}
         />
-        <Input
-          type="number"
-          variant="solid"
-          placeholder="Latitude"
-          value={lat}
-          onChange={(e) => filtersDispatcher(updateFilter(idx, { propertyValue: { coordinates: [long, e.target.value], maxDistanceMiles: radius }}))}
-        />
-        <Input
-          type="number"
-          variant="solid"
-          placeholder="Radius [in miles]"
-          value={radius}
-          onChange={(e) => filtersDispatcher(updateFilter(idx, { propertyValue: { coordinates: [long, lat], maxDistanceMiles: e.target.value }}))}
-        />
-        </>
       )
     }
 
@@ -194,7 +162,7 @@ const Filters: FC<Props> = ({ collection, filters }) => {
       <Input
         variant="solid"
         placeholder="Value"
-        value={filter?.propertyValue || ''}
+        value={getInputValue(filter)}
         onChange={(e) => filtersDispatcher(updateFilter(idx, { propertyValue: e.target.value }))}
       />
     );
@@ -206,7 +174,6 @@ const Filters: FC<Props> = ({ collection, filters }) => {
   }
 
   console.log({state});
-  state.forEach(item => item?.propertyValue && console.log(convertValueToJson(item.propertyValue)));
   return (
     <>
     {state.map((item, idx) => (
@@ -217,8 +184,8 @@ const Filters: FC<Props> = ({ collection, filters }) => {
           options={options}
           onChange={({ value }: { value: string }) => {
               filtersDispatcher(updateFilter(idx, { propertyName: value }));
-              const schemaProp = collectionSchema[value];
-              if (schemaProp) filtersDispatcher(updateFilter(idx, { propertyType: convertSchemaProp(schemaProp as SchemaProp) as PropertyType })); 
+              const schemaProp = collectionSchema[value] as SchemaProp;
+              if (schemaProp) filtersDispatcher(updateFilter(idx, { propertyType: convertSchemaProp(schemaProp) as PropertyType }));
             }
           }
           value={item?.propertyName ? {label: item.propertyName, value: item.propertyName} : null}
@@ -229,6 +196,8 @@ const Filters: FC<Props> = ({ collection, filters }) => {
           options={dataTypes}
           onChange={({ value }: { value: PropertyType }) => {
             filtersDispatcher(updateFilter(idx, { propertyType: value }));
+            // if (value === 'Null') filtersDispatcher(updateFilter(idx, { propertyValue: 'Null' }));
+            // if (value === 'Datetime') filtersDispatcher(updateFilter(idx, { propertyValue:  item?.propertyValue || DEFAULT_TIMEFRAME_ABSOLUTE_VALUE}));
             if (item?.operator) {
               // const type = DATA_TYPES[value];
               const operatorOptions = getOperatorOptions(value);
@@ -273,6 +242,12 @@ const Filters: FC<Props> = ({ collection, filters }) => {
       >
         {text.resetFilters}
       </Button>
+      <Button
+        variant="success"
+        style="solid"
+        onClick={() => console.log(convertFilters(state))}>
+          {text.done}
+        </Button>
     </>
   );
 };

@@ -27,7 +27,6 @@ export const filtersReducer = (state: State, action: FiltersActions): State => {
     case REMOVE_FILTER:
       return state.filter((_, idx) => idx !== action.payload.index);
     case SET_FILTERS:
-      console.log('set filters', {filters: action.payload.filters});
       return action.payload.filters;
     default:
       return state;
