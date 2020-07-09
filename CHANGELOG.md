@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [7.1.3](https://github.com/keen/explorer/compare/v7.1.2...v7.1.3) (2020-07-07)
+
 ### [7.1.2](https://github.com/keen/explorer/compare/v7.1.1...v7.1.2) (2020-07-01)
 
 
