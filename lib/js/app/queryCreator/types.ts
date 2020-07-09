@@ -100,6 +100,7 @@ export type PropertyType =
   | 'Number'
   | 'Datetime'
   | 'List'
+  | 'Geo'
   | 'Null'
   | 'Boolean';
 

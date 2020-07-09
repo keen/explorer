@@ -4,17 +4,6 @@ export const REMOVE_FILTER = '@filters/REMOVE_FILTER';
 export const RESET_FILTERS = '@filters/RESET_FILTERS';
 export const SET_FILTERS = '@filters/SET_FILTERS';
 
-
-
-// export const DATA_TYPES = [
-//   'String',
-//   'Number',
-//   'Null',
-//   'List',
-//   'Boolean',
-//   'Datetime'
-// ];
-
 export const DATA_TYPES = {
   string: 'String',
   num: 'Number',
@@ -22,6 +11,18 @@ export const DATA_TYPES = {
   list: 'List',
   null: 'Null',
   bool: 'Boolean',
+  geo: 'Geo'
+};
+
+export const SCHEMA_PROPS = {
+  num: 'Number',
+  string: 'String',
+  bool: 'Boolean',
+  datetime: 'Datetime',
+  null: 'String',
+  list: 'List',
+  geo: 'Geo',
+  array: 'List',
 };
 
 const today = new Date();
@@ -89,6 +90,6 @@ export const FILTER_OPERATORS = [
   {
     label: '\u2690 Within a given radius (geo)',
     value: 'within',
-    dataTypes: ['Geo', 'List'],
+    dataTypes: ['Geo'],
   },
 ];

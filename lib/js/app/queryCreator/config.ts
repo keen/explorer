@@ -106,5 +106,17 @@ export const FIELDS_CONFIG: QueryCreatorConfig = {
   contentEncoding: ['extraction'],
   propertyNames: ['extraction'],
   latest: ['extraction'],
-  filters: ['*'],
+  filters: [
+    'sum',
+    'average',
+    'count',
+    'count_unique',
+    'maximum',
+    'minimum',
+    'median',
+    'percentile',
+    'standard_deviation',
+    'extraction',
+    'select_unique'
+  ],
 };

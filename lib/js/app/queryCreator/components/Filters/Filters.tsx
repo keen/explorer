@@ -1,9 +1,8 @@
-import React, { FC, useEffect, useRef, useMemo, useReducer } from 'react';
+import React, { FC, useEffect, useMemo, useReducer } from 'react';
 import { useSelector } from 'react-redux';
-import shallowEqual from 'shallowequal';
-import { Button, Select, Input } from '@keen.io/ui-core';
-import { DatePicker } from './DatePicker';
-import { GeoCoordinates } from './GeoCoordinates';
+
+import { Button, Select } from '@keen.io/ui-core';
+import { FilterValue } from './FilterValue';
 
 import {
   addFilter,
@@ -16,8 +15,8 @@ import { getCollectionSchema } from '../../modules/events';
 
 import { filtersReducer } from './reducer';
 
-import { DATA_TYPES, FILTER_OPERATORS, DEFAULT_TIMEFRAME_ABSOLUTE_VALUE } from './constants';
-import { convertFilters, getTypeFromValue, convertSchemaProp, convertDateToString, isFilterValid } from './utils';
+import { DATA_TYPES, SCHEMA_PROPS, DEFAULT_TIMEFRAME_ABSOLUTE_VALUE } from './constants';
+import { convertFilters, getPropertyType, convertDateToString, isStateValid, getOperatorOptions } from './utils';
 
 import { AppState, PropertyType, Operator, Filter } from '../../types';
 import { SchemaProp } from './types';
@@ -33,7 +32,9 @@ type Props = {
   onChange: (filters: Filter[]) => void;
 };
 
-const Filters: FC<Props> = ({ collection, filters, onChange }) => {
+const dataTypes = Object.keys(DATA_TYPES).map(item => ({ label: DATA_TYPES[item], value: DATA_TYPES[item] }));
+
+export const Filters: FC<Props> = ({ collection, filters, onChange }) => {
   const collectionSchema = useSelector((state: AppState) =>
     getCollectionSchema(state, collection)
   );
@@ -49,136 +50,12 @@ const Filters: FC<Props> = ({ collection, filters, onChange }) => {
     return [];
   }, [collectionSchema]);
 
-  const dataTypes = Object.keys(DATA_TYPES).map(item => ({ label: DATA_TYPES[item], value: DATA_TYPES[item] }));
-
-  const getOperatorOptions = (type?: PropertyType) => {
-    if (!type) return FILTER_OPERATORS;
-
-    return FILTER_OPERATORS.filter(operator => operator.dataTypes.includes(type));
-  }
-
   const [state, filtersDispatcher] = useReducer(filtersReducer, []);
-  const stateRef = useRef(state);
-
-  const filtersRef = useRef(filters);
-
   useEffect(() => {
-    const localFilters = state.filter((v) => v !== null);
-    if (
-      !shallowEqual(filters, filtersRef.current) &&
-      !shallowEqual(filters, localFilters)
-    ) {
+    if (filters.length) {
       filtersDispatcher(setFilters(filters));
     }
-    filtersRef.current = filters;
   }, [filters])
-
-  useEffect(() => {
-    if (!shallowEqual(state, stateRef.current)) {
-      stateRef.current = state; console.log('use state');
-    }
-  }, [state])
-
-  const getInputValue = (filter: Filter) => {
-    if (filter?.propertyValue && typeof filter?.propertyValue === 'string') return filter.propertyValue;
-    return '';
-  };
-
-  const getSelectValue = (options: any, filter: Filter) => {
-    if (filter?.propertyValue) {
-      const value = options.filter(option => option.value === filter.propertyValue);
-      return value.length ? { label: filter.propertyValue, value: filter.propertyValue } : null;
-    }
-    return null;
-  }
-
-  const renderFilterValue = (idx: number, filter:Filter) => {
-    if (filter?.propertyType === DATA_TYPES['num']) {
-      return (
-        <Input
-          type="number"
-          variant="solid"
-          placeholder="Value"
-          value={getInputValue(filter)}
-          onChange={(e) => filtersDispatcher(updateFilter(idx, { propertyValue: e.target.value }))}
-        />
-      );
-    }
-
-    if (filter?.propertyType === DATA_TYPES['bool']) {
-      const BooleanOptions = ['true', 'false'].map((item) => ({
-        label: item,
-        value: item,
-      }));
-
-      return (
-        <Select
-          variant="solid"
-          placeholder={'Select property type'}
-          options={BooleanOptions}
-          onChange={({ value }: { value: string }) => filtersDispatcher(updateFilter(idx, { propertyValue: value }))}
-          value={getSelectValue(BooleanOptions, filter)}
-        />
-      );
-    }
-
-    if (filter?.propertyType === DATA_TYPES['null']) {
-      // filtersDispatcher(updateFilter(idx, { propertyValue: null }));
-      return (
-      <Input
-        disabled
-        variant="solid"
-        value={'null'}
-      />
-      );
-    }
-
-    if (filter?.propertyType === DATA_TYPES['datetime']) {
-      const initialDate = filter?.propertyValue || DEFAULT_TIMEFRAME_ABSOLUTE_VALUE
-      // filtersDispatcher(updateFilter(idx, { propertyValue: initialDate }));
-      return (
-        <DatePicker
-          idx={idx}
-          initialDate={initialDate}
-          onChange={
-            (idx, value) => filtersDispatcher(updateFilter(idx, { propertyValue: value }))
-          }
-        />
-      )
-    }
-
-    if (filter?.operator === 'within') {
-      // filtersDispatcher(updateFilter(idx, { propertyValue: '' }));
-      return (
-        <GeoCoordinates
-          idx={idx}
-          filter={filter}
-          onChange={(idx, value) => filtersDispatcher(updateFilter(idx, {propertyValue: value}))}
-        />
-      )
-    }
-
-    return (
-      <Input
-        variant="solid"
-        placeholder="Value"
-        value={getInputValue(filter)}
-        onChange={(e) => filtersDispatcher(updateFilter(idx, { propertyValue: e.target.value }))}
-      />
-    );
-  }
-
-  const getPropertyType = (item: Filter) => {
-    const propertyType = item?.propertyType || getTypeFromValue(item);
-    return propertyType ? { label: propertyType, value: propertyType } : null;
-  }
-
-  console.log({state});
-
-  const isStateComplete = (state) => {
-    console.log(state.every(filter => isFilterValid(filter)));
-    return state.every(filter => isFilterValid(filter))
-  }
 
   return (
     <>
@@ -191,7 +68,7 @@ const Filters: FC<Props> = ({ collection, filters, onChange }) => {
           onChange={({ value }: { value: string }) => {
               filtersDispatcher(updateFilter(idx, { propertyName: value }));
               const schemaProp = collectionSchema[value] as SchemaProp;
-              if (schemaProp) filtersDispatcher(updateFilter(idx, { propertyType: convertSchemaProp(schemaProp) as PropertyType }));
+              if (schemaProp) filtersDispatcher(updateFilter(idx, { propertyType: SCHEMA_PROPS[schemaProp] as PropertyType }));
             }
           }
           value={item?.propertyName ? {label: item.propertyName, value: item.propertyName} : null}
@@ -207,8 +84,10 @@ const Filters: FC<Props> = ({ collection, filters, onChange }) => {
               const date = item?.propertyValue || DEFAULT_TIMEFRAME_ABSOLUTE_VALUE;
               filtersDispatcher(updateFilter(idx, { propertyValue: convertDateToString(date)}))
             }
+            if (value === 'Geo') {
+              filtersDispatcher(updateFilter(idx, { operator: 'within'}))
+            }
             if (item?.operator) {
-              // const type = DATA_TYPES[value];
               const operatorOptions = getOperatorOptions(value);
               const isOperatorAvailable = operatorOptions.some(option => option.value === item.operator);
               if (!isOperatorAvailable) {
@@ -227,7 +106,11 @@ const Filters: FC<Props> = ({ collection, filters, onChange }) => {
           }
           value={item?.operator ? {label: item.operator, value: item.operator} : null}
         />
-        {renderFilterValue(idx, item)}
+        <FilterValue
+          idx={idx}
+          filter={item}
+          onChange={(idx, value) => filtersDispatcher(updateFilter(idx, { propertyValue: value }))}
+        />
         <Button
           variant="danger"
           style="outline"
@@ -254,11 +137,11 @@ const Filters: FC<Props> = ({ collection, filters, onChange }) => {
       <Button
         variant="success"
         style="solid"
-        isDisabled={!isStateComplete(state)}
+        isDisabled={!isStateValid(state)}
         onClick={() => onChange(convertFilters(state))}>
           {text.done}
         </Button>
-        {!isStateComplete(state) && `Please provide data for empty fields`}
+        {!isStateValid(state) && `Please provide data for empty fields`}
     </>
   );
 };

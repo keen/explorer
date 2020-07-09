@@ -19,7 +19,7 @@ export const GeoCoordinates: FC<Props> = ({idx, filter, onChange }) => {
     coordinates: [undefined, undefined],
     maxDistanceMiles: undefined,
   };
-  if (filter?.propertyValue && typeof filter?.propertyValue === 'object') {console.log(filter.propertyValue);
+  if (filter?.propertyValue && typeof filter?.propertyValue === 'object') {
     newPropertyValue = {
       ...filter.propertyValue
     }

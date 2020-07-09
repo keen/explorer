@@ -1,21 +1,41 @@
-import { DATA_TYPES } from '../constants';
-import { Filter , PropertyType} from '../../../types';
+import { Filter } from '../../../types';
 
-export const getPropertyType = ({ schema, filter }: {schema: any, filter: Filter}) => {
-  const { propertyName, operator } = filter;
+const getType = (value) => {
+  if (value === undefined) return 'undefined';
+  if (value === null) return 'null';
+  return value.constructor.name.toLowerCase();
+}
 
-  let { propertyType } = filter;
+const isList = (value) => {
+  const strValue = value.toString();
+  return strValue.split(',').length > 1
+}
 
-  if (propertyType) {
-    return propertyType;
+const getTypeFromValue = (filter: Filter) => {
+  if (!filter) return null;
+  const { propertyValue, operator } = filter;
+  switch(getType(propertyValue)) {
+    case 'object':
+      return 'Geo';
+    case 'string':
+      if (operator === 'exists') return 'Boolean';
+      if (['false', 'true'].includes(propertyValue)) return 'Boolean';
+      if (!isNaN(propertyValue) && ['contains', 'not_contains'].includes(operator)) return 'Number';
+      if (new Date(propertyValue) && new Date(propertyValue).toString() !== 'Invalid Date') return 'Datetime';
+      if (isList(propertyValue)) return 'List';
+      return 'String';
+    case 'array':
+      return 'List';
+    case 'boolean':
+      return 'Boolean';
+    case 'number':
+      return 'Number';
+    case 'null':
+      return 'Null';
   }
+}
 
-  const typeFromSchema = (schema && schema[propertyName]) || {};
-  propertyType = DATA_TYPES[typeFromSchema];
-
-  if (operator === 'exists') {
-    propertyType = 'Boolean';
-  }
-
-  return propertyType as PropertyType;
-};
+export const getPropertyType = (item: Filter) => {
+  const propertyType = item?.propertyType || getTypeFromValue(item);
+  return propertyType ? { label: propertyType, value: propertyType } : null;
+}
