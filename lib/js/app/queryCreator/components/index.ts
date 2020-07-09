@@ -11,7 +11,7 @@ import FunnelSteps from './FunnelSteps';
 import Limit from './Limit';
 import Accordion from './Accordion';
 import Extraction from './Extraction';
-import Filters from './Filters';
+import FiltersContainer from './Filters';
 
 export {
   Accordion,
@@ -27,5 +27,5 @@ export {
   Limit,
   EventCollection,
   FunnelSteps,
-  Filters,
+  FiltersContainer,
 };
