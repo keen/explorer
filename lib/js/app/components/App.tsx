@@ -1,7 +1,7 @@
 // @ts-nocheck
 import React, { Component } from 'react';
-import camelCase from 'camelcase-keys';
 import { connect } from 'react-redux';
+import snakeCase from 'snakecase-keys';
 import { Alert } from '@keen.io/ui-core';
 import { getPubSub } from '@keen.io/pubsub';
 
@@ -12,23 +12,26 @@ import {
   runQuery,
   deleteQuery,
   saveQuery,
+  resetQueryResults,
   getError,
   fetchSavedQueries,
-  getSavedQueries,
   getQueryResults,
   getQueryPerformState,
 } from '../modules/queries';
-import { resetSavedQuery, selectSavedQuery } from '../modules/savedQuery';
+import {
+  resetSavedQuery,
+  editSavedQuery,
+  selectSavedQuery,
+} from '../modules/savedQuery';
+import { persistState, loadPersitedState } from '../modules/app';
 
 import QueryCreator, {
   NEW_QUERY_EVENT as CREATOR_NEW_QUERY_EVENT,
 } from '../queryCreator';
-import QueryBrowser from '../queryBrowser';
-
-import { persistState, loadPersitedState } from '../modules/app';
 
 import APIQueryURL from './explorer/APIQueryURL';
 
+import Browser from './Browser';
 import QuerySettings from './QuerySettings';
 import QueryVisualization from './QueryVisualization';
 import VisualizationPlaceholder from './VisualizationPlaceholder';
@@ -37,14 +40,13 @@ import Confirm from './Confirm';
 
 import { QueryActions, SettingsContainer } from './App.styles';
 
-import { NEW_QUERY_EVENT } from '../consts';
+import { NEW_QUERY_EVENT, CACHE_AVAILABLE } from '../consts';
 
 import { client } from '../KeenExplorer';
 
 const mapStateToProps = (state, props) => ({
   collections: state.collections,
   queries: state.queries,
-  savedQueries: camelCase(getSavedQueries(state), { deep: true }),
   eventCollection: state.ui.eventCollection,
   savedQuery: state.savedQuery,
   isQueryLoading: getQueryPerformState(state),
@@ -56,7 +58,9 @@ const mapDispatchToProps = {
   fetchProject,
   fetchSchema,
   saveQuery,
+  editSavedQuery,
   fetchSavedQueries,
+  resetQueryResults,
   deleteQuery,
   persistState,
   loadPersitedState,
@@ -71,14 +75,18 @@ class App extends Component {
     super(props);
     this.state = {
       query: {},
+      mode: 'browser',
     };
 
     const pubsub = getPubSub();
     this.subscriptionDispose = pubsub.subscribe((eventName: string) => {
       switch (eventName) {
         case NEW_QUERY_EVENT:
-          pubsub.publish(CREATOR_NEW_QUERY_EVENT);
-          this.props.resetSavedQuery();
+          this.setState({ mode: 'editor' }, () => {
+            pubsub.publish(CREATOR_NEW_QUERY_EVENT);
+            this.props.resetQueryResults();
+            this.props.resetSavedQuery();
+          });
           break;
         default:
           break;
@@ -101,70 +109,87 @@ class App extends Component {
       config: { projectId, readKey, masterKey },
     } = this.props.keenAnalysis;
 
+    console.log('---', this.state.query);
+
     return (
       <div>
-        <QueryBrowser
-          onSelectQuery={(queryName) => {
-            this.props.selectSavedQuery(queryName);
-          }}
-          onDeleteQuery={(queryName) => {
-            this.props.deleteQuery(queryName);
-          }}
-          queries={this.props.savedQueries}
-        />
-        <div>
-          <QueryCreator
-            projectId={projectId}
-            readKey={readKey}
-            masterKey={masterKey}
-            onUpdateQuery={(query) => {
-              console.log(query, '--- query update');
-              this.setState({ query });
-              this.props.persistState({ query });
+        {this.state.mode === 'browser' && (
+          <Browser
+            query={this.state.query}
+            queryResults={this.props.queryResults}
+            onRunQuery={() => this.props.runQuery(this.state.query)}
+            onSelectQuery={(queryName, { query }) => {
+              this.props.selectSavedQuery(queryName);
+              this.props.resetQueryResults();
+              this.setState({ query: snakeCase(query) });
+            }}
+            onEditQuery={(queryName) => {
+              this.setState({ mode: 'editor' }, () => {
+                this.props.editSavedQuery(queryName);
+              });
             }}
           />
-          <APIQueryURL queryParams={this.state.query} client={client} />
-        </div>
-
-        <div className="result">
-          {this.props.queryResults ? (
-            <QueryVisualization
-              query={this.state.query}
-              queryResults={this.props.queryResults}
-            />
-          ) : (
-            <VisualizationPlaceholder isLoading={this.props.isQueryLoading} />
-          )}
-          {this.props.queryError && (
-            <Alert type="error">{this.props.queryError.body}</Alert>
-          )}
-          <QueryActions>
-            <RunQuery
-              isLoading={this.props.isQueryLoading}
-              onClick={() => this.props.runQuery(this.state.query)}
-            >
-              {runQueryLabel(this.state.query)}
-            </RunQuery>
-            <SettingsContainer>
-              <QuerySettings
-                onDelete={(name) => {
-                  this.props.deleteQuery(name);
-                }}
-                onSave={(name, refreshRate) => {
-                  const body = {
-                    query: this.state.query,
-                    metadata: {
-                      displayName: name,
-                    },
-                    refreshRate: refreshRate * 60 * 60,
-                  };
-
-                  this.props.saveQuery(name, body);
+        )}
+        {this.state.mode === 'editor' && (
+          <div>
+            <div>
+              <QueryCreator
+                projectId={projectId}
+                readKey={readKey}
+                masterKey={masterKey}
+                onUpdateQuery={(query) => {
+                  console.log(query, '--- query update');
+                  this.setState({ query });
+                  this.props.persistState({ query });
                 }}
               />
-            </SettingsContainer>
-          </QueryActions>
-        </div>
+              <APIQueryURL queryParams={this.state.query} client={client} />
+            </div>
+
+            <div className="result">
+              {this.props.queryResults ? (
+                <QueryVisualization
+                  query={this.state.query}
+                  queryResults={this.props.queryResults}
+                />
+              ) : (
+                <VisualizationPlaceholder
+                  isLoading={this.props.isQueryLoading}
+                />
+              )}
+              {this.props.queryError && (
+                <Alert type="error">{this.props.queryError.body}</Alert>
+              )}
+              <QueryActions>
+                <RunQuery
+                  isLoading={this.props.isQueryLoading}
+                  onClick={() => this.props.runQuery(this.state.query)}
+                >
+                  {runQueryLabel(this.state.query)}
+                </RunQuery>
+                <SettingsContainer>
+                  <QuerySettings
+                    cacheAvailable={CACHE_AVAILABLE.includes(
+                      this.state.query.analysis_type
+                    )}
+                    onDelete={(queryName) => this.props.deleteQuery(queryName)}
+                    onSave={(name, refreshRate) => {
+                      const body = {
+                        query: this.state.query,
+                        metadata: {
+                          displayName: name,
+                        },
+                        refreshRate: refreshRate * 60 * 60,
+                      };
+
+                      this.props.saveQuery(name, body);
+                    }}
+                  />
+                </SettingsContainer>
+              </QueryActions>
+            </div>
+          </div>
+        )}
         <Confirm />
       </div>
     );

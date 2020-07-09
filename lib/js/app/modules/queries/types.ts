@@ -14,6 +14,7 @@ import {
   SAVE_QUERY_SUCCESS,
   SET_CACHE_QUERY_LIMIT,
   SET_CACHE_QUERY_LIMIT_ERROR,
+  RESET_QUERY_RESULTS,
 } from './constants';
 
 export type ReducerState = {
@@ -24,6 +25,10 @@ export type ReducerState = {
   isLimited: boolean;
   error: Error | null;
 };
+
+export interface ResetQueryResultsAction {
+  type: typeof RESET_QUERY_RESULTS;
+}
 
 export interface SetCacheQueryLimitAction {
   type: typeof SET_CACHE_QUERY_LIMIT;
@@ -127,6 +132,7 @@ export interface CreateNewQueryAction {
 }
 
 export type QueriesActions =
+  | ResetQueryResultsAction
   | SetCacheQueryLimitAction
   | SetCacheQueryLimitErrorAction
   | SaveQueryAction

@@ -11,6 +11,7 @@ import {
   SAVE_QUERY_ERROR,
   SET_CACHE_QUERY_LIMIT,
   SET_CACHE_QUERY_LIMIT_ERROR,
+  RESET_QUERY_RESULTS,
 } from './constants';
 
 export const initialState: ReducerState = {
@@ -27,6 +28,11 @@ export const queriesReducer = (
   action: QueriesActions
 ) => {
   switch (action.type) {
+    case RESET_QUERY_RESULTS:
+      return {
+        ...state,
+        results: null,
+      };
     case SAVE_QUERY:
       return {
         ...state,

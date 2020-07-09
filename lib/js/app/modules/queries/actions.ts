@@ -16,7 +16,12 @@ import {
   SAVE_QUERY_SUCCESS,
   SET_CACHE_QUERY_LIMIT,
   SET_CACHE_QUERY_LIMIT_ERROR,
+  RESET_QUERY_RESULTS,
 } from './constants';
+
+export const resetQueryResults = (): QueriesActions => ({
+  type: RESET_QUERY_RESULTS,
+});
 
 export const setQueryCacheLimit = (limitReached: boolean): QueriesActions => ({
   type: SET_CACHE_QUERY_LIMIT,

@@ -4,5 +4,6 @@
   "resourceName": "Saved query resource name:",
   "querySettings": "Query settings",
   "queryName": "Query name",
-  "queryNamePlaceholder": "Give your query a name..."
+  "queryNamePlaceholder": "Give your query a name...",
+  "cachingNotAvailable": "Caching is not available for this type of query"
 }

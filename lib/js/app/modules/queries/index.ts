@@ -2,6 +2,7 @@ import { ReducerState } from './types';
 import { queriesReducer } from './reducer';
 import {
   createNewQuery,
+  resetQueryResults,
   runQuery,
   deleteQuery,
   saveQuery,
@@ -34,6 +35,7 @@ export {
   queriesReducer,
   runQuery,
   deleteQuery,
+  resetQueryResults,
   queriesSaga,
   SAVE_QUERY_SUCCESS,
 };

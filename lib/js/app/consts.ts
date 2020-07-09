@@ -2,6 +2,22 @@
 
 export const NEW_QUERY_EVENT = '@explorer/new-query';
 
+import { Analysis } from './types';
+
+export const CACHE_AVAILABLE: Analysis[] = [
+  'sum',
+  'average',
+  'count',
+  'count_unique',
+  'maximum',
+  'minimum',
+  'median',
+  'percentile',
+  'standard_deviation',
+  'funnel',
+  'select_unique',
+];
+
 export const ERRORS = {
   OVER_LIMIT_ERROR: 'OverCachedQueryLimitError',
   TOO_MANY_QUERIES: 'TooManyCachedQueriesInTheCurrentBillingPeriod',
@@ -247,11 +263,6 @@ export const DATA_TYPES = [
     value: 'Datetime',
   },
 ];
-
-export const TAB_TIMEFRAME_RELATIVE = 0;
-export const TAB_TIMEFRAME_ABSOLUTE = 1;
-export const TAB_EXTRACTION_PREVIEW = 0;
-export const TAB_EXTRACTION_BULK = 1;
 
 export const EXTRACTION_PREVIEW_EVENTS_DEFAULT = 100;
 export const EXTRACTION_PREVIEW_EVENTS_LIMIT = 100000;

@@ -14,6 +14,7 @@ type Props = {
   onSelect: (name: string) => void;
   /** Delete event handler */
   onDelete: (name: string) => void;
+  isActive: boolean;
   onEnableCacheFilter: () => void;
   onEnableAnalysisFilter: (analysisType: string) => void;
 };
@@ -22,6 +23,7 @@ const QueryItem: FC<Props> = ({
   settings,
   onSelect,
   onDelete,
+  isActive,
   onEnableAnalysisFilter,
   onEnableCacheFilter,
 }) => {
@@ -33,7 +35,14 @@ const QueryItem: FC<Props> = ({
 
   return (
     <div role="presentation">
-      <div onClick={() => onSelect(queryName)}>{getQueryName(settings)}</div>
+      <div
+        onClick={() => {
+          if (!isActive) onSelect(queryName);
+        }}
+      >
+        {getQueryName(settings)}
+        {isActive && '(Selected)'}
+      </div>
       <div>
         <span onClick={() => onEnableAnalysisFilter(analysisType)}>
           <Badge type="light">{analysisType}</Badge>

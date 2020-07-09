@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useState } from 'react';
+import React, { FC, useCallback, useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Button, Input, Label } from '@keen.io/ui-core';
 
@@ -33,9 +33,11 @@ type Props = {
   onSave: (queryName: string, refreshRate: number) => void;
   /** Delete query event handler */
   onDelete: (queryName: string) => void;
+  /** Caching available */
+  cacheAvailable: boolean;
 };
 
-const QuerySettings: FC<Props> = ({ onSave, onDelete }) => {
+const QuerySettings: FC<Props> = ({ onSave, onDelete, cacheAvailable }) => {
   const [error, setError] = useState(null);
   const dispatch = useDispatch();
 
@@ -53,6 +55,17 @@ const QuerySettings: FC<Props> = ({ onSave, onDelete }) => {
       setError(QueryError.NAME);
     }
   }, [onSave, savedQuery]);
+
+  useEffect(() => {
+    if (!cacheAvailable) {
+      dispatch(
+        updateSaveQuery({
+          cached: false,
+          refreshRate: 0,
+        })
+      );
+    }
+  }, [cacheAvailable]);
 
   return (
     <Container>
@@ -89,26 +102,30 @@ const QuerySettings: FC<Props> = ({ onSave, onDelete }) => {
             </Label>
           </ResourceName>
         )}
-        <CacheQuery
-          onCacheChange={(cached) =>
-            dispatch(
-              updateSaveQuery({
-                cached,
-                refreshRate: cached ? REFRESH_MINIMUM : 0,
-              })
-            )
-          }
-          onRefreshRateChange={(refreshRate) =>
-            dispatch(
-              updateSaveQuery({
-                refreshRate,
-              })
-            )
-          }
-          isLimited={limitedQueries}
-          refreshRate={savedQuery.refreshRate}
-          isCached={savedQuery.cached}
-        />
+        {cacheAvailable ? (
+          <CacheQuery
+            onCacheChange={(cached) =>
+              dispatch(
+                updateSaveQuery({
+                  cached,
+                  refreshRate: cached ? REFRESH_MINIMUM : 0,
+                })
+              )
+            }
+            onRefreshRateChange={(refreshRate) =>
+              dispatch(
+                updateSaveQuery({
+                  refreshRate,
+                })
+              )
+            }
+            isLimited={limitedQueries}
+            refreshRate={savedQuery.refreshRate}
+            isCached={savedQuery.cached}
+          />
+        ) : (
+          <div>{text.cachingNotAvailable}</div>
+        )}
       </Settings>
       <Actions>
         <SaveQuery

@@ -1,6 +1,6 @@
-import React, { FC, useState, useMemo } from 'react';
+import React, { FC, useState, useMemo, useCallback } from 'react';
 import { Icon } from '@keen.io/icons';
-import { Badge } from '@keen.io/ui-core';
+import { Badge, Input } from '@keen.io/ui-core';
 import { colors } from '@keen.io/colors';
 
 import { QueryItem } from './components';
@@ -11,37 +11,46 @@ type Props = {
   /** Saved queries collection */
   queries: SavedQuery[];
   /** Select query event handler */
-  onSelectQuery: (queryName: string) => void;
+  onSelectQuery: (queryName: string, settings: Object) => void;
   /** Delete query event handler */
   onDeleteQuery: (queryName: string) => void;
+  /** Active query name */
+  activeQuery?: string;
+  maxListHeight?: number;
 };
 
 export const QueryBrowser: FC<Props> = ({
   queries,
+  activeQuery,
   onSelectQuery,
   onDeleteQuery,
+  maxListHeight = 400,
 }) => {
+  const [search, setSearch] = useState(null);
   const [analysisFilter, setAnalysisFilter] = useState(null);
   const [cachedOnly, setCachedOnly] = useState(false);
 
-  const filteredQueries = useMemo(
-    () =>
-      queries
-        .filter(({ refreshRate }) => {
-          if (cachedOnly) return !!refreshRate;
-          return true;
-        })
-        .filter(({ query: { analysisType } }) => {
-          if (analysisFilter) return analysisType === analysisFilter;
-          return true;
-        }),
-    [analysisFilter, cachedOnly, queries]
+  const queriesFilter = useCallback(
+    ({ refreshRate, queryName, query: { analysisType } }) => {
+      if (cachedOnly && !!refreshRate) return false;
+      if (analysisFilter && analysisFilter !== analysisType) return false;
+      if (search) return queryName.includes(search);
+      return true;
+    },
+    [search, analysisFilter, cachedOnly]
   );
+
+  const filteredQueries = useMemo(() => queries.filter(queriesFilter), [
+    analysisFilter,
+    cachedOnly,
+    search,
+    queries,
+  ]);
 
   return (
     <div>
       <div>
-        <div>Filters</div>
+        <h3>Filters</h3>
         <div>
           {analysisFilter && (
             <Badge type="light">
@@ -61,17 +70,26 @@ export const QueryBrowser: FC<Props> = ({
           )}
         </div>
       </div>
-      <div>Queries</div>
-      {filteredQueries.map((query) => (
-        <QueryItem
-          key={query.queryName}
-          settings={query}
-          onEnableCacheFilter={() => setCachedOnly(true)}
-          onEnableAnalysisFilter={(analysis) => setAnalysisFilter(analysis)}
-          onDelete={(queryName) => onDeleteQuery(queryName)}
-          onSelect={(queryName) => onSelectQuery(queryName)}
-        />
-      ))}
+      <Input
+        variant="solid"
+        placeholder="Search"
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+      />
+      <h3>Your saved queries</h3>
+      <div style={{ height: maxListHeight, overflowY: 'scroll' }}>
+        {filteredQueries.map((query) => (
+          <QueryItem
+            key={query.queryName}
+            isActive={query.queryName === activeQuery}
+            settings={query}
+            onEnableCacheFilter={() => setCachedOnly(true)}
+            onEnableAnalysisFilter={(analysis) => setAnalysisFilter(analysis)}
+            onDelete={(queryName) => onDeleteQuery(queryName)}
+            onSelect={(queryName) => onSelectQuery(queryName, query)}
+          />
+        ))}
+      </div>
     </div>
   );
 };

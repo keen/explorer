@@ -3,6 +3,7 @@ import {
   RESET_SAVED_QUERY,
   SAVE_QUERY_SUCCESS,
   SELECT_SAVED_QUERY,
+  EDIT_SAVED_QUERY,
 } from './constants';
 
 export type SavedQuery = {
@@ -18,6 +19,13 @@ export type ReducerState = SavedQuery;
 export interface UpdateSavedQueryAction {
   type: typeof UPDATE_SAVED_QUERY;
   payload: Partial<SavedQuery>;
+}
+
+export interface EditSavedQueryAction {
+  type: typeof EDIT_SAVED_QUERY;
+  payload: {
+    queryName: string;
+  };
 }
 
 export interface ResetSavedQueryAction {
@@ -36,6 +44,7 @@ export interface SelectSavedQueryAction {
 }
 
 export type SavedQueryActions =
+  | EditSavedQueryAction
   | UpdateSavedQueryAction
   | ResetSavedQueryAction
   | SaveQuerySuccessAction

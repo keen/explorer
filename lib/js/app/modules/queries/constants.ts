@@ -9,6 +9,7 @@ export const DELETE_QUERY = '@queries/DELETE_QUERY';
 export const DELETE_QUERY_SUCCESS = '@queries/DELETE_QUERY_SUCCESS';
 export const DELETE_QUERY_ERROR = '@queries/DELETE_QUERY_ERROR';
 export const GET_SAVED_QUERIES = '@queries/GET_SAVED_QUERIES';
+export const RESET_QUERY_RESULTS = '@queries/RESET_QUERY_RESULTS';
 export const GET_SAVED_QUERIES_SUCCESS = '@queries/GET_SAVED_QUERIES_SUCCESS';
 export const GET_SAVED_QUERIES_ERROR = '@queries/GET_SAVED_QUERIES_ERROR';
 export const SET_CACHE_QUERY_LIMIT = '@queries/CACHE_QUERY_LIMIT';
