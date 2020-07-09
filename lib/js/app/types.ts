@@ -1,4 +1,4 @@
-import { ReducerState as SavedQuery } from './modules/savedQuery';
+import { ReducerState as SavedQueryState } from './modules/savedQuery';
 
 export type Analysis =
   | 'sum'
@@ -16,5 +16,21 @@ export type Analysis =
 
 export type PreloadedState = {
   ui: any;
-  savedQuery: SavedQuery;
+  savedQuery: SavedQueryState;
+};
+
+export type Metadata = {
+  displayName?: string;
+};
+
+export type SavedQuery = {
+  refreshRate: number;
+  userLastModifiedDate: string;
+  lastModifiedDate: string;
+  queryName: string;
+  metadata?: Metadata;
+  query: {
+    analysisType: Analysis;
+    eventCollection: string;
+  };
 };

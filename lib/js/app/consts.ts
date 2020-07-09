@@ -1,29 +1,27 @@
 /* eslint-disable @typescript-eslint/camelcase */
 
-import moment from 'moment';
+export const NEW_QUERY_EVENT = '@explorer/new-query';
 
-export const PANEL_NEW_QUERY = 0;
-export const PANEL_BROWSE = 1;
+import { Analysis } from './types';
+
+export const CACHE_AVAILABLE: Analysis[] = [
+  'sum',
+  'average',
+  'count',
+  'count_unique',
+  'maximum',
+  'minimum',
+  'median',
+  'percentile',
+  'standard_deviation',
+  'funnel',
+  'select_unique',
+];
 
 export const ERRORS = {
   OVER_LIMIT_ERROR: 'OverCachedQueryLimitError',
   TOO_MANY_QUERIES: 'TooManyCachedQueriesInTheCurrentBillingPeriod',
 };
-
-export const ANALYSIS_TYPES = [
-  { type: 'average', targetProperty: true },
-  { type: 'count', default: true },
-  { type: 'count_unique', targetProperty: true },
-  { type: 'extraction', extraction: true },
-  { type: 'funnel', funnel: true },
-  { type: 'maximum', targetProperty: true },
-  { type: 'median', targetProperty: true },
-  { type: 'minimum', targetProperty: true },
-  { type: 'percentile', targetProperty: true, percentile: true },
-  { type: 'select_unique', targetProperty: true },
-  { type: 'standard_deviation', targetProperty: true },
-  { type: 'sum', targetProperty: true },
-];
 
 export const TIME_UNITS = [
   'minutes',
@@ -33,20 +31,6 @@ export const TIME_UNITS = [
   'months',
   'years',
 ];
-
-export const DEFAULT_NUMBER_OF_TIME_UNITS = 14;
-
-export const RELATIVITY_UNITS = ['this', 'previous'];
-
-export const DEFAULT_TIMEFRAME_RELATIVE_VALUE = `${RELATIVITY_UNITS[0]}_${DEFAULT_NUMBER_OF_TIME_UNITS}_${TIME_UNITS[2]}`;
-export const DEFAULT_TIMEFRAME_ABSOLUTE_VALUE = {
-  start: `${moment().subtract(1, 'day').format('YYYY-MM-DD')}T${moment(
-    moment().format('YYYY-MM-DD')
-  ).format('HH:mm')}:00.000Z`,
-  end: `${moment(moment().format('YYYY-MM-DD')).format('YYYY-MM-DD')}T${moment(
-    moment().format('YYYY-MM-DD')
-  ).format('HH:mm')}:00.000Z`,
-};
 
 export const INTERVALS = [
   'minutely',
@@ -279,11 +263,6 @@ export const DATA_TYPES = [
     value: 'Datetime',
   },
 ];
-
-export const TAB_TIMEFRAME_RELATIVE = 0;
-export const TAB_TIMEFRAME_ABSOLUTE = 1;
-export const TAB_EXTRACTION_PREVIEW = 0;
-export const TAB_EXTRACTION_BULK = 1;
 
 export const EXTRACTION_PREVIEW_EVENTS_DEFAULT = 100;
 export const EXTRACTION_PREVIEW_EVENTS_LIMIT = 100000;

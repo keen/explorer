@@ -1,5 +1,5 @@
 import QueryCreator from './QueryCreator';
-import { SET_QUERY_EVENT } from './constants';
+import { SET_QUERY_EVENT, NEW_QUERY_EVENT } from './constants';
 
 export default QueryCreator;
-export { SET_QUERY_EVENT };
+export { SET_QUERY_EVENT, NEW_QUERY_EVENT };

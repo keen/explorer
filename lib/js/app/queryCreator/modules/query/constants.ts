@@ -1,6 +1,7 @@
 import { FunnelStep } from '../../types';
 
 export const SET_QUERY = '@query-creator/SET_QUERY';
+export const RESET_QUERY = '@query-creator/RESET_QUERY';
 export const SELECT_EVENT_COLLECTION = '@query-creator/SELECT_EVENT_COLLECTION';
 export const SELECT_ANALYSIS = '@query-creator/SELECT_ANALYSIS';
 export const SELECT_TARGET_PROPERTY = '@query-creator/SELECT_TARGET_PROPERTY';

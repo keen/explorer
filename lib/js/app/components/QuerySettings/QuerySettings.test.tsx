@@ -4,8 +4,9 @@ import { render as rtlRender, fireEvent, screen } from '@testing-library/react';
 import configureStore from 'redux-mock-store';
 
 import QuerySettings from './QuerySettings';
+import text from './text.json';
 
-const render = (storeState: any = {}) => {
+const render = (storeState: any = {}, overProps: any = {}) => {
   const mockStore = configureStore([]);
   const state = {
     queries: {
@@ -27,6 +28,8 @@ const render = (storeState: any = {}) => {
   const props = {
     onSave: jest.fn(),
     onDelete: jest.fn(),
+    cacheAvailable: true,
+    ...overProps,
   };
 
   const wrapper = rtlRender(
@@ -83,6 +86,44 @@ test('allows user to delete query', () => {
   expect(props.onDelete).toHaveBeenCalledWith(name);
 });
 
+test('reset cache settings', () => {
+  const savedQuery = {
+    name: 'query',
+    displayName: 'Query',
+    cached: false,
+    refreshRate: 0,
+    exists: true,
+  };
+  const { store } = render({ savedQuery }, { cacheAvailable: false });
+
+  expect(store.getActions()).toMatchInlineSnapshot(`
+    Array [
+      Object {
+        "payload": Object {
+          "cached": false,
+          "refreshRate": 0,
+        },
+        "type": "@saved-query/UPDATE_SAVED_QUERY",
+      },
+    ]
+  `);
+});
+
+test('shows message about not available cache', () => {
+  const savedQuery = {
+    name: 'query',
+    displayName: 'Query',
+    cached: false,
+    refreshRate: 0,
+    exists: true,
+  };
+
+  render({ savedQuery }, { cacheAvailable: false });
+  const notification = screen.getByText(text.cachingNotAvailable);
+
+  expect(notification).toBeInTheDocument();
+});
+
 test('allows user to clone query', () => {
   const savedQuery = {
     name: 'query',
@@ -99,7 +140,7 @@ test('allows user to clone query', () => {
   expect(store.getActions()).toMatchInlineSnapshot(`
     Array [
       Object {
-        "type": "RESET_SAVED_QUERY",
+        "type": "@saved-query/RESET_SAVED_QUERY",
       },
     ]
   `);
@@ -124,7 +165,7 @@ test('allows user to update save query name', () => {
           "exists": false,
           "name": "query",
         },
-        "type": "UPDATE_SAVED_QUERY",
+        "type": "@saved-query/UPDATE_SAVED_QUERY",
       },
     ]
   `);

@@ -21,6 +21,7 @@ import {
   UPDATE_FUNNEL_STEP,
   DEFAULT_FUNNEL_STEP,
   RESET_EXTRACTION,
+  RESET_QUERY,
 } from './constants';
 
 import { ReducerState, QueryActions } from './types';
@@ -48,6 +49,10 @@ export const queryReducer = (
   action: QueryActions
 ) => {
   switch (action.type) {
+    case RESET_QUERY:
+      return {
+        ...initialState,
+      };
     case RESET_EXTRACTION:
       return {
         ...state,

@@ -9,8 +9,8 @@
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 </head>
 <body class="dev-body">
+  <button id="new-query">New Query</button>
   <div id="root"></div>
-
 </body>
 <script type="text/javascript">
    new KeenExplorer({
@@ -26,5 +26,11 @@
      },
      features: {},
   });
+
+  const newQueryBtn = document.getElementById('new-query');
+  newQueryBtn.addEventListener('click', function() {
+    window.KeenPubSub.publish('@explorer/new-query');
+  });
+
 </script>
 </html>

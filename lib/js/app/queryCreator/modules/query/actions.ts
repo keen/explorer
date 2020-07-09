@@ -19,6 +19,7 @@ import {
   UPDATE_FUNNEL_STEP,
   REMOVE_FUNNEL_STEP,
   RESET_EXTRACTION,
+  RESET_QUERY,
 } from './constants';
 
 import { QueryActions, ReducerState as Query } from './types';
@@ -30,6 +31,10 @@ export const setQuery = (query: Partial<Query>): QueryActions => ({
   payload: {
     query,
   },
+});
+
+export const resetQuery = (): QueryActions => ({
+  type: RESET_QUERY,
 });
 
 export const setPropertyNames = (propertyNames: string[]): QueryActions => ({

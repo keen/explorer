@@ -1,6 +1,18 @@
-import { ReducerState } from './types';
+import { ReducerState, QueriesActions } from './types';
 
-import { RUN_QUERY, RUN_QUERY_ERROR, RUN_QUERY_SUCCESS } from './constants';
+import {
+  RUN_QUERY,
+  RUN_QUERY_ERROR,
+  RUN_QUERY_SUCCESS,
+  GET_SAVED_QUERIES_SUCCESS,
+  DELETE_QUERY_SUCCESS,
+  SAVE_QUERY,
+  SAVE_QUERY_SUCCESS,
+  SAVE_QUERY_ERROR,
+  SET_CACHE_QUERY_LIMIT,
+  SET_CACHE_QUERY_LIMIT_ERROR,
+  RESET_QUERY_RESULTS,
+} from './constants';
 
 export const initialState: ReducerState = {
   results: null,
@@ -13,72 +25,52 @@ export const initialState: ReducerState = {
 
 export const queriesReducer = (
   state: ReducerState = initialState,
-  action: any
+  action: QueriesActions
 ) => {
   switch (action.type) {
-    case 'CLIENT_SAVE_QUERY':
+    case RESET_QUERY_RESULTS:
       return {
         ...state,
+        results: null,
+      };
+    case SAVE_QUERY:
+      return {
+        ...state,
+        error: null,
         isSavingQuery: true,
       };
-
-    case 'CLIENT_SAVE_QUERY_SUCCESS':
+    case SAVE_QUERY_SUCCESS:
       return {
         ...state,
         isSavingQuery: false,
-        results: initialState.results,
       };
-
-    case 'CLIENT_SAVE_QUERY_ERROR':
+    case SAVE_QUERY_ERROR:
       return {
         ...state,
         isSavingQuery: false,
-        results: initialState.results,
       };
-
-    case 'CLIENT_FETCH_SAVED_QUERIES_SUCCESS':
+    case SET_CACHE_QUERY_LIMIT:
       return {
         ...state,
-        saved: action.payload,
+        isLimited: action.payload.limitReached,
+        isSavingQuery: false,
       };
-
-    case 'CLIENT_DELETE_QUERY_SUCCESS':
+    case SET_CACHE_QUERY_LIMIT_ERROR:
+      return {
+        ...state,
+        error: action.payload.error,
+      };
+    case DELETE_QUERY_SUCCESS:
       return {
         ...state,
         saved: state.saved.filter(
-          (item) => item.query_name !== action.payload.name
+          (item) => item.query_name !== action.payload.queryName
         ),
       };
-
-    case 'UPDATE_ACTIVE_SAVED_QUERY':
+    case GET_SAVED_QUERIES_SUCCESS:
       return {
         ...state,
-        activeSavedQuery: action.payload,
-      };
-
-    case 'RESET_UI':
-      return {
-        ...state,
-        results: initialState.results,
-      };
-    case 'QUERY_RESET_RESULTS':
-      return {
-        ...state,
-        results: initialState.results,
-      };
-
-    case 'ABOVE_CACHE_QUERY_LIMIT':
-      return {
-        ...state,
-        isLimited: true,
-        isSavingQuery: false,
-      };
-
-    case 'BELOW_CACHE_QUERY_LIMIT':
-      return {
-        ...state,
-        isLimited: false,
-        isSavingQuery: false,
+        saved: action.payload.queries,
       };
     case RUN_QUERY: {
       return {

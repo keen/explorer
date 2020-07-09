@@ -4,7 +4,7 @@ import { savedQuerySaga } from './saga';
 import {
   updateSaveQuery,
   resetSavedQuery,
-  saveQuerySuccess,
+  editSavedQuery,
   selectSavedQuery,
 } from './actions';
 import { ReducerState } from './types';
@@ -17,6 +17,6 @@ export {
   getSavedQueryName,
   selectSavedQuery,
   updateSaveQuery,
-  saveQuerySuccess,
+  editSavedQuery,
   resetSavedQuery,
 };

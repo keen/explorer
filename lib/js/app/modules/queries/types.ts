@@ -3,6 +3,18 @@ import {
   RUN_QUERY,
   RUN_QUERY_ERROR,
   RUN_QUERY_SUCCESS,
+  GET_SAVED_QUERIES,
+  GET_SAVED_QUERIES_ERROR,
+  GET_SAVED_QUERIES_SUCCESS,
+  DELETE_QUERY,
+  DELETE_QUERY_ERROR,
+  DELETE_QUERY_SUCCESS,
+  SAVE_QUERY,
+  SAVE_QUERY_ERROR,
+  SAVE_QUERY_SUCCESS,
+  SET_CACHE_QUERY_LIMIT,
+  SET_CACHE_QUERY_LIMIT_ERROR,
+  RESET_QUERY_RESULTS,
 } from './constants';
 
 export type ReducerState = {
@@ -13,6 +25,86 @@ export type ReducerState = {
   isLimited: boolean;
   error: Error | null;
 };
+
+export interface ResetQueryResultsAction {
+  type: typeof RESET_QUERY_RESULTS;
+}
+
+export interface SetCacheQueryLimitAction {
+  type: typeof SET_CACHE_QUERY_LIMIT;
+  payload: {
+    limitReached: boolean;
+  };
+}
+
+export interface SetCacheQueryLimitErrorAction {
+  type: typeof SET_CACHE_QUERY_LIMIT_ERROR;
+  payload: {
+    error: Error;
+  };
+}
+
+export interface SaveQueryAction {
+  type: typeof SAVE_QUERY;
+  payload: {
+    name: string;
+    body: Object;
+  };
+}
+
+export interface SaveQuerySuccessAction {
+  type: typeof SAVE_QUERY_SUCCESS;
+  payload: {
+    queryName: string;
+    body: Object;
+  };
+}
+
+export interface SaveQueryErrorAction {
+  type: typeof SAVE_QUERY_ERROR;
+  payload: {
+    error: Error;
+  };
+}
+
+export interface DeleteQueryAction {
+  type: typeof DELETE_QUERY;
+  payload: {
+    queryName: string;
+  };
+}
+
+export interface DeleteQuerySuccessAction {
+  type: typeof DELETE_QUERY_SUCCESS;
+  payload: {
+    queryName: string;
+  };
+}
+
+export interface DeleteQueryErrorAction {
+  type: typeof DELETE_QUERY_ERROR;
+  payload: {
+    error: Error;
+  };
+}
+
+export interface GetSavedQueriesAction {
+  type: typeof GET_SAVED_QUERIES;
+}
+
+export interface GetSavedQueriesSuccessAction {
+  type: typeof GET_SAVED_QUERIES_SUCCESS;
+  payload: {
+    queries: Object;
+  };
+}
+
+export interface GetSavedQueriesErrorAction {
+  type: typeof GET_SAVED_QUERIES_ERROR;
+  payload: {
+    error: Error;
+  };
+}
 
 export interface RunQueryAction {
   type: typeof RUN_QUERY;
@@ -40,7 +132,19 @@ export interface CreateNewQueryAction {
 }
 
 export type QueriesActions =
+  | ResetQueryResultsAction
+  | SetCacheQueryLimitAction
+  | SetCacheQueryLimitErrorAction
+  | SaveQueryAction
+  | SaveQuerySuccessAction
+  | SaveQueryErrorAction
+  | DeleteQueryAction
+  | DeleteQuerySuccessAction
+  | DeleteQueryErrorAction
   | RunQueryAction
   | RunQueryErrorAction
   | RunQuerySuccessAction
+  | GetSavedQueriesAction
+  | GetSavedQueriesSuccessAction
+  | GetSavedQueriesErrorAction
   | CreateNewQueryAction;
