@@ -28,7 +28,7 @@ export const convertValueToJson = (value: string|Coordinates) => {
   if (!!Number(value)) return Number(value);
   if (value === 'true') return true;
   if (value === 'false') return false;
-  if (value === 'null') return null;
+  if (value === 'Null') return null;
 
   if (new Date(value) && new Date(value).toString() !== 'Invalid Date') return value;
 

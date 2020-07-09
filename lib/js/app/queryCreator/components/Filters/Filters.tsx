@@ -17,7 +17,7 @@ import { getCollectionSchema } from '../../modules/events';
 import { filtersReducer } from './reducer';
 
 import { DATA_TYPES, FILTER_OPERATORS, DEFAULT_TIMEFRAME_ABSOLUTE_VALUE } from './constants';
-import { convertFilters, getTypeFromValue, convertSchemaProp } from './utils';
+import { convertFilters, getTypeFromValue, convertSchemaProp, convertDateToString, isFilterValid } from './utils';
 
 import { AppState, PropertyType, Operator, Filter } from '../../types';
 import { SchemaProp } from './types';
@@ -33,7 +33,7 @@ type Props = {
   onChange: (filters: Filter[]) => void;
 };
 
-const Filters: FC<Props> = ({ collection, filters }) => {
+const Filters: FC<Props> = ({ collection, filters, onChange }) => {
   const collectionSchema = useSelector((state: AppState) =>
     getCollectionSchema(state, collection)
   );
@@ -174,6 +174,12 @@ const Filters: FC<Props> = ({ collection, filters }) => {
   }
 
   console.log({state});
+
+  const isStateComplete = (state) => {
+    console.log(state.every(filter => isFilterValid(filter)));
+    return state.every(filter => isFilterValid(filter))
+  }
+
   return (
     <>
     {state.map((item, idx) => (
@@ -196,8 +202,11 @@ const Filters: FC<Props> = ({ collection, filters }) => {
           options={dataTypes}
           onChange={({ value }: { value: PropertyType }) => {
             filtersDispatcher(updateFilter(idx, { propertyType: value }));
-            // if (value === 'Null') filtersDispatcher(updateFilter(idx, { propertyValue: 'Null' }));
-            // if (value === 'Datetime') filtersDispatcher(updateFilter(idx, { propertyValue:  item?.propertyValue || DEFAULT_TIMEFRAME_ABSOLUTE_VALUE}));
+            if (value === 'Null') filtersDispatcher(updateFilter(idx, { propertyValue: 'Null' }));
+            if (value === 'Datetime') {
+              const date = item?.propertyValue || DEFAULT_TIMEFRAME_ABSOLUTE_VALUE;
+              filtersDispatcher(updateFilter(idx, { propertyValue: convertDateToString(date)}))
+            }
             if (item?.operator) {
               // const type = DATA_TYPES[value];
               const operatorOptions = getOperatorOptions(value);
@@ -213,7 +222,7 @@ const Filters: FC<Props> = ({ collection, filters }) => {
         <Select
           variant="solid"
           placeholder={'Select operator'}
-          options={item?.propertyType? getOperatorOptions(DATA_TYPES[item.propertyType]) : getOperatorOptions()}
+          options={getOperatorOptions(item?.propertyType)}
           onChange={({ value }: { value: Operator }) => filtersDispatcher(updateFilter(idx, { operator: value }))
           }
           value={item?.operator ? {label: item.operator, value: item.operator} : null}
@@ -245,9 +254,11 @@ const Filters: FC<Props> = ({ collection, filters }) => {
       <Button
         variant="success"
         style="solid"
-        onClick={() => console.log(convertFilters(state))}>
+        isDisabled={!isStateComplete(state)}
+        onClick={() => onChange(convertFilters(state))}>
           {text.done}
         </Button>
+        {!isStateComplete(state) && `Please provide data for empty fields`}
     </>
   );
 };

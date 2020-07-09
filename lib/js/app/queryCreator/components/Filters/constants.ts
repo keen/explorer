@@ -89,6 +89,6 @@ export const FILTER_OPERATORS = [
   {
     label: '\u2690 Within a given radius (geo)',
     value: 'within',
-    dataTypes: ['Geo'],
+    dataTypes: ['Geo', 'List'],
   },
 ];
