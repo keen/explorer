@@ -23,7 +23,11 @@ import {
   editSavedQuery,
   selectSavedQuery,
 } from '../modules/savedQuery';
-import { persistState, loadPersitedState } from '../modules/app';
+import {
+  persistState,
+  loadPersitedState,
+  getVisualizationType,
+} from '../modules/app';
 
 import QueryCreator, {
   NEW_QUERY_EVENT as CREATOR_NEW_QUERY_EVENT,
@@ -52,6 +56,7 @@ const mapStateToProps = (state, props) => ({
   isQueryLoading: getQueryPerformState(state),
   queryResults: getQueryResults(state),
   queryError: getError(state),
+  widget: getVisualizationType(state),
 });
 
 const mapDispatchToProps = {
@@ -178,6 +183,7 @@ class App extends Component {
                         query: this.state.query,
                         metadata: {
                           displayName: name,
+                          widget: this.props.widget,
                         },
                         refreshRate: refreshRate * 60 * 60,
                       };

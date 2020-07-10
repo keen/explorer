@@ -7,10 +7,15 @@ import { Container, Socket } from './Browser.styles';
 
 import QueryVisualization from '../QueryVisualization';
 import QuerySummary from '../QuerySummary';
+import RunQuery from '../RunQuery';
 
 import QueryBrowser from '../../queryBrowser';
 
-import { getSavedQueries, deleteQuery } from '../../modules/queries';
+import {
+  getSavedQueries,
+  getQueryPerformState,
+  deleteQuery,
+} from '../../modules/queries';
 import { getSavedQuery } from '../../modules/savedQuery';
 
 import { AppState } from '../../modules/types';
@@ -31,6 +36,7 @@ const Browser: FC<Props> = ({
   onSelectQuery,
 }) => {
   const dispatch = useDispatch();
+  const isQueryLoading = useSelector(getQueryPerformState);
   const savedQuery = useSelector(getSavedQuery);
   const savedQueries = useSelector((state: AppState) =>
     camelCase(getSavedQueries(state), { deep: true })
@@ -54,7 +60,9 @@ const Browser: FC<Props> = ({
       </Socket>
       <Socket>
         <Button onClick={() => onEditQuery(savedQuery.name)}>Edit</Button>
-        <Button onClick={onRunQuery}>Run Query</Button>
+        <RunQuery isLoading={isQueryLoading} onClick={onRunQuery}>
+          Run Query
+        </RunQuery>
         {queryResults && (
           <QueryVisualization query={query} queryResults={queryResults} />
         )}
