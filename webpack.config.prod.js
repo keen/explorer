@@ -1,6 +1,7 @@
 const webpack = require('webpack');
 const path = require('path');
 const merge = require('webpack-merge');
+const TerserPlugin = require('terser-webpack-plugin');
 
 const commonConfig = require('./webpack.common');
 
@@ -29,6 +30,14 @@ module.exports = merge(commonConfig, {
 
   optimization: {
      minimize: !!process.env.OPTIMIZE_MINIMIZE,
+     minimizer: [
+       new TerserPlugin({
+         terserOptions: {
+           keep_classnames: true,
+           keep_fnames: true,
+         },
+       }),
+     ],
    },
 
    plugins: [

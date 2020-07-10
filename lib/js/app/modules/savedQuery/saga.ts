@@ -4,6 +4,7 @@ import { updateSaveQuery, saveQuerySuccess } from './actions';
 import { convertMilisecondsToMinutes } from './utils';
 
 import { SET_QUERY_EVENT } from '../../queryCreator';
+import { setVisualizationType } from '../app';
 import { getSavedQueries, SAVE_QUERY_SUCCESS } from '../queries';
 
 import { SELECT_SAVED_QUERY, EDIT_SAVED_QUERY } from './constants';
@@ -19,6 +20,8 @@ function* selectSavedQuery({ payload }: SelectSavedQueryAction) {
     const { query_name, refresh_rate, metadata } = savedQueries.find(
       ({ query_name }) => query_name === name
     );
+
+    const widget = metadata && metadata.widget ? metadata.widget : null;
     const savedQuery = {
       name,
       displayName: metadata ? metadata.display_name : query_name,
@@ -27,6 +30,7 @@ function* selectSavedQuery({ payload }: SelectSavedQueryAction) {
       exists: true,
     };
 
+    yield put(setVisualizationType(widget));
     yield put(updateSaveQuery(savedQuery));
   } catch (err) {
     console.error(err);
