@@ -2,7 +2,7 @@ import React, { FC, useEffect, useMemo, useReducer } from 'react';
 import { useSelector } from 'react-redux';
 
 import { Button, Select } from '@keen.io/ui-core';
-import { FilterValue } from './FilterValue';
+import FilterValue from './FilterValue';
 
 import {
   addFilter,
@@ -34,7 +34,7 @@ type Props = {
 
 const dataTypes = Object.keys(DATA_TYPES).map(item => ({ label: DATA_TYPES[item], value: DATA_TYPES[item] }));
 
-export const Filters: FC<Props> = ({ collection, filters, onChange }) => {
+const Filters: FC<Props> = ({ collection, filters, onChange }) => {
   const collectionSchema = useSelector((state: AppState) =>
     getCollectionSchema(state, collection)
   );
@@ -55,7 +55,18 @@ export const Filters: FC<Props> = ({ collection, filters, onChange }) => {
     if (filters.length) {
       filtersDispatcher(setFilters(filters));
     }
-  }, [filters])
+  }, [filters]);
+
+  const setDefaults = (idx:number, type: PropertyType, value?: any ) => {
+    if (type === 'Null') filtersDispatcher(updateFilter(idx, { propertyValue: 'Null' }));
+    if (type === 'Datetime') {
+      const date = value || DEFAULT_TIMEFRAME_ABSOLUTE_VALUE;
+      filtersDispatcher(updateFilter(idx, { propertyValue: convertDateToString(date)}))
+    }
+    if (type === 'Geo') {
+      filtersDispatcher(updateFilter(idx, { operator: 'within'}))
+    }
+  }
 
   return (
     <>
@@ -68,7 +79,11 @@ export const Filters: FC<Props> = ({ collection, filters, onChange }) => {
           onChange={({ value }: { value: string }) => {
               filtersDispatcher(updateFilter(idx, { propertyName: value }));
               const schemaProp = collectionSchema[value] as SchemaProp;
-              if (schemaProp) filtersDispatcher(updateFilter(idx, { propertyType: SCHEMA_PROPS[schemaProp] as PropertyType }));
+              if (schemaProp) {
+                const propertyType = SCHEMA_PROPS[schemaProp] as PropertyType;
+                filtersDispatcher(updateFilter(idx, { propertyType }));
+                setDefaults(idx, propertyType);
+              }
             }
           }
           value={item?.propertyName ? {label: item.propertyName, value: item.propertyName} : null}
@@ -77,18 +92,12 @@ export const Filters: FC<Props> = ({ collection, filters, onChange }) => {
           variant="solid"
           placeholder={'Select property type'}
           options={dataTypes}
-          onChange={({ value }: { value: PropertyType }) => {
-            filtersDispatcher(updateFilter(idx, { propertyType: value }));
-            if (value === 'Null') filtersDispatcher(updateFilter(idx, { propertyValue: 'Null' }));
-            if (value === 'Datetime') {
-              const date = item?.propertyValue || DEFAULT_TIMEFRAME_ABSOLUTE_VALUE;
-              filtersDispatcher(updateFilter(idx, { propertyValue: convertDateToString(date)}))
-            }
-            if (value === 'Geo') {
-              filtersDispatcher(updateFilter(idx, { operator: 'within'}))
-            }
+          onChange={({ type }: { type: PropertyType }) => {
+            filtersDispatcher(updateFilter(idx, { propertyType: type }));
+            setDefaults(idx, type, item?.propertyValue );
+            
             if (item?.operator) {
-              const operatorOptions = getOperatorOptions(value);
+              const operatorOptions = getOperatorOptions(type);
               const isOperatorAvailable = operatorOptions.some(option => option.value === item.operator);
               if (!isOperatorAvailable) {
                 filtersDispatcher(updateFilter(idx, { operator: null }));

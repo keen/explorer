@@ -15,12 +15,12 @@ type Props = {
   onChange: (idx: number, value: string) => void;
 };
 
-export const DatePicker: FC<Props> = ({ idx, initialDate, onChange}) => {
+const DatePicker: FC<Props> = ({ idx, initialDate, onChange}) => {
   const [startFocus, setStartFocus] = useState(false);
   const startDate = moment.utc(initialDate);
 
   return (
-    <>
+    <div data-test="filter-datepicker">
       <SingleDatePicker
         date={startDate}
         onDateChange={(value) => {
@@ -43,6 +43,8 @@ export const DatePicker: FC<Props> = ({ idx, initialDate, onChange}) => {
           onChange(idx, valueConverted);
         }}
       />
-    </>
+    </div>
   );
 }
+
+export default DatePicker;

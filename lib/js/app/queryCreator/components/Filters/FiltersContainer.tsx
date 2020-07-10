@@ -1,6 +1,6 @@
 import React, { FC, useState } from 'react';
 import { Button } from '@keen.io/ui-core';
-import { Filters } from './Filters';
+import Filters from './Filters';
 
 import { Filter } from '../../types';
 

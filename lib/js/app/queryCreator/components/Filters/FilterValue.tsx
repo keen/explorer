@@ -1,7 +1,9 @@
 import React, { FC } from 'react';
 import { Select, Input } from '@keen.io/ui-core';
-import { DatePicker } from './DatePicker';
-import { GeoCoordinates } from './GeoCoordinates';
+import DatePicker from './DatePicker';
+import GeoCoordinates from './GeoCoordinates';
+
+import { getTypeFromValue } from './utils';
 
 import { Filter } from '../../types';
 import { Coordinates } from './types';
@@ -29,10 +31,12 @@ const getSelectValue = (options: any, filter: Filter) => {
   return null;
 }
 
-export const FilterValue: FC<Props> = ({ idx, filter, onChange }) => {
-  if (filter?.propertyType === DATA_TYPES['num']) {
+const FilterValue: FC<Props> = ({ idx, filter, onChange }) => {
+  const propertyType = filter?.propertyType || getTypeFromValue(filter);
+  if (propertyType === DATA_TYPES['num']) {
     return (
       <Input
+        data-test="filter-number"
         type="number"
         variant="solid"
         placeholder="Value"
@@ -42,26 +46,29 @@ export const FilterValue: FC<Props> = ({ idx, filter, onChange }) => {
     );
   }
 
-  if (filter?.propertyType === DATA_TYPES['bool']) {
+  if (propertyType === DATA_TYPES['bool']) {
     const BooleanOptions = ['true', 'false'].map((item) => ({
       label: item,
       value: item,
     }));
 
     return (
-      <Select
-        variant="solid"
-        placeholder={'Select property type'}
-        options={BooleanOptions}
-        onChange={({ value }: { value: string }) => onChange(idx, value )}
-        value={getSelectValue(BooleanOptions, filter)}
-      />
+      <div data-test="filter-boolean">
+        <Select
+          variant="solid"
+          placeholder={'Select property type'}
+          options={BooleanOptions}
+          onChange={({ value }: { value: string }) => onChange(idx, value )}
+          value={getSelectValue(BooleanOptions, filter)}
+        />
+      </div>
     );
   }
 
-  if (filter?.propertyType === DATA_TYPES['null']) {
+  if (propertyType === DATA_TYPES['null']) {
     return (
     <Input
+      data-test="filter-disabled"
       disabled
       variant="solid"
       value={'null'}
@@ -69,7 +76,7 @@ export const FilterValue: FC<Props> = ({ idx, filter, onChange }) => {
     );
   }
 
-  if (filter?.propertyType === DATA_TYPES['datetime']) {
+  if (propertyType === DATA_TYPES['datetime']) {
     const initialDate = filter?.propertyValue || DEFAULT_TIMEFRAME_ABSOLUTE_VALUE
     return (
       <DatePicker
@@ -82,7 +89,7 @@ export const FilterValue: FC<Props> = ({ idx, filter, onChange }) => {
     )
   }
 
-  if (filter?.operator === 'within') {
+  if (propertyType === DATA_TYPES['geo']) {
     return (
       <GeoCoordinates
         idx={idx}
@@ -94,6 +101,7 @@ export const FilterValue: FC<Props> = ({ idx, filter, onChange }) => {
 
   return (
     <Input
+      data-test="filter-input"
       variant="solid"
       placeholder="Value"
       value={getInputValue(filter)}
@@ -101,3 +109,5 @@ export const FilterValue: FC<Props> = ({ idx, filter, onChange }) => {
     />
   );
 }
+
+export default FilterValue;

@@ -14,7 +14,7 @@ type Props = {
   onChange: (idx: number, value: Coordinates) => void;
 };
 
-export const GeoCoordinates: FC<Props> = ({idx, filter, onChange }) => {
+const GeoCoordinates: FC<Props> = ({idx, filter, onChange }) => {
   let newPropertyValue = {
     coordinates: [undefined, undefined],
     maxDistanceMiles: undefined,
@@ -27,40 +27,42 @@ export const GeoCoordinates: FC<Props> = ({idx, filter, onChange }) => {
   const [ long = '', lat = '' ] = newPropertyValue?.coordinates;
   const radius = newPropertyValue?.maxDistanceMiles || '';
   return (
-    <>
-    <Input
-      type="number"
-      variant="solid"
-      placeholder="Longitude"
-      value={long}
-      onChange={(e) => {
-        const value:Coordinates = { coordinates: [e.target.value, lat], maxDistanceMiles: radius };
-        onChange(idx, value);
+    <div data-test="filter-geo">
+      <Input
+        type="number"
+        variant="solid"
+        placeholder="Longitude"
+        value={long}
+        onChange={(e) => {
+          const value:Coordinates = { coordinates: [e.target.value, lat], maxDistanceMiles: radius };
+          onChange(idx, value);
+          }
         }
-      }
-    />
-    <Input
-      type="number"
-      variant="solid"
-      placeholder="Latitude"
-      value={lat}
-      onChange={(e) => {
-        const value:Coordinates = { coordinates: [long, e.target.value], maxDistanceMiles: radius };
-        onChange(idx, value);
-      }
-    }
-    />
-    <Input
-      type="number"
-      variant="solid"
-      placeholder="Radius [in miles]"
-      value={radius}
-      onChange={(e) => {
-        const value:Coordinates = { coordinates: [long, lat], maxDistanceMiles: e.target.value };
-        onChange(idx, value);
+      />
+      <Input
+        type="number"
+        variant="solid"
+        placeholder="Latitude"
+        value={lat}
+        onChange={(e) => {
+          const value:Coordinates = { coordinates: [long, e.target.value], maxDistanceMiles: radius };
+          onChange(idx, value);
         }
       }
       />
-    </>
+      <Input
+        type="number"
+        variant="solid"
+        placeholder="Radius [in miles]"
+        value={radius}
+        onChange={(e) => {
+          const value:Coordinates = { coordinates: [long, lat], maxDistanceMiles: e.target.value };
+          onChange(idx, value);
+          }
+        }
+      />
+    </div>
   )
 }
+
+export default GeoCoordinates;
