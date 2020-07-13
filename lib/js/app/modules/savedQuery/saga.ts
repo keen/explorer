@@ -28,7 +28,7 @@ function* selectSavedQuery({ payload }: SelectSavedQueryAction) {
       refreshRate: convertMilisecondsToMinutes(refresh_rate),
       exists: true,
     };
-    console.log('BOOM BOOM BOOM!');
+
     yield put(setVisualizationType(widget));
     yield put(updateSaveQuery(savedQuery));
   } catch (err) {
