@@ -7,26 +7,29 @@ import { Filter } from '../../types';
 type Props = {
   /** Collection name */
   collection: string;
+  /** Filters */
+  filters: Filter[];
+  /** onChange handler */
+  onChange: (filters: Filter[]) => void;
 };
 
-const tempFilters = [{"propertyName":"state","operator":"ne","propertyValue":"Arizona"}] as Filter[];
-
-export const FiltersContainer: FC<Props> = ({ collection }) => {
+export const FiltersContainer: FC<Props> = ({ collection, filters, onChange }) => {
   const [isEdited, setIsEdited] = useState(false);
-  const [filters, setFilters] = useState(tempFilters);
+  const [localFilters, setLocalFilters] = useState(filters);
 
   const handleChange = (filters:Filter[]) => {
-    setFilters(filters);
+    setLocalFilters(filters);
     setIsEdited(false);
+    onChange(filters);
   }
 
   return (
     <>
       {isEdited ? 
-        <Filters collection={collection} filters={filters} onChange={filters => handleChange(filters)} />
+        <Filters collection={collection} filters={localFilters} onChange={filters => handleChange(filters)} />
       :
       <div>
-        <span>Filters {filters.length}</span>
+        <span>Filters {localFilters.length}</span>
         <Button 
           variant="secondary"
           style="outline"

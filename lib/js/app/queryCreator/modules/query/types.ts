@@ -13,6 +13,7 @@ import {
   SET_EXTRACTION_RECIPIENT_EMAIL,
   SET_EXTRACTION_CONTENT_ENCODING,
   SET_PROPERTY_NAMES,
+  SET_FILTERS,
   SELECT_TIMEZONE,
   ADD_FUNNEL_STEP,
   REMOVE_FUNNEL_STEP,
@@ -23,7 +24,7 @@ import {
   RESET_QUERY,
 } from './constants';
 
-import { Timezones, Timeframe, OrderBy, FunnelStep } from '../../types';
+import { Timezones, Timeframe, OrderBy, FunnelStep, Filter } from '../../types';
 import { Analysis } from '../../../types';
 
 export type ReducerState = {
@@ -37,6 +38,7 @@ export type ReducerState = {
   timeframe: Timeframe;
   interval?: string;
   analysisType: Analysis;
+  filters?: Filter[];
   steps?: FunnelStep[];
   propertyNames?: string | string[];
   latest?: number;
@@ -157,6 +159,13 @@ export interface SetLimitAction {
   };
 }
 
+export interface SetFiltersAction {
+  type: typeof SET_FILTERS;
+  payload: {
+    filters: Filter[]
+  }
+}
+
 export interface AddFunnelStepAction {
   type: typeof ADD_FUNNEL_STEP;
 }
@@ -207,6 +216,7 @@ export type QueryActions =
   | SetExtractionContentEncodingAction
   | SetPropertyNamesAction
   | SetTimeframeAction
+  | SetFiltersAction
   | SelectTimezoneAction
   | AddFunnelStepAction
   | UpdateFunnelStepAction

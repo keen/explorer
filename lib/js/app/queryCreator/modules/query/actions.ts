@@ -13,6 +13,7 @@ import {
   SET_EXTRACTION_LIMIT,
   SET_EXTRACTION_RECIPIENT_EMAIL,
   SET_EXTRACTION_CONTENT_ENCODING,
+  SET_FILTERS,
   SELECT_TIMEZONE,
   ADD_FUNNEL_STEP,
   UPDATE_FUNNEL_STEP_EVENT_COLLECTION,
@@ -23,7 +24,7 @@ import {
 } from './constants';
 
 import { QueryActions, ReducerState as Query } from './types';
-import { Timezones, Timeframe, OrderBy, FunnelStep } from '../../types';
+import { Timezones, Timeframe, OrderBy, FunnelStep, Filter } from '../../types';
 import { Analysis } from '../../../types';
 
 export const setQuery = (query: Partial<Query>): QueryActions => ({
@@ -138,6 +139,13 @@ export const setTimeframe = (timeframe: Timeframe): QueryActions => ({
   type: SET_TIMEFRAME,
   payload: {
     timeframe,
+  },
+});
+
+export const setFilters = (filters: Filter[]): QueryActions => ({
+  type: SET_FILTERS,
+  payload: {
+    filters,
   },
 });
 

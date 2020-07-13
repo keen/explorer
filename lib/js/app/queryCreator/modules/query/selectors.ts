@@ -35,3 +35,5 @@ export const getExtractionEmail = (state: AppState) => state.query.email;
 
 export const getExtractionEncoding = (state: AppState) =>
   state.query.contentEncoding;
+
+export const getFilters = (state: AppState) => state.query.filters;

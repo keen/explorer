@@ -18,6 +18,7 @@ export const SET_EXTRACTION_RECIPIENT_EMAIL =
 export const SET_EXTRACTION_CONTENT_ENCODING =
   '@query-creator/SET_EXTRACTION_CONTENT_ENCODING';
 export const SET_PROPERTY_NAMES = '@query-creator/SET_PROPERTY_NAMES';
+export const SET_FILTERS = '@query-creator/SET_FILTERS';
 export const SELECT_TIMEZONE = '@query-creator/SELECT_TIMEZONE';
 export const ADD_FUNNEL_STEP = '@query-creator/ADD_FUNNEL_STEP';
 export const REMOVE_FUNNEL_STEP = '@query-creator/REMOVE_FUNNEL_STEP';

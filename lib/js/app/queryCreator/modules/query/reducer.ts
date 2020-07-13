@@ -14,6 +14,7 @@ import {
   SET_GROUP_BY,
   SET_INTERVAL,
   SET_ORDER_BY,
+  SET_FILTERS,
   DEFAULT_ANALYSIS,
   DEFAULT_TIMEFRAME,
   ADD_FUNNEL_STEP,
@@ -95,6 +96,11 @@ export const queryReducer = (
       return {
         ...state,
         propertyNames: action.payload.propertyNames,
+      };
+    case SET_FILTERS:
+      return {
+        ...state,
+        filters: action.payload.filters,
       };
     case UPDATE_FUNNEL_STEP:
       return {

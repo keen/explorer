@@ -50,7 +50,7 @@ export type FunnelStep = {
   timeframe: Timeframe;
   timezone?: Timezones | number;
   withActors: boolean;
-  filters: any[];
+  filters: Filter[];
 };
 
 export type Timezones =
