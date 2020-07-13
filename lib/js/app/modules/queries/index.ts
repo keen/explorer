@@ -1,7 +1,6 @@
 import { ReducerState } from './types';
 import { queriesReducer } from './reducer';
 import {
-  createNewQuery,
   resetQueryResults,
   runQuery,
   deleteQuery,
@@ -31,7 +30,6 @@ export {
   getSavedQueries,
   getQueriesSaving,
   getQueriesLimit,
-  createNewQuery,
   queriesReducer,
   runQuery,
   deleteQuery,

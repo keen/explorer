@@ -1,15 +1,14 @@
-import { takeLatest, select, getContext, put } from 'redux-saga/effects';
+import { takeLatest, select, put } from 'redux-saga/effects';
 
 import { updateSaveQuery, saveQuerySuccess } from './actions';
 import { convertMilisecondsToMinutes } from './utils';
 
-import { SET_QUERY_EVENT } from '../../queryCreator';
 import { setVisualizationType } from '../app';
 import { getSavedQueries, SAVE_QUERY_SUCCESS } from '../queries';
 
-import { SELECT_SAVED_QUERY, EDIT_SAVED_QUERY } from './constants';
+import { SELECT_SAVED_QUERY } from './constants';
 
-import { SelectSavedQueryAction, EditSavedQueryAction } from './types';
+import { SelectSavedQueryAction } from './types';
 
 function* selectSavedQuery({ payload }: SelectSavedQueryAction) {
   const { name } = payload;
@@ -29,24 +28,12 @@ function* selectSavedQuery({ payload }: SelectSavedQueryAction) {
       refreshRate: convertMilisecondsToMinutes(refresh_rate),
       exists: true,
     };
-
+    console.log('BOOM BOOM BOOM!');
     yield put(setVisualizationType(widget));
     yield put(updateSaveQuery(savedQuery));
   } catch (err) {
     console.error(err);
   }
-}
-
-function* editSavedQuery({ payload }: EditSavedQueryAction) {
-  const { queryName } = payload;
-  const pubsub = yield getContext('pubsub');
-  const savedQueries = yield select(getSavedQueries);
-
-  const { query } = savedQueries.find(
-    ({ query_name }) => query_name === queryName
-  );
-
-  pubsub.publish(SET_QUERY_EVENT, { query });
 }
 
 function* saveQuerySuccessHandler() {
@@ -55,6 +42,5 @@ function* saveQuerySuccessHandler() {
 
 export function* savedQuerySaga() {
   yield takeLatest(SELECT_SAVED_QUERY, selectSavedQuery);
-  yield takeLatest(EDIT_SAVED_QUERY, editSavedQuery);
   yield takeLatest(SAVE_QUERY_SUCCESS, saveQuerySuccessHandler);
 }

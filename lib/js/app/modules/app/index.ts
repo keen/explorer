@@ -4,11 +4,20 @@ import {
   showConfirmation,
   hideConfirmation,
   acceptConfirmation,
-  persistState,
   setVisualizationType,
   loadPersitedState,
+  setViewMode,
+  updateQueryCreator,
+  queryEditorMounted,
+  createNewQuery,
+  editQuery,
+  copyShareUrl,
 } from './actions';
-import { getConfirmation, getVisualizationType } from './selectors';
+import {
+  getConfirmation,
+  getViewMode,
+  getVisualizationType,
+} from './selectors';
 
 import { HIDE_CONFIRMATION, ACCEPT_CONFIRMATION } from './constants';
 import { ReducerState } from './types';
@@ -19,7 +28,13 @@ export {
   showConfirmation,
   hideConfirmation,
   acceptConfirmation,
-  persistState,
+  copyShareUrl,
+  createNewQuery,
+  updateQueryCreator,
+  queryEditorMounted,
+  editQuery,
+  setViewMode,
+  getViewMode,
   loadPersitedState,
   setVisualizationType,
   getConfirmation,

@@ -1,13 +1,20 @@
 import {
-  SET_STATE_IN_URL,
   LOAD_STATE_FROM_URL,
+  COPY_SHARE_URL,
   SET_VISUALIZATION_TYPE,
   SHOW_CONFIRMATION,
   HIDE_CONFIRMATION,
   ACCEPT_CONFIRMATION,
+  SET_VIEW_MODE,
+  CREATE_NEW_QUERY,
+  EDIT_QUERY,
+  UPDATE_QUERY_CREATOR,
+  QUERY_EDITOR_MOUNTED,
 } from './constants';
 
 export type Confirmation = 'delete';
+
+export type ViewMode = 'browser' | 'editor';
 
 export type ReducerState = {
   confirmModal: {
@@ -15,22 +22,51 @@ export type ReducerState = {
     visible: boolean;
     meta?: Record<string, any>;
   };
+  view: ViewMode;
   visualization: {
     type: string | null;
   };
 };
 
+export interface CopyShareUrlAction {
+  type: typeof COPY_SHARE_URL;
+  payload: {
+    query: Object;
+    savedQuery: Object;
+  };
+}
+
+export interface CreateNewQueryAction {
+  type: typeof CREATE_NEW_QUERY;
+}
+
+export interface EditQueryAction {
+  type: typeof EDIT_QUERY;
+  payload: {
+    queryName: string;
+  };
+}
+
+export interface QueryEditorMountedAction {
+  type: typeof QUERY_EDITOR_MOUNTED;
+}
+
+export interface UpdateQueryCreatorAction {
+  type: typeof UPDATE_QUERY_CREATOR;
+  payload: { query: Object };
+}
+
+export interface SetViewModeAction {
+  type: typeof SET_VIEW_MODE;
+  payload: {
+    view: ViewMode;
+  };
+}
+
 export interface SetVisualizationType {
   type: typeof SET_VISUALIZATION_TYPE;
   payload: {
     type: string;
-  };
-}
-
-export interface PersistStateAction {
-  type: typeof SET_STATE_IN_URL;
-  payload: {
-    state: Object;
   };
 }
 
@@ -55,7 +91,12 @@ export interface AcceptConfirmationAction {
 }
 
 export type AppActions =
-  | PersistStateAction
+  | CopyShareUrlAction
+  | EditQueryAction
+  | QueryEditorMountedAction
+  | CreateNewQueryAction
+  | UpdateQueryCreatorAction
+  | SetViewModeAction
   | LoadPersistedStateAction
   | ShowConfirmationAction
   | HideConfirmationAction

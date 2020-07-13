@@ -1,5 +1,4 @@
 import {
-  CREATE_NEW_QUERY,
   RUN_QUERY,
   RUN_QUERY_ERROR,
   RUN_QUERY_SUCCESS,
@@ -127,10 +126,6 @@ export interface RunQueryErrorAction {
   };
 }
 
-export interface CreateNewQueryAction {
-  type: typeof CREATE_NEW_QUERY;
-}
-
 export type QueriesActions =
   | ResetQueryResultsAction
   | SetCacheQueryLimitAction
@@ -146,5 +141,4 @@ export type QueriesActions =
   | RunQuerySuccessAction
   | GetSavedQueriesAction
   | GetSavedQueriesSuccessAction
-  | GetSavedQueriesErrorAction
-  | CreateNewQueryAction;
+  | GetSavedQueriesErrorAction;

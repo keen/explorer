@@ -1,13 +1,58 @@
-import { takeLatest, put, select, getContext } from 'redux-saga/effects';
+import { takeLatest, put, take, select, getContext } from 'redux-saga/effects';
 
-import { getSavedQuery, updateSaveQuery } from '../savedQuery';
+import { setViewMode, updateQueryCreator } from './actions';
+
+import { resetSavedQuery, updateSaveQuery } from '../savedQuery';
+import { resetQueryResults, getSavedQueries } from '../queries';
 
 import { b64EncodeUnicode, b64DecodeUnicode } from '../../utils/base64';
-import { SET_QUERY_EVENT } from '../../queryCreator';
+import { copyToClipboard } from '../../utils';
 
-import { PersistStateAction } from './types';
+import { SET_QUERY_EVENT, NEW_QUERY_EVENT } from '../../queryCreator';
 
-import { SET_STATE_IN_URL, LOAD_STATE_FROM_URL, URL_STATE } from './constants';
+import {
+  EditQueryAction,
+  CopyShareUrlAction,
+  UpdateQueryCreatorAction,
+} from './types';
+
+import {
+  CREATE_NEW_QUERY,
+  QUERY_EDITOR_MOUNTED,
+  EDIT_QUERY,
+  UPDATE_QUERY_CREATOR,
+  COPY_SHARE_URL,
+  LOAD_STATE_FROM_URL,
+  URL_STATE,
+} from './constants';
+
+export function* createNewQuery() {
+  yield put(setViewMode('editor'));
+  const pubsub = yield getContext('pubsub');
+  yield pubsub.publish(NEW_QUERY_EVENT);
+  yield put(resetQueryResults());
+  yield put(resetSavedQuery());
+}
+
+function* editQuery({ payload }: EditQueryAction) {
+  yield put(setViewMode('editor'));
+  yield take(QUERY_EDITOR_MOUNTED);
+
+  const { queryName } = payload;
+  const savedQueries = yield select(getSavedQueries);
+
+  const { query } = savedQueries.find(
+    ({ query_name }) => query_name === queryName
+  );
+  yield put(updateQueryCreator(query));
+}
+
+export function* updateCreator({ payload }: UpdateQueryCreatorAction) {
+  const { query } = payload;
+  const pubsub = yield getContext('pubsub');
+
+  yield pubsub.publish(SET_QUERY_EVENT, { query });
+}
 
 export function* loadPersitedState() {
   const url = new URL(window.location.href);
@@ -21,43 +66,35 @@ export function* loadPersitedState() {
         b64DecodeUnicode(persistedState)
       );
 
-      if (query) {
-        const pubsub = yield getContext('pubsub');
-        pubsub.publish(SET_QUERY_EVENT, { query });
-      }
       if (savedQuery) yield put(updateSaveQuery(savedQuery));
+      if (query) {
+        yield put(setViewMode('editor'));
+        yield take(QUERY_EDITOR_MOUNTED);
+        yield put(updateQueryCreator(query));
+      }
+
+      history.replaceState({}, '', window.location.origin);
     }
   }
 }
 
-export function* persistState(action: PersistStateAction) {
-  const {
-    payload: { state },
-  } = action;
-  const savedQuery = yield select(getSavedQuery);
-
+export function* copyShareUrl({ payload }: CopyShareUrlAction) {
+  const { query, savedQuery } = payload;
   const stateToPersist = b64EncodeUnicode(
     JSON.stringify({
       savedQuery,
-      ...state,
+      query,
     })
   );
 
-  const url = new URL(window.location.href);
-  const { search } = url;
-
-  const urlParams = new URLSearchParams(search);
-  const previousState = urlParams.get(URL_STATE);
-
-  if (stateToPersist !== previousState) {
-    urlParams.set(URL_STATE, stateToPersist);
-    url.search = urlParams.toString();
-
-    history.pushState({}, '', url.toString());
-  }
+  const url = `${window.location.origin}?${URL_STATE}=${stateToPersist}`;
+  yield copyToClipboard(url);
 }
 
 export function* appSaga() {
-  yield takeLatest(SET_STATE_IN_URL, persistState);
+  yield takeLatest(COPY_SHARE_URL, copyShareUrl);
   yield takeLatest(LOAD_STATE_FROM_URL, loadPersitedState);
+  yield takeLatest(UPDATE_QUERY_CREATOR, updateCreator);
+  yield takeLatest(CREATE_NEW_QUERY, createNewQuery);
+  yield takeLatest(EDIT_QUERY, editQuery);
 }

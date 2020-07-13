@@ -94,7 +94,17 @@ test('reset cache settings', () => {
     refreshRate: 0,
     exists: true,
   };
-  const { store } = render({ savedQuery }, { cacheAvailable: false });
+
+  const {
+    store,
+    wrapper: { rerender },
+    props,
+  } = render({ savedQuery }, { cacheAvailable: true });
+  rerender(
+    <Provider store={store}>
+      <QuerySettings {...props} cacheAvailable={false} />
+    </Provider>
+  );
 
   expect(store.getActions()).toMatchInlineSnapshot(`
     Array [

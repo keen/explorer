@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useState, useEffect } from 'react';
+import React, { FC, useCallback, useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Button, Input, Label } from '@keen.io/ui-core';
 
@@ -46,6 +46,7 @@ const QuerySettings: FC<Props> = ({ onSave, onDelete, cacheAvailable }) => {
 
   const limitedQueries = useSelector(getQueriesLimit);
 
+  const cacheRef = useRef(cacheAvailable);
   const saveHandler = useCallback(() => {
     setError(null);
     const { name, displayName, refreshRate } = savedQuery;
@@ -57,7 +58,7 @@ const QuerySettings: FC<Props> = ({ onSave, onDelete, cacheAvailable }) => {
   }, [onSave, savedQuery]);
 
   useEffect(() => {
-    if (!cacheAvailable) {
+    if (!cacheAvailable && cacheRef.current !== cacheAvailable) {
       dispatch(
         updateSaveQuery({
           cached: false,
@@ -65,6 +66,7 @@ const QuerySettings: FC<Props> = ({ onSave, onDelete, cacheAvailable }) => {
         })
       );
     }
+    cacheRef.current = cacheAvailable;
   }, [cacheAvailable]);
 
   return (

@@ -5,6 +5,7 @@ import {
   HIDE_CONFIRMATION,
   ACCEPT_CONFIRMATION,
   SET_VISUALIZATION_TYPE,
+  SET_VIEW_MODE,
 } from './constants';
 
 export const initialState: ReducerState = {
@@ -13,6 +14,7 @@ export const initialState: ReducerState = {
     action: null,
     meta: null,
   },
+  view: 'browser',
   visualization: {
     type: null,
   },
@@ -23,6 +25,11 @@ export const appReducer = (
   action: AppActions
 ) => {
   switch (action.type) {
+    case SET_VIEW_MODE:
+      return {
+        ...state,
+        view: action.payload.view,
+      };
     case SET_VISUALIZATION_TYPE:
       return {
         ...state,

@@ -3,7 +3,6 @@ import {
   RESET_SAVED_QUERY,
   SAVE_QUERY_SUCCESS,
   SELECT_SAVED_QUERY,
-  EDIT_SAVED_QUERY,
 } from './constants';
 
 import { SavedQueryActions, ReducerState } from './types';
@@ -19,13 +18,6 @@ export const selectSavedQuery = (name: string): SavedQueryActions => ({
   type: SELECT_SAVED_QUERY,
   payload: {
     name,
-  },
-});
-
-export const editSavedQuery = (queryName: string): SavedQueryActions => ({
-  type: EDIT_SAVED_QUERY,
-  payload: {
-    queryName,
   },
 });
 

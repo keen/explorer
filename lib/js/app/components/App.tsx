@@ -8,7 +8,6 @@ import { getPubSub } from '@keen.io/pubsub';
 import { fetchProject, fetchSchema } from '../redux/actionCreators/client';
 
 import {
-  createNewQuery,
   runQuery,
   deleteQuery,
   saveQuery,
@@ -18,27 +17,24 @@ import {
   getQueryResults,
   getQueryPerformState,
 } from '../modules/queries';
+import { resetSavedQuery, selectSavedQuery } from '../modules/savedQuery';
 import {
-  resetSavedQuery,
-  editSavedQuery,
-  selectSavedQuery,
-} from '../modules/savedQuery';
-import {
-  persistState,
   loadPersitedState,
+  getViewMode,
   getVisualizationType,
+  createNewQuery,
+  copyShareUrl,
+  editQuery,
 } from '../modules/app';
-
-import QueryCreator, {
-  NEW_QUERY_EVENT as CREATOR_NEW_QUERY_EVENT,
-} from '../queryCreator';
 
 import APIQueryURL from './explorer/APIQueryURL';
 
 import Browser from './Browser';
+import Creator from './Creator';
 import QuerySettings from './QuerySettings';
 import QueryVisualization from './QueryVisualization';
 import VisualizationPlaceholder from './VisualizationPlaceholder';
+import ShareQuery from './ShareQuery';
 import RunQuery, { runQueryLabel } from './RunQuery';
 import Confirm from './Confirm';
 
@@ -53,6 +49,7 @@ const mapStateToProps = (state, props) => ({
   queries: state.queries,
   eventCollection: state.ui.eventCollection,
   savedQuery: state.savedQuery,
+  view: getViewMode(state),
   isQueryLoading: getQueryPerformState(state),
   queryResults: getQueryResults(state),
   queryError: getError(state),
@@ -63,15 +60,15 @@ const mapDispatchToProps = {
   fetchProject,
   fetchSchema,
   saveQuery,
-  editSavedQuery,
+  editQuery,
   fetchSavedQueries,
   resetQueryResults,
   deleteQuery,
-  persistState,
   loadPersitedState,
   resetSavedQuery,
   selectSavedQuery,
   createNewQuery,
+  copyShareUrl,
   runQuery,
 };
 
@@ -87,11 +84,7 @@ class App extends Component {
     this.subscriptionDispose = pubsub.subscribe((eventName: string) => {
       switch (eventName) {
         case NEW_QUERY_EVENT:
-          this.setState({ mode: 'editor' }, () => {
-            pubsub.publish(CREATOR_NEW_QUERY_EVENT);
-            this.props.resetQueryResults();
-            this.props.resetSavedQuery();
-          });
+          this.props.createNewQuery();
           break;
         default:
           break;
@@ -110,15 +103,11 @@ class App extends Component {
   }
 
   render() {
-    const {
-      config: { projectId, readKey, masterKey },
-    } = this.props.keenAnalysis;
-
     console.log('---', this.state.query);
 
     return (
       <div>
-        {this.state.mode === 'browser' && (
+        {this.props.view === 'browser' && (
           <Browser
             query={this.state.query}
             queryResults={this.props.queryResults}
@@ -129,23 +118,17 @@ class App extends Component {
               this.setState({ query: snakeCase(query) });
             }}
             onEditQuery={(queryName) => {
-              this.setState({ mode: 'editor' }, () => {
-                this.props.editSavedQuery(queryName);
-              });
+              this.props.editQuery(queryName);
             }}
           />
         )}
-        {this.state.mode === 'editor' && (
+        {this.props.view === 'editor' && (
           <div>
             <div>
-              <QueryCreator
-                projectId={projectId}
-                readKey={readKey}
-                masterKey={masterKey}
+              <Creator
                 onUpdateQuery={(query) => {
                   console.log(query, '--- query update');
                   this.setState({ query });
-                  this.props.persistState({ query });
                 }}
               />
               <APIQueryURL queryParams={this.state.query} client={client} />
@@ -172,6 +155,14 @@ class App extends Component {
                 >
                   {runQueryLabel(this.state.query)}
                 </RunQuery>
+                <ShareQuery
+                  onShareQuery={() =>
+                    this.props.copyShareUrl(
+                      this.state.query,
+                      this.props.savedQuery
+                    )
+                  }
+                />
                 <SettingsContainer>
                   <QuerySettings
                     cacheAvailable={CACHE_AVAILABLE.includes(

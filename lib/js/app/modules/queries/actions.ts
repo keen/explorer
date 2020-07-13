@@ -1,7 +1,6 @@
 import { QueriesActions } from './types';
 
 import {
-  CREATE_NEW_QUERY,
   RUN_QUERY,
   RUN_QUERY_ERROR,
   RUN_QUERY_SUCCESS,
@@ -67,10 +66,6 @@ export const deleteQuerySuccess = (queryName: string): QueriesActions => ({
 export const deleteQueryError = (error: Error): QueriesActions => ({
   type: DELETE_QUERY_ERROR,
   payload: { error },
-});
-
-export const createNewQuery = (): QueriesActions => ({
-  type: CREATE_NEW_QUERY,
 });
 
 export const getSavedQueries = (): QueriesActions => ({

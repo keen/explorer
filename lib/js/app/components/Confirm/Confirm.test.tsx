@@ -58,7 +58,7 @@ test('allows user to accept confirmation', () => {
   expect(store.getActions()).toMatchInlineSnapshot(`
     Array [
       Object {
-        "type": "ACCEPT_CONFIRMATION",
+        "type": "@app/ACCEPT_CONFIRMATION",
       },
     ]
   `);
@@ -81,7 +81,7 @@ test('allows user to close modal by clicking "cancel" label', () => {
   expect(store.getActions()).toMatchInlineSnapshot(`
     Array [
       Object {
-        "type": "HIDE_CONFIRMATION",
+        "type": "@app/HIDE_CONFIRMATION",
       },
     ]
   `);
@@ -107,7 +107,7 @@ test('allows user to close modal by clicking "close" icon', () => {
   expect(store.getActions()).toMatchInlineSnapshot(`
     Array [
       Object {
-        "type": "HIDE_CONFIRMATION",
+        "type": "@app/HIDE_CONFIRMATION",
       },
     ]
   `);
