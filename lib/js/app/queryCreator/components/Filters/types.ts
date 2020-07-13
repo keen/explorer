@@ -54,3 +54,8 @@ export type FiltersActions =
   | 'list'
   | 'geo'
   | 'array';
+
+  export type Coordinates = {
+    coordinates: [string, string],
+    maxDistanceMiles: string
+  };

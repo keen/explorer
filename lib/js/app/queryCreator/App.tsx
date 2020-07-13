@@ -119,7 +119,6 @@ const App: FC<Props> = ({ onPreviewCollection }) => {
       {showField('filters', analysis) && (
         <Accordion renderHeader={() => <div>Filters</div>}>
           <FiltersContainer collection={collection} />
-          {/* <Filters collection={collection} filters={[{"propertyName":"state","operator":"ne","propertyValue":"Arizona"}]} onChange={filters => console.log(filters)} /> */}
         </Accordion>
       )}
     </div>
