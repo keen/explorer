@@ -5,7 +5,7 @@ import {
   UPDATE_FILTER,
   REMOVE_FILTER,
   RESET_FILTERS,
-  SET_FILTERS
+  SET_FILTERS,
 } from './constants';
 
 interface AddFilterAction {
@@ -13,7 +13,7 @@ interface AddFilterAction {
 }
 
 interface UpdateFilterAction {
-  type: typeof UPDATE_FILTER,
+  type: typeof UPDATE_FILTER;
   payload: {
     index: number;
     value: Partial<Filter>;
@@ -21,21 +21,21 @@ interface UpdateFilterAction {
 }
 
 interface RemoveFilterAction {
-  type: typeof REMOVE_FILTER,
+  type: typeof REMOVE_FILTER;
   payload: {
     index: number;
   };
 }
 
 interface ResetFiltersAction {
-  type: typeof RESET_FILTERS
+  type: typeof RESET_FILTERS;
 }
 
 interface SetFiltersAction {
-  type: typeof SET_FILTERS,
+  type: typeof SET_FILTERS;
   payload: {
-    filters: Filter[]
-  }
+    filters: Filter[];
+  };
 }
 
 export type FiltersActions =
@@ -45,7 +45,7 @@ export type FiltersActions =
   | ResetFiltersAction
   | SetFiltersAction;
 
-  export type SchemaProp =
+export type SchemaProp =
   | 'num'
   | 'string'
   | 'bool'
@@ -55,7 +55,7 @@ export type FiltersActions =
   | 'geo'
   | 'array';
 
-  export type Coordinates = {
-    coordinates: [string, string],
-    maxDistanceMiles: string
-  };
+export type Coordinates = {
+  coordinates: [string, string];
+  maxDistanceMiles: string;
+};

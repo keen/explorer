@@ -42,6 +42,7 @@ function* runQuery(action: RunQueryAction) {
 
     yield put(runQuerySuccess(responseBody));
   } catch (error) {
+    console.log('error', error);
     yield put(runQueryError(error));
   }
 }

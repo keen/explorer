@@ -1,4 +1,5 @@
 import { QueriesActions } from './types';
+import { APIError } from '../../types';
 
 import {
   RUN_QUERY,
@@ -92,7 +93,7 @@ export const runQuerySuccess = (results: Object): QueriesActions => ({
   payload: { results },
 });
 
-export const runQueryError = (error: Error): QueriesActions => ({
+export const runQueryError = (error: APIError): QueriesActions => ({
   type: RUN_QUERY_ERROR,
   payload: { error },
 });

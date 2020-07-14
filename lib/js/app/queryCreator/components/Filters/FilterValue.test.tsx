@@ -6,18 +6,14 @@ import FilterValue from './FilterValue';
 import { Filter } from '../../types';
 
 test('render number field', () => {
-  const filter:Filter = {
+  const filter: Filter = {
     propertyName: 'propertyName',
     propertyValue: 1,
     propertyType: 'Number',
-    operator: 'eq'
+    operator: 'eq',
   };
   const { container } = render(
-    <FilterValue
-      idx={0}
-      filter={filter}
-      onChange={() => true}
-    />
+    <FilterValue idx={0} filter={filter} onChange={() => true} />
   );
 
   const filterValue = container.querySelector('[data-test="filter-number"]');
@@ -25,18 +21,14 @@ test('render number field', () => {
 });
 
 test('render boolean field', () => {
-  const filter:Filter = {
+  const filter: Filter = {
     propertyName: 'propertyName',
     propertyValue: true,
     propertyType: 'Boolean',
-    operator: 'eq'
+    operator: 'eq',
   };
   const { container } = render(
-    <FilterValue
-      idx={0}
-      filter={filter}
-      onChange={() => true}
-    />
+    <FilterValue idx={0} filter={filter} onChange={() => true} />
   );
 
   const filterValue = container.querySelector('[data-test="filter-boolean"]');
@@ -44,75 +36,61 @@ test('render boolean field', () => {
 });
 
 test('render null field', () => {
-  const filter:Filter = {
+  const filter: Filter = {
     propertyName: 'propertyName',
     propertyValue: null,
     propertyType: 'Null',
-    operator: 'eq'
-  }
+    operator: 'eq',
+  };
   const { container } = render(
-    <FilterValue
-      idx={0}
-      filter={filter}
-      onChange={() => true}
-    />
-  )
+    <FilterValue idx={0} filter={filter} onChange={() => true} />
+  );
 
   const filterValue = container.querySelector('[data-test="filter-disabled"]');
   expect(filterValue).toBeInTheDocument();
 });
 
 test('render datetime field', () => {
-  const filter:Filter = {
+  const filter: Filter = {
     propertyName: 'propertyName',
     propertyValue: '2020-07-10T00:00:00.000Z',
     propertyType: 'Datetime',
-    operator: 'eq'
-  }
+    operator: 'eq',
+  };
   const { container } = render(
-    <FilterValue
-      idx={0}
-      filter={filter}
-      onChange={() => true}
-    />
-  )
+    <FilterValue idx={0} filter={filter} onChange={() => true} />
+  );
 
-  const filterValue = container.querySelector('[data-test="filter-datepicker"]');
+  const filterValue = container.querySelector(
+    '[data-test="filter-datepicker"]'
+  );
   expect(filterValue).toBeInTheDocument();
 });
 
 test('render geo field', () => {
-  const filter:Filter = {
+  const filter: Filter = {
     propertyName: 'propertyName',
-    propertyValue: { coordinates: [1,2], maxDistanceMiles: 1},
+    propertyValue: { coordinates: [1, 2], maxDistanceMiles: 1 },
     propertyType: 'Geo',
-    operator: 'eq'
-  }
+    operator: 'eq',
+  };
   const { container } = render(
-    <FilterValue
-      idx={0}
-      filter={filter}
-      onChange={() => true}
-    />
-  )
+    <FilterValue idx={0} filter={filter} onChange={() => true} />
+  );
 
   const filterValue = container.querySelector('[data-test="filter-geo"]');
   expect(filterValue).toBeInTheDocument();
 });
 
 test('render string field', () => {
-  const filter:Filter = {
+  const filter: Filter = {
     propertyName: 'propertyName',
     propertyValue: 'propertyValue',
-    operator: 'eq'
-  }
+    operator: 'eq',
+  };
   const { container } = render(
-    <FilterValue
-      idx={0}
-      filter={filter}
-      onChange={() => true}
-    />
-  )
+    <FilterValue idx={0} filter={filter} onChange={() => true} />
+  );
 
   const filterValue = container.querySelector('[data-test="filter-input"]');
   expect(filterValue).toBeInTheDocument();
@@ -120,22 +98,17 @@ test('render string field', () => {
 
 test('calls "onChange" handler', () => {
   const mockFn = jest.fn();
-  const filter:Filter = {
+  const filter: Filter = {
     propertyName: 'propertyName',
     propertyValue: 'propertyValue',
-    operator: 'eq'
-  }
+    operator: 'eq',
+  };
   const { container } = render(
-    <FilterValue
-      idx={0}
-      filter={filter}
-      onChange={mockFn}
-    />
-  )
+    <FilterValue idx={0} filter={filter} onChange={mockFn} />
+  );
 
   const input = container.querySelector('[data-test="filter-input"]');
   fireEvent.change(input, { target: { value: '1' } });
 
   expect(mockFn).toHaveBeenCalled();
 });
-

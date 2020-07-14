@@ -61,9 +61,7 @@ const Editor: FC<Props> = ({
         ) : (
           <VisualizationPlaceholder isLoading={isQueryLoading} />
         )}
-        {runQueryError && (
-          <Alert type="error">{this.props.runQueryError.body}</Alert>
-        )}
+        {runQueryError && <Alert type="error">{runQueryError.body}</Alert>}
         <EditorActions>
           <RunQuery isLoading={isQueryLoading} onClick={onRunQuery}>
             {runQueryLabel(query)}

@@ -19,6 +19,12 @@ export type PreloadedState = {
   savedQuery: SavedQueryState;
 };
 
+export type APIError = {
+  error_code: string;
+  body: string;
+  status: number;
+};
+
 export type Metadata = {
   displayName?: string;
 };

@@ -16,13 +16,15 @@ import {
   RESET_QUERY_RESULTS,
 } from './constants';
 
+import { APIError } from '../../types';
+
 export type ReducerState = {
   results: any;
   isLoading: boolean;
   isSavingQuery: boolean;
   saved: any[];
   isLimited: boolean;
-  error: Error | null;
+  error: APIError | null;
 };
 
 export interface ResetQueryResultsAction {
@@ -122,7 +124,7 @@ export interface RunQuerySuccessAction {
 export interface RunQueryErrorAction {
   type: typeof RUN_QUERY_ERROR;
   payload: {
-    error: Error;
+    error: APIError;
   };
 }
 

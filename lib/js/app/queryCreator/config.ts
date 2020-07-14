@@ -117,6 +117,6 @@ export const FIELDS_CONFIG: QueryCreatorConfig = {
     'percentile',
     'standard_deviation',
     'extraction',
-    'select_unique'
+    'select_unique',
   ],
 };

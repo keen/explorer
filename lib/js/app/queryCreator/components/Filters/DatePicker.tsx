@@ -15,7 +15,7 @@ type Props = {
   onChange: (idx: number, value: string) => void;
 };
 
-const DatePicker: FC<Props> = ({ idx, initialDate, onChange}) => {
+const DatePicker: FC<Props> = ({ idx, initialDate, onChange }) => {
   const [startFocus, setStartFocus] = useState(false);
   const startDate = moment.utc(initialDate);
 
@@ -45,6 +45,6 @@ const DatePicker: FC<Props> = ({ idx, initialDate, onChange}) => {
       />
     </div>
   );
-}
+};
 
 export default DatePicker;
