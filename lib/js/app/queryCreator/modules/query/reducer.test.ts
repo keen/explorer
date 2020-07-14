@@ -170,7 +170,9 @@ test('set event collection', () => {
 });
 
 test('set filters', () => {
-  const filters = [{"propertyName":"state","operator":"ne","propertyValue":"Arizona"}] as Filter[];
+  const filters = [
+    { propertyName: 'state', operator: 'ne', propertyValue: 'Arizona' },
+  ] as Filter[];
 
   const action = setFilters(filters);
   const state = queryReducer(initialState, action);

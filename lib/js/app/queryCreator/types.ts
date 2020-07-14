@@ -80,7 +80,7 @@ export type Timezones =
   | 'Pacific/Auckland'
   | 'UTC';
 
-export type Operator = 
+export type Operator =
   | 'or'
   | 'eq'
   | 'ne'
@@ -95,7 +95,7 @@ export type Operator =
   | 'within'
   | 'regex';
 
-export type PropertyType = 
+export type PropertyType =
   | 'String'
   | 'Number'
   | 'Datetime'
@@ -109,4 +109,4 @@ export type Filter = {
   operator: Operator;
   propertyValue: any;
   propertyType?: PropertyType;
-}
+};

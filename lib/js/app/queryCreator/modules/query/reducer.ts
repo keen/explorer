@@ -39,6 +39,7 @@ export const initialState: ReducerState = {
   timeframe: DEFAULT_TIMEFRAME,
   analysisType: DEFAULT_ANALYSIS,
   steps: [],
+  filters: [],
   propertyNames: undefined,
   latest: undefined,
   email: undefined,

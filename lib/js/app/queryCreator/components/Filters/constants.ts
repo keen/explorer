@@ -1,4 +1,4 @@
-export const ADD_FILTER= '@filters/ADD_FILTER';
+export const ADD_FILTER = '@filters/ADD_FILTER';
 export const UPDATE_FILTER = '@filters/UPDATE_FILTER';
 export const REMOVE_FILTER = '@filters/REMOVE_FILTER';
 export const RESET_FILTERS = '@filters/RESET_FILTERS';
@@ -11,7 +11,7 @@ export const DATA_TYPES = {
   list: 'List',
   null: 'Null',
   bool: 'Boolean',
-  geo: 'Geo'
+  geo: 'Geo',
 };
 
 export const SCHEMA_PROPS = {

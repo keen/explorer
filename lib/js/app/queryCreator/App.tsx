@@ -20,7 +20,7 @@ import {
   Limit,
   Percentile,
   FunnelSteps,
-  FiltersContainer
+  FiltersContainer,
 } from './components';
 import { showField } from './utils/showField';
 
@@ -121,7 +121,11 @@ const App: FC<Props> = ({ onPreviewCollection }) => {
       {showField('limit', analysis) && <Limit />}
       {showField('filters', analysis) && (
         <Accordion renderHeader={() => <div>Filters</div>}>
-          <FiltersContainer collection={collection} filters={filters} onChange={(filters) => dispatch(setFilters(filters))} />
+          <FiltersContainer
+            collection={collection}
+            filters={filters}
+            onChange={(filters) => dispatch(setFilters(filters))}
+          />
         </Accordion>
       )}
     </div>

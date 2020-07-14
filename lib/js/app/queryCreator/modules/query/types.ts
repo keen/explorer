@@ -162,8 +162,8 @@ export interface SetLimitAction {
 export interface SetFiltersAction {
   type: typeof SET_FILTERS;
   payload: {
-    filters: Filter[]
-  }
+    filters: Filter[];
+  };
 }
 
 export interface AddFunnelStepAction {

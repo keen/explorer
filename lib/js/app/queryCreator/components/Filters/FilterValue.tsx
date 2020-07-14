@@ -15,21 +15,26 @@ type Props = {
   /** Filter */
   filter: Filter;
   /** Onchange handler */
-  onChange: (idx: number, value: string|Coordinates) => void;
+  onChange: (idx: number, value: string | Coordinates) => void;
 };
 
 const getInputValue = (filter: Filter) => {
-  if (filter?.propertyValue && typeof filter?.propertyValue === 'string') return filter.propertyValue;
+  if (filter?.propertyValue && typeof filter?.propertyValue === 'string')
+    return filter.propertyValue;
   return '';
 };
 
 const getSelectValue = (options: any, filter: Filter) => {
   if (filter?.propertyValue) {
-    const value = options.filter(option => option.value === filter.propertyValue);
-    return value.length ? { label: filter.propertyValue, value: filter.propertyValue } : null;
+    const value = options.filter(
+      (option) => option.value === filter.propertyValue
+    );
+    return value.length
+      ? { label: filter.propertyValue, value: filter.propertyValue }
+      : null;
   }
   return null;
-}
+};
 
 const FilterValue: FC<Props> = ({ idx, filter, onChange }) => {
   const propertyType = filter?.propertyType || getTypeFromValue(filter);
@@ -41,7 +46,7 @@ const FilterValue: FC<Props> = ({ idx, filter, onChange }) => {
         variant="solid"
         placeholder="Value"
         value={getInputValue(filter)}
-        onChange={(e) => onChange(idx, e.target.value )}
+        onChange={(e) => onChange(idx, e.target.value)}
       />
     );
   }
@@ -58,7 +63,7 @@ const FilterValue: FC<Props> = ({ idx, filter, onChange }) => {
           variant="solid"
           placeholder={'Select property type'}
           options={BooleanOptions}
-          onChange={({ value }: { value: string }) => onChange(idx, value )}
+          onChange={({ value }: { value: string }) => onChange(idx, value)}
           value={getSelectValue(BooleanOptions, filter)}
         />
       </div>
@@ -67,26 +72,25 @@ const FilterValue: FC<Props> = ({ idx, filter, onChange }) => {
 
   if (propertyType === DATA_TYPES['null']) {
     return (
-    <Input
-      data-test="filter-disabled"
-      disabled
-      variant="solid"
-      value={'null'}
-    />
+      <Input
+        data-test="filter-disabled"
+        disabled
+        variant="solid"
+        value={'null'}
+      />
     );
   }
 
   if (propertyType === DATA_TYPES['datetime']) {
-    const initialDate = filter?.propertyValue || DEFAULT_TIMEFRAME_ABSOLUTE_VALUE
+    const initialDate =
+      filter?.propertyValue || DEFAULT_TIMEFRAME_ABSOLUTE_VALUE;
     return (
       <DatePicker
         idx={idx}
         initialDate={initialDate}
-        onChange={
-          (idx, value) => onChange(idx, value)
-        }
+        onChange={(idx, value) => onChange(idx, value)}
       />
-    )
+    );
   }
 
   if (propertyType === DATA_TYPES['geo']) {
@@ -96,7 +100,7 @@ const FilterValue: FC<Props> = ({ idx, filter, onChange }) => {
         filter={filter}
         onChange={(idx, value) => onChange(idx, value)}
       />
-    )
+    );
   }
 
   return (
@@ -108,6 +112,6 @@ const FilterValue: FC<Props> = ({ idx, filter, onChange }) => {
       onChange={(e) => onChange(idx, e.target.value)}
     />
   );
-}
+};
 
 export default FilterValue;

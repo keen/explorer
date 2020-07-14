@@ -1,4 +1,3 @@
-
 import React, { FC } from 'react';
 import { Input } from '@keen.io/ui-core';
 
@@ -14,17 +13,17 @@ type Props = {
   onChange: (idx: number, value: Coordinates) => void;
 };
 
-const GeoCoordinates: FC<Props> = ({idx, filter, onChange }) => {
+const GeoCoordinates: FC<Props> = ({ idx, filter, onChange }) => {
   let newPropertyValue = {
     coordinates: [undefined, undefined],
     maxDistanceMiles: undefined,
   };
   if (filter?.propertyValue && typeof filter?.propertyValue === 'object') {
     newPropertyValue = {
-      ...filter.propertyValue
-    }
+      ...filter.propertyValue,
+    };
   }
-  const [ long = '', lat = '' ] = newPropertyValue?.coordinates;
+  const [long = '', lat = ''] = newPropertyValue?.coordinates;
   const radius = newPropertyValue?.maxDistanceMiles || '';
   return (
     <div data-test="filter-geo">
@@ -34,10 +33,12 @@ const GeoCoordinates: FC<Props> = ({idx, filter, onChange }) => {
         placeholder="Longitude"
         value={long}
         onChange={(e) => {
-          const value:Coordinates = { coordinates: [e.target.value, lat], maxDistanceMiles: radius };
+          const value: Coordinates = {
+            coordinates: [e.target.value, lat],
+            maxDistanceMiles: radius,
+          };
           onChange(idx, value);
-          }
-        }
+        }}
       />
       <Input
         type="number"
@@ -45,10 +46,12 @@ const GeoCoordinates: FC<Props> = ({idx, filter, onChange }) => {
         placeholder="Latitude"
         value={lat}
         onChange={(e) => {
-          const value:Coordinates = { coordinates: [long, e.target.value], maxDistanceMiles: radius };
+          const value: Coordinates = {
+            coordinates: [long, e.target.value],
+            maxDistanceMiles: radius,
+          };
           onChange(idx, value);
-        }
-      }
+        }}
       />
       <Input
         type="number"
@@ -56,13 +59,15 @@ const GeoCoordinates: FC<Props> = ({idx, filter, onChange }) => {
         placeholder="Radius [in miles]"
         value={radius}
         onChange={(e) => {
-          const value:Coordinates = { coordinates: [long, lat], maxDistanceMiles: e.target.value };
+          const value: Coordinates = {
+            coordinates: [long, lat],
+            maxDistanceMiles: e.target.value,
+          };
           onChange(idx, value);
-          }
-        }
+        }}
       />
     </div>
-  )
-}
+  );
+};
 
 export default GeoCoordinates;

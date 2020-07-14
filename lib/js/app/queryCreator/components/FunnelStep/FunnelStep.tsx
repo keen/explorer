@@ -15,7 +15,12 @@ import { getCollectionSchema } from '../../modules/events';
 
 import text from './text.json';
 
-import { FunnelStep, AppState, Timeframe as TimeframeType, Filter } from '../../types';
+import {
+  FunnelStep,
+  AppState,
+  Timeframe as TimeframeType,
+  Filter,
+} from '../../types';
 
 type Props = {
   /** Funnel step index */
@@ -116,10 +121,8 @@ const FunnelStep: FC<Props> = ({
       <FiltersContainer
         collection={eventCollection}
         filters={filters}
-        onChange={(filters:Filter[]) =>
-          dispatch(updateStep({ filters }))
-        } 
-        />
+        onChange={(filters: Filter[]) => dispatch(updateStep({ filters }))}
+      />
       <div>
         <Label htmlFor={`optional-step-${index}`}>
           <Checkbox
