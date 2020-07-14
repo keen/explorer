@@ -16,6 +16,7 @@ import {
   getExtractionEmail,
   getExtractionEncoding,
   getExtractionPropertyNames,
+  getFilters,
 } from './selectors';
 
 import {
@@ -35,6 +36,7 @@ import {
   setExtractionContentEncoding,
   setPropertyNames,
   setTimeframe,
+  setFilters,
   addFunnelStep,
   updateFunnelStep,
   updateFunnelStepEventCollection,
@@ -73,6 +75,7 @@ export {
   getLimit,
   getInterval,
   getTimeframe,
+  getFilters,
   setTimeframe,
   setGroupBy,
   setOrderBy,
@@ -84,6 +87,7 @@ export {
   setQuery,
   setPropertyNames,
   setPercentile,
+  setFilters,
   selectTimezone,
   addFunnelStep,
   updateFunnelStep,

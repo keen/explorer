@@ -5,6 +5,7 @@ import { FieldGroup } from '@keen.io/forms';
 
 import EventCollection from '../EventCollection';
 import Timeframe from '../Timeframe';
+import FiltersContainer from '../Filters';
 
 import {
   updateFunnelStep,
@@ -14,7 +15,7 @@ import { getCollectionSchema } from '../../modules/events';
 
 import text from './text.json';
 
-import { FunnelStep, AppState, Timeframe as TimeframeType } from '../../types';
+import { FunnelStep, AppState, Timeframe as TimeframeType, Filter } from '../../types';
 
 type Props = {
   /** Funnel step index */
@@ -33,6 +34,8 @@ type Props = {
   optional: boolean;
   /** Use actors properties */
   withActors: boolean;
+  /** Funnel filers */
+  filters: Filter[];
 };
 
 const FunnelStep: FC<Props> = ({
@@ -43,6 +46,7 @@ const FunnelStep: FC<Props> = ({
   optional,
   inverted,
   withActors,
+  filters = [],
   onRemove,
 }) => {
   const dispatch = useDispatch();
@@ -109,6 +113,13 @@ const FunnelStep: FC<Props> = ({
           }
         />
       </FieldGroup>
+      <FiltersContainer
+        collection={eventCollection}
+        filters={filters}
+        onChange={(filters:Filter[]) =>
+          dispatch(updateStep({ filters }))
+        } 
+        />
       <div>
         <Label htmlFor={`optional-step-${index}`}>
           <Checkbox

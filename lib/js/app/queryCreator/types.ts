@@ -23,7 +23,8 @@ export type CreatorFields =
   | 'propertyNames'
   | 'latest'
   | 'email'
-  | 'contentEncoding';
+  | 'contentEncoding'
+  | 'filters';
 
 type FieldRule = ('*' | Analysis)[];
 
@@ -49,7 +50,7 @@ export type FunnelStep = {
   timeframe: Timeframe;
   timezone?: Timezones | number;
   withActors: boolean;
-  filters: any[];
+  filters: Filter[];
 };
 
 export type Timezones =
@@ -78,3 +79,34 @@ export type Timezones =
   | 'Europe/Istanbul'
   | 'Pacific/Auckland'
   | 'UTC';
+
+export type Operator = 
+  | 'or'
+  | 'eq'
+  | 'ne'
+  | 'lt'
+  | 'lte'
+  | 'gt'
+  | 'gte'
+  | 'exists'
+  | 'in'
+  | 'contains'
+  | 'not_contains'
+  | 'within'
+  | 'regex';
+
+export type PropertyType = 
+  | 'String'
+  | 'Number'
+  | 'Datetime'
+  | 'List'
+  | 'Geo'
+  | 'Null'
+  | 'Boolean';
+
+export type Filter = {
+  propertyName: string;
+  operator: Operator;
+  propertyValue: any;
+  propertyType?: PropertyType;
+}

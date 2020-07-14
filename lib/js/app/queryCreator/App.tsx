@@ -20,6 +20,7 @@ import {
   Limit,
   Percentile,
   FunnelSteps,
+  FiltersContainer
 } from './components';
 import { showField } from './utils/showField';
 
@@ -29,6 +30,8 @@ import {
   getPercentile,
   getEventCollection,
   getAnalysis,
+  getFilters,
+  setFilters,
   setPercentile,
   getTimeframe,
   setTimeframe,
@@ -46,6 +49,7 @@ const App: FC<Props> = ({ onPreviewCollection }) => {
   const collection = useSelector(getEventCollection);
   const percentile = useSelector(getPercentile);
   const timeframe = useSelector(getTimeframe);
+  const filters = useSelector(getFilters);
 
   return (
     <div>
@@ -115,6 +119,11 @@ const App: FC<Props> = ({ onPreviewCollection }) => {
       )}
       {showField('interval', analysis) && <Interval />}
       {showField('limit', analysis) && <Limit />}
+      {showField('filters', analysis) && (
+        <Accordion renderHeader={() => <div>Filters</div>}>
+          <FiltersContainer collection={collection} filters={filters} onChange={(filters) => dispatch(setFilters(filters))} />
+        </Accordion>
+      )}
     </div>
   );
 };

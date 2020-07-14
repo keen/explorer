@@ -27,6 +27,7 @@ const FunnelSteps: FC<{}> = () => {
             optional,
             withActors,
             actorProperty,
+            filters,
           },
           idx
         ) => (
@@ -39,6 +40,7 @@ const FunnelSteps: FC<{}> = () => {
             inverted={inverted}
             optional={optional}
             withActors={withActors}
+            filters={filters}
             onRemove={() => dispatch(removeFunnelStep(idx))}
           />
         )

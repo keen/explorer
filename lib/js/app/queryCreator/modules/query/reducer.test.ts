@@ -15,6 +15,7 @@ import {
   setGroupBy,
   setOrderBy,
   setInterval,
+  setFilters,
   selectAnalysis,
   selectTargetProperty,
   selectEventCollection,
@@ -23,7 +24,7 @@ import {
 import { DEFAULT_FUNNEL_STEP } from './constants';
 
 import { ReducerState } from './types';
-import { OrderBy } from '../../types';
+import { OrderBy, Filter } from '../../types';
 
 test('reset extraction properties to initial state', () => {
   const action = resetExtraction();
@@ -166,6 +167,15 @@ test('set event collection', () => {
   const state = queryReducer(initialState, action);
 
   expect(state.eventCollection).toEqual(collection);
+});
+
+test('set filters', () => {
+  const filters = [{"propertyName":"state","operator":"ne","propertyValue":"Arizona"}] as Filter[];
+
+  const action = setFilters(filters);
+  const state = queryReducer(initialState, action);
+
+  expect(state.filters).toEqual(filters);
 });
 
 test('update funnel step', () => {
