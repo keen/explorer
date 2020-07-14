@@ -1,4 +1,4 @@
-import React, { FC, useMemo, useReducer } from 'react';
+import React, { FC, useMemo, useReducer, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
 import { Button, Select } from '@keen.io/ui-core';
@@ -58,6 +58,15 @@ const Filters: FC<Props> = ({ collection, filters, onChange }) => {
   }, [collectionSchema]);
 
   const [state, filtersDispatcher] = useReducer(filtersReducer, filters);
+
+  useEffect(() => {
+    filters.map((filter, idx) => {
+      if (!filter?.propertyType) {
+        const type = getPropertyType(filter);
+        if (type?.value) filtersDispatcher(updateFilter(idx, { propertyType: type.value }));
+      }
+    })
+  }, [filters]);
 
   const setDefaults = (idx: number, type: PropertyType, value?: any) => {
     if (type === 'Null')
