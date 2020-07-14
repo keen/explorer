@@ -1,5 +1,3 @@
-import { ReducerState as SavedQueryState } from './modules/savedQuery';
-
 export type Analysis =
   | 'sum'
   | 'average'
@@ -13,11 +11,6 @@ export type Analysis =
   | 'funnel'
   | 'extraction'
   | 'select_unique';
-
-export type PreloadedState = {
-  ui: any;
-  savedQuery: SavedQueryState;
-};
 
 export type APIError = {
   error_code: string;

@@ -9,7 +9,7 @@ import ShareQuery from '../ShareQuery';
 import RunQuery, { runQueryLabel } from '../RunQuery';
 import QueryVisualization from '../QueryVisualization';
 import VisualizationPlaceholder from '../VisualizationPlaceholder';
-import APIQueryURL from '../explorer/APIQueryURL';
+import APIQueryUrl from '../APIQueryUrl';
 
 import {
   getQueryResults,
@@ -54,7 +54,7 @@ const Editor: FC<Props> = ({
         Back to list
       </Button>
       <Creator onUpdateQuery={onUpdateQuery} />
-      <APIQueryURL queryParams={query} client={keenAnalysis} />
+      <APIQueryUrl query={query} keenAnalysis={keenAnalysis} />
       <section>
         {queryResults ? (
           <QueryVisualization query={query} queryResults={queryResults} />
