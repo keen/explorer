@@ -104,24 +104,28 @@ const Filters: FC<Props> = ({ collection, filters, onChange }) => {
                 ? { label: item.propertyName, value: item.propertyName }
                 : null
             }
-        />
-        <Select
-          variant="solid"
-          placeholder={'Select property type'}
-          options={dataTypes}
-          onChange={(type) => {
-            filtersDispatcher(updateFilter(idx, { propertyType: type.value }));
-            setDefaults(idx, type.value, item?.propertyValue );
-            
-            if (item?.operator) {
-              const operatorOptions = getOperatorOptions(type);
-              const isOperatorAvailable = operatorOptions.some(option => option.value === item.operator);
-              if (!isOperatorAvailable) {
-                filtersDispatcher(updateFilter(idx, { operator: null }));
+          />
+          <Select
+            variant="solid"
+            placeholder={'Select property type'}
+            options={dataTypes}
+            onChange={(type) => {
+              filtersDispatcher(
+                updateFilter(idx, { propertyType: type.value })
+              );
+              setDefaults(idx, type.value, item?.propertyValue);
+
+              if (item?.operator) {
+                const operatorOptions = getOperatorOptions(type);
+                const isOperatorAvailable = operatorOptions.some(
+                  (option) => option.value === item.operator
+                );
+                if (!isOperatorAvailable) {
+                  filtersDispatcher(updateFilter(idx, { operator: null }));
+                }
               }
             }}
-          }
-          value={getPropertyType(item)}
+            value={getPropertyType(item)}
           />
           <Select
             variant="solid"
