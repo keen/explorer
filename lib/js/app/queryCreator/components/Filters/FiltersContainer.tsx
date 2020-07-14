@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useState, useEffect } from 'react';
 import { Button } from '@keen.io/ui-core';
 import Filters from './Filters';
 
@@ -13,15 +13,22 @@ type Props = {
   onChange: (filters: Filter[]) => void;
 };
 
-export const FiltersContainer: FC<Props> = ({ collection, filters, onChange }) => {
+export const FiltersContainer: FC<Props> = ({ collection, filters=[], onChange }) => {
   const [isEdited, setIsEdited] = useState(false);
   const [localFilters, setLocalFilters] = useState(filters);
 
+  
   const handleChange = (filters:Filter[]) => {
     setLocalFilters(filters);
     setIsEdited(false);
     onChange(filters);
   }
+  
+  useEffect(() => {
+    return () => {
+      handleChange([]);
+    }
+  }, []);
 
   return (
     <>

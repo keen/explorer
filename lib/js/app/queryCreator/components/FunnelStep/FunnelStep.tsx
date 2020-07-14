@@ -34,6 +34,8 @@ type Props = {
   optional: boolean;
   /** Use actors properties */
   withActors: boolean;
+  /** Funnel filers */
+  filters: Filter[];
 };
 
 const FunnelStep: FC<Props> = ({
@@ -44,6 +46,7 @@ const FunnelStep: FC<Props> = ({
   optional,
   inverted,
   withActors,
+  filters = [],
   onRemove,
 }) => {
   const dispatch = useDispatch();
@@ -112,7 +115,7 @@ const FunnelStep: FC<Props> = ({
       </FieldGroup>
       <FiltersContainer
         collection={eventCollection}
-        filters={[]}
+        filters={filters}
         onChange={(filters:Filter[]) =>
           dispatch(updateStep({ filters }))
         } 
