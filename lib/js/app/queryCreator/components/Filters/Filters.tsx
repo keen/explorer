@@ -92,9 +92,9 @@ const Filters: FC<Props> = ({ collection, filters, onChange }) => {
           variant="solid"
           placeholder={'Select property type'}
           options={dataTypes}
-          onChange={({ type }: { type: PropertyType }) => {
-            filtersDispatcher(updateFilter(idx, { propertyType: type }));
-            setDefaults(idx, type, item?.propertyValue );
+          onChange={(type) => {
+            filtersDispatcher(updateFilter(idx, { propertyType: type.value }));
+            setDefaults(idx, type.value, item?.propertyValue );
             
             if (item?.operator) {
               const operatorOptions = getOperatorOptions(type);
