@@ -2,7 +2,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import snakeCase from 'snakecase-keys';
-import { Alert } from '@keen.io/ui-core';
 import { getPubSub } from '@keen.io/pubsub';
 
 import { fetchProject, fetchSchema } from '../redux/actionCreators/client';
@@ -12,12 +11,14 @@ import {
   deleteQuery,
   saveQuery,
   resetQueryResults,
-  getError,
   fetchSavedQueries,
   getQueryResults,
-  getQueryPerformState,
 } from '../modules/queries';
-import { resetSavedQuery, selectSavedQuery } from '../modules/savedQuery';
+import {
+  getSavedQuery,
+  resetSavedQuery,
+  selectSavedQuery,
+} from '../modules/savedQuery';
 import {
   loadPersitedState,
   getViewMode,
@@ -27,33 +28,22 @@ import {
   editQuery,
 } from '../modules/app';
 
-import APIQueryURL from './explorer/APIQueryURL';
+import { AppState } from '../modules/types';
 
 import Browser from './Browser';
-import Creator from './Creator';
+import Editor from './Editor';
 import QuerySettings from './QuerySettings';
-import QueryVisualization from './QueryVisualization';
-import VisualizationPlaceholder from './VisualizationPlaceholder';
-import ShareQuery from './ShareQuery';
-import RunQuery, { runQueryLabel } from './RunQuery';
 import Confirm from './Confirm';
 
 import { QueryActions, SettingsContainer } from './App.styles';
 
 import { NEW_QUERY_EVENT, CACHE_AVAILABLE } from '../consts';
 
-import { client } from '../KeenExplorer';
-
-const mapStateToProps = (state, props) => ({
-  collections: state.collections,
-  queries: state.queries,
-  eventCollection: state.ui.eventCollection,
-  savedQuery: state.savedQuery,
-  view: getViewMode(state),
-  isQueryLoading: getQueryPerformState(state),
-  queryResults: getQueryResults(state),
-  queryError: getError(state),
+const mapStateToProps = (state: AppState) => ({
+  savedQuery: getSavedQuery(state),
   widget: getVisualizationType(state),
+  view: getViewMode(state),
+  queryResults: getQueryResults(state),
 });
 
 const mapDispatchToProps = {
@@ -103,8 +93,6 @@ class App extends Component {
   }
 
   render() {
-    console.log('---', this.state.query);
-
     return (
       <div>
         {this.props.view === 'browser' && (
@@ -124,45 +112,19 @@ class App extends Component {
         )}
         {this.props.view === 'editor' && (
           <div>
+            <Editor
+              query={this.state.query}
+              onRunQuery={() => this.props.runQuery(this.state.query)}
+              onShareQuery={() =>
+                this.props.copyShareUrl(this.state.query, this.props.savedQuery)
+              }
+              onUpdateQuery={(query) => {
+                console.log(query, '--- query update');
+                this.setState({ query });
+              }}
+            />
             <div>
-              <Creator
-                onUpdateQuery={(query) => {
-                  console.log(query, '--- query update');
-                  this.setState({ query });
-                }}
-              />
-              <APIQueryURL queryParams={this.state.query} client={client} />
-            </div>
-
-            <div className="result">
-              {this.props.queryResults ? (
-                <QueryVisualization
-                  query={this.state.query}
-                  queryResults={this.props.queryResults}
-                />
-              ) : (
-                <VisualizationPlaceholder
-                  isLoading={this.props.isQueryLoading}
-                />
-              )}
-              {this.props.queryError && (
-                <Alert type="error">{this.props.queryError.body}</Alert>
-              )}
               <QueryActions>
-                <RunQuery
-                  isLoading={this.props.isQueryLoading}
-                  onClick={() => this.props.runQuery(this.state.query)}
-                >
-                  {runQueryLabel(this.state.query)}
-                </RunQuery>
-                <ShareQuery
-                  onShareQuery={() =>
-                    this.props.copyShareUrl(
-                      this.state.query,
-                      this.props.savedQuery
-                    )
-                  }
-                />
                 <SettingsContainer>
                   <QuerySettings
                     cacheAvailable={CACHE_AVAILABLE.includes(

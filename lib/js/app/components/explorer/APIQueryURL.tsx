@@ -1,7 +1,6 @@
 // @ts-nocheck
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
 
 import { TIMEZONES } from '../../consts';
 import { copyToClipboard } from '../../utils/text';
@@ -10,9 +9,14 @@ const mapStateToProps = (state) => ({
   analysisType: state.ui.analysisType,
 });
 
+type Props = {
+  queryParams: Object;
+  client: any;
+};
+
 const mapDispatchToProps = {};
 
-class APIQueryURL extends Component {
+class APIQueryURL extends Component<Props> {
   render() {
     const { analysisType, queryParams, client } = this.props;
 
@@ -78,11 +82,5 @@ class APIQueryURL extends Component {
     );
   }
 }
-
-APIQueryURL.propTypes = {
-  queryParams: PropTypes.shape({}).isRequired,
-  analysisType: PropTypes.string.isRequired,
-  client: PropTypes.shape({}).isRequired,
-};
 
 export default connect(mapStateToProps, mapDispatchToProps)(APIQueryURL);
