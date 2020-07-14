@@ -1,4 +1,4 @@
-import React, { FC, useMemo, useCallback } from 'react';
+import React, { FC, useMemo, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Label, Select, Button, Checkbox, Title } from '@keen.io/ui-core';
 import { FieldGroup } from '@keen.io/forms';
@@ -7,11 +7,11 @@ import EventCollection from '../EventCollection';
 import Timeframe from '../Timeframe';
 import FiltersContainer from '../Filters';
 
+import { updateFunnelStep } from '../../modules/query';
 import {
-  updateFunnelStep,
-  updateFunnelStepEventCollection,
-} from '../../modules/query';
-import { getCollectionSchema } from '../../modules/events';
+  fetchCollectionSchema,
+  getCollectionSchema,
+} from '../../modules/events';
 
 import text from './text.json';
 
@@ -59,6 +59,12 @@ const FunnelStep: FC<Props> = ({
     getCollectionSchema(state, eventCollection)
   );
 
+  useEffect(() => {
+    if (eventCollection && !collectionSchema) {
+      dispatch(fetchCollectionSchema(eventCollection));
+    }
+  }, [collectionSchema, eventCollection]);
+
   const actorPropertyOptions = useMemo(() => {
     if (collectionSchema) {
       return Object.keys(collectionSchema).map((propertyName) => ({
@@ -81,7 +87,6 @@ const FunnelStep: FC<Props> = ({
       <EventCollection
         collection={eventCollection}
         onChange={(collection) => {
-          dispatch(updateFunnelStepEventCollection(collection));
           updateStep({ eventCollection: collection, actorProperty: undefined });
         }}
       />

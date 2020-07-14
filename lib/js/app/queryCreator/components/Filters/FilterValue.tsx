@@ -18,7 +18,8 @@ type Props = {
   onChange: (idx: number, value: string | Coordinates) => void;
 };
 
-const getInputValue = (filter: Filter) => filter?.propertyValue ? filter.propertyValue.toString() : '';
+const getInputValue = (filter: Filter) =>
+  filter?.propertyValue ? filter.propertyValue.toString() : '';
 
 const getSelectValue = (options: any, filter: Filter) => {
   if (filter?.propertyValue) {

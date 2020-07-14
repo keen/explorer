@@ -63,9 +63,10 @@ const Filters: FC<Props> = ({ collection, filters, onChange }) => {
     filters.map((filter, idx) => {
       if (!filter?.propertyType) {
         const type = getPropertyType(filter);
-        if (type?.value) filtersDispatcher(updateFilter(idx, { propertyType: type.value }));
+        if (type?.value)
+          filtersDispatcher(updateFilter(idx, { propertyType: type.value }));
       }
-    })
+    });
   }, [filters]);
 
   const setDefaults = (idx: number, type: PropertyType, value?: any) => {

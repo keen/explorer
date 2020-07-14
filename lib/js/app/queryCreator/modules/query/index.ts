@@ -39,7 +39,6 @@ import {
   setFilters,
   addFunnelStep,
   updateFunnelStep,
-  updateFunnelStepEventCollection,
   removeFunnelStep,
   resetExtraction,
 } from './actions';
@@ -54,7 +53,6 @@ import {
   ReducerState,
   SetQueryAction,
   SelectEventCollectionAction,
-  UpdateFunnelStepEventCollectionAction,
 } from './types';
 
 export {
@@ -91,7 +89,6 @@ export {
   selectTimezone,
   addFunnelStep,
   updateFunnelStep,
-  updateFunnelStepEventCollection,
   removeFunnelStep,
   selectEventCollection,
   selectTargetProperty,
@@ -99,12 +96,7 @@ export {
   resetExtraction,
   resetQuery,
 };
-export {
-  SetQueryAction,
-  SelectEventCollectionAction,
-  UpdateFunnelStepEventCollectionAction,
-  ReducerState,
-};
+export { SetQueryAction, SelectEventCollectionAction, ReducerState };
 export {
   SET_QUERY,
   SELECT_EVENT_COLLECTION,
