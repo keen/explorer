@@ -1,10 +1,8 @@
 import React, { FC } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Icon } from '@keen.io/icons';
 import { FieldGroup } from '@keen.io/forms';
-import { colors } from '@keen.io/colors';
 
-import { PreviewCollections, PreviewLabel } from './App.styles';
+import { PreviewCollections, PreviewLabel, CoreProperties } from './App.styles';
 
 import {
   Accordion,
@@ -53,8 +51,14 @@ const App: FC<Props> = ({ onPreviewCollection }) => {
 
   return (
     <div>
-      {showField('eventCollection', analysis) && (
-        <FieldGroup data-test="event-collection">
+      <CoreProperties>
+        <Analysis
+          analysis={analysis}
+          onChange={(updatedAnalysis) =>
+            dispatch(selectAnalysis(updatedAnalysis))
+          }
+        />
+        {showField('eventCollection', analysis) && (
           <EventCollection
             collection={collection}
             onReset={() => dispatch(selectEventCollection(null))}
@@ -62,28 +66,22 @@ const App: FC<Props> = ({ onPreviewCollection }) => {
               dispatch(selectEventCollection(collection))
             }
           />
-          <PreviewCollections
-            onClick={() =>
-              onPreviewCollection && onPreviewCollection(collection)
-            }
-          >
-            <Icon type="eye-solid" fill={colors.blue['500']} />
-            <PreviewLabel>Preview Collections</PreviewLabel>
-          </PreviewCollections>
-        </FieldGroup>
-      )}
-      <Analysis
-        analysis={analysis}
-        onChange={(updatedAnalysis) =>
-          dispatch(selectAnalysis(updatedAnalysis))
-        }
-      />
-      {analysis === 'extraction' && <Extraction collection={collection} />}
-      {showField('targetProperty', analysis) && (
-        <FieldGroup>
+        )}
+        {showField('targetProperty', analysis) && (
           <TargetProperty collection={collection} />
-        </FieldGroup>
-      )}
+        )}
+        {showField('timeframe', analysis) && (
+          <Timeframe
+            id="timeframe"
+            value={timeframe}
+            onReset={() => dispatch(setTimeframe(DEFAULT_TIMEFRAME))}
+            onChange={(timeframe) => dispatch(setTimeframe(timeframe))}
+          />
+        )}
+      </CoreProperties>
+
+      {analysis === 'extraction' && <Extraction collection={collection} />}
+
       {showField('percentile', analysis) && (
         <FieldGroup>
           <Percentile
@@ -93,16 +91,7 @@ const App: FC<Props> = ({ onPreviewCollection }) => {
           />
         </FieldGroup>
       )}
-      {showField('timeframe', analysis) && (
-        <FieldGroup>
-          <Timeframe
-            id="timeframe"
-            value={timeframe}
-            onReset={() => dispatch(setTimeframe(DEFAULT_TIMEFRAME))}
-            onChange={(timeframe) => dispatch(setTimeframe(timeframe))}
-          />
-        </FieldGroup>
-      )}
+
       {showField('timezone', analysis) && typeof timeframe === 'string' && (
         <Timezone />
       )}

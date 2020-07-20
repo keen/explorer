@@ -15,3 +15,7 @@ export const PreviewCollections = styled.div`
 export const PreviewLabel = styled.span`
   margin-left: 5px;
 `;
+
+export const CoreProperties = styled.div`
+  display: flex;
+`;

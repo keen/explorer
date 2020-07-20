@@ -1,7 +1,13 @@
-import React, { FC, useMemo, useEffect } from 'react';
+import React, { FC, useState, useMemo, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { Label, Select } from '@keen.io/ui-core';
 
+import { Container, Collections } from './EventCollection.styles';
+
+import Dropdown from '../Dropdown';
+import DropdownList from '../DropdownList';
+import PropertyContainer from '../PropertyContainer';
+
+import { useSearch } from '../../hooks';
 import { getEventsCollections } from '../../modules/events';
 
 import text from './text.json';
@@ -16,6 +22,7 @@ type Props = {
 };
 
 const EventCollection: FC<Props> = ({ collection, onChange, onReset }) => {
+  const [isOpen, setOpen] = useState(false);
   const collections = useSelector(getEventsCollections);
   const options = useMemo(
     () =>
@@ -26,6 +33,19 @@ const EventCollection: FC<Props> = ({ collection, onChange, onReset }) => {
     [collections]
   );
 
+  const [collectionsList, setCollectionsList] = useState(options);
+
+  const { searchHandler } = useSearch<{ label: string; value: string }>(
+    options,
+    (searchResult) => {
+      setCollectionsList(searchResult);
+    }
+  );
+
+  useEffect(() => {
+    setCollectionsList(options);
+  }, [options]);
+
   useEffect(() => {
     return () => {
       if (onReset) onReset();
@@ -33,16 +53,30 @@ const EventCollection: FC<Props> = ({ collection, onChange, onReset }) => {
   }, []);
 
   return (
-    <>
-      <Label>{text.label}</Label>
-      <Select
-        variant="solid"
-        placeholder={text.placeholder}
-        onChange={({ value }: { value: string }) => onChange(value)}
-        value={collection ? { label: collection, value: collection } : null}
-        options={options}
+    <Container>
+      <PropertyContainer
+        onClick={() => !isOpen && setOpen(true)}
+        isActive={isOpen}
+        propertyLabel={text.label}
+        value={collection}
+        searchable
+        onSearch={searchHandler}
+        onDefocus={() => {
+          setOpen(false);
+        }}
       />
-    </>
+      <Dropdown isOpen={isOpen}>
+        <Collections>
+          <DropdownList
+            items={collectionsList}
+            onClick={(_e, { value }) => {
+              onChange(value);
+              setCollectionsList(options);
+            }}
+          />
+        </Collections>
+      </Dropdown>
+    </Container>
   );
 };
 

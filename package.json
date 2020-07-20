@@ -48,6 +48,7 @@
     "dom-to-image": "^2.6.0",
     "file-saver": "^2.0.2",
     "framer-motion": "^1.11.0",
+    "fuse.js": "^6.4.0",
     "json-stable-stringify": "1.0.0",
     "keen-analysis": "^3.4.2",
     "keen-dataviz": "^3.13.6",
