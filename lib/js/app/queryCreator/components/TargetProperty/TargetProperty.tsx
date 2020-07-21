@@ -1,10 +1,12 @@
-import React, { FC, useState, useEffect, useMemo } from 'react';
+import React, { FC, useState, useEffect, useRef, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Container } from './TargetProperty.styles';
+import { createCollection } from './utils/createCollection';
+import { createTree } from './utils/createTree';
 
 import Dropdown from '../Dropdown';
-import DropdownList from '../DropdownList';
+import PropertiesTree from '../PropertiesTree';
 import PropertyContainer from '../PropertyContainer';
 
 import { useSearch } from '../../hooks';
@@ -21,36 +23,46 @@ type Props = {
 };
 
 const TargetProperty: FC<Props> = ({ collection }) => {
+  const [propertiesTree, setPropertiesTree] = useState({});
   const [isOpen, setOpen] = useState(false);
+  const containerRef = useRef(null);
   const dispatch = useDispatch();
+
   const collectionSchema = useSelector((state: AppState) =>
     getCollectionSchema(state, collection)
   );
   const targetProperty = useSelector(getTargetProperty);
 
-  const options = useMemo(() => {
+  const { propertiesCollection } = useMemo(() => {
     if (collectionSchema) {
-      return Object.keys(collectionSchema).map((propertyName) => ({
-        label: propertyName,
-        value: propertyName,
-        type: collectionSchema[propertyName],
-      }));
+      return {
+        propertiesCollection: createCollection(collectionSchema),
+      };
     }
 
-    return [];
+    return {
+      propertiesCollection: [],
+    };
   }, [collectionSchema]);
-    const [propertiesList, setPropertiesList] = useState(options);
 
-    const { searchHandler } = useSearch<{ label: string; value: string, type: string }>(
-      options,
-      (searchResult) => {
-        setPropertiesList(searchResult);
-      },
-      {
-        keys: ['value', 'type'],
-        threshold: 0.4,
-      }
-    );
+  const { searchHandler } = useSearch<{
+    propertyPath: string;
+    propertyType: string;
+  }>(
+    propertiesCollection,
+    (searchResult) => {
+      const searchTree = {};
+      searchResult.forEach(({ propertyPath, propertyType }) => {
+        searchTree[propertyPath] = propertyType;
+      });
+
+      setPropertiesTree(createTree(searchTree));
+    },
+    {
+      keys: ['propertyPath', 'propertyType'],
+      threshold: 0.4,
+    }
+  );
 
   useEffect(() => {
     if (
@@ -64,11 +76,13 @@ const TargetProperty: FC<Props> = ({ collection }) => {
   }, [collection]);
 
   useEffect(() => {
-    setPropertiesList(options);
-  }, [options]);
+    if (collectionSchema) {
+      setPropertiesTree(createTree(collectionSchema));
+    }
+  }, [collectionSchema]);
 
   return (
-    <Container>
+    <Container ref={containerRef}>
       <PropertyContainer
         onClick={() => !isOpen && setOpen(true)}
         isActive={isOpen}
@@ -76,22 +90,22 @@ const TargetProperty: FC<Props> = ({ collection }) => {
         value={targetProperty}
         searchable
         onSearch={searchHandler}
-        onDefocus={() => {
-          setOpen(false);
+        onDefocus={(event: any) => {
+          if (!event.path.includes(containerRef.current)) {
+            setPropertiesTree(createTree(collectionSchema));
+            setOpen(false);
+          }
         }}
       />
-      <Dropdown isOpen={isOpen}>
-        <DropdownList
-          items={propertiesList}
-          renderItem={({ label, type }) => (
-            <>
-              <div>{label}</div>
-              <div>{type}</div>
-            </>
-          )}
-          onClick={(_e, { value }) => {
-            dispatch(selectTargetProperty(value));
+      <Dropdown isOpen={isOpen} data-dropdown="target-properties">
+        <PropertiesTree
+          data-dropdown="targeter"
+          onClick={(_e, property) => {
+            setOpen(false);
+            dispatch(selectTargetProperty(property));
+            setPropertiesTree(createTree(collectionSchema));
           }}
+          properties={propertiesTree}
         />
       </Dropdown>
     </Container>

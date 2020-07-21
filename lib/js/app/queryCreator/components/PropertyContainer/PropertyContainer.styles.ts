@@ -5,6 +5,7 @@ export const Container = styled.div`
   display: flex;
   padding: 10px;
   background: ${colors.gray[100]};
+  position: relative;
 `;
 
 export const Input = styled.input`

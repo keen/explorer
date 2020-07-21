@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { FieldGroup } from '@keen.io/forms';
 
-import { PreviewCollections, PreviewLabel, CoreProperties } from './App.styles';
+import { CoreProperties } from './App.styles';
 
 import {
   Accordion,

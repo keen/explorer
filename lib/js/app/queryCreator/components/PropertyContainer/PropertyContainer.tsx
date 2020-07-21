@@ -12,7 +12,7 @@ type Props = {
   /** Click event handler */
   onClick: (e: React.MouseEvent<HTMLDivElement>) => void;
   /** Container defocus event handler */
-  onDefocus: () => void;
+  onDefocus: (e: MouseEvent) => void;
   /** Search feature flag */
   searchable?: boolean;
   /** Search event handler */
@@ -36,7 +36,7 @@ const PropertyContainer: FC<Props> = ({
         containerRef.current &&
         !containerRef.current.contains(e.target)
       ) {
-        onDefocus();
+        onDefocus(e);
       }
     },
     [isActive, containerRef]
