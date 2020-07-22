@@ -54,7 +54,7 @@
     "keen-dataviz": "^3.13.6",
     "keen-tracking": "^4.4.0",
     "moment": "^2.22.2",
-    "moment-timezone": "^0.5.21",
+    "moment-timezone": "^0.5.31",
     "polished": "^3.6.3",
     "prismjs": "^1.16.0",
     "prop-types": "^15.7.2",

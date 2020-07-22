@@ -46,12 +46,15 @@ import {
 import {
   SET_QUERY,
   SELECT_EVENT_COLLECTION,
+  SELECT_TIMEZONE,
   UPDATE_FUNNEL_STEP_EVENT_COLLECTION,
+  DEFAULT_TIMEZONE,
   DEFAULT_TIMEFRAME,
 } from './constants';
 import {
   ReducerState,
   SetQueryAction,
+  SelectTimezoneAction,
   SelectEventCollectionAction,
 } from './types';
 
@@ -96,10 +99,17 @@ export {
   resetExtraction,
   resetQuery,
 };
-export { SetQueryAction, SelectEventCollectionAction, ReducerState };
+export {
+  SetQueryAction,
+  SelectTimezoneAction,
+  SelectEventCollectionAction,
+  ReducerState,
+};
 export {
   SET_QUERY,
   SELECT_EVENT_COLLECTION,
+  SELECT_TIMEZONE,
   UPDATE_FUNNEL_STEP_EVENT_COLLECTION,
   DEFAULT_TIMEFRAME,
+  DEFAULT_TIMEZONE,
 };

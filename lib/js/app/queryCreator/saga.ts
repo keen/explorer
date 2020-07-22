@@ -1,4 +1,5 @@
 import { all, select, takeLatest, getContext, put } from 'redux-saga/effects';
+import moment from 'moment-timezone';
 
 import {
   fetchProjectDetails,
@@ -9,9 +10,13 @@ import {
 } from './modules/app';
 
 import {
+  getTimeframe,
+  setTimeframe,
   SetQueryAction,
+  SelectTimezoneAction,
   SelectEventCollectionAction,
   SET_QUERY,
+  SELECT_TIMEZONE,
   SELECT_EVENT_COLLECTION,
 } from './modules/query';
 
@@ -69,6 +74,20 @@ function* selectCollection(action: SelectEventCollectionAction) {
   }
 }
 
+function* selectTimezone(action: SelectTimezoneAction) {
+  const { timezone } = action.payload;
+  const timeframe = yield select(getTimeframe);
+
+  if (typeof timeframe !== 'string') {
+    const { start, end } = timeframe;
+    const timeWithZone = {
+      start: moment(start).tz(timezone).format(),
+      end: moment(end).tz(timezone).format(),
+    };
+    yield put(setTimeframe(timeWithZone));
+  }
+}
+
 function* setQuery(action: SetQueryAction) {
   const {
     payload: { query },
@@ -82,6 +101,7 @@ function* watcher() {
   yield takeLatest(SET_QUERY, setQuery);
   yield takeLatest(FETCH_PROJECT_DETAILS, fetchProject);
   yield takeLatest(FETCH_COLLECTION_SCHEMA, fetchSchema);
+  yield takeLatest(SELECT_TIMEZONE, selectTimezone);
   yield takeLatest(SELECT_EVENT_COLLECTION, selectCollection);
 }
 

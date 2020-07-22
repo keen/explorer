@@ -1,4 +1,4 @@
 {
-  "shareLabel": "Share Query",
-  "shareSuccess": "Link copied to clipboard"
+  "label": "Share",
+  "copyMessage": "URL copied to clipboard"
 }

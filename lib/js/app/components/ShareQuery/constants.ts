@@ -1,1 +1,1 @@
-export const RESTORE_TIME = 3000;
+export const HIDE_TIME = 2000;

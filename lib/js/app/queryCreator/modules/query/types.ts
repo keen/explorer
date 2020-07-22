@@ -105,7 +105,7 @@ export interface SelectTargetPropertyAction {
 export interface SelectTimezoneAction {
   type: typeof SELECT_TIMEZONE;
   payload: {
-    timezone: number | Timezones;
+    timezone: Timezones;
   };
 }
 

@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 
 import { Container, Collections } from './EventCollection.styles';
 
+import Label from '../Label';
 import Dropdown from '../Dropdown';
 import DropdownList from '../DropdownList';
 import PropertyContainer from '../PropertyContainer';
@@ -54,17 +55,19 @@ const EventCollection: FC<Props> = ({ collection, onChange, onReset }) => {
 
   return (
     <Container>
+      <Label>{text.label}</Label>
       <PropertyContainer
         onClick={() => !isOpen && setOpen(true)}
         isActive={isOpen}
-        propertyLabel={text.label}
         value={collection}
         searchable
         onSearch={searchHandler}
         onDefocus={() => {
           setOpen(false);
         }}
-      />
+      >
+        {collection}
+      </PropertyContainer>
       <Dropdown isOpen={isOpen}>
         <Collections>
           <DropdownList

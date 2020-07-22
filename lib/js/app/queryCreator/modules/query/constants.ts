@@ -30,6 +30,7 @@ export const CHANGE_FUNNEL_STEPS_ORDER =
 
 export const DEFAULT_ANALYSIS = 'count';
 export const DEFAULT_TIMEFRAME = 'this_14_days';
+export const DEFAULT_TIMEZONE = 'UTC';
 
 export const DEFAULT_FUNNEL_STEP: FunnelStep = {
   eventCollection: undefined,

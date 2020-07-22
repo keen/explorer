@@ -1,6 +1,17 @@
-import moment from 'moment';
+import moment from 'moment-timezone';
 
-export const getDefaultAbsoluteTime = () => ({
-  start: `${moment().subtract(1, 'day').format('YYYY-MM-DD')}T00:00:00.000Z`,
-  end: `${moment().format('YYYY-MM-DD')}T00:00:00.000Z`,
-});
+import { Timezones } from '../../../types';
+
+export const getDefaultAbsoluteTime = (timezoneValue: Timezones) => {
+  const start = moment()
+    .tz(timezoneValue)
+    .subtract(1, 'day')
+    .startOf('day')
+    .format();
+  const end = moment().tz(timezoneValue).startOf('day').format();
+
+  return {
+    start,
+    end,
+  };
+};

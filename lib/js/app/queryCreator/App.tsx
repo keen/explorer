@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { FieldGroup } from '@keen.io/forms';
 
-import { CoreProperties } from './App.styles';
+import { PropertiesMenu, MenuItem } from './App.styles';
 
 import {
   Accordion,
@@ -14,7 +14,6 @@ import {
   Interval,
   TargetProperty,
   Timeframe,
-  Timezone,
   Limit,
   Percentile,
   FunnelSteps,
@@ -32,6 +31,8 @@ import {
   setFilters,
   setPercentile,
   getTimeframe,
+  getTimezone,
+  selectTimezone,
   setTimeframe,
   DEFAULT_TIMEFRAME,
 } from './modules/query';
@@ -48,37 +49,55 @@ const App: FC<Props> = ({ onPreviewCollection }) => {
   const percentile = useSelector(getPercentile);
   const timeframe = useSelector(getTimeframe);
   const filters = useSelector(getFilters);
+  const timezone = useSelector(getTimezone);
 
   return (
     <div>
-      <CoreProperties>
-        <Analysis
-          analysis={analysis}
-          onChange={(updatedAnalysis) =>
-            dispatch(selectAnalysis(updatedAnalysis))
-          }
-        />
-        {showField('eventCollection', analysis) && (
-          <EventCollection
-            collection={collection}
-            onReset={() => dispatch(selectEventCollection(null))}
-            onChange={(collection) =>
-              dispatch(selectEventCollection(collection))
+      <PropertiesMenu>
+        <MenuItem>
+          <Analysis
+            analysis={analysis}
+            onChange={(updatedAnalysis) =>
+              dispatch(selectAnalysis(updatedAnalysis))
             }
           />
+        </MenuItem>
+        {showField('eventCollection', analysis) && (
+          <MenuItem>
+            <EventCollection
+              collection={collection}
+              onReset={() => dispatch(selectEventCollection(null))}
+              onChange={(collection) =>
+                dispatch(selectEventCollection(collection))
+              }
+            />
+          </MenuItem>
         )}
         {showField('targetProperty', analysis) && (
-          <TargetProperty collection={collection} />
+          <MenuItem>
+            <TargetProperty collection={collection} />
+          </MenuItem>
         )}
         {showField('timeframe', analysis) && (
-          <Timeframe
-            id="timeframe"
-            value={timeframe}
-            onReset={() => dispatch(setTimeframe(DEFAULT_TIMEFRAME))}
-            onChange={(timeframe) => dispatch(setTimeframe(timeframe))}
-          />
+          <MenuItem>
+            <Timeframe
+              id="timeframe"
+              value={timeframe}
+              timezone={timezone}
+              onReset={() => {
+                dispatch(setTimeframe(DEFAULT_TIMEFRAME));
+                dispatch(selectTimezone(undefined));
+              }}
+              onTimeframeChange={(timeframe) =>
+                dispatch(setTimeframe(timeframe))
+              }
+              onTimezoneChange={(timezone) =>
+                dispatch(selectTimezone(timezone))
+              }
+            />
+          </MenuItem>
         )}
-      </CoreProperties>
+      </PropertiesMenu>
 
       {analysis === 'extraction' && <Extraction collection={collection} />}
 
@@ -90,10 +109,6 @@ const App: FC<Props> = ({ onPreviewCollection }) => {
             onChange={(value) => dispatch(setPercentile(value))}
           />
         </FieldGroup>
-      )}
-
-      {showField('timezone', analysis) && typeof timeframe === 'string' && (
-        <Timezone />
       )}
       {showField('steps', analysis) && <FunnelSteps />}
       {showField('groupBy', analysis) && (

@@ -1,16 +1,21 @@
-import React, { FC, useRef, useState } from 'react';
+import React, { FC, useRef, useState, useContext, useCallback } from 'react';
+import { stringify } from 'qs';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Button, Tooltip } from '@keen.io/ui-core';
 
-import { Container, TooltipContent } from './ShareQuery.styles';
-import { useTooltipHandler } from '../../hooks';
-
+import { Container, TooltipContent } from './APIResource.styles';
 import text from './text.json';
-import { HIDE_TIME } from './constants';
+
+import { useTooltipHandler } from '../../hooks';
+import { AppContext } from '../../contexts';
+
+import { HIDE_TIME, API_VERSION } from './constants';
 
 type Props = {
+  /** Query definition */
+  query: Record<string, any>;
   /** Click event handler */
-  onClick: () => void;
+  onClick: (resourceUrl: string) => void;
 };
 
 export const tooltipMotion = {
@@ -18,7 +23,9 @@ export const tooltipMotion = {
   exit: { opacity: 0 },
 };
 
-const ShareQuery: FC<Props> = ({ onClick }) => {
+const APIResource: FC<Props> = ({ query, onClick }) => {
+  const { keenAnalysis } = useContext(AppContext);
+
   const containerRef = useRef(null);
   const hideTooltip = useRef(null);
   const [tooltip, setTooltip] = useState<{
@@ -32,6 +39,21 @@ const ShareQuery: FC<Props> = ({ onClick }) => {
   });
 
   const { calculateTooltipPosition } = useTooltipHandler(containerRef);
+
+  const createResourceUrl = useCallback(() => {
+    const { analysis_type: analysisType, ...queryParams } = query;
+    const {
+      config: { protocol, host, projectId, masterKey },
+    } = keenAnalysis;
+
+    const queryString = stringify(queryParams, {
+      indices: false,
+      arrayFormat: 'repeat',
+      skipNulls: true,
+    });
+
+    return `${protocol}://${host}/${API_VERSION}/projects/${projectId}/queries/${analysisType}?api_key=${masterKey}&${queryString}`;
+  }, [keenAnalysis, query]);
 
   return (
     <Container ref={containerRef}>
@@ -77,7 +99,9 @@ const ShareQuery: FC<Props> = ({ onClick }) => {
               y: 0,
             });
           }, HIDE_TIME);
-          onClick();
+
+          const resourceUrl = createResourceUrl();
+          onClick(resourceUrl);
         }}
       >
         {text.label}
@@ -86,4 +110,4 @@ const ShareQuery: FC<Props> = ({ onClick }) => {
   );
 };
 
-export default ShareQuery;
+export default APIResource;

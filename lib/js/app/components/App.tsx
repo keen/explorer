@@ -24,7 +24,6 @@ import {
   getViewMode,
   getVisualizationType,
   createNewQuery,
-  copyShareUrl,
   editQuery,
 } from '../modules/app';
 
@@ -58,7 +57,6 @@ const mapDispatchToProps = {
   resetSavedQuery,
   selectSavedQuery,
   createNewQuery,
-  copyShareUrl,
   runQuery,
 };
 
@@ -115,9 +113,6 @@ class App extends Component {
             <Editor
               query={this.state.query}
               onRunQuery={() => this.props.runQuery(this.state.query)}
-              onShareQuery={() =>
-                this.props.copyShareUrl(this.state.query, this.props.savedQuery)
-              }
               onUpdateQuery={(query) => {
                 console.log(query, '--- query update');
                 this.setState({ query });

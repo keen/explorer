@@ -1,24 +1,21 @@
 import React from 'react';
-import { Provider } from 'react-redux';
 import { render as rtlRender, screen } from '@testing-library/react';
 import selectEvent from 'react-select-event';
-import configureStore from 'redux-mock-store';
 
 import Timezone from './Timezone';
 import text from './text.json';
 
-const render = (storeState: any = {}) => {
-  const mockStore = configureStore([]);
-  const store = mockStore({ ...storeState });
+const render = (overProps: any = {}) => {
+  const props = {
+    timezone: 'UTC',
+    onChange: jest.fn(),
+    ...overProps,
+  };
 
-  const wrapper = rtlRender(
-    <Provider store={store}>
-      <Timezone />
-    </Provider>
-  );
+  const wrapper = rtlRender(<Timezone {...props} />);
 
   return {
-    store,
+    props,
     wrapper,
   };
 };
@@ -31,56 +28,10 @@ test('allows user to select timezone', async () => {
   };
 
   const {
-    store,
+    props,
     wrapper: { getByLabelText },
   } = render(storeState);
   await selectEvent.select(getByLabelText(text.label), 'Europe/London');
 
-  expect(store.getActions()).toMatchInlineSnapshot(`
-    Array [
-      Object {
-        "payload": Object {
-          "timezone": "Europe/London",
-        },
-        "type": "@query-creator/SELECT_TIMEZONE",
-      },
-    ]
-  `);
-});
-
-test('reset timezone settings', async () => {
-  const storeState = {
-    query: {
-      timezone: 'Europe/London',
-    },
-  };
-
-  const {
-    store,
-    wrapper: { unmount },
-  } = render(storeState);
-  unmount();
-
-  expect(store.getActions()).toMatchInlineSnapshot(`
-    Array [
-      Object {
-        "payload": Object {
-          "timezone": undefined,
-        },
-        "type": "@query-creator/SELECT_TIMEZONE",
-      },
-    ]
-  `);
-});
-
-test('support named timezones', async () => {
-  const storeState = {
-    query: {
-      timezone: -18000,
-    },
-  };
-
-  render(storeState);
-
-  expect(screen.getByText('US/Eastern')).toBeInTheDocument();
+  expect(props.onChange).toHaveBeenCalledWith('Europe/London');
 });

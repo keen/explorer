@@ -4,6 +4,7 @@ import Fuse from 'fuse.js';
 import Item from './Item';
 import { Container, List } from './Analysis.styles';
 
+import Label from '../Label';
 import Dropdown from '../Dropdown';
 import PropertyContainer from '../PropertyContainer';
 
@@ -43,10 +44,10 @@ const Analysis: FC<Props> = ({ analysis, onChange }) => {
 
   return (
     <Container>
+      <Label>{text.label}</Label>
       <PropertyContainer
         onClick={() => !isOpen && setOpen(true)}
         isActive={isOpen}
-        propertyLabel={text.label}
         value={analysis}
         onSearch={searchHandler}
         searchable
@@ -54,7 +55,9 @@ const Analysis: FC<Props> = ({ analysis, onChange }) => {
           setOpen(false);
           setAnalysisList(options);
         }}
-      />
+      >
+        {analysis}
+      </PropertyContainer>
       <Dropdown isOpen={isOpen}>
         <List>
           {analysisList.map(({ label, value }) => (

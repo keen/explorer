@@ -12,8 +12,8 @@ test('returns named timezone for "number" value', () => {
   expect(getTimezoneValue(timezone)).toEqual('US/Eastern');
 });
 
-test('returns "null" for named timezone that is not mapped', () => {
+test('returns default value for named timezone that is not mapped', () => {
   const timezone = 100;
 
-  expect(getTimezoneValue(timezone)).toBeNull();
+  expect(getTimezoneValue(timezone)).toMatchInlineSnapshot();
 });

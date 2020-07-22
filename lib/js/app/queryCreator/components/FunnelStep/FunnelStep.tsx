@@ -114,7 +114,11 @@ const FunnelStep: FC<Props> = ({
         <Timeframe
           id={`funnel_step_${index}`}
           value={timeframe}
-          onChange={(value) =>
+          timezone={2000}
+          onTimezoneChange={() => {
+            // @TODO: Handle timezone change
+          }}
+          onTimeframeChange={(value) =>
             dispatch(
               updateStep({
                 timeframe: value,

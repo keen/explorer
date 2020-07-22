@@ -1,15 +1,16 @@
-import React, { FC, useContext } from 'react';
+import React, { FC } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Alert, Button } from '@keen.io/ui-core';
 
-import { EditorActions } from './Editor.styles';
+import { EditorActions, CreatorContainer } from './Editor.styles';
+
+import EditorNavigation from '../EditorNavigation';
 
 import Creator from '../Creator';
-import ShareQuery from '../ShareQuery';
+
 import RunQuery, { runQueryLabel } from '../RunQuery';
 import QueryVisualization from '../QueryVisualization';
 import VisualizationPlaceholder from '../VisualizationPlaceholder';
-import APIQueryUrl from '../APIQueryUrl';
 
 import {
   getQueryResults,
@@ -18,34 +19,24 @@ import {
 } from '../../modules/queries';
 import { setViewMode } from '../../modules/app';
 
-import { AppContext } from '../../contexts';
-
 type Props = {
   /** Query definition */
   query: Object;
   /** Query update handler */
   onUpdateQuery: (query: Object) => void;
-  /** Share query event handler */
-  onShareQuery: () => void;
   /** Run query event handler */
   onRunQuery: () => void;
 };
 
-const Editor: FC<Props> = ({
-  query,
-  onRunQuery,
-  onShareQuery,
-  onUpdateQuery,
-}) => {
+const Editor: FC<Props> = ({ query, onRunQuery, onUpdateQuery }) => {
   const dispatch = useDispatch();
   const queryResults = useSelector(getQueryResults);
   const runQueryError = useSelector(getError);
   const isQueryLoading = useSelector(getQueryPerformState);
 
-  const { keenAnalysis } = useContext(AppContext);
-
   return (
     <div>
+      <EditorNavigation query={query} />
       <Button
         onClick={() => {
           dispatch(setViewMode('browser'));
@@ -53,8 +44,9 @@ const Editor: FC<Props> = ({
       >
         Back to list
       </Button>
-      <Creator onUpdateQuery={onUpdateQuery} />
-      <APIQueryUrl query={query} keenAnalysis={keenAnalysis} />
+      <CreatorContainer>
+        <Creator onUpdateQuery={onUpdateQuery} />
+      </CreatorContainer>
       <section>
         {queryResults ? (
           <QueryVisualization query={query} queryResults={queryResults} />
@@ -66,7 +58,6 @@ const Editor: FC<Props> = ({
           <RunQuery isLoading={isQueryLoading} onClick={onRunQuery}>
             {runQueryLabel(query)}
           </RunQuery>
-          <ShareQuery onShareQuery={onShareQuery} />
         </EditorActions>
       </section>
     </div>

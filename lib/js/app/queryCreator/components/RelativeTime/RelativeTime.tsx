@@ -63,13 +63,6 @@ const RelativeTime: FC<Props> = ({ relativity, value, units, onChange }) => {
         options={unitsOptions}
         value={{ label: units, value: units }}
       />
-      <div>
-        The last
-        {value}
-        {units}
-        {relativity === 'this' ? 'including' : 'excluding'}
-        the current day
-      </div>
     </div>
   );
 };

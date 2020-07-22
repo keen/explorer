@@ -20,7 +20,7 @@ const PropertiesTree: FC<Props> = ({ openable, onClick, properties }) => {
         if (Array.isArray(properties[key])) {
           return (
             <div key={key} onClick={(e) => onClick(e, properties[key][0])}>
-              {key} {properties[key][1]}
+              <span>{key}</span> {properties[key][1]}
             </div>
           );
         } else {

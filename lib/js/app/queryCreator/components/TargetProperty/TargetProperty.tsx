@@ -5,6 +5,7 @@ import { Container } from './TargetProperty.styles';
 import { createCollection } from './utils/createCollection';
 import { createTree } from './utils/createTree';
 
+import Label from '../Label';
 import Dropdown from '../Dropdown';
 import PropertiesTree from '../PropertiesTree';
 import PropertyContainer from '../PropertyContainer';
@@ -83,21 +84,23 @@ const TargetProperty: FC<Props> = ({ collection }) => {
 
   return (
     <Container ref={containerRef}>
+      <Label>{text.label}</Label>
       <PropertyContainer
         onClick={() => !isOpen && setOpen(true)}
         isActive={isOpen}
-        propertyLabel={text.label}
         value={targetProperty}
         searchable
         onSearch={searchHandler}
         onDefocus={(event: any) => {
-          if (!event.path.includes(containerRef.current)) {
+          if (!event.path?.includes(containerRef.current)) {
             setPropertiesTree(createTree(collectionSchema));
             setOpen(false);
           }
         }}
-      />
-      <Dropdown isOpen={isOpen} data-dropdown="target-properties">
+      >
+        {targetProperty}
+      </PropertyContainer>
+      <Dropdown isOpen={isOpen}>
         <PropertiesTree
           data-dropdown="targeter"
           onClick={(_e, property) => {

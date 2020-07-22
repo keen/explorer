@@ -22,7 +22,7 @@ const TreeLevel: FC<Props> = ({ header, onClick, properties }) => {
           if (Array.isArray(properties[key])) {
             return (
               <div onClick={(e) => onClick(e, properties[key][0])} key={key}>
-                {key} {properties[key][1]}
+                <span>{key}</span> {properties[key][1]}
               </div>
             );
           } else {

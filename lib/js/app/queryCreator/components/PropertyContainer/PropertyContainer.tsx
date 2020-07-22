@@ -5,24 +5,24 @@ import { Container, Input } from './PropertyContainer.styles';
 type Props = {
   /** Active indicator */
   isActive: boolean;
-  /** Property label */
-  propertyLabel: string;
-  /** Property value */
-  value: string;
+  /** React children nodes */
+  children: React.ReactNode;
   /** Click event handler */
   onClick: (e: React.MouseEvent<HTMLDivElement>) => void;
   /** Container defocus event handler */
   onDefocus: (e: MouseEvent) => void;
   /** Search feature flag */
   searchable?: boolean;
+  /** Property value */
+  value?: string;
   /** Search event handler */
   onSearch?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
 const PropertyContainer: FC<Props> = ({
   onClick,
-  propertyLabel,
   value,
+  children,
   isActive,
   onDefocus,
   onSearch,
@@ -53,11 +53,10 @@ const PropertyContainer: FC<Props> = ({
       onClick={onClick}
       ref={containerRef}
     >
-      {propertyLabel}:
       {searchable && isActive ? (
         <Input type="text" autoFocus defaultValue={value} onChange={onSearch} />
       ) : (
-        <span>{value}</span>
+        <div>{children}</div>
       )}
     </Container>
   );

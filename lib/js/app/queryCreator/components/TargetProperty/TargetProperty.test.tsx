@@ -1,7 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { render as rtlRender } from '@testing-library/react';
-import selectEvent from 'react-select-event';
+import { render as rtlRender, fireEvent } from '@testing-library/react';
 import configureStore from 'redux-mock-store';
 
 import TargetProperty from './TargetProperty';
@@ -37,9 +36,14 @@ test('allows user to select target property', async () => {
 
   const {
     store,
-    wrapper: { getByLabelText },
+    wrapper: { getByText, getByTestId },
   } = render(storeState, { collection: 'purchases' });
-  await selectEvent.select(getByLabelText(text.label), 'userId');
+
+  const propertyField = getByTestId('property-container');
+  fireEvent.click(propertyField);
+
+  const property = getByText('userId');
+  fireEvent.click(property);
 
   expect(store.getActions()).toMatchInlineSnapshot(`
     Array [

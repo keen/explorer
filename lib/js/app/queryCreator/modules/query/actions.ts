@@ -65,7 +65,7 @@ export const selectTargetProperty = (property: string): QueryActions => ({
   },
 });
 
-export const selectTimezone = (timezone: number | Timezones): QueryActions => ({
+export const selectTimezone = (timezone: Timezones): QueryActions => ({
   type: SELECT_TIMEZONE,
   payload: {
     timezone,
