@@ -1,12 +1,13 @@
 import React from 'react';
-import { render as rtlRender } from '@testing-library/react';
+import { render as rtlRender, fireEvent } from '@testing-library/react';
 
 import Timeframe from './Timeframe';
 
 const render = (overProps: any = {}) => {
   const props = {
     id: 'id',
-    onChange: jest.fn(),
+    onTimeframeChange: jest.fn(),
+    onTimezoneChange: jest.fn(),
     onReset: jest.fn(),
     value: 'this_10_days',
     ...overProps,
@@ -25,6 +26,9 @@ test('should render relative time user interface', () => {
     wrapper: { getByTestId },
   } = render();
 
+  const propertyContainer = getByTestId('property-container');
+  fireEvent.click(propertyContainer);
+
   expect(getByTestId('relative-time')).toBeInTheDocument();
 });
 
@@ -37,7 +41,19 @@ test('should render absolute time user interface', () => {
     wrapper: { getByTestId },
   } = render({ value: timeframe });
 
+  const propertyContainer = getByTestId('property-container');
+  fireEvent.click(propertyContainer);
+
   expect(getByTestId('absolute-time')).toBeInTheDocument();
+});
+
+test('should render timezone user interface', () => {
+  const {
+    wrapper: { getByTestId },
+    props,
+  } = render();
+
+  expect(getByTestId('timezone')).toBeInTheDocument();
 });
 
 test('should call "onReset" handler', () => {

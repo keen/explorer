@@ -25,7 +25,7 @@ const Timezone: FC<Props> = ({ timezone, onChange }) => {
   );
 
   return (
-    <>
+    <div data-testid="timezone">
       <Label htmlFor="timezone">{text.label}</Label>
       <Select
         variant="solid"
@@ -35,7 +35,7 @@ const Timezone: FC<Props> = ({ timezone, onChange }) => {
         value={timezone ? { label: timezone, value: timezone } : null}
         options={options}
       />
-    </>
+    </div>
   );
 };
 
