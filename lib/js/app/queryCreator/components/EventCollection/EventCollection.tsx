@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 
 import { Container, Collections } from './EventCollection.styles';
 
-import Label from '../Label';
+import Title from '../Title';
 import Dropdown from '../Dropdown';
 import DropdownList from '../DropdownList';
 import PropertyContainer from '../PropertyContainer';
@@ -55,7 +55,7 @@ const EventCollection: FC<Props> = ({ collection, onChange, onReset }) => {
 
   return (
     <Container>
-      <Label>{text.label}</Label>
+      <Title>{text.label}</Title>
       <PropertyContainer
         onClick={() => !isOpen && setOpen(true)}
         isActive={isOpen}

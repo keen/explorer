@@ -7,29 +7,34 @@ import {
 } from './constants';
 
 export type Group = {
-  property?: string;
+  id: string;
+  property: string | null;
+  chosen?: boolean;
 };
 
 interface AddGroupAction {
   type: typeof ADD_GROUP;
+  payload: {
+    property: string;
+  };
 }
 
 interface SelectGroupPropertyAction {
   type: typeof SELECT_GROUP_PROPERTY;
   payload: {
-    index: number;
+    id: string;
     property: string;
   };
 }
 
 interface SetGroupsAction {
   type: typeof SET_GROUPS;
-  payload: { groups: string[] };
+  payload: { groups: Group[] };
 }
 
 interface RemoveGroupAction {
   type: typeof REMOVE_GROUP;
-  payload: { index: number };
+  payload: { id: string };
 }
 
 interface ResetGroupsAction {

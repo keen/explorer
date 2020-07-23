@@ -1,7 +1,18 @@
 import React, { FC, useEffect, useRef, useMemo, useReducer } from 'react';
+import { ReactSortable } from 'react-sortablejs';
 import { useSelector, useDispatch } from 'react-redux';
 import shallowEqual from 'shallowequal';
-import { Button, Select, Label } from '@keen.io/ui-core';
+
+import {
+  Section,
+  Options,
+  GroupSettings,
+  GroupsContainer,
+} from './GroupBy.styles';
+
+import Title from '../Title';
+import AddGroupBy from '../AddGroupBy';
+import GroupByItem from '../GroupByItem';
 
 import {
   addGroup,
@@ -12,10 +23,16 @@ import {
 } from './actions';
 import { groupByReducer } from './reducer';
 
-import { getGroupBy, setGroupBy } from '../../modules/query';
-import { getCollectionSchema } from '../../modules/events';
+import { convertGroups, serializeGroups } from './utils';
+import { createTree } from '../../utils/createTree';
+import { createCollection } from '../../utils/createCollection';
 
-import text from './text.json';
+import {
+  getEventCollection,
+  getGroupBy,
+  setGroupBy,
+} from '../../modules/query';
+import { getCollectionSchema } from '../../modules/events';
 
 import { AppState } from '../../types';
 
@@ -36,43 +53,46 @@ const GroupBy: FC<Props> = ({ collection }) => {
   }, shallowEqual);
   const groupsRef = useRef(groups);
 
+  const eventCollection = useSelector(getEventCollection);
   const collectionSchema = useSelector((state: AppState) =>
     getCollectionSchema(state, collection)
   );
 
-  const options = useMemo(() => {
+  const { propertiesCollection, propertiesTree } = useMemo(() => {
     if (collectionSchema) {
-      return Object.keys(collectionSchema).map((propertyName) => ({
-        label: propertyName,
-        value: propertyName,
-      }));
+      return {
+        propertiesCollection: createCollection(collectionSchema),
+        propertiesTree: createTree(collectionSchema),
+      };
     }
 
-    return [];
+    return {
+      propertiesTree: {},
+      propertiesCollection: [],
+    };
   }, [collectionSchema]);
 
-  const [state, groupDispatcher] = useReducer(groupByReducer, groups);
+  const [state, groupDispatcher] = useReducer(
+    groupByReducer,
+    convertGroups(groups)
+  );
   const stateRef = useRef(state);
-  const collectionRef = useRef(collection);
 
   useEffect(() => {
     return () => dispatch(setGroupBy(undefined));
   }, []);
 
   useEffect(() => {
-    if (collection !== collectionRef.current) {
-      collectionRef.current = collection;
-      groupDispatcher(resetGroups());
-    }
-  }, [collection]);
-
-  useEffect(() => {
-    const localGroups = state.filter((v) => v !== null);
+    const localGroups = serializeGroups(state);
     if (
       !shallowEqual(groups, groupsRef.current) &&
       !shallowEqual(groups, localGroups)
     ) {
-      groupDispatcher(setGroups(groups));
+      if (groups) {
+        groupDispatcher(setGroups(convertGroups(groups)));
+      } else {
+        groupDispatcher(resetGroups());
+      }
     }
     groupsRef.current = groups;
   }, [groups]);
@@ -80,46 +100,47 @@ const GroupBy: FC<Props> = ({ collection }) => {
   useEffect(() => {
     if (!shallowEqual(state, stateRef.current)) {
       stateRef.current = state;
-      const groups = state.filter((v) => v !== null);
+      const groups = serializeGroups(state);
       const updatedGroups = groups.length ? groups : undefined;
       dispatch(setGroupBy(updatedGroups));
     }
   }, [state]);
 
   return (
-    <>
-      {state.map((property, idx) => (
-        <div key={idx}>
-          <Label>Group {idx + 1}</Label>
-          <Button
-            data-testid={`group-remove-button-${idx}`}
-            variant="danger"
-            style="outline"
-            onClick={() => groupDispatcher(removeGroup(idx))}
-          >
-            {text.removeGroup}
-          </Button>
-          <Label htmlFor={`select-property-${idx}`}>{text.label}</Label>
-          <Select
-            inputId={`select-property-${idx}`}
-            variant="solid"
-            placeholder={text.placeholder}
-            options={options}
-            onChange={({ value }: { value: string }) =>
-              groupDispatcher(selectGroupProperty(idx, value))
-            }
-            value={property ? { label: property, value: property } : null}
+    <div>
+      <Title isDisabled={!eventCollection}>Group by</Title>
+      <Section>
+        <ReactSortable
+          animation={100}
+          delay={250}
+          list={state}
+          tag={GroupsContainer}
+          setList={(updatedGroups) => groupDispatcher(setGroups(updatedGroups))}
+        >
+          {state.map(({ property, id, chosen }) => (
+            <GroupSettings key={id}>
+              <GroupByItem
+                isDragged={chosen}
+                onRemove={() => groupDispatcher(removeGroup(id))}
+                onChange={(property) =>
+                  groupDispatcher(selectGroupProperty(id, property))
+                }
+                property={property}
+                properties={propertiesCollection}
+                propertiesTree={propertiesTree}
+              />
+            </GroupSettings>
+          ))}
+        </ReactSortable>
+        <Options>
+          <AddGroupBy
+            properties={propertiesCollection}
+            propertiesTree={propertiesTree}
+            onAddGroup={(property) => groupDispatcher(addGroup(property))}
           />
-        </div>
-      ))}
-      <Button
-        variant="secondary"
-        style="outline"
-        onClick={() => groupDispatcher(addGroup())}
-      >
-        {text.addGroup}
-      </Button>
-    </>
+        </Options>
+      </Section>
+    </div>
   );
 };
 

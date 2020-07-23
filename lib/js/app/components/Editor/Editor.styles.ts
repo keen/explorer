@@ -6,4 +6,5 @@ export const EditorActions = styled.div`
 
 export const CreatorContainer = styled.div`
   padding: 20px;
+  background: #f1f5f8;
 `;

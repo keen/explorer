@@ -11,7 +11,9 @@ import {
 
 import {
   getTimeframe,
+  getEventCollection,
   setTimeframe,
+  setGroupBy,
   SetQueryAction,
   SelectTimezoneAction,
   SelectEventCollectionAction,
@@ -72,6 +74,8 @@ function* selectCollection(action: SelectEventCollectionAction) {
     const schema = getCollectionSchema(state, collection);
     if (!schema) yield put(fetchCollectionSchema(collection));
   }
+
+  yield put(setGroupBy(undefined));
 }
 
 function* selectTimezone(action: SelectTimezoneAction) {

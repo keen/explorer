@@ -1,5 +1,15 @@
 import { groupByReducer, initialState } from './reducer';
 
+const uuidMock = jest.fn().mockImplementation(() => {
+  return 'mock-id';
+});
+
+jest.mock('uuid', () => {
+  return {
+    v4: uuidMock,
+  };
+});
+
 import {
   setGroups,
   addGroup,
@@ -9,7 +19,7 @@ import {
 } from './actions';
 
 test('set groups', () => {
-  const groups = ['city'];
+  const groups = [{ property: 'city', id: '1' }];
   const action = setGroups(groups);
 
   const state = groupByReducer(initialState, action);
@@ -18,17 +28,26 @@ test('set groups', () => {
 });
 
 test('add additional group settings', () => {
-  const initialState = ['city'];
-  const action = addGroup();
+  const initialState = [{ property: 'city', id: '1' }];
+  const action = addGroup('name');
 
   const state = groupByReducer(initialState, action);
 
-  expect(state).toEqual([...initialState, null]);
+  expect(state).toEqual([
+    ...initialState,
+    {
+      property: 'name',
+      id: 'mock-id',
+    },
+  ]);
 });
 
 test('remove group', () => {
-  const initialState = ['city', 'name'];
-  const action = removeGroup(1);
+  const initialState = [
+    { property: 'city', id: '1' },
+    { property: 'name', id: '2' },
+  ];
+  const action = removeGroup('1');
 
   const state = groupByReducer(initialState, action);
 
@@ -36,16 +55,22 @@ test('remove group', () => {
 });
 
 test('select group property', () => {
-  const initialState = ['city', 'country'];
-  const action = selectGroupProperty(0, 'section');
+  const initialState = [
+    { property: 'city', id: '1' },
+    { property: 'country', id: '2' },
+  ];
+  const action = selectGroupProperty('1', 'section');
 
   const state = groupByReducer(initialState, action);
 
-  expect(state).toEqual(['section', 'country']);
+  expect(state).toEqual([
+    { property: 'section', id: '1' },
+    { property: 'country', id: '2' },
+  ]);
 });
 
 test('reset groups settings', () => {
-  const initialState = ['city'];
+  const initialState = [{ property: 'city', id: '1' }];
   const action = resetGroups();
 
   const state = groupByReducer(initialState, action);

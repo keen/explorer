@@ -7,6 +7,7 @@ import { PropertiesMenu, MenuItem } from './App.styles';
 import {
   Accordion,
   Analysis,
+  Card,
   EventCollection,
   Extraction,
   GroupBy,
@@ -99,6 +100,14 @@ const App: FC<Props> = ({ onPreviewCollection }) => {
         )}
       </PropertiesMenu>
 
+      <Card>
+        {showField('steps', analysis) && <FunnelSteps />}
+        {showField('groupBy', analysis) && <GroupBy collection={collection} />}
+        {showField('orderBy', analysis) && <OrderBy />}
+        {showField('interval', analysis) && <Interval />}
+        {showField('limit', analysis) && <Limit />}
+      </Card>
+
       {analysis === 'extraction' && <Extraction collection={collection} />}
 
       {showField('percentile', analysis) && (
@@ -110,19 +119,7 @@ const App: FC<Props> = ({ onPreviewCollection }) => {
           />
         </FieldGroup>
       )}
-      {showField('steps', analysis) && <FunnelSteps />}
-      {showField('groupBy', analysis) && (
-        <Accordion renderHeader={() => <div>Group By</div>}>
-          <GroupBy collection={collection} />
-        </Accordion>
-      )}
-      {showField('orderBy', analysis) && (
-        <Accordion renderHeader={() => <div>Order By</div>}>
-          <OrderBy />
-        </Accordion>
-      )}
-      {showField('interval', analysis) && <Interval />}
-      {showField('limit', analysis) && <Limit />}
+
       {showField('filters', analysis) && (
         <Accordion renderHeader={() => <div>Filters</div>}>
           <FiltersContainer

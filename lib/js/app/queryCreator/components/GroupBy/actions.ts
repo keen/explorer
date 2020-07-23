@@ -6,33 +6,36 @@ import {
   SET_GROUPS,
 } from './constants';
 
-import { GroupByActions } from './types';
+import { Group, GroupByActions } from './types';
 
 export const resetGroups = (): GroupByActions => ({
   type: RESET_GROUPS,
 });
 
-export const addGroup = (): GroupByActions => ({
+export const addGroup = (property: string): GroupByActions => ({
   type: ADD_GROUP,
+  payload: {
+    property,
+  },
 });
 
-export const setGroups = (groups: string[]): GroupByActions => ({
+export const setGroups = (groups: Group[]): GroupByActions => ({
   type: SET_GROUPS,
   payload: { groups },
 });
 
 export const selectGroupProperty = (
-  index: number,
+  id: string,
   property: string
 ): GroupByActions => ({
   type: SELECT_GROUP_PROPERTY,
   payload: {
-    index,
+    id,
     property,
   },
 });
 
-export const removeGroup = (index: number): GroupByActions => ({
+export const removeGroup = (id: string): GroupByActions => ({
   type: REMOVE_GROUP,
-  payload: { index },
+  payload: { id },
 });

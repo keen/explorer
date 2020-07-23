@@ -5,7 +5,7 @@ import { Container } from './TargetProperty.styles';
 import { createCollection } from './utils/createCollection';
 import { createTree } from './utils/createTree';
 
-import Label from '../Label';
+import Title from '../Title';
 import Dropdown from '../Dropdown';
 import PropertiesTree from '../PropertiesTree';
 import PropertyContainer from '../PropertyContainer';
@@ -84,7 +84,7 @@ const TargetProperty: FC<Props> = ({ collection }) => {
 
   return (
     <Container ref={containerRef}>
-      <Label>{text.label}</Label>
+      <Title>{text.label}</Title>
       <PropertyContainer
         onClick={() => !isOpen && setOpen(true)}
         isActive={isOpen}
@@ -102,7 +102,7 @@ const TargetProperty: FC<Props> = ({ collection }) => {
       </PropertyContainer>
       <Dropdown isOpen={isOpen}>
         <PropertiesTree
-          data-dropdown="targeter"
+          data-dropdown="target-property"
           onClick={(_e, property) => {
             setOpen(false);
             dispatch(selectTargetProperty(property));

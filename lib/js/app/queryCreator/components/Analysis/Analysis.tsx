@@ -4,12 +4,12 @@ import Fuse from 'fuse.js';
 import Item from './Item';
 import { Container, List } from './Analysis.styles';
 
-import Label from '../Label';
+import Title from '../Title';
 import Dropdown from '../Dropdown';
 import PropertyContainer from '../PropertyContainer';
 
 import text from './text.json';
-import { createOptions } from './utils';
+import { createOptions, transformName } from './utils';
 
 import { Analysis as AnalysisType } from '../../../types';
 
@@ -44,11 +44,11 @@ const Analysis: FC<Props> = ({ analysis, onChange }) => {
 
   return (
     <Container>
-      <Label>{text.label}</Label>
+      <Title>{text.label}</Title>
       <PropertyContainer
         onClick={() => !isOpen && setOpen(true)}
         isActive={isOpen}
-        value={analysis}
+        value={transformName(analysis)}
         onSearch={searchHandler}
         searchable
         onDefocus={() => {
@@ -56,7 +56,7 @@ const Analysis: FC<Props> = ({ analysis, onChange }) => {
           setAnalysisList(options);
         }}
       >
-        {analysis}
+        {transformName(analysis)}
       </PropertyContainer>
       <Dropdown isOpen={isOpen}>
         <List>

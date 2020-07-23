@@ -3,7 +3,7 @@ import React, { FC, useState, useRef, useEffect } from 'react';
 import { Container } from './Timeframe.styles';
 import text from './text.json';
 
-import Label from '../Label';
+import Title from '../Title';
 import Dropdown from '../Dropdown';
 import PropertyContainer from '../PropertyContainer';
 import AbsoluteTime, { TIME_PICKER_CLASS } from '../AbsoluteTime';
@@ -54,7 +54,7 @@ const Timeframe: FC<Props> = ({
 
   return (
     <Container ref={containerRef}>
-      <Label>{text.label}</Label>
+      <Title>{text.label}</Title>
       <PropertyContainer
         onClick={() => !isOpen && setOpen(true)}
         isActive={isOpen}
