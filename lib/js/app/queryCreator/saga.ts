@@ -16,9 +16,11 @@ import {
   SetQueryAction,
   SelectTimezoneAction,
   SelectEventCollectionAction,
+  SelectFunnelStepEventCollectionAction,
   SET_QUERY,
   SELECT_TIMEZONE,
   SELECT_EVENT_COLLECTION,
+  SELECT_FUNNEL_STEP_EVENT_COLLECTION,
 } from './modules/query';
 
 import {
@@ -70,14 +72,23 @@ function* fetchSchema(action: FetchCollectionSchemaAction) {
 function* selectCollection(action: SelectEventCollectionAction) {
   const collection = action.payload.name;
   if (collection) {
-    const state = yield select();
-    const schemas = getSchemas(state);
+    const schemas = select(getSchemas);
     const isSchemaExist = schemas[collection];
 
     if (!isSchemaExist) yield put(fetchCollectionSchema(collection));
   }
 
   yield put(setGroupBy(undefined));
+}
+
+function* selectFunnelStepCollection(
+  action: SelectFunnelStepEventCollectionAction
+) {
+  const collection = action.payload.name;
+  const schemas = yield select(getSchemas);
+  const isSchemaExist = schemas[collection];
+
+  if (!isSchemaExist) yield put(fetchCollectionSchema(collection));
 }
 
 function* selectTimezone(action: SelectTimezoneAction) {
@@ -98,8 +109,24 @@ function* setQuery(action: SetQueryAction) {
   const {
     payload: { query },
   } = action;
-  if (query.eventCollection)
+  const schemas = yield select(getSchemas);
+
+  if (query.eventCollection && !schemas[query.eventCollection]) {
     yield put(fetchCollectionSchema(query.eventCollection));
+  }
+
+  if (query.steps) {
+    const { steps } = query;
+    const schemasToFetch = steps.filter(
+      ({ eventCollection }) => !schemas[eventCollection]
+    );
+
+    yield all(
+      schemasToFetch.map(({ eventCollection }) =>
+        put(fetchCollectionSchema(eventCollection))
+      )
+    );
+  }
 }
 
 function* watcher() {
@@ -109,6 +136,10 @@ function* watcher() {
   yield takeLatest(FETCH_COLLECTION_SCHEMA, fetchSchema);
   yield takeLatest(SELECT_TIMEZONE, selectTimezone);
   yield takeLatest(SELECT_EVENT_COLLECTION, selectCollection);
+  yield takeLatest(
+    SELECT_FUNNEL_STEP_EVENT_COLLECTION,
+    selectFunnelStepCollection
+  );
 }
 
 export default function* rootSaga() {

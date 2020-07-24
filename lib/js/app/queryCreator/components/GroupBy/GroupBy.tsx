@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useRef, useMemo, useReducer } from 'react';
+import React, { FC, useEffect, useRef, useReducer } from 'react';
 import { ReactSortable } from 'react-sortablejs';
 import { useSelector, useDispatch } from 'react-redux';
 import shallowEqual from 'shallowequal';
@@ -24,8 +24,6 @@ import {
 import { groupByReducer } from './reducer';
 
 import { convertGroups, serializeGroups } from './utils';
-import { createTree } from '../../utils/createTree';
-import { createCollection } from '../../utils/createCollection';
 
 import {
   getEventCollection,

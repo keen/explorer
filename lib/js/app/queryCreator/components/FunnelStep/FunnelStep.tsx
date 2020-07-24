@@ -1,26 +1,21 @@
-import React, { FC, useMemo, useEffect, useCallback } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Label, Select, Button, Checkbox, Title } from '@keen.io/ui-core';
+import React, { FC, useCallback } from 'react';
+import { useDispatch } from 'react-redux';
+import { Label, Button, Checkbox, Title } from '@keen.io/ui-core';
 import { FieldGroup } from '@keen.io/forms';
 
 import EventCollection from '../EventCollection';
+import TargetProperty from '../TargetProperty';
 import Timeframe from '../Timeframe';
 import FiltersContainer from '../Filters';
 
-import { updateFunnelStep } from '../../modules/query';
 import {
-  fetchCollectionSchema,
-  getCollectionSchema,
-} from '../../modules/events';
+  updateFunnelStep,
+  selectFunnelStepCollection,
+} from '../../modules/query';
 
 import text from './text.json';
 
-import {
-  FunnelStep,
-  AppState,
-  Timeframe as TimeframeType,
-  Filter,
-} from '../../types';
+import { FunnelStep, Timeframe as TimeframeType, Filter } from '../../types';
 
 type Props = {
   /** Funnel step index */
@@ -55,31 +50,12 @@ const FunnelStep: FC<Props> = ({
   onRemove,
 }) => {
   const dispatch = useDispatch();
-  const { schema: collectionSchema } = useSelector((state: AppState) =>
-    getCollectionSchema(state, eventCollection)
-  );
-
-  useEffect(() => {
-    if (eventCollection && !collectionSchema) {
-      dispatch(fetchCollectionSchema(eventCollection));
-    }
-  }, [collectionSchema, eventCollection]);
-
-  const actorPropertyOptions = useMemo(() => {
-    if (collectionSchema) {
-      return Object.keys(collectionSchema).map((propertyName) => ({
-        label: propertyName,
-        value: propertyName,
-      }));
-    }
-
-    return [];
-  }, [collectionSchema]);
-
   const updateStep = useCallback(
     (step: Partial<FunnelStep>) => dispatch(updateFunnelStep(index, step)),
     [index]
   );
+
+  console.log(actorProperty, 'TARGET PROP');
 
   return (
     <div>
@@ -88,29 +64,22 @@ const FunnelStep: FC<Props> = ({
         variant="secondary"
         collection={eventCollection}
         onChange={(collection) => {
+          dispatch(selectFunnelStepCollection(collection));
           updateStep({ eventCollection: collection, actorProperty: undefined });
         }}
       />
-      <FieldGroup>
-        <Label>{text.actorPropertyLabel}</Label>
-        <Select
-          variant="solid"
-          placeholder={text.actorPropertyPlaceholder}
-          onChange={({ value }: { value: string }) =>
-            dispatch(
-              updateStep({
-                actorProperty: value,
-              })
-            )
-          }
-          value={
-            actorProperty
-              ? { label: actorProperty, value: actorProperty }
-              : null
-          }
-          options={actorPropertyOptions}
-        />
-      </FieldGroup>
+      <TargetProperty
+        variant="secondary"
+        collection={eventCollection}
+        property={actorProperty}
+        onChange={(property) => {
+          dispatch(
+            updateStep({
+              actorProperty: property,
+            })
+          );
+        }}
+      />
       <FieldGroup>
         <Timeframe
           id={`funnel_step_${index}`}

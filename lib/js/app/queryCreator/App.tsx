@@ -24,12 +24,14 @@ import { showField } from './utils/showField';
 
 import {
   selectEventCollection,
+  selectTargetProperty,
   selectAnalysis,
   getPercentile,
   getEventCollection,
   getAnalysis,
   getFilters,
   setFilters,
+  getTargetProperty,
   setPercentile,
   getTimeframe,
   getTimezone,
@@ -50,6 +52,7 @@ const App: FC<Props> = ({ onPreviewCollection }) => {
   const percentile = useSelector(getPercentile);
   const timeframe = useSelector(getTimeframe);
   const filters = useSelector(getFilters);
+  const targetProperty = useSelector(getTargetProperty);
   const timezone = useSelector(getTimezone);
 
   return (
@@ -76,7 +79,13 @@ const App: FC<Props> = ({ onPreviewCollection }) => {
         )}
         {showField('targetProperty', analysis) && (
           <MenuItem>
-            <TargetProperty collection={collection} />
+            <TargetProperty
+              collection={collection}
+              property={targetProperty}
+              onChange={(property) => {
+                dispatch(selectTargetProperty(property));
+              }}
+            />
           </MenuItem>
         )}
         {showField('timeframe', analysis) && (

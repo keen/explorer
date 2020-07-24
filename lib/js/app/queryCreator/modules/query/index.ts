@@ -38,6 +38,7 @@ import {
   setTimeframe,
   setFilters,
   addFunnelStep,
+  selectFunnelStepCollection,
   updateFunnelStep,
   removeFunnelStep,
   resetExtraction,
@@ -47,7 +48,7 @@ import {
   SET_QUERY,
   SELECT_EVENT_COLLECTION,
   SELECT_TIMEZONE,
-  UPDATE_FUNNEL_STEP_EVENT_COLLECTION,
+  SELECT_FUNNEL_STEP_EVENT_COLLECTION,
   DEFAULT_TIMEZONE,
   DEFAULT_TIMEFRAME,
 } from './constants';
@@ -55,6 +56,7 @@ import {
   ReducerState,
   SetQueryAction,
   SelectTimezoneAction,
+  SelectFunnelStepEventCollectionAction,
   SelectEventCollectionAction,
 } from './types';
 
@@ -93,6 +95,7 @@ export {
   addFunnelStep,
   updateFunnelStep,
   removeFunnelStep,
+  selectFunnelStepCollection,
   selectEventCollection,
   selectTargetProperty,
   selectAnalysis,
@@ -103,13 +106,15 @@ export {
   SetQueryAction,
   SelectTimezoneAction,
   SelectEventCollectionAction,
+  SelectFunnelStepEventCollectionAction,
   ReducerState,
 };
+
 export {
   SET_QUERY,
   SELECT_EVENT_COLLECTION,
   SELECT_TIMEZONE,
-  UPDATE_FUNNEL_STEP_EVENT_COLLECTION,
+  SELECT_FUNNEL_STEP_EVENT_COLLECTION,
   DEFAULT_TIMEFRAME,
   DEFAULT_TIMEZONE,
 };

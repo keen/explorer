@@ -21,10 +21,10 @@ export const SET_PROPERTY_NAMES = '@query-creator/SET_PROPERTY_NAMES';
 export const SET_FILTERS = '@query-creator/SET_FILTERS';
 export const SELECT_TIMEZONE = '@query-creator/SELECT_TIMEZONE';
 export const ADD_FUNNEL_STEP = '@query-creator/ADD_FUNNEL_STEP';
+export const SELECT_FUNNEL_STEP_EVENT_COLLECTION =
+  '@query-creator/SELECT_FUNNEL_STEP_EVENT_COLLECTION';
 export const REMOVE_FUNNEL_STEP = '@query-creator/REMOVE_FUNNEL_STEP';
 export const UPDATE_FUNNEL_STEP = '@query-creator/UPDATE_FUNNEL_STEP';
-export const UPDATE_FUNNEL_STEP_EVENT_COLLECTION =
-  '@query-creator/UPDATE_FUNNEL_STEP_EVENT_COLLECTION';
 export const CHANGE_FUNNEL_STEPS_ORDER =
   '@query-creator/CHANGE_FUNNEL_STEP_ORDER';
 

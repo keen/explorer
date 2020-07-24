@@ -18,6 +18,7 @@ import {
   ADD_FUNNEL_STEP,
   REMOVE_FUNNEL_STEP,
   UPDATE_FUNNEL_STEP,
+  SELECT_FUNNEL_STEP_EVENT_COLLECTION,
   CHANGE_FUNNEL_STEPS_ORDER,
   RESET_EXTRACTION,
   RESET_QUERY,
@@ -169,6 +170,11 @@ export interface AddFunnelStepAction {
   type: typeof ADD_FUNNEL_STEP;
 }
 
+export interface SelectFunnelStepEventCollectionAction {
+  type: typeof SELECT_FUNNEL_STEP_EVENT_COLLECTION;
+  payload: { name: string };
+}
+
 export interface RemoveFunnelStepAction {
   type: typeof REMOVE_FUNNEL_STEP;
   payload: {
@@ -213,5 +219,6 @@ export type QueryActions =
   | AddFunnelStepAction
   | UpdateFunnelStepAction
   | RemoveFunnelStepAction
+  | SelectFunnelStepEventCollectionAction
   | ChangeFunnelStepsOrderAction
   | ResetExtractionAction;

@@ -16,6 +16,7 @@ import {
   SET_FILTERS,
   SELECT_TIMEZONE,
   ADD_FUNNEL_STEP,
+  SELECT_FUNNEL_STEP_EVENT_COLLECTION,
   UPDATE_FUNNEL_STEP,
   REMOVE_FUNNEL_STEP,
   RESET_EXTRACTION,
@@ -150,6 +151,13 @@ export const setFilters = (filters: Filter[]): QueryActions => ({
 
 export const addFunnelStep = (): QueryActions => ({
   type: ADD_FUNNEL_STEP,
+});
+
+export const selectFunnelStepCollection = (name: string): QueryActions => ({
+  type: SELECT_FUNNEL_STEP_EVENT_COLLECTION,
+  payload: {
+    name,
+  },
 });
 
 export const updateFunnelStep = (
