@@ -6,7 +6,7 @@ import { Container, List } from './Analysis.styles';
 
 import Title from '../Title';
 import Dropdown from '../Dropdown';
-import PropertyContainer from '../PropertyContainer';
+import DropableContainer from '../DropableContainer';
 
 import text from './text.json';
 import { createOptions, transformName } from './utils';
@@ -45,7 +45,7 @@ const Analysis: FC<Props> = ({ analysis, onChange }) => {
   return (
     <Container>
       <Title>{text.label}</Title>
-      <PropertyContainer
+      <DropableContainer
         onClick={() => !isOpen && setOpen(true)}
         isActive={isOpen}
         value={transformName(analysis)}
@@ -57,7 +57,7 @@ const Analysis: FC<Props> = ({ analysis, onChange }) => {
         }}
       >
         {transformName(analysis)}
-      </PropertyContainer>
+      </DropableContainer>
       <Dropdown isOpen={isOpen}>
         <List>
           {analysisList.map(({ label, value }) => (

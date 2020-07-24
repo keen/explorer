@@ -44,9 +44,6 @@ const Editor: FC<Props> = ({ query, onRunQuery, onUpdateQuery }) => {
       >
         Back to list
       </Button>
-      <CreatorContainer>
-        <Creator onUpdateQuery={onUpdateQuery} />
-      </CreatorContainer>
       <section>
         {queryResults ? (
           <QueryVisualization query={query} queryResults={queryResults} />
@@ -54,6 +51,11 @@ const Editor: FC<Props> = ({ query, onRunQuery, onUpdateQuery }) => {
           <VisualizationPlaceholder isLoading={isQueryLoading} />
         )}
         {runQueryError && <Alert type="error">{runQueryError.body}</Alert>}
+      </section>
+      <CreatorContainer>
+        <Creator onUpdateQuery={onUpdateQuery} />
+      </CreatorContainer>
+      <section>
         <EditorActions>
           <RunQuery isLoading={isQueryLoading} onClick={onRunQuery}>
             {runQueryLabel(query)}

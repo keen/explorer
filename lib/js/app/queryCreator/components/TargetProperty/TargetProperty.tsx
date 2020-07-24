@@ -1,8 +1,7 @@
-import React, { FC, useState, useEffect, useRef, useMemo } from 'react';
+import React, { FC, useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Container } from './TargetProperty.styles';
-import { createCollection } from '../../utils/createCollection';
 import { createTree } from '../../utils/createTree';
 
 import Title from '../Title';
@@ -24,40 +23,34 @@ type Props = {
 };
 
 const TargetProperty: FC<Props> = ({ collection }) => {
-  const [propertiesTree, setPropertiesTree] = useState({});
+  const dispatch = useDispatch();
+  const {
+    schema: collectionSchema,
+    tree: schemaTree,
+    list: schemaList,
+  } = useSelector((state: AppState) => getCollectionSchema(state, collection));
+
+  const [propertiesTree, setPropertiesTree] = useState(null);
   const [isOpen, setOpen] = useState(false);
   const containerRef = useRef(null);
-  const dispatch = useDispatch();
 
-  const collectionSchema = useSelector((state: AppState) =>
-    getCollectionSchema(state, collection)
-  );
   const targetProperty = useSelector(getTargetProperty);
-
-  const { propertiesCollection } = useMemo(() => {
-    if (collectionSchema) {
-      return {
-        propertiesCollection: createCollection(collectionSchema),
-      };
-    }
-
-    return {
-      propertiesCollection: [],
-    };
-  }, [collectionSchema]);
 
   const { searchHandler } = useSearch<{
     path: string;
     type: string;
   }>(
-    propertiesCollection,
-    (searchResult) => {
-      const searchTree = {};
-      searchResult.forEach(({ path, type }) => {
-        searchTree[path] = type;
-      });
-
-      setPropertiesTree(createTree(searchTree));
+    schemaList,
+    (searchResult, searchPhrase) => {
+      if (searchPhrase) {
+        const searchTree = {};
+        searchResult.forEach(({ path, type }) => {
+          searchTree[path] = type;
+        });
+        setPropertiesTree(createTree(searchTree));
+      } else {
+        setPropertiesTree(null);
+      }
     },
     {
       keys: ['path', 'type'],
@@ -72,15 +65,8 @@ const TargetProperty: FC<Props> = ({ collection }) => {
     ) {
       dispatch(selectTargetProperty(null));
     }
-
     return () => dispatch(selectTargetProperty(null));
   }, [collection]);
-
-  useEffect(() => {
-    if (collectionSchema) {
-      setPropertiesTree(createTree(collectionSchema));
-    }
-  }, [collectionSchema]);
 
   return (
     <Container ref={containerRef}>
@@ -93,7 +79,7 @@ const TargetProperty: FC<Props> = ({ collection }) => {
         onSearch={searchHandler}
         onDefocus={(event: any) => {
           if (!event.path?.includes(containerRef.current)) {
-            setPropertiesTree(createTree(collectionSchema));
+            setPropertiesTree(null);
             setOpen(false);
           }
         }}
@@ -108,7 +94,7 @@ const TargetProperty: FC<Props> = ({ collection }) => {
             dispatch(selectTargetProperty(property));
             setPropertiesTree(createTree(collectionSchema));
           }}
-          properties={propertiesTree}
+          properties={propertiesTree ? propertiesTree : schemaTree}
         />
       </Dropdown>
     </Container>

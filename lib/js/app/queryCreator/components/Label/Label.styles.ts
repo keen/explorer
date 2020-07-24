@@ -1,9 +1,10 @@
 import styled from 'styled-components';
+import { transparentize } from 'polished';
 import { colors } from '@keen.io/colors';
 
 export const Container = styled.div`
   padding: 10px 14px;
-  background: ${colors.white[500]};
+  background: ${transparentize(0.85, colors.blue[100])};
   border-radius: 4px;
   border: solid 1px ${colors.white[500]};
   box-sizing: border-box;

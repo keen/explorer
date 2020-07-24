@@ -34,6 +34,8 @@ import {
 } from '../../modules/query';
 import { getCollectionSchema } from '../../modules/events';
 
+import { DRAG_DELAY, DRAG_ANIMATION_TIME } from './constants';
+
 import { AppState } from '../../types';
 
 type Props = {
@@ -54,23 +56,10 @@ const GroupBy: FC<Props> = ({ collection }) => {
   const groupsRef = useRef(groups);
 
   const eventCollection = useSelector(getEventCollection);
-  const collectionSchema = useSelector((state: AppState) =>
-    getCollectionSchema(state, collection)
-  );
-
-  const { propertiesCollection, propertiesTree } = useMemo(() => {
-    if (collectionSchema) {
-      return {
-        propertiesCollection: createCollection(collectionSchema),
-        propertiesTree: createTree(collectionSchema),
-      };
-    }
-
-    return {
-      propertiesTree: {},
-      propertiesCollection: [],
-    };
-  }, [collectionSchema]);
+  const {
+    tree: schemaTree,
+    list: schemaList,
+  } = useSelector((state: AppState) => getCollectionSchema(state, collection));
 
   const [state, groupDispatcher] = useReducer(
     groupByReducer,
@@ -111,8 +100,8 @@ const GroupBy: FC<Props> = ({ collection }) => {
       <Title isDisabled={!eventCollection}>Group by</Title>
       <Section>
         <ReactSortable
-          animation={100}
-          delay={250}
+          animation={DRAG_ANIMATION_TIME}
+          delay={DRAG_DELAY}
           list={state}
           tag={GroupsContainer}
           setList={(updatedGroups) => groupDispatcher(setGroups(updatedGroups))}
@@ -126,16 +115,16 @@ const GroupBy: FC<Props> = ({ collection }) => {
                   groupDispatcher(selectGroupProperty(id, property))
                 }
                 property={property}
-                propertiesSchema={propertiesCollection}
-                propertiesTree={propertiesTree}
+                propertiesSchema={schemaList}
+                propertiesTree={schemaTree}
               />
             </GroupSettings>
           ))}
         </ReactSortable>
         <Options>
           <AddGroupBy
-            properties={propertiesCollection}
-            propertiesTree={propertiesTree}
+            properties={schemaList}
+            propertiesTree={schemaTree}
             onAddGroup={(property) => groupDispatcher(addGroup(property))}
           />
         </Options>

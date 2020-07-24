@@ -6,7 +6,7 @@ import { Container, Collections } from './EventCollection.styles';
 import Title from '../Title';
 import Dropdown from '../Dropdown';
 import DropdownList from '../DropdownList';
-import PropertyContainer from '../PropertyContainer';
+import DropableContainer, { Variant } from '../DropableContainer';
 
 import { useSearch } from '../../hooks';
 import { getEventsCollections } from '../../modules/events';
@@ -20,9 +20,16 @@ type Props = {
   onChange: (collection: string) => void;
   /** Reset event handler */
   onReset?: () => void;
+  /** Container variant */
+  variant?: Variant;
 };
 
-const EventCollection: FC<Props> = ({ collection, onChange, onReset }) => {
+const EventCollection: FC<Props> = ({
+  collection,
+  onChange,
+  onReset,
+  variant = 'primary',
+}) => {
   const [isOpen, setOpen] = useState(false);
   const collections = useSelector(getEventsCollections);
   const options = useMemo(
@@ -56,7 +63,8 @@ const EventCollection: FC<Props> = ({ collection, onChange, onReset }) => {
   return (
     <Container>
       <Title>{text.label}</Title>
-      <PropertyContainer
+      <DropableContainer
+        variant={variant}
         onClick={() => !isOpen && setOpen(true)}
         isActive={isOpen}
         value={collection}
@@ -67,7 +75,7 @@ const EventCollection: FC<Props> = ({ collection, onChange, onReset }) => {
         }}
       >
         {collection}
-      </PropertyContainer>
+      </DropableContainer>
       <Dropdown isOpen={isOpen}>
         <Collections>
           <DropdownList

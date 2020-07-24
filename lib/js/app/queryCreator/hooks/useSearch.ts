@@ -8,7 +8,7 @@ const defaultOptions = {
 
 export const useSearch = <T>(
   collection: T[],
-  callback: (results: T[]) => void,
+  callback: (results: T[], searchPhrase: string) => void,
   options: Fuse.IFuseOptions<any> = defaultOptions
 ) => {
   const fuseSearch = useRef(new Fuse(collection, options));
@@ -22,7 +22,7 @@ export const useSearch = <T>(
       const value = e.currentTarget.value;
       const results = fuseSearch.current.search(value).map(({ item }) => item);
 
-      callback(results);
+      callback(results, value);
     },
     [fuseSearch]
   );

@@ -5,7 +5,11 @@ import {
   fetchCollectionSchemaSuccess,
   fetchCollectionSchemaError,
 } from './actions';
-import { getEventsCollections, getCollectionSchema } from './selectors';
+import {
+  getEventsCollections,
+  getCollectionSchema,
+  getSchemas,
+} from './selectors';
 import { FETCH_COLLECTION_SCHEMA } from './constants';
 import { ReducerState, FetchCollectionSchemaAction } from './types';
 
@@ -17,6 +21,7 @@ export {
   setEventsCollections,
   getEventsCollections,
   getCollectionSchema,
+  getSchemas,
   ReducerState,
   FetchCollectionSchemaAction,
 };

@@ -11,7 +11,6 @@ import {
 
 import {
   getTimeframe,
-  getEventCollection,
   setTimeframe,
   setGroupBy,
   SetQueryAction,
@@ -28,7 +27,7 @@ import {
   fetchCollectionSchemaSuccess,
   fetchCollectionSchemaError,
   setEventsCollections,
-  getCollectionSchema,
+  getSchemas,
   FETCH_COLLECTION_SCHEMA,
 } from './modules/events';
 
@@ -61,6 +60,7 @@ function* fetchSchema(action: FetchCollectionSchemaAction) {
       api_key: client.config.masterKey,
     });
     const { properties } = yield fetch(url).then((response) => response.json());
+
     yield put(fetchCollectionSchemaSuccess(collection, properties));
   } catch (err) {
     yield put(fetchCollectionSchemaError(err));
@@ -71,8 +71,10 @@ function* selectCollection(action: SelectEventCollectionAction) {
   const collection = action.payload.name;
   if (collection) {
     const state = yield select();
-    const schema = getCollectionSchema(state, collection);
-    if (!schema) yield put(fetchCollectionSchema(collection));
+    const schemas = getSchemas(state);
+    const isSchemaExist = schemas[collection];
+
+    if (!isSchemaExist) yield put(fetchCollectionSchema(collection));
   }
 
   yield put(setGroupBy(undefined));

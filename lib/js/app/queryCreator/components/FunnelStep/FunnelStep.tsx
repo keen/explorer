@@ -55,7 +55,7 @@ const FunnelStep: FC<Props> = ({
   onRemove,
 }) => {
   const dispatch = useDispatch();
-  const collectionSchema = useSelector((state: AppState) =>
+  const { schema: collectionSchema } = useSelector((state: AppState) =>
     getCollectionSchema(state, eventCollection)
   );
 
@@ -85,6 +85,7 @@ const FunnelStep: FC<Props> = ({
     <div>
       <Title variant="h3">Step {index + 1}</Title>
       <EventCollection
+        variant="secondary"
         collection={eventCollection}
         onChange={(collection) => {
           updateStep({ eventCollection: collection, actorProperty: undefined });

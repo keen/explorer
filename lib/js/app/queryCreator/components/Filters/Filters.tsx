@@ -42,7 +42,7 @@ const dataTypes = Object.keys(DATA_TYPES).map((item) => ({
 }));
 
 const Filters: FC<Props> = ({ collection, filters, onChange }) => {
-  const collectionSchema = useSelector((state: AppState) =>
+  const { schema: collectionSchema } = useSelector((state: AppState) =>
     getCollectionSchema(state, collection)
   );
 

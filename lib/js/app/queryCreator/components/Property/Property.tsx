@@ -81,7 +81,9 @@ const Property: FC<Props> = ({
               property
             )}
           </Edit>
-          <Remove data-testid="remove-property" onClick={onRemove}>X</Remove>
+          <Remove data-testid="remove-property" onClick={onRemove}>
+            X
+          </Remove>
         </Content>
         {editMode && (
           <div>

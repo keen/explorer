@@ -5,7 +5,11 @@ import {
   FETCH_COLLECTION_SCHEMA_SUCCESS,
 } from './constants';
 
-export type CollectionSchema = Record<string, string>;
+export type CollectionSchema = {
+  schema: Record<string, string>;
+  list: { path: string; type: string }[];
+  tree: Record<string, string[] | Object>;
+};
 
 export type ReducerState = {
   collections: string[];
@@ -30,7 +34,7 @@ export interface FetchCollectionSchemaSuccessAction {
   type: typeof FETCH_COLLECTION_SCHEMA_SUCCESS;
   payload: {
     collection: string;
-    schema: CollectionSchema;
+    schema: Record<string, string>;
   };
 }
 

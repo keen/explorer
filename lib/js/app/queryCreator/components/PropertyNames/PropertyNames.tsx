@@ -19,7 +19,7 @@ type Props = {
 };
 
 const PropertyNames: FC<Props> = ({ collection, onSelect }) => {
-  const collectionSchema = useSelector((state: AppState) =>
+  const { schema: collectionSchema } = useSelector((state: AppState) =>
     getCollectionSchema(state, collection)
   );
 

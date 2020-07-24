@@ -19,7 +19,7 @@ export const fetchCollectionSchema = (collection: string): EventsActions => ({
 
 export const fetchCollectionSchemaSuccess = (
   collection: string,
-  schema: CollectionSchema
+  schema: Record<string, string>
 ): EventsActions => ({
   type: FETCH_COLLECTION_SCHEMA_SUCCESS,
   payload: { collection, schema },
