@@ -15,5 +15,5 @@ test('returns named timezone for "number" value', () => {
 test('returns default value for named timezone that is not mapped', () => {
   const timezone = 100;
 
-  expect(getTimezoneValue(timezone)).toMatchInlineSnapshot();
+  expect(getTimezoneValue(timezone)).toMatchInlineSnapshot(`"UTC"`);
 });

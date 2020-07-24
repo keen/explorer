@@ -1,12 +1,8 @@
 import { groupByReducer, initialState } from './reducer';
 
-const uuidMock = jest.fn().mockImplementation(() => {
-  return 'mock-id';
-});
-
 jest.mock('uuid', () => {
   return {
-    v4: uuidMock,
+    v4: () => 'mock-id',
   };
 });
 
@@ -51,7 +47,7 @@ test('remove group', () => {
 
   const state = groupByReducer(initialState, action);
 
-  expect(state).toEqual(['city']);
+  expect(state).toEqual([{ property: 'name', id: '2' }]);
 });
 
 test('select group property', () => {

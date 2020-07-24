@@ -53,6 +53,9 @@ test('should render timezone user interface', () => {
     props,
   } = render();
 
+  const propertyContainer = getByTestId('property-container');
+  fireEvent.click(propertyContainer);
+
   expect(getByTestId('timezone')).toBeInTheDocument();
 });
 
