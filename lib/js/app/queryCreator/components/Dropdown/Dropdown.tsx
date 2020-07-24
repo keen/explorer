@@ -12,7 +12,7 @@ type Props = {
 
 const dropdownMotion = {
   initial: { opacity: 0, top: 20 },
-  animate: { opacity: 1, top: 5 },
+  animate: { opacity: 1, top: 2 },
   exit: { opacity: 0, top: 30 },
 };
 

@@ -2,19 +2,14 @@ import React, { FC } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { FieldGroup } from '@keen.io/forms';
 
-import { PropertiesMenu, MenuItem } from './App.styles';
-
 import {
+  QueryArguments,
   Accordion,
-  Analysis,
   Card,
-  EventCollection,
   Extraction,
   GroupBy,
   OrderBy,
   Interval,
-  TargetProperty,
-  Timeframe,
   Limit,
   Percentile,
   FunnelSteps,
@@ -23,21 +18,15 @@ import {
 import { showField } from './utils/showField';
 
 import {
-  selectEventCollection,
-  selectTargetProperty,
-  selectAnalysis,
+
   getPercentile,
   getEventCollection,
   getAnalysis,
   getFilters,
   setFilters,
-  getTargetProperty,
+
   setPercentile,
-  getTimeframe,
-  getTimezone,
-  selectTimezone,
-  setTimeframe,
-  DEFAULT_TIMEFRAME,
+
 } from './modules/query';
 
 type Props = {
@@ -50,65 +39,13 @@ const App: FC<Props> = ({ onPreviewCollection }) => {
   const analysis = useSelector(getAnalysis);
   const collection = useSelector(getEventCollection);
   const percentile = useSelector(getPercentile);
-  const timeframe = useSelector(getTimeframe);
+
   const filters = useSelector(getFilters);
-  const targetProperty = useSelector(getTargetProperty);
-  const timezone = useSelector(getTimezone);
+
 
   return (
     <div>
-      <PropertiesMenu>
-        <MenuItem>
-          <Analysis
-            analysis={analysis}
-            onChange={(updatedAnalysis) =>
-              dispatch(selectAnalysis(updatedAnalysis))
-            }
-          />
-        </MenuItem>
-        {showField('eventCollection', analysis) && (
-          <MenuItem>
-            <EventCollection
-              collection={collection}
-              onReset={() => dispatch(selectEventCollection(null))}
-              onChange={(collection) =>
-                dispatch(selectEventCollection(collection))
-              }
-            />
-          </MenuItem>
-        )}
-        {showField('targetProperty', analysis) && (
-          <MenuItem>
-            <TargetProperty
-              collection={collection}
-              property={targetProperty}
-              onChange={(property) => {
-                dispatch(selectTargetProperty(property));
-              }}
-            />
-          </MenuItem>
-        )}
-        {showField('timeframe', analysis) && (
-          <MenuItem>
-            <Timeframe
-              id="timeframe"
-              value={timeframe}
-              timezone={timezone}
-              onReset={() => {
-                dispatch(setTimeframe(DEFAULT_TIMEFRAME));
-                dispatch(selectTimezone(undefined));
-              }}
-              onTimeframeChange={(timeframe) =>
-                dispatch(setTimeframe(timeframe))
-              }
-              onTimezoneChange={(timezone) =>
-                dispatch(selectTimezone(timezone))
-              }
-            />
-          </MenuItem>
-        )}
-      </PropertiesMenu>
-
+      <QueryArguments />
       <Card>
         {showField('steps', analysis) && <FunnelSteps />}
         {showField('groupBy', analysis) && <GroupBy collection={collection} />}
