@@ -1,6 +1,6 @@
 import React, { FC, useState, useEffect } from 'react';
 
-import { Container, Edit, Remove, Content } from './GroupByItem.styles';
+import { Container, Edit, Remove, Content } from './Property.styles';
 
 import Label from '../Label';
 import PropertiesTree from '../PropertiesTree';
@@ -9,24 +9,24 @@ import { createTree } from '../../utils/createTree';
 import { useSearch } from '../../hooks';
 
 type Props = {
+  /** Property name */
+  property: string;
   /** Remove event handler */
   onRemove: () => void;
   /** Change property event handler */
   onChange: (property: string) => void;
-  /** Group property */
-  property: string;
   /** Dragged indicator */
   isDragged: boolean;
-  /** Collection properties */
-  properties: { propertyPath: string; propertyType: string }[];
-  /** Collection tree properties */
+  /** Properties schema collection */
+  propertiesSchema: { propertyPath: string; propertyType: string }[];
+  /** Collection properties schema in tree structure */
   propertiesTree: Record<string, string[] | Object>;
 };
 
-const GroupByItem: FC<Props> = ({
+const Property: FC<Props> = ({
   isDragged,
   property,
-  properties,
+  propertiesSchema,
   propertiesTree,
   onChange,
   onRemove,
@@ -38,7 +38,7 @@ const GroupByItem: FC<Props> = ({
     propertyPath: string;
     propertyType: string;
   }>(
-    properties,
+    propertiesSchema,
     (searchResult) => {
       const searchTree = {};
       searchResult.forEach(({ propertyPath, propertyType }) => {
@@ -54,7 +54,7 @@ const GroupByItem: FC<Props> = ({
 
   useEffect(() => {
     setSearchTree(propertiesTree);
-  }, [editMode, properties]);
+  }, [editMode, propertiesSchema]);
 
   return (
     <Container
@@ -100,4 +100,4 @@ const GroupByItem: FC<Props> = ({
   );
 };
 
-export default GroupByItem;
+export default Property;

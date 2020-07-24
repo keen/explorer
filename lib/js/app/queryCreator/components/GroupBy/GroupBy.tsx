@@ -11,8 +11,8 @@ import {
 } from './GroupBy.styles';
 
 import Title from '../Title';
+import Property from '../Property';
 import AddGroupBy from '../AddGroupBy';
-import GroupByItem from '../GroupByItem';
 
 import {
   addGroup,
@@ -119,14 +119,14 @@ const GroupBy: FC<Props> = ({ collection }) => {
         >
           {state.map(({ property, id, chosen }) => (
             <GroupSettings key={id}>
-              <GroupByItem
+              <Property
                 isDragged={chosen}
                 onRemove={() => groupDispatcher(removeGroup(id))}
                 onChange={(property) =>
                   groupDispatcher(selectGroupProperty(id, property))
                 }
                 property={property}
-                properties={propertiesCollection}
+                propertiesSchema={propertiesCollection}
                 propertiesTree={propertiesTree}
               />
             </GroupSettings>
