@@ -2,8 +2,8 @@ import React, { FC, useState, useEffect, useRef, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Container } from './TargetProperty.styles';
-import { createCollection } from './utils/createCollection';
-import { createTree } from './utils/createTree';
+import { createCollection } from '../../utils/createCollection';
+import { createTree } from '../../utils/createTree';
 
 import Title from '../Title';
 import Dropdown from '../Dropdown';
@@ -47,20 +47,20 @@ const TargetProperty: FC<Props> = ({ collection }) => {
   }, [collectionSchema]);
 
   const { searchHandler } = useSearch<{
-    propertyPath: string;
-    propertyType: string;
+    path: string;
+    type: string;
   }>(
     propertiesCollection,
     (searchResult) => {
       const searchTree = {};
-      searchResult.forEach(({ propertyPath, propertyType }) => {
-        searchTree[propertyPath] = propertyType;
+      searchResult.forEach(({ path, type }) => {
+        searchTree[path] = type;
       });
 
       setPropertiesTree(createTree(searchTree));
     },
     {
-      keys: ['propertyPath', 'propertyType'],
+      keys: ['path', 'type'],
       threshold: 0.4,
     }
   );

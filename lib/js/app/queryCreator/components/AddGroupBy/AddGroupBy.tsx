@@ -9,7 +9,7 @@ type Props = {
   /** Add group by settings event handler */
   onAddGroup: (property: string) => void;
   /** Collection properties */
-  properties: { propertyPath: string; propertyType: string }[];
+  properties: { path: string; type: string }[];
   /** Collection tree properties */
   propertiesTree: Record<string, string[] | Object>;
 };
@@ -19,19 +19,19 @@ const AddGroupBy: FC<Props> = ({ onAddGroup, properties, propertiesTree }) => {
   const [searchTree, setSearchTree] = useState(propertiesTree);
 
   const { searchHandler } = useSearch<{
-    propertyPath: string;
-    propertyType: string;
+    path: string;
+    type: string;
   }>(
     properties,
     (searchResult) => {
       const searchTree = {};
-      searchResult.forEach(({ propertyPath, propertyType }) => {
-        searchTree[propertyPath] = propertyType;
+      searchResult.forEach(({ path, type }) => {
+        searchTree[path] = type;
       });
       setSearchTree(createTree(searchTree));
     },
     {
-      keys: ['propertyPath', 'propertyType'],
+      keys: ['path', 'type'],
       threshold: 0.4,
     }
   );

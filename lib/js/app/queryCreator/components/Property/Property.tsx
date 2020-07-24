@@ -18,7 +18,7 @@ type Props = {
   /** Dragged indicator */
   isDragged: boolean;
   /** Properties schema collection */
-  propertiesSchema: { propertyPath: string; propertyType: string }[];
+  propertiesSchema: { path: string; type: string }[];
   /** Collection properties schema in tree structure */
   propertiesTree: Record<string, string[] | Object>;
 };
@@ -35,19 +35,19 @@ const Property: FC<Props> = ({
   const [searchTree, setSearchTree] = useState(propertiesTree);
 
   const { searchHandler } = useSearch<{
-    propertyPath: string;
-    propertyType: string;
+    path: string;
+    type: string;
   }>(
     propertiesSchema,
     (searchResult) => {
       const searchTree = {};
-      searchResult.forEach(({ propertyPath, propertyType }) => {
-        searchTree[propertyPath] = propertyType;
+      searchResult.forEach(({ path, type }) => {
+        searchTree[path] = type;
       });
       setSearchTree(createTree(searchTree));
     },
     {
-      keys: ['propertyPath', 'propertyType'],
+      keys: ['path', 'type'],
       threshold: 0.4,
     }
   );
