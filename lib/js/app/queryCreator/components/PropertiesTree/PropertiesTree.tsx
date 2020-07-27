@@ -1,47 +1,48 @@
 import React, { FC } from 'react';
 
-import { List } from './PropertiesTree.styles';
-
-import TreeLevel from './TreeLevel';
+import { TreeLevel, TreeLeaf } from './components';
 
 type Props = {
+  /** Properties tree */
   properties: Record<string, string[] | Object>;
+  /** Click event handler */
   onClick: (e: React.MouseEvent<HTMLDivElement>, propertyPath: string) => void;
-  /** */
-  openable?: boolean;
+  /** Expand all tree levels */
+  expanded?: boolean;
   /** Open indicator */
   isOpen?: boolean;
 };
 
-const PropertiesTree: FC<Props> = ({ openable, onClick, properties }) => {
+const PropertiesTree: FC<Props> = ({ expanded, onClick, properties }) => {
   const keys = Object.keys(properties);
 
   return (
-    <List data-testid="properties-tree">
+    <div data-testid="properties-tree">
       {keys.map((key) => {
         if (Array.isArray(properties[key])) {
           return (
-            <div
-              style={{ paddingLeft: 15 }}
+            <TreeLeaf
+              padding={15}
+              name={key}
+              type={properties[key][1]}
               key={key}
               onClick={(e) => onClick(e, properties[key][0])}
-            >
-              <span>{key}</span> {properties[key][1]}
-            </div>
+            />
           );
         } else {
           return (
             <TreeLevel
               key={key}
-              nestLevel={1}
+              level={1}
               onClick={onClick}
               header={key}
+              expanded={expanded}
               properties={properties[key] as Record<string, any>}
             />
           );
         }
       })}
-    </List>
+    </div>
   );
 };
 

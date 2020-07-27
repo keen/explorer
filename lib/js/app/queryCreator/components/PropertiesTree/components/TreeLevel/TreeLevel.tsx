@@ -1,23 +1,37 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useState, useEffect } from 'react';
 import { Icon } from '@keen.io/icons';
 import { colors } from '@keen.io/colors';
 
 import { Header, MotionIcon } from './TreeLevel.styles';
+import TreeLeaf from '../TreeLeaf';
+
+import { PADDING } from '../../constants';
 
 type Props = {
-  /** Click event handler */
-  onClick: (e: React.MouseEvent<HTMLDivElement>, propertyPath: string) => void;
   /** Header title */
   header: string;
   /** Tree properties */
   properties: Record<string, string[] | Object>;
-  initialLevel?: boolean;
+  /** Click event handler */
+  onClick: (e: React.MouseEvent<HTMLDivElement>, propertyPath: string) => void;
   /** Nested level count */
-  nestLevel?: number;
+  level?: number;
+  /** Expand all tree levels */
+  expanded?: boolean;
 };
 
-const TreeLevel: FC<Props> = ({ header, onClick, nestLevel, properties }) => {
-  const [isOpen, setOpen] = useState(false);
+const TreeLevel: FC<Props> = ({
+  header,
+  onClick,
+  level,
+  expanded,
+  properties,
+}) => {
+  const [isOpen, setOpen] = useState(expanded);
+
+  useEffect(() => {
+    setOpen(expanded);
+  }, [expanded]);
 
   const keys = Object.keys(properties);
 
@@ -25,7 +39,7 @@ const TreeLevel: FC<Props> = ({ header, onClick, nestLevel, properties }) => {
     <div data-testid="tree-level">
       <Header
         onClick={() => setOpen(!isOpen)}
-        style={{ paddingLeft: nestLevel * 15 }}
+        style={{ paddingLeft: level * PADDING }}
       >
         {header}
         <MotionIcon
@@ -44,19 +58,22 @@ const TreeLevel: FC<Props> = ({ header, onClick, nestLevel, properties }) => {
         keys.map((key) => {
           if (Array.isArray(properties[key])) {
             return (
-              <div
-                style={{ paddingLeft: (nestLevel + 1) * 15 }}
-                onClick={(e) => onClick(e, properties[key][0])}
+              <TreeLeaf
                 key={key}
-              >
-                <span>{key}</span> {properties[key][1]}
-              </div>
+                padding={(level + 1) * PADDING}
+                name={key}
+                type={properties[key][1]}
+                onClick={(e) => {
+                  onClick(e, properties[key][0]);
+                }}
+              />
             );
           } else {
             return (
               <div key={key}>
                 <TreeLevel
-                  nestLevel={nestLevel + 1}
+                  expanded={expanded}
+                  level={level + 1}
                   onClick={onClick}
                   header={key}
                   properties={properties[key] as Record<string, any>}

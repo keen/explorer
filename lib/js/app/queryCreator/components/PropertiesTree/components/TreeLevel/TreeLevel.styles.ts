@@ -9,6 +9,7 @@ export const Header = styled.div`
   color: ${colors.blue[500]};
 
   display: flex;
+  cursor: pointer;
 `;
 
 export const MotionIcon = styled(motion.div)`

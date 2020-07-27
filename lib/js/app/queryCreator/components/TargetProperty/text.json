@@ -1,5 +1,6 @@
 {
   "label": "Target property",
   "searchPlaceholder": "Search",
+  "emptySearchResults": "No results",
   "placeholder": "Select event property"
 }

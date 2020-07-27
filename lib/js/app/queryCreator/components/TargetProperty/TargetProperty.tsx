@@ -18,7 +18,7 @@ import { useSearch } from '../../hooks';
 import { getCollectionSchema, getSchemas } from '../../modules/events';
 
 import text from './text.json';
-import { SEPARATOR } from './constants';
+import { SEPARATOR, EXPAND_TRESHOLD } from './constants';
 
 import { AppState } from '../../types';
 
@@ -39,6 +39,7 @@ const TargetProperty: FC<Props> = ({
   property,
   variant = 'primary',
 }) => {
+  const [searchPhrase, setSearchPhrase] = useState(null);
   const {
     schema: collectionSchema,
     tree: schemaTree,
@@ -60,12 +61,13 @@ const TargetProperty: FC<Props> = ({
     type: string;
   }>(
     schemaList,
-    (searchResult, searchPhrase) => {
-      if (searchPhrase) {
+    (searchResult, phrase) => {
+      if (phrase) {
         const searchTree = {};
         searchResult.forEach(({ path, type }) => {
           searchTree[path] = type;
         });
+        setSearchPhrase(phrase);
         setPropertiesTree(createTree(searchTree));
       } else {
         setPropertiesTree(null);
@@ -83,6 +85,15 @@ const TargetProperty: FC<Props> = ({
     }
     return () => onChange(null);
   }, [collection]);
+
+  useEffect(() => {
+    if (!isOpen) {
+      setSearchPhrase(null);
+    }
+  }, [isOpen]);
+
+  const isEmptySearch =
+    searchPhrase && propertiesTree && !Object.keys(propertiesTree).length;
 
   return (
     <Container ref={containerRef}>
@@ -110,17 +121,21 @@ const TargetProperty: FC<Props> = ({
         </PropertyOverflow>
       </DropableContainer>
       <Dropdown isOpen={isOpen}>
-        <TreeContainer>
-          <PropertiesTree
-            data-dropdown="target-property"
-            onClick={(_e, property) => {
-              setOpen(false);
-              onChange(property);
-              setPropertiesTree(createTree(collectionSchema));
-            }}
-            properties={propertiesTree ? propertiesTree : schemaTree}
-          />
-        </TreeContainer>
+        {isEmptySearch ? (
+          <div>{text.emptySearchResults}</div>
+        ) : (
+          <TreeContainer>
+            <PropertiesTree
+              expanded={searchPhrase && searchPhrase.length > EXPAND_TRESHOLD}
+              onClick={(_e, property) => {
+                setOpen(false);
+                onChange(property);
+                setPropertiesTree(createTree(collectionSchema));
+              }}
+              properties={propertiesTree ? propertiesTree : schemaTree}
+            />
+          </TreeContainer>
+        )}
       </Dropdown>
     </Container>
   );
