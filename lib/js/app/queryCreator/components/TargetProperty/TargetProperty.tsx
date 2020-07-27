@@ -1,11 +1,16 @@
 import React, { FC, useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 
-import { Container } from './TargetProperty.styles';
+import {
+  Container,
+  TreeContainer,
+  PropertyOverflow,
+} from './TargetProperty.styles';
 import { createTree } from '../../utils/createTree';
 
 import Title from '../Title';
 import Dropdown from '../Dropdown';
+import PropertyPath from '../PropertyPath';
 import PropertiesTree from '../PropertiesTree';
 import DropableContainer, { Variant } from '../DropableContainer';
 
@@ -13,6 +18,7 @@ import { useSearch } from '../../hooks';
 import { getCollectionSchema, getSchemas } from '../../modules/events';
 
 import text from './text.json';
+import { SEPARATOR } from './constants';
 
 import { AppState } from '../../types';
 
@@ -89,6 +95,7 @@ const TargetProperty: FC<Props> = ({
         isActive={isOpen}
         value={property}
         searchable
+        searchPlaceholder={text.searchPlaceholder}
         placeholder={text.placeholder}
         onSearch={searchHandler}
         onDefocus={(event: any) => {
@@ -98,18 +105,22 @@ const TargetProperty: FC<Props> = ({
           }
         }}
       >
-        {property}
+        <PropertyOverflow>
+          {property && <PropertyPath path={property.split(SEPARATOR)} />}
+        </PropertyOverflow>
       </DropableContainer>
       <Dropdown isOpen={isOpen}>
-        <PropertiesTree
-          data-dropdown="target-property"
-          onClick={(_e, property) => {
-            setOpen(false);
-            onChange(property);
-            setPropertiesTree(createTree(collectionSchema));
-          }}
-          properties={propertiesTree ? propertiesTree : schemaTree}
-        />
+        <TreeContainer>
+          <PropertiesTree
+            data-dropdown="target-property"
+            onClick={(_e, property) => {
+              setOpen(false);
+              onChange(property);
+              setPropertiesTree(createTree(collectionSchema));
+            }}
+            properties={propertiesTree ? propertiesTree : schemaTree}
+          />
+        </TreeContainer>
       </Dropdown>
     </Container>
   );

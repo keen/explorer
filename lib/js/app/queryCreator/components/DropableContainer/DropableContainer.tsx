@@ -98,7 +98,7 @@ const DropableContainer: FC<Props> = ({
         </>
       ) : (
         <>
-          {value && <div>{children}</div>}
+          {value && <>{children}</>}
           {placeholder && !value && <Placeholder>{placeholder}</Placeholder>}
         </>
       )}

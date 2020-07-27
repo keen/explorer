@@ -11,7 +11,7 @@ import {
   TooltipContainer,
 } from './ListItem.styles';
 
-import { Analysis } from '../../../types';
+import { Analysis } from '../../../../types';
 
 type Props = {
   /** Analysis value */

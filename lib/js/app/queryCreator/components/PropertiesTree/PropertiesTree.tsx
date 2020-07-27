@@ -1,5 +1,7 @@
 import React, { FC } from 'react';
 
+import { List } from './PropertiesTree.styles';
+
 import TreeLevel from './TreeLevel';
 
 type Props = {
@@ -15,27 +17,31 @@ const PropertiesTree: FC<Props> = ({ openable, onClick, properties }) => {
   const keys = Object.keys(properties);
 
   return (
-    <ul data-element="properties-tree">
+    <List data-testid="properties-tree">
       {keys.map((key) => {
         if (Array.isArray(properties[key])) {
           return (
-            <div key={key} onClick={(e) => onClick(e, properties[key][0])}>
+            <div
+              style={{ paddingLeft: 15 }}
+              key={key}
+              onClick={(e) => onClick(e, properties[key][0])}
+            >
               <span>{key}</span> {properties[key][1]}
             </div>
           );
         } else {
           return (
-            <div key={key}>
-              <TreeLevel
-                onClick={onClick}
-                header={key}
-                properties={properties[key] as Record<string, any>}
-              />
-            </div>
+            <TreeLevel
+              key={key}
+              nestLevel={1}
+              onClick={onClick}
+              header={key}
+              properties={properties[key] as Record<string, any>}
+            />
           );
         }
       })}
-    </ul>
+    </List>
   );
 };
 

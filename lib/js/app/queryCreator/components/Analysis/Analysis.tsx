@@ -1,6 +1,6 @@
 import React, { FC, useState } from 'react';
 
-import ListItem from './ListItem';
+import { ListItem } from './components';
 import { Container, List, Groups, AnalysisTitle } from './Analysis.styles';
 
 import Title from '../Title';
