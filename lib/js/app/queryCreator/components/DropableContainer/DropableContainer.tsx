@@ -1,6 +1,16 @@
 import React, { FC, useRef, useCallback, useEffect } from 'react';
+import { transparentize } from 'polished';
 
-import { Container, Input } from './DropableContainer.styles';
+import { colors } from '@keen.io/colors';
+import { Icon } from '@keen.io/icons';
+
+import {
+  Container,
+  Placeholder,
+  SearchIcon,
+  DropIndicator,
+  Input,
+} from './DropableContainer.styles';
 import { Variant } from './types';
 
 type Props = {
@@ -16,8 +26,14 @@ type Props = {
   variant?: Variant;
   /** Search feature flag */
   searchable?: boolean;
+  /** Shows drop indicator */
+  dropIndicator?: boolean;
   /** Property value */
-  value?: string;
+  value?: string | Record<string, any>;
+  /** Value placeholder */
+  placeholder?: string;
+  /** Search placeholder */
+  searchPlaceholder?: string;
   /** Search event handler */
   onSearch?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
@@ -25,11 +41,14 @@ type Props = {
 const DropableContainer: FC<Props> = ({
   onClick,
   value,
+  placeholder,
   children,
   isActive,
   onDefocus,
   onSearch,
   searchable,
+  searchPlaceholder,
+  dropIndicator,
   variant = 'primary',
 }) => {
   const containerRef = useRef(null);
@@ -54,14 +73,44 @@ const DropableContainer: FC<Props> = ({
   return (
     <Container
       data-testid="dropable-container"
+      isActive={isActive}
       variant={variant}
       onClick={onClick}
       ref={containerRef}
     >
       {searchable && isActive ? (
-        <Input type="text" autoFocus defaultValue={value} onChange={onSearch} />
+        <>
+          <SearchIcon>
+            <Icon
+              type="brand"
+              fill={transparentize(0.3, colors.blue[500])}
+              width={15}
+              height={15}
+            />
+          </SearchIcon>
+          <Input
+            type="text"
+            autoFocus
+            data-testid="dropable-container-input"
+            placeholder={typeof value === 'string' ? value : searchPlaceholder}
+            onChange={onSearch}
+          />
+        </>
       ) : (
-        <div>{children}</div>
+        <>
+          {value && <div>{children}</div>}
+          {placeholder && !value && <Placeholder>{placeholder}</Placeholder>}
+        </>
+      )}
+      {dropIndicator && (
+        <DropIndicator>
+          <Icon
+            type="caret-down"
+            fill={transparentize(0.3, colors.blue[500])}
+            width={10}
+            height={10}
+          />
+        </DropIndicator>
       )}
     </Container>
   );

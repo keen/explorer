@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 
 import { ListContainer, ListItem } from './DropdownList.styles';
 
@@ -8,29 +8,49 @@ interface ListElement {
 }
 
 type Props<T extends ListElement> = {
+  /** Collection of items */
   items: T[];
   /** Click event handler */
   onClick: (e: React.MouseEvent<HTMLLIElement>, item: T) => void;
+  /** Active item function */
+  setActiveItem?: (item: T) => boolean;
   /** Item render function */
-  renderItem?: (item: T) => JSX.Element;
+  renderItem?: (item: T, isActive: boolean) => JSX.Element;
 };
 
 const defaultItemRender = ({ label }) => <>{label}</>;
 
-const DropdownList = <T extends ListElement>({
-  items,
-  onClick,
-  renderItem = defaultItemRender,
-}: Props<T>) => {
-  return (
-    <ListContainer>
-      {items.map((item, idx) => (
-        <ListItem key={idx} onClick={(e) => onClick(e, item)}>
-          {renderItem(item)}
-        </ListItem>
-      ))}
-    </ListContainer>
-  );
-};
+const defaultSetActive = () => false;
+
+const DropdownList = forwardRef(
+  <T extends ListElement>(
+    {
+      items,
+      onClick,
+      renderItem = defaultItemRender,
+      setActiveItem = defaultSetActive,
+    }: Props<T>,
+    ref
+  ) => {
+    return (
+      <ListContainer>
+        {items.map((item, idx) => {
+          const isActive = setActiveItem(item);
+
+          return (
+            <ListItem
+              isActive={isActive}
+              ref={isActive ? ref : null}
+              key={idx}
+              onClick={(e) => onClick(e, item)}
+            >
+              {renderItem(item, isActive)}
+            </ListItem>
+          );
+        })}
+      </ListContainer>
+    );
+  }
+);
 
 export default DropdownList;

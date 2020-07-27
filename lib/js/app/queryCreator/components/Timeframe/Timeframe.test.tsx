@@ -26,7 +26,7 @@ test('should render relative time user interface', () => {
     wrapper: { getByTestId },
   } = render();
 
-  const propertyContainer = getByTestId('property-container');
+  const propertyContainer = getByTestId('dropable-container');
   fireEvent.click(propertyContainer);
 
   expect(getByTestId('relative-time')).toBeInTheDocument();
@@ -41,7 +41,7 @@ test('should render absolute time user interface', () => {
     wrapper: { getByTestId },
   } = render({ value: timeframe });
 
-  const propertyContainer = getByTestId('property-container');
+  const propertyContainer = getByTestId('dropable-container');
   fireEvent.click(propertyContainer);
 
   expect(getByTestId('absolute-time')).toBeInTheDocument();
@@ -53,7 +53,7 @@ test('should render timezone user interface', () => {
     props,
   } = render();
 
-  const propertyContainer = getByTestId('property-container');
+  const propertyContainer = getByTestId('dropable-container');
   fireEvent.click(propertyContainer);
 
   expect(getByTestId('timezone')).toBeInTheDocument();

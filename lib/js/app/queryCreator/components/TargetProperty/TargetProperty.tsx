@@ -73,7 +73,6 @@ const TargetProperty: FC<Props> = ({
 
   useEffect(() => {
     if (isSchemaExist && !Object.keys(collectionSchema).includes(property)) {
-      console.log('ZRESETUJMY TO !');
       onChange(null);
     }
     return () => onChange(null);
@@ -81,13 +80,16 @@ const TargetProperty: FC<Props> = ({
 
   return (
     <Container ref={containerRef}>
-      <Title>{text.label}</Title>
+      <Title isDisabled={!collection} onClick={() => !isOpen && setOpen(true)}>
+        {text.label}
+      </Title>
       <DropableContainer
         variant={variant}
-        onClick={() => !isOpen && setOpen(true)}
+        onClick={() => !isOpen && collection && setOpen(true)}
         isActive={isOpen}
         value={property}
         searchable
+        placeholder={text.placeholder}
         onSearch={searchHandler}
         onDefocus={(event: any) => {
           if (!event.path?.includes(containerRef.current)) {

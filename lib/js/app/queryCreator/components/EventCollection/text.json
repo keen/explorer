@@ -1,4 +1,6 @@
 {
-  "placeholder": "Choose an event collection",
-  "label": "Event collection"
+  "placeholder": "Select event stream",
+  "searchPlaceholder": "Search",
+  "emptySearchResults": "No results",
+  "label": "Event Stream"
 }

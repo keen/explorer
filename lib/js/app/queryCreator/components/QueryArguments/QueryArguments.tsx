@@ -36,57 +36,53 @@ const App: FC<Props> = () => {
   const timezone = useSelector(getTimezone);
 
   return (
-      <Container>
+    <Container>
+      <MenuItem>
+        <Analysis
+          analysis={analysis}
+          onChange={(updatedAnalysis) =>
+            dispatch(selectAnalysis(updatedAnalysis))
+          }
+        />
+      </MenuItem>
+      {showField('eventCollection', analysis) && (
         <MenuItem>
-          <Analysis
-            analysis={analysis}
-            onChange={(updatedAnalysis) =>
-              dispatch(selectAnalysis(updatedAnalysis))
+          <EventCollection
+            collection={collection}
+            onReset={() => dispatch(selectEventCollection(null))}
+            onChange={(collection) =>
+              dispatch(selectEventCollection(collection))
             }
           />
         </MenuItem>
-        {showField('eventCollection', analysis) && (
-          <MenuItem>
-            <EventCollection
-              collection={collection}
-              onReset={() => dispatch(selectEventCollection(null))}
-              onChange={(collection) =>
-                dispatch(selectEventCollection(collection))
-              }
-            />
-          </MenuItem>
-        )}
-        {showField('targetProperty', analysis) && (
-          <MenuItem>
-            <TargetProperty
-              collection={collection}
-              property={targetProperty}
-              onChange={(property) => {
-                dispatch(selectTargetProperty(property));
-              }}
-            />
-          </MenuItem>
-        )}
-        {showField('timeframe', analysis) && (
-          <MenuItem>
-            <Timeframe
-              id="timeframe"
-              value={timeframe}
-              timezone={timezone}
-              onReset={() => {
-                dispatch(setTimeframe(DEFAULT_TIMEFRAME));
-                dispatch(selectTimezone(undefined));
-              }}
-              onTimeframeChange={(timeframe) =>
-                dispatch(setTimeframe(timeframe))
-              }
-              onTimezoneChange={(timezone) =>
-                dispatch(selectTimezone(timezone))
-              }
-            />
-          </MenuItem>
-        )}
-      </Container>
+      )}
+      {showField('targetProperty', analysis) && (
+        <MenuItem>
+          <TargetProperty
+            collection={collection}
+            property={targetProperty}
+            onChange={(property) => {
+              dispatch(selectTargetProperty(property));
+            }}
+          />
+        </MenuItem>
+      )}
+      {showField('timeframe', analysis) && (
+        <MenuItem>
+          <Timeframe
+            id="timeframe"
+            value={timeframe}
+            timezone={timezone}
+            onReset={() => {
+              dispatch(setTimeframe(DEFAULT_TIMEFRAME));
+              dispatch(selectTimezone(undefined));
+            }}
+            onTimeframeChange={(timeframe) => dispatch(setTimeframe(timeframe))}
+            onTimezoneChange={(timezone) => dispatch(selectTimezone(timezone))}
+          />
+        </MenuItem>
+      )}
+    </Container>
   );
 };
 

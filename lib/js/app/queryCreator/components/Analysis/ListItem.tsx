@@ -1,15 +1,25 @@
 import React, { FC, useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
+import { Tooltip } from '@keen.io/ui-core';
 import { colors } from '@keen.io/colors';
 import { Icon } from '@keen.io/icons';
 
-import { Container, MotionIcon, Hint, Message } from './Item.styles';
+import {
+  Container,
+  MotionIcon,
+  Hint,
+  TooltipContainer,
+} from './ListItem.styles';
 
 import { Analysis } from '../../../types';
 
 type Props = {
   /** Analysis value */
   analysis: Analysis;
+  /** Analysis description */
+  description: string;
+  /** Active indicator */
+  isActive: boolean;
   /** Click event handler */
   onClick: (e: React.MouseEvent<HTMLLIElement>, analysis: Analysis) => void;
   /** React children nodes */
@@ -29,15 +39,22 @@ const iconMotion = {
   transition: { delay: 0.1 },
 };
 
-const Item: FC<Props> = ({ children, onClick, analysis }) => {
-  const [isActive, setActive] = useState(false);
+const ListItem: FC<Props> = ({
+  children,
+  onClick,
+  isActive,
+  analysis,
+  description,
+}) => {
+  const [isFocused, setFocus] = useState(false);
   const [hint, showHint] = useState(false);
 
   return (
     <Container
       onClick={(e) => onClick(e, analysis)}
-      onMouseEnter={() => setActive(true)}
-      onMouseLeave={() => setActive(false)}
+      isActive={isActive}
+      onMouseEnter={() => setFocus(true)}
+      onMouseLeave={() => setFocus(false)}
     >
       <div>{children}</div>
       <AnimatePresence>
@@ -45,8 +62,8 @@ const Item: FC<Props> = ({ children, onClick, analysis }) => {
           onMouseEnter={() => showHint(true)}
           onMouseLeave={() => showHint(false)}
         >
-          {isActive && (
-            <MotionIcon key="hint-icon" {...iconMotion}>
+          {isFocused && (
+            <MotionIcon data-testid="hint-icon" key="hint-icon" {...iconMotion}>
               <Icon
                 type="info"
                 width={15}
@@ -56,9 +73,15 @@ const Item: FC<Props> = ({ children, onClick, analysis }) => {
             </MotionIcon>
           )}
           {hint && (
-            <Message key="hint-message" {...hintMotion}>
-              lorem ipsum dolor sit amet
-            </Message>
+            <TooltipContainer
+              data-testid="hint-message"
+              key="tooltip-container"
+              {...hintMotion}
+            >
+              <Tooltip mode="dark" hasArrow={false}>
+                {description}
+              </Tooltip>
+            </TooltipContainer>
           )}
         </Hint>
       </AnimatePresence>
@@ -66,4 +89,4 @@ const Item: FC<Props> = ({ children, onClick, analysis }) => {
   );
 };
 
-export default Item;
+export default ListItem;

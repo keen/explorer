@@ -4,11 +4,19 @@ import { render as rtlRender, fireEvent } from '@testing-library/react';
 import configureStore from 'redux-mock-store';
 
 import TargetProperty from './TargetProperty';
-import text from './text.json';
 
-const render = (storeState: any = {}, props: any = {}) => {
+import { createTree } from '../../utils/createTree';
+import { createCollection } from '../../utils/createCollection';
+
+const render = (storeState: any = {}, overProps: any = {}) => {
   const mockStore = configureStore([]);
   const store = mockStore({ ...storeState });
+
+  const props = {
+    onChange: jest.fn(),
+    property: undefined,
+    ...overProps,
+  };
 
   const wrapper = rtlRender(
     <Provider store={store}>
@@ -18,71 +26,96 @@ const render = (storeState: any = {}, props: any = {}) => {
 
   return {
     store,
+    props,
     wrapper,
   };
 };
 
 test('allows user to select target property', async () => {
+  const collectionSchema = { date: 'String', userId: 'String' };
   const storeState = {
     query: {
       targetProperty: 'date',
     },
     events: {
       schemas: {
-        purchases: { date: 'String', userId: 'String' },
+        purchases: {
+          schema: collectionSchema,
+          tree: createTree(collectionSchema),
+          list: createCollection(collectionSchema),
+        },
       },
     },
   };
 
   const {
-    store,
+    props,
     wrapper: { getByText, getByTestId },
   } = render(storeState, { collection: 'purchases' });
 
-  const propertyField = getByTestId('property-container');
+  const propertyField = getByTestId('dropable-container');
   fireEvent.click(propertyField);
 
   const property = getByText('userId');
   fireEvent.click(property);
 
-  expect(store.getActions()).toMatchInlineSnapshot(`
-    Array [
-      Object {
-        "payload": Object {
-          "property": "userId",
+  expect(props.onChange).toHaveBeenCalledWith('userId');
+});
+
+test('allows user to search for target property', async () => {
+  const collectionSchema = { category: 'String', industry: 'String' };
+
+  const storeState = {
+    query: {
+      targetProperty: undefined,
+    },
+    events: {
+      schemas: {
+        purchases: {
+          schema: collectionSchema,
+          tree: createTree(collectionSchema),
+          list: createCollection(collectionSchema),
         },
-        "type": "@query-creator/SELECT_TARGET_PROPERTY",
       },
-    ]
-  `);
+    },
+  };
+
+  const {
+    wrapper: { getByText, getByTestId, queryByText },
+  } = render(storeState, { collection: 'purchases' });
+
+  const propertyField = getByTestId('dropable-container');
+  fireEvent.click(propertyField);
+
+  const input = getByTestId('dropable-container-input');
+  fireEvent.change(input, { target: { value: 'industry' } });
+
+  expect(queryByText('category')).not.toBeInTheDocument();
+  expect(getByText('industry')).toBeInTheDocument();
 });
 
 test('reset target property settings', async () => {
+  const collectionSchema = { date: 'String', userId: 'String' };
   const storeState = {
     query: {
       targetProperty: 'date',
     },
     events: {
       schemas: {
-        purchases: { date: 'String', userId: 'String' },
+        purchases: {
+          schema: collectionSchema,
+          tree: createTree(collectionSchema),
+          list: createCollection(collectionSchema),
+        },
       },
     },
   };
 
   const {
-    store,
+    props,
     wrapper: { unmount },
   } = render(storeState, { collection: 'purchases' });
   unmount();
 
-  expect(store.getActions()).toMatchInlineSnapshot(`
-    Array [
-      Object {
-        "payload": Object {
-          "property": null,
-        },
-        "type": "@query-creator/SELECT_TARGET_PROPERTY",
-      },
-    ]
-  `);
+  expect(props.onChange).toHaveBeenCalledWith(null);
 });

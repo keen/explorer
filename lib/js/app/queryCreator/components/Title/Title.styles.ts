@@ -10,10 +10,12 @@ export const Container = styled.div<{
   font-family: 'Lato Bold', sans-serif;
   font-size: 14px;
   line-height: 17px;
+  cursor: pointer;
 
   ${(props) =>
     props.isDisabled &&
     css`
+      cursor: not-allowed;
       color: ${transparentize(0.5, colors.black[100])};
     `}
 `;

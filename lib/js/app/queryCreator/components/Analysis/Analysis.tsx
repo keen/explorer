@@ -1,17 +1,18 @@
-import React, { FC, useMemo, useCallback, useState, useRef } from 'react';
-import Fuse from 'fuse.js';
+import React, { FC, useState } from 'react';
 
-import Item from './Item';
-import { Container, List } from './Analysis.styles';
+import ListItem from './ListItem';
+import { Container, List, Groups, AnalysisTitle } from './Analysis.styles';
 
 import Title from '../Title';
 import Dropdown from '../Dropdown';
 import DropableContainer from '../DropableContainer';
 
 import text from './text.json';
-import { createOptions, transformName } from './utils';
+import { transformName } from './utils';
 
 import { Analysis as AnalysisType } from '../../../types';
+
+import { ANALYSIS_GROUPS } from './constants';
 
 type Props = {
   /** Current analysis */
@@ -22,57 +23,42 @@ type Props = {
 
 const Analysis: FC<Props> = ({ analysis, onChange }) => {
   const [isOpen, setOpen] = useState(false);
-  const options = useMemo(() => createOptions(), []);
-  const [analysisList, setAnalysisList] = useState(options);
-
-  const fuseSearch = useRef(
-    new Fuse(options, {
-      keys: ['label', 'value'],
-      threshold: 0.3,
-    })
-  );
-
-  const searchHandler = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      const value = e.currentTarget.value;
-      const results = fuseSearch.current.search(value).map(({ item }) => item);
-
-      setAnalysisList(results);
-    },
-    [fuseSearch]
-  );
 
   return (
     <Container>
-      <Title>{text.label}</Title>
+      <Title onClick={() => setOpen(true)}>{text.label}</Title>
       <DropableContainer
         onClick={() => !isOpen && setOpen(true)}
+        placeholder={text.placeholder}
         isActive={isOpen}
-        value={transformName(analysis)}
-        onSearch={searchHandler}
-        searchable
+        value={analysis}
         onDefocus={() => {
           setOpen(false);
-          setAnalysisList(options);
         }}
       >
-        {transformName(analysis)}
+        <AnalysisTitle>{transformName(analysis)}</AnalysisTitle>
       </DropableContainer>
       <Dropdown isOpen={isOpen}>
-        <List>
-          {analysisList.map(({ label, value }) => (
-            <Item
-              key={value}
-              analysis={value}
-              onClick={(_e, analysis) => {
-                setOpen(false);
-                onChange(analysis);
-              }}
-            >
-              {label}
-            </Item>
+        <Groups>
+          {ANALYSIS_GROUPS.map((options, idx) => (
+            <List key={idx}>
+              {options.map(({ label, value, description }) => (
+                <ListItem
+                  key={value}
+                  isActive={analysis === value}
+                  description={description}
+                  analysis={value}
+                  onClick={(_e, analysis) => {
+                    setOpen(false);
+                    onChange(analysis);
+                  }}
+                >
+                  {label}
+                </ListItem>
+              ))}
+            </List>
           ))}
-        </List>
+        </Groups>
       </Dropdown>
     </Container>
   );

@@ -5,7 +5,7 @@ import text from './text.json';
 
 import Title from '../Title';
 import Dropdown from '../Dropdown';
-import PropertyContainer from '../PropertyContainer';
+import DropableContainer from '../DropableContainer';
 import AbsoluteTime, { TIME_PICKER_CLASS } from '../AbsoluteTime';
 import RelativeTime from '../RelativeTime';
 import RelativeTimeLabel from '../RelativeTimeLabel';
@@ -55,9 +55,10 @@ const Timeframe: FC<Props> = ({
   return (
     <Container ref={containerRef}>
       <Title>{text.label}</Title>
-      <PropertyContainer
+      <DropableContainer
         onClick={() => !isOpen && setOpen(true)}
         isActive={isOpen}
+        value={value}
         onDefocus={(event: any) => {
           if (
             !event.path?.includes(containerRef.current) &&
@@ -69,14 +70,16 @@ const Timeframe: FC<Props> = ({
           }
         }}
       >
-        {typeof value === 'string' ? (
-          <RelativeTimeLabel {...convertRelativeTime(value)} />
-        ) : (
-          <div>
-            {value.start} - {value.end}
-          </div>
-        )}
-      </PropertyContainer>
+        <>
+          {typeof value === 'string' ? (
+            <RelativeTimeLabel {...convertRelativeTime(value)} />
+          ) : (
+            <div>
+              {value.start} - {value.end}
+            </div>
+          )}
+        </>
+      </DropableContainer>
       <Dropdown isOpen={isOpen}>
         <div onClick={() => onTimeframeChange(DEFAULT_TIMEFRAME)}>
           {text.relative}

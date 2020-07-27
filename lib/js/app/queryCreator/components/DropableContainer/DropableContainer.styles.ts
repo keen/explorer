@@ -1,9 +1,16 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { variant } from 'styled-system';
 import { transparentize } from 'polished';
 import { colors } from '@keen.io/colors';
 
 import { Variant } from './types';
+
+const placeholderMixin = () => css`
+  font-size: 14px;
+  line-height: 17px;
+  font-family: 'Lato', sans-serif;
+  color: ${transparentize(0.5, colors.black[300])};
+`;
 
 const containerVariants = {
   prop: 'variant',
@@ -23,16 +30,41 @@ const containerVariants = {
 
 export const Container = styled.div<{
   variant: Variant;
+  isActive?: boolean;
 }>`
   ${variant(containerVariants)}
   display: flex;
   padding: 10px 14px;
   height: 37px;
   box-sizing: border-box;
+  border-radius: 4px;
   font-size: 14px;
   line-height: 17px;
   font-family: 'Lato', sans-serif;
   position: relative;
+
+  ${(props) =>
+    props.isActive &&
+    css`
+      box-shadow: 0 0 3px 1px rgba(29, 39, 41, 0.15);
+    `}
+
+  transition: box-shadow 0.2s;
+`;
+
+export const SearchIcon = styled.div`
+  margin-right: 5px;
+`;
+
+export const DropIndicator = styled.div`
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+  cursor: pointer;
+`;
+
+export const Placeholder = styled.div`
+  ${placeholderMixin()};
 `;
 
 export const Input = styled.input`
@@ -44,4 +76,12 @@ export const Input = styled.input`
   font-size: 14px;
   line-height: 17px;
   font-family: 'Lato', sans-serif;
+
+  ::placeholder,
+  ::-webkit-input-placeholder {
+    ${placeholderMixin()};
+  }
+  :-ms-input-placeholder {
+    ${placeholderMixin()};
+  }
 `;

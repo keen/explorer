@@ -24,7 +24,7 @@ export const useSearch = <T>(
 
       callback(results, value);
     },
-    [fuseSearch]
+    [fuseSearch, collection]
   );
 
   return {

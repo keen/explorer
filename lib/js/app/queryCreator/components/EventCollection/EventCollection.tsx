@@ -1,4 +1,4 @@
-import React, { FC, useState, useMemo, useEffect } from 'react';
+import React, { FC, useState, useMemo, useRef, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
 import { Container, Collections } from './EventCollection.styles';
@@ -31,6 +31,11 @@ const EventCollection: FC<Props> = ({
   variant = 'primary',
 }) => {
   const [isOpen, setOpen] = useState(false);
+  const [searchPhrase, setSearchPhrase] = useState(null);
+
+  const containerRef = useRef(null);
+  const activeItemRef = useRef(null);
+
   const collections = useSelector(getEventsCollections);
   const options = useMemo(
     () =>
@@ -45,10 +50,29 @@ const EventCollection: FC<Props> = ({
 
   const { searchHandler } = useSearch<{ label: string; value: string }>(
     options,
-    (searchResult) => {
-      setCollectionsList(searchResult);
+    (searchResult, phrase) => {
+      if (phrase) {
+        setSearchPhrase(phrase);
+        setCollectionsList(searchResult);
+      } else {
+        setCollectionsList(options);
+      }
     }
   );
+
+  useEffect(() => {
+    if (isOpen) {
+      if (activeItemRef.current) {
+        const containerOffsetTop = containerRef.current.offsetTop;
+        const { offsetTop, offsetHeight } = activeItemRef.current;
+
+        containerRef.current.scrollTop =
+          offsetTop - offsetHeight - containerOffsetTop;
+      }
+    } else {
+      setSearchPhrase(null);
+    }
+  }, [isOpen]);
 
   useEffect(() => {
     setCollectionsList(options);
@@ -62,13 +86,18 @@ const EventCollection: FC<Props> = ({
 
   return (
     <Container>
-      <Title>{text.label}</Title>
+      <Title data-testid="event-collection-title" onClick={() => setOpen(true)}>
+        {text.label}
+      </Title>
       <DropableContainer
         variant={variant}
+        searchPlaceholder={text.searchPlaceholder}
+        placeholder={text.placeholder}
         onClick={() => !isOpen && setOpen(true)}
         isActive={isOpen}
         value={collection}
         searchable
+        dropIndicator
         onSearch={searchHandler}
         onDefocus={() => {
           setOpen(false);
@@ -77,15 +106,21 @@ const EventCollection: FC<Props> = ({
         {collection}
       </DropableContainer>
       <Dropdown isOpen={isOpen}>
-        <Collections>
-          <DropdownList
-            items={collectionsList}
-            onClick={(_e, { value }) => {
-              onChange(value);
-              setCollectionsList(options);
-            }}
-          />
-        </Collections>
+        {searchPhrase && !collectionsList.length ? (
+          <div>{text.emptySearchResults}</div>
+        ) : (
+          <Collections ref={containerRef}>
+            <DropdownList
+              ref={activeItemRef}
+              items={collectionsList}
+              setActiveItem={({ value }) => collection === value}
+              onClick={(_e, { value }) => {
+                onChange(value);
+                setCollectionsList(options);
+              }}
+            />
+          </Collections>
+        )}
       </Dropdown>
     </Container>
   );

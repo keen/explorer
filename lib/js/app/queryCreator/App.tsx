@@ -18,15 +18,12 @@ import {
 import { showField } from './utils/showField';
 
 import {
-
   getPercentile,
   getEventCollection,
   getAnalysis,
   getFilters,
   setFilters,
-
   setPercentile,
-
 } from './modules/query';
 
 type Props = {
@@ -41,7 +38,6 @@ const App: FC<Props> = ({ onPreviewCollection }) => {
   const percentile = useSelector(getPercentile);
 
   const filters = useSelector(getFilters);
-
 
   return (
     <div>
