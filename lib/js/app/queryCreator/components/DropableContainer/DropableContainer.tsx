@@ -82,7 +82,7 @@ const DropableContainer: FC<Props> = ({
         <>
           <SearchIcon>
             <Icon
-              type="brand"
+              type="search"
               fill={transparentize(0.3, colors.blue[500])}
               width={15}
               height={15}
@@ -103,7 +103,7 @@ const DropableContainer: FC<Props> = ({
         </>
       )}
       {dropIndicator && (
-        <DropIndicator>
+        <DropIndicator data-testid="drop-indicator">
           <Icon
             type="caret-down"
             fill={transparentize(0.3, colors.blue[500])}
