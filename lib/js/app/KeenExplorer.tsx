@@ -19,13 +19,6 @@ import { version } from '../../../package.json';
 import App from './components/App';
 import { AppContext } from './contexts';
 
-const defaultConfig = {
-  previewCollection: true,
-  saveStateToLocalStorage: {
-    eventCollection: true,
-  },
-};
-
 export let client;
 export let keenTrackingClient;
 
@@ -56,13 +49,10 @@ export class KeenExplorer {
 
     ReactDOM.render(
       <Provider store={store}>
-        <AppContext.Provider value={{ keenAnalysis: client }}>
-          <App
-            {...{
-              ...defaultConfig,
-              ...props,
-            }}
-          />
+        <AppContext.Provider
+          value={{ keenAnalysis: client, modalContainer: props.modalContainer }}
+        >
+          <App {...props} />
         </AppContext.Provider>
       </Provider>,
       document.querySelector(props.container)

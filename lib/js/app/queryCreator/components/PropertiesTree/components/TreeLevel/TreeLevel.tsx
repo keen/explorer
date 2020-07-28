@@ -2,8 +2,10 @@ import React, { FC, useState, useEffect } from 'react';
 import { Icon } from '@keen.io/icons';
 import { colors } from '@keen.io/colors';
 
-import { Header, MotionIcon } from './TreeLevel.styles';
-import TreeLeaf from '../TreeLeaf';
+import { Header, Title, MotionIcon } from './TreeLevel.styles';
+import PropertyTreeItem from '../../../PropertyTreeItem';
+
+import { getPropertyType, getPropertyPath } from '../../utils';
 
 import { PADDING } from '../../constants';
 
@@ -39,9 +41,9 @@ const TreeLevel: FC<Props> = ({
     <div data-testid="tree-level">
       <Header
         onClick={() => setOpen(!isOpen)}
-        style={{ paddingLeft: level * PADDING }}
+        style={{ paddingLeft: level * PADDING, paddingRight: PADDING }}
       >
-        {header}
+        <Title>{header}</Title>
         <MotionIcon
           initial={false}
           animate={isOpen ? { rotate: 90 } : { rotate: 0 }}
@@ -58,27 +60,25 @@ const TreeLevel: FC<Props> = ({
         keys.map((key) => {
           if (Array.isArray(properties[key])) {
             return (
-              <TreeLeaf
+              <PropertyTreeItem
                 key={key}
+                propertyName={key}
+                propertyPath={getPropertyPath(properties[key] as string[])}
                 padding={(level + 1) * PADDING}
-                name={key}
-                type={properties[key][1]}
-                onClick={(e) => {
-                  onClick(e, properties[key][0]);
-                }}
+                type={getPropertyType(properties[key] as string[])}
+                onClick={(e, propertyPath) => onClick(e, propertyPath)}
               />
             );
           } else {
             return (
-              <div key={key}>
-                <TreeLevel
-                  expanded={expanded}
-                  level={level + 1}
-                  onClick={onClick}
-                  header={key}
-                  properties={properties[key] as Record<string, any>}
-                />
-              </div>
+              <TreeLevel
+                key={key}
+                header={key}
+                expanded={expanded}
+                level={level + 1}
+                onClick={onClick}
+                properties={properties[key] as Record<string, any>}
+              />
             );
           }
         })}

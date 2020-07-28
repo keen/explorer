@@ -13,6 +13,7 @@ type Props = {
 const Creator: FC<Props> = ({ onUpdateQuery }) => {
   const dispatch = useDispatch();
   const {
+    modalContainer,
     keenAnalysis: { config },
   } = useContext(AppContext);
 
@@ -22,6 +23,7 @@ const Creator: FC<Props> = ({ onUpdateQuery }) => {
 
   return (
     <QueryCreator
+      modalContainer={modalContainer}
       projectId={config.projectId}
       readKey={config.readKey}
       masterKey={config.masterKey}

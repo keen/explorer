@@ -8,13 +8,21 @@
   <link rel="stylesheet" type="text/css" href="https://static.keen.io/assets/keen-fonts.css" />
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 </head>
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+  }
+</style>
 <body class="dev-body">
   <button id="new-query">New Query</button>
+  <div id="modal-root"></div>
   <div id="root"></div>
 </body>
 <script type="text/javascript">
    new KeenExplorer({
      container: '#root',
+     modalContainer: '#modal-root',
      persistence: true,
      keenAnalysis: {
        config: <%= config %>,

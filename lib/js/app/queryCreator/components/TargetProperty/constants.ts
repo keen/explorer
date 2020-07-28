@@ -1,2 +1,2 @@
 export const SEPARATOR = '.';
-export const EXPAND_TRESHOLD = 3;
+export const EXPAND_TRESHOLD = 500;

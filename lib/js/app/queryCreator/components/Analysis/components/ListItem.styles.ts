@@ -6,7 +6,7 @@ import { colors } from '@keen.io/colors';
 export const Container = styled.li<{
   isActive: boolean;
 }>`
-  padding: 7px 10px;
+  padding: 8px 10px;
   display: flex;
   align-items: center;
   justify-content: space-between;

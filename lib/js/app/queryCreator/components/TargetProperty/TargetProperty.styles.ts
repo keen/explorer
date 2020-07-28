@@ -11,5 +11,5 @@ export const PropertyOverflow = styled.div`
 export const TreeContainer = styled.div`
   padding: 10px 0;
   overflow-y: scroll;
-  max-height: 140px;
+  max-height: 400px;
 `;

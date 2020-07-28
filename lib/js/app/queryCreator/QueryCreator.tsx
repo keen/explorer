@@ -8,6 +8,7 @@ import KeenAnalysis from 'keen-analysis';
 import App from './App';
 import rootSaga from './saga';
 import rootReducer from './reducer';
+import { AppContext } from './contexts';
 
 import { appStart } from './modules/app';
 import { getQuery, setQuery, resetQuery } from './modules/query';
@@ -23,6 +24,8 @@ type Props = {
   readKey: string;
   /** Keen master access key */
   masterKey: string;
+  /** Modal container selector */
+  modalContainer: string;
   /** Update query event handler */
   onUpdateQuery?: (query: Object) => void;
 };
@@ -100,7 +103,11 @@ class QueryCreator extends React.Component<Props> {
   render() {
     return (
       <Provider store={this.store}>
-        <App />
+        <AppContext.Provider
+          value={{ modalContainer: this.props.modalContainer }}
+        >
+          <App />
+        </AppContext.Provider>
       </Provider>
     );
   }

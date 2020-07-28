@@ -5,6 +5,6 @@ export const Container = styled.div`
 `;
 
 export const Collections = styled.div`
-  max-height: 140px;
+  max-height: 240px;
   overflow-y: scroll;
 `;

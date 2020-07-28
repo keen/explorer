@@ -18,6 +18,6 @@ export const Groups = styled.div`
   padding: 10px 0;
 
   ${List} + ${List} {
-    margin-top: 10px;
+    margin-top: 14px;
   }
 `;
