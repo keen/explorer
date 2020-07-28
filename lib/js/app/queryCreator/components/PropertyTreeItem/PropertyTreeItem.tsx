@@ -14,6 +14,8 @@ type Props = {
   propertyName: string;
   /** Property path */
   propertyPath: string;
+  /** Active indicator */
+  isActive: boolean;
   /** Property type */
   type: string;
   /** Left padding spacing */
@@ -32,6 +34,7 @@ const PropertyTreeItem: FC<Props> = ({
   onClick,
   propertyName,
   type,
+  isActive,
   propertyPath,
 }) => {
   const { modalContainer } = useContext(AppContext);
@@ -54,6 +57,7 @@ const PropertyTreeItem: FC<Props> = ({
 
   return (
     <Container
+      isActive={isActive}
       onMouseMove={(e) => {
         if (isEllipsisActive) {
           setTooltip({ x: e.pageX, y: e.pageY, visible: true });

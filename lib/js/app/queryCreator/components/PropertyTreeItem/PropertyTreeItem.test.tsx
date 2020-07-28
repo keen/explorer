@@ -13,9 +13,7 @@ const render = (overProps: any = {}) => {
     ...overProps,
   };
 
-  const wrapper = rtlRender(
-    <PropertyTreeItem {...props} />
-  );
+  const wrapper = rtlRender(<PropertyTreeItem {...props} />);
 
   return {
     props,
@@ -24,13 +22,19 @@ const render = (overProps: any = {}) => {
 };
 
 test('shows the property type', () => {
-  const { wrapper: { getByText }, props } = render();
+  const {
+    wrapper: { getByText },
+    props,
+  } = render();
 
   expect(getByText(props.type)).toBeInTheDocument();
 });
 
 test('allows user to select property', () => {
-  const { wrapper: { getByText }, props } = render();
+  const {
+    wrapper: { getByText },
+    props,
+  } = render();
 
   const element = getByText(props.propertyName);
   fireEvent.click(element);

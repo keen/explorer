@@ -12,11 +12,18 @@ type Props = {
   properties: Record<string, string[] | Object>;
   /** Click event handler */
   onClick: (e: React.MouseEvent<HTMLDivElement>, propertyPath: string) => void;
+  /** The curent active property */
+  activeProperty?: string;
   /** Expand all tree levels */
   expanded?: boolean;
 };
 
-const PropertiesTree: FC<Props> = ({ expanded, onClick, properties }) => {
+const PropertiesTree: FC<Props> = ({
+  expanded,
+  onClick,
+  activeProperty,
+  properties,
+}) => {
   const keys = Object.keys(properties);
 
   return (
@@ -30,6 +37,9 @@ const PropertiesTree: FC<Props> = ({ expanded, onClick, properties }) => {
               propertyName={key}
               propertyPath={getPropertyPath(properties[key] as string[])}
               type={getPropertyType(properties[key] as string[])}
+              isActive={
+                activeProperty === getPropertyPath(properties[key] as string[])
+              }
               onClick={(e, propertyPath) => onClick(e, propertyPath)}
             />
           );
@@ -40,6 +50,7 @@ const PropertiesTree: FC<Props> = ({ expanded, onClick, properties }) => {
               level={1}
               onClick={onClick}
               header={key}
+              activeProperty={activeProperty}
               expanded={expanded}
               properties={properties[key] as Record<string, any>}
             />

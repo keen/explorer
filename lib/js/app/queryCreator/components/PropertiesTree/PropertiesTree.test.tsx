@@ -10,9 +10,7 @@ const render = (overProps: any = {}) => {
     ...overProps,
   };
 
-  const wrapper = rtlRender(
-    <PropertiesTree {...props} />
-  );
+  const wrapper = rtlRender(<PropertiesTree {...props} />);
 
   return {
     props,
@@ -25,10 +23,13 @@ test('allows user to select nested property', () => {
     category: ['category', 'string'],
     user: {
       id: ['user.id', 'number'],
-    }
+    },
   };
 
-  const { wrapper: { getByText }, props } = render({ properties });
+  const {
+    wrapper: { getByText },
+    props,
+  } = render({ properties });
 
   const title = getByText('user');
   fireEvent.click(title);
@@ -45,11 +46,13 @@ test('renders properties from all tree levels', () => {
     user: {
       details: {
         name: ['user.details.name', 'string'],
-      }
-    }
+      },
+    },
   };
 
-  const { wrapper: { getByText } } = render({ properties, expanded: true });
+  const {
+    wrapper: { getByText },
+  } = render({ properties, expanded: true });
   const property = getByText('name');
 
   expect(property).toBeInTheDocument();
@@ -61,12 +64,15 @@ test('expands all properties tree levels', () => {
     user: {
       details: {
         name: ['user.details.name', 'string'],
-      }
-    }
+      },
+    },
   };
 
-  const { wrapper: { getByText, rerender }, props } = render({ properties });
-  rerender(<PropertiesTree {...props} expanded={true} />)
+  const {
+    wrapper: { getByText, rerender },
+    props,
+  } = render({ properties });
+  rerender(<PropertiesTree {...props} expanded={true} />);
 
   const property = getByText('name');
 

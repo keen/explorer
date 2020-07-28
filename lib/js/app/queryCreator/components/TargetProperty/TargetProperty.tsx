@@ -9,6 +9,7 @@ import {
 import { createTree } from '../../utils/createTree';
 
 import Title from '../Title';
+import EmptySearch from '../EmptySearch';
 import Dropdown from '../Dropdown';
 import PropertyPath from '../PropertyPath';
 import PropertiesTree from '../PropertiesTree';
@@ -132,7 +133,7 @@ const TargetProperty: FC<Props> = ({
       </DropableContainer>
       <Dropdown isOpen={isOpen}>
         {isEmptySearch ? (
-          <div>{text.emptySearchResults}</div>
+          <EmptySearch message={text.emptySearchResults} />
         ) : (
           <TreeContainer>
             <PropertiesTree
@@ -142,6 +143,7 @@ const TargetProperty: FC<Props> = ({
                 onChange(property);
                 setPropertiesTree(createTree(collectionSchema));
               }}
+              activeProperty={property}
               properties={propertiesTree ? propertiesTree : schemaTree}
             />
           </TreeContainer>

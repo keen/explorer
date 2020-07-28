@@ -32,8 +32,6 @@ const render = (storeState: any = {}, overProps: any = {}) => {
   };
 };
 
-
-
 test('allows user to select target property', async () => {
   const collectionSchema = { date: 'String', userId: 'String' };
   const storeState = {
@@ -124,14 +122,13 @@ test('expands search results', async () => {
   fireEvent.click(propertyField);
 
   const input = getByTestId('dropable-container-input');
-    fireEvent.change(input, { target: { value: 'flower' } });
+  fireEvent.change(input, { target: { value: 'flower' } });
 
   act(() => {
-     jest.runAllTimers();
-
+    jest.runAllTimers();
   });
 
-    expect(getByText('flower')).toBeInTheDocument();
+  expect(getByText('flower')).toBeInTheDocument();
 });
 
 test('renders empty search results message', async () => {

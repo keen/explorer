@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { Container, Collections } from './EventCollection.styles';
 
 import Title from '../Title';
+import EmptySearch from '../EmptySearch';
 import Dropdown from '../Dropdown';
 import DropdownList from '../DropdownList';
 import DropableContainer, { Variant } from '../DropableContainer';
@@ -70,6 +71,7 @@ const EventCollection: FC<Props> = ({
           offsetTop - offsetHeight - containerOffsetTop;
       }
     } else {
+      setCollectionsList(options);
       setSearchPhrase(null);
     }
   }, [isOpen]);
@@ -107,7 +109,7 @@ const EventCollection: FC<Props> = ({
       </DropableContainer>
       <Dropdown isOpen={isOpen}>
         {searchPhrase && !collectionsList.length ? (
-          <div>{text.emptySearchResults}</div>
+          <EmptySearch message={text.emptySearchResults} />
         ) : (
           <Collections ref={containerRef}>
             <DropdownList

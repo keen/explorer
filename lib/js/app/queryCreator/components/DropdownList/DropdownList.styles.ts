@@ -11,7 +11,7 @@ export const ListContainer = styled.ul`
 export const ListItem = styled.li<{
   isActive: boolean;
 }>`
-  padding: 8px 10px;
+  padding: 9px 10px;
   display: flex;
   align-items: center;
   justify-content: space-between;

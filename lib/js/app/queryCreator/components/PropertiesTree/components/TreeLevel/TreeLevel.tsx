@@ -16,6 +16,8 @@ type Props = {
   properties: Record<string, string[] | Object>;
   /** Click event handler */
   onClick: (e: React.MouseEvent<HTMLDivElement>, propertyPath: string) => void;
+  /** The curent active property */
+  activeProperty?: string;
   /** Nested level count */
   level?: number;
   /** Expand all tree levels */
@@ -27,6 +29,7 @@ const TreeLevel: FC<Props> = ({
   onClick,
   level,
   expanded,
+  activeProperty,
   properties,
 }) => {
   const [isOpen, setOpen] = useState(expanded);
@@ -62,6 +65,10 @@ const TreeLevel: FC<Props> = ({
             return (
               <PropertyTreeItem
                 key={key}
+                isActive={
+                  activeProperty ===
+                  getPropertyPath(properties[key] as string[])
+                }
                 propertyName={key}
                 propertyPath={getPropertyPath(properties[key] as string[])}
                 padding={(level + 1) * PADDING}
@@ -77,6 +84,7 @@ const TreeLevel: FC<Props> = ({
                 expanded={expanded}
                 level={level + 1}
                 onClick={onClick}
+                activeProperty={activeProperty}
                 properties={properties[key] as Record<string, any>}
               />
             );
