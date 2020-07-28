@@ -8,6 +8,13 @@ export const DEFAULT_ANALYSIS = 'count';
 
 import { Analysis } from '../types';
 
+export const KEYBOARD_KEYS = {
+  UP: 38,
+  DOWN: 40,
+  ENTER: 13,
+  ESCAPE: 27,
+};
+
 export const ANALYSIS_TYPES: Analysis[] = [
   'average',
   'count',
