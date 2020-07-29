@@ -73,7 +73,9 @@ const Analysis: FC<Props> = ({ analysis, onChange }) => {
       document.addEventListener('keydown', keyboardHandler);
     }
 
-    return () => document.removeEventListener('onkeydown', keyboardHandler);
+    return () => {
+      document.removeEventListener('keydown', keyboardHandler);
+    };
   }, [isOpen]);
 
   return (
