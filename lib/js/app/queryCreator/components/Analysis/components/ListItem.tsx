@@ -20,6 +20,8 @@ type Props = {
   description: string;
   /** Active indicator */
   isActive: boolean;
+  /** Mouse enter event handler */
+  onMouseEnter: (e: React.MouseEvent<HTMLLIElement>) => void;
   /** Click event handler */
   onClick: (e: React.MouseEvent<HTMLLIElement>, analysis: Analysis) => void;
   /** React children nodes */
@@ -42,6 +44,7 @@ const iconMotion = {
 const ListItem: FC<Props> = ({
   children,
   onClick,
+  onMouseEnter,
   isActive,
   analysis,
   description,
@@ -53,13 +56,16 @@ const ListItem: FC<Props> = ({
     <Container
       onClick={(e) => onClick(e, analysis)}
       isActive={isActive}
-      onMouseEnter={() => setFocus(true)}
+      onMouseEnter={(e) => {
+        onMouseEnter(e);
+        setFocus(true);
+      }}
       onMouseLeave={() => setFocus(false)}
     >
       <div>{children}</div>
       <AnimatePresence>
         <Hint
-          onMouseEnter={() => showHint(true)}
+          onMouseEnter={(e) => showHint(true)}
           onMouseLeave={() => showHint(false)}
         >
           {isFocused && (

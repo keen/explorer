@@ -3,6 +3,8 @@ import { render as rtlRender, fireEvent } from '@testing-library/react';
 
 import Analysis from './Analysis';
 
+import { KEYBOARD_KEYS } from '../../constants';
+
 const render = (overProps: any = {}) => {
   const props = {
     onChange: jest.fn(),
@@ -31,6 +33,21 @@ test('allows user to select analysis type', () => {
   fireEvent.click(element);
 
   expect(props.onChange).toHaveBeenCalledWith('count_unique');
+});
+
+test('allows user to select analysis by using keyboard', async () => {
+  const {
+    wrapper: { getByTestId },
+    props,
+  } = render({ analysis: 'average' });
+
+  const field = getByTestId('dropable-container');
+
+  fireEvent.click(field);
+  fireEvent.keyDown(field, { keyCode: KEYBOARD_KEYS.DOWN });
+  fireEvent.keyDown(field, { keyCode: KEYBOARD_KEYS.ENTER });
+
+  expect(props.onChange).toHaveBeenCalledWith('count');
 });
 
 test('shows hint message for analysis', () => {
