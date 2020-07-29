@@ -13,7 +13,7 @@ type Props<T extends ListElement> = {
   /** Click event handler */
   onClick: (e: React.MouseEvent<HTMLLIElement>, item: T) => void;
   /** Active item function */
-  setActiveItem?: (item: T) => boolean;
+  setActiveItem?: (item: T, idx: number) => boolean;
   /** Item render function */
   renderItem?: (item: T, isActive: boolean) => JSX.Element;
 };
@@ -35,7 +35,7 @@ const DropdownList = forwardRef(
     return (
       <ListContainer>
         {items.map((item, idx) => {
-          const isActive = setActiveItem(item);
+          const isActive = setActiveItem(item, idx);
 
           return (
             <ListItem
