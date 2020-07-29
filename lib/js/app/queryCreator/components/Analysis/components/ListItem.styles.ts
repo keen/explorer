@@ -6,7 +6,7 @@ import { colors } from '@keen.io/colors';
 export const Container = styled.li<{
   isActive: boolean;
 }>`
-  padding: 8px 10px;
+  padding: 8px 14px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -47,7 +47,6 @@ export const TooltipContainer = styled(motion.div)`
   width: 145px;
 
   position: absolute;
-  top: -7px;
-  right: -11px;
+  top: -9px;
   transform: translateX(100%);
 `;

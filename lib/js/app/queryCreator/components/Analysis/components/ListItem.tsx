@@ -29,8 +29,8 @@ type Props = {
 };
 
 const hintMotion = {
-  initial: { opacity: 0, right: -22 },
-  animate: { opacity: 1, right: -11 },
+  initial: { opacity: 0, right: -24 },
+  animate: { opacity: 1, right: -15 },
   exit: { opacity: 0 },
 };
 
