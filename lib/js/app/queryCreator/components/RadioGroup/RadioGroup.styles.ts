@@ -10,6 +10,7 @@ export const Container = styled.div`
   background-color: ${transparentize(0.85, colors.blue['100'])};
 
   border-radius: 4px;
+  position: relative;
 `;
 
 export const StyledLabel = styled.label`

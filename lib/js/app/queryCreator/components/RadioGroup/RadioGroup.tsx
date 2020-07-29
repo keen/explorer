@@ -16,7 +16,7 @@ type Props = {
   /** onChange handler */
   onChange: (e: React.ChangeEvent<HTMLInputElement>, value: string) => void;
 };
-const initialState = { x: 0, width: 0, height: 0 };
+const initialState = { x: 0, width: 0, height: 0, parentX: 0 };
 
 const RadioGroup: FC<Props> = ({ name, elements, value, onChange }) => {
   const [state, setState] = useState(initialState)
@@ -24,9 +24,24 @@ const RadioGroup: FC<Props> = ({ name, elements, value, onChange }) => {
   const activeRadioRef = useCallback(node => {
     if (node !== null) {
       const { x, width, height } = node.getBoundingClientRect();
-      setState({x, width, height });
+      setState(state => ({
+        ...state,
+        x: x - state.parentX,
+        width,
+        height
+      }));
     }
   }, []);
+
+  const containerRef = useCallback(node => {
+    if (node !== null) {
+      const { x } = node.getBoundingClientRect();
+      setState(state => ({
+        ...state,
+        parentX: x
+      }));
+    }
+  }, [state.parentX]);
 
   const markerMotion = {
     initial: initialState,
@@ -36,7 +51,7 @@ const RadioGroup: FC<Props> = ({ name, elements, value, onChange }) => {
   };
 
   return (
-    <Container data-testid="radio-group">
+    <Container data-testid="radio-group" ref={containerRef}>
       {elements.map((radio) => (
         <Radio key={radio.value} ref={radio.value === value ? activeRadioRef : null}>
           <StyledInput
