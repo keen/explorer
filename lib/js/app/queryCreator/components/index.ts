@@ -14,6 +14,7 @@ import Extraction from './Extraction';
 import FiltersContainer from './Filters';
 import QueryArguments from './QueryArguments';
 import Card from './Card';
+import Tabs from './Tabs';
 
 export {
   Accordion,
@@ -32,4 +33,5 @@ export {
   FunnelSteps,
   FiltersContainer,
   QueryArguments,
+  Tabs
 };

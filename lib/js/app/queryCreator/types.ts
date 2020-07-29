@@ -110,3 +110,5 @@ export type Filter = {
   propertyValue: any;
   propertyType?: PropertyType;
 };
+
+export type TabTypes = 'default' | 'large';
