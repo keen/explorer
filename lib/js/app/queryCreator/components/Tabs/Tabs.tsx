@@ -1,6 +1,6 @@
 import React, { FC, useState, useCallback } from 'react';
 
-import { TabsContainer, Tab, ActiveTab } from './tabs.styles';
+import { TabsContainer, Tab, ActiveTab } from './Tabs.styles';
 
 import { TabTypes } from '../../types';
 

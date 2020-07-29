@@ -1,5 +1,5 @@
 import React from 'react';
-import { render as rtlRender, fireEvent, getAllByTestId } from '@testing-library/react';
+import { render as rtlRender, fireEvent } from '@testing-library/react';
 
 import Tabs from './Tabs';
 
