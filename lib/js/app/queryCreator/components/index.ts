@@ -33,5 +33,5 @@ export {
   FunnelSteps,
   FiltersContainer,
   QueryArguments,
-  Tabs
+  Tabs,
 };

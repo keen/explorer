@@ -4,7 +4,18 @@ import { render as rtlRender, fireEvent } from '@testing-library/react';
 import Tabs from './Tabs';
 
 const elements = [
-  'Tab 1', 'Tab 2', 'Tab 3'
+  {
+    label: 'Tab 1',
+    id: 'tab-1',
+  },
+  {
+    label: 'Tab 2',
+    id: 'tab-2',
+  },
+  {
+    label: 'Tab 3',
+    id: 'tab-3',
+  },
 ];
 
 const render = (overProps: any = {}) => {
@@ -22,7 +33,7 @@ const render = (overProps: any = {}) => {
   };
 };
 
-test('Tabs should be rendered', () => {
+test('should be render tabs', () => {
   const {
     wrapper: { getByTestId },
   } = render();
@@ -40,7 +51,7 @@ test('should render provided number of tabs', () => {
   expect(tabs.length).toEqual(elements.length);
 });
 
-test('should call onClick', () => {
+test('should call onClick event handler', () => {
   const {
     wrapper: { getByText },
     props,
@@ -48,5 +59,5 @@ test('should call onClick', () => {
   const tab = getByText('Tab 1');
   fireEvent.click(tab);
 
-  expect(props.onClick).toHaveBeenCalled();
+  expect(props.onClick).toHaveBeenCalledWith('tab-1');
 });

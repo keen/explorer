@@ -24,7 +24,6 @@ const render = (overProps: any = {}) => {
 };
 
 test('calls "onClick" event handler', () => {
-  const mockFn = jest.fn();
   const {
     wrapper: { getByTestId },
     props,
@@ -37,7 +36,6 @@ test('calls "onClick" event handler', () => {
 });
 
 test('calls "onDefocus" event handler', () => {
-  const mockFn = jest.fn();
   const {
     wrapper: { getByTestId },
     props,
@@ -53,7 +51,6 @@ test('renders children nodes', () => {
   const children = 'children';
   const {
     wrapper: { getByText },
-    props,
   } = render({ value: 'extraction', children });
 
   const element = getByText(children);
@@ -65,7 +62,6 @@ test('renders placeholder', () => {
   const placeholder = 'placeholder';
   const {
     wrapper: { getByText },
-    props,
   } = render({ placeholder });
 
   const element = getByText(placeholder);
@@ -77,7 +73,6 @@ test('renders search placeholder', () => {
   const searchPlaceholder = 'searchPlaceholder';
   const {
     wrapper: { getByPlaceholderText },
-    props,
   } = render({ searchPlaceholder, searchable: true, isActive: true });
 
   const element = getByPlaceholderText(searchPlaceholder);
@@ -86,10 +81,8 @@ test('renders search placeholder', () => {
 });
 
 test('renders drop indicator', () => {
-  const placeholder = 'placeholder';
   const {
     wrapper: { getByTestId },
-    props,
   } = render({ dropIndicator: true });
 
   const element = getByTestId('drop-indicator');
@@ -101,7 +94,6 @@ test('allows user to search', () => {
   const mockFn = jest.fn();
   const {
     wrapper: { getByTestId },
-    props,
   } = render({
     searchable: true,
     isActive: true,

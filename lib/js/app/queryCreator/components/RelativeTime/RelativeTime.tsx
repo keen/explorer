@@ -1,9 +1,25 @@
-import React, { FC, useCallback, useMemo } from 'react';
-import { Select, Input } from '@keen.io/ui-core';
+import React, { FC, useCallback, useState, useMemo } from 'react';
+import { Checkbox } from '@keen.io/ui-core';
+
+import {
+  Container,
+  RelativityContainer,
+  TimeValue,
+  TimeLabel,
+  UnitsContainer,
+  CheckboxLabel,
+} from './RelativeTime.styles';
+
+import Title from '../Title';
+import Input from '../Input';
+import Dropdown from '../Dropdown';
+import DropdownList from '../DropdownList';
+import DropdownListContainer from '../DropdownListContainer';
+import DropableContainer from '../DropableContainer';
 
 import text from './text.json';
 
-import { RELATIVITY_OPTIONS, TIME_UNITS } from './constants';
+import { TIME_UNITS, THIS_RELATIVITY, PREVIOUS_RELATIVITY } from './constants';
 
 type Props = {
   /** Time relativity */
@@ -17,9 +33,10 @@ type Props = {
 };
 
 const RelativeTime: FC<Props> = ({ relativity, value, units, onChange }) => {
+  const [isUnitsOpen, setUnitsOpen] = useState(false);
   const changeValueHandler = useCallback(
     (eventValue) => {
-      let updatedValue = 0;
+      let updatedValue = 1;
       if (eventValue) {
         updatedValue = parseInt(eventValue);
       }
@@ -39,30 +56,67 @@ const RelativeTime: FC<Props> = ({ relativity, value, units, onChange }) => {
 
   return (
     <div data-testid="relative-time">
-      <Select
-        onChange={({ value: updatedRelativity }: { value: string }) =>
-          onChange(`${updatedRelativity}_${value}_${units}`)
-        }
-        placeholder={text.relativityPlaceholder}
-        variant="solid"
-        options={RELATIVITY_OPTIONS}
-        value={{ label: relativity, value: relativity }}
-      />
-      <Input
-        type="number"
-        value={value}
-        variant="solid"
-        onChange={(e) => changeValueHandler(e.target.value)}
-      />
-      <Select
-        onChange={({ value: updatedUnits }: { value: string }) =>
-          onChange(`${relativity}_${value}_${updatedUnits}`)
-        }
-        placeholder={text.unitsPlaceholder}
-        variant="solid"
-        options={unitsOptions}
-        value={{ label: units, value: units }}
-      />
+      <Container>
+        <TimeLabel>{text.timeLabel}</TimeLabel>
+        <TimeValue>
+          <Input
+            data-testid="relative-time-input"
+            autoFocus
+            type="number"
+            value={value}
+            onChange={(e) => changeValueHandler(e.target.value)}
+          />
+        </TimeValue>
+        <UnitsContainer>
+          <DropableContainer
+            variant="secondary"
+            placeholder={text.unitsPlaceholder}
+            onClick={() => !isUnitsOpen && setUnitsOpen(true)}
+            isActive={isUnitsOpen}
+            value={units}
+            dropIndicator
+            onDefocus={() => {
+              setUnitsOpen(false);
+            }}
+          >
+            {units}
+          </DropableContainer>
+          <Dropdown isOpen={isUnitsOpen}>
+            <DropdownListContainer scrollToActive>
+              {(activeItemRef) => (
+                <DropdownList
+                  ref={activeItemRef}
+                  items={unitsOptions}
+                  setActiveItem={({ value }) => units === value}
+                  onClick={(_e, { value: updatedUnits }) => {
+                    onChange(`${relativity}_${value}_${updatedUnits}`);
+                  }}
+                />
+              )}
+            </DropdownListContainer>
+          </Dropdown>
+        </UnitsContainer>
+      </Container>
+      <RelativityContainer
+        onClick={() => {
+          const updatedRelativity =
+            relativity === THIS_RELATIVITY
+              ? PREVIOUS_RELATIVITY
+              : THIS_RELATIVITY;
+          onChange(`${updatedRelativity}_${value}_${units}`);
+        }}
+      >
+        <Checkbox
+          id="relativity"
+          checked={relativity === THIS_RELATIVITY}
+          onChange={() => {
+            // @TODO: Make onChange optional in <Checkbox />
+          }}
+        />
+        <CheckboxLabel>
+          <Title>{text.relativityTitle}</Title>
+        </CheckboxLabel>
+      </RelativityContainer>
     </div>
   );
 };

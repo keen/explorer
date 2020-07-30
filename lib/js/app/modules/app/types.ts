@@ -31,8 +31,8 @@ export type ReducerState = {
 export interface CopyShareUrlAction {
   type: typeof COPY_SHARE_URL;
   payload: {
-    query: Object;
-    savedQuery: Object;
+    query: Record<string, any>;
+    savedQuery: Record<string, any>;
   };
 }
 
@@ -53,7 +53,7 @@ export interface QueryEditorMountedAction {
 
 export interface UpdateQueryCreatorAction {
   type: typeof UPDATE_QUERY_CREATOR;
-  payload: { query: Object };
+  payload: { query: Record<string, any> };
 }
 
 export interface SetViewModeAction {

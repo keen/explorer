@@ -53,4 +53,6 @@ const DropdownList = forwardRef(
   }
 );
 
+DropdownList.displayName = 'DropdownList';
+
 export default DropdownList;

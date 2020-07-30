@@ -1,6 +1,6 @@
 import { download } from './download';
 
-export const exportToJson = (data: Object, filename: string) => {
+export const exportToJson = (data: Record<string, any>, filename: string) => {
   let downloadFileName = filename;
   const hasExtension = filename.includes('.json');
 

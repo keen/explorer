@@ -27,7 +27,7 @@ type Props = {
   /** Modal container selector */
   modalContainer: string;
   /** Update query event handler */
-  onUpdateQuery?: (query: Object) => void;
+  onUpdateQuery?: (query: Record<string, any>) => void;
 };
 
 class QueryCreator extends React.Component<Props> {

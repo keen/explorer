@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/camelcase */
+
 import { all, select, takeLatest, getContext, put } from 'redux-saga/effects';
 import moment from 'moment-timezone';
 

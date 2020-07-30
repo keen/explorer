@@ -31,7 +31,7 @@ type Props = {
   onPreviewCollection?: (collection: string) => void;
 };
 
-const App: FC<Props> = ({ onPreviewCollection }) => {
+const App: FC<Props> = () => {
   const dispatch = useDispatch();
   const analysis = useSelector(getAnalysis);
   const collection = useSelector(getEventCollection);

@@ -8,12 +8,13 @@ import React, {
 } from 'react';
 import { useSelector } from 'react-redux';
 
-import { Container, Collections } from './EventCollection.styles';
+import { Container } from './EventCollection.styles';
 
 import Title from '../Title';
 import EmptySearch from '../EmptySearch';
 import Dropdown from '../Dropdown';
 import DropdownList from '../DropdownList';
+import DropdownListContainer from '../DropdownListContainer';
 import DropableContainer, { Variant } from '../DropableContainer';
 
 import { useSearch } from '../../hooks';
@@ -43,9 +44,6 @@ const EventCollection: FC<Props> = ({
   const [isOpen, setOpen] = useState(false);
   const [selectionIndex, setIndex] = useState<number>(null);
   const [searchPhrase, setSearchPhrase] = useState(null);
-
-  const containerRef = useRef(null);
-  const activeItemRef = useRef(null);
 
   const collections = useSelector(getEventsCollections);
   const options = useMemo(
@@ -111,14 +109,6 @@ const EventCollection: FC<Props> = ({
 
   useEffect(() => {
     if (isOpen) {
-      if (activeItemRef.current) {
-        const containerOffsetTop = containerRef.current.offsetTop;
-        const { offsetTop, offsetHeight } = activeItemRef.current;
-
-        containerRef.current.scrollTop =
-          offsetTop - offsetHeight - containerOffsetTop;
-      }
-
       const index = options.findIndex(({ value }) => value === collection);
       setIndex(index);
       document.addEventListener('keydown', keyboardHandler);
@@ -167,17 +157,19 @@ const EventCollection: FC<Props> = ({
         {searchPhrase && !collectionsList.length ? (
           <EmptySearch message={text.emptySearchResults} />
         ) : (
-          <Collections ref={containerRef}>
-            <DropdownList
-              ref={activeItemRef}
-              items={collectionsList}
-              setActiveItem={(_item, idx) => selectionIndex === idx}
-              onClick={(_e, { value }) => {
-                onChange(value);
-                setCollectionsList(options);
-              }}
-            />
-          </Collections>
+          <DropdownListContainer scrollToActive maxHeight={240}>
+            {(activeItemRef) => (
+              <DropdownList
+                ref={activeItemRef}
+                items={collectionsList}
+                setActiveItem={(_item, idx) => selectionIndex === idx}
+                onClick={(_e, { value }) => {
+                  onChange(value);
+                  setCollectionsList(options);
+                }}
+              />
+            )}
+          </DropdownListContainer>
         )}
       </Dropdown>
     </Container>

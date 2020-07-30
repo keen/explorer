@@ -8,7 +8,7 @@ import {
 export type CollectionSchema = {
   schema: Record<string, string>;
   list: { path: string; type: string }[];
-  tree: Record<string, string[] | Object>;
+  tree: Record<string, string[] | Record<string, any>>;
 };
 
 export type ReducerState = {

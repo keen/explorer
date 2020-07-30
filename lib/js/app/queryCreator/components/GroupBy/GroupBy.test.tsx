@@ -3,13 +3,11 @@ import { Provider } from 'react-redux';
 import {
   render as rtlRender,
   fireEvent,
-  waitFor,
 } from '@testing-library/react';
-import selectEvent from 'react-select-event';
 import configureStore from 'redux-mock-store';
 
 import GroupBy from './GroupBy';
-import text from './text.json';
+
 
 const render = (storeState: any = {}, overProps: any = {}) => {
   const mockStore = configureStore([]);

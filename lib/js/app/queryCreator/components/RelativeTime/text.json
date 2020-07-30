@@ -1,4 +1,6 @@
 {
   "relativityPlaceholder": "Relativity",
-  "unitsPlaceholder": "Units"
+  "relativityTitle": "Include Today",
+  "timeLabel": "This",
+  "unitsPlaceholder": "Select"
 }
