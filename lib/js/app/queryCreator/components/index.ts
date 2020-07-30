@@ -14,6 +14,7 @@ import Extraction from './Extraction';
 import FiltersContainer from './Filters';
 import QueryArguments from './QueryArguments';
 import Card from './Card';
+import InputGroup, { Group } from './InputGroup';
 
 export {
   Accordion,
@@ -32,4 +33,6 @@ export {
   FunnelSteps,
   FiltersContainer,
   QueryArguments,
+  InputGroup,
+  Group
 };

@@ -13,6 +13,7 @@ import {
 import Title from '../Title';
 import Property from '../Property';
 import AddGroupBy from '../AddGroupBy';
+import InputGroup from '../InputGroup';
 
 import {
   addGroup,
@@ -106,7 +107,17 @@ const GroupBy: FC<Props> = ({ collection }) => {
         >
           {state.map(({ property, id, chosen }) => (
             <GroupSettings key={id}>
-              <Property
+              {/* <Property
+                isDragged={chosen}
+                onRemove={() => groupDispatcher(removeGroup(id))}
+                onChange={(property) =>
+                  groupDispatcher(selectGroupProperty(id, property))
+                }
+                property={property}
+                propertiesSchema={schemaList}
+                propertiesTree={schemaTree}
+              /> */}
+              <InputGroup
                 isDragged={chosen}
                 onRemove={() => groupDispatcher(removeGroup(id))}
                 onChange={(property) =>
