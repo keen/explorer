@@ -1,12 +1,14 @@
 import React, { FC, useState, useRef, useEffect } from 'react';
 
-import { Container } from './Timeframe.styles';
+import { Container, SettingsContainer } from './Timeframe.styles';
 import text from './text.json';
 
 import Title from '../Title';
+import Tabs from '../Tabs';
 import Dropdown from '../Dropdown';
-import DropableContainer from '../DropableContainer';
+import DropableContainer, { Variant } from '../DropableContainer';
 import AbsoluteTime, { TIME_PICKER_CLASS } from '../AbsoluteTime';
+import AbsoluteTimeLabel from '../AbsoluteTimeLabel';
 import RelativeTime from '../RelativeTime';
 import RelativeTimeLabel from '../RelativeTimeLabel';
 import Timezone, { getTimezoneValue } from '../Timezone';
@@ -14,6 +16,7 @@ import Timezone, { getTimezoneValue } from '../Timezone';
 import { getDefaultAbsoluteTime } from './utils/getDefaultAbsoluteTime';
 import { convertRelativeTime } from './utils/convertRelativeTime';
 
+import { ABSOLUTE_TAB, RELATIVE_TAB, TABS_SETTINGS } from './constants';
 import { DEFAULT_TIMEFRAME } from '../../modules/query';
 
 import { Timeframe as TimeframeType, Timezones } from '../../types';
@@ -31,6 +34,8 @@ type Props = {
   value: TimeframeType;
   /** Reset field event handler */
   onReset?: () => void;
+  /** Container variant */
+  variant?: Variant;
 };
 
 const Timeframe: FC<Props> = ({
@@ -40,6 +45,7 @@ const Timeframe: FC<Props> = ({
   onReset,
   timezone,
   value,
+  variant = 'primary',
 }) => {
   const [isOpen, setOpen] = useState(false);
   const containerRef = useRef(null);
@@ -54,8 +60,9 @@ const Timeframe: FC<Props> = ({
 
   return (
     <Container ref={containerRef}>
-      <Title>{text.label}</Title>
+      <Title onClick={() => !isOpen && setOpen(true)}>{text.label}</Title>
       <DropableContainer
+        variant={variant}
         onClick={() => !isOpen && setOpen(true)}
         isActive={isOpen}
         value={value}
@@ -70,40 +77,43 @@ const Timeframe: FC<Props> = ({
           }
         }}
       >
-        <>
-          {typeof value === 'string' ? (
-            <RelativeTimeLabel {...convertRelativeTime(value)} />
-          ) : (
-            <div>
-              {value.start} - {value.end}
-            </div>
-          )}
-        </>
-      </DropableContainer>
-      <Dropdown isOpen={isOpen}>
-        <div onClick={() => onTimeframeChange(DEFAULT_TIMEFRAME)}>
-          {text.relative}
-        </div>
-        <div
-          onClick={() =>
-            onTimeframeChange(getDefaultAbsoluteTime(timezoneValue))
-          }
-        >
-          {text.absolute}
-        </div>
         {typeof value === 'string' ? (
-          <RelativeTime
-            onChange={onTimeframeChange}
-            {...convertRelativeTime(value)}
-          />
+          <RelativeTimeLabel {...convertRelativeTime(value)} />
         ) : (
-          <AbsoluteTime
-            id={id}
-            {...value}
+          <AbsoluteTimeLabel
+            start={value.start}
+            end={value.end}
             timezone={timezoneValue}
-            onChange={onTimeframeChange}
           />
         )}
+      </DropableContainer>
+      <Dropdown isOpen={isOpen}>
+        <Tabs
+          activeTab={typeof value === 'string' ? RELATIVE_TAB : ABSOLUTE_TAB}
+          onClick={(tabId) => {
+            if (tabId === RELATIVE_TAB) {
+              onTimeframeChange(DEFAULT_TIMEFRAME);
+            } else {
+              onTimeframeChange(getDefaultAbsoluteTime(timezoneValue));
+            }
+          }}
+          tabs={TABS_SETTINGS}
+        />
+        <SettingsContainer>
+          {typeof value === 'string' ? (
+            <RelativeTime
+              onChange={onTimeframeChange}
+              {...convertRelativeTime(value)}
+            />
+          ) : (
+            <AbsoluteTime
+              id={id}
+              {...value}
+              timezone={timezoneValue}
+              onChange={onTimeframeChange}
+            />
+          )}
+        </SettingsContainer>
         <Timezone
           timezone={timezoneValue}
           onChange={(timezone) => onTimezoneChange(timezone)}

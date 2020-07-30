@@ -41,10 +41,10 @@ export const MotionIcon = styled(motion.div)`
 `;
 
 export const TooltipContainer = styled(motion.div)`
-  font-size: 14px;
+  font-size: 13px;
   line-height: 17px;
   font-family: 'Lato', sans-serif;
-  width: 145px;
+  width: 160px;
 
   position: absolute;
   top: -9px;

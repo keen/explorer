@@ -26,9 +26,9 @@ import { DEFAULT_FILENAME } from './constants';
 
 type Props = {
   /** Query definition */
-  query: Object;
+  query: Record<string, any>;
   /** Analysis results */
-  queryResults: Object;
+  queryResults: Record<string, any>;
 };
 
 const QueryVisualization: FC<Props> = ({ queryResults, query }) => {

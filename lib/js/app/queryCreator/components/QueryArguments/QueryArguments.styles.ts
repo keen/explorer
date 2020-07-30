@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export const MenuItem = styled.div`
   width: 25%;
+  max-width: 320px;
   flex-shrink: 0;
 `;
 

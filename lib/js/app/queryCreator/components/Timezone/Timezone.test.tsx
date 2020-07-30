@@ -1,9 +1,7 @@
 import React from 'react';
-import { render as rtlRender, screen } from '@testing-library/react';
-import selectEvent from 'react-select-event';
+import { render as rtlRender, fireEvent } from '@testing-library/react';
 
 import Timezone from './Timezone';
-import text from './text.json';
 
 const render = (overProps: any = {}) => {
   const props = {
@@ -20,18 +18,26 @@ const render = (overProps: any = {}) => {
   };
 };
 
-test('allows user to select timezone', async () => {
-  const storeState = {
-    query: {
-      timezone: undefined,
-    },
-  };
-
+test('shows the current timezone', () => {
   const {
     props,
-    wrapper: { getByLabelText },
-  } = render(storeState);
-  await selectEvent.select(getByLabelText(text.label), 'Europe/London');
+    wrapper: { getByText },
+  } = render();
+
+  expect(getByText(props.timezone)).toBeInTheDocument();
+});
+
+test('allows user to select timezone', () => {
+  const {
+    props,
+    wrapper: { getByTestId, getByText },
+  } = render();
+
+  const field = getByTestId('dropable-container');
+  fireEvent.click(field);
+
+  const element = getByText('Europe/London');
+  fireEvent.click(element);
 
   expect(props.onChange).toHaveBeenCalledWith('Europe/London');
 });

@@ -7,7 +7,7 @@ import { CONTAINER_ID } from './constants';
 
 type Props = {
   /** Query execution results */
-  analysisResults: Object;
+  analysisResults: Record<string, any>;
   /** Type of visualization */
   visualization: string;
 };
@@ -31,5 +31,7 @@ const Dataviz = forwardRef<HTMLDivElement, Props>(
     );
   }
 );
+
+Dataviz.displayName = 'Dataviz';
 
 export default Dataviz;

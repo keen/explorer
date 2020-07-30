@@ -65,7 +65,7 @@ const ListItem: FC<Props> = ({
       <div>{children}</div>
       <AnimatePresence>
         <Hint
-          onMouseEnter={(e) => showHint(true)}
+          onMouseEnter={() => showHint(true)}
           onMouseLeave={() => showHint(false)}
         >
           {isFocused && (
@@ -85,7 +85,7 @@ const ListItem: FC<Props> = ({
               {...hintMotion}
             >
               <Tooltip mode="dark" hasArrow={false}>
-                {description}
+                <div dangerouslySetInnerHTML={{ __html: description }} />
               </Tooltip>
             </TooltipContainer>
           )}

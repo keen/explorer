@@ -30,7 +30,7 @@ export const editQuery = (queryName: string): AppActions => ({
   },
 });
 
-export const updateQueryCreator = (query: Object): AppActions => ({
+export const updateQueryCreator = (query: Record<string, any>): AppActions => ({
   type: UPDATE_QUERY_CREATOR,
   payload: { query },
 });
@@ -40,8 +40,8 @@ export const createNewQuery = (): AppActions => ({
 });
 
 export const copyShareUrl = (
-  query: Object,
-  savedQuery: Object
+  query: Record<string, any>,
+  savedQuery: Record<string, any>
 ): AppActions => ({
   type: COPY_SHARE_URL,
   payload: {

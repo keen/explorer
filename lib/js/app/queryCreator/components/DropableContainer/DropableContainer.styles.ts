@@ -40,7 +40,7 @@ export const Container = styled.div<{
   border-radius: 4px;
   font-size: 14px;
   line-height: 17px;
-  font-family: 'Lato', sans-serif;
+  font-family: 'Lato Regular', sans-serif;
   position: relative;
 
   ${(props) =>
@@ -60,6 +60,7 @@ export const DropIndicator = styled.div`
   display: flex;
   align-items: center;
   margin-left: auto;
+  padding-left: 5px;
   cursor: pointer;
 `;
 
@@ -75,7 +76,8 @@ export const Input = styled.input`
   color: ${colors.blue[500]};
   font-size: 14px;
   line-height: 17px;
-  font-family: 'Lato', sans-serif;
+  font-family: 'Lato Regular', sans-serif;
+  width: 100%;
 
   ::placeholder,
   ::-webkit-input-placeholder {

@@ -33,14 +33,14 @@ export const setQueryCacheLimitError = (error: Error): QueriesActions => ({
   payload: { error },
 });
 
-export const saveQuery = (name: string, body: Object): QueriesActions => ({
+export const saveQuery = (name: string, body: Record<string, any>): QueriesActions => ({
   type: SAVE_QUERY,
   payload: { name, body },
 });
 
 export const saveQuerySuccess = (
   queryName: string,
-  body: Object
+  body: Record<string, any>
 ): QueriesActions => ({
   type: SAVE_QUERY_SUCCESS,
   payload: {
@@ -73,7 +73,7 @@ export const getSavedQueries = (): QueriesActions => ({
   type: GET_SAVED_QUERIES,
 });
 
-export const getSavedQueriesSuccess = (queries: Object[]): QueriesActions => ({
+export const getSavedQueriesSuccess = (queries: Record<string, any>[]): QueriesActions => ({
   type: GET_SAVED_QUERIES_SUCCESS,
   payload: { queries },
 });
@@ -83,12 +83,12 @@ export const getSavedQueriesError = (error: Error): QueriesActions => ({
   payload: { error },
 });
 
-export const runQuery = (body: Object): QueriesActions => ({
+export const runQuery = (body: Record<string, any>): QueriesActions => ({
   type: RUN_QUERY,
   payload: { body },
 });
 
-export const runQuerySuccess = (results: Object): QueriesActions => ({
+export const runQuerySuccess = (results: Record<string, any>): QueriesActions => ({
   type: RUN_QUERY_SUCCESS,
   payload: { results },
 });
