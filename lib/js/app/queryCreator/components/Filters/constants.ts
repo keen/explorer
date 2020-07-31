@@ -4,6 +4,13 @@ export const REMOVE_FILTER = '@filters/REMOVE_FILTER';
 export const RESET_FILTERS = '@filters/RESET_FILTERS';
 export const SET_FILTERS = '@filters/SET_FILTERS';
 
+export const DEFAULT_FILTER = {
+  propertyName: undefined,
+  operator: undefined,
+  propertyValue: undefined,
+  propertyType: undefined,
+};
+
 export const DATA_TYPES = {
   string: 'String',
   num: 'Number',

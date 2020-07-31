@@ -1,0 +1,72 @@
+{state.map((item, idx) => (
+  <div key={idx}>
+    <Select
+      variant="solid"
+      placeholder={'Select property name'}
+      options={options}
+      onChange={({ value }: { value: string }) => {
+        filtersDispatcher(updateFilter(idx, { propertyName: value }));
+        const schemaProp = collectionSchema[value] as SchemaProp;
+        if (schemaProp) {
+          const propertyType = SCHEMA_PROPS[schemaProp] as PropertyType;
+          filtersDispatcher(updateFilter(idx, { propertyType }));
+          setDefaults(idx, propertyType);
+        }
+      }}
+      value={
+        item?.propertyName
+          ? { label: item.propertyName, value: item.propertyName }
+          : null
+      }
+    />
+    <Select
+      variant="solid"
+      placeholder={'Select property type'}
+      options={dataTypes}
+      onChange={(type) => {
+        filtersDispatcher(
+          updateFilter(idx, { propertyType: type.value })
+        );
+        setDefaults(idx, type.value, item?.propertyValue);
+
+        if (item?.operator) {
+          const operatorOptions = getOperatorOptions(type);
+          const isOperatorAvailable = operatorOptions.some(
+            (option) => option.value === item.operator
+          );
+          if (!isOperatorAvailable) {
+            filtersDispatcher(updateFilter(idx, { operator: null }));
+          }
+        }
+      }}
+      value={getPropertyType(item)}
+    />
+    <Select
+      variant="solid"
+      placeholder={'Select operator'}
+      options={getOperatorOptions(item?.propertyType)}
+      onChange={({ value }: { value: Operator }) =>
+        filtersDispatcher(updateFilter(idx, { operator: value }))
+      }
+      value={
+        item?.operator
+          ? { label: item.operator, value: item.operator }
+          : null
+      }
+    />
+    <FilterValue
+      idx={idx}
+      filter={item}
+      onChange={(idx, value) =>
+        filtersDispatcher(updateFilter(idx, { propertyValue: value }))
+      }
+    />
+    <Button
+      variant="danger"
+      style="outline"
+      onClick={() => filtersDispatcher(removeFilter(idx))}
+    >
+      {text.removeFilter}
+    </Button>
+  </div>
+))}
