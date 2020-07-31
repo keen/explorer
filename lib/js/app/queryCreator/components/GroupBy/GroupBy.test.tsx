@@ -1,13 +1,9 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import {
-  render as rtlRender,
-  fireEvent,
-} from '@testing-library/react';
+import { render as rtlRender, fireEvent } from '@testing-library/react';
 import configureStore from 'redux-mock-store';
 
 import GroupBy from './GroupBy';
-
 
 const render = (storeState: any = {}, overProps: any = {}) => {
   const mockStore = configureStore([]);

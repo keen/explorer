@@ -15,5 +15,5 @@ export const serializeOrderBy = (
   if (Array.isArray(orderBy)) return orderBy;
   if (typeof orderBy === 'object' && orderBy !== null) return [orderBy];
 
-  return [];
+  return undefined;
 };

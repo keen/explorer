@@ -26,7 +26,7 @@ test('serialize empty orderBy settings', () => {
   const orderBy = undefined;
   const result = serializeOrderBy(orderBy);
 
-  expect(result).toEqual([]);
+  expect(result).toEqual(undefined);
 });
 
 test('serialize collection of order settings', () => {

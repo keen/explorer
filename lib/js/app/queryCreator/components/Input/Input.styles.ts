@@ -19,6 +19,15 @@ export const inputMixin = () => css`
   &:focus {
     box-shadow: 0 0 3px 1px rgba(119, 163, 187, 0.5);
   }
+
+  &:disabled {
+    border: 1px solid ${transparentize(0.5, colors.blue[500])};
+    background: ${colors.white[500]};
+  }
+
+  &:disabled::placeholder {
+    color: ${transparentize(0.6, colors.black[400])};
+  }
 `;
 
 export const Input = styled.input`
