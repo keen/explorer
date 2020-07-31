@@ -46,6 +46,27 @@ exports[`renders date picker for timeframe end 1`] = `
   box-shadow: 0 0 3px 1px rgba(119,163,187,0.5);
 }
 
+.c0 .DateInput_input:disabled {
+  border: 1px solid rgba(39,86,109,0.5);
+  background: #FFFFFF;
+}
+
+.c0 .DateInput_input:disabled::-webkit-input-placeholder {
+  color: rgba(39,52,55,0.4);
+}
+
+.c0 .DateInput_input:disabled::-moz-placeholder {
+  color: rgba(39,52,55,0.4);
+}
+
+.c0 .DateInput_input:disabled:-ms-input-placeholder {
+  color: rgba(39,52,55,0.4);
+}
+
+.c0 .DateInput_input:disabled::placeholder {
+  color: rgba(39,52,55,0.4);
+}
+
 .c0 .DateInput_fang {
   display: none;
 }
@@ -139,6 +160,27 @@ exports[`renders date picker for timeframe start 1`] = `
 
 .c0 .DateInput_input:focus {
   box-shadow: 0 0 3px 1px rgba(119,163,187,0.5);
+}
+
+.c0 .DateInput_input:disabled {
+  border: 1px solid rgba(39,86,109,0.5);
+  background: #FFFFFF;
+}
+
+.c0 .DateInput_input:disabled::-webkit-input-placeholder {
+  color: rgba(39,52,55,0.4);
+}
+
+.c0 .DateInput_input:disabled::-moz-placeholder {
+  color: rgba(39,52,55,0.4);
+}
+
+.c0 .DateInput_input:disabled:-ms-input-placeholder {
+  color: rgba(39,52,55,0.4);
+}
+
+.c0 .DateInput_input:disabled::placeholder {
+  color: rgba(39,52,55,0.4);
 }
 
 .c0 .DateInput_fang {
