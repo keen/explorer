@@ -6,7 +6,7 @@ import { FieldGroup } from '@keen.io/forms';
 import EventCollection from '../EventCollection';
 import TargetProperty from '../TargetProperty';
 import Timeframe from '../Timeframe';
-import FiltersContainer from '../Filters';
+import Filters from '../Filters';
 
 import {
   updateFunnelStep,
@@ -98,7 +98,7 @@ const FunnelStep: FC<Props> = ({
           }
         />
       </FieldGroup>
-      <FiltersContainer
+      <Filters
         collection={eventCollection}
         filters={filters}
         onChange={(filters: Filter[]) => dispatch(updateStep({ filters }))}

@@ -4,6 +4,7 @@ import {
   REMOVE_FILTER,
   RESET_FILTERS,
   SET_FILTERS,
+  DEFAULT_FILTER,
 } from './constants';
 
 import { FiltersActions } from './types';
@@ -18,7 +19,7 @@ export const filtersReducer = (state: State, action: FiltersActions): State => {
     case RESET_FILTERS:
       return initialState;
     case ADD_FILTER:
-      return [...state, null];
+      return [...state, DEFAULT_FILTER];
     case UPDATE_FILTER:
       return state.map((filter, idx) => {
         if (idx === action.payload.index)

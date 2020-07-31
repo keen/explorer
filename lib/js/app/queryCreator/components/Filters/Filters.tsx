@@ -1,13 +1,25 @@
-import React, { FC, useMemo, useReducer, useEffect } from 'react';
+import React, {
+  FC,
+  useMemo,
+  useReducer,
+  useEffect,
+  useState,
+  useRef,
+} from 'react';
 import { useSelector } from 'react-redux';
 
-import { Button, Select } from '@keen.io/ui-core';
-import FilterValue from './FilterValue';
+import { Button, ActionButton } from '@keen.io/ui-core';
+
+import FiltersContext from './FiltersContext';
+import { Filter } from './components';
 
 import { addFilter, removeFilter, updateFilter, resetFilters } from './actions';
 import { getCollectionSchema } from '../../modules/events';
 
+import { useSearch } from '../../hooks';
+
 import { filtersReducer } from './reducer';
+import { createTree } from '../../utils/createTree';
 
 import {
   DATA_TYPES,
@@ -22,7 +34,12 @@ import {
   getOperatorOptions,
 } from './utils';
 
-import { AppState, PropertyType, Operator, Filter } from '../../types';
+import {
+  AppState,
+  PropertyType,
+  Operator,
+  Filter as FilterType,
+} from '../../types';
 import { SchemaProp } from './types';
 
 import text from './text.json';
@@ -31,9 +48,9 @@ type Props = {
   /** Collection name */
   collection: string;
   /** Filters */
-  filters: Filter[];
+  filters: FilterType[];
   /** Onchange handler */
-  onChange: (filters: Filter[]) => void;
+  onChange: (filters: FilterType[]) => void;
 };
 
 const dataTypes = Object.keys(DATA_TYPES).map((item) => ({
@@ -42,20 +59,46 @@ const dataTypes = Object.keys(DATA_TYPES).map((item) => ({
 }));
 
 const Filters: FC<Props> = ({ collection, filters, onChange }) => {
-  const { schema: collectionSchema } = useSelector((state: AppState) =>
-    getCollectionSchema(state, collection)
-  );
+  const [searchPropertiesPhrase, setSearchPhrase] = useState(null);
+  const [expandTree, setTreeExpand] = useState(false);
+  const expandTrigger = useRef(null);
 
-  const options = useMemo(() => {
-    if (collectionSchema) {
-      return Object.keys(collectionSchema).map((propertyName) => ({
-        label: propertyName,
-        value: propertyName,
-      }));
+  const {
+    schema: collectionSchema,
+    tree: schemaTree,
+    list: schemaList,
+  } = useSelector((state: AppState) => getCollectionSchema(state, collection));
+
+  const [propertiesTree, setPropertiesTree] = useState(null);
+
+  const { searchHandler } = useSearch<{
+    path: string;
+    type: string;
+  }>(
+    schemaList,
+    (searchResult, phrase) => {
+      if (expandTrigger.current) clearTimeout(expandTrigger.current);
+      if (phrase) {
+        const searchTree = {};
+        searchResult.forEach(({ path, type }) => {
+          searchTree[path] = type;
+        });
+        setSearchPhrase(phrase);
+        setPropertiesTree(createTree(searchTree));
+
+        expandTrigger.current = setTimeout(() => {
+          setTreeExpand(true);
+        }, 300);
+      } else {
+        setTreeExpand(false);
+        setPropertiesTree(null);
+      }
+    },
+    {
+      keys: ['path', 'type'],
+      threshold: 0.4,
     }
-
-    return [];
-  }, [collectionSchema]);
+  );
 
   const [state, filtersDispatcher] = useReducer(filtersReducer, filters);
 
@@ -85,85 +128,29 @@ const Filters: FC<Props> = ({ collection, filters, onChange }) => {
 
   return (
     <>
-      {state.map((item, idx) => (
-        <div key={idx}>
-          <Select
-            variant="solid"
-            placeholder={'Select property name'}
-            options={options}
-            onChange={({ value }: { value: string }) => {
-              filtersDispatcher(updateFilter(idx, { propertyName: value }));
-              const schemaProp = collectionSchema[value] as SchemaProp;
-              if (schemaProp) {
-                const propertyType = SCHEMA_PROPS[schemaProp] as PropertyType;
-                filtersDispatcher(updateFilter(idx, { propertyType }));
-                setDefaults(idx, propertyType);
-              }
+      <FiltersContext.Provider value={{ expandTree, searchPropertiesPhrase }}>
+        {state.map((filter, idx) => (
+          <Filter
+            key={idx}
+            filter={filter}
+            properties={propertiesTree ? propertiesTree : schemaTree}
+            onSearchProperties={searchHandler}
+            onRemove={() => filtersDispatcher(removeFilter(idx))}
+            onChange={(filter) => {
+              setSearchPhrase(null);
+              setPropertiesTree(schemaTree);
+              filtersDispatcher(updateFilter(idx, filter));
             }}
-            value={
-              item?.propertyName
-                ? { label: item.propertyName, value: item.propertyName }
-                : null
-            }
           />
-          <Select
-            variant="solid"
-            placeholder={'Select property type'}
-            options={dataTypes}
-            onChange={(type) => {
-              filtersDispatcher(
-                updateFilter(idx, { propertyType: type.value })
-              );
-              setDefaults(idx, type.value, item?.propertyValue);
+        ))}
+      </FiltersContext.Provider>
 
-              if (item?.operator) {
-                const operatorOptions = getOperatorOptions(type);
-                const isOperatorAvailable = operatorOptions.some(
-                  (option) => option.value === item.operator
-                );
-                if (!isOperatorAvailable) {
-                  filtersDispatcher(updateFilter(idx, { operator: null }));
-                }
-              }
-            }}
-            value={getPropertyType(item)}
-          />
-          <Select
-            variant="solid"
-            placeholder={'Select operator'}
-            options={getOperatorOptions(item?.propertyType)}
-            onChange={({ value }: { value: Operator }) =>
-              filtersDispatcher(updateFilter(idx, { operator: value }))
-            }
-            value={
-              item?.operator
-                ? { label: item.operator, value: item.operator }
-                : null
-            }
-          />
-          <FilterValue
-            idx={idx}
-            filter={item}
-            onChange={(idx, value) =>
-              filtersDispatcher(updateFilter(idx, { propertyValue: value }))
-            }
-          />
-          <Button
-            variant="danger"
-            style="outline"
-            onClick={() => filtersDispatcher(removeFilter(idx))}
-          >
-            {text.removeFilter}
-          </Button>
-        </div>
-      ))}
-      <Button
-        variant="secondary"
-        style="outline"
+      <ActionButton
+        action="create"
+        isDisabled={!collection}
         onClick={() => filtersDispatcher(addFilter())}
-      >
-        {text.addFilter}
-      </Button>
+      />
+
       <Button
         variant="secondary"
         style="outline"

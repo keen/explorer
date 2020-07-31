@@ -2,9 +2,10 @@ import React, { FC } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { FieldGroup } from '@keen.io/forms';
 
+import { FiltersSettings } from './App.styles';
+
 import {
   QueryArguments,
-  Accordion,
   Card,
   Extraction,
   GroupBy,
@@ -12,12 +13,13 @@ import {
   Interval,
   Limit,
   Percentile,
+  Title,
   FunnelSteps,
-  FiltersContainer,
-  InputGroup,
-  Group,
+  Filters,
 } from './components';
+
 import { showField } from './utils/showField';
+import text from './text.json';
 
 import {
   getPercentile,
@@ -44,6 +46,19 @@ const App: FC<Props> = () => {
   return (
     <div>
       <QueryArguments />
+      {showField('filters', analysis) && (
+        <FiltersSettings>
+          <Card>
+            <Title isDisabled={!collection}>{text.filters}</Title>
+            <Filters
+              collection={collection}
+              filters={filters}
+              onChange={(filters) => dispatch(setFilters(filters))}
+            />
+          </Card>
+        </FiltersSettings>
+      )}
+
       <Card>
         {showField('steps', analysis) && <FunnelSteps />}
         {showField('groupBy', analysis) && <GroupBy collection={collection} />}
@@ -71,16 +86,6 @@ const App: FC<Props> = () => {
             onChange={(value) => dispatch(setPercentile(value))}
           />
         </FieldGroup>
-      )}
-
-      {showField('filters', analysis) && (
-        <Accordion renderHeader={() => <div>Filters</div>}>
-          <FiltersContainer
-            collection={collection}
-            filters={filters}
-            onChange={(filters) => dispatch(setFilters(filters))}
-          />
-        </Accordion>
       )}
     </div>
   );

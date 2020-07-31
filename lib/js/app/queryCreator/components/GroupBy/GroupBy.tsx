@@ -11,7 +11,6 @@ import {
 } from './GroupBy.styles';
 
 import Title from '../Title';
-import Property from '../Property';
 import AddGroupBy from '../AddGroupBy';
 import InputGroup from '../InputGroup';
 
@@ -106,28 +105,7 @@ const GroupBy: FC<Props> = ({ collection }) => {
           setList={(updatedGroups) => groupDispatcher(setGroups(updatedGroups))}
         >
           {state.map(({ property, id, chosen }) => (
-            <GroupSettings key={id}>
-              {/* <Property
-                isDragged={chosen}
-                onRemove={() => groupDispatcher(removeGroup(id))}
-                onChange={(property) =>
-                  groupDispatcher(selectGroupProperty(id, property))
-                }
-                property={property}
-                propertiesSchema={schemaList}
-                propertiesTree={schemaTree}
-              /> */}
-              <InputGroup
-                isDragged={chosen}
-                onRemove={() => groupDispatcher(removeGroup(id))}
-                onChange={(property) =>
-                  groupDispatcher(selectGroupProperty(id, property))
-                }
-                property={property}
-                propertiesSchema={schemaList}
-                propertiesTree={schemaTree}
-              />
-            </GroupSettings>
+            <GroupSettings key={id}>{property}</GroupSettings>
           ))}
         </ReactSortable>
         <Options>
