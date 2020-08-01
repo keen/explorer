@@ -1,25 +1,17 @@
-import React, { FC, useCallback, useState, useMemo } from 'react';
+import React, { FC } from 'react';
 import { Checkbox } from '@keen.io/ui-core';
 
 import {
-  Container,
   RelativityContainer,
-  TimeValue,
-  TimeLabel,
-  UnitsContainer,
   CheckboxLabel,
 } from './RelativeTime.styles';
 
-import Title from '../Title';
-import Input from '../Input';
-import Dropdown from '../Dropdown';
-import DropdownList from '../DropdownList';
-import DropdownListContainer from '../DropdownListContainer';
-import DropableContainer from '../DropableContainer';
+import TimePeriod from '../TimePeriod';
 
+import Title from '../Title';
 import text from './text.json';
 
-import { TIME_UNITS, THIS_RELATIVITY, PREVIOUS_RELATIVITY } from './constants';
+import { THIS_RELATIVITY, PREVIOUS_RELATIVITY } from './constants';
 
 type Props = {
   /** Time relativity */
@@ -33,70 +25,17 @@ type Props = {
 };
 
 const RelativeTime: FC<Props> = ({ relativity, value, units, onChange }) => {
-  const [isUnitsOpen, setUnitsOpen] = useState(false);
-  const changeValueHandler = useCallback(
-    (eventValue) => {
-      let updatedValue = 1;
-      if (eventValue) {
-        updatedValue = parseInt(eventValue);
-      }
-      onChange(`${relativity}_${updatedValue}_${units}`);
-    },
-    [onChange]
-  );
-
-  const unitsOptions = useMemo(
-    () =>
-      TIME_UNITS.map((unit) => ({
-        label: unit,
-        value: unit,
-      })),
-    []
-  );
 
   return (
     <div data-testid="relative-time">
-      <Container>
-        <TimeLabel>{text.timeLabel}</TimeLabel>
-        <TimeValue>
-          <Input
-            data-testid="relative-time-input"
-            autoFocus
-            type="number"
-            value={value}
-            onChange={(e) => changeValueHandler(e.target.value)}
-          />
-        </TimeValue>
-        <UnitsContainer>
-          <DropableContainer
-            variant="secondary"
-            placeholder={text.unitsPlaceholder}
-            onClick={() => !isUnitsOpen && setUnitsOpen(true)}
-            isActive={isUnitsOpen}
-            value={units}
-            dropIndicator
-            onDefocus={() => {
-              setUnitsOpen(false);
-            }}
-          >
-            {units}
-          </DropableContainer>
-          <Dropdown isOpen={isUnitsOpen}>
-            <DropdownListContainer scrollToActive>
-              {(activeItemRef) => (
-                <DropdownList
-                  ref={activeItemRef}
-                  items={unitsOptions}
-                  setActiveItem={({ value }) => units === value}
-                  onClick={(_e, { value: updatedUnits }) => {
-                    onChange(`${relativity}_${value}_${updatedUnits}`);
-                  }}
-                />
-              )}
-            </DropdownListContainer>
-          </Dropdown>
-        </UnitsContainer>
-      </Container>
+        <TimePeriod
+          label={text.timeLabel}
+          unitsPlaceholder={text.unitsPlaceholder}
+          relativity={relativity}
+          value={value}
+          units={units}
+          onChange={onChange}
+        />
       <RelativityContainer
         onClick={() => {
           const updatedRelativity =
