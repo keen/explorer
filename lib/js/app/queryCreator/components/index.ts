@@ -15,6 +15,7 @@ import FiltersContainer from './Filters';
 import QueryArguments from './QueryArguments';
 import Card from './Card';
 import InputGroup, { Group } from './InputGroup';
+import { InputGroupWrapper, Group as GroupWrapper, RemoveButton, Select } from './InputGroupWrapper';
 
 export {
   Accordion,
@@ -34,5 +35,10 @@ export {
   FiltersContainer,
   QueryArguments,
   InputGroup,
-  Group
+  Group,
+
+  InputGroupWrapper,
+  GroupWrapper,
+  RemoveButton,
+  Select
 };

@@ -3,17 +3,21 @@ import { ReactSortable } from 'react-sortablejs';
 import { useSelector, useDispatch } from 'react-redux';
 import shallowEqual from 'shallowequal';
 
+import { Select } from '@keen.io/ui-core';
+
 import {
   Section,
   Options,
   GroupSettings,
   GroupsContainer,
+  StyledButton,
 } from './GroupBy.styles';
 
 import Title from '../Title';
 import Property from '../Property';
 import AddGroupBy from '../AddGroupBy';
-import InputGroup from '../InputGroup';
+import InputGroup, { Group } from '../InputGroup';
+import { Select as GroupSelect } from '../InputGroupWrapper';
 
 import {
   addGroup,
@@ -41,6 +45,11 @@ type Props = {
   /** Collection name */
   collection: string;
 };
+
+const options = [
+  { label: 'DESC', value: 'desc' },
+  { label: 'ASC', value: 'asc' }
+]
 
 const GroupBy: FC<Props> = ({ collection }) => {
   const dispatch = useDispatch();
@@ -126,7 +135,32 @@ const GroupBy: FC<Props> = ({ collection }) => {
                 property={property}
                 propertiesSchema={schemaList}
                 propertiesTree={schemaTree}
-              />
+              >
+                <Group>Select</Group>
+                <Group>
+                  <GroupSelect
+                    inputId="order"
+                    placeholder=""
+                    onChange={({ value }: { value: string }) => {
+                      console.log(value);
+                    }}
+                    value={null}
+                    options={options}
+                  />
+                </Group>
+                <Group>
+                  <Select
+                    inputId="order"
+                    placeholder=""
+                    onChange={({ value }: { label: string; value: string }) => {
+                      console.log(value);
+                    }}
+                    value={null}
+                    variant="solid"
+                    options={options}
+                  />
+                </Group>
+              </InputGroup>
             </GroupSettings>
           ))}
         </ReactSortable>
@@ -137,6 +171,7 @@ const GroupBy: FC<Props> = ({ collection }) => {
             onAddGroup={(property) => groupDispatcher(addGroup(property))}
           />
         </Options>
+        <StyledButton>+</StyledButton>
       </Section>
     </div>
   );
