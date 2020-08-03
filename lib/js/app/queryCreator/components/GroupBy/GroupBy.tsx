@@ -3,16 +3,20 @@ import { ReactSortable } from 'react-sortablejs';
 import { useSelector, useDispatch } from 'react-redux';
 import shallowEqual from 'shallowequal';
 
+import { Select } from '@keen.io/ui-core';
+
 import {
   Section,
   Options,
   GroupSettings,
   GroupsContainer,
+  StyledButton,
 } from './GroupBy.styles';
 
 import Title from '../Title';
 import AddGroupBy from '../AddGroupBy';
-import InputGroup from '../InputGroup';
+import InputGroup, { Group } from '../InputGroup';
+import { Select as GroupSelect } from '../InputGroupWrapper';
 
 import {
   addGroup,
@@ -40,6 +44,11 @@ type Props = {
   /** Collection name */
   collection: string;
 };
+
+const options = [
+  { label: 'DESC', value: 'desc' },
+  { label: 'ASC', value: 'asc' }
+]
 
 const GroupBy: FC<Props> = ({ collection }) => {
   const dispatch = useDispatch();
@@ -115,6 +124,7 @@ const GroupBy: FC<Props> = ({ collection }) => {
             onAddGroup={(property) => groupDispatcher(addGroup(property))}
           />
         </Options>
+        <StyledButton>+</StyledButton>
       </Section>
     </div>
   );

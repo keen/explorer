@@ -25,6 +25,7 @@ type Props = {
   propertiesSchema: { path: string; type: string }[];
   /** Collection properties schema in tree structure */
   propertiesTree: Record<string, string[] | Object>;
+  children?: React.ReactNode;
 };
 
 const InputGroup: FC<Props> = ({
@@ -32,6 +33,7 @@ const InputGroup: FC<Props> = ({
   property,
   propertiesSchema,
   propertiesTree,
+  children,
   onChange,
   onRemove, }) => {
   const [editMode, setEditMode] = useState(true);
@@ -76,12 +78,6 @@ const InputGroup: FC<Props> = ({
             isDragged={isDragged}
           >
             {editMode ? (
-                // <input
-                //   type="text"
-                //   autoFocus
-                //   defaultValue={property}
-                //   onChange={searchHandler}
-                // />
                 <>
                   {/* <SearchIcon>
                     <Icon
@@ -120,6 +116,7 @@ const InputGroup: FC<Props> = ({
           )}
         </Wrapper>
       </Group>
+      {children && children}
       <Group>
         <RemoveButton data-testid="remove-property" onClick={onRemove}>×</RemoveButton>
       </Group>
