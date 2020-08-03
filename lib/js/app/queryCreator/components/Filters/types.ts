@@ -45,6 +45,29 @@ export type FiltersActions =
   | ResetFiltersAction
   | SetFiltersAction;
 
+export type Property =
+  | 'String'
+  | 'Number'
+  | 'Datetime'
+  | 'List'
+  | 'Geo'
+  | 'Boolean';
+
+export type Operator =
+  | 'or'
+  | 'eq'
+  | 'ne'
+  | 'lt'
+  | 'lte'
+  | 'gt'
+  | 'gte'
+  | 'exists'
+  | 'in'
+  | 'contains'
+  | 'not_contains'
+  | 'within'
+  | 'regex';
+
 export type SchemaProp =
   | 'num'
   | 'string'
@@ -56,6 +79,6 @@ export type SchemaProp =
   | 'array';
 
 export type Coordinates = {
-  coordinates: [string, string];
-  maxDistanceMiles: string;
+  coordinates: [number, number];
+  maxDistanceMiles: number;
 };

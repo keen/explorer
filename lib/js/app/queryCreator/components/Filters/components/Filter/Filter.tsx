@@ -1,10 +1,15 @@
 import React, { FC } from 'react';
 import { ActionButton } from '@keen.io/ui-core';
 
-import { Container } from './Filter.styles';
+import { Container, FilterItem } from './Filter.styles';
 
 import FilterProperty from '../FilterProperty';
 import PropertyType from '../PropertyType';
+import FilterOperator from '../FilterOperator';
+import FilterValue from '../FilterValue';
+
+import { setDefaultValue } from './utils';
+import { getPropertyType } from '../../utils';
 
 import { Filter as FilterType } from '../../../../types';
 
@@ -28,22 +33,51 @@ const Filter: FC<Props> = ({
   onSearchProperties,
   onChange,
 }) => {
-  console.log(filter, 'saas');
-
-  const { propertyName } = filter;
+  const { propertyName, propertyType, propertyValue, operator } = filter;
 
   return (
     <Container>
-      <FilterProperty
-        property={propertyName}
-        properties={properties}
-        onSelectProperty={(property) =>
-          onChange({ ...filter, propertyName: property })
-        }
-        onSearchProperties={onSearchProperties}
-      />
-      <PropertyType />
-      <ActionButton action="remove" onClick={onRemove} />
+      <FilterItem>
+        <FilterProperty
+          property={propertyName}
+          properties={properties}
+          onSelectProperty={(property) =>
+            onChange({ ...filter, propertyName: property })
+          }
+          onSearchProperties={onSearchProperties}
+        />
+      </FilterItem>
+      <FilterItem>
+        <PropertyType
+          onChange={(propertyType) =>
+            onChange({
+              ...filter,
+              propertyType,
+              operator: undefined,
+              propertyValue: setDefaultValue(propertyType),
+            })
+          }
+          property={propertyName}
+          type={getPropertyType(filter)}
+        />
+      </FilterItem>
+      <FilterItem>
+        <FilterOperator
+          propertyType={propertyType}
+          operator={operator}
+          onChange={(value) => onChange({ ...filter, operator: value })}
+        />
+      </FilterItem>
+      <FilterItem>
+        <FilterValue
+          value={propertyValue}
+          onChange={(value) => onChange({ ...filter, propertyValue: value })}
+          propertyType={propertyType}
+        />
+      </FilterItem>
+      <FilterItem>
+        <ActionButton action="remove" onClick={onRemove} />
+      </FilterItem>
     </Container>
   );
 };

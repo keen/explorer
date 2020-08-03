@@ -1,11 +1,4 @@
-import React, {
-  FC,
-  useMemo,
-  useReducer,
-  useEffect,
-  useState,
-  useRef,
-} from 'react';
+import React, { FC, useReducer, useState, useRef } from 'react';
 import { useSelector } from 'react-redux';
 
 import { Button, ActionButton } from '@keen.io/ui-core';
@@ -21,26 +14,9 @@ import { useSearch } from '../../hooks';
 import { filtersReducer } from './reducer';
 import { createTree } from '../../utils/createTree';
 
-import {
-  DATA_TYPES,
-  SCHEMA_PROPS,
-  DEFAULT_TIMEFRAME_ABSOLUTE_VALUE,
-} from './constants';
-import {
-  convertFilters,
-  getPropertyType,
-  convertDateToString,
-  isStateValid,
-  getOperatorOptions,
-} from './utils';
+import { convertFilters, isStateValid } from './utils';
 
-import {
-  AppState,
-  PropertyType,
-  Operator,
-  Filter as FilterType,
-} from '../../types';
-import { SchemaProp } from './types';
+import { AppState, Filter as FilterType } from '../../types';
 
 import text from './text.json';
 
@@ -52,11 +28,6 @@ type Props = {
   /** Onchange handler */
   onChange: (filters: FilterType[]) => void;
 };
-
-const dataTypes = Object.keys(DATA_TYPES).map((item) => ({
-  label: DATA_TYPES[item],
-  value: DATA_TYPES[item],
-}));
 
 const Filters: FC<Props> = ({ collection, filters, onChange }) => {
   const [searchPropertiesPhrase, setSearchPhrase] = useState(null);
@@ -102,29 +73,7 @@ const Filters: FC<Props> = ({ collection, filters, onChange }) => {
 
   const [state, filtersDispatcher] = useReducer(filtersReducer, filters);
 
-  useEffect(() => {
-    filters.map((filter, idx) => {
-      if (!filter?.propertyType) {
-        const type = getPropertyType(filter);
-        if (type?.value)
-          filtersDispatcher(updateFilter(idx, { propertyType: type.value }));
-      }
-    });
-  }, [filters]);
-
-  const setDefaults = (idx: number, type: PropertyType, value?: any) => {
-    if (type === 'Null')
-      filtersDispatcher(updateFilter(idx, { propertyValue: 'Null' }));
-    if (type === 'Datetime') {
-      const date = value || DEFAULT_TIMEFRAME_ABSOLUTE_VALUE;
-      filtersDispatcher(
-        updateFilter(idx, { propertyValue: convertDateToString(date) })
-      );
-    }
-    if (type === 'Geo') {
-      filtersDispatcher(updateFilter(idx, { operator: 'within' }));
-    }
-  };
+  console.log(state, 'lalalalala');
 
   return (
     <>
