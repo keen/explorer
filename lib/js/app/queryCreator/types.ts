@@ -95,20 +95,19 @@ export type Operator =
   | 'within'
   | 'regex';
 
-export type PropertyType =
+export type Property =
   | 'String'
   | 'Number'
   | 'Datetime'
   | 'List'
   | 'Geo'
-  | 'Null'
   | 'Boolean';
 
 export type Filter = {
   propertyName: string;
   operator: Operator;
   propertyValue: any;
-  propertyType?: PropertyType;
+  propertyType?: Property;
 };
 
 export type TabTypes = 'default' | 'large';

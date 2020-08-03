@@ -50,10 +50,12 @@ const AbsoluteTime: FC<Props> = memo(
             <SingleDatePicker
               date={startDate}
               onDateChange={(valueSelected) => {
-                onChange({
-                  start: valueSelected.format(),
-                  end,
-                });
+                if (valueSelected) {
+                  onChange({
+                    start: valueSelected.format(),
+                    end,
+                  });
+                }
               }}
               focused={startFocus}
               onFocusChange={({ focused }) => setStartFocus(focused)}
@@ -86,10 +88,12 @@ const AbsoluteTime: FC<Props> = memo(
             <SingleDatePicker
               date={endDate}
               onDateChange={(valueSelected) => {
-                onChange({
-                  start,
-                  end: valueSelected.format(),
-                });
+                if (valueSelected) {
+                  onChange({
+                    start,
+                    end: valueSelected.format(),
+                  });
+                }
               }}
               focused={endFocus}
               onFocusChange={({ focused }) => setEndFocus(focused)}

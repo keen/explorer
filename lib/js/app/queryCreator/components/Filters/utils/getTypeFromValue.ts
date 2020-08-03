@@ -38,7 +38,5 @@ export const getTypeFromValue = (filter: Filter) => {
       return 'Boolean';
     case 'number':
       return 'Number';
-    case 'null':
-      return 'Null';
   }
 };

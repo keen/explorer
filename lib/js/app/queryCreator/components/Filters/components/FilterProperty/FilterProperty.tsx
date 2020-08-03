@@ -76,8 +76,6 @@ const FilterProperty: FC<Props> = ({
             onEditInputChange={onSearchProperties}
           />
         </PropertyItem>
-        <PropertyItem>test</PropertyItem>
-        <PropertyItem>X</PropertyItem>
       </PropertyGroup>
       <Dropdown isOpen={editMode} fullWidth={false}>
         <DropdownContent>
