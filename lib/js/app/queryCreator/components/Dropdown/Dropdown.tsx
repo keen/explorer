@@ -8,6 +8,8 @@ type Props = {
   isOpen: boolean;
   /** React children nodes */
   children: React.ReactNode;
+  /** Expand container to full width */
+  fullWidth?: boolean;
 };
 
 const dropdownMotion = {
@@ -16,10 +18,14 @@ const dropdownMotion = {
   exit: { opacity: 0, top: 30 },
 };
 
-const Dropdown: FC<Props> = ({ isOpen, children }) => (
+const Dropdown: FC<Props> = ({ isOpen, children, fullWidth = true }) => (
   <Wrapper>
     <AnimatePresence>
-      {isOpen && <Container {...dropdownMotion}>{children}</Container>}
+      {isOpen && (
+        <Container {...dropdownMotion} fullWidth={fullWidth}>
+          {children}
+        </Container>
+      )}
     </AnimatePresence>
   </Wrapper>
 );

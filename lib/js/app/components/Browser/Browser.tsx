@@ -21,11 +21,11 @@ import { getSavedQuery } from '../../modules/savedQuery';
 import { AppState } from '../../modules/types';
 
 type Props = {
-  query: Object;
+  query: Record<string, any>;
   onEditQuery: (queryName: string) => void;
-  onSelectQuery: (queryName: string, settings: Object) => void;
+  onSelectQuery: (queryName: string, settings: Record<string, any>) => void;
   onRunQuery: () => void;
-  queryResults?: Object;
+  queryResults?: Record<string, any>;
 };
 
 const Browser: FC<Props> = ({

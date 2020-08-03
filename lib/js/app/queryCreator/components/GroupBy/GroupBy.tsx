@@ -14,7 +14,6 @@ import {
 } from './GroupBy.styles';
 
 import Title from '../Title';
-import Property from '../Property';
 import AddGroupBy from '../AddGroupBy';
 import InputGroup, { Group } from '../InputGroup';
 import { Select as GroupSelect } from '../InputGroupWrapper';

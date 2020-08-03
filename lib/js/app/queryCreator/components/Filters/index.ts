@@ -1,3 +1,3 @@
-import { FiltersContainer } from './FiltersContainer';
+import Filters from './Filters';
 
-export default FiltersContainer;
+export default Filters;

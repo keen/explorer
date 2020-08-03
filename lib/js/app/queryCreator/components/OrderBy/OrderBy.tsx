@@ -62,7 +62,8 @@ const OrderBy: FC<Props> = () => {
 
   const removeOrderBy = useCallback(
     (index: number) => {
-      const orderBySettings = orderBy.filter((_order, idx) => index !== idx);
+      let orderBySettings = orderBy.filter((_order, idx) => index !== idx);
+      if (orderBySettings.length === 0) orderBySettings = undefined;
       dispatch(setOrderBy(orderBySettings));
     },
     [orderBy]
@@ -84,58 +85,62 @@ const OrderBy: FC<Props> = () => {
           <Button
             variant="secondary"
             style="outline"
-            onClick={() =>
-              dispatch(setOrderBy([...orderBy, DEFAULT_ORDER_SETTINGS]))
-            }
+            onClick={() => {
+              const currentSettings = orderBy || [];
+              dispatch(
+                setOrderBy([...currentSettings, DEFAULT_ORDER_SETTINGS])
+              );
+            }}
           >
             Add order settings
           </Button>
-          {orderBy.map(({ propertyName, direction }, idx) => (
-            <div key={idx}>
-              <div
-                data-testid={`orderby-remove-${idx}`}
-                onClick={() => removeOrderBy(idx)}
-              >
-                <Icon type="close" fill={colors.blue['500']} />
+          {orderBy &&
+            orderBy.map(({ propertyName, direction }, idx) => (
+              <div key={idx}>
+                <div
+                  data-testid={`orderby-remove-${idx}`}
+                  onClick={() => removeOrderBy(idx)}
+                >
+                  <Icon type="close" fill={colors.blue['500']} />
+                </div>
+                <Label htmlFor={`${idx}-order-property`}>
+                  {text.propetyLabel}
+                </Label>
+                <Select
+                  inputId={`${idx}-order-property`}
+                  variant="solid"
+                  options={options}
+                  onChange={({ value }: { value: string }) => {
+                    const orderSettings = { propertyName: value, direction };
+                    updateOrderBy(orderSettings as OrderBySettings, idx);
+                  }}
+                  placeholder={text.propetyPlaceholder}
+                  value={
+                    propertyName
+                      ? { label: propertyName, value: propertyName }
+                      : null
+                  }
+                />
+                <Label htmlFor={`${idx}-order-direction`}>
+                  {text.directionLabel}
+                </Label>
+                <Select
+                  inputId={`${idx}-order-direction`}
+                  variant="solid"
+                  options={DIRECTION_OPTIONS}
+                  onChange={({ value }: { value: string }) => {
+                    const orderSettings = { propertyName, direction: value };
+                    updateOrderBy(orderSettings as OrderBySettings, idx);
+                  }}
+                  placeholder={text.directionPlaceholder}
+                  value={
+                    direction
+                      ? { label: DIRECTION_LABELS[direction], value: direction }
+                      : null
+                  }
+                />
               </div>
-              <Label htmlFor={`${idx}-order-property`}>
-                {text.propetyLabel}
-              </Label>
-              <Select
-                inputId={`${idx}-order-property`}
-                variant="solid"
-                options={options}
-                onChange={({ value }: { value: string }) => {
-                  const orderSettings = { propertyName: value, direction };
-                  updateOrderBy(orderSettings as OrderBySettings, idx);
-                }}
-                placeholder={text.propetyPlaceholder}
-                value={
-                  propertyName
-                    ? { label: propertyName, value: propertyName }
-                    : null
-                }
-              />
-              <Label htmlFor={`${idx}-order-direction`}>
-                {text.directionLabel}
-              </Label>
-              <Select
-                inputId={`${idx}-order-direction`}
-                variant="solid"
-                options={DIRECTION_OPTIONS}
-                onChange={({ value }: { value: string }) => {
-                  const orderSettings = { propertyName, direction: value };
-                  updateOrderBy(orderSettings as OrderBySettings, idx);
-                }}
-                placeholder={text.directionPlaceholder}
-                value={
-                  direction
-                    ? { label: DIRECTION_LABELS[direction], value: direction }
-                    : null
-                }
-              />
-            </div>
-          ))}
+            ))}
         </div>
       ) : (
         text.specifyGroupBy

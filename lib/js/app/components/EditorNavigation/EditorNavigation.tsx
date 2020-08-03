@@ -17,7 +17,7 @@ import { NEW_QUERY_EVENT } from '../../queryCreator';
 
 type Props = {
   /** Query definition */
-  query: Object;
+  query: Record<string, any>;
 };
 
 const EditorNavigation: FC<Props> = ({ query }) => {

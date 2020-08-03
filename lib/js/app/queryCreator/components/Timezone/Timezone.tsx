@@ -1,5 +1,12 @@
-import React, { FC, useMemo } from 'react';
-import { Select, Label } from '@keen.io/ui-core';
+import React, { FC, useMemo, useState } from 'react';
+
+import { Container, SelectContainer } from './Timezone.styles';
+
+import Title from '../Title';
+import Dropdown from '../Dropdown';
+import DropdownList from '../DropdownList';
+import DropdownListContainer from '../DropdownListContainer';
+import DropableContainer from '../DropableContainer';
 
 import { TIMEZONES } from './constants';
 
@@ -15,6 +22,7 @@ type Props = {
 };
 
 const Timezone: FC<Props> = ({ timezone, onChange }) => {
+  const [isOpen, setOpen] = useState(false);
   const options = useMemo(
     () =>
       TIMEZONES.map(({ name }) => ({
@@ -25,17 +33,38 @@ const Timezone: FC<Props> = ({ timezone, onChange }) => {
   );
 
   return (
-    <div data-testid="timezone">
-      <Label htmlFor="timezone">{text.label}</Label>
-      <Select
-        variant="solid"
-        inputId="timezone"
-        placeholder={text.placeholder}
-        onChange={({ value }: { value: Timezones }) => onChange(value)}
-        value={timezone ? { label: timezone, value: timezone } : null}
-        options={options}
-      />
-    </div>
+    <Container data-testid="timezone">
+      <Title onClick={() => setOpen(true)}>{text.label}</Title>
+      <SelectContainer>
+        <DropableContainer
+          variant="secondary"
+          dropIndicator
+          onClick={() => !isOpen && setOpen(true)}
+          placeholder={text.placeholder}
+          isActive={isOpen}
+          value={timezone}
+          onDefocus={() => {
+            setOpen(false);
+          }}
+        >
+          {timezone}
+        </DropableContainer>
+        <Dropdown isOpen={isOpen}>
+          <DropdownListContainer scrollToActive>
+            {(activeItemRef) => (
+              <DropdownList
+                ref={activeItemRef}
+                items={options}
+                setActiveItem={({ value }) => value === timezone}
+                onClick={(_e, { value }) => {
+                  onChange(value);
+                }}
+              />
+            )}
+          </DropdownListContainer>
+        </Dropdown>
+      </SelectContainer>
+    </Container>
   );
 };
 

@@ -11,7 +11,7 @@ type Props = {
   /** Collection properties */
   properties: { path: string; type: string }[];
   /** Collection tree properties */
-  propertiesTree: Record<string, string[] | Object>;
+  propertiesTree: Record<string, string[] | Record<string, any>>;
 };
 
 const AddGroupBy: FC<Props> = ({ onAddGroup, properties, propertiesTree }) => {

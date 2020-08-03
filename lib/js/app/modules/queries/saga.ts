@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/camelcase */
+
 import { takeLatest, getContext, take, put } from 'redux-saga/effects';
 
 import {

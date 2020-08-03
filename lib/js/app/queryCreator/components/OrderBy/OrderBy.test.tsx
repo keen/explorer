@@ -107,7 +107,7 @@ test('allows user to remove order by settings', () => {
     Array [
       Object {
         "payload": Object {
-          "orderBy": Array [],
+          "orderBy": undefined,
         },
         "type": "@query-creator/SET_ORDER_BY",
       },

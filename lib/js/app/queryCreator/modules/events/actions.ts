@@ -5,7 +5,7 @@ import {
   FETCH_COLLECTION_SCHEMA_SUCCESS,
 } from './constants';
 
-import { EventsActions, CollectionSchema } from './types';
+import { EventsActions } from './types';
 
 export const setEventsCollections = (collections: string[]): EventsActions => ({
   type: SET_EVENTS_COLLECTIONS,

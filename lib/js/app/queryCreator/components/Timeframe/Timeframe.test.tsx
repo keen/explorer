@@ -50,7 +50,6 @@ test('should render absolute time user interface', () => {
 test('should render timezone user interface', () => {
   const {
     wrapper: { getByTestId },
-    props,
   } = render();
 
   const propertyContainer = getByTestId('dropable-container');

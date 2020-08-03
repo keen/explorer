@@ -6,8 +6,9 @@ export const Container = styled.div`
   padding: 10px 14px;
   background: ${transparentize(0.85, colors.blue[100])};
   border-radius: 4px;
-  border: solid 1px ${colors.white[500]};
+  border: solid 1px ${transparentize(0.85, colors.blue[100])};
   box-sizing: border-box;
+  height: 37px;
 
   transition: border-color 0.2s linear;
 

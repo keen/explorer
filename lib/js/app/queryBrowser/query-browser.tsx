@@ -11,7 +11,7 @@ type Props = {
   /** Saved queries collection */
   queries: SavedQuery[];
   /** Select query event handler */
-  onSelectQuery: (queryName: string, settings: Object) => void;
+  onSelectQuery: (queryName: string, settings: Record<string, any>) => void;
   /** Delete query event handler */
   onDeleteQuery: (queryName: string) => void;
   /** Active query name */

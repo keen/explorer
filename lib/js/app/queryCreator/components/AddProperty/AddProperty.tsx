@@ -1,4 +1,5 @@
 import React, { FC, useState, useEffect } from 'react';
+import { ActionButton } from '@keen.io/ui-core';
 
 import PropertiesTree from '../PropertiesTree';
 
@@ -13,13 +14,14 @@ type Props = {
   /** Collection properties */
   properties: { path: string; type: string }[];
   /** Collection tree properties */
-  propertiesTree: Record<string, string[] | Object>;
+  propertiesTree: Record<string, string[] | Record<string, any>>;
 };
 
 const AddProperty: FC<Props> = ({
   onAddProperty,
   properties,
   propertiesTree,
+  isDisabled,
 }) => {
   const [showProperties, setPropertiesVisibility] = useState(false);
   const [searchTree, setSearchTree] = useState(propertiesTree);
@@ -48,7 +50,11 @@ const AddProperty: FC<Props> = ({
 
   return (
     <div>
-      <div onClick={() => setPropertiesVisibility(true)}>Add</div>
+      <ActionButton
+        isDisabled={isDisabled}
+        action="create"
+        onClick={() => setPropertiesVisibility(true)}
+      />
       {showProperties && (
         <div>
           <input type="text" onChange={searchHandler} />

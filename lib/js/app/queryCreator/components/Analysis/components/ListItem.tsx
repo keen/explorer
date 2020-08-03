@@ -29,8 +29,8 @@ type Props = {
 };
 
 const hintMotion = {
-  initial: { opacity: 0, right: -22 },
-  animate: { opacity: 1, right: -11 },
+  initial: { opacity: 0, right: -24 },
+  animate: { opacity: 1, right: -15 },
   exit: { opacity: 0 },
 };
 
@@ -65,7 +65,7 @@ const ListItem: FC<Props> = ({
       <div>{children}</div>
       <AnimatePresence>
         <Hint
-          onMouseEnter={(e) => showHint(true)}
+          onMouseEnter={() => showHint(true)}
           onMouseLeave={() => showHint(false)}
         >
           {isFocused && (
@@ -85,7 +85,7 @@ const ListItem: FC<Props> = ({
               {...hintMotion}
             >
               <Tooltip mode="dark" hasArrow={false}>
-                {description}
+                <div dangerouslySetInnerHTML={{ __html: description }} />
               </Tooltip>
             </TooltipContainer>
           )}

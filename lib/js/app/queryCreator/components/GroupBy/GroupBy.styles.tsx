@@ -60,3 +60,5 @@ export const GroupsContainer = forwardRef<
 >(({ children }, ref) => {
   return <Container ref={ref}>{children}</Container>;
 });
+
+GroupsContainer.displayName = 'GroupsContainer';

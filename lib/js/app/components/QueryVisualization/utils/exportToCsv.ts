@@ -6,14 +6,13 @@ const convertToCSV = (
   lineDelimiter = '\n'
 ) => {
   let result: string;
-  let keys: string[];
   let ctr: number;
 
   if (data === null || !data.length) {
     return null;
   }
 
-  keys = Object.keys(data[0]);
+  const keys = Object.keys(data[0]);
 
   result = '';
   result += keys.join(columnDelimiter);
@@ -38,7 +37,7 @@ const convertToCSV = (
   return result;
 };
 
-export const exportToCsv = (data: Object, filename: string) => {
+export const exportToCsv = (data: Record<string, any>, filename: string) => {
   let downloadFileName = filename;
   const hasExtension = filename.includes('.csv');
 

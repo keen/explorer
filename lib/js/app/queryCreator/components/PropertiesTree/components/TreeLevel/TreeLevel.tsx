@@ -13,7 +13,7 @@ type Props = {
   /** Header title */
   header: string;
   /** Tree properties */
-  properties: Record<string, string[] | Object>;
+  properties: Record<string, string[] | Record<string, any>>;
   /** Click event handler */
   onClick: (e: React.MouseEvent<HTMLDivElement>, propertyPath: string) => void;
   /** The curent active property */
