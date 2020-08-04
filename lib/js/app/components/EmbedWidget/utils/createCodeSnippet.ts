@@ -5,7 +5,7 @@ export const createCodeSnippet = ({
   readKey,
 }: {
   widget: string;
-  query: Object;
+  query: Record<string, any>;
   projectId: string;
   readKey: string;
 }) => `

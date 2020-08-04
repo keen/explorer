@@ -20,6 +20,8 @@ type Props = {
   description: string;
   /** Active indicator */
   isActive: boolean;
+  /** Mouse enter event handler */
+  onMouseEnter: (e: React.MouseEvent<HTMLLIElement>) => void;
   /** Click event handler */
   onClick: (e: React.MouseEvent<HTMLLIElement>, analysis: Analysis) => void;
   /** React children nodes */
@@ -27,8 +29,8 @@ type Props = {
 };
 
 const hintMotion = {
-  initial: { opacity: 0, right: -22 },
-  animate: { opacity: 1, right: -11 },
+  initial: { opacity: 0, right: -24 },
+  animate: { opacity: 1, right: -15 },
   exit: { opacity: 0 },
 };
 
@@ -42,6 +44,7 @@ const iconMotion = {
 const ListItem: FC<Props> = ({
   children,
   onClick,
+  onMouseEnter,
   isActive,
   analysis,
   description,
@@ -53,7 +56,10 @@ const ListItem: FC<Props> = ({
     <Container
       onClick={(e) => onClick(e, analysis)}
       isActive={isActive}
-      onMouseEnter={() => setFocus(true)}
+      onMouseEnter={(e) => {
+        onMouseEnter(e);
+        setFocus(true);
+      }}
       onMouseLeave={() => setFocus(false)}
     >
       <div>{children}</div>
@@ -79,7 +85,7 @@ const ListItem: FC<Props> = ({
               {...hintMotion}
             >
               <Tooltip mode="dark" hasArrow={false}>
-                {description}
+                <div dangerouslySetInnerHTML={{ __html: description }} />
               </Tooltip>
             </TooltipContainer>
           )}

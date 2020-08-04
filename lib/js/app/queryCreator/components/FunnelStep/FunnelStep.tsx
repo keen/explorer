@@ -84,6 +84,7 @@ const FunnelStep: FC<Props> = ({
         <Timeframe
           id={`funnel_step_${index}`}
           value={timeframe}
+          variant="secondary"
           timezone={2000}
           onTimezoneChange={() => {
             // @TODO: Handle timezone change

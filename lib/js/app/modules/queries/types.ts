@@ -49,7 +49,7 @@ export interface SaveQueryAction {
   type: typeof SAVE_QUERY;
   payload: {
     name: string;
-    body: Object;
+    body: Record<string, any>;
   };
 }
 
@@ -57,7 +57,7 @@ export interface SaveQuerySuccessAction {
   type: typeof SAVE_QUERY_SUCCESS;
   payload: {
     queryName: string;
-    body: Object;
+    body: Record<string, any>;
   };
 }
 
@@ -96,7 +96,7 @@ export interface GetSavedQueriesAction {
 export interface GetSavedQueriesSuccessAction {
   type: typeof GET_SAVED_QUERIES_SUCCESS;
   payload: {
-    queries: Object;
+    queries: Record<string, any>;
   };
 }
 
@@ -110,14 +110,14 @@ export interface GetSavedQueriesErrorAction {
 export interface RunQueryAction {
   type: typeof RUN_QUERY;
   payload: {
-    body: Object;
+    body: Record<string, any>;
   };
 }
 
 export interface RunQuerySuccessAction {
   type: typeof RUN_QUERY_SUCCESS;
   payload: {
-    results: Object;
+    results: Record<string, any>;
   };
 }
 

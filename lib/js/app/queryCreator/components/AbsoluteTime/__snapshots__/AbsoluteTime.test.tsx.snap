@@ -1,0 +1,233 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders date picker for timeframe end 1`] = `
+.c0 {
+  font-family: 'Lato Regular',sans-serif;
+  -webkit-flex-basis: 50%;
+  -ms-flex-preferred-size: 50%;
+  flex-basis: 50%;
+  margin-right: 5px;
+}
+
+.c0 .SingleDatePickerInput__withBorder {
+  border: none;
+  border-radius: 0;
+}
+
+.c0 .SingleDatePicker_picker {
+  top: 39px!important;
+}
+
+.c0 .CalendarDay__default:hover {
+  background: rgba(156,192,162,0.2);
+  border: 1px solid rgba(156,192,162,0.2);
+}
+
+.c0 .DayPicker__withBorder {
+  border: solid 1px #F2F2F2;
+  box-shadow: 0 10px 24px 0 rgba(29,39,41,0.15);
+}
+
+.c0 .DateInput_input {
+  padding: 10px 14px;
+  height: 37px;
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid rgba(29,39,41,0.5);
+  border-radius: 4px;
+  outline: none;
+  font-size: 14px;
+  line-height: 17px;
+  font-family: 'Lato Regular',sans-serif;
+  color: #27566D;
+}
+
+.c0 .DateInput_input:focus {
+  box-shadow: 0 0 3px 1px rgba(119,163,187,0.5);
+}
+
+.c0 .DateInput_input:disabled {
+  border: 1px solid rgba(39,86,109,0.5);
+  background: #FFFFFF;
+}
+
+.c0 .DateInput_input:disabled::-webkit-input-placeholder {
+  color: rgba(39,52,55,0.4);
+}
+
+.c0 .DateInput_input:disabled::-moz-placeholder {
+  color: rgba(39,52,55,0.4);
+}
+
+.c0 .DateInput_input:disabled:-ms-input-placeholder {
+  color: rgba(39,52,55,0.4);
+}
+
+.c0 .DateInput_input:disabled::placeholder {
+  color: rgba(39,52,55,0.4);
+}
+
+.c0 .DateInput_fang {
+  display: none;
+}
+
+.c0 .CalendarDay__selected,
+.c0 .CalendarDay__selected:active,
+.c0 .CalendarDay__selected:hover {
+  background: #27566D;
+  border: 1px double #27566D;
+}
+
+<div
+  class="c0"
+  data-testid="date-end"
+>
+  <div
+    class="SingleDatePicker SingleDatePicker_1"
+  >
+    <div>
+      <div
+        class="SingleDatePickerInput SingleDatePickerInput_1 SingleDatePickerInput__withBorder SingleDatePickerInput__withBorder_2"
+      >
+        <div
+          class="DateInput DateInput_1"
+        >
+          <input
+            aria-describedby="DateInput__screen-reader-message-id_end"
+            aria-label="Date"
+            autocomplete="off"
+            class="DateInput_input DateInput_input_1"
+            id="id_end"
+            name="id_end"
+            placeholder="Date"
+            type="text"
+            value="2020-07-30"
+          />
+          <p
+            class="DateInput_screenReaderMessage DateInput_screenReaderMessage_1"
+            id="DateInput__screen-reader-message-id_end"
+          >
+            Navigate forward to interact with the calendar and select a date. Press the question mark key to get the keyboard shortcuts for changing dates.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`renders date picker for timeframe start 1`] = `
+.c0 {
+  font-family: 'Lato Regular',sans-serif;
+  -webkit-flex-basis: 50%;
+  -ms-flex-preferred-size: 50%;
+  flex-basis: 50%;
+  margin-right: 5px;
+}
+
+.c0 .SingleDatePickerInput__withBorder {
+  border: none;
+  border-radius: 0;
+}
+
+.c0 .SingleDatePicker_picker {
+  top: 39px!important;
+}
+
+.c0 .CalendarDay__default:hover {
+  background: rgba(156,192,162,0.2);
+  border: 1px solid rgba(156,192,162,0.2);
+}
+
+.c0 .DayPicker__withBorder {
+  border: solid 1px #F2F2F2;
+  box-shadow: 0 10px 24px 0 rgba(29,39,41,0.15);
+}
+
+.c0 .DateInput_input {
+  padding: 10px 14px;
+  height: 37px;
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid rgba(29,39,41,0.5);
+  border-radius: 4px;
+  outline: none;
+  font-size: 14px;
+  line-height: 17px;
+  font-family: 'Lato Regular',sans-serif;
+  color: #27566D;
+}
+
+.c0 .DateInput_input:focus {
+  box-shadow: 0 0 3px 1px rgba(119,163,187,0.5);
+}
+
+.c0 .DateInput_input:disabled {
+  border: 1px solid rgba(39,86,109,0.5);
+  background: #FFFFFF;
+}
+
+.c0 .DateInput_input:disabled::-webkit-input-placeholder {
+  color: rgba(39,52,55,0.4);
+}
+
+.c0 .DateInput_input:disabled::-moz-placeholder {
+  color: rgba(39,52,55,0.4);
+}
+
+.c0 .DateInput_input:disabled:-ms-input-placeholder {
+  color: rgba(39,52,55,0.4);
+}
+
+.c0 .DateInput_input:disabled::placeholder {
+  color: rgba(39,52,55,0.4);
+}
+
+.c0 .DateInput_fang {
+  display: none;
+}
+
+.c0 .CalendarDay__selected,
+.c0 .CalendarDay__selected:active,
+.c0 .CalendarDay__selected:hover {
+  background: #27566D;
+  border: 1px double #27566D;
+}
+
+<div
+  class="c0"
+  data-testid="date-start"
+>
+  <div
+    class="SingleDatePicker SingleDatePicker_1"
+  >
+    <div>
+      <div
+        class="SingleDatePickerInput SingleDatePickerInput_1 SingleDatePickerInput__withBorder SingleDatePickerInput__withBorder_2"
+      >
+        <div
+          class="DateInput DateInput_1"
+        >
+          <input
+            aria-describedby="DateInput__screen-reader-message-id_start"
+            aria-label="Date"
+            autocomplete="off"
+            class="DateInput_input DateInput_input_1"
+            id="id_start"
+            name="id_start"
+            placeholder="Date"
+            type="text"
+            value="2020-07-29"
+          />
+          <p
+            class="DateInput_screenReaderMessage DateInput_screenReaderMessage_1"
+            id="DateInput__screen-reader-message-id_start"
+          >
+            Navigate forward to interact with the calendar and select a date. Press the question mark key to get the keyboard shortcuts for changing dates.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

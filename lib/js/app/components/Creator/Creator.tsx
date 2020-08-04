@@ -7,12 +7,13 @@ import { AppContext } from '../../contexts';
 import { queryEditorMounted } from '../../modules/app';
 
 type Props = {
-  onUpdateQuery: (query: Object) => void;
+  onUpdateQuery: (query: Record<string, any>) => void;
 };
 
 const Creator: FC<Props> = ({ onUpdateQuery }) => {
   const dispatch = useDispatch();
   const {
+    modalContainer,
     keenAnalysis: { config },
   } = useContext(AppContext);
 
@@ -22,6 +23,7 @@ const Creator: FC<Props> = ({ onUpdateQuery }) => {
 
   return (
     <QueryCreator
+      modalContainer={modalContainer}
       projectId={config.projectId}
       readKey={config.readKey}
       masterKey={config.masterKey}

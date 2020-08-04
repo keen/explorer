@@ -20,7 +20,7 @@ type Props = {
   /** Properties schema collection */
   propertiesSchema: { path: string; type: string }[];
   /** Collection properties schema in tree structure */
-  propertiesTree: Record<string, string[] | Object>;
+  propertiesTree: Record<string, string[] | Record<string, any>>;
 };
 
 const Property: FC<Props> = ({

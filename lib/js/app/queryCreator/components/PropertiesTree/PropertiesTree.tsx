@@ -1,19 +1,29 @@
 import React, { FC } from 'react';
 
-import { TreeLevel, TreeLeaf } from './components';
+import { TreeLevel } from './components';
+
+import PropertyTreeItem from '../PropertyTreeItem';
+import { getPropertyType, getPropertyPath } from './utils';
+
+import { PADDING } from './constants';
 
 type Props = {
   /** Properties tree */
-  properties: Record<string, string[] | Object>;
+  properties: Record<string, string[] | Record<string, any>>;
   /** Click event handler */
   onClick: (e: React.MouseEvent<HTMLDivElement>, propertyPath: string) => void;
+  /** The curent active property */
+  activeProperty?: string;
   /** Expand all tree levels */
   expanded?: boolean;
-  /** Open indicator */
-  isOpen?: boolean;
 };
 
-const PropertiesTree: FC<Props> = ({ expanded, onClick, properties }) => {
+const PropertiesTree: FC<Props> = ({
+  expanded,
+  onClick,
+  activeProperty,
+  properties,
+}) => {
   const keys = Object.keys(properties);
 
   return (
@@ -21,12 +31,16 @@ const PropertiesTree: FC<Props> = ({ expanded, onClick, properties }) => {
       {keys.map((key) => {
         if (Array.isArray(properties[key])) {
           return (
-            <TreeLeaf
-              padding={15}
-              name={key}
-              type={properties[key][1]}
+            <PropertyTreeItem
               key={key}
-              onClick={(e) => onClick(e, properties[key][0])}
+              padding={PADDING}
+              propertyName={key}
+              propertyPath={getPropertyPath(properties[key] as string[])}
+              type={getPropertyType(properties[key] as string[])}
+              isActive={
+                activeProperty === getPropertyPath(properties[key] as string[])
+              }
+              onClick={(e, propertyPath) => onClick(e, propertyPath)}
             />
           );
         } else {
@@ -36,6 +50,7 @@ const PropertiesTree: FC<Props> = ({ expanded, onClick, properties }) => {
               level={1}
               onClick={onClick}
               header={key}
+              activeProperty={activeProperty}
               expanded={expanded}
               properties={properties[key] as Record<string, any>}
             />

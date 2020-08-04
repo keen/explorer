@@ -13,7 +13,7 @@ type Props = {
   /** Widget type */
   widget: string;
   /** Query definition */
-  query: Object;
+  query: Record<string, any>;
 };
 
 const EmbedWidget: FC<Props> = ({ widget, query }) => {

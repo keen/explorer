@@ -15,6 +15,7 @@ import FiltersContainer from './Filters';
 import QueryArguments from './QueryArguments';
 import Card from './Card';
 import RadioGroup from './RadioGroup';
+import Tabs from './Tabs';
 
 export {
   Accordion,
@@ -33,5 +34,6 @@ export {
   FunnelSteps,
   FiltersContainer,
   QueryArguments,
-  RadioGroup
+  RadioGroup,
+  Tabs,
 };

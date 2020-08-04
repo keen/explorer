@@ -17,7 +17,7 @@ const PropertyPath: FC<Props> = ({ path }) => {
         if (idx + 1 < pathLength) {
           return [
             <span key={`${slice}-${idx}`}>{slice}</span>,
-            <Wrapper>
+            <Wrapper key={`${slice}-${idx}-wrapper`}>
               <Icon
                 type="caret-right"
                 width={10}

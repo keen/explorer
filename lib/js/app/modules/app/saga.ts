@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/camelcase */
+
 import { takeLatest, put, take, select, getContext } from 'redux-saga/effects';
 
 import { setViewMode, updateQueryCreator } from './actions';

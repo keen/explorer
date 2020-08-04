@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/camelcase */
+
 import { takeLatest, select, put } from 'redux-saga/effects';
 
 import { updateSaveQuery, saveQuerySuccess } from './actions';

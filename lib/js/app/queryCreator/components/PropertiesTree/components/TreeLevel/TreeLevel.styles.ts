@@ -12,8 +12,15 @@ export const Header = styled.div`
   cursor: pointer;
 `;
 
+export const Title = styled.div`
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+`;
+
 export const MotionIcon = styled(motion.div)`
   display: flex;
+  flex-shrink: 0;
   align-items: center;
   margin-left: 4px;
 `;

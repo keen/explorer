@@ -23,10 +23,39 @@ const render = (storeState: any = {}) => {
 
 test('allows user to set limit', () => {
   const {
+    wrapper: { getByTestId },
+    store,
+  } = render({
+    query: {
+      groupBy: ['category'],
+      orderBy: [{ propertyName: 'result', direction: 'DESC' }],
+      limit: undefined,
+    },
+  });
+  const input = getByTestId('limit');
+
+  fireEvent.change(input, { target: { value: 80 } });
+
+  expect(store.getActions()).toMatchInlineSnapshot(`
+    Array [
+      Object {
+        "payload": Object {
+          "limit": 80,
+        },
+        "type": "@query-creator/SET_LIMIT",
+      },
+    ]
+  `);
+});
+
+test('allows user to set limit', () => {
+  const {
     wrapper: { container },
     store,
   } = render({
     query: {
+      groupBy: ['category'],
+      orderBy: [{ propertyName: 'result', direction: 'DESC' }],
       limit: undefined,
     },
   });
@@ -46,16 +75,48 @@ test('allows user to set limit', () => {
   `);
 });
 
+test('do not allows user to set limit without order settings', () => {
+  const {
+    wrapper: { getByTestId },
+  } = render({
+    query: {
+      groupBy: ['category'],
+      orderBy: undefined,
+      limit: undefined,
+    },
+  });
+  const input = getByTestId('limit');
+
+  expect(input).toBeDisabled();
+});
+
+test('do not allows user to set limit without group by settings', () => {
+  const {
+    wrapper: { getByTestId },
+  } = render({
+    query: {
+      groupBy: undefined,
+      orderBy: [{ propertyName: 'result', direction: 'DESC' }],
+      limit: undefined,
+    },
+  });
+  const input = getByTestId('limit');
+
+  expect(input).toBeDisabled();
+});
+
 test('allows user to remove limit', () => {
   const {
-    wrapper: { container },
+    wrapper: { getByTestId },
     store,
   } = render({
     query: {
       limit: 100,
+      groupBy: ['category'],
+      orderBy: [{ propertyName: 'result', direction: 'DESC' }],
     },
   });
-  const input = container.querySelector('input[type="number"]');
+  const input = getByTestId('limit');
 
   fireEvent.change(input, { target: { value: null } });
 

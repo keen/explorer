@@ -21,9 +21,9 @@ import { setViewMode } from '../../modules/app';
 
 type Props = {
   /** Query definition */
-  query: Object;
+  query: Record<string, any>;
   /** Query update handler */
-  onUpdateQuery: (query: Object) => void;
+  onUpdateQuery: (query: Record<string, any>) => void;
   /** Run query event handler */
   onRunQuery: () => void;
 };

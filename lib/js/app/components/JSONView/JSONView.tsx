@@ -6,7 +6,7 @@ import { Container } from './JSONView.styles';
 
 type Props = {
   /** Query execution results */
-  analysisResults: Object;
+  analysisResults: Record<string, any>;
 };
 
 const JSONView: FC<Props> = ({ analysisResults }) => {

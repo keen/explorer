@@ -9,6 +9,7 @@ import {
 import { createTree } from '../../utils/createTree';
 
 import Title from '../Title';
+import EmptySearch from '../EmptySearch';
 import Dropdown from '../Dropdown';
 import PropertyPath from '../PropertyPath';
 import PropertiesTree from '../PropertiesTree';
@@ -40,6 +41,9 @@ const TargetProperty: FC<Props> = ({
   variant = 'primary',
 }) => {
   const [searchPhrase, setSearchPhrase] = useState(null);
+  const [expandTree, setTreeExpand] = useState(false);
+  const expandTrigger = useRef(null);
+
   const {
     schema: collectionSchema,
     tree: schemaTree,
@@ -62,6 +66,7 @@ const TargetProperty: FC<Props> = ({
   }>(
     schemaList,
     (searchResult, phrase) => {
+      if (expandTrigger.current) clearTimeout(expandTrigger.current);
       if (phrase) {
         const searchTree = {};
         searchResult.forEach(({ path, type }) => {
@@ -69,7 +74,12 @@ const TargetProperty: FC<Props> = ({
         });
         setSearchPhrase(phrase);
         setPropertiesTree(createTree(searchTree));
+
+        expandTrigger.current = setTimeout(() => {
+          setTreeExpand(true);
+        }, EXPAND_TRESHOLD);
       } else {
+        setTreeExpand(false);
         setPropertiesTree(null);
       }
     },
@@ -88,6 +98,7 @@ const TargetProperty: FC<Props> = ({
 
   useEffect(() => {
     if (!isOpen) {
+      setTreeExpand(false);
       setSearchPhrase(null);
     }
   }, [isOpen]);
@@ -122,16 +133,17 @@ const TargetProperty: FC<Props> = ({
       </DropableContainer>
       <Dropdown isOpen={isOpen}>
         {isEmptySearch ? (
-          <div>{text.emptySearchResults}</div>
+          <EmptySearch message={text.emptySearchResults} />
         ) : (
           <TreeContainer>
             <PropertiesTree
-              expanded={searchPhrase && searchPhrase.length > EXPAND_TRESHOLD}
+              expanded={expandTree}
               onClick={(_e, property) => {
                 setOpen(false);
                 onChange(property);
                 setPropertiesTree(createTree(collectionSchema));
               }}
+              activeProperty={property}
               properties={propertiesTree ? propertiesTree : schemaTree}
             />
           </TreeContainer>
