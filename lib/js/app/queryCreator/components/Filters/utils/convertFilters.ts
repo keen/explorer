@@ -1,7 +1,7 @@
 import { Filter } from '../../../types';
 import { Coordinates } from '../types';
 
-const convertValueToJson = (value: string | Coordinates) => {
+const convertValueToJson = (value: string | number | Coordinates) => {
   if (typeof value === 'object') {
     const [long, lat] = value?.coordinates;
     const { maxDistanceMiles } = value;
@@ -19,7 +19,7 @@ const convertValueToJson = (value: string | Coordinates) => {
   if (new Date(value) && new Date(value).toString() !== 'Invalid Date')
     return value;
 
-  if (value.includes(',')) {
+  if (typeof value === 'string' && value.includes(',')) {
     const result = value.split(',').map((item) => {
       let trimmedItem: string | number = item.trim();
       if (Number(trimmedItem)) trimmedItem = Number(trimmedItem);

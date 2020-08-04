@@ -8,8 +8,7 @@ import PropertyType from '../PropertyType';
 import FilterOperator from '../FilterOperator';
 import FilterValue from '../FilterValue';
 
-import { setDefaultValue } from './utils';
-import { getPropertyType } from '../../utils';
+import { setDefaultValue, setOperator, isComponentChange } from '../../utils';
 
 import { Filter as FilterType } from '../../../../types';
 
@@ -20,6 +19,8 @@ type Props = {
   onRemove: () => void;
   /** Change event handler */
   onChange: (filter: FilterType) => void;
+  /** Change property event handler */
+  onPropertyChange: (propertyName: string) => void;
   /** Search properties event handler */
   onSearchProperties: (e: React.ChangeEvent<HTMLInputElement>) => void;
   /** Properties tree */
@@ -31,6 +32,7 @@ const Filter: FC<Props> = ({
   properties,
   onRemove,
   onSearchProperties,
+  onPropertyChange,
   onChange,
 }) => {
   const { propertyName, propertyType, propertyValue, operator } = filter;
@@ -41,36 +43,51 @@ const Filter: FC<Props> = ({
         <FilterProperty
           property={propertyName}
           properties={properties}
-          onSelectProperty={(property) =>
-            onChange({ ...filter, propertyName: property })
-          }
+          onSelectProperty={(property) => onPropertyChange(property)}
           onSearchProperties={onSearchProperties}
         />
       </FilterItem>
       <FilterItem>
         <PropertyType
-          onChange={(propertyType) =>
+          onChange={(propertyType) => {
+            const operator = setOperator(propertyType, filter.operator);
             onChange({
               ...filter,
               propertyType,
-              operator: undefined,
-              propertyValue: setDefaultValue(propertyType),
-            })
-          }
+              operator,
+              propertyValue: setDefaultValue(propertyType, operator),
+            });
+          }}
           property={propertyName}
-          type={getPropertyType(filter)}
+          type={propertyType}
         />
       </FilterItem>
       <FilterItem>
         <FilterOperator
           propertyType={propertyType}
           operator={operator}
-          onChange={(value) => onChange({ ...filter, operator: value })}
+          onChange={(updatedOperator) => {
+            const componentChange = isComponentChange(
+              propertyType,
+              operator,
+              updatedOperator
+            );
+            const filterValue = componentChange
+              ? setDefaultValue(propertyType, updatedOperator)
+              : propertyValue;
+
+            onChange({
+              ...filter,
+              operator: updatedOperator,
+              propertyValue: filterValue,
+            });
+          }}
         />
       </FilterItem>
       <FilterItem>
         <FilterValue
           value={propertyValue}
+          operator={operator}
           onChange={(value) => onChange({ ...filter, propertyValue: value })}
           propertyType={propertyType}
         />

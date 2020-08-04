@@ -101,7 +101,9 @@ const FunnelStep: FC<Props> = ({
       <Filters
         collection={eventCollection}
         filters={filters}
-        onChange={(filters: Filter[]) => dispatch(updateStep({ filters }))}
+        onReset={() => {}}
+        onRemove={() => {}}
+        onChange={() => {}}
       />
       <div>
         <Label htmlFor={`optional-step-${index}`}>

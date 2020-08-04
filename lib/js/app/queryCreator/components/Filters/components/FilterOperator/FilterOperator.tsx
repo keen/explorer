@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect, useMemo } from 'react';
+import React, { FC, useState, useMemo } from 'react';
 
 import { Container, OperatorsList } from './FilterOperator.styles';
 
@@ -7,8 +7,8 @@ import DropdownList from '../../../DropdownList';
 import DropdownListContainer from '../../../DropdownListContainer';
 import Dropdown from '../../../Dropdown';
 
+import { createOptions, getLabel } from './utils';
 import text from './text.json';
-import { FILTER_OPERATORS } from './constants';
 
 import { Operator, Property } from '../../types';
 
@@ -23,21 +23,7 @@ type Props = {
 
 const FilterOperator: FC<Props> = ({ operator, propertyType, onChange }) => {
   const [editMode, setEditMode] = useState(false);
-  const operators = useMemo(
-    () =>
-      FILTER_OPERATORS.filter(({ dataTypes }) =>
-        dataTypes.includes(propertyType)
-      ),
-    [propertyType]
-  );
-
-  useEffect(() => {
-    if (propertyType && operators) {
-      const [firstOperator] = operators;
-      const { value } = firstOperator;
-      onChange(value);
-    }
-  }, [propertyType, operators]);
+  const operators = useMemo(() => createOptions(propertyType), [propertyType]);
 
   return (
     <Container>
@@ -49,7 +35,7 @@ const FilterOperator: FC<Props> = ({ operator, propertyType, onChange }) => {
         placeholder={text.placeholder}
         value={operator}
       >
-        {operator}
+        {getLabel(propertyType, operator)}
       </DropableContainer>
       <Dropdown isOpen={editMode} fullWidth={false}>
         <OperatorsList>

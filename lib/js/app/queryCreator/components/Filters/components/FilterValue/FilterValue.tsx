@@ -8,18 +8,22 @@ import FilterBoolean from '../FilterBoolean';
 
 import text from './text.json';
 
-import { Coordinates, Property as PropertyType } from '../../types';
+import { Coordinates, Operator, Property as PropertyType } from '../../types';
 
 type Props = {
-  value?: string | boolean | number | Coordinates;
   /** Type of property */
   propertyType: PropertyType;
   /** Change event handler */
   onChange: (value: string | boolean | number | Coordinates) => void;
+  /** Filter value */
+  value?: string | boolean | number | Coordinates;
+  /** Filter operator */
+  operator?: Operator;
 };
 
 const getValueComponent = (
   propertyType: PropertyType,
+  operator: Operator,
   onChange: (value: string | boolean | number | Coordinates) => void,
   value?: string | boolean | number | Coordinates
 ) => {
@@ -48,11 +52,16 @@ const getValueComponent = (
   }
 };
 
-const FilterValue: FC<Props> = ({ propertyType, value, onChange }) => {
+const FilterValue: FC<Props> = ({
+  propertyType,
+  operator,
+  value,
+  onChange,
+}) => {
   return (
     <>
-      {propertyType ? (
-        <div>{getValueComponent(propertyType, onChange, value)}</div>
+      {propertyType && operator ? (
+        <div>{getValueComponent(propertyType, operator, onChange, value)}</div>
       ) : (
         <PropertyGroup isActive={false}>
           <PropertyItem>
