@@ -1,7 +1,13 @@
 import React, { forwardRef } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { transparentize } from 'polished';
 import { colors } from '@keen.io/colors';
+
+import { ActionButton } from '@keen.io/ui-core';
+
+type ButtonProps = {
+  items: number;
+}
 
 export const Section = styled.section`
   display: flex;
@@ -11,18 +17,21 @@ export const Options = styled.div`
   margin-left: 20px;
 `;
 
-export const GroupSettings = styled.div``;
+export const GroupSettings = styled.div`
+  margin-right: 10px;
+  margin-bottom: 10px;
+
+  &:last-child {
+    margin-right: 0;
+  }
+`;
 
 export const Container = styled.div`
   display: flex;
   flex-wrap: wrap;
-
-  ${GroupSettings} + ${GroupSettings} {
-    margin-left: 10px;
-  }
 `;
 
-export const StyledButton = styled.button`
+export const StyledButton = styled.button<ButtonProps>`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -45,10 +54,19 @@ export const StyledButton = styled.button`
   cursor: pointer;
   
   transition: background-color 0.15s ease-in-out;
+
+  ${props => props.items && css`margin-left: 10px;`}
   
   &:hover {
     text-decoration: none;
     background-color: ${transparentize(0.75, colors.blue['100'])};
+  }
+`;
+
+export const StyledActionButton = styled(ActionButton)`
+  & {
+    border-radius: 20px;
+    background: none;
   }
 `;
 

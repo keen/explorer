@@ -3,11 +3,12 @@ import { Wrapper } from './Group.styles';
 
 type Props = {
   children: React.ReactNode;
+  disableBackground?: boolean;
 };
 
-const Group: FC<Props> = ({ children }) => {
+const Group: FC<Props> = ({ children, disableBackground }) => {
   return (
-    <Wrapper>{children}</Wrapper>
+    <Wrapper disableBackground={disableBackground}>{children}</Wrapper>
   );
 };
 

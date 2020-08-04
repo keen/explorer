@@ -10,6 +10,7 @@ export type Group = {
   id: string;
   property: string | null;
   chosen?: boolean;
+  filtered?: boolean;
 };
 
 interface AddGroupAction {
