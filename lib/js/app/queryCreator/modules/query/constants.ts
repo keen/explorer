@@ -27,10 +27,20 @@ export const REMOVE_FUNNEL_STEP = '@query-creator/REMOVE_FUNNEL_STEP';
 export const UPDATE_FUNNEL_STEP = '@query-creator/UPDATE_FUNNEL_STEP';
 export const CHANGE_FUNNEL_STEPS_ORDER =
   '@query-creator/CHANGE_FUNNEL_STEP_ORDER';
+export const ADD_FILTER = '@query-creator/ADD_FILTER';
+export const UPDATE_FILTER = '@query-creator/UPDATE_FILTER';
+export const REMOVE_FILTER = '@query-creator/REMOVE_FILTER';
 
 export const DEFAULT_ANALYSIS = 'count';
 export const DEFAULT_TIMEFRAME = 'this_14_days';
 export const DEFAULT_TIMEZONE = 'UTC';
+
+export const DEFAULT_FILTER = {
+  propertyName: undefined,
+  operator: undefined,
+  propertyValue: undefined,
+  propertyType: undefined,
+};
 
 export const DEFAULT_FUNNEL_STEP: FunnelStep = {
   eventCollection: undefined,

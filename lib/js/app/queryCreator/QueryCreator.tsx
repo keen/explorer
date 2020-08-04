@@ -90,7 +90,7 @@ class QueryCreator extends React.Component<Props> {
             const { query } = meta;
             const serializedQuery = serializeQuery(query);
 
-            console.log('SET_QUERY_EVENT', serializedQuery);
+            console.log('SET_QUERY_EVENT');
             this.store.dispatch(setQuery(serializedQuery));
             break;
           default:

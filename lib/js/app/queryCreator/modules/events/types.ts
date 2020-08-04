@@ -3,6 +3,7 @@ import {
   FETCH_COLLECTION_SCHEMA,
   FETCH_COLLECTION_SCHEMA_ERROR,
   FETCH_COLLECTION_SCHEMA_SUCCESS,
+  SET_COLLETION_SCHEMA_LOADING,
 } from './constants';
 
 export type CollectionSchema = {
@@ -13,8 +14,17 @@ export type CollectionSchema = {
 
 export type ReducerState = {
   collections: string[];
+  loadingSchemas: string[];
   schemas: Record<string, CollectionSchema>;
 };
+
+export interface SetCollectionSchemaLoadingAction {
+  type: typeof SET_COLLETION_SCHEMA_LOADING;
+  payload: {
+    colletion: string;
+    isLoading: boolean;
+  };
+}
 
 export interface SetEventsCollectionsAction {
   type: typeof SET_EVENTS_COLLECTIONS;
@@ -46,6 +56,7 @@ export interface FetchCollectionSchemaErrorAction {
 }
 
 export type EventsActions =
+  | SetCollectionSchemaLoadingAction
   | SetEventsCollectionsAction
   | FetchCollectionSchemaAction
   | FetchCollectionSchemaSuccessAction

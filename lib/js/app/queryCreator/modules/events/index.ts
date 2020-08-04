@@ -1,5 +1,6 @@
 import { eventsReducer } from './reducer';
 import {
+  setCollectionSchemaLoading,
   setEventsCollections,
   fetchCollectionSchema,
   fetchCollectionSchemaSuccess,
@@ -8,6 +9,7 @@ import {
 import {
   getEventsCollections,
   getCollectionSchema,
+  getSchemaLoading,
   getSchemas,
 } from './selectors';
 import { FETCH_COLLECTION_SCHEMA } from './constants';
@@ -19,9 +21,11 @@ export {
   fetchCollectionSchemaSuccess,
   fetchCollectionSchemaError,
   setEventsCollections,
+  setCollectionSchemaLoading,
   getEventsCollections,
   getCollectionSchema,
   getSchemas,
+  getSchemaLoading,
   ReducerState,
   FetchCollectionSchemaAction,
 };
