@@ -14,6 +14,7 @@ import Extraction from './Extraction';
 import FiltersContainer from './Filters';
 import QueryArguments from './QueryArguments';
 import Card from './Card';
+import RadioGroup from './RadioGroup';
 import Tabs from './Tabs';
 
 export {
@@ -33,5 +34,6 @@ export {
   FunnelSteps,
   FiltersContainer,
   QueryArguments,
+  RadioGroup,
   Tabs,
 };
