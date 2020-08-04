@@ -15,8 +15,6 @@ type StyledInputProps = {
   inputWidth: number;
 }
 
-const INPUT_MIN_WIDTH = 120;
-
 const placeholderMixin = () => css`
   font-size: 14px;
   line-height: 17px;
@@ -65,7 +63,7 @@ export const StyledInput = styled.input<StyledInputProps>`
   font-size: 14px;
   line-height: 17px;
   font-family: 'Lato', sans-serif;
-  width: ${props => props.inputWidth && props?.inputWidth > INPUT_MIN_WIDTH ? `${props.inputWidth}px` : `${INPUT_MIN_WIDTH}px`};
+  width: ${props => props.inputWidth ? `${props.inputWidth}px` : 'auto'};
 
   ::placeholder,
   ::-webkit-input-placeholder {
@@ -84,7 +82,6 @@ export const Content = styled.div<ContentProps>`
   display: flex;
 
   padding: 10px 14px;
-  min-width: ${INPUT_MIN_WIDTH}px;
 
   font-family: 'Lato Regular', sans-serif;
   font-size: 14px;
@@ -103,7 +100,9 @@ export const TreeWrapper = styled.div`
   position: absolute;
   top: calc(100% + 3px);
   left: 0;
-  right: 0;
+  width: 285px;
+  max-height: 300px;
+  overflow-y: scroll;
 
   background-color: ${colors.white['500']};
 

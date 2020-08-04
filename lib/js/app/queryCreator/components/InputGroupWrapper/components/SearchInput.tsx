@@ -1,4 +1,8 @@
 import React, { FC, useState, useEffect, useCallback } from 'react';
+import { transparentize } from 'polished';
+
+import { colors } from '@keen.io/colors';
+import { Icon } from '@keen.io/icons';
 
 import { createTree } from '../../../utils/createTree';
 import { useSearch } from '../../../hooks';
@@ -17,8 +21,8 @@ type Props = {
   propertiesSchema: { path: string; type: string }[];
   /** Collection properties schema in tree structure */
   propertiesTree: Record<string, string[] | Record<string, any>>;
-  editMode: boolean;
-  setEditMode: (editMode: boolean) => void;
+  // editMode: boolean;
+  // setEditMode: (editMode: boolean) => void;
 };
 
 const SearchInput: FC<Props> = ({
@@ -26,11 +30,11 @@ const SearchInput: FC<Props> = ({
   property,
   propertiesSchema,
   propertiesTree,
-  editMode,
+  // editMode,
   onChange,
-  setEditMode,
+  // setEditMode,
 }) => {
-  // const [editMode, setEditMode] = useState(true);
+  const [editMode, setEditMode] = useState(true);
   const [searchTree, setSearchTree] = useState(propertiesTree);
   const [propertyWidth, setPropertyWidth] = useState(0);
 
@@ -71,19 +75,21 @@ const SearchInput: FC<Props> = ({
       >
         {editMode ? (
             <>
-              {/* <SearchIcon>
-                <Icon
-                  type="search"
-                  fill={transparentize(0.3, colors.blue[500])}
-                  width={15}
-                  height={15}
-                />
-              </SearchIcon> */}
+              {!property && 
+                <SearchIcon>
+                  <Icon
+                    type="search"
+                    fill={transparentize(0.3, colors.blue[500])}
+                    width={15}
+                    height={15}
+                  />
+                </SearchIcon> 
+              }
               <StyledInput
                 type="text"
                 autoFocus
                 data-testid="dropable-container-input"
-                placeholder={property}
+                placeholder={property || 'Please search property'}
                 onChange={searchHandler}
                 inputWidth={propertyWidth}
               />
@@ -100,8 +106,8 @@ const SearchInput: FC<Props> = ({
             properties={searchTree}
             onClick={(e, property) => {
               e.stopPropagation();
-              setEditMode(false);
-              onChange(property);
+                setEditMode(false);
+                onChange(property);
             }}
           />
         </TreeWrapper>

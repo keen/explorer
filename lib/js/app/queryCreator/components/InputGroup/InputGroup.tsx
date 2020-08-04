@@ -102,7 +102,9 @@ const InputGroup: FC<Props> = ({
                 </div>
               )}
           </Content>
-          {editMode && (
+          
+        </Wrapper>
+        {editMode && (
             <TreeWrapper>
               <PropertiesTree
                 properties={searchTree}
@@ -114,7 +116,6 @@ const InputGroup: FC<Props> = ({
               />
             </TreeWrapper>
           )}
-        </Wrapper>
       </Group>
       {children && children}
       <Group>

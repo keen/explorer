@@ -15,6 +15,6 @@ export const Container = styled.div<Props>`
   height: 37px;
   border-radius: 4px;
 
-  cursor: ${props => props.isActive ? 'default' : props.isDragged ? 'grabbing' : 'grab'};
-  ${props => props.isActive && css`box-shadow: 0 0 3px 1px ${transparentize(0.85, colors.black['500'])};`}
-`;
+  `;
+  // ${props => props.isActive && css`box-shadow: 0 0 3px 1px ${transparentize(0.85, colors.black['500'])};`}
+  // cursor: ${props => props.isActive ? 'default' : props.isDragged ? 'grabbing' : 'grab'};

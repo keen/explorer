@@ -14,7 +14,7 @@ import Filters from './Filters';
 import QueryArguments from './QueryArguments';
 import Card from './Card';
 import InputGroup, { Group } from './InputGroup';
-import { InputGroupWrapper, Group as GroupWrapper, RemoveButton, Select } from './InputGroupWrapper';
+import { InputGroupWrapper, Group as GroupWrapper, RemoveButton, Select, SearchInput } from './InputGroupWrapper';
 import Tabs from './Tabs';
 import Title from './Title';
 
