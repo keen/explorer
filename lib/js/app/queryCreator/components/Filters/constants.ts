@@ -133,13 +133,13 @@ export const TYPES_CONFIG: Record<
     },
     in: {
       label: 'matches any of the values',
-      defaultValue: '',
-      component: 'input-text',
+      defaultValue: [],
+      component: 'list',
     },
-    exist: {
+    exists: {
       label: 'property exists',
       defaultValue: '',
-      component: 'input-text',
+      component: 'boolean-switcher',
     },
   },
   Boolean: {
@@ -190,7 +190,7 @@ export const TYPES_CONFIG: Record<
       defaultValue: getCurrentDate,
       component: 'datepicker',
     },
-    exist: {
+    exists: {
       label: 'property exists',
       defaultValue: true,
       component: 'boolean-switcher',
@@ -205,7 +205,7 @@ export const TYPES_CONFIG: Record<
       },
       component: 'geo-coordinates',
     },
-    exist: {
+    exists: {
       label: 'property exists',
       defaultValue: true,
       component: 'boolean-switcher',

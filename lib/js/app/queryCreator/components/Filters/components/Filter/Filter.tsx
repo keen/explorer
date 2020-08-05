@@ -4,7 +4,6 @@ import { ActionButton } from '@keen.io/ui-core';
 import { Container, FilterItem } from './Filter.styles';
 
 import FilterProperty from '../FilterProperty';
-import PropertyType from '../PropertyType';
 import FilterOperator from '../FilterOperator';
 import FilterValue from '../FilterValue';
 
@@ -13,6 +12,8 @@ import { setDefaultValue, setOperator, isComponentChange } from '../../utils';
 import { Filter as FilterType } from '../../../../types';
 
 type Props = {
+  /** Filter identifier */
+  id: string;
   /** Filter settings */
   filter: FilterType;
   /** Remove event handler */
@@ -28,6 +29,7 @@ type Props = {
 };
 
 const Filter: FC<Props> = ({
+  id,
   filter,
   properties,
   onRemove,
@@ -42,14 +44,10 @@ const Filter: FC<Props> = ({
       <FilterItem>
         <FilterProperty
           property={propertyName}
+          type={propertyType}
           properties={properties}
           onSelectProperty={(property) => onPropertyChange(property)}
-          onSearchProperties={onSearchProperties}
-        />
-      </FilterItem>
-      <FilterItem>
-        <PropertyType
-          onChange={(propertyType) => {
+          onCastPropertyType={(propertyType) => {
             const operator = setOperator(propertyType, filter.operator);
             onChange({
               ...filter,
@@ -58,8 +56,7 @@ const Filter: FC<Props> = ({
               propertyValue: setDefaultValue(propertyType, operator),
             });
           }}
-          property={propertyName}
-          type={propertyType}
+          onSearchProperties={onSearchProperties}
         />
       </FilterItem>
       <FilterItem>
@@ -86,6 +83,7 @@ const Filter: FC<Props> = ({
       </FilterItem>
       <FilterItem>
         <FilterValue
+          id={id}
           value={propertyValue}
           operator={operator}
           onChange={(value) => onChange({ ...filter, propertyValue: value })}
