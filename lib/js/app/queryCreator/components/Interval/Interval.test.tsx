@@ -21,33 +21,9 @@ const render = (storeState: any = {}) => {
   };
 };
 
-test('renders custom interval components', () => {
+test('set supported interval', () => {
   const {
-    wrapper: { getByTestId },
-  } = render({
-    query: {
-      interval: 'every_14_days',
-    },
-  });
-
-  expect(getByTestId('custom-interval')).toBeInTheDocument();
-});
-
-test('renders supported interval components', () => {
-  const {
-    wrapper: { getByTestId },
-  } = render({
-    query: {
-      interval: 'monthly',
-    },
-  });
-
-  expect(getByTestId('supported-interval')).toBeInTheDocument();
-});
-
-test('allows user to change interval to custom', () => {
-  const {
-    wrapper: { getByTestId },
+    wrapper: { getByText, getByTestId },
     store,
   } = render({
     query: {
@@ -55,14 +31,17 @@ test('allows user to change interval to custom', () => {
     },
   });
 
-  const buttonTab = getByTestId('custom-interval-tab');
-  fireEvent.click(buttonTab);
+  const dropableContainer = getByTestId('dropable-container');
+  fireEvent.click(dropableContainer);
+
+  const button = getByText('weekly');
+  fireEvent.click(button);
 
   expect(store.getActions()).toMatchInlineSnapshot(`
     Array [
       Object {
         "payload": Object {
-          "interval": "every_7_days",
+          "interval": "weekly",
         },
         "type": "@query-creator/SET_INTERVAL",
       },
@@ -70,7 +49,35 @@ test('allows user to change interval to custom', () => {
   `);
 });
 
-test('allows user to change interval to supported', () => {
+test('set custom interval', () => {
+  const {
+    wrapper: { getByTestId },
+    store,
+  } = render({
+    query: {
+      interval: 'every_7_days',
+    },
+  });
+  
+  const dropableContainer = getByTestId('dropable-container');
+  fireEvent.click(dropableContainer);
+
+  const input = getByTestId('relative-time-input');
+  fireEvent.change(input, { target: { value: 30 } });
+
+  expect(store.getActions()).toMatchInlineSnapshot(`
+    Array [
+      Object {
+        "payload": Object {
+          "interval": "every_30_days",
+        },
+        "type": "@query-creator/SET_INTERVAL",
+      },
+    ]
+  `);
+});
+
+test('reset interval settings by clicking action button', () => {
   const {
     wrapper: { getByTestId },
     store,
@@ -80,14 +87,14 @@ test('allows user to change interval to supported', () => {
     },
   });
 
-  const buttonTab = getByTestId('supported-interval-tab');
-  fireEvent.click(buttonTab);
+  const resetButton = getByTestId('action-button');
+  fireEvent.click(resetButton);
 
   expect(store.getActions()).toMatchInlineSnapshot(`
     Array [
       Object {
         "payload": Object {
-          "interval": "daily",
+          "interval": undefined,
         },
         "type": "@query-creator/SET_INTERVAL",
       },

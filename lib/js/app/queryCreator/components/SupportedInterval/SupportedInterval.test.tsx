@@ -1,18 +1,19 @@
 import React from 'react';
-import { render } from '@testing-library/react';
-import selectEvent from 'react-select-event';
+import { render, fireEvent } from '@testing-library/react';
 
 import SupportedInterval from './SupportedInterval';
-import text from './text.json';
 
 test('allows user to select interval', async () => {
   const mockFn = jest.fn();
   const interval = 'monthly';
 
-  const { getByLabelText } = render(
+  const { getByText } = render(
     <SupportedInterval interval={undefined} onChange={mockFn} />
   );
-  await selectEvent.select(getByLabelText(text.label), interval);
+
+  const monthlyElement = getByText(interval);
+  
+  fireEvent.click(monthlyElement)
 
   expect(mockFn).toHaveBeenCalledWith(interval);
 });

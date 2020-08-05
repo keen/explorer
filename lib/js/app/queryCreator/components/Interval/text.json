@@ -1,5 +1,5 @@
 {
-  "clearInterval": "Clear interval",
+  "label": "Interval",
   "standard": "Standard",
   "custom": "Custom"
 }

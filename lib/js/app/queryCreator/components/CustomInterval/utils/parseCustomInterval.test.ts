@@ -11,5 +11,5 @@ test('should parse value for provided interval', () => {
   const interval = 'every_14_weeks';
   const { value } = parseCustomInterval(interval);
 
-  expect(value).toEqual('14');
+  expect(value).toEqual(14);
 });

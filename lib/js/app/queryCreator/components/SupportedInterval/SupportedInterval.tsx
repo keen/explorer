@@ -1,7 +1,6 @@
 import React, { FC, useMemo } from 'react';
-import { Label, Select } from '@keen.io/ui-core';
 
-import text from './text.json';
+import { Container, IntervalButton } from './SupportedInterval.styles';
 
 import { INTERVALS } from './constants';
 
@@ -23,21 +22,17 @@ const SupportedInterval: FC<Props> = ({ interval, onChange }) => {
   );
 
   return (
-    <div data-testid="supported-interval">
-      <>
-        <Label htmlFor="interval">{text.label}</Label>
-        <Select
-          inputId="interval"
-          placeholder={text.placeholder}
-          onChange={({ value }: { label: string; value: string }) => {
-            onChange(value);
-          }}
-          value={interval ? { label: interval, value: interval } : null}
-          variant="solid"
-          options={options}
-        />
-      </>
-    </div>
+    <Container data-testid="supported-interval">
+      {options.map((option: { label: string; value: string }) => (
+        <IntervalButton
+          key={option.value}
+          isActive={interval === option.value}
+          onClick={() => onChange(option.value)}
+        >
+          {option.label}
+        </IntervalButton>
+      ))}
+    </Container>
   );
 };
 
