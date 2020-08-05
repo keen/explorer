@@ -24,6 +24,6 @@ export const Container = styled.div<{
     `}
 
   ${PropertyItem} + ${PropertyItem} {
-    border-left: solid 1px red;
+    border-left: solid 1px ${colors.white[500]};
   }
 `;

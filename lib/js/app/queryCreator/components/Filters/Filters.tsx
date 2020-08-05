@@ -83,9 +83,12 @@ const Filters: FC<Props> = ({
   }, []);
 
   return (
-    <FiltersContext.Provider value={{ expandTree, searchPropertiesPhrase }}>
+    <FiltersContext.Provider
+      value={{ expandTree, searchPropertiesPhrase, schema: collectionSchema }}
+    >
       {filters.map((filter, idx) => (
         <Filter
+          id={`filter_${idx}`}
           key={idx}
           filter={filter}
           properties={propertiesTree ? propertiesTree : schemaTree}

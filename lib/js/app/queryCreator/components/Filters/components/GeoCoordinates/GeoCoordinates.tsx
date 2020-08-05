@@ -18,6 +18,9 @@ type Props = {
 };
 
 const GeoCoordinates: FC<Props> = ({ value, onChange }) => {
+  const { coordinates, maxDistanceMiles } = value;
+  const [lat, long] = coordinates;
+
   return (
     <Container>
       <InputContainer>
@@ -25,12 +28,11 @@ const GeoCoordinates: FC<Props> = ({ value, onChange }) => {
         <Input
           type="number"
           data-testid="lat-input"
+          value={lat}
           onChange={(e) => {
             const updatedLat = e.currentTarget.value
               ? parseInt(e.currentTarget.value)
               : undefined;
-            const { coordinates } = value;
-            const [, long] = coordinates;
             onChange({ ...value, coordinates: [updatedLat, long] });
           }}
         />
@@ -40,12 +42,11 @@ const GeoCoordinates: FC<Props> = ({ value, onChange }) => {
         <Input
           type="number"
           data-testid="long-input"
+          value={long}
           onChange={(e) => {
             const updatedLong = e.currentTarget.value
               ? parseInt(e.currentTarget.value)
               : undefined;
-            const { coordinates } = value;
-            const [lat] = coordinates;
             onChange({ ...value, coordinates: [lat, updatedLong] });
           }}
         />
@@ -55,6 +56,7 @@ const GeoCoordinates: FC<Props> = ({ value, onChange }) => {
         <Input
           type="number"
           data-testid="radius-input"
+          value={maxDistanceMiles}
           onChange={(e) => {
             const updatedRadius = e.currentTarget.value
               ? parseInt(e.currentTarget.value)

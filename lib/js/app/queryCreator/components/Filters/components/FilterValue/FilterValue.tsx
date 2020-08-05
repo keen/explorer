@@ -1,51 +1,76 @@
 import React, { FC } from 'react';
+import moment from 'moment';
+
+import { DatePickerContainer } from './FilterValue.styles';
 
 import Property from '../../../Property';
 import PropertyGroup, { PropertyItem } from '../../../PropertyGroup';
 import Input from '../../../Input';
+import FilterListValue from '../FilterListValue';
 import GeoCoordinates from '../GeoCoordinates';
+import DatePicker from '../../../DatePicker';
 import FilterBoolean from '../FilterBoolean';
 
 import text from './text.json';
 
+import { TYPES_CONFIG } from '../../constants';
+
+import { GetComponent } from './types';
 import { Coordinates, Operator, Property as PropertyType } from '../../types';
 
 type Props = {
   /** Type of property */
   propertyType: PropertyType;
   /** Change event handler */
-  onChange: (value: string | boolean | number | Coordinates) => void;
+  onChange: (value: string | boolean | number | Coordinates | Array<string | number>) => void;
   /** Filter value */
-  value?: string | boolean | number | Coordinates;
+  value?: string | boolean | number | Coordinates | Array<string | number>;
   /** Filter operator */
   operator?: Operator;
+  /** Filter identifier */
+  id: string;
 };
 
-const getValueComponent = (
-  propertyType: PropertyType,
-  operator: Operator,
-  onChange: (value: string | boolean | number | Coordinates) => void,
-  value?: string | boolean | number | Coordinates
-) => {
-  switch (propertyType) {
-    case 'Boolean':
+const getValueComponent = ({
+  propertyType,
+  operator,
+  onChange,
+  value,
+  id,
+}: GetComponent) => {
+  const { component } = TYPES_CONFIG[propertyType][operator];
+
+  switch (component) {
+    case 'list':
+      return <FilterListValue value={value as string[]} onChange={onChange} />;
+    case 'datepicker':
+      return (
+        <DatePickerContainer>
+          <DatePicker
+            date={moment(value as string)}
+            id={`datepicker_${id}`}
+            onChange={onChange}
+          />
+        </DatePickerContainer>
+      );
+    case 'boolean-switcher':
       return <FilterBoolean value={value as boolean} onChange={onChange} />;
-    case 'Geo':
+    case 'geo-coordinates':
       return (
         <GeoCoordinates onChange={onChange} value={value as Coordinates} />
       );
-    case 'Number':
+    case 'input-number':
       return (
         <Input
           type="number"
-          value={value ? (value as number) : 0}
+          value={value as number}
           onChange={(e) => onChange(e.currentTarget.value)}
         />
       );
     default:
       return (
         <Input
-          value={value ? (value as string) : ''}
+          value={value as string}
           onChange={(e) => onChange(e.currentTarget.value)}
         />
       );
@@ -57,11 +82,14 @@ const FilterValue: FC<Props> = ({
   operator,
   value,
   onChange,
+  id,
 }) => {
   return (
     <>
       {propertyType && operator ? (
-        <div>{getValueComponent(propertyType, operator, onChange, value)}</div>
+        <div>
+          {getValueComponent({ propertyType, operator, onChange, value, id })}
+        </div>
       ) : (
         <PropertyGroup isActive={false}>
           <PropertyItem>

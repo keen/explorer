@@ -65,7 +65,6 @@ const App: FC<Props> = () => {
         <FiltersSettings>
           <Card>
             <Title isDisabled={!collection}>{text.filters}</Title>
-            {isSchemaLoading && <div>loading filters</div>}
             {isSchemaExist && !isSchemaLoading && (
               <Filters
                 collection={collection}

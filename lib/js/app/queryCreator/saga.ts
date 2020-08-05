@@ -44,7 +44,7 @@ import {
   FETCH_COLLECTION_SCHEMA,
 } from './modules/events';
 
-import { SCHEMA_PROPS } from './constants';
+import { inferFilterType } from './utils';
 
 import { Filter } from './types';
 
@@ -138,15 +138,11 @@ function* transformFilters(collection: string, filters: Filter[]) {
     collectionSchema = { schema: properties };
   }
 
-  console.log(filters, 'FILTERSY!!!');
-
   const { schema } = collectionSchema;
   const filtersWithInferredTypes = filters.map((filter) => ({
     ...filter,
-    propertyType: SCHEMA_PROPS[schema[filter.propertyName]],
+    propertyType: inferFilterType(filter, schema),
   }));
-
-  console.log(filtersWithInferredTypes, 'Infered types');
 
   yield put(setFilters(filtersWithInferredTypes));
 }

@@ -27,6 +27,7 @@ export const Container = styled.div`
 
 export const Label = styled.div`
   margin-right: 5px;
+  color: ${transparentize(0.5, colors.blue[500])};
 `;
 
 export const Input = styled.input`
