@@ -13,6 +13,7 @@ import Extraction from './Extraction';
 import Filters from './Filters';
 import QueryArguments from './QueryArguments';
 import Card from './Card';
+import { InputGroup, Group, Input } from './InputGroup';
 import Tabs from './Tabs';
 import Title from './Title';
 
@@ -32,6 +33,9 @@ export {
   FunnelSteps,
   Filters,
   QueryArguments,
+  InputGroup,
+  Group,
+  Input,
   Title,
   Tabs,
 };

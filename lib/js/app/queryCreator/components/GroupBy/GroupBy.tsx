@@ -1,17 +1,18 @@
-import React, { FC, useEffect, useRef, useReducer } from 'react';
-import { ReactSortable } from 'react-sortablejs';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import React, { FC, useEffect, useRef, useReducer, useState } from 'react';
+import Sortable from 'sortablejs';
 import { useSelector, useDispatch } from 'react-redux';
 import shallowEqual from 'shallowequal';
 
+import { ActionButton } from '@keen.io/ui-core';
+
 import {
   Section,
-  Options,
   GroupSettings,
-  GroupsContainer,
 } from './GroupBy.styles';
 
 import Title from '../Title';
-import AddGroupBy from '../AddGroupBy';
+import { InputGroup, Group, Input } from '../InputGroup';
 
 import {
   addGroup,
@@ -22,7 +23,7 @@ import {
 } from './actions';
 import { groupByReducer } from './reducer';
 
-import { convertGroups, serializeGroups } from './utils';
+import { convertGroups, serializeGroups, mutateArray } from './utils';
 
 import {
   getEventCollection,
@@ -92,28 +93,62 @@ const GroupBy: FC<Props> = ({ collection }) => {
     }
   }, [state]);
 
+  const sortableRef = useRef(null);
+  const [isDragged, setDragMode] = useState(false);
+
+  useEffect(() => {
+    let dragGhost;
+    const sortable = new Sortable( sortableRef.current, {
+      animation: DRAG_ANIMATION_TIME,
+      delay: DRAG_DELAY,
+      filter: '.js-button',
+      onStart: () => setDragMode(true),
+      onMove: evt => !evt.related.className.includes('add-button'),
+      onEnd: evt => {
+        const updatedGroups = mutateArray(stateRef.current, evt.oldIndex, evt.newIndex);
+        groupDispatcher(setGroups(updatedGroups));
+        setDragMode(false);
+        dragGhost.parentNode.removeChild(dragGhost);
+      },
+      setData: (dataTransfer, dragEl) => {
+        dragGhost = dragEl.cloneNode(true);
+        const tree = dragGhost.querySelector('[data-testid="properties-tree"]');
+        if (tree) tree.remove();
+        document.body.appendChild(dragGhost);
+        dataTransfer.setDragImage(dragGhost, 0, 0);
+      },
+    });
+    
+  }, [state]);
+
   return (
     <div>
       <Title isDisabled={!eventCollection}>Group by</Title>
       <Section>
-        <ReactSortable
-          animation={DRAG_ANIMATION_TIME}
-          delay={DRAG_DELAY}
-          list={state}
-          tag={GroupsContainer}
-          setList={(updatedGroups) => groupDispatcher(setGroups(updatedGroups))}
-        >
-          {state.map(({ property, id, chosen }) => (
-            <GroupSettings key={id}>{property}</GroupSettings>
+        <div ref={sortableRef} style={{ display: 'flex', flexWrap: 'wrap'}}>
+        {state.map(({ property, id }) => (
+            <GroupSettings key={id}>
+              <InputGroup>
+                <Group>
+                  <Input
+                    isEditDisabled={isDragged}
+                    property={property}
+                    properties={schemaTree}
+                    propertiesSchema={schemaList}
+                    onSelectProperty={(property) => {
+                        groupDispatcher(selectGroupProperty(id, property));
+                      }
+                    }
+                  />
+                </Group>
+                <Group>
+                  <ActionButton action="remove" onClick={() => groupDispatcher(removeGroup(id))} background="transparent" borderRadius="0 4px 4px 0" />
+                </Group>
+              </InputGroup>
+            </GroupSettings>
           ))}
-        </ReactSortable>
-        <Options>
-          <AddGroupBy
-            properties={schemaList}
-            propertiesTree={schemaTree}
-            onAddGroup={(property) => groupDispatcher(addGroup(property))}
-          />
-        </Options>
+          <ActionButton className="add-button" isDisabled={!eventCollection} action="create" onClick={() => groupDispatcher(addGroup(''))} />
+        </div>
       </Section>
     </div>
   );
