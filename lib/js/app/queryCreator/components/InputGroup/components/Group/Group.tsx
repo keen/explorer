@@ -7,9 +7,7 @@ type Props = {
 };
 
 const Group: FC<Props> = ({ children }) => {
-  return (
-    <Wrapper>{children}</Wrapper>
-  );
+  return <Wrapper>{children}</Wrapper>;
 };
 
 export default Group;

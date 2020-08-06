@@ -9,8 +9,8 @@ export const Container = styled.div`
   align-items: center;
   height: 37px;
   border-radius: 4px;
-  
+
   &:focus-within {
     box-shadow: 0 0 3px 1px ${transparentize(0.85, colors.black['500'])};
   }
-  `;
+`;

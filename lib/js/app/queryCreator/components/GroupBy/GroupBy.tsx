@@ -1,18 +1,16 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { FC, useEffect, useRef, useReducer, useState } from 'react';
+import React, { FC, useEffect, useRef, useCallback, useReducer, useState } from 'react';
 import Sortable from 'sortablejs';
 import { useSelector, useDispatch } from 'react-redux';
 import shallowEqual from 'shallowequal';
 
 import { ActionButton } from '@keen.io/ui-core';
 
-import {
-  Section,
-  GroupSettings,
-} from './GroupBy.styles';
+import { Section, GroupSettings } from './GroupBy.styles';
 
+import { GroupByProperty } from './components';
 import Title from '../Title';
-import { InputGroup, Group, Input } from '../InputGroup';
+
 
 import {
   addGroup,
@@ -23,6 +21,10 @@ import {
 } from './actions';
 import { groupByReducer } from './reducer';
 
+import { useSearch } from '../../hooks';
+import { SearchContext } from '../../contexts';
+
+import { createTree } from '../../utils/createTree';
 import { convertGroups, serializeGroups, mutateArray } from './utils';
 
 import {
@@ -42,6 +44,11 @@ type Props = {
 };
 
 const GroupBy: FC<Props> = ({ collection }) => {
+  const [propertiesTree, setPropertiesTree] = useState(null);
+  const [searchPropertiesPhrase, setSearchPhrase] = useState(null);
+  const [expandTree, setTreeExpand] = useState(false);
+  const expandTrigger = useRef(null);
+
   const dispatch = useDispatch();
   const groups: string[] = useSelector((state: AppState) => {
     const groupBy = getGroupBy(state);
@@ -64,6 +71,40 @@ const GroupBy: FC<Props> = ({ collection }) => {
     convertGroups(groups)
   );
   const stateRef = useRef(state);
+
+  const { searchHandler } = useSearch<{
+    path: string;
+    type: string;
+  }>(
+    schemaList,
+    (searchResult, phrase) => {
+      if (expandTrigger.current) clearTimeout(expandTrigger.current);
+      if (phrase) {
+        const searchTree = {};
+        searchResult.forEach(({ path, type }) => {
+          searchTree[path] = type;
+        });
+        setSearchPhrase(phrase);
+        setPropertiesTree(createTree(searchTree));
+
+        expandTrigger.current = setTimeout(() => {
+          setTreeExpand(true);
+        }, 300);
+      } else {
+        setTreeExpand(false);
+        setPropertiesTree(null);
+      }
+    },
+    {
+      keys: ['path', 'type'],
+      threshold: 0.4,
+    }
+  );
+
+  const clearSearchHandler = useCallback(() => {
+    setPropertiesTree(null);
+    setSearchPhrase(null);
+  }, []);
 
   useEffect(() => {
     return () => dispatch(setGroupBy(undefined));
@@ -98,14 +139,22 @@ const GroupBy: FC<Props> = ({ collection }) => {
 
   useEffect(() => {
     let dragGhost;
-    const sortable = new Sortable( sortableRef.current, {
+    console.log('SORTABLE RE-COMPUTE -------');
+    new Sortable(sortableRef.current, {
       animation: DRAG_ANIMATION_TIME,
       delay: DRAG_DELAY,
       filter: '.js-button',
-      onStart: () => setDragMode(true),
-      onMove: evt => !evt.related.className.includes('add-button'),
-      onEnd: evt => {
-        const updatedGroups = mutateArray(stateRef.current, evt.oldIndex, evt.newIndex);
+      onStart: () => {
+        setDragMode(true);
+        setTreeExpand(false);
+      },
+      onMove: (evt) => !evt.related.className.includes('add-button'),
+      onEnd: (evt) => {
+        const updatedGroups = mutateArray(
+          stateRef.current,
+          evt.oldIndex,
+          evt.newIndex
+        );
         groupDispatcher(setGroups(updatedGroups));
         setDragMode(false);
         dragGhost.parentNode.removeChild(dragGhost);
@@ -118,72 +167,40 @@ const GroupBy: FC<Props> = ({ collection }) => {
         dataTransfer.setDragImage(dragGhost, 0, 0);
       },
     });
-
-  }, [state])
+  }, []);
 
   return (
     <div>
       <Title isDisabled={!eventCollection}>Group by</Title>
       <Section>
-        <div ref={sortableRef} style={{ display: 'flex', flexWrap: 'wrap'}}>
-        {state.map(({ property, id }) => (
+        <SearchContext.Provider value={{ expandTree, searchPropertiesPhrase }}>
+        <div ref={sortableRef} style={{ display: 'flex', flexWrap: 'wrap' }}>
+          {state.map(({ property, id }) => (
             <GroupSettings key={id}>
-              <InputGroup>
-                <Group>
-                  <Input
-                    isEditDisabled={isDragged}
-                    property={property}
-                    properties={schemaTree}
-                    propertiesSchema={schemaList}
-                    propertiesTree={schemaTree}
-                  />
-                </GroupWrapper>
-                <GroupWrapper>
-                  <StyledActionButton action="remove" onClick={() => groupDispatcher(removeGroup(id))} />
-                </GroupWrapper>
-              </InputGroupWrapper>
-            </GroupSettings>
-          ))}
-          <button className="js-button" onClick={() => groupDispatcher(addGroup(''))}>Add</button>
-          {/* <ActionButton className="js-button" action="create" onClick={() => groupDispatcher(addGroup(''))} /> */}
-        </div>
-
-        <ReactSortable
-          animation={DRAG_ANIMATION_TIME}
-          delay={DRAG_DELAY}
-          list={state}
-          tag={GroupsContainer}
-          setList={(updatedGroups) => groupDispatcher(setGroups(updatedGroups))}
-        >
-          {state.map(({ property, id, chosen }) => (
-            <GroupSettings key={id}>
-              {/* <Property
-                isDragged={chosen}
-                onRemove={() => groupDispatcher(removeGroup(id))}
-                onChange={(property) =>
-                  groupDispatcher(selectGroupProperty(id, property))
-                }
+              <GroupByProperty
+                isEditAllowed={!isDragged}
+                properties={propertiesTree ? propertiesTree : schemaTree}
                 property={property}
-                propertiesSchema={schemaList}
-                propertiesTree={schemaTree}
-              /> */}
-              <InputGroupWrapper isActive={chosen} isDragged={chosen}>
-                <GroupWrapper>
-                  <SearchInput
-                    isDragged={chosen}
-                    onChange={(property) =>
-                      groupDispatcher(selectGroupProperty(id, property))
-                    }
-                  />
-                </Group>
-                <Group>
-                  <ActionButton action="remove" onClick={() => groupDispatcher(removeGroup(id))} background="transparent" borderRadius="0 4px 4px 0" />
-                </Group>
-              </InputGroup>
+                onSearchProperties={searchHandler}
+                onSelectProperty={(property) => {
+                  clearSearchHandler();
+                  groupDispatcher(selectGroupProperty(id, property));
+                }}
+                onRemove={() => {
+                  clearSearchHandler();
+                  groupDispatcher(removeGroup(id));
+                }}
+              />
             </GroupSettings>
           ))}
-          <ActionButton className="add-button" isDisabled={!eventCollection} action="create" onClick={() => groupDispatcher(addGroup(''))} />
+          <ActionButton
+            className="add-button"
+            isDisabled={!eventCollection}
+            action="create"
+            onClick={() => groupDispatcher(addGroup(''))}
+          />
         </div>
+        </SearchContext.Provider>
       </Section>
     </div>
   );

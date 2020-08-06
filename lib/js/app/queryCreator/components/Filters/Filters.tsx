@@ -9,6 +9,7 @@ import Badge from '../Badge';
 
 import { getCollectionSchema } from '../../modules/events';
 import { useSearch } from '../../hooks';
+import { SearchContext } from '../../contexts';
 
 import { createTree } from '../../utils/createTree';
 import { setOperator, setDefaultValue } from './utils';
@@ -86,43 +87,43 @@ const Filters: FC<Props> = ({
   }, []);
 
   return (
-    <FiltersContext.Provider
-      value={{ expandTree, searchPropertiesPhrase, schema: collectionSchema }}
-    >
-      {filters.map((filter, idx, collection) => (
-        <>
-          <Filter
-            id={`filter-${idx}`}
-            key={idx}
-            filter={filter}
-            properties={propertiesTree ? propertiesTree : schemaTree}
-            onSearchProperties={searchHandler}
-            onPropertyChange={(propertyName) => {
-              const schemaType = collectionSchema[propertyName];
-              const inferredType = SCHEMA_PROPS[schemaType];
-              const operator = setOperator(inferredType, filter.operator);
+    <SearchContext.Provider value={{ expandTree, searchPropertiesPhrase }}>
+      <FiltersContext.Provider value={{ schema: collectionSchema }}>
+        {filters.map((filter, idx, collection) => (
+          <>
+            <Filter
+              id={`filter-${idx}`}
+              key={idx}
+              filter={filter}
+              properties={propertiesTree ? propertiesTree : schemaTree}
+              onSearchProperties={searchHandler}
+              onPropertyChange={(propertyName) => {
+                const schemaType = collectionSchema[propertyName];
+                const inferredType = SCHEMA_PROPS[schemaType];
+                const operator = setOperator(inferredType, filter.operator);
 
-              onChange(idx, {
-                propertyName,
-                propertyType: inferredType,
-                operator,
-                propertyValue: setDefaultValue(inferredType, operator),
-              });
+                onChange(idx, {
+                  propertyName,
+                  propertyType: inferredType,
+                  operator,
+                  propertyValue: setDefaultValue(inferredType, operator),
+                });
 
-              setSearchPhrase(null);
-              setPropertiesTree(schemaTree);
-            }}
-            onRemove={() => onRemove(idx)}
-            onChange={(filter) => onChange(idx, filter)}
-          />
-          {idx + 1 !== collection.length && (
-            <Operator key={`operator-${idx}`}>
-              <Badge>{AND_OPERATOR}</Badge>
-            </Operator>
-          )}
-        </>
-      ))}
-    </FiltersContext.Provider>
+                setSearchPhrase(null);
+                setPropertiesTree(schemaTree);
+              }}
+              onRemove={() => onRemove(idx)}
+              onChange={(filter) => onChange(idx, filter)}
+            />
+            {idx + 1 !== collection.length && (
+              <Operator key={`operator-${idx}`}>
+                <Badge>{AND_OPERATOR}</Badge>
+              </Operator>
+            )}
+          </>
+        ))}
+      </FiltersContext.Provider>
+    </SearchContext.Provider>
   );
 };
 

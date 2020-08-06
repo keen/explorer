@@ -5,7 +5,7 @@ import { colors } from '@keen.io/colors';
 export const Wrapper = styled.div`
   display: flex;
   align-items: center;
-  
+
   margin-right: 1px;
 
   background-color: ${transparentize(0.85, colors.blue['100'])};

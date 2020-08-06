@@ -7,13 +7,8 @@ type Props = {
   children: React.ReactNode;
 };
 
-const InputGroup: FC<Props> = ({
-  children,
-}) => {
-
-  return (
-    <Container>{children}</Container>
-  );
-}
+const InputGroup: FC<Props> = ({ children }) => {
+  return <Container>{children}</Container>;
+};
 
 export default InputGroup;

@@ -1,10 +1,4 @@
-import React, {
-  FC,
-  useState,
-  useRef,
-  useCallback,
-  useEffect,
-} from 'react';
+import React, { FC, useState, useRef, useCallback, useEffect } from 'react';
 
 import Dropdown from '../../../Dropdown';
 import EmptySearch from '../../../EmptySearch';
@@ -40,14 +34,14 @@ const Input: FC<Props> = ({
 }) => {
   const containerRef = useRef(null);
   const expandTrigger = useRef(null);
-  
+
   const [editMode, setEditMode] = useState(false);
   const [searchPhrase, setSearchPhrase] = useState(null);
   const [expandTree, setTreeExpand] = useState(false);
   const [propertiesTree, setPropertiesTree] = useState(properties);
 
   const isEmptySearch =
-  searchPhrase && propertiesTree && !Object.keys(propertiesTree).length;
+    searchPhrase && propertiesTree && !Object.keys(propertiesTree).length;
 
   const outsideClick = useCallback(
     (e) => {
