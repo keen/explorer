@@ -5,22 +5,22 @@ import Property from './Property';
 
 const render = (overProps: any = {}) => {
   const props = {
-    ...overProps
+    ...overProps,
   };
 
-  const wrapper = rtlRender(
-    <Property {...props} />
-  );
+  const wrapper = rtlRender(<Property {...props} />);
 
   return {
     wrapper,
     props,
-  }
+  };
 };
 
 test('renders placeholder', () => {
   const placeholder = 'placeholder';
-  const { wrapper: { getByText } } = render({
+  const {
+    wrapper: { getByText },
+  } = render({
     placeholder,
   });
 
@@ -29,7 +29,9 @@ test('renders placeholder', () => {
 
 test('renders property path', () => {
   const property = 'category.id';
-  const { wrapper: { getByText } } = render({
+  const {
+    wrapper: { getByText },
+  } = render({
     property,
   });
 
@@ -39,7 +41,9 @@ test('renders property path', () => {
 
 test('set default input value', () => {
   const property = 'category';
-  const { wrapper: { getByTestId } } = render({
+  const {
+    wrapper: { getByTestId },
+  } = render({
     editMode: true,
     property,
   });
@@ -51,7 +55,9 @@ test('set default input value', () => {
 
 test('set default input placeholder', () => {
   const searchPlaceholder = 'searchPlaceholder';
-  const { wrapper: { getByTestId } } = render({
+  const {
+    wrapper: { getByTestId },
+  } = render({
     editMode: true,
     searchPlaceholder,
   });
@@ -63,7 +69,9 @@ test('set default input placeholder', () => {
 
 test('set property as input placeholder', () => {
   const property = 'category';
-  const { wrapper: { getByTestId } } = render({
+  const {
+    wrapper: { getByTestId },
+  } = render({
     editMode: true,
     property,
   });
@@ -75,7 +83,9 @@ test('set property as input placeholder', () => {
 
 test('calls "onEditBlur" handler', () => {
   const mockFn = jest.fn();
-  const { wrapper: { getByTestId } } = render({
+  const {
+    wrapper: { getByTestId },
+  } = render({
     onEditBlur: mockFn,
     editMode: true,
   });
@@ -88,7 +98,9 @@ test('calls "onEditBlur" handler', () => {
 
 test('calls "onEditInputChange" handler', () => {
   const mockFn = jest.fn();
-  const { wrapper: { getByTestId } } = render({
+  const {
+    wrapper: { getByTestId },
+  } = render({
     onEditInputChange: mockFn,
     editMode: true,
   });

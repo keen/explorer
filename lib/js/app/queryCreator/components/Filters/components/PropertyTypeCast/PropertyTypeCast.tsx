@@ -66,6 +66,7 @@ const PropertyTypeCast: FC<Props> = ({ type, property, onChange }) => {
 
   return (
     <Container
+      data-testid="property-type-cast"
       ref={containerRef}
       onClick={(e) => {
         e.stopPropagation();

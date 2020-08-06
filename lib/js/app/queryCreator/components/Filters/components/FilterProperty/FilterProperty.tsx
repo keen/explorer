@@ -75,6 +75,7 @@ const FilterProperty: FC<Props> = ({
     <Container
       ref={containerRef}
       onClick={() => !editMode && setEditMode(true)}
+      data-testid="filter-property"
     >
       <PropertyGroup isActive={editMode}>
         <PropertyItem>

@@ -7,27 +7,30 @@ const render = (overProps: any = {}) => {
   const props = {
     onChange: jest.fn(),
     value: true,
-    ...overProps
+    ...overProps,
   };
 
-  const wrapper = rtlRender(
-    <FilterBoolean {...props} />
-  );
+  const wrapper = rtlRender(<FilterBoolean {...props} />);
 
   return {
     wrapper,
     props,
-  }
+  };
 };
 
 test('renders the current value', () => {
-  const { wrapper: { getByText } } = render();
+  const {
+    wrapper: { getByText },
+  } = render();
 
   expect(getByText('true')).toBeInTheDocument();
 });
 
 test('allows user to select value', () => {
-  const { wrapper: { getByTestId, getByText }, props } = render();
+  const {
+    wrapper: { getByTestId, getByText },
+    props,
+  } = render();
 
   const container = getByTestId('dropable-container');
   fireEvent.click(container);
