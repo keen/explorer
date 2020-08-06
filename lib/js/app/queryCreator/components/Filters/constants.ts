@@ -1,9 +1,5 @@
-import {
-  FilterValue,
-  FiltersValueComponent,
-} from './types';
-import {   Property,
-  Operator } from '../../types';
+import { FilterValue, FiltersValueComponent } from './types';
+import { Property, Operator } from '../../types';
 
 import { getCurrentDate } from './utils';
 
@@ -19,7 +15,9 @@ export const DATA_TYPES = {
   geo: 'Geo',
 };
 
-export const INTERNAL_OPERATORS: Record<
+export const AND_OPERATOR = 'AND';
+
+export const ABSTRACT_OPERATORS: Record<
   string,
   {
     label: string;
@@ -94,6 +92,7 @@ export const TYPES_CONFIG: Record<
       defaultValue: true,
       component: 'boolean-switcher',
     },
+    ...ABSTRACT_OPERATORS,
   },
   String: {
     contains: {
@@ -141,7 +140,7 @@ export const TYPES_CONFIG: Record<
       defaultValue: '',
       component: 'input-text',
     },
-    ...INTERNAL_OPERATORS,
+    ...ABSTRACT_OPERATORS,
   },
   List: {
     eq: {
@@ -164,6 +163,7 @@ export const TYPES_CONFIG: Record<
       defaultValue: '',
       component: 'boolean-switcher',
     },
+    ...ABSTRACT_OPERATORS,
   },
   Boolean: {
     eq: {
@@ -181,6 +181,7 @@ export const TYPES_CONFIG: Record<
       defaultValue: true,
       component: 'boolean-switcher',
     },
+    ...ABSTRACT_OPERATORS,
   },
   Datetime: {
     eq: {
@@ -218,6 +219,7 @@ export const TYPES_CONFIG: Record<
       defaultValue: true,
       component: 'boolean-switcher',
     },
+    ...ABSTRACT_OPERATORS,
   },
   Geo: {
     within: {
@@ -233,5 +235,6 @@ export const TYPES_CONFIG: Record<
       defaultValue: true,
       component: 'boolean-switcher',
     },
+    ...ABSTRACT_OPERATORS,
   },
 };

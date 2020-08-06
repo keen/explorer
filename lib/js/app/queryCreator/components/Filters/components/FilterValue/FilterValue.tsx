@@ -16,7 +16,11 @@ import text from './text.json';
 import { TYPES_CONFIG } from '../../constants';
 
 import { GetComponent } from './types';
-import { Coordinates, Operator, Property as PropertyType } from '../../../../types';
+import {
+  Coordinates,
+  Operator,
+  Property as PropertyType,
+} from '../../../../types';
 
 type Props = {
   /** Type of property */

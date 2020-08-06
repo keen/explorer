@@ -26,10 +26,7 @@ export const SCHEMA_PROPS = {
   array: 'List',
 };
 
-export const ABSTRACT_OPERATORS = [
-  'is_null',
-  'is_not_null',
-];
+export const ABSTRACT_OPERATORS = ['is_null', 'is_not_null'];
 
 export const ANALYSIS_TYPES: Analysis[] = [
   'average',

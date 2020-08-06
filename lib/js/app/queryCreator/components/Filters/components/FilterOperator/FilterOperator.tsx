@@ -60,12 +60,7 @@ const FilterOperator: FC<Props> = ({
                 ref={activeItemRef}
                 items={operators}
                 setActiveItem={({ value }) => value === operator}
-                onClick={(
-                  _e,
-                  {
-                    value,
-                  }
-                ) => {
+                onClick={(_e, { value }) => {
                   setEditMode(false);
                   onChange(value);
                 }}
