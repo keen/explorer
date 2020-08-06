@@ -89,15 +89,6 @@ const App: FC<Props> = () => {
         {showField('orderBy', analysis) && <OrderBy />}
         {showField('interval', analysis) && <Interval />}
         {showField('limit', analysis) && <Limit />}
-        {/* <InputGroup>
-          <Group>input</Group>
-          <Group>select</Group>
-          <Group>button</Group>
-          <Group>button</Group>
-          <Group>button</Group>
-          <Group>button</Group>
-          <Group>button</Group>
-        </InputGroup> */}
       </Card>
 
       {analysis === 'extraction' && <Extraction collection={collection} />}
