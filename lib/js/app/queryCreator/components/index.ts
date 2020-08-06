@@ -13,8 +13,7 @@ import Extraction from './Extraction';
 import Filters from './Filters';
 import QueryArguments from './QueryArguments';
 import Card from './Card';
-import InputGroup, { Group } from './InputGroup';
-import { InputGroupWrapper, Group as GroupWrapper, RemoveButton, Select, SearchInput } from './InputGroupWrapper';
+import { InputGroup, Group, Input } from './InputGroup';
 import Tabs from './Tabs';
 import Title from './Title';
 
@@ -36,11 +35,7 @@ export {
   QueryArguments,
   InputGroup,
   Group,
-
-  InputGroupWrapper,
-  GroupWrapper,
-  RemoveButton,
-  Select,
+  Input,
   Title,
   Tabs,
 };

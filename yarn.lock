@@ -1276,11 +1276,6 @@
     styled-components "5.1.0"
     use-debounce "^3.3.0"
 
-"@keen.io/colors@^0.1.2":
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/@keen.io/colors/-/colors-0.1.2.tgz#f2dc9d9f3685756ceee0aad3bb135d85fa3d7166"
-  integrity sha512-t1CRi5ZiFi7sc2nqSFFpbSIzrn9GV14M9MS1vO/1Z1ue/S2B3zYoYNZ6C5MLpSnMahxp1ImAuoB5FRNOTQSvZg==
-
 "@keen.io/colors@^0.2.0":
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/@keen.io/colors/-/colors-0.2.0.tgz#664410305fb097308e0303c4fcce33a971a50995"
@@ -1372,6 +1367,24 @@
   version "0.24.0"
   resolved "https://registry.yarnpkg.com/@keen.io/ui-core/-/ui-core-0.24.0.tgz#3fef1c3ebf47ac4596ec054cce82a0d0290a81dc"
   integrity sha512-vGiub86NTZiyrw/ruhtzTstE+UXxJftllu7Kc/vdNeW3XV/K/WyVtbeyJf7qa9nMRHrYwgnbVbSBZ4Vn8pGi0A==
+  dependencies:
+    "@keen.io/colors" "^0.2.0"
+    "@keen.io/icons" "^0.4.3"
+    color "^3.1.2"
+    framer-motion "^1.11.1"
+    polished "^3.4.4"
+    react "^16.12.0"
+    react-column-resizer "^1.1.9"
+    react-dom "^16.12.0"
+    react-select "^3.1.0"
+    styled-components "5.1.0"
+    styled-system "5.1.5"
+    webfontloader "^1.6.28"
+
+"@keen.io/ui-core@^0.24.1":
+  version "0.24.1"
+  resolved "https://registry.yarnpkg.com/@keen.io/ui-core/-/ui-core-0.24.1.tgz#1991a3cd42c37cbc796bbc87504a05819ee4aa5a"
+  integrity sha512-+Lzu9lk5y7h4x1pFPMAWp95lM31jhrT+n4vKWJMvVZC6TcP/eQhQlLjNkhpHMxUVO7tJP9i2rFtOpuGKLgSYLg==
   dependencies:
     "@keen.io/colors" "^0.2.0"
     "@keen.io/icons" "^0.4.3"
@@ -1879,11 +1892,6 @@
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/@types/snakecase-keys/-/snakecase-keys-2.1.0.tgz#d64fe4793a2a2b143644415d299c69748e911e66"
   integrity sha512-yoDyTa4SBpcENbp+X5voveHWKGJUBBqYeF3Ua5jsatVgyO6ZVCBTDKm5JByb3KIOZJ6AuBpkwHMdIFL/MTfFMg==
-
-"@types/sortablejs@^1.10.0":
-  version "1.10.5"
-  resolved "https://registry.yarnpkg.com/@types/sortablejs/-/sortablejs-1.10.5.tgz#341f5af3372180ce3cbfbd2b34a6fdefaca8d227"
-  integrity sha512-U/i9rGkCwmgmsa0UzHlGnQtL4y57tjywjp6j3GbA64MLaGO+sEBLVhBrQokWfgzeV2T6hQRYC4dZtXkl6dCMfw==
 
 "@types/source-list-map@*":
   version "0.1.2"
@@ -12209,16 +12217,6 @@ react-select@^3.0.4, react-select@^3.1.0:
     react-input-autosize "^2.2.2"
     react-transition-group "^4.3.0"
 
-react-sortablejs@^2.0.11:
-  version "2.0.11"
-  resolved "https://registry.yarnpkg.com/react-sortablejs/-/react-sortablejs-2.0.11.tgz#eecf621f801ab8c16a8a5c3c856005f0795ccbcf"
-  integrity sha512-Id44yygU6H/fNRp0uWkGZnKGuBF8GF/Ts6gKX5NfwmzceRjH0e0XHsmBuQ6WXhBIVnMM+XgkEPub851mdti0TA==
-  dependencies:
-    "@types/sortablejs" "^1.10.0"
-    classnames "^2.2.6"
-    sortablejs "1.10.1"
-    tiny-invariant "^1.0.6"
-
 react-test-renderer@^15.6.2:
   version "15.6.2"
   resolved "https://registry.yarnpkg.com/react-test-renderer/-/react-test-renderer-15.6.2.tgz#d0333434fc2c438092696ca770da5ed48037efa8"
@@ -13304,11 +13302,6 @@ sort-keys@^1.0.0:
   dependencies:
     is-plain-obj "^1.0.0"
 
-sortablejs@1.10.1:
-  version "1.10.1"
-  resolved "https://registry.yarnpkg.com/sortablejs/-/sortablejs-1.10.1.tgz#3d52b00f871be00f00f84d99a60d120bf3dfe52c"
-  integrity sha512-N6r7GrVmO8RW1rn0cTdvK3JR0BcqecAJ0PmYMCL3ZuqTH3pY+9QyqkmJSkkLyyDvd+AJnwaxTP22Ybr/83V9hQ==
-
 sortablejs@^1.10.2:
   version "1.10.2"
   resolved "https://registry.yarnpkg.com/sortablejs/-/sortablejs-1.10.2.tgz#6e40364d913f98b85a14f6678f92b5c1221f5290"
@@ -14075,11 +14068,6 @@ tiny-emitter@^2.0.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/tiny-emitter/-/tiny-emitter-2.1.0.tgz#1d1a56edfc51c43e863cbb5382a72330e3555423"
   integrity sha512-NB6Dk1A9xgQPMoGqC5CVXn123gWyte215ONT5Pp5a0yt4nlEoO1ZWeCwpncaekPHXO60i47ihFnZPiRPjRMq4Q==
-
-tiny-invariant@^1.0.6:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/tiny-invariant/-/tiny-invariant-1.1.0.tgz#634c5f8efdc27714b7f386c35e6760991d230875"
-  integrity sha512-ytxQvrb1cPc9WBEI/HSeYYoGD0kWnGEOR8RY6KomWLBVhqz0RgTwVO9dLrGz7dC+nN9llyI7OKAgRq8Vq4ZBSw==
 
 tiny-warning@^1.0.2:
   version "1.0.3"

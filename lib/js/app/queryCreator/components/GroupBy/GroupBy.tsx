@@ -1,25 +1,18 @@
-import React, { FC, useEffect, useRef, useReducer } from 'react';
-import { ReactSortable } from 'react-sortablejs';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import React, { FC, useEffect, useRef, useReducer, useState } from 'react';
 import Sortable from 'sortablejs';
 import { useSelector, useDispatch } from 'react-redux';
 import shallowEqual from 'shallowequal';
 
-import { Select, ActionButton } from '@keen.io/ui-core';
+import { ActionButton } from '@keen.io/ui-core';
 
 import {
   Section,
-  Options,
   GroupSettings,
-  GroupsContainer,
-  StyledButton,
-  StyledActionButton,
 } from './GroupBy.styles';
 
 import Title from '../Title';
-import AddGroupBy from '../AddGroupBy';
-import InputGroup, { Group } from '../InputGroup';
-import { InputGroupWrapper, Group as GroupWrapper, RemoveButton, SearchInput} from '../InputGroupWrapper';
-import { Select as GroupSelect } from '../InputGroupWrapper';
+import { InputGroup, Group, Input } from '../InputGroup';
 
 import {
   addGroup,
@@ -47,11 +40,6 @@ type Props = {
   /** Collection name */
   collection: string;
 };
-
-const options = [
-  { label: 'DESC', value: 'desc' },
-  { label: 'ASC', value: 'asc' }
-]
 
 const GroupBy: FC<Props> = ({ collection }) => {
   const dispatch = useDispatch();
@@ -106,136 +94,61 @@ const GroupBy: FC<Props> = ({ collection }) => {
   }, [state]);
 
   const sortableRef = useRef(null);
+  const [isDragged, setDragMode] = useState(false);
 
   useEffect(() => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    let dragGhost;
     const sortable = new Sortable( sortableRef.current, {
       animation: DRAG_ANIMATION_TIME,
       delay: DRAG_DELAY,
       filter: '.js-button',
-      onMove: evt => !evt.related.className.includes('js-button'),
+      onStart: () => setDragMode(true),
+      onMove: evt => !evt.related.className.includes('add-button'),
       onEnd: evt => {
         const updatedGroups = mutateArray(stateRef.current, evt.oldIndex, evt.newIndex);
         groupDispatcher(setGroups(updatedGroups));
+        setDragMode(false);
+        dragGhost.parentNode.removeChild(dragGhost);
       },
-      // onUpdate: (updatedGroups) => groupDispatcher(setGroups(updatedGroups)),
+      setData: (dataTransfer, dragEl) => {
+        dragGhost = dragEl.cloneNode(true);
+        const tree = dragGhost.querySelector('[data-testid="properties-tree"]');
+        if (tree) tree.remove();
+        document.body.appendChild(dragGhost);
+        dataTransfer.setDragImage(dragGhost, 0, 0);
+      },
     });
     
-  }, [state])
+  }, [state]);
 
   return (
     <div>
       <Title isDisabled={!eventCollection}>Group by</Title>
       <Section>
-        <div ref={sortableRef} style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', margin: '50px'}}>
-        {state.map(({ property, id, chosen }) => (
+        <div ref={sortableRef} style={{ display: 'flex', flexWrap: 'wrap'}}>
+        {state.map(({ property, id }) => (
             <GroupSettings key={id}>
-              <InputGroupWrapper isActive={chosen} isDragged={chosen}>
-                <GroupWrapper>
-                  <SearchInput
-                    isDragged={chosen}
-                    onChange={(property) =>
-                      groupDispatcher(selectGroupProperty(id, property))
-                    }
+              <InputGroup>
+                <Group>
+                  <Input
+                    isEditDisabled={isDragged}
                     property={property}
+                    properties={schemaTree}
                     propertiesSchema={schemaList}
-                    propertiesTree={schemaTree}
+                    onSelectProperty={(property) => {
+                        groupDispatcher(selectGroupProperty(id, property));
+                      }
+                    }
                   />
-                </GroupWrapper>
-                <GroupWrapper>
-                  <StyledActionButton action="remove" onClick={() => groupDispatcher(removeGroup(id))} />
-                </GroupWrapper>
-              </InputGroupWrapper>
+                </Group>
+                <Group>
+                  <ActionButton action="remove" onClick={() => groupDispatcher(removeGroup(id))} background="transparent" borderRadius="0 4px 4px 0" />
+                </Group>
+              </InputGroup>
             </GroupSettings>
           ))}
-          <button className="js-button" onClick={() => groupDispatcher(addGroup(''))}>Add</button>
-          {/* <ActionButton className="js-button" action="create" onClick={() => groupDispatcher(addGroup(''))} /> */}
+          <ActionButton className="add-button" isDisabled={!eventCollection} action="create" onClick={() => groupDispatcher(addGroup(''))} />
         </div>
-        
-        <ReactSortable
-          animation={DRAG_ANIMATION_TIME}
-          delay={DRAG_DELAY}
-          list={state}
-          tag={GroupsContainer}
-          setList={(updatedGroups) => groupDispatcher(setGroups(updatedGroups))}
-        >
-          {state.map(({ property, id, chosen }) => (
-            <GroupSettings key={id}>
-              {/* <Property
-                isDragged={chosen}
-                onRemove={() => groupDispatcher(removeGroup(id))}
-                onChange={(property) =>
-                  groupDispatcher(selectGroupProperty(id, property))
-                }
-                property={property}
-                propertiesSchema={schemaList}
-                propertiesTree={schemaTree}
-              /> */}
-              <InputGroupWrapper isActive={chosen} isDragged={chosen}>
-                <GroupWrapper>
-                  <SearchInput
-                    isDragged={chosen}
-                    onChange={(property) =>
-                      groupDispatcher(selectGroupProperty(id, property))
-                    }
-                    property={property}
-                    propertiesSchema={schemaList}
-                    propertiesTree={schemaTree}
-                  />
-                </GroupWrapper>
-                <GroupWrapper>
-                  {/* <RemoveButton onClick={() => groupDispatcher(removeGroup(id))} /> */}
-                  <StyledActionButton action="remove" onClick={() => groupDispatcher(removeGroup(id))} />
-                </GroupWrapper>
-              </InputGroupWrapper>
-              {/* <InputGroup
-                isDragged={chosen}
-                onRemove={() => groupDispatcher(removeGroup(id))}
-                onChange={(property) =>
-                  groupDispatcher(selectGroupProperty(id, property))
-                }
-                property={property}
-                propertiesSchema={schemaList}
-                propertiesTree={schemaTree}
-              >
-                <Group>
-                  <GroupSelect
-                    inputId="order"
-                    placeholder=""
-                    onChange={({ value }: { value: string }) => {
-                      console.log(value);
-                    }}
-                    value={null}
-                    options={options}
-                  />
-                </Group>
-                <Group>
-                  <Select
-                    inputId="order"
-                    placeholder=""
-                    onChange={({ value }: { label: string; value: string }) => {
-                      console.log(value);
-                    }}
-                    value={null}
-                    variant="solid"
-                    options={options}
-                  />
-                </Group>
-              </InputGroup> */}
-            </GroupSettings>
-          ))}
-          {/* <button>add</button> */}
-        </ReactSortable>
-
-        {/* <Options>
-          <AddGroupBy
-            properties={schemaList}
-            propertiesTree={schemaTree}
-            onAddGroup={(property) => groupDispatcher(addGroup(property))}
-          />
-        </Options> */}
-        {/* <StyledButton onClick={() => groupDispatcher(addGroup(''))} items={state.length}>+</StyledButton> */}
-        <ActionButton action="create" onClick={() => groupDispatcher(addGroup(''))} />
       </Section>
     </div>
   );

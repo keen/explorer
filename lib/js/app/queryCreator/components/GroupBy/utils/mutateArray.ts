@@ -14,5 +14,3 @@ export const mutateArray = (array: any[], from: number, to: number) => {
 	mutate(array, from, to);
 	return array;
 };
-
-// export const mutateArray = (array: any[], from: number, to: number) => mutate([...array], from, to);

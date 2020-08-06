@@ -33,13 +33,13 @@
     }
   },
   "dependencies": {
-    "@keen.io/colors": "^0.1.2",
+    "@keen.io/colors": "^0.2.0",
     "@keen.io/dataviz": "^0.9.0",
     "@keen.io/forms": "^0.3.7",
     "@keen.io/icons": "^0.4.3",
     "@keen.io/parser": "^0.2.26",
     "@keen.io/pubsub": "^0.2.0",
-    "@keen.io/ui-core": "^0.24.0",
+    "@keen.io/ui-core": "^0.24.1",
     "@types/react-dom": "^16.9.8",
     "camelcase-keys": "^6.2.2",
     "classnames": "2.1.2",
@@ -68,7 +68,6 @@
     "react-modal": "^3.8.1",
     "react-redux": "^7.2.0",
     "react-select": "^3.0.4",
-    "react-sortablejs": "^2.0.11",
     "redux": "^4.0.1",
     "redux-devtools-extension": "^2.13.7",
     "redux-saga": "^1.0.0",
