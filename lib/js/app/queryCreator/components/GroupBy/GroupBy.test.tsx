@@ -1,29 +1,3 @@
-import React from 'react';
-import { Provider } from 'react-redux';
-import { render as rtlRender, fireEvent } from '@testing-library/react';
-import configureStore from 'redux-mock-store';
-
-import GroupBy from './GroupBy';
-
-const render = (storeState: any = {}, overProps: any = {}) => {
-  const mockStore = configureStore([]);
-  const store = mockStore({ ...storeState });
-
-  const props = {
-    ...overProps,
-  };
-
-  const wrapper = rtlRender(
-    <Provider store={store}>
-      <GroupBy {...props} />
-    </Provider>
-  );
-
-  return {
-    store,
-    wrapper,
-  };
-};
 test('1', () => {
   expect(1).toEqual(1);
 });

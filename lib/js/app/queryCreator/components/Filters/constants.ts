@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/camelcase */
+
 import { FilterValue, FiltersValueComponent } from './types';
 import { Property, Operator } from '../../types';
 

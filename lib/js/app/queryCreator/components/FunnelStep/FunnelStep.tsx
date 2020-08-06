@@ -87,6 +87,7 @@ const FunnelStep: FC<Props> = ({
           variant="secondary"
           timezone={2000}
           onTimezoneChange={() => {
+            console.log('timezone');
             // @TODO: Handle timezone change
           }}
           onTimeframeChange={(value) =>
@@ -101,9 +102,9 @@ const FunnelStep: FC<Props> = ({
       <Filters
         collection={eventCollection}
         filters={filters}
-        onReset={() => {}}
-        onRemove={() => {}}
-        onChange={() => {}}
+        onReset={() => true}
+        onRemove={() => true}
+        onChange={() => true}
       />
       <div>
         <Label htmlFor={`optional-step-${index}`}>
