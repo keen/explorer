@@ -43,7 +43,6 @@ const EventCollection: FC<Props> = ({
 }) => {
   const [isOpen, setOpen] = useState(false);
   const [selectionIndex, setIndex] = useState<number>(null);
-  const [searchPhrase, setSearchPhrase] = useState(null);
 
   const collections = useSelector(getEventsCollections);
   const options = useMemo(
@@ -94,18 +93,17 @@ const EventCollection: FC<Props> = ({
     [collectionsList]
   );
 
-  const { searchHandler } = useSearch<{ label: string; value: string }>(
-    options,
-    (searchResult, phrase) => {
-      setIndex(null);
-      if (phrase) {
-        setSearchPhrase(phrase);
-        setCollectionsList(searchResult);
-      } else {
-        setCollectionsList(options);
-      }
+  const { searchHandler, searchPhrase, clearSearchPhrase } = useSearch<{
+    label: string;
+    value: string;
+  }>(options, (searchResult, phrase) => {
+    setIndex(null);
+    if (phrase) {
+      setCollectionsList(searchResult);
+    } else {
+      setCollectionsList(options);
     }
-  );
+  });
 
   useEffect(() => {
     if (isOpen) {
@@ -114,7 +112,7 @@ const EventCollection: FC<Props> = ({
       document.addEventListener('keydown', keyboardHandler);
     } else {
       setCollectionsList(options);
-      setSearchPhrase(null);
+      clearSearchPhrase();
     }
 
     return () => {

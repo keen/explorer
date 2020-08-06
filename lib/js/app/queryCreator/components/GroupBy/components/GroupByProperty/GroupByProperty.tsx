@@ -1,53 +1,47 @@
 import React, {
   FC,
   useState,
-  useContext,
   useRef,
-  useCallback,
+  useContext,
   useEffect,
+  useCallback,
 } from 'react';
+import { ActionButton } from '@keen.io/ui-core';
 
-import { Container, DropdownContent } from './FilterProperty.styles';
+import { Container, DropdownContent } from './GroupByProperty.styles';
 
-import Dropdown from '../../../Dropdown';
-import EmptySearch from '../../../EmptySearch';
 import PropertyGroup, { PropertyItem } from '../../../PropertyGroup';
+import Dropdown from '../../../Dropdown';
 import Property from '../../../Property';
+import EmptySearch from '../../../EmptySearch';
 import PropertiesTree from '../../../PropertiesTree';
-
-import PropertyTypeCast from '../PropertyTypeCast';
-
-import { SearchContext } from '../../../../contexts';
-
-import { Property as PropertyType } from '../../../../types';
 
 import text from './text.json';
 
+import { SearchContext } from '../../../../contexts';
+
 type Props = {
-  /** Property */
-  property?: string;
-  /** Property type */
-  type?: PropertyType;
+  onRemove: () => void;
+  isEditAllowed: boolean;
+  onSelectProperty: (property: string) => void;
   /** Search properties event handler */
   onSearchProperties: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  /** Select property event handler */
-  onSelectProperty: (property: string) => void;
-  /** Select property event handler */
-  onCastPropertyType: (type: PropertyType) => void;
   /** Properties tree */
   properties: Record<string, string[] | Record<string, any>>;
+  property?: string;
 };
 
-const FilterProperty: FC<Props> = ({
+const GroupByProperty: FC<Props> = ({
   property,
-  type,
+  isEditAllowed,
   properties,
   onSelectProperty,
-  onCastPropertyType,
   onSearchProperties,
+  onRemove,
 }) => {
   const [editMode, setEditMode] = useState(false);
   const containerRef = useRef(null);
+
   const { expandTree, searchPropertiesPhrase } = useContext(SearchContext);
 
   const isEmptySearch =
@@ -71,6 +65,10 @@ const FilterProperty: FC<Props> = ({
     return () => document.removeEventListener('click', outsideClick);
   }, [editMode, containerRef]);
 
+  useEffect(() => {
+    if (!isEditAllowed) setEditMode(false);
+  }, [isEditAllowed, editMode]);
+
   return (
     <Container
       ref={containerRef}
@@ -86,13 +84,9 @@ const FilterProperty: FC<Props> = ({
             onEditInputChange={onSearchProperties}
           />
         </PropertyItem>
-        {property && !editMode && (
-          <PropertyTypeCast
-            property={property}
-            type={type}
-            onChange={onCastPropertyType}
-          />
-        )}
+        <PropertyItem>
+          <ActionButton onClick={onRemove} action="remove" />
+        </PropertyItem>
       </PropertyGroup>
       <Dropdown isOpen={editMode} fullWidth={false}>
         <DropdownContent>
@@ -115,4 +109,4 @@ const FilterProperty: FC<Props> = ({
   );
 };
 
-export default FilterProperty;
+export default GroupByProperty;

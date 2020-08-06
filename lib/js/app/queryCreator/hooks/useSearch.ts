@@ -1,4 +1,4 @@
-import { useRef, useEffect, useCallback } from 'react';
+import { useRef, useState, useEffect, useCallback } from 'react';
 import Fuse from 'fuse.js';
 
 const defaultOptions = {
@@ -11,7 +11,12 @@ export const useSearch = <T>(
   callback: (results: T[], searchPhrase: string) => void,
   options: Fuse.IFuseOptions<any> = defaultOptions
 ) => {
+  const [searchPhrase, setSearchPhrase] = useState(null);
   const fuseSearch = useRef(new Fuse(collection, options));
+
+  const clearSearchPhrase = useCallback(() => {
+    setSearchPhrase(null);
+  }, []);
 
   useEffect(() => {
     fuseSearch.current = new Fuse(collection, options);
@@ -21,6 +26,7 @@ export const useSearch = <T>(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const value = e.currentTarget.value;
       const results = fuseSearch.current.search(value).map(({ item }) => item);
+      setSearchPhrase(value);
 
       callback(results, value);
     },
@@ -28,6 +34,8 @@ export const useSearch = <T>(
   );
 
   return {
+    clearSearchPhrase,
+    searchPhrase,
     searchHandler,
   };
 };
