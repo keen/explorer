@@ -60,6 +60,7 @@ const FilterListValue: FC<Props> = ({ items, onChange }) => {
           <Input
             ref={inputRef}
             autoFocus
+            data-testid="list-input"
             placeholder={text.inputPlaceholder}
             onKeyPress={(e: React.KeyboardEvent<HTMLInputElement>) => {
               if (e.charCode === KEYBOARD_KEYS.ENTER) {

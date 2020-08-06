@@ -60,6 +60,7 @@ const Property: FC<Props> = ({
             <Input
               type="text"
               autoFocus
+              data-testid="property-input"
               onBlur={(e) => onEditBlur && onEditBlur(e)}
               placeholder={property ? property : searchPlaceholder}
               defaultValue={property}
