@@ -9,5 +9,9 @@ export const Container = styled.div`
 
   ${FilterItem} + ${FilterItem} {
     margin-left: 5px;
+
+    &:empty {
+      display: none;
+    }
   }
 `;

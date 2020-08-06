@@ -1,25 +1,4 @@
-export type Property =
-  | 'String'
-  | 'Number'
-  | 'Datetime'
-  | 'List'
-  | 'Geo'
-  | 'Boolean';
-
-export type Operator =
-  | 'or'
-  | 'eq'
-  | 'ne'
-  | 'lt'
-  | 'lte'
-  | 'gt'
-  | 'gte'
-  | 'exists'
-  | 'in'
-  | 'contains'
-  | 'not_contains'
-  | 'within'
-  | 'regex';
+import { Coordinates } from '../../types';
 
 export type FiltersValueComponent =
   | 'input-text'
@@ -27,7 +6,17 @@ export type FiltersValueComponent =
   | 'datepicker'
   | 'geo-coordinates'
   | 'boolean-switcher'
+  | 'null-placeholder'
   | 'list';
+
+export type FilterValue =
+  | boolean
+  | string
+  | Coordinates
+  | number
+  | Function
+  | string[]
+  | number[];
 
 export type SchemaProp =
   | 'num'
@@ -38,8 +27,3 @@ export type SchemaProp =
   | 'list'
   | 'geo'
   | 'array';
-
-export type Coordinates = {
-  coordinates: [number, number];
-  maxDistanceMiles: number;
-};

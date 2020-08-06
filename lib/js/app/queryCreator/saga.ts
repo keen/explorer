@@ -44,7 +44,7 @@ import {
   FETCH_COLLECTION_SCHEMA,
 } from './modules/events';
 
-import { inferFilterType } from './utils';
+import { inferFilterType, createAbstractOperator } from './utils';
 
 import { Filter } from './types';
 
@@ -141,6 +141,7 @@ function* transformFilters(collection: string, filters: Filter[]) {
   const { schema } = collectionSchema;
   const filtersWithInferredTypes = filters.map((filter) => ({
     ...filter,
+    operator: createAbstractOperator(filter),
     propertyType: inferFilterType(filter, schema),
   }));
 

@@ -1,4 +1,4 @@
-import { Property, Operator } from '../../../types';
+import { Property, Operator } from '../../../../../types';
 
 import { TYPES_CONFIG } from '../../../constants';
 

@@ -7,7 +7,10 @@ export const Container = styled.div`
   cursor: pointer;
 `;
 
-export const DropableContainer = styled.div<{ editMode: boolean; isActive: boolean }>`
+export const DropableContainer = styled.div<{
+  editMode: boolean;
+  isActive: boolean;
+}>`
   height: 37px;
   padding: 10px 14px;
   background: ${colors.white[500]};
@@ -27,10 +30,12 @@ export const DropableContainer = styled.div<{ editMode: boolean; isActive: boole
     color: ${transparentize(0.3, colors.black[100])};
   }
 
-  ${props => props.isActive && css`
-    color: ${colors.black[100]};
-    background: ${colors.gray[200]};
-  `}
+  ${(props) =>
+    props.isActive &&
+    css`
+      color: ${colors.black[100]};
+      background: ${colors.gray[200]};
+    `}
 
   ${(props) =>
     props.editMode &&

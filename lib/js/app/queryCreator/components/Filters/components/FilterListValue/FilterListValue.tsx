@@ -1,7 +1,13 @@
 import React, { FC, useState, useRef, useCallback } from 'react';
 import { ActionButton } from '@keen.io/ui-core';
 
-import { Container, List, DropdownContainer } from './FilterListValue.styles';
+import {
+  Container,
+  List,
+  ListItem,
+  Value,
+  DropdownContainer,
+} from './FilterListValue.styles';
 
 import DropableContainer from '../../../DropableContainer';
 import Dropdown from '../../../Dropdown';
@@ -14,20 +20,24 @@ import { SEPARATOR } from './constants';
 import { KEYBOARD_KEYS } from '../../../../constants';
 
 type Props = {
-  value: Array<string | number>;
+  /** List values */
+  items: Array<string | number>;
   /** Change event handler */
   onChange: (value: Array<string | number>) => void;
 };
 
-const FilterListValue: FC<Props> = ({ value, onChange }) => {
+const FilterListValue: FC<Props> = ({ items, onChange }) => {
   const containerRef = useRef(null);
   const inputRef = useRef(null);
   const [editMode, setEditMode] = useState(false);
 
-  const removeHandler = useCallback((item: string|number) => {
-    const updatedList = value.filter((v) => v !== item);
-    onChange(updatedList);
-  }, [value, onChange]);
+  const removeHandler = useCallback(
+    (item: string | number) => {
+      const updatedList = items.filter((v) => v !== item);
+      onChange(updatedList);
+    },
+    [items, onChange]
+  );
 
   return (
     <Container ref={containerRef}>
@@ -41,9 +51,9 @@ const FilterListValue: FC<Props> = ({ value, onChange }) => {
           }
         }}
         placeholder={text.placeholder}
-        value={value.length ? value : null}
+        value={items.length ? items : null}
       >
-        {value.join(SEPARATOR)}
+        {items.join(SEPARATOR)}
       </DropableContainer>
       <Dropdown isOpen={editMode} fullWidth={false}>
         <DropdownContainer>
@@ -55,11 +65,12 @@ const FilterListValue: FC<Props> = ({ value, onChange }) => {
               if (e.charCode === KEYBOARD_KEYS.ENTER) {
                 e.preventDefault();
                 const eventValue = parseFloat(e.currentTarget.value);
+                const value = Number.isNaN(eventValue)
+                  ? e.currentTarget.value
+                  : eventValue;
 
-                const itemValue = Number.isNaN(eventValue) ? e.currentTarget.value : eventValue;
-
-                if (!value.includes(itemValue)) {
-                  onChange([...value, itemValue]);
+                if (!items.includes(value)) {
+                  onChange([...items, value]);
                 }
 
                 inputRef.current.value = '';
@@ -67,19 +78,21 @@ const FilterListValue: FC<Props> = ({ value, onChange }) => {
             }}
           />
           <List>
-            {value.map((item, idx) => (
-              <PropertyGroup isActive={false} key={idx}>
-                <PropertyItem>
-                  {item}
-                </PropertyItem>
-                <PropertyItem>
-                  <ActionButton
-                    action="remove"
-                    onClick={() => removeHandler(item)}
-                    background="transparent"
-                  />
-                </PropertyItem>
-              </PropertyGroup>
+            {items.map((value, idx) => (
+              <ListItem key={idx}>
+                <PropertyGroup isActive={false}>
+                  <PropertyItem>
+                    <Value>{value}</Value>
+                  </PropertyItem>
+                  <PropertyItem>
+                    <ActionButton
+                      action="remove"
+                      onClick={() => removeHandler(value)}
+                      background="transparent"
+                    />
+                  </PropertyItem>
+                </PropertyGroup>
+              </ListItem>
             ))}
           </List>
         </DropdownContainer>

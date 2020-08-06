@@ -1,4 +1,4 @@
-import React, { FC, useState, useMemo } from 'react';
+import React, { FC, useState, useMemo, useEffect, useRef } from 'react';
 
 import { Container, OperatorsList } from './FilterOperator.styles';
 
@@ -10,20 +10,35 @@ import Dropdown from '../../../Dropdown';
 import { createOptions, getLabel } from './utils';
 import text from './text.json';
 
-import { Operator, Property } from '../../types';
+import { Operator, Property } from '../../../../types';
 
 type Props = {
+  /** Property */
+  property?: string;
   /** Property type */
   propertyType: Property;
   /** Operator value */
   operator: Operator;
   /** Change event handler */
-  onChange: (operator: Operator) => void;
+  onChange: (operator: Operator, rootOperator?: Operator) => void;
 };
 
-const FilterOperator: FC<Props> = ({ operator, propertyType, onChange }) => {
+const FilterOperator: FC<Props> = ({
+  operator,
+  property,
+  propertyType,
+  onChange,
+}) => {
   const [editMode, setEditMode] = useState(false);
   const operators = useMemo(() => createOptions(propertyType), [propertyType]);
+  const propertyRef = useRef(property);
+
+  useEffect(() => {
+    if (property && !propertyRef.current) {
+      propertyRef.current = property;
+      setEditMode(true);
+    }
+  }, [property]);
 
   return (
     <Container>
@@ -45,7 +60,12 @@ const FilterOperator: FC<Props> = ({ operator, propertyType, onChange }) => {
                 ref={activeItemRef}
                 items={operators}
                 setActiveItem={({ value }) => value === operator}
-                onClick={(_e, { value }) => {
+                onClick={(
+                  _e,
+                  {
+                    value,
+                  }
+                ) => {
                   setEditMode(false);
                   onChange(value);
                 }}

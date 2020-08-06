@@ -28,7 +28,7 @@ import text from './text.json';
 import { DATA_TYPES } from './constants';
 import { SCHEMA_PROPS } from '../../../../constants';
 
-import { Property } from '../../types';
+import { Property } from '../../../../types';
 
 type Props = {
   /** Property */
@@ -72,9 +72,7 @@ const PropertyTypeCast: FC<Props> = ({ type, property, onChange }) => {
         !editMode && setEditMode(true);
       }}
     >
-      <DropableContainer
-        editMode={editMode}
-        isActive={schemaType !== type}>
+      <DropableContainer editMode={editMode} isActive={schemaType !== type}>
         {type}
       </DropableContainer>
       <Dropdown isOpen={editMode} fullWidth={false}>

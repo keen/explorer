@@ -16,13 +16,15 @@ import text from './text.json';
 import { TYPES_CONFIG } from '../../constants';
 
 import { GetComponent } from './types';
-import { Coordinates, Operator, Property as PropertyType } from '../../types';
+import { Coordinates, Operator, Property as PropertyType } from '../../../../types';
 
 type Props = {
   /** Type of property */
   propertyType: PropertyType;
   /** Change event handler */
-  onChange: (value: string | boolean | number | Coordinates | Array<string | number>) => void;
+  onChange: (
+    value: string | boolean | number | Coordinates | Array<string | number>
+  ) => void;
   /** Filter value */
   value?: string | boolean | number | Coordinates | Array<string | number>;
   /** Filter operator */
@@ -41,8 +43,10 @@ const getValueComponent = ({
   const { component } = TYPES_CONFIG[propertyType][operator];
 
   switch (component) {
+    case 'null-placeholder':
+      return null;
     case 'list':
-      return <FilterListValue value={value as string[]} onChange={onChange} />;
+      return <FilterListValue items={value as string[]} onChange={onChange} />;
     case 'datepicker':
       return (
         <DatePickerContainer>
@@ -87,9 +91,9 @@ const FilterValue: FC<Props> = ({
   return (
     <>
       {propertyType && operator ? (
-        <div>
+        <>
           {getValueComponent({ propertyType, operator, onChange, value, id })}
-        </div>
+        </>
       ) : (
         <PropertyGroup isActive={false}>
           <PropertyItem>

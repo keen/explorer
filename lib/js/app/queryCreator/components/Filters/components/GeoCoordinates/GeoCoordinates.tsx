@@ -8,7 +8,7 @@ import {
 } from './GeoCoordinates.styles';
 import text from './text.json';
 
-import { Coordinates } from '../../types';
+import { Coordinates } from '../../../../types';
 
 type Props = {
   /** Geo coordinates */
