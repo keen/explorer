@@ -1,8 +1,11 @@
 import React, { FC, useEffect, useState, useRef } from 'react';
 import { useSelector } from 'react-redux';
 
+import { Operator } from './Filters.styles';
+
 import FiltersContext from './FiltersContext';
 import { Filter } from './components';
+import Badge from '../Badge';
 
 import { getCollectionSchema } from '../../modules/events';
 import { useSearch } from '../../hooks';
@@ -10,7 +13,7 @@ import { useSearch } from '../../hooks';
 import { createTree } from '../../utils/createTree';
 import { setOperator, setDefaultValue } from './utils';
 
-import { SEARCH_EXPAND_TIME } from './constants';
+import { SEARCH_EXPAND_TIME, AND_OPERATOR } from './constants';
 import { SCHEMA_PROPS } from '../../constants';
 
 import { AppState, Filter as FilterType } from '../../types';
@@ -86,31 +89,38 @@ const Filters: FC<Props> = ({
     <FiltersContext.Provider
       value={{ expandTree, searchPropertiesPhrase, schema: collectionSchema }}
     >
-      {filters.map((filter, idx) => (
-        <Filter
-          id={`filter_${idx}`}
-          key={idx}
-          filter={filter}
-          properties={propertiesTree ? propertiesTree : schemaTree}
-          onSearchProperties={searchHandler}
-          onPropertyChange={(propertyName) => {
-            const schemaType = collectionSchema[propertyName];
-            const inferredType = SCHEMA_PROPS[schemaType];
-            const operator = setOperator(inferredType, filter.operator);
+      {filters.map((filter, idx, collection) => (
+        <>
+          <Filter
+            id={`filter-${idx}`}
+            key={idx}
+            filter={filter}
+            properties={propertiesTree ? propertiesTree : schemaTree}
+            onSearchProperties={searchHandler}
+            onPropertyChange={(propertyName) => {
+              const schemaType = collectionSchema[propertyName];
+              const inferredType = SCHEMA_PROPS[schemaType];
+              const operator = setOperator(inferredType, filter.operator);
 
-            onChange(idx, {
-              propertyName,
-              propertyType: inferredType,
-              operator,
-              propertyValue: setDefaultValue(inferredType, operator),
-            });
+              onChange(idx, {
+                propertyName,
+                propertyType: inferredType,
+                operator,
+                propertyValue: setDefaultValue(inferredType, operator),
+              });
 
-            setSearchPhrase(null);
-            setPropertiesTree(schemaTree);
-          }}
-          onRemove={() => onRemove(idx)}
-          onChange={(filter) => onChange(idx, filter)}
-        />
+              setSearchPhrase(null);
+              setPropertiesTree(schemaTree);
+            }}
+            onRemove={() => onRemove(idx)}
+            onChange={(filter) => onChange(idx, filter)}
+          />
+          {idx + 1 !== collection.length && (
+            <Operator key={`operator-${idx}`}>
+              <Badge>{AND_OPERATOR}</Badge>
+            </Operator>
+          )}
+        </>
       ))}
     </FiltersContext.Provider>
   );

@@ -18,7 +18,7 @@ export const transformToQuery = (query: QueryState) => {
   });
 
   if (queryCopy.filters) {
-    queryCopy.filters = queryCopy.filters.map(convertAbstractOperators)
+    queryCopy.filters = queryCopy.filters.map(convertAbstractOperators);
   }
 
   return snakeCase({

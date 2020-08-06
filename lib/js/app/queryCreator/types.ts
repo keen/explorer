@@ -42,36 +42,35 @@ export type Timeframe =
       end: string;
     };
 
-    export type Property =
-      | 'String'
-      | 'Number'
-      | 'Datetime'
-      | 'List'
-      | 'Geo'
-      | 'Boolean';
+export type Property =
+  | 'String'
+  | 'Number'
+  | 'Datetime'
+  | 'List'
+  | 'Geo'
+  | 'Boolean';
 
-      export type Coordinates = {
-        coordinates: [number, number];
-        maxDistanceMiles: number;
-      };
+export type Coordinates = {
+  coordinates: [number, number];
+  maxDistanceMiles: number;
+};
 
-      export type Operator =
-        | 'or'
-        | 'eq'
-        | 'ne'
-        | 'lt'
-        | 'lte'
-        | 'gt'
-        | 'gte'
-        | 'exists'
-        | 'in'
-        | 'contains'
-        | 'not_contains'
-        | 'within'
-        | 'regex'
-        | 'is_null'
-        | 'is_not_null';
-
+export type Operator =
+  | 'or'
+  | 'eq'
+  | 'ne'
+  | 'lt'
+  | 'lte'
+  | 'gt'
+  | 'gte'
+  | 'exists'
+  | 'in'
+  | 'contains'
+  | 'not_contains'
+  | 'within'
+  | 'regex'
+  | 'is_null'
+  | 'is_not_null';
 
 export type Filter = {
   propertyName: string;
