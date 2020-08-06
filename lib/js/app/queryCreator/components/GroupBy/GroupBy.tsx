@@ -1,5 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { FC, useEffect, useRef, useCallback, useReducer, useState } from 'react';
+import React, {
+  FC,
+  useEffect,
+  useRef,
+  useCallback,
+  useReducer,
+  useState,
+} from 'react';
 import Sortable from 'sortablejs';
 import { useSelector, useDispatch } from 'react-redux';
 import shallowEqual from 'shallowequal';
@@ -10,7 +17,6 @@ import { Section, GroupSettings } from './GroupBy.styles';
 
 import { GroupByProperty } from './components';
 import Title from '../Title';
-
 
 import {
   addGroup,
@@ -174,32 +180,32 @@ const GroupBy: FC<Props> = ({ collection }) => {
       <Title isDisabled={!eventCollection}>Group by</Title>
       <Section>
         <SearchContext.Provider value={{ expandTree, searchPropertiesPhrase }}>
-        <div ref={sortableRef} style={{ display: 'flex', flexWrap: 'wrap' }}>
-          {state.map(({ property, id }) => (
-            <GroupSettings key={id}>
-              <GroupByProperty
-                isEditAllowed={!isDragged}
-                properties={propertiesTree ? propertiesTree : schemaTree}
-                property={property}
-                onSearchProperties={searchHandler}
-                onSelectProperty={(property) => {
-                  clearSearchHandler();
-                  groupDispatcher(selectGroupProperty(id, property));
-                }}
-                onRemove={() => {
-                  clearSearchHandler();
-                  groupDispatcher(removeGroup(id));
-                }}
-              />
-            </GroupSettings>
-          ))}
-          <ActionButton
-            className="add-button"
-            isDisabled={!eventCollection}
-            action="create"
-            onClick={() => groupDispatcher(addGroup(''))}
-          />
-        </div>
+          <div ref={sortableRef} style={{ display: 'flex', flexWrap: 'wrap' }}>
+            {state.map(({ property, id }) => (
+              <GroupSettings key={id}>
+                <GroupByProperty
+                  isEditAllowed={!isDragged}
+                  properties={propertiesTree ? propertiesTree : schemaTree}
+                  property={property}
+                  onSearchProperties={searchHandler}
+                  onSelectProperty={(property) => {
+                    clearSearchHandler();
+                    groupDispatcher(selectGroupProperty(id, property));
+                  }}
+                  onRemove={() => {
+                    clearSearchHandler();
+                    groupDispatcher(removeGroup(id));
+                  }}
+                />
+              </GroupSettings>
+            ))}
+            <ActionButton
+              className="add-button"
+              isDisabled={!eventCollection}
+              action="create"
+              onClick={() => groupDispatcher(addGroup(''))}
+            />
+          </div>
         </SearchContext.Provider>
       </Section>
     </div>
