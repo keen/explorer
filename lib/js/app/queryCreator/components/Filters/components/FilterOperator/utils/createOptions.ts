@@ -1,4 +1,4 @@
-import { Property, Operator } from '../../../types';
+import { Property, Operator } from '../../../../../types';
 
 import { TYPES_CONFIG } from '../../../constants';
 
@@ -9,6 +9,7 @@ export const createOptions = (propertyType: Property) => {
 
     return operators.map((operatorKey: Operator) => ({
       label: operatorsConfig[operatorKey].label,
+      rootOperator: operatorsConfig[operatorKey].rootOperator,
       value: operatorKey,
     }));
   }

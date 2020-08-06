@@ -18,7 +18,7 @@ import PropertiesTree from '../../../PropertiesTree';
 import PropertyTypeCast from '../PropertyTypeCast';
 import FiltersContext from '../../FiltersContext';
 
-import { Property as PropertyType } from '../../types';
+import { Property as PropertyType } from '../../../../types';
 
 import text from './text.json';
 

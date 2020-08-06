@@ -1,4 +1,4 @@
-import { Coordinates, Operator, Property } from '../../types';
+import { Coordinates, Operator, Property } from '../../../../types';
 
 export type GetComponent = {
   propertyType: Property;

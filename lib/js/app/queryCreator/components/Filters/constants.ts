@@ -1,4 +1,9 @@
-import { Property, Coordinates, FiltersValueComponent } from './types';
+import {
+  FilterValue,
+  FiltersValueComponent,
+} from './types';
+import {   Property,
+  Operator } from '../../types';
 
 import { getCurrentDate } from './utils';
 
@@ -14,19 +19,36 @@ export const DATA_TYPES = {
   geo: 'Geo',
 };
 
+export const INTERNAL_OPERATORS: Record<
+  string,
+  {
+    label: string;
+    defaultValue: FilterValue;
+    component: FiltersValueComponent;
+    rootOperator?: Operator;
+  }
+> = {
+  is_null: {
+    label: 'value is null',
+    defaultValue: null,
+    rootOperator: 'eq',
+    component: 'null-placeholder',
+  },
+  is_not_null: {
+    label: 'value is not null',
+    defaultValue: null,
+    rootOperator: 'ne',
+    component: 'null-placeholder',
+  },
+};
+
 export const TYPES_CONFIG: Record<
   Property,
   {
     [key: string]: {
       label: string;
-      defaultValue:
-        | boolean
-        | string
-        | Coordinates
-        | number
-        | Function
-        | string[]
-        | number[];
+      defaultValue: FilterValue;
+      rootOperator?: Operator;
       component: FiltersValueComponent;
     };
   }
@@ -119,6 +141,7 @@ export const TYPES_CONFIG: Record<
       defaultValue: '',
       component: 'input-text',
     },
+    ...INTERNAL_OPERATORS,
   },
   List: {
     eq: {

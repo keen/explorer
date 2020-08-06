@@ -1,6 +1,6 @@
 import { TYPES_CONFIG } from '../constants';
 
-import { Operator, Property } from '../types';
+import { Operator, Property } from '../../../types';
 
 export const setOperator = (
   propertyType: Property,

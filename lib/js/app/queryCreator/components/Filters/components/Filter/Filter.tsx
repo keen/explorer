@@ -61,6 +61,7 @@ const Filter: FC<Props> = ({
       </FilterItem>
       <FilterItem>
         <FilterOperator
+          property={propertyName}
           propertyType={propertyType}
           operator={operator}
           onChange={(updatedOperator) => {
