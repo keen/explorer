@@ -15,6 +15,22 @@ export const KEYBOARD_KEYS = {
   ESCAPE: 27,
 };
 
+export const SCHEMA_PROPS = {
+  num: 'Number',
+  string: 'String',
+  bool: 'Boolean',
+  datetime: 'Datetime',
+  null: 'String',
+  list: 'List',
+  geo: 'Geo',
+  array: 'List',
+};
+
+export const ABSTRACT_OPERATORS = [
+  'is_null',
+  'is_not_null',
+];
+
 export const ANALYSIS_TYPES: Analysis[] = [
   'average',
   'count',

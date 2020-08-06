@@ -12,15 +12,10 @@ export const Container = styled.div<{
   display: flex;
   background: ${transparentize(0.85, colors.blue[100])};
   border-radius: 4px;
-  border: solid 1px ${transparentize(0.85, colors.blue[100])};
   box-sizing: border-box;
   height: 37px;
 
   transition: border-color 0.2s linear;
-
-  &:hover {
-    border: 1px solid rgba(39, 86, 109, 0.5);
-  }
 
   ${(props) =>
     props.isActive &&
@@ -29,6 +24,6 @@ export const Container = styled.div<{
     `}
 
   ${PropertyItem} + ${PropertyItem} {
-    border-left: solid 1px red;
+    border-left: solid 1px ${colors.white[500]};
   }
 `;

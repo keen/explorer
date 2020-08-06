@@ -1,64 +1,40 @@
-import React, {
-  FC,
-  useMemo,
-  useReducer,
-  useEffect,
-  useState,
-  useRef,
-} from 'react';
+import React, { FC, useEffect, useState, useRef } from 'react';
 import { useSelector } from 'react-redux';
-
-import { Button, ActionButton } from '@keen.io/ui-core';
 
 import FiltersContext from './FiltersContext';
 import { Filter } from './components';
 
-import { addFilter, removeFilter, updateFilter, resetFilters } from './actions';
 import { getCollectionSchema } from '../../modules/events';
-
 import { useSearch } from '../../hooks';
 
-import { filtersReducer } from './reducer';
 import { createTree } from '../../utils/createTree';
+import { setOperator, setDefaultValue } from './utils';
 
-import {
-  DATA_TYPES,
-  SCHEMA_PROPS,
-  DEFAULT_TIMEFRAME_ABSOLUTE_VALUE,
-} from './constants';
-import {
-  convertFilters,
-  getPropertyType,
-  convertDateToString,
-  isStateValid,
-  getOperatorOptions,
-} from './utils';
+import { SEARCH_EXPAND_TIME } from './constants';
+import { SCHEMA_PROPS } from '../../constants';
 
-import {
-  AppState,
-  PropertyType,
-  Operator,
-  Filter as FilterType,
-} from '../../types';
-import { SchemaProp } from './types';
-
-import text from './text.json';
+import { AppState, Filter as FilterType } from '../../types';
 
 type Props = {
   /** Collection name */
   collection: string;
   /** Filters */
   filters: FilterType[];
-  /** Onchange handler */
-  onChange: (filters: FilterType[]) => void;
+  /** Reset event handler */
+  onReset: () => void;
+  /** Remove event handler */
+  onRemove: (idx: number) => void;
+  /** On change event handler */
+  onChange: (idx: number, filters: FilterType) => void;
 };
 
-const dataTypes = Object.keys(DATA_TYPES).map((item) => ({
-  label: DATA_TYPES[item],
-  value: DATA_TYPES[item],
-}));
-
-const Filters: FC<Props> = ({ collection, filters, onChange }) => {
+const Filters: FC<Props> = ({
+  collection,
+  filters,
+  onRemove,
+  onReset,
+  onChange,
+}) => {
   const [searchPropertiesPhrase, setSearchPhrase] = useState(null);
   const [expandTree, setTreeExpand] = useState(false);
   const expandTrigger = useRef(null);
@@ -88,7 +64,7 @@ const Filters: FC<Props> = ({ collection, filters, onChange }) => {
 
         expandTrigger.current = setTimeout(() => {
           setTreeExpand(true);
-        }, 300);
+        }, SEARCH_EXPAND_TIME);
       } else {
         setTreeExpand(false);
         setPropertiesTree(null);
@@ -100,74 +76,43 @@ const Filters: FC<Props> = ({ collection, filters, onChange }) => {
     }
   );
 
-  const [state, filtersDispatcher] = useReducer(filtersReducer, filters);
-
   useEffect(() => {
-    filters.map((filter, idx) => {
-      if (!filter?.propertyType) {
-        const type = getPropertyType(filter);
-        if (type?.value)
-          filtersDispatcher(updateFilter(idx, { propertyType: type.value }));
-      }
-    });
-  }, [filters]);
-
-  const setDefaults = (idx: number, type: PropertyType, value?: any) => {
-    if (type === 'Null')
-      filtersDispatcher(updateFilter(idx, { propertyValue: 'Null' }));
-    if (type === 'Datetime') {
-      const date = value || DEFAULT_TIMEFRAME_ABSOLUTE_VALUE;
-      filtersDispatcher(
-        updateFilter(idx, { propertyValue: convertDateToString(date) })
-      );
-    }
-    if (type === 'Geo') {
-      filtersDispatcher(updateFilter(idx, { operator: 'within' }));
-    }
-  };
+    return () => {
+      onReset();
+    };
+  }, []);
 
   return (
-    <>
-      <FiltersContext.Provider value={{ expandTree, searchPropertiesPhrase }}>
-        {state.map((filter, idx) => (
-          <Filter
-            key={idx}
-            filter={filter}
-            properties={propertiesTree ? propertiesTree : schemaTree}
-            onSearchProperties={searchHandler}
-            onRemove={() => filtersDispatcher(removeFilter(idx))}
-            onChange={(filter) => {
-              setSearchPhrase(null);
-              setPropertiesTree(schemaTree);
-              filtersDispatcher(updateFilter(idx, filter));
-            }}
-          />
-        ))}
-      </FiltersContext.Provider>
+    <FiltersContext.Provider
+      value={{ expandTree, searchPropertiesPhrase, schema: collectionSchema }}
+    >
+      {filters.map((filter, idx) => (
+        <Filter
+          id={`filter_${idx}`}
+          key={idx}
+          filter={filter}
+          properties={propertiesTree ? propertiesTree : schemaTree}
+          onSearchProperties={searchHandler}
+          onPropertyChange={(propertyName) => {
+            const schemaType = collectionSchema[propertyName];
+            const inferredType = SCHEMA_PROPS[schemaType];
+            const operator = setOperator(inferredType, filter.operator);
 
-      <ActionButton
-        action="create"
-        isDisabled={!collection}
-        onClick={() => filtersDispatcher(addFilter())}
-      />
+            onChange(idx, {
+              propertyName,
+              propertyType: inferredType,
+              operator,
+              propertyValue: setDefaultValue(inferredType, operator),
+            });
 
-      <Button
-        variant="secondary"
-        style="outline"
-        onClick={() => filtersDispatcher(resetFilters())}
-      >
-        {text.resetFilters}
-      </Button>
-      <Button
-        variant="success"
-        style="solid"
-        isDisabled={!isStateValid(state)}
-        onClick={() => onChange(convertFilters(state))}
-      >
-        {text.done}
-      </Button>
-      {!isStateValid(state) && `Please provide data for empty fields`}
-    </>
+            setSearchPhrase(null);
+            setPropertiesTree(schemaTree);
+          }}
+          onRemove={() => onRemove(idx)}
+          onChange={(filter) => onChange(idx, filter)}
+        />
+      ))}
+    </FiltersContext.Provider>
   );
 };
 

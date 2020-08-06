@@ -1,49 +1,22 @@
-import { Filter } from '../../types';
+import { Coordinates } from '../../types';
 
-import {
-  ADD_FILTER,
-  UPDATE_FILTER,
-  REMOVE_FILTER,
-  RESET_FILTERS,
-  SET_FILTERS,
-} from './constants';
+export type FiltersValueComponent =
+  | 'input-text'
+  | 'input-number'
+  | 'datepicker'
+  | 'geo-coordinates'
+  | 'boolean-switcher'
+  | 'null-placeholder'
+  | 'list';
 
-interface AddFilterAction {
-  type: typeof ADD_FILTER;
-}
-
-interface UpdateFilterAction {
-  type: typeof UPDATE_FILTER;
-  payload: {
-    index: number;
-    value: Partial<Filter>;
-  };
-}
-
-interface RemoveFilterAction {
-  type: typeof REMOVE_FILTER;
-  payload: {
-    index: number;
-  };
-}
-
-interface ResetFiltersAction {
-  type: typeof RESET_FILTERS;
-}
-
-interface SetFiltersAction {
-  type: typeof SET_FILTERS;
-  payload: {
-    filters: Filter[];
-  };
-}
-
-export type FiltersActions =
-  | AddFilterAction
-  | UpdateFilterAction
-  | RemoveFilterAction
-  | ResetFiltersAction
-  | SetFiltersAction;
+export type FilterValue =
+  | boolean
+  | string
+  | Coordinates
+  | number
+  | Function
+  | string[]
+  | number[];
 
 export type SchemaProp =
   | 'num'
@@ -54,8 +27,3 @@ export type SchemaProp =
   | 'list'
   | 'geo'
   | 'array';
-
-export type Coordinates = {
-  coordinates: [string, string];
-  maxDistanceMiles: string;
-};

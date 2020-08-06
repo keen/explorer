@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { ActionButton } from '@keen.io/ui-core';
 import { FieldGroup } from '@keen.io/forms';
 
 import { FiltersSettings } from './App.styles';
@@ -26,9 +27,15 @@ import {
   getEventCollection,
   getAnalysis,
   getFilters,
-  setFilters,
   setPercentile,
+  removeFilter,
+  addFilter,
+  setFilters,
+  updateFilter,
 } from './modules/query';
+import { getSchemas, getSchemaLoading } from './modules/events';
+
+import { AppState } from './types';
 
 type Props = {
   /** Preview collection event handler */
@@ -43,6 +50,14 @@ const App: FC<Props> = () => {
 
   const filters = useSelector(getFilters);
 
+  const isSchemaExist = useSelector((state: AppState) => {
+    const schemas = getSchemas(state);
+    return schemas[collection];
+  });
+  const isSchemaLoading = useSelector((state: AppState) =>
+    getSchemaLoading(state, collection)
+  );
+
   return (
     <div>
       <QueryArguments />
@@ -50,10 +65,19 @@ const App: FC<Props> = () => {
         <FiltersSettings>
           <Card>
             <Title isDisabled={!collection}>{text.filters}</Title>
-            <Filters
-              collection={collection}
-              filters={filters}
-              onChange={(filters) => dispatch(setFilters(filters))}
+            {isSchemaExist && !isSchemaLoading && (
+              <Filters
+                collection={collection}
+                filters={filters}
+                onReset={() => dispatch(setFilters([]))}
+                onRemove={(idx) => dispatch(removeFilter(idx))}
+                onChange={(idx, filter) => dispatch(updateFilter(idx, filter))}
+              />
+            )}
+            <ActionButton
+              action="create"
+              isDisabled={!collection}
+              onClick={() => dispatch(addFilter())}
             />
           </Card>
         </FiltersSettings>

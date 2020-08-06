@@ -15,25 +15,34 @@ import PropertyGroup, { PropertyItem } from '../../../PropertyGroup';
 import Property from '../../../Property';
 import PropertiesTree from '../../../PropertiesTree';
 
+import PropertyTypeCast from '../PropertyTypeCast';
 import FiltersContext from '../../FiltersContext';
+
+import { Property as PropertyType } from '../../../../types';
 
 import text from './text.json';
 
 type Props = {
   /** Property */
   property?: string;
+  /** Property type */
+  type?: PropertyType;
   /** Search properties event handler */
   onSearchProperties: (e: React.ChangeEvent<HTMLInputElement>) => void;
   /** Select property event handler */
   onSelectProperty: (property: string) => void;
+  /** Select property event handler */
+  onCastPropertyType: (type: PropertyType) => void;
   /** Properties tree */
   properties: Record<string, string[] | Record<string, any>>;
 };
 
 const FilterProperty: FC<Props> = ({
   property,
+  type,
   properties,
   onSelectProperty,
+  onCastPropertyType,
   onSearchProperties,
 }) => {
   const [editMode, setEditMode] = useState(false);
@@ -76,8 +85,13 @@ const FilterProperty: FC<Props> = ({
             onEditInputChange={onSearchProperties}
           />
         </PropertyItem>
-        <PropertyItem>test</PropertyItem>
-        <PropertyItem>X</PropertyItem>
+        {property && !editMode && (
+          <PropertyTypeCast
+            property={property}
+            type={type}
+            onChange={onCastPropertyType}
+          />
+        )}
       </PropertyGroup>
       <Dropdown isOpen={editMode} fullWidth={false}>
         <DropdownContent>

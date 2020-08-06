@@ -1,4 +1,7 @@
 import snakeCase from 'snakecase-keys';
+
+import { convertAbstractOperators } from './convertAbstractOperators';
+
 import { ReducerState as QueryState } from '../modules/query';
 
 import { FIELDS_CONFIG } from '../config';
@@ -13,6 +16,10 @@ export const transformToQuery = (query: QueryState) => {
       delete queryCopy[fieldName];
     }
   });
+
+  if (queryCopy.filters) {
+    queryCopy.filters = queryCopy.filters.map(convertAbstractOperators)
+  }
 
   return snakeCase({
     analysisType,

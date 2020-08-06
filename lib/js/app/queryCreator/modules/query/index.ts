@@ -20,6 +20,9 @@ import {
 } from './selectors';
 
 import {
+  addFilter,
+  removeFilter,
+  updateFilter,
   setQuery,
   resetQuery,
   selectEventCollection,
@@ -101,6 +104,9 @@ export {
   selectAnalysis,
   resetExtraction,
   resetQuery,
+  addFilter,
+  updateFilter,
+  removeFilter,
 };
 export {
   SetQueryAction,
