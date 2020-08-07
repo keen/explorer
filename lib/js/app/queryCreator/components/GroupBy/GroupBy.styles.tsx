@@ -84,3 +84,8 @@ export const GroupsContainer = forwardRef<
 });
 
 GroupsContainer.displayName = 'GroupsContainer';
+
+export const SortableContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+`; 

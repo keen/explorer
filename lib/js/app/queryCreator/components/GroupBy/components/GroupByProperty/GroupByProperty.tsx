@@ -7,8 +7,10 @@ import React, {
   useCallback,
 } from 'react';
 import { ActionButton } from '@keen.io/ui-core';
+import { transparentize } from 'polished';
+import { colors } from '@keen.io/colors';
 
-import { Container, DropdownContent } from './GroupByProperty.styles';
+import { Container, DropdownContent, StyledPropertyItem } from './GroupByProperty.styles';
 
 import PropertyGroup, { PropertyItem } from '../../../PropertyGroup';
 import Dropdown from '../../../Dropdown';
@@ -21,14 +23,18 @@ import text from './text.json';
 import { SearchContext } from '../../../../contexts';
 
 type Props = {
-  onRemove: () => void;
+  /** Properties tree */
+  properties: Record<string, string[] | Record<string, any>>;
+  /** Property */
+  property?: string;
+  /** Enable edit mode */
   isEditAllowed: boolean;
+  /** Select property event handler */
   onSelectProperty: (property: string) => void;
   /** Search properties event handler */
   onSearchProperties: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  /** Properties tree */
-  properties: Record<string, string[] | Record<string, any>>;
-  property?: string;
+  /** Remove event handler */
+  onRemove: () => void;
 };
 
 const GroupByProperty: FC<Props> = ({
@@ -72,6 +78,7 @@ const GroupByProperty: FC<Props> = ({
   return (
     <Container
       ref={containerRef}
+      isActive={editMode}
       onClick={() => !editMode && setEditMode(true)}
     >
       <PropertyGroup isActive={editMode}>
@@ -84,9 +91,9 @@ const GroupByProperty: FC<Props> = ({
             onEditInputChange={onSearchProperties}
           />
         </PropertyItem>
-        <PropertyItem>
-          <ActionButton onClick={onRemove} action="remove" />
-        </PropertyItem>
+        <StyledPropertyItem>
+          <ActionButton onClick={onRemove} action="remove" borderRadius="0 4px 4px 0" background={transparentize(0.85, colors.blue['100'])} />
+        </StyledPropertyItem>
       </PropertyGroup>
       <Dropdown isOpen={editMode} fullWidth={false}>
         <DropdownContent>

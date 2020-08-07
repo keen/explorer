@@ -3,5 +3,6 @@
   "removeGroup": "Remove",
   "addGroup": "Add Group",
   "placeholder": "Select property",
-  "label": "Property"
+  "label": "Property",
+  "title": "Group by"
 }

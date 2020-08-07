@@ -13,7 +13,7 @@ import shallowEqual from 'shallowequal';
 
 import { ActionButton } from '@keen.io/ui-core';
 
-import { Section, GroupSettings } from './GroupBy.styles';
+import { Section, GroupSettings, SortableContainer } from './GroupBy.styles';
 
 import { GroupByProperty } from './components';
 import Title from '../Title';
@@ -43,6 +43,8 @@ import { getCollectionSchema } from '../../modules/events';
 import { DRAG_DELAY, DRAG_ANIMATION_TIME } from './constants';
 
 import { AppState } from '../../types';
+
+import text from './text.json';
 
 type Props = {
   /** Collection name */
@@ -145,11 +147,10 @@ const GroupBy: FC<Props> = ({ collection }) => {
 
   useEffect(() => {
     let dragGhost;
-    console.log('SORTABLE RE-COMPUTE -------');
     new Sortable(sortableRef.current, {
       animation: DRAG_ANIMATION_TIME,
       delay: DRAG_DELAY,
-      filter: '.js-button',
+      filter: '.add-button',
       onStart: () => {
         setDragMode(true);
         setTreeExpand(false);
@@ -165,8 +166,9 @@ const GroupBy: FC<Props> = ({ collection }) => {
         setDragMode(false);
         dragGhost.parentNode.removeChild(dragGhost);
       },
-      setData: (dataTransfer, dragEl) => {
+      setData: (dataTransfer, dragEl) => { console.log(dragEl.innerHTML);
         dragGhost = dragEl.cloneNode(true);
+        dragGhost.style.width = dragEl.offsetWidth;
         const tree = dragGhost.querySelector('[data-testid="properties-tree"]');
         if (tree) tree.remove();
         document.body.appendChild(dragGhost);
@@ -177,35 +179,35 @@ const GroupBy: FC<Props> = ({ collection }) => {
 
   return (
     <div>
-      <Title isDisabled={!eventCollection}>Group by</Title>
+      <Title isDisabled={!eventCollection}>{text.title}</Title>
       <Section>
         <SearchContext.Provider value={{ expandTree, searchPropertiesPhrase }}>
-          <div ref={sortableRef} style={{ display: 'flex', flexWrap: 'wrap' }}>
-            {state.map(({ property, id }) => (
-              <GroupSettings key={id}>
-                <GroupByProperty
-                  isEditAllowed={!isDragged}
-                  properties={propertiesTree ? propertiesTree : schemaTree}
-                  property={property}
-                  onSearchProperties={searchHandler}
-                  onSelectProperty={(property) => {
-                    clearSearchHandler();
-                    groupDispatcher(selectGroupProperty(id, property));
-                  }}
-                  onRemove={() => {
-                    clearSearchHandler();
-                    groupDispatcher(removeGroup(id));
-                  }}
-                />
-              </GroupSettings>
-            ))}
-            <ActionButton
-              className="add-button"
-              isDisabled={!eventCollection}
-              action="create"
-              onClick={() => groupDispatcher(addGroup(''))}
-            />
-          </div>
+          <SortableContainer ref={sortableRef}>
+          {state.map(({ property, id }) => (
+            <GroupSettings key={id}>
+              <GroupByProperty
+                isEditAllowed={!isDragged}
+                properties={propertiesTree ? propertiesTree : schemaTree}
+                property={property}
+                onSearchProperties={searchHandler}
+                onSelectProperty={(property) => {
+                  clearSearchHandler();
+                  groupDispatcher(selectGroupProperty(id, property));
+                }}
+                onRemove={() => {
+                  clearSearchHandler();
+                  groupDispatcher(removeGroup(id));
+                }}
+              />
+            </GroupSettings>
+          ))}
+          <ActionButton
+            className="add-button"
+            isDisabled={!eventCollection}
+            action="create"
+            onClick={() => groupDispatcher(addGroup(''))}
+          />
+          </SortableContainer>
         </SearchContext.Provider>
       </Section>
     </div>
