@@ -8,6 +8,7 @@ import {
   EventCollection,
   TargetProperty,
   Timeframe,
+  Percentile
 } from '../../components';
 import { showField } from '../../utils/showField';
 
@@ -20,8 +21,10 @@ import {
   getTargetProperty,
   getTimeframe,
   getTimezone,
+  getPercentile,
   selectTimezone,
   setTimeframe,
+  setPercentile,
   DEFAULT_TIMEFRAME,
 } from '../../modules/query';
 
@@ -34,10 +37,11 @@ const App: FC<Props> = () => {
   const timeframe = useSelector(getTimeframe);
   const targetProperty = useSelector(getTargetProperty);
   const timezone = useSelector(getTimezone);
+  const percentile = useSelector(getPercentile);
 
   return (
     <Container>
-      <MenuItem>
+      <MenuItem width="25%">
         <Analysis
           analysis={analysis}
           onChange={(updatedAnalysis) =>
@@ -46,7 +50,7 @@ const App: FC<Props> = () => {
         />
       </MenuItem>
       {showField('eventCollection', analysis) && (
-        <MenuItem>
+        <MenuItem width="25%">
           <EventCollection
             collection={collection}
             onReset={() => dispatch(selectEventCollection(null))}
@@ -57,7 +61,7 @@ const App: FC<Props> = () => {
         </MenuItem>
       )}
       {showField('targetProperty', analysis) && (
-        <MenuItem>
+        <MenuItem width="25%">
           <TargetProperty
             collection={collection}
             property={targetProperty}
@@ -67,8 +71,19 @@ const App: FC<Props> = () => {
           />
         </MenuItem>
       )}
-      {showField('timeframe', analysis) && (
+      
+      {showField('percentile', analysis) && (
         <MenuItem>
+          <Percentile
+            value={percentile}
+            onReset={() => dispatch(setPercentile(null))}
+            onChange={(value) => dispatch(setPercentile(value))}
+          />
+        </MenuItem>
+      )}
+
+      {showField('timeframe', analysis) && (
+        <MenuItem width="25%">
           <Timeframe
             id="timeframe"
             value={timeframe}
