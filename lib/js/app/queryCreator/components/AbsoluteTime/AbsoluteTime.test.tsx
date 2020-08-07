@@ -6,7 +6,7 @@ import AbsoluteTime from './AbsoluteTime';
 
 const render = (overProps: any = {}) => {
   const props = {
-    id: 'id',
+    id: 'date',
     start: '2020-07-29T12:00:00Z',
     end: '2020-07-30T00:00:00Z',
     timezone: 'UTC',

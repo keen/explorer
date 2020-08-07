@@ -32,7 +32,7 @@ const AbsoluteTime: FC<Props> = memo(
         <TimeRow>
           <TimeLabel>{text.startDate}</TimeLabel>
           <DatePicker
-            id={`${id}_start`}
+            id={`${id}-start`}
             date={startDate}
             onChange={(date) => onChange({ start: date, end })}
           />
@@ -40,7 +40,7 @@ const AbsoluteTime: FC<Props> = memo(
         <TimeRow>
           <TimeLabel>{text.endDate}</TimeLabel>
           <DatePicker
-            id={`${id}_end`}
+            id={`${id}-end`}
             date={endDate}
             onChange={(date) => onChange({ start, end: date })}
           />

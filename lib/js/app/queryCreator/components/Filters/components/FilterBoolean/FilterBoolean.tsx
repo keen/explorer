@@ -28,7 +28,7 @@ const FilterBoolean: FC<Props> = ({ value, onChange }) => {
         onClick={() => !editMode && setEditMode(true)}
         onDefocus={() => setEditMode(false)}
         placeholder={text.placeholder}
-        value={'value'}
+        value={text.placeholder}
       >
         {value ? TRUE_LABEL : FALSE_LABEL}
       </DropableContainer>

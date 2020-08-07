@@ -1,5 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { FC, useEffect, useRef, useCallback, useReducer, useState } from 'react';
+import React, {
+  FC,
+  useEffect,
+  useRef,
+  useCallback,
+  useReducer,
+  useState,
+} from 'react';
 import Sortable from 'sortablejs';
 import { useSelector, useDispatch } from 'react-redux';
 import shallowEqual from 'shallowequal';

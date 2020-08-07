@@ -78,6 +78,7 @@ const getValueComponent = ({
     default:
       return (
         <Input
+          data-testid="filter-value-input"
           value={value as string}
           onChange={(e) => onChange(e.currentTarget.value)}
         />
