@@ -1,7 +1,7 @@
 {
   "name": "keen-explorer",
   "description": "Data Explorer by Keen IO",
-  "version": "7.1.4",
+  "version": "7.1.5",
   "license": "MIT",
   "bucket-name": "keen-js",
   "main": "dist/keen-explorer.umd.js",
