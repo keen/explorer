@@ -20,7 +20,7 @@ type Props = {
   /** Operator value */
   operator: Operator;
   /** Change event handler */
-  onChange: (operator: Operator, rootOperator?: Operator) => void;
+  onChange: (operator: Operator) => void;
 };
 
 const FilterOperator: FC<Props> = ({
@@ -53,7 +53,7 @@ const FilterOperator: FC<Props> = ({
         {getLabel(propertyType, operator)}
       </DropableContainer>
       <Dropdown isOpen={editMode} fullWidth={false}>
-        <OperatorsList>
+        <OperatorsList data-testid="operators-list">
           <DropdownListContainer scrollToActive maxHeight={240}>
             {(activeItemRef) => (
               <DropdownList

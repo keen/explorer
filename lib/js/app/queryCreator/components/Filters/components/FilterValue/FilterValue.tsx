@@ -55,7 +55,7 @@ const getValueComponent = ({
       return (
         <DatePickerContainer>
           <DatePicker
-            date={moment(value as string)}
+            date={moment.utc(value as string)}
             id={`datepicker_${id}`}
             onChange={onChange}
           />
