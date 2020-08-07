@@ -80,6 +80,7 @@ const GroupByProperty: FC<Props> = ({
       ref={containerRef}
       isActive={editMode}
       onClick={() => !editMode && setEditMode(true)}
+      data-testid="groupBy-property"
     >
       <PropertyGroup isActive={editMode}>
         <PropertyItem>

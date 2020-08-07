@@ -166,7 +166,7 @@ const GroupBy: FC<Props> = ({ collection }) => {
         setDragMode(false);
         dragGhost.parentNode.removeChild(dragGhost);
       },
-      setData: (dataTransfer, dragEl) => { console.log(dragEl.innerHTML);
+      setData: (dataTransfer, dragEl) => {
         dragGhost = dragEl.cloneNode(true);
         dragGhost.style.width = dragEl.offsetWidth;
         const tree = dragGhost.querySelector('[data-testid="properties-tree"]');
