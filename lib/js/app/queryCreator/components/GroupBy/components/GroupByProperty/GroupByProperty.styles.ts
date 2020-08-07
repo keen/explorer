@@ -4,7 +4,7 @@ import { PropertyItem } from '../../../PropertyGroup';
 
 type Props = {
   isActive: boolean;
-}
+};
 
 export const Container = styled.div<Props>`
   position: relative;
@@ -12,7 +12,7 @@ export const Container = styled.div<Props>`
   display: inline-flex;
   flex-direction: column;
 
-  cursor: ${props => props.isActive ? 'default' : 'grab' };
+  cursor: ${(props) => (props.isActive ? 'default' : 'grab')};
 `;
 
 export const DropdownContent = styled.div`
@@ -23,4 +23,4 @@ export const DropdownContent = styled.div`
 
 export const StyledPropertyItem = styled(PropertyItem)`
   background: none;
-`
+`;

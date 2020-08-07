@@ -48,5 +48,3 @@ test('allows users to add group by settings', async () => {
     expect(store.getActions()).toMatchInlineSnapshot(`Array []`);
   });
 });
-
-

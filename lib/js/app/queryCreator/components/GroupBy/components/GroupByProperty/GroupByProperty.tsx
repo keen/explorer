@@ -10,7 +10,11 @@ import { ActionButton } from '@keen.io/ui-core';
 import { transparentize } from 'polished';
 import { colors } from '@keen.io/colors';
 
-import { Container, DropdownContent, StyledPropertyItem } from './GroupByProperty.styles';
+import {
+  Container,
+  DropdownContent,
+  StyledPropertyItem,
+} from './GroupByProperty.styles';
 
 import PropertyGroup, { PropertyItem } from '../../../PropertyGroup';
 import Dropdown from '../../../Dropdown';
@@ -93,7 +97,13 @@ const GroupByProperty: FC<Props> = ({
           />
         </PropertyItem>
         <StyledPropertyItem>
-          <ActionButton onClick={onRemove} action="remove" borderRadius="0 4px 4px 0" background={transparentize(0.85, colors.blue['100'])} />
+          <ActionButton
+            onClick={onRemove}
+            action="remove"
+            borderRadius="0 4px 4px 0"
+            background="transparent"
+            backgroundHover={transparentize(0.85, colors.blue['100'])}
+          />
         </StyledPropertyItem>
       </PropertyGroup>
       <Dropdown isOpen={editMode} fullWidth={false}>
