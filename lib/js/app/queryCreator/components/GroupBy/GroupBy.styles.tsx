@@ -88,4 +88,4 @@ GroupsContainer.displayName = 'GroupsContainer';
 export const SortableContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
-`; 
+`;

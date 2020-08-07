@@ -31,7 +31,10 @@ const render = (overProps: any = {}) => {
 };
 
 test('allows user to remove property', () => {
-  const { wrapper: { getByTestId }, props } = render({ property: 'name' });
+  const {
+    wrapper: { getByTestId },
+    props,
+  } = render({ property: 'name' });
   const button = getByTestId('action-button');
 
   fireEvent.click(button);
@@ -39,7 +42,10 @@ test('allows user to remove property', () => {
 });
 
 test('allows user to select property', () => {
-  const { wrapper: { getByTestId, getByText }, props } = render();
+  const {
+    wrapper: { getByTestId, getByText },
+    props,
+  } = render();
 
   const element = getByTestId('groupBy-property');
   fireEvent.click(element);
@@ -51,14 +57,16 @@ test('allows user to select property', () => {
 });
 
 test('allows user to search property', () => {
-  const { wrapper: { getByTestId }, props } = render();
+  const {
+    wrapper: { getByTestId },
+    props,
+  } = render();
 
   const element = getByTestId('groupBy-property');
   fireEvent.click(element);
 
   const searchInput = getByTestId('property-input');
-  fireEvent.change(searchInput, { target: { value: 'age' }});
+  fireEvent.change(searchInput, { target: { value: 'age' } });
 
   expect(props.onSearchProperties).toHaveBeenCalled();
-
 });

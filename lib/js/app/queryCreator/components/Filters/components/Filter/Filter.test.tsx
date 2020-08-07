@@ -50,7 +50,10 @@ test('allows user to remove filter', () => {
     operator: undefined,
   };
 
-  const { wrapper: { getByTestId }, props } = render({ filter });
+  const {
+    wrapper: { getByTestId },
+    props,
+  } = render({ filter });
 
   const button = getByTestId('action-button');
   fireEvent.click(button);
@@ -66,7 +69,10 @@ test('allows user to set filter property', () => {
     operator: undefined,
   };
 
-  const { wrapper: { getByTestId, getByText }, props } = render({ filter });
+  const {
+    wrapper: { getByTestId, getByText },
+    props,
+  } = render({ filter });
 
   const element = getByTestId('filter-property');
   fireEvent.click(element);
@@ -85,7 +91,10 @@ test('allows user to cast property type', () => {
     operator: 'lt',
   };
 
-  const { wrapper: { getByTestId, getByText }, props } = render({ filter });
+  const {
+    wrapper: { getByTestId, getByText },
+    props,
+  } = render({ filter });
 
   const propertyTypes = getByTestId('property-type-cast');
   fireEvent.click(propertyTypes);
@@ -109,7 +118,10 @@ test('allows user to set operator', () => {
     operator: 'eq',
   };
 
-  const { wrapper: { getByText }, props } = render({ filter });
+  const {
+    wrapper: { getByText },
+    props,
+  } = render({ filter });
 
   const operators = getByText('equals');
   fireEvent.click(operators);
@@ -131,7 +143,10 @@ test('updates filter value based on operator', () => {
     operator: 'eq',
   };
 
-  const { wrapper: { getByText }, props } = render({ filter });
+  const {
+    wrapper: { getByText },
+    props,
+  } = render({ filter });
 
   const operators = getByText('equals');
   fireEvent.click(operators);
@@ -154,7 +169,10 @@ test('allows user to set filter value', () => {
     operator: 'eq',
   };
 
-  const { wrapper: { getByTestId }, props } = render({ filter });
+  const {
+    wrapper: { getByTestId },
+    props,
+  } = render({ filter });
 
   const input = getByTestId('filter-value-input');
   fireEvent.change(input, { target: { value: 'Andrew' } });

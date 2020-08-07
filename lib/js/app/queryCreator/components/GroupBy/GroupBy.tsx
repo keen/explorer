@@ -183,30 +183,30 @@ const GroupBy: FC<Props> = ({ collection }) => {
       <Section>
         <SearchContext.Provider value={{ expandTree, searchPropertiesPhrase }}>
           <SortableContainer ref={sortableRef}>
-          {state.map(({ property, id }) => (
-            <GroupSettings key={id}>
-              <GroupByProperty
-                isEditAllowed={!isDragged}
-                properties={propertiesTree ? propertiesTree : schemaTree}
-                property={property}
-                onSearchProperties={searchHandler}
-                onSelectProperty={(property) => {
-                  clearSearchHandler();
-                  groupDispatcher(selectGroupProperty(id, property));
-                }}
-                onRemove={() => {
-                  clearSearchHandler();
-                  groupDispatcher(removeGroup(id));
-                }}
-              />
-            </GroupSettings>
-          ))}
-          <ActionButton
-            className="add-button"
-            isDisabled={!eventCollection}
-            action="create"
-            onClick={() => groupDispatcher(addGroup(''))}
-          />
+            {state.map(({ property, id }) => (
+              <GroupSettings key={id}>
+                <GroupByProperty
+                  isEditAllowed={!isDragged}
+                  properties={propertiesTree ? propertiesTree : schemaTree}
+                  property={property}
+                  onSearchProperties={searchHandler}
+                  onSelectProperty={(property) => {
+                    clearSearchHandler();
+                    groupDispatcher(selectGroupProperty(id, property));
+                  }}
+                  onRemove={() => {
+                    clearSearchHandler();
+                    groupDispatcher(removeGroup(id));
+                  }}
+                />
+              </GroupSettings>
+            ))}
+            <ActionButton
+              className="add-button"
+              isDisabled={!eventCollection}
+              action="create"
+              onClick={() => groupDispatcher(addGroup(''))}
+            />
           </SortableContainer>
         </SearchContext.Provider>
       </Section>
