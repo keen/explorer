@@ -62,6 +62,7 @@ export interface ResetQueryAction {
 
 export interface AddFilterAction {
   type: typeof ADD_FILTER;
+  payload: { id: string };
 }
 
 export interface RemoveFilterAction {

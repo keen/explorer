@@ -1,9 +1,10 @@
 import React, { FC } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { v4 as uuid } from 'uuid';
 import { ActionButton } from '@keen.io/ui-core';
 import { FieldGroup } from '@keen.io/forms';
 
-import { FiltersSettings } from './App.styles';
+import { FiltersSettings, ActionContainer } from './App.styles';
 
 import {
   QueryArguments,
@@ -74,11 +75,16 @@ const App: FC<Props> = () => {
                 onChange={(idx, filter) => dispatch(updateFilter(idx, filter))}
               />
             )}
-            <ActionButton
-              action="create"
-              isDisabled={!collection}
-              onClick={() => dispatch(addFilter())}
-            />
+            <ActionContainer hasSpacing={!!filters.length}>
+              <ActionButton
+                action="create"
+                isDisabled={!collection}
+                onClick={() => {
+                  const filterId = uuid();
+                  dispatch(addFilter(filterId));
+                }}
+              />
+            </ActionContainer>
           </Card>
         </FiltersSettings>
       )}

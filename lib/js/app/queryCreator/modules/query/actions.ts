@@ -41,8 +41,11 @@ export const resetQuery = (): QueryActions => ({
   type: RESET_QUERY,
 });
 
-export const addFilter = (): QueryActions => ({
+export const addFilter = (id: string): QueryActions => ({
   type: ADD_FILTER,
+  payload: {
+    id,
+  },
 });
 
 export const removeFilter = (index: number): QueryActions => ({

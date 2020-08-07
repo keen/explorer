@@ -59,7 +59,10 @@ export const queryReducer = (
     case ADD_FILTER:
       return {
         ...state,
-        filters: [...state.filters, DEFAULT_FILTER],
+        filters: [
+          ...state.filters,
+          { ...DEFAULT_FILTER, id: action.payload.id },
+        ],
       };
     case REMOVE_FILTER:
       return {

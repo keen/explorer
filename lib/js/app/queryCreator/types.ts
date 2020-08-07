@@ -73,6 +73,7 @@ export type Operator =
   | 'is_not_null';
 
 export type Filter = {
+  id?: string;
   propertyName: string;
   operator: Operator;
   propertyValue: any;

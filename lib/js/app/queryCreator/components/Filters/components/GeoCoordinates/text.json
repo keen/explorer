@@ -1,5 +1,6 @@
 {
   "latLabel": "Lat:",
   "longLabel": "Long:",
-  "radiusLabel": "R:"
+  "radiusLabel": "R:",
+  "radiusUnit": "mi"
 }

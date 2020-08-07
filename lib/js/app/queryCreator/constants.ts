@@ -8,6 +8,8 @@ export const DEFAULT_ANALYSIS = 'count';
 
 import { Analysis } from '../types';
 
+export const ACTION_BUTTON_SPACING = 5;
+
 export const KEYBOARD_KEYS = {
   UP: 38,
   DOWN: 40,

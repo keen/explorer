@@ -1,4 +1,5 @@
 import React, { FC, useEffect, useState, useRef } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
 import { useSelector } from 'react-redux';
 
 import { Operator } from './Filters.styles';
@@ -18,6 +19,12 @@ import { SEARCH_EXPAND_TIME, AND_OPERATOR } from './constants';
 import { SCHEMA_PROPS } from '../../constants';
 
 import { AppState, Filter as FilterType } from '../../types';
+
+const operatorMotion = {
+  initial: { opacity: 0, x: -100 },
+  animate: { opacity: 1, x: 0 },
+  exit: { opacity: 0, x: 0 },
+};
 
 type Props = {
   /** Collection name */
@@ -90,10 +97,10 @@ const Filters: FC<Props> = ({
     <SearchContext.Provider value={{ expandTree, searchPropertiesPhrase }}>
       <FiltersContext.Provider value={{ schema: collectionSchema }}>
         {filters.map((filter, idx, collection) => (
-          <>
+          <React.Fragment key={`fragment-${filter.id}`}>
             <Filter
-              id={`filter-${idx}`}
-              key={idx}
+              id={filter.id}
+              key={`filter-${filter.id}`}
               filter={filter}
               properties={propertiesTree ? propertiesTree : schemaTree}
               onSearchProperties={searchHandler}
@@ -115,12 +122,16 @@ const Filters: FC<Props> = ({
               onRemove={() => onRemove(idx)}
               onChange={(filter) => onChange(idx, filter)}
             />
-            {idx + 1 !== collection.length && (
-              <Operator key={`operator-${idx}`}>
-                <Badge>{AND_OPERATOR}</Badge>
-              </Operator>
-            )}
-          </>
+            <AnimatePresence>
+              {idx + 1 !== collection.length && (
+                <motion.div key={`operator-${filter.id}`} {...operatorMotion}>
+                  <Operator>
+                    <Badge>{AND_OPERATOR}</Badge>
+                  </Operator>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </React.Fragment>
         ))}
       </FiltersContext.Provider>
     </SearchContext.Provider>

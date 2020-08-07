@@ -8,6 +8,7 @@ import {
   call,
   put,
 } from 'redux-saga/effects';
+import { v4 as uuid } from 'uuid';
 import moment from 'moment-timezone';
 
 import {
@@ -141,6 +142,7 @@ function* transformFilters(collection: string, filters: Filter[]) {
   const { schema } = collectionSchema;
   const filtersWithInferredTypes = filters.map((filter) => ({
     ...filter,
+    id: uuid(),
     operator: createAbstractOperator(filter),
     propertyType: inferFilterType(filter, schema),
   }));
