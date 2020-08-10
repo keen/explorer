@@ -212,7 +212,7 @@ class App extends Component {
         limit,
         percentile,
       },
-      ...(timezone ? { timezone } : {})
+      ...(timezone ? { timezone } : {}),
     };
 
     if (analysisType === 'extraction') {
@@ -544,7 +544,11 @@ class App extends Component {
                     <Step key={index} index={index} className="">
                       <EventCollection funnel={true} step={index} />
                       <ActorProperty step={index} />
-                      <Timeframe funnel={true} step={index} />
+                      <Timeframe
+                        funnel={true}
+                        step={index}
+                        componentTimezone={step.timezone || 'UTC'}
+                      />
                       {this.renderFiltersFoldable({
                         funnel: true,
                         step: index,
