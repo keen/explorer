@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import snakeCase from 'snakecase-keys';
 
 import { convertAbstractOperators } from './convertAbstractOperators';
