@@ -4,7 +4,6 @@ import {
   render as rtlRender,
   fireEvent,
   waitFor,
-  act,
 } from '@testing-library/react';
 import configureStore from 'redux-mock-store';
 
@@ -41,7 +40,6 @@ test('allows users to add group by settings', async () => {
 
   const {
     wrapper: { getByTestId },
-    store,
   } = render(storeState, { collection: 'purchases' });
 
   const button = getByTestId('action-button');
