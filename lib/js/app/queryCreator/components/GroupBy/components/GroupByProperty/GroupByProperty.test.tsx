@@ -43,12 +43,9 @@ test('allows user to remove property', () => {
 
 test('allows user to select property', () => {
   const {
-    wrapper: { getByTestId, getByText },
+    wrapper: { getByText },
     props,
   } = render();
-
-  const element = getByTestId('groupBy-property');
-  fireEvent.click(element);
 
   const property = getByText('age');
   fireEvent.click(property);
@@ -61,9 +58,6 @@ test('allows user to search property', () => {
     wrapper: { getByTestId },
     props,
   } = render();
-
-  const element = getByTestId('groupBy-property');
-  fireEvent.click(element);
 
   const searchInput = getByTestId('property-input');
   fireEvent.change(searchInput, { target: { value: 'age' } });

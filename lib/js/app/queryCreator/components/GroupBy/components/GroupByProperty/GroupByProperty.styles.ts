@@ -2,17 +2,11 @@ import styled from 'styled-components';
 
 import { PropertyItem } from '../../../PropertyGroup';
 
-type Props = {
-  isActive: boolean;
-};
-
-export const Container = styled.div<Props>`
+export const Container = styled.div`
   position: relative;
 
   display: inline-flex;
   flex-direction: column;
-
-  cursor: ${(props) => (props.isActive ? 'default' : 'grab')};
 `;
 
 export const DropdownContent = styled.div`

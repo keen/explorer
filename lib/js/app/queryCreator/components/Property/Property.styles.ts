@@ -17,6 +17,7 @@ const placeholderMixin = () => css`
 
 export const Content = styled.div`
   display: flex;
+  cursor: default;
 `;
 
 export const Placeholder = styled.span`

@@ -21,6 +21,14 @@ export const GroupSettings = styled.div`
   margin-right: 10px;
   margin-bottom: 10px;
 
+  &[draggable='true'] {
+    cursor: grabbing;
+  }
+
+  &[draggable='false'] {
+    cursor: grab;
+  }
+
   &:last-child {
     margin-right: 0;
   }

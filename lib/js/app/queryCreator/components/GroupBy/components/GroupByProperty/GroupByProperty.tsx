@@ -49,7 +49,7 @@ const GroupByProperty: FC<Props> = ({
   onSearchProperties,
   onRemove,
 }) => {
-  const [editMode, setEditMode] = useState(false);
+  const [editMode, setEditMode] = useState(!property);
   const containerRef = useRef(null);
 
   const { expandTree, searchPropertiesPhrase } = useContext(SearchContext);
@@ -82,7 +82,6 @@ const GroupByProperty: FC<Props> = ({
   return (
     <Container
       ref={containerRef}
-      isActive={editMode}
       onClick={() => !editMode && setEditMode(true)}
       data-testid="groupBy-property"
     >

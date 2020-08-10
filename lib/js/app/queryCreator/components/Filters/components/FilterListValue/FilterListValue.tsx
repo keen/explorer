@@ -1,4 +1,6 @@
 import React, { FC, useState, useRef, useCallback } from 'react';
+import { transparentize } from 'polished';
+import { colors } from '@keen.io/colors';
 import { ActionButton } from '@keen.io/ui-core';
 
 import {
@@ -87,9 +89,11 @@ const FilterListValue: FC<Props> = ({ items, onChange }) => {
                   </PropertyItem>
                   <PropertyItem>
                     <ActionButton
-                      action="remove"
                       onClick={() => removeHandler(value)}
+                      action="remove"
+                      borderRadius="0 4px 4px 0"
                       background="transparent"
+                      backgroundHover={transparentize(0.85, colors.blue['100'])}
                     />
                   </PropertyItem>
                 </PropertyGroup>
