@@ -46,7 +46,16 @@ test('allows users to add group by settings', async () => {
   fireEvent.click(button);
 
   waitFor(() => {
-    expect(store.getActions()).toMatchInlineSnapshot(`Array []`);
+    expect(store.getActions()).toMatchInlineSnapshot(`
+      Array [
+        Object {
+          "payload": Object {
+            "groupBy": undefined,
+          },
+          "type": "@query-creator/SET_GROUP_BY",
+        },
+      ]
+    `);
   });
 });
 
