@@ -184,7 +184,7 @@ const GroupBy: FC<Props> = ({ collection }) => {
         <SearchContext.Provider value={{ expandTree, searchPropertiesPhrase }}>
           <SortableContainer ref={sortableRef}>
             {state.map(({ property, id }) => (
-              <GroupSettings key={id}>
+              <GroupSettings key={id} data-testid="groupBy-settings-item">
                 <GroupByProperty
                   isEditAllowed={!isDragged}
                   properties={propertiesTree ? propertiesTree : schemaTree}

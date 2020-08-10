@@ -4,6 +4,7 @@ import {
   render as rtlRender,
   fireEvent,
   waitFor,
+  act,
 } from '@testing-library/react';
 import configureStore from 'redux-mock-store';
 
@@ -42,21 +43,15 @@ test('allows users to add group by settings', async () => {
     wrapper: { getByTestId },
     store,
   } = render(storeState, { collection: 'purchases' });
+
   const button = getByTestId('action-button');
   fireEvent.click(button);
 
   waitFor(() => {
-    expect(store.getActions()).toMatchInlineSnapshot(`
-      Array [
-        Object {
-          "payload": Object {
-            "groupBy": undefined,
-          },
-          "type": "@query-creator/SET_GROUP_BY",
-        },
-      ]
-    `);
+    const element = getByTestId('groupBy-settings-item');
+    expect(element).toBeInTheDocument();
   });
+
 });
 
 test('should render exact number of properties with preserved order', async () => {
