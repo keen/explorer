@@ -21,6 +21,9 @@ import {
   REMOVE_FUNNEL_STEP,
   RESET_EXTRACTION,
   RESET_QUERY,
+  ADD_FILTER,
+  UPDATE_FILTER,
+  REMOVE_FILTER,
 } from './constants';
 
 import { QueryActions, ReducerState as Query } from './types';
@@ -36,6 +39,26 @@ export const setQuery = (query: Partial<Query>): QueryActions => ({
 
 export const resetQuery = (): QueryActions => ({
   type: RESET_QUERY,
+});
+
+export const addFilter = (id: string): QueryActions => ({
+  type: ADD_FILTER,
+  payload: {
+    id,
+  },
+});
+
+export const removeFilter = (index: number): QueryActions => ({
+  type: REMOVE_FILTER,
+  payload: { index },
+});
+
+export const updateFilter = (
+  index: number,
+  filter: Partial<Filter>
+): QueryActions => ({
+  type: UPDATE_FILTER,
+  payload: { index, filter },
 });
 
 export const setPropertyNames = (propertyNames: string[]): QueryActions => ({

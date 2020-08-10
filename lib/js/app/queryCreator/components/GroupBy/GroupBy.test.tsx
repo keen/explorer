@@ -1,21 +1,22 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { render as rtlRender, fireEvent } from '@testing-library/react';
+import {
+  render as rtlRender,
+  fireEvent,
+  waitFor,
+} from '@testing-library/react';
 import configureStore from 'redux-mock-store';
 
 import GroupBy from './GroupBy';
+import text from './text.json';
 
 const render = (storeState: any = {}, overProps: any = {}) => {
   const mockStore = configureStore([]);
   const store = mockStore({ ...storeState });
 
-  const props = {
-    ...overProps,
-  };
-
   const wrapper = rtlRender(
     <Provider store={store}>
-      <GroupBy {...props} />
+      <GroupBy {...overProps} />
     </Provider>
   );
 
@@ -25,10 +26,10 @@ const render = (storeState: any = {}, overProps: any = {}) => {
   };
 };
 
-test('allows users to remove group by settings', () => {
+test('allows users to add group by settings', async () => {
   const storeState = {
     query: {
-      groupBy: ['userId'],
+      groupBy: undefined,
     },
     events: {
       schemas: {
@@ -39,63 +40,59 @@ test('allows users to remove group by settings', () => {
 
   const {
     wrapper: { getByTestId },
-    store,
   } = render(storeState, { collection: 'purchases' });
 
-  const button = getByTestId('remove-property');
+  const button = getByTestId('action-button');
   fireEvent.click(button);
 
-  expect(store.getActions()).toMatchInlineSnapshot(`
-    Array [
-      Object {
-        "payload": Object {
-          "groupBy": Array [
-            "userId",
-          ],
-        },
-        "type": "@query-creator/SET_GROUP_BY",
-      },
-      Object {
-        "payload": Object {
-          "groupBy": undefined,
-        },
-        "type": "@query-creator/SET_GROUP_BY",
-      },
-    ]
-  `);
+  waitFor(() => {
+    const element = getByTestId('groupBy-settings-item');
+    expect(element).toBeInTheDocument();
+  });
+
 });
 
-// test('allows users to add group by settings', async () => {
-//   const storeState = {
-//     query: {
-//       groupBy: undefined,
-//     },
-//     events: {
-//       schemas: {
-//         purchases: { date: 'String', userId: 'String' },
-//       },
-//     },
-//   };
-//
-//   const {
-//     wrapper: { getByText, getByLabelText },
-//     store,
-//   } = render(storeState, { collection: 'purchases' });
-//   const button = getByText(text.addGroup);
-//   fireEvent.click(button);
-//
-//   await selectEvent.select(getByLabelText(text.label), 'userId');
-//
-//   waitFor(() => {
-//     expect(store.getActions()).toMatchInlineSnapshot(`
-//       Array [
-//         Object {
-//           "payload": Object {
-//             "groupBy": undefined,
-//           },
-//           "type": "@query-creator/SET_GROUP_BY",
-//         },
-//       ]
-//     `);
-//   });
-// });
+test('should render exact number of properties with preserved order', async () => {
+  const storeState = {
+    query: {
+      groupBy: ['date', 'userId'],
+    },
+    events: {
+      schemas: {
+        purchases: { date: 'String', userId: 'String' },
+      },
+    },
+  };
+
+  const {
+    wrapper: { getAllByTestId },
+  } = render(storeState, { collection: 'purchases' });
+
+  const items = getAllByTestId('groupBy-property');
+
+  expect(items.length).toEqual(Object.keys(storeState.query.groupBy).length);
+
+  items.forEach((item, idx) => {
+    expect(item.textContent).toEqual(`${storeState.query.groupBy[idx]}×`);
+  });
+});
+
+test('should render title', () => {
+  const storeState = {
+    query: {
+      groupBy: undefined,
+    },
+    events: {
+      schemas: {
+        purchases: { date: 'String', userId: 'String' },
+      },
+    },
+  };
+
+  const {
+    wrapper: { getByText },
+  } = render(storeState, { collection: 'purchases' });
+
+  const title = getByText(text.title);
+  expect(title).toBeInTheDocument();
+});

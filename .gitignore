@@ -5,6 +5,7 @@
 
 node_modules
 dist
+coverage
 config.js
 .idea/
 .package-lock.json

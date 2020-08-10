@@ -24,6 +24,10 @@ import {
   DEFAULT_FUNNEL_STEP,
   RESET_EXTRACTION,
   RESET_QUERY,
+  ADD_FILTER,
+  UPDATE_FILTER,
+  REMOVE_FILTER,
+  DEFAULT_FILTER,
 } from './constants';
 
 import { ReducerState, QueryActions } from './types';
@@ -52,6 +56,34 @@ export const queryReducer = (
   action: QueryActions
 ) => {
   switch (action.type) {
+    case ADD_FILTER:
+      return {
+        ...state,
+        filters: [
+          ...state.filters,
+          { ...DEFAULT_FILTER, id: action.payload.id },
+        ],
+      };
+    case REMOVE_FILTER:
+      return {
+        ...state,
+        filters: state.filters.filter(
+          (_filter, idx) => idx !== action.payload.index
+        ),
+      };
+    case UPDATE_FILTER:
+      return {
+        ...state,
+        filters: state.filters.map((filter, index) => {
+          if (index === action.payload.index) {
+            return {
+              ...filter,
+              ...action.payload.filter,
+            };
+          }
+          return filter;
+        }),
+      };
     case RESET_QUERY:
       return {
         ...initialState,

@@ -1,6 +1,14 @@
 /* eslint-disable @typescript-eslint/camelcase */
 
-import { all, select, takeLatest, getContext, put } from 'redux-saga/effects';
+import {
+  all,
+  select,
+  takeLatest,
+  getContext,
+  call,
+  put,
+} from 'redux-saga/effects';
+import { v4 as uuid } from 'uuid';
 import moment from 'moment-timezone';
 
 import {
@@ -15,6 +23,7 @@ import {
   getTimeframe,
   setTimeframe,
   setGroupBy,
+  setFilters,
   SetQueryAction,
   SelectTimezoneAction,
   SelectEventCollectionAction,
@@ -31,9 +40,14 @@ import {
   fetchCollectionSchemaSuccess,
   fetchCollectionSchemaError,
   setEventsCollections,
+  setCollectionSchemaLoading,
   getSchemas,
   FETCH_COLLECTION_SCHEMA,
 } from './modules/events';
+
+import { inferFilterType, createAbstractOperator } from './utils';
+
+import { Filter } from './types';
 
 function* appStart() {
   yield put(fetchProjectDetails());
@@ -59,6 +73,9 @@ function* fetchProject() {
 function* fetchSchema(action: FetchCollectionSchemaAction) {
   const collection = action.payload.collection;
   const client = yield getContext('keenClient');
+
+  yield put(setCollectionSchemaLoading(collection, true));
+
   try {
     const url = client.url(`/3.0/projects/{projectId}/events/${collection}`, {
       api_key: client.config.masterKey,
@@ -68,6 +85,8 @@ function* fetchSchema(action: FetchCollectionSchemaAction) {
     yield put(fetchCollectionSchemaSuccess(collection, properties));
   } catch (err) {
     yield put(fetchCollectionSchemaError(err));
+  } finally {
+    yield put(setCollectionSchemaLoading(collection, false));
   }
 }
 
@@ -107,6 +126,30 @@ function* selectTimezone(action: SelectTimezoneAction) {
   }
 }
 
+function* transformFilters(collection: string, filters: Filter[]) {
+  const schemas = yield select(getSchemas);
+  let collectionSchema = schemas[collection];
+
+  if (!collectionSchema) {
+    const client = yield getContext('keenClient');
+    const url = client.url(`/3.0/projects/{projectId}/events/${collection}`, {
+      api_key: client.config.masterKey,
+    });
+    const { properties } = yield fetch(url).then((response) => response.json());
+    collectionSchema = { schema: properties };
+  }
+
+  const { schema } = collectionSchema;
+  const filtersWithInferredTypes = filters.map((filter) => ({
+    ...filter,
+    id: uuid(),
+    operator: createAbstractOperator(filter),
+    propertyType: inferFilterType(filter, schema),
+  }));
+
+  yield put(setFilters(filtersWithInferredTypes));
+}
+
 function* setQuery(action: SetQueryAction) {
   const {
     payload: { query },
@@ -128,6 +171,10 @@ function* setQuery(action: SetQueryAction) {
         put(fetchCollectionSchema(eventCollection))
       )
     );
+  }
+
+  if (query.filters) {
+    yield call(transformFilters, query.eventCollection, query.filters);
   }
 }
 

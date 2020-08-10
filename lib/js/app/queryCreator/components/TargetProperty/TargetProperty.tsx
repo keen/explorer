@@ -40,7 +40,6 @@ const TargetProperty: FC<Props> = ({
   property,
   variant = 'primary',
 }) => {
-  const [searchPhrase, setSearchPhrase] = useState(null);
   const [expandTree, setTreeExpand] = useState(false);
   const expandTrigger = useRef(null);
 
@@ -60,7 +59,7 @@ const TargetProperty: FC<Props> = ({
   const [isOpen, setOpen] = useState(false);
   const containerRef = useRef(null);
 
-  const { searchHandler } = useSearch<{
+  const { searchHandler, searchPhrase, clearSearchPhrase } = useSearch<{
     path: string;
     type: string;
   }>(
@@ -72,7 +71,6 @@ const TargetProperty: FC<Props> = ({
         searchResult.forEach(({ path, type }) => {
           searchTree[path] = type;
         });
-        setSearchPhrase(phrase);
         setPropertiesTree(createTree(searchTree));
 
         expandTrigger.current = setTimeout(() => {
@@ -99,7 +97,7 @@ const TargetProperty: FC<Props> = ({
   useEffect(() => {
     if (!isOpen) {
       setTreeExpand(false);
-      setSearchPhrase(null);
+      clearSearchPhrase();
     }
   }, [isOpen]);
 

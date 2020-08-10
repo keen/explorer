@@ -7,7 +7,7 @@ interface ListElement {
   value: any;
 }
 
-type Props<T extends ListElement> = {
+type Props<T> = {
   /** Collection of items */
   items: T[];
   /** Click event handler */

@@ -1,3 +1,5 @@
-import { FiltersContainer } from './FiltersContainer';
+import Filters from './Filters';
+import { TYPES_CONFIG } from './constants';
 
-export default FiltersContainer;
+export default Filters;
+export { TYPES_CONFIG };

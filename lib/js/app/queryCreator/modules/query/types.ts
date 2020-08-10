@@ -22,6 +22,9 @@ import {
   CHANGE_FUNNEL_STEPS_ORDER,
   RESET_EXTRACTION,
   RESET_QUERY,
+  ADD_FILTER,
+  UPDATE_FILTER,
+  REMOVE_FILTER,
 } from './constants';
 
 import { Timezones, Timeframe, OrderBy, FunnelStep, Filter } from '../../types';
@@ -55,6 +58,21 @@ export interface SetQueryAction {
 
 export interface ResetQueryAction {
   type: typeof RESET_QUERY;
+}
+
+export interface AddFilterAction {
+  type: typeof ADD_FILTER;
+  payload: { id: string };
+}
+
+export interface RemoveFilterAction {
+  type: typeof REMOVE_FILTER;
+  payload: { index: number };
+}
+
+export interface UpdateFilterAction {
+  type: typeof UPDATE_FILTER;
+  payload: { index: number; filter: Partial<Filter> };
 }
 
 export interface SetExtractionLimitAction {
@@ -221,4 +239,7 @@ export type QueryActions =
   | RemoveFunnelStepAction
   | SelectFunnelStepEventCollectionAction
   | ChangeFunnelStepsOrderAction
-  | ResetExtractionAction;
+  | ResetExtractionAction
+  | AddFilterAction
+  | RemoveFilterAction
+  | UpdateFilterAction;

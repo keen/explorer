@@ -8,12 +8,27 @@ export const DEFAULT_ANALYSIS = 'count';
 
 import { Analysis } from '../types';
 
+export const ACTION_BUTTON_SPACING = 5;
+
 export const KEYBOARD_KEYS = {
   UP: 38,
   DOWN: 40,
   ENTER: 13,
   ESCAPE: 27,
 };
+
+export const SCHEMA_PROPS = {
+  num: 'Number',
+  string: 'String',
+  bool: 'Boolean',
+  datetime: 'Datetime',
+  null: 'String',
+  list: 'List',
+  geo: 'Geo',
+  array: 'List',
+};
+
+export const ABSTRACT_OPERATORS = ['is_null', 'is_not_null'];
 
 export const ANALYSIS_TYPES: Analysis[] = [
   'average',

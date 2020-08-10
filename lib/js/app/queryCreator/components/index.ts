@@ -9,16 +9,15 @@ import OrderBy from './OrderBy';
 import Interval from './Interval';
 import FunnelSteps from './FunnelSteps';
 import Limit from './Limit';
-import Accordion from './Accordion';
 import Extraction from './Extraction';
-import FiltersContainer from './Filters';
+import Filters from './Filters';
 import QueryArguments from './QueryArguments';
 import Card from './Card';
 import RadioGroup from './RadioGroup';
 import Tabs from './Tabs';
+import Title from './Title';
 
 export {
-  Accordion,
   Analysis,
   Card,
   Percentile,
@@ -32,8 +31,9 @@ export {
   Limit,
   EventCollection,
   FunnelSteps,
-  FiltersContainer,
+  Filters,
   QueryArguments,
   RadioGroup,
+  Title,
   Tabs,
 };

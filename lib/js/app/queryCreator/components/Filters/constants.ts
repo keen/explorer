@@ -1,8 +1,11 @@
-export const ADD_FILTER = '@filters/ADD_FILTER';
-export const UPDATE_FILTER = '@filters/UPDATE_FILTER';
-export const REMOVE_FILTER = '@filters/REMOVE_FILTER';
-export const RESET_FILTERS = '@filters/RESET_FILTERS';
-export const SET_FILTERS = '@filters/SET_FILTERS';
+/* eslint-disable @typescript-eslint/camelcase */
+
+import { FilterValue, FiltersValueComponent } from './types';
+import { Property, Operator } from '../../types';
+
+import { getCurrentDate } from './utils';
+
+export const SEARCH_EXPAND_TIME = 300;
 
 export const DATA_TYPES = {
   string: 'String',
@@ -14,82 +17,226 @@ export const DATA_TYPES = {
   geo: 'Geo',
 };
 
-export const SCHEMA_PROPS = {
-  num: 'Number',
-  string: 'String',
-  bool: 'Boolean',
-  datetime: 'Datetime',
-  null: 'String',
-  list: 'List',
-  geo: 'Geo',
-  array: 'List',
+export const AND_OPERATOR = 'AND';
+
+export const ABSTRACT_OPERATORS: Record<
+  string,
+  {
+    label: string;
+    defaultValue: FilterValue;
+    component: FiltersValueComponent;
+    rootOperator?: Operator;
+  }
+> = {
+  is_null: {
+    label: 'value is null',
+    defaultValue: null,
+    rootOperator: 'eq',
+    component: 'null-placeholder',
+  },
+  is_not_null: {
+    label: 'value is not null',
+    defaultValue: null,
+    rootOperator: 'ne',
+    component: 'null-placeholder',
+  },
 };
 
-const today = new Date();
-export const DEFAULT_TIMEFRAME_ABSOLUTE_VALUE = {
-  start: new Date(today.setHours(0, 0, 0, 0)).toISOString(),
-  end: new Date(today.setHours(24, 0, 0, 0)).toISOString(),
+export const TYPES_CONFIG: Record<
+  Property,
+  {
+    [key: string]: {
+      label: string;
+      defaultValue: FilterValue;
+      rootOperator?: Operator;
+      component: FiltersValueComponent;
+    };
+  }
+> = {
+  Number: {
+    eq: {
+      label: 'equals',
+      defaultValue: 0,
+      component: 'input-number',
+    },
+    ne: {
+      label: 'does not equal',
+      defaultValue: 0,
+      component: 'input-number',
+    },
+    gt: {
+      label: 'is greater than',
+      defaultValue: 0,
+      component: 'input-number',
+    },
+    gte: {
+      label: 'is greater than or equals',
+      defaultValue: 0,
+      component: 'input-number',
+    },
+    lt: {
+      label: 'is less than',
+      defaultValue: 0,
+      component: 'input-number',
+    },
+    lte: {
+      label: 'is less than or equals',
+      defaultValue: 0,
+      component: 'input-number',
+    },
+    in: {
+      label: 'matches any of the values',
+      defaultValue: [],
+      component: 'list',
+    },
+    exists: {
+      label: 'property exists',
+      defaultValue: true,
+      component: 'boolean-switcher',
+    },
+    ...ABSTRACT_OPERATORS,
+  },
+  String: {
+    contains: {
+      label: 'contains',
+      defaultValue: '',
+      component: 'input-text',
+    },
+    not_contains: {
+      label: 'does not contain',
+      defaultValue: '',
+      component: 'input-text',
+    },
+    eq: {
+      label: 'is same as ',
+      defaultValue: '',
+      component: 'input-text',
+    },
+    ne: {
+      label: 'is different than',
+      defaultValue: '',
+      component: 'input-text',
+    },
+    in: {
+      label: 'matches any of the values',
+      defaultValue: [],
+      component: 'list',
+    },
+    exists: {
+      label: 'property exists',
+      defaultValue: true,
+      component: 'boolean-switcher',
+    },
+    gt: {
+      label: 'is greater than',
+      defaultValue: '',
+      component: 'input-text',
+    },
+    lt: {
+      label: 'is less than',
+      defaultValue: '',
+      component: 'input-text',
+    },
+    regex: {
+      label: 'matches regex',
+      defaultValue: '',
+      component: 'input-text',
+    },
+    ...ABSTRACT_OPERATORS,
+  },
+  List: {
+    eq: {
+      label: 'equals',
+      defaultValue: '',
+      component: 'input-text',
+    },
+    ne: {
+      label: 'does not equal',
+      defaultValue: '',
+      component: 'input-text',
+    },
+    in: {
+      label: 'matches any of the values',
+      defaultValue: [],
+      component: 'list',
+    },
+    exists: {
+      label: 'property exists',
+      defaultValue: '',
+      component: 'boolean-switcher',
+    },
+    ...ABSTRACT_OPERATORS,
+  },
+  Boolean: {
+    eq: {
+      label: 'is',
+      defaultValue: true,
+      component: 'boolean-switcher',
+    },
+    ne: {
+      label: 'is not',
+      defaultValue: true,
+      component: 'boolean-switcher',
+    },
+    exists: {
+      label: 'property exists',
+      defaultValue: true,
+      component: 'boolean-switcher',
+    },
+    ...ABSTRACT_OPERATORS,
+  },
+  Datetime: {
+    eq: {
+      label: 'is specific date',
+      defaultValue: getCurrentDate,
+      component: 'datepicker',
+    },
+    ne: {
+      label: 'is not specific date',
+      defaultValue: getCurrentDate,
+      component: 'datepicker',
+    },
+    gt: {
+      label: 'is after',
+      defaultValue: getCurrentDate,
+      component: 'datepicker',
+    },
+    gte: {
+      label: 'is specific date or after',
+      defaultValue: getCurrentDate,
+      component: 'datepicker',
+    },
+    lt: {
+      label: 'is before',
+      defaultValue: getCurrentDate,
+      component: 'datepicker',
+    },
+    lte: {
+      label: 'is specific date or before',
+      defaultValue: getCurrentDate,
+      component: 'datepicker',
+    },
+    exists: {
+      label: 'property exists',
+      defaultValue: true,
+      component: 'boolean-switcher',
+    },
+    ...ABSTRACT_OPERATORS,
+  },
+  Geo: {
+    within: {
+      label: 'is within a given radius',
+      defaultValue: {
+        coordinates: [0, 0],
+        maxDistanceMiles: undefined,
+      },
+      component: 'geo-coordinates',
+    },
+    exists: {
+      label: 'property exists',
+      defaultValue: true,
+      component: 'boolean-switcher',
+    },
+    ...ABSTRACT_OPERATORS,
+  },
 };
-
-export const FILTER_OPERATORS = [
-  {
-    label: '\u003D Equal to',
-    value: 'eq',
-    dataTypes: ['String', 'Number', 'Null', 'List', 'Boolean', 'Datetime'],
-  },
-  {
-    label: '\u2260 Not equal to',
-    value: 'ne',
-    dataTypes: ['String', 'Number', 'Null', 'List', 'Boolean', 'Datetime'],
-  },
-  {
-    label: '\u003E Greater than',
-    value: 'gt',
-    dataTypes: ['Number', 'Null', 'Datetime', 'String'],
-  },
-  {
-    label: '\u2265 Greater than or equal to',
-    value: 'gte',
-    dataTypes: ['Number', 'Null', 'Datetime', 'String'],
-  },
-  {
-    label: '\u003C Less than',
-    value: 'lt',
-    dataTypes: ['Number', 'Null', 'Datetime', 'String'],
-  },
-  {
-    label: '\u2264 Less than or equal to',
-    value: 'lte',
-    dataTypes: ['Number', 'Null', 'Datetime', 'String'],
-  },
-  {
-    label: '\u2203 Property exists',
-    value: 'exists',
-    dataTypes: ['String', 'Number', 'Boolean'],
-  },
-  {
-    label: '\u229A String contains',
-    value: 'contains',
-    dataTypes: ['String', 'Null'],
-  },
-  {
-    label: '\u2349 String does not contain',
-    value: 'not_contains',
-    dataTypes: ['String', 'Null'],
-  },
-  {
-    label: '\u229A Regex',
-    value: 'regex',
-    dataTypes: ['String'],
-  },
-  {
-    label: '\u29C7 Matches any value in a list',
-    value: 'in',
-    dataTypes: ['String', 'Number', 'List'],
-  },
-  {
-    label: '\u2690 Within a given radius (geo)',
-    value: 'within',
-    dataTypes: ['Geo'],
-  },
-];

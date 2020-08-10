@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`creates JSON tree 1`] = `
+Object {
+  "age": Array [
+    "age",
+    "number",
+  ],
+  "category": Object {
+    "details": Object {
+      "name": Array [
+        "category.details.name",
+        "string",
+      ],
+    },
+    "id": Array [
+      "category.id",
+      "string",
+    ],
+  },
+}
+`;

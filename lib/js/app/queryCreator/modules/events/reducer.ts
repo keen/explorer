@@ -5,11 +5,13 @@ import { createCollection } from '../../utils/createCollection';
 
 import {
   SET_EVENTS_COLLECTIONS,
+  SET_COLLETION_SCHEMA_LOADING,
   FETCH_COLLECTION_SCHEMA_SUCCESS,
 } from './constants';
 
 export const initialState: ReducerState = {
   collections: [],
+  loadingSchemas: [],
   schemas: {},
 };
 
@@ -18,6 +20,15 @@ export const eventsReducer = (
   action: EventsActions
 ) => {
   switch (action.type) {
+    case SET_COLLETION_SCHEMA_LOADING:
+      return {
+        ...state,
+        loadingSchemas: action.payload.isLoading
+          ? [...state.loadingSchemas, action.payload.colletion]
+          : state.loadingSchemas.filter(
+              (collection) => collection !== action.payload.colletion
+            ),
+      };
     case FETCH_COLLECTION_SCHEMA_SUCCESS:
       return {
         ...state,
