@@ -22,10 +22,8 @@ test('calls "callback" handler with search results', () => {
 
   act(() => {
     result.current.searchHandler(searchEvent);
-      jest.runAllTimers();
+    jest.runAllTimers();
   });
-
-
 
   expect(mockFn).toHaveBeenCalledWith(
     [{ label: 'Category', value: 'category' }],
@@ -47,9 +45,7 @@ test('returns search phrase', () => {
   act(() => {
     result.current.searchHandler(searchEvent);
     jest.runAllTimers();
-
   });
-
 
   expect(result.current.searchPhrase).toEqual(searchPhrase);
 });
@@ -71,8 +67,6 @@ test('clears search phrase', () => {
 
     result.current.clearSearchPhrase();
   });
-
-
 
   expect(result.current.searchPhrase).toBeNull();
 });

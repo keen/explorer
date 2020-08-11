@@ -50,10 +50,8 @@ const TreeLeaf: FC<Props> = ({
   useEffect(() => {
     const element = nameRef.current;
     const contentOverflow = element.offsetWidth < element.scrollWidth;
-    if (contentOverflow) {
-      setEllipsis(true);
-    }
-  }, []);
+    setEllipsis(contentOverflow);
+  }, [propertyPath]);
 
   return (
     <Container

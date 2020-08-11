@@ -7,6 +7,8 @@ import {
 import { TreeLeaf, TreeNode } from './components';
 import { createTreeWalker, getPropertyPath, getPropertyType } from './utils';
 
+import { LIST_HEIGHT, ELEMENT_HEIGHT } from './constants';
+
 import { TreeData } from './types';
 
 type Props = {
@@ -77,8 +79,8 @@ const PropertiesTree: FC<Props> = ({
         ref={treeRef}
         treeWalker={createTreeWalker(properties, expanded)}
         itemData={{ activeProperty, onSelectProperty: onClick }}
-        itemSize={36}
-        height={200}
+        itemSize={ELEMENT_HEIGHT}
+        height={LIST_HEIGHT}
         width="100%"
       >
         {Node}

@@ -85,7 +85,6 @@ test('expands all properties tree levels', () => {
     jest.runAllTimers();
   });
 
-
   const property = getByText('name');
 
   expect(property).toBeInTheDocument();
