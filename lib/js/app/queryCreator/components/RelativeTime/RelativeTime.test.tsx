@@ -44,4 +44,3 @@ test('allows user to exclude the current day from timeframe', () => {
 
   expect(props.onChange).toHaveBeenCalledWith('previous_14_days');
 });
-

@@ -1,10 +1,16 @@
 import React, { FC, useCallback, useState } from 'react';
-import { Container, StyledLabel, Radio, StyledInput, Marker } from './RadioGroup.styles';
+import {
+  Container,
+  StyledLabel,
+  Radio,
+  StyledInput,
+  Marker,
+} from './RadioGroup.styles';
 
 type Group = {
   label: string;
   value: string;
-}
+};
 
 type Props = {
   /** Group name */
@@ -19,29 +25,32 @@ type Props = {
 const initialState = { x: 0, width: 0, height: 0, parentX: 0 };
 
 const RadioGroup: FC<Props> = ({ name, elements, value, onChange }) => {
-  const [state, setState] = useState(initialState)
+  const [state, setState] = useState(initialState);
 
-  const activeRadioRef = useCallback(node => {
+  const activeRadioRef = useCallback((node) => {
     if (node !== null) {
       const { x, width, height } = node.getBoundingClientRect();
-      setState(state => ({
+      setState((state) => ({
         ...state,
         x: x - state.parentX,
         width,
-        height
+        height,
       }));
     }
   }, []);
 
-  const containerRef = useCallback(node => {
-    if (node !== null) {
-      const { x } = node.getBoundingClientRect();
-      setState(state => ({
-        ...state,
-        parentX: x
-      }));
-    }
-  }, [state.parentX]);
+  const containerRef = useCallback(
+    (node) => {
+      if (node !== null) {
+        const { x } = node.getBoundingClientRect();
+        setState((state) => ({
+          ...state,
+          parentX: x,
+        }));
+      }
+    },
+    [state.parentX]
+  );
 
   const markerMotion = {
     initial: initialState,
@@ -53,23 +62,29 @@ const RadioGroup: FC<Props> = ({ name, elements, value, onChange }) => {
   return (
     <Container data-testid="radio-group" ref={containerRef}>
       {elements.map((radio) => (
-        <Radio key={radio.value} ref={radio.value === value ? activeRadioRef : null}>
+        <Radio
+          key={radio.value}
+          ref={radio.value === value ? activeRadioRef : null}
+        >
           <StyledInput
             type="radio"
             id={radio.value}
             value={radio.value}
-            name={name} 
+            name={name}
             checked={radio.value === value}
-            onChange={e => onChange(e, radio.value)}
+            onChange={(e) => onChange(e, radio.value)}
           />
           <StyledLabel
-            data-testid={`${radio.value}${radio.value === value ? '-active' : ''}`}
-            htmlFor={radio.value}>
-              {radio.label}
-            </StyledLabel>
+            data-testid={`${radio.value}${
+              radio.value === value ? '-active' : ''
+            }`}
+            htmlFor={radio.value}
+          >
+            {radio.label}
+          </StyledLabel>
         </Radio>
       ))}
-      {activeRadioRef && <Marker {...markerMotion } />}
+      {activeRadioRef && <Marker {...markerMotion} />}
     </Container>
   );
 };

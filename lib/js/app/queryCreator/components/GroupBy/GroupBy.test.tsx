@@ -49,7 +49,6 @@ test('allows users to add group by settings', async () => {
     const element = getByTestId('groupBy-settings-item');
     expect(element).toBeInTheDocument();
   });
-
 });
 
 test('should render exact number of properties with preserved order', async () => {
