@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { Container, MenuItem } from './QueryArguments.styles';
+import { Container, MenuItem, MenuItemPercentile } from './QueryArguments.styles';
 
 import {
   Analysis,
@@ -41,7 +41,7 @@ const App: FC<Props> = () => {
 
   return (
     <Container>
-      <MenuItem width="25%">
+      <MenuItem>
         <Analysis
           analysis={analysis}
           onChange={(updatedAnalysis) =>
@@ -50,7 +50,7 @@ const App: FC<Props> = () => {
         />
       </MenuItem>
       {showField('eventCollection', analysis) && (
-        <MenuItem width="25%">
+        <MenuItem>
           <EventCollection
             collection={collection}
             onReset={() => dispatch(selectEventCollection(null))}
@@ -61,7 +61,7 @@ const App: FC<Props> = () => {
         </MenuItem>
       )}
       {showField('targetProperty', analysis) && (
-        <MenuItem width="25%">
+        <MenuItem>
           <TargetProperty
             collection={collection}
             property={targetProperty}
@@ -73,17 +73,17 @@ const App: FC<Props> = () => {
       )}
       
       {showField('percentile', analysis) && (
-        <MenuItem>
+        <MenuItemPercentile>
           <Percentile
             value={percentile}
             onReset={() => dispatch(setPercentile(null))}
             onChange={(value) => dispatch(setPercentile(value))}
           />
-        </MenuItem>
+        </MenuItemPercentile>
       )}
 
       {showField('timeframe', analysis) && (
-        <MenuItem width="25%">
+        <MenuItem>
           <Timeframe
             id="timeframe"
             value={timeframe}

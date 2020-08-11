@@ -67,7 +67,7 @@ const Percentile: FC<Props> = ({ value, onReset, onChange }) => {
               opacity: 1
             }}>
             <Tooltip mode="dark" hasArrow={false}>
-              Percentile value has to be from range 0-100
+              {text.message}
             </Tooltip>
           </TooltipContainer>
         )

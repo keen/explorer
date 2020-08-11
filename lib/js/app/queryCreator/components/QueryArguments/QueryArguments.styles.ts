@@ -1,21 +1,22 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
-export const MenuItem = styled.div<{
-  width?: string;
-}>`
-  width: ${props => props.width};
+export const MenuItem = styled.div`
+  width: 25%;
   max-width: 320px;
   flex-shrink: 0;
-  ${props => props.width && css`
-    width: ${props.width};
-  `}
+`;
+
+export const MenuItemPercentile = styled.div`
+  flex-basis: 68px;
 `;
 
 export const Container = styled.div`
   display: flex;
   margin-bottom: 20px;
 
-  ${MenuItem} + ${MenuItem} {
+  ${MenuItem} + ${MenuItem},
+  ${MenuItemPercentile} + ${MenuItem},
+  ${MenuItem} + ${MenuItemPercentile} {
     margin-left: 20px;
   }
 `;

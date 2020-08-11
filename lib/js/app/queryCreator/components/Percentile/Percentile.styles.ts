@@ -25,4 +25,6 @@ export const TooltipContainer = styled(motion.div)`
   pointer-events: none;
   z-index: 1;
   width: 200px;
+  font-family: 'Lato Regular', sans-serif;
+  font-size: 14px;
 `;
