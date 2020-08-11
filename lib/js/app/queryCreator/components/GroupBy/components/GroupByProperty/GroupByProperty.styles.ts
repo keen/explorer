@@ -11,8 +11,6 @@ export const Container = styled.div`
 
 export const DropdownContent = styled.div`
   width: 285px;
-  max-height: 300px;
-  overflow-y: scroll;
 `;
 
 export const StyledPropertyItem = styled(PropertyItem)`

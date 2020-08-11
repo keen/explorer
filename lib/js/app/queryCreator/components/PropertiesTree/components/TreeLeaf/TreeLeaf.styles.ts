@@ -4,7 +4,6 @@ import { colors } from '@keen.io/colors';
 
 export const Container = styled.div<{
   isActive?: boolean;
-  padding: number;
 }>`
   position: relative;
   display: flex;
@@ -12,10 +11,11 @@ export const Container = styled.div<{
   font-size: 14px;
   color: ${colors.blue[500]};
 
-  padding-left: ${(props) => props.padding}px;
   padding-right: 15px;
   padding-top: 10px;
   padding-bottom: 10px;
+  width: 100%;
+  box-sizing: border-box;
 
   cursor: pointer;
   transition: background 0.2s linear;

@@ -1,11 +1,13 @@
-import React, { FC } from 'react';
+import React, { FC, useRef, useEffect } from 'react';
+import {
+  FixedSizeTree as Tree,
+  FixedSizeNodeComponentProps,
+} from 'react-vtree';
 
-import { TreeLevel } from './components';
+import { TreeLeaf, TreeNode } from './components';
+import { createTreeWalker, getPropertyPath, getPropertyType } from './utils';
 
-import PropertyTreeItem from '../PropertyTreeItem';
-import { getPropertyType, getPropertyPath } from './utils';
-
-import { PADDING } from './constants';
+import { TreeData } from './types';
 
 type Props = {
   /** Properties tree */
@@ -18,45 +20,69 @@ type Props = {
   expanded?: boolean;
 };
 
+const Node: FC<FixedSizeNodeComponentProps<TreeData>> = ({
+  data: { name, isLeaf, schemaMeta, deepnessLevel },
+  isOpen,
+  style,
+  toggle,
+  treeData,
+}) => {
+  const { activeProperty, onSelectProperty } = treeData;
+
+  return (
+    <div style={style}>
+      {isLeaf ? (
+        <TreeLeaf
+          isActive={activeProperty === getPropertyPath(schemaMeta)}
+          propertyName={name}
+          onClick={onSelectProperty}
+          deepnessLevel={deepnessLevel}
+          propertyType={getPropertyType(schemaMeta)}
+          propertyPath={getPropertyPath(schemaMeta)}
+        />
+      ) : (
+        <TreeNode
+          name={name}
+          isOpen={isOpen}
+          deepnessLevel={deepnessLevel}
+          onClick={toggle}
+        />
+      )}
+    </div>
+  );
+};
+
 const PropertiesTree: FC<Props> = ({
   expanded,
   onClick,
   activeProperty,
   properties,
 }) => {
-  const keys = Object.keys(properties);
+  const treeRef = useRef(null);
+  const expandTrigger = useRef(null);
+
+  useEffect(() => {
+    if (expandTrigger.current) clearTimeout(expandTrigger.current);
+    if (treeRef.current) {
+      treeRef.current.recomputeTree({
+        refreshNodes: true,
+        useDefaultOpenness: true,
+      });
+    }
+  }, [expanded, treeRef]);
 
   return (
     <div data-testid="properties-tree">
-      {keys.map((key) => {
-        if (Array.isArray(properties[key])) {
-          return (
-            <PropertyTreeItem
-              key={key}
-              padding={PADDING}
-              propertyName={key}
-              propertyPath={getPropertyPath(properties[key] as string[])}
-              type={getPropertyType(properties[key] as string[])}
-              isActive={
-                activeProperty === getPropertyPath(properties[key] as string[])
-              }
-              onClick={(e, propertyPath) => onClick(e, propertyPath)}
-            />
-          );
-        } else {
-          return (
-            <TreeLevel
-              key={key}
-              level={1}
-              onClick={onClick}
-              header={key}
-              activeProperty={activeProperty}
-              expanded={expanded}
-              properties={properties[key] as Record<string, any>}
-            />
-          );
-        }
-      })}
+      <Tree
+        ref={treeRef}
+        treeWalker={createTreeWalker(properties, expanded)}
+        itemData={{ activeProperty, onSelectProperty: onClick }}
+        itemSize={36}
+        height={200}
+        width="100%"
+      >
+        {Node}
+      </Tree>
     </div>
   );
 };

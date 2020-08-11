@@ -5,10 +5,10 @@ import { colors } from '@keen.io/colors';
 export const Header = styled.div`
   font-family: Lato Bold, sans-serif;
   font-size: 14px;
-  line-height: 30px;
+  height: 36px;
   color: ${colors.blue[500]};
-
   display: flex;
+  align-items: center;
   cursor: pointer;
 `;
 

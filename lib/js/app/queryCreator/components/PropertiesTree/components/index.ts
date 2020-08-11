@@ -1,3 +1,4 @@
-import TreeLevel from './TreeLevel';
+import TreeLeaf from './TreeLeaf';
+import TreeNode from './TreeNode';
 
-export { TreeLevel };
+export { TreeLeaf, TreeNode };

@@ -7,6 +7,8 @@ const collection = [
   { label: 'Name', value: 'name' },
 ];
 
+jest.useFakeTimers();
+
 test('calls "callback" handler with search results', () => {
   const mockFn = jest.fn();
   const searchPhrase = 'category';
@@ -20,7 +22,10 @@ test('calls "callback" handler with search results', () => {
 
   act(() => {
     result.current.searchHandler(searchEvent);
+      jest.runAllTimers();
   });
+
+
 
   expect(mockFn).toHaveBeenCalledWith(
     [{ label: 'Category', value: 'category' }],
@@ -41,7 +46,10 @@ test('returns search phrase', () => {
 
   act(() => {
     result.current.searchHandler(searchEvent);
+    jest.runAllTimers();
+
   });
+
 
   expect(result.current.searchPhrase).toEqual(searchPhrase);
 });
@@ -59,8 +67,12 @@ test('clears search phrase', () => {
 
   act(() => {
     result.current.searchHandler(searchEvent);
+    jest.runAllTimers();
+
     result.current.clearSearchPhrase();
   });
+
+
 
   expect(result.current.searchPhrase).toBeNull();
 });
