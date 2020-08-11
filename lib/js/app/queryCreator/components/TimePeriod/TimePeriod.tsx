@@ -1,6 +1,11 @@
 import React, { FC, useState, useCallback, useMemo } from 'react';
 
-import { Container, TimeLabel, TimeValue, UnitsContainer } from './TimePeriod.styles';
+import {
+  Container,
+  TimeLabel,
+  TimeValue,
+  UnitsContainer,
+} from './TimePeriod.styles';
 
 import Input from '../Input';
 import Dropdown from '../Dropdown';
@@ -25,7 +30,14 @@ type Props = {
   unitsPlaceholder: string;
 };
 
-const TimePeriod: FC<Props> = ({ relativity, value, units, onChange, label, unitsPlaceholder }) => {
+const TimePeriod: FC<Props> = ({
+  relativity,
+  value,
+  units,
+  onChange,
+  label,
+  unitsPlaceholder,
+}) => {
   const [isUnitsOpen, setUnitsOpen] = useState(false);
   const changeValueHandler = useCallback(
     (eventValue) => {
@@ -50,46 +62,46 @@ const TimePeriod: FC<Props> = ({ relativity, value, units, onChange, label, unit
   return (
     <Container>
       <TimeLabel>{label}</TimeLabel>
-        <TimeValue>
-          <Input
-            data-testid="relative-time-input"
-            autoFocus
-            type="number"
-            value={value}
-            onChange={(e) => changeValueHandler(e.target.value)}
-          />
-        </TimeValue>
-        <UnitsContainer>
-          <DropableContainer
-            variant="secondary"
-            placeholder={unitsPlaceholder}
-            onClick={() => !isUnitsOpen && setUnitsOpen(true)}
-            isActive={isUnitsOpen}
-            value={units}
-            dropIndicator
-            onDefocus={() => {
-              setUnitsOpen(false);
-            }}
-          >
-            {units}
-          </DropableContainer>
-          <Dropdown isOpen={isUnitsOpen}>
-            <DropdownListContainer scrollToActive>
-              {(activeItemRef) => (
-                <DropdownList
-                  ref={activeItemRef}
-                  items={unitsOptions}
-                  setActiveItem={({ value }) => units === value}
-                  onClick={(_e, { value: updatedUnits }) => {
-                    onChange(`${relativity}_${value}_${updatedUnits}`);
-                  }}
-                />
-              )}
-            </DropdownListContainer>
-          </Dropdown>
-        </UnitsContainer>
+      <TimeValue>
+        <Input
+          data-testid="relative-time-input"
+          autoFocus
+          type="number"
+          value={value}
+          onChange={(e) => changeValueHandler(e.target.value)}
+        />
+      </TimeValue>
+      <UnitsContainer>
+        <DropableContainer
+          variant="secondary"
+          placeholder={unitsPlaceholder}
+          onClick={() => !isUnitsOpen && setUnitsOpen(true)}
+          isActive={isUnitsOpen}
+          value={units}
+          dropIndicator
+          onDefocus={() => {
+            setUnitsOpen(false);
+          }}
+        >
+          {units}
+        </DropableContainer>
+        <Dropdown isOpen={isUnitsOpen}>
+          <DropdownListContainer scrollToActive>
+            {(activeItemRef) => (
+              <DropdownList
+                ref={activeItemRef}
+                items={unitsOptions}
+                setActiveItem={({ value }) => units === value}
+                onClick={(_e, { value: updatedUnits }) => {
+                  onChange(`${relativity}_${value}_${updatedUnits}`);
+                }}
+              />
+            )}
+          </DropdownListContainer>
+        </Dropdown>
+      </UnitsContainer>
     </Container>
-  )
-}
+  );
+};
 
 export default TimePeriod;

@@ -12,8 +12,8 @@ test('allows user to select interval', async () => {
   );
 
   const monthlyElement = getByText(interval);
-  
-  fireEvent.click(monthlyElement)
+
+  fireEvent.click(monthlyElement);
 
   expect(mockFn).toHaveBeenCalledWith(interval);
 });

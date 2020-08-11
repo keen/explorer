@@ -58,7 +58,7 @@ test('set custom interval', () => {
       interval: 'every_7_days',
     },
   });
-  
+
   const dropableContainer = getByTestId('dropable-container');
   fireEvent.click(dropableContainer);
 

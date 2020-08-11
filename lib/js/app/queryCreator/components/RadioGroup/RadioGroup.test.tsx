@@ -4,9 +4,9 @@ import { render as rtlRender, fireEvent } from '@testing-library/react';
 import RadioGroup from './RadioGroup';
 
 const elements = [
-  {label: 'Radio 1', value: 'radio-1'},
-  {label: 'Radio 2', value: 'radio-2'},
-  {label: 'Radio 3', value: 'radio-3'},
+  { label: 'Radio 1', value: 'radio-1' },
+  { label: 'Radio 2', value: 'radio-2' },
+  { label: 'Radio 3', value: 'radio-3' },
 ];
 
 const render = (overProps: any = {}) => {
@@ -57,8 +57,8 @@ test('should call onChange', () => {
 test('should mark active radio', () => {
   const {
     wrapper: { getByTestId },
-  } = render({ value: 'radio-2'});
+  } = render({ value: 'radio-2' });
   const radio = getByTestId('radio-2-active');
 
   expect(radio).toBeInTheDocument();
-})
+});
