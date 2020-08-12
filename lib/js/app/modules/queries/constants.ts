@@ -14,6 +14,7 @@ export const GET_SAVED_QUERIES_ERROR = '@queries/GET_SAVED_QUERIES_ERROR';
 export const SET_CACHE_QUERY_LIMIT = '@queries/CACHE_QUERY_LIMIT';
 export const SET_CACHE_QUERY_LIMIT_ERROR =
   '@queries/SET_CACHE_QUERY_LIMIT_ERROR';
+export const SET_QUERY_LIMIT_REACHED = '@queries/SET_QUERY_LIMIT_REACHED';
 
 export const ERRORS = {
   OVER_LIMIT_ERROR: 'OverCachedQueryLimitError',

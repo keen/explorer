@@ -12,6 +12,7 @@ import {
   SET_CACHE_QUERY_LIMIT,
   SET_CACHE_QUERY_LIMIT_ERROR,
   RESET_QUERY_RESULTS,
+  SET_QUERY_LIMIT_REACHED,
 } from './constants';
 
 export const initialState: ReducerState = {
@@ -20,6 +21,7 @@ export const initialState: ReducerState = {
   isSavingQuery: false,
   saved: [],
   isLimited: false,
+  limitReached: false,
   error: null,
 };
 
@@ -93,6 +95,11 @@ export const queriesReducer = (
         results: action.payload.results,
       };
     }
+    case SET_QUERY_LIMIT_REACHED:
+      return {
+        ...state,
+        limitReached: action.payload.limitReached,
+      };
     default:
       return state;
   }

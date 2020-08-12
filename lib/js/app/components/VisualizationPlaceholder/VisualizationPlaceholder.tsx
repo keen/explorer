@@ -1,9 +1,8 @@
 import React, { FC } from 'react';
-import { Icon } from '@keen.io/icons';
 import { FadeLoader } from '@keen.io/ui-core';
 import { colors } from '@keen.io/colors';
 
-import { Container, Text } from './VisualizationPlaceholder.styles';
+import { Container, Text, LoaderWrapper } from './VisualizationPlaceholder.styles';
 import text from './text.json';
 
 type Props = {
@@ -16,12 +15,13 @@ const VisualizationPlaceholder: FC<Props> = ({ isLoading }) => {
     <Container>
       {isLoading ? (
         <>
-          <FadeLoader width={50} height={50} color={colors.blue['500']} />
-          <Text>{text.loadingPlaceholder}</Text>
+          <LoaderWrapper>
+            <FadeLoader width={80} height={80} color={colors.blue['500']} />
+          </LoaderWrapper>
+          <Text color={colors.blue['500']}>{text.loadingPlaceholder}</Text>
         </>
       ) : (
         <>
-          <Icon type="brand" width={50} height={50} fill={colors.blue['500']} />
           <Text>{text.placeholder}</Text>
         </>
       )}

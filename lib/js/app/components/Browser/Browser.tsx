@@ -8,6 +8,7 @@ import { Container, Socket } from './Browser.styles';
 import QueryVisualization from '../QueryVisualization';
 import QuerySummary from '../QuerySummary';
 import RunQuery from '../RunQuery';
+import VisualizationPlaceholder from '../VisualizationPlaceholder';
 
 import QueryBrowser from '../../queryBrowser';
 
@@ -66,7 +67,9 @@ const Browser: FC<Props> = ({
         {queryResults && (
           <QueryVisualization query={query} queryResults={queryResults} />
         )}
-
+        {!queryResults && currentQuery && (
+          <VisualizationPlaceholder isLoading={isQueryLoading} />
+        )}
         {savedQuery.displayName}
         {currentQuery && <QuerySummary querySettings={currentQuery} />}
       </Socket>

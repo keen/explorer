@@ -15,11 +15,11 @@ const JSONView: FC<Props> = ({ analysisResults }) => {
       <ReactJson
         src={analysisResults}
         style={{
-          fontFamily: 'inherit',
+          fontFamily: "'Lato Regular', sans-serif",
         }}
-        collapsed={true}
         displayDataTypes={false}
-        sortKeys={true}
+        sortKeys
+        iconStyle="square"
       />
     </Container>
   );

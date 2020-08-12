@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useRef, useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Alert, Button } from '@keen.io/ui-core';
 
@@ -11,11 +11,13 @@ import Creator from '../Creator';
 import RunQuery, { runQueryLabel } from '../RunQuery';
 import QueryVisualization from '../QueryVisualization';
 import VisualizationPlaceholder from '../VisualizationPlaceholder';
+import QueryLimitReached from '../QueryLimitReached';
 
 import {
   getQueryResults,
   getQueryPerformState,
   getError,
+  getQueryLimitReached
 } from '../../modules/queries';
 import { setViewMode } from '../../modules/app';
 
@@ -28,14 +30,36 @@ type Props = {
   onRunQuery: () => void;
 };
 
+const isElementInViewport = (elementRef) => {
+  if (!elementRef.current) return;
+
+  const { top } = elementRef.current.getBoundingClientRect();
+  return top >= 0 && top < window.innerHeight;
+};
+
 const Editor: FC<Props> = ({ query, onRunQuery, onUpdateQuery }) => {
   const dispatch = useDispatch();
   const queryResults = useSelector(getQueryResults);
   const runQueryError = useSelector(getError);
   const isQueryLoading = useSelector(getQueryPerformState);
+  const isQueryLimitReached = useSelector(getQueryLimitReached);
+
+  const editorRef = useRef<HTMLDivElement>(null);
+
+  const [scrollToRef, setScrollToRef] = useState(false);
+
+  useEffect(() => {
+    if (scrollToRef && editorRef.current && !isElementInViewport(editorRef.current)) {
+      setScrollToRef(false);
+      editorRef.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      });
+    }
+  }, [scrollToRef, queryResults]);
 
   return (
-    <div>
+    <div ref={editorRef}>
       <EditorNavigation query={query} />
       <Button
         onClick={() => {
@@ -44,8 +68,7 @@ const Editor: FC<Props> = ({ query, onRunQuery, onUpdateQuery }) => {
       >
         Back to list
       </Button>
-      <section>
-        {queryResults ? (
+      <section>{ isQueryLimitReached ? <QueryLimitReached /> : queryResults ? (
           <QueryVisualization query={query} queryResults={queryResults} />
         ) : (
           <VisualizationPlaceholder isLoading={isQueryLoading} />
@@ -57,7 +80,11 @@ const Editor: FC<Props> = ({ query, onRunQuery, onUpdateQuery }) => {
       </CreatorContainer>
       <section>
         <EditorActions>
-          <RunQuery isLoading={isQueryLoading} onClick={onRunQuery}>
+          <RunQuery isLoading={isQueryLoading} onClick={() => {
+            onRunQuery();
+            setScrollToRef(true);
+          }
+          }>
             {runQueryLabel(query)}
           </RunQuery>
         </EditorActions>
