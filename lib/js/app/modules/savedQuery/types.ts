@@ -1,9 +1,14 @@
 import {
   UPDATE_SAVED_QUERY,
   RESET_SAVED_QUERY,
-  SAVE_QUERY_SUCCESS,
   SELECT_SAVED_QUERY,
 } from './constants';
+
+export type SavedQueryAPIResponse = {
+  query_name: string;
+  refresh_rate: number;
+  metadata: Record<string, any>;
+};
 
 export type SavedQuery = {
   name: string;
@@ -24,10 +29,6 @@ export interface ResetSavedQueryAction {
   type: typeof RESET_SAVED_QUERY;
 }
 
-export interface SaveQuerySuccessAction {
-  type: typeof SAVE_QUERY_SUCCESS;
-}
-
 export interface SelectSavedQueryAction {
   type: typeof SELECT_SAVED_QUERY;
   payload: {
@@ -38,5 +39,4 @@ export interface SelectSavedQueryAction {
 export type SavedQueryActions =
   | UpdateSavedQueryAction
   | ResetSavedQueryAction
-  | SaveQuerySuccessAction
   | SelectSavedQueryAction;

@@ -26,9 +26,16 @@ type Props = {
   onUpdateQuery: (query: Record<string, any>) => void;
   /** Run query event handler */
   onRunQuery: () => void;
+  /** Save query event handler */
+  onSaveQuery: () => void;
 };
 
-const Editor: FC<Props> = ({ query, onRunQuery, onUpdateQuery }) => {
+const Editor: FC<Props> = ({
+  query,
+  onRunQuery,
+  onSaveQuery,
+  onUpdateQuery,
+}) => {
   const dispatch = useDispatch();
   const queryResults = useSelector(getQueryResults);
   const runQueryError = useSelector(getError);
@@ -36,7 +43,7 @@ const Editor: FC<Props> = ({ query, onRunQuery, onUpdateQuery }) => {
 
   return (
     <div>
-      <EditorNavigation query={query} />
+      <EditorNavigation onSaveQuery={onSaveQuery} />
       <Button
         onClick={() => {
           dispatch(setViewMode('browser'));

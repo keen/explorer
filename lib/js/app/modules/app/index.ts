@@ -9,6 +9,8 @@ import {
   setViewMode,
   updateQueryCreator,
   queryEditorMounted,
+  showQuerySettingsModal,
+  hideQuerySettingsModal,
   createNewQuery,
   editQuery,
   copyShareUrl,
@@ -16,6 +18,7 @@ import {
 import {
   getConfirmation,
   getViewMode,
+  getQuerySettingsModalVisibility,
   getVisualizationType,
 } from './selectors';
 
@@ -38,7 +41,10 @@ export {
   loadPersitedState,
   setVisualizationType,
   getConfirmation,
+  getQuerySettingsModalVisibility,
   getVisualizationType,
+  showQuerySettingsModal,
+  hideQuerySettingsModal,
   ReducerState,
 };
 export { HIDE_CONFIRMATION, ACCEPT_CONFIRMATION };

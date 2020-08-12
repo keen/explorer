@@ -1,7 +1,6 @@
 import {
   UPDATE_SAVED_QUERY,
   RESET_SAVED_QUERY,
-  SAVE_QUERY_SUCCESS,
   SELECT_SAVED_QUERY,
 } from './constants';
 
@@ -23,8 +22,4 @@ export const selectSavedQuery = (name: string): SavedQueryActions => ({
 
 export const resetSavedQuery = (): SavedQueryActions => ({
   type: RESET_SAVED_QUERY,
-});
-
-export const saveQuerySuccess = (): SavedQueryActions => ({
-  type: SAVE_QUERY_SUCCESS,
 });

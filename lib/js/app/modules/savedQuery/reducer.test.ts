@@ -1,13 +1,6 @@
 import { savedQueryReducer, initialState } from './reducer';
 
-import { saveQuerySuccess, updateSaveQuery, resetSavedQuery } from './actions';
-
-test('updates "exist" state for query', () => {
-  const action = saveQuerySuccess();
-  const { exists } = savedQueryReducer(initialState, action);
-
-  expect(exists).toBeTruthy();
-});
+import { updateSaveQuery, resetSavedQuery } from './actions';
 
 test('updates saved query state', () => {
   const updates = {

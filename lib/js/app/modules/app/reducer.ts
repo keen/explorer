@@ -6,6 +6,8 @@ import {
   ACCEPT_CONFIRMATION,
   SET_VISUALIZATION_TYPE,
   SET_VIEW_MODE,
+  SHOW_QUERY_SETTINGS_MODAL,
+  HIDE_QUERY_SETTINGS_MODAL,
 } from './constants';
 
 export const initialState: ReducerState = {
@@ -13,6 +15,9 @@ export const initialState: ReducerState = {
     visible: false,
     action: null,
     meta: null,
+  },
+  querySettingsModal: {
+    visible: false,
   },
   view: 'browser',
   visualization: {
@@ -25,6 +30,22 @@ export const appReducer = (
   action: AppActions
 ) => {
   switch (action.type) {
+    case HIDE_QUERY_SETTINGS_MODAL:
+      return {
+        ...state,
+        querySettingsModal: {
+          ...state.querySettingsModal,
+          visible: false,
+        },
+      };
+    case SHOW_QUERY_SETTINGS_MODAL:
+      return {
+        ...state,
+        querySettingsModal: {
+          ...state.querySettingsModal,
+          visible: true,
+        },
+      };
     case SET_VIEW_MODE:
       return {
         ...state,
