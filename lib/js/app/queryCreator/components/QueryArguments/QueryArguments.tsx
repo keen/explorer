@@ -1,14 +1,18 @@
 import React, { FC } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { Container, MenuItem, MenuItemPercentile } from './QueryArguments.styles';
+import {
+  Container,
+  MenuItem,
+  MenuItemPercentile,
+} from './QueryArguments.styles';
 
 import {
   Analysis,
   EventCollection,
   TargetProperty,
   Timeframe,
-  Percentile
+  Percentile,
 } from '../../components';
 import { showField } from '../../utils/showField';
 
@@ -71,7 +75,7 @@ const App: FC<Props> = () => {
           />
         </MenuItem>
       )}
-      
+
       {showField('percentile', analysis) && (
         <MenuItemPercentile>
           <Percentile

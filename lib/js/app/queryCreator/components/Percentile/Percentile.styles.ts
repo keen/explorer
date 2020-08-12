@@ -5,7 +5,7 @@ export const Container = styled.div`
   width: 68px;
 
   position: relative;
-  
+
   input::-webkit-outer-spin-button,
   input::-webkit-inner-spin-button {
     -webkit-appearance: none;
@@ -13,7 +13,7 @@ export const Container = styled.div`
   }
 
   /* Firefox */
-  input[type=number] {
+  input[type='number'] {
     -moz-appearance: textfield;
   }
 `;

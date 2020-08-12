@@ -58,29 +58,27 @@ const Percentile: FC<Props> = ({ value, onReset, onChange }) => {
   return (
     <Container ref={containerRef}>
       <AnimatePresence>
-      {
-        tooltip && (
+        {tooltip && (
           <TooltipContainer
-          {...tooltipMotion}
-            initial={{ opacity: 0}}
+            {...tooltipMotion}
+            initial={{ opacity: 0 }}
             animate={{
-              opacity: 1
-            }}>
+              opacity: 1,
+            }}
+          >
             <Tooltip mode="dark" hasArrow={false}>
               {text.message}
             </Tooltip>
           </TooltipContainer>
-        )
-      }
+        )}
       </AnimatePresence>
       <Title>{text.label}</Title>
       <Input
         type="number"
-        value={value}
+        value={value ? value : ''}
         placeholder={text.placeholder}
         onChange={(e) => changeHandler(e)}
       />
-      
     </Container>
   );
 };

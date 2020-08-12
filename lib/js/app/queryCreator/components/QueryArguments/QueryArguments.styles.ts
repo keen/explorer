@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 
 export const MenuItem = styled.div`
-  width: 25%;
+  flex-basis: 25%;
   max-width: 320px;
-  flex-shrink: 0;
+  flex-shrink: 1;
 `;
 
 export const MenuItemPercentile = styled.div`
