@@ -1,13 +1,18 @@
 import React, { FC } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { Container, MenuItem } from './QueryArguments.styles';
+import {
+  Container,
+  MenuItem,
+  MenuItemPercentile,
+} from './QueryArguments.styles';
 
 import {
   Analysis,
   EventCollection,
   TargetProperty,
   Timeframe,
+  Percentile,
 } from '../../components';
 import { showField } from '../../utils/showField';
 
@@ -20,8 +25,10 @@ import {
   getTargetProperty,
   getTimeframe,
   getTimezone,
+  getPercentile,
   selectTimezone,
   setTimeframe,
+  setPercentile,
   DEFAULT_TIMEFRAME,
 } from '../../modules/query';
 
@@ -34,6 +41,7 @@ const App: FC<Props> = () => {
   const timeframe = useSelector(getTimeframe);
   const targetProperty = useSelector(getTargetProperty);
   const timezone = useSelector(getTimezone);
+  const percentile = useSelector(getPercentile);
 
   return (
     <Container>
@@ -67,6 +75,17 @@ const App: FC<Props> = () => {
           />
         </MenuItem>
       )}
+
+      {showField('percentile', analysis) && (
+        <MenuItemPercentile>
+          <Percentile
+            value={percentile}
+            onReset={() => dispatch(setPercentile(null))}
+            onChange={(value) => dispatch(setPercentile(value))}
+          />
+        </MenuItemPercentile>
+      )}
+
       {showField('timeframe', analysis) && (
         <MenuItem>
           <Timeframe

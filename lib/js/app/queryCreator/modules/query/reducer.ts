@@ -35,7 +35,7 @@ import { ReducerState, QueryActions } from './types';
 export const initialState: ReducerState = {
   eventCollection: null,
   targetProperty: null,
-  percentile: null,
+  percentile: undefined,
   timezone: DEFAULT_TIMEZONE,
   groupBy: undefined,
   orderBy: undefined,

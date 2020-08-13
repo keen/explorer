@@ -2,7 +2,6 @@ import React, { FC } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { v4 as uuid } from 'uuid';
 import { ActionButton } from '@keen.io/ui-core';
-import { FieldGroup } from '@keen.io/forms';
 
 import { FiltersSettings, ActionContainer } from './App.styles';
 
@@ -14,7 +13,6 @@ import {
   OrderBy,
   Interval,
   Limit,
-  Percentile,
   Title,
   FunnelSteps,
   Filters,
@@ -24,11 +22,9 @@ import { showField } from './utils/showField';
 import text from './text.json';
 
 import {
-  getPercentile,
   getEventCollection,
   getAnalysis,
   getFilters,
-  setPercentile,
   removeFilter,
   addFilter,
   setFilters,
@@ -47,7 +43,6 @@ const App: FC<Props> = () => {
   const dispatch = useDispatch();
   const analysis = useSelector(getAnalysis);
   const collection = useSelector(getEventCollection);
-  const percentile = useSelector(getPercentile);
 
   const filters = useSelector(getFilters);
 
@@ -98,16 +93,6 @@ const App: FC<Props> = () => {
       </Card>
 
       {analysis === 'extraction' && <Extraction collection={collection} />}
-
-      {showField('percentile', analysis) && (
-        <FieldGroup>
-          <Percentile
-            value={percentile}
-            onReset={() => dispatch(setPercentile(null))}
-            onChange={(value) => dispatch(setPercentile(value))}
-          />
-        </FieldGroup>
-      )}
     </div>
   );
 };
