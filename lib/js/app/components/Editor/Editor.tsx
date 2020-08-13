@@ -24,6 +24,8 @@ import { setViewMode } from '../../modules/app';
 type Props = {
   /** Query definition */
   query: Record<string, any>;
+  /** Optional upgrade subscription url */
+  upgradeSubscriptionUrl?: string;
   /** Query update handler */
   onUpdateQuery: (query: Record<string, any>) => void;
   /** Run query event handler */
@@ -37,7 +39,7 @@ const isElementInViewport = (elementRef) => {
   return top >= 0 && top < window.innerHeight;
 };
 
-const Editor: FC<Props> = ({ query, onRunQuery, onUpdateQuery }) => {
+const Editor: FC<Props> = ({ query, upgradeSubscriptionUrl, onRunQuery, onUpdateQuery }) => {
   const dispatch = useDispatch();
   const queryResults = useSelector(getQueryResults);
   const runQueryError = useSelector(getError);
@@ -68,7 +70,7 @@ const Editor: FC<Props> = ({ query, onRunQuery, onUpdateQuery }) => {
       >
         Back to list
       </Button>
-      <section>{ isQueryLimitReached ? <QueryLimitReached /> : queryResults ? (
+      <section>{ isQueryLimitReached ? <QueryLimitReached upgradeSubscriptionUrl={upgradeSubscriptionUrl} /> : queryResults ? (
           <QueryVisualization query={query} queryResults={queryResults} />
         ) : (
           <VisualizationPlaceholder isLoading={isQueryLoading} />

@@ -14,3 +14,13 @@ test('render QueryLimitReached component', () => {
   expect(firstLine).toBeInTheDocument();
   expect(secondLine).toBeInTheDocument();
 });
+
+test('render QueryLimitReached component with upgradeSubscriptionUrl', () => {
+  const { queryByText } =render(<QueryLimitReached upgradeSubscriptionUrl='test' />);
+  const title = queryByText(text.title);
+  const firstLine = queryByText(text.first_line);
+  const secondLine = queryByText(text.second_line);
+  expect(title).toBeInTheDocument();
+  expect(firstLine).toBeNull();
+  expect(secondLine).toBeInTheDocument();
+});

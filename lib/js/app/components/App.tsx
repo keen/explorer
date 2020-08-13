@@ -112,6 +112,7 @@ class App extends Component {
           <div>
             <Editor
               query={this.state.query}
+              upgradeSubscriptionUrl={this.props.upgradeSubscriptionUrl}
               onRunQuery={() => this.props.runQuery(this.state.query)}
               onUpdateQuery={(query) => {
                 console.log(query, '--- query update');

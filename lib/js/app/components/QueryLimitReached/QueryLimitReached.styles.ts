@@ -35,4 +35,14 @@ line-height: 26px;
 margin: 0;
 
 color: ${colors.black[500]};
+
+a {
+  font-family: 'Lato Bold', sans-serif;
+  color: ${colors.green[500]};
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
 `;

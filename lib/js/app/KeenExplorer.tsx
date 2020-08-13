@@ -50,7 +50,7 @@ export class KeenExplorer {
     ReactDOM.render(
       <Provider store={store}>
         <AppContext.Provider
-          value={{ keenAnalysis: client, modalContainer: props.modalContainer }}
+          value={{ keenAnalysis: client, modalContainer: props.modalContainer, upgradeSubscriptionUrl: props.upgradeSubscriptionUrl }}
         >
           <App {...props} />
         </AppContext.Provider>
