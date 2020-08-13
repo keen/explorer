@@ -1,11 +1,12 @@
 import styled from 'styled-components';
+import { transparentize } from 'polished';
 import { colors } from '@keen.io/colors';
 
 export const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: #f1f5f8;
+  background: ${transparentize(0.9, colors.blue[100])};
   padding: 10px 20px;
 `;
 

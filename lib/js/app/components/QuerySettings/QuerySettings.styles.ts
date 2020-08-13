@@ -3,16 +3,12 @@ import { colors } from '@keen.io/colors';
 
 export const Settings = styled.div`
   padding: 25px;
-  width: 350px;
+  width: 380px;
 `;
 
 export const FooterContent = styled.div`
   display: flex;
   align-items: center;
-`;
-
-export const LabelContainer = styled.div`
-  margin-bottom: 3px;
 `;
 
 export const Cancel = styled.div`

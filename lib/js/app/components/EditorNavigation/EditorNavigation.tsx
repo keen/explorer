@@ -34,7 +34,10 @@ const EditorNavigation: FC<Props> = ({ onSaveQuery }) => {
       <Menu>
         {exists && (
           <MenuItem>
-            <span onClick={() => dispatch(showQuerySettingsModal())}>
+            <span
+              data-testid="query-settings"
+              onClick={() => dispatch(showQuerySettingsModal())}
+            >
               Settings
             </span>
           </MenuItem>

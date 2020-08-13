@@ -52,7 +52,7 @@
     "@keen.io/icons": "^0.4.3",
     "@keen.io/parser": "^0.2.26",
     "@keen.io/pubsub": "^0.2.0",
-    "@keen.io/ui-core": "^0.26.0",
+    "@keen.io/ui-core": "^0.26.1",
     "@types/react-dom": "^16.9.8",
     "camelcase-keys": "^6.2.2",
     "classnames": "2.1.2",

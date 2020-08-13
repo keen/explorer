@@ -13,7 +13,6 @@ import {
 
 import {
   Settings,
-  LabelContainer,
   Cancel,
   FooterContent,
   NewQueryNotice,
@@ -58,15 +57,14 @@ const QuerySettings: FC<Props> = ({ onSave, onClose }) => {
     <>
       <Settings>
         {!exists && <NewQueryNotice>{text.newQueryNotice}</NewQueryNotice>}
-        <LabelContainer>
-          <Label
-            htmlFor="queryName"
-            variant="secondary"
-            hasError={queryNameError}
-          >
-            {text.queryName}
-          </Label>
-        </LabelContainer>
+        <Label
+          htmlFor="queryName"
+          variant="secondary"
+          showAsterisk
+          hasError={queryNameError}
+        >
+          {text.queryName}
+        </Label>
         <Input
           data-testid="query-name-input"
           type="text"
@@ -98,11 +96,13 @@ const QuerySettings: FC<Props> = ({ onSave, onClose }) => {
               }
             }}
           >
-            {text.saveButton}
+            {isSavingQuery ? text.savingQuery : text.saveButton}
           </Button>
-          <Cancel>
-            <Anchor onClick={onClose}>{text.closeButton}</Anchor>
-          </Cancel>
+          {!isSavingQuery && (
+            <Cancel>
+              <Anchor onClick={onClose}>{text.closeButton}</Anchor>
+            </Cancel>
+          )}
         </FooterContent>
       </ModalFooter>
     </>

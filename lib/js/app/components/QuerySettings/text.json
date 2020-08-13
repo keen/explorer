@@ -3,6 +3,7 @@
   "queryNameError": "Query name is required",
   "queryNamePlaceholder": "Give your query a name",
   "saveButton": "Update settings and save query",
+  "savingQuery": "Saving query",
   "closeButton": "Cancel",
   "newQueryNotice": "Name your query in order to save it"
 }
