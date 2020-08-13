@@ -32,6 +32,8 @@ const render = (storeState: any = {}, overProps: any = {}) => {
   };
 };
 
+jest.useFakeTimers();
+
 test('allows user to select target property', async () => {
   const collectionSchema = { date: 'String', userId: 'String' };
   const storeState = {
@@ -91,12 +93,15 @@ test('allows user to search for target property', async () => {
   const input = getByTestId('dropable-container-input');
   fireEvent.change(input, { target: { value: 'industry' } });
 
+  act(() => {
+    jest.runAllTimers();
+  });
+
   expect(queryByText('category')).not.toBeInTheDocument();
   expect(getByText('industry')).toBeInTheDocument();
 });
 
 test('expands search results', async () => {
-  jest.useFakeTimers();
   const collectionSchema = { 'category.geology.plants.flower': 'String' };
 
   const storeState = {
@@ -157,6 +162,10 @@ test('renders empty search results message', async () => {
 
   const input = getByTestId('dropable-container-input');
   fireEvent.change(input, { target: { value: 'industry' } });
+
+  act(() => {
+    jest.runAllTimers();
+  });
 
   expect(getByText(text.emptySearchResults)).toBeInTheDocument();
 });

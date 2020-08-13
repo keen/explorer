@@ -1,6 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { render as rtlRender, fireEvent } from '@testing-library/react';
+import { render as rtlRender, fireEvent, act } from '@testing-library/react';
 import configureStore from 'redux-mock-store';
 
 import EventCollection from './EventCollection';
@@ -30,6 +30,8 @@ const render = (storeState: any = {}, overProps: any = {}) => {
     wrapper,
   };
 };
+
+jest.useFakeTimers();
 
 test('allows user to select event collection', () => {
   const storeState = {
@@ -87,6 +89,10 @@ test('allows user to search event collection', () => {
   const input = getByTestId('dropable-container-input');
   fireEvent.change(input, { target: { value: 'logins' } });
 
+  act(() => {
+    jest.runAllTimers();
+  });
+
   expect(queryByText('purchases')).not.toBeInTheDocument();
   expect(getByText('logins')).toBeInTheDocument();
 });
@@ -106,6 +112,10 @@ test('renders empty search results', () => {
 
   const input = getByTestId('dropable-container-input');
   fireEvent.change(input, { target: { value: 'purchases' } });
+
+  act(() => {
+    jest.runAllTimers();
+  });
 
   expect(getByText(text.emptySearchResults)).toBeInTheDocument();
 });

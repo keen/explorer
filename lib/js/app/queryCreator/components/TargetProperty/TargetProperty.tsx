@@ -1,11 +1,7 @@
 import React, { FC, useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 
-import {
-  Container,
-  TreeContainer,
-  PropertyOverflow,
-} from './TargetProperty.styles';
+import { Container, PropertyOverflow } from './TargetProperty.styles';
 import { createTree } from '../../utils/createTree';
 
 import Title from '../Title';
@@ -19,7 +15,7 @@ import { useSearch } from '../../hooks';
 import { getCollectionSchema, getSchemas } from '../../modules/events';
 
 import text from './text.json';
-import { SEPARATOR, EXPAND_TRESHOLD } from './constants';
+import { SEPARATOR } from './constants';
 
 import { AppState } from '../../types';
 
@@ -41,7 +37,6 @@ const TargetProperty: FC<Props> = ({
   variant = 'primary',
 }) => {
   const [expandTree, setTreeExpand] = useState(false);
-  const expandTrigger = useRef(null);
 
   const {
     schema: collectionSchema,
@@ -65,17 +60,13 @@ const TargetProperty: FC<Props> = ({
   }>(
     schemaList,
     (searchResult, phrase) => {
-      if (expandTrigger.current) clearTimeout(expandTrigger.current);
       if (phrase) {
         const searchTree = {};
         searchResult.forEach(({ path, type }) => {
           searchTree[path] = type;
         });
         setPropertiesTree(createTree(searchTree));
-
-        expandTrigger.current = setTimeout(() => {
-          setTreeExpand(true);
-        }, EXPAND_TRESHOLD);
+        setTreeExpand(true);
       } else {
         setTreeExpand(false);
         setPropertiesTree(null);
@@ -133,18 +124,16 @@ const TargetProperty: FC<Props> = ({
         {isEmptySearch ? (
           <EmptySearch message={text.emptySearchResults} />
         ) : (
-          <TreeContainer>
-            <PropertiesTree
-              expanded={expandTree}
-              onClick={(_e, property) => {
-                setOpen(false);
-                onChange(property);
-                setPropertiesTree(createTree(collectionSchema));
-              }}
-              activeProperty={property}
-              properties={propertiesTree ? propertiesTree : schemaTree}
-            />
-          </TreeContainer>
+          <PropertiesTree
+            expanded={expandTree}
+            onClick={(_e, property) => {
+              setOpen(false);
+              onChange(property);
+              setPropertiesTree(createTree(collectionSchema));
+            }}
+            activeProperty={property}
+            properties={propertiesTree ? propertiesTree : schemaTree}
+          />
         )}
       </Dropdown>
     </Container>

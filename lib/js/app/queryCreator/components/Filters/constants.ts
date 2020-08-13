@@ -5,8 +5,6 @@ import { Property, Operator } from '../../types';
 
 import { getCurrentDate } from './utils';
 
-export const SEARCH_EXPAND_TIME = 300;
-
 export const DATA_TYPES = {
   string: 'String',
   num: 'Number',

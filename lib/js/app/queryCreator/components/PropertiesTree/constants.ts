@@ -1,1 +1,2 @@
-export const PADDING = 15;
+export const ELEMENT_HEIGHT = 36;
+export const LIST_HEIGHT = 200;

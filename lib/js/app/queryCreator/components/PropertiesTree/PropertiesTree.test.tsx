@@ -1,5 +1,5 @@
 import React from 'react';
-import { render as rtlRender, fireEvent } from '@testing-library/react';
+import { render as rtlRender, fireEvent, act } from '@testing-library/react';
 
 import PropertiesTree from './PropertiesTree';
 
@@ -17,6 +17,8 @@ const render = (overProps: any = {}) => {
     wrapper,
   };
 };
+
+jest.useFakeTimers();
 
 test('allows user to select nested property', () => {
   const properties = {
@@ -53,6 +55,11 @@ test('renders properties from all tree levels', () => {
   const {
     wrapper: { getByText },
   } = render({ properties, expanded: true });
+
+  act(() => {
+    jest.runAllTimers();
+  });
+
   const property = getByText('name');
 
   expect(property).toBeInTheDocument();
@@ -73,6 +80,10 @@ test('expands all properties tree levels', () => {
     props,
   } = render({ properties });
   rerender(<PropertiesTree {...props} expanded={true} />);
+
+  act(() => {
+    jest.runAllTimers();
+  });
 
   const property = getByText('name');
 
