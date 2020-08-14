@@ -13,6 +13,7 @@ import {
   deleteQueryError,
   setQueryCacheLimit,
   setQueryCacheLimitError,
+  setQueryLimitReached,
 } from './actions';
 
 import {
@@ -45,6 +46,7 @@ function* runQuery(action: RunQueryAction) {
     yield put(runQuerySuccess(responseBody));
   } catch (error) {
     console.log('error', error);
+    yield put(setQueryLimitReached(error));
     yield put(runQueryError(error));
   }
 }

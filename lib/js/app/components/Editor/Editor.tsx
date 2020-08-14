@@ -21,6 +21,8 @@ import {
 } from '../../modules/queries';
 import { setViewMode } from '../../modules/app';
 
+import { isElementInViewport } from './utils';
+
 type Props = {
   /** Query definition */
   query: Record<string, any>;
@@ -30,13 +32,6 @@ type Props = {
   onUpdateQuery: (query: Record<string, any>) => void;
   /** Run query event handler */
   onRunQuery: () => void;
-};
-
-const isElementInViewport = (elementRef) => {
-  if (!elementRef.current) return;
-
-  const { top } = elementRef.current.getBoundingClientRect();
-  return top >= 0 && top < window.innerHeight;
 };
 
 const Editor: FC<Props> = ({ query, upgradeSubscriptionUrl, onRunQuery, onUpdateQuery }) => {

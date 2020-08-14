@@ -5,7 +5,7 @@ import VisualizationPlaceholder from './VisualizationPlaceholder';
 
 import text from './text.json';
 
-test("render loading placeholder when loading is true", () => {
+test("render placeholder with loading indicator", () => {
   const { queryByText } = render(<VisualizationPlaceholder isLoading />);
   const loadingPlaceholder = queryByText(text.loadingPlaceholder);
   const placeholder = queryByText(text.placeholder);
@@ -13,7 +13,7 @@ test("render loading placeholder when loading is true", () => {
   expect(placeholder).toBeNull();
 });
 
-test("render placeholder when loading is done", () => {
+test("render visualization placeholder", () => {
   const { queryByText } = render(<VisualizationPlaceholder isLoading={false} />);
   const loadingPlaceholder = queryByText(text.loadingPlaceholder);
   const placeholder = queryByText(text.placeholder);

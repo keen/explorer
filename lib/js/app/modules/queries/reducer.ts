@@ -21,7 +21,7 @@ export const initialState: ReducerState = {
   isSavingQuery: false,
   saved: [],
   isLimited: false,
-  limitReached: false,
+  queriesExecutionLimitReached: false,
   error: null,
 };
 

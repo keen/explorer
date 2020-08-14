@@ -25,7 +25,7 @@ export type ReducerState = {
   isSavingQuery: boolean;
   saved: any[];
   isLimited: boolean;
-  limitReached: boolean;
+  queriesExecutionLimitReached: boolean;
   error: APIError | null;
 };
 
