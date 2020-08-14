@@ -1,10 +1,10 @@
-import { getDataTypeFromQuery } from './getDataTypeFromQuery';
+import { getAvailableWidgets } from './getAvailableWidgets';
 
-import { DATA_TYPES, DEFAULT_VISUALIZATIONS } from '../constants';
+import { DEFAULT_VISUALIZATIONS } from '../constants';
 
 export const getVisualizations = (query: any) => {
-  const dataType = getDataTypeFromQuery(query);
+  const widgets = getAvailableWidgets(query);
 
-  if (dataType) return DEFAULT_VISUALIZATIONS.concat(DATA_TYPES[dataType]);
+  if (widgets) return DEFAULT_VISUALIZATIONS.concat(widgets);
   return DEFAULT_VISUALIZATIONS;
 };
