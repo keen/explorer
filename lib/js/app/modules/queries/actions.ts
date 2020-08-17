@@ -16,6 +16,7 @@ import {
   SAVE_QUERY_SUCCESS,
   SET_CACHE_QUERY_LIMIT,
   SET_CACHE_QUERY_LIMIT_ERROR,
+  SET_QUERY_LIMIT_REACHED,
   RESET_QUERY_RESULTS,
   RESET_SAVE_QUERY_ERROR,
 } from './constants';
@@ -108,4 +109,13 @@ export const runQuerySuccess = (
 export const runQueryError = (error: APIError): QueriesActions => ({
   type: RUN_QUERY_ERROR,
   payload: { error },
+});
+
+export const setQueryLimitReached = (
+  queriesExecutionLimitReached: boolean
+): QueriesActions => ({
+  type: SET_QUERY_LIMIT_REACHED,
+  payload: {
+    queriesExecutionLimitReached,
+  },
 });

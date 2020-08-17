@@ -14,6 +14,7 @@ import {
   deleteQueryError,
   setQueryCacheLimit,
   setQueryCacheLimitError,
+  setQueryLimitReached,
 } from './actions';
 
 import {
@@ -42,6 +43,14 @@ import {
   ERRORS,
 } from './constants';
 
+import { isElementInViewport } from './utils';
+
+function* scrollToElement(element: HTMLElement) {
+  if (element && !isElementInViewport(element)) {
+    yield element.scrollIntoView({ block: 'start', behavior: 'smooth' });
+  }
+}
+
 function* runQuery(action: RunQueryAction) {
   try {
     const {
@@ -52,14 +61,23 @@ function* runQuery(action: RunQueryAction) {
 
     yield put(runQuerySuccess(responseBody));
   } catch (error) {
+    const { body, error_code } = error;
     yield put(runQueryError(error));
 
-    const { body } = error;
+    if (error_code === ERRORS.TOO_MANY_QUERIES) {
+      yield put(setQueryLimitReached(true));
+    }
+
     const notificationManager = yield getContext(NOTIFICATION_MANAGER_CONTEXT);
     yield notificationManager.showNotification({
       type: 'error',
       message: body,
     });
+  } finally {
+    const element = document.getElementById('editor');
+    if (element) {
+      yield scrollToElement(element);
+    }
   }
 }
 
@@ -101,7 +119,7 @@ function* saveQuery({ payload }: SaveQueryAction) {
 
     if (
       errorCode === ERRORS.OVER_LIMIT_ERROR ||
-      errorCode === ERRORS.TOO_MANY_QUERIES
+      errorCode === ERRORS.TOO_MANY_CACHED_QUERIES
     ) {
       yield put({
         type: 'ABOVE_CACHE_QUERY_LIMIT',

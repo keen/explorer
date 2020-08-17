@@ -14,6 +14,7 @@ import {
   SAVE_QUERY_SUCCESS,
   SET_CACHE_QUERY_LIMIT,
   SET_CACHE_QUERY_LIMIT_ERROR,
+  SET_QUERY_LIMIT_REACHED,
   RESET_QUERY_RESULTS,
 } from './constants';
 
@@ -25,6 +26,7 @@ export type ReducerState = {
   isSavingQuery: boolean;
   saved: any[];
   isLimited: boolean;
+  queriesExecutionLimitReached: boolean;
   saveQueryError: APIError | null;
   error: APIError | null;
 };
@@ -134,6 +136,13 @@ export interface RunQueryErrorAction {
   };
 }
 
+export interface SetQueryLimitReachedAction {
+  type: typeof SET_QUERY_LIMIT_REACHED;
+  payload: {
+    queriesExecutionLimitReached: boolean;
+  };
+}
+
 export type QueriesActions =
   | ResetQueryResultsAction
   | SetCacheQueryLimitAction
@@ -150,4 +159,5 @@ export type QueriesActions =
   | GetSavedQueriesAction
   | GetSavedQueriesSuccessAction
   | GetSavedQueriesErrorAction
+  | SetQueryLimitReachedAction
   | ResetSaveQueryErrorAction;

@@ -1,0 +1,5 @@
+{
+  "title": "Queries Limit Reached",
+  "first_line": "Queries execution is blocked and it will automatically resume when the new account cycle starts.",
+  "second_line": "You can still fill the query form and save it."
+}

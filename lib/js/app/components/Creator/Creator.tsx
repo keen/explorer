@@ -27,6 +27,7 @@ const Creator: FC<Props> = ({ onUpdateQuery }) => {
       projectId={config.projectId}
       readKey={config.readKey}
       masterKey={config.masterKey}
+      host={config.host}
       onUpdateQuery={onUpdateQuery}
     />
   );

@@ -55,6 +55,7 @@ export class KeenExplorer {
           value={{
             keenAnalysis: keenAnalysisClient,
             modalContainer: props.modalContainer,
+            upgradeSubscriptionUrl: props.upgradeSubscriptionUrl,
             notificationPubSub,
           }}
         >

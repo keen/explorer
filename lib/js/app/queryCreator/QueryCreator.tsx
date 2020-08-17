@@ -24,6 +24,8 @@ type Props = {
   readKey: string;
   /** Keen master access key */
   masterKey: string;
+  /** Host name */
+  host?: string;
   /** Modal container selector */
   modalContainer: string;
   /** Update query event handler */
@@ -47,6 +49,7 @@ class QueryCreator extends React.Component<Props> {
       projectId: this.props.projectId,
       masterKey: this.props.masterKey,
       readKey: this.props.readKey,
+      host: this.props.host,
     });
 
     const sagaMiddleware = createSagaMiddleware({

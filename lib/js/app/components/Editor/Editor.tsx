@@ -11,13 +11,20 @@ import Creator from '../Creator';
 import RunQuery, { runQueryLabel } from '../RunQuery';
 import QueryVisualization from '../QueryVisualization';
 import VisualizationPlaceholder from '../VisualizationPlaceholder';
+import QueryLimitReached from '../QueryLimitReached';
 
-import { getQueryResults, getQueryPerformState } from '../../modules/queries';
+import {
+  getQueryResults,
+  getQueryPerformState,
+  getQueryLimitReached,
+} from '../../modules/queries';
 import { setViewMode } from '../../modules/app';
 
 type Props = {
   /** Query definition */
   query: Record<string, any>;
+  /** Optional upgrade subscription url */
+  upgradeSubscriptionUrl?: string;
   /** Query update handler */
   onUpdateQuery: (query: Record<string, any>) => void;
   /** Run query event handler */
@@ -28,6 +35,7 @@ type Props = {
 
 const Editor: FC<Props> = ({
   query,
+  upgradeSubscriptionUrl,
   onRunQuery,
   onSaveQuery,
   onUpdateQuery,
@@ -35,9 +43,10 @@ const Editor: FC<Props> = ({
   const dispatch = useDispatch();
   const queryResults = useSelector(getQueryResults);
   const isQueryLoading = useSelector(getQueryPerformState);
+  const isQueryLimitReached = useSelector(getQueryLimitReached);
 
   return (
-    <div>
+    <div id="editor">
       <EditorNavigation onSaveQuery={onSaveQuery} />
       <Button
         onClick={() => {
@@ -47,7 +56,9 @@ const Editor: FC<Props> = ({
         Back to list
       </Button>
       <section>
-        {queryResults ? (
+        {isQueryLimitReached ? (
+          <QueryLimitReached upgradeSubscriptionUrl={upgradeSubscriptionUrl} />
+        ) : queryResults ? (
           <QueryVisualization query={query} queryResults={queryResults} />
         ) : (
           <VisualizationPlaceholder isLoading={isQueryLoading} />
@@ -58,7 +69,7 @@ const Editor: FC<Props> = ({
       </CreatorContainer>
       <section>
         <EditorActions>
-          <RunQuery isLoading={isQueryLoading} onClick={onRunQuery}>
+          <RunQuery isLoading={isQueryLoading} onClick={() => onRunQuery()}>
             {runQueryLabel(query)}
           </RunQuery>
         </EditorActions>

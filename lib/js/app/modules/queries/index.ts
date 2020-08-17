@@ -16,6 +16,7 @@ import {
   getQueriesLimit,
   getQueryResults,
   getQueryPerformState,
+  getQueryLimitReached,
 } from './selectors';
 
 import { SAVE_QUERY_SUCCESS } from './constants';
@@ -34,6 +35,7 @@ export {
   getSavedQueries,
   getQueriesSaving,
   getQueriesLimit,
+  getQueryLimitReached,
   queriesReducer,
   runQuery,
   deleteQuery,

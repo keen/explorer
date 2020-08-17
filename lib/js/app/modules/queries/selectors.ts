@@ -15,4 +15,7 @@ export const getQueriesLimit = ({ queries }: AppState) => queries.isLimited;
 
 export const getQueryResults = ({ queries }: AppState) => queries.results;
 
+export const getQueryLimitReached = ({ queries }: AppState) =>
+  queries.queriesExecutionLimitReached;
+
 export const getQueryExecutionError = ({ queries }: AppState) => queries.error;
