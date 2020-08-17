@@ -1479,14 +1479,14 @@
     react "^16.12.0"
     react-dom "^16.12.0"
 
-"@keen.io/forms@^0.3.7":
-  version "0.3.18"
-  resolved "https://registry.yarnpkg.com/@keen.io/forms/-/forms-0.3.18.tgz#42c3028b23b0dba197cb2b63a58e31a1c4204e18"
-  integrity sha512-dy+zJlbIvBjXjtcA1Zi1Hc2hSm+1Qv9uOLGcpIjUFZ5OWKrkeFxlWlf+OIqCZoH9iWnXYPIC6Y4hbOEYuRXftA==
+"@keen.io/forms@^0.3.19":
+  version "0.3.19"
+  resolved "https://registry.yarnpkg.com/@keen.io/forms/-/forms-0.3.19.tgz#37053a294f912426a5f89100e3f3321146d315a7"
+  integrity sha512-K9Bsp33G1/xwsJFntss3YRCTY2bX12z6yUzqAfpImatMn77KcUQmi5vohb2ZICNGtnngOqYKBVGlF8hPoG9BBw==
   dependencies:
     "@keen.io/colors" "^0.2.0"
     "@keen.io/icons" "^0.4.3"
-    "@keen.io/ui-core" "^0.24.2"
+    "@keen.io/ui-core" "^0.25.0"
     formik "^2.1.4"
     framer-motion "^1.11.1"
     react "^16.12.0"
@@ -1525,6 +1525,42 @@
   version "0.24.2"
   resolved "https://registry.yarnpkg.com/@keen.io/ui-core/-/ui-core-0.24.2.tgz#64b1b5147752ea25b384cc97e428d69274a86176"
   integrity sha512-KEJ8z8EuSSfrYh7XOAxq5bbcMk32H/u7IFmgNMsFDc52grHqbGVmvwSP2peuGJwAa3TqBSqjIGbYtdsCIrD4eA==
+  dependencies:
+    "@keen.io/colors" "^0.2.0"
+    "@keen.io/icons" "^0.4.3"
+    color "^3.1.2"
+    framer-motion "^1.11.1"
+    polished "^3.4.4"
+    react "^16.12.0"
+    react-column-resizer "^1.1.9"
+    react-dom "^16.12.0"
+    react-select "^3.1.0"
+    styled-components "5.1.0"
+    styled-system "5.1.5"
+    webfontloader "^1.6.28"
+
+"@keen.io/ui-core@^0.25.0":
+  version "0.25.0"
+  resolved "https://registry.yarnpkg.com/@keen.io/ui-core/-/ui-core-0.25.0.tgz#f83455f2fd23f7132b34f2286245f83bb0fba8f5"
+  integrity sha512-c8HryLv4d1aHZIAqxetHmCNNMitrGgGQSDaJOpVCtpnrVR8GfYsGJB18aHrMYqGbxkmrSYWkfMQqNJJ24b87Ew==
+  dependencies:
+    "@keen.io/colors" "^0.2.0"
+    "@keen.io/icons" "^0.4.3"
+    color "^3.1.2"
+    framer-motion "^1.11.1"
+    polished "^3.4.4"
+    react "^16.12.0"
+    react-column-resizer "^1.1.9"
+    react-dom "^16.12.0"
+    react-select "^3.1.0"
+    styled-components "5.1.0"
+    styled-system "5.1.5"
+    webfontloader "^1.6.28"
+
+"@keen.io/ui-core@^0.26.2":
+  version "0.26.2"
+  resolved "https://registry.yarnpkg.com/@keen.io/ui-core/-/ui-core-0.26.2.tgz#7a438ba344ad1a0bf94196974788cfb1e4377877"
+  integrity sha512-ly5/U2kEVzVsZB83QwgWyWvbi6r9GZqqLUl9/4bZljO818FRtzFSXGZf5ELm8o5O0ONTYQ4FzfJiGEvkHY+41g==
   dependencies:
     "@keen.io/colors" "^0.2.0"
     "@keen.io/icons" "^0.4.3"

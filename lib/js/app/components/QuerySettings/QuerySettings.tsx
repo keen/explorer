@@ -1,163 +1,111 @@
-import React, { FC, useCallback, useState, useEffect, useRef } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { Button, Input, Label } from '@keen.io/ui-core';
+import React, { FC, useState, useCallback } from 'react';
+import { useSelector } from 'react-redux';
+import { ErrorContainer } from '@keen.io/forms';
+import {
+  Anchor,
+  Input,
+  Label,
+  Button,
+  Error,
+  FadeLoader,
+  ModalFooter,
+} from '@keen.io/ui-core';
 
 import {
-  Container,
-  Title,
   Settings,
-  QueryName,
-  ResourceName,
-  ResourceMessage,
-  Actions,
-  InputContainer,
+  Cancel,
+  FooterContent,
+  NewQueryNotice,
 } from './QuerySettings.styles';
 
-import CacheQuery, { REFRESH_MINIMUM } from '../CacheQuery';
-import SaveQuery from '../SaveQuery';
-
-import {
-  getSavedQuery,
-  updateSaveQuery,
-  resetSavedQuery,
-} from '../../modules/savedQuery';
-import { getQueriesSaving, getQueriesLimit } from '../../modules/queries';
-import { slugify, copyToClipboard } from '../../utils/text';
-
+import { getSavedQuery } from '../../modules/savedQuery';
+import { getQueriesSaving } from '../../modules/queries';
 import text from './text.json';
 
-import { QueryError } from './types';
+import { slugify } from '../../utils/text';
 
 type Props = {
   /** Save query event handler */
-  onSave: (queryName: string, refreshRate: number) => void;
-  /** Delete query event handler */
-  onDelete: (queryName: string) => void;
-  /** Caching available */
-  cacheAvailable: boolean;
+  onSave: (settings: { displayName: string; name: string }) => void;
+  /** Close settings event handler */
+  onClose: () => void;
 };
 
-const QuerySettings: FC<Props> = ({ onSave, onDelete, cacheAvailable }) => {
-  const [error, setError] = useState(null);
-  const dispatch = useDispatch();
-
-  const isSaving = useSelector(getQueriesSaving);
+const QuerySettings: FC<Props> = ({ onSave, onClose }) => {
   const savedQuery = useSelector(getSavedQuery);
+  const isSavingQuery = useSelector(getQueriesSaving);
 
-  const limitedQueries = useSelector(getQueriesLimit);
+  const [querySettings, setQuerySettings] = useState(savedQuery);
+  const [queryNameError, setQueryNameError] = useState(false);
 
-  const cacheRef = useRef(cacheAvailable);
-  const saveHandler = useCallback(() => {
-    setError(null);
-    const { name, displayName, refreshRate } = savedQuery;
-    if (displayName) {
-      onSave(name, refreshRate);
-    } else {
-      setError(QueryError.NAME);
-    }
-  }, [onSave, savedQuery]);
+  const handleQueryNameUpdate = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const value = e.currentTarget.value;
+      setQueryNameError(!value);
+      setQuerySettings((settings) => ({
+        ...settings,
+        name: slugify(value),
+        displayName: value,
+      }));
+    },
+    []
+  );
 
-  useEffect(() => {
-    if (!cacheAvailable && cacheRef.current !== cacheAvailable) {
-      dispatch(
-        updateSaveQuery({
-          cached: false,
-          refreshRate: 0,
-        })
-      );
-    }
-    cacheRef.current = cacheAvailable;
-  }, [cacheAvailable]);
+  const { exists } = savedQuery;
 
   return (
-    <Container>
+    <>
       <Settings>
-        <Title>{text.querySettings}</Title>
-        <QueryName>
-          <Label variant="secondary">{text.queryName}</Label>
-          <InputContainer>
-            <Input
-              type="text"
-              data-test="query-name"
-              value={savedQuery.displayName}
-              placeholder={text.queryNamePlaceholder}
-              hasError={!!error}
-              variant="solid"
-              onChange={(e) => {
-                const value = e.currentTarget.value;
-                dispatch(
-                  updateSaveQuery({
-                    name: slugify(value),
-                    displayName: value,
-                    exists: false,
-                  })
-                );
-              }}
-            />
-          </InputContainer>
-        </QueryName>
-        {savedQuery.name && (
-          <ResourceName onClick={() => copyToClipboard(savedQuery.name)}>
-            <Label variant="secondary">
-              <ResourceMessage>{text.resourceName}</ResourceMessage>{' '}
-              {savedQuery.name}
-            </Label>
-          </ResourceName>
-        )}
-        {cacheAvailable ? (
-          <CacheQuery
-            onCacheChange={(cached) =>
-              dispatch(
-                updateSaveQuery({
-                  cached,
-                  refreshRate: cached ? REFRESH_MINIMUM : 0,
-                })
-              )
-            }
-            onRefreshRateChange={(refreshRate) =>
-              dispatch(
-                updateSaveQuery({
-                  refreshRate,
-                })
-              )
-            }
-            isLimited={limitedQueries}
-            refreshRate={savedQuery.refreshRate}
-            isCached={savedQuery.cached}
-          />
-        ) : (
-          <div>{text.cachingNotAvailable}</div>
-        )}
-      </Settings>
-      <Actions>
-        <SaveQuery
-          onSave={saveHandler}
-          isSaving={isSaving}
-          isExist={savedQuery.exists}
+        {!exists && <NewQueryNotice>{text.newQueryNotice}</NewQueryNotice>}
+        <Label
+          htmlFor="queryName"
+          variant="secondary"
+          showAsterisk
+          hasError={queryNameError}
+        >
+          {text.queryName}
+        </Label>
+        <Input
+          data-testid="query-name-input"
+          type="text"
+          variant="solid"
+          id="queryName"
+          hasError={queryNameError}
+          placeholder={text.queryNamePlaceholder}
+          value={querySettings.displayName}
+          onChange={handleQueryNameUpdate}
         />
-        {savedQuery.exists && (
-          <>
-            <Button
-              variant="secondary"
-              style="outline"
-              onClick={() => {
-                setError(null);
-                dispatch(resetSavedQuery());
-              }}
-            >
-              {text.clone}
-            </Button>
-            <Button
-              variant="danger"
-              style="outline"
-              onClick={() => onDelete(savedQuery.name)}
-            >
-              {text.delete}
-            </Button>
-          </>
-        )}
-      </Actions>
-    </Container>
+        <ErrorContainer>
+          {queryNameError && <Error>{text.queryNameError}</Error>}
+        </ErrorContainer>
+      </Settings>
+      <ModalFooter>
+        <FooterContent>
+          <Button
+            data-testid="save-query"
+            variant="secondary"
+            style="solid"
+            isDisabled={isSavingQuery}
+            icon={isSavingQuery && <FadeLoader />}
+            onClick={() => {
+              const { name, displayName } = querySettings;
+              if (displayName) {
+                onSave({ name, displayName });
+              } else {
+                setQueryNameError(true);
+              }
+            }}
+          >
+            {isSavingQuery ? text.savingQuery : text.saveButton}
+          </Button>
+          {!isSavingQuery && (
+            <Cancel>
+              <Anchor onClick={onClose}>{text.closeButton}</Anchor>
+            </Cancel>
+          )}
+        </FooterContent>
+      </ModalFooter>
+    </>
   );
 };
 

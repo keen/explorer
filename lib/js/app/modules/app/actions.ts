@@ -10,9 +10,19 @@ import {
   UPDATE_QUERY_CREATOR,
   QUERY_EDITOR_MOUNTED,
   COPY_SHARE_URL,
+  SHOW_QUERY_SETTINGS_MODAL,
+  HIDE_QUERY_SETTINGS_MODAL,
 } from './constants';
 
 import { AppActions, Confirmation, ViewMode } from './types';
+
+export const showQuerySettingsModal = (): AppActions => ({
+  type: SHOW_QUERY_SETTINGS_MODAL,
+});
+
+export const hideQuerySettingsModal = (): AppActions => ({
+  type: HIDE_QUERY_SETTINGS_MODAL,
+});
 
 export const setViewMode = (view: ViewMode): AppActions => ({
   type: SET_VIEW_MODE,

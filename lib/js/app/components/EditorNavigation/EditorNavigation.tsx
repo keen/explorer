@@ -1,55 +1,64 @@
 import React, { FC } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getPubSub } from '@keen.io/pubsub';
-import { Button } from '@keen.io/ui-core';
+import { Button, FadeLoader } from '@keen.io/ui-core';
 
-import { Container, Menu, MenuItem } from './EditorNavigation.styles';
+import {
+  Container,
+  QueryName,
+  Menu,
+  MenuItem,
+} from './EditorNavigation.styles';
 import text from './text.json';
 
-import ShareQuery from '../ShareQuery';
-import APIResource from '../APIResource';
 import { getSavedQuery } from '../../modules/savedQuery';
-import { copyShareUrl } from '../../modules/app';
-
-import { copyToClipboard } from '../../utils';
-
-import { NEW_QUERY_EVENT } from '../../queryCreator';
+import { getQueriesSaving } from '../../modules/queries';
+import {
+  showQuerySettingsModal,
+  getQuerySettingsModalVisibility,
+} from '../../modules/app';
 
 type Props = {
-  /** Query definition */
-  query: Record<string, any>;
+  /** Save query event handler*/
+  onSaveQuery: () => void;
 };
 
-const EditorNavigation: FC<Props> = ({ query }) => {
+const EditorNavigation: FC<Props> = ({ onSaveQuery }) => {
   const dispatch = useDispatch();
-  const savedQuery = useSelector(getSavedQuery);
+  const { exists, displayName } = useSelector(getSavedQuery);
+  const isSavingQuery = useSelector(getQueriesSaving);
+  const isModalVisible = useSelector(getQuerySettingsModalVisibility);
 
   return (
     <Container>
-      <div>test</div>
+      <QueryName>{displayName ? displayName : text.newQueryTitle}</QueryName>
       <Menu>
+        {exists && (
+          <MenuItem>
+            <span
+              data-testid="query-settings"
+              onClick={() => dispatch(showQuerySettingsModal())}
+            >
+              Settings
+            </span>
+          </MenuItem>
+        )}
         <MenuItem>
           <Button
-            style="outline"
-            variant="success"
+            data-testid="save-query"
+            variant="secondary"
+            style="solid"
+            isDisabled={isSavingQuery}
             onClick={() => {
-              const pubsub = getPubSub();
-              pubsub.publish(NEW_QUERY_EVENT);
+              if (!exists) {
+                dispatch(showQuerySettingsModal());
+              } else {
+                onSaveQuery();
+              }
             }}
+            icon={isSavingQuery && !isModalVisible && <FadeLoader />}
           >
-            {text.newQueryButton}
+            {text.saveQuery}
           </Button>
-        </MenuItem>
-        <MenuItem>
-          <APIResource
-            onClick={(resourceUrl) => copyToClipboard(resourceUrl)}
-            query={query}
-          />
-        </MenuItem>
-        <MenuItem>
-          <ShareQuery
-            onClick={() => dispatch(copyShareUrl(query, savedQuery))}
-          />
         </MenuItem>
       </Menu>
     </Container>

@@ -19,6 +19,7 @@ import {
 import { SAVE_QUERY_SUCCESS } from './constants';
 
 import { queriesSaga } from './saga';
+import { SaveQuerySuccessAction } from './types';
 
 export {
   ReducerState,
@@ -36,4 +37,5 @@ export {
   resetQueryResults,
   queriesSaga,
   SAVE_QUERY_SUCCESS,
+  SaveQuerySuccessAction,
 };

@@ -86,29 +86,3 @@ test('allows user to close modal by clicking "cancel" label', () => {
     ]
   `);
 });
-
-test('allows user to close modal by clicking "close" icon', () => {
-  const storeState = {
-    app: {
-      confirmModal: {
-        visible: true,
-      },
-    },
-  };
-
-  const {
-    wrapper: { container },
-    store,
-  } = render(storeState);
-  const close = container.querySelector('svg');
-
-  fireEvent.click(close);
-
-  expect(store.getActions()).toMatchInlineSnapshot(`
-    Array [
-      Object {
-        "type": "@app/HIDE_CONFIRMATION",
-      },
-    ]
-  `);
-});
