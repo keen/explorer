@@ -1,4 +1,4 @@
-import React, { FC, useRef, useState, useEffect } from 'react';
+import React, { FC } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Alert, Button } from '@keen.io/ui-core';
 
@@ -21,8 +21,6 @@ import {
 } from '../../modules/queries';
 import { setViewMode } from '../../modules/app';
 
-import { isElementInViewport } from './utils';
-
 type Props = {
   /** Query definition */
   query: Record<string, any>;
@@ -39,24 +37,10 @@ const Editor: FC<Props> = ({ query, upgradeSubscriptionUrl, onRunQuery, onUpdate
   const queryResults = useSelector(getQueryResults);
   const runQueryError = useSelector(getError);
   const isQueryLoading = useSelector(getQueryPerformState);
-  const isQueryLimitReached = useSelector(getQueryLimitReached);
-
-  const editorRef = useRef<HTMLDivElement>(null);
-
-  const [scrollToRef, setScrollToRef] = useState(false);
-
-  useEffect(() => {
-    if (scrollToRef && editorRef.current && !isElementInViewport(editorRef.current)) {
-      setScrollToRef(false);
-      editorRef.current.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start',
-      });
-    }
-  }, [scrollToRef, queryResults]);
+  const isQueryLimitReached = useSelector(getQueryLimitReached); console.log({isQueryLimitReached});
 
   return (
-    <div ref={editorRef}>
+    <div id="editor">
       <EditorNavigation query={query} />
       <Button
         onClick={() => {
@@ -77,11 +61,7 @@ const Editor: FC<Props> = ({ query, upgradeSubscriptionUrl, onRunQuery, onUpdate
       </CreatorContainer>
       <section>
         <EditorActions>
-          <RunQuery isLoading={isQueryLoading} onClick={() => {
-            onRunQuery();
-            setScrollToRef(true);
-          }
-          }>
+          <RunQuery isLoading={isQueryLoading} onClick={() => onRunQuery()}>
             {runQueryLabel(query)}
           </RunQuery>
         </EditorActions>

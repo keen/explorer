@@ -106,9 +106,9 @@ export const runQueryError = (error: APIError): QueriesActions => ({
   payload: { error },
 });
 
-export const setQueryLimitReached = (limitReached: boolean): QueriesActions => ({
+export const setQueryLimitReached = (queriesExecutionLimitReached: boolean): QueriesActions => ({
   type: SET_QUERY_LIMIT_REACHED,
   payload: {
-    limitReached
+    queriesExecutionLimitReached
   }
 });

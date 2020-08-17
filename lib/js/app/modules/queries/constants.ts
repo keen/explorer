@@ -18,5 +18,6 @@ export const SET_QUERY_LIMIT_REACHED = '@queries/SET_QUERY_LIMIT_REACHED';
 
 export const ERRORS = {
   OVER_LIMIT_ERROR: 'OverCachedQueryLimitError',
-  TOO_MANY_QUERIES: 'TooManyCachedQueriesInTheCurrentBillingPeriod',
+  TOO_MANY_QUERIES: 'TooManyQueriesInTheCurrentBillingPeriod',
+  TOO_MANY_CACHED_QUERIES: 'TooManyCachedQueriesInTheCurrentBillingPeriod',
 };

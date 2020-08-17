@@ -133,7 +133,7 @@ export interface RunQueryErrorAction {
 export interface SetQueryLimitReachedAction {
   type: typeof SET_QUERY_LIMIT_REACHED;
   payload: {
-    limitReached: boolean;
+    queriesExecutionLimitReached: boolean;
   }
 }
 

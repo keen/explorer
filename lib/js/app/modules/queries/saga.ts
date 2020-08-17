@@ -35,6 +35,14 @@ import {
   ERRORS,
 } from './constants';
 
+import { isElementInViewport } from './utils';
+
+function* scrollToElement(element: HTMLElement) {
+  if (element && !isElementInViewport(element)) {
+    yield element.scrollIntoView({ block: 'start', behavior: 'smooth' });
+  }
+}
+
 function* runQuery(action: RunQueryAction) {
   try {
     const {
@@ -46,8 +54,20 @@ function* runQuery(action: RunQueryAction) {
     yield put(runQuerySuccess(responseBody));
   } catch (error) {
     console.log('error', error);
-    yield put(setQueryLimitReached(error));
+    const { status, error_code } = error;
+    if (
+      status >= 400 &&
+        status < 500 &&
+        error_code === ERRORS.TOO_MANY_QUERIES
+    ) {
+      yield put(setQueryLimitReached(true));
+    }
     yield put(runQueryError(error));
+  } finally {
+    const element = document.getElementById('editor');
+    if (element) {
+      yield scrollToElement(element);
+    }
   }
 }
 
@@ -67,7 +87,7 @@ function* saveQuery({ payload }: SaveQueryAction) {
       (status >= 400 &&
         status < 500 &&
         error_code === ERRORS.OVER_LIMIT_ERROR) ||
-      error_code === ERRORS.TOO_MANY_QUERIES
+      error_code === ERRORS.TOO_MANY_CACHED_QUERIES
     ) {
       yield put({
         type: 'ABOVE_CACHE_QUERY_LIMIT',

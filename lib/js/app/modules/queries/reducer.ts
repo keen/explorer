@@ -98,7 +98,7 @@ export const queriesReducer = (
     case SET_QUERY_LIMIT_REACHED:
       return {
         ...state,
-        limitReached: action.payload.limitReached,
+        queriesExecutionLimitReached: action.payload.queriesExecutionLimitReached,
       };
     default:
       return state;
