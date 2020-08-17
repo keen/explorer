@@ -4,8 +4,6 @@ import { connect } from 'react-redux';
 import snakeCase from 'snakecase-keys';
 import { getPubSub } from '@keen.io/pubsub';
 
-import { fetchProject, fetchSchema } from '../redux/actionCreators/client';
-
 import {
   runQuery,
   deleteQuery,
@@ -46,7 +44,6 @@ const mapStateToProps = (state: AppState) => ({
 
 const mapDispatchToProps = {
   fetchProject,
-  fetchSchema,
   saveQuery,
   editQuery,
   fetchSavedQueries,
@@ -84,7 +81,6 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.props.fetchProject();
     this.props.fetchSavedQueries();
     this.props.loadPersitedState();
   }
