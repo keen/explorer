@@ -11,6 +11,10 @@ export const FooterContent = styled.div`
   align-items: center;
 `;
 
+export const ErrorNotification = styled.div`
+  margin-bottom: 20px;
+`;
+
 export const Cancel = styled.div`
   margin-left: 20px;
   display: flex;

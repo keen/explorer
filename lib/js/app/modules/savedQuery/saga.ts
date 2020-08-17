@@ -4,7 +4,7 @@ import { takeLatest, select, put } from 'redux-saga/effects';
 
 import { updateSaveQuery } from './actions';
 
-import { setVisualizationType, hideQuerySettingsModal } from '../app';
+import { setVisualizationType } from '../app';
 import { getSavedQueries, SAVE_QUERY_SUCCESS } from '../queries';
 
 import { SELECT_SAVED_QUERY } from './constants';
@@ -41,7 +41,6 @@ function* saveQuerySuccessHandler(action: SaveQuerySuccessAction) {
   const savedQuery = serializeSavedQuery(body as SavedQueryAPIResponse);
 
   yield put(updateSaveQuery(savedQuery));
-  yield put(hideQuerySettingsModal());
 }
 
 export function* savedQuerySaga() {
