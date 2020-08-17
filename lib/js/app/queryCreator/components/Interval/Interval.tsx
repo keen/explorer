@@ -12,7 +12,11 @@ import CustomInterval from '../CustomInterval';
 import { isCustomInterval } from './utils/isCustomInterval';
 import { transformInterval } from './utils/transformInterval';
 import text from './text.json';
-import { Container, IntervalContainer, DropdownContainer } from './Interval.styles';
+import {
+  Container,
+  IntervalContainer,
+  DropdownContainer,
+} from './Interval.styles';
 
 import { getInterval, setInterval } from '../../modules/query';
 
@@ -48,26 +52,26 @@ const Interval: FC<Props> = () => {
     <Container ref={containerRef}>
       <Title onClick={() => !isOpen && setOpen(true)}>{text.label}</Title>
       <IntervalContainer>
-        <DropableContainer 
+        <DropableContainer
           variant="secondary"
           placeholder="Set interval"
           onClick={() => !isOpen && setOpen(true)}
           isActive={isOpen}
           value={interval}
           onDefocus={(event: any) => {
-            if (
-              !event.path?.includes(containerRef.current)
-            ) {
+            if (!event.path?.includes(containerRef.current)) {
               setOpen(false);
             }
           }}
         >
           {interval && transformInterval(interval)}
         </DropableContainer>
-        {interval && <ActionButton
-          action="remove"
-          onClick={() => dispatch(setInterval(undefined))}
-        />}
+        {interval && (
+          <ActionButton
+            action="remove"
+            onClick={() => dispatch(setInterval(undefined))}
+          />
+        )}
       </IntervalContainer>
       <Dropdown isOpen={isOpen}>
         <Tabs
@@ -83,7 +87,13 @@ const Interval: FC<Props> = () => {
           {customInterval ? (
             <CustomInterval interval={interval} onChange={changeHandler} />
           ) : (
-            <SupportedInterval interval={interval} onChange={(interval) => {changeHandler(interval); setOpen(false);}} />
+            <SupportedInterval
+              interval={interval}
+              onChange={(interval) => {
+                changeHandler(interval);
+                setOpen(false);
+              }}
+            />
           )}
         </DropdownContainer>
       </Dropdown>

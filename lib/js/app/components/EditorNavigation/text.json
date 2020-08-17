@@ -1,3 +1,5 @@
 {
-  "newQueryButton": "New Query"
+  "newQueryButton": "New Query",
+  "newQueryTitle": "New Query",
+  "saveQuery": "Save Query"
 }

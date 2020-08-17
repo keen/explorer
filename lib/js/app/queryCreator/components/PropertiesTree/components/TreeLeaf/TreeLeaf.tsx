@@ -2,26 +2,26 @@ import React, { FC, useState, useEffect, useRef, useContext } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Tooltip } from '@keen.io/ui-core';
 
-import { Container, Type, Path, Name } from './PropertyTreeItem.styles';
-import Portal from '../Portal';
+import { Container, Type, Path, Name } from './TreeLeaf.styles';
+import Portal from '../../../Portal';
 
-import { AppContext } from '../../contexts';
+import { AppContext } from '../../../../contexts';
 
-import { SEPARATOR } from './constants';
+import { SEPARATOR, PADDING } from './constants';
 
 type Props = {
   /** Property name */
   propertyName: string;
   /** Property path */
   propertyPath: string;
-  /** Active indicator */
-  isActive: boolean;
   /** Property type */
-  type: string;
-  /** Left padding spacing */
-  padding: number;
+  propertyType: string;
   /** Click event handler */
   onClick: (e: React.MouseEvent<HTMLDivElement>, propertyPath: string) => void;
+  /** Active indicator */
+  isActive?: boolean;
+  /** Deepness level */
+  deepnessLevel: number;
 };
 
 const tooltipMotion = {
@@ -29,13 +29,13 @@ const tooltipMotion = {
   exit: { opacity: 0 },
 };
 
-const PropertyTreeItem: FC<Props> = ({
-  padding,
+const TreeLeaf: FC<Props> = ({
   onClick,
   propertyName,
-  type,
-  isActive,
+  propertyType,
   propertyPath,
+  isActive,
+  deepnessLevel,
 }) => {
   const { modalContainer } = useContext(AppContext);
   const [isEllipsisActive, setEllipsis] = useState(false);
@@ -50,13 +50,12 @@ const PropertyTreeItem: FC<Props> = ({
   useEffect(() => {
     const element = nameRef.current;
     const contentOverflow = element.offsetWidth < element.scrollWidth;
-    if (contentOverflow) {
-      setEllipsis(true);
-    }
-  }, []);
+    setEllipsis(contentOverflow);
+  }, [propertyPath]);
 
   return (
     <Container
+      style={{ paddingLeft: PADDING + deepnessLevel * PADDING }}
       isActive={isActive}
       onMouseMove={(e) => {
         if (isEllipsisActive) {
@@ -66,11 +65,10 @@ const PropertyTreeItem: FC<Props> = ({
       onMouseLeave={() => {
         if (isEllipsisActive) setTooltip({ x: 0, y: 0, visible: false });
       }}
-      padding={padding}
       onClick={(e) => onClick(e, propertyPath)}
     >
       <Name ref={nameRef}>{propertyName}</Name>
-      <Type>{type}</Type>
+      <Type>{propertyType}</Type>
       <AnimatePresence>
         {tooltip.visible && (
           <Portal modalContainer={modalContainer}>
@@ -107,4 +105,4 @@ const PropertyTreeItem: FC<Props> = ({
   );
 };
 
-export default PropertyTreeItem;
+export default TreeLeaf;

@@ -18,6 +18,7 @@ import {
   SET_CACHE_QUERY_LIMIT_ERROR,
   SET_QUERY_LIMIT_REACHED,
   RESET_QUERY_RESULTS,
+  RESET_SAVE_QUERY_ERROR,
 } from './constants';
 
 export const resetQueryResults = (): QueriesActions => ({
@@ -56,6 +57,10 @@ export const saveQuerySuccess = (
 export const saveQueryError = (error: Error): QueriesActions => ({
   type: SAVE_QUERY_ERROR,
   payload: { error },
+});
+
+export const resetSavedQueryError = (): QueriesActions => ({
+  type: RESET_SAVE_QUERY_ERROR,
 });
 
 export const deleteQuery = (queryName: string): QueriesActions => ({
@@ -106,9 +111,11 @@ export const runQueryError = (error: APIError): QueriesActions => ({
   payload: { error },
 });
 
-export const setQueryLimitReached = (queriesExecutionLimitReached: boolean): QueriesActions => ({
+export const setQueryLimitReached = (
+  queriesExecutionLimitReached: boolean
+): QueriesActions => ({
   type: SET_QUERY_LIMIT_REACHED,
   payload: {
-    queriesExecutionLimitReached
-  }
+    queriesExecutionLimitReached,
+  },
 });

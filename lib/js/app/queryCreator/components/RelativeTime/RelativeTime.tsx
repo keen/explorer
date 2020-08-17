@@ -1,10 +1,7 @@
 import React, { FC } from 'react';
 import { Checkbox } from '@keen.io/ui-core';
 
-import {
-  RelativityContainer,
-  CheckboxLabel,
-} from './RelativeTime.styles';
+import { RelativityContainer, CheckboxLabel } from './RelativeTime.styles';
 
 import TimePeriod from '../TimePeriod';
 
@@ -25,17 +22,16 @@ type Props = {
 };
 
 const RelativeTime: FC<Props> = ({ relativity, value, units, onChange }) => {
-
   return (
     <div data-testid="relative-time">
-        <TimePeriod
-          label={text.timeLabel}
-          unitsPlaceholder={text.unitsPlaceholder}
-          relativity={relativity}
-          value={value}
-          units={units}
-          onChange={onChange}
-        />
+      <TimePeriod
+        label={text.timeLabel}
+        unitsPlaceholder={text.unitsPlaceholder}
+        relativity={relativity}
+        value={value}
+        units={units}
+        onChange={onChange}
+      />
       <RelativityContainer
         onClick={() => {
           const updatedRelativity =

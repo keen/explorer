@@ -10,6 +10,7 @@ import {
   DELETE_QUERY_SUCCESS,
   SAVE_QUERY,
   SAVE_QUERY_ERROR,
+  RESET_SAVE_QUERY_ERROR,
   SAVE_QUERY_SUCCESS,
   SET_CACHE_QUERY_LIMIT,
   SET_CACHE_QUERY_LIMIT_ERROR,
@@ -26,6 +27,7 @@ export type ReducerState = {
   saved: any[];
   isLimited: boolean;
   queriesExecutionLimitReached: boolean;
+  saveQueryError: APIError | null;
   error: APIError | null;
 };
 
@@ -68,6 +70,10 @@ export interface SaveQueryErrorAction {
   payload: {
     error: Error;
   };
+}
+
+export interface ResetSaveQueryErrorAction {
+  type: typeof RESET_SAVE_QUERY_ERROR;
 }
 
 export interface DeleteQueryAction {
@@ -134,7 +140,7 @@ export interface SetQueryLimitReachedAction {
   type: typeof SET_QUERY_LIMIT_REACHED;
   payload: {
     queriesExecutionLimitReached: boolean;
-  }
+  };
 }
 
 export type QueriesActions =
@@ -153,4 +159,5 @@ export type QueriesActions =
   | GetSavedQueriesAction
   | GetSavedQueriesSuccessAction
   | GetSavedQueriesErrorAction
-  | SetQueryLimitReachedAction;
+  | SetQueryLimitReachedAction
+  | ResetSaveQueryErrorAction;

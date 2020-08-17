@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Alert, Button } from '@keen.io/ui-core';
+import { Button } from '@keen.io/ui-core';
 
 import { EditorActions, CreatorContainer } from './Editor.styles';
 
@@ -16,8 +16,7 @@ import QueryLimitReached from '../QueryLimitReached';
 import {
   getQueryResults,
   getQueryPerformState,
-  getError,
-  getQueryLimitReached
+  getQueryLimitReached,
 } from '../../modules/queries';
 import { setViewMode } from '../../modules/app';
 
@@ -30,18 +29,25 @@ type Props = {
   onUpdateQuery: (query: Record<string, any>) => void;
   /** Run query event handler */
   onRunQuery: () => void;
+  /** Save query event handler */
+  onSaveQuery: () => void;
 };
 
-const Editor: FC<Props> = ({ query, upgradeSubscriptionUrl, onRunQuery, onUpdateQuery }) => {
+const Editor: FC<Props> = ({
+  query,
+  upgradeSubscriptionUrl,
+  onRunQuery,
+  onSaveQuery,
+  onUpdateQuery,
+}) => {
   const dispatch = useDispatch();
   const queryResults = useSelector(getQueryResults);
-  const runQueryError = useSelector(getError);
   const isQueryLoading = useSelector(getQueryPerformState);
-  const isQueryLimitReached = useSelector(getQueryLimitReached); console.log({isQueryLimitReached});
+  const isQueryLimitReached = useSelector(getQueryLimitReached);
 
   return (
     <div id="editor">
-      <EditorNavigation query={query} />
+      <EditorNavigation onSaveQuery={onSaveQuery} />
       <Button
         onClick={() => {
           dispatch(setViewMode('browser'));
@@ -49,12 +55,14 @@ const Editor: FC<Props> = ({ query, upgradeSubscriptionUrl, onRunQuery, onUpdate
       >
         Back to list
       </Button>
-      <section>{ isQueryLimitReached ? <QueryLimitReached upgradeSubscriptionUrl={upgradeSubscriptionUrl} /> : queryResults ? (
+      <section>
+        {isQueryLimitReached ? (
+          <QueryLimitReached upgradeSubscriptionUrl={upgradeSubscriptionUrl} />
+        ) : queryResults ? (
           <QueryVisualization query={query} queryResults={queryResults} />
         ) : (
           <VisualizationPlaceholder isLoading={isQueryLoading} />
         )}
-        {runQueryError && <Alert type="error">{runQueryError.body}</Alert>}
       </section>
       <CreatorContainer>
         <Creator onUpdateQuery={onUpdateQuery} />

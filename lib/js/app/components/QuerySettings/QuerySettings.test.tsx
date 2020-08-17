@@ -1,6 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { render as rtlRender, fireEvent, screen } from '@testing-library/react';
+import { render as rtlRender, fireEvent } from '@testing-library/react';
 import configureStore from 'redux-mock-store';
 
 import QuerySettings from './QuerySettings';
@@ -10,8 +10,8 @@ const render = (storeState: any = {}, overProps: any = {}) => {
   const mockStore = configureStore([]);
   const state = {
     queries: {
-      isLimited: false,
       isSaving: false,
+      saveQueryError: null,
     },
     savedQuery: {
       name: '',
@@ -27,8 +27,7 @@ const render = (storeState: any = {}, overProps: any = {}) => {
 
   const props = {
     onSave: jest.fn(),
-    onDelete: jest.fn(),
-    cacheAvailable: true,
+    onClose: jest.fn(),
     ...overProps,
   };
 
@@ -46,152 +45,66 @@ const render = (storeState: any = {}, overProps: any = {}) => {
 };
 
 test('allows user to save query', () => {
-  const savedQuery = {
-    name: 'query',
-    displayName: 'Query',
-    cached: false,
-    refreshRate: 0,
-    exists: false,
-  };
   const {
-    wrapper: { container },
+    wrapper: { getByTestId, getByText },
     props,
-  } = render({ savedQuery });
-  const input = container.querySelector('input[type="text"]');
-  const button = screen.getByText('Save');
-
-  fireEvent.change(input, { target: { value: 'Query' } });
-  fireEvent.click(button);
-
-  const { name, refreshRate } = savedQuery;
-
-  expect(props.onSave).toHaveBeenCalledWith(name, refreshRate);
-});
-
-test('allows user to delete query', () => {
-  const savedQuery = {
-    name: 'query',
-    displayName: 'Query',
-    cached: false,
-    refreshRate: 0,
-    exists: true,
-  };
-  const { props } = render({ savedQuery });
-
-  const button = screen.getByText('Delete');
-  fireEvent.click(button);
-
-  const { name } = savedQuery;
-
-  expect(props.onDelete).toHaveBeenCalledWith(name);
-});
-
-test('reset cache settings', () => {
-  const savedQuery = {
-    name: 'query',
-    displayName: 'Query',
-    cached: false,
-    refreshRate: 0,
-    exists: true,
-  };
-
-  const {
-    store,
-    wrapper: { rerender },
-    props,
-  } = render({ savedQuery }, { cacheAvailable: true });
-  rerender(
-    <Provider store={store}>
-      <QuerySettings {...props} cacheAvailable={false} />
-    </Provider>
-  );
-
-  expect(store.getActions()).toMatchInlineSnapshot(`
-    Array [
-      Object {
-        "payload": Object {
-          "cached": false,
-          "refreshRate": 0,
-        },
-        "type": "@saved-query/UPDATE_SAVED_QUERY",
-      },
-    ]
-  `);
-});
-
-test('shows message about not available cache', () => {
-  const savedQuery = {
-    name: 'query',
-    displayName: 'Query',
-    cached: false,
-    refreshRate: 0,
-    exists: true,
-  };
-
-  render({ savedQuery }, { cacheAvailable: false });
-  const notification = screen.getByText(text.cachingNotAvailable);
-
-  expect(notification).toBeInTheDocument();
-});
-
-test('allows user to clone query', () => {
-  const savedQuery = {
-    name: 'query',
-    displayName: 'Query',
-    cached: false,
-    refreshRate: 0,
-    exists: true,
-  };
-  const { store } = render({ savedQuery });
-
-  const button = screen.getByText('Clone');
-  fireEvent.click(button);
-
-  expect(store.getActions()).toMatchInlineSnapshot(`
-    Array [
-      Object {
-        "type": "@saved-query/RESET_SAVED_QUERY",
-      },
-    ]
-  `);
-});
-
-test('allows user to update save query name', () => {
-  const {
-    wrapper: { container },
-    store,
   } = render();
-  const input = container.querySelector('input[type="text"]');
-  const button = screen.getByText('Save');
 
-  fireEvent.change(input, { target: { value: 'Query' } });
+  const input = getByTestId('query-name-input');
+  fireEvent.change(input, { target: { value: 'Last month purchases' } });
+
+  const button = getByText(text.saveButton);
   fireEvent.click(button);
 
-  expect(store.getActions()).toMatchInlineSnapshot(`
-    Array [
-      Object {
-        "payload": Object {
-          "displayName": "Query",
-          "exists": false,
-          "name": "query",
-        },
-        "type": "@saved-query/UPDATE_SAVED_QUERY",
-      },
-    ]
-  `);
+  expect(props.onSave).toHaveBeenCalledWith({
+    displayName: 'Last month purchases',
+    name: 'last-month-purchases',
+  });
 });
 
-test('shows query resource name', () => {
-  const savedQuery = {
-    name: 'query-name',
-    displayName: 'Query',
-    cached: false,
-    refreshRate: 0,
-    exists: false,
+test('allows user to close query settings', () => {
+  const {
+    props,
+    wrapper: { getByText },
+  } = render();
+
+  const button = getByText(text.closeButton);
+  fireEvent.click(button);
+
+  expect(props.onClose).toHaveBeenCalled();
+});
+
+test('renders query name error', () => {
+  const {
+    wrapper: { getByText },
+  } = render();
+
+  const button = getByText(text.saveButton);
+  fireEvent.click(button);
+
+  expect(getByText(text.queryNameError)).toBeInTheDocument();
+});
+
+test('renders notice about naming save query', () => {
+  const {
+    wrapper: { getByText },
+  } = render();
+
+  expect(getByText(text.newQueryNotice)).toBeInTheDocument();
+});
+
+test('renders save query error', () => {
+  const storeState = {
+    queries: {
+      isSaving: false,
+      saveQueryError: {
+        body: 'save query error',
+      },
+    },
   };
+  const {
+    wrapper: { getByTestId },
+  } = render(storeState);
 
-  render({ savedQuery });
-  const { name } = savedQuery;
-
-  expect(screen.getByText(name)).toBeInTheDocument();
+  expect(getByTestId('error-alert')).toBeInTheDocument();
 });

@@ -28,21 +28,21 @@ export const Title = styled.h2`
 `;
 
 export const Message = styled.p`
-font-family: 'Lato Regular', sans-serif;
-font-size: 16px;
-line-height: 26px;
+  font-family: 'Lato Regular', sans-serif;
+  font-size: 16px;
+  line-height: 26px;
 
-margin: 0;
+  margin: 0;
 
-color: ${colors.black[500]};
+  color: ${colors.black[500]};
 
-a {
-  font-family: 'Lato Bold', sans-serif;
-  color: ${colors.green[500]};
-  text-decoration: none;
+  a {
+    font-family: 'Lato Bold', sans-serif;
+    color: ${colors.green[500]};
+    text-decoration: none;
 
-  &:hover {
-    text-decoration: underline;
+    &:hover {
+      text-decoration: underline;
+    }
   }
-}
 `;

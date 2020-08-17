@@ -1,10 +1,6 @@
 import { SavedQueryActions, ReducerState } from './types';
 
-import {
-  UPDATE_SAVED_QUERY,
-  RESET_SAVED_QUERY,
-  SAVE_QUERY_SUCCESS,
-} from './constants';
+import { UPDATE_SAVED_QUERY, RESET_SAVED_QUERY } from './constants';
 
 export const initialState: ReducerState = {
   name: '',
@@ -19,11 +15,6 @@ export const savedQueryReducer = (
   action: SavedQueryActions
 ) => {
   switch (action.type) {
-    case SAVE_QUERY_SUCCESS:
-      return {
-        ...state,
-        exists: true,
-      };
     case UPDATE_SAVED_QUERY:
       return {
         ...state,

@@ -13,6 +13,7 @@ import {
   SET_CACHE_QUERY_LIMIT_ERROR,
   RESET_QUERY_RESULTS,
   SET_QUERY_LIMIT_REACHED,
+  RESET_SAVE_QUERY_ERROR,
 } from './constants';
 
 export const initialState: ReducerState = {
@@ -22,6 +23,7 @@ export const initialState: ReducerState = {
   saved: [],
   isLimited: false,
   queriesExecutionLimitReached: false,
+  saveQueryError: null,
   error: null,
 };
 
@@ -38,17 +40,24 @@ export const queriesReducer = (
     case SAVE_QUERY:
       return {
         ...state,
-        error: null,
+        saveQueryError: null,
         isSavingQuery: true,
+      };
+    case RESET_SAVE_QUERY_ERROR:
+      return {
+        ...state,
+        saveQueryError: null,
       };
     case SAVE_QUERY_SUCCESS:
       return {
         ...state,
+        saveQueryError: null,
         isSavingQuery: false,
       };
     case SAVE_QUERY_ERROR:
       return {
         ...state,
+        saveQueryError: action.payload.error,
         isSavingQuery: false,
       };
     case SET_CACHE_QUERY_LIMIT:
@@ -98,7 +107,8 @@ export const queriesReducer = (
     case SET_QUERY_LIMIT_REACHED:
       return {
         ...state,
-        queriesExecutionLimitReached: action.payload.queriesExecutionLimitReached,
+        queriesExecutionLimitReached:
+          action.payload.queriesExecutionLimitReached,
       };
     default:
       return state;

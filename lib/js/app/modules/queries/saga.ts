@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/camelcase */
 
 import { takeLatest, getContext, take, put } from 'redux-saga/effects';
+import HttpStatus from 'http-status-codes';
 
 import {
   runQueryError,
@@ -18,12 +19,19 @@ import {
 
 import {
   showConfirmation,
+  hideQuerySettingsModal,
   HIDE_CONFIRMATION,
   ACCEPT_CONFIRMATION,
 } from '../../modules/app';
 import { resetSavedQuery } from '../../modules/savedQuery';
+import text from './text.json';
 
 import { RunQueryAction, DeleteQueryAction, SaveQueryAction } from './types';
+
+import {
+  NOTIFICATION_MANAGER_CONTEXT,
+  KEEN_CLIENT_CONTEXT,
+} from '../../constants';
 
 import {
   RUN_QUERY,
@@ -48,21 +56,23 @@ function* runQuery(action: RunQueryAction) {
     const {
       payload: { body },
     } = action;
-    const client = yield getContext('keenClient');
+    const client = yield getContext(KEEN_CLIENT_CONTEXT);
     const responseBody = yield client.query(body);
 
     yield put(runQuerySuccess(responseBody));
   } catch (error) {
-    console.log('error', error);
-    const { status, error_code } = error;
-    if (
-      status >= 400 &&
-        status < 500 &&
-        error_code === ERRORS.TOO_MANY_QUERIES
-    ) {
+    const { body, error_code } = error;
+    yield put(runQueryError(error));
+
+    if (error_code === ERRORS.TOO_MANY_QUERIES) {
       yield put(setQueryLimitReached(true));
     }
-    yield put(runQueryError(error));
+
+    const notificationManager = yield getContext(NOTIFICATION_MANAGER_CONTEXT);
+    yield notificationManager.showNotification({
+      type: 'error',
+      message: body,
+    });
   } finally {
     const element = document.getElementById('editor');
     if (element) {
@@ -74,27 +84,47 @@ function* runQuery(action: RunQueryAction) {
 function* saveQuery({ payload }: SaveQueryAction) {
   try {
     const { name, body } = payload;
-    const client = yield getContext('keenClient');
+    const notificationManager = yield getContext(NOTIFICATION_MANAGER_CONTEXT);
+    const client = yield getContext(KEEN_CLIENT_CONTEXT);
+
     const responseBody = yield client.put({
       url: client.url('queries', 'saved', name),
       apiKey: client.config.masterKey,
       params: body,
     });
+
+    yield put(hideQuerySettingsModal());
     yield put(saveQuerySuccess(name, responseBody));
+    yield notificationManager.showNotification({
+      type: 'success',
+      message: text.saveQuerySuccess,
+    });
   } catch (error) {
-    const { status, error_code } = error;
+    const { status, error_code: errorCode } = error;
+
+    if (status === HttpStatus.INTERNAL_SERVER_ERROR) {
+      yield put(hideQuerySettingsModal());
+      const notificationManager = yield getContext(
+        NOTIFICATION_MANAGER_CONTEXT
+      );
+      yield notificationManager.showNotification({
+        type: 'error',
+        message: text.saveQueryError,
+        showDismissButton: true,
+        autoDismiss: false,
+      });
+    } else {
+      yield put(saveQueryError(error));
+    }
+
     if (
-      (status >= 400 &&
-        status < 500 &&
-        error_code === ERRORS.OVER_LIMIT_ERROR) ||
-      error_code === ERRORS.TOO_MANY_CACHED_QUERIES
+      errorCode === ERRORS.OVER_LIMIT_ERROR ||
+      errorCode === ERRORS.TOO_MANY_CACHED_QUERIES
     ) {
       yield put({
         type: 'ABOVE_CACHE_QUERY_LIMIT',
       });
     }
-
-    yield put(saveQueryError(error));
   }
 }
 

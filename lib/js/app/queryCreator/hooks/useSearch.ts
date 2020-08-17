@@ -6,6 +6,8 @@ const defaultOptions = {
   threshold: 0.3,
 };
 
+const DEBOUNCE_TIME = 200;
+
 export const useSearch = <T>(
   collection: T[],
   callback: (results: T[], searchPhrase: string) => void,
@@ -13,6 +15,8 @@ export const useSearch = <T>(
 ) => {
   const [searchPhrase, setSearchPhrase] = useState(null);
   const fuseSearch = useRef(new Fuse(collection, options));
+
+  const searchDebounce = useRef(null);
 
   const clearSearchPhrase = useCallback(() => {
     setSearchPhrase(null);
@@ -25,10 +29,17 @@ export const useSearch = <T>(
   const searchHandler = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const value = e.currentTarget.value;
-      const results = fuseSearch.current.search(value).map(({ item }) => item);
-      setSearchPhrase(value);
 
-      callback(results, value);
+      if (searchDebounce.current) clearTimeout(searchDebounce.current);
+
+      searchDebounce.current = setTimeout(() => {
+        const results = fuseSearch.current
+          .search(value)
+          .map(({ item }) => item);
+        setSearchPhrase(value);
+
+        callback(results, value);
+      }, DEBOUNCE_TIME);
     },
     [fuseSearch, collection]
   );

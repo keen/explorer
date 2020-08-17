@@ -55,7 +55,6 @@ const GroupBy: FC<Props> = ({ collection }) => {
   const [propertiesTree, setPropertiesTree] = useState(null);
   const [searchPropertiesPhrase, setSearchPhrase] = useState(null);
   const [expandTree, setTreeExpand] = useState(false);
-  const expandTrigger = useRef(null);
 
   const dispatch = useDispatch();
   const groups: string[] = useSelector((state: AppState) => {
@@ -86,7 +85,6 @@ const GroupBy: FC<Props> = ({ collection }) => {
   }>(
     schemaList,
     (searchResult, phrase) => {
-      if (expandTrigger.current) clearTimeout(expandTrigger.current);
       if (phrase) {
         const searchTree = {};
         searchResult.forEach(({ path, type }) => {
@@ -94,10 +92,7 @@ const GroupBy: FC<Props> = ({ collection }) => {
         });
         setSearchPhrase(phrase);
         setPropertiesTree(createTree(searchTree));
-
-        expandTrigger.current = setTimeout(() => {
-          setTreeExpand(true);
-        }, 300);
+        setTreeExpand(true);
       } else {
         setTreeExpand(false);
         setPropertiesTree(null);

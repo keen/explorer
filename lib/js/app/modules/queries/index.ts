@@ -5,10 +5,12 @@ import {
   runQuery,
   deleteQuery,
   saveQuery,
+  resetSavedQueryError,
   getSavedQueries as fetchSavedQueries,
 } from './actions';
 import {
-  getError,
+  getQueryExecutionError,
+  getSaveQueryError,
   getSavedQueries,
   getQueriesSaving,
   getQueriesLimit,
@@ -20,12 +22,14 @@ import {
 import { SAVE_QUERY_SUCCESS } from './constants';
 
 import { queriesSaga } from './saga';
+import { SaveQuerySuccessAction } from './types';
 
 export {
   ReducerState,
   fetchSavedQueries,
   saveQuery,
-  getError,
+  getQueryExecutionError,
+  getSaveQueryError,
   getQueryResults,
   getQueryPerformState,
   getSavedQueries,
@@ -36,6 +40,8 @@ export {
   runQuery,
   deleteQuery,
   resetQueryResults,
+  resetSavedQueryError,
   queriesSaga,
   SAVE_QUERY_SUCCESS,
+  SaveQuerySuccessAction,
 };

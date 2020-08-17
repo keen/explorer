@@ -6,7 +6,7 @@ import QueryLimitReached from './QueryLimitReached';
 import text from './text.json';
 
 test('renders exceed query limit message', () => {
-  const { queryByText } =render(<QueryLimitReached/>);
+  const { queryByText } = render(<QueryLimitReached />);
   const title = queryByText(text.title);
   const firstLine = queryByText(text.first_line);
   const secondLine = queryByText(text.second_line);
@@ -16,7 +16,9 @@ test('renders exceed query limit message', () => {
 });
 
 test('renders upgrade subscription anchor', () => {
-  const { queryByText } =render(<QueryLimitReached upgradeSubscriptionUrl='test' />);
+  const { queryByText } = render(
+    <QueryLimitReached upgradeSubscriptionUrl="test" />
+  );
   const title = queryByText(text.title);
   const firstLine = queryByText(text.first_line);
   const secondLine = queryByText(text.second_line);

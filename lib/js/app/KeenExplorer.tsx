@@ -2,10 +2,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { createStore, applyMiddleware } from 'redux';
-import { Provider } from 'react-redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
+import { Provider } from 'react-redux';
 import createSagaMiddleware from 'redux-saga';
-import { getPubSub } from '@keen.io/pubsub';
+import { ToastProvider } from '@keen.io/toast-notifications';
+import { getPubSub, PubSub } from '@keen.io/pubsub';
+
 import KeenAnalysis from 'keen-analysis';
 import KeenTracking from 'keen-tracking';
 
@@ -18,6 +20,10 @@ import { version } from '../../../package.json';
 
 import App from './components/App';
 import { AppContext } from './contexts';
+
+import { NotificationManager } from './modules/notifications';
+
+import { SHOW_TOAST_NOTIFICATION_EVENT } from './constants';
 
 export let client;
 export let keenTrackingClient;
@@ -33,10 +39,15 @@ export class KeenExplorer {
         keenTracking.instance || new KeenTracking(keenTracking.config);
     }
 
+    const notificationPubSub = new PubSub();
     const sagaMiddleware = createSagaMiddleware({
       context: {
         keenClient: client,
         pubsub: getPubSub(),
+        notificationManager: new NotificationManager({
+          pubsub: notificationPubSub,
+          eventName: SHOW_TOAST_NOTIFICATION_EVENT,
+        }),
       },
     });
     const composeEnhancers = composeWithDevTools({});
@@ -50,9 +61,16 @@ export class KeenExplorer {
     ReactDOM.render(
       <Provider store={store}>
         <AppContext.Provider
-          value={{ keenAnalysis: client, modalContainer: props.modalContainer, upgradeSubscriptionUrl: props.upgradeSubscriptionUrl }}
+          value={{
+            keenAnalysis: client,
+            modalContainer: props.modalContainer,
+            upgradeSubscriptionUrl: props.upgradeSubscriptionUrl,
+            notificationPubSub,
+          }}
         >
-          <App {...props} />
+          <ToastProvider>
+            <App {...props} />
+          </ToastProvider>
         </AppContext.Provider>
       </Provider>,
       document.querySelector(props.container)

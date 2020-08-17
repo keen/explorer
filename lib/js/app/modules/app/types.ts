@@ -10,6 +10,8 @@ import {
   EDIT_QUERY,
   UPDATE_QUERY_CREATOR,
   QUERY_EDITOR_MOUNTED,
+  SHOW_QUERY_SETTINGS_MODAL,
+  HIDE_QUERY_SETTINGS_MODAL,
 } from './constants';
 
 export type Confirmation = 'delete';
@@ -21,6 +23,9 @@ export type ReducerState = {
     action: Confirmation;
     visible: boolean;
     meta?: Record<string, any>;
+  };
+  querySettingsModal: {
+    visible: boolean;
   };
   view: ViewMode;
   visualization: {
@@ -34,6 +39,14 @@ export interface CopyShareUrlAction {
     query: Record<string, any>;
     savedQuery: Record<string, any>;
   };
+}
+
+export interface ShowQuerySettingsModalAction {
+  type: typeof SHOW_QUERY_SETTINGS_MODAL;
+}
+
+export interface HideQuerySettingsModalAction {
+  type: typeof HIDE_QUERY_SETTINGS_MODAL;
 }
 
 export interface CreateNewQueryAction {
@@ -101,4 +114,6 @@ export type AppActions =
   | ShowConfirmationAction
   | HideConfirmationAction
   | AcceptConfirmationAction
-  | SetVisualizationType;
+  | SetVisualizationType
+  | ShowQuerySettingsModalAction
+  | HideQuerySettingsModalAction;

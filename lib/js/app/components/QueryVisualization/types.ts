@@ -1,10 +1,13 @@
-export type DataTypes =
-  | 'singular'
-  | 'categorical'
-  | 'categoricalInterval'
-  | 'categoricalOrdinal'
-  | 'chronological'
-  | 'categoricalChronological'
-  | 'nominal'
-  | 'extraction'
-  | 'funnel';
+export type Widget =
+  | 'bar'
+  | 'line'
+  | 'area'
+  | 'pie'
+  | 'donut'
+  | 'gauge'
+  | 'metric'
+  | 'funnel'
+  | 'choropleth'
+  | 'bubble'
+  | 'heatmap'
+  | 'table';

@@ -1,0 +1,123 @@
+import React from 'react';
+import { Provider } from 'react-redux';
+import { render as rtlRender, fireEvent } from '@testing-library/react';
+import configureStore from 'redux-mock-store';
+
+import EditorNavigation from './EditorNavigation';
+import text from './text.json';
+
+const render = (storeState: any = {}, overProps: any = {}) => {
+  const mockStore = configureStore([]);
+  const state = {
+    app: {
+      querySettingsModal: {
+        visible: true,
+      },
+    },
+    savedQuery: {
+      name: '',
+      displayName: '',
+      cached: false,
+      refreshRate: 0,
+      exists: false,
+    },
+    queries: {
+      isSaving: false,
+    },
+    ...storeState,
+  };
+
+  const store = mockStore({ ...state });
+
+  const props = {
+    onSaveQuery: jest.fn(),
+    ...overProps,
+  };
+
+  const wrapper = rtlRender(
+    <Provider store={store}>
+      <EditorNavigation {...props} />
+    </Provider>
+  );
+
+  return {
+    store,
+    props,
+    wrapper,
+  };
+};
+
+test('renders saved query name', () => {
+  const savedQuery = {
+    name: 'purchases',
+    displayName: 'Purchases',
+    cached: false,
+    refreshRate: 0,
+    exists: true,
+  };
+  const {
+    wrapper: { getByText },
+  } = render({ savedQuery });
+
+  expect(getByText(savedQuery.displayName)).toBeInTheDocument();
+});
+
+test('allows user to open query settings', () => {
+  const savedQuery = {
+    name: 'purchases',
+    displayName: 'Purchases',
+    cached: false,
+    refreshRate: 0,
+    exists: true,
+  };
+  const {
+    wrapper: { getByTestId },
+  } = render({ savedQuery });
+
+  expect(getByTestId('query-settings')).toBeInTheDocument();
+});
+
+test('renders "New Query" for not existing query', () => {
+  const {
+    wrapper: { getByText },
+  } = render();
+
+  expect(getByText(text.newQueryTitle)).toBeInTheDocument();
+});
+
+test('allows user to save query', () => {
+  const savedQuery = {
+    name: 'purchases',
+    displayName: 'Purchases',
+    cached: false,
+    refreshRate: 0,
+    exists: true,
+  };
+  const {
+    props,
+    wrapper: { getByText },
+  } = render({ savedQuery });
+
+  const button = getByText(text.saveQuery);
+  fireEvent.click(button);
+
+  expect(props.onSaveQuery).toHaveBeenCalled();
+});
+
+test('opens query settings modal for not existing query', () => {
+  const {
+    store,
+    wrapper: { getByText },
+  } = render();
+
+  const button = getByText(text.saveQuery);
+  fireEvent.click(button);
+
+  expect(store.getActions()).toMatchInlineSnapshot(`
+    Array [
+      Object {
+        "type": "@app/SHOW_QUERY_SETTINGS_MODAL",
+      },
+    ]
+  `);
+});

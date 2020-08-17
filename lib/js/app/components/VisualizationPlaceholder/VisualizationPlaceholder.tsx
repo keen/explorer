@@ -2,7 +2,11 @@ import React, { FC } from 'react';
 import { FadeLoader } from '@keen.io/ui-core';
 import { colors } from '@keen.io/colors';
 
-import { Container, Text, LoaderWrapper } from './VisualizationPlaceholder.styles';
+import {
+  Container,
+  Text,
+  LoaderWrapper,
+} from './VisualizationPlaceholder.styles';
 import text from './text.json';
 
 type Props = {

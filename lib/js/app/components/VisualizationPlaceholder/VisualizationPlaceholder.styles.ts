@@ -19,14 +19,14 @@ export const Container = styled.div`
 
 type TextProps = {
   color?: string;
-}
+};
 
 export const Text = styled.div<TextProps>`
   font-family: 'Gangster Grotesk Regular', sans-serif;
   font-size: 20px;
   line-height: 24px;
 
-  color: ${props => props.color ? props.color : colors.green[400]};
+  color: ${(props) => (props.color ? props.color : colors.green[400])};
 `;
 
 export const LoaderWrapper = styled.div`

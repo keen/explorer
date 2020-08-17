@@ -31,12 +31,11 @@ import { AppState } from '../modules/types';
 
 import Browser from './Browser';
 import Editor from './Editor';
-import QuerySettings from './QuerySettings';
+import QuerySettingsModal from './QuerySettingsModal';
+import ToastNotifications from './ToastNotifications';
 import Confirm from './Confirm';
 
-import { QueryActions, SettingsContainer } from './App.styles';
-
-import { NEW_QUERY_EVENT, CACHE_AVAILABLE } from '../consts';
+import { NEW_QUERY_EVENT } from '../constants';
 
 const mapStateToProps = (state: AppState) => ({
   savedQuery: getSavedQuery(state),
@@ -90,6 +89,25 @@ class App extends Component {
     this.props.loadPersitedState();
   }
 
+  onSaveQuery = ({
+    displayName,
+    name,
+  }: {
+    displayName: string;
+    name: string;
+  }) => {
+    const body = {
+      query: this.state.query,
+      metadata: {
+        displayName,
+        widget: this.props.widget,
+      },
+      refreshRate: 0,
+    };
+
+    this.props.saveQuery(name, body);
+  };
+
   render() {
     return (
       <div>
@@ -114,38 +132,25 @@ class App extends Component {
               query={this.state.query}
               upgradeSubscriptionUrl={this.props.upgradeSubscriptionUrl}
               onRunQuery={() => this.props.runQuery(this.state.query)}
+              onSaveQuery={() => {
+                const { displayName, name } = this.props.savedQuery;
+                this.onSaveQuery({
+                  displayName,
+                  name,
+                });
+              }}
               onUpdateQuery={(query) => {
                 console.log(query, '--- query update');
                 this.setState({ query });
               }}
             />
-            <div>
-              <QueryActions>
-                <SettingsContainer>
-                  <QuerySettings
-                    cacheAvailable={CACHE_AVAILABLE.includes(
-                      this.state.query.analysis_type
-                    )}
-                    onDelete={(queryName) => this.props.deleteQuery(queryName)}
-                    onSave={(name, refreshRate) => {
-                      const body = {
-                        query: this.state.query,
-                        metadata: {
-                          displayName: name,
-                          widget: this.props.widget,
-                        },
-                        refreshRate: refreshRate * 60 * 60,
-                      };
-
-                      this.props.saveQuery(name, body);
-                    }}
-                  />
-                </SettingsContainer>
-              </QueryActions>
-            </div>
           </div>
         )}
         <Confirm />
+        <ToastNotifications />
+        <QuerySettingsModal
+          onSaveQuery={(settings) => this.onSaveQuery(settings)}
+        />
       </div>
     );
   }

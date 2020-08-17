@@ -4,6 +4,7 @@ export const RUN_QUERY_ERROR = '@queries/RUN_QUERY_ERROR';
 export const SAVE_QUERY = '@queries/SAVE_QUERY';
 export const SAVE_QUERY_SUCCESS = '@queries/SAVE_QUERY_SUCCESS';
 export const SAVE_QUERY_ERROR = '@queries/SAVE_QUERY_ERROR';
+export const RESET_SAVE_QUERY_ERROR = '@queries/RESET_SAVE_QUERY_ERROR';
 export const DELETE_QUERY = '@queries/DELETE_QUERY';
 export const DELETE_QUERY_SUCCESS = '@queries/DELETE_QUERY_SUCCESS';
 export const DELETE_QUERY_ERROR = '@queries/DELETE_QUERY_ERROR';

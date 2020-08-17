@@ -1,7 +1,6 @@
 import React, { FC, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { Label, Button, Checkbox, Title } from '@keen.io/ui-core';
-import { FieldGroup } from '@keen.io/forms';
 
 import EventCollection from '../EventCollection';
 import TargetProperty from '../TargetProperty';
@@ -80,25 +79,23 @@ const FunnelStep: FC<Props> = ({
           );
         }}
       />
-      <FieldGroup>
-        <Timeframe
-          id={`funnel_step_${index}`}
-          value={timeframe}
-          variant="secondary"
-          timezone={2000}
-          onTimezoneChange={() => {
-            console.log('timezone');
-            // @TODO: Handle timezone change
-          }}
-          onTimeframeChange={(value) =>
-            dispatch(
-              updateStep({
-                timeframe: value,
-              })
-            )
-          }
-        />
-      </FieldGroup>
+      <Timeframe
+        id={`funnel_step_${index}`}
+        value={timeframe}
+        variant="secondary"
+        timezone={2000}
+        onTimezoneChange={() => {
+          console.log('timezone');
+          // @TODO: Handle timezone change
+        }}
+        onTimeframeChange={(value) =>
+          dispatch(
+            updateStep({
+              timeframe: value,
+            })
+          )
+        }
+      />
       <Filters
         collection={eventCollection}
         filters={filters}
