@@ -9,12 +9,11 @@ import { ToastProvider } from '@keen.io/toast-notifications';
 import { getPubSub, PubSub } from '@keen.io/pubsub';
 
 import KeenAnalysis from 'keen-analysis';
-import KeenTracking from 'keen-tracking';
 
 import '../../../test/demo/keen-explorer.css';
 
-import rootReducer from './redux';
-import rootSaga from './redux/sagas';
+import rootReducer from './rootReducer';
+import rootSaga from './rootSaga';
 
 import { version } from '../../../package.json';
 
@@ -25,19 +24,11 @@ import { NotificationManager } from './modules/notifications';
 
 import { SHOW_TOAST_NOTIFICATION_EVENT } from './constants';
 
-export let client;
-export let keenTrackingClient;
-
 export class KeenExplorer {
   constructor(props) {
-    const { keenAnalysis, keenTracking } = props;
-
-    client = keenAnalysis.instance || new KeenAnalysis(keenAnalysis.config);
-
-    if (keenTracking) {
-      keenTrackingClient =
-        keenTracking.instance || new KeenTracking(keenTracking.config);
-    }
+    const { keenAnalysis } = props;
+    const keenAnalysisClient =
+      keenAnalysis.instance || new KeenAnalysis(keenAnalysis.config);
 
     const notificationPubSub = new PubSub();
     const sagaMiddleware = createSagaMiddleware({
@@ -62,7 +53,7 @@ export class KeenExplorer {
       <Provider store={store}>
         <AppContext.Provider
           value={{
-            keenAnalysis: client,
+            keenAnalysis: keenAnalysisClient,
             modalContainer: props.modalContainer,
             notificationPubSub,
           }}
