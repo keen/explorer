@@ -3,11 +3,11 @@ import { Widgets } from '../constants';
 
 export const getAvailableWidgets = (query: Record<string, any>): Widget[] => {
   if (query) {
-    if (query.analysisType === 'extraction') {
+    if (query.analysis_type === 'extraction') {
       return [Widgets.table];
     }
 
-    if (query.analysisType === Widgets.funnel) {
+    if (query.analysis_type === Widgets.funnel) {
       return [
         Widgets.bar,
         Widgets.area,
@@ -17,7 +17,7 @@ export const getAvailableWidgets = (query: Record<string, any>): Widget[] => {
       ];
     }
 
-    if (query.groupBy && !query.interval) {
+    if (query.group_by && !query.interval) {
       return [
         Widgets.bar,
         Widgets.line,
