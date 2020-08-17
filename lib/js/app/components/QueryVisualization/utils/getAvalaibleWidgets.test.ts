@@ -1,9 +1,10 @@
+/* eslint-disable @typescript-eslint/camelcase */
 import { getAvailableWidgets } from './getAvailableWidgets';
 
 test('return widgets for extraction', () => {
   const query: Record<string, any> = {
-    analysisType: 'extraction',
-    eventCollection: 'Clicks',
+    analysis_type: 'extraction',
+    event_collection: 'Clicks',
     timeframe: 'this_14_days',
   };
 
@@ -17,8 +18,8 @@ test('return widgets for extraction', () => {
 
 test('return widgets for funnel', () => {
   const query: Record<string, any> = {
-    analysisType: 'funnel',
-    eventCollection: 'Clicks',
+    analysis_type: 'funnel',
+    event_collection: 'Clicks',
     timeframe: 'this_14_days',
   };
 
@@ -36,8 +37,8 @@ test('return widgets for funnel', () => {
 
 test('return widgets for interval', () => {
   const query: Record<string, any> = {
-    analysisType: 'count',
-    eventCollection: 'Clicks',
+    analysis_type: 'count',
+    event_collection: 'Clicks',
     timeframe: 'this_14_days',
     interval: 'daily',
   };
@@ -56,10 +57,10 @@ test('return widgets for interval', () => {
 
 test('return widgets for groupBy', () => {
   const query: Record<string, any> = {
-    analysisType: 'count',
-    eventCollection: 'Clicks',
+    analysis_type: 'count',
+    event_collection: 'Clicks',
     timeframe: 'this_14_days',
-    groupBy: ['country'],
+    group_by: ['country'],
   };
 
   const result = getAvailableWidgets(query);
@@ -78,8 +79,8 @@ test('return widgets for groupBy', () => {
 });
 test('return widgets for default', () => {
   const query: Record<string, any> = {
-    analysisType: 'count',
-    eventCollection: 'Clicks',
+    analysis_type: 'count',
+    event_collection: 'Clicks',
     timeframe: 'this_14_days',
   };
 
