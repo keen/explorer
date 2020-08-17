@@ -1,5 +1,3 @@
-import { Filter, OrderBy, Timeframe, Timezones } from './queryCreator/types';
-
 export type Analysis =
   | 'sum'
   | 'average'
@@ -34,18 +32,4 @@ export type SavedQuery = {
     analysisType: Analysis;
     eventCollection: string;
   };
-};
-
-export type Query = {
-  analysisType: Analysis;
-  eventCollection: string;
-  targetProperty?: string;
-  filters?: Filter[];
-  groupBy?: string[];
-  interval?: string;
-  limit?: number;
-  orderBy?: OrderBy;
-  timeframe: Timeframe;
-  timezone?: Timezones;
-  percentile?: number;
 };

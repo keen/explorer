@@ -1,8 +1,7 @@
 import { Widget } from '../types';
 import { Widgets } from '../constants';
-import { Query } from '../../../types';
 
-export const getAvailableWidgets = (query: Query): Widget[] => {
+export const getAvailableWidgets = (query: Record<string, any>): Widget[] => {
   if (query) {
     if (query.analysisType === 'extraction') {
       return [Widgets.table];

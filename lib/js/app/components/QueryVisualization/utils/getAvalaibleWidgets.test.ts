@@ -1,8 +1,7 @@
-import { Query } from '../../../types';
 import { getAvailableWidgets } from './getAvailableWidgets';
 
 test('return widgets for extraction', () => {
-  const query: Query = {
+  const query: Record<string, any> = {
     analysisType: 'extraction',
     eventCollection: 'Clicks',
     timeframe: 'this_14_days',
@@ -17,7 +16,7 @@ test('return widgets for extraction', () => {
 });
 
 test('return widgets for funnel', () => {
-  const query: Query = {
+  const query: Record<string, any> = {
     analysisType: 'funnel',
     eventCollection: 'Clicks',
     timeframe: 'this_14_days',
@@ -36,7 +35,7 @@ test('return widgets for funnel', () => {
 });
 
 test('return widgets for interval', () => {
-  const query: Query = {
+  const query: Record<string, any> = {
     analysisType: 'count',
     eventCollection: 'Clicks',
     timeframe: 'this_14_days',
@@ -56,7 +55,7 @@ test('return widgets for interval', () => {
 });
 
 test('return widgets for groupBy', () => {
-  const query: Query = {
+  const query: Record<string, any> = {
     analysisType: 'count',
     eventCollection: 'Clicks',
     timeframe: 'this_14_days',
@@ -78,7 +77,7 @@ test('return widgets for groupBy', () => {
   `);
 });
 test('return widgets for default', () => {
-  const query: Query = {
+  const query: Record<string, any> = {
     analysisType: 'count',
     eventCollection: 'Clicks',
     timeframe: 'this_14_days',
