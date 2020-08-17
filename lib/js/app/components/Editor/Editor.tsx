@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Alert, Button } from '@keen.io/ui-core';
+import { Button } from '@keen.io/ui-core';
 
 import { EditorActions, CreatorContainer } from './Editor.styles';
 
@@ -12,11 +12,7 @@ import RunQuery, { runQueryLabel } from '../RunQuery';
 import QueryVisualization from '../QueryVisualization';
 import VisualizationPlaceholder from '../VisualizationPlaceholder';
 
-import {
-  getQueryResults,
-  getQueryPerformState,
-  getError,
-} from '../../modules/queries';
+import { getQueryResults, getQueryPerformState } from '../../modules/queries';
 import { setViewMode } from '../../modules/app';
 
 type Props = {
@@ -38,7 +34,6 @@ const Editor: FC<Props> = ({
 }) => {
   const dispatch = useDispatch();
   const queryResults = useSelector(getQueryResults);
-  const runQueryError = useSelector(getError);
   const isQueryLoading = useSelector(getQueryPerformState);
 
   return (
@@ -57,7 +52,6 @@ const Editor: FC<Props> = ({
         ) : (
           <VisualizationPlaceholder isLoading={isQueryLoading} />
         )}
-        {runQueryError && <Alert type="error">{runQueryError.body}</Alert>}
       </section>
       <CreatorContainer>
         <Creator onUpdateQuery={onUpdateQuery} />

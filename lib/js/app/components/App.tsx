@@ -32,9 +32,10 @@ import { AppState } from '../modules/types';
 import Browser from './Browser';
 import Editor from './Editor';
 import QuerySettingsModal from './QuerySettingsModal';
+import ToastNotifications from './ToastNotifications';
 import Confirm from './Confirm';
 
-import { NEW_QUERY_EVENT } from '../consts';
+import { NEW_QUERY_EVENT } from '../constants';
 
 const mapStateToProps = (state: AppState) => ({
   savedQuery: getSavedQuery(state),
@@ -145,6 +146,7 @@ class App extends Component {
           </div>
         )}
         <Confirm />
+        <ToastNotifications />
         <QuerySettingsModal
           onSaveQuery={(settings) => this.onSaveQuery(settings)}
         />

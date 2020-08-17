@@ -11,6 +11,7 @@ const render = (storeState: any = {}, overProps: any = {}) => {
   const state = {
     queries: {
       isSaving: false,
+      saveQueryError: null,
     },
     savedQuery: {
       name: '',
@@ -90,4 +91,20 @@ test('renders notice about naming save query', () => {
   } = render();
 
   expect(getByText(text.newQueryNotice)).toBeInTheDocument();
+});
+
+test('renders save query error', () => {
+  const storeState = {
+    queries: {
+      isSaving: false,
+      saveQueryError: {
+        body: 'save query error',
+      },
+    },
+  };
+  const {
+    wrapper: { getByTestId },
+  } = render(storeState);
+
+  expect(getByTestId('error-alert')).toBeInTheDocument();
 });

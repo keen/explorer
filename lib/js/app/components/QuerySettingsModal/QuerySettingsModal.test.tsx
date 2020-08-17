@@ -61,6 +61,9 @@ test('close modal and reset query settings', () => {
         "type": "@app/HIDE_QUERY_SETTINGS_MODAL",
       },
       Object {
+        "type": "@queries/RESET_SAVE_QUERY_ERROR",
+      },
+      Object {
         "type": "@saved-query/RESET_SAVED_QUERY",
       },
     ]
@@ -87,6 +90,9 @@ test('allows user to close modal', () => {
     Array [
       Object {
         "type": "@app/HIDE_QUERY_SETTINGS_MODAL",
+      },
+      Object {
+        "type": "@queries/RESET_SAVE_QUERY_ERROR",
       },
     ]
   `);

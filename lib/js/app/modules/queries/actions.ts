@@ -17,6 +17,7 @@ import {
   SET_CACHE_QUERY_LIMIT,
   SET_CACHE_QUERY_LIMIT_ERROR,
   RESET_QUERY_RESULTS,
+  RESET_SAVE_QUERY_ERROR,
 } from './constants';
 
 export const resetQueryResults = (): QueriesActions => ({
@@ -55,6 +56,10 @@ export const saveQuerySuccess = (
 export const saveQueryError = (error: Error): QueriesActions => ({
   type: SAVE_QUERY_ERROR,
   payload: { error },
+});
+
+export const resetSavedQueryError = (): QueriesActions => ({
+  type: RESET_SAVE_QUERY_ERROR,
 });
 
 export const deleteQuery = (queryName: string): QueriesActions => ({

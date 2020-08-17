@@ -8,6 +8,7 @@ import {
   getQuerySettingsModalVisibility,
   hideQuerySettingsModal,
 } from '../../modules/app';
+import { resetSavedQueryError } from '../../modules/queries';
 import { getSavedQuery, resetSavedQuery } from '../../modules/savedQuery';
 
 import text from './text.json';
@@ -23,6 +24,7 @@ const QuerySettingsModal: FC<Props> = ({ onSaveQuery }) => {
 
   const closeHandler = useCallback(() => {
     dispatch(hideQuerySettingsModal());
+    dispatch(resetSavedQueryError());
     if (!exists) {
       dispatch(resetSavedQuery());
     }
@@ -32,7 +34,7 @@ const QuerySettingsModal: FC<Props> = ({ onSaveQuery }) => {
     <Modal isOpen={isOpen} onClose={closeHandler}>
       {() => (
         <>
-          <ModalHeader title={text.querySettings} onClose={closeHandler} />
+          <ModalHeader onClose={closeHandler}>{text.querySettings}</ModalHeader>
           <QuerySettings onSave={onSaveQuery} onClose={closeHandler} />
         </>
       )}
