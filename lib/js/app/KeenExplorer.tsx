@@ -13,7 +13,7 @@ import KeenTracking from 'keen-tracking';
 
 import '../../../test/demo/keen-explorer.css';
 
-import rootReducer from './redux';
+import rootReducer from './rootReducer';
 import rootSaga from './redux/sagas';
 
 import { version } from '../../../package.json';
