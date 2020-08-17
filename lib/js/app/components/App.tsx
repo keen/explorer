@@ -43,7 +43,6 @@ const mapStateToProps = (state: AppState) => ({
 });
 
 const mapDispatchToProps = {
-  fetchProject,
   saveQuery,
   editQuery,
   fetchSavedQueries,
