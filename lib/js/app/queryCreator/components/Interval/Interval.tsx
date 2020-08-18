@@ -11,7 +11,9 @@ import CustomInterval from '../CustomInterval';
 
 import { isCustomInterval } from './utils/isCustomInterval';
 import { transformInterval } from './utils/transformInterval';
+import { getEventPath } from '../../utils';
 import text from './text.json';
+
 import {
   Container,
   IntervalContainer,
@@ -59,7 +61,7 @@ const Interval: FC<Props> = () => {
           isActive={isOpen}
           value={interval}
           onDefocus={(event: any) => {
-            if (!event.path?.includes(containerRef.current)) {
+            if (!getEventPath(event)?.includes(containerRef.current)) {
               setOpen(false);
             }
           }}

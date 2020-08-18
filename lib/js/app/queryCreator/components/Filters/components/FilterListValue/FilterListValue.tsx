@@ -16,6 +16,7 @@ import Dropdown from '../../../Dropdown';
 import Input from '../../../Input';
 import PropertyGroup, { PropertyItem } from '../../../PropertyGroup';
 
+import { getEventPath } from '../../../../utils';
 import text from './text.json';
 
 import { SEPARATOR } from './constants';
@@ -48,7 +49,7 @@ const FilterListValue: FC<Props> = ({ items, onChange }) => {
         variant="secondary"
         onClick={() => !editMode && setEditMode(true)}
         onDefocus={(event: any) => {
-          if (!event.path?.includes(containerRef.current)) {
+          if (!getEventPath(event)?.includes(containerRef.current)) {
             setEditMode(false);
           }
         }}

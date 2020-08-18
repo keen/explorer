@@ -15,6 +15,7 @@ import Timezone, { getTimezoneValue } from '../Timezone';
 
 import { getDefaultAbsoluteTime } from './utils/getDefaultAbsoluteTime';
 import { convertRelativeTime } from './utils/convertRelativeTime';
+import { getEventPath } from '../../utils';
 
 import { ABSOLUTE_TAB, RELATIVE_TAB, TABS_SETTINGS } from './constants';
 import { DEFAULT_TIMEFRAME } from '../../modules/query';
@@ -67,11 +68,10 @@ const Timeframe: FC<Props> = ({
         isActive={isOpen}
         value={value}
         onDefocus={(event: any) => {
+          const path = getEventPath(event);
           if (
-            !event.path?.includes(containerRef.current) &&
-            !event.path?.includes(
-              document.querySelector(`.${TIME_PICKER_CLASS}`)
-            )
+            !path?.includes(containerRef.current) &&
+            !path?.includes(document.querySelector(`.${TIME_PICKER_CLASS}`))
           ) {
             setOpen(false);
           }
