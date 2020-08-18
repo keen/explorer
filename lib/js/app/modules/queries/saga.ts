@@ -66,13 +66,15 @@ function* runQuery(action: RunQueryAction) {
 
     if (error_code === ERRORS.TOO_MANY_QUERIES) {
       yield put(setQueryLimitReached(true));
+    } else {
+      const notificationManager = yield getContext(
+        NOTIFICATION_MANAGER_CONTEXT
+      );
+      yield notificationManager.showNotification({
+        type: 'error',
+        message: body,
+      });
     }
-
-    const notificationManager = yield getContext(NOTIFICATION_MANAGER_CONTEXT);
-    yield notificationManager.showNotification({
-      type: 'error',
-      message: body,
-    });
   } finally {
     const element = document.getElementById('editor');
     if (element) {

@@ -33,7 +33,7 @@ export class KeenExplorer {
     const notificationPubSub = new PubSub();
     const sagaMiddleware = createSagaMiddleware({
       context: {
-        keenClient: client,
+        keenClient: keenAnalysisClient,
         pubsub: getPubSub(),
         notificationManager: new NotificationManager({
           pubsub: notificationPubSub,

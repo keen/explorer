@@ -1,11 +1,9 @@
 import React, { FC } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { Button } from '@keen.io/ui-core';
+import { useSelector } from 'react-redux';
 
 import { EditorActions, CreatorContainer } from './Editor.styles';
 
 import EditorNavigation from '../EditorNavigation';
-
 import Creator from '../Creator';
 
 import RunQuery, { runQueryLabel } from '../RunQuery';
@@ -18,7 +16,6 @@ import {
   getQueryPerformState,
   getQueryLimitReached,
 } from '../../modules/queries';
-import { setViewMode } from '../../modules/app';
 
 type Props = {
   /** Query definition */
@@ -40,7 +37,6 @@ const Editor: FC<Props> = ({
   onSaveQuery,
   onUpdateQuery,
 }) => {
-  const dispatch = useDispatch();
   const queryResults = useSelector(getQueryResults);
   const isQueryLoading = useSelector(getQueryPerformState);
   const isQueryLimitReached = useSelector(getQueryLimitReached);
@@ -48,13 +44,6 @@ const Editor: FC<Props> = ({
   return (
     <div id="editor">
       <EditorNavigation onSaveQuery={onSaveQuery} />
-      <Button
-        onClick={() => {
-          dispatch(setViewMode('browser'));
-        }}
-      >
-        Back to list
-      </Button>
       <section>
         {isQueryLimitReached ? (
           <QueryLimitReached upgradeSubscriptionUrl={upgradeSubscriptionUrl} />
