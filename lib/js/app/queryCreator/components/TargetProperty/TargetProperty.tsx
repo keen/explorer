@@ -12,6 +12,7 @@ import PropertiesTree from '../PropertiesTree';
 import DropableContainer, { Variant } from '../DropableContainer';
 
 import { useSearch } from '../../hooks';
+import { getEventPath } from '../../utils';
 import { getCollectionSchema, getSchemas } from '../../modules/events';
 
 import text from './text.json';
@@ -110,7 +111,7 @@ const TargetProperty: FC<Props> = ({
         placeholder={text.placeholder}
         onSearch={searchHandler}
         onDefocus={(event: any) => {
-          if (!event.path?.includes(containerRef.current)) {
+          if (!getEventPath(event)?.includes(containerRef.current)) {
             setPropertiesTree(null);
             setOpen(false);
           }
