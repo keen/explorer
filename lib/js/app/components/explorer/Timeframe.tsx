@@ -32,13 +32,15 @@ const mapDispatchToProps = {
   updateStepUI,
 };
 
-const convertDateToString = (valueSelected) => {
+const convertDateToString = (valueSelected, timezone) => {
   const value = valueSelected || moment(moment().format('YYYY-MM-DD'));
-  const valueConverted = `${value.format('YYYY-MM-DD')}T${value.format(
-    'HH:mm'
-  )}:00.000Z`;
-  return valueConverted;
+  return moment(value).tz(timezone).format();
 };
+
+const timezoneByValue = (timezone) =>
+  TIMEZONES.find((item) => item.value === timezone);
+const timezoneToString = (timezone) =>
+  (timezoneByValue(timezone) && timezoneByValue(timezone).label) || 'UTC';
 
 class Timeframe extends Component {
   constructor(props) {
@@ -182,7 +184,14 @@ class Timeframe extends Component {
 
   renderAbsolute() {
     let { timeframe = DEFAULT_TIMEFRAME_ABSOLUTE_VALUE } = this.props;
-    const { funnel, step, steps, updateUI, updateStepUI } = this.props;
+    const {
+      funnel,
+      step,
+      steps,
+      updateUI,
+      updateStepUI,
+      timezone,
+    } = this.props;
     const { startDateFocused, endDateFocused } = this.state;
     const falseFunc = () => false; // https://github.com/airbnb/react-dates/issues/239
 
@@ -229,7 +238,8 @@ class Timeframe extends Component {
                 .utc(valueSelected)
                 .startOf('day');
               const valueConverted = convertDateToString(
-                valueSelectedWithTimeReset
+                valueSelectedWithTimeReset,
+                timezoneToString(timezone)
               );
               update({
                 ...timeframe,
@@ -250,7 +260,10 @@ class Timeframe extends Component {
             showSecond={false}
             value={startDate}
             onChange={(valueSelected) => {
-              const valueConverted = convertDateToString(valueSelected);
+              const valueConverted = convertDateToString(
+                valueSelected,
+                timezoneToString(timezone)
+              );
               update({
                 ...timeframe,
                 start: valueConverted,
@@ -268,7 +281,8 @@ class Timeframe extends Component {
                 .utc(valueSelected)
                 .startOf('day');
               const valueConverted = convertDateToString(
-                valueSelectedWithTimeReset
+                valueSelectedWithTimeReset,
+                timezoneToString(timezone)
               );
               update({
                 ...timeframe,
@@ -289,7 +303,10 @@ class Timeframe extends Component {
             showSecond={false}
             value={endDate}
             onChange={(valueSelected) => {
-              const valueConverted = convertDateToString(valueSelected);
+              const valueConverted = convertDateToString(
+                valueSelected,
+                timezoneToString(timezone)
+              );
               update({
                 ...timeframe,
                 end: valueConverted,
@@ -417,6 +434,21 @@ class Timeframe extends Component {
             options={sortedTimezones}
             onChange={(e) => {
               localStorage.setItem('timezone', e.value);
+              const convertedTimezone = timezoneToString(timezone);
+              if (timeframe.start && timeframe.end) {
+                const startDate = moment(timeframe.start)
+                  .tz(convertedTimezone)
+                  .toString();
+                const endDate = moment(timeframe.end)
+                  .tz(convertedTimezone)
+                  .toString();
+                updateUI({
+                  timeframe: {
+                    start: startDate,
+                    end: endDate,
+                  },
+                });
+              }
               updateUI({
                 timezone: e.value,
               });
@@ -425,6 +457,14 @@ class Timeframe extends Component {
                   step,
                   payload: {
                     timezone: e.value,
+                    timeframe: {
+                      start: moment(steps[step].timeframe.start)
+                        .tz(convertedTimezone)
+                        .toString(),
+                      end: moment(steps[step].timeframe.end)
+                        .tz(convertedTimezone)
+                        .toString(),
+                    },
                   },
                 });
               }
