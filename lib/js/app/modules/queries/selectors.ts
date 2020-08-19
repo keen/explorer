@@ -11,11 +11,15 @@ export const getQueriesSaving = ({ queries }: AppState) =>
 export const getQueryPerformState = ({ queries }: AppState) =>
   queries.isLoading;
 
-export const getQueriesLimit = ({ queries }: AppState) => queries.isLimited;
+export const getCacheQueriesLimitExceed = ({ queries }: AppState) =>
+  queries.cachedQueries.limitReached;
+
+export const getCacheQueriesLimit = ({ queries }: AppState) =>
+  queries.cachedQueries.limit;
 
 export const getQueryResults = ({ queries }: AppState) => queries.results;
 
 export const getQueryLimitReached = ({ queries }: AppState) =>
-  queries.queriesExecutionLimitReached;
+  queries.queriesExecution.limitReached;
 
 export const getQueryExecutionError = ({ queries }: AppState) => queries.error;

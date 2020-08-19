@@ -6,6 +6,7 @@ import {
   deleteQuery,
   saveQuery,
   resetSavedQueryError,
+  getOrganizationUsageLimits,
   getSavedQueries as fetchSavedQueries,
 } from './actions';
 import {
@@ -13,7 +14,8 @@ import {
   getSaveQueryError,
   getSavedQueries,
   getQueriesSaving,
-  getQueriesLimit,
+  getCacheQueriesLimit,
+  getCacheQueriesLimitExceed,
   getQueryResults,
   getQueryPerformState,
   getQueryLimitReached,
@@ -34,7 +36,9 @@ export {
   getQueryPerformState,
   getSavedQueries,
   getQueriesSaving,
-  getQueriesLimit,
+  getOrganizationUsageLimits,
+  getCacheQueriesLimit,
+  getCacheQueriesLimitExceed,
   getQueryLimitReached,
   queriesReducer,
   runQuery,

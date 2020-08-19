@@ -1,4 +1,5 @@
 import {
+  APP_START,
   LOAD_STATE_FROM_URL,
   SHOW_CONFIRMATION,
   HIDE_CONFIRMATION,
@@ -14,10 +15,22 @@ import {
   HIDE_QUERY_SETTINGS_MODAL,
 } from './constants';
 
-import { AppActions, Confirmation, ViewMode } from './types';
+import {
+  AppActions,
+  Confirmation,
+  SettingsModalSource,
+  ViewMode,
+} from './types';
 
-export const showQuerySettingsModal = (): AppActions => ({
+export const appStart = (): AppActions => ({
+  type: APP_START,
+});
+
+export const showQuerySettingsModal = (
+  source: SettingsModalSource
+): AppActions => ({
   type: SHOW_QUERY_SETTINGS_MODAL,
+  payload: { source },
 });
 
 export const hideQuerySettingsModal = (): AppActions => ({

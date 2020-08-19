@@ -1,10 +1,11 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { motion } from 'framer-motion';
 import { transparentize } from 'polished';
 import { colors } from '@keen.io/colors';
 
 export const Container = styled.div`
   display: flex;
+  align-items: center;
   height: 40px;
 `;
 
@@ -22,22 +23,19 @@ export const CacheSwitch = styled.label<{
     props.disabled ? colors.gray['500'] : colors.black['500']};
 `;
 
-export const CheckboxLabel = styled.div`
+export const CacheLabel = styled.div<{
+  disabled: boolean;
+}>`
   margin-left: 7px;
-`;
-
-export const SelectContainer = styled.div`
-  width: 80px;
-  margin: 0 10px;
-`;
-
-export const RefreshSettings = styled.div`
-  display: flex;
-  align-items: center;
-
+  color: ${colors.black[100]};
+  font-family: 'Lato Bold', sans-serif;
   font-size: 14px;
-  font-family: 'Lato Regular', sans-serif;
-  color: ${colors.black['500']};
+
+  ${(props) =>
+    props.disabled &&
+    css`
+      color: ${transparentize(0.5, colors.black[100])};
+    `};
 `;
 
 export const LimitReached = styled.div`
@@ -48,17 +46,17 @@ export const LimitReached = styled.div`
   cursor: pointer;
 `;
 
+export const RefreshFrequency = styled.span`
+  color: ${colors.black[100]};
+  font-family: 'Lato Bold', sans-serif;
+  font-size: 14px;
+`;
+
 export const TooltipMotion = styled(motion.div)`
   position: absolute;
   left: 50%;
-  top: -10px;
-  transform: translateX(-50%) translateY(-100%);
-`;
-
-export const TooltipContent = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 320px;
+  top: 25px;
+  transform: translateX(-50%);
 `;
 
 export const CacheLimit = styled.div`
@@ -66,5 +64,5 @@ export const CacheLimit = styled.div`
   align-items: center;
   font-size: 14px;
   font-family: 'Lato Regular', sans-serif;
-  color: ${transparentize(0.5, colors.black['500'])};
+  color: ${colors.blue['500']};
 `;

@@ -1,6 +1,6 @@
-import React, { FC, useMemo, useState } from 'react';
+import React, { FC, useCallback, useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
-import { Checkbox, Select, Tooltip, Label } from '@keen.io/ui-core';
+import { Checkbox } from '@keen.io/ui-core';
 import { Icon } from '@keen.io/icons';
 import { colors } from '@keen.io/colors';
 
@@ -8,15 +8,16 @@ import {
   Container,
   CacheSwitch,
   CacheLimit,
-  CheckboxLabel,
-  RefreshSettings,
-  SelectContainer,
+  CacheLabel,
+  RefreshFrequency,
   LimitReached,
   TooltipMotion,
-  TooltipContent,
 } from './CacheQuery.styles';
-import { CHECKBOX_ID, REFRESH_MINIMUM, REFRESH_MAXIMUM } from './constants';
 
+import { LimitTooltip } from './components';
+import CacheRefreshRate from '../CacheRefreshRate';
+
+import { CHECKBOX_ID, REFRESH_MINIMUM, REFRESH_MAXIMUM } from './constants';
 import text from './text.json';
 
 const tooltipMotion = {
@@ -36,10 +37,6 @@ type Props = {
   onRefreshRateChange: (rate: number) => void;
   /** Current query refresh rate */
   refreshRate?: number;
-  /** Query cache refresh minimum treshold */
-  minimumRefreshRate?: number;
-  /** Query cache refresh maximum treshold */
-  maximumRefreshRate?: number;
 };
 
 const CacheQuery: FC<Props> = ({
@@ -48,23 +45,16 @@ const CacheQuery: FC<Props> = ({
   onCacheChange,
   onRefreshRateChange,
   refreshRate,
-  minimumRefreshRate = REFRESH_MINIMUM,
-  maximumRefreshRate = REFRESH_MAXIMUM,
 }) => {
   const [tooltip, setTooltip] = useState({
     visible: false,
   });
 
-  const refreshRates = useMemo(
-    () =>
-      new Array(maximumRefreshRate - minimumRefreshRate + 1)
-        .fill(true)
-        .map((_v, idx) => {
-          const rate = minimumRefreshRate + idx;
-          return { label: rate.toString(), value: rate };
-        }),
-    []
-  );
+  const cacheChangeHandler = useCallback(() => {
+    if (!isLimited || (isLimited && isCached)) {
+      onCacheChange(!isCached);
+    }
+  }, [isLimited, isCached]);
 
   return (
     <Container>
@@ -72,35 +62,28 @@ const CacheQuery: FC<Props> = ({
         <Checkbox
           id={CHECKBOX_ID}
           checked={isCached}
-          onChange={() => onCacheChange(!isCached)}
+          onChange={() => cacheChangeHandler()}
         />
-        <CheckboxLabel>
-          <Label variant="secondary" htmlFor={CHECKBOX_ID}>
-            {text.cache}
-          </Label>
-        </CheckboxLabel>
+        <CacheLabel disabled={isLimited && !isCached}>
+          <label htmlFor={CHECKBOX_ID}>{text.cache}</label>
+        </CacheLabel>
       </CacheSwitch>
       {isCached && (
-        <RefreshSettings data-test="refresh-settings">
-          <div>{text.refreshInterval}</div>
-          <SelectContainer>
-            <Select
-              variant="solid"
-              placeholder={text.refreshRatePlaceholder}
-              value={refreshRate && { label: refreshRate, value: refreshRate }}
-              onChange={({ value }: { value: number }) =>
-                onRefreshRateChange(value)
-              }
-              options={refreshRates}
-            />
-          </SelectContainer>
-        </RefreshSettings>
+        <>
+          <RefreshFrequency>{text.refreshInterval}</RefreshFrequency>
+          <CacheRefreshRate
+            refreshRate={refreshRate}
+            minimumRate={REFRESH_MINIMUM}
+            maximumRate={REFRESH_MAXIMUM}
+            onChange={onRefreshRateChange}
+          />
+        </>
       )}
-      {isLimited && (
+      {isLimited && !isCached && (
         <CacheLimit>
-          {text.queriesLimit}
+          <span>{text.queriesLimit}</span>
           <LimitReached
-            data-test="cache-limit"
+            data-testid="cache-limit"
             onMouseEnter={() => setTooltip({ visible: true })}
             onMouseLeave={() => setTooltip({ visible: false })}
           >
@@ -108,12 +91,7 @@ const CacheQuery: FC<Props> = ({
             <AnimatePresence>
               {tooltip.visible && (
                 <TooltipMotion {...tooltipMotion}>
-                  <Tooltip arrowDirection="bottom">
-                    <TooltipContent>
-                      <p>{text.limitReachedMessage}</p>
-                      <p>{text.disableMessage}</p>
-                    </TooltipContent>
-                  </Tooltip>
+                  <LimitTooltip />
                 </TooltipMotion>
               )}
             </AnimatePresence>

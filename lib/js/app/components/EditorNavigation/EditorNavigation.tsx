@@ -15,6 +15,7 @@ import { getQueriesSaving } from '../../modules/queries';
 import {
   showQuerySettingsModal,
   getQuerySettingsModalVisibility,
+  SettingsModalSource,
 } from '../../modules/app';
 
 type Props = {
@@ -32,16 +33,18 @@ const EditorNavigation: FC<Props> = ({ onSaveQuery }) => {
     <Container>
       <QueryName>{displayName ? displayName : text.newQueryTitle}</QueryName>
       <Menu>
-        {exists && (
-          <MenuItem>
-            <span
-              data-testid="query-settings"
-              onClick={() => dispatch(showQuerySettingsModal())}
-            >
-              Settings
-            </span>
-          </MenuItem>
-        )}
+        <MenuItem>
+          <span
+            data-testid="query-settings"
+            onClick={() =>
+              dispatch(
+                showQuerySettingsModal(SettingsModalSource.QUERY_SETTINGS)
+              )
+            }
+          >
+            Settings
+          </span>
+        </MenuItem>
         <MenuItem>
           <Button
             data-testid="save-query"
@@ -50,7 +53,9 @@ const EditorNavigation: FC<Props> = ({ onSaveQuery }) => {
             isDisabled={isSavingQuery}
             onClick={() => {
               if (!exists) {
-                dispatch(showQuerySettingsModal());
+                dispatch(
+                  showQuerySettingsModal(SettingsModalSource.FIRST_QUERY_SAVE)
+                );
               } else {
                 onSaveQuery();
               }

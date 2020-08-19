@@ -1,4 +1,5 @@
 import {
+  APP_START,
   LOAD_STATE_FROM_URL,
   COPY_SHARE_URL,
   SET_VISUALIZATION_TYPE,
@@ -18,6 +19,11 @@ export type Confirmation = 'delete';
 
 export type ViewMode = 'browser' | 'editor';
 
+export enum SettingsModalSource {
+  QUERY_SETTINGS,
+  FIRST_QUERY_SAVE,
+}
+
 export type ReducerState = {
   confirmModal: {
     action: Confirmation;
@@ -26,12 +32,17 @@ export type ReducerState = {
   };
   querySettingsModal: {
     visible: boolean;
+    source: SettingsModalSource;
   };
   view: ViewMode;
   visualization: {
     type: string | null;
   };
 };
+
+export interface AppStartAction {
+  type: typeof APP_START;
+}
 
 export interface CopyShareUrlAction {
   type: typeof COPY_SHARE_URL;
@@ -43,6 +54,7 @@ export interface CopyShareUrlAction {
 
 export interface ShowQuerySettingsModalAction {
   type: typeof SHOW_QUERY_SETTINGS_MODAL;
+  payload: { source: SettingsModalSource };
 }
 
 export interface HideQuerySettingsModalAction {
@@ -104,6 +116,7 @@ export interface AcceptConfirmationAction {
 }
 
 export type AppActions =
+  | AppStartAction
   | CopyShareUrlAction
   | EditQueryAction
   | QueryEditorMountedAction

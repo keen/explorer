@@ -5,7 +5,11 @@ import { takeLatest, put, take, select, getContext } from 'redux-saga/effects';
 import { setViewMode, updateQueryCreator } from './actions';
 
 import { resetSavedQuery, updateSaveQuery } from '../savedQuery';
-import { resetQueryResults, getSavedQueries } from '../queries';
+import {
+  resetQueryResults,
+  getSavedQueries,
+  getOrganizationUsageLimits,
+} from '../queries';
 
 import { b64EncodeUnicode, b64DecodeUnicode } from '../../utils/base64';
 import { copyToClipboard } from '../../utils';
@@ -19,6 +23,7 @@ import {
 } from './types';
 
 import {
+  APP_START,
   CREATE_NEW_QUERY,
   QUERY_EDITOR_MOUNTED,
   EDIT_QUERY,
@@ -93,7 +98,12 @@ export function* copyShareUrl({ payload }: CopyShareUrlAction) {
   yield copyToClipboard(url);
 }
 
+export function* appStart() {
+  yield put(getOrganizationUsageLimits());
+}
+
 export function* appSaga() {
+  yield takeLatest(APP_START, appStart);
   yield takeLatest(COPY_SHARE_URL, copyShareUrl);
   yield takeLatest(LOAD_STATE_FROM_URL, loadPersitedState);
   yield takeLatest(UPDATE_QUERY_CREATOR, updateCreator);

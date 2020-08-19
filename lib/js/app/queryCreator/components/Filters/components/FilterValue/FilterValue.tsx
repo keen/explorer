@@ -1,11 +1,11 @@
 import React, { FC } from 'react';
+import { Input } from '@keen.io/ui-core';
 import moment from 'moment';
 
 import { DatePickerContainer } from './FilterValue.styles';
 
 import Property from '../../../Property';
 import PropertyGroup, { PropertyItem } from '../../../PropertyGroup';
-import Input from '../../../Input';
 import FilterListValue from '../FilterListValue';
 import GeoCoordinates from '../GeoCoordinates';
 import DatePicker from '../../../DatePicker';
@@ -71,6 +71,7 @@ const getValueComponent = ({
       return (
         <Input
           type="number"
+          variant="solid"
           value={value as number}
           onChange={(e) => onChange(e.currentTarget.value)}
         />
@@ -79,6 +80,7 @@ const getValueComponent = ({
       return (
         <Input
           data-testid="filter-value-input"
+          variant="solid"
           value={value as string}
           onChange={(e) => onChange(e.currentTarget.value)}
         />

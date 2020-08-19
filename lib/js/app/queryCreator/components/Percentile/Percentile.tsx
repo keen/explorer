@@ -1,9 +1,8 @@
 import React, { FC, useState, useEffect, useCallback, useRef } from 'react';
 import { AnimatePresence } from 'framer-motion';
-import { Tooltip } from '@keen.io/ui-core';
+import { Tooltip, Input } from '@keen.io/ui-core';
 
 import Title from '../Title';
-import Input from '../Input';
 
 import { Container, TooltipContainer } from './Percentile.styles';
 
@@ -75,6 +74,7 @@ const Percentile: FC<Props> = ({ value, onReset, onChange }) => {
       <Title>{text.label}</Title>
       <Input
         type="number"
+        variant="solid"
         value={value ? value : ''}
         placeholder={text.placeholder}
         onChange={(e) => changeHandler(e)}

@@ -12,7 +12,8 @@ import {
   getSavedQueriesError,
   deleteQuerySuccess,
   deleteQueryError,
-  setQueryCacheLimit,
+  setCacheQueryLimit,
+  setCacheQueryLimitExceed,
   setQueryCacheLimitError,
   setQueryLimitReached,
 } from './actions';
@@ -40,6 +41,7 @@ import {
   SAVE_QUERY,
   GET_SAVED_QUERIES,
   SAVE_QUERY_SUCCESS,
+  GET_ORGANIZATION_USAGE_LIMITS,
   ERRORS,
 } from './constants';
 
@@ -123,9 +125,7 @@ function* saveQuery({ payload }: SaveQueryAction) {
       errorCode === ERRORS.OVER_LIMIT_ERROR ||
       errorCode === ERRORS.TOO_MANY_CACHED_QUERIES
     ) {
-      yield put({
-        type: 'ABOVE_CACHE_QUERY_LIMIT',
-      });
+      yield put(setCacheQueryLimitExceed(true));
     }
   }
 }
@@ -167,12 +167,13 @@ function* fetchSavedQueries() {
   }
 }
 
-function* checkCacheLimits() {
+function* checkOrganizationLimits() {
   try {
-    const client = yield getContext('keenClient');
+    const client = yield getContext(KEEN_CLIENT_CONTEXT);
     const url = client.url('/3.0/projects/{projectId}/organization-usage', {
       api_key: client.config.masterKey,
     });
+
     const responseBody = yield fetch(url).then((response) => response.json());
     if (responseBody) {
       const {
@@ -180,7 +181,10 @@ function* checkCacheLimits() {
       } = responseBody;
 
       const limitReached = limited && current_usage >= limit;
-      yield put(setQueryCacheLimit(limitReached));
+      const cachedQueriesLimit = limit;
+
+      yield put(setCacheQueryLimitExceed(limitReached));
+      yield put(setCacheQueryLimit(cachedQueriesLimit));
     }
   } catch (error) {
     yield put(setQueryCacheLimitError(error));
@@ -196,7 +200,7 @@ export function* queriesSaga() {
     fetchSavedQueries
   );
   yield takeLatest(
-    [SAVE_QUERY_SUCCESS, DELETE_QUERY_SUCCESS],
-    checkCacheLimits
+    [GET_ORGANIZATION_USAGE_LIMITS, SAVE_QUERY_SUCCESS, DELETE_QUERY_SUCCESS],
+    checkOrganizationLimits
   );
 }
