@@ -8,7 +8,7 @@ const serializeSavedQuery = ({
   query_name,
   refresh_rate,
   metadata,
-}: SavedQueryAPIResponse): SavedQuery => ({
+}: SavedQueryAPIResponse): Partial<SavedQuery> => ({
   name: query_name,
   displayName: metadata ? metadata.display_name : query_name,
   cached: !!refresh_rate,

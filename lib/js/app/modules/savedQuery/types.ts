@@ -14,6 +14,7 @@ export type SavedQuery = {
   name: string;
   displayName: string;
   cached: boolean;
+  isCloned: boolean;
   refreshRate: number;
   exists: boolean;
 };
