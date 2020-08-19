@@ -171,3 +171,7 @@ These are the major technologies used in the project.
 
 * [ReactJS](http://facebook.github.io/react/) for UI Components & input handling.
 * [NPM](https://www.npmjs.org/) for dependency management.
+
+## Deployments
+
+The all commits pushed into master branch will be picked by CircleCI workflow that perform npm packages version and publish.
