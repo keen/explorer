@@ -1,10 +1,12 @@
 import React, { FC } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { Button } from '@keen.io/ui-core';
 
-import { EditorActions, CreatorContainer } from './Editor.styles';
+import { EditorActions, ClearButton, CreatorContainer } from './Editor.styles';
 
 import EditorNavigation from '../EditorNavigation';
 import Creator from '../Creator';
+import text from './text.json';
 
 import RunQuery, { runQueryLabel } from '../RunQuery';
 import QueryVisualization from '../QueryVisualization';
@@ -16,6 +18,7 @@ import {
   getQueryPerformState,
   getQueryLimitReached,
 } from '../../modules/queries';
+import { clearQuery } from '../../modules/app';
 
 type Props = {
   /** Query definition */
@@ -37,6 +40,8 @@ const Editor: FC<Props> = ({
   onSaveQuery,
   onUpdateQuery,
 }) => {
+  const dispatch = useDispatch();
+
   const queryResults = useSelector(getQueryResults);
   const isQueryLoading = useSelector(getQueryPerformState);
   const isQueryLimitReached = useSelector(getQueryLimitReached);
@@ -61,6 +66,16 @@ const Editor: FC<Props> = ({
           <RunQuery isLoading={isQueryLoading} onClick={() => onRunQuery()}>
             {runQueryLabel(query)}
           </RunQuery>
+          <ClearButton>
+            <Button
+              onClick={() => dispatch(clearQuery())}
+              style="outline"
+              variant="success"
+              size="large"
+            >
+              {text.clearButton}
+            </Button>
+          </ClearButton>
         </EditorActions>
       </section>
     </div>

@@ -28,7 +28,11 @@ const LimitTooltip: FC<{}> = () => {
             <>
               {' '}
               {text.upgradeConnector}{' '}
-              <UpgradeAnchor target="_blank" href={upgradeSubscriptionUrl}>
+              <UpgradeAnchor
+                target="_blank"
+                rel="noopener noreferrer"
+                href={upgradeSubscriptionUrl}
+              >
                 {text.upgradeAnchor}
               </UpgradeAnchor>
             </>

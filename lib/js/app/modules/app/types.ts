@@ -7,6 +7,7 @@ import {
   HIDE_CONFIRMATION,
   ACCEPT_CONFIRMATION,
   SET_VIEW_MODE,
+  CLEAR_QUERY,
   CREATE_NEW_QUERY,
   EDIT_QUERY,
   UPDATE_QUERY_CREATOR,
@@ -65,6 +66,10 @@ export interface CreateNewQueryAction {
   type: typeof CREATE_NEW_QUERY;
 }
 
+export interface ClearQueryAction {
+  type: typeof CLEAR_QUERY;
+}
+
 export interface EditQueryAction {
   type: typeof EDIT_QUERY;
   payload: {
@@ -120,6 +125,7 @@ export type AppActions =
   | CopyShareUrlAction
   | EditQueryAction
   | QueryEditorMountedAction
+  | ClearQueryAction
   | CreateNewQueryAction
   | UpdateQueryCreatorAction
   | SetViewModeAction

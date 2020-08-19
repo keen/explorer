@@ -7,6 +7,7 @@ import {
   SET_VISUALIZATION_TYPE,
   SET_VIEW_MODE,
   CREATE_NEW_QUERY,
+  CLEAR_QUERY,
   EDIT_QUERY,
   UPDATE_QUERY_CREATOR,
   QUERY_EDITOR_MOUNTED,
@@ -60,6 +61,10 @@ export const updateQueryCreator = (query: Record<string, any>): AppActions => ({
 
 export const createNewQuery = (): AppActions => ({
   type: CREATE_NEW_QUERY,
+});
+
+export const clearQuery = (): AppActions => ({
+  type: CLEAR_QUERY,
 });
 
 export const copyShareUrl = (

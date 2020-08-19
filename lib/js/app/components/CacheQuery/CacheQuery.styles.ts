@@ -47,6 +47,7 @@ export const LimitReached = styled.div`
 `;
 
 export const RefreshFrequency = styled.span`
+  margin-right: 10px;
   color: ${colors.black[100]};
   font-family: 'Lato Bold', sans-serif;
   font-size: 14px;
