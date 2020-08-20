@@ -1,6 +1,5 @@
 import React, { FC } from 'react';
 import { Icon } from '@keen.io/icons';
-import { Badge } from '@keen.io/ui-core';
 import { colors } from '@keen.io/colors';
 
 import { getQueryName } from './utils/getQueryName';
@@ -19,19 +18,8 @@ type Props = {
   onEnableAnalysisFilter: (analysisType: string) => void;
 };
 
-const QueryItem: FC<Props> = ({
-  settings,
-  onSelect,
-  onDelete,
-  isActive,
-  onEnableAnalysisFilter,
-  onEnableCacheFilter,
-}) => {
-  const {
-    queryName,
-    refreshRate,
-    query: { analysisType },
-  } = settings;
+const QueryItem: FC<Props> = ({ settings, onSelect, onDelete, isActive }) => {
+  const { queryName } = settings;
 
   return (
     <div role="presentation">
@@ -42,16 +30,6 @@ const QueryItem: FC<Props> = ({
       >
         {getQueryName(settings)}
         {isActive && '(Selected)'}
-      </div>
-      <div>
-        <span onClick={() => onEnableAnalysisFilter(analysisType)}>
-          <Badge type="light">{analysisType}</Badge>
-        </span>
-        {!!refreshRate && (
-          <span onClick={onEnableCacheFilter}>
-            <Badge type="success">cached</Badge>
-          </span>
-        )}
       </div>
       <div onClick={() => onDelete(queryName)}>
         <Icon type="close" fill={colors.blue['500']} />

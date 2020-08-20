@@ -1029,24 +1029,3 @@ li.rc-time-picker-panel-select-option-disabled:hover {
   background: transparent;
   cursor: not-allowed;
 }
-.keen-time-picker.rc-time-picker-panel {
-  font-family: 'Lato Regular', sans-serif;
-
-}
-.keen-time-picker.rc-time-picker-panel .rc-time-picker-panel-input-wrap {
-    border: none;
-    padding: 0;
-  }
-.keen-time-picker.rc-time-picker-panel .rc-time-picker-panel-input {
-    display: none;
-  }
-.keen-time-picker.rc-time-picker-panel .rc-time-picker-panel-inner {
-    margin-top: 42px;
-  }
-.keen-time-picker.rc-time-picker-panel .rc-time-picker-panel-select li {
-    outline: none;
-  }
-.keen-time-picker.rc-time-picker-panel .rc-time-picker-panel-select li:hover,
-  .keen-time-picker.rc-time-picker-panel .rc-time-picker-panel-select-option-selected {
-    background: rgba(156,192,162,0.2);
-  }

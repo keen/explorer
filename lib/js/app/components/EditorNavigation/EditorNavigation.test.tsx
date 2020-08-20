@@ -85,6 +85,21 @@ test('renders "New Query" for not existing query', () => {
   expect(getByText(text.newQueryTitle)).toBeInTheDocument();
 });
 
+test('renders badge with query cache indicator', () => {
+  const savedQuery = {
+    name: 'purchases',
+    displayName: 'Purchases',
+    cached: true,
+    refreshRate: 4,
+    exists: true,
+  };
+  const {
+    wrapper: { getByTestId },
+  } = render({ savedQuery });
+
+  expect(getByTestId('cache-badge')).toBeInTheDocument();
+});
+
 test('allows user to save query', () => {
   const savedQuery = {
     name: 'purchases',

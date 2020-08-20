@@ -1,10 +1,11 @@
 import React, { FC } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Button, FadeLoader } from '@keen.io/ui-core';
+import { Button, Badge, FadeLoader } from '@keen.io/ui-core';
 
 import {
   Container,
   QueryName,
+  QueryMeta,
   Menu,
   MenuItem,
 } from './EditorNavigation.styles';
@@ -25,13 +26,23 @@ type Props = {
 
 const EditorNavigation: FC<Props> = ({ onSaveQuery }) => {
   const dispatch = useDispatch();
-  const { exists, displayName } = useSelector(getSavedQuery);
+  const { exists, displayName, refreshRate, cached } = useSelector(
+    getSavedQuery
+  );
   const isSavingQuery = useSelector(getQueriesSaving);
   const isModalVisible = useSelector(getQuerySettingsModalVisibility);
 
   return (
     <Container>
       <QueryName>{displayName ? displayName : text.newQueryTitle}</QueryName>
+      <QueryMeta>
+        {cached && (
+          <Badge variant="green">
+            <span data-testid="cache-badge">{text.cachedLabel}</span>{' '}
+            {`(${refreshRate}${text.cacheUnits})`}
+          </Badge>
+        )}
+      </QueryMeta>
       <Menu>
         <MenuItem>
           <span

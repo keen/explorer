@@ -1,5 +1,7 @@
 {
   "newQueryButton": "New Query",
   "newQueryTitle": "New Query",
+  "cachedLabel": "Cached",
+  "cacheUnits": "h",
   "saveQuery": "Save Query"
 }
