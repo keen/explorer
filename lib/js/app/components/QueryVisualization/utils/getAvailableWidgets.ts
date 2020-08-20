@@ -20,8 +20,6 @@ export const getAvailableWidgets = (query: Record<string, any>): Widget[] => {
     if (query.group_by && !query.interval) {
       return [
         Widgets.bar,
-        Widgets.line,
-        Widgets.area,
         Widgets.pie,
         Widgets.donut,
         Widgets.heatmap,
