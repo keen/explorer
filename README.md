@@ -1,5 +1,9 @@
 # Keen Explorer
 
+[![written in typescript](https://img.shields.io/badge/written%20in-typescript-blue.svg)](https://www.typescriptlang.org) [![styled with prettier](https://img.shields.io/badge/styled_with-prettier-yellow.svg)](https://github.com/prettier/prettier) [![tested with jest](https://img.shields.io/badge/tested_with-jest-99424f.svg)](https://facebook.github.io/jest/) [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/) [![yarn](https://img.shields.io/badge/maintained%20with-yarn-cc00ff.svg)](https://yarnpkg.com/en/)
+
+### overview
+
 <a href="https://keen.io/"><img src="https://img.shields.io/github/release/keen/explorer.svg?style=flat-square&maxAge=600" alt=""></a>
 <a href="https://github.com/keen/explorer/graphs/contributors" alt="Contributors"><img src="https://img.shields.io/github/contributors/keen/explorer.svg" /></a>
 <a href="https://github.com/keen/explorer/pulse" alt="Activity"><img src="https://img.shields.io/github/last-commit/keen/explorer.svg" /></a>
@@ -8,15 +12,34 @@
 <a href="https://www.jsdelivr.com/package/npm/keen-explorer"><img src="https://data.jsdelivr.com/v1/package/npm/keen-explorer/badge" alt=""></a>
 <a href="https://www.npmjs.com/package/keen-explorer"><img src="https://img.shields.io/npm/dm/keen-explorer.svg" alt=""></a>
 
-## Install
+### install
 
 ```ssh
 npm install keen-explorer --save
 ```
 
+### npm scripts
+
+List of useful commands that could be used by developers. Execution in the command-line interface should be prefixed with `yarn` package manager.
+
+| Command    | Description                                          |
+| ---------- | ---------------------------------------------------- |
+| `lint`     | run linter against current application codebase.     |
+| `test`     | run unit tests.                                      |
+| `build`    | builds application distribution.                     |
+| `prettier` | run code formatter process against current codebase. |
+
+### commit
+
+This project uses [Conventional Commits](https://www.conventionalcommits.org) to enforce common commit standards.
+
+| Command      | Description                        |
+| ------------ | ---------------------------------- |
+| `npx git-cz` | run commit command line interface. |
+
 ## Live Demo
 
-http://keen.github.io/explorer/
+<http://keen.github.io/explorer/>
 
 ## Example
 
@@ -40,27 +63,6 @@ const myExplorer = new KeenExplorer({
     // OPTIONAL configuration for KeenDataviz
     // https://github.com/keen/keen-dataviz.js
   }
-
-  // Customize explorer UI
-  // Default configuration:
-  components: {
-    eventCollection: true,
-    previewCollections: true,
-    analysisType: true,
-    timeframe: true,
-    timezone: true,
-    filters: true,
-    groupBy: true,
-    interval: true,
-    apiQueryUrl: true,
-    actorProperty: true,
-    step: true,
-    savedQueryBrowser: true,
-    results: true,
-    saveButton: true,
-    downloadButton: true,
-    embedButton: true,
-  },
 });
 ```
 
@@ -105,69 +107,3 @@ const myExplorer = new KeenExplorer({
 #### Get your project ID & API keys
 
 If you don't have an account [talk to our team](https://try.keen.io/contact) to get started today. If you do, [login to Keen IO to create a project](https://keen.io/add-project) for your app. The Project ID and API Keys are available on the Project Overview page. You will need these for the next steps.
-
-## Custom builds of the Explorer
-
-  1. Clone our repo `git clone https://github.com/keen/explorer.git`
-  2. Configure the Keen.js client in the demo file at test/demo/demo-config.js with your project ID and Keen IO API keys.
-  3. Install the dependencies with `npm install`.
-  4. Run the development script with `npm run start`.
-  5. You can now view the demo locally at `http://localhost:8080/` or your specified port.
-
-### Building the project:
-
-The project is built with [Webpack](https://github.com/webpack/webpack).
-
-* Run `npm run build` from the root directory of the project to build ALL files, including the minified versions for production use.
-
-#### Testing
-
-**Run Unit Tests**
-* Run `npm run test` to run all the tests. Currently there are only unit tests.
-
-### FAQ
-
-**Is this open source Keen Explorer different than the one on keen.io?**
-Nope! We have recently moved all our development on the Keen Explorer to this open source version.  
-
-**I have questions about using the project! Where/who do I ask?**
-If you have any questions about using this project, Explorer feel free to contact us anytime at [team@keen.io](mailto:team@keen.io).
-
-### Contributing:
-To contribute to this project:
-
-* Fork the repo.
-* Submit a Pull Request **with** test coverage.
-* Follow our PR template, which includes the following sections:
-
-```markdown
-
-## What does this PR do? How does it affect users?
-
-## How should this be tested?
-
-Step through the code line by line. Things to keep in mind as you review:
- - Are there any edge cases not covered by this code?
- - Does this code follow conventions (naming, formatting, modularization, etc) where applicable?
-
-Fetch the branch and/or deploy to staging to test the following:
-
-- [ ] Does the code compile without warnings (check shell, console)?
-- [ ] Do all tests pass?
-- [ ] Does the UI, pixel by pixel, look exactly as expected (check various screen sizes, including mobile)?
-- [ ] If the feature makes requests from the browser, inspect them in the Web Inspector. Do they look as expected (parameters, headers, etc)?
-- [ ] If the feature sends data to Keen, is the data visible in the project if you run an extraction (include link to collection/query)?
-- [ ] If the feature saves data to a database, can you confirm the data is indeed created in the database?
-
-## Related tickets?
-
-```
-
-Screenshots encouraged! Would an animated GIF be more informative than a screenshot? Then we recommend [Recordit](http://recordit.co/).
-
-### Tech used in this project
-
-These are the major technologies used in the project.
-
-* [ReactJS](http://facebook.github.io/react/) for UI Components & input handling.
-* [NPM](https://www.npmjs.org/) for dependency management.
