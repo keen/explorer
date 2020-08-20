@@ -1,7 +1,5 @@
 import React, { FC, useState, useMemo, useCallback } from 'react';
-import { Icon } from '@keen.io/icons';
-import { Badge, Input } from '@keen.io/ui-core';
-import { colors } from '@keen.io/colors';
+import { Input } from '@keen.io/ui-core';
 
 import { QueryItem } from './components';
 
@@ -49,27 +47,6 @@ export const QueryBrowser: FC<Props> = ({
 
   return (
     <div>
-      <div>
-        <h3>Filters</h3>
-        <div>
-          {analysisFilter && (
-            <Badge type="light">
-              {analysisFilter}
-              <span onClick={() => setAnalysisFilter(false)}>
-                <Icon type="close" fill={colors.blue['500']} />
-              </span>
-            </Badge>
-          )}
-          {cachedOnly && (
-            <Badge type="success">
-              cached
-              <span onClick={() => setCachedOnly(false)}>
-                <Icon type="close" fill={colors.white['500']} />
-              </span>
-            </Badge>
-          )}
-        </div>
-      </div>
       <Input
         variant="solid"
         placeholder="Search"

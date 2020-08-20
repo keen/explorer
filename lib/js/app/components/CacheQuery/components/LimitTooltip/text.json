@@ -1,0 +1,7 @@
+{
+  "disableMessage": "Disable caching for other queries",
+  "cachedQueries": "cached queries",
+  "upgradeAnchor": "Upgrade",
+  "upgradeConnector": "or",
+  "limitReachedMessage": "You have reached the limit of cached queries for your organization"
+}

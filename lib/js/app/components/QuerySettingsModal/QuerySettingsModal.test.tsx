@@ -15,6 +15,10 @@ const render = (storeState: any = {}, overProps: any = {}) => {
     },
     queries: {
       isSaving: false,
+      cachedQueries: {
+        limit: 5,
+        limitReached: false,
+      },
     },
     savedQuery: {
       name: '',
@@ -30,6 +34,7 @@ const render = (storeState: any = {}, overProps: any = {}) => {
 
   const props = {
     onSaveQuery: jest.fn(),
+    cachedAvailable: true,
     ...overProps,
   };
 

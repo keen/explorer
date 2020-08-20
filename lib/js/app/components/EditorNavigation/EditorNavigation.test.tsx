@@ -85,6 +85,21 @@ test('renders "New Query" for not existing query', () => {
   expect(getByText(text.newQueryTitle)).toBeInTheDocument();
 });
 
+test('renders badge with query cache indicator', () => {
+  const savedQuery = {
+    name: 'purchases',
+    displayName: 'Purchases',
+    cached: true,
+    refreshRate: 4,
+    exists: true,
+  };
+  const {
+    wrapper: { getByTestId },
+  } = render({ savedQuery });
+
+  expect(getByTestId('cache-badge')).toBeInTheDocument();
+});
+
 test('allows user to save query', () => {
   const savedQuery = {
     name: 'purchases',
@@ -116,6 +131,9 @@ test('opens query settings modal for not existing query', () => {
   expect(store.getActions()).toMatchInlineSnapshot(`
     Array [
       Object {
+        "payload": Object {
+          "source": 1,
+        },
         "type": "@app/SHOW_QUERY_SETTINGS_MODAL",
       },
     ]

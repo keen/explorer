@@ -14,10 +14,17 @@ import { getSavedQuery, resetSavedQuery } from '../../modules/savedQuery';
 import text from './text.json';
 
 type Props = {
-  onSaveQuery: (settings: { displayName: string; name: string }) => void;
+  /** Save query event handler */
+  onSaveQuery: (settings: {
+    displayName: string;
+    name: string;
+    refreshRate: number;
+  }) => void;
+  /** Cache available indicator */
+  cacheAvailable: boolean;
 };
 
-const QuerySettingsModal: FC<Props> = ({ onSaveQuery }) => {
+const QuerySettingsModal: FC<Props> = ({ onSaveQuery, cacheAvailable }) => {
   const dispatch = useDispatch();
   const isOpen = useSelector(getQuerySettingsModalVisibility);
   const { exists } = useSelector(getSavedQuery);
@@ -35,7 +42,11 @@ const QuerySettingsModal: FC<Props> = ({ onSaveQuery }) => {
       {() => (
         <>
           <ModalHeader onClose={closeHandler}>{text.querySettings}</ModalHeader>
-          <QuerySettings onSave={onSaveQuery} onClose={closeHandler} />
+          <QuerySettings
+            cacheAvailable={cacheAvailable}
+            onSave={onSaveQuery}
+            onClose={closeHandler}
+          />
         </>
       )}
     </Modal>

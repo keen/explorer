@@ -5,10 +5,12 @@ const AppContext = React.createContext<{
   keenAnalysis: any;
   notificationPubSub: PubSub;
   modalContainer: string;
+  upgradeSubscriptionUrl?: string;
 }>({
   keenAnalysis: null,
   modalContainer: null,
   notificationPubSub: null,
+  upgradeSubscriptionUrl: null,
 });
 
 export default AppContext;

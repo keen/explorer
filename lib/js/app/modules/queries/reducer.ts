@@ -10,6 +10,7 @@ import {
   SAVE_QUERY_SUCCESS,
   SAVE_QUERY_ERROR,
   SET_CACHE_QUERY_LIMIT,
+  SET_CACHE_QUERY_LIMIT_EXCEED,
   SET_CACHE_QUERY_LIMIT_ERROR,
   RESET_QUERY_RESULTS,
   SET_QUERY_LIMIT_REACHED,
@@ -21,8 +22,13 @@ export const initialState: ReducerState = {
   isLoading: false,
   isSavingQuery: false,
   saved: [],
-  isLimited: false,
-  queriesExecutionLimitReached: false,
+  cachedQueries: {
+    limit: null,
+    limitReached: false,
+  },
+  queriesExecution: {
+    limitReached: false,
+  },
   saveQueryError: null,
   error: null,
 };
@@ -60,11 +66,22 @@ export const queriesReducer = (
         saveQueryError: action.payload.error,
         isSavingQuery: false,
       };
+    case SET_CACHE_QUERY_LIMIT_EXCEED:
+      return {
+        ...state,
+        cachedQueries: {
+          ...state.cachedQueries,
+          limitReached: action.payload.limitReached,
+        },
+        isSavingQuery: false,
+      };
     case SET_CACHE_QUERY_LIMIT:
       return {
         ...state,
-        isLimited: action.payload.limitReached,
-        isSavingQuery: false,
+        cachedQueries: {
+          ...state.cachedQueries,
+          limit: action.payload.limit,
+        },
       };
     case SET_CACHE_QUERY_LIMIT_ERROR:
       return {
@@ -107,8 +124,9 @@ export const queriesReducer = (
     case SET_QUERY_LIMIT_REACHED:
       return {
         ...state,
-        queriesExecutionLimitReached:
-          action.payload.queriesExecutionLimitReached,
+        queriesExecution: {
+          limitReached: action.payload.queriesExecutionLimitReached,
+        },
       };
     default:
       return state;

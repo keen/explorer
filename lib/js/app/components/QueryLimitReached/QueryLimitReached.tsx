@@ -9,7 +9,7 @@ type Props = {
 };
 
 const QueryLimitReached: FC<Props> = ({ upgradeSubscriptionUrl }) => (
-  <Wrapper>
+  <Wrapper data-testid="query-execution-limit">
     <Container>
       <Title>{text.title}</Title>
       {upgradeSubscriptionUrl ? (

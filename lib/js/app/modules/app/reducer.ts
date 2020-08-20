@@ -18,6 +18,7 @@ export const initialState: ReducerState = {
   },
   querySettingsModal: {
     visible: false,
+    source: null,
   },
   view: 'browser',
   visualization: {
@@ -35,6 +36,7 @@ export const appReducer = (
         ...state,
         querySettingsModal: {
           ...state.querySettingsModal,
+          source: null,
           visible: false,
         },
       };
@@ -43,6 +45,7 @@ export const appReducer = (
         ...state,
         querySettingsModal: {
           ...state.querySettingsModal,
+          source: action.payload.source,
           visible: true,
         },
       };

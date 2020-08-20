@@ -33,7 +33,7 @@ import QuerySettingsModal from './QuerySettingsModal';
 import ToastNotifications from './ToastNotifications';
 import Confirm from './Confirm';
 
-import { NEW_QUERY_EVENT } from '../constants';
+import { NEW_QUERY_EVENT, CACHE_AVAILABLE } from '../constants';
 
 const mapStateToProps = (state: AppState) => ({
   savedQuery: getSavedQuery(state),
@@ -86,9 +86,11 @@ class App extends Component {
 
   onSaveQuery = ({
     displayName,
+    refreshRate,
     name,
   }: {
     displayName: string;
+    refreshRate: number;
     name: string;
   }) => {
     const body = {
@@ -97,7 +99,7 @@ class App extends Component {
         displayName,
         widget: this.props.widget,
       },
-      refreshRate: 0,
+      refreshRate: refreshRate * 60 * 60,
     };
 
     this.props.saveQuery(name, body);
@@ -128,9 +130,14 @@ class App extends Component {
               upgradeSubscriptionUrl={this.props.upgradeSubscriptionUrl}
               onRunQuery={() => this.props.runQuery(this.state.query)}
               onSaveQuery={() => {
-                const { displayName, name } = this.props.savedQuery;
+                const {
+                  displayName,
+                  name,
+                  refreshRate,
+                } = this.props.savedQuery;
                 this.onSaveQuery({
                   displayName,
+                  refreshRate,
                   name,
                 });
               }}
@@ -144,6 +151,9 @@ class App extends Component {
         <Confirm />
         <ToastNotifications />
         <QuerySettingsModal
+          cacheAvailable={CACHE_AVAILABLE.includes(
+            this.state.query.analysis_type
+          )}
           onSaveQuery={(settings) => this.onSaveQuery(settings)}
         />
       </div>

@@ -4,7 +4,7 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import CacheQuery from './CacheQuery';
 import text from './text.json';
 
-test('calls "onCacheChange" handler', () => {
+test('allows user to enable cache for query', () => {
   const mockFn = jest.fn();
   const { container } = render(
     <CacheQuery
@@ -21,40 +21,40 @@ test('calls "onCacheChange" handler', () => {
   expect(mockFn).toHaveBeenCalled();
 });
 
-test('shows cache limit reached information', () => {
+test('do not allows user to enable cache with exceeded limits', () => {
+  const mockFn = jest.fn();
+  const { container } = render(
+    <CacheQuery
+      onCacheChange={mockFn}
+      onRefreshRateChange={jest.fn()}
+      isLimited={true}
+      isCached={false}
+    />
+  );
+
+  const checkbox = container.querySelector('input[type="checkbox"]');
+  fireEvent.click(checkbox);
+
+  expect(mockFn).not.toHaveBeenCalled();
+});
+
+test('shows cache limit reached information for not cached query', () => {
   const mockFn = jest.fn();
   render(
     <CacheQuery
       onCacheChange={mockFn}
       onRefreshRateChange={jest.fn()}
       isLimited={true}
-      isCached={true}
+      isCached={false}
     />
   );
 
-  expect(screen.getByText('Cached queries limit')).toBeInTheDocument();
+  expect(screen.getByText(text.queriesLimit)).toBeInTheDocument();
 });
 
-test('shows tooltip with cache limit information', () => {
+test('renders refresh settings when caching is enabled', () => {
   const mockFn = jest.fn();
-  const { container } = render(
-    <CacheQuery
-      onCacheChange={mockFn}
-      onRefreshRateChange={jest.fn()}
-      isLimited={true}
-      isCached={true}
-    />
-  );
-
-  const cacheInformation = container.querySelector('[data-test="cache-limit"]');
-  fireEvent.mouseEnter(cacheInformation);
-
-  expect(screen.getByText(text.limitReachedMessage)).toBeInTheDocument();
-});
-
-test('shows refresh settings when caching is enabled', () => {
-  const mockFn = jest.fn();
-  const { container } = render(
+  const { getByTestId } = render(
     <CacheQuery
       onCacheChange={mockFn}
       onRefreshRateChange={jest.fn()}
@@ -62,9 +62,8 @@ test('shows refresh settings when caching is enabled', () => {
       isCached={true}
     />
   );
-  const settings = container.querySelector('[data-test="refresh-settings"]');
 
-  expect(settings).toBeInTheDocument();
+  expect(getByTestId('cache-refresh-rate')).toBeInTheDocument();
 });
 
 test('refresh settings is not visible for disabled caching', () => {
@@ -77,7 +76,9 @@ test('refresh settings is not visible for disabled caching', () => {
       isCached={false}
     />
   );
-  const settings = container.querySelector('[data-test="refresh-settings"]');
+  const settings = container.querySelector(
+    '[data-testid="cache-refresh-rate"]'
+  );
 
   expect(settings).not.toBeInTheDocument();
 });

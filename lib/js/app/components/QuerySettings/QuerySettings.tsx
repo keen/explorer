@@ -1,4 +1,4 @@
-import React, { FC, useState, useCallback } from 'react';
+import React, { FC, useState, useCallback, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { ErrorContainer } from '@keen.io/forms';
 import {
@@ -20,23 +20,41 @@ import {
   NewQueryNotice,
 } from './QuerySettings.styles';
 
+import CacheQuery, { REFRESH_MINIMUM } from '../CacheQuery';
+
 import { getSavedQuery } from '../../modules/savedQuery';
-import { getQueriesSaving, getSaveQueryError } from '../../modules/queries';
+import {
+  getQuerySettingsModalSource,
+  SettingsModalSource,
+} from '../../modules/app';
+import {
+  getQueriesSaving,
+  getCacheQueriesLimitExceed,
+  getSaveQueryError,
+} from '../../modules/queries';
 import text from './text.json';
 
 import { slugify } from '../../utils/text';
 
 type Props = {
   /** Save query event handler */
-  onSave: (settings: { displayName: string; name: string }) => void;
+  onSave: (settings: {
+    displayName: string;
+    name: string;
+    refreshRate: number;
+  }) => void;
   /** Close settings event handler */
   onClose: () => void;
+  /** Cache avaialbe indicator */
+  cacheAvailable: boolean;
 };
 
-const QuerySettings: FC<Props> = ({ onSave, onClose }) => {
+const QuerySettings: FC<Props> = ({ onSave, onClose, cacheAvailable }) => {
   const savedQuery = useSelector(getSavedQuery);
   const isSavingQuery = useSelector(getQueriesSaving);
+  const isCacheLimited = useSelector(getCacheQueriesLimitExceed);
   const error = useSelector(getSaveQueryError);
+  const settingsSource = useSelector(getQuerySettingsModalSource);
 
   const [querySettings, setQuerySettings] = useState(savedQuery);
   const [queryNameError, setQueryNameError] = useState(false);
@@ -54,7 +72,15 @@ const QuerySettings: FC<Props> = ({ onSave, onClose }) => {
     []
   );
 
-  const { exists } = savedQuery;
+  useEffect(() => {
+    if (!savedQuery.cached && (isCacheLimited || !cacheAvailable)) {
+      setQuerySettings((settings) => ({
+        ...settings,
+        cached: false,
+        refreshRate: 0,
+      }));
+    }
+  }, [cacheAvailable, isCacheLimited]);
 
   return (
     <>
@@ -64,7 +90,9 @@ const QuerySettings: FC<Props> = ({ onSave, onClose }) => {
             <Alert type="error">{error.body}</Alert>
           </ErrorNotification>
         )}
-        {!exists && <NewQueryNotice>{text.newQueryNotice}</NewQueryNotice>}
+        {settingsSource === SettingsModalSource.FIRST_QUERY_SAVE && (
+          <NewQueryNotice>{text.newQueryNotice}</NewQueryNotice>
+        )}
         <Label
           htmlFor="queryName"
           variant="secondary"
@@ -86,6 +114,26 @@ const QuerySettings: FC<Props> = ({ onSave, onClose }) => {
         <ErrorContainer>
           {queryNameError && <Error>{text.queryNameError}</Error>}
         </ErrorContainer>
+        {cacheAvailable && (
+          <CacheQuery
+            onCacheChange={(cached) =>
+              setQuerySettings((settings) => ({
+                ...settings,
+                cached,
+                refreshRate: cached ? REFRESH_MINIMUM : 0,
+              }))
+            }
+            onRefreshRateChange={(refreshRate) =>
+              setQuerySettings((settings) => ({
+                ...settings,
+                refreshRate,
+              }))
+            }
+            isLimited={isCacheLimited}
+            refreshRate={querySettings.refreshRate}
+            isCached={querySettings.cached}
+          />
+        )}
       </Settings>
       <ModalFooter>
         <FooterContent>
@@ -96,9 +144,9 @@ const QuerySettings: FC<Props> = ({ onSave, onClose }) => {
             isDisabled={isSavingQuery}
             icon={isSavingQuery && <FadeLoader />}
             onClick={() => {
-              const { name, displayName } = querySettings;
+              const { name, displayName, refreshRate } = querySettings;
               if (displayName) {
-                onSave({ name, displayName });
+                onSave({ name, displayName, refreshRate });
               } else {
                 setQueryNameError(true);
               }

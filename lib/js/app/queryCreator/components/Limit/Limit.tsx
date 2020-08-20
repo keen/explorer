@@ -1,8 +1,8 @@
 import React, { FC, useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Input } from '@keen.io/ui-core';
 
 import Title from '../Title';
-import Input from '../Input';
 
 import {
   setLimit,
@@ -47,6 +47,7 @@ const Limit: FC<Props> = () => {
       <Input
         disabled={isDisabled}
         type="number"
+        variant="solid"
         data-testid="limit"
         id="limit"
         placeholder={text.placeholder}

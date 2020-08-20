@@ -1,10 +1,11 @@
 import React, { FC } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Button, FadeLoader } from '@keen.io/ui-core';
+import { Button, Badge, FadeLoader } from '@keen.io/ui-core';
 
 import {
   Container,
   QueryName,
+  QueryMeta,
   Menu,
   MenuItem,
 } from './EditorNavigation.styles';
@@ -15,6 +16,7 @@ import { getQueriesSaving } from '../../modules/queries';
 import {
   showQuerySettingsModal,
   getQuerySettingsModalVisibility,
+  SettingsModalSource,
 } from '../../modules/app';
 
 type Props = {
@@ -24,24 +26,36 @@ type Props = {
 
 const EditorNavigation: FC<Props> = ({ onSaveQuery }) => {
   const dispatch = useDispatch();
-  const { exists, displayName } = useSelector(getSavedQuery);
+  const { exists, displayName, refreshRate, cached } = useSelector(
+    getSavedQuery
+  );
   const isSavingQuery = useSelector(getQueriesSaving);
   const isModalVisible = useSelector(getQuerySettingsModalVisibility);
 
   return (
     <Container>
       <QueryName>{displayName ? displayName : text.newQueryTitle}</QueryName>
-      <Menu>
-        {exists && (
-          <MenuItem>
-            <span
-              data-testid="query-settings"
-              onClick={() => dispatch(showQuerySettingsModal())}
-            >
-              Settings
-            </span>
-          </MenuItem>
+      <QueryMeta>
+        {cached && (
+          <Badge variant="green">
+            <span data-testid="cache-badge">{text.cachedLabel}</span>{' '}
+            {`(${refreshRate}${text.cacheUnits})`}
+          </Badge>
         )}
+      </QueryMeta>
+      <Menu>
+        <MenuItem>
+          <span
+            data-testid="query-settings"
+            onClick={() =>
+              dispatch(
+                showQuerySettingsModal(SettingsModalSource.QUERY_SETTINGS)
+              )
+            }
+          >
+            Settings
+          </span>
+        </MenuItem>
         <MenuItem>
           <Button
             data-testid="save-query"
@@ -50,7 +64,9 @@ const EditorNavigation: FC<Props> = ({ onSaveQuery }) => {
             isDisabled={isSavingQuery}
             onClick={() => {
               if (!exists) {
-                dispatch(showQuerySettingsModal());
+                dispatch(
+                  showQuerySettingsModal(SettingsModalSource.FIRST_QUERY_SAVE)
+                );
               } else {
                 onSaveQuery();
               }

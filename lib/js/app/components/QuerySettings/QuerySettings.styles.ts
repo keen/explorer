@@ -2,8 +2,8 @@ import styled from 'styled-components';
 import { colors } from '@keen.io/colors';
 
 export const Settings = styled.div`
-  padding: 25px;
-  width: 380px;
+  padding: 25px 55px 25px 25px;
+  width: 320px;
 `;
 
 export const FooterContent = styled.div`

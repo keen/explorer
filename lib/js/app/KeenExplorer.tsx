@@ -21,6 +21,7 @@ import App from './components/App';
 import { AppContext } from './contexts';
 
 import { NotificationManager } from './modules/notifications';
+import { appStart } from './modules/app';
 
 import { SHOW_TOAST_NOTIFICATION_EVENT } from './constants';
 
@@ -48,6 +49,7 @@ export class KeenExplorer {
     );
 
     sagaMiddleware.run(rootSaga);
+    store.dispatch(appStart());
 
     ReactDOM.render(
       <Provider store={store}>

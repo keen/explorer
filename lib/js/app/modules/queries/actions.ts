@@ -14,20 +14,33 @@ import {
   SAVE_QUERY,
   SAVE_QUERY_ERROR,
   SAVE_QUERY_SUCCESS,
+  SET_CACHE_QUERY_LIMIT_EXCEED,
   SET_CACHE_QUERY_LIMIT,
   SET_CACHE_QUERY_LIMIT_ERROR,
   SET_QUERY_LIMIT_REACHED,
   RESET_QUERY_RESULTS,
   RESET_SAVE_QUERY_ERROR,
+  GET_ORGANIZATION_USAGE_LIMITS,
 } from './constants';
+
+export const getOrganizationUsageLimits = (): QueriesActions => ({
+  type: GET_ORGANIZATION_USAGE_LIMITS,
+});
 
 export const resetQueryResults = (): QueriesActions => ({
   type: RESET_QUERY_RESULTS,
 });
 
-export const setQueryCacheLimit = (limitReached: boolean): QueriesActions => ({
-  type: SET_CACHE_QUERY_LIMIT,
+export const setCacheQueryLimitExceed = (
+  limitReached: boolean
+): QueriesActions => ({
+  type: SET_CACHE_QUERY_LIMIT_EXCEED,
   payload: { limitReached },
+});
+
+export const setCacheQueryLimit = (limit: number): QueriesActions => ({
+  type: SET_CACHE_QUERY_LIMIT,
+  payload: { limit },
 });
 
 export const setQueryCacheLimitError = (error: Error): QueriesActions => ({
