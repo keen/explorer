@@ -3,7 +3,13 @@ import { useSelector, useDispatch } from 'react-redux';
 import { v4 as uuid } from 'uuid';
 import { ActionButton } from '@keen.io/ui-core';
 
-import { FiltersSettings, ActionContainer } from './App.styles';
+import {
+  FiltersSettings,
+  ModifiersSettings,
+  ModifiersItem,
+  LimitContainer,
+  ActionContainer,
+} from './App.styles';
 
 import {
   QueryArguments,
@@ -54,6 +60,12 @@ const App: FC<Props> = () => {
     getSchemaLoading(state, collection)
   );
 
+  const modifiersItemSettings = {
+    marginBottom: { xs: 20, md: 0 },
+    marginRight: { xs: 0, md: 25 },
+    width: { xs: '100%', md: 'auto' },
+  };
+
   return (
     <div>
       <QueryArguments />
@@ -83,13 +95,26 @@ const App: FC<Props> = () => {
           </Card>
         </FiltersSettings>
       )}
-
       <Card>
         {showField('steps', analysis) && <FunnelSteps />}
-        {showField('groupBy', analysis) && <GroupBy collection={collection} />}
-        {showField('orderBy', analysis) && <OrderBy />}
+        <ModifiersSettings flexDirection={{ xs: 'column', md: 'row' }}>
+          {showField('groupBy', analysis) && (
+            <ModifiersItem {...modifiersItemSettings}>
+              <GroupBy collection={collection} />
+            </ModifiersItem>
+          )}
+          {showField('orderBy', analysis) && (
+            <ModifiersItem {...modifiersItemSettings}>
+              <OrderBy />
+            </ModifiersItem>
+          )}
+          {showField('limit', analysis) && (
+            <LimitContainer>
+              <Limit />
+            </LimitContainer>
+          )}
+        </ModifiersSettings>
         {showField('interval', analysis) && <Interval />}
-        {showField('limit', analysis) && <Limit />}
       </Card>
 
       {analysis === 'extraction' && <Extraction collection={collection} />}

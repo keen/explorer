@@ -2,12 +2,14 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware, Store, Unsubscribe } from 'redux';
 import createSagaMiddleware from 'redux-saga';
+import { ThemeProvider } from 'styled-components';
 import { getPubSub, PubSub } from '@keen.io/pubsub';
 import KeenAnalysis from 'keen-analysis';
 
 import App from './App';
 import rootSaga from './saga';
 import rootReducer from './reducer';
+import theme from './theme';
 import { AppContext } from './contexts';
 
 import { appStart } from './modules/app';
@@ -104,11 +106,13 @@ class QueryCreator extends React.Component<Props> {
   render() {
     return (
       <Provider store={this.store}>
-        <AppContext.Provider
-          value={{ modalContainer: this.props.modalContainer }}
-        >
-          <App />
-        </AppContext.Provider>
+        <ThemeProvider theme={theme}>
+          <AppContext.Provider
+            value={{ modalContainer: this.props.modalContainer }}
+          >
+            <App />
+          </AppContext.Provider>
+        </ThemeProvider>
       </Provider>
     );
   }
