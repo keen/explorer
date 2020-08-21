@@ -4,7 +4,12 @@ import 'react-dates/initialize';
 import TimePicker from 'rc-time-picker';
 import { SingleDatePicker } from 'react-dates';
 
-import { Container, DateContainer, TimeContainer } from './DatePicker.styles';
+import {
+  Container,
+  DateContainer,
+  TimeContainer,
+  GlobalStyle,
+} from './DatePicker.styles';
 
 import { use12HoursDateFormat } from '../../utils';
 import { DATE_FORMAT, TIME_PICKER_CLASS } from './constants';
@@ -24,6 +29,7 @@ const DatePicker: FC<Props> = ({ date, id, onChange }) => {
 
   return (
     <Container>
+      <GlobalStyle />
       <DateContainer data-testid={id}>
         <SingleDatePicker
           date={date}
