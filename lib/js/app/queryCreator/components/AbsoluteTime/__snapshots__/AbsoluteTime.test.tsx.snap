@@ -155,7 +155,7 @@ exports[`renders date picker for timeframe end 1`] = `
 }
 
 .c0 .SingleDatePicker_picker__portal {
-  background-color: rgba(0,0,0,.3);
+  background-color: rgba(0,0,0,0.3);
   position: fixed;
   top: 0;
   left: 0;
@@ -219,7 +219,7 @@ exports[`renders date picker for timeframe end 1`] = `
 }
 
 .c0 .DayPickerKeyboardShortcuts_show::before {
-  content: "";
+  content: '';
   display: block;
   position: absolute;
 }
@@ -622,7 +622,7 @@ exports[`renders date picker for timeframe end 1`] = `
 .c0 .DayPickerNavigation_button__horizontalDefault {
   position: absolute;
   top: 18px;
-  line-height: .78;
+  line-height: 0.78;
   border-radius: 3px;
   padding: 6px 9px;
 }
@@ -643,7 +643,7 @@ exports[`renders date picker for timeframe end 1`] = `
 .c0 .DayPickerNavigation_button__verticalDefault {
   padding: 5px;
   background: #fff;
-  box-shadow: 0 0 5px 2px rgba(0,0,0,.1);
+  box-shadow: 0 0 5px 2px rgba(0,0,0,0.1);
   position: relative;
   display: inline-block;
   text-align: center;
@@ -696,7 +696,7 @@ exports[`renders date picker for timeframe end 1`] = `
 }
 
 .c0 .DayPicker__withBorder {
-  box-shadow: 0 2px 6px rgba(0,0,0,.05),0 0 0 1px rgba(0,0,0,.07);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05),0 0 0 1px rgba(0,0,0,0.07);
   border-radius: 3px;
 }
 
@@ -772,8 +772,8 @@ exports[`renders date picker for timeframe end 1`] = `
 }
 
 .c0 .DayPicker_transitionContainer__horizontal {
-  -webkit-transition: height .2s ease-in-out;
-  transition: height .2s ease-in-out;
+  -webkit-transition: height 0.2s ease-in-out;
+  transition: height 0.2s ease-in-out;
 }
 
 .c0 .DayPicker_transitionContainer__vertical {
@@ -833,10 +833,10 @@ exports[`renders date picker for timeframe end 1`] = `
 .c0 .DateInput_input__small {
   font-size: 15px;
   line-height: 18px;
-  -webkit-letter-spacing: .2px;
-  -moz-letter-spacing: .2px;
-  -ms-letter-spacing: .2px;
-  letter-spacing: .2px;
+  -webkit-letter-spacing: 0.2px;
+  -moz-letter-spacing: 0.2px;
+  -ms-letter-spacing: 0.2px;
+  letter-spacing: 0.2px;
   padding: 7px 7px 5px;
 }
 
@@ -1026,7 +1026,7 @@ exports[`renders date picker for timeframe end 1`] = `
 }
 
 .c0 .DateRangePicker_picker__portal {
-  background-color: rgba(0,0,0,.3);
+  background-color: rgba(0,0,0,0.3);
   position: fixed;
   top: 0;
   left: 0;
@@ -1331,7 +1331,7 @@ exports[`renders date picker for timeframe start 1`] = `
 }
 
 .c0 .SingleDatePicker_picker__portal {
-  background-color: rgba(0,0,0,.3);
+  background-color: rgba(0,0,0,0.3);
   position: fixed;
   top: 0;
   left: 0;
@@ -1395,7 +1395,7 @@ exports[`renders date picker for timeframe start 1`] = `
 }
 
 .c0 .DayPickerKeyboardShortcuts_show::before {
-  content: "";
+  content: '';
   display: block;
   position: absolute;
 }
@@ -1798,7 +1798,7 @@ exports[`renders date picker for timeframe start 1`] = `
 .c0 .DayPickerNavigation_button__horizontalDefault {
   position: absolute;
   top: 18px;
-  line-height: .78;
+  line-height: 0.78;
   border-radius: 3px;
   padding: 6px 9px;
 }
@@ -1819,7 +1819,7 @@ exports[`renders date picker for timeframe start 1`] = `
 .c0 .DayPickerNavigation_button__verticalDefault {
   padding: 5px;
   background: #fff;
-  box-shadow: 0 0 5px 2px rgba(0,0,0,.1);
+  box-shadow: 0 0 5px 2px rgba(0,0,0,0.1);
   position: relative;
   display: inline-block;
   text-align: center;
@@ -1872,7 +1872,7 @@ exports[`renders date picker for timeframe start 1`] = `
 }
 
 .c0 .DayPicker__withBorder {
-  box-shadow: 0 2px 6px rgba(0,0,0,.05),0 0 0 1px rgba(0,0,0,.07);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05),0 0 0 1px rgba(0,0,0,0.07);
   border-radius: 3px;
 }
 
@@ -1948,8 +1948,8 @@ exports[`renders date picker for timeframe start 1`] = `
 }
 
 .c0 .DayPicker_transitionContainer__horizontal {
-  -webkit-transition: height .2s ease-in-out;
-  transition: height .2s ease-in-out;
+  -webkit-transition: height 0.2s ease-in-out;
+  transition: height 0.2s ease-in-out;
 }
 
 .c0 .DayPicker_transitionContainer__vertical {
@@ -2009,10 +2009,10 @@ exports[`renders date picker for timeframe start 1`] = `
 .c0 .DateInput_input__small {
   font-size: 15px;
   line-height: 18px;
-  -webkit-letter-spacing: .2px;
-  -moz-letter-spacing: .2px;
-  -ms-letter-spacing: .2px;
-  letter-spacing: .2px;
+  -webkit-letter-spacing: 0.2px;
+  -moz-letter-spacing: 0.2px;
+  -ms-letter-spacing: 0.2px;
+  letter-spacing: 0.2px;
   padding: 7px 7px 5px;
 }
 
@@ -2202,7 +2202,7 @@ exports[`renders date picker for timeframe start 1`] = `
 }
 
 .c0 .DateRangePicker_picker__portal {
-  background-color: rgba(0,0,0,.3);
+  background-color: rgba(0,0,0,0.3);
   position: fixed;
   top: 0;
   left: 0;
