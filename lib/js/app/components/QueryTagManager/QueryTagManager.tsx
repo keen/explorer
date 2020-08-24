@@ -110,7 +110,7 @@ const QueryTagManager: FC<Props> = ({ tags, onAddTag, onRemoveTag }) => {
                   }
 
                   inputRef.current.value = '';
-                  //      setDropdownVisibility(false);
+                  setDropdownVisibility(false);
                 }}
               />
             </DropdownListContainer>
