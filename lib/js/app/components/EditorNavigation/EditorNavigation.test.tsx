@@ -14,6 +14,9 @@ const render = (storeState: any = {}, overProps: any = {}) => {
         visible: true,
       },
     },
+    project: {
+      tagsPool: [],
+    },
     savedQuery: {
       name: '',
       displayName: '',
@@ -55,6 +58,7 @@ test('renders saved query name', () => {
     cached: false,
     refreshRate: 0,
     exists: true,
+    tags: [],
   };
   const {
     wrapper: { getByText },

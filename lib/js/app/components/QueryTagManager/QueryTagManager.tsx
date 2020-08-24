@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useState, useRef, useCallback, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import {
   Input,
@@ -30,6 +30,9 @@ type Props = {
 
 const QueryTagManager: FC<Props> = ({ tags, onAddTag, onRemoveTag }) => {
   const tagsPool = useSelector(getTagsPool);
+  const containerRef = useRef(null);
+  const inputRef = useRef(null);
+
   const [dropdownVisible, setDropdownVisibility] = useState(false);
   const [tagsHints, setTagsHint] = useState(null);
 
@@ -44,66 +47,89 @@ const QueryTagManager: FC<Props> = ({ tags, onAddTag, onRemoveTag }) => {
     }
   );
 
+  const outsideClick = useCallback(
+    (e) => {
+      if (containerRef.current && !containerRef.current.contains(e.target)) {
+        setDropdownVisibility(false);
+      }
+    },
+    [containerRef]
+  );
+
+  useEffect(() => {
+    document.addEventListener('click', outsideClick);
+    return () => document.removeEventListener('click', outsideClick);
+  }, [containerRef]);
+
   return (
     <div>
       <Label htmlFor="queryLabels" variant="secondary">
         {text.labels}
       </Label>
-      <DropdownContainer>
-        <Input
-          data-testid="query-labels-input"
-          type="text"
-          variant="solid"
-          id="queryLabels"
-          placeholder={text.inputPlaceholder}
-          onBlur={(e) => {
-            e.currentTarget.value = '';
-          }}
-          onChange={searchHandler}
-          onKeyPress={(e: React.KeyboardEvent<HTMLInputElement>) => {
-            if (e.charCode === 13) {
-              e.preventDefault();
-              const value = e.currentTarget.value;
-              if (value && !tags.includes(value)) {
-                setDropdownVisibility(false);
-                onAddTag(value);
-              }
-              e.currentTarget.value = '';
-            }
-          }}
-        />
-        <Dropdown isOpen={dropdownVisible}>
-          <DropdownListContainer>
-            <DropdownList
-              items={
-                tagsHints && tagsHints.length
-                  ? tagsHints.map((tag: string) => ({ label: tag, value: tag }))
-                  : [
-                      {
-                        label: `${searchPhrase} ${text.newTag}`,
-                        value: searchPhrase,
-                      },
-                    ]
-              }
-              onClick={(_e, { value }) => {
-                if (!tags.includes(value)) {
+      <div ref={containerRef}>
+        <DropdownContainer>
+          <Input
+            data-testid="query-labels-input"
+            ref={inputRef}
+            type="text"
+            variant="solid"
+            id="queryLabels"
+            placeholder={text.inputPlaceholder}
+            onChange={searchHandler}
+            onKeyPress={(e: React.KeyboardEvent<HTMLInputElement>) => {
+              if (e.charCode === 13) {
+                e.preventDefault();
+                const value = e.currentTarget.value;
+                if (value && !tags.includes(value)) {
+                  setDropdownVisibility(false);
                   onAddTag(value);
                 }
-                setDropdownVisibility(false);
-              }}
-            />
-          </DropdownListContainer>
-        </Dropdown>
-      </DropdownContainer>
-      <TagsContainer>
-        {tags.map((tag) => (
-          <Tag key={tag}>
-            <Badge onRemove={() => onRemoveTag(tag)} removable variant="purple">
-              {tag}
-            </Badge>
-          </Tag>
-        ))}
-      </TagsContainer>
+                e.currentTarget.value = '';
+              }
+            }}
+          />
+          <Dropdown isOpen={dropdownVisible}>
+            <DropdownListContainer>
+              <DropdownList
+                items={
+                  tagsHints && tagsHints.length
+                    ? tagsHints.map((tag: string) => ({
+                        label: tag,
+                        value: tag,
+                      }))
+                    : [
+                        {
+                          label: `${searchPhrase} ${text.newTag}`,
+                          value: searchPhrase,
+                        },
+                      ]
+                }
+                onClick={(e, { value }) => {
+                  if (!tags.includes(value)) {
+                    onAddTag(value);
+                  }
+
+                  inputRef.current.value = '';
+                  //      setDropdownVisibility(false);
+                }}
+              />
+            </DropdownListContainer>
+          </Dropdown>
+        </DropdownContainer>
+        <TagsContainer>
+          {tags.map((tag) => (
+            <Tag key={tag}>
+              <Badge
+                onRemove={() => onRemoveTag(tag)}
+                removable
+                variant="purple"
+              >
+                {tag}
+              </Badge>
+            </Tag>
+          ))}
+        </TagsContainer>
+      </div>
     </div>
   );
 };
