@@ -1,5 +1,6 @@
 import {
   APP_START,
+  SWITCH_TO_QUERIES_LIST,
   LOAD_STATE_FROM_URL,
   SHOW_CONFIRMATION,
   HIDE_CONFIRMATION,
@@ -25,6 +26,10 @@ import {
 
 export const appStart = (): AppActions => ({
   type: APP_START,
+});
+
+export const switchToQueriesList = (): AppActions => ({
+  type: SWITCH_TO_QUERIES_LIST,
 });
 
 export const showQuerySettingsModal = (

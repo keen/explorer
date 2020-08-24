@@ -6,6 +6,7 @@ import {
   Container,
   QueryName,
   QueryMeta,
+  Tag,
   Menu,
   MenuItem,
 } from './EditorNavigation.styles';
@@ -15,6 +16,7 @@ import { getSavedQuery } from '../../modules/savedQuery';
 import { getQueriesSaving } from '../../modules/queries';
 import {
   showQuerySettingsModal,
+  switchToQueriesList,
   getQuerySettingsModalVisibility,
   SettingsModalSource,
 } from '../../modules/app';
@@ -26,7 +28,7 @@ type Props = {
 
 const EditorNavigation: FC<Props> = ({ onSaveQuery }) => {
   const dispatch = useDispatch();
-  const { exists, displayName, refreshRate, cached } = useSelector(
+  const { exists, displayName, refreshRate, tags, cached } = useSelector(
     getSavedQuery
   );
   const isSavingQuery = useSelector(getQueriesSaving);
@@ -37,13 +39,28 @@ const EditorNavigation: FC<Props> = ({ onSaveQuery }) => {
       <QueryName>{displayName ? displayName : text.newQueryTitle}</QueryName>
       <QueryMeta>
         {cached && (
-          <Badge variant="green">
-            <span data-testid="cache-badge">{text.cachedLabel}</span>{' '}
-            {`(${refreshRate}${text.cacheUnits})`}
-          </Badge>
+          <Tag>
+            <Badge variant="green">
+              <span data-testid="cache-badge">{text.cachedLabel}</span>{' '}
+              {`(${refreshRate}${text.cacheUnits})`}
+            </Badge>
+          </Tag>
         )}
+        {tags.map((tag) => (
+          <Tag key={tag}>
+            <Badge variant="purple">{tag}</Badge>
+          </Tag>
+        ))}
       </QueryMeta>
       <Menu>
+        <MenuItem>
+          <span
+            data-testid="query-list"
+            onClick={() => dispatch(switchToQueriesList())}
+          >
+            List
+          </span>
+        </MenuItem>
         <MenuItem>
           <span
             data-testid="query-settings"

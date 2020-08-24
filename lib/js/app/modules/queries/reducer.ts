@@ -21,7 +21,7 @@ export const initialState: ReducerState = {
   results: null,
   isLoading: false,
   isSavingQuery: false,
-  saved: [],
+  savedQueries: [],
   cachedQueries: {
     limit: null,
     limitReached: false,
@@ -91,14 +91,14 @@ export const queriesReducer = (
     case DELETE_QUERY_SUCCESS:
       return {
         ...state,
-        saved: state.saved.filter(
-          (item) => item.query_name !== action.payload.queryName
+        savedQueries: state.savedQueries.filter(
+          (item) => item.name !== action.payload.queryName
         ),
       };
     case GET_SAVED_QUERIES_SUCCESS:
       return {
         ...state,
-        saved: action.payload.queries,
+        savedQueries: action.payload.queries,
       };
     case RUN_QUERY: {
       return {

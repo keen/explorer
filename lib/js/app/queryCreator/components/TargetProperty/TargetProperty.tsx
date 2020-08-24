@@ -1,12 +1,12 @@
 import React, { FC, useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
+import { Dropdown } from '@keen.io/ui-core';
 
 import { Container, PropertyOverflow } from './TargetProperty.styles';
 import { createTree } from '../../utils/createTree';
 
 import Title from '../Title';
 import EmptySearch from '../EmptySearch';
-import Dropdown from '../Dropdown';
 import PropertyPath from '../PropertyPath';
 import PropertiesTree from '../PropertiesTree';
 import DropableContainer, { Variant } from '../DropableContainer';

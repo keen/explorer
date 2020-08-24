@@ -1,10 +1,9 @@
 import React, { FC, useState, useEffect, useCallback, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { ActionButton } from '@keen.io/ui-core';
+import { ActionButton, Dropdown } from '@keen.io/ui-core';
 
 import Title from '../Title';
 import Tabs from '../Tabs';
-import Dropdown from '../Dropdown';
 import DropableContainer from '../DropableContainer';
 import SupportedInterval from '../SupportedInterval';
 import CustomInterval from '../CustomInterval';

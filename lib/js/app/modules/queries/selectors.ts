@@ -1,6 +1,6 @@
 import { AppState } from '../types';
 
-export const getSavedQueries = ({ queries }: AppState) => queries.saved;
+export const getSavedQueries = ({ queries }: AppState) => queries.savedQueries;
 
 export const getSaveQueryError = ({ queries }: AppState) =>
   queries.saveQueryError;

@@ -21,6 +21,7 @@ import {
 } from './QuerySettings.styles';
 
 import CacheQuery, { REFRESH_MINIMUM } from '../CacheQuery';
+import QueryTagManager from '../QueryTagManager';
 
 import { getSavedQuery } from '../../modules/savedQuery';
 import {
@@ -42,6 +43,7 @@ type Props = {
     displayName: string;
     name: string;
     refreshRate: number;
+    tags: string[];
   }) => void;
   /** Close settings event handler */
   onClose: () => void;
@@ -114,6 +116,21 @@ const QuerySettings: FC<Props> = ({ onSave, onClose, cacheAvailable }) => {
         <ErrorContainer>
           {queryNameError && <Error>{text.queryNameError}</Error>}
         </ErrorContainer>
+        <QueryTagManager
+          tags={querySettings.tags}
+          onAddTag={(tag) => {
+            setQuerySettings((settings) => ({
+              ...settings,
+              tags: [...settings.tags, tag],
+            }));
+          }}
+          onRemoveTag={(tag) => {
+            setQuerySettings((settings) => ({
+              ...settings,
+              tags: settings.tags.filter((tagName) => tagName !== tag),
+            }));
+          }}
+        />
         {cacheAvailable && (
           <CacheQuery
             onCacheChange={(cached) =>
@@ -144,9 +161,9 @@ const QuerySettings: FC<Props> = ({ onSave, onClose, cacheAvailable }) => {
             isDisabled={isSavingQuery}
             icon={isSavingQuery && <FadeLoader />}
             onClick={() => {
-              const { name, displayName, refreshRate } = querySettings;
+              const { name, displayName, refreshRate, tags } = querySettings;
               if (displayName) {
-                onSave({ name, displayName, refreshRate });
+                onSave({ name, displayName, refreshRate, tags });
               } else {
                 setQueryNameError(true);
               }

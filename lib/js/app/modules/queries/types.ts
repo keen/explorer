@@ -22,11 +22,22 @@ import {
 
 import { APIError } from '../../types';
 
+export type SavedQueryListItem = {
+  name: string;
+  displayName: string;
+  refreshRate: number;
+  lastModifiedDate: string;
+  cached: boolean;
+  query: Record<string, any>;
+  tags: string[];
+  widget: string | null;
+};
+
 export type ReducerState = {
   results: any;
   isLoading: boolean;
   isSavingQuery: boolean;
-  saved: any[];
+  savedQueries: SavedQueryListItem[];
   cachedQueries: {
     limit: null | number;
     limitReached: boolean;

@@ -25,8 +25,10 @@ import {
   ACCEPT_CONFIRMATION,
 } from '../../modules/app';
 import { resetSavedQuery } from '../../modules/savedQuery';
+import { serializeSavedQuery } from './utils';
 import text from './text.json';
 
+import { SavedQueryAPIResponse } from '../../types';
 import { RunQueryAction, DeleteQueryAction, SaveQueryAction } from './types';
 
 import {
@@ -155,13 +157,15 @@ function* deleteQuery(action: DeleteQueryAction) {
 
 function* fetchSavedQueries() {
   try {
-    const client = yield getContext('keenClient');
-    const responseBody = yield client
+    const client = yield getContext(KEEN_CLIENT_CONTEXT);
+    const responseBody: SavedQueryAPIResponse[] = yield client
       .get(client.url('queries', 'saved'))
       .auth(client.masterKey())
       .send();
 
-    yield put(getSavedQueriesSuccess(responseBody));
+    const savedQueries = responseBody.map(serializeSavedQuery);
+
+    yield put(getSavedQueriesSuccess(savedQueries));
   } catch (error) {
     yield put(getSavedQueriesError(error));
   }

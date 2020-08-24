@@ -1,11 +1,11 @@
 import React, { FC, useState, useRef, useEffect } from 'react';
+import { Dropdown } from '@keen.io/ui-core';
 
 import { Container, SettingsContainer } from './Timeframe.styles';
 import text from './text.json';
 
 import Title from '../Title';
 import Tabs from '../Tabs';
-import Dropdown from '../Dropdown';
 import DropableContainer, { Variant } from '../DropableContainer';
 import AbsoluteTime, { TIME_PICKER_CLASS } from '../AbsoluteTime';
 import AbsoluteTimeLabel from '../AbsoluteTimeLabel';

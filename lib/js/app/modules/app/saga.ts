@@ -27,6 +27,7 @@ import {
   CREATE_NEW_QUERY,
   CLEAR_QUERY,
   QUERY_EDITOR_MOUNTED,
+  SWITCH_TO_QUERIES_LIST,
   EDIT_QUERY,
   UPDATE_QUERY_CREATOR,
   COPY_SHARE_URL,
@@ -52,12 +53,8 @@ function* editQuery({ payload }: EditQueryAction) {
   yield put(setViewMode('editor'));
   yield take(QUERY_EDITOR_MOUNTED);
 
-  const { queryName } = payload;
   const savedQueries = yield select(getSavedQueries);
-
-  const { query } = savedQueries.find(
-    ({ query_name }) => query_name === queryName
-  );
+  const { query } = savedQueries.find(({ name }) => name === payload.queryName);
   yield put(updateQueryCreator(query));
 }
 
@@ -66,6 +63,12 @@ export function* updateCreator({ payload }: UpdateQueryCreatorAction) {
   const pubsub = yield getContext('pubsub');
 
   yield pubsub.publish(SET_QUERY_EVENT, { query });
+}
+
+export function* switchToQueriesList() {
+  yield put(setViewMode('browser'));
+  yield put(resetQueryResults());
+  yield put(resetSavedQuery());
 }
 
 export function* loadPersitedState() {
@@ -115,6 +118,7 @@ export function* appSaga() {
   yield takeLatest(LOAD_STATE_FROM_URL, loadPersitedState);
   yield takeLatest(UPDATE_QUERY_CREATOR, updateCreator);
   yield takeLatest(CREATE_NEW_QUERY, createNewQuery);
+  yield takeLatest(SWITCH_TO_QUERIES_LIST, switchToQueriesList);
   yield takeLatest(CLEAR_QUERY, clearQuery);
   yield takeLatest(EDIT_QUERY, editQuery);
 }

@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`serializes saved query 1`] = `
+Object {
+  "cached": true,
+  "displayName": "purchases",
+  "lastModifiedDate": "user_last_modified_date",
+  "name": "purchases",
+  "query": Object {
+    "analysis_type": "count",
+  },
+  "refreshRate": 14000,
+  "widget": "bar",
+}
+`;
