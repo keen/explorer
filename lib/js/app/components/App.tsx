@@ -19,6 +19,7 @@ import {
 import {
   loadPersitedState,
   getViewMode,
+  setViewMode,
   getVisualizationType,
   createNewQuery,
   editQuery,
@@ -32,7 +33,11 @@ import QuerySettingsModal from './QuerySettingsModal';
 import ToastNotifications from './ToastNotifications';
 import Confirm from './Confirm';
 
-import { NEW_QUERY_EVENT, CACHE_AVAILABLE } from '../constants';
+import {
+  NEW_QUERY_EVENT,
+  CHANGE_VIEW_EVENT,
+  CACHE_AVAILABLE,
+} from '../constants';
 
 const mapStateToProps = (state: AppState) => ({
   savedQuery: getSavedQuery(state),
@@ -51,6 +56,7 @@ const mapDispatchToProps = {
   resetSavedQuery,
   selectSavedQuery,
   createNewQuery,
+  setViewMode,
   runQuery,
 };
 
@@ -63,15 +69,20 @@ class App extends Component {
     };
 
     const pubsub = getPubSub();
-    this.subscriptionDispose = pubsub.subscribe((eventName: string) => {
-      switch (eventName) {
-        case NEW_QUERY_EVENT:
-          this.props.createNewQuery();
-          break;
-        default:
-          break;
+    this.subscriptionDispose = pubsub.subscribe(
+      (eventName: string, meta: Record<string, any>) => {
+        switch (eventName) {
+          case CHANGE_VIEW_EVENT:
+            const { view } = meta;
+            this.props.setViewMode(view);
+          case NEW_QUERY_EVENT:
+            this.props.createNewQuery();
+            break;
+          default:
+            break;
+        }
       }
-    });
+    );
   }
 
   componentWillUnmount() {

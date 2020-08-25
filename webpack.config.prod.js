@@ -42,5 +42,6 @@ module.exports = merge(commonConfig, {
 
    plugins: [
      new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+     new webpack.optimize.ModuleConcatenationPlugin(),
   ]
 });

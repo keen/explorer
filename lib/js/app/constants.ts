@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/camelcase */
 
 export const NEW_QUERY_EVENT = '@explorer/new-query';
+export const CHANGE_VIEW_EVENT = '@explorer/change-view';
+
 export const SHOW_TOAST_NOTIFICATION_EVENT =
   '@explorer/show-toast-notification';
 
