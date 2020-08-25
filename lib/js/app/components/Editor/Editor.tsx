@@ -2,7 +2,12 @@ import React, { FC } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Button } from '@keen.io/ui-core';
 
-import { EditorActions, ClearButton, CreatorContainer } from './Editor.styles';
+import {
+  EditorActions,
+  Card,
+  ClearButton,
+  CreatorContainer,
+} from './Editor.styles';
 
 import EditorNavigation from '../EditorNavigation';
 import Creator from '../Creator';
@@ -50,13 +55,17 @@ const Editor: FC<Props> = ({
     <div id="editor">
       <EditorNavigation onSaveQuery={onSaveQuery} />
       <section>
-        {isQueryLimitReached ? (
+        {isQueryLimitReached && (
           <QueryLimitReached upgradeSubscriptionUrl={upgradeSubscriptionUrl} />
-        ) : queryResults ? (
-          <QueryVisualization query={query} queryResults={queryResults} />
-        ) : (
-          <VisualizationPlaceholder isLoading={isQueryLoading} />
         )}
+        <Card>
+          {queryResults && !isQueryLimitReached && (
+            <QueryVisualization query={query} queryResults={queryResults} />
+          )}
+          {!queryResults && !isQueryLimitReached && (
+            <VisualizationPlaceholder isLoading={isQueryLoading} />
+          )}
+        </Card>
       </section>
       <CreatorContainer>
         <Creator onUpdateQuery={onUpdateQuery} />

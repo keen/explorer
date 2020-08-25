@@ -4,11 +4,19 @@ import { takeLatest, put, take, select, getContext } from 'redux-saga/effects';
 
 import { setViewMode, updateQueryCreator } from './actions';
 
-import { resetSavedQuery, updateSaveQuery } from '../savedQuery';
+import {
+  resetSavedQuery,
+  updateSaveQuery,
+  getSavedQuery,
+  selectSavedQuery,
+} from '../savedQuery';
 import {
   resetQueryResults,
   getSavedQueries,
+  fetchSavedQueries,
   getOrganizationUsageLimits,
+  setQuerySettings,
+  GET_SAVED_QUERIES_SUCCESS,
 } from '../queries';
 
 import { b64EncodeUnicode, b64DecodeUnicode } from '../../utils/base64';
@@ -20,6 +28,7 @@ import {
   EditQueryAction,
   CopyShareUrlAction,
   UpdateQueryCreatorAction,
+  AppStartAction,
 } from './types';
 
 import {
@@ -32,6 +41,7 @@ import {
   UPDATE_QUERY_CREATOR,
   COPY_SHARE_URL,
   LOAD_STATE_FROM_URL,
+  SELECT_FIRST_QUERY,
   URL_STATE,
 } from './constants';
 
@@ -65,10 +75,25 @@ export function* updateCreator({ payload }: UpdateQueryCreatorAction) {
   yield pubsub.publish(SET_QUERY_EVENT, { query });
 }
 
+export function* selectFirstSavedQuery() {
+  const savedQueries = yield select(getSavedQueries);
+
+  if (savedQueries.length) {
+    const [firstQuery] = savedQueries;
+    const { name, query } = firstQuery;
+    yield put(selectSavedQuery(name));
+    yield put(setQuerySettings(query));
+  }
+}
+
 export function* switchToQueriesList() {
   yield put(setViewMode('browser'));
   yield put(resetQueryResults());
-  yield put(resetSavedQuery());
+
+  const { exists } = yield select(getSavedQuery);
+  if (!exists) {
+    yield selectFirstSavedQuery();
+  }
 }
 
 export function* loadPersitedState() {
@@ -108,8 +133,15 @@ export function* copyShareUrl({ payload }: CopyShareUrlAction) {
   yield copyToClipboard(url);
 }
 
-export function* appStart() {
+export function* appStart({ payload }: AppStartAction) {
   yield put(getOrganizationUsageLimits());
+  yield put(fetchSavedQueries());
+
+  const { initialView } = payload;
+  if (initialView === 'browser') {
+    yield take(GET_SAVED_QUERIES_SUCCESS);
+    yield selectFirstSavedQuery();
+  }
 }
 
 export function* appSaga() {
@@ -120,5 +152,6 @@ export function* appSaga() {
   yield takeLatest(CREATE_NEW_QUERY, createNewQuery);
   yield takeLatest(SWITCH_TO_QUERIES_LIST, switchToQueriesList);
   yield takeLatest(CLEAR_QUERY, clearQuery);
+  yield takeLatest(SELECT_FIRST_QUERY, selectFirstSavedQuery);
   yield takeLatest(EDIT_QUERY, editQuery);
 }

@@ -1,6 +1,7 @@
 import { ReducerState } from './types';
 import { queriesReducer } from './reducer';
 import {
+  setQuerySettings,
   resetQueryResults,
   runQuery,
   deleteQuery,
@@ -19,6 +20,7 @@ import {
   getQueryResults,
   getQueryPerformState,
   getQueryLimitReached,
+  getQuerySettings,
 } from './selectors';
 
 import { SAVE_QUERY_SUCCESS, GET_SAVED_QUERIES_SUCCESS } from './constants';
@@ -44,6 +46,8 @@ export {
   getCacheQueriesLimit,
   getCacheQueriesLimitExceed,
   getQueryLimitReached,
+  getQuerySettings,
+  setQuerySettings,
   queriesReducer,
   runQuery,
   deleteQuery,

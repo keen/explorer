@@ -35,3 +35,21 @@ export type SavedQueryAPIResponse = {
 export type Metadata = {
   displayName?: string;
 };
+
+export type ProjectSettings = {
+  projectId: string;
+  masterKey: string;
+  readKey: string;
+  writeKey: string;
+};
+
+export type Options = {
+  container: string;
+  modalContainer: string;
+  initialView: 'browser' | 'editor';
+  upgradeSubscriptionUrl?: string;
+  keenAnalysis: {
+    config: ProjectSettings;
+    instance: any;
+  };
+};

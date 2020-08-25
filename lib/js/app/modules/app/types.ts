@@ -10,6 +10,7 @@ import {
   CLEAR_QUERY,
   CREATE_NEW_QUERY,
   EDIT_QUERY,
+  SELECT_FIRST_QUERY,
   SWITCH_TO_QUERIES_LIST,
   UPDATE_QUERY_CREATOR,
   QUERY_EDITOR_MOUNTED,
@@ -44,6 +45,13 @@ export type ReducerState = {
 
 export interface AppStartAction {
   type: typeof APP_START;
+  payload: {
+    initialView: ViewMode;
+  };
+}
+
+export interface SelectFirstSavedQueryAction {
+  type: typeof SELECT_FIRST_QUERY;
 }
 
 export interface SwitchToQueriesListAction {
@@ -141,4 +149,5 @@ export type AppActions =
   | SwitchToQueriesListAction
   | SetVisualizationType
   | ShowQuerySettingsModalAction
-  | HideQuerySettingsModalAction;
+  | HideQuerySettingsModalAction
+  | SelectFirstSavedQueryAction;

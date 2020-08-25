@@ -5,14 +5,19 @@ import { Container } from './ActionsMenu.styles';
 
 import text from './text.json';
 
-type Props = {};
+type Props = {
+  /** Remove query event handler */
+  onRemoveQuery: () => void;
+};
 
-const ActionsMenu: FC<Props> = () => (
+const ActionsMenu: FC<Props> = ({ onRemoveQuery }) => (
   <Container>
     <DropdownMenu.Container>
       <DropdownMenu.Item>Example #1</DropdownMenu.Item>
       <DropdownMenu.Divider />
-      <DropdownMenu.Item>{text.deleteQuery}</DropdownMenu.Item>
+      <DropdownMenu.Item onClick={onRemoveQuery}>
+        {text.deleteQuery}
+      </DropdownMenu.Item>
     </DropdownMenu.Container>
   </Container>
 );

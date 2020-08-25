@@ -16,6 +16,7 @@ import {
   clearQuery,
   editQuery,
   copyShareUrl,
+  selectFirstSavedQuery,
   appStart,
 } from './actions';
 import {
@@ -53,6 +54,7 @@ export {
   getVisualizationType,
   showQuerySettingsModal,
   hideQuerySettingsModal,
+  selectFirstSavedQuery,
   ReducerState,
   SettingsModalSource,
 };

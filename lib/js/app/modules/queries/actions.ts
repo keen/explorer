@@ -1,7 +1,8 @@
-import { QueriesActions } from './types';
+import { QueriesActions, SavedQueryListItem } from './types';
 import { APIError } from '../../types';
 
 import {
+  SET_QUERY_SETTINGS,
   RUN_QUERY,
   RUN_QUERY_ERROR,
   RUN_QUERY_SUCCESS,
@@ -22,6 +23,13 @@ import {
   RESET_SAVE_QUERY_ERROR,
   GET_ORGANIZATION_USAGE_LIMITS,
 } from './constants';
+
+export const setQuerySettings = (
+  settings: Record<string, any>
+): QueriesActions => ({
+  type: SET_QUERY_SETTINGS,
+  payload: { settings },
+});
 
 export const getOrganizationUsageLimits = (): QueriesActions => ({
   type: GET_ORGANIZATION_USAGE_LIMITS,
@@ -96,7 +104,7 @@ export const getSavedQueries = (): QueriesActions => ({
 });
 
 export const getSavedQueriesSuccess = (
-  queries: Record<string, any>[]
+  queries: SavedQueryListItem[]
 ): QueriesActions => ({
   type: GET_SAVED_QUERIES_SUCCESS,
   payload: { queries },

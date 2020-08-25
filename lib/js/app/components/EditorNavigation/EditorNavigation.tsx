@@ -22,7 +22,7 @@ import text from './text.json';
 import ActionsMenu from '../ActionsMenu';
 
 import { getSavedQuery } from '../../modules/savedQuery';
-import { getQueriesSaving } from '../../modules/queries';
+import { getQueriesSaving, deleteQuery } from '../../modules/queries';
 import {
   showQuerySettingsModal,
   switchToQueriesList,
@@ -46,7 +46,7 @@ const EditorNavigation: FC<Props> = ({ onSaveQuery }) => {
   const actionsContainer = useRef(null);
 
   const [actionsMenu, setActionsMenuVisibility] = useState(false);
-  const { exists, displayName, refreshRate, tags, cached } = useSelector(
+  const { exists, displayName, name, refreshRate, tags, cached } = useSelector(
     getSavedQuery
   );
   const isSavingQuery = useSelector(getQueriesSaving);
@@ -102,8 +102,11 @@ const EditorNavigation: FC<Props> = ({ onSaveQuery }) => {
         </MenuItem>
         <MenuItem>
           <CircleButton
-            icon={<Icon type="settings" />}
-            data-testid="query-settings"
+            icon={
+              <span data-testid="query-settings">
+                <Icon type="settings" />
+              </span>
+            }
             onClick={() =>
               dispatch(
                 showQuerySettingsModal(SettingsModalSource.QUERY_SETTINGS)
@@ -121,7 +124,12 @@ const EditorNavigation: FC<Props> = ({ onSaveQuery }) => {
             fullWidth={false}
             motion={actionsDropdownMotion}
           >
-            <ActionsMenu />
+            <ActionsMenu
+              onRemoveQuery={() => {
+                setActionsMenuVisibility(false);
+                dispatch(deleteQuery(name));
+              }}
+            />
           </Dropdown>
         </MenuItem>
         <MenuItem>
