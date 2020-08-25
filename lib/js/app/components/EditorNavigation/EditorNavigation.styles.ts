@@ -32,6 +32,6 @@ export const Menu = styled.div`
   margin-left: auto;
 
   ${MenuItem} + ${MenuItem} {
-    margin-left: 15px;
+    margin-left: 10px;
   }
 `;

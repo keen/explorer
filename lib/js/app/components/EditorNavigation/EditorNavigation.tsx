@@ -1,6 +1,13 @@
-import React, { FC } from 'react';
+import React, { FC, useState, useRef, useCallback, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Button, Badge, FadeLoader } from '@keen.io/ui-core';
+import {
+  Button,
+  Badge,
+  CircleButton,
+  Dropdown,
+  FadeLoader,
+} from '@keen.io/ui-core';
+import { Icon } from '@keen.io/icons';
 
 import {
   Container,
@@ -12,6 +19,8 @@ import {
 } from './EditorNavigation.styles';
 import text from './text.json';
 
+import ActionsMenu from '../ActionsMenu';
+
 import { getSavedQuery } from '../../modules/savedQuery';
 import { getQueriesSaving } from '../../modules/queries';
 import {
@@ -21,6 +30,12 @@ import {
   SettingsModalSource,
 } from '../../modules/app';
 
+const actionsDropdownMotion = {
+  initial: { opacity: 0, top: 20, left: -10 },
+  animate: { opacity: 1, top: 2, left: -10 },
+  exit: { opacity: 0, top: 30, left: -10 },
+};
+
 type Props = {
   /** Save query event handler*/
   onSaveQuery: () => void;
@@ -28,11 +43,35 @@ type Props = {
 
 const EditorNavigation: FC<Props> = ({ onSaveQuery }) => {
   const dispatch = useDispatch();
+  const actionsContainer = useRef(null);
+
+  const [actionsMenu, setActionsMenuVisibility] = useState(false);
   const { exists, displayName, refreshRate, tags, cached } = useSelector(
     getSavedQuery
   );
   const isSavingQuery = useSelector(getQueriesSaving);
   const isModalVisible = useSelector(getQuerySettingsModalVisibility);
+
+  const outsideActionsMenuClick = useCallback(
+    (e) => {
+      if (
+        actionsMenu &&
+        actionsContainer.current &&
+        !actionsContainer.current.contains(e.target)
+      ) {
+        setActionsMenuVisibility(false);
+      }
+    },
+    [actionsContainer, actionsMenu]
+  );
+
+  useEffect(() => {
+    if (actionsMenu) {
+      document.addEventListener('click', outsideActionsMenuClick);
+    }
+
+    return () => document.removeEventListener('click', outsideActionsMenuClick);
+  }, [actionsMenu, actionsContainer]);
 
   return (
     <Container>
@@ -62,16 +101,28 @@ const EditorNavigation: FC<Props> = ({ onSaveQuery }) => {
           </span>
         </MenuItem>
         <MenuItem>
-          <span
+          <CircleButton
+            icon={<Icon type="settings" />}
             data-testid="query-settings"
             onClick={() =>
               dispatch(
                 showQuerySettingsModal(SettingsModalSource.QUERY_SETTINGS)
               )
             }
+          />
+        </MenuItem>
+        <MenuItem ref={actionsContainer}>
+          <CircleButton
+            icon={<Icon type="actions" />}
+            onClick={() => setActionsMenuVisibility(!actionsMenu)}
+          />
+          <Dropdown
+            isOpen={actionsMenu}
+            fullWidth={false}
+            motion={actionsDropdownMotion}
           >
-            Settings
-          </span>
+            <ActionsMenu />
+          </Dropdown>
         </MenuItem>
         <MenuItem>
           <Button
