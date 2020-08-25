@@ -2,10 +2,8 @@ import React, { FC } from 'react';
 
 import { Card } from './QuerySummary.styles';
 
-import { SavedQuery } from '../../types';
-
 type Props = {
-  querySettings: SavedQuery;
+  querySettings: any;
 };
 
 const QuerySummary: FC<Props> = ({ querySettings }) => {

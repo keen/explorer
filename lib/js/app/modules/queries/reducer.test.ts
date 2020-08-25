@@ -79,21 +79,21 @@ test('updates cached queries limit exceed indicator', () => {
 });
 
 test('removes saved query from collection', () => {
-  const savedQueries = [
-    { query_name: 'last-purchases' },
-    { query_name: 'marketing' },
+  const savedQueriesList: any = [
+    { name: 'last-purchases' },
+    { name: 'marketing' },
   ];
 
   const action = deleteQuerySuccess('last-purchases');
-  const { saved } = queriesReducer(
-    { ...initialState, saved: savedQueries },
+  const { savedQueries } = queriesReducer(
+    { ...initialState, savedQueries: savedQueriesList },
     action
   );
 
-  expect(saved).toMatchInlineSnapshot(`
+  expect(savedQueries).toMatchInlineSnapshot(`
     Array [
       Object {
-        "query_name": "marketing",
+        "name": "marketing",
       },
     ]
   `);

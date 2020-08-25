@@ -6,12 +6,11 @@ const defaultOptions = {
   threshold: 0.3,
 };
 
-const DEBOUNCE_TIME = 200;
-
 export const useSearch = <T>(
   collection: T[],
   callback: (results: T[], searchPhrase: string) => void,
-  options: Fuse.IFuseOptions<any> = defaultOptions
+  options: Fuse.IFuseOptions<any> = defaultOptions,
+  debounceTime = 200
 ) => {
   const [searchPhrase, setSearchPhrase] = useState(null);
   const fuseSearch = useRef(new Fuse(collection, options));
@@ -31,7 +30,6 @@ export const useSearch = <T>(
       const value = e.currentTarget.value;
 
       if (searchDebounce.current) clearTimeout(searchDebounce.current);
-
       searchDebounce.current = setTimeout(() => {
         const results = fuseSearch.current
           .search(value)
@@ -39,7 +37,7 @@ export const useSearch = <T>(
         setSearchPhrase(value);
 
         callback(results, value);
-      }, DEBOUNCE_TIME);
+      }, debounceTime);
     },
     [fuseSearch, collection]
   );

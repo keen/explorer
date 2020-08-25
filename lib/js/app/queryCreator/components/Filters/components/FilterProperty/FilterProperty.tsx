@@ -6,10 +6,10 @@ import React, {
   useCallback,
   useEffect,
 } from 'react';
+import { Dropdown } from '@keen.io/ui-core';
 
 import { Container, DropdownContent } from './FilterProperty.styles';
 
-import Dropdown from '../../../Dropdown';
 import EmptySearch from '../../../EmptySearch';
 import PropertyGroup, { PropertyItem } from '../../../PropertyGroup';
 import Property from '../../../Property';

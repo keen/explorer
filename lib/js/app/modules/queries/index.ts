@@ -21,10 +21,14 @@ import {
   getQueryLimitReached,
 } from './selectors';
 
-import { SAVE_QUERY_SUCCESS } from './constants';
+import { SAVE_QUERY_SUCCESS, GET_SAVED_QUERIES_SUCCESS } from './constants';
 
 import { queriesSaga } from './saga';
-import { SaveQuerySuccessAction } from './types';
+import {
+  SaveQuerySuccessAction,
+  GetSavedQueriesSuccessAction,
+  SavedQueryListItem,
+} from './types';
 
 export {
   ReducerState,
@@ -47,5 +51,8 @@ export {
   resetSavedQueryError,
   queriesSaga,
   SAVE_QUERY_SUCCESS,
+  GET_SAVED_QUERIES_SUCCESS,
+  SavedQueryListItem,
+  GetSavedQueriesSuccessAction,
   SaveQuerySuccessAction,
 };

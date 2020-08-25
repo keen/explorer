@@ -18,6 +18,9 @@ const render = (storeState: any = {}, overProps: any = {}) => {
       },
       saveQueryError: null,
     },
+    project: {
+      tagsPool: [],
+    },
     app: {
       querySettingsModal: {
         source: SettingsModalSource.FIRST_QUERY_SAVE,
@@ -29,6 +32,7 @@ const render = (storeState: any = {}, overProps: any = {}) => {
       cached: false,
       refreshRate: 0,
       exists: false,
+      tags: [],
     },
     ...storeState,
   };
@@ -70,6 +74,7 @@ test('allows user to save query', () => {
     displayName: 'Last month purchases',
     name: 'last-month-purchases',
     refreshRate: 0,
+    tags: [],
   });
 });
 

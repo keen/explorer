@@ -1,7 +1,6 @@
 // @ts-nocheck
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import snakeCase from 'snakecase-keys';
 import { getPubSub } from '@keen.io/pubsub';
 
 import {
@@ -87,10 +86,12 @@ class App extends Component {
   onSaveQuery = ({
     displayName,
     refreshRate,
+    tags,
     name,
   }: {
     displayName: string;
     refreshRate: number;
+    tags: string[];
     name: string;
   }) => {
     const body = {
@@ -98,6 +99,7 @@ class App extends Component {
       metadata: {
         displayName,
         widget: this.props.widget,
+        tags,
       },
       refreshRate: refreshRate * 60 * 60,
     };
@@ -113,10 +115,10 @@ class App extends Component {
             query={this.state.query}
             queryResults={this.props.queryResults}
             onRunQuery={() => this.props.runQuery(this.state.query)}
-            onSelectQuery={(queryName, { query }) => {
+            onSelectQuery={(queryName, query) => {
               this.props.selectSavedQuery(queryName);
               this.props.resetQueryResults();
-              this.setState({ query: snakeCase(query) });
+              this.setState({ query });
             }}
             onEditQuery={(queryName) => {
               this.props.editQuery(queryName);
@@ -133,11 +135,13 @@ class App extends Component {
                 const {
                   displayName,
                   name,
+                  tags,
                   refreshRate,
                 } = this.props.savedQuery;
                 this.onSaveQuery({
                   displayName,
                   refreshRate,
+                  tags,
                   name,
                 });
               }}

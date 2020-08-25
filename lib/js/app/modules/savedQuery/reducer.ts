@@ -5,6 +5,7 @@ import { UPDATE_SAVED_QUERY, RESET_SAVED_QUERY } from './constants';
 export const initialState: ReducerState = {
   name: '',
   displayName: '',
+  tags: [],
   isCloned: false,
   cached: false,
   refreshRate: 0,

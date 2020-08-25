@@ -1,4 +1,5 @@
 import React, { FC, useState, useCallback, useMemo } from 'react';
+import { Dropdown, Input } from '@keen.io/ui-core';
 
 import {
   Container,
@@ -7,8 +8,6 @@ import {
   UnitsContainer,
 } from './TimePeriod.styles';
 
-import Input from '../Input';
-import Dropdown from '../Dropdown';
 import DropdownList from '../DropdownList';
 import DropdownListContainer from '../DropdownListContainer';
 import DropableContainer from '../DropableContainer';
@@ -64,6 +63,7 @@ const TimePeriod: FC<Props> = ({
       <TimeLabel>{label}</TimeLabel>
       <TimeValue>
         <Input
+          variant="solid"
           data-testid="relative-time-input"
           autoFocus
           type="number"
