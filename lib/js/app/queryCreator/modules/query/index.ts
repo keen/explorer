@@ -24,6 +24,7 @@ import {
   removeFilter,
   updateFilter,
   setQuery,
+  serializeQuery,
   resetQuery,
   selectEventCollection,
   selectTargetProperty,
@@ -54,6 +55,7 @@ import {
   SELECT_FUNNEL_STEP_EVENT_COLLECTION,
   DEFAULT_TIMEZONE,
   DEFAULT_TIMEFRAME,
+  SERIALIZE_QUERY,
 } from './constants';
 import {
   ReducerState,
@@ -91,6 +93,7 @@ export {
   setExtractionRecipientEmail,
   setExtractionContentEncoding,
   setQuery,
+  serializeQuery,
   setPropertyNames,
   setPercentile,
   setFilters,
@@ -117,6 +120,7 @@ export {
 };
 
 export {
+  SERIALIZE_QUERY,
   SET_QUERY,
   SELECT_EVENT_COLLECTION,
   SELECT_TIMEZONE,

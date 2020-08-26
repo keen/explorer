@@ -13,6 +13,7 @@ const ToastNotifications = () => {
   useEffect(() => {
     const dispose = notificationPubSub.subscribe(
       (eventName, meta: ToastSettings) => {
+        console.log('showing notification');
         switch (eventName) {
           case SHOW_TOAST_NOTIFICATION_EVENT:
             const {

@@ -11,6 +11,13 @@ export const KEEN_CLIENT_CONTEXT = 'keenClient';
 
 import { Analysis } from './types';
 
+export const KEYBOARD_KEYS = {
+  UP: 38,
+  DOWN: 40,
+  ENTER: 13,
+  ESCAPE: 27,
+};
+
 export const CACHE_AVAILABLE: Analysis[] = [
   'sum',
   'average',

@@ -1,4 +1,5 @@
 import {
+  SERIALIZE_QUERY,
   SET_QUERY,
   SELECT_EVENT_COLLECTION,
   SELECT_ANALYSIS,
@@ -32,6 +33,13 @@ import { Analysis } from '../../../types';
 
 export const setQuery = (query: Partial<Query>): QueryActions => ({
   type: SET_QUERY,
+  payload: {
+    query,
+  },
+});
+
+export const serializeQuery = (query: Partial<Query>): QueryActions => ({
+  type: SERIALIZE_QUERY,
   payload: {
     query,
   },

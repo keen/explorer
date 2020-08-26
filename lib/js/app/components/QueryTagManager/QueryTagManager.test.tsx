@@ -1,6 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { render as rtlRender, fireEvent } from '@testing-library/react';
+import { render as rtlRender, fireEvent, act } from '@testing-library/react';
 import configureStore from 'redux-mock-store';
 
 import QueryTagManager from './QueryTagManager';
@@ -36,25 +36,37 @@ const render = (storeState: any = {}, overProps: any = {}) => {
   };
 };
 
+jest.useFakeTimers();
+
 test('allows user to add tag', () => {
   const {
-    wrapper: { getByTestId },
+    wrapper: { getByTestId, getByText },
     props,
   } = render();
 
   const input = getByTestId('query-labels-input');
   fireEvent.change(input, { target: { value: 'marketing' } });
-  fireEvent.keyPress(input, { keyCode: 13 });
+
+  act(() => {
+    jest.runAllTimers();
+  });
+
+  const element = getByText('marketing (New label)');
+  fireEvent.click(element);
 
   expect(props.onAddTag).toHaveBeenCalledWith('marketing');
 });
 
 test('do not allows user to add already existing tag', () => {
   const {
-    wrapper: { getByTestId },
+    wrapper: { getByTestId, getAllByText },
     props,
   } = render(
-    {},
+    {
+      project: {
+        tagsPool: ['marketing'],
+      },
+    },
     {
       tags: ['marketing'],
     }
@@ -62,7 +74,13 @@ test('do not allows user to add already existing tag', () => {
 
   const input = getByTestId('query-labels-input');
   fireEvent.change(input, { target: { value: 'marketing' } });
-  fireEvent.keyPress(input, { keyCode: 13 });
+
+  act(() => {
+    jest.runAllTimers();
+  });
+
+  const [listElement] = getAllByText('marketing');
+  fireEvent.click(listElement);
 
   expect(props.onAddTag).not.toHaveBeenCalled();
 });

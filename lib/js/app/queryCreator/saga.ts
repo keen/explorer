@@ -24,11 +24,12 @@ import {
   setTimeframe,
   setGroupBy,
   setFilters,
+  setQuery,
   SetQueryAction,
   SelectTimezoneAction,
   SelectEventCollectionAction,
   SelectFunnelStepEventCollectionAction,
-  SET_QUERY,
+  SERIALIZE_QUERY,
   SELECT_TIMEZONE,
   SELECT_EVENT_COLLECTION,
   SELECT_FUNNEL_STEP_EVENT_COLLECTION,
@@ -150,11 +151,14 @@ function* transformFilters(collection: string, filters: Filter[]) {
   yield put(setFilters(filtersWithInferredTypes));
 }
 
-function* setQuery(action: SetQueryAction) {
+function* serializeQuery(action: SetQueryAction) {
   const {
     payload: { query },
   } = action;
   const schemas = yield select(getSchemas);
+
+  const { filters, ...rest } = query;
+  yield put(setQuery(rest));
 
   if (query.eventCollection && !schemas[query.eventCollection]) {
     yield put(fetchCollectionSchema(query.eventCollection));
@@ -173,14 +177,14 @@ function* setQuery(action: SetQueryAction) {
     );
   }
 
-  if (query.filters) {
-    yield call(transformFilters, query.eventCollection, query.filters);
+  if (filters) {
+    yield call(transformFilters, query.eventCollection, filters);
   }
 }
 
 function* watcher() {
   yield takeLatest(APP_START, appStart);
-  yield takeLatest(SET_QUERY, setQuery);
+  yield takeLatest(SERIALIZE_QUERY, serializeQuery);
   yield takeLatest(FETCH_PROJECT_DETAILS, fetchProject);
   yield takeLatest(FETCH_COLLECTION_SCHEMA, fetchSchema);
   yield takeLatest(SELECT_TIMEZONE, selectTimezone);
