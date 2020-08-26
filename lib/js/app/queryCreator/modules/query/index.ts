@@ -1,4 +1,4 @@
-import { queryReducer } from './reducer';
+import { queryReducer, initialState } from './reducer';
 import {
   getQuery,
   getEventCollection,
@@ -66,6 +66,7 @@ import {
 } from './types';
 
 export {
+  initialState,
   queryReducer,
   getQuery,
   getPercentile,

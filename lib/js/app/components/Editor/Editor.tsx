@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Button } from '@keen.io/ui-core';
 
@@ -22,6 +22,7 @@ import {
   getQueryResults,
   getQueryPerformState,
   getQueryLimitReached,
+  setQuerySettings,
 } from '../../modules/queries';
 import { clearQuery } from '../../modules/app';
 
@@ -30,8 +31,6 @@ type Props = {
   query: Record<string, any>;
   /** Optional upgrade subscription url */
   upgradeSubscriptionUrl?: string;
-  /** Query update handler */
-  onUpdateQuery: (query: Record<string, any>) => void;
   /** Run query event handler */
   onRunQuery: () => void;
   /** Save query event handler */
@@ -43,13 +42,16 @@ const Editor: FC<Props> = ({
   upgradeSubscriptionUrl,
   onRunQuery,
   onSaveQuery,
-  onUpdateQuery,
 }) => {
   const dispatch = useDispatch();
 
   const queryResults = useSelector(getQueryResults);
   const isQueryLoading = useSelector(getQueryPerformState);
   const isQueryLimitReached = useSelector(getQueryLimitReached);
+
+  const udateQuery = useCallback((query: Record<string, any>) => {
+    dispatch(setQuerySettings(query));
+  }, []);
 
   return (
     <div id="editor">
@@ -68,7 +70,7 @@ const Editor: FC<Props> = ({
         </Card>
       </section>
       <CreatorContainer>
-        <Creator onUpdateQuery={onUpdateQuery} />
+        <Creator onUpdateQuery={udateQuery} />
       </CreatorContainer>
       <section>
         <EditorActions>

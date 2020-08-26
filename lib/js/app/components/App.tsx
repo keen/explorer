@@ -159,10 +159,6 @@ class App extends Component {
                   name,
                 });
               }}
-              onUpdateQuery={(query) => {
-                console.log(query, '--- query update');
-                this.props.setQuerySettings(query);
-              }}
             />
           </div>
         )}

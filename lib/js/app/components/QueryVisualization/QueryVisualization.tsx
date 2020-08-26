@@ -21,10 +21,6 @@ import {
   exportToJson,
 } from './utils';
 
-/**
-    {showDataviz && <EmbedWidget query={query} widget={widgetType} />}
-**/
-
 import { DEFAULT_FILENAME } from './constants';
 
 type Props = {
