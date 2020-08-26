@@ -49,7 +49,7 @@ const Editor: FC<Props> = ({
   const isQueryLoading = useSelector(getQueryPerformState);
   const isQueryLimitReached = useSelector(getQueryLimitReached);
 
-  const udateQuery = useCallback((query: Record<string, any>) => {
+  const updateQuery = useCallback((query: Record<string, any>) => {
     dispatch(setQuerySettings(query));
   }, []);
 
@@ -70,7 +70,7 @@ const Editor: FC<Props> = ({
         </Card>
       </section>
       <CreatorContainer>
-        <Creator onUpdateQuery={udateQuery} />
+        <Creator onUpdateQuery={updateQuery} />
       </CreatorContainer>
       <section>
         <EditorActions>
