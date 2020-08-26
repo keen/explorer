@@ -23,6 +23,7 @@ import {
   getTimeframe,
   setTimeframe,
   setGroupBy,
+  setOrderBy,
   setFilters,
   SetQueryAction,
   SelectTimezoneAction,
@@ -47,7 +48,7 @@ import {
 
 import { inferFilterType, createAbstractOperator } from './utils';
 
-import { Filter } from './types';
+import { Filter, OrderBy } from './types';
 
 function* appStart() {
   yield put(fetchProjectDetails());
@@ -100,6 +101,7 @@ function* selectCollection(action: SelectEventCollectionAction) {
   }
 
   yield put(setGroupBy(undefined));
+  yield put(setOrderBy(undefined));
 }
 
 function* selectFunnelStepCollection(
@@ -150,6 +152,30 @@ function* transformFilters(collection: string, filters: Filter[]) {
   yield put(setFilters(filtersWithInferredTypes));
 }
 
+const transformOrderBy = (orderBy: string | OrderBy | OrderBy[]) => {
+  if (typeof orderBy === 'string') return orderBy;
+  if (Array.isArray(orderBy)) {
+    return orderBy.map((item) => ({
+      id: uuid(),
+      ...item,
+    }));
+  }
+
+  return {
+    id: uuid(),
+    ...(orderBy as OrderBy),
+  };
+};
+
+// function* transformOrderBy(orderBy: OrderBy[]) {
+//   const transformedOrderBy = orderBy.map((item) => ({
+//     id: uuid(),
+//     ...item
+//   }));
+
+//   yield put(setOrderBy(transformedOrderBy));
+// }
+
 function* setQuery(action: SetQueryAction) {
   const {
     payload: { query },
@@ -175,6 +201,12 @@ function* setQuery(action: SetQueryAction) {
 
   if (query.filters) {
     yield call(transformFilters, query.eventCollection, query.filters);
+  }
+  console.log('***********');
+  if (query.orderBy) {
+    const transformedOrderBy = yield transformOrderBy(query.orderBy);
+    console.log({ transformedOrderBy });
+    yield put(setOrderBy(transformedOrderBy));
   }
 }
 

@@ -15,7 +15,7 @@ const render = (storeState: any = {}) => {
 
   const wrapper = rtlRender(
     <Provider store={store}>
-      <OrderBy />
+      <OrderBy collection="collection" />
     </Provider>
   );
 

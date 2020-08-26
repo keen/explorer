@@ -105,7 +105,7 @@ const App: FC<Props> = () => {
           )}
           {showField('orderBy', analysis) && (
             <ModifiersItem {...modifiersItemSettings}>
-              <OrderBy />
+              <OrderBy collection={collection} />
             </ModifiersItem>
           )}
           {showField('limit', analysis) && (
