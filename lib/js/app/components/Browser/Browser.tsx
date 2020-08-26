@@ -1,18 +1,21 @@
 import React, { FC, useMemo } from 'react';
-import { Button } from '@keen.io/ui-core';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { Container, Socket } from './Browser.styles';
+import { Container, Card, Socket } from './Browser.styles';
 
 import BrowserNavigation from '../BrowserNavigation';
+import BrowserQueryMenu from '../BrowserQueryMenu';
 import QueriesList from '../QueriesList';
 
 import QueryVisualization from '../QueryVisualization';
 import QuerySummary from '../QuerySummary';
-import RunQuery from '../RunQuery';
 import VisualizationPlaceholder from '../VisualizationPlaceholder';
 
-import { getSavedQueries, getQueryPerformState } from '../../modules/queries';
+import {
+  getSavedQueries,
+  getQueryPerformState,
+  deleteQuery,
+} from '../../modules/queries';
 import { getSavedQuery } from '../../modules/savedQuery';
 
 type Props = {
@@ -26,16 +29,6 @@ type Props = {
   queryResults?: Record<string, any>;
 };
 
-/**
-<QueryBrowser
-  activeQuery={currentQuery && currentQuery.name}
-  onSelectQuery={onSelectQuery}
-  onDeleteQuery={(queryName) => dispatch(deleteQuery(queryName))}
-  queries={savedQueries}
-/>
-
-*/
-
 const Browser: FC<Props> = ({
   query,
   queryResults,
@@ -43,6 +36,8 @@ const Browser: FC<Props> = ({
   onRunQuery,
   onSelectQuery,
 }) => {
+  const dispatch = useDispatch();
+
   const isQueryLoading = useSelector(getQueryPerformState);
   const savedQuery = useSelector(getSavedQuery);
   const savedQueries = useSelector(getSavedQueries);
@@ -64,18 +59,32 @@ const Browser: FC<Props> = ({
           />
         </Socket>
         <Socket>
-          <Button onClick={() => onEditQuery(savedQuery.name)}>Edit</Button>
-          <RunQuery isLoading={isQueryLoading} onClick={onRunQuery}>
-            Run Query
-          </RunQuery>
-          {queryResults && (
-            <QueryVisualization query={query} queryResults={queryResults} />
-          )}
-          {!queryResults && currentQuery && (
-            <VisualizationPlaceholder isLoading={isQueryLoading} />
-          )}
-          {savedQuery.displayName}
-          {currentQuery && <QuerySummary querySettings={currentQuery} />}
+          <div>Preview</div>
+          <Card>
+            {queryResults && (
+              <QueryVisualization query={query} queryResults={queryResults} />
+            )}
+            {!queryResults && currentQuery && (
+              <VisualizationPlaceholder
+                isLoading={isQueryLoading}
+                onRunQuery={onRunQuery}
+              />
+            )}
+            {currentQuery && (
+              <>
+                <div>
+                  <BrowserQueryMenu
+                    onRemoveQuery={() =>
+                      dispatch(deleteQuery(currentQuery.name))
+                    }
+                    onEditQuery={() => onEditQuery(currentQuery.name)}
+                  />
+                  <h4>{currentQuery.displayName}</h4>
+                </div>
+                <QuerySummary querySettings={currentQuery} />
+              </>
+            )}
+          </Card>
         </Socket>
       </Container>
     </div>

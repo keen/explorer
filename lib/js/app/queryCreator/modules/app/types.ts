@@ -1,5 +1,6 @@
 import {
   APP_START,
+  STORE_SCHEMAS,
   FETCH_PROJECT_DETAILS,
   FETCH_PROJECT_DETAILS_SUCCESS,
   FETCH_PROJECT_DETAILS_ERROR,
@@ -7,6 +8,10 @@ import {
 
 export interface AppStartAction {
   type: typeof APP_START;
+}
+
+export interface StoreSchemasAction {
+  type: typeof STORE_SCHEMAS;
 }
 
 export interface FetchProjectDetailsAction {
@@ -26,6 +31,7 @@ export interface FetchProjectDetailsErrorAction {
 
 export type AppActions =
   | AppStartAction
+  | StoreSchemasAction
   | FetchProjectDetailsAction
   | FetchProjectDetailsSuccessAction
   | FetchProjectDetailsErrorAction;

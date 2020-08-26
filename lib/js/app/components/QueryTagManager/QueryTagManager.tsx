@@ -19,6 +19,8 @@ import text from './text.json';
 
 import { getTagsPool } from '../../modules/project';
 
+import { KEYBOARD_KEYS } from '../../constants';
+
 type Props = {
   /** Collection of query tags */
   tags: string[];
@@ -32,14 +34,34 @@ const QueryTagManager: FC<Props> = ({ tags, onAddTag, onRemoveTag }) => {
   const tagsPool = useSelector(getTagsPool);
   const containerRef = useRef(null);
   const inputRef = useRef(null);
+  const [selectionIndex, setIndex] = useState<number>(null);
 
   const [dropdownVisible, setDropdownVisibility] = useState(false);
   const [tagsHints, setTagsHint] = useState(null);
 
-  const { searchHandler, searchPhrase } = useSearch(
+  const indexRef = useRef(selectionIndex);
+  const tagsRef = useRef(tagsHints);
+
+  indexRef.current = selectionIndex;
+  tagsRef.current = tagsHints;
+
+  const { searchHandler } = useSearch(
     tagsPool,
     (searchResults, phrase) => {
-      setTagsHint(searchResults.length ? searchResults : null);
+      setTagsHint(
+        searchResults.length
+          ? searchResults.map((tag: string) => ({
+              label: tag,
+              value: tag,
+            }))
+          : [
+              {
+                label: `${phrase} ${text.newTag}`,
+                value: phrase,
+              },
+            ]
+      );
+      setIndex(0);
       setDropdownVisibility(!!phrase);
     },
     {
@@ -56,10 +78,45 @@ const QueryTagManager: FC<Props> = ({ tags, onAddTag, onRemoveTag }) => {
     [containerRef]
   );
 
+  const keyboardHandler = useCallback(
+    (e: KeyboardEvent) => {
+      switch (e.keyCode) {
+        case KEYBOARD_KEYS.ENTER:
+          const { value } = tagsHints[indexRef.current];
+          if (!tags.includes(value)) {
+            onAddTag(value);
+          }
+
+          inputRef.current.value = '';
+          setDropdownVisibility(false);
+          break;
+        case KEYBOARD_KEYS.UP:
+          if (indexRef.current > 0) {
+            setIndex(indexRef.current - 1);
+          }
+          break;
+        case KEYBOARD_KEYS.DOWN:
+          if (indexRef.current < tagsHints.length - 1) {
+            setIndex(indexRef.current + 1);
+          }
+          break;
+      }
+    },
+    [tagsHints, tags]
+  );
+
   useEffect(() => {
     document.addEventListener('click', outsideClick);
     return () => document.removeEventListener('click', outsideClick);
   }, [containerRef]);
+
+  useEffect(() => {
+    document.addEventListener('keydown', keyboardHandler);
+
+    return () => {
+      document.removeEventListener('keydown', keyboardHandler);
+    };
+  }, [dropdownVisible, tags, tagsHints]);
 
   return (
     <div>
@@ -74,37 +131,16 @@ const QueryTagManager: FC<Props> = ({ tags, onAddTag, onRemoveTag }) => {
             type="text"
             variant="solid"
             id="queryLabels"
+            autoComplete="off"
             placeholder={text.inputPlaceholder}
             onChange={searchHandler}
-            onKeyPress={(e: React.KeyboardEvent<HTMLInputElement>) => {
-              if (e.charCode === 13) {
-                e.preventDefault();
-                const value = e.currentTarget.value;
-                if (value && !tags.includes(value)) {
-                  setDropdownVisibility(false);
-                  onAddTag(value);
-                }
-                e.currentTarget.value = '';
-              }
-            }}
           />
           <Dropdown isOpen={dropdownVisible}>
             <DropdownListContainer>
               <DropdownList
-                items={
-                  tagsHints && tagsHints.length
-                    ? tagsHints.map((tag: string) => ({
-                        label: tag,
-                        value: tag,
-                      }))
-                    : [
-                        {
-                          label: `${searchPhrase} ${text.newTag}`,
-                          value: searchPhrase,
-                        },
-                      ]
-                }
-                onClick={(e, { value }) => {
+                setActiveItem={(_item, idx) => selectionIndex === idx}
+                items={tagsHints}
+                onClick={(_e, { value }) => {
                   if (!tags.includes(value)) {
                     onAddTag(value);
                   }

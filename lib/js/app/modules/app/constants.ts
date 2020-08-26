@@ -13,6 +13,7 @@ export const UPDATE_QUERY_CREATOR = '@app/UPDATE_QUERY_CREATOR';
 export const QUERY_EDITOR_MOUNTED = '@app/QUERY_EDITOR_MOUNTED';
 export const SHOW_QUERY_SETTINGS_MODAL = '@app/SHOW_QUERY_SETTINGS_MODAL';
 export const HIDE_QUERY_SETTINGS_MODAL = '@app/HIDE_QUERY_SETTINGS_MODAL';
+export const SELECT_FIRST_QUERY = '@app/SELECT_FIRST_QUERY';
 export const APP_START = '@app/APP_START';
 
 export const URL_STATE = 'keen_explorer_state';

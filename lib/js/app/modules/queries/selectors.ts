@@ -9,7 +9,7 @@ export const getQueriesSaving = ({ queries }: AppState) =>
   queries.isSavingQuery;
 
 export const getQueryPerformState = ({ queries }: AppState) =>
-  queries.isLoading;
+  queries.isQueryPerforming;
 
 export const getCacheQueriesLimitExceed = ({ queries }: AppState) =>
   queries.cachedQueries.limitReached;
@@ -23,3 +23,5 @@ export const getQueryLimitReached = ({ queries }: AppState) =>
   queries.queriesExecution.limitReached;
 
 export const getQueryExecutionError = ({ queries }: AppState) => queries.error;
+
+export const getQuerySettings = ({ queries }: AppState) => queries.settings;

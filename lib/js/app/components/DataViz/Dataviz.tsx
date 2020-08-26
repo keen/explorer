@@ -2,6 +2,7 @@ import React, { useRef, useEffect, forwardRef } from 'react';
 import { KeenDataviz } from '@keen.io/dataviz';
 
 import { VisulizationContainer } from './DataViz.styles';
+import text from './text.json';
 
 import { CONTAINER_ID } from './constants';
 
@@ -21,7 +22,25 @@ const Dataviz = forwardRef<HTMLDivElement, Props>(
       datavizRef.current = new KeenDataviz({
         container: `#${CONTAINER_ID}`,
         type: visualization as any,
-      }).render(analysisResults);
+        widget: {
+          card: {
+            backgroundColor: 'transparent',
+            borderRadius: '0px',
+            border: 'none',
+            hasShadow: false,
+          },
+        },
+      });
+
+      if (
+        analysisResults.result &&
+        Array.isArray(analysisResults.result) &&
+        analysisResults.result.length === 0
+      ) {
+        datavizRef.current.error(text.noResults);
+      } else {
+        datavizRef.current.render(analysisResults);
+      }
     }, [visualization, analysisResults, containerRef]);
 
     return (

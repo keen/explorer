@@ -23,10 +23,11 @@ const QueriesList: FC<Props> = ({ savedQueries, onSelectQuery }) => {
         <Header>{text.updated}</Header>
       </tr>
       <tbody>
-        {savedQueries.map(({ name, displayName, query }) => (
+        {savedQueries.map(({ name, displayName, tags, query }) => (
           <QueriesListItem
             key={name}
             queryName={displayName}
+            tags={tags}
             onClick={() => onSelectQuery(name, query)}
           />
         ))}

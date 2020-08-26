@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { createStore, applyMiddleware } from 'redux';
@@ -15,19 +14,19 @@ import '../../../test/demo/keen-explorer.css';
 import rootReducer from './rootReducer';
 import rootSaga from './rootSaga';
 
-import { version } from '../../../package.json';
-
 import App from './components/App';
 import { AppContext } from './contexts';
 
 import { NotificationManager } from './modules/notifications';
 import { appStart } from './modules/app';
 
+import { Options } from './types';
+
 import { SHOW_TOAST_NOTIFICATION_EVENT } from './constants';
 
 export class KeenExplorer {
-  constructor(props) {
-    const { keenAnalysis } = props;
+  constructor(props: Options) {
+    const { keenAnalysis, upgradeSubscriptionUrl, modalContainer } = props;
     const keenAnalysisClient =
       keenAnalysis.instance || new KeenAnalysis(keenAnalysis.config);
 
@@ -49,20 +48,22 @@ export class KeenExplorer {
     );
 
     sagaMiddleware.run(rootSaga);
-    store.dispatch(appStart());
+
+    const initialView = props.initialView || 'browser';
+    store.dispatch(appStart(initialView));
 
     ReactDOM.render(
       <Provider store={store}>
         <AppContext.Provider
           value={{
             keenAnalysis: keenAnalysisClient,
-            modalContainer: props.modalContainer,
-            upgradeSubscriptionUrl: props.upgradeSubscriptionUrl,
+            modalContainer,
+            upgradeSubscriptionUrl,
             notificationPubSub,
           }}
         >
           <ToastProvider>
-            <App {...props} />
+            <App />
           </ToastProvider>
         </AppContext.Provider>
       </Provider>,
@@ -70,7 +71,5 @@ export class KeenExplorer {
     );
   }
 }
-
-KeenExplorer.version = version;
 
 export default KeenExplorer;
