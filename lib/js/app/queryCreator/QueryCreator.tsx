@@ -10,14 +10,21 @@ import App from './App';
 import rootSaga from './saga';
 import rootReducer from './reducer';
 import theme from './theme';
+import { rehydrateState } from './rehydrateState';
 import { AppContext } from './contexts';
 
 import { appStart } from './modules/app';
-import { getQuery, setQuery, resetQuery } from './modules/query';
+import { getQuery, serializeQuery, resetQuery } from './modules/query';
 import { transformToQuery } from './utils/transformToQuery';
-import { serializeQuery } from './utils/serializeQuery';
+import { transformQueryToCamelCase } from './utils/transformQueryToCamelCase';
 
-import { SET_QUERY_EVENT, NEW_QUERY_EVENT } from './constants';
+import { UPDATE_TIMEOUT, SET_QUERY_EVENT, NEW_QUERY_EVENT } from './constants';
+
+declare global {
+  interface Window {
+    __QUERY_CREATOR_SCHEMAS__: Record<string, any>;
+  }
+}
 
 type Props = {
   /** Keen project identifer */
@@ -34,11 +41,14 @@ type Props = {
   onUpdateQuery?: (query: Record<string, any>) => void;
 };
 
-class QueryCreator extends React.Component<Props> {
+class QueryCreator extends React.PureComponent<Props> {
   /** Query Creator store */
   store: Store;
 
   pubsub: PubSub;
+
+  /** Event loop update query tick */
+  updateQueryTrigger: NodeJS.Timeout;
 
   setQuerySubscription: () => void;
 
@@ -59,7 +69,13 @@ class QueryCreator extends React.Component<Props> {
         keenClient,
       },
     });
-    this.store = createStore(rootReducer, applyMiddleware(sagaMiddleware));
+
+    const preloadedState = rehydrateState();
+    this.store = createStore(
+      rootReducer,
+      preloadedState,
+      applyMiddleware(sagaMiddleware)
+    );
 
     sagaMiddleware.run(rootSaga);
     this.store.dispatch(appStart());
@@ -80,7 +96,12 @@ class QueryCreator extends React.Component<Props> {
     this.storeSubscription = this.store.subscribe(() => {
       const state = this.store.getState();
       const query = getQuery(state);
-      if (onUpdateQuery) onUpdateQuery(transformToQuery(query));
+      if (onUpdateQuery) {
+        if (this.updateQueryTrigger) clearTimeout(this.updateQueryTrigger);
+        this.updateQueryTrigger = setTimeout(() => {
+          onUpdateQuery(transformToQuery(query));
+        }, UPDATE_TIMEOUT);
+      }
     });
   };
 
@@ -93,8 +114,8 @@ class QueryCreator extends React.Component<Props> {
             break;
           case SET_QUERY_EVENT:
             const { query } = meta;
-            const serializedQuery = serializeQuery(query);
-            this.store.dispatch(setQuery(serializedQuery));
+            const transformedQuery = transformQueryToCamelCase(query);
+            this.store.dispatch(serializeQuery(transformedQuery));
             break;
           default:
             break;

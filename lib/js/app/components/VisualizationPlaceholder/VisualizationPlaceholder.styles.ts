@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { transparentize } from 'polished';
 import { colors } from '@keen.io/colors';
 
 export const Container = styled.div`
@@ -12,9 +11,6 @@ export const Container = styled.div`
 
   width: 100%;
   height: 160px;
-  background: ${colors.white[500]};
-
-  box-shadow: 0 2px 4px 0 ${transparentize(0.85, colors.black[500])};
 `;
 
 type TextProps = {
@@ -27,6 +23,10 @@ export const Text = styled.div<TextProps>`
   line-height: 24px;
 
   color: ${(props) => (props.color ? props.color : colors.green[400])};
+`;
+
+export const ButtonWrapper = styled.div`
+  margin-top: 20px;
 `;
 
 export const LoaderWrapper = styled.div`

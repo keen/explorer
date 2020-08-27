@@ -6,7 +6,7 @@ import React, {
   useEffect,
   useCallback,
 } from 'react';
-import { ActionButton } from '@keen.io/ui-core';
+import { ActionButton, Dropdown } from '@keen.io/ui-core';
 import { transparentize } from 'polished';
 import { colors } from '@keen.io/colors';
 
@@ -17,7 +17,6 @@ import {
 } from './OrderByProperty.styles';
 
 import PropertyGroup, { PropertyItem } from '../../../PropertyGroup';
-import Dropdown from '../../../Dropdown';
 import Property from '../../../Property';
 import EmptySearch from '../../../EmptySearch';
 import PropertiesTree from '../../../PropertiesTree';

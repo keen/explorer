@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/camelcase */
 
-import { takeLatest, getContext, take, put } from 'redux-saga/effects';
+import { takeLatest, getContext, select, take, put } from 'redux-saga/effects';
 import HttpStatus from 'http-status-codes';
 
 import {
@@ -16,17 +16,23 @@ import {
   setCacheQueryLimitExceed,
   setQueryCacheLimitError,
   setQueryLimitReached,
+  resetQueryResults,
 } from './actions';
 
 import {
   showConfirmation,
   hideQuerySettingsModal,
+  getViewMode,
+  setViewMode,
+  selectFirstSavedQuery,
   HIDE_CONFIRMATION,
   ACCEPT_CONFIRMATION,
 } from '../../modules/app';
-import { resetSavedQuery } from '../../modules/savedQuery';
+
+import { serializeSavedQuery } from './utils';
 import text from './text.json';
 
+import { SavedQueryAPIResponse } from '../../types';
 import { RunQueryAction, DeleteQueryAction, SaveQueryAction } from './types';
 
 import {
@@ -145,8 +151,21 @@ function* deleteQuery(action: DeleteQueryAction) {
         .auth(client.masterKey())
         .send();
 
-      yield put(resetSavedQuery());
+      const view = yield select(getViewMode);
+      if (view === 'editor') yield put(setViewMode('browser'));
+
+      yield put(resetQueryResults());
       yield put(deleteQuerySuccess(queryName));
+      yield put(selectFirstSavedQuery());
+
+      const notificationManager = yield getContext(
+        NOTIFICATION_MANAGER_CONTEXT
+      );
+      yield notificationManager.showNotification({
+        type: 'info',
+        message: text.removeQuerySuccess,
+        autoDismiss: true,
+      });
     }
   } catch (error) {
     yield put(deleteQueryError(error));
@@ -155,13 +174,15 @@ function* deleteQuery(action: DeleteQueryAction) {
 
 function* fetchSavedQueries() {
   try {
-    const client = yield getContext('keenClient');
-    const responseBody = yield client
+    const client = yield getContext(KEEN_CLIENT_CONTEXT);
+    const responseBody: SavedQueryAPIResponse[] = yield client
       .get(client.url('queries', 'saved'))
       .auth(client.masterKey())
       .send();
 
-    yield put(getSavedQueriesSuccess(responseBody));
+    const savedQueries = responseBody.map(serializeSavedQuery);
+
+    yield put(getSavedQueriesSuccess(savedQueries));
   } catch (error) {
     yield put(getSavedQueriesError(error));
   }

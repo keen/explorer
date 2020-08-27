@@ -12,9 +12,11 @@ import {
   showQuerySettingsModal,
   hideQuerySettingsModal,
   createNewQuery,
+  switchToQueriesList,
   clearQuery,
   editQuery,
   copyShareUrl,
+  selectFirstSavedQuery,
   appStart,
 } from './actions';
 import {
@@ -38,6 +40,7 @@ export {
   copyShareUrl,
   clearQuery,
   createNewQuery,
+  switchToQueriesList,
   updateQueryCreator,
   queryEditorMounted,
   editQuery,
@@ -51,6 +54,7 @@ export {
   getVisualizationType,
   showQuerySettingsModal,
   hideQuerySettingsModal,
+  selectFirstSavedQuery,
   ReducerState,
   SettingsModalSource,
 };

@@ -1,4 +1,5 @@
 import {
+  SERIALIZE_QUERY,
   SET_QUERY,
   SELECT_EVENT_COLLECTION,
   SELECT_ANALYSIS,
@@ -51,6 +52,13 @@ export type ReducerState = {
 
 export interface SetQueryAction {
   type: typeof SET_QUERY;
+  payload: {
+    query: Partial<ReducerState>;
+  };
+}
+
+export interface SerializeQueryAction {
+  type: typeof SERIALIZE_QUERY;
   payload: {
     query: Partial<ReducerState>;
   };
@@ -217,6 +225,7 @@ export interface ChangeFunnelStepsOrderAction {
 }
 
 export type QueryActions =
+  | SerializeQueryAction
   | SetQueryAction
   | ResetQueryAction
   | SelectEventCollectionAction

@@ -6,6 +6,7 @@ import React, {
   useCallback,
   useEffect,
 } from 'react';
+import { Dropdown } from '@keen.io/ui-core';
 
 import {
   Container,
@@ -20,7 +21,6 @@ import FiltersContext from '../../FiltersContext';
 
 import DropdownList from '../../../DropdownList';
 import DropdownListContainer from '../../../DropdownListContainer';
-import Dropdown from '../../../Dropdown';
 
 import { createOptions } from './utils';
 import text from './text.json';

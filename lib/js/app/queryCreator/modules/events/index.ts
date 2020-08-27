@@ -1,4 +1,4 @@
-import { eventsReducer } from './reducer';
+import { eventsReducer, initialState } from './reducer';
 import {
   setCollectionSchemaLoading,
   setEventsCollections,
@@ -12,10 +12,14 @@ import {
   getSchemaLoading,
   getSchemas,
 } from './selectors';
-import { FETCH_COLLECTION_SCHEMA } from './constants';
+import {
+  FETCH_COLLECTION_SCHEMA,
+  FETCH_COLLECTION_SCHEMA_SUCCESS,
+} from './constants';
 import { ReducerState, FetchCollectionSchemaAction } from './types';
 
 export {
+  initialState,
   eventsReducer,
   fetchCollectionSchema,
   fetchCollectionSchemaSuccess,
@@ -29,4 +33,4 @@ export {
   ReducerState,
   FetchCollectionSchemaAction,
 };
-export { FETCH_COLLECTION_SCHEMA };
+export { FETCH_COLLECTION_SCHEMA, FETCH_COLLECTION_SCHEMA_SUCCESS };

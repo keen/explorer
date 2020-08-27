@@ -13,8 +13,12 @@ const render = (storeState: any = {}, overProps: any = {}) => {
         visible: true,
       },
     },
+    project: {
+      tagsPool: [],
+    },
     queries: {
       isSaving: false,
+      savedQueries: [],
       cachedQueries: {
         limit: 5,
         limitReached: false,
@@ -26,6 +30,7 @@ const render = (storeState: any = {}, overProps: any = {}) => {
       cached: false,
       refreshRate: 0,
       exists: false,
+      tags: [],
     },
     ...storeState,
   };
@@ -82,6 +87,7 @@ test('allows user to close modal', () => {
     cached: false,
     refreshRate: 0,
     exists: true,
+    tags: [],
   };
   const {
     wrapper: { getByTestId },

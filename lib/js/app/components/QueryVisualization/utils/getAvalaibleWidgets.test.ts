@@ -67,8 +67,6 @@ test('return widgets for groupBy', () => {
   expect(result).toMatchInlineSnapshot(`
     Array [
       "bar",
-      "line",
-      "area",
       "pie",
       "donut",
       "heatmap",

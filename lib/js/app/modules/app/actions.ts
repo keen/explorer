@@ -1,5 +1,6 @@
 import {
   APP_START,
+  SWITCH_TO_QUERIES_LIST,
   LOAD_STATE_FROM_URL,
   SHOW_CONFIRMATION,
   HIDE_CONFIRMATION,
@@ -14,6 +15,7 @@ import {
   COPY_SHARE_URL,
   SHOW_QUERY_SETTINGS_MODAL,
   HIDE_QUERY_SETTINGS_MODAL,
+  SELECT_FIRST_QUERY,
 } from './constants';
 
 import {
@@ -23,8 +25,17 @@ import {
   ViewMode,
 } from './types';
 
-export const appStart = (): AppActions => ({
+export const appStart = (initialView: ViewMode): AppActions => ({
   type: APP_START,
+  payload: { initialView },
+});
+
+export const selectFirstSavedQuery = (): AppActions => ({
+  type: SELECT_FIRST_QUERY,
+});
+
+export const switchToQueriesList = (): AppActions => ({
+  type: SWITCH_TO_QUERIES_LIST,
 });
 
 export const showQuerySettingsModal = (

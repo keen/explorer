@@ -1,10 +1,10 @@
 import React, { FC, useState } from 'react';
+import { Dropdown } from '@keen.io/ui-core';
 
 import { Container } from './FilterBoolean.styles';
 
 import DropableContainer from '../../../DropableContainer';
 import DropdownList from '../../../DropdownList';
-import Dropdown from '../../../Dropdown';
 
 import { TRUE_LABEL, FALSE_LABEL, OPTIONS } from './constants';
 

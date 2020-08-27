@@ -1,9 +1,9 @@
 import React, { FC, useMemo, useState } from 'react';
+import { Dropdown } from '@keen.io/ui-core';
 
 import { Container, SelectContainer } from './Timezone.styles';
 
 import Title from '../Title';
-import Dropdown from '../Dropdown';
 import DropdownList from '../DropdownList';
 import DropdownListContainer from '../DropdownListContainer';
 import DropableContainer from '../DropableContainer';

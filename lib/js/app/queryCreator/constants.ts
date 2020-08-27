@@ -1,3 +1,5 @@
+import { Analysis } from '../types';
+
 export const SELECT_EVENT_COLLECTION = '@query-creator/SELECT_EVENT_COLLECTION';
 export const SELECT_ANALYSIS = '@query-creator/SELECT_ANALYSIS';
 
@@ -6,9 +8,7 @@ export const NEW_QUERY_EVENT = '@query-creator/new-query';
 
 export const DEFAULT_ANALYSIS = 'count';
 
-import { Analysis } from '../types';
-
-export const ACTION_BUTTON_SPACING = 5;
+export const UPDATE_TIMEOUT = 0;
 
 export const KEYBOARD_KEYS = {
   UP: 38,

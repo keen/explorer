@@ -1,16 +1,15 @@
 import React, { FC, useMemo } from 'react';
-import { Button } from '@keen.io/ui-core';
-import { useSelector, useDispatch } from 'react-redux';
-import camelCase from 'camelcase-keys';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { Container, Socket } from './Browser.styles';
+import { Container, Card, Socket } from './Browser.styles';
+
+import BrowserNavigation from '../BrowserNavigation';
+import BrowserQueryMenu from '../BrowserQueryMenu';
+import QueriesList from '../QueriesList';
 
 import QueryVisualization from '../QueryVisualization';
 import QuerySummary from '../QuerySummary';
-import RunQuery from '../RunQuery';
 import VisualizationPlaceholder from '../VisualizationPlaceholder';
-
-import QueryBrowser from '../../queryBrowser';
 
 import {
   getSavedQueries,
@@ -19,12 +18,13 @@ import {
 } from '../../modules/queries';
 import { getSavedQuery } from '../../modules/savedQuery';
 
-import { AppState } from '../../modules/types';
-
 type Props = {
   query: Record<string, any>;
+  /** Edit query event handler */
   onEditQuery: (queryName: string) => void;
+  /** Select query event handler */
   onSelectQuery: (queryName: string, settings: Record<string, any>) => void;
+  /** Run selected query event handler */
   onRunQuery: () => void;
   queryResults?: Record<string, any>;
 };
@@ -37,43 +37,57 @@ const Browser: FC<Props> = ({
   onSelectQuery,
 }) => {
   const dispatch = useDispatch();
+
   const isQueryLoading = useSelector(getQueryPerformState);
   const savedQuery = useSelector(getSavedQuery);
-  const savedQueries = useSelector((state: AppState) =>
-    camelCase(getSavedQueries(state), { deep: true })
-  );
+  const savedQueries = useSelector(getSavedQueries);
 
   const currentQuery = useMemo(() => {
-    return savedQueries.find(({ queryName }) => {
-      return queryName === savedQuery.name;
+    return savedQueries.find(({ name }) => {
+      return name === savedQuery.name;
     });
   }, [savedQuery]);
 
   return (
-    <Container>
-      <Socket>
-        <QueryBrowser
-          activeQuery={currentQuery && currentQuery.queryName}
-          onSelectQuery={onSelectQuery}
-          onDeleteQuery={(queryName) => dispatch(deleteQuery(queryName))}
-          queries={savedQueries}
-        />
-      </Socket>
-      <Socket>
-        <Button onClick={() => onEditQuery(savedQuery.name)}>Edit</Button>
-        <RunQuery isLoading={isQueryLoading} onClick={onRunQuery}>
-          Run Query
-        </RunQuery>
-        {queryResults && (
-          <QueryVisualization query={query} queryResults={queryResults} />
-        )}
-        {!queryResults && currentQuery && (
-          <VisualizationPlaceholder isLoading={isQueryLoading} />
-        )}
-        {savedQuery.displayName}
-        {currentQuery && <QuerySummary querySettings={currentQuery} />}
-      </Socket>
-    </Container>
+    <div>
+      <BrowserNavigation />
+      <Container>
+        <Socket>
+          <QueriesList
+            savedQueries={savedQueries}
+            onSelectQuery={onSelectQuery}
+          />
+        </Socket>
+        <Socket>
+          <div>Preview</div>
+          <Card>
+            {queryResults && (
+              <QueryVisualization query={query} queryResults={queryResults} />
+            )}
+            {!queryResults && currentQuery && (
+              <VisualizationPlaceholder
+                isLoading={isQueryLoading}
+                onRunQuery={onRunQuery}
+              />
+            )}
+            {currentQuery && (
+              <>
+                <div>
+                  <BrowserQueryMenu
+                    onRemoveQuery={() =>
+                      dispatch(deleteQuery(currentQuery.name))
+                    }
+                    onEditQuery={() => onEditQuery(currentQuery.name)}
+                  />
+                  <h4>{currentQuery.displayName}</h4>
+                </div>
+                <QuerySummary querySettings={currentQuery} />
+              </>
+            )}
+          </Card>
+        </Socket>
+      </Container>
+    </div>
   );
 };
 

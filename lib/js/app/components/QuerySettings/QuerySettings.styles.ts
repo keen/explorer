@@ -1,9 +1,12 @@
 import styled from 'styled-components';
-import { colors } from '@keen.io/colors';
 
 export const Settings = styled.div`
   padding: 25px 55px 25px 25px;
   width: 320px;
+`;
+
+export const TagManager = styled.div`
+  margin-top: 10px;
 `;
 
 export const FooterContent = styled.div`
@@ -24,8 +27,4 @@ export const Cancel = styled.div`
 
 export const NewQueryNotice = styled.div`
   margin-bottom: 20px;
-  color: ${colors.black[100]};
-  font-size: 14px;
-  line-height: 17px;
-  font-family: 'Lato Regular', sans-serif;
 `;

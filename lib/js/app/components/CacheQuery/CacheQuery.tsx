@@ -61,6 +61,7 @@ const CacheQuery: FC<Props> = ({
       <CacheSwitch htmlFor={CHECKBOX_ID} disabled={isLimited && !isCached}>
         <Checkbox
           id={CHECKBOX_ID}
+          type="secondary"
           checked={isCached}
           onChange={() => cacheChangeHandler()}
         />

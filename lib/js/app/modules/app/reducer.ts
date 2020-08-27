@@ -1,6 +1,7 @@
 import { ReducerState, AppActions } from './types';
 
 import {
+  APP_START,
   SHOW_CONFIRMATION,
   HIDE_CONFIRMATION,
   ACCEPT_CONFIRMATION,
@@ -31,6 +32,11 @@ export const appReducer = (
   action: AppActions
 ) => {
   switch (action.type) {
+    case APP_START:
+      return {
+        ...state,
+        view: action.payload.initialView,
+      };
     case HIDE_QUERY_SETTINGS_MODAL:
       return {
         ...state,

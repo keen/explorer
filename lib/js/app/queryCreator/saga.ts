@@ -26,12 +26,13 @@ import {
   setGroupBy,
   setOrderBy,
   setFilters,
+  setQuery,
   SetQueryAction,
   SelectTimezoneAction,
   SelectEventCollectionAction,
   SelectFunnelStepEventCollectionAction,
-  SET_QUERY,
   SET_GROUP_BY,
+  SERIALIZE_QUERY,
   SELECT_TIMEZONE,
   SELECT_EVENT_COLLECTION,
   SELECT_FUNNEL_STEP_EVENT_COLLECTION,
@@ -45,6 +46,7 @@ import {
   setEventsCollections,
   setCollectionSchemaLoading,
   getSchemas,
+  FETCH_COLLECTION_SCHEMA_SUCCESS,
   FETCH_COLLECTION_SCHEMA,
 } from './modules/events';
 
@@ -97,14 +99,17 @@ function* fetchSchema(action: FetchCollectionSchemaAction) {
 function* selectCollection(action: SelectEventCollectionAction) {
   const collection = action.payload.name;
   if (collection) {
-    const schemas = select(getSchemas);
+    const schemas = yield select(getSchemas);
     const isSchemaExist = schemas[collection];
 
-    if (!isSchemaExist) yield put(fetchCollectionSchema(collection));
+    if (!isSchemaExist) {
+      yield put(fetchCollectionSchema(collection));
+    }
   }
 
   yield put(setGroupBy(undefined));
   yield put(setOrderBy(undefined));
+  yield put(setFilters([]));
 }
 
 function* selectFunnelStepCollection(
@@ -129,6 +134,11 @@ function* selectTimezone(action: SelectTimezoneAction) {
     };
     yield put(setTimeframe(timeWithZone));
   }
+}
+
+function* storeEventSchemas() {
+  const schemas = yield select(getSchemas);
+  window.__QUERY_CREATOR_SCHEMAS__ = schemas;
 }
 
 function* transformFilters(collection: string, filters: Filter[]) {
@@ -172,21 +182,14 @@ const transformOrderBy = (orderBy: string | OrderBy | OrderBy[]) => {
     },
   ];
 };
-
-// function* transformOrderBy(orderBy: OrderBy[]) {
-//   const transformedOrderBy = orderBy.map((item) => ({
-//     id: uuid(),
-//     ...item
-//   }));
-
-//   yield put(setOrderBy(transformedOrderBy));
-// }
-
-function* setQuery(action: SetQueryAction) {
+function* serializeQuery(action: SetQueryAction) {
   const {
     payload: { query },
   } = action;
   const schemas = yield select(getSchemas);
+
+  const { filters, ...rest } = query;
+  yield put(setQuery(rest));
 
   if (query.eventCollection && !schemas[query.eventCollection]) {
     yield put(fetchCollectionSchema(query.eventCollection));
@@ -205,8 +208,8 @@ function* setQuery(action: SetQueryAction) {
     );
   }
 
-  if (query.filters) {
-    yield call(transformFilters, query.eventCollection, query.filters);
+  if (filters) {
+    yield call(transformFilters, query.eventCollection, filters);
   }
 
   if (query.orderBy) {
@@ -234,11 +237,12 @@ function* updateGroupBy(action: SetGroupByAction) {
 
 function* watcher() {
   yield takeLatest(APP_START, appStart);
-  yield takeLatest(SET_QUERY, setQuery);
+  yield takeLatest(SERIALIZE_QUERY, serializeQuery);
   yield takeLatest(FETCH_PROJECT_DETAILS, fetchProject);
   yield takeLatest(FETCH_COLLECTION_SCHEMA, fetchSchema);
   yield takeLatest(SELECT_TIMEZONE, selectTimezone);
   yield takeLatest(SELECT_EVENT_COLLECTION, selectCollection);
+  yield takeLatest(FETCH_COLLECTION_SCHEMA_SUCCESS, storeEventSchemas);
   yield takeLatest(
     SELECT_FUNNEL_STEP_EVENT_COLLECTION,
     selectFunnelStepCollection

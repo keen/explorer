@@ -1,7 +1,7 @@
 import React, { FC, useState, useRef, useCallback } from 'react';
 import { transparentize } from 'polished';
 import { colors } from '@keen.io/colors';
-import { ActionButton } from '@keen.io/ui-core';
+import { ActionButton, Dropdown, Input } from '@keen.io/ui-core';
 
 import {
   Container,
@@ -12,8 +12,6 @@ import {
 } from './FilterListValue.styles';
 
 import DropableContainer from '../../../DropableContainer';
-import Dropdown from '../../../Dropdown';
-import Input from '../../../Input';
 import PropertyGroup, { PropertyItem } from '../../../PropertyGroup';
 
 import { getEventPath } from '../../../../utils';
@@ -31,7 +29,6 @@ type Props = {
 
 const FilterListValue: FC<Props> = ({ items, onChange }) => {
   const containerRef = useRef(null);
-  const inputRef = useRef(null);
   const [editMode, setEditMode] = useState(false);
 
   const removeHandler = useCallback(
@@ -61,8 +58,8 @@ const FilterListValue: FC<Props> = ({ items, onChange }) => {
       <Dropdown isOpen={editMode} fullWidth={false}>
         <DropdownContainer>
           <Input
-            ref={inputRef}
             autoFocus
+            variant="solid"
             data-testid="list-input"
             placeholder={text.inputPlaceholder}
             onKeyPress={(e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -77,7 +74,7 @@ const FilterListValue: FC<Props> = ({ items, onChange }) => {
                   onChange([...items, value]);
                 }
 
-                inputRef.current.value = '';
+                e.currentTarget.value = '';
               }
             }}
           />

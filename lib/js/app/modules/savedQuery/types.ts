@@ -4,17 +4,12 @@ import {
   SELECT_SAVED_QUERY,
 } from './constants';
 
-export type SavedQueryAPIResponse = {
-  query_name: string;
-  refresh_rate: number;
-  metadata: Record<string, any>;
-};
-
 export type SavedQuery = {
   name: string;
   displayName: string;
   cached: boolean;
   isCloned: boolean;
+  tags: string[];
   refreshRate: number;
   exists: boolean;
 };

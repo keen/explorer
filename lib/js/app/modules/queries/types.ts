@@ -18,15 +18,29 @@ import {
   SET_QUERY_LIMIT_REACHED,
   RESET_QUERY_RESULTS,
   GET_ORGANIZATION_USAGE_LIMITS,
+  SET_QUERY_SETTINGS,
 } from './constants';
 
 import { APIError } from '../../types';
 
+export type SavedQueryListItem = {
+  name: string;
+  displayName: string;
+  refreshRate: number;
+  lastModifiedDate: string;
+  cached: boolean;
+  query: Record<string, any>;
+  tags: string[];
+  widget: string | null;
+};
+
 export type ReducerState = {
   results: any;
-  isLoading: boolean;
+  settings: Record<string, any>;
+  isQueryPerforming: boolean;
+  isSavedQueriesLoaded: boolean;
   isSavingQuery: boolean;
-  saved: any[];
+  savedQueries: SavedQueryListItem[];
   cachedQueries: {
     limit: null | number;
     limitReached: boolean;
@@ -37,6 +51,11 @@ export type ReducerState = {
   saveQueryError: APIError | null;
   error: APIError | null;
 };
+
+export interface SetQuerySettingsAction {
+  type: typeof SET_QUERY_SETTINGS;
+  payload: { settings: Record<string, any> };
+}
 
 export interface GetOrganizationUsageLimitsAction {
   type: typeof GET_ORGANIZATION_USAGE_LIMITS;
@@ -122,7 +141,7 @@ export interface GetSavedQueriesAction {
 export interface GetSavedQueriesSuccessAction {
   type: typeof GET_SAVED_QUERIES_SUCCESS;
   payload: {
-    queries: Record<string, any>;
+    queries: SavedQueryListItem[];
   };
 }
 
@@ -162,6 +181,7 @@ export interface SetQueryLimitReachedAction {
 }
 
 export type QueriesActions =
+  | SetQuerySettingsAction
   | ResetQueryResultsAction
   | SetCacheQueryLimitAction
   | SetCacheQueryLimitExceedAction
