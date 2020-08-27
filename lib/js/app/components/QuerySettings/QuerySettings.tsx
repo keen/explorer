@@ -14,6 +14,7 @@ import {
 
 import {
   Settings,
+  TagManager,
   Cancel,
   ErrorNotification,
   FooterContent,
@@ -31,6 +32,7 @@ import {
 import {
   getQueriesSaving,
   getCacheQueriesLimitExceed,
+  getSavedQueries,
   getSaveQueryError,
 } from '../../modules/queries';
 import text from './text.json';
@@ -53,18 +55,19 @@ type Props = {
 
 const QuerySettings: FC<Props> = ({ onSave, onClose, cacheAvailable }) => {
   const savedQuery = useSelector(getSavedQuery);
+  const savedQueries = useSelector(getSavedQueries);
   const isSavingQuery = useSelector(getQueriesSaving);
   const isCacheLimited = useSelector(getCacheQueriesLimitExceed);
   const error = useSelector(getSaveQueryError);
   const settingsSource = useSelector(getQuerySettingsModalSource);
 
   const [querySettings, setQuerySettings] = useState(savedQuery);
-  const [queryNameError, setQueryNameError] = useState(false);
+  const [queryNameError, setQueryNameError] = useState<string | boolean>(null);
 
   const handleQueryNameUpdate = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const value = e.currentTarget.value;
-      setQueryNameError(!value);
+      setQueryNameError(value ? false : text.queryNameError);
       setQuerySettings((settings) => ({
         ...settings,
         name: slugify(value),
@@ -84,6 +87,8 @@ const QuerySettings: FC<Props> = ({ onSave, onClose, cacheAvailable }) => {
     }
   }, [cacheAvailable, isCacheLimited]);
 
+  const hasNameChanged = savedQuery.name !== querySettings.name;
+
   return (
     <>
       <Settings>
@@ -93,13 +98,15 @@ const QuerySettings: FC<Props> = ({ onSave, onClose, cacheAvailable }) => {
           </ErrorNotification>
         )}
         {settingsSource === SettingsModalSource.FIRST_QUERY_SAVE && (
-          <NewQueryNotice>{text.newQueryNotice}</NewQueryNotice>
+          <NewQueryNotice>
+            <Alert type="info">{text.newQueryNotice}</Alert>
+          </NewQueryNotice>
         )}
         <Label
           htmlFor="queryName"
           variant="secondary"
           showAsterisk
-          hasError={queryNameError}
+          hasError={!!queryNameError}
         >
           {text.queryName}
         </Label>
@@ -108,29 +115,31 @@ const QuerySettings: FC<Props> = ({ onSave, onClose, cacheAvailable }) => {
           type="text"
           variant="solid"
           id="queryName"
-          hasError={queryNameError}
+          hasError={!!queryNameError}
           placeholder={text.queryNamePlaceholder}
           value={querySettings.displayName}
           onChange={handleQueryNameUpdate}
         />
         <ErrorContainer>
-          {queryNameError && <Error>{text.queryNameError}</Error>}
+          {queryNameError && <Error>{queryNameError}</Error>}
         </ErrorContainer>
-        <QueryTagManager
-          tags={querySettings.tags}
-          onAddTag={(tag) => {
-            setQuerySettings((settings) => ({
-              ...settings,
-              tags: [...settings.tags, tag],
-            }));
-          }}
-          onRemoveTag={(tag) => {
-            setQuerySettings((settings) => ({
-              ...settings,
-              tags: settings.tags.filter((tagName) => tagName !== tag),
-            }));
-          }}
-        />
+        <TagManager>
+          <QueryTagManager
+            tags={querySettings.tags}
+            onAddTag={(tag) => {
+              setQuerySettings((settings) => ({
+                ...settings,
+                tags: [...settings.tags, tag],
+              }));
+            }}
+            onRemoveTag={(tag) => {
+              setQuerySettings((settings) => ({
+                ...settings,
+                tags: settings.tags.filter((tagName) => tagName !== tag),
+              }));
+            }}
+          />
+        </TagManager>
         {cacheAvailable && (
           <CacheQuery
             onCacheChange={(cached) =>
@@ -163,9 +172,18 @@ const QuerySettings: FC<Props> = ({ onSave, onClose, cacheAvailable }) => {
             onClick={() => {
               const { name, displayName, refreshRate, tags } = querySettings;
               if (displayName) {
-                onSave({ name, displayName, refreshRate, tags });
+                const validateNameUniqueness =
+                  hasNameChanged || savedQuery.isCloned;
+                if (
+                  validateNameUniqueness &&
+                  savedQueries.find((query) => query.name === name)
+                ) {
+                  setQueryNameError(text.queryUniqueNameError);
+                } else {
+                  onSave({ name, displayName, refreshRate, tags });
+                }
               } else {
-                setQueryNameError(true);
+                setQueryNameError(text.queryNameError);
               }
             }}
           >

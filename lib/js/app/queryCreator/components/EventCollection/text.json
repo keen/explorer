@@ -1,6 +1,6 @@
 {
   "placeholder": "Select event stream",
   "searchPlaceholder": "Search",
-  "emptySearchResults": "No event found with this name",
+  "emptySearchResults": "No stream found with this name",
   "label": "Event Stream"
 }

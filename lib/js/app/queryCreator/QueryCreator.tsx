@@ -86,10 +86,6 @@ class QueryCreator extends React.PureComponent<Props> {
     this.subscribeSetQuery();
   }
 
-  // shouldComponentUpdate() {
-  //   return false;
-  // }
-
   componentWillUnmount() {
     if (this.storeSubscription) this.storeSubscription();
     if (this.setQuerySubscription) this.setQuerySubscription();
@@ -129,7 +125,6 @@ class QueryCreator extends React.PureComponent<Props> {
   };
 
   render() {
-    console.log('rewalkuje go !s');
     return (
       <Provider store={this.store}>
         <ThemeProvider theme={theme}>
