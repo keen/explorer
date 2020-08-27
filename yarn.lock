@@ -1754,7 +1754,7 @@
     "@styled-system/core" "^5.1.2"
     "@styled-system/css" "^5.1.5"
 
-"@testing-library/dom@>=5", "@testing-library/dom@^7.17.1":
+"@testing-library/dom@^7.17.1":
   version "7.22.1"
   resolved "https://registry.yarnpkg.com/@testing-library/dom/-/dom-7.22.1.tgz#b66861fb7751287bda63a55f5c72ca808c63043c"
   integrity sha512-bEszhvj9LcspaRz56mqGV7uc+vJTAYKCKPJcGb5X6U1qBysgTAgCexQXvKZ3BBjWu5S/TANP2NniOVsMWqKXcw==
@@ -12474,13 +12474,6 @@ react-redux@^7.2.0:
     loose-envify "^1.4.0"
     prop-types "^15.7.2"
     react-is "^16.9.0"
-
-react-select-event@^4.1.4:
-  version "4.2.0"
-  resolved "https://registry.yarnpkg.com/react-select-event/-/react-select-event-4.2.0.tgz#824f9f52fdbd9de305ec1b3405f76f76dcc22cbe"
-  integrity sha512-DK58Q9ucsbGsCFl26n2CZ5MA7WwxSxrA49mM8EKmjJ8Fg0l1R4uZfwy80PdDoVReH3RWAVRLnhfJorqcIKGc2Q==
-  dependencies:
-    "@testing-library/dom" ">=5"
 
 react-select@^3.1.0:
   version "3.1.0"

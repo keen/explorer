@@ -1,36 +1,38 @@
 import React, { FC, useState } from 'react';
 
-import { Container, OrderList } from './DirectionList.styles';
-
 import DropableContainer from '../../../DropableContainer';
 import DropdownList from '../../../DropdownList';
 import DropdownListContainer from '../../../DropdownListContainer';
 import Dropdown from '../../../Dropdown';
 
-import { Direction } from '../../types';
+import { Container, OrderList, DropableWrapper } from './DirectionList.styles';
+
+import { OrderDirection } from '../../types';
 import { DIRECTION_OPTIONS } from '../../constants';
 
 type Props = {
   /** Direction value */
-  direction: Direction;
+  direction?: OrderDirection;
   /** Change event handler */
-  onChange: (direction: Direction) => void;
+  onChange: (direction: OrderDirection) => void;
 };
 
-const DirectionList: FC<Props> = ({ direction, onChange }) => {
+const DirectionList: FC<Props> = ({ direction = 'ASC', onChange }) => {
   const [editMode, setEditMode] = useState(false);
 
   return (
     <Container>
-      <DropableContainer
-        isActive={editMode}
-        variant="secondary"
-        onClick={() => !editMode && setEditMode(true)}
-        onDefocus={() => setEditMode(false)}
-        value={direction}
-      >
-        {direction}
-      </DropableContainer>
+      <DropableWrapper>
+        <DropableContainer
+          isActive={editMode}
+          variant="secondary"
+          onClick={() => !editMode && setEditMode(true)}
+          onDefocus={() => setEditMode(false)}
+          value={direction}
+        >
+          {direction}
+        </DropableContainer>
+      </DropableWrapper>
       <Dropdown isOpen={editMode} fullWidth={false}>
         <OrderList data-testid="order-list">
           <DropdownListContainer scrollToActive maxHeight={240}>

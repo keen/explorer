@@ -36,7 +36,7 @@ export type ReducerState = {
   percentile?: number;
   timezone?: number | Timezones;
   groupBy?: string | string[];
-  orderBy?: string | OrderBy | OrderBy[];
+  orderBy?: OrderBy[];
   limit?: number;
   timeframe: Timeframe;
   interval?: string;

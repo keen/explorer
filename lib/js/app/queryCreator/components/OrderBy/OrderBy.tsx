@@ -28,19 +28,15 @@ import {
   TooltipMotion,
 } from './OrderBy.styles';
 
-import {
-  serializeOrderBy,
-  mutateArray,
-  filterSchema,
-  createListFromSchema,
-} from './utils';
+import { mutateArray } from '../../utils';
+import { filterSchema, createListFromSchema } from './utils';
 import { setOrderBy, getGroupBy, getOrderBy } from '../../modules/query';
 import { getCollectionSchema } from '../../modules/events';
 
 import { DRAG_ANIMATION_TIME, DRAG_DELAY } from './constants';
 
 import { AppState, OrderBy as OrderBySettings } from '../../types';
-import { Direction } from './types';
+import { OrderDirection } from './types';
 
 import text from './text.json';
 
@@ -70,12 +66,8 @@ const OrderBy: FC<Props> = ({ collection }) => {
     getCollectionSchema(state, collection)
   );
 
-  const orderBy = useSelector((state: AppState) => {
-    const orderSettings = getOrderBy(state);
-    return serializeOrderBy(orderSettings);
-  });
+  const orderBy = useSelector((state: AppState) => getOrderBy(state));
 
-  const orderRef = useRef(orderBy);
   const sortableRef = useRef(null);
 
   const [propertiesTree, setPropertiesTree] = useState(null);
@@ -136,31 +128,6 @@ const OrderBy: FC<Props> = ({ collection }) => {
     [orderBy]
   );
 
-  const clearOrderBy = useCallback(
-    (groups: string[]) => {
-      let orderBySettings = orderBy.filter(
-        (item) =>
-          groups.includes(item.propertyName) || item.propertyName === 'result'
-      );
-      if (groups.length === 0) orderBySettings = undefined;
-      if (!shallowEqual(orderBy, orderBySettings)) {
-        dispatch(setOrderBy(orderBySettings));
-      }
-    },
-    [orderBy]
-  );
-
-  useEffect(() => {
-    if (orderBy?.length) clearOrderBy(groups);
-  }, [groups, orderBy]);
-
-  useEffect(() => {
-    if (!shallowEqual(orderBy, orderRef.current)) {
-      dispatch(setOrderBy(orderBy));
-    }
-    orderRef.current = orderBy;
-  }, [orderBy]);
-
   const showOrderOptions = useMemo(
     () => groups.filter((group) => group).length,
     [groups]
@@ -177,11 +144,8 @@ const OrderBy: FC<Props> = ({ collection }) => {
       },
       onMove: (evt) => !evt.related.className.includes('add-button'),
       onEnd: (evt) => {
-        const updatedGroups = mutateArray(
-          orderRef.current,
-          evt.oldIndex,
-          evt.newIndex
-        );
+        if (!orderBy) return;
+        const updatedGroups = mutateArray(orderBy, evt.oldIndex, evt.newIndex);
         dispatch(setOrderBy(updatedGroups));
         setDragMode(false);
       },
@@ -202,14 +166,14 @@ const OrderBy: FC<Props> = ({ collection }) => {
                 <OrderByContainer key={id}>
                   <OrderByProperty
                     property={propertyName}
-                    direction={direction}
+                    orderDirection={direction}
                     isEditAllowed={!isDragged}
                     properties={
                       propertiesTree
                         ? propertiesTree
                         : createTree(filteredSchema)
                     }
-                    onSelectDirection={(value: Direction) => {
+                    onSelectDirection={(value: OrderDirection) => {
                       const orderSettings = {
                         id,
                         propertyName,

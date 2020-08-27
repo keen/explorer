@@ -1,17 +1,32 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import selectEvent from 'react-select-event';
 import { render as rtlRender, fireEvent } from '@testing-library/react';
 import configureStore from 'redux-mock-store';
 
+import { createTree } from '../../utils/createTree';
+import { createCollection } from '../../utils/createCollection';
+
 import OrderBy from './OrderBy';
-import text from './text.json';
 
 import { DEFAULT_ORDER_SETTINGS } from './constants';
 
 const render = (storeState: any = {}) => {
   const mockStore = configureStore([]);
-  const store = mockStore({ ...storeState });
+  const collectionSchema = { country: 'string', city: 'string' };
+  const state = {
+    events: {
+      schemas: {
+        purchases: {
+          schema: collectionSchema,
+          tree: createTree(collectionSchema),
+          list: createCollection(collectionSchema),
+        },
+      },
+    },
+    ...storeState,
+  };
+
+  const store = mockStore({ ...state });
 
   const wrapper = rtlRender(
     <Provider store={store}>
@@ -25,19 +40,24 @@ const render = (storeState: any = {}) => {
   };
 };
 
-test('allows user to set order by property', async () => {
+test('allows user to set order by property', () => {
   const storeState = {
     query: {
       groupBy: ['country', 'city'],
-      orderBy: DEFAULT_ORDER_SETTINGS,
+      orderBy: [DEFAULT_ORDER_SETTINGS],
     },
   };
 
   const {
-    wrapper: { getByLabelText },
+    wrapper: { getByTestId, getByText },
     store,
   } = render(storeState);
-  await selectEvent.select(getByLabelText(text.propetyLabel), 'country');
+
+  const propertyItem = getByTestId('orderBy-property-item');
+  fireEvent.click(propertyItem);
+
+  const option = getByText('country');
+  fireEvent.click(option);
 
   expect(store.getActions()).toMatchInlineSnapshot(`
     Array [
@@ -46,6 +66,7 @@ test('allows user to set order by property', async () => {
           "orderBy": Array [
             Object {
               "direction": "ASC",
+              "id": undefined,
               "propertyName": "country",
             },
           ],
@@ -56,19 +77,24 @@ test('allows user to set order by property', async () => {
   `);
 });
 
-test('allows user to set order by direction', async () => {
+test('allows user to set order by direction', () => {
   const storeState = {
     query: {
       groupBy: ['country', 'city'],
-      orderBy: DEFAULT_ORDER_SETTINGS,
+      orderBy: [DEFAULT_ORDER_SETTINGS],
     },
   };
 
   const {
-    wrapper: { getByLabelText },
+    wrapper: { getByText },
     store,
   } = render(storeState);
-  await selectEvent.select(getByLabelText(text.directionLabel), 'Descending');
+
+  const defaultOrderDirection = getByText('ASC');
+  fireEvent.click(defaultOrderDirection);
+
+  const customOrderDirection = getByText('DESC');
+  fireEvent.click(customOrderDirection);
 
   expect(store.getActions()).toMatchInlineSnapshot(`
     Array [
@@ -77,6 +103,7 @@ test('allows user to set order by direction', async () => {
           "orderBy": Array [
             Object {
               "direction": "DESC",
+              "id": undefined,
               "propertyName": "result",
             },
           ],
@@ -91,16 +118,16 @@ test('allows user to remove order by settings', () => {
   const storeState = {
     query: {
       groupBy: ['country', 'city'],
-      orderBy: DEFAULT_ORDER_SETTINGS,
+      orderBy: [DEFAULT_ORDER_SETTINGS],
     },
   };
 
   const {
-    wrapper: { getByTestId },
+    wrapper: { container },
     store,
   } = render(storeState);
 
-  const removeButton = getByTestId('orderby-remove-0');
+  const removeButton = container.querySelector('button:not(.add-button)');
   fireEvent.click(removeButton);
 
   expect(store.getActions()).toMatchInlineSnapshot(`

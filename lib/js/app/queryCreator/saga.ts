@@ -20,6 +20,7 @@ import {
 } from './modules/app';
 
 import {
+  getOrderBy,
   getTimeframe,
   setTimeframe,
   setGroupBy,
@@ -30,6 +31,7 @@ import {
   SelectEventCollectionAction,
   SelectFunnelStepEventCollectionAction,
   SET_QUERY,
+  SET_GROUP_BY,
   SELECT_TIMEZONE,
   SELECT_EVENT_COLLECTION,
   SELECT_FUNNEL_STEP_EVENT_COLLECTION,
@@ -49,6 +51,7 @@ import {
 import { inferFilterType, createAbstractOperator } from './utils';
 
 import { Filter, OrderBy } from './types';
+import { SetGroupByAction } from './modules/query/types';
 
 function* appStart() {
   yield put(fetchProjectDetails());
@@ -153,7 +156,8 @@ function* transformFilters(collection: string, filters: Filter[]) {
 }
 
 const transformOrderBy = (orderBy: string | OrderBy | OrderBy[]) => {
-  if (typeof orderBy === 'string') return orderBy;
+  if (typeof orderBy === 'string')
+    return [{ id: uuid(), propertyName: orderBy, direction: 'ASC' }];
   if (Array.isArray(orderBy)) {
     return orderBy.map((item) => ({
       id: uuid(),
@@ -161,10 +165,12 @@ const transformOrderBy = (orderBy: string | OrderBy | OrderBy[]) => {
     }));
   }
 
-  return {
-    id: uuid(),
-    ...(orderBy as OrderBy),
-  };
+  return [
+    {
+      id: uuid(),
+      ...(orderBy as OrderBy),
+    },
+  ];
 };
 
 // function* transformOrderBy(orderBy: OrderBy[]) {
@@ -202,12 +208,28 @@ function* setQuery(action: SetQueryAction) {
   if (query.filters) {
     yield call(transformFilters, query.eventCollection, query.filters);
   }
-  console.log('***********');
+
   if (query.orderBy) {
     const transformedOrderBy = yield transformOrderBy(query.orderBy);
-    console.log({ transformedOrderBy });
     yield put(setOrderBy(transformedOrderBy));
   }
+}
+
+function* updateGroupBy(action: SetGroupByAction) {
+  const {
+    payload: { groupBy },
+  } = action;
+  const orderBy = yield select(getOrderBy);
+
+  let orderBySettings;
+  if (groupBy && orderBy && groupBy.length && Object.keys(orderBy).length) {
+    orderBySettings = orderBy.filter(
+      (item: OrderBy) =>
+        groupBy.includes(item.propertyName) || item.propertyName === 'result'
+    );
+  }
+
+  yield put(setOrderBy(orderBySettings));
 }
 
 function* watcher() {
@@ -221,6 +243,7 @@ function* watcher() {
     SELECT_FUNNEL_STEP_EVENT_COLLECTION,
     selectFunnelStepCollection
   );
+  yield takeLatest(SET_GROUP_BY, updateGroupBy);
 }
 
 export default function* rootSaga() {

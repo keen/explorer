@@ -27,7 +27,7 @@ import text from './text.json';
 
 import { SearchContext } from '../../../../contexts';
 
-import { Direction } from '../../types';
+import { OrderDirection } from '../../types';
 
 type Props = {
   /** Properties tree */
@@ -35,11 +35,11 @@ type Props = {
   /** Property */
   property?: string;
   /** Direction */
-  direction?: Direction;
+  orderDirection?: OrderDirection;
   /** Enable edit mode */
   isEditAllowed: boolean;
   /* Select direction event handler */
-  onSelectDirection: (direction: Direction) => void;
+  onSelectDirection: (direction: OrderDirection) => void;
   /** Select property event handler */
   onSelectProperty: (property: string) => void;
   /** Search properties event handler */
@@ -50,7 +50,7 @@ type Props = {
 
 const OrderByProperty: FC<Props> = ({
   property,
-  direction,
+  orderDirection,
   isEditAllowed,
   properties,
   onSelectDirection,
@@ -89,9 +89,12 @@ const OrderByProperty: FC<Props> = ({
   }, [isEditAllowed, editMode]);
 
   return (
-    <Container ref={containerRef} data-testid="groupBy-property">
+    <Container ref={containerRef} data-testid="orderBy-property">
       <PropertyGroup isActive={editMode}>
-        <PropertyItem onClick={() => !editMode && setEditMode(true)}>
+        <PropertyItem
+          onClick={() => !editMode && setEditMode(true)}
+          data-testid="orderBy-property-item"
+        >
           <Property
             property={property}
             editMode={editMode}
@@ -102,8 +105,8 @@ const OrderByProperty: FC<Props> = ({
         </PropertyItem>
         <StyledPropertyItem>
           <DirectionList
-            direction={direction}
-            onChange={(value: Direction) => onSelectDirection(value)}
+            direction={orderDirection}
+            onChange={(value: OrderDirection) => onSelectDirection(value)}
           />
         </StyledPropertyItem>
         <StyledPropertyItem>

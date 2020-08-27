@@ -10,10 +10,7 @@ const mutate = (array: any[], from: number, to: number) => {
 };
 
 export const mutateArray = (array: any[], from: number, to: number) => {
-  console.log('==== mutateArray');
   array = [...array];
-  console.log(array);
   mutate(array, from, to);
-  console.log(array);
   return array;
 };

@@ -25,13 +25,8 @@ export const transformToQuery = (query: QueryState) => {
     );
   }
 
-  if (queryCopy.orderBy && typeof queryCopy.orderBy !== 'string') {
-    if (Array.isArray(queryCopy.orderBy)) {
-      queryCopy.orderBy = queryCopy.orderBy.map(({ id, ...item }) => item);
-    } else {
-      const { id, ...item } = queryCopy.orderBy;
-      queryCopy.orderBy = item;
-    }
+  if (queryCopy.orderBy) {
+    queryCopy.orderBy = queryCopy.orderBy.map(({ id, ...item }) => item);
   }
 
   return snakeCase({
