@@ -1,5 +1,4 @@
 import { filterSchema } from './filterSchema';
-import { serializeOrderBy } from './serializeOrderBy';
 import { createListFromSchema } from './createListFromSchema';
 
-export { filterSchema, serializeOrderBy, createListFromSchema };
+export { filterSchema, createListFromSchema };

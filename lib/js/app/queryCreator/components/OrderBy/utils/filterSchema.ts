@@ -13,7 +13,6 @@ export const filterSchema = (
   });
 
   if (orderBy) {
-    console.log(orderBy);
     orderBy.map((item) => {
       if (obj[item.propertyName]) {
         delete obj[item.propertyName];

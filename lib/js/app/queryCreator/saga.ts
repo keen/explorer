@@ -165,30 +165,31 @@ function* transformFilters(collection: string, filters: Filter[]) {
   yield put(setFilters(filtersWithInferredTypes));
 }
 
-const transformOrderBy = (orderBy: string | OrderBy | OrderBy[]) => {
+function* transformOrderBy(orderBy: string | OrderBy | OrderBy[]) {
   if (typeof orderBy === 'string')
-    return [{ id: uuid(), propertyName: orderBy, direction: 'ASC' }];
+    yield [{ id: uuid(), propertyName: orderBy, direction: 'ASC' }];
   if (Array.isArray(orderBy)) {
-    return orderBy.map((item) => ({
+    yield orderBy.map((item) => ({
       id: uuid(),
       ...item,
     }));
   }
 
-  return [
+  yield [
     {
       id: uuid(),
       ...(orderBy as OrderBy),
     },
   ];
-};
+}
+
 function* serializeQuery(action: SetQueryAction) {
   const {
     payload: { query },
   } = action;
   const schemas = yield select(getSchemas);
 
-  const { filters, ...rest } = query;
+  const { filters, orderBy, ...rest } = query;
   yield put(setQuery(rest));
 
   if (query.eventCollection && !schemas[query.eventCollection]) {
@@ -212,8 +213,8 @@ function* serializeQuery(action: SetQueryAction) {
     yield call(transformFilters, query.eventCollection, filters);
   }
 
-  if (query.orderBy) {
-    const transformedOrderBy = yield transformOrderBy(query.orderBy);
+  if (orderBy) {
+    const transformedOrderBy = yield transformOrderBy(orderBy);
     yield put(setOrderBy(transformedOrderBy));
   }
 }

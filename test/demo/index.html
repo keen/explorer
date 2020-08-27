@@ -38,9 +38,11 @@
   });
 
   const newQueryBtn = document.getElementById('new-query');
-  newQueryBtn.addEventListener('click', function() {
+  if (newQueryBtn) {
+    newQueryBtn.addEventListener('click', function() {
     window.KeenPubSub.publish('@explorer/new-query');
   });
+  }
 
 </script>
 </html>

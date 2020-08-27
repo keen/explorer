@@ -67,6 +67,7 @@ const OrderBy: FC<Props> = ({ collection }) => {
   );
 
   const orderBy = useSelector((state: AppState) => getOrderBy(state));
+  const orderByRef = useRef(orderBy);
 
   const sortableRef = useRef(null);
 
@@ -134,6 +135,10 @@ const OrderBy: FC<Props> = ({ collection }) => {
   );
 
   useEffect(() => {
+    orderByRef.current = orderBy;
+  }, [orderBy]);
+
+  useEffect(() => {
     new Sortable(sortableRef.current, {
       animation: DRAG_ANIMATION_TIME,
       delay: DRAG_DELAY,
@@ -144,13 +149,23 @@ const OrderBy: FC<Props> = ({ collection }) => {
       },
       onMove: (evt) => !evt.related.className.includes('add-button'),
       onEnd: (evt) => {
-        if (!orderBy) return;
-        const updatedGroups = mutateArray(orderBy, evt.oldIndex, evt.newIndex);
-        dispatch(setOrderBy(updatedGroups));
-        setDragMode(false);
+        if (orderByRef.current) {
+          const updatedGroups = mutateArray(
+            orderByRef.current,
+            evt.oldIndex,
+            evt.newIndex
+          );
+          dispatch(setOrderBy(updatedGroups));
+          setDragMode(false);
+        }
       },
     });
   }, []);
+
+  const isActionButtonDisabled = () =>
+    !showOrderOptions ||
+    !Object.keys(filteredSchema).length ||
+    (orderBy && orderBy.some((item) => !item.propertyName));
 
   return (
     <>
@@ -200,9 +215,7 @@ const OrderBy: FC<Props> = ({ collection }) => {
               ))}
             <ActionButton
               className="add-button"
-              isDisabled={
-                !showOrderOptions || !Object.keys(filteredSchema).length
-              }
+              isDisabled={isActionButtonDisabled()}
               action="create"
               onClick={() => {
                 const currentSettings = orderBy || [];

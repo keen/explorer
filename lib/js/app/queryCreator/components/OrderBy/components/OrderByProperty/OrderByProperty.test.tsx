@@ -68,12 +68,9 @@ test('allows user to search property', () => {
 
 test('allows user to select orderBy direction', () => {
   const {
-    wrapper,
     wrapper: { getByText },
     props,
   } = render();
-
-  console.log(wrapper.debug);
 
   const defaultOrder = getByText('ASC');
   fireEvent.click(defaultOrder);
