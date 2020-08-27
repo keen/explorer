@@ -18,6 +18,7 @@ const render = (storeState: any = {}, overProps: any = {}) => {
     },
     queries: {
       isSaving: false,
+      savedQueries: [],
       cachedQueries: {
         limit: 5,
         limitReached: false,

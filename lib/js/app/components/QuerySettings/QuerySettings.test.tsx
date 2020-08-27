@@ -16,6 +16,7 @@ const render = (storeState: any = {}, overProps: any = {}) => {
       cachedQueries: {
         LimitReached: false,
       },
+      savedQueries: [],
       saveQueryError: null,
     },
     project: {
@@ -88,6 +89,30 @@ test('allows user to close query settings', () => {
   fireEvent.click(button);
 
   expect(props.onClose).toHaveBeenCalled();
+});
+
+test('renders query uniqueness name error', () => {
+  const storeState = {
+    queries: {
+      isSaving: false,
+      cachedQueries: {
+        LimitReached: false,
+      },
+      savedQueries: [{ name: 'revenue' }],
+      saveQueryError: null,
+    },
+  };
+  const {
+    wrapper: { getByText, getByTestId },
+  } = render(storeState);
+
+  const input = getByTestId('query-name-input');
+  fireEvent.change(input, { target: { value: 'revenue' } });
+
+  const button = getByText(text.saveButton);
+  fireEvent.click(button);
+
+  expect(getByText(text.queryUniqueNameError)).toBeInTheDocument();
 });
 
 test('renders query name error', () => {

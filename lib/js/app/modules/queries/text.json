@@ -1,5 +1,5 @@
 {
-  "saveQuerySuccess": "Query has been saved",
-  "removeQuerySuccess": "Query has been removed",
+  "saveQuerySuccess": "Query saved",
+  "removeQuerySuccess": "Query removed",
   "saveQueryError": "We cannot save the query. There is a problem on our end."
 }
