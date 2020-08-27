@@ -2,7 +2,7 @@ import { createListFromSchema } from './createListFromSchema';
 
 test('generate list from provided schema', () => {
   const schema = {
-    'reference.loremipsumdoloristametkadsdssdswfdsfdsfsdsfd': 'num',
+    'reference.value': 'num',
     'reference.options.geometry.articles.funnels.name': 'string',
     users: 'list',
   };
@@ -11,7 +11,7 @@ test('generate list from provided schema', () => {
   expect(list).toMatchInlineSnapshot(
     [
       {
-        path: 'reference.loremipsumdoloristametkadsdssdswfdsfdsfsdsfd',
+        path: 'reference.value',
         type: 'num',
       },
       {
@@ -26,7 +26,7 @@ test('generate list from provided schema', () => {
     `
     Object {
       "0": Object {
-        "path": "reference.loremipsumdoloristametkadsdssdswfdsfdsfsdsfd",
+        "path": "reference.value",
         "type": "num",
       },
       "1": Object {
