@@ -41,9 +41,12 @@ const TargetProperty: FC<Props> = ({
 
   const {
     schema: collectionSchema,
-    tree: schemaTree,
+    tree: fieldsTree,
     list: schemaList,
+    virtualFieldsTree,
   } = useSelector((state: AppState) => getCollectionSchema(state, collection));
+
+  const schemaTree = virtualFieldsTree ? virtualFieldsTree : fieldsTree;
 
   const isSchemaExist = useSelector((state: AppState) => {
     if (!collection) return false;

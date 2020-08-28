@@ -43,11 +43,16 @@ export type ProjectSettings = {
   writeKey: string;
 };
 
+export type VirtualAnalysis = {
+  [key: string]: () => Promise<any>;
+};
+
 export type Options = {
   container: string;
   modalContainer: string;
   initialView: 'browser' | 'editor';
   upgradeSubscriptionUrl?: string;
+  virtualAnalysis?: Record<string, VirtualAnalysis>;
   keenAnalysis: {
     config: ProjectSettings;
     instance: any;

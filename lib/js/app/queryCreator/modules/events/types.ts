@@ -4,12 +4,15 @@ import {
   FETCH_COLLECTION_SCHEMA_ERROR,
   FETCH_COLLECTION_SCHEMA_SUCCESS,
   SET_COLLETION_SCHEMA_LOADING,
+  SCHEMA_COMPUTED,
 } from './constants';
 
 export type CollectionSchema = {
   schema: Record<string, string>;
   list: { path: string; type: string }[];
   tree: Record<string, string[] | Record<string, any>>;
+  virtualFieldsTree?: Record<string, string[] | Record<string, any>>;
+  virtualFieldsList?: { path: string; type: string }[];
 };
 
 export type ReducerState = {
@@ -55,9 +58,18 @@ export interface FetchCollectionSchemaErrorAction {
   };
 }
 
+export interface SchemaComputedAction {
+  type: typeof SCHEMA_COMPUTED;
+  payload: {
+    collection: string;
+    schema: Partial<CollectionSchema>;
+  };
+}
+
 export type EventsActions =
   | SetCollectionSchemaLoadingAction
   | SetEventsCollectionsAction
   | FetchCollectionSchemaAction
   | FetchCollectionSchemaSuccessAction
-  | FetchCollectionSchemaErrorAction;
+  | FetchCollectionSchemaErrorAction
+  | SchemaComputedAction;

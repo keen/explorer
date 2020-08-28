@@ -8,6 +8,8 @@ export const NEW_QUERY_EVENT = '@query-creator/new-query';
 
 export const DEFAULT_ANALYSIS = 'count';
 
+export const VIRTUAL_SCHEMAS_CONTEXT = 'virtualSchemas';
+
 export const UPDATE_TIMEOUT = 0;
 
 export const KEYBOARD_KEYS = {

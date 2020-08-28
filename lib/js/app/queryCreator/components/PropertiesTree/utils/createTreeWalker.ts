@@ -1,5 +1,6 @@
 import { StackElement, TreeData } from '../types';
 
+// @TODO: Handle empty properties as schema is compited asynchronusly
 const createTreeWalker = (
   properties: Record<string, string[] | Record<string, any>>,
   isOpenByDefault: boolean

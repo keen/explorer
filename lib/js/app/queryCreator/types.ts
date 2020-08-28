@@ -26,6 +26,8 @@ export type CreatorFields =
   | 'contentEncoding'
   | 'filters';
 
+export type VirtualSchemas = Record<string, Record<string, string>>;
+
 type FieldRule = ('*' | Analysis)[];
 
 export type QueryCreatorConfig = Record<CreatorFields, FieldRule>;

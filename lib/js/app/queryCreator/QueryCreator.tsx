@@ -18,7 +18,14 @@ import { getQuery, serializeQuery, resetQuery } from './modules/query';
 import { transformToQuery } from './utils/transformToQuery';
 import { transformQueryToCamelCase } from './utils/transformQueryToCamelCase';
 
-import { UPDATE_TIMEOUT, SET_QUERY_EVENT, NEW_QUERY_EVENT } from './constants';
+import {
+  VIRTUAL_SCHEMAS_CONTEXT,
+  UPDATE_TIMEOUT,
+  SET_QUERY_EVENT,
+  NEW_QUERY_EVENT,
+} from './constants';
+
+import { VirtualSchemas } from './types';
 
 declare global {
   interface Window {
@@ -37,6 +44,8 @@ type Props = {
   host?: string;
   /** Modal container selector */
   modalContainer: string;
+  /** Virtual schemas definition */
+  virtualSchemas?: VirtualSchemas;
   /** Update query event handler */
   onUpdateQuery?: (query: Record<string, any>) => void;
 };
@@ -67,6 +76,11 @@ class QueryCreator extends React.PureComponent<Props> {
     const sagaMiddleware = createSagaMiddleware({
       context: {
         keenClient,
+        [VIRTUAL_SCHEMAS_CONTEXT]: {
+          purchases: {
+            mmr: 'computed',
+          },
+        },
       },
     });
 
