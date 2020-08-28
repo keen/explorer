@@ -31,6 +31,7 @@ type FieldRule = ('*' | Analysis)[];
 export type QueryCreatorConfig = Record<CreatorFields, FieldRule>;
 
 export type OrderBy = {
+  id?: string;
   propertyName: string;
   direction: 'ASC' | 'DESC';
 };

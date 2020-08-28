@@ -5,10 +5,9 @@ import {
   select,
   takeLatest,
   getContext,
-  call,
+  fork,
   put,
 } from 'redux-saga/effects';
-import { v4 as uuid } from 'uuid';
 import moment from 'moment-timezone';
 
 import {
@@ -20,15 +19,18 @@ import {
 } from './modules/app';
 
 import {
+  getOrderBy,
   getTimeframe,
   setTimeframe,
   setGroupBy,
+  setOrderBy,
   setFilters,
   setQuery,
   SetQueryAction,
   SelectTimezoneAction,
   SelectEventCollectionAction,
   SelectFunnelStepEventCollectionAction,
+  SET_GROUP_BY,
   SERIALIZE_QUERY,
   SELECT_TIMEZONE,
   SELECT_EVENT_COLLECTION,
@@ -47,9 +49,10 @@ import {
   FETCH_COLLECTION_SCHEMA,
 } from './modules/events';
 
-import { inferFilterType, createAbstractOperator } from './utils';
+import { serializeOrderBy, serializeFilters } from './serializers';
 
-import { Filter } from './types';
+import { Filter, OrderBy } from './types';
+import { SetGroupByAction } from './modules/query/types';
 
 function* appStart() {
   yield put(fetchProjectDetails());
@@ -104,6 +107,7 @@ function* selectCollection(action: SelectEventCollectionAction) {
   }
 
   yield put(setGroupBy(undefined));
+  yield put(setOrderBy(undefined));
   yield put(setFilters([]));
 }
 
@@ -143,21 +147,21 @@ function* transformFilters(collection: string, filters: Filter[]) {
   if (!collectionSchema) {
     const client = yield getContext('keenClient');
     const url = client.url(`/3.0/projects/{projectId}/events/${collection}`, {
-      api_key: client.config.masterKey,
+      api_key: client.config.readKey,
     });
     const { properties } = yield fetch(url).then((response) => response.json());
     collectionSchema = { schema: properties };
   }
 
   const { schema } = collectionSchema;
-  const filtersWithInferredTypes = filters.map((filter) => ({
-    ...filter,
-    id: uuid(),
-    operator: createAbstractOperator(filter),
-    propertyType: inferFilterType(filter, schema),
-  }));
 
-  yield put(setFilters(filtersWithInferredTypes));
+  const filtersSettings = serializeFilters(filters, schema);
+  yield put(setFilters(filtersSettings));
+}
+
+function* transformOrderBy(orderBy: string | OrderBy | OrderBy[]) {
+  const orderBySettings = serializeOrderBy(orderBy);
+  yield put(setOrderBy(orderBySettings));
 }
 
 function* serializeQuery(action: SetQueryAction) {
@@ -166,7 +170,7 @@ function* serializeQuery(action: SetQueryAction) {
   } = action;
   const schemas = yield select(getSchemas);
 
-  const { filters, ...rest } = query;
+  const { filters, orderBy, ...rest } = query;
   yield put(setQuery(rest));
 
   if (query.eventCollection && !schemas[query.eventCollection]) {
@@ -187,8 +191,29 @@ function* serializeQuery(action: SetQueryAction) {
   }
 
   if (filters) {
-    yield call(transformFilters, query.eventCollection, filters);
+    yield fork(transformFilters, query.eventCollection, filters);
   }
+
+  if (orderBy) {
+    yield fork(transformOrderBy, orderBy);
+  }
+}
+
+function* updateGroupBy(action: SetGroupByAction) {
+  const {
+    payload: { groupBy },
+  } = action;
+  const orderBy = yield select(getOrderBy);
+
+  let orderBySettings: OrderBy[];
+  if (groupBy && orderBy && groupBy.length && Object.keys(orderBy).length) {
+    orderBySettings = orderBy.filter(
+      ({ propertyName }: OrderBy) =>
+        groupBy.includes(propertyName) || propertyName === 'result'
+    );
+  }
+
+  yield put(setOrderBy(orderBySettings));
 }
 
 function* watcher() {
@@ -203,6 +228,7 @@ function* watcher() {
     SELECT_FUNNEL_STEP_EVENT_COLLECTION,
     selectFunnelStepCollection
   );
+  yield takeLatest(SET_GROUP_BY, updateGroupBy);
 }
 
 export default function* rootSaga() {

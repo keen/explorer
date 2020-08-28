@@ -1,27 +1,57 @@
-import React, { FC, useMemo, useRef, useEffect, useCallback } from 'react';
+import React, {
+  FC,
+  useMemo,
+  useRef,
+  useEffect,
+  useCallback,
+  useState,
+} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import shallowEqual from 'shallowequal';
-import { Button, Select, Label } from '@keen.io/ui-core';
-import { Icon } from '@keen.io/icons';
-import { colors } from '@keen.io/colors';
+import { v4 as uuid } from 'uuid';
+import Sortable from 'sortablejs';
+import { AnimatePresence } from 'framer-motion';
+import { ActionButton, Tooltip } from '@keen.io/ui-core';
 
-import { serializeOrderBy } from './utils/serializeOrderBy';
-import text from './text.json';
+import { useSearch } from '../../hooks';
+import { SearchContext } from '../../contexts';
 
-import { setOrderBy, getGroupBy, getOrderBy } from '../../modules/query';
+import { createTree } from '../../utils/createTree';
 
+import Title from '../Title';
+import { OrderByProperty } from './components';
 import {
-  ORDER_OPTIONS,
-  DIRECTION_OPTIONS,
-  DIRECTION_LABELS,
-  DEFAULT_ORDER_SETTINGS,
-} from './constants';
+  Section,
+  SortableContainer,
+  OrderByContainer,
+  TooltipContent,
+  TooltipMotion,
+} from './OrderBy.styles';
+
+import { mutateArray } from '../../utils';
+import { filterSchema, createListFromSchema } from './utils';
+import { setOrderBy, getGroupBy, getOrderBy } from '../../modules/query';
+import { getCollectionSchema } from '../../modules/events';
+
+import { DRAG_ANIMATION_TIME, DRAG_DELAY } from './constants';
 
 import { AppState, OrderBy as OrderBySettings } from '../../types';
+import { OrderDirection } from './types';
 
-type Props = {};
+import text from './text.json';
 
-const OrderBy: FC<Props> = () => {
+type Props = {
+  /** Collection name */
+  collection: string;
+};
+
+const tooltipMotion = {
+  initial: { opacity: 0 },
+  animate: { opacity: 1 },
+  exit: { opacity: 0 },
+};
+
+const OrderBy: FC<Props> = ({ collection }) => {
   const dispatch = useDispatch();
   const groups: string[] = useSelector((state: AppState) => {
     const groupBy = getGroupBy(state);
@@ -32,27 +62,57 @@ const OrderBy: FC<Props> = () => {
     return [];
   }, shallowEqual);
 
-  const orderBy = useSelector((state: AppState) => {
-    const orderSettings = getOrderBy(state);
-    return serializeOrderBy(orderSettings);
-  });
+  const { schema } = useSelector((state: AppState) =>
+    getCollectionSchema(state, collection)
+  );
 
-  const options = useMemo(() => {
-    return [
-      ...ORDER_OPTIONS,
-      ...groups.map((groupProperty) => ({
-        label: groupProperty,
-        value: groupProperty,
-      })),
-    ];
-  }, [groups]);
+  const orderBy = useSelector((state: AppState) => getOrderBy(state));
+  const orderByRef = useRef(orderBy);
 
-  const orderRef = useRef(orderBy);
+  const sortableRef = useRef(null);
+
+  const [propertiesTree, setPropertiesTree] = useState(null);
+  const [searchPropertiesPhrase, setSearchPhrase] = useState(null);
+  const [expandTree, setTreeExpand] = useState(false);
+  const [isDragged, setDragMode] = useState(false);
+  const [hint, showHint] = useState(false);
+
+  const filteredSchema = filterSchema(schema, groups, orderBy);
+
+  const { searchHandler } = useSearch<{
+    path: string;
+    type: string;
+  }>(
+    createListFromSchema(filteredSchema),
+    (searchResult, phrase) => {
+      if (phrase) {
+        const searchTree = {};
+        searchResult.forEach(({ path, type }) => {
+          searchTree[path] = type;
+        });
+        setSearchPhrase(phrase);
+        setPropertiesTree(createTree(searchTree));
+        setTreeExpand(true);
+      } else {
+        setTreeExpand(false);
+        setPropertiesTree(null);
+      }
+    },
+    {
+      keys: ['path', 'type'],
+      threshold: 0.4,
+    }
+  );
+
+  const clearSearchHandler = useCallback(() => {
+    setPropertiesTree(null);
+    setSearchPhrase(null);
+  }, []);
 
   const updateOrderBy = useCallback(
-    (orderSettings: OrderBySettings, index: number) => {
-      const orderBySettings = orderBy.map((order, idx) => {
-        if (idx === index) return orderSettings;
+    (orderSettings: OrderBySettings, id: string) => {
+      const orderBySettings = orderBy.map((order) => {
+        if (order.id === id) return orderSettings;
         return order;
       });
       dispatch(setOrderBy(orderBySettings));
@@ -61,90 +121,126 @@ const OrderBy: FC<Props> = () => {
   );
 
   const removeOrderBy = useCallback(
-    (index: number) => {
-      let orderBySettings = orderBy.filter((_order, idx) => index !== idx);
+    (id: string) => {
+      let orderBySettings = orderBy.filter((order) => order.id !== id);
       if (orderBySettings.length === 0) orderBySettings = undefined;
       dispatch(setOrderBy(orderBySettings));
     },
     [orderBy]
   );
 
+  const showOrderOptions = useMemo(
+    () => groups.filter((group) => group).length,
+    [groups]
+  );
+
   useEffect(() => {
-    if (!shallowEqual(orderBy, orderRef.current)) {
-      dispatch(setOrderBy(orderBy));
-    }
-    orderRef.current = orderBy;
+    orderByRef.current = orderBy;
   }, [orderBy]);
 
-  const showOrderOptions = groups.length;
+  useEffect(() => {
+    new Sortable(sortableRef.current, {
+      animation: DRAG_ANIMATION_TIME,
+      delay: DRAG_DELAY,
+      filter: '.add-button',
+      onStart: () => {
+        setDragMode(true);
+        setTreeExpand(false);
+      },
+      onMove: (evt) => !evt.related.className.includes('add-button'),
+      onEnd: (evt) => {
+        if (orderByRef.current) {
+          const updatedGroups = mutateArray(
+            orderByRef.current,
+            evt.oldIndex,
+            evt.newIndex
+          );
+          dispatch(setOrderBy(updatedGroups));
+          setDragMode(false);
+        }
+      },
+    });
+  }, []);
+
+  const isActionButtonDisabled = () =>
+    !showOrderOptions ||
+    !Object.keys(filteredSchema).length ||
+    (orderBy && orderBy.some((item) => !item.propertyName));
 
   return (
     <>
-      {showOrderOptions ? (
-        <div>
-          <Button
-            variant="secondary"
-            style="outline"
-            onClick={() => {
-              const currentSettings = orderBy || [];
-              dispatch(
-                setOrderBy([...currentSettings, DEFAULT_ORDER_SETTINGS])
-              );
-            }}
-          >
-            Add order settings
-          </Button>
-          {orderBy &&
-            orderBy.map(({ propertyName, direction }, idx) => (
-              <div key={idx}>
-                <div
-                  data-testid={`orderby-remove-${idx}`}
-                  onClick={() => removeOrderBy(idx)}
-                >
-                  <Icon type="close" fill={colors.blue['500']} />
-                </div>
-                <Label htmlFor={`${idx}-order-property`}>
-                  {text.propetyLabel}
-                </Label>
-                <Select
-                  inputId={`${idx}-order-property`}
-                  variant="solid"
-                  options={options}
-                  onChange={({ value }: { value: string }) => {
-                    const orderSettings = { propertyName: value, direction };
-                    updateOrderBy(orderSettings as OrderBySettings, idx);
-                  }}
-                  placeholder={text.propetyPlaceholder}
-                  value={
-                    propertyName
-                      ? { label: propertyName, value: propertyName }
-                      : null
-                  }
-                />
-                <Label htmlFor={`${idx}-order-direction`}>
-                  {text.directionLabel}
-                </Label>
-                <Select
-                  inputId={`${idx}-order-direction`}
-                  variant="solid"
-                  options={DIRECTION_OPTIONS}
-                  onChange={({ value }: { value: string }) => {
-                    const orderSettings = { propertyName, direction: value };
-                    updateOrderBy(orderSettings as OrderBySettings, idx);
-                  }}
-                  placeholder={text.directionPlaceholder}
-                  value={
-                    direction
-                      ? { label: DIRECTION_LABELS[direction], value: direction }
-                      : null
-                  }
-                />
-              </div>
-            ))}
-        </div>
-      ) : (
-        text.specifyGroupBy
-      )}
+      <Title isDisabled={!showOrderOptions}>{text.title}</Title>
+      <Section
+        onMouseEnter={() => !showOrderOptions && showHint(true)}
+        onMouseLeave={() => !showOrderOptions && showHint(false)}
+      >
+        <SearchContext.Provider value={{ expandTree, searchPropertiesPhrase }}>
+          <SortableContainer ref={sortableRef}>
+            {orderBy &&
+              orderBy.map(({ propertyName, direction, id }) => (
+                <OrderByContainer key={id}>
+                  <OrderByProperty
+                    property={propertyName}
+                    orderDirection={direction}
+                    isEditAllowed={!isDragged}
+                    properties={
+                      propertiesTree
+                        ? propertiesTree
+                        : createTree(filteredSchema)
+                    }
+                    onSelectDirection={(value: OrderDirection) => {
+                      const orderSettings = {
+                        id,
+                        propertyName,
+                        direction: value,
+                      };
+                      updateOrderBy(orderSettings as OrderBySettings, id);
+                    }}
+                    onSelectProperty={(value: string) => {
+                      clearSearchHandler();
+                      const orderSettings = {
+                        id,
+                        propertyName: value,
+                        direction,
+                      };
+                      updateOrderBy(orderSettings as OrderBySettings, id);
+                    }}
+                    onSearchProperties={searchHandler}
+                    onRemove={() => {
+                      clearSearchHandler();
+                      removeOrderBy(id);
+                    }}
+                  />
+                </OrderByContainer>
+              ))}
+            <ActionButton
+              className="add-button"
+              isDisabled={isActionButtonDisabled()}
+              action="create"
+              onClick={() => {
+                const currentSettings = orderBy || [];
+                dispatch(
+                  setOrderBy([
+                    ...currentSettings,
+                    { id: uuid(), propertyName: '', direction: 'ASC' },
+                  ])
+                );
+              }}
+            />
+          </SortableContainer>
+        </SearchContext.Provider>
+        {!showOrderOptions && (
+          <AnimatePresence>
+            {hint && (
+              <TooltipMotion {...tooltipMotion} data-testid="orderby-hint">
+                <Tooltip hasArrow={false} mode="dark">
+                  <TooltipContent>{text.orderByHint}</TooltipContent>
+                </Tooltip>
+              </TooltipMotion>
+            )}
+          </AnimatePresence>
+        )}
+      </Section>
     </>
   );
 };

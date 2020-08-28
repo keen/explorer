@@ -13,11 +13,14 @@ export const DIRECTION_LABELS = {
 };
 
 export const DIRECTION_OPTIONS = [
-  { label: 'Ascending', value: 'ASC' },
-  { label: 'Descending', value: 'DESC' },
+  { label: 'ASC', value: 'ASC' },
+  { label: 'DESC', value: 'DESC' },
 ];
 
 export const DEFAULT_ORDER_SETTINGS = {
   propertyName: 'result',
   direction: 'ASC',
 } as OrderBy;
+
+export const DRAG_DELAY = 250;
+export const DRAG_ANIMATION_TIME = 100;
