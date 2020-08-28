@@ -5,10 +5,9 @@ import {
   select,
   takeLatest,
   getContext,
-  call,
+  fork,
   put,
 } from 'redux-saga/effects';
-import { v4 as uuid } from 'uuid';
 import moment from 'moment-timezone';
 
 import {
@@ -50,7 +49,7 @@ import {
   FETCH_COLLECTION_SCHEMA,
 } from './modules/events';
 
-import { inferFilterType, createAbstractOperator } from './utils';
+import { serializeOrderBy, serializeFilters } from './serializers';
 
 import { Filter, OrderBy } from './types';
 import { SetGroupByAction } from './modules/query/types';
@@ -148,39 +147,21 @@ function* transformFilters(collection: string, filters: Filter[]) {
   if (!collectionSchema) {
     const client = yield getContext('keenClient');
     const url = client.url(`/3.0/projects/{projectId}/events/${collection}`, {
-      api_key: client.config.masterKey,
+      api_key: client.config.readKey,
     });
     const { properties } = yield fetch(url).then((response) => response.json());
     collectionSchema = { schema: properties };
   }
 
   const { schema } = collectionSchema;
-  const filtersWithInferredTypes = filters.map((filter) => ({
-    ...filter,
-    id: uuid(),
-    operator: createAbstractOperator(filter),
-    propertyType: inferFilterType(filter, schema),
-  }));
 
-  yield put(setFilters(filtersWithInferredTypes));
+  const filtersSettings = serializeFilters(filters, schema);
+  yield put(setFilters(filtersSettings));
 }
 
 function* transformOrderBy(orderBy: string | OrderBy | OrderBy[]) {
-  if (typeof orderBy === 'string')
-    yield [{ id: uuid(), propertyName: orderBy, direction: 'ASC' }];
-  if (Array.isArray(orderBy)) {
-    yield orderBy.map((item) => ({
-      id: uuid(),
-      ...item,
-    }));
-  }
-
-  yield [
-    {
-      id: uuid(),
-      ...(orderBy as OrderBy),
-    },
-  ];
+  const orderBySettings = serializeOrderBy(orderBy);
+  yield put(setOrderBy(orderBySettings));
 }
 
 function* serializeQuery(action: SetQueryAction) {
@@ -210,12 +191,11 @@ function* serializeQuery(action: SetQueryAction) {
   }
 
   if (filters) {
-    yield call(transformFilters, query.eventCollection, filters);
+    yield fork(transformFilters, query.eventCollection, filters);
   }
 
   if (orderBy) {
-    const transformedOrderBy = yield transformOrderBy(orderBy);
-    yield put(setOrderBy(transformedOrderBy));
+    yield fork(transformOrderBy, orderBy);
   }
 }
 
@@ -225,11 +205,11 @@ function* updateGroupBy(action: SetGroupByAction) {
   } = action;
   const orderBy = yield select(getOrderBy);
 
-  let orderBySettings;
+  let orderBySettings: OrderBy[];
   if (groupBy && orderBy && groupBy.length && Object.keys(orderBy).length) {
     orderBySettings = orderBy.filter(
-      (item: OrderBy) =>
-        groupBy.includes(item.propertyName) || item.propertyName === 'result'
+      ({ propertyName }: OrderBy) =>
+        groupBy.includes(propertyName) || propertyName === 'result'
     );
   }
 

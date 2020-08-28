@@ -16,7 +16,6 @@ export const ModifiersSettings = styled.div<FlexDirectionProps>`
   display: flex;
   margin-bottom: 20px;
 
-  flex-wrap: wrap;
   ${flexbox}
 `;
 
