@@ -186,11 +186,12 @@ test('update funnel step', () => {
       {
         ...DEFAULT_FUNNEL_STEP,
         eventCollection: 'clicks',
+        id: 'asd123',
       },
     ],
   };
 
-  const action = updateFunnelStep(0, {
+  const action = updateFunnelStep('asd123', {
     withActors: true,
     eventCollection: 'logins',
   });
@@ -212,11 +213,12 @@ test('removes funnel step', () => {
       {
         ...DEFAULT_FUNNEL_STEP,
         eventCollection: 'clicks',
+        id: 'asd123',
       },
     ],
   };
 
-  const action = removeFunnelStep(0);
+  const action = removeFunnelStep('asd123');
   const { steps } = queryReducer(
     {
       ...initialState,
@@ -238,7 +240,7 @@ test('add funnel step', () => {
     ],
   };
 
-  const action = addFunnelStep();
+  const action = addFunnelStep('qwe123');
   const { steps } = queryReducer(
     {
       ...initialState,

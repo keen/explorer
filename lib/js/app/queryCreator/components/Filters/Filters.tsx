@@ -1,135 +1,74 @@
-import React, { FC, useEffect, useState } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
+import React, { FC } from 'react';
 import { useSelector } from 'react-redux';
+import { v4 as uuid } from 'uuid';
+import { ActionButton } from '@keen.io/ui-core';
 
-import { Operator } from './Filters.styles';
+import { Title } from '../';
 
-import FiltersContext from './FiltersContext';
-import { Filter } from './components';
-import Badge from '../Badge';
+import FiltersComponent from './FiltersComponent';
 
-import { getCollectionSchema } from '../../modules/events';
-import { useSearch } from '../../hooks';
-import { SearchContext } from '../../contexts';
+import { ActionContainer } from './Filters.styles';
 
-import { createTree } from '../../utils/createTree';
-import { setOperator, setDefaultValue } from './utils';
+import { getSchemas, getSchemaLoading } from '../../modules/events';
 
-import { AND_OPERATOR } from './constants';
-import { SCHEMA_PROPS } from '../../constants';
+import text from './text.json';
 
-import { AppState, Filter as FilterType } from '../../types';
-
-const operatorMotion = {
-  initial: { opacity: 0, x: -100 },
-  animate: { opacity: 1, x: 0 },
-  exit: { opacity: 0, x: 0 },
-};
+import { AppState, Filter } from '../../types';
 
 type Props = {
-  /** Collection name */
+  /** Collection */
   collection: string;
   /** Filters */
-  filters: FilterType[];
-  /** Reset event handler */
-  onReset: () => void;
-  /** Remove event handler */
+  filters: Filter[];
+  /** onReset handler */
+  onReset?: () => void;
+  /** onRemove handler */
   onRemove: (idx: number) => void;
-  /** On change event handler */
-  onChange: (idx: number, filters: FilterType) => void;
+  /** onChange handler */
+  onChange: (idx: number, filter: Filter) => void;
+  /** Add button onClick handler */
+  onClick: (idx: string) => void;
 };
 
 const Filters: FC<Props> = ({
   collection,
   filters,
-  onRemove,
   onReset,
+  onRemove,
   onChange,
+  onClick,
 }) => {
-  const [searchPropertiesPhrase, setSearchPhrase] = useState(null);
-  const [expandTree, setTreeExpand] = useState(false);
-
-  const {
-    schema: collectionSchema,
-    tree: schemaTree,
-    list: schemaList,
-  } = useSelector((state: AppState) => getCollectionSchema(state, collection));
-
-  const [propertiesTree, setPropertiesTree] = useState(null);
-
-  const { searchHandler } = useSearch<{
-    path: string;
-    type: string;
-  }>(
-    schemaList,
-    (searchResult, phrase) => {
-      if (phrase) {
-        const searchTree = {};
-        searchResult.forEach(({ path, type }) => {
-          searchTree[path] = type;
-        });
-        setSearchPhrase(phrase);
-        setPropertiesTree(createTree(searchTree));
-        setTreeExpand(true);
-      } else {
-        setTreeExpand(false);
-        setPropertiesTree(null);
-      }
-    },
-    {
-      keys: ['path', 'type'],
-      threshold: 0.4,
-    }
+  const isSchemaExist = useSelector((state: AppState) => {
+    const schemas = getSchemas(state);
+    return schemas[collection];
+  });
+  const isSchemaLoading = useSelector((state: AppState) =>
+    getSchemaLoading(state, collection)
   );
 
-  useEffect(() => {
-    return () => {
-      onReset();
-    };
-  }, []);
-
   return (
-    <SearchContext.Provider value={{ expandTree, searchPropertiesPhrase }}>
-      <FiltersContext.Provider value={{ schema: collectionSchema }}>
-        {filters.map((filter, idx, collection) => (
-          <React.Fragment key={`fragment-${filter.id}`}>
-            <Filter
-              id={filter.id}
-              key={`filter-${filter.id}`}
-              filter={filter}
-              properties={propertiesTree ? propertiesTree : schemaTree}
-              onSearchProperties={searchHandler}
-              onPropertyChange={(propertyName) => {
-                const schemaType = collectionSchema[propertyName];
-                const inferredType = SCHEMA_PROPS[schemaType];
-                const operator = setOperator(inferredType, filter.operator);
-
-                onChange(idx, {
-                  propertyName,
-                  propertyType: inferredType,
-                  operator,
-                  propertyValue: setDefaultValue(inferredType, operator),
-                });
-
-                setSearchPhrase(null);
-                setPropertiesTree(schemaTree);
-              }}
-              onRemove={() => onRemove(idx)}
-              onChange={(filter) => onChange(idx, filter)}
-            />
-            <AnimatePresence>
-              {idx + 1 !== collection.length && (
-                <motion.div key={`operator-${filter.id}`} {...operatorMotion}>
-                  <Operator>
-                    <Badge>{AND_OPERATOR}</Badge>
-                  </Operator>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </React.Fragment>
-        ))}
-      </FiltersContext.Provider>
-    </SearchContext.Provider>
+    <div>
+      <Title isDisabled={!collection}>{text.filters}</Title>
+      {isSchemaExist && !isSchemaLoading && (
+        <FiltersComponent
+          collection={collection}
+          filters={filters}
+          onReset={onReset && onReset}
+          onRemove={(idx) => onRemove(idx)}
+          onChange={(idx, filter) => onChange(idx, filter)}
+        />
+      )}
+      <ActionContainer hasSpacing={!!filters.length}>
+        <ActionButton
+          action="create"
+          isDisabled={!collection}
+          onClick={() => {
+            const filterId = uuid();
+            onClick(filterId);
+          }}
+        />
+      </ActionContainer>
+    </div>
   );
 };
 

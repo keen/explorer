@@ -1,8 +1,8 @@
 {
-  "actorPropertyLabel": "Actor property",
-  "actorPropertyPlaceholder": "Select actor property",
-  "removeStep": "Remove",
-  "invertedLabel": "Inverted step",
-  "optionalLabel": "Optional step",
-  "withActorsLabel": "With Actors"
+  "title": "STEP",
+  "clone": "Clone",
+  "optionalLabel": "Optional Step",
+  "optionalTooltip": "Following steps will ignore the result of this step and will use the effect of last non-optional step as an input.",
+  "invertedLabel": "Inverted Step",
+  "invertedTooltip": "Excludes events matching this step configuration"
 }

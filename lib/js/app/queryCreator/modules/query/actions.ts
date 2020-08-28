@@ -17,14 +17,20 @@ import {
   SET_FILTERS,
   SELECT_TIMEZONE,
   ADD_FUNNEL_STEP,
+  CLONE_FUNNEL_STEP,
   SELECT_FUNNEL_STEP_EVENT_COLLECTION,
   UPDATE_FUNNEL_STEP,
   REMOVE_FUNNEL_STEP,
+  CHANGE_FUNNEL_STEPS_ORDER,
+  ADD_FUNNEL_STEP_FILTER,
+  UPDATE_FUNNEL_STEP_FILTER,
+  REMOVE_FUNNEL_STEP_FILTER,
   RESET_EXTRACTION,
   RESET_QUERY,
   ADD_FILTER,
   UPDATE_FILTER,
   REMOVE_FILTER,
+  UPDATE_FUNNEL_STEP_TIMEZONE,
 } from './constants';
 
 import { QueryActions, ReducerState as Query } from './types';
@@ -180,10 +186,23 @@ export const setFilters = (filters: Filter[]): QueryActions => ({
   },
 });
 
-export const addFunnelStep = (): QueryActions => ({
+export const addFunnelStep = (id: string): QueryActions => ({
   type: ADD_FUNNEL_STEP,
+  payload: {
+    id,
+  },
 });
 
+export const cloneFunnelStep = (
+  cloneId: string,
+  newId: string
+): QueryActions => ({
+  type: CLONE_FUNNEL_STEP,
+  payload: {
+    cloneId,
+    newId,
+  },
+});
 export const selectFunnelStepCollection = (name: string): QueryActions => ({
   type: SELECT_FUNNEL_STEP_EVENT_COLLECTION,
   payload: {
@@ -192,19 +211,72 @@ export const selectFunnelStepCollection = (name: string): QueryActions => ({
 });
 
 export const updateFunnelStep = (
-  index: number,
+  stepId: string,
   properties: Partial<FunnelStep>
 ): QueryActions => ({
   type: UPDATE_FUNNEL_STEP,
   payload: {
-    index,
+    stepId,
     properties,
   },
 });
 
-export const removeFunnelStep = (index: number): QueryActions => ({
+export const changeFunnelStepsOrderAction = (
+  steps: FunnelStep[]
+): QueryActions => ({
+  type: CHANGE_FUNNEL_STEPS_ORDER,
+  payload: { steps },
+});
+
+export const removeFunnelStep = (stepId: string): QueryActions => ({
   type: REMOVE_FUNNEL_STEP,
   payload: {
-    index,
+    stepId,
+  },
+});
+
+export const addFunnelStepFilter = (
+  stepId: string,
+  filterId: string
+): QueryActions => ({
+  type: ADD_FUNNEL_STEP_FILTER,
+  payload: {
+    stepId,
+    filterId,
+  },
+});
+
+export const updateFunnelStepFilter = (
+  stepId: string,
+  filterIndex: number,
+  properties: Filter
+): QueryActions => ({
+  type: UPDATE_FUNNEL_STEP_FILTER,
+  payload: {
+    stepId,
+    filterIndex,
+    properties,
+  },
+});
+
+export const removeFunnelStepFilter = (
+  stepId: string,
+  filterIndex: number
+): QueryActions => ({
+  type: REMOVE_FUNNEL_STEP_FILTER,
+  payload: {
+    stepId,
+    filterIndex,
+  },
+});
+
+export const updateFunnelStepTimezone = (
+  stepId: string,
+  timezone: Timezones
+): QueryActions => ({
+  type: UPDATE_FUNNEL_STEP_TIMEZONE,
+  payload: {
+    stepId,
+    timezone,
   },
 });

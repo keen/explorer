@@ -29,6 +29,8 @@ type Props = {
   property?: string;
   /** Container variant */
   variant?: Variant;
+  /** Error */
+  hasError?: boolean;
 };
 
 const TargetProperty: FC<Props> = ({
@@ -36,6 +38,7 @@ const TargetProperty: FC<Props> = ({
   onChange,
   property,
   variant = 'primary',
+  hasError = false,
 }) => {
   const [expandTree, setTreeExpand] = useState(false);
 
@@ -98,10 +101,15 @@ const TargetProperty: FC<Props> = ({
 
   return (
     <Container ref={containerRef}>
-      <Title isDisabled={!collection} onClick={() => !isOpen && setOpen(true)}>
+      <Title
+        isDisabled={!collection}
+        onClick={() => !isOpen && setOpen(true)}
+        hasError={hasError}
+      >
         {text.label}
       </Title>
       <DropableContainer
+        hasError={hasError}
         variant={variant}
         onClick={() => !isOpen && collection && setOpen(true)}
         isActive={isOpen}

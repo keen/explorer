@@ -45,6 +45,11 @@ import {
   selectFunnelStepCollection,
   updateFunnelStep,
   removeFunnelStep,
+  changeFunnelStepsOrderAction,
+  cloneFunnelStep,
+  addFunnelStepFilter,
+  updateFunnelStepFilter,
+  removeFunnelStepFilter,
   resetExtraction,
 } from './actions';
 
@@ -57,6 +62,7 @@ import {
   DEFAULT_TIMEZONE,
   DEFAULT_TIMEFRAME,
   SERIALIZE_QUERY,
+  UPDATE_FUNNEL_STEP_TIMEZONE,
 } from './constants';
 import {
   ReducerState,
@@ -64,6 +70,7 @@ import {
   SelectTimezoneAction,
   SelectFunnelStepEventCollectionAction,
   SelectEventCollectionAction,
+  UpdateFunnelStepTimezoneAction,
 } from './types';
 
 export {
@@ -104,6 +111,11 @@ export {
   updateFunnelStep,
   removeFunnelStep,
   selectFunnelStepCollection,
+  changeFunnelStepsOrderAction,
+  cloneFunnelStep,
+  addFunnelStepFilter,
+  updateFunnelStepFilter,
+  removeFunnelStepFilter,
   selectEventCollection,
   selectTargetProperty,
   selectAnalysis,
@@ -119,6 +131,7 @@ export {
   SelectEventCollectionAction,
   SelectFunnelStepEventCollectionAction,
   ReducerState,
+  UpdateFunnelStepTimezoneAction,
 };
 
 export {
@@ -130,4 +143,5 @@ export {
   SELECT_FUNNEL_STEP_EVENT_COLLECTION,
   DEFAULT_TIMEFRAME,
   DEFAULT_TIMEZONE,
+  UPDATE_FUNNEL_STEP_TIMEZONE,
 };

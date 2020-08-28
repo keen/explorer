@@ -9,15 +9,18 @@ type Props = {
   onClick?: (e: React.MouseEvent<HTMLDivElement>) => void;
   /** Disabled indicator */
   isDisabled?: boolean;
+  /** Error */
+  hasError?: boolean;
 };
 
-const Title: FC<Props> = ({ children, onClick, isDisabled }) => {
+const Title: FC<Props> = ({ children, onClick, isDisabled, hasError }) => {
   return (
     <Container
       onClick={(e) => {
         if (onClick && !isDisabled) onClick(e);
       }}
       isDisabled={isDisabled}
+      hasError={hasError}
     >
       {children}
     </Container>
