@@ -4,13 +4,25 @@ import {
   FETCH_COLLECTION_SCHEMA,
   FETCH_COLLECTION_SCHEMA_ERROR,
   FETCH_COLLECTION_SCHEMA_SUCCESS,
+  SCHEMA_COMPUTED,
 } from './constants';
 
-import { EventsActions } from './types';
+import { EventsActions, CollectionSchema } from './types';
 
 export const setEventsCollections = (collections: string[]): EventsActions => ({
   type: SET_EVENTS_COLLECTIONS,
   payload: { collections },
+});
+
+export const schemaComputed = (
+  collection: string,
+  schema: Partial<CollectionSchema>
+): EventsActions => ({
+  type: SCHEMA_COMPUTED,
+  payload: {
+    collection,
+    schema,
+  },
 });
 
 export const setCollectionSchemaLoading = (
