@@ -14,7 +14,7 @@ import {
   Timeframe,
   Percentile,
 } from '../../components';
-import { showField } from '../../utils/showField';
+import { showField } from '../../utils';
 
 import {
   selectEventCollection,

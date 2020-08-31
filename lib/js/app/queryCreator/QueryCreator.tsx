@@ -15,8 +15,7 @@ import { AppContext } from './contexts';
 
 import { appStart } from './modules/app';
 import { getQuery, serializeQuery, resetQuery } from './modules/query';
-import { transformToQuery } from './utils/transformToQuery';
-import { transformQueryToCamelCase } from './utils/transformQueryToCamelCase';
+import { transformToQuery, transformQueryToCamelCase } from './utils';
 
 import { UPDATE_TIMEOUT, SET_QUERY_EVENT, NEW_QUERY_EVENT } from './constants';
 

@@ -1,7 +1,6 @@
 import { ReducerState, EventsActions } from './types';
 
-import { createTree } from '../../utils/createTree';
-import { createCollection } from '../../utils/createCollection';
+import { createTree, createCollection } from '../../utils';
 
 import {
   SET_EVENTS_COLLECTIONS,
