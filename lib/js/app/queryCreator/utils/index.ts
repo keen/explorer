@@ -3,6 +3,7 @@ import { createAbstractOperator } from './createAbstractOperator';
 import { use12HoursDateFormat } from './hoursFormat';
 import { getEventPath } from './getEventPath';
 import { mutateArray } from './mutateArray';
+import { createTree } from './createTree';
 
 export {
   inferFilterType,
@@ -10,4 +11,5 @@ export {
   use12HoursDateFormat,
   getEventPath,
   mutateArray,
+  createTree,
 };
