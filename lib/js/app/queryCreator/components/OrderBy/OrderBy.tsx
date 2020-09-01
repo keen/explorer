@@ -139,6 +139,7 @@ const OrderBy: FC<Props> = ({ collection }) => {
   }, [orderBy]);
 
   useEffect(() => {
+    let dragGhost;
     new Sortable(sortableRef.current, {
       animation: DRAG_ANIMATION_TIME,
       delay: DRAG_DELAY,
@@ -157,7 +158,20 @@ const OrderBy: FC<Props> = ({ collection }) => {
           );
           dispatch(setOrderBy(updatedGroups));
           setDragMode(false);
+          if (dragGhost) dragGhost.parentNode.removeChild(dragGhost);
         }
+      },
+      setData: (dataTransfer, dragEl) => {
+        dragGhost = dragEl.cloneNode(true);
+        dragGhost.style = {
+          width: dragEl.offsetWidth,
+          transform: 'translateX(-100%)',
+          position: 'absolute',
+        };
+        const tree = dragGhost.querySelector('[data-testid="properties-tree"]');
+        if (tree) tree.remove();
+        document.body.appendChild(dragGhost);
+        dataTransfer.setDragImage(dragGhost, 10, 10);
       },
     });
   }, []);
