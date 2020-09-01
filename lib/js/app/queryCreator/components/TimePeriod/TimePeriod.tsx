@@ -67,6 +67,7 @@ const TimePeriod: FC<Props> = ({
           data-testid="relative-time-input"
           autoFocus
           type="number"
+          min={1}
           value={value}
           onChange={(e) => changeValueHandler(e.target.value)}
         />
