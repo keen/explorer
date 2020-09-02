@@ -14,12 +14,16 @@ const render = (storeState: any = {}, overProps: any = {}) => {
         visible: true,
       },
     },
+    project: {
+      tagsPool: [],
+    },
     savedQuery: {
       name: '',
       displayName: '',
       cached: false,
       refreshRate: 0,
       exists: false,
+      tags: [],
     },
     queries: {
       isSaving: false,
@@ -54,6 +58,7 @@ test('renders saved query name', () => {
     cached: false,
     refreshRate: 0,
     exists: true,
+    tags: [],
   };
   const {
     wrapper: { getByText },
@@ -69,6 +74,7 @@ test('allows user to open query settings', () => {
     cached: false,
     refreshRate: 0,
     exists: true,
+    tags: [],
   };
   const {
     wrapper: { getByTestId },
@@ -92,6 +98,7 @@ test('renders badge with query cache indicator', () => {
     cached: true,
     refreshRate: 4,
     exists: true,
+    tags: [],
   };
   const {
     wrapper: { getByTestId },
@@ -107,6 +114,7 @@ test('allows user to save query', () => {
     cached: false,
     refreshRate: 0,
     exists: true,
+    tags: [],
   };
   const {
     props,

@@ -6,12 +6,12 @@ import React, {
   useCallback,
   useMemo,
 } from 'react';
+import { Dropdown } from '@keen.io/ui-core';
 
 import { ListItem } from './components';
 import { Container, List, Groups, AnalysisTitle } from './Analysis.styles';
 
 import Title from '../Title';
-import Dropdown from '../Dropdown';
 import DropableContainer from '../DropableContainer';
 
 import text from './text.json';

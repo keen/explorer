@@ -17,6 +17,7 @@ const render = (storeState: any = {}, overProps: any = {}) => {
       cached: false,
       refreshRate: 0,
       exists: false,
+      tags: [],
     },
     app: {
       querySettingsModal: {

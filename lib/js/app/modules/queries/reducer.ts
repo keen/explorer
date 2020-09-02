@@ -1,6 +1,7 @@
 import { ReducerState, QueriesActions } from './types';
 
 import {
+  SET_QUERY_SETTINGS,
   RUN_QUERY,
   RUN_QUERY_ERROR,
   RUN_QUERY_SUCCESS,
@@ -18,10 +19,12 @@ import {
 } from './constants';
 
 export const initialState: ReducerState = {
+  settings: {},
   results: null,
-  isLoading: false,
+  isQueryPerforming: false,
   isSavingQuery: false,
-  saved: [],
+  isSavedQueriesLoaded: false,
+  savedQueries: [],
   cachedQueries: {
     limit: null,
     limitReached: false,
@@ -38,6 +41,11 @@ export const queriesReducer = (
   action: QueriesActions
 ) => {
   switch (action.type) {
+    case SET_QUERY_SETTINGS:
+      return {
+        ...state,
+        settings: action.payload.settings,
+      };
     case RESET_QUERY_RESULTS:
       return {
         ...state,
@@ -91,33 +99,34 @@ export const queriesReducer = (
     case DELETE_QUERY_SUCCESS:
       return {
         ...state,
-        saved: state.saved.filter(
-          (item) => item.query_name !== action.payload.queryName
+        savedQueries: state.savedQueries.filter(
+          (item) => item.name !== action.payload.queryName
         ),
       };
     case GET_SAVED_QUERIES_SUCCESS:
       return {
         ...state,
-        saved: action.payload.queries,
+        isSavedQueriesLoaded: true,
+        savedQueries: action.payload.queries,
       };
     case RUN_QUERY: {
       return {
         ...state,
         error: null,
-        isLoading: true,
+        isQueryPerforming: true,
       };
     }
     case RUN_QUERY_ERROR: {
       return {
         ...state,
-        isLoading: false,
+        isQueryPerforming: false,
         error: action.payload.error,
       };
     }
     case RUN_QUERY_SUCCESS: {
       return {
         ...state,
-        isLoading: false,
+        isQueryPerforming: false,
         results: action.payload.results,
       };
     }

@@ -19,6 +19,7 @@ type Props = {
     displayName: string;
     name: string;
     refreshRate: number;
+    tags: string[];
   }) => void;
   /** Cache available indicator */
   cacheAvailable: boolean;

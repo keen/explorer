@@ -25,6 +25,10 @@ export const transformToQuery = (query: QueryState) => {
     );
   }
 
+  if (queryCopy.orderBy) {
+    queryCopy.orderBy = queryCopy.orderBy.map(({ id, ...item }) => item);
+  }
+
   return snakeCase({
     analysisType,
     ...queryCopy,

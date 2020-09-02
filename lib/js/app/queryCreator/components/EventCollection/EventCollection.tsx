@@ -7,12 +7,12 @@ import React, {
   useEffect,
 } from 'react';
 import { useSelector } from 'react-redux';
+import { Dropdown } from '@keen.io/ui-core';
 
 import { Container } from './EventCollection.styles';
 
 import Title from '../Title';
 import EmptySearch from '../EmptySearch';
-import Dropdown from '../Dropdown';
 import DropdownList from '../DropdownList';
 import DropdownListContainer from '../DropdownListContainer';
 import DropableContainer, { Variant } from '../DropableContainer';

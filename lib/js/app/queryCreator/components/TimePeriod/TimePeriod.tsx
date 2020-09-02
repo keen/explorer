@@ -1,4 +1,5 @@
 import React, { FC, useState, useCallback, useMemo } from 'react';
+import { Dropdown, Input } from '@keen.io/ui-core';
 
 import {
   Container,
@@ -7,8 +8,6 @@ import {
   UnitsContainer,
 } from './TimePeriod.styles';
 
-import Input from '../Input';
-import Dropdown from '../Dropdown';
 import DropdownList from '../DropdownList';
 import DropdownListContainer from '../DropdownListContainer';
 import DropableContainer from '../DropableContainer';
@@ -39,13 +38,15 @@ const TimePeriod: FC<Props> = ({
   unitsPlaceholder,
 }) => {
   const [isUnitsOpen, setUnitsOpen] = useState(false);
+  const [inputValue, setInputValue] = useState(value);
+
   const changeValueHandler = useCallback(
     (eventValue) => {
-      let updatedValue = 1;
       if (eventValue) {
-        updatedValue = parseInt(eventValue);
+        const updatedValue = parseInt(eventValue);
+        onChange(`${relativity}_${updatedValue}_${units}`);
       }
-      onChange(`${relativity}_${updatedValue}_${units}`);
+      setInputValue(eventValue);
     },
     [onChange]
   );
@@ -64,10 +65,13 @@ const TimePeriod: FC<Props> = ({
       <TimeLabel>{label}</TimeLabel>
       <TimeValue>
         <Input
+          variant="solid"
           data-testid="relative-time-input"
           autoFocus
           type="number"
-          value={value}
+          value={inputValue}
+          hasError={!inputValue}
+          min={1}
           onChange={(e) => changeValueHandler(e.target.value)}
         />
       </TimeValue>

@@ -9,7 +9,6 @@ import text from './text.json';
 
 import DataViz from '../DataViz';
 import JSONView from '../JSONView';
-import EmbedWidget from '../EmbedWidget';
 
 import { getVisualizationType, setVisualizationType } from '../../modules/app';
 import { getSavedQueryName } from '../../modules/savedQuery';
@@ -83,7 +82,7 @@ const QueryVisualization: FC<Props> = ({ queryResults, query }) => {
       ) : (
         <JSONView analysisResults={queryResults} />
       )}
-      {showDataviz && <EmbedWidget query={query} widget={widgetType} />}
+
       <Settings>
         {showDataviz && (
           <Button onClick={() => extractToImage()}>

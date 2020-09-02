@@ -1,4 +1,4 @@
-import { queryReducer } from './reducer';
+import { queryReducer, initialState } from './reducer';
 import {
   getQuery,
   getEventCollection,
@@ -24,6 +24,7 @@ import {
   removeFilter,
   updateFilter,
   setQuery,
+  serializeQuery,
   resetQuery,
   selectEventCollection,
   selectTargetProperty,
@@ -49,11 +50,13 @@ import {
 
 import {
   SET_QUERY,
+  SET_GROUP_BY,
   SELECT_EVENT_COLLECTION,
   SELECT_TIMEZONE,
   SELECT_FUNNEL_STEP_EVENT_COLLECTION,
   DEFAULT_TIMEZONE,
   DEFAULT_TIMEFRAME,
+  SERIALIZE_QUERY,
 } from './constants';
 import {
   ReducerState,
@@ -64,6 +67,7 @@ import {
 } from './types';
 
 export {
+  initialState,
   queryReducer,
   getQuery,
   getPercentile,
@@ -91,6 +95,7 @@ export {
   setExtractionRecipientEmail,
   setExtractionContentEncoding,
   setQuery,
+  serializeQuery,
   setPropertyNames,
   setPercentile,
   setFilters,
@@ -117,7 +122,9 @@ export {
 };
 
 export {
+  SERIALIZE_QUERY,
   SET_QUERY,
+  SET_GROUP_BY,
   SELECT_EVENT_COLLECTION,
   SELECT_TIMEZONE,
   SELECT_FUNNEL_STEP_EVENT_COLLECTION,

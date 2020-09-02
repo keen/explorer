@@ -30,8 +30,8 @@ import { groupByReducer } from './reducer';
 import { useSearch } from '../../hooks';
 import { SearchContext } from '../../contexts';
 
-import { createTree } from '../../utils/createTree';
-import { convertGroups, serializeGroups, mutateArray } from './utils';
+import { mutateArray, createTree } from '../../utils';
+import { convertGroups, serializeGroups } from './utils';
 
 import {
   getEventCollection,
@@ -159,15 +159,19 @@ const GroupBy: FC<Props> = ({ collection }) => {
         );
         groupDispatcher(setGroups(updatedGroups));
         setDragMode(false);
-        dragGhost.parentNode.removeChild(dragGhost);
+        if (dragGhost) dragGhost.parentNode.removeChild(dragGhost);
       },
       setData: (dataTransfer, dragEl) => {
         dragGhost = dragEl.cloneNode(true);
-        dragGhost.style.width = dragEl.offsetWidth;
+        dragGhost.style = {
+          width: dragEl.offsetWidth,
+          transform: 'translateX(-100%)',
+          position: 'absolute',
+        };
         const tree = dragGhost.querySelector('[data-testid="properties-tree"]');
         if (tree) tree.remove();
         document.body.appendChild(dragGhost);
-        dataTransfer.setDragImage(dragGhost, 0, 0);
+        dataTransfer.setDragImage(dragGhost, 10, 10);
       },
     });
   }, []);

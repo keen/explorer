@@ -10,7 +10,12 @@ export const Container = styled.div`
 `;
 
 export const QueryMeta = styled.div`
+  display: flex;
   margin-left: 10px;
+`;
+
+export const Tag = styled.div`
+  margin-right: 10px;
 `;
 
 export const QueryName = styled.div`
@@ -27,6 +32,6 @@ export const Menu = styled.div`
   margin-left: auto;
 
   ${MenuItem} + ${MenuItem} {
-    margin-left: 15px;
+    margin-left: 10px;
   }
 `;

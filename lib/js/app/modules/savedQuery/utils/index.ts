@@ -1,3 +1,4 @@
 import serializeSavedQuery from './serializeSavedQuery';
+import convertMilisecondsToMinutes from './convertMilisecondsToMinutes';
 
-export { serializeSavedQuery };
+export { serializeSavedQuery, convertMilisecondsToMinutes };

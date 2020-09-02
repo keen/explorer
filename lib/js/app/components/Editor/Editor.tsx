@@ -1,8 +1,13 @@
-import React, { FC } from 'react';
+import React, { FC, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Button } from '@keen.io/ui-core';
 
-import { EditorActions, ClearButton, CreatorContainer } from './Editor.styles';
+import {
+  EditorActions,
+  Card,
+  ClearButton,
+  CreatorContainer,
+} from './Editor.styles';
 
 import EditorNavigation from '../EditorNavigation';
 import Creator from '../Creator';
@@ -17,6 +22,7 @@ import {
   getQueryResults,
   getQueryPerformState,
   getQueryLimitReached,
+  setQuerySettings,
 } from '../../modules/queries';
 import { clearQuery } from '../../modules/app';
 
@@ -25,8 +31,6 @@ type Props = {
   query: Record<string, any>;
   /** Optional upgrade subscription url */
   upgradeSubscriptionUrl?: string;
-  /** Query update handler */
-  onUpdateQuery: (query: Record<string, any>) => void;
   /** Run query event handler */
   onRunQuery: () => void;
   /** Save query event handler */
@@ -38,7 +42,6 @@ const Editor: FC<Props> = ({
   upgradeSubscriptionUrl,
   onRunQuery,
   onSaveQuery,
-  onUpdateQuery,
 }) => {
   const dispatch = useDispatch();
 
@@ -46,20 +49,28 @@ const Editor: FC<Props> = ({
   const isQueryLoading = useSelector(getQueryPerformState);
   const isQueryLimitReached = useSelector(getQueryLimitReached);
 
+  const updateQuery = useCallback((query: Record<string, any>) => {
+    dispatch(setQuerySettings(query));
+  }, []);
+
   return (
     <div id="editor">
       <EditorNavigation onSaveQuery={onSaveQuery} />
       <section>
-        {isQueryLimitReached ? (
+        {isQueryLimitReached && (
           <QueryLimitReached upgradeSubscriptionUrl={upgradeSubscriptionUrl} />
-        ) : queryResults ? (
-          <QueryVisualization query={query} queryResults={queryResults} />
-        ) : (
-          <VisualizationPlaceholder isLoading={isQueryLoading} />
         )}
+        <Card>
+          {queryResults && !isQueryLimitReached && (
+            <QueryVisualization query={query} queryResults={queryResults} />
+          )}
+          {!queryResults && !isQueryLimitReached && (
+            <VisualizationPlaceholder isLoading={isQueryLoading} />
+          )}
+        </Card>
       </section>
       <CreatorContainer>
-        <Creator onUpdateQuery={onUpdateQuery} />
+        <Creator onUpdateQuery={updateQuery} />
       </CreatorContainer>
       <section>
         <EditorActions>

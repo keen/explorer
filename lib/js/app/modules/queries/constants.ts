@@ -1,3 +1,4 @@
+export const SET_QUERY_SETTINGS = '@queries/SET_QUERY_SETTINGS';
 export const RUN_QUERY = '@queries/RUN_QUERY';
 export const RUN_QUERY_SUCCESS = '@queries/RUN_QUERY_SUCCESS';
 export const RUN_QUERY_ERROR = '@queries/RUN_QUERY_ERROR';

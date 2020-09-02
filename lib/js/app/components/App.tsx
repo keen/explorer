@@ -1,7 +1,6 @@
 // @ts-nocheck
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import snakeCase from 'snakecase-keys';
 import { getPubSub } from '@keen.io/pubsub';
 
 import {
@@ -9,8 +8,9 @@ import {
   deleteQuery,
   saveQuery,
   resetQueryResults,
-  fetchSavedQueries,
   getQueryResults,
+  getQuerySettings,
+  setQuerySettings,
 } from '../modules/queries';
 import {
   getSavedQuery,
@@ -20,7 +20,9 @@ import {
 import {
   loadPersitedState,
   getViewMode,
+  setViewMode,
   getVisualizationType,
+  switchToQueriesList,
   createNewQuery,
   editQuery,
 } from '../modules/app';
@@ -33,46 +35,58 @@ import QuerySettingsModal from './QuerySettingsModal';
 import ToastNotifications from './ToastNotifications';
 import Confirm from './Confirm';
 
-import { NEW_QUERY_EVENT, CACHE_AVAILABLE } from '../constants';
+import {
+  NEW_QUERY_EVENT,
+  CHANGE_VIEW_EVENT,
+  CACHE_AVAILABLE,
+} from '../constants';
 
 const mapStateToProps = (state: AppState) => ({
   savedQuery: getSavedQuery(state),
   widget: getVisualizationType(state),
   view: getViewMode(state),
   queryResults: getQueryResults(state),
+  query: getQuerySettings(state),
 });
 
 const mapDispatchToProps = {
   saveQuery,
   editQuery,
-  fetchSavedQueries,
   resetQueryResults,
   deleteQuery,
   loadPersitedState,
   resetSavedQuery,
   selectSavedQuery,
+  setQuerySettings,
+  switchToQueriesList,
   createNewQuery,
+  setViewMode,
   runQuery,
 };
 
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      query: {},
-      mode: 'browser',
-    };
 
     const pubsub = getPubSub();
-    this.subscriptionDispose = pubsub.subscribe((eventName: string) => {
-      switch (eventName) {
-        case NEW_QUERY_EVENT:
-          this.props.createNewQuery();
-          break;
-        default:
-          break;
+    this.subscriptionDispose = pubsub.subscribe(
+      (eventName: string, meta: Record<string, any>) => {
+        switch (eventName) {
+          case CHANGE_VIEW_EVENT:
+            const { view } = meta;
+            if (view === 'browser') {
+              this.props.switchToQueriesList();
+            } else {
+              this.props.setViewMode(view);
+            }
+          case NEW_QUERY_EVENT:
+            this.props.createNewQuery();
+            break;
+          default:
+            break;
+        }
       }
-    });
+    );
   }
 
   componentWillUnmount() {
@@ -80,24 +94,26 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.props.fetchSavedQueries();
     this.props.loadPersitedState();
   }
 
   onSaveQuery = ({
     displayName,
     refreshRate,
+    tags,
     name,
   }: {
     displayName: string;
     refreshRate: number;
+    tags: string[];
     name: string;
   }) => {
     const body = {
-      query: this.state.query,
+      query: this.props.query,
       metadata: {
         displayName,
         widget: this.props.widget,
+        tags,
       },
       refreshRate: refreshRate * 60 * 60,
     };
@@ -110,13 +126,13 @@ class App extends Component {
       <div>
         {this.props.view === 'browser' && (
           <Browser
-            query={this.state.query}
+            query={this.props.query}
             queryResults={this.props.queryResults}
-            onRunQuery={() => this.props.runQuery(this.state.query)}
-            onSelectQuery={(queryName, { query }) => {
+            onRunQuery={() => this.props.runQuery(this.props.query)}
+            onSelectQuery={(queryName, query) => {
               this.props.selectSavedQuery(queryName);
               this.props.resetQueryResults();
-              this.setState({ query: snakeCase(query) });
+              this.props.setQuerySettings(query);
             }}
             onEditQuery={(queryName) => {
               this.props.editQuery(queryName);
@@ -126,24 +142,22 @@ class App extends Component {
         {this.props.view === 'editor' && (
           <div>
             <Editor
-              query={this.state.query}
+              query={this.props.query}
               upgradeSubscriptionUrl={this.props.upgradeSubscriptionUrl}
-              onRunQuery={() => this.props.runQuery(this.state.query)}
+              onRunQuery={() => this.props.runQuery(this.props.query)}
               onSaveQuery={() => {
                 const {
                   displayName,
                   name,
+                  tags,
                   refreshRate,
                 } = this.props.savedQuery;
                 this.onSaveQuery({
                   displayName,
                   refreshRate,
+                  tags,
                   name,
                 });
-              }}
-              onUpdateQuery={(query) => {
-                console.log(query, '--- query update');
-                this.setState({ query });
               }}
             />
           </div>
@@ -152,7 +166,7 @@ class App extends Component {
         <ToastNotifications />
         <QuerySettingsModal
           cacheAvailable={CACHE_AVAILABLE.includes(
-            this.state.query.analysis_type
+            this.props.query.analysis_type
           )}
           onSaveQuery={(settings) => this.onSaveQuery(settings)}
         />

@@ -15,6 +15,7 @@ export const FiltersSettings = styled.div`
 export const ModifiersSettings = styled.div<FlexDirectionProps>`
   display: flex;
   margin-bottom: 20px;
+
   ${flexbox}
 `;
 
