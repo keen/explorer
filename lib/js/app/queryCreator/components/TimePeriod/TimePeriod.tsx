@@ -38,13 +38,15 @@ const TimePeriod: FC<Props> = ({
   unitsPlaceholder,
 }) => {
   const [isUnitsOpen, setUnitsOpen] = useState(false);
+  const [inputValue, setInputValue] = useState(value);
+
   const changeValueHandler = useCallback(
     (eventValue) => {
-      let updatedValue = 1;
       if (eventValue) {
-        updatedValue = parseInt(eventValue);
+        const updatedValue = parseInt(eventValue);
+        onChange(`${relativity}_${updatedValue}_${units}`);
       }
-      onChange(`${relativity}_${updatedValue}_${units}`);
+      setInputValue(eventValue);
     },
     [onChange]
   );
@@ -67,8 +69,9 @@ const TimePeriod: FC<Props> = ({
           data-testid="relative-time-input"
           autoFocus
           type="number"
+          value={inputValue}
+          hasError={!inputValue}
           min={1}
-          value={value}
           onChange={(e) => changeValueHandler(e.target.value)}
         />
       </TimeValue>
