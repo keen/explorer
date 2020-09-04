@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useState, useEffect } from 'react';
+import React, { FC, useCallback, useState, useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { transparentize } from 'polished';
 import { Label, Checkbox, Input } from '@keen.io/ui-core';
@@ -91,21 +91,19 @@ const FunnelStep: FC<Props> = ({
 }) => {
   const dispatch = useDispatch();
 
+  const firstDetailsVisible = useRef(detailsVisible);
+
   const updateStep = useCallback(
     (step: Partial<FunnelStep>) => dispatch(updateFunnelStep(id, step)),
     [id]
   );
   const [error, setError] = useState(false);
-  const [showError, setShowError] = useState(false);
 
   useEffect(() => {
-    showError &&
+    firstDetailsVisible.current &&
+      !detailsVisible &&
       setError(eventCollection === undefined || actorProperty === undefined);
   }, [eventCollection, actorProperty, detailsVisible]);
-
-  useEffect(() => {
-    setShowError(true);
-  }, []);
 
   const [stepName, setStepName] = useState(null);
 
@@ -113,6 +111,7 @@ const FunnelStep: FC<Props> = ({
     <StepContainer>
       <CardWrapper
         className="dragBar"
+        data-testid="bar"
         onClick={() => setDetailsVisible(detailsVisible ? null : id)}
       >
         <StepHeader>
@@ -129,6 +128,7 @@ const FunnelStep: FC<Props> = ({
           </StepTitle>
           <Settings>
             <Clone
+              data-testid="clone-button"
               onClick={(e) => {
                 e.stopPropagation();
                 onClone(id);
@@ -137,6 +137,7 @@ const FunnelStep: FC<Props> = ({
               {text.clone}
             </Clone>
             <Close
+              data-testid="close-button"
               onClick={(e) => {
                 e.stopPropagation();
                 onRemove();
@@ -218,11 +219,11 @@ const FunnelStep: FC<Props> = ({
           </Wrapper>
           <Wrapper>
             <Item>
-              <Title>Step Name</Title>
+              <Title>{text.stepLabel}</Title>
               <Input
                 type="text"
                 variant="solid"
-                id="stepLabel"
+                id={`stepName-${id}-${index}`}
                 placeholder={eventCollection && eventCollection}
                 onChange={(e) => setStepName(e.target.value)}
                 value={stepName ? stepName : ''}
@@ -247,7 +248,7 @@ const FunnelStep: FC<Props> = ({
                 type="info"
                 message={
                   index === 0
-                    ? 'The first step cannot be optional'
+                    ? text.firstStepOptionalTooltip
                     : text.optionalTooltip
                 }
                 fill={colors.blue[500]}
@@ -274,7 +275,7 @@ const FunnelStep: FC<Props> = ({
                 type="info"
                 message={
                   index === 0
-                    ? 'The first step cannot be inverted'
+                    ? text.firstStepInvertedTooltip
                     : text.invertedTooltip
                 }
                 fill={colors.blue[500]}

@@ -221,9 +221,7 @@ export const updateFunnelStep = (
   },
 });
 
-export const changeFunnelStepsOrderAction = (
-  steps: FunnelStep[]
-): QueryActions => ({
+export const changeFunnelStepsOrder = (steps: FunnelStep[]): QueryActions => ({
   type: CHANGE_FUNNEL_STEPS_ORDER,
   payload: { steps },
 });

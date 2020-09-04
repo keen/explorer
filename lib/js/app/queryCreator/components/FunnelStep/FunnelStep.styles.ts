@@ -15,6 +15,7 @@ export const SmallItem = styled.div`
 
 export const Item = styled.div`
   flex-basis: 25%;
+  max-width: 320px;
 `;
 
 export const Wrapper = styled.div`

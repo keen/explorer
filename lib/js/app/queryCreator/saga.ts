@@ -24,6 +24,7 @@ import {
   getTimeframe,
   setTimeframe,
   getFunnelSteps,
+  changeFunnelStepsOrder,
   updateFunnelStep,
   setGroupBy,
   setOrderBy,
@@ -197,6 +198,7 @@ function* serializeQuery(action: SetQueryAction) {
     const schemasToFetch = steps.filter(
       ({ eventCollection }) => !schemas[eventCollection]
     );
+    yield put(changeFunnelStepsOrder(steps));
 
     yield all(
       schemasToFetch.map(({ eventCollection }) =>

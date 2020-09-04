@@ -14,7 +14,7 @@ import {
   addFunnelStep,
   removeFunnelStep,
   getFunnelSteps,
-  changeFunnelStepsOrderAction,
+  changeFunnelStepsOrder,
   cloneFunnelStep,
 } from '../../modules/query';
 
@@ -46,7 +46,7 @@ const FunnelSteps: FC<{}> = () => {
           evt.oldIndex,
           evt.newIndex
         );
-        dispatch(changeFunnelStepsOrderAction(updatedSteps));
+        dispatch(changeFunnelStepsOrder(updatedSteps));
       },
     });
   }, []);

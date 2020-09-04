@@ -30,7 +30,7 @@ export const transformToQuery = (query: QueryState) => {
   }
 
   if (queryCopy.steps) {
-    queryCopy.steps = queryCopy.steps.map((step) => ({
+    queryCopy.steps = queryCopy.steps.map(({ id, ...step }) => ({
       ...step,
       filters: step.filters.map(({ id, ...filter }) =>
         convertAbstractOperators(filter)

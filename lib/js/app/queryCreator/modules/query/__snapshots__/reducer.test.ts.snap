@@ -26,6 +26,80 @@ Array [
 ]
 `;
 
+exports[`add funnel step filter 1`] = `
+Array [
+  Object {
+    "actorProperty": undefined,
+    "eventCollection": "clicks",
+    "filters": Array [
+      Object {
+        "id": "qwe456",
+        "operator": undefined,
+        "propertyName": undefined,
+        "propertyType": undefined,
+        "propertyValue": undefined,
+      },
+    ],
+    "id": "asd123",
+    "inverted": false,
+    "optional": false,
+    "timeframe": "this_14_days",
+    "timezone": undefined,
+    "withActors": false,
+  },
+]
+`;
+
+exports[`clone funnel step 1`] = `
+Array [
+  Object {
+    "actorProperty": undefined,
+    "eventCollection": "clicks",
+    "filters": Array [],
+    "id": "asd123",
+    "inverted": false,
+    "optional": false,
+    "timeframe": "this_14_days",
+    "timezone": undefined,
+    "withActors": false,
+  },
+  Object {
+    "actorProperty": undefined,
+    "eventCollection": "clicks",
+    "filters": Array [],
+    "id": "qwe456",
+    "inverted": false,
+    "optional": false,
+    "timeframe": "this_14_days",
+    "timezone": undefined,
+    "withActors": false,
+  },
+]
+`;
+
+exports[`remove funnel step filter 1`] = `
+Array [
+  Object {
+    "actorProperty": undefined,
+    "eventCollection": "clicks",
+    "filter": Array [
+      Object {
+        "operator": "eq",
+        "propertyName": "id",
+        "propertyValue": "city",
+      },
+    ],
+    "filters": Array [],
+    "id": "asd123",
+    "inverted": false,
+    "optional": false,
+    "timeframe": "this_14_days",
+    "timezone": undefined,
+    "withActors": false,
+  },
+]
+`;
+
 exports[`update funnel step 1`] = `
 Array [
   Object {
@@ -38,6 +112,45 @@ Array [
     "timeframe": "this_14_days",
     "timezone": undefined,
     "withActors": true,
+  },
+]
+`;
+
+exports[`update funnel step filter 1`] = `
+Array [
+  Object {
+    "actorProperty": undefined,
+    "eventCollection": "clicks",
+    "filter": Array [
+      Object {
+        "operator": "eq",
+        "propertyName": "id",
+        "propertyValue": "city",
+      },
+    ],
+    "filters": Array [],
+    "id": "asd123",
+    "inverted": false,
+    "optional": false,
+    "timeframe": "this_14_days",
+    "timezone": undefined,
+    "withActors": false,
+  },
+]
+`;
+
+exports[`update funnel step timezone 1`] = `
+Array [
+  Object {
+    "actorProperty": undefined,
+    "eventCollection": "clicks",
+    "filters": Array [],
+    "id": "asd123",
+    "inverted": false,
+    "optional": false,
+    "timeframe": "this_14_days",
+    "timezone": "US/Central",
+    "withActors": false,
   },
 ]
 `;
