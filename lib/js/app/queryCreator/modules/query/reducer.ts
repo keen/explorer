@@ -235,7 +235,7 @@ export const queryReducer = (
           if (step.id === action.payload.stepId) {
             return {
               ...step,
-              filters: state.filters.filter(
+              filters: step.filters.filter(
                 (filter, index) => index !== action.payload.filterIndex
               ),
             };
