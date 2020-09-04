@@ -29,6 +29,15 @@ export const transformToQuery = (query: QueryState) => {
     queryCopy.orderBy = queryCopy.orderBy.map(({ id, ...item }) => item);
   }
 
+  if (queryCopy.steps) {
+    queryCopy.steps = queryCopy.steps.map(({ id, ...step }) => ({
+      ...step,
+      filters: step.filters.map(({ id, ...filter }) =>
+        convertAbstractOperators(filter)
+      ),
+    }));
+  }
+
   return snakeCase({
     analysisType,
     ...queryCopy,

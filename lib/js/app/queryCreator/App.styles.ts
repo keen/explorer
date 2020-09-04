@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import {
   layout,
   flexbox,
@@ -7,10 +7,6 @@ import {
   SpaceProps,
   FlexDirectionProps,
 } from 'styled-system';
-
-export const FiltersSettings = styled.div`
-  margin-bottom: 20px;
-`;
 
 export const ModifiersSettings = styled.div<FlexDirectionProps>`
   display: flex;
@@ -26,12 +22,4 @@ export const ModifiersItem = styled.div<LayoutProps & SpaceProps>`
 
 export const LimitContainer = styled.div`
   max-width: 100px;
-`;
-
-export const ActionContainer = styled.div<{ hasSpacing: boolean }>`
-  ${(props) =>
-    props.hasSpacing &&
-    css`
-      margin-top: 5px;
-    `};
 `;

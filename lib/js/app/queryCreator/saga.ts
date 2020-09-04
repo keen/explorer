@@ -9,6 +9,7 @@ import {
   put,
 } from 'redux-saga/effects';
 import moment from 'moment-timezone';
+import { v4 as uuid } from 'uuid';
 
 import {
   fetchProjectDetails,
@@ -22,6 +23,9 @@ import {
   getOrderBy,
   getTimeframe,
   setTimeframe,
+  getFunnelSteps,
+  changeFunnelStepsOrder,
+  updateFunnelStep,
   setGroupBy,
   setOrderBy,
   setFilters,
@@ -32,9 +36,11 @@ import {
   SelectFunnelStepEventCollectionAction,
   SET_GROUP_BY,
   SERIALIZE_QUERY,
+  UpdateFunnelStepTimezoneAction,
   SELECT_TIMEZONE,
   SELECT_EVENT_COLLECTION,
   SELECT_FUNNEL_STEP_EVENT_COLLECTION,
+  UPDATE_FUNNEL_STEP_TIMEZONE,
 } from './modules/query';
 
 import {
@@ -53,6 +59,8 @@ import { serializeOrderBy, serializeFilters } from './serializers';
 
 import { Filter, OrderBy } from './types';
 import { SetGroupByAction } from './modules/query/types';
+
+import { createAbstractOperator } from './utils';
 
 function* appStart() {
   yield put(fetchProjectDetails());
@@ -178,10 +186,19 @@ function* serializeQuery(action: SetQueryAction) {
   }
 
   if (query.steps) {
-    const { steps } = query;
+    const steps = query.steps.map((step) => ({
+      ...step,
+      id: uuid(),
+      filters: step.filters.map((filter) => ({
+        ...filter,
+        operator: createAbstractOperator(filter),
+      })),
+    }));
+
     const schemasToFetch = steps.filter(
       ({ eventCollection }) => !schemas[eventCollection]
     );
+    yield put(changeFunnelStepsOrder(steps));
 
     yield all(
       schemasToFetch.map(({ eventCollection }) =>
@@ -216,6 +233,26 @@ function* updateGroupBy(action: SetGroupByAction) {
   yield put(setOrderBy(orderBySettings));
 }
 
+function* updateFunnelStepTimezone(action: UpdateFunnelStepTimezoneAction) {
+  const { timezone } = action.payload;
+  const steps = yield select(getFunnelSteps);
+  const timeframe = steps.filter((step) => step.id === action.payload.stepId)
+    .timeframe;
+
+  if (typeof timeframe !== 'string') {
+    const { start, end } = timeframe;
+    const timeWithZone = {
+      start: moment(start).tz(timezone).format(),
+      end: moment(end).tz(timezone).format(),
+    };
+    yield put(
+      updateFunnelStep(action.payload.stepId, {
+        timeframe: timeWithZone,
+      })
+    );
+  }
+}
+
 function* watcher() {
   yield takeLatest(APP_START, appStart);
   yield takeLatest(SERIALIZE_QUERY, serializeQuery);
@@ -229,6 +266,7 @@ function* watcher() {
     selectFunnelStepCollection
   );
   yield takeLatest(SET_GROUP_BY, updateGroupBy);
+  yield takeLatest(UPDATE_FUNNEL_STEP_TIMEZONE, updateFunnelStepTimezone);
 }
 
 export default function* rootSaga() {

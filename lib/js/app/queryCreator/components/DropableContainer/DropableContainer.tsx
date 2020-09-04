@@ -36,6 +36,8 @@ type Props = {
   searchPlaceholder?: string;
   /** Search event handler */
   onSearch?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  /** Error */
+  hasError?: boolean;
 };
 
 const DropableContainer: FC<Props> = ({
@@ -50,6 +52,7 @@ const DropableContainer: FC<Props> = ({
   searchPlaceholder,
   dropIndicator,
   variant = 'primary',
+  hasError = false,
 }) => {
   const containerRef = useRef(null);
   const outsideClick = useCallback(
@@ -75,6 +78,7 @@ const DropableContainer: FC<Props> = ({
       data-testid="dropable-container"
       isActive={isActive}
       variant={variant}
+      hasError={hasError}
       onClick={onClick}
       ref={containerRef}
     >

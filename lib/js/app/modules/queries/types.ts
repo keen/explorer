@@ -32,6 +32,7 @@ export type SavedQueryListItem = {
   query: Record<string, any>;
   tags: string[];
   widget: string | null;
+  stepLabels: string[];
 };
 
 export type ReducerState = {
