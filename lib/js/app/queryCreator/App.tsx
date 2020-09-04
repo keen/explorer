@@ -61,7 +61,7 @@ const App: FC<Props> = () => {
             onChange={(idx: number, filter: Filter) =>
               dispatch(updateFilter(idx, filter))
             }
-            onClick={(idx: string) => dispatch(addFilter(idx))}
+            onClick={(id: string) => dispatch(addFilter(id))}
           />
         </Card>
       )}

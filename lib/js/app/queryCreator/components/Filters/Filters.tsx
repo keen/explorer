@@ -27,7 +27,7 @@ type Props = {
   /** onChange handler */
   onChange: (idx: number, filter: Filter) => void;
   /** Add button onClick handler */
-  onClick: (idx: string) => void;
+  onClick: (id: string) => void;
 };
 
 const Filters: FC<Props> = ({
