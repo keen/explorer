@@ -1,15 +1,7 @@
 import React, { FC } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { v4 as uuid } from 'uuid';
-import { ActionButton } from '@keen.io/ui-core';
 
-import {
-  FiltersSettings,
-  ModifiersSettings,
-  ModifiersItem,
-  LimitContainer,
-  ActionContainer,
-} from './App.styles';
+import { ModifiersSettings, ModifiersItem, LimitContainer } from './App.styles';
 
 import {
   QueryArguments,
@@ -19,13 +11,11 @@ import {
   OrderBy,
   Interval,
   Limit,
-  Title,
   FunnelSteps,
   Filters,
 } from './components';
 
 import { showField } from './utils';
-import text from './text.json';
 
 import {
   getEventCollection,
@@ -36,9 +26,8 @@ import {
   setFilters,
   updateFilter,
 } from './modules/query';
-import { getSchemas, getSchemaLoading } from './modules/events';
 
-import { AppState } from './types';
+import { Filter } from './types';
 
 type Props = {
   /** Preview collection event handler */
@@ -52,14 +41,6 @@ const App: FC<Props> = () => {
 
   const filters = useSelector(getFilters);
 
-  const isSchemaExist = useSelector((state: AppState) => {
-    const schemas = getSchemas(state);
-    return schemas[collection];
-  });
-  const isSchemaLoading = useSelector((state: AppState) =>
-    getSchemaLoading(state, collection)
-  );
-
   const modifiersItemSettings = {
     marginBottom: { xs: 20, md: 0 },
     marginRight: { xs: 0, md: 25 },
@@ -70,52 +51,42 @@ const App: FC<Props> = () => {
     <div>
       <QueryArguments />
       {showField('filters', analysis) && (
-        <FiltersSettings>
-          <Card>
-            <Title isDisabled={!collection}>{text.filters}</Title>
-            {isSchemaExist && !isSchemaLoading && (
-              <Filters
-                collection={collection}
-                filters={filters}
-                onReset={() => dispatch(setFilters([]))}
-                onRemove={(idx) => dispatch(removeFilter(idx))}
-                onChange={(idx, filter) => dispatch(updateFilter(idx, filter))}
-              />
-            )}
-            <ActionContainer hasSpacing={!!filters.length}>
-              <ActionButton
-                action="create"
-                isDisabled={!collection}
-                onClick={() => {
-                  const filterId = uuid();
-                  dispatch(addFilter(filterId));
-                }}
-              />
-            </ActionContainer>
-          </Card>
-        </FiltersSettings>
+        <Card>
+          <Filters
+            collection={collection}
+            filters={filters}
+            onReset={() => dispatch(setFilters([]))}
+            onRemove={(id: string) => dispatch(removeFilter(id))}
+            onChange={(id: string, filter: Filter) =>
+              dispatch(updateFilter(id, filter))
+            }
+            onClick={(id: string) => dispatch(addFilter(id))}
+          />
+        </Card>
       )}
-      <Card>
-        {showField('steps', analysis) && <FunnelSteps />}
-        <ModifiersSettings flexDirection={{ xs: 'column', md: 'row' }}>
-          {showField('groupBy', analysis) && (
-            <ModifiersItem {...modifiersItemSettings}>
-              <GroupBy collection={collection} />
-            </ModifiersItem>
-          )}
-          {showField('orderBy', analysis) && (
-            <ModifiersItem {...modifiersItemSettings}>
-              <OrderBy collection={collection} />
-            </ModifiersItem>
-          )}
-          {showField('limit', analysis) && (
-            <LimitContainer>
-              <Limit />
-            </LimitContainer>
-          )}
-        </ModifiersSettings>
-        {showField('interval', analysis) && <Interval />}
-      </Card>
+      {showField('steps', analysis) && <FunnelSteps />}
+      {!showField('steps', analysis) && (
+        <Card>
+          <ModifiersSettings flexDirection={{ xs: 'column', md: 'row' }}>
+            {showField('groupBy', analysis) && (
+              <ModifiersItem {...modifiersItemSettings}>
+                <GroupBy collection={collection} />
+              </ModifiersItem>
+            )}
+            {showField('orderBy', analysis) && (
+              <ModifiersItem {...modifiersItemSettings}>
+                <OrderBy collection={collection} />
+              </ModifiersItem>
+            )}
+            {showField('limit', analysis) && (
+              <LimitContainer>
+                <Limit />
+              </LimitContainer>
+            )}
+          </ModifiersSettings>
+          {showField('interval', analysis) && <Interval />}
+        </Card>
+      )}
 
       {analysis === 'extraction' && <Extraction collection={collection} />}
     </div>

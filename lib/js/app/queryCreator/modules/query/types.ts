@@ -17,10 +17,15 @@ import {
   SET_FILTERS,
   SELECT_TIMEZONE,
   ADD_FUNNEL_STEP,
+  CLONE_FUNNEL_STEP,
   REMOVE_FUNNEL_STEP,
   UPDATE_FUNNEL_STEP,
   SELECT_FUNNEL_STEP_EVENT_COLLECTION,
   CHANGE_FUNNEL_STEPS_ORDER,
+  ADD_FUNNEL_STEP_FILTER,
+  UPDATE_FUNNEL_STEP_FILTER,
+  REMOVE_FUNNEL_STEP_FILTER,
+  UPDATE_FUNNEL_STEP_TIMEZONE,
   RESET_EXTRACTION,
   RESET_QUERY,
   ADD_FILTER,
@@ -75,12 +80,12 @@ export interface AddFilterAction {
 
 export interface RemoveFilterAction {
   type: typeof REMOVE_FILTER;
-  payload: { index: number };
+  payload: { id: string };
 }
 
 export interface UpdateFilterAction {
   type: typeof UPDATE_FILTER;
-  payload: { index: number; filter: Partial<Filter> };
+  payload: { id: string; filter: Partial<Filter> };
 }
 
 export interface SetExtractionLimitAction {
@@ -194,6 +199,17 @@ export interface SetFiltersAction {
 
 export interface AddFunnelStepAction {
   type: typeof ADD_FUNNEL_STEP;
+  payload: {
+    id: string;
+  };
+}
+
+export interface CloneFunnelStepAction {
+  type: typeof CLONE_FUNNEL_STEP;
+  payload: {
+    cloneId: string;
+    newId: string;
+  };
 }
 
 export interface SelectFunnelStepEventCollectionAction {
@@ -204,23 +220,53 @@ export interface SelectFunnelStepEventCollectionAction {
 export interface RemoveFunnelStepAction {
   type: typeof REMOVE_FUNNEL_STEP;
   payload: {
-    index: number;
+    stepId: string;
   };
 }
 
 export interface UpdateFunnelStepAction {
   type: typeof UPDATE_FUNNEL_STEP;
   payload: {
-    index: number;
+    stepId: string;
     properties: Partial<FunnelStep>;
   };
 }
 
 export interface ChangeFunnelStepsOrderAction {
   type: typeof CHANGE_FUNNEL_STEPS_ORDER;
+  payload: { steps: FunnelStep[] };
+}
+
+export interface AddFunnelStepFilterAction {
+  type: typeof ADD_FUNNEL_STEP_FILTER;
   payload: {
-    index: number;
-    updatedIndex: number;
+    stepId: string;
+    filterId: string;
+  };
+}
+
+export interface UpdateFunnelStepFilterAction {
+  type: typeof UPDATE_FUNNEL_STEP_FILTER;
+  payload: {
+    stepId: string;
+    filterId: string;
+    properties: Filter;
+  };
+}
+
+export interface RemoveFunnelStepFilterAction {
+  type: typeof REMOVE_FUNNEL_STEP_FILTER;
+  payload: {
+    stepId: string;
+    filterId: string;
+  };
+}
+
+export interface UpdateFunnelStepTimezoneAction {
+  type: typeof UPDATE_FUNNEL_STEP_TIMEZONE;
+  payload: {
+    stepId: string;
+    timezone: Timezones;
   };
 }
 
@@ -248,6 +294,11 @@ export type QueryActions =
   | RemoveFunnelStepAction
   | SelectFunnelStepEventCollectionAction
   | ChangeFunnelStepsOrderAction
+  | CloneFunnelStepAction
+  | AddFunnelStepFilterAction
+  | UpdateFunnelStepFilterAction
+  | RemoveFunnelStepFilterAction
+  | UpdateFunnelStepTimezoneAction
   | ResetExtractionAction
   | AddFilterAction
   | RemoveFilterAction

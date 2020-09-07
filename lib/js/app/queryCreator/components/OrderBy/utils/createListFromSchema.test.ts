@@ -24,20 +24,20 @@ test('generate list from provided schema', () => {
       },
     ],
     `
-    Object {
-      "0": Object {
+    Array [
+      Object {
         "path": "reference.value",
         "type": "num",
       },
-      "1": Object {
+      Object {
         "path": "reference.options.geometry.articles.funnels.name",
         "type": "string",
       },
-      "2": Object {
+      Object {
         "path": "users",
         "type": "list",
       },
-    }
+    ]
   `
   );
 });

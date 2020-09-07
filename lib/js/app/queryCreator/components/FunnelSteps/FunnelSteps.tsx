@@ -1,6 +1,11 @@
-import React, { FC } from 'react';
+import React, { FC, useState, useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Button } from '@keen.io/ui-core';
+import { v4 as uuid } from 'uuid';
+import Sortable from 'sortablejs';
+
+import { Container, AddStep } from './FunnelSteps.styles';
+
+import { mutateArray } from '../../utils';
 
 import text from './text.json';
 
@@ -9,50 +14,98 @@ import {
   addFunnelStep,
   removeFunnelStep,
   getFunnelSteps,
+  changeFunnelStepsOrder,
+  cloneFunnelStep,
 } from '../../modules/query';
+
+import { DRAG_ANIMATION_TIME } from './constants';
 
 const FunnelSteps: FC<{}> = () => {
   const dispatch = useDispatch();
   const steps = useSelector(getFunnelSteps);
 
+  const [stepVisible, setStepVisible] = useState(null);
+  const [isDragged, setDragMode] = useState(false);
+
+  const sortableRef = useRef(null);
+
+  const stepsRef = useRef(null);
+
+  useEffect(() => {
+    stepsRef.current = steps;
+  }, [steps]);
+
+  useEffect(() => {
+    new Sortable(sortableRef.current, {
+      animation: DRAG_ANIMATION_TIME,
+      filter: '.add-step',
+      handle: '.dragBar',
+      onStart: () => setDragMode(true),
+      onMove: (evt) => !evt.related.className.includes('add-step'),
+      onEnd: (evt) => {
+        const updatedSteps = mutateArray(
+          stepsRef.current,
+          evt.oldIndex,
+          evt.newIndex
+        );
+        dispatch(changeFunnelStepsOrder(updatedSteps));
+        setDragMode(false);
+      },
+    });
+  }, []);
+
   return (
-    <div>
-      funnel
-      {steps.map(
-        (
-          {
-            eventCollection,
-            timeframe,
-            inverted,
-            optional,
-            withActors,
-            actorProperty,
-            filters,
-          },
-          idx
-        ) => (
-          <FunnelStep
-            key={idx}
-            index={idx}
-            timeframe={timeframe}
-            actorProperty={actorProperty}
-            eventCollection={eventCollection}
-            inverted={inverted}
-            optional={optional}
-            withActors={withActors}
-            filters={filters}
-            onRemove={() => dispatch(removeFunnelStep(idx))}
-          />
-        )
-      )}
-      <Button
-        variant="secondary"
-        style="outline"
-        onClick={() => dispatch(addFunnelStep())}
+    <Container ref={sortableRef}>
+      {!!steps.length &&
+        steps.map(
+          (
+            {
+              id,
+              eventCollection,
+              timeframe,
+              timezone,
+              inverted,
+              optional,
+              actorProperty,
+              filters,
+            },
+            idx
+          ) => (
+            <FunnelStep
+              key={id}
+              id={id}
+              index={idx}
+              timeframe={timeframe}
+              timezone={timezone}
+              actorProperty={actorProperty}
+              eventCollection={eventCollection}
+              inverted={inverted}
+              optional={optional}
+              filters={filters}
+              onRemove={() => dispatch(removeFunnelStep(id))}
+              detailsVisible={stepVisible === id}
+              isFirstStep={idx === 0}
+              isDragged={isDragged}
+              setDetailsVisible={(id) => setStepVisible(id)}
+              onClone={(id) => {
+                const stepId = uuid();
+                dispatch(cloneFunnelStep(id, stepId));
+                setStepVisible(stepId);
+              }}
+            />
+          )
+        )}
+      <AddStep
+        className="add-step"
+        onClick={() => {
+          const stepId = uuid();
+          dispatch(addFunnelStep(stepId));
+          setStepVisible(stepId);
+        }}
       >
         {text.addStep}
-      </Button>
-    </div>
+      </AddStep>
+    </Container>
   );
 };
 

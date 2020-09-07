@@ -388,7 +388,6 @@
   text-align: center;
   vertical-align: top;
   -webkit-user-select: none;
-  -moz-user-select: none;
   -ms-user-select: none;
   user-select: none
 }
@@ -474,7 +473,6 @@
 .DayPickerNavigation_button {
   cursor: pointer;
   -webkit-user-select: none;
-  -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
   border: 0;
@@ -691,7 +689,6 @@
 }
 .DateInput_input__readOnly {
   -webkit-user-select: none;
-  -moz-user-select: none;
   -ms-user-select: none;
   user-select: none
 }
@@ -1011,7 +1008,6 @@
   text-align: left;
   cursor: pointer;
   -webkit-user-select: none;
-     -moz-user-select: none;
       -ms-user-select: none;
           user-select: none;
 }

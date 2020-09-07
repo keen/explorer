@@ -7,3 +7,4 @@ export const FETCH_COLLECTION_SCHEMA_ERROR =
   '@query-creator/FETCH_COLLECTION_SCHEMA_ERROR';
 export const SET_COLLETION_SCHEMA_LOADING =
   '@query-creator/SET_COLLETION_SCHEMA_LOADING';
+export const SCHEMA_COMPUTED = '@query-creator/SCHEMA_COMPUTED';

@@ -33,6 +33,8 @@ type Props = {
   onReset?: () => void;
   /** Container variant */
   variant?: Variant;
+  /** Error */
+  hasError?: boolean;
 };
 
 const EventCollection: FC<Props> = ({
@@ -40,6 +42,7 @@ const EventCollection: FC<Props> = ({
   onChange,
   onReset,
   variant = 'primary',
+  hasError = false,
 }) => {
   const [isOpen, setOpen] = useState(false);
   const [selectionIndex, setIndex] = useState<number>(null);
@@ -132,11 +135,16 @@ const EventCollection: FC<Props> = ({
 
   return (
     <Container>
-      <Title data-testid="event-collection-title" onClick={() => setOpen(true)}>
+      <Title
+        data-testid="event-collection-title"
+        onClick={() => setOpen(true)}
+        hasError={hasError}
+      >
         {text.label}
       </Title>
       <DropableContainer
         variant={variant}
+        hasError={hasError}
         searchPlaceholder={text.searchPlaceholder}
         placeholder={text.placeholder}
         onClick={() => !isOpen && setOpen(true)}
