@@ -19,7 +19,6 @@ circle.yml
 jest.config.js
 replace-config.js
 webpack.config.js
-postcss.config.js
 .eslintrc
 .eslintignore
 

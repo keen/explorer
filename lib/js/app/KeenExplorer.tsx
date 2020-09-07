@@ -9,8 +9,6 @@ import { getPubSub, PubSub } from '@keen.io/pubsub';
 
 import KeenAnalysis from 'keen-analysis';
 
-import '../../../test/demo/keen-explorer.css';
-
 import rootReducer from './rootReducer';
 import rootSaga from './rootSaga';
 
