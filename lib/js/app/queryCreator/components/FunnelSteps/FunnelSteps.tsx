@@ -25,6 +25,7 @@ const FunnelSteps: FC<{}> = () => {
   const steps = useSelector(getFunnelSteps);
 
   const [stepVisible, setStepVisible] = useState(null);
+  const [isDragged, setDragMode] = useState(false);
 
   const sortableRef = useRef(null);
 
@@ -39,6 +40,7 @@ const FunnelSteps: FC<{}> = () => {
       animation: DRAG_ANIMATION_TIME,
       filter: '.add-step',
       handle: '.dragBar',
+      onStart: () => setDragMode(true),
       onMove: (evt) => !evt.related.className.includes('add-step'),
       onEnd: (evt) => {
         const updatedSteps = mutateArray(
@@ -47,6 +49,7 @@ const FunnelSteps: FC<{}> = () => {
           evt.newIndex
         );
         dispatch(changeFunnelStepsOrder(updatedSteps));
+        setDragMode(false);
       },
     });
   }, []);
@@ -81,6 +84,8 @@ const FunnelSteps: FC<{}> = () => {
               filters={filters}
               onRemove={() => dispatch(removeFunnelStep(id))}
               detailsVisible={stepVisible === id}
+              isFirstStep={idx === 0}
+              isDragged={isDragged}
               setDetailsVisible={(id) => setStepVisible(id)}
               onClone={(id) => {
                 const stepId = uuid();

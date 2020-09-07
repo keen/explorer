@@ -68,6 +68,10 @@ type Props = {
   filters: Filter[];
   /** Details visible */
   detailsVisible: boolean;
+  /** Funnel step is first */
+  isFirstStep: boolean;
+  /** Funnel step is dragged */
+  isDragged?: boolean;
   /** Details visible show/hide handler */
   setDetailsVisible: (id: string) => void;
   /** Clone funnel step handler */
@@ -84,8 +88,10 @@ const FunnelStep: FC<Props> = ({
   optional,
   inverted,
   filters = [],
-  onRemove,
   detailsVisible,
+  isFirstStep,
+  isDragged,
+  onRemove,
   setDetailsVisible,
   onClone,
 }) => {
@@ -108,7 +114,7 @@ const FunnelStep: FC<Props> = ({
   const [stepName, setStepName] = useState(null);
 
   return (
-    <StepContainer>
+    <StepContainer isDragged={isDragged}>
       <CardWrapper
         className="dragBar"
         data-testid="bar"
@@ -230,7 +236,7 @@ const FunnelStep: FC<Props> = ({
               />
             </Item>
             <SmallItem>
-              <Label disabled={index === 0} htmlFor={`optional-step-${index}`}>
+              <Label disabled={isFirstStep} htmlFor={`optional-step-${index}`}>
                 <Checkbox
                   type="secondary"
                   id={`optional-step-${index}`}
@@ -239,15 +245,15 @@ const FunnelStep: FC<Props> = ({
                       optional: !optional,
                     })
                   }
-                  checked={index !== 0 && optional}
-                  disabled={index === 0}
+                  checked={!isFirstStep && optional}
+                  disabled={isFirstStep}
                 />
                 {text.optionalLabel}
               </Label>
               <Hint
                 type="info"
                 message={
-                  index === 0
+                  isFirstStep
                     ? text.firstStepOptionalTooltip
                     : text.optionalTooltip
                 }
@@ -257,7 +263,7 @@ const FunnelStep: FC<Props> = ({
               />
             </SmallItem>
             <SmallItem>
-              <Label disabled={index === 0} htmlFor={`inverted-step-${index}`}>
+              <Label disabled={isFirstStep} htmlFor={`inverted-step-${index}`}>
                 <Checkbox
                   type="secondary"
                   id={`inverted-step-${index}`}
@@ -266,15 +272,15 @@ const FunnelStep: FC<Props> = ({
                       inverted: !inverted,
                     })
                   }
-                  checked={index !== 0 && inverted}
-                  disabled={index === 0}
+                  checked={!isFirstStep && inverted}
+                  disabled={isFirstStep}
                 />
                 {text.invertedLabel}
               </Label>
               <Hint
                 type="info"
                 message={
-                  index === 0
+                  isFirstStep
                     ? text.firstStepInvertedTooltip
                     : text.invertedTooltip
                 }

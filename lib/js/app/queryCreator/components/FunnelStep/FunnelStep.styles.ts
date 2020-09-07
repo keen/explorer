@@ -41,7 +41,11 @@ export const CardWrapper = styled(Card)`
   }
 `;
 
-export const StepContainer = styled.div`
+export const StepContainer = styled.div<{
+  isDragged?: boolean;
+}>`
+  cursor: ${(props) => (props.isDragged ? 'grabbing' : 'grab')};
+
   ${CardWrapper} + ${CardWrapper} {
     border-top: 1px solid ${colors.white[300]};
   }
