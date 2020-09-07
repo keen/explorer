@@ -1,12 +1,10 @@
 import { ReducerState, EventsActions } from './types';
 
-import { createTree } from '../../utils/createTree';
-import { createCollection } from '../../utils/createCollection';
-
 import {
   SET_EVENTS_COLLECTIONS,
   SET_COLLETION_SCHEMA_LOADING,
   FETCH_COLLECTION_SCHEMA_SUCCESS,
+  SCHEMA_COMPUTED,
 } from './constants';
 
 export const initialState: ReducerState = {
@@ -29,15 +27,27 @@ export const eventsReducer = (
               (collection) => collection !== action.payload.colletion
             ),
       };
+    case SCHEMA_COMPUTED:
+      return {
+        ...state,
+        schemas: {
+          ...state.schemas,
+          [action.payload.collection]: {
+            ...state.schemas[action.payload.collection],
+            ...action.payload.schema,
+          },
+        },
+      };
     case FETCH_COLLECTION_SCHEMA_SUCCESS:
       return {
         ...state,
         schemas: {
           ...state.schemas,
           [action.payload.collection]: {
+            ...state.schemas[action.payload.collection],
             schema: action.payload.schema,
-            tree: createTree(action.payload.schema),
-            list: createCollection(action.payload.schema),
+            tree: {},
+            list: {},
           },
         },
       };

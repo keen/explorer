@@ -4,6 +4,7 @@ import {
   FETCH_COLLECTION_SCHEMA_ERROR,
   FETCH_COLLECTION_SCHEMA_SUCCESS,
   SET_COLLETION_SCHEMA_LOADING,
+  SCHEMA_COMPUTED,
 } from './constants';
 
 export type CollectionSchema = {
@@ -17,6 +18,14 @@ export type ReducerState = {
   loadingSchemas: string[];
   schemas: Record<string, CollectionSchema>;
 };
+
+export interface SchemaComputedAction {
+  type: typeof SCHEMA_COMPUTED;
+  payload: {
+    collection: string;
+    schema: Partial<CollectionSchema>;
+  };
+}
 
 export interface SetCollectionSchemaLoadingAction {
   type: typeof SET_COLLETION_SCHEMA_LOADING;
@@ -60,4 +69,5 @@ export type EventsActions =
   | SetEventsCollectionsAction
   | FetchCollectionSchemaAction
   | FetchCollectionSchemaSuccessAction
-  | FetchCollectionSchemaErrorAction;
+  | FetchCollectionSchemaErrorAction
+  | SchemaComputedAction;

@@ -6,6 +6,7 @@ import {
   takeLatest,
   getContext,
   fork,
+  take,
   put,
 } from 'redux-saga/effects';
 import moment from 'moment-timezone';
@@ -51,11 +52,16 @@ import {
   setEventsCollections,
   setCollectionSchemaLoading,
   getSchemas,
+  computeSchemaSuccess,
   FETCH_COLLECTION_SCHEMA_SUCCESS,
   FETCH_COLLECTION_SCHEMA,
+  SCHEMA_COMPUTED,
 } from './modules/events';
 
 import { serializeOrderBy, serializeFilters } from './serializers';
+
+import { createTree } from './utils/createTree';
+import { createCollection } from './utils/createCollection';
 
 import { Filter, OrderBy } from './types';
 import { SetGroupByAction } from './modules/query/types';
@@ -83,6 +89,21 @@ function* fetchProject() {
   }
 }
 
+function* transformSchema(
+  collection: string,
+  properties: Record<string, string>
+) {
+  const tree = yield createTree(properties);
+  const list = yield createCollection(properties);
+
+  const schema = {
+    tree,
+    list,
+  };
+
+  yield put(computeSchemaSuccess(collection, schema));
+}
+
 function* fetchSchema(action: FetchCollectionSchemaAction) {
   const collection = action.payload.collection;
   const client = yield getContext('keenClient');
@@ -96,6 +117,7 @@ function* fetchSchema(action: FetchCollectionSchemaAction) {
     const { properties } = yield fetch(url).then((response) => response.json());
 
     yield put(fetchCollectionSchemaSuccess(collection, properties));
+    yield fork(transformSchema, collection, properties);
   } catch (err) {
     yield put(fetchCollectionSchemaError(err));
   } finally {
@@ -149,16 +171,18 @@ function* storeEventSchemas() {
 }
 
 function* transformFilters(collection: string, filters: Filter[]) {
-  const schemas = yield select(getSchemas);
+  let schemas = yield select(getSchemas);
   let collectionSchema = schemas[collection];
 
   if (!collectionSchema) {
-    const client = yield getContext('keenClient');
-    const url = client.url(`/3.0/projects/{projectId}/events/${collection}`, {
-      api_key: client.config.readKey,
-    });
-    const { properties } = yield fetch(url).then((response) => response.json());
-    collectionSchema = { schema: properties };
+    while (true) {
+      yield take(FETCH_COLLECTION_SCHEMA_SUCCESS);
+      schemas = yield select(getSchemas);
+      if (schemas[collection]) {
+        collectionSchema = schemas[collection];
+        break;
+      }
+    }
   }
 
   const { schema } = collectionSchema;
@@ -260,7 +284,7 @@ function* watcher() {
   yield takeLatest(FETCH_COLLECTION_SCHEMA, fetchSchema);
   yield takeLatest(SELECT_TIMEZONE, selectTimezone);
   yield takeLatest(SELECT_EVENT_COLLECTION, selectCollection);
-  yield takeLatest(FETCH_COLLECTION_SCHEMA_SUCCESS, storeEventSchemas);
+  yield takeLatest(SCHEMA_COMPUTED, storeEventSchemas);
   yield takeLatest(
     SELECT_FUNNEL_STEP_EVENT_COLLECTION,
     selectFunnelStepCollection
