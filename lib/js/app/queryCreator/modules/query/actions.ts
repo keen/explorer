@@ -62,17 +62,17 @@ export const addFilter = (id: string): QueryActions => ({
   },
 });
 
-export const removeFilter = (index: number): QueryActions => ({
+export const removeFilter = (id: string): QueryActions => ({
   type: REMOVE_FILTER,
-  payload: { index },
+  payload: { id },
 });
 
 export const updateFilter = (
-  index: number,
+  id: string,
   filter: Partial<Filter>
 ): QueryActions => ({
   type: UPDATE_FILTER,
-  payload: { index, filter },
+  payload: { id, filter },
 });
 
 export const setPropertyNames = (propertyNames: string[]): QueryActions => ({
@@ -246,25 +246,25 @@ export const addFunnelStepFilter = (
 
 export const updateFunnelStepFilter = (
   stepId: string,
-  filterIndex: number,
+  filterId: string,
   properties: Filter
 ): QueryActions => ({
   type: UPDATE_FUNNEL_STEP_FILTER,
   payload: {
     stepId,
-    filterIndex,
+    filterId,
     properties,
   },
 });
 
 export const removeFunnelStepFilter = (
   stepId: string,
-  filterIndex: number
+  filterId: string
 ): QueryActions => ({
   type: REMOVE_FUNNEL_STEP_FILTER,
   payload: {
     stepId,
-    filterIndex,
+    filterId,
   },
 });
 

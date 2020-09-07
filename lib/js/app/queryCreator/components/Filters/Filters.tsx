@@ -23,9 +23,9 @@ type Props = {
   /** onReset handler */
   onReset?: () => void;
   /** onRemove handler */
-  onRemove: (idx: number) => void;
+  onRemove: (id: string) => void;
   /** onChange handler */
-  onChange: (idx: number, filter: Filter) => void;
+  onChange: (id: string, filter: Filter) => void;
   /** Add button onClick handler */
   onClick: (id: string) => void;
 };
@@ -54,8 +54,8 @@ const Filters: FC<Props> = ({
           collection={collection}
           filters={filters}
           onReset={onReset && onReset}
-          onRemove={(idx) => onRemove(idx)}
-          onChange={(idx, filter) => onChange(idx, filter)}
+          onRemove={(id) => onRemove(id)}
+          onChange={(id, filter) => onChange(id, filter)}
         />
       )}
       <ActionContainer hasSpacing={!!filters.length}>

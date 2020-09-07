@@ -84,6 +84,7 @@ Array [
     "eventCollection": "clicks",
     "filter": Array [
       Object {
+        "id": "qwe456",
         "operator": "eq",
         "propertyName": "id",
         "propertyValue": "city",
@@ -123,6 +124,7 @@ Array [
     "eventCollection": "clicks",
     "filter": Array [
       Object {
+        "id": "qwe456",
         "operator": "eq",
         "propertyName": "id",
         "propertyValue": "city",
