@@ -3,8 +3,7 @@ import { Provider } from 'react-redux';
 import { render as rtlRender, fireEvent } from '@testing-library/react';
 import configureStore from 'redux-mock-store';
 
-import { createTree } from '../../utils/createTree';
-import { createCollection } from '../../utils/createCollection';
+import { createTree, createCollection } from '../../utils';
 
 import OrderBy from './OrderBy';
 

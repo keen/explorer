@@ -12,7 +12,7 @@ import { getCollectionSchema } from '../../modules/events';
 import { useSearch } from '../../hooks';
 import { SearchContext } from '../../contexts';
 
-import { createTree } from '../../utils/createTree';
+import { createTree } from '../../utils';
 import { setOperator, setDefaultValue } from './utils';
 
 import { AND_OPERATOR } from './constants';

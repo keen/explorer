@@ -3,7 +3,11 @@ import { createAbstractOperator } from './createAbstractOperator';
 import { use12HoursDateFormat } from './hoursFormat';
 import { getEventPath } from './getEventPath';
 import { mutateArray } from './mutateArray';
+import { createCollection } from './createCollection';
 import { createTree } from './createTree';
+import { showField } from './showField';
+import { transformQueryToCamelCase } from './transformQueryToCamelCase';
+import { transformToQuery } from './transformToQuery';
 
 export {
   inferFilterType,
@@ -11,5 +15,9 @@ export {
   use12HoursDateFormat,
   getEventPath,
   mutateArray,
+  createCollection,
   createTree,
+  showField,
+  transformQueryToCamelCase,
+  transformToQuery,
 };

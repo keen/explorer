@@ -16,7 +16,7 @@ import { ActionButton, Tooltip } from '@keen.io/ui-core';
 import { useSearch } from '../../hooks';
 import { SearchContext } from '../../contexts';
 
-import { createTree } from '../../utils/createTree';
+import { createTree } from '../../utils';
 
 import Title from '../Title';
 import { OrderByProperty } from './components';

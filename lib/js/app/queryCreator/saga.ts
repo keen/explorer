@@ -60,8 +60,7 @@ import {
 
 import { serializeOrderBy, serializeFilters } from './serializers';
 
-import { createTree } from './utils/createTree';
-import { createCollection } from './utils/createCollection';
+import { createTree, createCollection } from './utils';
 
 import { Filter, OrderBy } from './types';
 import { SetGroupByAction } from './modules/query/types';

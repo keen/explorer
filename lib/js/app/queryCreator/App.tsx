@@ -12,11 +12,10 @@ import {
   Interval,
   Limit,
   FunnelSteps,
+  Filters,
 } from './components';
 
-import Filters from './components/Filters';
-
-import { showField } from './utils/showField';
+import { showField } from './utils';
 
 import {
   getEventCollection,

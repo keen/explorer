@@ -3,7 +3,7 @@ import { render as rtlRender, fireEvent } from '@testing-library/react';
 
 import OrderByProperty from './OrderByProperty';
 
-import { createTree } from '../../../../utils/createTree';
+import { createTree } from '../../../../utils';
 
 const schema = createTree({
   'category.id': 'String',

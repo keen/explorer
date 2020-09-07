@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { Dropdown } from '@keen.io/ui-core';
 
 import { Container, PropertyOverflow } from './TargetProperty.styles';
-import { createTree } from '../../utils/createTree';
+import { createTree } from '../../utils';
 
 import Title from '../Title';
 import EmptySearch from '../EmptySearch';
