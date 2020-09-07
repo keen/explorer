@@ -57,9 +57,9 @@ const App: FC<Props> = () => {
             collection={collection}
             filters={filters}
             onReset={() => dispatch(setFilters([]))}
-            onRemove={(idx: number) => dispatch(removeFilter(idx))}
-            onChange={(idx: number, filter: Filter) =>
-              dispatch(updateFilter(idx, filter))
+            onRemove={(id: string) => dispatch(removeFilter(id))}
+            onChange={(id: string, filter: Filter) =>
+              dispatch(updateFilter(id, filter))
             }
             onClick={(id: string) => dispatch(addFilter(id))}
           />

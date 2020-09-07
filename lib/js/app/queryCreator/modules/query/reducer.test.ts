@@ -312,6 +312,7 @@ test('update funnel step filter', () => {
         id: 'asd123',
         filter: [
           {
+            id: 'qwe456',
             propertyName: 'id',
             operator: 'eq',
             propertyValue: 'city',
@@ -321,7 +322,7 @@ test('update funnel step filter', () => {
     ],
   };
 
-  const action = updateFunnelStepFilter('asd123', 0, {
+  const action = updateFunnelStepFilter('asd123', 'qwe456', {
     propertyName: 'id',
     operator: 'ne',
     propertyValue: 'name',
@@ -346,6 +347,7 @@ test('remove funnel step filter', () => {
         id: 'asd123',
         filter: [
           {
+            id: 'qwe456',
             propertyName: 'id',
             operator: 'eq',
             propertyValue: 'city',
@@ -355,7 +357,7 @@ test('remove funnel step filter', () => {
     ],
   };
 
-  const action = removeFunnelStepFilter('asd123', 0);
+  const action = removeFunnelStepFilter('asd123', 'qwe456');
   const { steps } = queryReducer(
     {
       ...initialState,

@@ -34,9 +34,9 @@ type Props = {
   /** Reset event handler */
   onReset?: () => void;
   /** Remove event handler */
-  onRemove: (idx: number) => void;
+  onRemove: (id: string) => void;
   /** On change event handler */
-  onChange: (idx: number, filters: FilterType) => void;
+  onChange: (id: string, filters: FilterType) => void;
 };
 
 const FiltersComponent: FC<Props> = ({
@@ -104,7 +104,7 @@ const FiltersComponent: FC<Props> = ({
                 const inferredType = SCHEMA_PROPS[schemaType];
                 const operator = setOperator(inferredType, filter.operator);
 
-                onChange(idx, {
+                onChange(filter.id, {
                   propertyName,
                   propertyType: inferredType,
                   operator,
@@ -114,8 +114,8 @@ const FiltersComponent: FC<Props> = ({
                 setSearchPhrase(null);
                 setPropertiesTree(schemaTree);
               }}
-              onRemove={() => onRemove(idx)}
-              onChange={(filter) => onChange(idx, filter)}
+              onRemove={() => onRemove(filter.id)}
+              onChange={(filter) => onChange(filter.id, filter)}
             />
             <AnimatePresence>
               {idx + 1 !== collection.length && (

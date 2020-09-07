@@ -208,13 +208,15 @@ const FunnelStep: FC<Props> = ({
             <Filters
               collection={eventCollection}
               filters={filters}
-              onRemove={(idx: number) =>
-                dispatch(removeFunnelStepFilter(id, idx))
+              onRemove={(filterId: string) =>
+                dispatch(removeFunnelStepFilter(id, filterId))
               }
-              onChange={(idx: number, filter: Filter) =>
-                dispatch(updateFunnelStepFilter(id, idx, filter))
+              onChange={(filterId: string, filter: Filter) =>
+                dispatch(updateFunnelStepFilter(id, filterId, filter))
               }
-              onClick={(idx: string) => dispatch(addFunnelStepFilter(id, idx))}
+              onClick={(filterId: string) =>
+                dispatch(addFunnelStepFilter(id, filterId))
+              }
             />
           </Wrapper>
           <Wrapper>

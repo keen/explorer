@@ -74,14 +74,14 @@ export const queryReducer = (
       return {
         ...state,
         filters: state.filters.filter(
-          (_filter, idx) => idx !== action.payload.index
+          (_filter) => _filter.id !== action.payload.id
         ),
       };
     case UPDATE_FILTER:
       return {
         ...state,
-        filters: state.filters.map((filter, index) => {
-          if (index === action.payload.index) {
+        filters: state.filters.map((filter) => {
+          if (filter.id === action.payload.id) {
             return {
               ...filter,
               ...action.payload.filter,
@@ -214,14 +214,14 @@ export const queryReducer = (
           if (step.id === action.payload.stepId) {
             return {
               ...step,
-              filters: step.filters.map((el, index) => {
-                if (index === action.payload.filterIndex) {
+              filters: step.filters.map((filter) => {
+                if (filter.id === action.payload.filterId) {
                   return {
-                    ...el,
+                    ...filter,
                     ...action.payload.properties,
                   };
                 }
-                return el;
+                return filter;
               }),
             };
           }
@@ -236,7 +236,7 @@ export const queryReducer = (
             return {
               ...step,
               filters: step.filters.filter(
-                (filter, index) => index !== action.payload.filterIndex
+                (filter) => filter.id !== action.payload.filterId
               ),
             };
           }

@@ -80,12 +80,12 @@ export interface AddFilterAction {
 
 export interface RemoveFilterAction {
   type: typeof REMOVE_FILTER;
-  payload: { index: number };
+  payload: { id: string };
 }
 
 export interface UpdateFilterAction {
   type: typeof UPDATE_FILTER;
-  payload: { index: number; filter: Partial<Filter> };
+  payload: { id: string; filter: Partial<Filter> };
 }
 
 export interface SetExtractionLimitAction {
@@ -249,7 +249,7 @@ export interface UpdateFunnelStepFilterAction {
   type: typeof UPDATE_FUNNEL_STEP_FILTER;
   payload: {
     stepId: string;
-    filterIndex: number;
+    filterId: string;
     properties: Filter;
   };
 }
@@ -258,7 +258,7 @@ export interface RemoveFunnelStepFilterAction {
   type: typeof REMOVE_FUNNEL_STEP_FILTER;
   payload: {
     stepId: string;
-    filterIndex: number;
+    filterId: string;
   };
 }
 
