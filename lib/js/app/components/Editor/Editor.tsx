@@ -50,7 +50,6 @@ const Editor: FC<Props> = ({
   const isQueryLimitReached = useSelector(getQueryLimitReached);
 
   const updateQuery = useCallback((query: Record<string, any>) => {
-    console.log(query, 'QUERY UPDATE');
     dispatch(setQuerySettings(query));
   }, []);
 
