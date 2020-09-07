@@ -21,6 +21,8 @@ import {
   SELECT_FUNNEL_STEP_EVENT_COLLECTION,
   UPDATE_FUNNEL_STEP,
   REMOVE_FUNNEL_STEP,
+  SET_FUNNEL_STEPS,
+  SET_FUNNEL_STEP_FILTERS,
   CHANGE_FUNNEL_STEPS_ORDER,
   ADD_FUNNEL_STEP_FILTER,
   UPDATE_FUNNEL_STEP_FILTER,
@@ -224,6 +226,22 @@ export const updateFunnelStep = (
 export const changeFunnelStepsOrder = (steps: FunnelStep[]): QueryActions => ({
   type: CHANGE_FUNNEL_STEPS_ORDER,
   payload: { steps },
+});
+
+export const setFunnelSteps = (steps: FunnelStep[]): QueryActions => ({
+  type: SET_FUNNEL_STEPS,
+  payload: { steps },
+});
+
+export const setFunnelStepFilters = (
+  stepId: string,
+  filters: Filter[]
+): QueryActions => ({
+  type: SET_FUNNEL_STEP_FILTERS,
+  payload: {
+    stepId,
+    filters,
+  },
 });
 
 export const removeFunnelStep = (stepId: string): QueryActions => ({

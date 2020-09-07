@@ -17,6 +17,8 @@ import {
   SET_FILTERS,
   SELECT_TIMEZONE,
   ADD_FUNNEL_STEP,
+  SET_FUNNEL_STEPS,
+  SET_FUNNEL_STEP_FILTERS,
   CLONE_FUNNEL_STEP,
   REMOVE_FUNNEL_STEP,
   UPDATE_FUNNEL_STEP,
@@ -237,6 +239,16 @@ export interface ChangeFunnelStepsOrderAction {
   payload: { steps: FunnelStep[] };
 }
 
+export interface SetFunnelSteps {
+  type: typeof SET_FUNNEL_STEPS;
+  payload: { steps: FunnelStep[] };
+}
+
+export interface SetFunnelStepFilters {
+  type: typeof SET_FUNNEL_STEP_FILTERS;
+  payload: { stepId: string; filters: Filter[] };
+}
+
 export interface AddFunnelStepFilterAction {
   type: typeof ADD_FUNNEL_STEP_FILTER;
   payload: {
@@ -289,6 +301,8 @@ export type QueryActions =
   | SetTimeframeAction
   | SetFiltersAction
   | SelectTimezoneAction
+  | SetFunnelSteps
+  | SetFunnelStepFilters
   | AddFunnelStepAction
   | UpdateFunnelStepAction
   | RemoveFunnelStepAction

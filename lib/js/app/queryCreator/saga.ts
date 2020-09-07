@@ -4,13 +4,14 @@ import {
   all,
   select,
   takeLatest,
+  takeEvery,
   getContext,
   fork,
+  spawn,
   take,
   put,
 } from 'redux-saga/effects';
 import moment from 'moment-timezone';
-import { v4 as uuid } from 'uuid';
 
 import {
   fetchProjectDetails,
@@ -25,7 +26,8 @@ import {
   getTimeframe,
   setTimeframe,
   getFunnelSteps,
-  changeFunnelStepsOrder,
+  setFunnelSteps,
+  setFunnelStepFilters,
   updateFunnelStep,
   setGroupBy,
   setOrderBy,
@@ -58,14 +60,16 @@ import {
   SCHEMA_COMPUTED,
 } from './modules/events';
 
-import { serializeOrderBy, serializeFilters } from './serializers';
+import {
+  serializeOrderBy,
+  serializeFilters,
+  serializeFunnelSteps,
+} from './serializers';
 
 import { createTree, createCollection } from './utils';
 
-import { Filter, OrderBy } from './types';
+import { Filter, OrderBy, FunnelStep } from './types';
 import { SetGroupByAction } from './modules/query/types';
-
-import { createAbstractOperator } from './utils';
 
 function* appStart() {
   yield put(fetchProjectDetails());
@@ -116,7 +120,7 @@ function* fetchSchema(action: FetchCollectionSchemaAction) {
     const { properties } = yield fetch(url).then((response) => response.json());
 
     yield put(fetchCollectionSchemaSuccess(collection, properties));
-    yield fork(transformSchema, collection, properties);
+    yield spawn(transformSchema, collection, properties);
   } catch (err) {
     yield put(fetchCollectionSchemaError(err));
   } finally {
@@ -190,6 +194,31 @@ function* transformFilters(collection: string, filters: Filter[]) {
   yield put(setFilters(filtersSettings));
 }
 
+function* transformStepFilters(
+  collection: string,
+  filters: Filter[],
+  stepId: string
+) {
+  let schemas = yield select(getSchemas);
+  let collectionSchema = schemas[collection];
+
+  if (!collectionSchema) {
+    while (true) {
+      yield take(FETCH_COLLECTION_SCHEMA_SUCCESS);
+      schemas = yield select(getSchemas);
+      if (schemas[collection]) {
+        collectionSchema = schemas[collection];
+        break;
+      }
+    }
+  }
+
+  const { schema } = collectionSchema;
+
+  const filtersSettings = serializeFilters(filters, schema);
+  yield put(setFunnelStepFilters(stepId, filtersSettings));
+}
+
 function* transformOrderBy(orderBy: string | OrderBy | OrderBy[]) {
   const orderBySettings = serializeOrderBy(orderBy);
   yield put(setOrderBy(orderBySettings));
@@ -201,30 +230,31 @@ function* serializeQuery(action: SetQueryAction) {
   } = action;
   const schemas = yield select(getSchemas);
 
-  const { filters, orderBy, ...rest } = query;
+  const { filters, orderBy, steps, ...rest } = query;
   yield put(setQuery(rest));
 
   if (query.eventCollection && !schemas[query.eventCollection]) {
     yield put(fetchCollectionSchema(query.eventCollection));
   }
 
-  if (query.steps) {
-    const steps = query.steps.map((step) => ({
-      ...step,
-      id: uuid(),
-      filters: step.filters.map((filter) => ({
-        ...filter,
-        operator: createAbstractOperator(filter),
-      })),
-    }));
+  if (steps) {
+    const { transformedSteps, stepsFilters } = serializeFunnelSteps(steps);
+    yield put(setFunnelSteps(transformedSteps));
 
-    const schemasToFetch = steps.filter(
-      ({ eventCollection }) => !schemas[eventCollection]
-    );
-    yield put(changeFunnelStepsOrder(steps));
+    if (stepsFilters && stepsFilters.length) {
+      yield all(
+        stepsFilters.map(({ eventCollection, filters, id }) =>
+          fork(transformStepFilters, eventCollection, filters, id)
+        )
+      );
+    }
+
+    const schemasToFetch = steps
+      .filter(({ eventCollection }) => !schemas[eventCollection])
+      .map(({ eventCollection }) => eventCollection);
 
     yield all(
-      schemasToFetch.map(({ eventCollection }) =>
+      schemasToFetch.map((eventCollection) =>
         put(fetchCollectionSchema(eventCollection))
       )
     );
@@ -259,8 +289,9 @@ function* updateGroupBy(action: SetGroupByAction) {
 function* updateFunnelStepTimezone(action: UpdateFunnelStepTimezoneAction) {
   const { timezone } = action.payload;
   const steps = yield select(getFunnelSteps);
-  const timeframe = steps.filter((step) => step.id === action.payload.stepId)
-    .timeframe;
+  const timeframe = steps.filter(
+    (step: FunnelStep) => step.id === action.payload.stepId
+  ).timeframe;
 
   if (typeof timeframe !== 'string') {
     const { start, end } = timeframe;
@@ -280,7 +311,7 @@ function* watcher() {
   yield takeLatest(APP_START, appStart);
   yield takeLatest(SERIALIZE_QUERY, serializeQuery);
   yield takeLatest(FETCH_PROJECT_DETAILS, fetchProject);
-  yield takeLatest(FETCH_COLLECTION_SCHEMA, fetchSchema);
+  yield takeEvery(FETCH_COLLECTION_SCHEMA, fetchSchema);
   yield takeLatest(SELECT_TIMEZONE, selectTimezone);
   yield takeLatest(SELECT_EVENT_COLLECTION, selectCollection);
   yield takeLatest(SCHEMA_COMPUTED, storeEventSchemas);

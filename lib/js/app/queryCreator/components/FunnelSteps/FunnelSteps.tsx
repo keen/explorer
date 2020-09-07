@@ -30,10 +30,7 @@ const FunnelSteps: FC<{}> = () => {
   const sortableRef = useRef(null);
 
   const stepsRef = useRef(null);
-
-  useEffect(() => {
-    stepsRef.current = steps;
-  }, [steps]);
+  stepsRef.current = steps;
 
   useEffect(() => {
     new Sortable(sortableRef.current, {

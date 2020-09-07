@@ -16,6 +16,7 @@ import {
   RESET_QUERY_RESULTS,
   SET_QUERY_LIMIT_REACHED,
   RESET_SAVE_QUERY_ERROR,
+  SET_QUERY_SAVE_STATE,
 } from './constants';
 
 export const initialState: ReducerState = {
@@ -61,6 +62,11 @@ export const queriesReducer = (
       return {
         ...state,
         saveQueryError: null,
+      };
+    case SET_QUERY_SAVE_STATE:
+      return {
+        ...state,
+        isSavingQuery: false,
       };
     case SAVE_QUERY_SUCCESS:
       return {

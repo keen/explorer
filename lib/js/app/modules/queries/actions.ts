@@ -4,6 +4,7 @@ import { APIError } from '../../types';
 import {
   SET_QUERY_SETTINGS,
   RUN_QUERY,
+  SET_QUERY_SAVE_STATE,
   RUN_QUERY_ERROR,
   RUN_QUERY_SUCCESS,
   GET_SAVED_QUERIES,
@@ -62,6 +63,13 @@ export const saveQuery = (
 ): QueriesActions => ({
   type: SAVE_QUERY,
   payload: { name, body },
+});
+
+export const setQuerySaveState = (isSaving: boolean): QueriesActions => ({
+  type: SET_QUERY_SAVE_STATE,
+  payload: {
+    isSaving,
+  },
 });
 
 export const saveQuerySuccess = (

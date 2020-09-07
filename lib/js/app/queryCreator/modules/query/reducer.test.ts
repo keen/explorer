@@ -14,6 +14,7 @@ import {
   addFunnelStep,
   cloneFunnelStep,
   addFunnelStepFilter,
+  changeFunnelStepsOrder,
   updateFunnelStepFilter,
   updateFunnelStepTimezone,
   removeFunnelStepFilter,
@@ -367,6 +368,31 @@ test('remove funnel step filter', () => {
   );
 
   expect(steps).toMatchSnapshot();
+});
+
+test('updates funnel steps order', () => {
+  const funnelSteps = [
+    {
+      ...DEFAULT_FUNNEL_STEP,
+      eventCollection: 'purchases',
+      id: 'id2',
+      inverted: true,
+      optional: true,
+    },
+    {
+      ...DEFAULT_FUNNEL_STEP,
+      eventCollection: 'clicks',
+      id: 'id1',
+    },
+  ];
+
+  const action = changeFunnelStepsOrder(funnelSteps);
+  const { steps } = queryReducer(initialState, action);
+
+  const [firstStep] = steps;
+
+  expect(firstStep.inverted).toBeFalsy();
+  expect(firstStep.optional).toBeFalsy();
 });
 
 test('update funnel step timezone', () => {
