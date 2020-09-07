@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`creates collection 1`] = `
+Array [
+  Object {
+    "path": "date",
+    "type": "String",
+  },
+  Object {
+    "path": "userId",
+    "type": "String",
+  },
+]
+`;

@@ -21,6 +21,14 @@ export type ReducerState = {
   schemas: Record<string, CollectionSchema>;
 };
 
+export interface SchemaComputedAction {
+  type: typeof SCHEMA_COMPUTED;
+  payload: {
+    collection: string;
+    schema: Partial<CollectionSchema>;
+  };
+}
+
 export interface SetCollectionSchemaLoadingAction {
   type: typeof SET_COLLETION_SCHEMA_LOADING;
   payload: {

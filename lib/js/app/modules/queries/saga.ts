@@ -16,12 +16,14 @@ import {
   setCacheQueryLimitExceed,
   setQueryCacheLimitError,
   setQueryLimitReached,
+  setQuerySaveState,
   resetQueryResults,
 } from './actions';
 
 import {
   showConfirmation,
   hideQuerySettingsModal,
+  getQuerySettingsModalVisibility,
   getViewMode,
   setViewMode,
   selectFirstSavedQuery,
@@ -96,6 +98,7 @@ function* saveQuery({ payload }: SaveQueryAction) {
     const { name, body } = payload;
     const notificationManager = yield getContext(NOTIFICATION_MANAGER_CONTEXT);
     const client = yield getContext(KEEN_CLIENT_CONTEXT);
+    const settingsModalVisible = yield select(getQuerySettingsModalVisibility);
 
     const responseBody = yield client.put({
       url: client.url('queries', 'saved', name),
@@ -103,7 +106,10 @@ function* saveQuery({ payload }: SaveQueryAction) {
       params: body,
     });
 
-    yield put(hideQuerySettingsModal());
+    if (settingsModalVisible) {
+      yield put(hideQuerySettingsModal());
+    }
+
     yield put(saveQuerySuccess(name, responseBody));
     yield notificationManager.showNotification({
       type: 'success',
@@ -111,12 +117,10 @@ function* saveQuery({ payload }: SaveQueryAction) {
     });
   } catch (error) {
     const { status, error_code: errorCode } = error;
+    const notificationManager = yield getContext(NOTIFICATION_MANAGER_CONTEXT);
 
     if (status === HttpStatus.INTERNAL_SERVER_ERROR) {
       yield put(hideQuerySettingsModal());
-      const notificationManager = yield getContext(
-        NOTIFICATION_MANAGER_CONTEXT
-      );
       yield notificationManager.showNotification({
         type: 'error',
         message: text.saveQueryError,
@@ -124,7 +128,19 @@ function* saveQuery({ payload }: SaveQueryAction) {
         autoDismiss: false,
       });
     } else {
-      yield put(saveQueryError(error));
+      const settingsModalVisible = yield select(
+        getQuerySettingsModalVisibility
+      );
+      if (settingsModalVisible) {
+        yield put(saveQueryError(error));
+      } else {
+        yield put(setQuerySaveState(false));
+        yield notificationManager.showNotification({
+          type: 'error',
+          message: error.body,
+          autoDismiss: true,
+        });
+      }
     }
 
     if (

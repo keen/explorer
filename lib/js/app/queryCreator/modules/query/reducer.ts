@@ -19,9 +19,17 @@ import {
   DEFAULT_TIMEFRAME,
   DEFAULT_TIMEZONE,
   ADD_FUNNEL_STEP,
+  SET_FUNNEL_STEPS,
+  SET_FUNNEL_STEP_FILTERS,
+  CLONE_FUNNEL_STEP,
   REMOVE_FUNNEL_STEP,
   UPDATE_FUNNEL_STEP,
   DEFAULT_FUNNEL_STEP,
+  CHANGE_FUNNEL_STEPS_ORDER,
+  ADD_FUNNEL_STEP_FILTER,
+  UPDATE_FUNNEL_STEP_FILTER,
+  REMOVE_FUNNEL_STEP_FILTER,
+  UPDATE_FUNNEL_STEP_TIMEZONE,
   RESET_EXTRACTION,
   RESET_QUERY,
   ADD_FILTER,
@@ -68,14 +76,14 @@ export const queryReducer = (
       return {
         ...state,
         filters: state.filters.filter(
-          (_filter, idx) => idx !== action.payload.index
+          (_filter) => _filter.id !== action.payload.id
         ),
       };
     case UPDATE_FILTER:
       return {
         ...state,
-        filters: state.filters.map((filter, index) => {
-          if (index === action.payload.index) {
+        filters: state.filters.map((filter) => {
+          if (filter.id === action.payload.id) {
             return {
               ...filter,
               ...action.payload.filter,
@@ -139,8 +147,8 @@ export const queryReducer = (
     case UPDATE_FUNNEL_STEP:
       return {
         ...state,
-        steps: state.steps.map((step, index) => {
-          if (index === action.payload.index) {
+        steps: state.steps.map((step) => {
+          if (step.id === action.payload.stepId) {
             return {
               ...step,
               ...action.payload.properties,
@@ -153,13 +161,129 @@ export const queryReducer = (
       return {
         ...state,
         steps: state.steps.filter(
-          (_step, index) => index !== action.payload.index
+          (_step) => _step.id !== action.payload.stepId
         ),
       };
     case ADD_FUNNEL_STEP:
       return {
         ...state,
-        steps: [...state.steps, DEFAULT_FUNNEL_STEP],
+        steps: [
+          ...state.steps,
+          { ...DEFAULT_FUNNEL_STEP, id: action.payload.id },
+        ],
+      };
+    case CLONE_FUNNEL_STEP:
+      return {
+        ...state,
+        steps: [
+          ...state.steps,
+          ...state.steps
+            .filter((step) => step.id === action.payload.cloneId)
+            .map((step) => ({
+              ...step,
+              id: action.payload.newId,
+            })),
+        ],
+      };
+    case CHANGE_FUNNEL_STEPS_ORDER:
+      return {
+        ...state,
+        steps: action.payload.steps.map((step, idx) => {
+          if (idx === 0) {
+            return {
+              ...step,
+              inverted: false,
+              optional: false,
+            };
+          }
+          return step;
+        }),
+      };
+    case SET_FUNNEL_STEPS:
+      return {
+        ...state,
+        steps: action.payload.steps,
+      };
+    case ADD_FUNNEL_STEP_FILTER:
+      return {
+        ...state,
+        steps: state.steps.map((step) => {
+          if (step.id === action.payload.stepId) {
+            return {
+              ...step,
+              filters: [
+                ...step.filters,
+                {
+                  id: action.payload.filterId,
+                  ...DEFAULT_FILTER,
+                },
+              ],
+            };
+          }
+          return step;
+        }),
+      };
+    case SET_FUNNEL_STEP_FILTERS:
+      return {
+        ...state,
+        steps: state.steps.map((step) => {
+          if (step.id === action.payload.stepId) {
+            return {
+              ...step,
+              filters: action.payload.filters,
+            };
+          }
+          return step;
+        }),
+      };
+    case UPDATE_FUNNEL_STEP_FILTER:
+      return {
+        ...state,
+        steps: state.steps.map((step) => {
+          if (step.id === action.payload.stepId) {
+            return {
+              ...step,
+              filters: step.filters.map((filter) => {
+                if (filter.id === action.payload.filterId) {
+                  return {
+                    ...filter,
+                    ...action.payload.properties,
+                  };
+                }
+                return filter;
+              }),
+            };
+          }
+          return step;
+        }),
+      };
+    case REMOVE_FUNNEL_STEP_FILTER:
+      return {
+        ...state,
+        steps: state.steps.map((step) => {
+          if (step.id === action.payload.stepId) {
+            return {
+              ...step,
+              filters: step.filters.filter(
+                (filter) => filter.id !== action.payload.filterId
+              ),
+            };
+          }
+          return step;
+        }),
+      };
+    case UPDATE_FUNNEL_STEP_TIMEZONE:
+      return {
+        ...state,
+        steps: state.steps.map((step) => {
+          if (step.id === action.payload.stepId) {
+            return {
+              ...step,
+              timezone: action.payload.timezone,
+            };
+          }
+          return step;
+        }),
       };
     case SET_ORDER_BY:
       return {

@@ -3,7 +3,7 @@ import { render as rtlRender, fireEvent } from '@testing-library/react';
 
 import GroupByProperty from './GroupByProperty';
 
-import { createTree } from '../../../../utils/createTree';
+import { createTree } from '../../../../utils';
 
 const schema = createTree({
   'category.id': 'String',

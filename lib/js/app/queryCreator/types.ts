@@ -84,6 +84,7 @@ export type Filter = {
 };
 
 export type FunnelStep = {
+  id?: string;
   actorProperty: string;
   eventCollection: string;
   inverted: boolean;

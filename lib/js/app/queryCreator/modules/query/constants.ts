@@ -26,8 +26,18 @@ export const SELECT_FUNNEL_STEP_EVENT_COLLECTION =
   '@query-creator/SELECT_FUNNEL_STEP_EVENT_COLLECTION';
 export const REMOVE_FUNNEL_STEP = '@query-creator/REMOVE_FUNNEL_STEP';
 export const UPDATE_FUNNEL_STEP = '@query-creator/UPDATE_FUNNEL_STEP';
+export const CLONE_FUNNEL_STEP = '@query-creator/CLONE_FUNNEL_STEP';
+export const SET_FUNNEL_STEPS = '@query-creator/SET_FUNNEL_STEPS';
+export const SET_FUNNEL_STEP_FILTERS = '@query-creator/SET_FUNNEL_STEP_FILTERS';
 export const CHANGE_FUNNEL_STEPS_ORDER =
   '@query-creator/CHANGE_FUNNEL_STEP_ORDER';
+export const ADD_FUNNEL_STEP_FILTER = '@query-creator/ADD_FUNNEL_STEP_FILTER';
+export const UPDATE_FUNNEL_STEP_FILTER =
+  '@query-creator/UPDATE_FUNNEL_STEP_FILTER';
+export const REMOVE_FUNNEL_STEP_FILTER =
+  '@query-creator/REMOVE_FUNNEL_STEP_FILTER';
+export const UPDATE_FUNNEL_STEP_TIMEZONE =
+  '@query-creator/UPDATE_FUNNEL_STEP_TIMEZONE';
 export const ADD_FILTER = '@query-creator/ADD_FILTER';
 export const UPDATE_FILTER = '@query-creator/UPDATE_FILTER';
 export const REMOVE_FILTER = '@query-creator/REMOVE_FILTER';

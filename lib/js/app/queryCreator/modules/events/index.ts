@@ -5,7 +5,7 @@ import {
   fetchCollectionSchema,
   fetchCollectionSchemaSuccess,
   fetchCollectionSchemaError,
-  schemaComputed,
+  computeSchemaSuccess,
 } from './actions';
 import {
   getEventsCollections,
@@ -32,7 +32,7 @@ export {
   getCollectionSchema,
   getSchemas,
   getSchemaLoading,
-  schemaComputed,
+  computeSchemaSuccess,
   ReducerState,
   FetchCollectionSchemaAction,
 };

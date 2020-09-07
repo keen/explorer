@@ -12,6 +12,12 @@ import {
   updateFunnelStep,
   removeFunnelStep,
   addFunnelStep,
+  cloneFunnelStep,
+  addFunnelStepFilter,
+  changeFunnelStepsOrder,
+  updateFunnelStepFilter,
+  updateFunnelStepTimezone,
+  removeFunnelStepFilter,
   setGroupBy,
   setOrderBy,
   setInterval,
@@ -186,11 +192,12 @@ test('update funnel step', () => {
       {
         ...DEFAULT_FUNNEL_STEP,
         eventCollection: 'clicks',
+        id: 'asd123',
       },
     ],
   };
 
-  const action = updateFunnelStep(0, {
+  const action = updateFunnelStep('asd123', {
     withActors: true,
     eventCollection: 'logins',
   });
@@ -212,11 +219,12 @@ test('removes funnel step', () => {
       {
         ...DEFAULT_FUNNEL_STEP,
         eventCollection: 'clicks',
+        id: 'asd123',
       },
     ],
   };
 
-  const action = removeFunnelStep(0);
+  const action = removeFunnelStep('asd123');
   const { steps } = queryReducer(
     {
       ...initialState,
@@ -238,7 +246,167 @@ test('add funnel step', () => {
     ],
   };
 
-  const action = addFunnelStep();
+  const action = addFunnelStep('qwe123');
+  const { steps } = queryReducer(
+    {
+      ...initialState,
+      ...stepsState,
+    },
+    action
+  );
+
+  expect(steps).toMatchSnapshot();
+});
+
+test('clone funnel step', () => {
+  const stepsState = {
+    steps: [
+      {
+        ...DEFAULT_FUNNEL_STEP,
+        eventCollection: 'clicks',
+        id: 'asd123',
+      },
+    ],
+  };
+
+  const action = cloneFunnelStep('asd123', 'qwe456');
+  const { steps } = queryReducer(
+    {
+      ...initialState,
+      ...stepsState,
+    },
+    action
+  );
+
+  expect(steps).toMatchSnapshot();
+});
+
+test('add funnel step filter', () => {
+  const stepsState = {
+    steps: [
+      {
+        ...DEFAULT_FUNNEL_STEP,
+        eventCollection: 'clicks',
+        id: 'asd123',
+      },
+    ],
+  };
+
+  const action = addFunnelStepFilter('asd123', 'qwe456');
+  const { steps } = queryReducer(
+    {
+      ...initialState,
+      ...stepsState,
+    },
+    action
+  );
+
+  expect(steps).toMatchSnapshot();
+});
+
+test('update funnel step filter', () => {
+  const stepsState = {
+    steps: [
+      {
+        ...DEFAULT_FUNNEL_STEP,
+        eventCollection: 'clicks',
+        id: 'asd123',
+        filter: [
+          {
+            id: 'qwe456',
+            propertyName: 'id',
+            operator: 'eq',
+            propertyValue: 'city',
+          },
+        ],
+      },
+    ],
+  };
+
+  const action = updateFunnelStepFilter('asd123', 'qwe456', {
+    propertyName: 'id',
+    operator: 'ne',
+    propertyValue: 'name',
+  });
+  const { steps } = queryReducer(
+    {
+      ...initialState,
+      ...stepsState,
+    },
+    action
+  );
+
+  expect(steps).toMatchSnapshot();
+});
+
+test('remove funnel step filter', () => {
+  const stepsState = {
+    steps: [
+      {
+        ...DEFAULT_FUNNEL_STEP,
+        eventCollection: 'clicks',
+        id: 'asd123',
+        filter: [
+          {
+            id: 'qwe456',
+            propertyName: 'id',
+            operator: 'eq',
+            propertyValue: 'city',
+          },
+        ],
+      },
+    ],
+  };
+
+  const action = removeFunnelStepFilter('asd123', 'qwe456');
+  const { steps } = queryReducer(
+    {
+      ...initialState,
+      ...stepsState,
+    },
+    action
+  );
+
+  expect(steps).toMatchSnapshot();
+});
+
+test('updates funnel steps order', () => {
+  const funnelSteps = [
+    {
+      ...DEFAULT_FUNNEL_STEP,
+      eventCollection: 'purchases',
+      id: 'id2',
+      inverted: true,
+      optional: true,
+    },
+    {
+      ...DEFAULT_FUNNEL_STEP,
+      eventCollection: 'clicks',
+      id: 'id1',
+    },
+  ];
+
+  const action = changeFunnelStepsOrder(funnelSteps);
+  const { steps } = queryReducer(initialState, action);
+
+  const [firstStep] = steps;
+
+  expect(firstStep.inverted).toBeFalsy();
+  expect(firstStep.optional).toBeFalsy();
+});
+
+test('update funnel step timezone', () => {
+  const stepsState = {
+    steps: [
+      {
+        ...DEFAULT_FUNNEL_STEP,
+        eventCollection: 'clicks',
+        id: 'asd123',
+      },
+    ],
+  };
+
+  const action = updateFunnelStepTimezone('asd123', 'US/Central');
   const { steps } = queryReducer(
     {
       ...initialState,

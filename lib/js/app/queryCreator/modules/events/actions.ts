@@ -14,6 +14,17 @@ export const setEventsCollections = (collections: string[]): EventsActions => ({
   payload: { collections },
 });
 
+export const computeSchemaSuccess = (
+  collection: string,
+  schema: Partial<CollectionSchema>
+): EventsActions => ({
+  type: SCHEMA_COMPUTED,
+  payload: {
+    collection,
+    schema,
+  },
+});
+
 export const setCollectionSchemaLoading = (
   colletion: string,
   isLoading: boolean

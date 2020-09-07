@@ -4,6 +4,7 @@ import { colors } from '@keen.io/colors';
 
 export const Container = styled.div<{
   isDisabled?: boolean;
+  hasError?: boolean;
 }>`
   margin-bottom: 3px;
   color: ${colors.black[100]};
@@ -17,5 +18,11 @@ export const Container = styled.div<{
     css`
       cursor: not-allowed;
       color: ${transparentize(0.5, colors.black[100])};
+    `}
+
+  ${(props) =>
+    props.hasError &&
+    css`
+      color: ${colors.red[500]};
     `}
 `;

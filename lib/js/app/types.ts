@@ -29,6 +29,7 @@ export type SavedQueryAPIResponse = {
     display_name?: string;
     tags?: string[];
     widget?: string;
+    step_labels?: string[];
   };
 };
 
