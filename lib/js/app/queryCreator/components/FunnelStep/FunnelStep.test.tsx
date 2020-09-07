@@ -13,6 +13,7 @@ const props = {
   filters: [],
   inverted: false,
   optional: false,
+  isFirstStep: true,
 };
 
 const mockStore = configureStore([]);
