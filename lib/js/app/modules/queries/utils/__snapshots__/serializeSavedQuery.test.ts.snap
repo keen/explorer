@@ -10,6 +10,7 @@ Object {
     "analysis_type": "count",
   },
   "refreshRate": 14000,
+  "stepLabels": Array [],
   "tags": Array [],
   "widget": "bar",
 }

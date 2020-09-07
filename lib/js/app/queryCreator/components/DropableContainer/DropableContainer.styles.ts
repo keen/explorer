@@ -31,6 +31,7 @@ const containerVariants = {
 export const Container = styled.div<{
   variant: Variant;
   isActive?: boolean;
+  hasError?: boolean;
 }>`
   ${variant(containerVariants)}
   display: flex;
@@ -50,6 +51,12 @@ export const Container = styled.div<{
     `}
 
   transition: box-shadow 0.2s;
+
+  ${(props) =>
+    props.hasError &&
+    css`
+      border: 1px solid ${transparentize(0.5, colors.red[500])};
+    `}
 `;
 
 export const SearchIcon = styled.div`

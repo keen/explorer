@@ -19,6 +19,7 @@ import {
   RESET_QUERY_RESULTS,
   GET_ORGANIZATION_USAGE_LIMITS,
   SET_QUERY_SETTINGS,
+  SET_QUERY_SAVE_STATE,
 } from './constants';
 
 import { APIError } from '../../types';
@@ -32,6 +33,7 @@ export type SavedQueryListItem = {
   query: Record<string, any>;
   tags: string[];
   widget: string | null;
+  stepLabels: string[];
 };
 
 export type ReducerState = {
@@ -92,6 +94,11 @@ export interface SaveQueryAction {
     name: string;
     body: Record<string, any>;
   };
+}
+
+export interface QuerySaveStateAction {
+  type: typeof SET_QUERY_SAVE_STATE;
+  payload: { isSaving: boolean };
 }
 
 export interface SaveQuerySuccessAction {
@@ -187,6 +194,7 @@ export type QueriesActions =
   | SetCacheQueryLimitExceedAction
   | SetCacheQueryLimitErrorAction
   | SaveQueryAction
+  | QuerySaveStateAction
   | SaveQuerySuccessAction
   | SaveQueryErrorAction
   | DeleteQueryAction

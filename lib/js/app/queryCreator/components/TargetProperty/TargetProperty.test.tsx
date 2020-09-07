@@ -6,8 +6,7 @@ import configureStore from 'redux-mock-store';
 import TargetProperty from './TargetProperty';
 import text from './text.json';
 
-import { createTree } from '../../utils/createTree';
-import { createCollection } from '../../utils/createCollection';
+import { createTree, createCollection } from '../../utils';
 
 const render = (storeState: any = {}, overProps: any = {}) => {
   const mockStore = configureStore([]);

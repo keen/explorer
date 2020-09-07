@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`transforms query 1`] = `
+Object {
+  "analysis_type": "count",
+  "event_collection": "logins",
+  "filters": Array [],
+  "group_by": Array [
+    "user.age",
+  ],
+  "order_by": Array [
+    Object {
+      "direction": "ASC",
+      "property_name": "user.age",
+    },
+  ],
+  "timeframe": "this_14_days",
+  "timezone": "UTC",
+}
+`;

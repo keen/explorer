@@ -6,7 +6,7 @@ import Filter from './Filter';
 import FiltersContext from '../../FiltersContext';
 import { SearchContext } from '../../../../contexts';
 
-import { createTree } from '../../../../utils/createTree';
+import { createTree } from '../../../../utils';
 
 const schema = createTree({
   'category.id': 'String',

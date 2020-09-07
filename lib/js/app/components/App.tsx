@@ -101,11 +101,13 @@ class App extends Component {
     displayName,
     refreshRate,
     tags,
+    stepLabels,
     name,
   }: {
     displayName: string;
     refreshRate: number;
     tags: string[];
+    stepLabels: string[];
     name: string;
   }) => {
     const body = {
@@ -114,6 +116,7 @@ class App extends Component {
         displayName,
         widget: this.props.widget,
         tags,
+        stepLabels,
       },
       refreshRate: refreshRate * 60 * 60,
     };

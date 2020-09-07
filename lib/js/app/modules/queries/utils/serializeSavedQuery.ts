@@ -16,6 +16,7 @@ const serializeSavedQuery = ({
   lastModifiedDate: user_last_modified_date,
   widget: metadata ? metadata.widget : null,
   tags: metadata && metadata.tags ? metadata.tags : [],
+  stepLabels: metadata && metadata.step_labels ? metadata.step_labels : [],
   query,
 });
 
