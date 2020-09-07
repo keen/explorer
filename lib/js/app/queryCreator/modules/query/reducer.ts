@@ -63,8 +63,6 @@ export const queryReducer = (
   state: ReducerState = initialState,
   action: QueryActions
 ) => {
-  console.log(action, 'sasaas');
-
   switch (action.type) {
     case ADD_FILTER:
       return {
@@ -187,8 +185,21 @@ export const queryReducer = (
             })),
         ],
       };
-    case SET_FUNNEL_STEPS:
     case CHANGE_FUNNEL_STEPS_ORDER:
+      return {
+        ...state,
+        steps: action.payload.steps.map((step, idx) => {
+          if (idx === 0) {
+            return {
+              ...step,
+              inverted: false,
+              optional: false,
+            };
+          }
+          return step;
+        }),
+      };
+    case SET_FUNNEL_STEPS:
       return {
         ...state,
         steps: action.payload.steps,

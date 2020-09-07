@@ -245,7 +245,7 @@ function* serializeQuery(action: SetQueryAction) {
     if (stepsFilters && stepsFilters.length) {
       yield all(
         stepsFilters.map(({ eventCollection, filters, id }) =>
-          spawn(transformStepFilters, eventCollection, filters, id)
+          fork(transformStepFilters, eventCollection, filters, id)
         )
       );
     }
