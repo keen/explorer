@@ -28,9 +28,8 @@
      upgradeSubscriptionUrl: 'http://keen.io',
      virtualAnalysis: {
        purchases: {
-         kaczka: () => {
-
-         },
+         // Resolve to Keen API response from any data source
+         mmr: (query) => Promise.resolve({ result: 230 }),
        }
      },
      keenAnalysis: {

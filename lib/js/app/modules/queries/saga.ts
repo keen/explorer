@@ -1,6 +1,13 @@
 /* eslint-disable @typescript-eslint/camelcase */
 
-import { takeLatest, getContext, select, take, put } from 'redux-saga/effects';
+import {
+  takeLatest,
+  getContext,
+  select,
+  call,
+  take,
+  put,
+} from 'redux-saga/effects';
 import HttpStatus from 'http-status-codes';
 
 import {
@@ -66,11 +73,28 @@ function* runQuery(action: RunQueryAction) {
     const {
       payload: { body },
     } = action;
-    const client = yield getContext(KEEN_CLIENT_CONTEXT);
-    const responseBody = yield client.query(body);
 
-    yield put(runQuerySuccess(responseBody));
+    const { event_collection, target_property } = body;
+
+    const virtualAnalysis = yield getContext('virtualAnalysis');
+    const isVirtualAnalysis =
+      virtualAnalysis[event_collection] &&
+      virtualAnalysis[event_collection][target_property];
+
+    if (isVirtualAnalysis) {
+      const virtualAnalysisResult = yield call(
+        virtualAnalysis[event_collection][target_property],
+        body
+      );
+      yield put(runQuerySuccess(virtualAnalysisResult));
+    } else {
+      const client = yield getContext(KEEN_CLIENT_CONTEXT);
+      const responseBody = yield client.query(body);
+
+      yield put(runQuerySuccess(responseBody));
+    }
   } catch (error) {
+    console.error(error, 'ERROR');
     const { body, error_code } = error;
     yield put(runQueryError(error));
 

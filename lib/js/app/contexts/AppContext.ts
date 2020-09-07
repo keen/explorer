@@ -6,7 +6,9 @@ const AppContext = React.createContext<{
   notificationPubSub: PubSub;
   modalContainer: string;
   upgradeSubscriptionUrl?: string;
+  virtualFields: any;
 }>({
+  virtualFields: {},
   keenAnalysis: null,
   modalContainer: null,
   notificationPubSub: null,

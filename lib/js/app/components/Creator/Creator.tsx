@@ -14,6 +14,7 @@ const Creator: FC<Props> = ({ onUpdateQuery }) => {
   const dispatch = useDispatch();
   const {
     modalContainer,
+    virtualFields,
     keenAnalysis: { config },
   } = useContext(AppContext);
 
@@ -23,6 +24,7 @@ const Creator: FC<Props> = ({ onUpdateQuery }) => {
 
   return (
     <QueryCreator
+      virtualSchemas={virtualFields}
       modalContainer={modalContainer}
       projectId={config.projectId}
       readKey={config.readKey}

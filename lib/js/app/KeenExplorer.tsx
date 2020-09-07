@@ -26,7 +26,12 @@ import { SHOW_TOAST_NOTIFICATION_EVENT } from './constants';
 
 export class KeenExplorer {
   constructor(props: Options) {
-    const { keenAnalysis, upgradeSubscriptionUrl, modalContainer } = props;
+    const {
+      keenAnalysis,
+      upgradeSubscriptionUrl,
+      virtualAnalysis,
+      modalContainer,
+    } = props;
     const keenAnalysisClient =
       keenAnalysis.instance || new KeenAnalysis(keenAnalysis.config);
 
@@ -35,6 +40,7 @@ export class KeenExplorer {
       context: {
         keenClient: keenAnalysisClient,
         pubsub: getPubSub(),
+        virtualAnalysis,
         notificationManager: new NotificationManager({
           pubsub: notificationPubSub,
           eventName: SHOW_TOAST_NOTIFICATION_EVENT,
@@ -52,6 +58,17 @@ export class KeenExplorer {
     const initialView = props.initialView || 'browser';
     store.dispatch(appStart(initialView));
 
+    const virtualFields = {};
+
+    Object.keys(virtualAnalysis).forEach((eventCollection: string) => {
+      if (!virtualFields[eventCollection]) {
+        virtualFields[eventCollection] = {};
+      }
+      Object.keys(virtualAnalysis[eventCollection]).forEach((key) => {
+        virtualFields[eventCollection][key] = 'computed';
+      });
+    });
+
     ReactDOM.render(
       <Provider store={store}>
         <AppContext.Provider
@@ -59,6 +76,7 @@ export class KeenExplorer {
             keenAnalysis: keenAnalysisClient,
             modalContainer,
             upgradeSubscriptionUrl,
+            virtualFields,
             notificationPubSub,
           }}
         >

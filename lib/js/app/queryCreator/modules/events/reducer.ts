@@ -47,7 +47,9 @@ export const eventsReducer = (
             ...state.schemas[action.payload.collection],
             schema: action.payload.schema,
             tree: {},
-            list: {},
+            list: [],
+            virtualFieldsTree: {},
+            virtualFieldsList: [],
           },
         },
       };

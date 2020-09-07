@@ -75,11 +75,7 @@ class QueryCreator extends React.PureComponent<Props> {
     const sagaMiddleware = createSagaMiddleware({
       context: {
         keenClient,
-        [VIRTUAL_SCHEMAS_CONTEXT]: {
-          purchases: {
-            mmr: 'computed',
-          },
-        },
+        [VIRTUAL_SCHEMAS_CONTEXT]: props.virtualSchemas,
       },
     });
 
