@@ -6,6 +6,7 @@ import configureStore from 'redux-mock-store';
 import FunnelStep from './FunnelStep';
 
 const props = {
+  id: 'id',
   index: 0,
   detailsVisible: false,
   timeframe: 'this_14_days',

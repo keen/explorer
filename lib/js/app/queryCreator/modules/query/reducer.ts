@@ -19,6 +19,8 @@ import {
   DEFAULT_TIMEFRAME,
   DEFAULT_TIMEZONE,
   ADD_FUNNEL_STEP,
+  SET_FUNNEL_STEPS,
+  SET_FUNNEL_STEP_FILTERS,
   CLONE_FUNNEL_STEP,
   REMOVE_FUNNEL_STEP,
   UPDATE_FUNNEL_STEP,
@@ -61,6 +63,8 @@ export const queryReducer = (
   state: ReducerState = initialState,
   action: QueryActions
 ) => {
+  console.log(action, 'sasaas');
+
   switch (action.type) {
     case ADD_FILTER:
       return {
@@ -183,6 +187,7 @@ export const queryReducer = (
             })),
         ],
       };
+    case SET_FUNNEL_STEPS:
     case CHANGE_FUNNEL_STEPS_ORDER:
       return {
         ...state,
@@ -202,6 +207,19 @@ export const queryReducer = (
                   ...DEFAULT_FILTER,
                 },
               ],
+            };
+          }
+          return step;
+        }),
+      };
+    case SET_FUNNEL_STEP_FILTERS:
+      return {
+        ...state,
+        steps: state.steps.map((step) => {
+          if (step.id === action.payload.stepId) {
+            return {
+              ...step,
+              filters: action.payload.filters,
             };
           }
           return step;

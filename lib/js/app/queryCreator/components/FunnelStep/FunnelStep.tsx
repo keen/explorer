@@ -161,6 +161,7 @@ const FunnelStep: FC<Props> = ({
                   updateStep({
                     eventCollection: collection,
                     actorProperty: undefined,
+                    filters: [],
                   });
                 }}
               />

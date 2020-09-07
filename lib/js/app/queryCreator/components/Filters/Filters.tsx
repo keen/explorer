@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { v4 as uuid } from 'uuid';
 import { ActionButton } from '@keen.io/ui-core';
 
-import { Title } from '../';
+import Title from '../Title';
 
 import FiltersComponent from './FiltersComponent';
 

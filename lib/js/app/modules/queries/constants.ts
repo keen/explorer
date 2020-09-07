@@ -3,6 +3,7 @@ export const RUN_QUERY = '@queries/RUN_QUERY';
 export const RUN_QUERY_SUCCESS = '@queries/RUN_QUERY_SUCCESS';
 export const RUN_QUERY_ERROR = '@queries/RUN_QUERY_ERROR';
 export const SAVE_QUERY = '@queries/SAVE_QUERY';
+export const SET_QUERY_SAVE_STATE = '@queries/SET_QUERY_SAVE_STATE';
 export const SAVE_QUERY_SUCCESS = '@queries/SAVE_QUERY_SUCCESS';
 export const SAVE_QUERY_ERROR = '@queries/SAVE_QUERY_ERROR';
 export const RESET_SAVE_QUERY_ERROR = '@queries/RESET_SAVE_QUERY_ERROR';
