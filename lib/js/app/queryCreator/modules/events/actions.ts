@@ -14,7 +14,7 @@ export const setEventsCollections = (collections: string[]): EventsActions => ({
   payload: { collections },
 });
 
-export const schemaComputed = (
+export const computeSchemaSuccess = (
   collection: string,
   schema: Partial<CollectionSchema>
 ): EventsActions => ({

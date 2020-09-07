@@ -46,7 +46,7 @@ import {
   setEventsCollections,
   setCollectionSchemaLoading,
   getSchemas,
-  schemaComputed,
+  computeSchemaSuccess,
   FETCH_COLLECTION_SCHEMA_SUCCESS,
   FETCH_COLLECTION_SCHEMA,
   SCHEMA_COMPUTED,
@@ -93,7 +93,7 @@ function* transformSchema(
     list,
   };
 
-  yield put(schemaComputed(collection, schema));
+  yield put(computeSchemaSuccess(collection, schema));
 }
 
 function* fetchSchema(action: FetchCollectionSchemaAction) {
