@@ -6,4 +6,5 @@ export const OperatorsList = styled.div`
 
 export const Container = styled.div`
   position: relative;
+  white-space: nowrap;
 `;
