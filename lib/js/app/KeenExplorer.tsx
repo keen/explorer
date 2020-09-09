@@ -3,9 +3,11 @@ import ReactDOM from 'react-dom';
 import { createStore, applyMiddleware } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { Provider } from 'react-redux';
+import { ThemeProvider } from 'styled-components';
 import createSagaMiddleware from 'redux-saga';
 import { ToastProvider } from '@keen.io/toast-notifications';
 import { getPubSub, PubSub } from '@keen.io/pubsub';
+import { screenBreakpoints } from '@keen.io/ui-core';
 
 import KeenAnalysis from 'keen-analysis';
 
@@ -52,18 +54,24 @@ export class KeenExplorer {
 
     ReactDOM.render(
       <Provider store={store}>
-        <AppContext.Provider
-          value={{
-            keenAnalysis: keenAnalysisClient,
-            modalContainer,
-            upgradeSubscriptionUrl,
-            notificationPubSub,
+        <ThemeProvider
+          theme={{
+            breakpoints: screenBreakpoints,
           }}
         >
-          <ToastProvider>
-            <App />
-          </ToastProvider>
-        </AppContext.Provider>
+          <AppContext.Provider
+            value={{
+              keenAnalysis: keenAnalysisClient,
+              modalContainer,
+              upgradeSubscriptionUrl,
+              notificationPubSub,
+            }}
+          >
+            <ToastProvider>
+              <App />
+            </ToastProvider>
+          </AppContext.Provider>
+        </ThemeProvider>
       </Provider>,
       document.querySelector(props.container)
     );
