@@ -1483,10 +1483,18 @@
     styled-components "5.1.0"
     styled-system "5.1.5"
 
-"@keen.io/icons@^0.4.3", "@keen.io/icons@^0.4.4":
+"@keen.io/icons@^0.4.3":
   version "0.4.4"
   resolved "https://registry.yarnpkg.com/@keen.io/icons/-/icons-0.4.4.tgz#43bcf1c89927f8e15bd54753890db03be94d43ea"
   integrity sha512-+3ySdb7qt3t8VbgKcLNWnFVXGlVOTQCVPJZXZt5BmdO0VZeViqKjnx3OoE5oYyVCDCEP87xWvaC6cQb61guVUA==
+  dependencies:
+    "@keen.io/colors" "^0.2.0"
+    react "^16.12.0"
+
+"@keen.io/icons@^0.4.4", "@keen.io/icons@^0.4.5":
+  version "0.4.5"
+  resolved "https://registry.yarnpkg.com/@keen.io/icons/-/icons-0.4.5.tgz#be55a78a3d6f9da07cfe5e50720a8467719f455c"
+  integrity sha512-rR+EkR8B3XIyH34Wk0tV4xHSfhGF2YewbZmgCdVuvrLnEz8bRaZxoBznHIzD8DP/5h2vGt2v7EmjqoxkGkTNdQ==
   dependencies:
     "@keen.io/colors" "^0.2.0"
     react "^16.12.0"
@@ -1518,12 +1526,31 @@
     styled-system "5.1.5"
 
 "@keen.io/ui-core@^0.28.1":
-  version "0.28.1"
-  resolved "https://registry.yarnpkg.com/@keen.io/ui-core/-/ui-core-0.28.1.tgz#8199e74904c70ee0fdb16d07111c2427c626929f"
-  integrity sha512-iqvMSl8+O3r/rnSa6o6Msb1X29OoJBunasHCLpIWEaVpv6byELzRD2E5DleDnJW40e4qKEv5NfYTYSUfrcowMw==
+  version "0.28.3"
+  resolved "https://registry.yarnpkg.com/@keen.io/ui-core/-/ui-core-0.28.3.tgz#0ba7b6841a1cfd1c59c4ad2f97e847cb134a3d98"
+  integrity sha512-kaFOAFAlHbKJFRnpMnWMwijBQbcMLrKLf4MxImQeWfbWLr/C5x7A7aWO36IDI29O0TU4cH6xcjT80D0WHhTqcQ==
   dependencies:
     "@keen.io/colors" "^0.2.0"
     "@keen.io/icons" "^0.4.4"
+    color "^3.1.2"
+    framer-motion "^1.11.1"
+    fuse.js "^6.4.1"
+    polished "^3.4.4"
+    react "^16.12.0"
+    react-column-resizer "^1.1.9"
+    react-dom "^16.12.0"
+    react-select "^3.1.0"
+    styled-components "5.1.0"
+    styled-system "5.1.5"
+    webfontloader "^1.6.28"
+
+"@keen.io/ui-core@^0.29.1":
+  version "0.29.1"
+  resolved "https://registry.yarnpkg.com/@keen.io/ui-core/-/ui-core-0.29.1.tgz#48cbdfd6819104c9d734d64340de5f4efee75576"
+  integrity sha512-ViZitbrqacbl7dG2wQGdoJgV9Xgc7M20Daw8wL9wr2fzcr9h/7mvXZ20LslFRfEREVMNMiLHLyJQu9te+kZEWg==
+  dependencies:
+    "@keen.io/colors" "^0.2.0"
+    "@keen.io/icons" "^0.4.5"
     color "^3.1.2"
     framer-motion "^1.11.1"
     fuse.js "^6.4.1"

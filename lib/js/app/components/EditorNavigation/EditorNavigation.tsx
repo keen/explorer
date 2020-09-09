@@ -1,5 +1,7 @@
 import React, { FC, useState, useRef, useCallback, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { AnimatePresence } from 'framer-motion';
+import { Tooltip } from '@keen.io/ui-core';
 import {
   Button,
   Badge,
@@ -16,6 +18,8 @@ import {
   Tag,
   Menu,
   MenuItem,
+  TooltipMotion,
+  TooltipContent,
 } from './EditorNavigation.styles';
 import text from './text.json';
 
@@ -36,6 +40,12 @@ const actionsDropdownMotion = {
   exit: { opacity: 0, top: 30, left: -10 },
 };
 
+const tooltipMotion = {
+  initial: { opacity: 0 },
+  animate: { opacity: 1 },
+  exit: { opacity: 0 },
+};
+
 type Props = {
   /** Save query event handler*/
   onSaveQuery: () => void;
@@ -46,6 +56,7 @@ const EditorNavigation: FC<Props> = ({ onSaveQuery }) => {
   const actionsContainer = useRef(null);
 
   const [actionsMenu, setActionsMenuVisibility] = useState(false);
+  const [tooltip, showTooltip] = useState(false);
   const { exists, displayName, name, refreshRate, tags, cached } = useSelector(
     getSavedQuery
   );
@@ -100,7 +111,11 @@ const EditorNavigation: FC<Props> = ({ onSaveQuery }) => {
             List
           </span>
         </MenuItem>
-        <MenuItem>
+        <MenuItem
+          position="relative"
+          onMouseEnter={() => showTooltip(true)}
+          onMouseLeave={() => showTooltip(false)}
+        >
           <CircleButton
             icon={
               <span data-testid="query-settings">
@@ -113,6 +128,15 @@ const EditorNavigation: FC<Props> = ({ onSaveQuery }) => {
               )
             }
           />
+          <AnimatePresence>
+            {tooltip && (
+              <TooltipMotion {...tooltipMotion}>
+                <Tooltip hasArrow={false} mode="light">
+                  <TooltipContent>{text.tooltip}</TooltipContent>
+                </Tooltip>
+              </TooltipMotion>
+            )}
+          </AnimatePresence>
         </MenuItem>
         <MenuItem ref={actionsContainer}>
           <CircleButton

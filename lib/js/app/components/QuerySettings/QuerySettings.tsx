@@ -1,5 +1,6 @@
 import React, { FC, useState, useCallback, useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import { colors } from '@keen.io/colors';
 import { ErrorContainer } from '@keen.io/forms';
 import {
   Anchor,
@@ -191,7 +192,13 @@ const QuerySettings: FC<Props> = ({ onSave, onClose, cacheAvailable }) => {
           </Button>
           {!isSavingQuery && (
             <Cancel>
-              <Anchor onClick={onClose}>{text.closeButton}</Anchor>
+              <Anchor
+                onClick={onClose}
+                color={colors.blue[500]}
+                hoverColor={colors.blue[300]}
+              >
+                {text.closeButton}
+              </Anchor>
             </Cancel>
           )}
         </FooterContent>

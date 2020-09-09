@@ -1,5 +1,6 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { transparentize } from 'polished';
+import { motion } from 'framer-motion';
 import { colors } from '@keen.io/colors';
 
 export const Container = styled.div`
@@ -25,7 +26,16 @@ export const QueryName = styled.div`
   color: ${colors.blue[500]};
 `;
 
-export const MenuItem = styled.div``;
+type MenuItemProps = {
+  position?: 'static' | 'relative';
+};
+export const MenuItem = styled.div<MenuItemProps>`
+  ${(props) =>
+    props.position &&
+    css`
+      position: ${props.position};
+    `}
+`;
 
 export const Menu = styled.div`
   display: flex;
@@ -34,4 +44,19 @@ export const Menu = styled.div`
   ${MenuItem} + ${MenuItem} {
     margin-left: 10px;
   }
+`;
+
+export const TooltipMotion = styled(motion.div)`
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  transform: translateY(4px);
+`;
+
+export const TooltipContent = styled.div`
+  font-family: 'Lato Regular', sans-serif;
+  font-size: 14px;
+  line-height: 17px;
+
+  color: ${colors.black[500]};
 `;
