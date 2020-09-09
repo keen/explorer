@@ -39,13 +39,16 @@ const QueriesListItem: FC<Props> = ({
   onClick,
 }) => {
   const [labelsOpen, toogleLabels] = useState(false);
-
   const queryTags =
-    tags.length > TAGS_LIMIT && !labelsOpen ? tags.slice(0, 2) : tags;
+    tags.length > TAGS_LIMIT && !labelsOpen ? tags.slice(0, TAGS_LIMIT) : tags;
 
   return (
-    <Container onClick={onClick} isActive={isActive}>
-      <QueryName>{queryName}</QueryName>
+    <Container
+      onClick={onClick}
+      isActive={isActive}
+      data-testid="saved-query-item"
+    >
+      <QueryName data-testid="saved-query-name">{queryName}</QueryName>
       <Labels>
         {' '}
         {refreshRate !== 0 && (
@@ -73,7 +76,7 @@ const QueriesListItem: FC<Props> = ({
           />
         )}
       </Labels>
-      <UpdateDate>{updateDate}</UpdateDate>
+      <UpdateDate data-testid="saved-query-date">{updateDate}</UpdateDate>
     </Container>
   );
 };

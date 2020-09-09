@@ -80,6 +80,7 @@ const QueriesList: FC<Props> = ({
             paddingLeft={20}
             sortable
             onClick={() => sortHandler('name')}
+            data-testid="table-header-name"
           >
             <Heading>{text.name}</Heading>
             <SortIndicators
@@ -97,6 +98,7 @@ const QueriesList: FC<Props> = ({
             paddingRight={20}
             sortable
             onClick={() => sortHandler('lastModifiedDate')}
+            data-testid="table-header-date"
           >
             <Heading>{text.updated}</Heading>
             <SortIndicators

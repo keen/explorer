@@ -13,7 +13,7 @@ type Props = {
 };
 
 const DropIndicator: FC<Props> = ({ onClick, isActive }) => (
-  <Container onClick={onClick}>
+  <Container onClick={onClick} data-testid="drop-indicator">
     <motion.span
       animate={
         isActive

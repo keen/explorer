@@ -25,7 +25,7 @@ export const ScrollOverflow = styled.div`
   width: 100%;
   height: 5px;
   background: ${BACKGROUND_MAIN};
-  box-shadow: ${transparentize(0.5, colors.gray[500])} -4px 0px 8px;
+  box-shadow: ${transparentize(0.85, colors.black[500])} 0px -2px 6px;
 `;
 
 export const Container = styled.div<FlexDirectionProps>`
