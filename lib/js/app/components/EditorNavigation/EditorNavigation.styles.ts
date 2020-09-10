@@ -13,6 +13,7 @@ export const Container = styled.div`
 export const WrapperVertical = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
 `;
 
 export const WrapperHorizontal = styled.div`

@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { DropdownMenu } from '@keen.io/ui-core';
 
-import { Container } from './ActionsMenu.styles';
+import { Container, DeleteQueryItem } from './ActionsMenu.styles';
 
 import text from './text.json';
 
@@ -16,7 +16,7 @@ const ActionsMenu: FC<Props> = ({ onRemoveQuery }) => (
       <DropdownMenu.Item>Example #1</DropdownMenu.Item>
       <DropdownMenu.Divider />
       <DropdownMenu.Item onClick={onRemoveQuery}>
-        {text.deleteQuery}
+        <DeleteQueryItem>{text.deleteQuery}</DeleteQueryItem>
       </DropdownMenu.Item>
     </DropdownMenu.Container>
   </Container>

@@ -1491,6 +1491,14 @@
     "@keen.io/colors" "^0.2.0"
     react "^16.12.0"
 
+"@keen.io/icons@^0.4.5":
+  version "0.4.5"
+  resolved "https://registry.yarnpkg.com/@keen.io/icons/-/icons-0.4.5.tgz#be55a78a3d6f9da07cfe5e50720a8467719f455c"
+  integrity sha512-rR+EkR8B3XIyH34Wk0tV4xHSfhGF2YewbZmgCdVuvrLnEz8bRaZxoBznHIzD8DP/5h2vGt2v7EmjqoxkGkTNdQ==
+  dependencies:
+    "@keen.io/colors" "^0.2.0"
+    react "^16.12.0"
+
 "@keen.io/icons@^0.4.6":
   version "0.4.6"
   resolved "https://registry.yarnpkg.com/@keen.io/icons/-/icons-0.4.6.tgz#c5f9117ba9d4822e81cf4546b23400ffe463fb82"
@@ -1511,10 +1519,10 @@
   resolved "https://registry.yarnpkg.com/@keen.io/pubsub/-/pubsub-0.2.0.tgz#7d2f1d903d12e11ddff8e150ec8e53475fca2327"
   integrity sha512-SIPrwH2MTGaVaRqEEa0Nd1/RPOcX2QFxBSIiQvZ0U7DxMkt4MbDmpZHgYTsBRwJ1PAXvC27KQqTrjentgctS3w==
 
-"@keen.io/toast-notifications@^0.0.4":
-  version "0.0.4"
-  resolved "https://registry.yarnpkg.com/@keen.io/toast-notifications/-/toast-notifications-0.0.4.tgz#8d1ad91a2f7198b203462a190d6fa98051613bd5"
-  integrity sha512-BaCFX691p/Rq3jkXG9M1KkQVHcnY0WK/Ze/VgwYstdpMlw0L14nWwgjvwjEa+8/H45VLXzbZKmJUxaqgobeIxA==
+"@keen.io/toast-notifications@^0.0.5":
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/@keen.io/toast-notifications/-/toast-notifications-0.0.5.tgz#5282108b21140f52e0453b7617191c825b1a39c2"
+  integrity sha512-Fj1tFmL/uQcScrDZLJp1oVEfUplUn1yjMFESSLnmMVkq7XHhJyCmZ3XP9lRVrULbIGv3NOWlThYvrfrkSjbiqg==
   dependencies:
     "@keen.io/colors" "^0.2.0"
     framer-motion "^1.11.1"
@@ -1532,6 +1540,25 @@
   dependencies:
     "@keen.io/colors" "^0.2.0"
     "@keen.io/icons" "^0.4.4"
+    color "^3.1.2"
+    framer-motion "^1.11.1"
+    fuse.js "^6.4.1"
+    polished "^3.4.4"
+    react "^16.12.0"
+    react-column-resizer "^1.1.9"
+    react-dom "^16.12.0"
+    react-select "^3.1.0"
+    styled-components "5.1.0"
+    styled-system "5.1.5"
+    webfontloader "^1.6.28"
+
+"@keen.io/ui-core@^0.29.1":
+  version "0.29.1"
+  resolved "https://registry.yarnpkg.com/@keen.io/ui-core/-/ui-core-0.29.1.tgz#48cbdfd6819104c9d734d64340de5f4efee75576"
+  integrity sha512-ViZitbrqacbl7dG2wQGdoJgV9Xgc7M20Daw8wL9wr2fzcr9h/7mvXZ20LslFRfEREVMNMiLHLyJQu9te+kZEWg==
+  dependencies:
+    "@keen.io/colors" "^0.2.0"
+    "@keen.io/icons" "^0.4.5"
     color "^3.1.2"
     framer-motion "^1.11.1"
     fuse.js "^6.4.1"
