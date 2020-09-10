@@ -4,9 +4,11 @@ import { render as rtlRender, fireEvent } from '@testing-library/react';
 import ActionsMenu from './ActionsMenu';
 import text from './text.json';
 
-const render = () => {
+const render = (overProps: any = {}) => {
   const props = {
+    isNewQuery: false,
     onRemoveQuery: jest.fn(),
+    ...overProps,
   };
 
   const wrapper = rtlRender(<ActionsMenu {...props} />);
@@ -35,4 +37,14 @@ test('allows user to remove query', () => {
   fireEvent.click(removeLink);
 
   expect(props.onRemoveQuery).toHaveBeenCalled();
+});
+
+test("doesn't allow to remove new query", () => {
+  const {
+    wrapper: { queryByText },
+  } = render({ isNewQuery: true });
+
+  const removeLink = queryByText(text.deleteQuery);
+
+  expect(removeLink).toBeNull();
 });

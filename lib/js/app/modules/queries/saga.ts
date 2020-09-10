@@ -27,6 +27,7 @@ import {
   getViewMode,
   setViewMode,
   selectFirstSavedQuery,
+  switchToQueriesList,
   HIDE_CONFIRMATION,
   ACCEPT_CONFIRMATION,
 } from '../../modules/app';
@@ -153,6 +154,8 @@ function* saveQuery({ payload }: SaveQueryAction) {
 }
 
 function* deleteQuery(action: DeleteQueryAction) {
+  const notificationManager = yield getContext(NOTIFICATION_MANAGER_CONTEXT);
+
   try {
     const {
       payload: { queryName },
@@ -174,9 +177,6 @@ function* deleteQuery(action: DeleteQueryAction) {
       yield put(deleteQuerySuccess(queryName));
       yield put(selectFirstSavedQuery());
 
-      const notificationManager = yield getContext(
-        NOTIFICATION_MANAGER_CONTEXT
-      );
       yield notificationManager.showNotification({
         type: 'info',
         message: text.removeQuerySuccess,
@@ -184,6 +184,28 @@ function* deleteQuery(action: DeleteQueryAction) {
       });
     }
   } catch (error) {
+    const { error_code, status } = error;
+    if (error_code === ERRORS.RESOURCE_NOT_FOUND) {
+      yield put(resetQueryResults());
+      yield put(switchToQueriesList());
+      yield put(selectFirstSavedQuery());
+
+      yield notificationManager.showNotification({
+        type: 'error',
+        message: text.queryDeleted,
+        autoDismiss: true,
+      });
+    }
+
+    if (status === 500) {
+      yield notificationManager.showNotification({
+        type: 'error',
+        message: text.queryDeleteError,
+        showDismissButton: true,
+        autoDismiss: false,
+      });
+    }
+
     yield put(deleteQueryError(error));
   }
 }
