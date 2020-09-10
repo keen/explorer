@@ -147,3 +147,21 @@ test('opens query settings modal for not existing query', () => {
     ]
   `);
 });
+
+test('allows user to return to the saved queries list', () => {
+  const {
+    store,
+    wrapper: { getByText },
+  } = render();
+
+  const link = getByText(text.backLink);
+  fireEvent.click(link);
+
+  expect(store.getActions()).toMatchInlineSnapshot(`
+  Array [
+    Object {
+      "type": "@app/SWITCH_TO_QUERIES_LIST",
+    },
+  ]
+`);
+});

@@ -1483,10 +1483,18 @@
     styled-components "5.1.0"
     styled-system "5.1.5"
 
-"@keen.io/icons@^0.4.3", "@keen.io/icons@^0.4.4":
+"@keen.io/icons@^0.4.4":
   version "0.4.4"
   resolved "https://registry.yarnpkg.com/@keen.io/icons/-/icons-0.4.4.tgz#43bcf1c89927f8e15bd54753890db03be94d43ea"
   integrity sha512-+3ySdb7qt3t8VbgKcLNWnFVXGlVOTQCVPJZXZt5BmdO0VZeViqKjnx3OoE5oYyVCDCEP87xWvaC6cQb61guVUA==
+  dependencies:
+    "@keen.io/colors" "^0.2.0"
+    react "^16.12.0"
+
+"@keen.io/icons@^0.4.6":
+  version "0.4.6"
+  resolved "https://registry.yarnpkg.com/@keen.io/icons/-/icons-0.4.6.tgz#c5f9117ba9d4822e81cf4546b23400ffe463fb82"
+  integrity sha512-q2nwabxQm/aHAAyceb9QSgIbdfgJd41aYOT9t0/0CeCuZjy1wersM/A0adYDa5aMu9h/Q6f2QK12IiJhvTOnrg==
   dependencies:
     "@keen.io/colors" "^0.2.0"
     react "^16.12.0"
