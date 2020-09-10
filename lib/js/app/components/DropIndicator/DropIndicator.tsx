@@ -15,6 +15,7 @@ type Props = {
 const DropIndicator: FC<Props> = ({ onClick, isActive }) => (
   <Container onClick={onClick} data-testid="drop-indicator">
     <motion.span
+      transition={{ duration: 0.3 }}
       animate={
         isActive
           ? {
