@@ -12,3 +12,6 @@ export const getVisualizationType = ({ app }: AppState) =>
   app.visualization.type;
 
 export const getViewMode = ({ app }: AppState) => app.view;
+
+export const getBrowserScreenDimension = ({ app }: AppState) =>
+  app.browserScreen;

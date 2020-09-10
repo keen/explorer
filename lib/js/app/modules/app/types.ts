@@ -14,6 +14,8 @@ import {
   SWITCH_TO_QUERIES_LIST,
   UPDATE_QUERY_CREATOR,
   QUERY_EDITOR_MOUNTED,
+  SCREEN_RESIZE,
+  SET_SCREEN_DIMENSION,
   SHOW_QUERY_SETTINGS_MODAL,
   HIDE_QUERY_SETTINGS_MODAL,
 } from './constants';
@@ -38,6 +40,10 @@ export type ReducerState = {
     source: SettingsModalSource;
   };
   view: ViewMode;
+  browserScreen: {
+    width: number;
+    height: number;
+  };
   visualization: {
     type: string | null;
   };
@@ -47,6 +53,22 @@ export interface AppStartAction {
   type: typeof APP_START;
   payload: {
     initialView: ViewMode;
+  };
+}
+
+export interface ResizeScreenAction {
+  type: typeof SCREEN_RESIZE;
+  payload: {
+    width: number;
+    height: number;
+  };
+}
+
+export interface SetScreenDimensionAction {
+  type: typeof SET_SCREEN_DIMENSION;
+  payload: {
+    width: number;
+    height: number;
   };
 }
 
@@ -135,6 +157,8 @@ export interface AcceptConfirmationAction {
 
 export type AppActions =
   | AppStartAction
+  | ResizeScreenAction
+  | SetScreenDimensionAction
   | CopyShareUrlAction
   | EditQueryAction
   | QueryEditorMountedAction

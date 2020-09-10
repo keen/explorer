@@ -27,6 +27,8 @@ import {
   editQuery,
 } from '../modules/app';
 
+import { MainContainer } from './App.styles';
+
 import { AppState } from '../modules/types';
 
 import Browser from './Browser';
@@ -126,7 +128,7 @@ class App extends Component {
 
   render() {
     return (
-      <div>
+      <MainContainer>
         {this.props.view === 'browser' && (
           <Browser
             query={this.props.query}
@@ -143,27 +145,25 @@ class App extends Component {
           />
         )}
         {this.props.view === 'editor' && (
-          <div>
-            <Editor
-              query={this.props.query}
-              upgradeSubscriptionUrl={this.props.upgradeSubscriptionUrl}
-              onRunQuery={() => this.props.runQuery(this.props.query)}
-              onSaveQuery={() => {
-                const {
-                  displayName,
-                  name,
-                  tags,
-                  refreshRate,
-                } = this.props.savedQuery;
-                this.onSaveQuery({
-                  displayName,
-                  refreshRate,
-                  tags,
-                  name,
-                });
-              }}
-            />
-          </div>
+          <Editor
+            query={this.props.query}
+            upgradeSubscriptionUrl={this.props.upgradeSubscriptionUrl}
+            onRunQuery={() => this.props.runQuery(this.props.query)}
+            onSaveQuery={() => {
+              const {
+                displayName,
+                name,
+                tags,
+                refreshRate,
+              } = this.props.savedQuery;
+              this.onSaveQuery({
+                displayName,
+                refreshRate,
+                tags,
+                name,
+              });
+            }}
+          />
         )}
         <Confirm />
         <ToastNotifications />
@@ -173,7 +173,7 @@ class App extends Component {
           )}
           onSaveQuery={(settings) => this.onSaveQuery(settings)}
         />
-      </div>
+      </MainContainer>
     );
   }
 }

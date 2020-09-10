@@ -9,7 +9,20 @@ import {
   hideConfirmation,
   acceptConfirmation,
   showQuerySettingsModal,
+  setScreenDimension,
 } from './actions';
+
+test('set browser screen dimension', () => {
+  const action = setScreenDimension(1024, 786);
+  const { browserScreen } = appReducer(initialState, action);
+
+  expect(browserScreen).toMatchInlineSnapshot(`
+    Object {
+      "height": 786,
+      "width": 1024,
+    }
+  `);
+});
 
 test('updates visualization', () => {
   const action = setVisualizationType('bar');
