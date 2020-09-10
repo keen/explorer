@@ -22,7 +22,7 @@ import { appStart } from './modules/app';
 
 import { Options } from './types';
 
-import { SHOW_TOAST_NOTIFICATION_EVENT } from './constants';
+import { SHOW_TOAST_NOTIFICATION_EVENT, PUBSUB_CONTEXT } from './constants';
 
 export class KeenExplorer {
   constructor(props: Options) {
@@ -34,7 +34,7 @@ export class KeenExplorer {
     const sagaMiddleware = createSagaMiddleware({
       context: {
         keenClient: keenAnalysisClient,
-        pubsub: getPubSub(),
+        [PUBSUB_CONTEXT]: getPubSub(),
         notificationManager: new NotificationManager({
           pubsub: notificationPubSub,
           eventName: SHOW_TOAST_NOTIFICATION_EVENT,

@@ -1,7 +1,7 @@
 import {
   APP_START,
   LOAD_STATE_FROM_URL,
-  COPY_SHARE_URL,
+  SHARE_QUERY_URL,
   SET_VISUALIZATION_TYPE,
   SHOW_CONFIRMATION,
   HIDE_CONFIRMATION,
@@ -14,6 +14,8 @@ import {
   SWITCH_TO_QUERIES_LIST,
   UPDATE_QUERY_CREATOR,
   QUERY_EDITOR_MOUNTED,
+  EXPLORER_MOUNTED,
+  NOTIFICATIONS_MOUNTED,
   SCREEN_RESIZE,
   SET_SCREEN_DIMENSION,
   SHOW_QUERY_SETTINGS_MODAL,
@@ -80,12 +82,8 @@ export interface SwitchToQueriesListAction {
   type: typeof SWITCH_TO_QUERIES_LIST;
 }
 
-export interface CopyShareUrlAction {
-  type: typeof COPY_SHARE_URL;
-  payload: {
-    query: Record<string, any>;
-    savedQuery: Record<string, any>;
-  };
+export interface ShareQueryUrlAction {
+  type: typeof SHARE_QUERY_URL;
 }
 
 export interface ShowQuerySettingsModalAction {
@@ -114,6 +112,14 @@ export interface EditQueryAction {
 
 export interface QueryEditorMountedAction {
   type: typeof QUERY_EDITOR_MOUNTED;
+}
+
+export interface ExplorerMountedAction {
+  type: typeof EXPLORER_MOUNTED;
+}
+
+export interface NotificationsMountedAction {
+  type: typeof NOTIFICATIONS_MOUNTED;
 }
 
 export interface UpdateQueryCreatorAction {
@@ -159,9 +165,11 @@ export type AppActions =
   | AppStartAction
   | ResizeScreenAction
   | SetScreenDimensionAction
-  | CopyShareUrlAction
+  | ShareQueryUrlAction
   | EditQueryAction
   | QueryEditorMountedAction
+  | NotificationsMountedAction
+  | ExplorerMountedAction
   | ClearQueryAction
   | CreateNewQueryAction
   | UpdateQueryCreatorAction

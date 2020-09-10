@@ -16,6 +16,7 @@ import {
   resizeScreen,
   setScreenDimension,
   setViewMode,
+  loadPersitedState,
   updateQueryCreator,
 } from './actions';
 
@@ -30,19 +31,26 @@ import {
   getSavedQueries,
   fetchSavedQueries,
   getOrganizationUsageLimits,
+  getQuerySettings,
   setQuerySettings,
   GET_SAVED_QUERIES_SUCCESS,
 } from '../queries';
 
-import { b64EncodeUnicode, b64DecodeUnicode } from '../../utils/base64';
-import { getScreenDimensions } from './utils';
+import { getViewMode } from './selectors';
+
+import text from './text.json';
+import {
+  getScreenDimensions,
+  b64EncodeUnicode,
+  b64DecodeUnicode,
+} from './utils';
 import { copyToClipboard } from '../../utils';
 
 import { SET_QUERY_EVENT, NEW_QUERY_EVENT } from '../../queryCreator';
+import { PUBSUB_CONTEXT, NOTIFICATION_MANAGER_CONTEXT } from '../../constants';
 
 import {
   EditQueryAction,
-  CopyShareUrlAction,
   ResizeScreenAction,
   UpdateQueryCreatorAction,
   AppStartAction,
@@ -55,8 +63,9 @@ import {
   QUERY_EDITOR_MOUNTED,
   SWITCH_TO_QUERIES_LIST,
   EDIT_QUERY,
+  NOTIFICATIONS_MOUNTED,
   UPDATE_QUERY_CREATOR,
-  COPY_SHARE_URL,
+  SHARE_QUERY_URL,
   LOAD_STATE_FROM_URL,
   SELECT_FIRST_QUERY,
   URL_STATE,
@@ -78,14 +87,14 @@ const createScreenResizeChannel = () =>
 
 export function* createNewQuery() {
   yield put(setViewMode('editor'));
-  const pubsub = yield getContext('pubsub');
+  const pubsub = yield getContext(PUBSUB_CONTEXT);
   yield pubsub.publish(NEW_QUERY_EVENT);
   yield put(resetQueryResults());
   yield put(resetSavedQuery());
 }
 
 export function* clearQuery() {
-  const pubsub = yield getContext('pubsub');
+  const pubsub = yield getContext(PUBSUB_CONTEXT);
   yield pubsub.publish(NEW_QUERY_EVENT);
   yield put(resetQueryResults());
 }
@@ -101,7 +110,7 @@ function* editQuery({ payload }: EditQueryAction) {
 
 export function* updateCreator({ payload }: UpdateQueryCreatorAction) {
   const { query } = payload;
-  const pubsub = yield getContext('pubsub');
+  const pubsub = yield getContext(PUBSUB_CONTEXT);
 
   yield pubsub.publish(SET_QUERY_EVENT, { query });
 }
@@ -127,41 +136,72 @@ export function* switchToQueriesList() {
   }
 }
 
-export function* loadPersitedState() {
-  const url = new URL(window.location.href);
-  const searchParams = new URLSearchParams(url.search);
+export function* loadStateFromUrl() {
+  try {
+    const url = new URL(window.location.href);
+    const searchParams = new URLSearchParams(url.search);
 
-  if (searchParams) {
     const persistedState = searchParams.get(URL_STATE);
+    const { query, savedQuery } = JSON.parse(b64DecodeUnicode(persistedState));
 
-    if (persistedState) {
-      const { query, savedQuery } = JSON.parse(
-        b64DecodeUnicode(persistedState)
-      );
-
-      if (savedQuery) yield put(updateSaveQuery(savedQuery));
-      if (query) {
-        yield put(setViewMode('editor'));
-        yield take(QUERY_EDITOR_MOUNTED);
-        yield put(updateQueryCreator(query));
-      }
-
-      history.replaceState({}, '', window.location.origin);
+    if (savedQuery) yield put(updateSaveQuery(savedQuery));
+    if (query) {
+      yield put(setViewMode('editor'));
+      yield take(QUERY_EDITOR_MOUNTED);
+      yield put(updateQueryCreator(query));
     }
+  } catch (err) {
+    yield take(NOTIFICATIONS_MOUNTED);
+    const notificationManager = yield getContext(NOTIFICATION_MANAGER_CONTEXT);
+    yield notificationManager.showNotification({
+      type: 'error',
+      message: text.shareQueryLoadError,
+      showDismissButton: true,
+      autoDismiss: false,
+    });
+
+    const view = yield select(getViewMode);
+    if (view === 'browser') {
+      yield take(GET_SAVED_QUERIES_SUCCESS);
+      yield selectFirstSavedQuery();
+    } else {
+      yield put(resetSavedQuery());
+    }
+  } finally {
+    history.replaceState({}, '', window.location.origin);
   }
 }
 
-export function* copyShareUrl({ payload }: CopyShareUrlAction) {
-  const { query, savedQuery } = payload;
-  const stateToPersist = b64EncodeUnicode(
-    JSON.stringify({
-      savedQuery,
-      query,
-    })
-  );
+export function* shareQueryUrl() {
+  const savedQuery = yield select(getSavedQuery);
+  const query = yield select(getQuerySettings);
 
-  const url = `${window.location.origin}?${URL_STATE}=${stateToPersist}`;
-  yield copyToClipboard(url);
+  try {
+    const stateToPersist = yield b64EncodeUnicode(
+      JSON.stringify({
+        savedQuery,
+        query,
+      })
+    );
+
+    const url = `${window.location.origin}?${URL_STATE}=${stateToPersist}`;
+    yield copyToClipboard(url);
+
+    const notificationManager = yield getContext(NOTIFICATION_MANAGER_CONTEXT);
+    yield notificationManager.showNotification({
+      type: 'success',
+      message: text.shareQuerySuccess,
+      autoDismiss: true,
+    });
+  } catch (err) {
+    const notificationManager = yield getContext(NOTIFICATION_MANAGER_CONTEXT);
+    yield notificationManager.showNotification({
+      type: 'error',
+      message: text.shareQueryError,
+      showDismissButton: true,
+      autoDismiss: false,
+    });
+  }
 }
 
 export function* watchScreenResize() {
@@ -186,7 +226,15 @@ export function* appStart({ payload }: AppStartAction) {
   yield put(fetchSavedQueries());
 
   const { initialView } = payload;
-  if (initialView === 'browser') {
+
+  const locationUrl = new URL(window.location.href);
+  const searchParams = new URLSearchParams(locationUrl.search);
+
+  const hasPersistedState = searchParams && searchParams.get(URL_STATE);
+
+  if (hasPersistedState) {
+    yield put(loadPersitedState());
+  } else if (initialView === 'browser') {
     yield take(GET_SAVED_QUERIES_SUCCESS);
     yield selectFirstSavedQuery();
   }
@@ -199,8 +247,8 @@ export function* appStart({ payload }: AppStartAction) {
 
 export function* appSaga() {
   yield takeLatest(APP_START, appStart);
-  yield takeLatest(COPY_SHARE_URL, copyShareUrl);
-  yield takeLatest(LOAD_STATE_FROM_URL, loadPersitedState);
+  yield takeLatest(SHARE_QUERY_URL, shareQueryUrl);
+  yield takeLatest(LOAD_STATE_FROM_URL, loadStateFromUrl);
   yield takeLatest(UPDATE_QUERY_CREATOR, updateCreator);
   yield takeLatest(CREATE_NEW_QUERY, createNewQuery);
   yield takeLatest(SWITCH_TO_QUERIES_LIST, switchToQueriesList);

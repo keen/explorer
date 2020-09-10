@@ -8,6 +8,7 @@ export const SHOW_TOAST_NOTIFICATION_EVENT =
 
 export const NOTIFICATION_MANAGER_CONTEXT = 'notificationManager';
 export const KEEN_CLIENT_CONTEXT = 'keenClient';
+export const PUBSUB_CONTEXT = 'pubsub';
 
 export const BACKGROUND_MAIN = '#f1f6f8';
 

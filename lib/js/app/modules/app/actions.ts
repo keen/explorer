@@ -12,7 +12,9 @@ import {
   EDIT_QUERY,
   UPDATE_QUERY_CREATOR,
   QUERY_EDITOR_MOUNTED,
-  COPY_SHARE_URL,
+  EXPLORER_MOUNTED,
+  NOTIFICATIONS_MOUNTED,
+  SHARE_QUERY_URL,
   SHOW_QUERY_SETTINGS_MODAL,
   HIDE_QUERY_SETTINGS_MODAL,
   SELECT_FIRST_QUERY,
@@ -73,6 +75,16 @@ export const queryEditorMounted = (): AppActions => ({
   type: QUERY_EDITOR_MOUNTED,
 });
 
+export const explorerMounted = (): AppActions => ({
+  type: EXPLORER_MOUNTED,
+});
+
+export const notificationsMounted = (): AppActions => ({
+  type: NOTIFICATIONS_MOUNTED,
+});
+
+NOTIFICATIONS_MOUNTED;
+
 export const editQuery = (queryName: string): AppActions => ({
   type: EDIT_QUERY,
   payload: {
@@ -93,15 +105,8 @@ export const clearQuery = (): AppActions => ({
   type: CLEAR_QUERY,
 });
 
-export const copyShareUrl = (
-  query: Record<string, any>,
-  savedQuery: Record<string, any>
-): AppActions => ({
-  type: COPY_SHARE_URL,
-  payload: {
-    query,
-    savedQuery,
-  },
+export const shareQueryUrl = (): AppActions => ({
+  type: SHARE_QUERY_URL,
 });
 
 export const setVisualizationType = (type: string): AppActions => ({
