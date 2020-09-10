@@ -39,3 +39,48 @@ test('calls "onClick" handler', () => {
 
   expect(props.onClick).toHaveBeenCalled();
 });
+
+test('renders query name', () => {
+  const {
+    wrapper: { getByText },
+    props,
+  } = render();
+  const element = getByText(props.queryName);
+
+  expect(element).toBeInTheDocument();
+});
+
+test('renders cache indicator', () => {
+  const {
+    wrapper: { getByTestId },
+  } = render({
+    refreshRate: 4,
+  });
+  const element = getByTestId('cache-badge');
+
+  expect(element).toBeInTheDocument();
+});
+
+test('renders query tags', () => {
+  const {
+    wrapper: { getByText },
+  } = render({
+    tags: ['marketing'],
+  });
+  const tagElement = getByText('marketing');
+
+  expect(tagElement).toBeInTheDocument();
+});
+
+test('allows user to show all tags related with query', () => {
+  const {
+    wrapper: { getByText, getByTestId },
+  } = render({
+    tags: ['marketing', 'it', 'infrastructure'],
+  });
+
+  const dropIndicator = getByTestId('drop-indicator');
+  fireEvent.click(dropIndicator);
+
+  expect(getByText('infrastructure')).toBeInTheDocument();
+});
