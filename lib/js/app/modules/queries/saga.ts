@@ -197,7 +197,7 @@ function* deleteQuery(action: DeleteQueryAction) {
       });
     }
 
-    if (status === 500) {
+    if (status === HttpStatus.INTERNAL_SERVER_ERROR) {
       yield notificationManager.showNotification({
         type: 'error',
         message: text.queryDeleteError,
