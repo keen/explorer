@@ -146,6 +146,7 @@ const EditorNavigation: FC<Props> = ({ onSaveQuery }) => {
           >
             <ActionsMenu
               isNewQuery={!exists}
+              onShareQuery={() => setActionsMenuVisibility(false)}
               onRemoveQuery={() => {
                 setActionsMenuVisibility(false);
                 dispatch(deleteQuery(name));

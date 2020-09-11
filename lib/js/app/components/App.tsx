@@ -18,12 +18,12 @@ import {
   selectSavedQuery,
 } from '../modules/savedQuery';
 import {
-  loadPersitedState,
   getViewMode,
   setViewMode,
   getVisualizationType,
   switchToQueriesList,
   createNewQuery,
+  explorerMounted,
   editQuery,
 } from '../modules/app';
 
@@ -56,7 +56,7 @@ const mapDispatchToProps = {
   editQuery,
   resetQueryResults,
   deleteQuery,
-  loadPersitedState,
+  explorerMounted,
   resetSavedQuery,
   selectSavedQuery,
   setQuerySettings,
@@ -96,7 +96,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.props.loadPersitedState();
+    this.props.explorerMounted();
   }
 
   onSaveQuery = ({
