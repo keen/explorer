@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [7.1.8](https://github.com/keen/explorer/compare/v7.1.7...v7.1.8) (2020-09-11)
+
+
+### Bug Fixes
+
+* 🐛 fix typo for metadata check ([468e04a](https://github.com/keen/explorer/commit/468e04add3948747c6f0d3c9df1cfdb8fe14e101))
+
 ### [7.1.7](https://github.com/keen/explorer/compare/v7.1.6...v7.1.7) (2020-08-19)
 
 ### [7.1.6](https://github.com/keen/explorer/compare/v7.1.5...v7.1.6) (2020-08-19)
