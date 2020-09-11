@@ -50,7 +50,6 @@ test('allows user to remove query', () => {
   expect(props.onRemoveQuery).toHaveBeenCalled();
 });
 
-<<<<<<< HEAD
 test("doesn't allow to remove new query", () => {
   const {
     wrapper: { queryByText },
@@ -59,7 +58,8 @@ test("doesn't allow to remove new query", () => {
   const removeLink = queryByText(text.deleteQuery);
 
   expect(removeLink).toBeNull();
-=======
+});
+
 test('calls "onShareQuery" handler', () => {
   const {
     wrapper: { getByText },
@@ -88,5 +88,4 @@ test('allows user to share query url', () => {
       },
     ]
   `);
->>>>>>> feat: 🎸 share query url feature
 });

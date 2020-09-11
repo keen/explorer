@@ -84,6 +84,7 @@ const BrowserQueryMenu: FC<Props> = ({ onEditQuery, onRemoveQuery }) => {
             motion={actionsDropdownMotion}
           >
             <ActionsMenu
+              isNewQuery={false}
               onShareQuery={() => setActionsMenuVisibility(false)}
               onRemoveQuery={() => {
                 setActionsMenuVisibility(false);

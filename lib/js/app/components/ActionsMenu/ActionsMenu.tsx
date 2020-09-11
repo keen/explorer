@@ -16,7 +16,11 @@ type Props = {
   onShareQuery?: () => void;
 };
 
-const ActionsMenu: FC<Props> = ({ isNewQuery, onShareQuery, onRemoveQuery }) => {
+const ActionsMenu: FC<Props> = ({
+  isNewQuery,
+  onShareQuery,
+  onRemoveQuery,
+}) => {
   const dispatch = useDispatch();
   return (
     <Container>
@@ -38,6 +42,6 @@ const ActionsMenu: FC<Props> = ({ isNewQuery, onShareQuery, onRemoveQuery }) => 
       </DropdownMenu.Container>
     </Container>
   );
-}
+};
 
 export default ActionsMenu;
