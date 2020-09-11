@@ -159,17 +159,21 @@ const GroupBy: FC<Props> = ({ collection }) => {
         );
         groupDispatcher(setGroups(updatedGroups));
         setDragMode(false);
+
         if (dragGhost) dragGhost.parentNode.removeChild(dragGhost);
       },
       setData: (dataTransfer, dragEl) => {
         dragGhost = dragEl.cloneNode(true);
-        dragGhost.style = {
+        const styles = {
           width: dragEl.offsetWidth,
           transform: 'translateX(-100%)',
           position: 'absolute',
         };
+        Object.assign(dragGhost.style, styles);
+
         const tree = dragGhost.querySelector('[data-testid="properties-tree"]');
         if (tree) tree.remove();
+
         document.body.appendChild(dragGhost);
         dataTransfer.setDragImage(dragGhost, 10, 10);
       },
