@@ -4,5 +4,6 @@
   "cachedLabel": "Cached",
   "cacheUnits": "h",
   "saveQuery": "Save Query",
+  "tooltip": "Settings",
   "backLink": "Go to Saved Queries"
 }

@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { position, PositionProps } from 'styled-system';
 import { transparentize } from 'polished';
 import { motion } from 'framer-motion';
 import { colors } from '@keen.io/colors';
@@ -37,7 +38,9 @@ export const QueryName = styled.div`
   color: ${colors.blue[500]};
 `;
 
-export const MenuItem = styled.div``;
+export const MenuItem = styled.div<PositionProps>`
+  ${position}
+`;
 
 export const Menu = styled.div`
   display: flex;
@@ -48,12 +51,27 @@ export const Menu = styled.div`
   }
 `;
 
-export const BackLink = styled(motion.div)`
-  display: inline-flex;
-  color: ${colors.blue[200]};
+export const TooltipMotion = styled(motion.div)`
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  transform: translateY(4px);
+`;
 
+export const TooltipContent = styled.div`
+  font-family: 'Lato Regular', sans-serif;
+  font-size: 14px;
+  line-height: 17px;
+
+  color: ${colors.black[500]};
+`;
+
+export const BackLink = styled(motion.div)`
   margin-top: 10px;
 
+  display: inline-flex;
+
+  color: ${colors.blue[200]};
   font-family: 'Lato Regular', sans-serif;
   font-size: 14px;
   line-height: 17px;
