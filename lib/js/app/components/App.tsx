@@ -8,7 +8,6 @@ import {
   deleteQuery,
   saveQuery,
   resetQueryResults,
-  getQueryResults,
   getQuerySettings,
   setQuerySettings,
 } from '../modules/queries';
@@ -47,7 +46,6 @@ const mapStateToProps = (state: AppState) => ({
   savedQuery: getSavedQuery(state),
   widget: getVisualizationType(state),
   view: getViewMode(state),
-  queryResults: getQueryResults(state),
   query: getQuerySettings(state),
 });
 
@@ -131,8 +129,6 @@ class App extends Component {
       <MainContainer>
         {this.props.view === 'browser' && (
           <Browser
-            query={this.props.query}
-            queryResults={this.props.queryResults}
             onRunQuery={() => this.props.runQuery(this.props.query)}
             onSelectQuery={(queryName, query) => {
               this.props.selectSavedQuery(queryName);

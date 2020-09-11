@@ -3,7 +3,7 @@ import { transparentize } from 'polished';
 import { colors } from '@keen.io/colors';
 
 export const Wrapper = styled.div`
-  margin: 20px;
+  padding: 20px;
 `;
 
 export const Container = styled.div`

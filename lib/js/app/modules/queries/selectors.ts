@@ -2,6 +2,9 @@ import { AppState } from '../types';
 
 export const getSavedQueries = ({ queries }: AppState) => queries.savedQueries;
 
+export const getSavedQueriesLoaded = ({ queries }: AppState) =>
+  queries.isSavedQueriesLoaded;
+
 export const getSaveQueryError = ({ queries }: AppState) =>
   queries.saveQueryError;
 

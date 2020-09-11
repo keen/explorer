@@ -6,58 +6,41 @@ import React, {
   useState,
   useRef,
 } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import {
   Container,
-  Card,
   Socket,
   ScrollOverflow,
   ScrollableContainer,
+  PreviewPlaceholder,
 } from './Browser.styles';
 
 import BrowserNavigation from '../BrowserNavigation';
-import BrowserQueryMenu from '../BrowserQueryMenu';
+import BrowserPreview from '../BrowserPreview';
 import QueriesList from '../QueriesList';
-import Heading from '../Heading';
+import QueriesPlaceholder from '../QueriesPlaceholder';
 
-import QueryVisualization from '../QueryVisualization';
-import QuerySummary from '../QuerySummary';
-import VisualizationPlaceholder from '../VisualizationPlaceholder';
-
-import {
-  getSavedQueries,
-  getQueryPerformState,
-  deleteQuery,
-} from '../../modules/queries';
+import { getSavedQueries, getSavedQueriesLoaded } from '../../modules/queries';
 import { getBrowserScreenDimension } from '../../modules/app';
 import { getSavedQuery } from '../../modules/savedQuery';
 
-import { LIST_SCROLL_OFFSET } from './constants';
+import { LIST_SCROLL_OFFSET, SOCKET_CONTAINER_WIDTH } from './constants';
 
 type Props = {
-  query: Record<string, any>;
   /** Edit query event handler */
   onEditQuery: (queryName: string) => void;
   /** Select query event handler */
   onSelectQuery: (queryName: string, settings: Record<string, any>) => void;
   /** Run selected query event handler */
   onRunQuery: () => void;
-  queryResults?: Record<string, any>;
 };
 
-const Browser: FC<Props> = ({
-  query,
-  queryResults,
-  onEditQuery,
-  onRunQuery,
-  onSelectQuery,
-}) => {
-  const dispatch = useDispatch();
+const Browser: FC<Props> = ({ onEditQuery, onRunQuery, onSelectQuery }) => {
   const browserDimension = useSelector(getBrowserScreenDimension);
-  const isQueryLoading = useSelector(getQueryPerformState);
   const savedQuery = useSelector(getSavedQuery);
   const savedQueries = useSelector(getSavedQueries);
+  const isSavedQueriesLoaded = useSelector(getSavedQueriesLoaded);
 
   const [maxScroll, setMaxScroll] = useState(0);
   const [scrollOverflow, setScrollOverflow] = useState(false);
@@ -90,65 +73,53 @@ const Browser: FC<Props> = ({
   );
 
   useEffect(() => {
-    const scroll = calculateMaxScroll();
     if (listContainer.current) {
+      const scroll = calculateMaxScroll();
       const { offsetHeight, scrollHeight, scrollTop } = listContainer.current;
       const hasOverflow = offsetHeight < scrollHeight && scrollTop < scroll;
       setScrollOverflow(hasOverflow);
     }
-  }, [savedQueries, browserDimension]);
+  }, [listContainer, savedQueries, browserDimension]);
+
+  const isEmptyProject = isSavedQueriesLoaded && savedQueries.length === 0;
 
   return (
     <>
       <BrowserNavigation />
       <Container flexDirection={{ xs: 'column', md: 'row' }}>
         <Socket
-          width={{ xs: '100%', md: '50%' }}
+          width={SOCKET_CONTAINER_WIDTH}
           marginRight={{ xs: 0, md: '-1px' }}
         >
-          <ScrollableContainer
-            ref={listContainer}
-            onScroll={scrollHandler}
-            maxHeight={browserDimension.height - LIST_SCROLL_OFFSET}
-          >
-            <QueriesList
-              savedQueries={savedQueries}
-              activeQuery={savedQuery.name}
-              onSelectQuery={onSelectQuery}
-            />
-          </ScrollableContainer>
-          {scrollOverflow && <ScrollOverflow />}
+          {!isSavedQueriesLoaded || isEmptyProject ? (
+            <QueriesPlaceholder />
+          ) : (
+            <>
+              <ScrollableContainer
+                ref={listContainer}
+                onScroll={scrollHandler}
+                maxHeight={browserDimension.height - LIST_SCROLL_OFFSET}
+              >
+                <QueriesList
+                  savedQueries={savedQueries}
+                  activeQuery={savedQuery.name}
+                  onSelectQuery={onSelectQuery}
+                />
+              </ScrollableContainer>
+              {scrollOverflow && <ScrollOverflow />}
+            </>
+          )}
         </Socket>
-        <Socket
-          marginLeft={{ xs: 0, md: 15 }}
-          width={{ xs: '100%', md: '50%' }}
-        >
-          <Heading>Preview</Heading>
-          <Card>
-            {queryResults && (
-              <QueryVisualization query={query} queryResults={queryResults} />
-            )}
-            {!queryResults && currentQuery && (
-              <VisualizationPlaceholder
-                isLoading={isQueryLoading}
-                onRunQuery={onRunQuery}
-              />
-            )}
-            {currentQuery && (
-              <>
-                <div>
-                  <BrowserQueryMenu
-                    onRemoveQuery={() =>
-                      dispatch(deleteQuery(currentQuery.name))
-                    }
-                    onEditQuery={() => onEditQuery(currentQuery.name)}
-                  />
-                  <h4>{currentQuery.displayName}</h4>
-                </div>
-                <QuerySummary querySettings={currentQuery} />
-              </>
-            )}
-          </Card>
+        <Socket marginLeft={{ xs: 0, md: 15 }} width={SOCKET_CONTAINER_WIDTH}>
+          {!isSavedQueriesLoaded || isEmptyProject ? (
+            <PreviewPlaceholder />
+          ) : (
+            <BrowserPreview
+              currentQuery={currentQuery}
+              onEditQuery={onEditQuery}
+              onRunQuery={onRunQuery}
+            />
+          )}
         </Socket>
       </Container>
     </>

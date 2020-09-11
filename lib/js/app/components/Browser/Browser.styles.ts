@@ -14,8 +14,7 @@ import { BACKGROUND_MAIN } from '../../constants';
 
 export const ScrollableContainer = styled.div<LayoutProps>`
   ${layout}
-  overflow-y: scroll;
-  overflox-x: hidden;
+  overflow-y: auto;
 `;
 
 export const ScrollOverflow = styled.div`
@@ -40,7 +39,12 @@ export const Socket = styled.div<SpaceProps & LayoutProps>`
   ${space}
 `;
 
-export const Card = styled.div`
-  background: ${colors.white[500]};
-  box-shadow: 0 2px 4px 0 ${transparentize(0.85, colors.black[500])};
+export const PreviewPlaceholder = styled.div`
+  width: 100%;
+  height: 500px;
+  background: linear-gradient(
+    180deg,
+    rgba(205, 207, 211, 0.2) 0%,
+    rgba(205, 207, 211, 0) 100%
+  );
 `;
