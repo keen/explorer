@@ -1,7 +1,8 @@
 import styled from 'styled-components';
+import { colors } from '@keen.io/colors';
 
 export const Title = styled.div`
-  font-weight: bold;
+  color: ${colors.red[500]};
 `;
 
 export const Close = styled.div`
@@ -16,8 +17,12 @@ export const Footer = styled.div`
 `;
 
 export const Description = styled.div`
-  font-size: 13px;
-  line-height: 20px;
-  margin: 20px 0;
-  max-width: 420px;
+  margin: 20px 25px;
+  max-width: 350px;
+
+  font-size: 16px;
+  line-height: 19px;
+  font-family: 'Lato Regular', sans-serif;
+
+  color: ${colors.black[500]};
 `;

@@ -1,4 +1,5 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
+import { position, PositionProps } from 'styled-system';
 import { transparentize } from 'polished';
 import { motion } from 'framer-motion';
 import { colors } from '@keen.io/colors';
@@ -8,6 +9,17 @@ export const Container = styled.div`
   align-items: center;
   background: ${transparentize(0.9, colors.blue[100])};
   padding: 10px 20px;
+`;
+
+export const WrapperVertical = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+`;
+
+export const WrapperHorizontal = styled.div`
+  display: flex;
+  align-items: center;
 `;
 
 export const QueryMeta = styled.div`
@@ -26,15 +38,8 @@ export const QueryName = styled.div`
   color: ${colors.blue[500]};
 `;
 
-type MenuItemProps = {
-  position?: 'static' | 'relative';
-};
-export const MenuItem = styled.div<MenuItemProps>`
-  ${(props) =>
-    props.position &&
-    css`
-      position: ${props.position};
-    `}
+export const MenuItem = styled.div<PositionProps>`
+  ${position}
 `;
 
 export const Menu = styled.div`
@@ -59,4 +64,21 @@ export const TooltipContent = styled.div`
   line-height: 17px;
 
   color: ${colors.black[500]};
+`;
+
+export const BackLink = styled(motion.div)`
+  margin-top: 10px;
+
+  display: inline-flex;
+
+  color: ${colors.blue[200]};
+  font-family: 'Lato Regular', sans-serif;
+  font-size: 14px;
+  line-height: 17px;
+
+  cursor: pointer;
+`;
+
+export const BackLinkText = styled.div`
+  margin-left: 5px;
 `;

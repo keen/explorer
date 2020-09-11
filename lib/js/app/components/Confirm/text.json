@@ -1,7 +1,6 @@
 {
   "buttonLabel": "Confirm",
   "cancelLabel": "Cancel",
-  "deleteQueryTitle": "Delete query",
-  "deleteMessage": "Are you sure you want to delete query",
-  "cannotReverse": "This operation cannot be undone."
+  "deleteQueryTitle": "Deleting query",
+  "deleteMessage": "Do you want to permanently delete this query from your project?"
 }

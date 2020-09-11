@@ -1,5 +1,7 @@
 {
   "saveQuerySuccess": "Query saved",
   "removeQuerySuccess": "Query removed",
-  "saveQueryError": "We cannot save the query. There is a problem on our end."
+  "saveQueryError": "We cannot save the query. There is a problem on our end.",
+  "queryDeleted": "Query already has been deleted.",
+  "queryDeleteError": "We were not able to delete this query. Try again later."
 }

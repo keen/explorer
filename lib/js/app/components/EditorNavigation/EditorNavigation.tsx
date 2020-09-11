@@ -1,6 +1,6 @@
 import React, { FC, useState, useRef, useCallback, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { Tooltip } from '@keen.io/ui-core';
 import {
   Button,
@@ -20,6 +20,10 @@ import {
   MenuItem,
   TooltipMotion,
   TooltipContent,
+  BackLink,
+  BackLinkText,
+  WrapperHorizontal,
+  WrapperVertical,
 } from './EditorNavigation.styles';
 import text from './text.json';
 
@@ -33,6 +37,7 @@ import {
   getQuerySettingsModalVisibility,
   SettingsModalSource,
 } from '../../modules/app';
+import { colors } from '@keen.io/colors';
 
 const actionsDropdownMotion = {
   initial: { opacity: 0, top: 20, left: -10 },
@@ -49,6 +54,11 @@ const tooltipMotion = {
 type Props = {
   /** Save query event handler*/
   onSaveQuery: () => void;
+};
+
+const iconVariants = {
+  initial: { x: 0 },
+  hover: { x: -5 },
 };
 
 const EditorNavigation: FC<Props> = ({ onSaveQuery }) => {
@@ -86,31 +96,40 @@ const EditorNavigation: FC<Props> = ({ onSaveQuery }) => {
 
   return (
     <Container>
-      <QueryName>{displayName ? displayName : text.newQueryTitle}</QueryName>
-      <QueryMeta>
-        {cached && (
-          <Tag>
-            <Badge variant="green">
-              <span data-testid="cache-badge">{text.cachedLabel}</span>{' '}
-              {`(${refreshRate}${text.cacheUnits})`}
-            </Badge>
-          </Tag>
-        )}
-        {tags.map((tag) => (
-          <Tag key={tag}>
-            <Badge variant="purple">{tag}</Badge>
-          </Tag>
-        ))}
-      </QueryMeta>
+      <WrapperVertical>
+        <WrapperHorizontal>
+          <QueryName>
+            {displayName ? displayName : text.newQueryTitle}
+          </QueryName>
+          <QueryMeta>
+            {cached && (
+              <Tag>
+                <Badge variant="green">
+                  <span data-testid="cache-badge">{text.cachedLabel}</span>{' '}
+                  {`(${refreshRate}${text.cacheUnits})`}
+                </Badge>
+              </Tag>
+            )}
+            {tags.map((tag) => (
+              <Tag key={tag}>
+                <Badge variant="purple">{tag}</Badge>
+              </Tag>
+            ))}
+          </QueryMeta>
+        </WrapperHorizontal>
+        <BackLink
+          onClick={() => dispatch(switchToQueriesList())}
+          whileHover="hover"
+          initial="initial"
+          animate="initial"
+        >
+          <motion.div variants={iconVariants}>
+            <Icon type="button-arrow-left" fill={colors.blue[300]} />
+          </motion.div>
+          <BackLinkText>{text.backLink}</BackLinkText>
+        </BackLink>
+      </WrapperVertical>
       <Menu>
-        <MenuItem>
-          <span
-            data-testid="query-list"
-            onClick={() => dispatch(switchToQueriesList())}
-          >
-            List
-          </span>
-        </MenuItem>
         <MenuItem
           position="relative"
           onMouseEnter={() => showTooltip(true)}
@@ -149,6 +168,7 @@ const EditorNavigation: FC<Props> = ({ onSaveQuery }) => {
             motion={actionsDropdownMotion}
           >
             <ActionsMenu
+              isNewQuery={!exists}
               onRemoveQuery={() => {
                 setActionsMenuVisibility(false);
                 dispatch(deleteQuery(name));

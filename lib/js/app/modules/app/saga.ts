@@ -1,8 +1,23 @@
 /* eslint-disable @typescript-eslint/camelcase */
 
-import { takeLatest, put, take, select, getContext } from 'redux-saga/effects';
+import {
+  takeLatest,
+  put,
+  take,
+  select,
+  call,
+  spawn,
+  debounce,
+  getContext,
+} from 'redux-saga/effects';
+import { eventChannel } from 'redux-saga';
 
-import { setViewMode, updateQueryCreator } from './actions';
+import {
+  resizeScreen,
+  setScreenDimension,
+  setViewMode,
+  updateQueryCreator,
+} from './actions';
 
 import {
   resetSavedQuery,
@@ -20,6 +35,7 @@ import {
 } from '../queries';
 
 import { b64EncodeUnicode, b64DecodeUnicode } from '../../utils/base64';
+import { getScreenDimensions } from './utils';
 import { copyToClipboard } from '../../utils';
 
 import { SET_QUERY_EVENT, NEW_QUERY_EVENT } from '../../queryCreator';
@@ -27,6 +43,7 @@ import { SET_QUERY_EVENT, NEW_QUERY_EVENT } from '../../queryCreator';
 import {
   EditQueryAction,
   CopyShareUrlAction,
+  ResizeScreenAction,
   UpdateQueryCreatorAction,
   AppStartAction,
 } from './types';
@@ -43,7 +60,21 @@ import {
   LOAD_STATE_FROM_URL,
   SELECT_FIRST_QUERY,
   URL_STATE,
+  SCREEN_RESIZE,
 } from './constants';
+
+const createScreenResizeChannel = () =>
+  eventChannel((emitter) => {
+    const resizeHandler = () => {
+      emitter(getScreenDimensions());
+    };
+
+    window.addEventListener('resize', resizeHandler);
+
+    return () => {
+      window.removeEventListener('resize', resizeHandler);
+    };
+  });
 
 export function* createNewQuery() {
   yield put(setViewMode('editor'));
@@ -133,6 +164,23 @@ export function* copyShareUrl({ payload }: CopyShareUrlAction) {
   yield copyToClipboard(url);
 }
 
+export function* watchScreenResize() {
+  const channel = yield call(createScreenResizeChannel);
+  try {
+    while (true) {
+      const { width, height } = yield take(channel);
+      yield put(resizeScreen(width, height));
+    }
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+export function* resizeBrowserScreen({ payload }: ResizeScreenAction) {
+  const { width, height } = payload;
+  yield put(setScreenDimension(width, height));
+}
+
 export function* appStart({ payload }: AppStartAction) {
   yield put(getOrganizationUsageLimits());
   yield put(fetchSavedQueries());
@@ -142,6 +190,11 @@ export function* appStart({ payload }: AppStartAction) {
     yield take(GET_SAVED_QUERIES_SUCCESS);
     yield selectFirstSavedQuery();
   }
+
+  const { width, height } = getScreenDimensions();
+  yield put(setScreenDimension(width, height));
+
+  yield spawn(watchScreenResize);
 }
 
 export function* appSaga() {
@@ -154,4 +207,5 @@ export function* appSaga() {
   yield takeLatest(CLEAR_QUERY, clearQuery);
   yield takeLatest(SELECT_FIRST_QUERY, selectFirstSavedQuery);
   yield takeLatest(EDIT_QUERY, editQuery);
+  yield debounce(200, SCREEN_RESIZE, resizeBrowserScreen);
 }

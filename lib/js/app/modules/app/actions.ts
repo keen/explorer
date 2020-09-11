@@ -16,6 +16,8 @@ import {
   SHOW_QUERY_SETTINGS_MODAL,
   HIDE_QUERY_SETTINGS_MODAL,
   SELECT_FIRST_QUERY,
+  SCREEN_RESIZE,
+  SET_SCREEN_DIMENSION,
 } from './constants';
 
 import {
@@ -28,6 +30,19 @@ import {
 export const appStart = (initialView: ViewMode): AppActions => ({
   type: APP_START,
   payload: { initialView },
+});
+
+export const resizeScreen = (width: number, height: number): AppActions => ({
+  type: SCREEN_RESIZE,
+  payload: { width, height },
+});
+
+export const setScreenDimension = (
+  width: number,
+  height: number
+): AppActions => ({
+  type: SET_SCREEN_DIMENSION,
+  payload: { width, height },
 });
 
 export const selectFirstSavedQuery = (): AppActions => ({
