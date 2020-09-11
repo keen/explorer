@@ -27,4 +27,5 @@ export const ERRORS = {
   OVER_LIMIT_ERROR: 'OverCachedQueryLimitError',
   TOO_MANY_QUERIES: 'TooManyQueriesInTheCurrentBillingPeriod',
   TOO_MANY_CACHED_QUERIES: 'TooManyCachedQueriesInTheCurrentBillingPeriod',
+  RESOURCE_NOT_FOUND: 'ResourceNotFoundError',
 };

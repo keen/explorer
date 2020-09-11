@@ -125,6 +125,7 @@ const EditorNavigation: FC<Props> = ({ onSaveQuery }) => {
             motion={actionsDropdownMotion}
           >
             <ActionsMenu
+              isNewQuery={!exists}
               onRemoveQuery={() => {
                 setActionsMenuVisibility(false);
                 dispatch(deleteQuery(name));
