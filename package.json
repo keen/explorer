@@ -45,7 +45,7 @@
     "@keen.io/colors": "^0.2.0",
     "@keen.io/dataviz": "^0.9.10",
     "@keen.io/forms": "^0.3.25",
-    "@keen.io/icons": "^0.4.3",
+    "@keen.io/icons": "^0.4.6",
     "@keen.io/parser": "^0.3.9",
     "@keen.io/pubsub": "^0.2.0",
     "@keen.io/toast-notifications": "^0.0.5",

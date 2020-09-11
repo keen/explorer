@@ -3,5 +3,6 @@
   "newQueryTitle": "New Query",
   "cachedLabel": "Cached",
   "cacheUnits": "h",
-  "saveQuery": "Save Query"
+  "saveQuery": "Save Query",
+  "backLink": "Go to Saved Queries"
 }
