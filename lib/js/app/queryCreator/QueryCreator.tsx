@@ -4,12 +4,12 @@ import { createStore, applyMiddleware, Store, Unsubscribe } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 import { ThemeProvider } from 'styled-components';
 import { getPubSub, PubSub } from '@keen.io/pubsub';
+import { screenBreakpoints } from '@keen.io/ui-core';
 import KeenAnalysis from 'keen-analysis';
 
 import App from './App';
 import rootSaga from './saga';
 import rootReducer from './reducer';
-import theme from './theme';
 import { rehydrateState } from './rehydrateState';
 import { AppContext } from './contexts';
 
@@ -126,7 +126,11 @@ class QueryCreator extends React.PureComponent<Props> {
   render() {
     return (
       <Provider store={this.store}>
-        <ThemeProvider theme={theme}>
+        <ThemeProvider
+          theme={{
+            breakpoints: screenBreakpoints,
+          }}
+        >
           <AppContext.Provider
             value={{ modalContainer: this.props.modalContainer }}
           >

@@ -7,6 +7,7 @@ import {
   ACCEPT_CONFIRMATION,
   SET_VISUALIZATION_TYPE,
   SET_VIEW_MODE,
+  SET_SCREEN_DIMENSION,
   SHOW_QUERY_SETTINGS_MODAL,
   HIDE_QUERY_SETTINGS_MODAL,
 } from './constants';
@@ -20,6 +21,10 @@ export const initialState: ReducerState = {
   querySettingsModal: {
     visible: false,
     source: null,
+  },
+  browserScreen: {
+    width: 0,
+    height: 0,
   },
   view: 'browser',
   visualization: {
@@ -36,6 +41,14 @@ export const appReducer = (
       return {
         ...state,
         view: action.payload.initialView,
+      };
+    case SET_SCREEN_DIMENSION:
+      return {
+        ...state,
+        browserScreen: {
+          height: action.payload.height,
+          width: action.payload.width,
+        },
       };
     case HIDE_QUERY_SETTINGS_MODAL:
       return {

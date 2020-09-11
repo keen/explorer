@@ -25,6 +25,7 @@ import {
   getQuerySettingsModalSource,
   getQuerySettingsModalVisibility,
   getVisualizationType,
+  getBrowserScreenDimension,
 } from './selectors';
 
 import { HIDE_CONFIRMATION, ACCEPT_CONFIRMATION } from './constants';
@@ -49,6 +50,7 @@ export {
   loadPersitedState,
   setVisualizationType,
   getConfirmation,
+  getBrowserScreenDimension,
   getQuerySettingsModalSource,
   getQuerySettingsModalVisibility,
   getVisualizationType,
