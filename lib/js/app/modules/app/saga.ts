@@ -40,6 +40,7 @@ import { getViewMode } from './selectors';
 
 import text from './text.json';
 import {
+  getLocationUrl,
   getScreenDimensions,
   b64EncodeUnicode,
   b64DecodeUnicode,
@@ -168,7 +169,7 @@ export function* loadStateFromUrl() {
       yield put(resetSavedQuery());
     }
   } finally {
-    history.replaceState({}, '', window.location.origin);
+    history.replaceState({}, '', getLocationUrl());
   }
 }
 
@@ -184,7 +185,7 @@ export function* shareQueryUrl() {
       })
     );
 
-    const url = `${window.location.origin}?${URL_STATE}=${stateToPersist}`;
+    const url = `${getLocationUrl()}?${URL_STATE}=${stateToPersist}`;
     yield copyToClipboard(url);
 
     const notificationManager = yield getContext(NOTIFICATION_MANAGER_CONTEXT);
