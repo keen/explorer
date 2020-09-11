@@ -83,8 +83,6 @@ export const notificationsMounted = (): AppActions => ({
   type: NOTIFICATIONS_MOUNTED,
 });
 
-NOTIFICATIONS_MOUNTED;
-
 export const editQuery = (queryName: string): AppActions => ({
   type: EDIT_QUERY,
   payload: {
