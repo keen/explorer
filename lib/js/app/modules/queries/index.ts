@@ -1,5 +1,5 @@
 import { ReducerState } from './types';
-import { queriesReducer } from './reducer';
+import { queriesReducer, initialState } from './reducer';
 import {
   setQuerySettings,
   resetQueryResults,
@@ -58,6 +58,7 @@ export {
   resetQueryResults,
   resetSavedQueryError,
   queriesSaga,
+  initialState,
   SAVE_QUERY_SUCCESS,
   GET_SAVED_QUERIES_SUCCESS,
   SavedQueryListItem,

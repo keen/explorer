@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { motion } from 'framer-motion';
 import { transparentize } from 'polished';
 import { colors } from '@keen.io/colors';
 
@@ -22,4 +23,8 @@ export const Actions = styled.div`
 export const Settings = styled.div`
   display: flex;
   align-items: center;
+`;
+
+export const PulseMotion = styled(motion.div)`
+  border-radius: 25px;
 `;
