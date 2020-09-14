@@ -30,6 +30,7 @@ export const ScrollOverflow = styled.div`
 export const Container = styled.div<FlexDirectionProps>`
   display: flex;
   background: ${transparentize(0.9, colors.blue[100])};
+  position: relative;
   ${flexbox}
 `;
 

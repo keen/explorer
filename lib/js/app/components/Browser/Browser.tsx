@@ -6,7 +6,7 @@ import React, {
   useState,
   useRef,
 } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import {
   Container,
@@ -18,11 +18,12 @@ import {
 
 import BrowserNavigation from '../BrowserNavigation';
 import BrowserPreview from '../BrowserPreview';
+import CreateFirstQuery from '../CreateFirstQuery';
 import QueriesList from '../QueriesList';
 import QueriesPlaceholder from '../QueriesPlaceholder';
 
 import { getSavedQueries, getSavedQueriesLoaded } from '../../modules/queries';
-import { getBrowserScreenDimension } from '../../modules/app';
+import { getBrowserScreenDimension, createNewQuery } from '../../modules/app';
 import { getSavedQuery } from '../../modules/savedQuery';
 
 import { LIST_SCROLL_OFFSET, SOCKET_CONTAINER_WIDTH } from './constants';
@@ -37,6 +38,8 @@ type Props = {
 };
 
 const Browser: FC<Props> = ({ onEditQuery, onRunQuery, onSelectQuery }) => {
+  const dispatch = useDispatch();
+
   const browserDimension = useSelector(getBrowserScreenDimension);
   const savedQuery = useSelector(getSavedQuery);
   const savedQueries = useSelector(getSavedQueries);
@@ -85,7 +88,7 @@ const Browser: FC<Props> = ({ onEditQuery, onRunQuery, onSelectQuery }) => {
 
   return (
     <>
-      <BrowserNavigation />
+      <BrowserNavigation attractNewQueryButton={isEmptyProject} />
       <Container flexDirection={{ xs: 'column', md: 'row' }}>
         <Socket
           width={SOCKET_CONTAINER_WIDTH}
@@ -121,6 +124,10 @@ const Browser: FC<Props> = ({ onEditQuery, onRunQuery, onSelectQuery }) => {
             />
           )}
         </Socket>
+        <CreateFirstQuery
+          isVisible={isEmptyProject}
+          onClick={() => dispatch(createNewQuery())}
+        />
       </Container>
     </>
   );
