@@ -12,8 +12,8 @@ import { v4 as uuid } from 'uuid';
 import Sortable from 'sortablejs';
 import { AnimatePresence } from 'framer-motion';
 import { ActionButton, Tooltip } from '@keen.io/ui-core';
+import { useSearch } from '@keen.io/react-hooks';
 
-import { useSearch } from '../../hooks';
 import { SearchContext } from '../../contexts';
 
 import { createTree } from '../../utils';

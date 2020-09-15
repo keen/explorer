@@ -1,13 +1,7 @@
 import React, { FC, useState, useRef, useCallback, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import {
-  Input,
-  Label,
-  Badge,
-  Dropdown,
-  DropdownList,
-  useSearch,
-} from '@keen.io/ui-core';
+import { Input, Label, Badge, Dropdown, DropdownList } from '@keen.io/ui-core';
+import { useSearch } from '@keen.io/react-hooks';
 
 import {
   DropdownContainer,

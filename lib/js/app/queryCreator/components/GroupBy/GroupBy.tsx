@@ -12,6 +12,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import shallowEqual from 'shallowequal';
 
 import { ActionButton } from '@keen.io/ui-core';
+import { useSearch } from '@keen.io/react-hooks';
 
 import { Section, GroupSettings, SortableContainer } from './GroupBy.styles';
 
@@ -27,7 +28,6 @@ import {
 } from './actions';
 import { groupByReducer } from './reducer';
 
-import { useSearch } from '../../hooks';
 import { SearchContext } from '../../contexts';
 
 import { mutateArray, createTree } from '../../utils';

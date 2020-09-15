@@ -8,6 +8,7 @@ import React, {
 } from 'react';
 import { useSelector } from 'react-redux';
 import { Dropdown } from '@keen.io/ui-core';
+import { useSearch } from '@keen.io/react-hooks';
 
 import { Container } from './EventCollection.styles';
 
@@ -17,7 +18,6 @@ import DropdownList from '../DropdownList';
 import DropdownListContainer from '../DropdownListContainer';
 import DropableContainer, { Variant } from '../DropableContainer';
 
-import { useSearch } from '../../hooks';
 import { getEventsCollections } from '../../modules/events';
 
 import text from './text.json';
