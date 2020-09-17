@@ -1,18 +1,18 @@
 import React, { FC, useState, useRef, useCallback } from 'react';
-import { transparentize } from 'polished';
-import { colors } from '@keen.io/colors';
-import { ActionButton, Dropdown, Input } from '@keen.io/ui-core';
+import { Dropdown, Input } from '@keen.io/ui-core';
 
 import {
   Container,
   List,
   ListItem,
-  Value,
   DropdownContainer,
+  ItemContainer,
 } from './FilterListValue.styles';
 
 import DropableContainer from '../../../DropableContainer';
-import PropertyGroup, { PropertyItem } from '../../../PropertyGroup';
+import PropertyGroup from '../../../PropertyGroup';
+
+import Value from './Value';
 
 import { getEventPath } from '../../../../utils';
 import text from './text.json';
@@ -53,7 +53,7 @@ const FilterListValue: FC<Props> = ({ items, onChange }) => {
         placeholder={text.placeholder}
         value={items.length ? items : null}
       >
-        {items.join(SEPARATOR)}
+        <ItemContainer>{items.join(SEPARATOR)}</ItemContainer>
       </DropableContainer>
       <Dropdown isOpen={editMode} fullWidth={false}>
         <DropdownContainer>
@@ -82,18 +82,7 @@ const FilterListValue: FC<Props> = ({ items, onChange }) => {
             {items.map((value, idx) => (
               <ListItem key={idx}>
                 <PropertyGroup isActive={false}>
-                  <PropertyItem>
-                    <Value>{value}</Value>
-                  </PropertyItem>
-                  <PropertyItem>
-                    <ActionButton
-                      onClick={() => removeHandler(value)}
-                      action="remove"
-                      borderRadius="0 4px 4px 0"
-                      background="transparent"
-                      backgroundHover={transparentize(0.85, colors.blue['100'])}
-                    />
-                  </PropertyItem>
+                  <Value value={value} removeHandler={removeHandler} />
                 </PropertyGroup>
               </ListItem>
             ))}
