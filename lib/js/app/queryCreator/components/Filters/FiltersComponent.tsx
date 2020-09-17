@@ -1,6 +1,7 @@
 import React, { FC, useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useSelector } from 'react-redux';
+import { useSearch } from '@keen.io/react-hooks';
 
 import { Operator } from './Filters.styles';
 
@@ -9,7 +10,6 @@ import { Filter } from './components';
 import Badge from '../Badge';
 
 import { getCollectionSchema } from '../../modules/events';
-import { useSearch } from '../../hooks';
 import { SearchContext } from '../../contexts';
 
 import { createTree } from '../../utils';

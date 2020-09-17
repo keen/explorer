@@ -1503,6 +1503,15 @@
   resolved "https://registry.yarnpkg.com/@keen.io/pubsub/-/pubsub-1.1.0.tgz#21fdf029c48ba106e390f1545a1441c758bce524"
   integrity sha512-IUqNTOjwGQuevXXEIezTZHUybED05QDh3Q0ElWjXTumYGS6Gp2UxcZAl5lcKsBFkAd+JUTDBqw1/qDz61xtfKA==
 
+"@keen.io/react-hooks@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@keen.io/react-hooks/-/react-hooks-1.0.1.tgz#0b9be5d8f3dc7229c006fb48883ec0fb9b3f71ec"
+  integrity sha512-9ETjHXBnAO+5Gu0c71i56iaqPoIqS//I1QoY67UDT1Npj12nCJD4ekjz0kDdpFaAAf55Wj3FxmbSOkJlsoV96Q==
+  dependencies:
+    d3-array "^2.7.1"
+    fuse.js "^6.4.1"
+    react "^16.12.0"
+
 "@keen.io/toast-notifications@^1.1.0":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@keen.io/toast-notifications/-/toast-notifications-1.1.0.tgz#fe964d0896d8cdb5f17917936a95f5ee617cd7ec"
@@ -4661,7 +4670,7 @@ d3-array@1, d3-array@^1.1.1, d3-array@^1.2.0:
   resolved "https://registry.yarnpkg.com/d3-array/-/d3-array-1.2.4.tgz#635ce4d5eea759f6f605863dbcfc30edc737f71f"
   integrity sha512-KHW6M86R+FUPYGb3R5XiYjXPq7VzwxZ22buHhAEVG5ztoEcZZMLov530mmccaqA1GghZArjQV46fuc8kUqhhHw==
 
-"d3-array@1.2.0 - 2", d3-array@^2.4.0:
+"d3-array@1.2.0 - 2", d3-array@^2.4.0, d3-array@^2.7.1:
   version "2.7.1"
   resolved "https://registry.yarnpkg.com/d3-array/-/d3-array-2.7.1.tgz#b1f56065e9aba1ef6f0d0c8c9390b65421593352"
   integrity sha512-dYWhEvg1L2+osFsSqNHpXaPQNugLT4JfyvbLE046I2PDcgYGFYc0w24GSJwbmcjjZYOPC3PNP2S782bWUM967Q==
@@ -6617,7 +6626,7 @@ functions-have-names@^1.2.0:
   resolved "https://registry.yarnpkg.com/functions-have-names/-/functions-have-names-1.2.1.tgz#a981ac397fa0c9964551402cdc5533d7a4d52f91"
   integrity sha512-j48B/ZI7VKs3sgeI2cZp7WXWmZXu7Iq5pl5/vptV5N2mq+DGFuS/ulaDjtaoLpYzuD6u8UgrUKHfgo7fDTSiBA==
 
-fuse.js@^6.4.0, fuse.js@^6.4.1:
+fuse.js@^6.4.1:
   version "6.4.1"
   resolved "https://registry.yarnpkg.com/fuse.js/-/fuse.js-6.4.1.tgz#76f1b4ab9cd021b854a68381b35628033d27507e"
   integrity sha512-+hAS7KYgLXontDh/vqffs7wIBw0ceb9Sx8ywZQhOsiQGcSO5zInGhttWOUYQYlvV/yYMJOacQ129Xs3mP3+oZQ==

@@ -1,6 +1,7 @@
 import React, { FC, useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { Dropdown } from '@keen.io/ui-core';
+import { useSearch } from '@keen.io/react-hooks';
 
 import { Container, PropertyOverflow } from './TargetProperty.styles';
 import { createTree } from '../../utils';
@@ -11,7 +12,6 @@ import PropertyPath from '../PropertyPath';
 import PropertiesTree from '../PropertiesTree';
 import DropableContainer, { Variant } from '../DropableContainer';
 
-import { useSearch } from '../../hooks';
 import { getEventPath } from '../../utils';
 import { getCollectionSchema, getSchemas } from '../../modules/events';
 
