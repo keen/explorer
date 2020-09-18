@@ -1,9 +1,12 @@
+/* eslint-disable @typescript-eslint/camelcase */
 import React from 'react';
 import { Provider } from 'react-redux';
 import { render as rtlRender, fireEvent, screen } from '@testing-library/react';
 import configureStore from 'redux-mock-store';
 
 import { SettingsModalSource } from '../../modules/app';
+
+import { ERRORS } from '../../constants';
 
 import QuerySettings from './QuerySettings';
 import text from './text.json';
@@ -166,4 +169,24 @@ test('renders save query error', () => {
   } = render(storeState);
 
   expect(getByTestId('error-alert')).toBeInTheDocument();
+});
+
+test('renders "Upgrade plan" anchor for cached queries limit error', () => {
+  const storeState = {
+    queries: {
+      isSaving: false,
+      cachedQueries: {
+        limitReached: true,
+        limit: 5,
+      },
+      saveQueryError: {
+        error_code: ERRORS.TOO_MANY_QUERIES,
+      },
+    },
+  };
+  const {
+    wrapper: { getByText },
+  } = render(storeState);
+
+  expect(getByText(text.upgradeAnchor)).toBeInTheDocument();
 });
