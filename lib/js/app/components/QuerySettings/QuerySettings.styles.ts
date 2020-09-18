@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { colors } from '@keen.io/colors';
 
 export const Settings = styled.div`
   padding: 25px 55px 25px 25px;
@@ -27,4 +28,10 @@ export const Cancel = styled.div`
 
 export const NewQueryNotice = styled.div`
   margin-bottom: 20px;
+`;
+
+export const UpgradeAnchor = styled.a`
+  font-family: 'Lato Bold', sans-serif;
+  color: ${colors.red[500]};
+  text-decoration: none;
 `;

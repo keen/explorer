@@ -1,4 +1,4 @@
-import React, { FC, useState, useCallback, useEffect } from 'react';
+import React, { FC, useState, useCallback, useEffect, useContext } from 'react';
 import { useSelector } from 'react-redux';
 import { colors } from '@keen.io/colors';
 import { ErrorContainer } from '@keen.io/forms';
@@ -20,6 +20,7 @@ import {
   ErrorNotification,
   FooterContent,
   NewQueryNotice,
+  UpgradeAnchor,
 } from './QuerySettings.styles';
 
 import CacheQuery, { REFRESH_MINIMUM } from '../CacheQuery';
@@ -36,6 +37,9 @@ import {
   getSavedQueries,
   getSaveQueryError,
 } from '../../modules/queries';
+
+import { AppContext } from '../../contexts';
+import { ERRORS } from '../../constants';
 import text from './text.json';
 
 import { slugify } from '../../utils/text';
@@ -61,6 +65,8 @@ const QuerySettings: FC<Props> = ({ onSave, onClose, cacheAvailable }) => {
   const isCacheLimited = useSelector(getCacheQueriesLimitExceed);
   const error = useSelector(getSaveQueryError);
   const settingsSource = useSelector(getQuerySettingsModalSource);
+
+  const { upgradeSubscriptionUrl } = useContext(AppContext);
 
   const [querySettings, setQuerySettings] = useState(savedQuery);
   const [queryNameError, setQueryNameError] = useState<string | boolean>(null);
@@ -95,7 +101,23 @@ const QuerySettings: FC<Props> = ({ onSave, onClose, cacheAvailable }) => {
       <Settings>
         {error && (
           <ErrorNotification data-testid="error-alert">
-            <Alert type="error">{error.body}</Alert>
+            <Alert type="error">
+              {error.error_code === ERRORS.TOO_MANY_QUERIES ? (
+                <>
+                  <div>{text.cachedQueriesLimitReached}</div>
+                  <UpgradeAnchor
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href={upgradeSubscriptionUrl}
+                  >
+                    {text.upgradeAnchor}
+                  </UpgradeAnchor>{' '}
+                  {text.upgradeConnector} {text.uncacheQuery}
+                </>
+              ) : (
+                error.body
+              )}
+            </Alert>
           </ErrorNotification>
         )}
         {settingsSource === SettingsModalSource.FIRST_QUERY_SAVE && (
