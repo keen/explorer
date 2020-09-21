@@ -1,5 +1,5 @@
 {
   "refreshInterval": "- Refresh interval",
   "queriesLimit": "Limit reached",
-  "cache": "Cache data"
+  "cache": "Cache query"
 }

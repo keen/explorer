@@ -6,5 +6,9 @@
   "saveButton": "Update settings and save query",
   "savingQuery": "Saving query",
   "closeButton": "Cancel",
-  "newQueryNotice": "Name your query in order to save it"
+  "newQueryNotice": "Create your saved query",
+  "cachedQueriesLimitReached": "The limit of cached queries for your organization has been reached.",
+  "upgradeAnchor": "Upgrade plan",
+  "upgradeConnector": "or",
+  "uncacheQuery": "uncache other saved query."
 }

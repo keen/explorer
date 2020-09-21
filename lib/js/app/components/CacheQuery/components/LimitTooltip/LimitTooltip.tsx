@@ -19,9 +19,10 @@ const LimitTooltip: FC<{}> = () => {
         {cacheQueriesLimit && (
           <>
             {' '}
-            ({cacheQueriesLimit} {text.cachedQueries}).
+            ({cacheQueriesLimit} {text.cachedQueries})
           </>
         )}
+        .
         <DisableMessage>
           {text.disableMessage}
           {upgradeSubscriptionUrl ? (

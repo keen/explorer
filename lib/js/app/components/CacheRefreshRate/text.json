@@ -1,5 +1,5 @@
 {
   "cacheUnits": "(hours)",
   "refreshInterval": "- Refresh interval",
-  "refreshRateHint": "Refresh frequency can be from 4 hours up to 48 hours"
+  "refreshRateHint": "Refresh interval can be set from 4 to 48 hours"
 }

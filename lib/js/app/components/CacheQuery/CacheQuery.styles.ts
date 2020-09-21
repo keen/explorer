@@ -14,7 +14,7 @@ export const CacheSwitch = styled.label<{
 }>`
   display: flex;
   align-items: center;
-  margin-right: 5px;
+  margin-right: 4px;
   margin-bottom: 0;
 
   font-size: 14px;
@@ -47,7 +47,7 @@ export const LimitReached = styled.div`
 `;
 
 export const RefreshFrequency = styled.span`
-  margin-right: 10px;
+  margin-right: 4px;
   color: ${colors.black[100]};
   font-family: 'Lato Bold', sans-serif;
   font-size: 14px;
