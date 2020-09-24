@@ -20,6 +20,8 @@ import {
   SELECT_FIRST_QUERY,
   SCREEN_RESIZE,
   SET_SCREEN_DIMENSION,
+  EXPORT_CHART_TO_IMAGE,
+  EXPORT_CHART_TO_JSON,
 } from './constants';
 
 import {
@@ -135,4 +137,12 @@ export const hideConfirmation = (): AppActions => ({
 
 export const acceptConfirmation = (): AppActions => ({
   type: ACCEPT_CONFIRMATION,
+});
+
+export const exportChartToImage = () => ({
+  type: EXPORT_CHART_TO_IMAGE,
+});
+
+export const exportChartToJson = () => ({
+  type: EXPORT_CHART_TO_JSON,
 });

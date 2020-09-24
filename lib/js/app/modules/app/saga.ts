@@ -28,6 +28,7 @@ import {
 } from '../savedQuery';
 import {
   resetQueryResults,
+  getQueryResults,
   getSavedQueries,
   fetchSavedQueries,
   getOrganizationUsageLimits,
@@ -45,7 +46,7 @@ import {
   b64EncodeUnicode,
   b64DecodeUnicode,
 } from './utils';
-import { copyToClipboard } from '../../utils';
+import { copyToClipboard, exportToImage, exportToJson } from '../../utils';
 
 import { SET_QUERY_EVENT, NEW_QUERY_EVENT } from '../../queryCreator';
 import { PUBSUB_CONTEXT, NOTIFICATION_MANAGER_CONTEXT } from '../../constants';
@@ -71,6 +72,8 @@ import {
   SELECT_FIRST_QUERY,
   URL_STATE,
   SCREEN_RESIZE,
+  EXPORT_CHART_TO_IMAGE,
+  EXPORT_CHART_TO_JSON,
 } from './constants';
 
 const createScreenResizeChannel = () =>
@@ -246,6 +249,54 @@ export function* appStart({ payload }: AppStartAction) {
   yield spawn(watchScreenResize);
 }
 
+export function* generateFileName() {
+  const savedQuery = yield select(getSavedQuery);
+  const query = yield select(getQuerySettings);
+
+  let fileName = 'chart';
+  if (savedQuery?.name) {
+    fileName = `${savedQuery.name}-${Date.now()}`;
+  } else if (query?.analysis_type && query?.event_collection) {
+    fileName = `${query.analysis_type}-${query.event_collection}-${Date.now()}`;
+  }
+  return fileName;
+}
+
+export function* exportChartToImage() {
+  const node = document.getElementById('query-visualization');
+  if (!node) throw new Error('Query visualization container is not available');
+  const fileName = yield generateFileName();
+
+  try {
+    exportToImage({ fileName, node });
+  } catch (err) {
+    const notificationManager = yield getContext(NOTIFICATION_MANAGER_CONTEXT);
+    yield notificationManager.showNotification({
+      type: 'error',
+      message: `Image ${text.exportChartError}`,
+      showDismissButton: true,
+      autoDismiss: false,
+    });
+  }
+}
+
+export function* exportChartToJson() {
+  const data = yield select(getQueryResults);
+  const fileName = yield generateFileName();
+
+  try {
+    exportToJson({ data, fileName });
+  } catch (err) {
+    const notificationManager = yield getContext(NOTIFICATION_MANAGER_CONTEXT);
+    yield notificationManager.showNotification({
+      type: 'error',
+      message: `JSON ${text.exportChartError}`,
+      showDismissButton: true,
+      autoDismiss: false,
+    });
+  }
+}
+
 export function* appSaga() {
   yield takeLatest(APP_START, appStart);
   yield takeLatest(SHARE_QUERY_URL, shareQueryUrl);
@@ -256,5 +307,7 @@ export function* appSaga() {
   yield takeLatest(CLEAR_QUERY, clearQuery);
   yield takeLatest(SELECT_FIRST_QUERY, selectFirstSavedQuery);
   yield takeLatest(EDIT_QUERY, editQuery);
+  yield takeLatest(EXPORT_CHART_TO_IMAGE, exportChartToImage);
+  yield takeLatest(EXPORT_CHART_TO_JSON, exportChartToJson);
   yield debounce(200, SCREEN_RESIZE, resizeBrowserScreen);
 }
