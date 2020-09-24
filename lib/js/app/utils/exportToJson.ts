@@ -16,9 +16,5 @@ export const exportToJson = ({
     downloadFileName = `${fileName}.json`;
   }
 
-  try {
-    download(JSON.stringify(data), downloadFileName, 'text/json;charset:utf-8');
-  } catch (err) {
-    alert('There was a problem with JSON export');
-  }
+  download(JSON.stringify(data), downloadFileName, 'text/json;charset:utf-8');
 };

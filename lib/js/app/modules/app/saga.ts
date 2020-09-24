@@ -266,13 +266,35 @@ export function* exportChartToImage() {
   const node = document.getElementById('query-visualization');
   if (!node) throw new Error('Query visualization container is not available');
   const fileName = yield generateFileName();
-  exportToImage({ fileName, node });
+
+  try {
+    exportToImage({ fileName, node });
+  } catch (err) {
+    const notificationManager = yield getContext(NOTIFICATION_MANAGER_CONTEXT);
+    yield notificationManager.showNotification({
+      type: 'error',
+      message: `Image ${text.exportChartError}`,
+      showDismissButton: true,
+      autoDismiss: false,
+    });
+  }
 }
 
 export function* exportChartToJson() {
   const data = yield select(getQueryResults);
   const fileName = yield generateFileName();
-  exportToJson({ data, fileName });
+
+  try {
+    exportToJson({ data, fileName });
+  } catch (err) {
+    const notificationManager = yield getContext(NOTIFICATION_MANAGER_CONTEXT);
+    yield notificationManager.showNotification({
+      type: 'error',
+      message: `Image ${text.exportChartError}`,
+      showDismissButton: true,
+      autoDismiss: false,
+    });
+  }
 }
 
 export function* appSaga() {
