@@ -66,7 +66,7 @@ const BrowserQueryMenu: FC<Props> = ({ onEditQuery, onRemoveQuery }) => {
           </Button>
         </ButtonWrapper>
       </BasicActions>
-      <ContextActions>
+      <ContextActions data-testid="context-buttons">
         <CircleButton
           icon={<Icon type="settings" />}
           onClick={() =>
