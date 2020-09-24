@@ -20,6 +20,8 @@ import {
   shareQueryUrl,
   selectFirstSavedQuery,
   appStart,
+  exportChartToImage,
+  exportChartToJson,
 } from './actions';
 import {
   getConfirmation,
@@ -61,6 +63,8 @@ export {
   showQuerySettingsModal,
   hideQuerySettingsModal,
   selectFirstSavedQuery,
+  exportChartToImage,
+  exportChartToJson,
   ReducerState,
   SettingsModalSource,
 };

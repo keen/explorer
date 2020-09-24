@@ -72,16 +72,18 @@ const QueryVisualization: FC<Props> = ({ queryResults, query }) => {
   const showDataviz = widgetType !== 'json';
 
   return (
-    <div>
-      {showDataviz ? (
-        <DataViz
-          analysisResults={queryResults}
-          visualization={widgetType}
-          ref={datavizContainerRef}
-        />
-      ) : (
-        <JSONView analysisResults={queryResults} />
-      )}
+    <>
+      <div id="query-visualization">
+        {showDataviz ? (
+          <DataViz
+            analysisResults={queryResults}
+            visualization={widgetType}
+            ref={datavizContainerRef}
+          />
+        ) : (
+          <JSONView analysisResults={queryResults} />
+        )}
+      </div>
 
       <Settings>
         {showDataviz && (
@@ -117,7 +119,7 @@ const QueryVisualization: FC<Props> = ({ queryResults, query }) => {
           />
         </div>
       </Settings>
-    </div>
+    </>
   );
 };
 

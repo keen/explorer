@@ -15,7 +15,7 @@ const render = (overProps: any = {}) => {
   };
 
   const mockStore = configureStore([]);
-  const store = mockStore({});
+  const store = mockStore({ queries: {} });
 
   const wrapper = rtlRender(
     <Provider store={store}>
@@ -85,6 +85,42 @@ test('allows user to share query url', () => {
     Array [
       Object {
         "type": "@app/SHARE_QUERY_URL",
+      },
+    ]
+  `);
+});
+
+test('allows user to export results as image', () => {
+  const {
+    wrapper: { getByText },
+    store,
+  } = render();
+
+  const exportImage = getByText(text.image);
+  fireEvent.click(exportImage);
+
+  expect(store.getActions()).toMatchInlineSnapshot(`
+    Array [
+      Object {
+        "type": "@app/EXPORT_CHART_TO_IMAGE",
+      },
+    ]
+  `);
+});
+
+test('allows user to export results as JSON', () => {
+  const {
+    wrapper: { getByText },
+    store,
+  } = render();
+
+  const exportJson = getByText(text.json);
+  fireEvent.click(exportJson);
+
+  expect(store.getActions()).toMatchInlineSnapshot(`
+    Array [
+      Object {
+        "type": "@app/EXPORT_CHART_TO_JSON",
       },
     ]
   `);
