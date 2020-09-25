@@ -27,8 +27,8 @@ type Props = {
   isNewQuery: boolean;
   /** Remove query event handler */
   onRemoveQuery: () => void;
-  /** Share query event handler */
-  onShareQuery?: () => void;
+  /** Hide menu */
+  onHideMenu: () => void;
 };
 
 const tooltipMotion = {
@@ -37,11 +37,7 @@ const tooltipMotion = {
   exit: { opacity: 0 },
 };
 
-const ActionsMenu: FC<Props> = ({
-  isNewQuery,
-  onShareQuery,
-  onRemoveQuery,
-}) => {
+const ActionsMenu: FC<Props> = ({ isNewQuery, onRemoveQuery, onHideMenu }) => {
   const dispatch = useDispatch();
   const queryResults = useSelector(getQueryResults);
   const [tooltip, showTooltip] = useState(false);
@@ -63,28 +59,48 @@ const ActionsMenu: FC<Props> = ({
             )}
           </AnimatePresence>
           <ExportDataLinks isActive={queryResults}>
-            <DropdownMenu.Item onClick={() => dispatch(exportChartToImage())}>
+            <DropdownMenu.Item
+              onClick={() => {
+                dispatch(exportChartToImage());
+                onHideMenu();
+              }}
+            >
               {text.image}
             </DropdownMenu.Item>
-            <DropdownMenu.Item onClick={() => dispatch(exportChartToJson())}>
+            <DropdownMenu.Item
+              onClick={() => {
+                dispatch(exportChartToJson());
+                onHideMenu();
+              }}
+            >
               {text.json}
             </DropdownMenu.Item>
-            <DropdownMenu.Item onClick={() => console.log('generate csv')}>
+            <DropdownMenu.Item
+              onClick={() => {
+                console.log('generate csv');
+                onHideMenu();
+              }}
+            >
               {text.csv}
             </DropdownMenu.Item>
           </ExportDataLinks>
         </ExportDataWrapper>
         <DropdownMenu.Divider />
         {!isNewQuery && (
-          <DropdownMenu.Item onClick={onRemoveQuery}>
+          <DropdownMenu.Item
+            onClick={() => {
+              onRemoveQuery();
+              onHideMenu();
+            }}
+          >
             <DeleteQueryItem>{text.deleteQuery}</DeleteQueryItem>
           </DropdownMenu.Item>
         )}
         {!isNewQuery && <DropdownMenu.Divider />}
         <DropdownMenu.Item
           onClick={() => {
-            onShareQuery && onShareQuery();
             dispatch(shareQueryUrl());
+            onHideMenu();
           }}
         >
           {text.shareQuery}

@@ -2,5 +2,6 @@
   "shareQuerySuccess": "Query link generated and copied to clipboard",
   "shareQueryError": "We were not able to generate the link. Try again later.",
   "shareQueryLoadError": "We were not able to load shared query. Try again later.",
-  "exportChartError": "export failed. Please try again later."
+  "downloadChartError": "download failed. Please try again later.",
+  "downloadInProgress": "download in progress"
 }

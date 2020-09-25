@@ -266,14 +266,19 @@ export function* exportChartToImage() {
   const node = document.getElementById('query-visualization');
   if (!node) throw new Error('Query visualization container is not available');
   const fileName = yield generateFileName();
+  const notificationManager = yield getContext(NOTIFICATION_MANAGER_CONTEXT);
 
   try {
     exportToImage({ fileName, node });
+    yield notificationManager.showNotification({
+      type: 'info',
+      message: `Image ${text.downloadInProgress}`,
+      autoDismiss: true,
+    });
   } catch (err) {
-    const notificationManager = yield getContext(NOTIFICATION_MANAGER_CONTEXT);
     yield notificationManager.showNotification({
       type: 'error',
-      message: `Image ${text.exportChartError}`,
+      message: `Image ${text.downloadChartError}`,
       showDismissButton: true,
       autoDismiss: false,
     });
@@ -283,14 +288,19 @@ export function* exportChartToImage() {
 export function* exportChartToJson() {
   const data = yield select(getQueryResults);
   const fileName = yield generateFileName();
+  const notificationManager = yield getContext(NOTIFICATION_MANAGER_CONTEXT);
 
   try {
     exportToJson({ data, fileName });
+    yield notificationManager.showNotification({
+      type: 'info',
+      message: `JSON ${text.downloadInProgress}`,
+      autoDismiss: true,
+    });
   } catch (err) {
-    const notificationManager = yield getContext(NOTIFICATION_MANAGER_CONTEXT);
     yield notificationManager.showNotification({
       type: 'error',
-      message: `JSON ${text.exportChartError}`,
+      message: `JSON ${text.downloadChartError}`,
       showDismissButton: true,
       autoDismiss: false,
     });
