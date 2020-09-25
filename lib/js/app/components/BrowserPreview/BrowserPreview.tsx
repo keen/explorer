@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { Card, HeaderContainer } from './BrowserPreview.styles';
+import { Card, HeaderContainer, QueryTitle } from './BrowserPreview.styles';
 import text from './text.json';
 
 import BrowserQueryMenu from '../BrowserQueryMenu';
@@ -48,6 +48,9 @@ const BrowserPreview: FC<Props> = ({
       </HeaderContainer>
       <Card>
         {isQueryLimitReached && <QueryLimitReached />}
+        {!isQueryLimitReached && currentQuery?.name && (
+          <QueryTitle>{currentQuery.name}</QueryTitle>
+        )}
         {queryResults && !isQueryLimitReached && (
           <QueryVisualization query={query} queryResults={queryResults} />
         )}
@@ -59,13 +62,10 @@ const BrowserPreview: FC<Props> = ({
         )}
         {currentQuery && (
           <>
-            <div>
-              <BrowserQueryMenu
-                onRemoveQuery={() => dispatch(deleteQuery(currentQuery.name))}
-                onEditQuery={() => onEditQuery(currentQuery.name)}
-              />
-              <h4>{currentQuery.displayName}</h4>
-            </div>
+            <BrowserQueryMenu
+              onRemoveQuery={() => dispatch(deleteQuery(currentQuery.name))}
+              onEditQuery={() => onEditQuery(currentQuery.name)}
+            />
             <QuerySummary querySettings={currentQuery} />
           </>
         )}
