@@ -273,7 +273,7 @@ export function* exportChartToImage() {
     const notificationManager = yield getContext(NOTIFICATION_MANAGER_CONTEXT);
     yield notificationManager.showNotification({
       type: 'error',
-      message: `Image ${text.exportChartError}`,
+      message: `Image ${text.downloadChartError}`,
       showDismissButton: true,
       autoDismiss: false,
     });
@@ -290,7 +290,7 @@ export function* exportChartToJson() {
     const notificationManager = yield getContext(NOTIFICATION_MANAGER_CONTEXT);
     yield notificationManager.showNotification({
       type: 'error',
-      message: `JSON ${text.exportChartError}`,
+      message: `JSON ${text.downloadChartError}`,
       showDismissButton: true,
       autoDismiss: false,
     });

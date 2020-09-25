@@ -10,7 +10,7 @@ const render = (overProps: any = {}) => {
   const props = {
     isNewQuery: false,
     onRemoveQuery: jest.fn(),
-    onShareQuery: jest.fn(),
+    onHideMenu: jest.fn(),
     ...overProps,
   };
 
@@ -60,7 +60,7 @@ test("doesn't allow to remove new query", () => {
   expect(removeLink).toBeNull();
 });
 
-test('calls "onShareQuery" handler', () => {
+test('calls "onHideMenu" handler', () => {
   const {
     wrapper: { getByText },
     props,
@@ -69,7 +69,7 @@ test('calls "onShareQuery" handler', () => {
   const shareQuery = getByText(text.shareQuery);
   fireEvent.click(shareQuery);
 
-  expect(props.onShareQuery).toHaveBeenCalled();
+  expect(props.onHideMenu).toHaveBeenCalled();
 });
 
 test('allows user to share query url', () => {

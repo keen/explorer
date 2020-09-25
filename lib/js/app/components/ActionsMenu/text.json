@@ -1,9 +1,9 @@
 {
   "deleteQuery": "Delete query",
   "shareQuery": "Share query",
-  "exportResult": "Export result to",
+  "exportResult": "Download result as",
   "image": "Image",
   "json": "JSON",
   "csv": "CSV",
-  "tooltip": "Run query to export result"
+  "tooltip": "Run query to download result"
 }
