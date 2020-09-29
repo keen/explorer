@@ -96,8 +96,6 @@ export function* createNewQuery() {
   const pubsub = yield getContext(PUBSUB_CONTEXT);
   yield pubsub.publish(NEW_QUERY_EVENT);
 
-  console.log('WAAAAGH!!!!!!');
-
   yield put(resetQueryResults());
   yield put(resetVisualization());
   yield put(resetSavedQuery());
