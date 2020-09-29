@@ -1,1 +1,1 @@
-export const CONTAIER_ID = 'query-visualization';
+export const CONTAINER_ID = 'query-visualization';

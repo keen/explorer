@@ -10,7 +10,7 @@ import { Container, JSONContainer } from './QueryVisualization.styles';
 import DataViz from '../DataViz';
 import JSONView from '../JSONView';
 
-import { CONTAIER_ID } from './constants';
+import { CONTAINER_ID } from './constants';
 
 type Props = {
   /** Analysis results */
@@ -33,7 +33,7 @@ const QueryVisualization: FC<Props> = ({
   const useDataviz = widgetType !== 'json';
 
   return (
-    <Container id={CONTAIER_ID}>
+    <Container id={CONTAINER_ID}>
       {useDataviz ? (
         <DataViz
           analysisResults={queryResults}
