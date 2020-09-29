@@ -6,5 +6,4 @@ export const Container = styled.div`
 
 export const PickerContainer = styled.div`
   padding: 10px;
-  z-index: 3;
 `;

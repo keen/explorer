@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   getAvailableWidgets,
@@ -39,6 +39,13 @@ const EditorVisualization: FC<Props> = ({ query, queryResults }) => {
       };
     }
   );
+
+  useEffect(() => {
+    if (!widgets.includes(widgetType)) {
+      const [defaultWidget] = widgets;
+      dispatch(setVisualization(defaultWidget, {}, {}));
+    }
+  }, [widgets, widgetType]);
 
   return (
     <Container>
