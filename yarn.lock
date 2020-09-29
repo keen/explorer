@@ -1461,15 +1461,15 @@
     d3-scale "^3.2.1"
     d3-time "^2.0.0"
 
-"@keen.io/charts@^2.2.3":
-  version "2.2.3"
-  resolved "https://registry.yarnpkg.com/@keen.io/charts/-/charts-2.2.3.tgz#e859876081d9d35efbe964aafda625080be69807"
-  integrity sha512-tEKia6kxcGJwVz7FGSD59SeA3aj0G/U6kaiOuclzIOY9u2GyUdVU6ljboBYccK0BoSb8WYz1dMiH1QRZ7qNS9g==
+"@keen.io/charts@^2.2.0":
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/@keen.io/charts/-/charts-2.2.0.tgz#67ef716cef9a5cb174aedc110074fd269ebd4317"
+  integrity sha512-WM0SdvN9vRG2BkvRpMia7JxpLrMbS1mH2F1ccp/4+CRoWTjShjqmGRbE3tqdBHp4vGV6fs9g3WMW33C4QllFPw==
   dependencies:
     "@keen.io/charts-utils" "^1.0.2"
     "@keen.io/colors" "^1.1.0"
     "@keen.io/react-hooks" "^1.0.2"
-    "@keen.io/ui-core" "^2.4.1"
+    "@keen.io/ui-core" "^2.3.2"
     column-resizer "^1.3.5"
     d3-array "^2.4.0"
     d3-axis "^1.0.12"
@@ -1492,32 +1492,32 @@
     styled-components "5.1.0"
     use-debounce "^3.3.0"
 
-"@keen.io/colors@^1.1.0":
+"@keen.io/colors@^1.0.0", "@keen.io/colors@^1.1.0":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@keen.io/colors/-/colors-1.1.0.tgz#feda3fc31056cd67c9d36abfce30470b95ef6879"
   integrity sha512-ATUL4zpj6NNHZChCVfI3ellRIzfJMsYzSCqnkcd7AqZseSGVLe6A8yK0yqlzzYVtz3yunX9nDN1AMpJH2dFIfA==
 
 "@keen.io/dataviz@^2.0.2":
-  version "2.1.3"
-  resolved "https://registry.yarnpkg.com/@keen.io/dataviz/-/dataviz-2.1.3.tgz#996747050b247a6a8035d2dab9f79b5e0b7f42f1"
-  integrity sha512-jU5JMYYPcBXVS4FtBrlM8wwRam5kVCPBxlQwPoJJUoJau3YXg7ljoCqV5JeaMvgltFODsh9qwpuvmRVBKZ0sUA==
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@keen.io/dataviz/-/dataviz-2.1.0.tgz#2c776cb9fb5138081f922f2d63f00d66d523346b"
+  integrity sha512-1yREOSfCNoxC3VuxzXaBMtnPB3c1AqxvOqOMOEMdLHxE9sVAe9LhFZD0JiYHXmBgmvL6B2F5qg9jSRzXejveUw==
   dependencies:
-    "@keen.io/charts" "^2.2.3"
+    "@keen.io/charts" "^2.2.0"
     "@keen.io/colors" "^1.1.0"
-    "@keen.io/parser" "^2.0.14"
-    "@keen.io/widgets" "^2.1.3"
+    "@keen.io/parser" "^2.0.11"
+    "@keen.io/widgets" "^2.1.0"
     deepmerge "4.2.2"
     react "^16.12.0"
     react-dom "^16.12.0"
 
 "@keen.io/forms@^2.0.2":
-  version "2.0.11"
-  resolved "https://registry.yarnpkg.com/@keen.io/forms/-/forms-2.0.11.tgz#12aacd4a9a63b254b1c6e5161a15e70c66b96093"
-  integrity sha512-0WYKmwQu5mVk4KFm4RFD/vrQ1x3F+w0GKe9p903g2ek0nfyfgGKTvmx8234zkWPs0n256tpOYnC311ThNRpXKg==
+  version "2.0.9"
+  resolved "https://registry.yarnpkg.com/@keen.io/forms/-/forms-2.0.9.tgz#33426dff4537b58c329e6eaaf0f77e611c5f26bf"
+  integrity sha512-12nqOIEb/DMgVPk13uPTRBGuIdzzdMM0aiUmvZ1fEVe92BAp0Wy/V8NImyQGFklcLD/jyOysOBRF+NcW+RAr4Q==
   dependencies:
     "@keen.io/colors" "^1.1.0"
     "@keen.io/icons" "^1.2.0"
-    "@keen.io/ui-core" "^2.4.1"
+    "@keen.io/ui-core" "^2.3.2"
     formik "^2.1.4"
     framer-motion "^1.11.1"
     react "^16.12.0"
@@ -1533,10 +1533,10 @@
     "@keen.io/colors" "^1.1.0"
     react "^16.12.0"
 
-"@keen.io/parser@^2.0.14", "@keen.io/parser@^2.0.2":
-  version "2.0.14"
-  resolved "https://registry.yarnpkg.com/@keen.io/parser/-/parser-2.0.14.tgz#4b476cb7e8887f29cb6c43358a0488f4e3f46350"
-  integrity sha512-HpTASq7ceTmnvWlrd9S4FALESPBvoghp6EfFAu8IVAg2hiCmAOv1Psf7DIDNe4Ojo7fAnKO4GhJzfAjlZMAgug==
+"@keen.io/parser@^2.0.11", "@keen.io/parser@^2.0.2":
+  version "2.0.11"
+  resolved "https://registry.yarnpkg.com/@keen.io/parser/-/parser-2.0.11.tgz#44c0a14f55e935610f5831d37a84bf85e38574d6"
+  integrity sha512-w+VRce52ia0dZsGe8rqpvbQOKRUxnnMOCgH+jBd79rGEPgB0ox3xHzELRMDslCPa5GQj3z2EaRfWeqtVDvOr0g==
   dependencies:
     d3-time-format "^2.2.3"
 
@@ -1568,6 +1568,25 @@
     styled-components "5.1.0"
     styled-system "5.1.5"
 
+"@keen.io/ui-core@^2.3.2":
+  version "2.3.2"
+  resolved "https://registry.yarnpkg.com/@keen.io/ui-core/-/ui-core-2.3.2.tgz#a976ed650bbe38d672e996898a71cb3e4d789f37"
+  integrity sha512-ZeEQcmlcn2727oNYs2yzj5Kp4mJKVitV+dK6JbnBNcNPfAqcINyV9DVjnyL4Ioy81JsaONrdV59pQtf4CTENAg==
+  dependencies:
+    "@keen.io/colors" "^1.1.0"
+    "@keen.io/icons" "^1.2.0"
+    color "^3.1.2"
+    framer-motion "^1.11.1"
+    fuse.js "^6.4.1"
+    polished "^3.4.4"
+    react "^16.12.0"
+    react-column-resizer "^1.1.9"
+    react-dom "^16.12.0"
+    react-select "^3.1.0"
+    styled-components "5.1.0"
+    styled-system "5.1.5"
+    webfontloader "^1.6.28"
+
 "@keen.io/ui-core@^2.4.1":
   version "2.4.1"
   resolved "https://registry.yarnpkg.com/@keen.io/ui-core/-/ui-core-2.4.1.tgz#208a859ed4f976e50bc8251441226b62c0c75b19"
@@ -1587,16 +1606,28 @@
     styled-system "5.1.5"
     webfontloader "^1.6.28"
 
-"@keen.io/widgets@^2.1.3":
-  version "2.1.3"
-  resolved "https://registry.yarnpkg.com/@keen.io/widgets/-/widgets-2.1.3.tgz#7d1acf435d0ce9aa6ae0dc5b12ff18ac31db6f46"
-  integrity sha512-h5OFDACMZb9d4iPq4omDx81dEdlpBptl5KkAZwm6A9cmcZa+qKlPohRo1nGLhnM8LAZI25sGPYorSNkRxhmxOw==
+"@keen.io/widget-picker@^1.1.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@keen.io/widget-picker/-/widget-picker-1.2.0.tgz#c3850ed5af7814a0e584d91a3234207edd368253"
+  integrity sha512-AHRjX2rGo4lsUrqAliWs2Lnf/JomPFhQ0fv+GF300tX7xC1x3zDCdJ8QBXPdkQjdVHNj3j2XwOf1VkjY4lKV5g==
   dependencies:
-    "@keen.io/charts" "^2.2.3"
+    "@keen.io/colors" "^1.0.0"
+    "@keen.io/icons" "^1.2.0"
+    framer-motion "^1.11.1"
+    react "^16.12.0"
+    react-dom "^16.12.0"
+    styled-components "5.1.0"
+
+"@keen.io/widgets@^2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@keen.io/widgets/-/widgets-2.1.0.tgz#8153df469d6a655d166729aa9aa3c71f35ff7a0e"
+  integrity sha512-2ATs78b41hEDsSH+eswk+pTm2KMoYMAEbHQi1NNLcP1g3wfBxrnQGC5l80NeNQ9qVAC7s7LcOlmWiaq7DslDJA==
+  dependencies:
+    "@keen.io/charts" "^2.2.0"
     "@keen.io/charts-utils" "^1.0.2"
     "@keen.io/colors" "^1.1.0"
     "@keen.io/react-hooks" "^1.0.2"
-    "@keen.io/ui-core" "^2.4.1"
+    "@keen.io/ui-core" "^2.3.2"
     react "^16.12.0"
     react-dom "^16.12.0"
     styled-components "5.1.0"
@@ -10469,10 +10500,17 @@ pn@^1.1.0:
   resolved "https://registry.yarnpkg.com/pn/-/pn-1.1.0.tgz#e2f4cef0e219f463c179ab37463e4e1ecdccbafb"
   integrity sha512-2qHaIQr2VLRFoxe2nASzsV6ef4yOOH+Fi9FBOVH6cqeSgUnoyySPZkxzLuzd+RYOQTRpROA0ztTMqxROKSb/nA==
 
-polished@^3.4.4, polished@^3.6.3:
+polished@^3.4.4:
   version "3.6.7"
   resolved "https://registry.yarnpkg.com/polished/-/polished-3.6.7.tgz#44cbd0047f3187d83db0c479ef0c7d5583af5fb6"
   integrity sha512-b4OViUOihwV0icb9PHmWbR+vPqaSzSAEbgLskvb7ANPATVXGiYv/TQFHQo65S53WU9i5EQ1I03YDOJW7K0bmYg==
+  dependencies:
+    "@babel/runtime" "^7.9.2"
+
+polished@^3.6.3:
+  version "3.6.6"
+  resolved "https://registry.yarnpkg.com/polished/-/polished-3.6.6.tgz#91ef9eface9be5366c07672b63b736f50c151185"
+  integrity sha512-yiB2ims2DZPem0kCD6V0wnhcVGFEhNh0Iw0axNpKU+oSAgFt6yx6HxIT23Qg0WWvgS379cS35zT4AOyZZRzpQQ==
   dependencies:
     "@babel/runtime" "^7.9.2"
 

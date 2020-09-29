@@ -1,4 +1,10 @@
 import {
+  PickerWidgets,
+  ChartSettings,
+  WidgetSettings,
+} from '@keen.io/widget-picker';
+
+import {
   RUN_QUERY,
   RUN_QUERY_ERROR,
   RUN_QUERY_SUCCESS,
@@ -24,6 +30,12 @@ import {
 
 import { APIError } from '../../types';
 
+export type Visualization = {
+  type: PickerWidgets;
+  chartSettings: ChartSettings;
+  widgetSettings: WidgetSettings;
+};
+
 export type SavedQueryListItem = {
   name: string;
   displayName: string;
@@ -32,7 +44,7 @@ export type SavedQueryListItem = {
   cached: boolean;
   query: Record<string, any>;
   tags: string[];
-  widget: string | null;
+  visualization: Visualization;
   stepLabels: string[];
 };
 

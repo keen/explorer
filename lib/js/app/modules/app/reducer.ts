@@ -5,7 +5,8 @@ import {
   SHOW_CONFIRMATION,
   HIDE_CONFIRMATION,
   ACCEPT_CONFIRMATION,
-  SET_VISUALIZATION_TYPE,
+  SET_VISUALIZATION,
+  RESET_VISUALIZATION,
   SET_VIEW_MODE,
   SET_SCREEN_DIMENSION,
   SHOW_QUERY_SETTINGS_MODAL,
@@ -29,6 +30,8 @@ export const initialState: ReducerState = {
   view: 'browser',
   visualization: {
     type: null,
+    chartSettings: {},
+    widgetSettings: {},
   },
 };
 
@@ -73,13 +76,20 @@ export const appReducer = (
         ...state,
         view: action.payload.view,
       };
-    case SET_VISUALIZATION_TYPE:
+    case SET_VISUALIZATION:
       return {
         ...state,
         visualization: {
           ...state.visualization,
           type: action.payload.type,
+          chartSettings: action.payload.chartSettings,
+          widgetSettings: action.payload.widgetSettings,
         },
+      };
+    case RESET_VISUALIZATION:
+      return {
+        ...state,
+        visualization: initialState.visualization,
       };
     case ACCEPT_CONFIRMATION:
     case HIDE_CONFIRMATION:

@@ -1,124 +1,52 @@
-import React, { FC, useMemo, useRef, useCallback } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Label, Select, Button } from '@keen.io/ui-core';
-import { parseQuery } from '@keen.io/parser';
-import { colors } from '@keen.io/colors';
+import React, { FC, useRef } from 'react';
+import {
+  PickerWidgets,
+  ChartSettings,
+  WidgetSettings,
+} from '@keen.io/widget-picker';
 
-import { Settings, Container } from './QueryVisualization.styles';
-import text from './text.json';
+import { Container, JSONContainer } from './QueryVisualization.styles';
 
 import DataViz from '../DataViz';
 import JSONView from '../JSONView';
 
-import { getVisualizationType, setVisualizationType } from '../../modules/app';
-import { getSavedQueryName } from '../../modules/savedQuery';
-
-import {
-  getVisualizations,
-  sortVisualizations,
-  exportToSvg,
-  exportToCsv,
-  exportToJson,
-} from './utils';
-
-import { DEFAULT_FILENAME } from './constants';
+import { CONTAIER_ID } from './constants';
 
 type Props = {
-  /** Query definition */
-  query: Record<string, any>;
   /** Analysis results */
   queryResults: Record<string, any>;
+  /** Type of visualization widget */
+  widgetType: PickerWidgets;
+  /** Chart plot settings */
+  chartSettings: ChartSettings;
+  /** Widget settings */
+  widgetSettings: WidgetSettings;
 };
 
-const QueryVisualization: FC<Props> = ({ queryResults, query }) => {
-  const dispatch = useDispatch();
-  const queryName = useSelector(getSavedQueryName);
-  const datavizContainerRef = useRef<HTMLDivElement>(null);
-
-  const visualizations = useMemo(
-    () => getVisualizations(query).sort(sortVisualizations),
-    [query]
-  );
-  const options = useMemo(
-    () =>
-      visualizations.map((widgetType: string) => ({
-        label: widgetType,
-        value: widgetType,
-      })),
-    [visualizations]
-  );
-
-  const extractToImage = useCallback(() => {
-    try {
-      exportToSvg({
-        quality: 1,
-        backgroundColor: colors.white[500],
-        node: datavizContainerRef.current,
-      });
-    } catch (err) {
-      console.error(err);
-    }
-  }, []);
-
-  const exportFilename = queryName || DEFAULT_FILENAME;
-  const [defaultVisualization] = visualizations;
-  const visualization = useSelector(getVisualizationType);
-
-  const widgetType =
-    visualization && visualizations.includes(visualization)
-      ? visualization
-      : defaultVisualization;
-
-  const showDataviz = widgetType !== 'json';
+const QueryVisualization: FC<Props> = ({
+  queryResults,
+  chartSettings,
+  widgetSettings,
+  widgetType,
+}) => {
+  const datavizContainerRef = useRef(null);
+  const useDataviz = widgetType !== 'json';
 
   return (
-    <Container>
-      <div id="query-visualization">
-        {showDataviz ? (
-          <DataViz
-            analysisResults={queryResults}
-            visualization={widgetType}
-            ref={datavizContainerRef}
-          />
-        ) : (
+    <Container id={CONTAIER_ID}>
+      {useDataviz ? (
+        <DataViz
+          analysisResults={queryResults}
+          chartSettings={chartSettings}
+          widgetSettings={widgetSettings}
+          visualization={widgetType as Exclude<PickerWidgets, 'json'>}
+          ref={datavizContainerRef}
+        />
+      ) : (
+        <JSONContainer>
           <JSONView analysisResults={queryResults} />
-        )}
-      </div>
-
-      <Settings>
-        {showDataviz && (
-          <Button onClick={() => extractToImage()}>
-            {text.exportImageLabel}
-          </Button>
-        )}
-
-        <Button onClick={() => exportToJson(queryResults, exportFilename)}>
-          {text.exportJSONLabel}
-        </Button>
-
-        <Button
-          onClick={() => {
-            const { results } = parseQuery(queryResults as any);
-            exportToCsv(results, exportFilename);
-          }}
-        >
-          {text.exportCSVLabel}
-        </Button>
-
-        <div data-testid="visualization-select">
-          <Label htmlFor="visualization-type">{text.visualizationLabel}</Label>
-          <Select
-            inputId="visualization-type"
-            placeholder={text.visualizationPlaceholder}
-            onChange={({ value }: { label: string; value: string }) =>
-              dispatch(setVisualizationType(value))
-            }
-            value={widgetType ? { label: widgetType, value: widgetType } : null}
-            variant="solid"
-            options={options}
-          />
-        </div>
-      </Settings>
+        </JSONContainer>
+      )}
     </Container>
   );
 };

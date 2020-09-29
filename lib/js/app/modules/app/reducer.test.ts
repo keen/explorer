@@ -4,7 +4,7 @@ import { SettingsModalSource } from './types';
 
 import {
   setViewMode,
-  setVisualizationType,
+  setVisualization,
   showConfirmation,
   hideConfirmation,
   acceptConfirmation,
@@ -25,10 +25,18 @@ test('set browser screen dimension', () => {
 });
 
 test('updates visualization', () => {
-  const action = setVisualizationType('bar');
+  const action = setVisualization('bar', { layout: 'vertical' }, {});
   const { visualization } = appReducer(initialState, action);
 
-  expect(visualization.type).toEqual('bar');
+  expect(visualization).toMatchInlineSnapshot(`
+    Object {
+      "chartSettings": Object {
+        "layout": "vertical",
+      },
+      "type": "bar",
+      "widgetSettings": Object {},
+    }
+  `);
 });
 
 test('updates application view', () => {

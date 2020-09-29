@@ -14,7 +14,7 @@ import Creator from '../Creator';
 import text from './text.json';
 
 import RunQuery, { runQueryLabel } from '../RunQuery';
-import QueryVisualization from '../QueryVisualization';
+import EditorVisualization from '../EditorVisualization';
 import VisualizationPlaceholder from '../VisualizationPlaceholder';
 import QueryLimitReached from '../QueryLimitReached';
 
@@ -29,12 +29,12 @@ import { clearQuery } from '../../modules/app';
 type Props = {
   /** Query definition */
   query: Record<string, any>;
-  /** Optional upgrade subscription url */
-  upgradeSubscriptionUrl?: string;
   /** Run query event handler */
   onRunQuery: () => void;
   /** Save query event handler */
   onSaveQuery: () => void;
+  /** Optional upgrade subscription url */
+  upgradeSubscriptionUrl?: string;
 };
 
 const Editor: FC<Props> = ({
@@ -62,7 +62,7 @@ const Editor: FC<Props> = ({
         )}
         <Card>
           {queryResults && !isQueryLimitReached && (
-            <QueryVisualization query={query} queryResults={queryResults} />
+            <EditorVisualization query={query} queryResults={queryResults} />
           )}
           {!queryResults && !isQueryLimitReached && (
             <VisualizationPlaceholder isLoading={isQueryLoading} />

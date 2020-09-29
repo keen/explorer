@@ -15,6 +15,8 @@ import { eventChannel } from 'redux-saga';
 import {
   resizeScreen,
   setScreenDimension,
+  resetVisualization,
+  setVisualization,
   setViewMode,
   loadPersitedState,
   updateQueryCreator,
@@ -37,7 +39,7 @@ import {
   GET_SAVED_QUERIES_SUCCESS,
 } from '../queries';
 
-import { getViewMode } from './selectors';
+import { getViewMode, getVisualization } from './selectors';
 
 import text from './text.json';
 import {
@@ -93,7 +95,11 @@ export function* createNewQuery() {
   yield put(setViewMode('editor'));
   const pubsub = yield getContext(PUBSUB_CONTEXT);
   yield pubsub.publish(NEW_QUERY_EVENT);
+
+  console.log('WAAAAGH!!!!!!');
+
   yield put(resetQueryResults());
+  yield put(resetVisualization());
   yield put(resetSavedQuery());
 }
 
@@ -146,9 +152,15 @@ export function* loadStateFromUrl() {
     const searchParams = new URLSearchParams(url.search);
 
     const persistedState = searchParams.get(URL_STATE);
-    const { query, savedQuery } = JSON.parse(b64DecodeUnicode(persistedState));
+    const { query, savedQuery, visualization } = JSON.parse(
+      b64DecodeUnicode(persistedState)
+    );
 
     if (savedQuery) yield put(updateSaveQuery(savedQuery));
+    if (visualization) {
+      const { type: widgetType, chartSettings, widgetSettings } = visualization;
+      yield put(setVisualization(widgetType, chartSettings, widgetSettings));
+    }
     if (query) {
       yield put(setViewMode('editor'));
       yield take(QUERY_EDITOR_MOUNTED);
@@ -179,11 +191,13 @@ export function* loadStateFromUrl() {
 export function* shareQueryUrl() {
   const savedQuery = yield select(getSavedQuery);
   const query = yield select(getQuerySettings);
+  const visualization = yield select(getVisualization);
 
   try {
     const stateToPersist = yield b64EncodeUnicode(
       JSON.stringify({
         savedQuery,
+        visualization,
         query,
       })
     );

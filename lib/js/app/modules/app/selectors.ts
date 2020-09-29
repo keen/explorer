@@ -8,8 +8,7 @@ export const getQuerySettingsModalVisibility = ({ app }: AppState) =>
 export const getQuerySettingsModalSource = ({ app }: AppState) =>
   app.querySettingsModal.source;
 
-export const getVisualizationType = ({ app }: AppState) =>
-  app.visualization.type;
+export const getVisualization = ({ app }: AppState) => app.visualization;
 
 export const getViewMode = ({ app }: AppState) => app.view;
 

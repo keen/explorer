@@ -4,7 +4,7 @@ import { takeLatest, select, put } from 'redux-saga/effects';
 
 import { updateSaveQuery } from './actions';
 
-import { setVisualizationType } from '../app';
+import { setVisualization } from '../app';
 import { SavedQueryListItem } from '../queries';
 import { getSavedQueries, SAVE_QUERY_SUCCESS } from '../queries';
 
@@ -26,7 +26,7 @@ function* selectSavedQuery({ payload }: SelectSavedQueryAction) {
       displayName,
       name,
       tags,
-      widget,
+      visualization,
       stepLabels,
     } = savedQueries.find(({ name: queryName }) => queryName === payload.name);
     const savedQuery = {
@@ -40,7 +40,9 @@ function* selectSavedQuery({ payload }: SelectSavedQueryAction) {
       stepLabels,
     };
 
-    yield put(setVisualizationType(widget));
+    const { type: widgetType, chartSettings, widgetSettings } = visualization;
+
+    yield put(setVisualization(widgetType, chartSettings, widgetSettings));
     yield put(updateSaveQuery(savedQuery));
   } catch (err) {
     console.error(err);

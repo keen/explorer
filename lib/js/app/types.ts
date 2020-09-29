@@ -1,3 +1,5 @@
+import { PickerWidgets } from '@keen.io/widget-picker';
+
 export type Analysis =
   | 'sum'
   | 'average'
@@ -18,6 +20,12 @@ export type APIError = {
   status: number;
 };
 
+export type VisualizationMeta = {
+  type: PickerWidgets;
+  chart_settings: Record<string, any>;
+  widget_settings: Record<string, any>;
+};
+
 export type SavedQueryAPIResponse = {
   query_name: string;
   refresh_rate: number;
@@ -28,13 +36,9 @@ export type SavedQueryAPIResponse = {
   metadata: {
     display_name?: string;
     tags?: string[];
-    widget?: string;
+    visualization?: VisualizationMeta;
     step_labels?: string[];
   };
-};
-
-export type Metadata = {
-  displayName?: string;
 };
 
 export type ProjectSettings = {

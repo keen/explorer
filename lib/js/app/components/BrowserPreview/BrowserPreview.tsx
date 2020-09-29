@@ -14,7 +14,6 @@ import VisualizationPlaceholder from '../VisualizationPlaceholder';
 import {
   deleteQuery,
   getQueryResults,
-  getQuerySettings,
   getQueryLimitReached,
   getQueryPerformState,
   SavedQueryListItem,
@@ -35,8 +34,6 @@ const BrowserPreview: FC<Props> = ({
   onRunQuery,
 }) => {
   const dispatch = useDispatch();
-
-  const query = useSelector(getQuerySettings);
   const queryResults = useSelector(getQueryResults);
   const isQueryLoading = useSelector(getQueryPerformState);
   const isQueryLimitReached = useSelector(getQueryLimitReached);
@@ -47,18 +44,25 @@ const BrowserPreview: FC<Props> = ({
         <Heading>{text.title}</Heading>
       </HeaderContainer>
       <Card>
-        {isQueryLimitReached && <QueryLimitReached />}
-        {!isQueryLimitReached && currentQuery && (
-          <QueryTitle>{currentQuery.name}</QueryTitle>
-        )}
-        {queryResults && !isQueryLimitReached && (
-          <QueryVisualization query={query} queryResults={queryResults} />
-        )}
-        {!queryResults && !isQueryLimitReached && (
-          <VisualizationPlaceholder
-            isLoading={isQueryLoading}
-            onRunQuery={onRunQuery}
-          />
+        {isQueryLimitReached ? (
+          <QueryLimitReached />
+        ) : (
+          <>
+            {currentQuery && <QueryTitle>{currentQuery.name}</QueryTitle>}
+            {currentQuery && queryResults ? (
+              <QueryVisualization
+                widgetType={currentQuery.visualization.type}
+                widgetSettings={currentQuery.visualization.widgetSettings}
+                chartSettings={currentQuery.visualization.chartSettings}
+                queryResults={queryResults}
+              />
+            ) : (
+              <VisualizationPlaceholder
+                isLoading={isQueryLoading}
+                onRunQuery={onRunQuery}
+              />
+            )}
+          </>
         )}
         {currentQuery && (
           <>

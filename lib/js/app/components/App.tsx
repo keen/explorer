@@ -19,7 +19,7 @@ import {
 import {
   getViewMode,
   setViewMode,
-  getVisualizationType,
+  getVisualization,
   switchToQueriesList,
   createNewQuery,
   explorerMounted,
@@ -44,7 +44,7 @@ import {
 
 const mapStateToProps = (state: AppState) => ({
   savedQuery: getSavedQuery(state),
-  widget: getVisualizationType(state),
+  visualization: getVisualization(state),
   view: getViewMode(state),
   query: getQuerySettings(state),
 });
@@ -114,7 +114,7 @@ class App extends Component {
       query: this.props.query,
       metadata: {
         displayName,
-        widget: this.props.widget,
+        visualization: this.props.visualization,
         tags,
         stepLabels,
       },
