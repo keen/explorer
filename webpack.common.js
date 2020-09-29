@@ -20,7 +20,13 @@ module.exports = {
     rules: [
       {
         test: /\.tsx?$/,
+        // exclude: /node_modules\/(?!(framesync)\/).*/,
+        // exclude: {
+        //   test: /node_modules/,
+        //   exclude: "/node_modules/framesync",
+        // },
         exclude: /node_modules/,
+        // exclude: /node_modules\/(?!(framesync)\/).*/,
         use: [
           {
             loader: 'babel-loader',
