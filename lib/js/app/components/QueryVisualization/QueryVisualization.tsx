@@ -4,7 +4,7 @@ import { Label, Select, Button } from '@keen.io/ui-core';
 import { parseQuery } from '@keen.io/parser';
 import { colors } from '@keen.io/colors';
 
-import { Settings } from './QueryVisualization.styles';
+import { Settings, Container } from './QueryVisualization.styles';
 import text from './text.json';
 
 import DataViz from '../DataViz';
@@ -72,7 +72,7 @@ const QueryVisualization: FC<Props> = ({ queryResults, query }) => {
   const showDataviz = widgetType !== 'json';
 
   return (
-    <div>
+    <Container>
       {showDataviz ? (
         <DataViz
           analysisResults={queryResults}
@@ -117,7 +117,7 @@ const QueryVisualization: FC<Props> = ({ queryResults, query }) => {
           />
         </div>
       </Settings>
-    </div>
+    </Container>
   );
 };
 

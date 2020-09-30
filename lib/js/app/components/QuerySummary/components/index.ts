@@ -1,3 +1,6 @@
-import FilterSummary from './FilterSummary';
+import Timeframe from './Timeframe';
+import FunnelSteps from './FunnelSteps';
+import PropertyName from './PropertyName';
+import StyledTable from './Table';
 
-export { FilterSummary };
+export { Timeframe, FunnelSteps, PropertyName, StyledTable };

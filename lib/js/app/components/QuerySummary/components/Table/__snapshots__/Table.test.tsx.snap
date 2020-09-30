@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render <StyledTable/> 1`] = `
+<div>
+  <table
+    class="sc-AxjAm iqAuRm"
+  >
+    <tbody
+      class="sc-AxirZ ktnnZK"
+    >
+      <tr
+        class="sc-AxhUy iVJvSQ"
+      >
+        <th
+          class="sc-AxiKw ifbXDy"
+        >
+          Label
+        </th>
+        <td
+          class="sc-AxhCb kntqjH"
+        >
+          Value
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+`;

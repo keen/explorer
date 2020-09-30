@@ -1,12 +1,12 @@
 import React, { FC } from 'react';
+import { Icon } from '@keen.io/icons';
+import { colors } from '@keen.io/colors';
 
-import { Divider } from './PropertyName.styles';
+import { Container, IconContainer } from './PropertyName.styles';
 
 type Props = {
   name: string;
 };
-
-const DIVIDER_MARK = '>';
 
 const PropertyName: FC<Props> = ({ name }) => {
   const nameArr = name.split('.');
@@ -14,10 +14,19 @@ const PropertyName: FC<Props> = ({ name }) => {
   return (
     <>
       {nameArr.map((item, idx) => (
-        <span key={idx}>
-          {item}
-          {idx < nameArr.length - 1 && <Divider>{DIVIDER_MARK}</Divider>}
-        </span>
+        <Container key={idx}>
+          <span>{item}</span>
+          {idx < nameArr.length - 1 && (
+            <IconContainer>
+              <Icon
+                type="caret-right"
+                fill={colors.blue[100]}
+                width={10}
+                height={10}
+              />
+            </IconContainer>
+          )}
+        </Container>
       ))}
     </>
   );

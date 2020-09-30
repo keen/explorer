@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders <AbsoluteTimeframe /> component 1`] = `
+<div>
+  <div
+    class="sc-pYBma bXhNpl"
+  >
+    2020-09-29 00:00
+    <span
+      class="sc-oUbqx eulMNf"
+    >
+      to
+    </span>
+    2020-09-30 00:00
+  </div>
+</div>
+`;
+
+exports[`renders <AbsoluteTimeframe /> component when timezone as number provided 1`] = `
+<div>
+  <div
+    class="sc-pYBma bXhNpl"
+  >
+    2020-09-29 00:00
+    <span
+      class="sc-oUbqx eulMNf"
+    >
+      to
+    </span>
+    2020-09-30 00:00
+  </div>
+</div>
+`;

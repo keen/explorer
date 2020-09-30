@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render <PropertyName/> 1`] = `
+<div>
+  <div
+    class="sc-AxjAm fyrgdD"
+  >
+    <span>
+      item
+    </span>
+    <span
+      class="sc-AxirZ fhlWLz"
+    >
+      <svg
+        height="10"
+        opacity="1"
+        viewBox="0 0 30 30"
+        width="10"
+      >
+        <polygon
+          fill="#77A3BB"
+          points="9.45351896 0 24.453519 15 9.45351896 30 5.55 26.096481 16.6465765 15 5.55 3.90351896"
+        />
+      </svg>
+    </span>
+  </div>
+  <div
+    class="sc-AxjAm fyrgdD"
+  >
+    <span>
+      price
+    </span>
+  </div>
+</div>
+`;

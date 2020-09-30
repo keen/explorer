@@ -1,15 +1,14 @@
 import React, { FC } from 'react';
-import { FilterSummary } from './components';
-import {
-  Wrapper,
-  StyledTable,
-  StyledBody,
-  Row,
-  Label,
-  Value,
-} from './QuerySummary.styles';
 
-import { Filter } from './types';
+import {
+  Timeframe,
+  FunnelSteps,
+  PropertyName,
+  StyledTable,
+} from './components';
+import { Wrapper } from './QuerySummary.styles';
+
+import text from './text.json';
 
 type Props = {
   querySettings: Record<string, any>;
@@ -22,50 +21,53 @@ const QuerySummary: FC<Props> = ({ querySettings }) => {
       event_collection: eventCollection,
       target_property: targetProperty,
       timeframe,
+      timezone,
       filters,
+      steps,
     },
   } = querySettings;
 
   return (
     <Wrapper>
-      <StyledTable>
-        <StyledBody>
+      <StyledTable.Table>
+        <StyledTable.Body>
           {analysisType && (
-            <Row>
-              <Label>Analysis:</Label>
-              <Value>{analysisType}</Value>
-            </Row>
+            <StyledTable.Row>
+              <StyledTable.Label>{text.analysis}</StyledTable.Label>
+              <StyledTable.Value>{analysisType}</StyledTable.Value>
+            </StyledTable.Row>
           )}
           {eventCollection && (
-            <Row>
-              <Label>Event stream:</Label>
-              <Value>{eventCollection}</Value>
-            </Row>
+            <StyledTable.Row>
+              <StyledTable.Label>{text.eventStream}</StyledTable.Label>
+              <StyledTable.Value>{eventCollection}</StyledTable.Value>
+            </StyledTable.Row>
           )}
           {targetProperty && (
-            <Row>
-              <Label>Target property:</Label>
-              <Value>{targetProperty}</Value>
-            </Row>
+            <StyledTable.Row>
+              <StyledTable.Label>{text.targetProperty}</StyledTable.Label>
+              <StyledTable.Value>
+                <PropertyName name={targetProperty} />
+              </StyledTable.Value>
+            </StyledTable.Row>
           )}
           {timeframe && (
-            <Row>
-              <Label>Timeframe:</Label>
-              <Value>{timeframe}</Value>
-            </Row>
+            <StyledTable.Row>
+              <StyledTable.Label>{text.timeframe}</StyledTable.Label>
+              <StyledTable.Value>
+                <Timeframe timeframe={timeframe} timezone={timezone} />
+              </StyledTable.Value>
+            </StyledTable.Row>
           )}
           {!!filters?.length && (
-            <Row>
-              <Label>Filters:</Label>
-              <Value>
-                {filters.map((filter: Filter, idx: number) => (
-                  <FilterSummary key={idx} filter={filter} />
-                ))}
-              </Value>
-            </Row>
+            <StyledTable.Row>
+              <StyledTable.Label>{text.appliedFilters}</StyledTable.Label>
+              <StyledTable.Value>{filters.length}</StyledTable.Value>
+            </StyledTable.Row>
           )}
-        </StyledBody>
-      </StyledTable>
+        </StyledTable.Body>
+      </StyledTable.Table>
+      {steps && <FunnelSteps steps={steps} />}
     </Wrapper>
   );
 };

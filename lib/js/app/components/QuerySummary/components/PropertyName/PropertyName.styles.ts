@@ -1,9 +1,12 @@
 import styled from 'styled-components';
-import { colors } from '@keen.io/colors';
 
-export const Divider = styled.span`
-  margin-left: 5px;
-  margin-right: 5px;
+export const Container = styled.div`
+  display: inline-flex;
+  align-items: center;
+`;
 
-  color: ${colors.black[100]};
+export const IconContainer = styled.span`
+  display: inline-block;
+  margin-left: 3px;
+  margin-right: 3px;
 `;
