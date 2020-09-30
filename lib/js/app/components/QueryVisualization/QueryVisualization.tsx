@@ -73,15 +73,17 @@ const QueryVisualization: FC<Props> = ({ queryResults, query }) => {
 
   return (
     <Container>
-      {showDataviz ? (
-        <DataViz
-          analysisResults={queryResults}
-          visualization={widgetType}
-          ref={datavizContainerRef}
-        />
-      ) : (
-        <JSONView analysisResults={queryResults} />
-      )}
+      <div id="query-visualization">
+        {showDataviz ? (
+          <DataViz
+            analysisResults={queryResults}
+            visualization={widgetType}
+            ref={datavizContainerRef}
+          />
+        ) : (
+          <JSONView analysisResults={queryResults} />
+        )}
+      </div>
 
       <Settings>
         {showDataviz && (

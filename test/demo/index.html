@@ -3,8 +3,7 @@
 <head>
   <meta charset="utf-8">
   <title><%= htmlWebpackPlugin.options.title %></title>
-  <link href="https://fonts.googleapis.com/css?family=Montserrat%7CMontserrat:600%7CHind" rel="stylesheet">
-  <link rel="stylesheet" type="text/css" href="https://static.keen.io/assets/keen-fonts.css" />
+  <link rel="stylesheet" type="text/css" href="https://static.keen.io/assets/keen-fonts.css" crossorigin="anonymous" />
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 </head>
 <style>
@@ -14,9 +13,6 @@
   }
 </style>
 <body class="dev-body">
-  <!--
-  <button id="new-query">New Query</button>
--->
   <div id="modal-root"></div>
   <div id="root"></div>
 </body>
@@ -35,13 +31,6 @@
      },
      features: {},
   });
-
-  const newQueryBtn = document.getElementById('new-query');
-  if (newQueryBtn) {
-    newQueryBtn.addEventListener('click', function() {
-    window.KeenPubSub.publish('@explorer/new-query');
-  });
-  }
 
 </script>
 </html>
