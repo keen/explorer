@@ -1,21 +1,9 @@
-{
+module.exports = {
   "presets": [
     ["@babel/preset-env", { "useBuiltIns": "usage", "corejs": 3 }],
     "@babel/preset-react",
-    // "@babel/preset-typescript",
+    "@babel/preset-typescript",
   ],
-  // "presets": [
-  //   [
-  //     '@babel/preset-env',
-  //     {
-  //       targets: {
-  //         node: 'current',
-  //       },
-  //     },
-  //   ],
-  //   '@babel/preset-react',
-  //   '@babel/preset-typescript',
-  // ],
   "plugins": [
     ["prismjs", {
       "languages": ["javascript", "css", "markup"],

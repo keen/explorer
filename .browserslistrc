@@ -5,5 +5,6 @@
 # If you need to support different browsers in production, you may tweak the list below.
 
 > 0.2%
+IE 11
 not dead
 not op_mini all
