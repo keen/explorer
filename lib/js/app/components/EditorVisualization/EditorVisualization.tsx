@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from 'react';
+import React, { FC, useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   getAvailableWidgets,
@@ -7,6 +7,7 @@ import {
 } from '@keen.io/widget-picker';
 
 import { Container, PickerContainer } from './EditorVisualization.styles';
+import { getDefaultSettings } from './utils';
 
 import QueryVisualization from '../QueryVisualization';
 import { getVisualization, setVisualization } from '../../modules/app';
@@ -22,7 +23,7 @@ type Props = {
 
 const EditorVisualization: FC<Props> = ({ query, queryResults }) => {
   const dispatch = useDispatch();
-  const widgets = getAvailableWidgets(query);
+  const widgets = useMemo(() => getAvailableWidgets(query), [queryResults]);
 
   const { widget: widgetType, chartSettings, widgetSettings } = useSelector(
     (state: AppState) => {
@@ -31,6 +32,10 @@ const EditorVisualization: FC<Props> = ({ query, queryResults }) => {
       if (widget === null) {
         const [defaultWidget] = widgets;
         widget = defaultWidget;
+        return {
+          widget,
+          ...getDefaultSettings(defaultWidget),
+        };
       }
 
       return {
@@ -43,7 +48,10 @@ const EditorVisualization: FC<Props> = ({ query, queryResults }) => {
   useEffect(() => {
     if (!widgets.includes(widgetType)) {
       const [defaultWidget] = widgets;
-      dispatch(setVisualization(defaultWidget, {}, {}));
+      const { chartSettings, widgetSettings } = getDefaultSettings(
+        defaultWidget
+      );
+      dispatch(setVisualization(defaultWidget, chartSettings, widgetSettings));
     }
   }, [widgets, widgetType]);
 
@@ -63,12 +71,14 @@ const EditorVisualization: FC<Props> = ({ query, queryResults }) => {
           }
         />
       </PickerContainer>
-      <QueryVisualization
-        widgetType={widgetType}
-        chartSettings={chartSettings}
-        widgetSettings={widgetSettings}
-        queryResults={queryResults}
-      />
+      {widgets.includes(widgetType) && (
+        <QueryVisualization
+          widgetType={widgetType}
+          chartSettings={chartSettings}
+          widgetSettings={widgetSettings}
+          queryResults={queryResults}
+        />
+      )}
     </Container>
   );
 };

@@ -1,9 +1,15 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { render as rtlRender, fireEvent } from '@testing-library/react';
+import {
+  render as rtlRender,
+  fireEvent,
+  cleanup,
+} from '@testing-library/react';
 import configureStore from 'redux-mock-store';
 
 import QuerySettingsModal from './QuerySettingsModal';
+
+import { AppContext } from '../../contexts';
 
 const render = (storeState: any = {}, overProps: any = {}) => {
   const mockStore = configureStore([]);
@@ -44,9 +50,11 @@ const render = (storeState: any = {}, overProps: any = {}) => {
   };
 
   const wrapper = rtlRender(
-    <Provider store={store}>
-      <QuerySettingsModal {...props} />
-    </Provider>
+    <AppContext.Provider value={{ modalContainer: '#modal-root' } as any}>
+      <Provider store={store}>
+        <QuerySettingsModal {...props} />
+      </Provider>
+    </AppContext.Provider>
   );
 
   return {
@@ -55,6 +63,19 @@ const render = (storeState: any = {}, overProps: any = {}) => {
     wrapper,
   };
 };
+
+afterEach(() => {
+  cleanup();
+});
+
+beforeEach(() => {
+  let modalRoot = document.getElementById('modal-root');
+  if (!modalRoot) {
+    modalRoot = document.createElement('div');
+    modalRoot.setAttribute('id', 'modal-root');
+    document.body.appendChild(modalRoot);
+  }
+});
 
 test('close modal and reset query settings', () => {
   const {

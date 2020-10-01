@@ -1,4 +1,4 @@
-import React, { FC, useRef } from 'react';
+import React, { FC } from 'react';
 import {
   PickerWidgets,
   ChartSettings,
@@ -29,7 +29,6 @@ const QueryVisualization: FC<Props> = ({
   widgetSettings,
   widgetType,
 }) => {
-  const datavizContainerRef = useRef(null);
   const useDataviz = widgetType !== 'json';
 
   return (
@@ -40,7 +39,6 @@ const QueryVisualization: FC<Props> = ({
           chartSettings={chartSettings}
           widgetSettings={widgetSettings}
           visualization={widgetType as Exclude<PickerWidgets, 'json'>}
-          ref={datavizContainerRef}
         />
       ) : (
         <JSONContainer>

@@ -1,6 +1,6 @@
-import React, { FC, useCallback } from 'react';
+import React, { FC, useContext, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Modal, ModalHeader } from '@keen.io/ui-core';
+import { Portal, Modal, ModalHeader } from '@keen.io/ui-core';
 
 import QuerySettings from '../QuerySettings';
 
@@ -10,6 +10,8 @@ import {
 } from '../../modules/app';
 import { resetSavedQueryError } from '../../modules/queries';
 import { getSavedQuery, resetSavedQuery } from '../../modules/savedQuery';
+
+import { AppContext } from '../../contexts';
 
 import text from './text.json';
 
@@ -27,6 +29,8 @@ type Props = {
 
 const QuerySettingsModal: FC<Props> = ({ onSaveQuery, cacheAvailable }) => {
   const dispatch = useDispatch();
+  const { modalContainer } = useContext(AppContext);
+
   const isOpen = useSelector(getQuerySettingsModalVisibility);
   const { exists } = useSelector(getSavedQuery);
 
@@ -39,18 +43,22 @@ const QuerySettingsModal: FC<Props> = ({ onSaveQuery, cacheAvailable }) => {
   }, [exists]);
 
   return (
-    <Modal isOpen={isOpen} onClose={closeHandler}>
-      {() => (
-        <>
-          <ModalHeader onClose={closeHandler}>{text.querySettings}</ModalHeader>
-          <QuerySettings
-            cacheAvailable={cacheAvailable}
-            onSave={onSaveQuery}
-            onClose={closeHandler}
-          />
-        </>
-      )}
-    </Modal>
+    <Portal modalContainer={modalContainer}>
+      <Modal isOpen={isOpen} onClose={closeHandler}>
+        {() => (
+          <>
+            <ModalHeader onClose={closeHandler}>
+              {text.querySettings}
+            </ModalHeader>
+            <QuerySettings
+              cacheAvailable={cacheAvailable}
+              onSave={onSaveQuery}
+              onClose={closeHandler}
+            />
+          </>
+        )}
+      </Modal>
+    </Portal>
   );
 };
 

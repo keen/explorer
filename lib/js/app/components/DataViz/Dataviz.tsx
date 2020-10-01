@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, forwardRef } from 'react';
+import React, { FC, useRef, useEffect } from 'react';
 import {
   PickerWidgets,
   ChartSettings,
@@ -8,6 +8,8 @@ import { KeenDataviz } from '@keen.io/dataviz';
 
 import { VisulizationContainer } from './DataViz.styles';
 import text from './text.json';
+
+import { isEmptyAnalysisResult } from './utils';
 
 import { CONTAINER_ID, DEFAULT_WIDGET_SETTINGS } from './constants';
 
@@ -22,47 +24,37 @@ type Props = {
   widgetSettings: WidgetSettings;
 };
 
-const Dataviz = forwardRef<HTMLDivElement, Props>(
-  (
-    { analysisResults, visualization, chartSettings, widgetSettings },
-    containerRef
-  ) => {
-    const datavizRef = useRef(null);
+const Dataviz: FC<Props> = ({
+  analysisResults,
+  visualization,
+  chartSettings,
+  widgetSettings,
+}) => {
+  const datavizRef = useRef(null);
+  const containerRef = useRef(null);
 
-    useEffect(() => {
-      if (datavizRef.current) datavizRef.current.destroy();
-      datavizRef.current = new KeenDataviz({
-        container: `#${CONTAINER_ID}`,
-        type: visualization,
-        settings: {
-          ...chartSettings,
-        },
-        widget: {
-          ...DEFAULT_WIDGET_SETTINGS,
-          ...widgetSettings,
-        },
-      });
+  useEffect(() => {
+    datavizRef.current = new KeenDataviz({
+      container: containerRef.current,
+      type: visualization,
+      settings: {
+        ...chartSettings,
+      },
+      widget: {
+        ...DEFAULT_WIDGET_SETTINGS,
+        ...widgetSettings,
+      },
+    });
 
-      if (
-        analysisResults.result &&
-        Array.isArray(analysisResults.result) &&
-        analysisResults.result.length === 0
-      ) {
-        datavizRef.current.error(text.noResults);
-      } else {
-        datavizRef.current.render(analysisResults);
-      }
-    }, [
-      visualization,
-      analysisResults,
-      chartSettings,
-      widgetSettings,
-      containerRef,
-    ]);
+    if (isEmptyAnalysisResult(analysisResults)) {
+      datavizRef.current.error(text.noResults);
+    } else {
+      datavizRef.current.render(analysisResults);
+    }
+  }, [visualization, chartSettings, widgetSettings, analysisResults]);
 
-    return <VisulizationContainer id={CONTAINER_ID} ref={containerRef} />;
-  }
-);
+  return <VisulizationContainer id={CONTAINER_ID} ref={containerRef} />;
+};
 
 Dataviz.displayName = 'Dataviz';
 

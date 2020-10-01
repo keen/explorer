@@ -5,7 +5,3 @@ export const VisulizationContainer = styled.div`
   min-height: 340px;
   max-height: 440px;
 `;
-
-export const Settings = styled.div`
-  display: flex;
-`;

@@ -43,7 +43,7 @@ test('allows user to set order by property', () => {
   const storeState = {
     query: {
       groupBy: ['country', 'city'],
-      orderBy: [DEFAULT_ORDER_SETTINGS],
+      orderBy: [{ ...DEFAULT_ORDER_SETTINGS, id: 'id' }],
     },
   };
 
@@ -65,7 +65,7 @@ test('allows user to set order by property', () => {
           "orderBy": Array [
             Object {
               "direction": "ASC",
-              "id": undefined,
+              "id": "id",
               "propertyName": "country",
             },
           ],
@@ -80,7 +80,7 @@ test('allows user to set order by direction', () => {
   const storeState = {
     query: {
       groupBy: ['country', 'city'],
-      orderBy: [DEFAULT_ORDER_SETTINGS],
+      orderBy: [{ ...DEFAULT_ORDER_SETTINGS, id: 'id' }],
     },
   };
 
@@ -102,7 +102,7 @@ test('allows user to set order by direction', () => {
           "orderBy": Array [
             Object {
               "direction": "DESC",
-              "id": undefined,
+              "id": "id",
               "propertyName": "result",
             },
           ],
@@ -117,7 +117,7 @@ test('allows user to remove order by settings', () => {
   const storeState = {
     query: {
       groupBy: ['country', 'city'],
-      orderBy: [DEFAULT_ORDER_SETTINGS],
+      orderBy: [{ ...DEFAULT_ORDER_SETTINGS, id: 'id' }],
     },
   };
 
