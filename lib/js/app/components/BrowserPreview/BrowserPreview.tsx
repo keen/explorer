@@ -48,7 +48,7 @@ const BrowserPreview: FC<Props> = ({
       </HeaderContainer>
       <Card>
         {isQueryLimitReached && <QueryLimitReached />}
-        {!isQueryLimitReached && currentQuery?.name && (
+        {!isQueryLimitReached && currentQuery && (
           <QueryTitle>{currentQuery.name}</QueryTitle>
         )}
         {queryResults && !isQueryLimitReached && (

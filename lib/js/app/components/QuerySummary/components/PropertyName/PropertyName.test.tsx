@@ -19,8 +19,12 @@ const render = (overProps: any = {}) => {
 
 test('should render <PropertyName/>', () => {
   const {
-    wrapper: { container },
+    wrapper: { getByText },
   } = render();
 
-  expect(container).toMatchSnapshot();
+  const item = getByText('item');
+  const price = getByText('price');
+
+  expect(item).toBeInTheDocument();
+  expect(price).toBeInTheDocument();
 });

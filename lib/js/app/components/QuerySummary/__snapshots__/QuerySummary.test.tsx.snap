@@ -1,63 +1,117 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`should render query summary 1`] = `
+.c1 {
+  margin: 0 0 10px 0;
+  padding: 0;
+  border-collapse: collapse;
+  table-layout: fixed;
+  text-align: left;
+}
+
+.c4 {
+  padding: 0 20px 10px 0;
+  font-family: 'Lato Bold',sans-serif;
+  font-size: 14px;
+  line-height: 17px;
+  color: #4F5B5F;
+}
+
+.c6 {
+  padding: 0 0 10px 0;
+  font-family: 'Lato Regular',sans-serif;
+  font-size: 14px;
+  line-height: 17px;
+  color: #4F5B5F;
+}
+
+.c2 {
+  vertical-align: top;
+}
+
+.c2:last-child .c3,
+.c2:last-child .c5 {
+  padding-bottom: 0;
+}
+
+.c7 {
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.c8 {
+  display: inline-block;
+  margin-left: 3px;
+  margin-right: 3px;
+}
+
+.c0 {
+  padding: 20px;
+}
+
 <div>
   <div
-    class="sc-qPwwY kAsNeQ"
+    class="c0"
   >
     <table
-      class="sc-pbYdQ ihIQcb"
+      class="c1"
     >
       <tbody
-        class="sc-pkUyL bQnweJ"
+        class=""
       >
         <tr
-          class="sc-qXgLg kdfqeA"
+          class="c2"
         >
           <th
-            class="sc-psRme htrpLL"
+            class="c3 c4"
           >
             Analysis:
           </th>
           <td
-            class="sc-qPjXN ftayUG"
+            class="c5 c6"
           >
             sum
           </td>
         </tr>
         <tr
-          class="sc-qXgLg kdfqeA"
+          class="c2"
         >
           <th
-            class="sc-psRme htrpLL"
+            class="c3 c4"
           >
             Event Stream:
           </th>
           <td
-            class="sc-qPjXN ftayUG"
+            class="c5 c6"
           >
             purchases
           </td>
         </tr>
         <tr
-          class="sc-qXgLg kdfqeA"
+          class="c2"
         >
           <th
-            class="sc-psRme htrpLL"
+            class="c3 c4"
           >
             Target Property:
           </th>
           <td
-            class="sc-qPjXN ftayUG"
+            class="c5 c6"
           >
             <div
-              class="sc-pzXPE kIHrir"
+              class="c7"
             >
               <span>
                 item
               </span>
               <span
-                class="sc-pIvhh gxbXhU"
+                class="c8"
               >
                 <svg
                   height="10"
@@ -73,7 +127,7 @@ exports[`should render query summary 1`] = `
               </span>
             </div>
             <div
-              class="sc-pzXPE kIHrir"
+              class="c7"
             >
               <span>
                 price
@@ -82,15 +136,15 @@ exports[`should render query summary 1`] = `
           </td>
         </tr>
         <tr
-          class="sc-qXgLg kdfqeA"
+          class="c2"
         >
           <th
-            class="sc-psRme htrpLL"
+            class="c3 c4"
           >
             Applied Filters:
           </th>
           <td
-            class="sc-qPjXN ftayUG"
+            class="c5 c6"
           >
             1
           </td>
@@ -102,26 +156,103 @@ exports[`should render query summary 1`] = `
 `;
 
 exports[`should render query summary for funnels 1`] = `
+.c1 {
+  margin: 0 0 10px 0;
+  padding: 0;
+  border-collapse: collapse;
+  table-layout: fixed;
+  text-align: left;
+}
+
+.c4 {
+  padding: 0 20px 10px 0;
+  font-family: 'Lato Bold',sans-serif;
+  font-size: 14px;
+  line-height: 17px;
+  color: #4F5B5F;
+}
+
+.c6 {
+  padding: 0 0 10px 0;
+  font-family: 'Lato Regular',sans-serif;
+  font-size: 14px;
+  line-height: 17px;
+  color: #4F5B5F;
+}
+
+.c2 {
+  vertical-align: top;
+}
+
+.c2:last-child .c3,
+.c2:last-child .c5 {
+  padding-bottom: 0;
+}
+
+.c8 {
+  border: 1px solid #EDEDED;
+}
+
+.c8 + .c7 {
+  border-top: none;
+}
+
+.c9 {
+  padding: 10px 12px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.c10 {
+  margin-right: 10px;
+}
+
+.c11 {
+  margin-right: 10px;
+  font-family: 'Lato Bold',sans-serif;
+  font-size: 14px;
+  line-height: 17px;
+  color: #4F5B5F;
+}
+
+.c12 {
+  font-family: 'Lato Regular',sans-serif;
+  font-size: 14px;
+  line-height: 17px;
+  color: #4F5B5F;
+}
+
+.c0 {
+  padding: 20px;
+}
+
 <div>
   <div
-    class="sc-qPwwY kAsNeQ"
+    class="c0"
   >
     <table
-      class="sc-pbYdQ ihIQcb"
+      class="c1"
     >
       <tbody
-        class="sc-pkUyL bQnweJ"
+        class=""
       >
         <tr
-          class="sc-qXgLg kdfqeA"
+          class="c2"
         >
           <th
-            class="sc-psRme htrpLL"
+            class="c3 c4"
           >
             Analysis:
           </th>
           <td
-            class="sc-qPjXN ftayUG"
+            class="c5 c6"
           >
             funnel
           </td>
@@ -129,13 +260,13 @@ exports[`should render query summary for funnels 1`] = `
       </tbody>
     </table>
     <div
-      class="sc-pQQXS jsoUMF"
+      class="c7 c8"
     >
       <div
-        class="sc-pZopv fqNZuG"
+        class="c9"
       >
         <div
-          class="sc-oUnPI kXhBts"
+          class="c10"
         >
           <svg
             height="15"
@@ -150,27 +281,27 @@ exports[`should render query summary for funnels 1`] = `
           </svg>
         </div>
         <div
-          class="sc-pcLhl fqIQzf"
+          class="c11"
         >
           Step
            
           1
         </div>
         <div
-          class="sc-plgXW ZoUoA"
+          class="c12"
         >
           signups
         </div>
       </div>
     </div>
     <div
-      class="sc-pQQXS jsoUMF"
+      class="c7 c8"
     >
       <div
-        class="sc-pZopv fqNZuG"
+        class="c9"
       >
         <div
-          class="sc-oUnPI kXhBts"
+          class="c10"
         >
           <svg
             height="15"
@@ -185,14 +316,14 @@ exports[`should render query summary for funnels 1`] = `
           </svg>
         </div>
         <div
-          class="sc-pcLhl fqIQzf"
+          class="c11"
         >
           Step
            
           2
         </div>
         <div
-          class="sc-plgXW ZoUoA"
+          class="c12"
         >
           purchases
         </div>

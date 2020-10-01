@@ -22,9 +22,9 @@ const AbsoluteTimeframe: FC<Props> = ({ timeframe, timezone }) => {
 
   return (
     <Container>
-      {moment(start).tz(namedTimezone).format('YYYY-MM-DD HH:mm')}
+      <span>{moment(start).tz(namedTimezone).format('YYYY-MM-DD HH:mm')}</span>
       <Separator>{text.separator}</Separator>
-      {moment(end).tz(namedTimezone).format('YYYY-MM-DD HH:mm')}
+      <span>{moment(end).tz(namedTimezone).format('YYYY-MM-DD HH:mm')}</span>
     </Container>
   );
 };

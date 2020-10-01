@@ -23,16 +23,24 @@ const render = (overProps: any = {}) => {
 
 test('renders <AbsoluteTimeframe /> component', () => {
   const {
-    wrapper: { container },
+    wrapper: { getByText },
   } = render();
 
-  expect(container).toMatchSnapshot();
+  const from = getByText('2020-09-29 00:00');
+  const to = getByText('2020-09-30 00:00');
+
+  expect(from).toBeInTheDocument();
+  expect(to).toBeInTheDocument();
 });
 
 test('renders <AbsoluteTimeframe /> component when timezone as number provided', () => {
   const {
-    wrapper: { container },
-  } = render({ timezone: 0 });
+    wrapper: { getByText },
+  } = render({ timezone: 3600 });
 
-  expect(container).toMatchSnapshot();
+  const from = getByText('2020-09-29 02:00');
+  const to = getByText('2020-09-30 02:00');
+
+  expect(from).toBeInTheDocument();
+  expect(to).toBeInTheDocument();
 });

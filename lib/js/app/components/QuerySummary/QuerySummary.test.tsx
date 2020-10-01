@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/camelcase */
 import React from 'react';
+import 'jest-styled-components';
 import { render as rtlRender } from '@testing-library/react';
 
 import QuerySummary from './QuerySummary';
