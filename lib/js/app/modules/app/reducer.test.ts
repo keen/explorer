@@ -5,6 +5,7 @@ import { SettingsModalSource } from './types';
 import {
   setViewMode,
   setVisualization,
+  resetVisualization,
   showConfirmation,
   hideConfirmation,
   acceptConfirmation,
@@ -37,6 +38,25 @@ test('updates visualization', () => {
       "widgetSettings": Object {},
     }
   `);
+});
+
+test('restores visualization settings to initial configuration', () => {
+  const action = resetVisualization();
+  const { visualization } = appReducer(
+    {
+      ...initialState,
+      visualization: {
+        type: 'bar',
+        chartSettings: {
+          groupMode: 'stacked',
+        },
+        widgetSettings: {},
+      },
+    },
+    action
+  );
+
+  expect(visualization).toEqual(initialState.visualization);
 });
 
 test('updates application view', () => {

@@ -32,7 +32,7 @@ const QueryVisualization: FC<Props> = ({
   const useDataviz = widgetType !== 'json';
 
   return (
-    <Container id={CONTAINER_ID}>
+    <Container id={CONTAINER_ID} data-testid="query-visualization">
       {useDataviz ? (
         <DataViz
           analysisResults={queryResults}
@@ -41,7 +41,7 @@ const QueryVisualization: FC<Props> = ({
           visualization={widgetType as Exclude<PickerWidgets, 'json'>}
         />
       ) : (
-        <JSONContainer>
+        <JSONContainer data-testid="json-tree">
           <JSONView analysisResults={queryResults} />
         </JSONContainer>
       )}
