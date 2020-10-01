@@ -11,6 +11,7 @@ const loadConfig = () => {
 
 module.exports = {
   entry: {
+    polyfills: './lib/polyfills.ts',
     main: './lib/index.js',
   },
   resolve: {
