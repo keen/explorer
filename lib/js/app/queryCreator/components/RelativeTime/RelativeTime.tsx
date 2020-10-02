@@ -41,13 +41,7 @@ const RelativeTime: FC<Props> = ({ relativity, value, units, onChange }) => {
           onChange(`${updatedRelativity}_${value}_${units}`);
         }}
       >
-        <Checkbox
-          id="relativity"
-          checked={relativity === THIS_RELATIVITY}
-          onChange={() => {
-            // @TODO: Make onChange optional in <Checkbox />
-          }}
-        />
+        <Checkbox id="relativity" checked={relativity === THIS_RELATIVITY} />
         <CheckboxLabel>
           <Title>{text.relativityTitle}</Title>
         </CheckboxLabel>
