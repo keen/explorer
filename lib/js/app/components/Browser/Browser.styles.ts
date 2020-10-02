@@ -15,10 +15,11 @@ import { BACKGROUND_MAIN } from '../../constants';
 export const ScrollableContainer = styled.div<LayoutProps>`
   ${layout}
   overflow-y: auto;
+  position: relative;
 `;
 
 export const ScrollOverflow = styled.div`
-  position: absolute;
+  position: sticky;
   bottom: 0;
   left: 0;
   width: 100%;
@@ -34,9 +35,9 @@ export const Container = styled.div<FlexDirectionProps>`
   ${flexbox}
 `;
 
-export const Socket = styled.div<SpaceProps & LayoutProps>`
+export const Socket = styled.div<SpaceProps>`
   position: relative;
-  ${layout}
+  flex: 1;
   ${space}
 `;
 

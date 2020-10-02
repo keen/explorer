@@ -26,7 +26,7 @@ import { getSavedQueries, getSavedQueriesLoaded } from '../../modules/queries';
 import { getBrowserScreenDimension, createNewQuery } from '../../modules/app';
 import { getSavedQuery } from '../../modules/savedQuery';
 
-import { LIST_SCROLL_OFFSET, SOCKET_CONTAINER_WIDTH } from './constants';
+import { LIST_SCROLL_OFFSET } from './constants';
 
 type Props = {
   /** Edit query event handler */
@@ -90,10 +90,7 @@ const Browser: FC<Props> = ({ onEditQuery, onRunQuery, onSelectQuery }) => {
     <>
       <BrowserNavigation attractNewQueryButton={isEmptyProject} />
       <Container flexDirection={{ xs: 'column', md: 'row' }}>
-        <Socket
-          width={SOCKET_CONTAINER_WIDTH}
-          marginRight={{ xs: 0, md: '-1px' }}
-        >
+        <Socket marginRight={{ xs: 0, md: '-1px' }}>
           {!isSavedQueriesLoaded || isEmptyProject ? (
             <QueriesPlaceholder />
           ) : (
@@ -108,12 +105,12 @@ const Browser: FC<Props> = ({ onEditQuery, onRunQuery, onSelectQuery }) => {
                   activeQuery={savedQuery.name}
                   onSelectQuery={onSelectQuery}
                 />
+                {scrollOverflow && <ScrollOverflow />}
               </ScrollableContainer>
-              {scrollOverflow && <ScrollOverflow />}
             </>
           )}
         </Socket>
-        <Socket marginLeft={{ xs: 0, md: 15 }} width={SOCKET_CONTAINER_WIDTH}>
+        <Socket marginLeft={{ xs: 0, md: 15 }}>
           {!isSavedQueriesLoaded || isEmptyProject ? (
             <PreviewPlaceholder />
           ) : (
