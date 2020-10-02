@@ -48,7 +48,9 @@ const BrowserPreview: FC<Props> = ({
           <QueryLimitReached />
         ) : (
           <>
-            {currentQuery && <QueryTitle>{currentQuery.name}</QueryTitle>}
+            {currentQuery && (
+              <QueryTitle>{currentQuery.displayName}</QueryTitle>
+            )}
             {currentQuery && queryResults ? (
               <QueryVisualization
                 widgetType={currentQuery.visualization.type}
