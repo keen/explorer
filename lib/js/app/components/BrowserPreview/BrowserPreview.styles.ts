@@ -10,3 +10,12 @@ export const Card = styled.div`
 export const HeaderContainer = styled.div`
   margin: 7px 0 20px 0;
 `;
+
+export const QueryTitle = styled.div`
+  padding: 20px;
+
+  font-family: 'Gangster Grotesk Bold', sans-serif;
+  font-size: 20px;
+  line-height: 24px;
+  color: ${colors.blue[500]};
+`;

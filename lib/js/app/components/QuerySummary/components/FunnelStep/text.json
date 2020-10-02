@@ -1,0 +1,7 @@
+{
+  "step": "Step",
+  "eventStream": "Event Stream:",
+  "targetProperty": "Target Property:",
+  "timeframe": "Timeframe:",
+  "appliedFilters": "Applied Filters:"
+}

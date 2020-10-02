@@ -1,0 +1,61 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render <StyledTable/> 1`] = `
+.c0 {
+  margin: 0 0 10px 0;
+  padding: 0;
+  border-collapse: collapse;
+  table-layout: fixed;
+  text-align: left;
+}
+
+.c3 {
+  padding: 0 20px 10px 0;
+  font-family: 'Lato Bold',sans-serif;
+  font-size: 14px;
+  line-height: 17px;
+  color: #4F5B5F;
+}
+
+.c5 {
+  padding: 0 0 10px 0;
+  font-family: 'Lato Regular',sans-serif;
+  font-size: 14px;
+  line-height: 17px;
+  color: #4F5B5F;
+}
+
+.c1 {
+  vertical-align: top;
+}
+
+.c1:last-child .c2,
+.c1:last-child .c4 {
+  padding-bottom: 0;
+}
+
+<div>
+  <table
+    class="c0"
+  >
+    <tbody
+      class=""
+    >
+      <tr
+        class="c1"
+      >
+        <th
+          class="c2 c3"
+        >
+          Label
+        </th>
+        <td
+          class="c4 c5"
+        >
+          Value
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+`;
