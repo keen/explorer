@@ -1,3 +1,5 @@
+import { TIME_UNITS } from '../../../constants';
+
 const TIME_SEPARATOR = '_';
 
 const TODAY = {
@@ -10,15 +12,6 @@ const YESTERDAY = {
   relativity: 'previous',
   value: 1,
   units: 'days',
-};
-
-const TIME_UNITS = {
-  minute: 'minutes',
-  month: 'months',
-  hour: 'hours',
-  year: 'years',
-  week: 'weeks',
-  day: 'days',
 };
 
 export const convertRelativeTime = (time: string) => {

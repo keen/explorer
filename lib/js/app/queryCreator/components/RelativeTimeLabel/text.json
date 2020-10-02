@@ -1,4 +1,5 @@
 {
   "label": "Last",
-  "todayIncludes": "(Includes today)"
+  "todayIncludes": "(Includes today)",
+  "relativityTitle": "Include current"
 }
