@@ -119,6 +119,7 @@ export const queriesReducer = (
       return {
         ...state,
         error: null,
+        results: null,
         isQueryPerforming: true,
       };
     }

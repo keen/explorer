@@ -13,7 +13,14 @@ test('serializes saved query', () => {
     query: { analysis_type: 'count' },
     metadata: {
       display_name: 'purchases',
-      widget: 'bar',
+      visualization: {
+        type: 'bar',
+        chart_settings: {
+          layout: 'vertical',
+          group_mode: 'grouped',
+        },
+        widget_settings: {},
+      },
     },
   };
 

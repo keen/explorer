@@ -1,11 +1,18 @@
 import {
+  PickerWidgets,
+  ChartSettings,
+  WidgetSettings,
+} from '@keen.io/widget-picker';
+
+import {
   APP_START,
   SWITCH_TO_QUERIES_LIST,
   LOAD_STATE_FROM_URL,
   SHOW_CONFIRMATION,
   HIDE_CONFIRMATION,
   ACCEPT_CONFIRMATION,
-  SET_VISUALIZATION_TYPE,
+  SET_VISUALIZATION,
+  RESET_VISUALIZATION,
   SET_VIEW_MODE,
   CREATE_NEW_QUERY,
   CLEAR_QUERY,
@@ -109,11 +116,21 @@ export const shareQueryUrl = (): AppActions => ({
   type: SHARE_QUERY_URL,
 });
 
-export const setVisualizationType = (type: string): AppActions => ({
-  type: SET_VISUALIZATION_TYPE,
+export const setVisualization = (
+  type: PickerWidgets,
+  chartSettings: ChartSettings,
+  widgetSettings: WidgetSettings
+): AppActions => ({
+  type: SET_VISUALIZATION,
   payload: {
     type,
+    chartSettings,
+    widgetSettings,
   },
+});
+
+export const resetVisualization = (): AppActions => ({
+  type: RESET_VISUALIZATION,
 });
 
 export const loadPersitedState = (): AppActions => ({

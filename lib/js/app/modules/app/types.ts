@@ -1,8 +1,15 @@
 import {
+  PickerWidgets,
+  ChartSettings,
+  WidgetSettings,
+} from '@keen.io/widget-picker';
+
+import {
   APP_START,
   LOAD_STATE_FROM_URL,
   SHARE_QUERY_URL,
-  SET_VISUALIZATION_TYPE,
+  SET_VISUALIZATION,
+  RESET_VISUALIZATION,
   SHOW_CONFIRMATION,
   HIDE_CONFIRMATION,
   ACCEPT_CONFIRMATION,
@@ -47,7 +54,9 @@ export type ReducerState = {
     height: number;
   };
   visualization: {
-    type: string | null;
+    type: PickerWidgets | null;
+    chartSettings: ChartSettings;
+    widgetSettings: WidgetSettings;
   };
 };
 
@@ -134,11 +143,17 @@ export interface SetViewModeAction {
   };
 }
 
-export interface SetVisualizationType {
-  type: typeof SET_VISUALIZATION_TYPE;
+export interface SetVisualizationAction {
+  type: typeof SET_VISUALIZATION;
   payload: {
-    type: string;
+    type: PickerWidgets;
+    chartSettings: ChartSettings;
+    widgetSettings: WidgetSettings;
   };
+}
+
+export interface ResetVisualizationAction {
+  type: typeof RESET_VISUALIZATION;
 }
 
 export interface LoadPersistedStateAction {
@@ -179,7 +194,8 @@ export type AppActions =
   | HideConfirmationAction
   | AcceptConfirmationAction
   | SwitchToQueriesListAction
-  | SetVisualizationType
+  | SetVisualizationAction
+  | ResetVisualizationAction
   | ShowQuerySettingsModalAction
   | HideQuerySettingsModalAction
   | SelectFirstSavedQueryAction;

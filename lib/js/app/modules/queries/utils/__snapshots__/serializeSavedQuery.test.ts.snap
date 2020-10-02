@@ -12,6 +12,13 @@ Object {
   "refreshRate": 14000,
   "stepLabels": Array [],
   "tags": Array [],
-  "widget": "bar",
+  "visualization": Object {
+    "chartSettings": Object {
+      "groupMode": "grouped",
+      "layout": "vertical",
+    },
+    "type": "bar",
+    "widgetSettings": Object {},
+  },
 }
 `;

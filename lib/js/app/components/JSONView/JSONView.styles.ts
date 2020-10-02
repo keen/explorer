@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  width: 100%;
-  height: 280px;
+  min-height: 340px;
+  max-height: 400px;
+  flex-grow: 1;
   overflow-y: scroll;
 `;

@@ -4,7 +4,8 @@ import { SettingsModalSource } from './types';
 
 import {
   setViewMode,
-  setVisualizationType,
+  setVisualization,
+  resetVisualization,
   showConfirmation,
   hideConfirmation,
   acceptConfirmation,
@@ -25,10 +26,37 @@ test('set browser screen dimension', () => {
 });
 
 test('updates visualization', () => {
-  const action = setVisualizationType('bar');
+  const action = setVisualization('bar', { layout: 'vertical' }, {});
   const { visualization } = appReducer(initialState, action);
 
-  expect(visualization.type).toEqual('bar');
+  expect(visualization).toMatchInlineSnapshot(`
+    Object {
+      "chartSettings": Object {
+        "layout": "vertical",
+      },
+      "type": "bar",
+      "widgetSettings": Object {},
+    }
+  `);
+});
+
+test('restores visualization settings to initial configuration', () => {
+  const action = resetVisualization();
+  const { visualization } = appReducer(
+    {
+      ...initialState,
+      visualization: {
+        type: 'bar',
+        chartSettings: {
+          groupMode: 'stacked',
+        },
+        widgetSettings: {},
+      },
+    },
+    action
+  );
+
+  expect(visualization).toEqual(initialState.visualization);
 });
 
 test('updates application view', () => {

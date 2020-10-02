@@ -1,10 +1,8 @@
 import React, { FC, useState, useEffect, useRef, useContext } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Tooltip } from '@keen.io/ui-core';
+import { Tooltip, Portal } from '@keen.io/ui-core';
 
 import { Container, Type, Path, Name } from './TreeLeaf.styles';
-import Portal from '../../../Portal';
-
 import { AppContext } from '../../../../contexts';
 
 import { SEPARATOR, PADDING } from './constants';
