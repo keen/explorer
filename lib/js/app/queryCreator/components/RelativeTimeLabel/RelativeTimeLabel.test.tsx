@@ -28,6 +28,14 @@ test('shows message about including current day in timeframe', () => {
   expect(getByText(text.todayIncludes)).toBeInTheDocument();
 });
 
+test('shows message about including current interval in timeframe', () => {
+  const {
+    wrapper: { getByText },
+  } = render({ units: 'years' });
+
+  expect(getByText('(Include current year)')).toBeInTheDocument();
+});
+
 test('shows timeframe settings', () => {
   const {
     wrapper: { getByText },

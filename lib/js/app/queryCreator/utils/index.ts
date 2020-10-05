@@ -8,6 +8,7 @@ import { createTree } from './createTree';
 import { showField } from './showField';
 import { transformQueryToCamelCase } from './transformQueryToCamelCase';
 import { transformToQuery } from './transformToQuery';
+import { getInterval } from './getInterval';
 
 export {
   inferFilterType,
@@ -20,4 +21,5 @@ export {
   showField,
   transformQueryToCamelCase,
   transformToQuery,
+  getInterval,
 };

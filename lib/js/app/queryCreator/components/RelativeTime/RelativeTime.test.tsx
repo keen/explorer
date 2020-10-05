@@ -27,7 +27,7 @@ test('allows user to include the current day in timeframe', () => {
     wrapper: { getByText },
   } = render({ relativity: 'previous' });
 
-  const checkbox = getByText(text.relativityTitle);
+  const checkbox = getByText(text.relativityTitleForToday);
   fireEvent.click(checkbox);
 
   expect(props.onChange).toHaveBeenCalledWith('this_14_days');
@@ -39,8 +39,17 @@ test('allows user to exclude the current day from timeframe', () => {
     wrapper: { getByText },
   } = render();
 
-  const checkbox = getByText(text.relativityTitle);
+  const checkbox = getByText(text.relativityTitleForToday);
   fireEvent.click(checkbox);
 
   expect(props.onChange).toHaveBeenCalledWith('previous_14_days');
+});
+
+test('renders correct checkbox label for different interval', () => {
+  const {
+    wrapper: { getByText },
+  } = render({ units: 'months' });
+
+  const checkbox = getByText(`${text.relativityTitle} month`);
+  expect(checkbox).toBeInTheDocument();
 });

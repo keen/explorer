@@ -12,7 +12,7 @@ import DropdownList from '../DropdownList';
 import DropdownListContainer from '../DropdownListContainer';
 import DropableContainer from '../DropableContainer';
 
-import { TIME_UNITS } from './constants';
+import { TIME_UNITS } from '../../constants';
 
 type Props = {
   /** Time relativity */
@@ -53,7 +53,7 @@ const TimePeriod: FC<Props> = ({
 
   const unitsOptions = useMemo(
     () =>
-      TIME_UNITS.map((unit) => ({
+      Object.values(TIME_UNITS).map((unit) => ({
         label: unit,
         value: unit,
       })),
