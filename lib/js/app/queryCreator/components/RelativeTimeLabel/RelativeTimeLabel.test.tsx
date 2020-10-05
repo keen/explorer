@@ -33,7 +33,7 @@ test('shows message about including current interval in timeframe', () => {
     wrapper: { getByText },
   } = render({ units: 'years' });
 
-  expect(getByText('(Include current year)')).toBeInTheDocument();
+  expect(getByText('(Includes current year)')).toBeInTheDocument();
 });
 
 test('shows timeframe settings', () => {
