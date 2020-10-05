@@ -47,9 +47,9 @@ export const ANALYSIS_TYPES: Analysis[] = [
 
 export const TIME_UNITS = {
   minute: 'minutes',
-  month: 'months',
   hour: 'hours',
-  year: 'years',
-  week: 'weeks',
   day: 'days',
+  week: 'weeks',
+  month: 'months',
+  year: 'years',
 };
