@@ -22,6 +22,7 @@ import {
   appStart,
   exportChartToImage,
   exportChartToJson,
+  exportDataToCsv,
 } from './actions';
 import {
   getConfirmation,
@@ -65,6 +66,7 @@ export {
   selectFirstSavedQuery,
   exportChartToImage,
   exportChartToJson,
+  exportDataToCsv,
   ReducerState,
   SettingsModalSource,
 };

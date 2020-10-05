@@ -29,6 +29,7 @@ import {
   SET_SCREEN_DIMENSION,
   EXPORT_CHART_TO_IMAGE,
   EXPORT_CHART_TO_JSON,
+  EXPORT_DATA_TO_CSV,
 } from './constants';
 
 import {
@@ -162,4 +163,8 @@ export const exportChartToImage = () => ({
 
 export const exportChartToJson = () => ({
   type: EXPORT_CHART_TO_JSON,
+});
+
+export const exportDataToCsv = () => ({
+  type: EXPORT_DATA_TO_CSV,
 });

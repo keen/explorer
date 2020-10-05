@@ -56,6 +56,7 @@
     "camelcase-keys": "^6.2.2",
     "core-js": "^3.6.5",
     "csv-parse": "^4.10.1",
+    "csv-stringify": "^5.5.1",
     "dom-to-image": "^2.6.0",
     "file-saver": "^2.0.2",
     "framer-motion": "^1.11.0",
