@@ -3,45 +3,45 @@ const path = require('path');
 const merge = require('webpack-merge');
 const TerserPlugin = require('terser-webpack-plugin');
 
-const commonConfig = require('./webpack.common');
+const createWebpackConfig = require('./webpack.common');
 
-const fileName = 'keen-explorer';
+const FILE_NAME = 'explorer';
 
-module.exports = merge(commonConfig, {
-  context: __dirname,
-  mode: 'production',
-  devtool: 'source-map',
+module.exports = (env) => {
+  const useLegacyBrowsers = env.TARGET_LEGACY_BROWSERS === 'true';
 
-  entry: ['./lib/index.js'],
-  target: 'web',
+  const config = merge(createWebpackConfig(useLegacyBrowsers), {
+    context: __dirname,
+    mode: 'production',
+    devtool: 'source-map',
 
-  output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: `${
-      fileName
-    }${
-      process.env.BUNDLE ? '.bundle' : '.umd'
-    }${
-      process.env.OPTIMIZE_MINIMIZE ? '.min' : ''
-    }.js`,
-    library: `${!process.env.LIBRARY ? '' : process.env.LIBRARY}`,
-    libraryTarget: 'umd',
-  },
+    entry: {
+      main: `./lib/index${useLegacyBrowsers ? '.polyfills': ''}.ts`,
+    },
+    target: 'web',
 
-  optimization: {
-     minimize: !!process.env.OPTIMIZE_MINIMIZE,
-     minimizer: [
-       new TerserPlugin({
-         terserOptions: {
-           keep_classnames: true,
-           keep_fnames: true,
-         },
-       }),
-     ],
-   },
+    output: {
+      path: path.resolve(__dirname, 'dist'),
+      filename: `${FILE_NAME}.${useLegacyBrowsers ? 'legacy': 'modern'}.min.js`,
+      libraryTarget: 'umd',
+    },
 
-   plugins: [
-     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
-     new webpack.optimize.ModuleConcatenationPlugin(),
-  ]
-});
+    optimization: {
+       minimizer: [
+         new TerserPlugin({
+           terserOptions: {
+             keep_classnames: true,
+             keep_fnames: true,
+           },
+         }),
+       ],
+     },
+
+     plugins: [
+       new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+       new webpack.optimize.ModuleConcatenationPlugin(),
+    ]
+  });
+
+return config;
+};

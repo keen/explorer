@@ -1,9 +1,9 @@
 const path = require('path');
 const merge = require('webpack-merge');
 
-const commonConfig = require('./webpack.common');
+const createWebpackConfig = require('./webpack.common');
 
-const config = merge(commonConfig, {
+const config = merge(createWebpackConfig(), {
   mode: 'development',
   target: 'web',
   devServer: {
