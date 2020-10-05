@@ -2,54 +2,78 @@ const webpack = require('webpack');
 const path =  require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-const loadConfig = () => {
+const loadAppConfig = () => {
   if (process.env.NODE_ENV === 'development') {
     return require('./config');
   }
   return {};
 };
 
-module.exports = {
-  entry: {
-    polyfills: './lib/polyfills.ts',
-    main: './lib/index.js',
-  },
-  resolve: {
-    extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
-  },
-  module: {
-    rules: [
-      {
-        test: /\.jsx?$/,
-        // exclude: /node_modules\/(?!(framesync)\/).*/,
-        exclude: /node_modules/,
-        use: [
+const createWebpackConfig = (
+  supportLegacyBrowsers
+) => {
+
+  const config = {
+    entry: {
+      main: './lib/index.ts',
+    },
+    resolve: {
+      extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
+    },
+    module: {
+      rules: [
+        {
+          test: /\.tsx?$/,
+          use: {
+            loader: 'ts-loader',
+          },
+        },
+        {
+          test: /\.css$/,
+          use: ['style-loader', 'css-loader'],
+        },
+      ],
+    },
+    plugins: [
+      new HtmlWebpackPlugin({
+        inject: true,
+        templateParameters: {
+          'config': JSON.stringify(
+            loadAppConfig()
+          )
+        },
+        template: path.join(__dirname, 'test', 'demo', 'index.html'),
+      }),
+    ],
+  };
+
+  if (supportLegacyBrowsers) {
+    const babelOptions = {
+      presets: [
+        '@babel/preset-react',
+        [
+          '@babel/preset-env',
           {
-            loader: 'babel-loader',
+            corejs: '3.6',
+            useBuiltIns: 'entry',
           },
         ],
-      },
-      {
-        test: /\.tsx?$/,
-        use: {
-          loader: 'ts-loader',
+      ],
+    };
+
+    config.module.rules.unshift({
+      test: /\.jsx?$/,
+      exclude: /@babel(?:\/|\\{1,2})runtime|core-js/,
+      use: [
+        {
+          loader: 'babel-loader',
+          options: babelOptions,
         },
-      },
-      {
-        test: /\.css$/,
-        use: ['style-loader', 'css-loader'],
-      },
-    ],
-  },
-  plugins: [
-    new HtmlWebpackPlugin({
-      inject: true,
-      templateParameters: {
-        'config': JSON.stringify(
-          loadConfig()
-        )
-      },
-      template: path.join(__dirname, 'test', 'demo', 'index.html'),
-    }),
-  ],
+      ],
+    });
+  }
+
+  return config;
 };
+
+module.exports = createWebpackConfig;
