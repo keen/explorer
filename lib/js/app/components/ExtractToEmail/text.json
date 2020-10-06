@@ -1,0 +1,7 @@
+{
+  "limitLabel": "Limit number of events",
+  "limitPlaceholder": "Events limit",
+  "emailLabel": "Send to Email",
+  "emailPlaceholder": "Email",
+  "buttonLabel": "Extract to Email"
+}

@@ -19,6 +19,7 @@ import VisualizationPlaceholder from '../VisualizationPlaceholder';
 import QueryLimitReached from '../QueryLimitReached';
 
 import {
+  extractToEmail,
   getQueryResults,
   getQueryPerformState,
   getQueryLimitReached,
@@ -77,6 +78,11 @@ const Editor: FC<Props> = ({
           <RunQuery isLoading={isQueryLoading} onClick={() => onRunQuery()}>
             {runQueryLabel(query)}
           </RunQuery>
+          <div>
+            <button onClick={() => dispatch(extractToEmail())}>
+              Extract to email
+            </button>
+          </div>
           <ClearButton>
             <Button
               onClick={() => dispatch(clearQuery())}

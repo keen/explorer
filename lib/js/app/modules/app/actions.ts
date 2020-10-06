@@ -29,6 +29,8 @@ import {
   SET_SCREEN_DIMENSION,
   EXPORT_CHART_TO_IMAGE,
   EXPORT_CHART_TO_JSON,
+  SHOW_EMAIL_EXTRACTION_MODAL,
+  HIDE_EMAIL_EXTRACTION_MODAL,
 } from './constants';
 
 import {
@@ -54,6 +56,14 @@ export const setScreenDimension = (
 ): AppActions => ({
   type: SET_SCREEN_DIMENSION,
   payload: { width, height },
+});
+
+export const showEmailExtractionModal = (): AppActions => ({
+  type: SHOW_EMAIL_EXTRACTION_MODAL,
+});
+
+export const hideEmailExtractionModal = (): AppActions => ({
+  type: HIDE_EMAIL_EXTRACTION_MODAL,
 });
 
 export const selectFirstSavedQuery = (): AppActions => ({

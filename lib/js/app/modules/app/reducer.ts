@@ -11,6 +11,8 @@ import {
   SET_SCREEN_DIMENSION,
   SHOW_QUERY_SETTINGS_MODAL,
   HIDE_QUERY_SETTINGS_MODAL,
+  SHOW_EMAIL_EXTRACTION_MODAL,
+  HIDE_EMAIL_EXTRACTION_MODAL,
 } from './constants';
 
 export const initialState: ReducerState = {
@@ -22,6 +24,9 @@ export const initialState: ReducerState = {
   querySettingsModal: {
     visible: false,
     source: null,
+  },
+  extractToEmailModal: {
+    visible: false,
   },
   browserScreen: {
     width: 0,
@@ -51,6 +56,22 @@ export const appReducer = (
         browserScreen: {
           height: action.payload.height,
           width: action.payload.width,
+        },
+      };
+    case SHOW_EMAIL_EXTRACTION_MODAL:
+      return {
+        ...state,
+        extractToEmailModal: {
+          ...state.extractToEmailModal,
+          visible: true,
+        },
+      };
+    case HIDE_EMAIL_EXTRACTION_MODAL:
+      return {
+        ...state,
+        extractToEmailModal: {
+          ...state.extractToEmailModal,
+          visible: false,
         },
       };
     case HIDE_QUERY_SETTINGS_MODAL:

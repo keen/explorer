@@ -14,10 +14,6 @@ export const SET_ORDER_BY = '@query-creator/SET_ORDER_BY';
 export const SET_LIMIT = '@query-creator/SET_LIMIT';
 export const RESET_EXTRACTION = '@query-creator/RESET_EXTRACTION';
 export const SET_EXTRACTION_LIMIT = '@query-creator/SET_EXTRACTION_LIMIT';
-export const SET_EXTRACTION_RECIPIENT_EMAIL =
-  '@query-creator/SET_EXTRACTION_RECIPIENT_EMAIL';
-export const SET_EXTRACTION_CONTENT_ENCODING =
-  '@query-creator/SET_EXTRACTION_CONTENT_ENCODING';
 export const SET_PROPERTY_NAMES = '@query-creator/SET_PROPERTY_NAMES';
 export const SET_FILTERS = '@query-creator/SET_FILTERS';
 export const SELECT_TIMEZONE = '@query-creator/SELECT_TIMEZONE';
@@ -45,6 +41,7 @@ export const REMOVE_FILTER = '@query-creator/REMOVE_FILTER';
 export const DEFAULT_ANALYSIS = 'count';
 export const DEFAULT_TIMEFRAME = 'this_14_days';
 export const DEFAULT_TIMEZONE = 'UTC';
+export const DEFAULT_EXTRACTION_LIMIT = 100;
 
 export const DEFAULT_FILTER = {
   propertyName: undefined,

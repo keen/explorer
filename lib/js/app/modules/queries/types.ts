@@ -26,6 +26,8 @@ import {
   GET_ORGANIZATION_USAGE_LIMITS,
   SET_QUERY_SETTINGS,
   SET_QUERY_SAVE_STATE,
+  EXTRACT_TO_EMAIL,
+  RUN_EMAIL_EXTRACTION,
 } from './constants';
 
 import { APIError } from '../../types';
@@ -65,6 +67,18 @@ export type ReducerState = {
   saveQueryError: APIError | null;
   error: APIError | null;
 };
+
+export interface ExtractToEmailAction {
+  type: typeof EXTRACT_TO_EMAIL;
+}
+
+export interface RunEmailExtractionAction {
+  type: typeof RUN_EMAIL_EXTRACTION;
+  payload: {
+    latest: number;
+    email: string;
+  };
+}
 
 export interface SetQuerySettingsAction {
   type: typeof SET_QUERY_SETTINGS;
@@ -220,4 +234,6 @@ export type QueriesActions =
   | GetSavedQueriesErrorAction
   | SetQueryLimitReachedAction
   | ResetSaveQueryErrorAction
-  | GetOrganizationUsageLimitsAction;
+  | GetOrganizationUsageLimitsAction
+  | ExtractToEmailAction
+  | RunEmailExtractionAction;

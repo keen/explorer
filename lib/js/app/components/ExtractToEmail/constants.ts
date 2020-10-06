@@ -1,0 +1,2 @@
+export const DEFAULT_LIMIT = 1000;
+export const EMAIL_EXTRACTION_LIMIT = 10000000;

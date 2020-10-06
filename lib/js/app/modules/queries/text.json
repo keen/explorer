@@ -3,5 +3,7 @@
   "removeQuerySuccess": "Query removed",
   "saveQueryError": "We cannot save the query. There is a problem on our end.",
   "queryDeleted": "Query already has been deleted.",
-  "queryDeleteError": "We were not able to delete this query. Try again later."
+  "queryDeleteError": "We were not able to delete this query. Try again later.",
+  "prepeareEmailExtraction": "Processing Email extraction.",
+  "emailExtractionError": "We were not able to process email extraction. Try again later."
 }

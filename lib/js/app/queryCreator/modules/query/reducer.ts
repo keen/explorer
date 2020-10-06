@@ -7,8 +7,6 @@ import {
   SET_PROPERTY_NAMES,
   SET_LIMIT,
   SET_EXTRACTION_LIMIT,
-  SET_EXTRACTION_RECIPIENT_EMAIL,
-  SET_EXTRACTION_CONTENT_ENCODING,
   SET_PERCENTILE,
   SET_TIMEFRAME,
   SET_GROUP_BY,
@@ -36,6 +34,7 @@ import {
   UPDATE_FILTER,
   REMOVE_FILTER,
   DEFAULT_FILTER,
+  DEFAULT_EXTRACTION_LIMIT,
 } from './constants';
 
 import { ReducerState, QueryActions } from './types';
@@ -54,9 +53,7 @@ export const initialState: ReducerState = {
   steps: [],
   filters: [],
   propertyNames: undefined,
-  latest: undefined,
-  email: undefined,
-  contentEncoding: undefined,
+  latest: DEFAULT_EXTRACTION_LIMIT,
 };
 
 export const queryReducer = (
@@ -123,16 +120,6 @@ export const queryReducer = (
       return {
         ...state,
         latest: action.payload.limit,
-      };
-    case SET_EXTRACTION_RECIPIENT_EMAIL:
-      return {
-        ...state,
-        email: action.payload.email,
-      };
-    case SET_EXTRACTION_CONTENT_ENCODING:
-      return {
-        ...state,
-        contentEncoding: action.payload.contentEncoding,
       };
     case SET_PROPERTY_NAMES:
       return {

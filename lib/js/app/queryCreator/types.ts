@@ -31,9 +31,14 @@ type FieldRule = ('*' | Analysis)[];
 export type QueryCreatorConfig = Record<CreatorFields, FieldRule>;
 
 export type OrderBy = {
-  id?: string;
+  id?: string; // zmienic
   propertyName: string;
   direction: 'ASC' | 'DESC';
+};
+
+export type ExtractionProperty = {
+  id: string;
+  propertyName: string;
 };
 
 export type Timeframe =
@@ -82,7 +87,7 @@ export type Filter = {
 };
 
 export type FunnelStep = {
-  id?: string;
+  id?: string; // zmienic
   actorProperty: string;
   eventCollection: string;
   inverted: boolean;

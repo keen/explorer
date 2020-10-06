@@ -20,9 +20,13 @@ import {
   resetQueryResults,
 } from './actions';
 
+import { getQuerySettings } from './selectors';
+
 import {
   showConfirmation,
   hideQuerySettingsModal,
+  showEmailExtractionModal,
+  hideEmailExtractionModal,
   getQuerySettingsModalVisibility,
   getViewMode,
   setViewMode,
@@ -30,6 +34,7 @@ import {
   switchToQueriesList,
   HIDE_CONFIRMATION,
   ACCEPT_CONFIRMATION,
+  HIDE_EMAIL_EXTRACTION_MODAL,
 } from '../../modules/app';
 
 import { serializeSavedQuery } from './utils';
@@ -50,7 +55,9 @@ import {
   SAVE_QUERY,
   GET_SAVED_QUERIES,
   SAVE_QUERY_SUCCESS,
+  EXTRACT_TO_EMAIL,
   GET_ORGANIZATION_USAGE_LIMITS,
+  RUN_EMAIL_EXTRACTION,
   ERRORS,
 } from './constants';
 
@@ -59,6 +66,50 @@ import { isElementInViewport } from './utils';
 function* scrollToElement(element: HTMLElement) {
   if (element && !isElementInViewport(element)) {
     yield element.scrollIntoView({ block: 'start', behavior: 'smooth' });
+  }
+}
+
+function* extractToEmail() {
+  yield put(showEmailExtractionModal());
+  const action = yield take([
+    HIDE_EMAIL_EXTRACTION_MODAL,
+    RUN_EMAIL_EXTRACTION,
+  ]);
+
+  if (action.type === RUN_EMAIL_EXTRACTION) {
+    const client = yield getContext(KEEN_CLIENT_CONTEXT);
+    const notificationManager = yield getContext(NOTIFICATION_MANAGER_CONTEXT);
+    const query = yield select(getQuerySettings);
+
+    yield notificationManager.showNotification({
+      type: 'info',
+      message: text.prepeareEmailExtraction,
+      autoDismiss: true,
+    });
+
+    try {
+      yield put(hideEmailExtractionModal());
+      yield client.query({
+        ...query,
+        ...action.payload,
+      });
+    } catch (error) {
+      const { status } = error;
+      if (status === HttpStatus.INTERNAL_SERVER_ERROR) {
+        yield notificationManager.showNotification({
+          type: 'error',
+          message: text.emailExtractionError,
+          showDismissButton: true,
+          autoDismiss: false,
+        });
+      } else {
+        yield notificationManager.showNotification({
+          type: 'error',
+          message: error.body,
+          autoDismiss: true,
+        });
+      }
+    }
   }
 }
 
@@ -251,6 +302,7 @@ function* checkOrganizationLimits() {
 }
 
 export function* queriesSaga() {
+  yield takeLatest(EXTRACT_TO_EMAIL, extractToEmail);
   yield takeLatest(RUN_QUERY, runQuery);
   yield takeLatest(DELETE_QUERY, deleteQuery);
   yield takeLatest(SAVE_QUERY, saveQuery);

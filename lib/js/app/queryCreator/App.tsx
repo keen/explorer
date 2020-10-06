@@ -50,6 +50,11 @@ const App: FC<Props> = () => {
   return (
     <div>
       <QueryArguments />
+      {analysis === 'extraction' && (
+        <Card>
+          <Extraction collection={collection} />
+        </Card>
+      )}
       {showField('filters', analysis) && (
         <Card>
           <Filters
@@ -87,8 +92,6 @@ const App: FC<Props> = () => {
           {showField('interval', analysis) && <Interval />}
         </Card>
       )}
-
-      {analysis === 'extraction' && <Extraction collection={collection} />}
     </div>
   );
 };

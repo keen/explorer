@@ -12,8 +12,6 @@ import {
   SET_LIMIT,
   SET_INTERVAL,
   SET_EXTRACTION_LIMIT,
-  SET_EXTRACTION_RECIPIENT_EMAIL,
-  SET_EXTRACTION_CONTENT_ENCODING,
   SET_FILTERS,
   SELECT_TIMEZONE,
   ADD_FUNNEL_STEP,
@@ -35,8 +33,15 @@ import {
   UPDATE_FUNNEL_STEP_TIMEZONE,
 } from './constants';
 
-import { QueryActions, ReducerState as Query } from './types';
-import { Timezones, Timeframe, OrderBy, FunnelStep, Filter } from '../../types';
+import { QueryActions, ReducerState as Query, InitialQuery } from './types';
+import {
+  Timezones,
+  Timeframe,
+  OrderBy,
+  FunnelStep,
+  ExtractionProperty,
+  Filter,
+} from '../../types';
 import { Analysis } from '../../../types';
 
 export const setQuery = (query: Partial<Query>): QueryActions => ({
@@ -46,7 +51,7 @@ export const setQuery = (query: Partial<Query>): QueryActions => ({
   },
 });
 
-export const serializeQuery = (query: Partial<Query>): QueryActions => ({
+export const serializeQuery = (query: Partial<InitialQuery>): QueryActions => ({
   type: SERIALIZE_QUERY,
   payload: {
     query,
@@ -77,7 +82,9 @@ export const updateFilter = (
   payload: { id, filter },
 });
 
-export const setPropertyNames = (propertyNames: string[]): QueryActions => ({
+export const setPropertyNames = (
+  propertyNames: ExtractionProperty[]
+): QueryActions => ({
   type: SET_PROPERTY_NAMES,
   payload: {
     propertyNames,
@@ -151,22 +158,6 @@ export const setExtractionLimit = (limit?: number): QueryActions => ({
   type: SET_EXTRACTION_LIMIT,
   payload: {
     limit,
-  },
-});
-
-export const setExtractionRecipientEmail = (email?: string): QueryActions => ({
-  type: SET_EXTRACTION_RECIPIENT_EMAIL,
-  payload: {
-    email,
-  },
-});
-
-export const setExtractionContentEncoding = (
-  contentEncoding?: string
-): QueryActions => ({
-  type: SET_EXTRACTION_CONTENT_ENCODING,
-  payload: {
-    contentEncoding,
   },
 });
 
