@@ -44,7 +44,7 @@
   },
   "dependencies": {
     "@keen.io/colors": "^1.1.0",
-    "@keen.io/dataviz": "^2.0.2",
+    "@keen.io/dataviz": "^2.1.4",
     "@keen.io/forms": "^2.0.2",
     "@keen.io/icons": "^1.1.0",
     "@keen.io/parser": "^2.0.2",
@@ -107,7 +107,6 @@
     "@types/qs": "^6.9.3",
     "@types/rc-time-picker": "^3.4.1",
     "@types/react": "^16.9.35",
-    "@types/react-dom": "^16.9.8",
     "@types/react-dates": "^17.1.12",
     "@types/react-redux": "^7.1.9",
     "@types/react-window": "^1.8.2",
