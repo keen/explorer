@@ -97,9 +97,7 @@ export const queryReducer = (
       return {
         ...state,
         propertyNames: undefined,
-        latest: undefined,
-        email: undefined,
-        contentEncoding: undefined,
+        latest: DEFAULT_EXTRACTION_LIMIT,
       };
     case SET_QUERY:
       return {

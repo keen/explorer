@@ -80,7 +80,7 @@ const Editor: FC<Props> = ({
           {runQueryLabel(query)}
         </RunQuery>
         {showEmailExtraction(query) && (
-          <ButtonWrapper>
+          <ButtonWrapper data-testid="email-extraction">
             <Button
               variant="success"
               size="large"

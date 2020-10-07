@@ -6,6 +6,10 @@ export const Container = styled.div`
   width: 320px;
 `;
 
+export const FooterContent = styled.div`
+  display: flex;
+`;
+
 export const EmailContainer = styled.div`
   margin: 25px 0 5px 0;
 `;

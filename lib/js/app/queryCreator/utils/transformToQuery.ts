@@ -55,7 +55,5 @@ export const transformToQuery = (query: QueryState) => {
     }));
   }
 
-  console.log('--- queryToTransform', queryToTransform);
-
   return snakeCase(queryToTransform);
 };

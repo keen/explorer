@@ -18,6 +18,7 @@ import {
   EmailContainer,
   ContentTypeContainer,
   CompressionLabel,
+  FooterContent,
   MaximumLimit,
   FileSettings,
   Cancel,
@@ -151,32 +152,34 @@ const ExtractToEmail: FC<Props> = ({ onClose }) => {
         </FileSettings>
       </Container>
       <ModalFooter>
-        <Button
-          data-testid="send-email"
-          variant="secondary"
-          style="solid"
-          onClick={() => {
-            const isValidEmail = validateEmail(email);
-            setEmailValidation(isValidEmail);
+        <FooterContent>
+          <Button
+            data-testid="send-email"
+            variant="secondary"
+            style="solid"
+            onClick={() => {
+              const isValidEmail = validateEmail(email);
+              setEmailValidation(isValidEmail);
 
-            if (isValidEmail) {
-              dispatch(
-                runEmailExtraction(email, limit, contentType, contentEncoding)
-              );
-            }
-          }}
-        >
-          {text.buttonLabel}
-        </Button>
-        <Cancel>
-          <Anchor
-            onClick={onClose}
-            color={colors.blue[500]}
-            hoverColor={colors.blue[300]}
+              if (isValidEmail) {
+                dispatch(
+                  runEmailExtraction(email, limit, contentType, contentEncoding)
+                );
+              }
+            }}
           >
-            {text.closeButton}
-          </Anchor>
-        </Cancel>
+            {text.buttonLabel}
+          </Button>
+          <Cancel>
+            <Anchor
+              onClick={onClose}
+              color={colors.blue[500]}
+              hoverColor={colors.blue[300]}
+            >
+              {text.closeButton}
+            </Anchor>
+          </Cancel>
+        </FooterContent>
       </ModalFooter>
     </>
   );
