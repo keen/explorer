@@ -1,51 +1,19 @@
-import React, { FC, useMemo, useContext } from 'react';
-import { Button } from '@keen.io/ui-core';
-import Prism from 'prismjs';
+import React, { FC } from 'react';
+import { Light as SyntaxHighlighter } from 'react-syntax-highlighter';
+import js from 'react-syntax-highlighter/dist/esm/languages/hljs/javascript';
+// import github from 'react-syntax-highlighter/dist/esm/styles/hljs/github';
+import a11y from 'react-syntax-highlighter/dist/esm/styles/hljs/a11y-light';
 
-import { Code } from './EmbedWidget.styles';
-import { createCodeSnippet } from './utils';
-import text from './text.json';
-
-import { AppContext } from '../../contexts';
-import { copyToClipboard } from '../../utils';
+SyntaxHighlighter.registerLanguage('javascript', js);
 
 type Props = {
-  /** Widget type */
-  widget: string;
-  /** Query definition */
-  query: Record<string, any>;
+  children: string;
 };
 
-const EmbedWidget: FC<Props> = ({ widget, query }) => {
-  const { keenAnalysis } = useContext(AppContext);
-  const code = useMemo(
-    () =>
-      createCodeSnippet({
-        widget,
-        query,
-        projectId: keenAnalysis.config.projectId,
-        readKey: keenAnalysis.config.readKey,
-      }),
-    [widget, query]
-  );
-
-  const html = useMemo(
-    () => Prism.highlight(code, Prism.languages.javascript, 'javascript'),
-    [code]
-  );
-
-  return (
-    <div>
-      <Code dangerouslySetInnerHTML={{ __html: html }} />
-      <Button
-        variant="secondary"
-        style="outline"
-        onClick={() => copyToClipboard(code)}
-      >
-        {text.copyLabel}
-      </Button>
-    </div>
-  );
-};
+const EmbedWidget: FC<Props> = ({ children }) => (
+  <SyntaxHighlighter language="javascript" style={a11y} wrapLongLines={true}>
+    {children}
+  </SyntaxHighlighter>
+);
 
 export default EmbedWidget;

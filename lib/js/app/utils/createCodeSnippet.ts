@@ -9,6 +9,7 @@ export const createCodeSnippet = ({
   projectId: string;
   readKey: string;
 }) => `
+<!doctype html>
 <html>
 <head>
   <meta charset="utf-8">
@@ -21,6 +22,7 @@ export const createCodeSnippet = ({
     }
   </style>
 </head>
+<body>
 <div id="container"></div>
 <script type="text/javascript">
 const dataviz = new KeenDataviz({
@@ -33,7 +35,13 @@ const client = new KeenAnalysis({
   readKey: '${readKey}'
 });
 
-client.query(${JSON.stringify(query)}).then((res) => dataviz.render(res));
+client.query(${JSON.stringify(
+  query,
+  null,
+  ' '
+)}).then((res) => dataviz.render(res));
 
 </script>
+</body>
+</html>
 `;

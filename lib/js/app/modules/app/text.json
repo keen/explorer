@@ -3,5 +3,7 @@
   "shareQueryError": "We were not able to generate the link. Try again later.",
   "shareQueryLoadError": "We were not able to load shared query. Try again later.",
   "downloadChartError": "download failed. Please try again later.",
-  "downloadInProgress": "download in progress"
+  "downloadInProgress": "download in progress",
+  "copyEmbeddedCode": "HTML code copied to clipboard",
+  "copyEmbeddedCodeError": "We were not able to copy HTML code. Try again later."
 }
