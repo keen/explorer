@@ -14,28 +14,33 @@ import Title from '../../../Title';
 type Props = {
   /** Extracting all properties indicator */
   isFullExtraction: boolean;
+  /** Disabled indicator */
+  isDisabled: boolean;
   /** Clear properties event handler */
   onClearProperties: () => void;
 };
 
 const ExtractionTitle: FC<Props> = ({
   isFullExtraction,
+  isDisabled,
   onClearProperties,
 }) => (
   <Container>
-    <Title>{text.title}</Title>
-    <MessageContainer>
-      {isFullExtraction ? (
-        <FullExtraction>{text.fullExtraction}</FullExtraction>
-      ) : (
-        <FilteredExtraction>
-          {text.filteredExtraction}{' '}
-          <ClearProperties role="button" onClick={onClearProperties}>
-            {text.clearProperties}
-          </ClearProperties>
-        </FilteredExtraction>
-      )}
-    </MessageContainer>
+    <Title isDisabled={isDisabled}>{text.title}</Title>
+    {!isDisabled && (
+      <MessageContainer>
+        {isFullExtraction ? (
+          <FullExtraction>{text.fullExtraction}</FullExtraction>
+        ) : (
+          <FilteredExtraction>
+            {text.filteredExtraction}{' '}
+            <ClearProperties role="button" onClick={onClearProperties}>
+              {text.clearProperties}
+            </ClearProperties>
+          </FilteredExtraction>
+        )}
+      </MessageContainer>
+    )}
   </Container>
 );
 

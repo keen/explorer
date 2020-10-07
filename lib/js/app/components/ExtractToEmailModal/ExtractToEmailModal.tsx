@@ -28,7 +28,7 @@ const ExtractToEmailModal: FC<{}> = () => {
         {() => (
           <>
             <ModalHeader onClose={closeHandler}>{text.title}</ModalHeader>
-            <ExtractToEmail />
+            <ExtractToEmail onClose={closeHandler} />
           </>
         )}
       </Modal>

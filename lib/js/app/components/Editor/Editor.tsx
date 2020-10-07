@@ -5,13 +5,15 @@ import { Button } from '@keen.io/ui-core';
 import {
   EditorActions,
   Card,
-  ClearButton,
+  ButtonWrapper,
   CreatorContainer,
 } from './Editor.styles';
+import text from './text.json';
+
+import { showEmailExtraction } from './utils';
 
 import EditorNavigation from '../EditorNavigation';
 import Creator from '../Creator';
-import text from './text.json';
 
 import RunQuery, { runQueryLabel } from '../RunQuery';
 import EditorVisualization from '../EditorVisualization';
@@ -73,28 +75,32 @@ const Editor: FC<Props> = ({
       <CreatorContainer>
         <Creator onUpdateQuery={updateQuery} />
       </CreatorContainer>
-      <section>
-        <EditorActions>
-          <RunQuery isLoading={isQueryLoading} onClick={() => onRunQuery()}>
-            {runQueryLabel(query)}
-          </RunQuery>
-          <div>
-            <button onClick={() => dispatch(extractToEmail())}>
-              Extract to email
-            </button>
-          </div>
-          <ClearButton>
+      <EditorActions>
+        <RunQuery isLoading={isQueryLoading} onClick={() => onRunQuery()}>
+          {runQueryLabel(query)}
+        </RunQuery>
+        {showEmailExtraction(query) && (
+          <ButtonWrapper>
             <Button
-              onClick={() => dispatch(clearQuery())}
-              style="outline"
               variant="success"
               size="large"
+              onClick={() => dispatch(extractToEmail())}
             >
-              {text.clearButton}
+              {text.extractToEmailButton}
             </Button>
-          </ClearButton>
-        </EditorActions>
-      </section>
+          </ButtonWrapper>
+        )}
+        <ButtonWrapper>
+          <Button
+            onClick={() => dispatch(clearQuery())}
+            style="outline"
+            variant="success"
+            size="large"
+          >
+            {text.clearButton}
+          </Button>
+        </ButtonWrapper>
+      </EditorActions>
     </div>
   );
 };

@@ -146,6 +146,7 @@ const ExtractionProperties: FC<Props> = ({
   return (
     <div>
       <ExtractionTitle
+        isDisabled={!collection}
         isFullExtraction={properties.length === 0}
         onClearProperties={() => onSetProperties(undefined)}
       />

@@ -14,7 +14,7 @@ import {
   Container,
   DropdownContent,
   StyledPropertyItem,
-} from './GroupByProperty.styles';
+} from './SearchableProperty.styles';
 
 import PropertyGroup, { PropertyItem } from '../PropertyGroup';
 import Property from '../Property';

@@ -31,7 +31,7 @@ type FieldRule = ('*' | Analysis)[];
 export type QueryCreatorConfig = Record<CreatorFields, FieldRule>;
 
 export type OrderBy = {
-  id?: string; // zmienic
+  id?: string;
   propertyName: string;
   direction: 'ASC' | 'DESC';
 };
@@ -87,7 +87,7 @@ export type Filter = {
 };
 
 export type FunnelStep = {
-  id?: string; // zmienic
+  id?: string;
   actorProperty: string;
   eventCollection: string;
   inverted: boolean;

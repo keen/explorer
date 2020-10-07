@@ -1,7 +1,12 @@
 {
   "limitLabel": "Limit number of events",
+  "limitMaxLabel": "(max 10,000,000)",
   "limitPlaceholder": "Events limit",
   "emailLabel": "Send to Email",
-  "emailPlaceholder": "Email",
-  "buttonLabel": "Extract to Email"
+  "emailPlaceholder": "example@domain.com",
+  "buttonLabel": "Extract to Email",
+  "fileFormatLabel": "File format",
+  "emailError": "Please provide a valid email address",
+  "contentEncodingLabel": "Compress to GZIP",
+  "closeButton": "Cancel"
 }

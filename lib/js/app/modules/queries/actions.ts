@@ -33,12 +33,16 @@ export const extractToEmail = (): QueriesActions => ({
 
 export const runEmailExtraction = (
   email: string,
-  latest: number
+  latest: number,
+  contentType: string,
+  contentEncoding?: string
 ): QueriesActions => ({
   type: RUN_EMAIL_EXTRACTION,
   payload: {
     email,
     latest,
+    contentType,
+    contentEncoding,
   },
 });
 

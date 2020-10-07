@@ -75,6 +75,8 @@ export interface ExtractToEmailAction {
 export interface RunEmailExtractionAction {
   type: typeof RUN_EMAIL_EXTRACTION;
   payload: {
+    contentType: string;
+    contentEncoding: string;
     latest: number;
     email: string;
   };

@@ -89,10 +89,15 @@ function* extractToEmail() {
 
     try {
       yield put(hideEmailExtractionModal());
-      yield client.query({
+      const { latest, email, contentEncoding, contentType } = action.payload;
+      const body = {
         ...query,
-        ...action.payload,
-      });
+        email,
+        latest,
+        content_type: contentType,
+        content_encoding: contentEncoding,
+      };
+      yield client.query(body);
     } catch (error) {
       const { status } = error;
       if (status === HttpStatus.INTERNAL_SERVER_ERROR) {

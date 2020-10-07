@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { colors } from '@keen.io/colors';
 
 export const LimitContainer = styled.div`
-  margin-top: 15px;
+  margin-top: 10px;
 `;
 
 export const LimitInput = styled.div`
