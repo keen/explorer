@@ -1618,6 +1618,25 @@
     styled-system "5.1.5"
     webfontloader "^1.6.28"
 
+"@keen.io/ui-core@^2.5.1":
+  version "2.5.1"
+  resolved "https://registry.yarnpkg.com/@keen.io/ui-core/-/ui-core-2.5.1.tgz#8ce47e8629ad0e2050524e6a573bbc715a854859"
+  integrity sha512-yi5WPWjI7BsSaCNRBd+XBi+LtPOcTDM4F0gautv8USgHqmiGq7ZzPxyEnO0KOiQi0kovEwZOpnIl10UfDHvsOA==
+  dependencies:
+    "@keen.io/colors" "^1.1.0"
+    "@keen.io/icons" "^1.2.0"
+    color "^3.1.2"
+    framer-motion "^1.11.1"
+    fuse.js "^6.4.1"
+    polished "^3.4.4"
+    react "^16.12.0"
+    react-column-resizer "^1.1.9"
+    react-dom "^16.12.0"
+    react-select "^3.1.0"
+    styled-components "5.1.0"
+    styled-system "5.1.5"
+    webfontloader "^1.6.28"
+
 "@keen.io/widget-picker@^1.1.0":
   version "1.2.4"
   resolved "https://registry.yarnpkg.com/@keen.io/widget-picker/-/widget-picker-1.2.4.tgz#c55c502ed305fe79dfeae8ce3b08663e0594b070"

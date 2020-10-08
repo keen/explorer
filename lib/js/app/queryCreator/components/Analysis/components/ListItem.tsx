@@ -1,15 +1,9 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useState, useRef, useEffect } from 'react';
 import { AnimatePresence } from 'framer-motion';
-import { Tooltip } from '@keen.io/ui-core';
 import { colors } from '@keen.io/colors';
 import { Icon } from '@keen.io/icons';
 
-import {
-  Container,
-  MotionIcon,
-  Hint,
-  TooltipContainer,
-} from './ListItem.styles';
+import { Container, MotionIcon, Hint } from './ListItem.styles';
 
 import { Analysis } from '../../../../types';
 
@@ -26,12 +20,8 @@ type Props = {
   onClick: (e: React.MouseEvent<HTMLLIElement>, analysis: Analysis) => void;
   /** React children nodes */
   children: React.ReactNode;
-};
-
-const hintMotion = {
-  initial: { opacity: 0, right: -24 },
-  animate: { opacity: 1, right: -15 },
-  exit: { opacity: 0 },
+  /** Show hint handler */
+  showHint: (value: boolean, topPos?: number, bottomPos?: number) => void;
 };
 
 const iconMotion = {
@@ -47,13 +37,25 @@ const ListItem: FC<Props> = ({
   onMouseEnter,
   isActive,
   analysis,
-  description,
+  showHint,
 }) => {
   const [isFocused, setFocus] = useState(false);
-  const [hint, showHint] = useState(false);
+  const [position, setPosition] = useState({
+    top: 0,
+    bottom: 0,
+  });
+  const elementRef = useRef(null);
+
+  useEffect(() => {
+    const { offsetTop: top, clientHeight: height } = elementRef.current;
+    setPosition({ top, bottom: top + height });
+  }, [elementRef]);
+
+  const { top, bottom } = position;
 
   return (
     <Container
+      ref={elementRef}
       onClick={(e) => onClick(e, analysis)}
       isActive={isActive}
       onMouseEnter={(e) => {
@@ -65,7 +67,7 @@ const ListItem: FC<Props> = ({
       <div>{children}</div>
       <AnimatePresence>
         <Hint
-          onMouseEnter={() => showHint(true)}
+          onMouseEnter={() => showHint(true, top, bottom)}
           onMouseLeave={() => showHint(false)}
         >
           {isFocused && (
@@ -77,17 +79,6 @@ const ListItem: FC<Props> = ({
                 fill={colors.blue[500]}
               />
             </MotionIcon>
-          )}
-          {hint && (
-            <TooltipContainer
-              data-testid="hint-message"
-              key="tooltip-container"
-              {...hintMotion}
-            >
-              <Tooltip mode="dark" hasArrow={false}>
-                <div dangerouslySetInnerHTML={{ __html: description }} />
-              </Tooltip>
-            </TooltipContainer>
           )}
         </Hint>
       </AnimatePresence>
