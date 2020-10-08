@@ -168,11 +168,11 @@ export const exportChartToJson = () => ({
   type: EXPORT_CHART_TO_JSON,
 });
 
-export const showEmbedModal = () => ({
+export const showEmbedModal = (): AppActions => ({
   type: SHOW_EMBED_MODAL,
 });
 
-export const hideEmbedModal = () => ({
+export const hideEmbedModal = (): AppActions => ({
   type: HIDE_EMBED_MODAL,
 });
 

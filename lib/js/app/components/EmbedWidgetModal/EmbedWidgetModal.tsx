@@ -38,7 +38,9 @@ const EmbedWidgetModal: FC = () => {
   const { projectId, readKey } = keenAnalysis.config;
 
   const isOpen = useSelector(getEmbedModalVisibility);
-  const { type: widget } = useSelector(getVisualization);
+  const { type: widget, chartSettings, widgetSettings } = useSelector(
+    getVisualization
+  );
   const query = useSelector(getQuerySettings);
 
   const code = useMemo(
@@ -46,6 +48,8 @@ const EmbedWidgetModal: FC = () => {
       createCodeSnippet({
         widget,
         query,
+        chartSettings,
+        widgetSettings,
         projectId,
         readKey,
       }),

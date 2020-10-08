@@ -34,6 +34,7 @@ export const CodeWrapper = styled.div`
   max-height: 350px;
   min-width: 350px;
   width: 75vw;
+  max-width: 1180px;
   margin: 10px;
   overflow: scroll;
 `;

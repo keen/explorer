@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders code snippet 1`] = `
+<div>
+  <pre
+    style="display: block; overflow-x: auto; background: rgb(254, 254, 254); color: rgb(84, 84, 84); padding: 0.5em;"
+  >
+    <code
+      class="language-javascript"
+      style="white-space: pre-wrap;"
+    >
+      <span>
+        <span
+          class="comment linenumber react-syntax-highlighter-line-number"
+          style="display: inline-block; min-width: 1em; padding-right: 1em; text-align: right; user-select: none;"
+        >
+          1
+        </span>
+        <span>
+          &lt;script&gt;
+        </span>
+        <span
+          class="hljs-function"
+        >
+          () =&gt;
+        </span>
+        <span>
+           {}&lt;/script&gt;
+        </span>
+      </span>
+    </code>
+  </pre>
+</div>
+`;

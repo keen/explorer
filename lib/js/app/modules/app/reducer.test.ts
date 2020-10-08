@@ -11,6 +11,8 @@ import {
   acceptConfirmation,
   showQuerySettingsModal,
   setScreenDimension,
+  showEmbedModal,
+  hideEmbedModal,
 } from './actions';
 
 test('set browser screen dimension', () => {
@@ -105,4 +107,22 @@ test('restores initial state after users dismiss confirmation', () => {
   const state = appReducer(initialState, action);
 
   expect(state.confirmModal).toEqual(initialState.confirmModal);
+});
+
+test('update state when EmbedWidgetModal is opened', () => {
+  const action = showEmbedModal();
+  const { embedModal } = appReducer(initialState, action);
+
+  expect(embedModal).toEqual({
+    visible: true,
+  });
+});
+
+test('update state when EmbedWidgetModal is closed', () => {
+  const action = hideEmbedModal();
+  const { embedModal } = appReducer(initialState, action);
+
+  expect(embedModal).toEqual({
+    visible: false,
+  });
 });

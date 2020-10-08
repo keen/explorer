@@ -125,3 +125,21 @@ test('allows user to export results as JSON', () => {
     ]
   `);
 });
+
+test('allows user to embed HTML code', () => {
+  const {
+    wrapper: { getByText },
+    store,
+  } = render();
+
+  const embedHtml = getByText(text.embedHtml);
+  fireEvent.click(embedHtml);
+
+  expect(store.getActions()).toMatchInlineSnapshot(`
+    Array [
+      Object {
+        "type": "@app/SHOW_EMBED_MODAL",
+      },
+    ]
+  `);
+});
