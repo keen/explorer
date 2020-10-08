@@ -8356,10 +8356,10 @@ keen-core@^0.2.0:
   dependencies:
     component-emitter "^1.2.0"
 
-keen-dataviz@^3.13.6:
-  version "3.14.0"
-  resolved "https://registry.yarnpkg.com/keen-dataviz/-/keen-dataviz-3.14.0.tgz#46f84dd7445e3ed31b9151800d8793452bbdca45"
-  integrity sha512-f+dtml0h7YZ9vy2HsEdVbG7OXio8dXnmi3VtnJxOPZGHsU9EM2HNqX4PUJIeCLlsBQIqvdgw/3uMJ79ANTSd2Q==
+keen-dataviz@^3.14.5:
+  version "3.14.5"
+  resolved "https://registry.yarnpkg.com/keen-dataviz/-/keen-dataviz-3.14.5.tgz#e91985e0c8c048cc7eceb36b68ab4cc0ea25351c"
+  integrity sha512-LN+jThECEH1aGDOAUh8xljdMfs658eQU5bGChHfw+gRR9m6MvcwXLUn1QbEx1pvzsIwtQPBMpHnUOpB5MTjwUA==
   dependencies:
     c3 "^0.7.2"
     d3 "^5.11.0"
