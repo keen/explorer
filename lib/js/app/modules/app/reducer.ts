@@ -13,6 +13,8 @@ import {
   HIDE_QUERY_SETTINGS_MODAL,
   SHOW_EMBED_MODAL,
   HIDE_EMBED_MODAL,
+  SHOW_EMAIL_EXTRACTION_MODAL,
+  HIDE_EMAIL_EXTRACTION_MODAL,
 } from './constants';
 
 export const initialState: ReducerState = {
@@ -26,6 +28,9 @@ export const initialState: ReducerState = {
     source: null,
   },
   embedModal: {
+    visible: false,
+  },
+  extractToEmailModal: {
     visible: false,
   },
   browserScreen: {
@@ -56,6 +61,22 @@ export const appReducer = (
         browserScreen: {
           height: action.payload.height,
           width: action.payload.width,
+        },
+      };
+    case SHOW_EMAIL_EXTRACTION_MODAL:
+      return {
+        ...state,
+        extractToEmailModal: {
+          ...state.extractToEmailModal,
+          visible: true,
+        },
+      };
+    case HIDE_EMAIL_EXTRACTION_MODAL:
+      return {
+        ...state,
+        extractToEmailModal: {
+          ...state.extractToEmailModal,
+          visible: false,
         },
       };
     case HIDE_QUERY_SETTINGS_MODAL:

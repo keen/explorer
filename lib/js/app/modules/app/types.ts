@@ -31,6 +31,8 @@ import {
   HIDE_EMBED_MODAL,
   COPY_EMBEDDED_CODE,
   DOWNLOAD_CODE_SNIPPET,
+  SHOW_EMAIL_EXTRACTION_MODAL,
+  HIDE_EMAIL_EXTRACTION_MODAL,
 } from './constants';
 
 export type Confirmation = 'delete';
@@ -47,6 +49,9 @@ export type ReducerState = {
     action: Confirmation;
     visible: boolean;
     meta?: Record<string, any>;
+  };
+  extractToEmailModal: {
+    visible: boolean;
   };
   querySettingsModal: {
     visible: boolean;
@@ -66,6 +71,14 @@ export type ReducerState = {
     widgetSettings: WidgetSettings;
   };
 };
+
+export interface ShowEmailExtractionModalction {
+  type: typeof SHOW_EMAIL_EXTRACTION_MODAL;
+}
+
+export interface HideEmailExtractionModalction {
+  type: typeof HIDE_EMAIL_EXTRACTION_MODAL;
+}
 
 export interface AppStartAction {
   type: typeof APP_START;
@@ -233,4 +246,7 @@ export type AppActions =
   | HideEmbedModalAction
   | CopyEmbeddedCodeAction
   | DownloadCodeSnippetAction
-  | SelectFirstSavedQueryAction;
+  | SelectFirstSavedQueryAction
+  | SelectFirstSavedQueryAction
+  | ShowEmailExtractionModalction
+  | HideEmailExtractionModalction;

@@ -23,7 +23,28 @@ import {
   RESET_QUERY_RESULTS,
   RESET_SAVE_QUERY_ERROR,
   GET_ORGANIZATION_USAGE_LIMITS,
+  EXTRACT_TO_EMAIL,
+  RUN_EMAIL_EXTRACTION,
 } from './constants';
+
+export const extractToEmail = (): QueriesActions => ({
+  type: EXTRACT_TO_EMAIL,
+});
+
+export const runEmailExtraction = (
+  email: string,
+  latest: number,
+  contentType: string,
+  contentEncoding?: string
+): QueriesActions => ({
+  type: RUN_EMAIL_EXTRACTION,
+  payload: {
+    email,
+    latest,
+    contentType,
+    contentEncoding,
+  },
+});
 
 export const setQuerySettings = (
   settings: Record<string, any>

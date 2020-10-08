@@ -2,6 +2,9 @@ import { AppState } from '../types';
 
 export const getConfirmation = ({ app }: AppState) => app.confirmModal;
 
+export const getExtractToEmailModalVisibility = ({ app }: AppState) =>
+  app.extractToEmailModal.visible;
+
 export const getQuerySettingsModalVisibility = ({ app }: AppState) =>
   app.querySettingsModal.visible;
 

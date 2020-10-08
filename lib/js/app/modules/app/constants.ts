@@ -26,5 +26,7 @@ export const EXPORT_CHART_TO_JSON = '@app/EXPORT_CHART_TO_JSON';
 export const COPY_EMBEDDED_CODE = '@app/COPY_EMBEDDED_CODE';
 export const DOWNLOAD_CODE_SNIPPET = '@app/DOWNLOAD_CODE_SNIPPET';
 export const APP_START = '@app/APP_START';
+export const SHOW_EMAIL_EXTRACTION_MODAL = '@app/SHOW_EMAIL_EXTRACTION_MODAL';
+export const HIDE_EMAIL_EXTRACTION_MODAL = '@app/HIDE_EMAIL_EXTRACTION_MODAL';
 
 export const URL_STATE = 'keen_explorer_state';

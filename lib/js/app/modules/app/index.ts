@@ -26,6 +26,8 @@ import {
   exportChartToJson,
   copyEmbeddedCode,
   downloadCodeSnippet,
+  showEmailExtractionModal,
+  hideEmailExtractionModal,
 } from './actions';
 import {
   getConfirmation,
@@ -33,11 +35,16 @@ import {
   getQuerySettingsModalSource,
   getQuerySettingsModalVisibility,
   getEmbedModalVisibility,
+  getExtractToEmailModalVisibility,
   getVisualization,
   getBrowserScreenDimension,
 } from './selectors';
 
-import { HIDE_CONFIRMATION, ACCEPT_CONFIRMATION } from './constants';
+import {
+  HIDE_CONFIRMATION,
+  ACCEPT_CONFIRMATION,
+  HIDE_EMAIL_EXTRACTION_MODAL,
+} from './constants';
 import { ReducerState, SettingsModalSource } from './types';
 
 export {
@@ -70,6 +77,9 @@ export {
   hideQuerySettingsModal,
   showEmbedModal,
   hideEmbedModal,
+  getExtractToEmailModalVisibility,
+  showEmailExtractionModal,
+  hideEmailExtractionModal,
   selectFirstSavedQuery,
   exportChartToImage,
   exportChartToJson,
@@ -78,4 +88,4 @@ export {
   ReducerState,
   SettingsModalSource,
 };
-export { HIDE_CONFIRMATION, ACCEPT_CONFIRMATION };
+export { HIDE_CONFIRMATION, ACCEPT_CONFIRMATION, HIDE_EMAIL_EXTRACTION_MODAL };

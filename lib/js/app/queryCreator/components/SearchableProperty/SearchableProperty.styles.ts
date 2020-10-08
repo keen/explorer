@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { PropertyItem } from '../../../PropertyGroup';
+import { PropertyItem } from '../PropertyGroup';
 
 export const Container = styled.div`
   position: relative;

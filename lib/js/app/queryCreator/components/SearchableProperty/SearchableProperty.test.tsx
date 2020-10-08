@@ -1,9 +1,9 @@
 import React from 'react';
 import { render as rtlRender, fireEvent } from '@testing-library/react';
 
-import GroupByProperty from './GroupByProperty';
+import SearchableProperty from './SearchableProperty';
 
-import { createTree } from '../../../../utils';
+import { createTree } from '../../utils';
 
 const schema = createTree({
   'category.id': 'String',
@@ -22,7 +22,7 @@ const render = (overProps: any = {}) => {
     ...overProps,
   };
 
-  const wrapper = rtlRender(<GroupByProperty {...props} />);
+  const wrapper = rtlRender(<SearchableProperty {...props} />);
 
   return {
     wrapper,
