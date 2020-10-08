@@ -36,6 +36,11 @@ export type OrderBy = {
   direction: 'ASC' | 'DESC';
 };
 
+export type ExtractionProperty = {
+  id: string;
+  propertyName: string;
+};
+
 export type Timeframe =
   | string
   | {

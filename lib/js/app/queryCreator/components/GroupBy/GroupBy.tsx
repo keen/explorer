@@ -16,7 +16,7 @@ import { useSearch } from '@keen.io/react-hooks';
 
 import { Section, GroupSettings, SortableContainer } from './GroupBy.styles';
 
-import { GroupByProperty } from './components';
+import SearchableProperty from '../SearchableProperty';
 import Title from '../Title';
 
 import {
@@ -188,7 +188,7 @@ const GroupBy: FC<Props> = ({ collection }) => {
           <SortableContainer ref={sortableRef}>
             {state.map(({ property, id }) => (
               <GroupSettings key={id} data-testid="groupBy-settings-item">
-                <GroupByProperty
+                <SearchableProperty
                   isEditAllowed={!isDragged}
                   properties={propertiesTree ? propertiesTree : schemaTree}
                   property={property}
