@@ -44,7 +44,7 @@
     "csv-stringify": "^5.3.6",
     "json-stable-stringify": "1.0.0",
     "keen-analysis": "^3.4.2",
-    "keen-dataviz": "^3.13.6",
+    "keen-dataviz": "^3.14.5",
     "keen-tracking": "^4.4.0",
     "moment": "^2.22.2",
     "moment-timezone": "^0.5.21",
