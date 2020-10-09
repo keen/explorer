@@ -36,6 +36,7 @@ import QuerySettingsModal from './QuerySettingsModal';
 import ExtractToEmailModal from './ExtractToEmailModal';
 import ToastNotifications from './ToastNotifications';
 import Confirm from './Confirm';
+import EmbedWidgetModal from './EmbedWidgetModal';
 
 import {
   NEW_QUERY_EVENT,
@@ -173,6 +174,7 @@ class App extends Component {
           )}
           onSaveQuery={(settings) => this.onSaveQuery(settings)}
         />
+        <EmbedWidgetModal />
       </MainContainer>
     );
   }

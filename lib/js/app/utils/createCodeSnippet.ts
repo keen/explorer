@@ -1,14 +1,24 @@
+import {
+  PickerWidgets,
+  ChartSettings,
+  WidgetSettings,
+} from '@keen.io/widget-picker';
+
 export const createCodeSnippet = ({
   widget,
   query,
+  widgetSettings,
+  chartSettings,
   projectId,
   readKey,
 }: {
-  widget: string;
+  widget: PickerWidgets;
   query: Record<string, any>;
+  chartSettings?: ChartSettings;
+  widgetSettings?: WidgetSettings;
   projectId: string;
   readKey: string;
-}) => `
+}) => `<!doctype html>
 <html>
 <head>
   <meta charset="utf-8">
@@ -21,11 +31,14 @@ export const createCodeSnippet = ({
     }
   </style>
 </head>
+<body>
 <div id="container"></div>
 <script type="text/javascript">
 const dataviz = new KeenDataviz({
   type: '${widget}',
   container: '#container',
+  widget: ${widgetSettings ? JSON.stringify(widgetSettings, null, ' ') : {}},
+  settings: ${chartSettings ? JSON.stringify(chartSettings, null, ' ') : {}},
 });
 
 const client = new KeenAnalysis({
@@ -33,7 +46,13 @@ const client = new KeenAnalysis({
   readKey: '${readKey}'
 });
 
-client.query(${JSON.stringify(query)}).then((res) => dataviz.render(res));
+client.query(${JSON.stringify(
+  query,
+  null,
+  ' '
+)}).then((res) => dataviz.render(res));
 
 </script>
+</body>
+</html>
 `;

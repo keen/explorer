@@ -27,6 +27,10 @@ import {
   SET_SCREEN_DIMENSION,
   SHOW_QUERY_SETTINGS_MODAL,
   HIDE_QUERY_SETTINGS_MODAL,
+  SHOW_EMBED_MODAL,
+  HIDE_EMBED_MODAL,
+  COPY_EMBEDDED_CODE,
+  DOWNLOAD_CODE_SNIPPET,
   SHOW_EMAIL_EXTRACTION_MODAL,
   HIDE_EMAIL_EXTRACTION_MODAL,
 } from './constants';
@@ -52,6 +56,9 @@ export type ReducerState = {
   querySettingsModal: {
     visible: boolean;
     source: SettingsModalSource;
+  };
+  embedModal: {
+    visible: boolean;
   };
   view: ViewMode;
   browserScreen: {
@@ -189,6 +196,30 @@ export interface AcceptConfirmationAction {
   type: typeof ACCEPT_CONFIRMATION;
 }
 
+export interface ShowEmbedModalAction {
+  type: typeof SHOW_EMBED_MODAL;
+}
+
+export interface HideEmbedModalAction {
+  type: typeof HIDE_EMBED_MODAL;
+}
+
+export interface CopyEmbeddedCodeAction {
+  type: typeof DOWNLOAD_CODE_SNIPPET;
+  payload: {
+    projectId: string;
+    readKey: string;
+  };
+}
+
+export interface DownloadCodeSnippetAction {
+  type: typeof COPY_EMBEDDED_CODE;
+  payload: {
+    projectId: string;
+    readKey: string;
+  };
+}
+
 export type AppActions =
   | AppStartAction
   | ResizeScreenAction
@@ -211,6 +242,11 @@ export type AppActions =
   | ResetVisualizationAction
   | ShowQuerySettingsModalAction
   | HideQuerySettingsModalAction
+  | ShowEmbedModalAction
+  | HideEmbedModalAction
+  | CopyEmbeddedCodeAction
+  | DownloadCodeSnippetAction
+  | SelectFirstSavedQueryAction
   | SelectFirstSavedQueryAction
   | ShowEmailExtractionModalction
   | HideEmailExtractionModalction;

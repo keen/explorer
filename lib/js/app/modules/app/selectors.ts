@@ -11,6 +11,9 @@ export const getQuerySettingsModalVisibility = ({ app }: AppState) =>
 export const getQuerySettingsModalSource = ({ app }: AppState) =>
   app.querySettingsModal.source;
 
+export const getEmbedModalVisibility = ({ app }: AppState) =>
+  app.embedModal.visible;
+
 export const getVisualization = ({ app }: AppState) => app.visualization;
 
 export const getViewMode = ({ app }: AppState) => app.view;
