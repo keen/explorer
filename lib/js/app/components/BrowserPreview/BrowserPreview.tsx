@@ -54,9 +54,7 @@ const BrowserPreview: FC<Props> = ({
         ) : (
           <>
             {currentQuery && (
-              <QueryTitle widgetType={currentQuery.visualization.type}>
-                {currentQuery.displayName}
-              </QueryTitle>
+              <QueryTitle>{currentQuery.displayName}</QueryTitle>
             )}
             {currentQuery && queryResults ? (
               <VisualizationWrapper
