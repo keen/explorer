@@ -11,7 +11,12 @@ type Props = {
 };
 
 const EmbedWidget: FC<Props> = ({ children }) => (
-  <SyntaxHighlighter language="javascript" style={a11y} wrapLongLines={true}>
+  <SyntaxHighlighter
+    language="javascript"
+    style={a11y}
+    wrapLongLines={true}
+    customStyle={{ margin: '0' }}
+  >
     {children}
   </SyntaxHighlighter>
 );

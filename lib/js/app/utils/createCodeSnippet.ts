@@ -18,8 +18,7 @@ export const createCodeSnippet = ({
   widgetSettings?: WidgetSettings;
   projectId: string;
   readKey: string;
-}) => `
-<!doctype html>
+}) => `<!doctype html>
 <html>
 <head>
   <meta charset="utf-8">
