@@ -3,8 +3,8 @@ import { getAvailableWidgets } from '@keen.io/widget-picker';
 import { Visualization } from '../types';
 
 /**
- * Creates default visualization settings. Used for
- * backward compatibility.
+ * Creates default visualization settings. Used as fallback
+ * for backward compatibility.
  *
  * @param query - query settings
  * @return visualization settings
