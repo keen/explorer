@@ -108,7 +108,6 @@ const ActionsMenu: FC<Props> = ({ isNewQuery, onRemoveQuery, onHideMenu }) => {
         </DropdownMenu.Item>
         <DropdownMenu.Item
           onClick={() => {
-            console.log('embed html');
             dispatch(showEmbedModal());
             onHideMenu();
           }}
