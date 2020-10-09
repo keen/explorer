@@ -62,7 +62,7 @@ const EmbedWidgetModal: FC = () => {
 
   return (
     <Portal modalContainer={modalContainer}>
-      <Modal isOpen={isOpen} onClose={closeHandler}>
+      <Modal isOpen={isOpen} onClose={closeHandler} blockScrollOnOpen={false}>
         {() => (
           <>
             <ModalHeader onClose={closeHandler}>{text.embedHTML}</ModalHeader>
