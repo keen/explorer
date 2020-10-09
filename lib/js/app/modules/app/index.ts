@@ -24,6 +24,7 @@ import {
   appStart,
   exportChartToImage,
   exportChartToJson,
+  exportDataToCsv,
   copyEmbeddedCode,
   downloadCodeSnippet,
   showEmailExtractionModal,
@@ -85,6 +86,7 @@ export {
   exportChartToJson,
   copyEmbeddedCode,
   downloadCodeSnippet,
+  exportDataToCsv,
   ReducerState,
   SettingsModalSource,
 };

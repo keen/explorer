@@ -52,6 +52,7 @@ import {
   copyToClipboard,
   exportToImage,
   exportToJson,
+  exportToCsv,
   createCodeSnippet,
   exportToHtml,
 } from '../../utils';
@@ -84,6 +85,7 @@ import {
   SCREEN_RESIZE,
   EXPORT_CHART_TO_IMAGE,
   EXPORT_CHART_TO_JSON,
+  EXPORT_DATA_TO_CSV,
   COPY_EMBEDDED_CODE,
   DOWNLOAD_CODE_SNIPPET,
 } from './constants';
@@ -329,6 +331,28 @@ export function* exportChartToJson() {
   }
 }
 
+export function* exportDataToCsv() {
+  const data = yield select(getQueryResults);
+  const fileName = yield generateFileName();
+  const notificationManager = yield getContext(NOTIFICATION_MANAGER_CONTEXT);
+
+  try {
+    exportToCsv({ data, fileName });
+    yield notificationManager.showNotification({
+      type: 'info',
+      message: `CSV ${text.downloadInProgress}`,
+      autoDismiss: true,
+    });
+  } catch (err) {
+    yield notificationManager.showNotification({
+      type: 'error',
+      message: `CSV ${text.downloadChartError}`,
+      showDismissButton: true,
+      autoDismiss: false,
+    });
+  }
+}
+
 function* getCodeSnippet(projectId: string, readKey: string) {
   const query = yield select(getQuerySettings);
   const { type: widget, chartSettings, widgetSettings } = yield select(
@@ -405,6 +429,7 @@ export function* appSaga() {
   yield takeLatest(EDIT_QUERY, editQuery);
   yield takeLatest(EXPORT_CHART_TO_IMAGE, exportChartToImage);
   yield takeLatest(EXPORT_CHART_TO_JSON, exportChartToJson);
+  yield takeLatest(EXPORT_DATA_TO_CSV, exportDataToCsv);
   yield takeLatest(COPY_EMBEDDED_CODE, copyEmbeddedCode);
   yield takeLatest(DOWNLOAD_CODE_SNIPPET, downloadCodeSnippet);
   yield debounce(200, SCREEN_RESIZE, resizeBrowserScreen);

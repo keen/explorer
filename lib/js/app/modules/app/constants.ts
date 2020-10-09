@@ -23,6 +23,7 @@ export const SCREEN_RESIZE = '@app/SCREEN_RESIZE';
 export const SET_SCREEN_DIMENSION = '@app/SET_SCREEN_DIMENSION';
 export const EXPORT_CHART_TO_IMAGE = '@app/EXPORT_CHART_TO_IMAGE';
 export const EXPORT_CHART_TO_JSON = '@app/EXPORT_CHART_TO_JSON';
+export const EXPORT_DATA_TO_CSV = '@app/EXPORT_DATA_TO_CSV';
 export const COPY_EMBEDDED_CODE = '@app/COPY_EMBEDDED_CODE';
 export const DOWNLOAD_CODE_SNIPPET = '@app/DOWNLOAD_CODE_SNIPPET';
 export const APP_START = '@app/APP_START';

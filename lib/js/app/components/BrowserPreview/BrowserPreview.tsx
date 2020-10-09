@@ -1,7 +1,12 @@
 import React, { FC } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { Card, HeaderContainer, QueryTitle } from './BrowserPreview.styles';
+import {
+  Card,
+  HeaderContainer,
+  QueryTitle,
+  VisualizationWrapper,
+} from './BrowserPreview.styles';
 import text from './text.json';
 
 import BrowserQueryMenu from '../BrowserQueryMenu';
@@ -52,12 +57,16 @@ const BrowserPreview: FC<Props> = ({
               <QueryTitle>{currentQuery.displayName}</QueryTitle>
             )}
             {currentQuery && queryResults ? (
-              <QueryVisualization
+              <VisualizationWrapper
                 widgetType={currentQuery.visualization.type}
-                widgetSettings={currentQuery.visualization.widgetSettings}
-                chartSettings={currentQuery.visualization.chartSettings}
-                queryResults={queryResults}
-              />
+              >
+                <QueryVisualization
+                  widgetType={currentQuery.visualization.type}
+                  widgetSettings={currentQuery.visualization.widgetSettings}
+                  chartSettings={currentQuery.visualization.chartSettings}
+                  queryResults={queryResults}
+                />
+              </VisualizationWrapper>
             ) : (
               <VisualizationPlaceholder
                 isLoading={isQueryLoading}

@@ -126,6 +126,24 @@ test('allows user to export results as JSON', () => {
   `);
 });
 
+test('allows user to export results as CSV', () => {
+  const {
+    wrapper: { getByText },
+    store,
+  } = render();
+
+  const exportCsv = getByText(text.csv);
+  fireEvent.click(exportCsv);
+
+  expect(store.getActions()).toMatchInlineSnapshot(`
+    Array [
+      Object {
+        "type": "@app/EXPORT_DATA_TO_CSV",
+      },
+    ]
+  `);
+});
+
 test('allows user to embed HTML code', () => {
   const {
     wrapper: { getByText },

@@ -1492,15 +1492,15 @@
     d3-scale "^3.2.1"
     d3-time "^2.0.0"
 
-"@keen.io/charts@^2.2.4":
-  version "2.2.4"
-  resolved "https://registry.yarnpkg.com/@keen.io/charts/-/charts-2.2.4.tgz#fce6471d4fbd24317ad50a0e8313c293a7fe9561"
-  integrity sha512-lVWXL2D+Fygwlf8xOfYwV2O/b/otFF8TSTXFu5bzLD4SZlbq5Gelc2i3yjRwyeozC7ADkdaGa5FOfo7BsWN1Hw==
+"@keen.io/charts@^2.2.6":
+  version "2.2.6"
+  resolved "https://registry.yarnpkg.com/@keen.io/charts/-/charts-2.2.6.tgz#3d2cb87d6d9d9b1301e40ee2b5a4987305f780d0"
+  integrity sha512-LpUwKXkk/pBzjozaO4v31r5uoMEQEBnWX2JA0q4DwrsF4C63iqKzYZI1xDDI5pxBo3q7pJCeg2mJlGtG5Nnt9Q==
   dependencies:
     "@keen.io/charts-utils" "^1.0.2"
     "@keen.io/colors" "^1.1.0"
     "@keen.io/react-hooks" "^1.0.2"
-    "@keen.io/ui-core" "^2.4.1"
+    "@keen.io/ui-core" "^2.5.1"
     column-resizer "^1.3.5"
     d3-array "^2.4.0"
     d3-axis "^1.0.12"
@@ -1529,14 +1529,14 @@
   integrity sha512-ATUL4zpj6NNHZChCVfI3ellRIzfJMsYzSCqnkcd7AqZseSGVLe6A8yK0yqlzzYVtz3yunX9nDN1AMpJH2dFIfA==
 
 "@keen.io/dataviz@^2.1.4":
-  version "2.1.4"
-  resolved "https://registry.yarnpkg.com/@keen.io/dataviz/-/dataviz-2.1.4.tgz#44900b6560d9a82942fcfb340aee1d32bb361856"
-  integrity sha512-Wip7LnG11FQgVjp8MjDj1uz3kcQPRyBApGt7OotX3xXD6eTqGpLwKA5Umtm5z8EO/V14dOdAVpAKZsz4eMe4hw==
+  version "2.1.6"
+  resolved "https://registry.yarnpkg.com/@keen.io/dataviz/-/dataviz-2.1.6.tgz#40dd9f2a64a988a884d4198f7203aa67d47a3b85"
+  integrity sha512-SDMobjn2jTjLZqLwOCiXkNj4D7qCrzilkk3UbNyKqKttI9LkpLPRmOh+nmDhxYXTUZGL1TcWRrlLia4k5A3eAg==
   dependencies:
-    "@keen.io/charts" "^2.2.4"
+    "@keen.io/charts" "^2.2.6"
     "@keen.io/colors" "^1.1.0"
-    "@keen.io/parser" "^2.0.15"
-    "@keen.io/widgets" "^2.1.4"
+    "@keen.io/parser" "^2.1.1"
+    "@keen.io/widgets" "^2.1.6"
     deepmerge "4.2.2"
     react "^16.12.0"
     react-dom "^16.12.0"
@@ -1564,14 +1564,7 @@
     "@keen.io/colors" "^1.1.0"
     react "^16.12.0"
 
-"@keen.io/parser@^2.0.15":
-  version "2.0.15"
-  resolved "https://registry.yarnpkg.com/@keen.io/parser/-/parser-2.0.15.tgz#3f13e112a496396c716edbe3bffcc8379a65af3a"
-  integrity sha512-Hd7Ou72UNC98VguWFm7lHL/yVLs2i9IHRZ28e5UImgwigKTv7ID7FlvD/TCnurFwSPargdMtKvTBK+ykhRW8zg==
-  dependencies:
-    d3-time-format "^2.2.3"
-
-"@keen.io/parser@^2.0.2":
+"@keen.io/parser@^2.1.1":
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/@keen.io/parser/-/parser-2.1.1.tgz#61e6535f7e5e24392fdf6dffa25b303d94e415ed"
   integrity sha512-iau9a/nJhqyjQfWPc6R2sXDJU806/+ssy7SexVg99Ce+ESMKQvNs48Emvmb6OoLItiOPerH8btwjQTXTEBKbOg==
@@ -1637,16 +1630,16 @@
     react-dom "^16.12.0"
     styled-components "5.1.0"
 
-"@keen.io/widgets@^2.1.4":
-  version "2.1.4"
-  resolved "https://registry.yarnpkg.com/@keen.io/widgets/-/widgets-2.1.4.tgz#4184dcd9bff934fe3186a5040e6df9897a7becd1"
-  integrity sha512-klXvmv73kdLWE3D0GCWR/ijVioPiXbQIAbpTxoRuqztJEEbbszu4l7KKyia8KzQWT3NHv0pFb9UGh/dd52bzfQ==
+"@keen.io/widgets@^2.1.6":
+  version "2.1.6"
+  resolved "https://registry.yarnpkg.com/@keen.io/widgets/-/widgets-2.1.6.tgz#83e94d91ef80b25858afb861dcbba089e7c0e4d5"
+  integrity sha512-SKUn9JBPCahYdjH0xeW4WtQ5akdoeyhGuGD4SqKkRydGQCRZR0dQ+Oo0qeZrBpqMoEyagkcRdn6Dnt11Xsx0eg==
   dependencies:
-    "@keen.io/charts" "^2.2.4"
+    "@keen.io/charts" "^2.2.6"
     "@keen.io/charts-utils" "^1.0.2"
     "@keen.io/colors" "^1.1.0"
     "@keen.io/react-hooks" "^1.0.2"
-    "@keen.io/ui-core" "^2.4.1"
+    "@keen.io/ui-core" "^2.5.1"
     react "^16.12.0"
     react-dom "^16.12.0"
     styled-components "5.1.0"
@@ -2049,11 +2042,6 @@
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/@types/prettier/-/prettier-2.1.1.tgz#be148756d5480a84cde100324c03a86ae5739fb5"
   integrity sha512-2zs+O+UkDsJ1Vcp667pd3f8xearMdopz/z54i99wtRDI5KLmngk7vlrYZD0ZjKHaROR03EznlBbVY9PfAEyJIQ==
-
-"@types/prismjs@^1.16.1":
-  version "1.16.1"
-  resolved "https://registry.yarnpkg.com/@types/prismjs/-/prismjs-1.16.1.tgz#50b82947207847db6abcbcd14caa89e3b897c259"
-  integrity sha512-RNgcK3FEc1GpeOkamGDq42EYkb6yZW5OWQwTS56NJIB8WL0QGISQglA7En7NUx9RGP8AC52DOe+squqbAckXlA==
 
 "@types/prop-types@*", "@types/prop-types@^15.7.3":
   version "15.7.3"
@@ -2972,11 +2960,6 @@ babel-plugin-macros@^2.0.0:
     "@babel/runtime" "^7.7.2"
     cosmiconfig "^6.0.0"
     resolve "^1.12.0"
-
-babel-plugin-prismjs@^2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/babel-plugin-prismjs/-/babel-plugin-prismjs-2.0.1.tgz#b56095f423926662259de8f5ee50a7afbcf0fd92"
-  integrity sha512-GqQGa3xX3Z2ft97oDbGvEFoxD8nKqb3ZVszrOc5H7icnEUA56BIjVYm86hfZZA82uuHLwTIfCXbEKzKG1BzKzg==
 
 "babel-plugin-styled-components@>= 1":
   version "1.11.1"
@@ -4532,11 +4515,6 @@ csstype@^3.0.2:
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/csstype/-/csstype-3.0.3.tgz#2b410bbeba38ba9633353aff34b05d9755d065f8"
   integrity sha512-jPl+wbWPOWJ7SXsWyqGRk3lGecbar0Cb0OvZF/r/ZU011R4YqiRehgkQ9p4eQfo9DSDLqLL3wHwfxeJiuIsNag==
-
-csv-parse@^4.10.1:
-  version "4.12.0"
-  resolved "https://registry.yarnpkg.com/csv-parse/-/csv-parse-4.12.0.tgz#fd42d6291bbaadd51d3009f6cadbb3e53b4ce026"
-  integrity sha512-wPQl3H79vWLPI8cgKFcQXl0NBgYYEqVnT1i6/So7OjMpsI540oD7p93r3w6fDSyPvwkTepG05F69/7AViX2lXg==
 
 csvtojson@^2.0.8:
   version "2.0.10"
@@ -10323,13 +10301,6 @@ polished@^3.4.4:
   dependencies:
     "@babel/runtime" "^7.9.2"
 
-polished@^3.6.3:
-  version "3.6.6"
-  resolved "https://registry.yarnpkg.com/polished/-/polished-3.6.6.tgz#91ef9eface9be5366c07672b63b736f50c151185"
-  integrity sha512-yiB2ims2DZPem0kCD6V0wnhcVGFEhNh0Iw0axNpKU+oSAgFt6yx6HxIT23Qg0WWvgS379cS35zT4AOyZZRzpQQ==
-  dependencies:
-    "@babel/runtime" "^7.9.2"
-
 popmotion@9.0.0-beta-8:
   version "9.0.0-beta-8"
   resolved "https://registry.yarnpkg.com/popmotion/-/popmotion-9.0.0-beta-8.tgz#f5a709f11737734e84f2a6b73f9bcf25ee30c388"
@@ -10470,7 +10441,7 @@ pretty-format@^26.4.2:
     ansi-styles "^4.0.0"
     react-is "^16.12.0"
 
-prismjs@^1.16.0, prismjs@^1.21.0, prismjs@~1.21.0:
+prismjs@^1.21.0, prismjs@~1.21.0:
   version "1.21.0"
   resolved "https://registry.yarnpkg.com/prismjs/-/prismjs-1.21.0.tgz#36c086ec36b45319ec4218ee164c110f9fc015a3"
   integrity sha512-uGdSIu1nk3kej2iZsLyDoJ7e9bnPzIgY0naW/HdknGj61zScaprVEVGHrPoXqI+M9sP0NDnTK2jpkvmldpuqDw==
