@@ -22,6 +22,7 @@ import {
   appStart,
   exportChartToImage,
   exportChartToJson,
+  exportDataToCsv,
   showEmailExtractionModal,
   hideEmailExtractionModal,
 } from './actions';
@@ -75,6 +76,7 @@ export {
   selectFirstSavedQuery,
   exportChartToImage,
   exportChartToJson,
+  exportDataToCsv,
   ReducerState,
   SettingsModalSource,
 };

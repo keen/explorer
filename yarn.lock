@@ -1564,7 +1564,7 @@
     "@keen.io/colors" "^1.1.0"
     react "^16.12.0"
 
-"@keen.io/parser@^2.0.2", "@keen.io/parser@^2.1.1":
+"@keen.io/parser@^2.1.1":
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/@keen.io/parser/-/parser-2.1.1.tgz#61e6535f7e5e24392fdf6dffa25b303d94e415ed"
   integrity sha512-iau9a/nJhqyjQfWPc6R2sXDJU806/+ssy7SexVg99Ce+ESMKQvNs48Emvmb6OoLItiOPerH8btwjQTXTEBKbOg==
@@ -4505,11 +4505,6 @@ csstype@^3.0.2:
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/csstype/-/csstype-3.0.3.tgz#2b410bbeba38ba9633353aff34b05d9755d065f8"
   integrity sha512-jPl+wbWPOWJ7SXsWyqGRk3lGecbar0Cb0OvZF/r/ZU011R4YqiRehgkQ9p4eQfo9DSDLqLL3wHwfxeJiuIsNag==
-
-csv-parse@^4.10.1:
-  version "4.12.0"
-  resolved "https://registry.yarnpkg.com/csv-parse/-/csv-parse-4.12.0.tgz#fd42d6291bbaadd51d3009f6cadbb3e53b4ce026"
-  integrity sha512-wPQl3H79vWLPI8cgKFcQXl0NBgYYEqVnT1i6/So7OjMpsI540oD7p93r3w6fDSyPvwkTepG05F69/7AViX2lXg==
 
 csvtojson@^2.0.8:
   version "2.0.10"
