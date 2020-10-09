@@ -27,6 +27,8 @@ import {
   SET_SCREEN_DIMENSION,
   SHOW_QUERY_SETTINGS_MODAL,
   HIDE_QUERY_SETTINGS_MODAL,
+  SHOW_EMAIL_EXTRACTION_MODAL,
+  HIDE_EMAIL_EXTRACTION_MODAL,
 } from './constants';
 
 export type Confirmation = 'delete';
@@ -44,6 +46,9 @@ export type ReducerState = {
     visible: boolean;
     meta?: Record<string, any>;
   };
+  extractToEmailModal: {
+    visible: boolean;
+  };
   querySettingsModal: {
     visible: boolean;
     source: SettingsModalSource;
@@ -59,6 +64,14 @@ export type ReducerState = {
     widgetSettings: WidgetSettings;
   };
 };
+
+export interface ShowEmailExtractionModalction {
+  type: typeof SHOW_EMAIL_EXTRACTION_MODAL;
+}
+
+export interface HideEmailExtractionModalction {
+  type: typeof HIDE_EMAIL_EXTRACTION_MODAL;
+}
 
 export interface AppStartAction {
   type: typeof APP_START;
@@ -198,4 +211,6 @@ export type AppActions =
   | ResetVisualizationAction
   | ShowQuerySettingsModalAction
   | HideQuerySettingsModalAction
-  | SelectFirstSavedQueryAction;
+  | SelectFirstSavedQueryAction
+  | ShowEmailExtractionModalction
+  | HideEmailExtractionModalction;

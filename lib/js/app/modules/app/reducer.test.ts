@@ -11,7 +11,34 @@ import {
   acceptConfirmation,
   showQuerySettingsModal,
   setScreenDimension,
+  showEmailExtractionModal,
+  hideEmailExtractionModal,
 } from './actions';
+
+test('shows extraction settings modal', () => {
+  const action = showEmailExtractionModal();
+  const { extractToEmailModal } = appReducer(initialState, action);
+
+  expect(extractToEmailModal).toMatchInlineSnapshot(`
+    Object {
+      "visible": true,
+    }
+  `);
+});
+
+test('hide extraction settings modal', () => {
+  const action = hideEmailExtractionModal();
+  const { extractToEmailModal } = appReducer(
+    { ...initialState, extractToEmailModal: { visible: true } },
+    action
+  );
+
+  expect(extractToEmailModal).toMatchInlineSnapshot(`
+    Object {
+      "visible": false,
+    }
+  `);
+});
 
 test('set browser screen dimension', () => {
   const action = setScreenDimension(1024, 786);

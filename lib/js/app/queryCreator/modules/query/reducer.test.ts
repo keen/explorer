@@ -6,8 +6,6 @@ import {
   setLimit,
   setTimeframe,
   setExtractionLimit,
-  setExtractionRecipientEmail,
-  setExtractionContentEncoding,
   setPropertyNames,
   updateFunnelStep,
   removeFunnelStep,
@@ -37,8 +35,7 @@ test('reset extraction properties to initial state', () => {
   const state = queryReducer(
     {
       ...initialState,
-      contentEncoding: 'gzip',
-      propertyNames: ['surname'],
+      propertyNames: [{ id: 'id', propertyName: 'country' }],
     },
     action
   );
@@ -74,25 +71,8 @@ test('set extraction limit', () => {
   expect(latest).toEqual(45);
 });
 
-test('set extraction email recipient', () => {
-  const email = 'user@keen.io';
-  const action = setExtractionRecipientEmail(email);
-  const state = queryReducer(initialState, action);
-
-  expect(state.email).toEqual(email);
-});
-
-test('set extraction content encoding', () => {
-  const encoding = 'gzip';
-  const action = setExtractionContentEncoding(encoding);
-
-  const state = queryReducer(initialState, action);
-
-  expect(state.contentEncoding).toEqual(encoding);
-});
-
 test('set extraction property names', () => {
-  const properties = ['name', 'surname', 'id'];
+  const properties = [{ id: 'id', propertyName: 'surname' }];
   const action = setPropertyNames(properties);
 
   const state = queryReducer(initialState, action);

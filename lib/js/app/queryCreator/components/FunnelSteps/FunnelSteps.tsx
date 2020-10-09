@@ -12,6 +12,7 @@ import text from './text.json';
 import FunnelStep from '../FunnelStep';
 import {
   addFunnelStep,
+  setFunnelSteps,
   removeFunnelStep,
   getFunnelSteps,
   changeFunnelStepsOrder,
@@ -49,6 +50,10 @@ const FunnelSteps: FC<{}> = () => {
         setDragMode(false);
       },
     });
+
+    return () => {
+      dispatch(setFunnelSteps([]));
+    };
   }, []);
 
   return (
@@ -94,6 +99,7 @@ const FunnelSteps: FC<{}> = () => {
         )}
       <AddStep
         className="add-step"
+        data-testid="add-step-button"
         onClick={() => {
           const stepId = uuid();
           dispatch(addFunnelStep(stepId));

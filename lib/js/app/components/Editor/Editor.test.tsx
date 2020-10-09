@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/camelcase */
 import React from 'react';
 import { Provider } from 'react-redux';
 import { render as rtlRender, fireEvent } from '@testing-library/react';
@@ -90,6 +91,40 @@ test('allows user to run query', () => {
   fireEvent.click(clearButton);
 
   expect(props.onRunQuery).toHaveBeenCalled();
+});
+
+test('do not renders email extraction button', () => {
+  const {
+    wrapper: { queryByText },
+  } = render();
+
+  expect(queryByText(text.extractToEmailButton)).not.toBeInTheDocument();
+});
+
+test('allows user to perform extraction to email', () => {
+  const overProps = {
+    query: {
+      analysis_type: 'extraction',
+    },
+  };
+  const {
+    wrapper: { getByText },
+    store,
+  } = render({}, overProps);
+
+  const button = getByText(text.extractToEmailButton);
+  fireEvent.click(button);
+
+  expect(store.getActions()).toMatchInlineSnapshot(`
+    Array [
+      Object {
+        "type": "@app/QUERY_EDITOR_MOUNTED",
+      },
+      Object {
+        "type": "@queries/EXTRACT_TO_EMAIL",
+      },
+    ]
+  `);
 });
 
 test('renders notice about queries execution limit exceed', () => {

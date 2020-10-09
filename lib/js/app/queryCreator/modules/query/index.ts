@@ -13,8 +13,6 @@ import {
   getLimit,
   getFunnelSteps,
   getExtractionLimit,
-  getExtractionEmail,
-  getExtractionEncoding,
   getExtractionPropertyNames,
   getFilters,
 } from './selectors';
@@ -36,8 +34,6 @@ import {
   setInterval,
   setLimit,
   setExtractionLimit,
-  setExtractionRecipientEmail,
-  setExtractionContentEncoding,
   setPropertyNames,
   setTimeframe,
   setFilters,
@@ -70,7 +66,9 @@ import {
 } from './constants';
 import {
   ReducerState,
+  InitialQuery,
   SetQueryAction,
+  SerializeQueryAction,
   SelectTimezoneAction,
   SelectFunnelStepEventCollectionAction,
   SelectEventCollectionAction,
@@ -86,8 +84,6 @@ export {
   getEventCollection,
   getTargetProperty,
   getExtractionLimit,
-  getExtractionEmail,
-  getExtractionEncoding,
   getExtractionPropertyNames,
   getAnalysis,
   getTimezone,
@@ -103,8 +99,6 @@ export {
   setLimit,
   setInterval,
   setExtractionLimit,
-  setExtractionRecipientEmail,
-  setExtractionContentEncoding,
   setQuery,
   serializeQuery,
   setPropertyNames,
@@ -132,7 +126,9 @@ export {
   removeFilter,
 };
 export {
+  InitialQuery,
   SetQueryAction,
+  SerializeQueryAction,
   SelectTimezoneAction,
   SelectEventCollectionAction,
   SelectFunnelStepEventCollectionAction,

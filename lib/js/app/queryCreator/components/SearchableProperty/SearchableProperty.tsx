@@ -14,16 +14,16 @@ import {
   Container,
   DropdownContent,
   StyledPropertyItem,
-} from './GroupByProperty.styles';
+} from './SearchableProperty.styles';
 
-import PropertyGroup, { PropertyItem } from '../../../PropertyGroup';
-import Property from '../../../Property';
-import EmptySearch from '../../../EmptySearch';
-import PropertiesTree from '../../../PropertiesTree';
+import PropertyGroup, { PropertyItem } from '../PropertyGroup';
+import Property from '../Property';
+import EmptySearch from '../EmptySearch';
+import PropertiesTree from '../PropertiesTree';
 
 import text from './text.json';
 
-import { SearchContext } from '../../../../contexts';
+import { SearchContext } from '../../contexts';
 
 type Props = {
   /** Properties tree */
@@ -38,15 +38,18 @@ type Props = {
   onSearchProperties: (e: React.ChangeEvent<HTMLInputElement>) => void;
   /** Remove event handler */
   onRemove: () => void;
+  /** Blur event handler */
+  onBlur?: () => void;
 };
 
-const GroupByProperty: FC<Props> = ({
+const SearchableProperty: FC<Props> = ({
   property,
   isEditAllowed,
   properties,
   onSelectProperty,
   onSearchProperties,
   onRemove,
+  onBlur,
 }) => {
   const [editMode, setEditMode] = useState(!property);
   const containerRef = useRef(null);
@@ -64,9 +67,10 @@ const GroupByProperty: FC<Props> = ({
         !containerRef.current.contains(e.target)
       ) {
         setEditMode(false);
+        if (onBlur) onBlur();
       }
     },
-    [editMode, containerRef]
+    [editMode, containerRef, onBlur]
   );
 
   useEffect(() => {
@@ -82,7 +86,7 @@ const GroupByProperty: FC<Props> = ({
     <Container
       ref={containerRef}
       onClick={() => !editMode && setEditMode(true)}
-      data-testid="groupBy-property"
+      data-testid="searchable-property"
     >
       <PropertyGroup isActive={editMode}>
         <PropertyItem>
@@ -125,4 +129,4 @@ const GroupByProperty: FC<Props> = ({
   );
 };
 
-export default GroupByProperty;
+export default SearchableProperty;

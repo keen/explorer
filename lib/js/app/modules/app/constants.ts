@@ -23,5 +23,7 @@ export const EXPORT_CHART_TO_IMAGE = '@app/EXPORT_CHART_TO_IMAGE';
 export const EXPORT_CHART_TO_JSON = '@app/EXPORT_CHART_TO_JSON';
 export const EXPORT_DATA_TO_CSV = '@app/EXPORT_DATA_TO_CSV';
 export const APP_START = '@app/APP_START';
+export const SHOW_EMAIL_EXTRACTION_MODAL = '@app/SHOW_EMAIL_EXTRACTION_MODAL';
+export const HIDE_EMAIL_EXTRACTION_MODAL = '@app/HIDE_EMAIL_EXTRACTION_MODAL';
 
 export const URL_STATE = 'keen_explorer_state';
