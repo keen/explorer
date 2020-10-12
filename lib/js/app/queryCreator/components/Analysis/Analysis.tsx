@@ -61,25 +61,24 @@ const Analysis: FC<Props> = ({ analysis, onChange }) => {
 
   useEffect(() => {
     if (dropdownRef.current && hint && tooltipRef.current) {
+      const { offsetHeight } = document.body;
       const { clientHeight: height } = tooltipRef.current;
       const { top, bottom } = dropdownRef.current.getBoundingClientRect();
       const scrollTop = dropdownRef.current.offsetParent
         ? dropdownRef.current.offsetParent.scrollTop
         : 0;
-      setTooltip((state) => ({
-        ...state,
-        overflow: bottom < top + state.top + height,
-        height,
-        top: state.top - scrollTop,
-        bottom: state.bottom - scrollTop,
-      }));
+      setTooltip((state) => {
+        const tooltipBottom = top + state.top + height;
+        const overflow = bottom < tooltipBottom || offsetHeight < tooltipBottom;
+        return {
+          ...state,
+          overflow,
+          height,
+          top: state.top - scrollTop,
+          bottom: state.bottom - scrollTop,
+        };
+      });
     }
-    if (!hint)
-      setTooltip((state) => ({
-        ...state,
-        top: 0,
-        bottom: 0,
-      }));
   }, [tooltipRef, dropdownRef, hint]);
 
   const indexRef = useRef(selectionIndex);
