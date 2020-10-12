@@ -18,7 +18,7 @@ const WIDGET_MAPPINGS: Record<string, string> = {
   funnel: 'funnel',
   'funnel-3d': 'funnel',
   'horizontal-funnel': 'funnel',
-  'horizontal-funnel-3d': 'horizontal-funnel-3d',
+  'horizontal-funnel-3d': 'funnel',
 };
 
 /**
