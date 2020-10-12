@@ -22,8 +22,9 @@ export type APIError = {
 
 export type VisualizationMeta = {
   type: PickerWidgets;
-  chart_settings: Record<string, any>;
-  widget_settings: Record<string, any>;
+  chart_settings?: Record<string, any>;
+  widget_settings?: Record<string, any>;
+  chart_type?: string;
 };
 
 export type SavedQueryAPIResponse = {

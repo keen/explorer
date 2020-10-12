@@ -25,6 +25,7 @@ import {
   explorerMounted,
   editQuery,
 } from '../modules/app';
+import { setVisualization } from '../utils';
 
 import { MainContainer } from './App.styles';
 
@@ -112,11 +113,15 @@ class App extends Component {
     stepLabels: string[];
     name: string;
   }) => {
+    const visualization = setVisualization(
+      this.props.query,
+      this.props.visualization
+    );
     const body = {
       query: this.props.query,
       metadata: {
         displayName,
-        visualization: this.props.visualization,
+        visualization,
         tags,
         stepLabels,
       },
