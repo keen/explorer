@@ -153,7 +153,7 @@ const Analysis: FC<Props> = ({ analysis, onChange }) => {
                       onChange(analysis);
                     }}
                     showHint={(value, topPos, bottomPos) => {
-                      if (topPos && bottomPos && value) {
+                      if (topPos !== 0 && bottomPos !== 0 && value) {
                         setTooltip((state) => ({
                           ...state,
                           top: topPos,
