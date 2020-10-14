@@ -24,11 +24,18 @@ import {
   SHARE_QUERY_URL,
   SHOW_QUERY_SETTINGS_MODAL,
   HIDE_QUERY_SETTINGS_MODAL,
+  SHOW_EMBED_MODAL,
+  HIDE_EMBED_MODAL,
   SELECT_FIRST_QUERY,
   SCREEN_RESIZE,
   SET_SCREEN_DIMENSION,
   EXPORT_CHART_TO_IMAGE,
   EXPORT_CHART_TO_JSON,
+  EXPORT_DATA_TO_CSV,
+  COPY_EMBEDDED_CODE,
+  DOWNLOAD_CODE_SNIPPET,
+  SHOW_EMAIL_EXTRACTION_MODAL,
+  HIDE_EMAIL_EXTRACTION_MODAL,
 } from './constants';
 
 import {
@@ -54,6 +61,14 @@ export const setScreenDimension = (
 ): AppActions => ({
   type: SET_SCREEN_DIMENSION,
   payload: { width, height },
+});
+
+export const showEmailExtractionModal = (): AppActions => ({
+  type: SHOW_EMAIL_EXTRACTION_MODAL,
+});
+
+export const hideEmailExtractionModal = (): AppActions => ({
+  type: HIDE_EMAIL_EXTRACTION_MODAL,
 });
 
 export const selectFirstSavedQuery = (): AppActions => ({
@@ -162,4 +177,38 @@ export const exportChartToImage = () => ({
 
 export const exportChartToJson = () => ({
   type: EXPORT_CHART_TO_JSON,
+});
+
+export const exportDataToCsv = () => ({
+  type: EXPORT_DATA_TO_CSV,
+});
+
+export const showEmbedModal = (): AppActions => ({
+  type: SHOW_EMBED_MODAL,
+});
+
+export const hideEmbedModal = (): AppActions => ({
+  type: HIDE_EMBED_MODAL,
+});
+
+export const copyEmbeddedCode = (
+  projectId: string,
+  readKey: string
+): AppActions => ({
+  type: COPY_EMBEDDED_CODE,
+  payload: {
+    projectId,
+    readKey,
+  },
+});
+
+export const downloadCodeSnippet = (
+  projectId: string,
+  readKey: string
+): AppActions => ({
+  type: DOWNLOAD_CODE_SNIPPET,
+  payload: {
+    projectId,
+    readKey,
+  },
 });

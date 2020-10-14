@@ -11,8 +11,6 @@ import {
   SET_INTERVAL,
   SET_LIMIT,
   SET_EXTRACTION_LIMIT,
-  SET_EXTRACTION_RECIPIENT_EMAIL,
-  SET_EXTRACTION_CONTENT_ENCODING,
   SET_PROPERTY_NAMES,
   SET_FILTERS,
   SELECT_TIMEZONE,
@@ -35,7 +33,14 @@ import {
   REMOVE_FILTER,
 } from './constants';
 
-import { Timezones, Timeframe, OrderBy, FunnelStep, Filter } from '../../types';
+import {
+  Timezones,
+  Timeframe,
+  OrderBy,
+  ExtractionProperty,
+  FunnelStep,
+  Filter,
+} from '../../types';
 import { Analysis } from '../../../types';
 
 export type ReducerState = {
@@ -46,15 +51,17 @@ export type ReducerState = {
   groupBy?: string | string[];
   orderBy?: OrderBy[];
   limit?: number;
-  timeframe: Timeframe;
+  timeframe?: Timeframe;
   interval?: string;
   analysisType: Analysis;
   filters?: Filter[];
   steps?: FunnelStep[];
-  propertyNames?: string | string[];
+  propertyNames?: ExtractionProperty[];
   latest?: number;
-  email?: string;
-  contentEncoding?: string;
+};
+
+export type InitialQuery = Omit<ReducerState, 'propertyNames'> & {
+  propertyNames?: string | string[];
 };
 
 export interface SetQueryAction {
@@ -67,7 +74,7 @@ export interface SetQueryAction {
 export interface SerializeQueryAction {
   type: typeof SERIALIZE_QUERY;
   payload: {
-    query: Partial<ReducerState>;
+    query: Partial<InitialQuery>;
   };
 }
 
@@ -94,20 +101,6 @@ export interface SetExtractionLimitAction {
   type: typeof SET_EXTRACTION_LIMIT;
   payload: {
     limit: number;
-  };
-}
-
-export interface SetExtractionRecipientEmailAction {
-  type: typeof SET_EXTRACTION_RECIPIENT_EMAIL;
-  payload: {
-    email: string;
-  };
-}
-
-export interface SetExtractionContentEncodingAction {
-  type: typeof SET_EXTRACTION_CONTENT_ENCODING;
-  payload: {
-    contentEncoding: string;
   };
 }
 
@@ -153,7 +146,7 @@ export interface SetPercentileAction {
 export interface SetPropertyNamesAction {
   type: typeof SET_PROPERTY_NAMES;
   payload: {
-    propertyNames: string[];
+    propertyNames: ExtractionProperty[];
   };
 }
 
@@ -295,8 +288,6 @@ export type QueryActions =
   | SetIntervalAction
   | SetLimitAction
   | SetExtractionLimitAction
-  | SetExtractionRecipientEmailAction
-  | SetExtractionContentEncodingAction
   | SetPropertyNamesAction
   | SetTimeframeAction
   | SetFiltersAction

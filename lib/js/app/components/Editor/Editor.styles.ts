@@ -8,7 +8,7 @@ export const EditorActions = styled.div`
   background: ${transparentize(0.9, colors.blue[100])};
 `;
 
-export const ClearButton = styled.div`
+export const ButtonWrapper = styled.div`
   margin-left: 10px;
 `;
 

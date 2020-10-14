@@ -20,6 +20,8 @@ import {
   shareQueryUrl,
   exportChartToImage,
   exportChartToJson,
+  exportDataToCsv,
+  showEmbedModal,
 } from '../../modules/app';
 
 type Props = {
@@ -77,7 +79,7 @@ const ActionsMenu: FC<Props> = ({ isNewQuery, onRemoveQuery, onHideMenu }) => {
             </DropdownMenu.Item>
             <DropdownMenu.Item
               onClick={() => {
-                console.log('generate csv');
+                dispatch(exportDataToCsv());
                 onHideMenu();
               }}
             >
@@ -104,6 +106,14 @@ const ActionsMenu: FC<Props> = ({ isNewQuery, onRemoveQuery, onHideMenu }) => {
           }}
         >
           {text.shareQuery}
+        </DropdownMenu.Item>
+        <DropdownMenu.Item
+          onClick={() => {
+            dispatch(showEmbedModal());
+            onHideMenu();
+          }}
+        >
+          {text.embedHtml}
         </DropdownMenu.Item>
       </DropdownMenu.Container>
     </Container>

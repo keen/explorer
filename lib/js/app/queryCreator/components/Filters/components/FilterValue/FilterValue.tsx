@@ -73,7 +73,12 @@ const getValueComponent = ({
           type="number"
           variant="solid"
           value={value as number}
-          onChange={(e) => onChange(e.currentTarget.value)}
+          onChange={(e) => {
+            const value = e.currentTarget.value
+              ? parseFloat(e.currentTarget.value)
+              : '';
+            onChange(value);
+          }}
         />
       );
     default:

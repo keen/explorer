@@ -13,6 +13,8 @@ import {
   explorerMounted,
   showQuerySettingsModal,
   hideQuerySettingsModal,
+  showEmbedModal,
+  hideEmbedModal,
   createNewQuery,
   switchToQueriesList,
   clearQuery,
@@ -22,17 +24,28 @@ import {
   appStart,
   exportChartToImage,
   exportChartToJson,
+  exportDataToCsv,
+  copyEmbeddedCode,
+  downloadCodeSnippet,
+  showEmailExtractionModal,
+  hideEmailExtractionModal,
 } from './actions';
 import {
   getConfirmation,
   getViewMode,
   getQuerySettingsModalSource,
   getQuerySettingsModalVisibility,
+  getEmbedModalVisibility,
+  getExtractToEmailModalVisibility,
   getVisualization,
   getBrowserScreenDimension,
 } from './selectors';
 
-import { HIDE_CONFIRMATION, ACCEPT_CONFIRMATION } from './constants';
+import {
+  HIDE_CONFIRMATION,
+  ACCEPT_CONFIRMATION,
+  HIDE_EMAIL_EXTRACTION_MODAL,
+} from './constants';
 import { ReducerState, SettingsModalSource } from './types';
 
 export {
@@ -59,13 +72,22 @@ export {
   getBrowserScreenDimension,
   getQuerySettingsModalSource,
   getQuerySettingsModalVisibility,
+  getEmbedModalVisibility,
   getVisualization,
   showQuerySettingsModal,
   hideQuerySettingsModal,
+  showEmbedModal,
+  hideEmbedModal,
+  getExtractToEmailModalVisibility,
+  showEmailExtractionModal,
+  hideEmailExtractionModal,
   selectFirstSavedQuery,
   exportChartToImage,
   exportChartToJson,
+  copyEmbeddedCode,
+  downloadCodeSnippet,
+  exportDataToCsv,
   ReducerState,
   SettingsModalSource,
 };
-export { HIDE_CONFIRMATION, ACCEPT_CONFIRMATION };
+export { HIDE_CONFIRMATION, ACCEPT_CONFIRMATION, HIDE_EMAIL_EXTRACTION_MODAL };

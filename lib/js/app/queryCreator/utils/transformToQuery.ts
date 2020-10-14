@@ -1,10 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-
 import snakeCase from 'snakecase-keys';
 
 import { convertAbstractOperators } from './convertAbstractOperators';
 
-import { ReducerState as QueryState } from '../modules/query';
+import { ReducerState as QueryState, InitialQuery } from '../modules/query';
 
 import { FIELDS_CONFIG } from '../config';
 
@@ -19,18 +18,36 @@ export const transformToQuery = (query: QueryState) => {
     }
   });
 
-  if (queryCopy.filters) {
-    queryCopy.filters = queryCopy.filters.map(({ id, ...filter }) =>
+  const {
+    filters,
+    orderBy,
+    propertyNames,
+    steps,
+    ...restQuerySettings
+  } = queryCopy;
+  const queryToTransform: InitialQuery = {
+    analysisType,
+    ...restQuerySettings,
+  };
+
+  if (filters) {
+    queryToTransform.filters = filters.map(({ id, ...filter }) =>
       convertAbstractOperators(filter)
     );
   }
 
-  if (queryCopy.orderBy) {
-    queryCopy.orderBy = queryCopy.orderBy.map(({ id, ...item }) => item);
+  if (orderBy) {
+    queryToTransform.orderBy = orderBy.map(({ id, ...item }) => item);
   }
 
-  if (queryCopy.steps) {
-    queryCopy.steps = queryCopy.steps.map(({ id, ...step }) => ({
+  if (propertyNames) {
+    queryToTransform.propertyNames = queryCopy.propertyNames.map(
+      ({ id, propertyName }) => propertyName
+    );
+  }
+
+  if (steps) {
+    queryToTransform.steps = steps.map(({ id, ...step }) => ({
       ...step,
       filters: step.filters.map(({ id, ...filter }) =>
         convertAbstractOperators(filter)
@@ -38,8 +55,5 @@ export const transformToQuery = (query: QueryState) => {
     }));
   }
 
-  return snakeCase({
-    analysisType,
-    ...queryCopy,
-  });
+  return snakeCase(queryToTransform);
 };
