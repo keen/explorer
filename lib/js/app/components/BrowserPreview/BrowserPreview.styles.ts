@@ -10,7 +10,7 @@ export const Card = styled.div`
 `;
 
 export const HeaderContainer = styled.div`
-  margin: 7px 0 20px 0;
+  margin: 7px 0 17px 0;
 `;
 
 export const QueryTitle = styled.div`
