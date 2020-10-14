@@ -58,18 +58,23 @@ const Analysis: FC<Props> = ({ analysis, onChange }) => {
 
   const tooltipRef = useRef(null);
   const dropdownRef = useRef(null);
+  const scrollRef = useRef(null);
 
   useEffect(() => {
-    if (dropdownRef.current && hint && tooltipRef.current) {
-      const { offsetHeight } = document.body;
+    if (
+      dropdownRef.current &&
+      hint &&
+      tooltipRef.current &&
+      scrollRef.current
+    ) {
       const { clientHeight: height } = tooltipRef.current;
       const { top, bottom } = dropdownRef.current.getBoundingClientRect();
-      const scrollTop = dropdownRef.current.offsetParent
-        ? dropdownRef.current.offsetParent.scrollTop
+      const scrollTop = scrollRef.current.offsetParent
+        ? scrollRef.current.offsetParent.scrollTop
         : 0;
       setTooltip((state) => {
         const tooltipBottom = top + state.top + height;
-        const overflow = bottom < tooltipBottom || offsetHeight < tooltipBottom;
+        const overflow = bottom + scrollTop < tooltipBottom;
         return {
           ...state,
           overflow,
@@ -79,7 +84,7 @@ const Analysis: FC<Props> = ({ analysis, onChange }) => {
         };
       });
     }
-  }, [tooltipRef, dropdownRef, hint]);
+  }, [tooltipRef, dropdownRef, scrollRef, hint]);
 
   const indexRef = useRef(selectionIndex);
   indexRef.current = selectionIndex;
@@ -136,9 +141,9 @@ const Analysis: FC<Props> = ({ analysis, onChange }) => {
       >
         <AnalysisTitle>{transformName(analysis)}</AnalysisTitle>
       </DropableContainer>
-      <Dropdown isOpen={isOpen}>
+      <Dropdown ref={dropdownRef} isOpen={isOpen}>
         <ScrollWrapper>
-          <Groups ref={dropdownRef}>
+          <Groups ref={scrollRef}>
             {ANALYSIS_GROUPS.map((options, idx) => (
               <List key={idx}>
                 {options.map(({ label, value, index, description }) => (

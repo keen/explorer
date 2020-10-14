@@ -1564,6 +1564,14 @@
     "@keen.io/colors" "^1.1.0"
     react "^16.12.0"
 
+"@keen.io/icons@^1.2.1":
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/@keen.io/icons/-/icons-1.2.1.tgz#bc4a40a7dd42aade50e282bca17bd7d228d013cd"
+  integrity sha512-HMInYabaiLs06j/CjPY/8RQdW23yn7Xnd+TdmLpQICWhTAIlMJojDY2NMhuXrsKFEADbDYQLK7bDBN53QWOOog==
+  dependencies:
+    "@keen.io/colors" "^1.1.0"
+    react "^16.12.0"
+
 "@keen.io/parser@^2.1.1":
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/@keen.io/parser/-/parser-2.1.1.tgz#61e6535f7e5e24392fdf6dffa25b303d94e415ed"
@@ -1618,32 +1626,13 @@
     styled-system "5.1.5"
     webfontloader "^1.6.28"
 
-"@keen.io/ui-core@^2.5.4":
-  version "2.5.4"
-  resolved "https://registry.yarnpkg.com/@keen.io/ui-core/-/ui-core-2.5.4.tgz#9964a86b12c6aa27d745187046896a968cc2511f"
-  integrity sha512-ARpussyA248MpkAbTNn1rOsddgwC8SBu7acHbZfZkQ6xl+QlRUENjj+jq9y234ltFkdyNMUvVxVaQkrNWxoU/g==
+"@keen.io/ui-core@^2.5.6":
+  version "2.5.6"
+  resolved "https://registry.yarnpkg.com/@keen.io/ui-core/-/ui-core-2.5.6.tgz#65025b88b903832b9740d6f87eaa14b2cb4d4e49"
+  integrity sha512-fTv/L3XNHmNdaXoqRgEN7IPXCahiJvoQimN3X4DfQddusFdpiDG0qDXgJgEKnOQ5p9xZMoHZ6iwZHXw0SGHbjw==
   dependencies:
     "@keen.io/colors" "^1.1.0"
-    "@keen.io/icons" "^1.2.0"
-    color "^3.1.2"
-    framer-motion "^1.11.1"
-    fuse.js "^6.4.1"
-    polished "^3.4.4"
-    react "^16.12.0"
-    react-column-resizer "^1.1.9"
-    react-dom "^16.12.0"
-    react-select "^3.1.0"
-    styled-components "5.1.0"
-    styled-system "5.1.5"
-    webfontloader "^1.6.28"
-
-"@keen.io/ui-core@^2.5.1":
-  version "2.5.1"
-  resolved "https://registry.yarnpkg.com/@keen.io/ui-core/-/ui-core-2.5.1.tgz#8ce47e8629ad0e2050524e6a573bbc715a854859"
-  integrity sha512-yi5WPWjI7BsSaCNRBd+XBi+LtPOcTDM4F0gautv8USgHqmiGq7ZzPxyEnO0KOiQi0kovEwZOpnIl10UfDHvsOA==
-  dependencies:
-    "@keen.io/colors" "^1.1.0"
-    "@keen.io/icons" "^1.2.0"
+    "@keen.io/icons" "^1.2.1"
     color "^3.1.2"
     framer-motion "^1.11.1"
     fuse.js "^6.4.1"
