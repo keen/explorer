@@ -29,17 +29,18 @@ import {
   setFunnelSteps,
   setFunnelStepFilters,
   updateFunnelStep,
+  setPropertyNames,
   setGroupBy,
   setOrderBy,
   setFilters,
   setQuery,
-  SetQueryAction,
+  SerializeQueryAction,
   SelectTimezoneAction,
   SelectEventCollectionAction,
   SelectFunnelStepEventCollectionAction,
+  UpdateFunnelStepTimezoneAction,
   SET_GROUP_BY,
   SERIALIZE_QUERY,
-  UpdateFunnelStepTimezoneAction,
   SELECT_TIMEZONE,
   SELECT_EVENT_COLLECTION,
   SELECT_FUNNEL_STEP_EVENT_COLLECTION,
@@ -64,6 +65,7 @@ import {
   serializeOrderBy,
   serializeFilters,
   serializeFunnelSteps,
+  serializePropertyNames,
 } from './serializers';
 
 import { createTree, createCollection } from './utils';
@@ -141,6 +143,7 @@ function* selectCollection(action: SelectEventCollectionAction) {
 
   yield put(setGroupBy(undefined));
   yield put(setOrderBy(undefined));
+  yield put(setPropertyNames(undefined));
   yield put(setFilters([]));
 }
 
@@ -224,13 +227,18 @@ function* transformOrderBy(orderBy: string | OrderBy | OrderBy[]) {
   yield put(setOrderBy(orderBySettings));
 }
 
-function* serializeQuery(action: SetQueryAction) {
+function* transformPropertyNames(propertyNames: string | string[]) {
+  const propertiesSettings = serializePropertyNames(propertyNames);
+  yield put(setPropertyNames(propertiesSettings));
+}
+
+function* serializeQuery(action: SerializeQueryAction) {
   const {
     payload: { query },
   } = action;
   const schemas = yield select(getSchemas);
 
-  const { filters, orderBy, steps, ...rest } = query;
+  const { filters, orderBy, steps, propertyNames, ...rest } = query;
   yield put(setQuery(rest));
 
   if (query.eventCollection && !schemas[query.eventCollection]) {
@@ -258,6 +266,10 @@ function* serializeQuery(action: SetQueryAction) {
         put(fetchCollectionSchema(eventCollection))
       )
     );
+  }
+
+  if (propertyNames) {
+    yield fork(transformPropertyNames, propertyNames);
   }
 
   if (filters) {

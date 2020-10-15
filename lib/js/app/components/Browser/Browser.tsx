@@ -110,7 +110,7 @@ const Browser: FC<Props> = ({ onEditQuery, onRunQuery, onSelectQuery }) => {
             </>
           )}
         </Socket>
-        <Socket marginLeft={{ xs: 0, md: 15 }}>
+        <Socket marginLeft={{ xs: 0, md: 15 }} marginRight={{ xs: 0, md: 15 }}>
           {!isSavedQueriesLoaded || isEmptyProject ? (
             <PreviewPlaceholder />
           ) : (

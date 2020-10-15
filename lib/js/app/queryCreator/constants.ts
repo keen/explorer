@@ -44,3 +44,12 @@ export const ANALYSIS_TYPES: Analysis[] = [
   'standard_deviation',
   'sum',
 ];
+
+export const TIME_UNITS = {
+  minute: 'minutes',
+  hour: 'hours',
+  day: 'days',
+  week: 'weeks',
+  month: 'months',
+  year: 'years',
+};

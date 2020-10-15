@@ -6,6 +6,8 @@ import {
   runQuery,
   deleteQuery,
   setQuerySaveState,
+  extractToEmail,
+  runEmailExtraction,
   saveQuery,
   resetSavedQueryError,
   getOrganizationUsageLimits,
@@ -24,6 +26,7 @@ import {
   getQueryLimitReached,
   getQuerySettings,
 } from './selectors';
+import { getDefaultVisualization } from './utils';
 
 import { SAVE_QUERY_SUCCESS, GET_SAVED_QUERIES_SUCCESS } from './constants';
 
@@ -38,6 +41,8 @@ export {
   ReducerState,
   fetchSavedQueries,
   saveQuery,
+  extractToEmail,
+  runEmailExtraction,
   getQueryExecutionError,
   getSaveQueryError,
   getQueryResults,
@@ -64,4 +69,5 @@ export {
   SavedQueryListItem,
   GetSavedQueriesSuccessAction,
   SaveQuerySuccessAction,
+  getDefaultVisualization,
 };

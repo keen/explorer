@@ -1,6 +1,8 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { transparentize } from 'polished';
 import { colors } from '@keen.io/colors';
+
+import { PickerWidgets } from '@keen.io/widget-picker';
 
 export const Card = styled.div`
   background: ${colors.white[500]};
@@ -8,14 +10,28 @@ export const Card = styled.div`
 `;
 
 export const HeaderContainer = styled.div`
-  margin: 7px 0 20px 0;
+  margin: 7px 0 17px 0;
 `;
 
 export const QueryTitle = styled.div`
-  padding: 20px;
+  padding: 20px 20px 0 20px;
 
   font-family: 'Gangster Grotesk Bold', sans-serif;
   font-size: 20px;
   line-height: 24px;
   color: ${colors.blue[500]};
+`;
+
+export const VisualizationWrapper = styled.div<{ widgetType: PickerWidgets }>`
+  ${({ widgetType }) =>
+    widgetType === 'json' &&
+    css`
+      padding: 10px;
+    `}
+
+  ${({ widgetType }) =>
+    widgetType === 'table' &&
+    css`
+      padding-top: 20px;
+    `}
 `;

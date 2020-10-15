@@ -1,7 +1,5 @@
 /* eslint-disable @typescript-eslint/camelcase */
-import camelCase from 'camelcase-keys';
-
-import getDefaultVisualization from './getDefaultVisualization';
+import serializeVisualization from './serializeVisualization';
 
 import { SavedQueryListItem } from '../types';
 import { SavedQueryAPIResponse } from '../../../types';
@@ -18,18 +16,10 @@ const serializeSavedQuery = ({
   cached: !!refresh_rate,
   refreshRate: refresh_rate,
   lastModifiedDate: user_last_modified_date,
-  visualization:
+  visualization: serializeVisualization(
+    query,
     metadata && metadata.visualization
-      ? {
-          type: metadata.visualization.type,
-          chartSettings: camelCase(metadata.visualization.chart_settings, {
-            deep: true,
-          }),
-          widgetSettings: camelCase(metadata.visualization.widget_settings, {
-            deep: true,
-          }),
-        }
-      : getDefaultVisualization(query),
+  ),
   tags: metadata && metadata.tags ? metadata.tags : [],
   stepLabels: metadata && metadata.step_labels ? metadata.step_labels : [],
   query,

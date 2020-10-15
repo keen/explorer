@@ -67,7 +67,7 @@ test('should render exact number of properties with preserved order', async () =
     wrapper: { getAllByTestId },
   } = render(storeState, { collection: 'purchases' });
 
-  const items = getAllByTestId('groupBy-property');
+  const items = getAllByTestId('searchable-property');
 
   expect(items.length).toEqual(Object.keys(storeState.query.groupBy).length);
 

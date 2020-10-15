@@ -8,6 +8,8 @@ import TimePeriod from '../TimePeriod';
 import Title from '../Title';
 import text from './text.json';
 
+import { getInterval } from '../../utils';
+
 import { THIS_RELATIVITY, PREVIOUS_RELATIVITY } from './constants';
 
 type Props = {
@@ -22,6 +24,7 @@ type Props = {
 };
 
 const RelativeTime: FC<Props> = ({ relativity, value, units, onChange }) => {
+  const interval = getInterval(units);
   return (
     <div data-testid="relative-time">
       <TimePeriod
@@ -41,15 +44,13 @@ const RelativeTime: FC<Props> = ({ relativity, value, units, onChange }) => {
           onChange(`${updatedRelativity}_${value}_${units}`);
         }}
       >
-        <Checkbox
-          id="relativity"
-          checked={relativity === THIS_RELATIVITY}
-          onChange={() => {
-            // @TODO: Make onChange optional in <Checkbox />
-          }}
-        />
+        <Checkbox id="relativity" checked={relativity === THIS_RELATIVITY} />
         <CheckboxLabel>
-          <Title>{text.relativityTitle}</Title>
+          <Title>
+            {interval === 'day'
+              ? text.relativityTitleForToday
+              : `${text.relativityTitle} ${interval}`}
+          </Title>
         </CheckboxLabel>
       </RelativityContainer>
     </div>

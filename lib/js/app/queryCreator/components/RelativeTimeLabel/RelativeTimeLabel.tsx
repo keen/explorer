@@ -1,6 +1,8 @@
 import React, { FC } from 'react';
 
 import { Container, IncludesToday } from './RelativeTimeLabel.styles';
+
+import { getInterval } from '../../utils';
 import text from './text.json';
 
 type Props = {
@@ -13,13 +15,18 @@ type Props = {
 };
 
 const RelativeTimeLabel: FC<Props> = ({ relativity, value, units }) => {
+  const interval = getInterval(units);
   return (
     <Container>
       <span>
         {text.label} {value} {units}
       </span>{' '}
       {relativity === 'this' && (
-        <IncludesToday>{text.todayIncludes}</IncludesToday>
+        <IncludesToday>
+          {interval === 'day'
+            ? text.todayIncludes
+            : `(${text.relativityTitle} ${interval})`}
+        </IncludesToday>
       )}
     </Container>
   );

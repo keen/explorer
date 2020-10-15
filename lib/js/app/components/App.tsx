@@ -25,6 +25,7 @@ import {
   explorerMounted,
   editQuery,
 } from '../modules/app';
+import { setVisualization } from '../utils';
 
 import { MainContainer } from './App.styles';
 
@@ -33,8 +34,10 @@ import { AppState } from '../modules/types';
 import Browser from './Browser';
 import Editor from './Editor';
 import QuerySettingsModal from './QuerySettingsModal';
+import ExtractToEmailModal from './ExtractToEmailModal';
 import ToastNotifications from './ToastNotifications';
 import Confirm from './Confirm';
+import EmbedWidgetModal from './EmbedWidgetModal';
 
 import {
   NEW_QUERY_EVENT,
@@ -110,11 +113,15 @@ class App extends Component {
     stepLabels: string[];
     name: string;
   }) => {
+    const visualization = setVisualization(
+      this.props.query,
+      this.props.visualization
+    );
     const body = {
       query: this.props.query,
       metadata: {
         displayName,
-        visualization: this.props.visualization,
+        visualization,
         tags,
         stepLabels,
       },
@@ -141,25 +148,28 @@ class App extends Component {
           />
         )}
         {this.props.view === 'editor' && (
-          <Editor
-            query={this.props.query}
-            upgradeSubscriptionUrl={this.props.upgradeSubscriptionUrl}
-            onRunQuery={() => this.props.runQuery(this.props.query)}
-            onSaveQuery={() => {
-              const {
-                displayName,
-                name,
-                tags,
-                refreshRate,
-              } = this.props.savedQuery;
-              this.onSaveQuery({
-                displayName,
-                refreshRate,
-                tags,
-                name,
-              });
-            }}
-          />
+          <>
+            <Editor
+              query={this.props.query}
+              upgradeSubscriptionUrl={this.props.upgradeSubscriptionUrl}
+              onRunQuery={() => this.props.runQuery(this.props.query)}
+              onSaveQuery={() => {
+                const {
+                  displayName,
+                  name,
+                  tags,
+                  refreshRate,
+                } = this.props.savedQuery;
+                this.onSaveQuery({
+                  displayName,
+                  refreshRate,
+                  tags,
+                  name,
+                });
+              }}
+            />
+            <ExtractToEmailModal />
+          </>
         )}
         <Confirm />
         <ToastNotifications />
@@ -169,6 +179,7 @@ class App extends Component {
           )}
           onSaveQuery={(settings) => this.onSaveQuery(settings)}
         />
+        <EmbedWidgetModal />
       </MainContainer>
     );
   }

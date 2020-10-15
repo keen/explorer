@@ -48,7 +48,14 @@ import {
   b64EncodeUnicode,
   b64DecodeUnicode,
 } from './utils';
-import { copyToClipboard, exportToImage, exportToJson } from '../../utils';
+import {
+  copyToClipboard,
+  exportToImage,
+  exportToJson,
+  exportToCsv,
+  createCodeSnippet,
+  exportToHtml,
+} from '../../utils';
 
 import { SET_QUERY_EVENT, NEW_QUERY_EVENT } from '../../queryCreator';
 import { PUBSUB_CONTEXT, NOTIFICATION_MANAGER_CONTEXT } from '../../constants';
@@ -58,6 +65,8 @@ import {
   ResizeScreenAction,
   UpdateQueryCreatorAction,
   AppStartAction,
+  CopyEmbeddedCodeAction,
+  DownloadCodeSnippetAction,
 } from './types';
 
 import {
@@ -76,6 +85,9 @@ import {
   SCREEN_RESIZE,
   EXPORT_CHART_TO_IMAGE,
   EXPORT_CHART_TO_JSON,
+  EXPORT_DATA_TO_CSV,
+  COPY_EMBEDDED_CODE,
+  DOWNLOAD_CODE_SNIPPET,
 } from './constants';
 
 const createScreenResizeChannel = () =>
@@ -319,6 +331,92 @@ export function* exportChartToJson() {
   }
 }
 
+export function* exportDataToCsv() {
+  const data = yield select(getQueryResults);
+  const fileName = yield generateFileName();
+  const notificationManager = yield getContext(NOTIFICATION_MANAGER_CONTEXT);
+
+  try {
+    exportToCsv({ data, fileName });
+    yield notificationManager.showNotification({
+      type: 'info',
+      message: `CSV ${text.downloadInProgress}`,
+      autoDismiss: true,
+    });
+  } catch (err) {
+    yield notificationManager.showNotification({
+      type: 'error',
+      message: `CSV ${text.downloadChartError}`,
+      showDismissButton: true,
+      autoDismiss: false,
+    });
+  }
+}
+
+function* getCodeSnippet(projectId: string, readKey: string) {
+  const query = yield select(getQuerySettings);
+  const { type: widget, chartSettings, widgetSettings } = yield select(
+    getVisualization
+  );
+
+  const snippet = createCodeSnippet({
+    widget,
+    query,
+    chartSettings,
+    widgetSettings,
+    projectId,
+    readKey,
+  });
+
+  return snippet;
+}
+
+export function* copyEmbeddedCode({ payload }: CopyEmbeddedCodeAction) {
+  const { projectId, readKey } = payload;
+  const notificationManager = yield getContext(NOTIFICATION_MANAGER_CONTEXT);
+
+  try {
+    const snippet = yield getCodeSnippet(projectId, readKey);
+    copyToClipboard(snippet);
+    yield notificationManager.showNotification({
+      type: 'success',
+      message: text.copyEmbeddedCode,
+      autoDismiss: true,
+    });
+  } catch (err) {
+    yield notificationManager.showNotification({
+      type: 'error',
+      message: text.copyEmbeddedCodeError,
+      showDismissButton: true,
+      autoDismiss: false,
+    });
+  }
+}
+
+export function* downloadCodeSnippet({ payload }: DownloadCodeSnippetAction) {
+  const { projectId, readKey } = payload;
+  const fileName = yield generateFileName();
+  const notificationManager = yield getContext(NOTIFICATION_MANAGER_CONTEXT);
+
+  try {
+    const data = yield getCodeSnippet(projectId, readKey);
+    exportToHtml({ data, fileName });
+
+    yield notificationManager.showNotification({
+      type: 'success',
+      message: `HTML ${text.downloadInProgress}`,
+      autoDismiss: true,
+    });
+  } catch (err) {
+    yield notificationManager.showNotification({
+      type: 'error',
+      message: text.downloadChartError,
+      showDismissButton: true,
+      autoDismiss: false,
+    });
+  }
+}
+
 export function* appSaga() {
   yield takeLatest(APP_START, appStart);
   yield takeLatest(SHARE_QUERY_URL, shareQueryUrl);
@@ -331,5 +429,8 @@ export function* appSaga() {
   yield takeLatest(EDIT_QUERY, editQuery);
   yield takeLatest(EXPORT_CHART_TO_IMAGE, exportChartToImage);
   yield takeLatest(EXPORT_CHART_TO_JSON, exportChartToJson);
+  yield takeLatest(EXPORT_DATA_TO_CSV, exportDataToCsv);
+  yield takeLatest(COPY_EMBEDDED_CODE, copyEmbeddedCode);
+  yield takeLatest(DOWNLOAD_CODE_SNIPPET, downloadCodeSnippet);
   yield debounce(200, SCREEN_RESIZE, resizeBrowserScreen);
 }

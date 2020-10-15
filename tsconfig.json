@@ -1,6 +1,6 @@
 {
 	"compilerOptions": {
-		"target": "esnext",
+		"target": "es6",
 		"moduleResolution": "node",
 		"allowJs": true,
     "resolveJsonModule": true,
@@ -8,7 +8,6 @@
 		"allowSyntheticDefaultImports": true,
 		"esModuleInterop": true,
     "module": "esnext",
-    "target": "es6",
     "jsx": "react",
 		"typeRoots": [ "./types", "./node_modules/@types"]
 	},
