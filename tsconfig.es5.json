@@ -1,0 +1,10 @@
+{
+	"extends": "./tsconfig.json",
+	"compilerOptions": {
+		"target": "es5",
+	},
+  "include": [
+  	"./lib/**/*"
+  ],
+	 "exclude": ["node_modules", "typings"]
+}

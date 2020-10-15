@@ -26,6 +26,9 @@ const createWebpackConfig = (
           test: /\.tsx?$/,
           use: {
             loader: 'ts-loader',
+            options: {
+              configFile: `tsconfig${supportLegacyBrowsers ? '.es5': ''}.json`
+            }
           },
         },
         {
