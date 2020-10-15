@@ -11,7 +11,6 @@ const FILE_NAME = 'explorer';
 module.exports = (env) => {
   const useLegacyBrowsers = env.TARGET_LEGACY_BROWSERS === 'true';
 
-
   const config = merge(createWebpackConfig(useLegacyBrowsers), {
     context: __dirname,
     mode: 'production',

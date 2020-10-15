@@ -1633,10 +1633,10 @@
     styled-system "5.1.5"
     webfontloader "^1.6.28"
 
-"@keen.io/ui-core@^2.5.6":
-  version "2.5.6"
-  resolved "https://registry.yarnpkg.com/@keen.io/ui-core/-/ui-core-2.5.6.tgz#65025b88b903832b9740d6f87eaa14b2cb4d4e49"
-  integrity sha512-fTv/L3XNHmNdaXoqRgEN7IPXCahiJvoQimN3X4DfQddusFdpiDG0qDXgJgEKnOQ5p9xZMoHZ6iwZHXw0SGHbjw==
+"@keen.io/ui-core@^2.5.5":
+  version "2.5.5"
+  resolved "https://registry.yarnpkg.com/@keen.io/ui-core/-/ui-core-2.5.5.tgz#8ac362988c0884da4bce82070eea00655efb8bfc"
+  integrity sha512-K+PDRGSNVzciGRa9jgmkiRweDM7zAccK6ATPj5zciAfoXX2gzk3WuG1m55iFlg6NXie5xzPS2CW292+uQiDTpA==
   dependencies:
     "@keen.io/colors" "^1.1.0"
     "@keen.io/icons" "^1.2.1"
@@ -1652,10 +1652,10 @@
     styled-system "5.1.5"
     webfontloader "^1.6.28"
 
-"@keen.io/ui-core@^2.5.5":
-  version "2.5.5"
-  resolved "https://registry.yarnpkg.com/@keen.io/ui-core/-/ui-core-2.5.5.tgz#8ac362988c0884da4bce82070eea00655efb8bfc"
-  integrity sha512-K+PDRGSNVzciGRa9jgmkiRweDM7zAccK6ATPj5zciAfoXX2gzk3WuG1m55iFlg6NXie5xzPS2CW292+uQiDTpA==
+"@keen.io/ui-core@^2.5.6":
+  version "2.5.6"
+  resolved "https://registry.yarnpkg.com/@keen.io/ui-core/-/ui-core-2.5.6.tgz#65025b88b903832b9740d6f87eaa14b2cb4d4e49"
+  integrity sha512-fTv/L3XNHmNdaXoqRgEN7IPXCahiJvoQimN3X4DfQddusFdpiDG0qDXgJgEKnOQ5p9xZMoHZ6iwZHXw0SGHbjw==
   dependencies:
     "@keen.io/colors" "^1.1.0"
     "@keen.io/icons" "^1.2.1"
