@@ -1633,13 +1633,13 @@
     styled-system "5.1.5"
     webfontloader "^1.6.28"
 
-"@keen.io/ui-core@^2.5.4":
-  version "2.5.4"
-  resolved "https://registry.yarnpkg.com/@keen.io/ui-core/-/ui-core-2.5.4.tgz#9964a86b12c6aa27d745187046896a968cc2511f"
-  integrity sha512-ARpussyA248MpkAbTNn1rOsddgwC8SBu7acHbZfZkQ6xl+QlRUENjj+jq9y234ltFkdyNMUvVxVaQkrNWxoU/g==
+"@keen.io/ui-core@^2.5.6":
+  version "2.5.6"
+  resolved "https://registry.yarnpkg.com/@keen.io/ui-core/-/ui-core-2.5.6.tgz#65025b88b903832b9740d6f87eaa14b2cb4d4e49"
+  integrity sha512-fTv/L3XNHmNdaXoqRgEN7IPXCahiJvoQimN3X4DfQddusFdpiDG0qDXgJgEKnOQ5p9xZMoHZ6iwZHXw0SGHbjw==
   dependencies:
     "@keen.io/colors" "^1.1.0"
-    "@keen.io/icons" "^1.2.0"
+    "@keen.io/icons" "^1.2.1"
     color "^3.1.2"
     framer-motion "^1.11.1"
     fuse.js "^6.4.1"

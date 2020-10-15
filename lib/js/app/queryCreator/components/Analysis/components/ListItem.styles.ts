@@ -30,7 +30,6 @@ export const Container = styled.li<{
 `;
 
 export const Hint = styled.div`
-  position: relative;
   display: flex;
   align-items: center;
 `;
@@ -38,15 +37,4 @@ export const Hint = styled.div`
 export const MotionIcon = styled(motion.div)`
   display: flex;
   align-items: center;
-`;
-
-export const TooltipContainer = styled(motion.div)`
-  font-size: 13px;
-  line-height: 17px;
-  font-family: 'Lato', sans-serif;
-  width: 160px;
-
-  position: absolute;
-  top: -9px;
-  transform: translateX(100%);
 `;
