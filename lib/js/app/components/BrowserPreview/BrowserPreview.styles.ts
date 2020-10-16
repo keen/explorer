@@ -10,6 +10,8 @@ export const Card = styled.div`
 `;
 
 export const HeaderContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
   margin: 7px 0 17px 0;
 `;
 

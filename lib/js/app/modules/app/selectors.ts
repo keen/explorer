@@ -20,3 +20,5 @@ export const getViewMode = ({ app }: AppState) => app.view;
 
 export const getBrowserScreenDimension = ({ app }: AppState) =>
   app.browserScreen;
+
+export const getQueryAutorun = ({ app }: AppState) => app.autorunQuery;

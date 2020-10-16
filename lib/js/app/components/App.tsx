@@ -9,7 +9,6 @@ import {
   saveQuery,
   resetQueryResults,
   getQuerySettings,
-  setQuerySettings,
 } from '../modules/queries';
 import {
   getSavedQuery,
@@ -60,7 +59,6 @@ const mapDispatchToProps = {
   explorerMounted,
   resetSavedQuery,
   selectSavedQuery,
-  setQuerySettings,
   switchToQueriesList,
   createNewQuery,
   setViewMode,
@@ -137,10 +135,9 @@ class App extends Component {
         {this.props.view === 'browser' && (
           <Browser
             onRunQuery={() => this.props.runQuery(this.props.query)}
-            onSelectQuery={(queryName, query) => {
-              this.props.selectSavedQuery(queryName);
+            onSelectQuery={(queryName) => {
               this.props.resetQueryResults();
-              this.props.setQuerySettings(query);
+              this.props.selectSavedQuery(queryName);
             }}
             onEditQuery={(queryName) => {
               this.props.editQuery(queryName);

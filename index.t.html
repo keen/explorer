@@ -1,0 +1,34 @@
+<!doctype html><html lang="en"><head>
+  <meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=11"/><title>Webpack App</title><link rel="stylesheet" href="https://static.keen.io/assets/keen-fonts.css" /><style>body {
+      margin: 0;
+      padding: 0;
+    }</style>
+    <script type="module" src="explorer.modern.min.js"></script>
+  </head>
+    <body class="dev-body"><div id="root"></div><div id="modal-root"></div>
+    <script nomodule src="explorer.legacy.min.js"></script>
+  </body>
+      <script type="text/javascript">
+        window.onload = function() {
+          new KeenExplorer({
+           container: '#root',
+           modalContainer: '#modal-root',
+           upgradeSubscriptionUrl: 'http://keen.io',
+           keenAnalysis: {
+             config: {
+               projectId: '5f80297aca99e4631690de94',
+               masterKey: '8BA454FC068C834EE625D11A9C86DEB23193AB5422AEA0995D172C3F387BCC76',
+               readKey: 'eedf109cb2fa139c1535affcb132107812995febfc24ba64c1f0ef3ad0b7440179e15650401708539cd6d780e8485132a42c73b4fee5bae41bb343b38a9c3b0b2d5d3eaec9dc944df3c95a64fbdc8e42e669486f97a0dffda63bae21cfb6fdf6',
+               writeKey: '3fa948d433827cbb9f6f201328d427dfe8ed6c98fb29c73b87aad3bc657f0b2d9af6e4ac376176543460ca1e0e610526996ff43b860cdee32be85159e170efa6b8eab925471e831154313db7a8be11c229cb8d89b6cc8c36e9963b0877f8390a',
+             },
+           },
+           keenDataviz: {
+           },
+           keenTracking: {
+            config: {},
+           },
+           features: {},
+        });
+      };
+</script>
+</html>
