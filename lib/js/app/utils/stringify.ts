@@ -1,8 +1,7 @@
 import { TIMEZONES } from '../queryCreator';
 
-export const stringify = (queryParams) => {
-  console.log(JSON.stringify(queryParams));
-  return Object.keys(queryParams)
+export const stringify = (queryParams) =>
+  Object.keys(queryParams)
     .map((k) => {
       let queryParamValue = queryParams[k];
       if (!queryParamValue) return null;
@@ -48,4 +47,3 @@ export const stringify = (queryParams) => {
     .join('&')
     .replace(/%22true%22/gi, 'true')
     .replace(/%22false%22/gi, 'false');
-};

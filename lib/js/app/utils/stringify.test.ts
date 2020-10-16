@@ -17,5 +17,36 @@ test('stringify query params', () => {
     event_collection: 'purchases',
   };
 
+  const queryParamsWithFilters = {
+    steps: [
+      {
+        event_collection: 'purchases',
+        actor_property: 'item.price',
+        timeframe: 'this_14_days',
+        filters: [],
+        inverted: false,
+        optional: false,
+        with_actors: false,
+      },
+      {
+        event_collection: 'signups',
+        actor_property: 'user.age',
+        timeframe: 'this_14_days',
+        filters: [
+          {
+            operator: 'ne',
+            property_type: 'String',
+            property_value: 'male',
+            property_name: 'user.gender',
+          },
+        ],
+        inverted: false,
+        optional: false,
+        with_actors: false,
+      },
+    ],
+  };
+
   expect(stringify(queryParams)).toMatchSnapshot();
+  expect(stringify(queryParamsWithFilters)).toMatchSnapshot();
 });

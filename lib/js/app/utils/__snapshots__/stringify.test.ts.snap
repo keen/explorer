@@ -1,3 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`stringify query params 1`] = `"timezone=0&timeframe=%22this_14_weeks%22&order_by=%5B%7B%22direction%22%3A%22ASC%22%2C%22property_name%22%3A%22result%22%7D%2C%7B%22direction%22%3A%22ASC%22%2C%22property_name%22%3A%22platform%22%7D%5D&group_by=%5B%22referrer%22%2C%22platform%22%5D&event_collection=%22purchases%22"`;
+
+exports[`stringify query params 2`] = `"steps=%5B%7B%22event_collection%22%3A%22purchases%22%2C%22actor_property%22%3A%22item.price%22%2C%22timeframe%22%3A%22this_14_days%22%2C%22filters%22%3A%5B%5D%2C%22inverted%22%3Afalse%2C%22optional%22%3Afalse%2C%22with_actors%22%3Afalse%7D%2C%7B%22event_collection%22%3A%22signups%22%2C%22actor_property%22%3A%22user.age%22%2C%22timeframe%22%3A%22this_14_days%22%2C%22filters%22%3A%5B%7B%22operator%22%3A%22ne%22%2C%22property_type%22%3A%22String%22%2C%22property_value%22%3A%22male%22%2C%22property_name%22%3A%22user.gender%22%7D%5D%2C%22inverted%22%3Afalse%2C%22optional%22%3Afalse%2C%22with_actors%22%3Afalse%7D%5D"`;
