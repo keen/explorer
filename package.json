@@ -71,7 +71,7 @@
     "react": "^16.13.1",
     "react-dates": "^21.8.0",
     "react-dom": "^16.13.1",
-    "react-json-view": "^1.19.1",
+    "react-json-inspector": "^7.1.1",
     "react-redux": "^7.2.0",
     "react-syntax-highlighter": "^15.1.0",
     "react-vtree": "^2.0.2",
