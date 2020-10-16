@@ -16,6 +16,7 @@ import {
   showEmailExtractionModal,
   hideEmailExtractionModal,
   setQueryAutorun,
+  setChartSettings,
 } from './actions';
 
 test('set query autorun settings', () => {
@@ -160,4 +161,14 @@ test('update state when EmbedWidgetModal is closed', () => {
   expect(embedModal).toEqual({
     visible: false,
   });
+});
+
+test('update state when chart setttings has been changed', () => {
+  const settings = { stepLabels: ['label1'] };
+  const action = setChartSettings(settings);
+
+  const {
+    visualization: { chartSettings },
+  } = appReducer(initialState, action);
+  expect(chartSettings).toEqual(settings);
 });

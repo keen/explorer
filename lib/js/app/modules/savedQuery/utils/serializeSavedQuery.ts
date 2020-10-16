@@ -14,7 +14,6 @@ const serializeSavedQuery = ({
   displayName: metadata ? metadata.display_name : query_name,
   cached: !!refresh_rate,
   tags: metadata && metadata.tags ? metadata.tags : [],
-  stepLabels: metadata && metadata.step_labels ? metadata.step_labels : [],
   refreshRate: convertMilisecondsToMinutes(refresh_rate),
   exists: true,
 });

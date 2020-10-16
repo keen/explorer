@@ -1,5 +1,6 @@
 import { initialState as queryInitialState } from './modules/query';
 import { initialState as eventsInitialState } from './modules/events';
+import { initialState as chartSettingsInitialState } from './modules/chartSettings';
 
 export const rehydrateState = () => {
   const schemas =
@@ -11,5 +12,6 @@ export const rehydrateState = () => {
       ...eventsInitialState,
       schemas,
     },
+    chartSettings: chartSettingsInitialState,
   };
 };

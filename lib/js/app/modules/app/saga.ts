@@ -21,6 +21,7 @@ import {
   loadPersitedState,
   updateQueryCreator,
   setQueryAutorun,
+  setChartSettings,
 } from './actions';
 
 import {
@@ -93,6 +94,7 @@ import {
   SET_QUERY_AUTORUN,
   QUERY_AUTORUN_KEY,
 } from './constants';
+import { SET_CHART_SETTINGS } from '../../queryCreator/constants';
 
 const createScreenResizeChannel = () =>
   eventChannel((emitter) => {
@@ -128,7 +130,16 @@ function* editQuery({ payload }: EditQueryAction) {
   yield take(QUERY_EDITOR_MOUNTED);
 
   const savedQueries = yield select(getSavedQueries);
-  const { query } = savedQueries.find(({ name }) => name === payload.queryName);
+  const { query, visualization } = savedQueries.find(
+    ({ name }) => name === payload.queryName
+  );
+  const { chartSettings } = visualization;
+  if (Object.keys(chartSettings).length) {
+    const pubsub = yield getContext(PUBSUB_CONTEXT);
+    yield pubsub.publish(SET_CHART_SETTINGS, { chartSettings });
+    yield put(setChartSettings(chartSettings));
+  }
+
   yield put(updateQueryCreator(query));
 }
 

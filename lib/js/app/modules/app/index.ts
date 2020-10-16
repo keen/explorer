@@ -30,6 +30,7 @@ import {
   showEmailExtractionModal,
   hideEmailExtractionModal,
   setQueryAutorun,
+  setChartSettings,
 } from './actions';
 import {
   getConfirmation,
@@ -91,6 +92,7 @@ export {
   exportDataToCsv,
   setQueryAutorun,
   getQueryAutorun,
+  setChartSettings,
   ReducerState,
   SettingsModalSource,
 };

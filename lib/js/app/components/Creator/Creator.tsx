@@ -8,9 +8,10 @@ import { queryEditorMounted } from '../../modules/app';
 
 type Props = {
   onUpdateQuery: (query: Record<string, any>) => void;
+  onUpdateChartSettings: (chartSettings: Record<string, any>) => void;
 };
 
-const Creator: FC<Props> = ({ onUpdateQuery }) => {
+const Creator: FC<Props> = ({ onUpdateQuery, onUpdateChartSettings }) => {
   const dispatch = useDispatch();
   const {
     modalContainer,
@@ -29,6 +30,7 @@ const Creator: FC<Props> = ({ onUpdateQuery }) => {
       masterKey={config.masterKey}
       host={config.host}
       onUpdateQuery={onUpdateQuery}
+      onUpdateChartSettings={onUpdateChartSettings}
     />
   );
 };

@@ -22,6 +22,7 @@ const render = (overProps: any = {}) => {
         ],
       },
     },
+    chartSettings: {},
     ...overProps,
   };
 

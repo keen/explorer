@@ -1,4 +1,4 @@
-import React, { FC, useState, useRef, useEffect } from 'react';
+import React, { FC, useState, useRef, useEffect, useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { v4 as uuid } from 'uuid';
 import Sortable from 'sortablejs';
@@ -18,12 +18,21 @@ import {
   changeFunnelStepsOrder,
   cloneFunnelStep,
 } from '../../modules/query';
+import {
+  getChartSettings,
+  updateChartSettings,
+} from '../../modules/chartSettings';
 
 import { DRAG_ANIMATION_TIME } from './constants';
+import { AppContext } from '../../contexts';
 
 const FunnelSteps: FC<{}> = () => {
   const dispatch = useDispatch();
   const steps = useSelector(getFunnelSteps);
+  const chartSettings = useSelector(getChartSettings);
+  const { stepLabels } = chartSettings;
+
+  const { onUpdateChartSettings } = useContext(AppContext);
 
   const [stepVisible, setStepVisible] = useState(null);
   const [isDragged, setDragMode] = useState(false);
@@ -32,6 +41,9 @@ const FunnelSteps: FC<{}> = () => {
 
   const stepsRef = useRef(null);
   stepsRef.current = steps;
+
+  const stepsLabelsRef = useRef(null);
+  stepsLabelsRef.current = stepLabels;
 
   useEffect(() => {
     new Sortable(sortableRef.current, {
@@ -48,6 +60,16 @@ const FunnelSteps: FC<{}> = () => {
         );
         dispatch(changeFunnelStepsOrder(updatedSteps));
         setDragMode(false);
+
+        if (stepsLabelsRef?.current.length) {
+          const updatedStepLabels = mutateArray(
+            stepsLabelsRef.current,
+            evt.oldIndex,
+            evt.newIndex
+          );
+          dispatch(updateChartSettings({ stepLabels: updatedStepLabels }));
+          onUpdateChartSettings({ stepLabels: updatedStepLabels });
+        }
       },
     });
 
@@ -55,6 +77,14 @@ const FunnelSteps: FC<{}> = () => {
       dispatch(setFunnelSteps([]));
     };
   }, []);
+
+  const handleStepLabelChange = (label: string, idx: number) => {
+    const updatedStepLabels = [...stepLabels];
+    updatedStepLabels[idx] = label;
+
+    dispatch(updateChartSettings({ stepLabels: updatedStepLabels }));
+    onUpdateChartSettings({ stepLabels: updatedStepLabels });
+  };
 
   return (
     <Container ref={sortableRef}>
@@ -84,15 +114,35 @@ const FunnelSteps: FC<{}> = () => {
               inverted={inverted}
               optional={optional}
               filters={filters}
-              onRemove={() => dispatch(removeFunnelStep(id))}
+              onRemove={() => {
+                dispatch(removeFunnelStep(id));
+
+                if (stepsLabelsRef?.current.length) {
+                  const updatedStepLabels = [...stepsLabelsRef.current];
+                  updatedStepLabels.splice(idx, 1);
+                  dispatch(
+                    updateChartSettings({ stepLabels: updatedStepLabels })
+                  );
+                  onUpdateChartSettings({ stepLabels: updatedStepLabels });
+                }
+              }}
+              onLabelChange={(label, idx) => handleStepLabelChange(label, idx)}
               detailsVisible={stepVisible === id}
               isFirstStep={idx === 0}
               isDragged={isDragged}
+              stepLabel={stepLabels[idx] || undefined}
               setDetailsVisible={(id) => setStepVisible(id)}
               onClone={(id) => {
                 const stepId = uuid();
                 dispatch(cloneFunnelStep(id, stepId));
                 setStepVisible(stepId);
+                if (stepsLabelsRef?.current.length) {
+                  const updatedStepLabels = [...stepsLabelsRef.current, null];
+                  dispatch(
+                    updateChartSettings({ stepLabels: updatedStepLabels })
+                  );
+                  onUpdateChartSettings({ stepLabels: updatedStepLabels });
+                }
               }}
             />
           )

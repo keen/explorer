@@ -22,9 +22,10 @@ import text from './text.json';
 type Props = {
   step: FunnelStep;
   index: number;
+  label?: string;
 };
 
-const FunnelStep: FC<Props> = ({ step, index }) => {
+const FunnelStep: FC<Props> = ({ step, index, label }) => {
   const [open, setOpen] = useState(false);
 
   const {
@@ -46,7 +47,7 @@ const FunnelStep: FC<Props> = ({ step, index }) => {
         <StepNumber>
           {text.step} {index + 1}
         </StepNumber>
-        <Title>{eventCollection}</Title>
+        <Title>{label || eventCollection}</Title>
       </Header>
       {open && (
         <Content>

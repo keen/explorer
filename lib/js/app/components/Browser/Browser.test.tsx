@@ -39,6 +39,9 @@ const render = (storeState: any = {}, overProps: any = {}) => {
         width: 900,
         height: 700,
       },
+      visualization: {
+        chartSettings: {},
+      },
     },
     ...storeState,
   };

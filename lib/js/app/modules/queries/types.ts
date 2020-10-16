@@ -47,7 +47,6 @@ export type SavedQueryListItem = {
   query: Record<string, any>;
   tags: string[];
   visualization: Visualization;
-  stepLabels: string[];
 };
 
 export type ReducerState = {

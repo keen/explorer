@@ -21,7 +21,6 @@ const serializeSavedQuery = ({
     metadata && metadata.visualization
   ),
   tags: metadata && metadata.tags ? metadata.tags : [],
-  stepLabels: metadata && metadata.step_labels ? metadata.step_labels : [],
   query,
 });
 
