@@ -33,6 +33,7 @@ import {
   DOWNLOAD_CODE_SNIPPET,
   SHOW_EMAIL_EXTRACTION_MODAL,
   HIDE_EMAIL_EXTRACTION_MODAL,
+  COPY_API_RESOURCE_URL,
 } from './constants';
 
 export type Confirmation = 'delete';
@@ -220,6 +221,13 @@ export interface DownloadCodeSnippetAction {
   };
 }
 
+export interface CopyApiResourceUrlAction {
+  type: typeof COPY_API_RESOURCE_URL;
+  payload: {
+    config: Record<string, any>;
+  };
+}
+
 export type AppActions =
   | AppStartAction
   | ResizeScreenAction
@@ -249,4 +257,5 @@ export type AppActions =
   | SelectFirstSavedQueryAction
   | SelectFirstSavedQueryAction
   | ShowEmailExtractionModalction
-  | HideEmailExtractionModalction;
+  | HideEmailExtractionModalction
+  | CopyApiResourceUrlAction;

@@ -55,6 +55,7 @@ import {
   exportToCsv,
   createCodeSnippet,
   exportToHtml,
+  createResourceUrl,
 } from '../../utils';
 
 import { SET_QUERY_EVENT, NEW_QUERY_EVENT } from '../../queryCreator';
@@ -67,6 +68,7 @@ import {
   AppStartAction,
   CopyEmbeddedCodeAction,
   DownloadCodeSnippetAction,
+  CopyApiResourceUrlAction,
 } from './types';
 
 import {
@@ -88,6 +90,7 @@ import {
   EXPORT_DATA_TO_CSV,
   COPY_EMBEDDED_CODE,
   DOWNLOAD_CODE_SNIPPET,
+  COPY_API_RESOURCE_URL,
 } from './constants';
 
 const createScreenResizeChannel = () =>
@@ -417,6 +420,29 @@ export function* downloadCodeSnippet({ payload }: DownloadCodeSnippetAction) {
   }
 }
 
+export function* copyApiResourceUrl({ payload }: CopyApiResourceUrlAction) {
+  const { config } = payload;
+  const query = yield select(getQuerySettings);
+  const notificationManager = yield getContext(NOTIFICATION_MANAGER_CONTEXT);
+  try {
+    const url = createResourceUrl({ query, config });
+    console.log(url);
+    yield copyToClipboard(url);
+    yield notificationManager.showNotification({
+      type: 'success',
+      message: text.copyApiResourceUrl,
+      autoDismiss: true,
+    });
+  } catch (err) {
+    yield notificationManager.showNotification({
+      type: 'error',
+      message: text.copyApiResourceUrlError,
+      showDismissButton: true,
+      autoDismiss: false,
+    });
+  }
+}
+
 export function* appSaga() {
   yield takeLatest(APP_START, appStart);
   yield takeLatest(SHARE_QUERY_URL, shareQueryUrl);
@@ -432,5 +458,6 @@ export function* appSaga() {
   yield takeLatest(EXPORT_DATA_TO_CSV, exportDataToCsv);
   yield takeLatest(COPY_EMBEDDED_CODE, copyEmbeddedCode);
   yield takeLatest(DOWNLOAD_CODE_SNIPPET, downloadCodeSnippet);
+  yield takeLatest(COPY_API_RESOURCE_URL, copyApiResourceUrl);
   yield debounce(200, SCREEN_RESIZE, resizeBrowserScreen);
 }

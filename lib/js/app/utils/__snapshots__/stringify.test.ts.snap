@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`stringify query params 1`] = `"timezone=0&timeframe=%22this_14_weeks%22&order_by=%5B%7B%22direction%22%3A%22ASC%22%2C%22property_name%22%3A%22result%22%7D%2C%7B%22direction%22%3A%22ASC%22%2C%22property_name%22%3A%22platform%22%7D%5D&group_by=%5B%22referrer%22%2C%22platform%22%5D&event_collection=%22purchases%22"`;

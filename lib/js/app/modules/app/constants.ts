@@ -29,5 +29,6 @@ export const DOWNLOAD_CODE_SNIPPET = '@app/DOWNLOAD_CODE_SNIPPET';
 export const APP_START = '@app/APP_START';
 export const SHOW_EMAIL_EXTRACTION_MODAL = '@app/SHOW_EMAIL_EXTRACTION_MODAL';
 export const HIDE_EMAIL_EXTRACTION_MODAL = '@app/HIDE_EMAIL_EXTRACTION_MODAL';
+export const COPY_API_RESOURCE_URL = '@app/COPY_API_RESOURCE_URL';
 
 export const URL_STATE = 'keen_explorer_state';

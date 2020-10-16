@@ -1,8 +1,9 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useState, useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { DropdownMenu, Tooltip } from '@keen.io/ui-core';
 import { AnimatePresence } from 'framer-motion';
 
+import { AppContext } from '../../contexts';
 import { getQueryResults } from '../../modules/queries';
 
 import {
@@ -22,6 +23,7 @@ import {
   exportChartToJson,
   exportDataToCsv,
   showEmbedModal,
+  copyApiResourceUrl,
 } from '../../modules/app';
 
 type Props = {
@@ -43,6 +45,9 @@ const ActionsMenu: FC<Props> = ({ isNewQuery, onRemoveQuery, onHideMenu }) => {
   const dispatch = useDispatch();
   const queryResults = useSelector(getQueryResults);
   const [tooltip, showTooltip] = useState(false);
+  const {
+    keenAnalysis: { config },
+  } = useContext(AppContext);
   return (
     <Container>
       <DropdownMenu.Container>
@@ -51,15 +56,15 @@ const ActionsMenu: FC<Props> = ({ isNewQuery, onRemoveQuery, onHideMenu }) => {
           onMouseEnter={() => !queryResults && showTooltip(true)}
           onMouseLeave={() => tooltip && showTooltip(false)}
         >
-          <AnimatePresence>
-            {tooltip && (
+          {tooltip && (
+            <AnimatePresence>
               <TooltipMotion {...tooltipMotion}>
                 <Tooltip hasArrow={false} mode="dark">
                   <TooltipContent>{text.tooltip}</TooltipContent>
                 </Tooltip>
               </TooltipMotion>
-            )}
-          </AnimatePresence>
+            </AnimatePresence>
+          )}
           <ExportDataLinks isActive={queryResults}>
             <DropdownMenu.Item
               onClick={() => {
@@ -106,6 +111,14 @@ const ActionsMenu: FC<Props> = ({ isNewQuery, onRemoveQuery, onHideMenu }) => {
           }}
         >
           {text.shareQuery}
+        </DropdownMenu.Item>
+        <DropdownMenu.Item
+          onClick={() => {
+            dispatch(copyApiResourceUrl(config));
+            onHideMenu();
+          }}
+        >
+          {text.apiResource}
         </DropdownMenu.Item>
         <DropdownMenu.Item
           onClick={() => {

@@ -29,6 +29,7 @@ import {
   downloadCodeSnippet,
   showEmailExtractionModal,
   hideEmailExtractionModal,
+  copyApiResourceUrl,
 } from './actions';
 import {
   getConfirmation,
@@ -87,6 +88,7 @@ export {
   copyEmbeddedCode,
   downloadCodeSnippet,
   exportDataToCsv,
+  copyApiResourceUrl,
   ReducerState,
   SettingsModalSource,
 };

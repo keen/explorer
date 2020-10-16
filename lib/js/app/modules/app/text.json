@@ -5,5 +5,7 @@
   "downloadChartError": "download failed. Please try again later.",
   "downloadInProgress": "download in progress",
   "copyEmbeddedCode": "HTML code copied to clipboard",
-  "copyEmbeddedCodeError": "We were not able to copy HTML code. Try again later."
+  "copyEmbeddedCodeError": "We were not able to copy HTML code. Try again later.",
+  "copyApiResourceUrl": "API Resource copied to clipboard",
+  "copyApiResourceUrlError": "We were not able to copy API Resource. Try again later."
 }
