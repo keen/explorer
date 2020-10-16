@@ -426,7 +426,6 @@ export function* copyApiResourceUrl({ payload }: CopyApiResourceUrlAction) {
   const notificationManager = yield getContext(NOTIFICATION_MANAGER_CONTEXT);
   try {
     const url = createResourceUrl({ query, config });
-    console.log(url);
     yield copyToClipboard(url);
     yield notificationManager.showNotification({
       type: 'success',

@@ -56,15 +56,15 @@ const ActionsMenu: FC<Props> = ({ isNewQuery, onRemoveQuery, onHideMenu }) => {
           onMouseEnter={() => !queryResults && showTooltip(true)}
           onMouseLeave={() => tooltip && showTooltip(false)}
         >
-          {tooltip && (
-            <AnimatePresence>
+          <AnimatePresence>
+            {tooltip && (
               <TooltipMotion {...tooltipMotion}>
                 <Tooltip hasArrow={false} mode="dark">
                   <TooltipContent>{text.tooltip}</TooltipContent>
                 </Tooltip>
               </TooltipMotion>
-            </AnimatePresence>
-          )}
+            )}
+          </AnimatePresence>
           <ExportDataLinks isActive={queryResults}>
             <DropdownMenu.Item
               onClick={() => {
