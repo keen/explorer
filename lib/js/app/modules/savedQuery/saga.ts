@@ -4,9 +4,14 @@ import { takeLatest, select, put } from 'redux-saga/effects';
 
 import { updateSaveQuery } from './actions';
 
-import { setVisualization } from '../app';
+import { setVisualization, getQueryAutorun } from '../app';
 import { SavedQueryListItem } from '../queries';
-import { getSavedQueries, SAVE_QUERY_SUCCESS } from '../queries';
+import {
+  setQuerySettings,
+  getSavedQueries,
+  runQuery,
+  SAVE_QUERY_SUCCESS,
+} from '../queries';
 
 import { SELECT_SAVED_QUERY } from './constants';
 
@@ -28,6 +33,7 @@ function* selectSavedQuery({ payload }: SelectSavedQueryAction) {
       tags,
       visualization,
       stepLabels,
+      query,
     } = savedQueries.find(({ name: queryName }) => queryName === payload.name);
     const savedQuery = {
       name,
@@ -43,7 +49,13 @@ function* selectSavedQuery({ payload }: SelectSavedQueryAction) {
     const { type: widgetType, chartSettings, widgetSettings } = visualization;
 
     yield put(setVisualization(widgetType, chartSettings, widgetSettings));
+    yield put(setQuerySettings(query));
     yield put(updateSaveQuery(savedQuery));
+
+    const autorunQuery = yield select(getQueryAutorun);
+    if (autorunQuery) {
+      yield put(runQuery(query));
+    }
   } catch (err) {
     console.error(err);
   }
