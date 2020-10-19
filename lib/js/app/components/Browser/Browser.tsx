@@ -16,17 +16,23 @@ import {
   PreviewPlaceholder,
 } from './Browser.styles';
 
+import SearchQueries from '../SearchQueries';
 import BrowserNavigation from '../BrowserNavigation';
 import BrowserPreview from '../BrowserPreview';
 import CreateFirstQuery from '../CreateFirstQuery';
-import QueriesList from '../QueriesList';
+import QueriesList, { QueriesSortSettings } from '../QueriesList';
 import QueriesPlaceholder from '../QueriesPlaceholder';
 
 import { getSavedQueries, getSavedQueriesLoaded } from '../../modules/queries';
 import { getBrowserScreenDimension, createNewQuery } from '../../modules/app';
 import { getSavedQuery } from '../../modules/savedQuery';
 
-import { LIST_SCROLL_OFFSET } from './constants';
+import {
+  LIST_SCROLL_OFFSET,
+  SOCKET_CONTAINER_WIDTH,
+  DEFAULT_PROPERTY,
+  DEFAULT_DIRECTION,
+} from './constants';
 
 type Props = {
   /** Edit query event handler */
@@ -39,10 +45,44 @@ type Props = {
 
 const Browser: FC<Props> = ({ onEditQuery, onRunQuery, onSelectQuery }) => {
   const dispatch = useDispatch();
+  const [searchPhrase, setSearchPhrase] = useState(null);
+  const [sortSettings, setSortSettings] = useState<QueriesSortSettings>({
+    property: DEFAULT_PROPERTY,
+    direction: DEFAULT_DIRECTION,
+  });
 
   const browserDimension = useSelector(getBrowserScreenDimension);
   const savedQuery = useSelector(getSavedQuery);
+
   const savedQueries = useSelector(getSavedQueries);
+  const filteredQueries = useMemo(() => {
+    let queries = savedQueries;
+    if (searchPhrase) {
+      queries = savedQueries.filter(({ displayName }) =>
+        displayName.toLowerCase().includes(searchPhrase)
+      );
+    }
+
+    const { property, direction } = sortSettings;
+    if (property && direction) {
+      queries = queries.sort((firstQuery, secondQuery) => {
+        const firstProperty = firstQuery[property];
+        const secondProperty = secondQuery[property];
+
+        if (firstProperty < secondProperty) {
+          return direction === 'ascending' ? -1 : 1;
+        }
+        if (firstProperty > secondProperty) {
+          return direction === 'ascending' ? 1 : -1;
+        }
+
+        return 0;
+      });
+    }
+
+    return queries;
+  }, [searchPhrase, savedQueries, sortSettings]);
+
   const isSavedQueriesLoaded = useSelector(getSavedQueriesLoaded);
 
   const [maxScroll, setMaxScroll] = useState(0);
@@ -85,10 +125,13 @@ const Browser: FC<Props> = ({ onEditQuery, onRunQuery, onSelectQuery }) => {
   }, [listContainer, savedQueries, browserDimension]);
 
   const isEmptyProject = isSavedQueriesLoaded && savedQueries.length === 0;
+  const isEmptySearch = isSavedQueriesLoaded && filteredQueries.length === 0;
 
   return (
     <>
-      <BrowserNavigation attractNewQueryButton={isEmptyProject} />
+      <BrowserNavigation attractNewQueryButton={isEmptyProject}>
+        <SearchQueries onSearch={(phrase) => setSearchPhrase(phrase)} />
+      </BrowserNavigation>
       <Container flexDirection={{ xs: 'column', md: 'row' }}>
         <Socket marginRight={{ xs: 0, md: '-1px' }}>
           {!isSavedQueriesLoaded || isEmptyProject ? (
@@ -101,11 +144,14 @@ const Browser: FC<Props> = ({ onEditQuery, onRunQuery, onSelectQuery }) => {
                 maxHeight={browserDimension.height - LIST_SCROLL_OFFSET}
               >
                 <QueriesList
-                  savedQueries={savedQueries}
+                  savedQueries={filteredQueries}
+                  sortSettings={sortSettings}
                   activeQuery={savedQuery.name}
                   onSelectQuery={onSelectQuery}
+                  onSortQueries={(settings) => setSortSettings(settings)}
                 />
                 {scrollOverflow && <ScrollOverflow />}
+                {isEmptySearch && <QueriesPlaceholder isEmptySearch />}
               </ScrollableContainer>
             </>
           )}

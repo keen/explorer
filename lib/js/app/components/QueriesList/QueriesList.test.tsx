@@ -1,9 +1,5 @@
 import React from 'react';
-import {
-  render as rtlRender,
-  getNodeText,
-  fireEvent,
-} from '@testing-library/react';
+import { render as rtlRender, fireEvent } from '@testing-library/react';
 
 import QueriesList from './QueriesList';
 
@@ -12,6 +8,11 @@ const render = (overProps: any = {}) => {
     savedQueries: [],
     activeQuery: '',
     onSelectQuery: jest.fn(),
+    onSortQueries: jest.fn(),
+    sortSettings: {
+      property: 'name',
+      direction: 'ascending',
+    },
     ...overProps,
   };
 
@@ -70,16 +71,17 @@ test('allows user to sort saved query list by name', () => {
   ];
 
   const {
-    wrapper: { getAllByTestId, getByTestId },
+    wrapper: { getByTestId },
+    props,
   } = render({ savedQueries });
 
   const sortByName = getByTestId('table-header-name');
   fireEvent.click(sortByName);
 
-  const [firstQuery, secondQuery] = getAllByTestId('saved-query-name');
-
-  expect(getNodeText(firstQuery)).toEqual('Purchases');
-  expect(getNodeText(secondQuery)).toEqual('A/B tests');
+  expect(props.onSortQueries).toHaveBeenCalledWith({
+    property: 'name',
+    direction: 'descending',
+  });
 });
 
 test('allows user to sort saved query list by update date', () => {
@@ -103,14 +105,15 @@ test('allows user to sort saved query list by update date', () => {
   ];
 
   const {
-    wrapper: { getAllByTestId, getByTestId },
+    wrapper: { getByTestId },
+    props,
   } = render({ savedQueries });
 
   const sortByName = getByTestId('table-header-date');
   fireEvent.click(sortByName);
 
-  const [firstQuery, secondQuery] = getAllByTestId('saved-query-date');
-
-  expect(getNodeText(firstQuery)).toEqual('2019/10/12');
-  expect(getNodeText(secondQuery)).toEqual('2020/11/11');
+  expect(props.onSortQueries).toHaveBeenCalledWith({
+    property: 'lastModifiedDate',
+    direction: 'ascending',
+  });
 });
