@@ -15,7 +15,15 @@ import {
   hideEmbedModal,
   showEmailExtractionModal,
   hideEmailExtractionModal,
+  setQueryAutorun,
 } from './actions';
+
+test('set query autorun settings', () => {
+  const action = setQueryAutorun(true);
+  const { autorunQuery } = appReducer(initialState, action);
+
+  expect(autorunQuery).toBeTruthy();
+});
 
 test('shows extraction settings modal', () => {
   const action = showEmailExtractionModal();

@@ -30,6 +30,7 @@ import {
   showEmailExtractionModal,
   hideEmailExtractionModal,
   copyApiResourceUrl,
+  setQueryAutorun,
 } from './actions';
 import {
   getConfirmation,
@@ -40,6 +41,7 @@ import {
   getExtractToEmailModalVisibility,
   getVisualization,
   getBrowserScreenDimension,
+  getQueryAutorun,
 } from './selectors';
 
 import {
@@ -89,6 +91,8 @@ export {
   downloadCodeSnippet,
   exportDataToCsv,
   copyApiResourceUrl,
+  setQueryAutorun,
+  getQueryAutorun,
   ReducerState,
   SettingsModalSource,
 };

@@ -20,6 +20,7 @@ import {
   setViewMode,
   loadPersitedState,
   updateQueryCreator,
+  setQueryAutorun,
 } from './actions';
 
 import {
@@ -69,6 +70,7 @@ import {
   CopyEmbeddedCodeAction,
   DownloadCodeSnippetAction,
   CopyApiResourceUrlAction,
+  SetQueryAutorunAction,
 } from './types';
 
 import {
@@ -91,6 +93,8 @@ import {
   COPY_EMBEDDED_CODE,
   DOWNLOAD_CODE_SNIPPET,
   COPY_API_RESOURCE_URL,
+  SET_QUERY_AUTORUN,
+  QUERY_AUTORUN_KEY,
 } from './constants';
 
 const createScreenResizeChannel = () =>
@@ -252,6 +256,18 @@ export function* resizeBrowserScreen({ payload }: ResizeScreenAction) {
   yield put(setScreenDimension(width, height));
 }
 
+export function* rehydrateAutorunSettings() {
+  try {
+    const settings = localStorage.getItem(QUERY_AUTORUN_KEY);
+    if (settings) {
+      const { autorun } = JSON.parse(settings);
+      yield put(setQueryAutorun(autorun));
+    }
+  } catch (err) {
+    console.error(err);
+  }
+}
+
 export function* appStart({ payload }: AppStartAction) {
   yield put(getOrganizationUsageLimits());
   yield put(fetchSavedQueries());
@@ -273,6 +289,7 @@ export function* appStart({ payload }: AppStartAction) {
   const { width, height } = getScreenDimensions();
   yield put(setScreenDimension(width, height));
 
+  yield spawn(rehydrateAutorunSettings);
   yield spawn(watchScreenResize);
 }
 
@@ -442,8 +459,18 @@ export function* copyApiResourceUrl({ payload }: CopyApiResourceUrlAction) {
   }
 }
 
+export function* persistAutorunSettings({ payload }: SetQueryAutorunAction) {
+  const { autorun } = payload;
+  try {
+    localStorage.setItem(QUERY_AUTORUN_KEY, JSON.stringify({ autorun }));
+  } catch (err) {
+    console.error(err);
+  }
+}
+
 export function* appSaga() {
   yield takeLatest(APP_START, appStart);
+  yield takeLatest(SET_QUERY_AUTORUN, persistAutorunSettings);
   yield takeLatest(SHARE_QUERY_URL, shareQueryUrl);
   yield takeLatest(LOAD_STATE_FROM_URL, loadStateFromUrl);
   yield takeLatest(UPDATE_QUERY_CREATOR, updateCreator);

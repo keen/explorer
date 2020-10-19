@@ -34,6 +34,7 @@ import {
   SHOW_EMAIL_EXTRACTION_MODAL,
   HIDE_EMAIL_EXTRACTION_MODAL,
   COPY_API_RESOURCE_URL,
+  SET_QUERY_AUTORUN,
 } from './constants';
 
 export type Confirmation = 'delete';
@@ -71,13 +72,21 @@ export type ReducerState = {
     chartSettings: ChartSettings;
     widgetSettings: WidgetSettings;
   };
+  autorunQuery: boolean;
 };
 
-export interface ShowEmailExtractionModalction {
+export interface SetQueryAutorunAction {
+  type: typeof SET_QUERY_AUTORUN;
+  payload: {
+    autorun: boolean;
+  };
+}
+
+export interface ShowEmailExtractionModalAction {
   type: typeof SHOW_EMAIL_EXTRACTION_MODAL;
 }
 
-export interface HideEmailExtractionModalction {
+export interface HideEmailExtractionModalAction {
   type: typeof HIDE_EMAIL_EXTRACTION_MODAL;
 }
 
@@ -256,6 +265,7 @@ export type AppActions =
   | DownloadCodeSnippetAction
   | SelectFirstSavedQueryAction
   | SelectFirstSavedQueryAction
-  | ShowEmailExtractionModalction
-  | HideEmailExtractionModalction
-  | CopyApiResourceUrlAction;
+  | ShowEmailExtractionModalAction
+  | HideEmailExtractionModalAction
+  | CopyApiResourceUrlAction
+  | SetQueryAutorunAction;

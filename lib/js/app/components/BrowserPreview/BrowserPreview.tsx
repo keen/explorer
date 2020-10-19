@@ -9,6 +9,7 @@ import {
 } from './BrowserPreview.styles';
 import text from './text.json';
 
+import AutorunQuery from '../AutorunQuery';
 import BrowserQueryMenu from '../BrowserQueryMenu';
 import Heading from '../Heading';
 import QueryVisualization from '../QueryVisualization';
@@ -23,6 +24,7 @@ import {
   getQueryPerformState,
   SavedQueryListItem,
 } from '../../modules/queries';
+import { setQueryAutorun, getQueryAutorun } from '../../modules/app';
 
 type Props = {
   /** Current active query */
@@ -39,14 +41,20 @@ const BrowserPreview: FC<Props> = ({
   onRunQuery,
 }) => {
   const dispatch = useDispatch();
+
   const queryResults = useSelector(getQueryResults);
   const isQueryLoading = useSelector(getQueryPerformState);
   const isQueryLimitReached = useSelector(getQueryLimitReached);
+  const autorunQuery = useSelector(getQueryAutorun);
 
   return (
     <>
       <HeaderContainer>
         <Heading>{text.title}</Heading>
+        <AutorunQuery
+          autorun={autorunQuery}
+          onToggle={(autorun) => dispatch(setQueryAutorun(autorun))}
+        />
       </HeaderContainer>
       <Card>
         {isQueryLimitReached ? (
