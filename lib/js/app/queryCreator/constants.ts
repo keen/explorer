@@ -53,3 +53,9 @@ export const TIME_UNITS = {
   month: 'months',
   year: 'years',
 };
+
+export const TOOLTIP_MOTION = {
+  initial: { opacity: 0 },
+  animate: { opacity: 1 },
+  exit: { opacity: 0 },
+};

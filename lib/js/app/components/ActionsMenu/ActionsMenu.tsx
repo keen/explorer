@@ -24,6 +24,8 @@ import {
   showEmbedModal,
 } from '../../modules/app';
 
+import { TOOLTIP_MOTION } from '../../constants';
+
 type Props = {
   /** Is new query */
   isNewQuery: boolean;
@@ -31,12 +33,6 @@ type Props = {
   onRemoveQuery: () => void;
   /** Hide menu */
   onHideMenu: () => void;
-};
-
-const tooltipMotion = {
-  initial: { opacity: 0 },
-  animate: { opacity: 1 },
-  exit: { opacity: 0 },
 };
 
 const ActionsMenu: FC<Props> = ({ isNewQuery, onRemoveQuery, onHideMenu }) => {
@@ -53,7 +49,7 @@ const ActionsMenu: FC<Props> = ({ isNewQuery, onRemoveQuery, onHideMenu }) => {
         >
           <AnimatePresence>
             {tooltip && (
-              <TooltipMotion {...tooltipMotion}>
+              <TooltipMotion {...TOOLTIP_MOTION}>
                 <Tooltip hasArrow={false} mode="dark">
                   <TooltipContent>{text.tooltip}</TooltipContent>
                 </Tooltip>
