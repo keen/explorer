@@ -1551,7 +1551,7 @@
   resolved "https://registry.yarnpkg.com/@keen.io/colors/-/colors-1.1.0.tgz#feda3fc31056cd67c9d36abfce30470b95ef6879"
   integrity sha512-ATUL4zpj6NNHZChCVfI3ellRIzfJMsYzSCqnkcd7AqZseSGVLe6A8yK0yqlzzYVtz3yunX9nDN1AMpJH2dFIfA==
 
-"@keen.io/dataviz@^2.1.10":
+"@keen.io/dataviz@^2.1.14":
   version "2.1.14"
   resolved "https://registry.yarnpkg.com/@keen.io/dataviz/-/dataviz-2.1.14.tgz#591a25ff8a059c196a8f4e0ccd5c303fa1564b63"
   integrity sha512-smQQLedyA3qwjS1H34GXKHHBSaivaI7UlQfWUiF/YxjQEx6TuzG1yC1pAejngt+0uG+Yfe2CLfVfd5vQJ6KT0g==
@@ -1641,7 +1641,7 @@
     styled-system "5.1.5"
     webfontloader "^1.6.28"
 
-"@keen.io/widget-picker@^1.1.0":
+"@keen.io/widget-picker@^1.2.15":
   version "1.2.15"
   resolved "https://registry.yarnpkg.com/@keen.io/widget-picker/-/widget-picker-1.2.15.tgz#271db6f9100d40f59224783236206b345f5abc7a"
   integrity sha512-KmbSlaBgEuU2VmwzfFeXYegZbSQE6KaGn/NepL/rFx6EmBwV2jEYDmJiN0dXuDMPXN2kqcV8O7isw7vScw6sPw==
