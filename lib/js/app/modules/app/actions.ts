@@ -36,6 +36,7 @@ import {
   DOWNLOAD_CODE_SNIPPET,
   SHOW_EMAIL_EXTRACTION_MODAL,
   HIDE_EMAIL_EXTRACTION_MODAL,
+  SET_QUERY_AUTORUN,
 } from './constants';
 
 import {
@@ -48,6 +49,11 @@ import {
 export const appStart = (initialView: ViewMode): AppActions => ({
   type: APP_START,
   payload: { initialView },
+});
+
+export const setQueryAutorun = (autorun: boolean): AppActions => ({
+  type: SET_QUERY_AUTORUN,
+  payload: { autorun },
 });
 
 export const resizeScreen = (width: number, height: number): AppActions => ({

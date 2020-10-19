@@ -29,6 +29,7 @@ import {
   downloadCodeSnippet,
   showEmailExtractionModal,
   hideEmailExtractionModal,
+  setQueryAutorun,
 } from './actions';
 import {
   getConfirmation,
@@ -39,6 +40,7 @@ import {
   getExtractToEmailModalVisibility,
   getVisualization,
   getBrowserScreenDimension,
+  getQueryAutorun,
 } from './selectors';
 
 import {
@@ -87,6 +89,8 @@ export {
   copyEmbeddedCode,
   downloadCodeSnippet,
   exportDataToCsv,
+  setQueryAutorun,
+  getQueryAutorun,
   ReducerState,
   SettingsModalSource,
 };
