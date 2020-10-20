@@ -25,6 +25,10 @@ export const Settings = styled.div`
   align-items: center;
 `;
 
+export const Socket = styled.div`
+  margin-left: 20px;
+`;
+
 export const PulseMotion = styled(motion.div)`
   border-radius: 25px;
 `;

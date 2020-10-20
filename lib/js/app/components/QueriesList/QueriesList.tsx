@@ -1,6 +1,5 @@
-import React, { FC, useState, useMemo, useCallback } from 'react';
+import React, { FC, useCallback } from 'react';
 import moment from 'moment';
-import { SortMode } from '@keen.io/ui-core';
 
 import { QueriesTable, Header } from './QueriesList.styles';
 
@@ -11,9 +10,7 @@ import Heading from '../Heading';
 import { SavedQueryListItem } from '../../modules/queries';
 import text from './text.json';
 
-import { DEFAULT_PROPERTY, DEFAULT_DIRECTION } from './constants';
-
-import { SortProperty } from './types';
+import { QueriesSortSettings, SortProperty } from './types';
 
 type Props = {
   /** Saved queries list */
@@ -22,54 +19,31 @@ type Props = {
   activeQuery: string;
   /** Select query event handler */
   onSelectQuery: (queryName: string, settings: Record<string, any>) => void;
+  /** Queries sort settings */
+  sortSettings: QueriesSortSettings;
+  /** Update sort settings event handler */
+  onSortQueries: (settings: QueriesSortSettings) => void;
 };
 
 const QueriesList: FC<Props> = ({
   savedQueries,
   activeQuery,
+  sortSettings,
+  onSortQueries,
   onSelectQuery,
 }) => {
-  const [sortSettings, setSortSettings] = useState<{
-    direction: SortMode;
-    property: SortProperty;
-  }>({
-    property: DEFAULT_PROPERTY,
-    direction: DEFAULT_DIRECTION,
-  });
-
   const sortHandler = useCallback(
     (property: SortProperty) => {
       if (property !== sortSettings.property) {
-        setSortSettings({ property, direction: 'ascending' });
+        onSortQueries({ property, direction: 'ascending' });
       } else {
         const sortDirection =
           sortSettings.direction === 'ascending' ? 'descending' : 'ascending';
-        setSortSettings({ property, direction: sortDirection });
+        onSortQueries({ property, direction: sortDirection });
       }
     },
     [sortSettings]
   );
-
-  const sortedSavedQueries = useMemo(() => {
-    const { property, direction } = sortSettings;
-    if (property && direction) {
-      return savedQueries.sort((firstQuery, secondQuery) => {
-        const firstProperty = firstQuery[property];
-        const secondProperty = secondQuery[property];
-
-        if (firstProperty < secondProperty) {
-          return direction === 'ascending' ? -1 : 1;
-        }
-        if (firstProperty > secondProperty) {
-          return direction === 'ascending' ? 1 : -1;
-        }
-
-        return 0;
-      });
-    }
-
-    return savedQueries;
-  }, [sortSettings, savedQueries]);
 
   return (
     <QueriesTable>
@@ -110,7 +84,7 @@ const QueriesList: FC<Props> = ({
             />
           </Header>
         </tr>
-        {sortedSavedQueries.map(
+        {savedQueries.map(
           ({
             name,
             displayName,
