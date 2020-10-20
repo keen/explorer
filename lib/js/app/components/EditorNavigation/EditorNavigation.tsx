@@ -39,16 +39,12 @@ import {
 } from '../../modules/app';
 import { colors } from '@keen.io/colors';
 
+import { TOOLTIP_MOTION } from '../../constants';
+
 const actionsDropdownMotion = {
   initial: { opacity: 0, top: 20, left: -10 },
   animate: { opacity: 1, top: 2, left: -10 },
   exit: { opacity: 0, top: 30, left: -10 },
-};
-
-const tooltipMotion = {
-  initial: { opacity: 0 },
-  animate: { opacity: 1 },
-  exit: { opacity: 0 },
 };
 
 type Props = {
@@ -66,7 +62,8 @@ const EditorNavigation: FC<Props> = ({ onSaveQuery }) => {
   const actionsContainer = useRef(null);
 
   const [actionsMenu, setActionsMenuVisibility] = useState(false);
-  const [tooltip, showTooltip] = useState(false);
+  const [actionsTooltip, showActionsTooltip] = useState(false);
+  const [settingsTooltip, showSettingsTooltip] = useState(false);
   const { exists, displayName, name, refreshRate, tags, cached } = useSelector(
     getSavedQuery
   );
@@ -132,8 +129,8 @@ const EditorNavigation: FC<Props> = ({ onSaveQuery }) => {
       <Menu>
         <MenuItem
           position="relative"
-          onMouseEnter={() => showTooltip(true)}
-          onMouseLeave={() => showTooltip(false)}
+          onMouseEnter={() => showSettingsTooltip(true)}
+          onMouseLeave={() => showSettingsTooltip(false)}
         >
           <CircleButton
             icon={
@@ -141,27 +138,36 @@ const EditorNavigation: FC<Props> = ({ onSaveQuery }) => {
                 <Icon type="settings" />
               </span>
             }
-            onClick={() =>
+            onClick={() => {
+              showSettingsTooltip(false);
               dispatch(
                 showQuerySettingsModal(SettingsModalSource.QUERY_SETTINGS)
-              )
-            }
+              );
+            }}
           />
           <AnimatePresence>
-            {tooltip && (
-              <TooltipMotion {...tooltipMotion}>
+            {settingsTooltip && (
+              <TooltipMotion {...TOOLTIP_MOTION}>
                 <Tooltip hasArrow={false} mode="light">
-                  <TooltipContent>{text.tooltip}</TooltipContent>
+                  <TooltipContent>{text.settingsTooltip}</TooltipContent>
                 </Tooltip>
               </TooltipMotion>
             )}
           </AnimatePresence>
         </MenuItem>
-        <MenuItem ref={actionsContainer}>
-          <CircleButton
-            icon={<Icon type="actions" />}
-            onClick={() => setActionsMenuVisibility(!actionsMenu)}
-          />
+        <MenuItem position="relative" ref={actionsContainer}>
+          <div
+            onMouseEnter={() => showActionsTooltip(true)}
+            onMouseLeave={() => showActionsTooltip(false)}
+          >
+            <CircleButton
+              icon={<Icon type="actions" />}
+              onClick={() => {
+                showActionsTooltip(false);
+                setActionsMenuVisibility(!actionsMenu);
+              }}
+            />
+          </div>
           <Dropdown
             isOpen={actionsMenu}
             fullWidth={false}
@@ -176,6 +182,15 @@ const EditorNavigation: FC<Props> = ({ onSaveQuery }) => {
               }}
             />
           </Dropdown>
+          <AnimatePresence>
+            {actionsTooltip && (
+              <TooltipMotion {...TOOLTIP_MOTION}>
+                <Tooltip hasArrow={false} mode="light">
+                  <TooltipContent>{text.actionsTooltip}</TooltipContent>
+                </Tooltip>
+              </TooltipMotion>
+            )}
+          </AnimatePresence>
         </MenuItem>
         <MenuItem>
           <Button

@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { space, SpaceProps } from 'styled-system';
+import { motion } from 'framer-motion';
 import { colors } from '@keen.io/colors';
 
 export const Container = styled.div`
@@ -26,4 +27,20 @@ export const BasicActions = styled.div`
 
 export const ContextActions = styled.div`
   display: flex;
+`;
+
+export const TooltipMotion = styled(motion.div)`
+  position: absolute;
+  right: 0;
+  top: 100%;
+  transform: translateY(4px);
+`;
+
+export const TooltipContent = styled.div`
+  font-family: 'Lato Regular', sans-serif;
+  font-size: 14px;
+  line-height: 17px;
+  white-space: nowrap;
+
+  color: ${colors.black[500]};
 `;

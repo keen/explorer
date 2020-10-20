@@ -1,4 +1,6 @@
 {
   "editQuery": "Edit query",
-  "removeQuery": "Delete"
+  "removeQuery": "Delete",
+  "settingsTooltip": "Query Settings",
+  "actionsTooltip": "Actions"
 }

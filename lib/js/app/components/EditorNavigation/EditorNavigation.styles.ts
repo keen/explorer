@@ -53,7 +53,7 @@ export const Menu = styled.div`
 
 export const TooltipMotion = styled(motion.div)`
   position: absolute;
-  left: 50%;
+  right: 0;
   top: 100%;
   transform: translateY(4px);
 `;
@@ -62,6 +62,7 @@ export const TooltipContent = styled.div`
   font-family: 'Lato Regular', sans-serif;
   font-size: 14px;
   line-height: 17px;
+  white-space: nowrap;
 
   color: ${colors.black[500]};
 `;
