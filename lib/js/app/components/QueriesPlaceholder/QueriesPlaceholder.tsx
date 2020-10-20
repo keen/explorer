@@ -17,7 +17,9 @@ const QueriesPlaceholder: FC<Props> = ({ isEmptySearch }) => (
     <Placeholder opacityAmount={0.8} />
     <Placeholder opacityAmount={0.82}>
       {isEmptySearch && (
-        <SearchMessage>{text.emptySearchMessage}</SearchMessage>
+        <SearchMessage data-testid="empty-search-message">
+          {text.emptySearchMessage}
+        </SearchMessage>
       )}
     </Placeholder>
     <Placeholder opacityAmount={0.84} />

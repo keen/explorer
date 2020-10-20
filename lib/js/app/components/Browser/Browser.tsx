@@ -130,7 +130,9 @@ const Browser: FC<Props> = ({ onEditQuery, onRunQuery, onSelectQuery }) => {
   return (
     <>
       <BrowserNavigation attractNewQueryButton={isEmptyProject}>
-        <SearchQueries onSearch={(phrase) => setSearchPhrase(phrase)} />
+        {isSavedQueriesLoaded && !isEmptyProject && (
+          <SearchQueries onSearch={(phrase) => setSearchPhrase(phrase)} />
+        )}
       </BrowserNavigation>
       <Container flexDirection={{ xs: 'column', md: 'row' }}>
         <Socket marginRight={{ xs: 0, md: '-1px' }}>
