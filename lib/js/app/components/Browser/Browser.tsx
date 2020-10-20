@@ -29,7 +29,6 @@ import { getSavedQuery } from '../../modules/savedQuery';
 
 import {
   LIST_SCROLL_OFFSET,
-  SOCKET_CONTAINER_WIDTH,
   DEFAULT_PROPERTY,
   DEFAULT_DIRECTION,
 } from './constants';
@@ -122,7 +121,7 @@ const Browser: FC<Props> = ({ onEditQuery, onRunQuery, onSelectQuery }) => {
       const hasOverflow = offsetHeight < scrollHeight && scrollTop < scroll;
       setScrollOverflow(hasOverflow);
     }
-  }, [listContainer, savedQueries, browserDimension]);
+  }, [listContainer, searchPhrase, savedQueries, browserDimension]);
 
   const isEmptyProject = isSavedQueriesLoaded && savedQueries.length === 0;
   const isEmptySearch = isSavedQueriesLoaded && filteredQueries.length === 0;
