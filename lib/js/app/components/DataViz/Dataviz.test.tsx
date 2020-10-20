@@ -6,6 +6,8 @@ import { KeenDataviz } from '@keen.io/dataviz';
 import DataViz from './Dataviz';
 import text from './text.json';
 
+import { DEFAULT_WIDGET_SETTINGS } from './constants';
+
 const renderMock = jest.fn();
 const errorMock = jest.fn();
 
@@ -36,6 +38,23 @@ test('creates KeenDataviz instance', () => {
   render(<DataViz {...initialProps} />);
 
   expect(KeenDataviz).toHaveBeenCalledTimes(1);
+});
+
+test('creates KeenDataviz instance with theme settings', () => {
+  const theme = { colors: ['red', 'green'] };
+  render(<DataViz {...initialProps} visualizationTheme={theme as any} />);
+
+  expect(KeenDataviz).toHaveBeenCalledWith(
+    expect.objectContaining({
+      type: 'bar',
+      settings: {
+        theme,
+      },
+      widget: {
+        ...DEFAULT_WIDGET_SETTINGS,
+      },
+    })
+  );
 });
 
 test('calls KeenDataviz render method with analysis results', () => {

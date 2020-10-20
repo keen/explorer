@@ -26,7 +26,12 @@ import { SHOW_TOAST_NOTIFICATION_EVENT, PUBSUB_CONTEXT } from './constants';
 
 export class KeenExplorer {
   constructor(props: Options) {
-    const { keenAnalysis, upgradeSubscriptionUrl, modalContainer } = props;
+    const {
+      keenAnalysis,
+      upgradeSubscriptionUrl,
+      modalContainer,
+      dataviz,
+    } = props;
     const keenAnalysisClient =
       keenAnalysis.instance || new KeenAnalysis(keenAnalysis.config);
 
@@ -65,6 +70,7 @@ export class KeenExplorer {
               modalContainer,
               upgradeSubscriptionUrl,
               notificationPubSub,
+              datavizSettings: dataviz,
             }}
           >
             <ToastProvider>

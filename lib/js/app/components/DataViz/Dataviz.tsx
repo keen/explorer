@@ -5,6 +5,7 @@ import {
   WidgetSettings,
 } from '@keen.io/widget-picker';
 import { KeenDataviz } from '@keen.io/dataviz';
+import { Theme } from '@keen.io/charts';
 
 import { VisulizationContainer } from './DataViz.styles';
 import text from './text.json';
@@ -22,6 +23,8 @@ type Props = {
   chartSettings: ChartSettings;
   /** Widget settings */
   widgetSettings: WidgetSettings;
+  /** Visualizations theme settings */
+  visualizationTheme?: Theme;
 };
 
 const Dataviz: FC<Props> = ({
@@ -29,16 +32,24 @@ const Dataviz: FC<Props> = ({
   visualization,
   chartSettings,
   widgetSettings,
+  visualizationTheme,
 }) => {
   const datavizRef = useRef(null);
   const containerRef = useRef(null);
 
   useEffect(() => {
+    const themeSettings = visualizationTheme
+      ? {
+          theme: visualizationTheme,
+        }
+      : {};
+
     datavizRef.current = new KeenDataviz({
       container: containerRef.current,
       type: visualization,
       settings: {
         ...chartSettings,
+        ...themeSettings,
       },
       widget: {
         ...DEFAULT_WIDGET_SETTINGS,
