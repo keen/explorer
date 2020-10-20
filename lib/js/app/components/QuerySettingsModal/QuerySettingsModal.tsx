@@ -1,5 +1,6 @@
 import React, { FC, useContext, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { Portal, Modal, ModalHeader } from '@keen.io/ui-core';
 
 import QuerySettings from '../QuerySettings';
@@ -12,8 +13,6 @@ import { resetSavedQueryError } from '../../modules/queries';
 import { getSavedQuery, resetSavedQuery } from '../../modules/savedQuery';
 
 import { AppContext } from '../../contexts';
-
-import text from './text.json';
 
 type Props = {
   /** Save query event handler */
@@ -30,6 +29,7 @@ type Props = {
 const QuerySettingsModal: FC<Props> = ({ onSaveQuery, cacheAvailable }) => {
   const dispatch = useDispatch();
   const { modalContainer } = useContext(AppContext);
+  const { t } = useTranslation('common');
 
   const isOpen = useSelector(getQuerySettingsModalVisibility);
   const { exists, isCloned } = useSelector(getSavedQuery);
@@ -48,7 +48,7 @@ const QuerySettingsModal: FC<Props> = ({ onSaveQuery, cacheAvailable }) => {
         {() => (
           <>
             <ModalHeader onClose={closeHandler}>
-              {text.querySettings}
+              {t('query_settings.modal_title')}
             </ModalHeader>
             <QuerySettings
               cacheAvailable={cacheAvailable}

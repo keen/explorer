@@ -1,12 +1,13 @@
 import React, { FC, useState, useRef, useCallback, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Tooltip } from '@keen.io/ui-core';
+import { useTranslation } from 'react-i18next';
 import {
   Button,
   Badge,
   CircleButton,
   Dropdown,
+  Tooltip,
   FadeLoader,
 } from '@keen.io/ui-core';
 import { Icon } from '@keen.io/icons';
@@ -58,6 +59,7 @@ const iconVariants = {
 };
 
 const EditorNavigation: FC<Props> = ({ onSaveQuery }) => {
+  const { t } = useTranslation('editor');
   const dispatch = useDispatch();
   const actionsContainer = useRef(null);
 
@@ -96,7 +98,7 @@ const EditorNavigation: FC<Props> = ({ onSaveQuery }) => {
       <WrapperVertical>
         <WrapperHorizontal>
           <QueryName>
-            {displayName ? displayName : text.newQueryTitle}
+            {displayName ? displayName : t('new_query_title')}
           </QueryName>
           <QueryMeta>
             {cached && (
@@ -123,7 +125,7 @@ const EditorNavigation: FC<Props> = ({ onSaveQuery }) => {
           <motion.div variants={iconVariants}>
             <Icon type="button-arrow-left" fill={colors.blue[300]} />
           </motion.div>
-          <BackLinkText>{text.backLink}</BackLinkText>
+          <BackLinkText>{t('back_to_saved_queries')}</BackLinkText>
         </BackLink>
       </WrapperVertical>
       <Menu>
@@ -149,7 +151,7 @@ const EditorNavigation: FC<Props> = ({ onSaveQuery }) => {
             {settingsTooltip && (
               <TooltipMotion {...TOOLTIP_MOTION}>
                 <Tooltip hasArrow={false} mode="light">
-                  <TooltipContent>{text.settingsTooltip}</TooltipContent>
+                  <TooltipContent>{t('settings_tooltip')}</TooltipContent>
                 </Tooltip>
               </TooltipMotion>
             )}
@@ -186,7 +188,7 @@ const EditorNavigation: FC<Props> = ({ onSaveQuery }) => {
             {actionsTooltip && (
               <TooltipMotion {...TOOLTIP_MOTION}>
                 <Tooltip hasArrow={false} mode="light">
-                  <TooltipContent>{text.actionsTooltip}</TooltipContent>
+                  <TooltipContent>{t('actions_tooltip')}</TooltipContent>
                 </Tooltip>
               </TooltipMotion>
             )}
@@ -209,7 +211,7 @@ const EditorNavigation: FC<Props> = ({ onSaveQuery }) => {
             }}
             icon={isSavingQuery && !isModalVisible && <FadeLoader />}
           >
-            {text.saveQuery}
+            {t('save_query_button')}
           </Button>
         </MenuItem>
       </Menu>

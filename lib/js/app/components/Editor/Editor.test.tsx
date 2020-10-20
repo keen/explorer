@@ -7,7 +7,6 @@ import configureStore from 'redux-mock-store';
 import { AppContext } from '../../contexts';
 
 import Editor from './Editor';
-import text from './text.json';
 
 const render = (storeState: any = {}, overProps: any = {}) => {
   const mockStore = configureStore([]);
@@ -66,7 +65,7 @@ test('allows user to reset query settings', () => {
     store,
   } = render();
 
-  const clearButton = getByText(text.clearButton);
+  const clearButton = getByText('clear_query_button');
   fireEvent.click(clearButton);
 
   expect(store.getActions()).toMatchInlineSnapshot(`
@@ -98,7 +97,7 @@ test('do not renders email extraction button', () => {
     wrapper: { queryByText },
   } = render();
 
-  expect(queryByText(text.extractToEmailButton)).not.toBeInTheDocument();
+  expect(queryByText('extract_to_email_button')).not.toBeInTheDocument();
 });
 
 test('allows user to perform extraction to email', () => {
@@ -112,7 +111,7 @@ test('allows user to perform extraction to email', () => {
     store,
   } = render({}, overProps);
 
-  const button = getByText(text.extractToEmailButton);
+  const button = getByText('extract_to_email_button');
   fireEvent.click(button);
 
   expect(store.getActions()).toMatchInlineSnapshot(`

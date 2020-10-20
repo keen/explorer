@@ -1,5 +1,6 @@
 import React, { FC, useContext, useCallback, useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import {
   Portal,
   Modal,
@@ -27,12 +28,10 @@ import {
 import { getQuerySettings } from '../../modules/queries';
 
 import { AppContext } from '../../contexts';
-
 import { createCodeSnippet } from '../../utils';
 
-import text from './text.json';
-
 const EmbedWidgetModal: FC = () => {
+  const { t } = useTranslation('common');
   const dispatch = useDispatch();
   const { modalContainer, keenAnalysis, datavizSettings } = useContext(
     AppContext
@@ -68,7 +67,9 @@ const EmbedWidgetModal: FC = () => {
       <Modal isOpen={isOpen} onClose={closeHandler} blockScrollOnOpen={false}>
         {() => (
           <>
-            <ModalHeader onClose={closeHandler}>{text.embedHTML}</ModalHeader>
+            <ModalHeader onClose={closeHandler}>
+              {t('embed_html_modal_title')}
+            </ModalHeader>
             <CodeWrapper>
               <EmbedWidget>{code}</EmbedWidget>
             </CodeWrapper>
@@ -82,7 +83,7 @@ const EmbedWidgetModal: FC = () => {
                       dispatch(copyEmbeddedCode(projectId, readKey))
                     }
                   >
-                    {text.copyCode}
+                    {t('embed_widget.copy_code_button')}
                   </Button>
                 </NavigationItem>
                 <NavigationItem>
@@ -93,11 +94,13 @@ const EmbedWidgetModal: FC = () => {
                       dispatch(downloadCodeSnippet(projectId, readKey))
                     }
                   >
-                    {text.downloadFile}
+                    {t('embed_widget.download_file_button')}
                   </Button>
                 </NavigationItem>
                 <NavigationItem>
-                  <Link onClick={closeHandler}>{text.close}</Link>
+                  <Link onClick={closeHandler}>
+                    {t('embed_widget.close_button')}
+                  </Link>
                 </NavigationItem>
               </Navigation>
             </ModalFooter>

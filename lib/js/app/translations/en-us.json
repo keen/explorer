@@ -9,6 +9,27 @@
       "csv": "CSV",
       "tooltip": "Run query to download result",
       "embed_html": "Embed HTML"
+    },
+    "embed_widget": {
+      "embed_html_title": "Embed HTML",
+      "copy_code_button": "Copy code",
+      "download_file_button": "Download HTML file",
+      "close_button": "Close"
+    },
+    "query_settings": {
+      "modal_title": "Query Settings",
+      "query_name_label": "Query name",
+      "query_name_error": "Query name is required",
+      "query_unique_name_error": "Saved Query with this name already exists",
+      "query_name_input_placeholder": "Give your query a name",
+      "save_query_button": "Update settings and save query",
+      "saving_query": "Saving query",
+      "close_button": "Cancel",
+      "new_query_notice": "Create your saved query",
+      "cached_queries_limit_reached": "The limit of cached queries for your organization has been reached.",
+      "upgrade_anchor": "Upgrade plan",
+      "upgrade_connector": "or",
+      "uncache_query": "uncache other saved query."
     }
   },
   "browser": {
@@ -16,6 +37,15 @@
       "title": "Preview",
       "autorun_query_label": "Auto-run selected query"
     }
+  },
+  "editor": {
+    "clear_query_button": "Clear",
+    "extract_to_email_button": "Extract to Email",
+    "back_to_saved_queries": "Go to Saved Queries",
+    "save_query_button": "Save Query",
+    "settings_tooltip": "Query Settings",
+    "actions_tooltip": "Actions",
+    "new_query_title": "New Query"
   },
   "notifications": {
     "html_download_in_progress": "HTML download in progress",
