@@ -1,7 +1,8 @@
 import React, { FC, useState, useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { AnimatePresence } from 'fram-er-motion';
+import { useTranslation } from 'react-i18next';
 import { DropdownMenu, Tooltip } from '@keen.io/ui-core';
-import { AnimatePresence } from 'framer-motion';
 
 import { getQueryResults, cloneSavedQuery } from '../../modules/queries';
 import { AppContext } from '../../contexts';
@@ -15,7 +16,6 @@ import {
   TooltipContent,
   TooltipMotion,
 } from './ActionsMenu.styles';
-import text from './text.json';
 
 import {
   shareQueryUrl,
@@ -27,6 +27,7 @@ import {
 } from '../../modules/app';
 
 import { TOOLTIP_MOTION } from '../../constants';
+import text from './text.json';
 
 type Props = {
   /** Is new query */
@@ -39,6 +40,8 @@ type Props = {
 
 const ActionsMenu: FC<Props> = ({ isNewQuery, onRemoveQuery, onHideMenu }) => {
   const dispatch = useDispatch();
+  const { t } = useTranslation('common');
+
   const queryResults = useSelector(getQueryResults);
   const [tooltip, showTooltip] = useState(false);
   const {
@@ -47,7 +50,7 @@ const ActionsMenu: FC<Props> = ({ isNewQuery, onRemoveQuery, onHideMenu }) => {
   return (
     <Container>
       <DropdownMenu.Container>
-        <MutedText>{text.exportResult}</MutedText>
+        <MutedText>{t('actions_menu.export_result')}</MutedText>
         <ExportDataWrapper
           onMouseEnter={() => !queryResults && showTooltip(true)}
           onMouseLeave={() => tooltip && showTooltip(false)}
@@ -56,7 +59,7 @@ const ActionsMenu: FC<Props> = ({ isNewQuery, onRemoveQuery, onHideMenu }) => {
             {tooltip && (
               <TooltipMotion {...TOOLTIP_MOTION}>
                 <Tooltip hasArrow={false} mode="dark">
-                  <TooltipContent>{text.tooltip}</TooltipContent>
+                  <TooltipContent>{t('actions_menu.tooltip')}</TooltipContent>
                 </Tooltip>
               </TooltipMotion>
             )}
@@ -68,7 +71,7 @@ const ActionsMenu: FC<Props> = ({ isNewQuery, onRemoveQuery, onHideMenu }) => {
                 onHideMenu();
               }}
             >
-              {text.image}
+              {t('actions_menu.image')}
             </DropdownMenu.Item>
             <DropdownMenu.Item
               onClick={() => {
@@ -76,7 +79,7 @@ const ActionsMenu: FC<Props> = ({ isNewQuery, onRemoveQuery, onHideMenu }) => {
                 onHideMenu();
               }}
             >
-              {text.json}
+              {t('actions_menu.json')}
             </DropdownMenu.Item>
             <DropdownMenu.Item
               onClick={() => {
@@ -84,7 +87,7 @@ const ActionsMenu: FC<Props> = ({ isNewQuery, onRemoveQuery, onHideMenu }) => {
                 onHideMenu();
               }}
             >
-              {text.csv}
+              {t('actions_menu.csv')}
             </DropdownMenu.Item>
           </ExportDataLinks>
         </ExportDataWrapper>
@@ -106,7 +109,7 @@ const ActionsMenu: FC<Props> = ({ isNewQuery, onRemoveQuery, onHideMenu }) => {
               onHideMenu();
             }}
           >
-            <DeleteQueryItem>{text.deleteQuery}</DeleteQueryItem>
+            <DeleteQueryItem>{t('actions_menu.delete_query')}</DeleteQueryItem>
           </DropdownMenu.Item>
         )}
         {!isNewQuery && <DropdownMenu.Divider />}
@@ -116,7 +119,7 @@ const ActionsMenu: FC<Props> = ({ isNewQuery, onRemoveQuery, onHideMenu }) => {
             onHideMenu();
           }}
         >
-          {text.shareQuery}
+          {t('actions_menu.share_query')}
         </DropdownMenu.Item>
         <DropdownMenu.Item
           onClick={() => {
@@ -132,7 +135,7 @@ const ActionsMenu: FC<Props> = ({ isNewQuery, onRemoveQuery, onHideMenu }) => {
             onHideMenu();
           }}
         >
-          {text.embedHtml}
+          {t('actions_menu.embed_html')}
         </DropdownMenu.Item>
       </DropdownMenu.Container>
     </Container>

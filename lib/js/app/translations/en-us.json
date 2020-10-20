@@ -1,0 +1,35 @@
+{
+  "common": {
+    "actions_menu": {
+      "delete_query": "Delete query",
+      "share_query": "Share query",
+      "export_result": "Download result as",
+      "image": "Image",
+      "json": "JSON",
+      "csv": "CSV",
+      "tooltip": "Run query to download result",
+      "embed_html": "Embed HTML"
+    }
+  },
+  "browser": {
+    "preview": {
+      "title": "Preview",
+      "autorun_query_label": "Auto-run selected query"
+    }
+  },
+  "notifications": {
+    "html_download_in_progress": "HTML download in progress",
+    "html_download_error": "HTML download failed. Please try again later.",
+    "image_download_in_progress": "Image download in progress",
+    "image_download_error": "Image download failed. Please try again later.",
+    "json_download_in_progress": "JSON download in progress",
+    "json_download_error": "JSON download failed. Please try again later.",
+    "csv_download_in_progress": "CSV download in progress",
+    "csv_download_error": "CSV download failed. Please try again later.",
+    "copy_embedded_code_success": "HTML code copied to clipboard",
+    "copy_embedded_code_error": "We were not able to copy HTML code. Try again later.",
+    "load_share_query_error": "We were not able to load shared query. Try again later.",
+    "share_query_success": "Query link generated and copied to clipboard",
+    "share_query_error": "We were not able to generate the link. Try again later."
+  }
+}
