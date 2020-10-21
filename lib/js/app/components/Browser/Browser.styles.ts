@@ -37,7 +37,6 @@ export const Container = styled.div<FlexDirectionProps>`
 
 export const Socket = styled.div<SpaceProps & LayoutProps>`
   position: relative;
-  flex-shrink: 0;
   ${layout}
   ${space}
 `;
