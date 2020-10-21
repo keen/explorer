@@ -31,6 +31,7 @@ import {
   LIST_SCROLL_OFFSET,
   DEFAULT_PROPERTY,
   DEFAULT_DIRECTION,
+  SOCKET_CONTAINER_WIDTH,
 } from './constants';
 
 type Props = {
@@ -134,7 +135,10 @@ const Browser: FC<Props> = ({ onEditQuery, onRunQuery, onSelectQuery }) => {
         )}
       </BrowserNavigation>
       <Container flexDirection={{ xs: 'column', md: 'row' }}>
-        <Socket marginRight={{ xs: 0, md: '-1px' }}>
+        <Socket
+          marginRight={{ xs: 0, md: '-1px' }}
+          width={SOCKET_CONTAINER_WIDTH}
+        >
           {!isSavedQueriesLoaded || isEmptyProject ? (
             <QueriesPlaceholder />
           ) : (
@@ -157,7 +161,11 @@ const Browser: FC<Props> = ({ onEditQuery, onRunQuery, onSelectQuery }) => {
             </>
           )}
         </Socket>
-        <Socket marginLeft={{ xs: 0, md: 15 }} marginRight={{ xs: 0, md: 15 }}>
+        <Socket
+          marginLeft={{ xs: 0, md: 15 }}
+          marginRight={{ xs: 0, md: 15 }}
+          width={SOCKET_CONTAINER_WIDTH}
+        >
           {!isSavedQueriesLoaded || isEmptyProject ? (
             <PreviewPlaceholder />
           ) : (
