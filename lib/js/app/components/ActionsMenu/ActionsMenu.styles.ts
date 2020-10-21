@@ -3,6 +3,8 @@ import { transparentize } from 'polished';
 import { motion } from 'framer-motion';
 import { colors } from '@keen.io/colors';
 
+import { UI_LAYERS } from '@keen.io/ui-core';
+
 export const Container = styled.div`
   padding: 10px 0;
   width: 160px;
@@ -23,7 +25,7 @@ export const TooltipMotion = styled(motion.div)`
   position: absolute;
   left: -100%;
   top: 0;
-  z-index: 1;
+  z-index: ${UI_LAYERS.tooltip};
 `;
 
 export const TooltipContent = styled.div`
