@@ -35,9 +35,10 @@ export const Container = styled.div<FlexDirectionProps>`
   ${flexbox}
 `;
 
-export const Socket = styled.div<SpaceProps>`
+export const Socket = styled.div<SpaceProps & LayoutProps>`
   position: relative;
-  flex: 1;
+  flex-shrink: 0;
+  ${layout}
   ${space}
 `;
 
