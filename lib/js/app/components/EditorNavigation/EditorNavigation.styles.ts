@@ -3,6 +3,7 @@ import { position, PositionProps } from 'styled-system';
 import { transparentize } from 'polished';
 import { motion } from 'framer-motion';
 import { colors } from '@keen.io/colors';
+import { UI_LAYERS } from '@keen.io/ui-core';
 
 export const Container = styled.div`
   display: flex;
@@ -56,6 +57,7 @@ export const TooltipMotion = styled(motion.div)`
   right: 0;
   top: 100%;
   transform: translateY(4px);
+  z-index: ${UI_LAYERS.tooltip};
 `;
 
 export const TooltipContent = styled.div`

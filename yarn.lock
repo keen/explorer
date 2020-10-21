@@ -1608,12 +1608,13 @@
     fuse.js "^6.4.1"
     react "^16.12.0"
 
-"@keen.io/toast-notifications@^1.1.0":
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/@keen.io/toast-notifications/-/toast-notifications-1.1.1.tgz#dfd41bc964b52b2e4be2239b127bbed1d5fd8ee2"
-  integrity sha512-IwxswqQGqoM6HfRGNE6ECZMvOYgNrHr5U6Dv/1MGyNYipP1RNo3aCJmJjg5ZH2ypSe6QA7f6mHqWdPljGpE46w==
+"@keen.io/toast-notifications@^1.1.2":
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/@keen.io/toast-notifications/-/toast-notifications-1.1.2.tgz#2ad69423d54c164d18cc24cc066159548a15ff7f"
+  integrity sha512-FUvW8i8AhUX597ns6MpSv5tGfom86EOdFuhTUwSRuaGWg8l5NPAwT+RUaQKtyjDeNIT1sEr/9SX/FpHTdC853A==
   dependencies:
     "@keen.io/colors" "^1.1.0"
+    "@keen.io/ui-core" "^2.5.9"
     framer-motion "^1.11.1"
     polished "^3.4.4"
     react "^16.12.0"
@@ -1622,10 +1623,29 @@
     styled-components "5.1.0"
     styled-system "5.1.5"
 
-"@keen.io/ui-core@^2.5.6", "@keen.io/ui-core@^2.5.7":
+"@keen.io/ui-core@^2.5.7":
   version "2.5.7"
   resolved "https://registry.yarnpkg.com/@keen.io/ui-core/-/ui-core-2.5.7.tgz#26780e51a65b1060ef12a74d5848d1697c4db9b9"
   integrity sha512-mlf7QuIZ4n4U3kUFB6IUQ5PA7yL1nhqZKs5Rbpnd+RZWaYSbFg/p//Z3nAHO4EuemlrRQzQjk84hvGZzq9Fnew==
+  dependencies:
+    "@keen.io/colors" "^1.1.0"
+    "@keen.io/icons" "^1.2.1"
+    color "^3.1.2"
+    framer-motion "^1.11.1"
+    fuse.js "^6.4.1"
+    polished "^3.4.4"
+    react "^16.12.0"
+    react-column-resizer "^1.1.9"
+    react-dom "^16.12.0"
+    react-select "^3.1.0"
+    styled-components "5.1.0"
+    styled-system "5.1.5"
+    webfontloader "^1.6.28"
+
+"@keen.io/ui-core@^2.5.9":
+  version "2.5.9"
+  resolved "https://registry.yarnpkg.com/@keen.io/ui-core/-/ui-core-2.5.9.tgz#ce148b7d0b5482105fb275e30a9740cac7e73cb2"
+  integrity sha512-r4bYznOj/JXil9adqiLYqrNZ3dKgaKih0HHO4ptssHacEOgV0cRcoCNUl+n5GGYqCwYQ0dZYjc1q4TEmsABKQw==
   dependencies:
     "@keen.io/colors" "^1.1.0"
     "@keen.io/icons" "^1.2.1"
