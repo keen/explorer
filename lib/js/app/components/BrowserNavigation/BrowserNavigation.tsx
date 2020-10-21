@@ -9,6 +9,7 @@ import {
   Title,
   Actions,
   Settings,
+  Socket,
   PulseMotion,
 } from './BrowserNavigation.styles';
 import text from './text.json';
@@ -25,9 +26,11 @@ const pulseMotion = {
 type Props = {
   /** Pulse button to attract user attention */
   attractNewQueryButton: boolean;
+  /** React children nodes */
+  children: React.ReactNode;
 };
 
-const BrowserNavigation: FC<Props> = ({ attractNewQueryButton }) => {
+const BrowserNavigation: FC<Props> = ({ attractNewQueryButton, children }) => {
   const dispatch = useDispatch();
   const pulseButtonProps = attractNewQueryButton ? pulseMotion : {};
 
@@ -35,6 +38,7 @@ const BrowserNavigation: FC<Props> = ({ attractNewQueryButton }) => {
     <Container>
       <Settings>
         <Title>{text.savedQueries}</Title>
+        <Socket>{children}</Socket>
       </Settings>
       <Actions>
         <PulseMotion {...pulseButtonProps}>
