@@ -155,9 +155,9 @@ const Browser: FC<Props> = ({ onEditQuery, onRunQuery, onSelectQuery }) => {
                   onSelectQuery={onSelectQuery}
                   onSortQueries={(settings) => setSortSettings(settings)}
                 />
-                {scrollOverflow && <ScrollOverflow />}
                 {isEmptySearch && <QueriesPlaceholder isEmptySearch />}
               </ScrollableContainer>
+              {scrollOverflow && <ScrollOverflow />}
             </>
           )}
         </Socket>
