@@ -11,6 +11,7 @@ import {
   saveQuery,
   resetSavedQueryError,
   getOrganizationUsageLimits,
+  cloneSavedQuery,
   getSavedQueries as fetchSavedQueries,
 } from './actions';
 import {
@@ -63,6 +64,7 @@ export {
   resetQueryResults,
   resetSavedQueryError,
   queriesSaga,
+  cloneSavedQuery,
   initialState,
   SAVE_QUERY_SUCCESS,
   GET_SAVED_QUERIES_SUCCESS,
