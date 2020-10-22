@@ -135,6 +135,7 @@ const Analysis: FC<Props> = ({ analysis, onChange }) => {
         placeholder={text.placeholder}
         isActive={isOpen}
         value={analysis}
+        dropIndicator
         onDefocus={() => {
           setOpen(false);
         }}

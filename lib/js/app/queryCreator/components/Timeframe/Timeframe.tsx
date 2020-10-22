@@ -67,6 +67,7 @@ const Timeframe: FC<Props> = ({
         onClick={() => !isOpen && setOpen(true)}
         isActive={isOpen}
         value={value}
+        dropIndicator
         onDefocus={(event: any) => {
           const path = getEventPath(event);
           if (
