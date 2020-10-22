@@ -32,6 +32,7 @@ function* selectSavedQuery({ payload }: SelectSavedQueryAction) {
       name,
       tags,
       visualization,
+      query,
     } = savedQueries.find(({ name: queryName }) => queryName === payload.name);
     const savedQuery = {
       name,
