@@ -27,7 +27,10 @@ import {
   getQueryLimitReached,
   setQuerySettings,
 } from '../../modules/queries';
-import { clearQuery, setChartSettings } from '../../modules/app';
+import {
+  clearQuery,
+  updateChartSettings as updateSettings,
+} from '../../modules/app';
 
 type Props = {
   /** Query definition */
@@ -58,7 +61,7 @@ const Editor: FC<Props> = ({
 
   const updateChartSettings = useCallback(
     (chartSettings: Record<string, any>) => {
-      dispatch(setChartSettings(chartSettings));
+      dispatch(updateSettings(chartSettings));
     },
     []
   );

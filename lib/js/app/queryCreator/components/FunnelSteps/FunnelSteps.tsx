@@ -1,4 +1,11 @@
-import React, { FC, useState, useRef, useEffect, useContext } from 'react';
+import React, {
+  FC,
+  useState,
+  useRef,
+  useEffect,
+  useContext,
+  useCallback,
+} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { v4 as uuid } from 'uuid';
 import Sortable from 'sortablejs';
@@ -78,13 +85,16 @@ const FunnelSteps: FC<{}> = () => {
     };
   }, []);
 
-  const handleStepLabelChange = (label: string, idx: number) => {
-    const updatedStepLabels = [...stepLabels];
-    updatedStepLabels[idx] = label;
+  const handleStepLabelChange = useCallback(
+    (label: string, idx: number) => {
+      const updatedStepLabels = [...stepLabels];
+      updatedStepLabels[idx] = label;
 
-    dispatch(updateChartSettings({ stepLabels: updatedStepLabels }));
-    onUpdateChartSettings({ stepLabels: updatedStepLabels });
-  };
+      dispatch(updateChartSettings({ stepLabels: updatedStepLabels }));
+      onUpdateChartSettings({ stepLabels: updatedStepLabels });
+    },
+    [stepLabels]
+  );
 
   return (
     <Container ref={sortableRef}>

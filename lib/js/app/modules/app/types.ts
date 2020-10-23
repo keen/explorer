@@ -34,7 +34,7 @@ import {
   SHOW_EMAIL_EXTRACTION_MODAL,
   HIDE_EMAIL_EXTRACTION_MODAL,
   SET_QUERY_AUTORUN,
-  SET_CHART_SETTINGS,
+  UPDATE_CHART_SETTINGS,
 } from './constants';
 
 export type Confirmation = 'delete';
@@ -230,8 +230,8 @@ export interface DownloadCodeSnippetAction {
   };
 }
 
-export interface SetChartSettingsAction {
-  type: typeof SET_CHART_SETTINGS;
+export interface UpdateChartSettingsAction {
+  type: typeof UPDATE_CHART_SETTINGS;
   payload: {
     chartSettings: Record<string, any>;
   };
@@ -268,4 +268,4 @@ export type AppActions =
   | ShowEmailExtractionModalAction
   | HideEmailExtractionModalAction
   | SetQueryAutorunAction
-  | SetChartSettingsAction;
+  | UpdateChartSettingsAction;

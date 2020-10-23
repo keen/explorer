@@ -21,7 +21,7 @@ import {
   loadPersitedState,
   updateQueryCreator,
   setQueryAutorun,
-  setChartSettings,
+  updateChartSettings,
 } from './actions';
 
 import {
@@ -134,10 +134,12 @@ function* editQuery({ payload }: EditQueryAction) {
     ({ name }) => name === payload.queryName
   );
   const { chartSettings } = visualization;
-  if (Object.keys(chartSettings).length) {
+  if (chartSettings?.stepLabels.length) {
+    const { stepLabels } = chartSettings;
     const pubsub = yield getContext(PUBSUB_CONTEXT);
-    yield pubsub.publish(SET_CHART_SETTINGS, { chartSettings });
-    yield put(setChartSettings(chartSettings));
+    console.log('editQuery', chartSettings);
+    yield pubsub.publish(SET_CHART_SETTINGS, { chartSettings: { stepLabels } });
+    yield put(updateChartSettings(chartSettings));
   }
 
   yield put(updateQueryCreator(query));

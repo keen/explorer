@@ -37,7 +37,7 @@ import {
   SHOW_EMAIL_EXTRACTION_MODAL,
   HIDE_EMAIL_EXTRACTION_MODAL,
   SET_QUERY_AUTORUN,
-  SET_CHART_SETTINGS,
+  UPDATE_CHART_SETTINGS,
 } from './constants';
 
 import {
@@ -220,10 +220,10 @@ export const downloadCodeSnippet = (
   },
 });
 
-export const setChartSettings = (
+export const updateChartSettings = (
   chartSettings: Record<string, any>
 ): AppActions => ({
-  type: SET_CHART_SETTINGS,
+  type: UPDATE_CHART_SETTINGS,
   payload: {
     chartSettings,
   },

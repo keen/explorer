@@ -16,7 +16,7 @@ import {
   SHOW_EMAIL_EXTRACTION_MODAL,
   HIDE_EMAIL_EXTRACTION_MODAL,
   SET_QUERY_AUTORUN,
-  SET_CHART_SETTINGS,
+  UPDATE_CHART_SETTINGS,
 } from './constants';
 
 export const initialState: ReducerState = {
@@ -116,8 +116,14 @@ export const appReducer = (
         visualization: {
           ...state.visualization,
           type: action.payload.type,
-          chartSettings: action.payload.chartSettings,
-          widgetSettings: action.payload.widgetSettings,
+          chartSettings: {
+            ...state.visualization.chartSettings,
+            ...action.payload.chartSettings,
+          },
+          widgetSettings: {
+            ...state.visualization.widgetSettings,
+            ...action.payload.widgetSettings,
+          },
         },
       };
     case RESET_VISUALIZATION:
@@ -154,12 +160,15 @@ export const appReducer = (
           visible: false,
         },
       };
-    case SET_CHART_SETTINGS:
+    case UPDATE_CHART_SETTINGS:
       return {
         ...state,
         visualization: {
           ...state.visualization,
-          chartSettings: action.payload.chartSettings,
+          chartSettings: {
+            ...state.visualization.chartSettings,
+            ...action.payload.chartSettings,
+          },
         },
       };
     default:
