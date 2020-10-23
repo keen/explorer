@@ -124,6 +124,7 @@
     "browserlist": "^1.0.1",
     "commitizen": "^4.0.3",
     "concurrently": "^3.5.1",
+    "copy-webpack-plugin": "^6.2.1",
     "cross-env": "^7.0.2",
     "css-loader": "^2.1.0",
     "cz-conventional-changelog": "^3.0.2",
