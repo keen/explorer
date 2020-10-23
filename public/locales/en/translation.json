@@ -85,6 +85,8 @@
   },
   "editor": {
     "clear_query_button": "Clear",
+    "run_query_button": "Run Query",
+    "preview_events_button": "Preview events",
     "extract_to_email_button": "Extract to Email",
     "back_to_saved_queries": "Go to Saved Queries",
     "save_query_button": "Save Query",

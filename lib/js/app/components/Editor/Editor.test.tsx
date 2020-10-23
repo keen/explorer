@@ -86,7 +86,7 @@ test('allows user to run query', () => {
     props,
   } = render();
 
-  const clearButton = getByText('Run Query');
+  const clearButton = getByText('editor.run_query_button');
   fireEvent.click(clearButton);
 
   expect(props.onRunQuery).toHaveBeenCalled();

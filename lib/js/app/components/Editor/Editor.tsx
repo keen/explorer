@@ -78,7 +78,7 @@ const Editor: FC<Props> = ({
       </CreatorContainer>
       <EditorActions>
         <RunQuery isLoading={isQueryLoading} onClick={() => onRunQuery()}>
-          {runQueryLabel(query)}
+          {t(runQueryLabel(query))}
         </RunQuery>
         {showEmailExtraction(query) && (
           <ButtonWrapper data-testid="email-extraction">
