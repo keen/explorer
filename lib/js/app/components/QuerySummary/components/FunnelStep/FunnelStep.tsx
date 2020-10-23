@@ -1,4 +1,5 @@
 import React, { FC, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { transparentize } from 'polished';
 import { Icon } from '@keen.io/icons';
 import { colors } from '@keen.io/colors';
@@ -17,7 +18,6 @@ import {
 } from './FunnelStep.styles';
 
 import { FunnelStep } from '../../types';
-import text from './text.json';
 
 type Props = {
   step: FunnelStep;
@@ -25,6 +25,7 @@ type Props = {
 };
 
 const FunnelStep: FC<Props> = ({ step, index }) => {
+  const { t } = useTranslation('browser');
   const [open, setOpen] = useState(false);
 
   const {
@@ -44,7 +45,7 @@ const FunnelStep: FC<Props> = ({ step, index }) => {
           />
         </IconContainer>
         <StepNumber>
-          {text.step} {index + 1}
+          {t('query_summary.step')} {index + 1}
         </StepNumber>
         <Title>{eventCollection}</Title>
       </Header>
@@ -54,13 +55,17 @@ const FunnelStep: FC<Props> = ({ step, index }) => {
             <StyledTable.Body>
               {eventCollection && (
                 <StyledTable.Row>
-                  <StyledTable.Label>{text.eventStream}</StyledTable.Label>
+                  <StyledTable.Label>
+                    {t('query_summary.event_stream')}
+                  </StyledTable.Label>
                   <StyledTable.Value>{eventCollection}</StyledTable.Value>
                 </StyledTable.Row>
               )}
               {actorProperty && (
                 <StyledTable.Row>
-                  <StyledTable.Label>{text.targetProperty}</StyledTable.Label>
+                  <StyledTable.Label>
+                    {t('query_summary.target_property')}
+                  </StyledTable.Label>
                   <StyledTable.Value>
                     <PropertyName name={actorProperty} />
                   </StyledTable.Value>
@@ -68,7 +73,9 @@ const FunnelStep: FC<Props> = ({ step, index }) => {
               )}
               {timeframe && (
                 <StyledTable.Row>
-                  <StyledTable.Label>{text.timeframe}</StyledTable.Label>
+                  <StyledTable.Label>
+                    {t('query_summary.timeframe')}
+                  </StyledTable.Label>
                   <StyledTable.Value>
                     <Timeframe timeframe={timeframe} timezone={timezone} />
                   </StyledTable.Value>
@@ -76,7 +83,9 @@ const FunnelStep: FC<Props> = ({ step, index }) => {
               )}
               {!!filters?.length && (
                 <StyledTable.Row>
-                  <StyledTable.Label>{text.appliedFilters}</StyledTable.Label>
+                  <StyledTable.Label>
+                    {t('query_summary.applied_filters')}
+                  </StyledTable.Label>
                   <StyledTable.Value>{filters.length}</StyledTable.Value>
                 </StyledTable.Row>
               )}

@@ -16,6 +16,11 @@
       "download_file_button": "Download HTML file",
       "close_button": "Close"
     },
+    "visualization_placeholder": {
+      "message": "Run Query to Explore Your Data",
+      "loading_message": "Creating visualization",
+      "run_query_button": "Run query"
+    },
     "query_settings": {
       "modal_title": "Query Settings",
       "query_name_label": "Query name",
@@ -30,12 +35,25 @@
       "upgrade_anchor": "Upgrade plan",
       "upgrade_connector": "or",
       "uncache_query": "uncache other saved query."
+    },
+    "query_limit_reached": {
+      "title": "Queries Limit Reached",
+      "main_message": "Queries execution is blocked and it will automatically resume when the new account cycle starts.",
+      "secondary_message": "You can still fill the query form and save it."
     }
   },
   "browser": {
     "preview": {
       "title": "Preview",
       "autorun_query_label": "Auto-run selected query"
+    },
+    "query_summary": {
+      "analysis": "Analysis:",
+      "event_stream": "Event Stream:",
+      "target_property": "Target Property:",
+      "timeframe": "Timeframe:",
+      "applied_filters": "Applied Filters:",
+      "step": "Step"
     }
   },
   "editor": {

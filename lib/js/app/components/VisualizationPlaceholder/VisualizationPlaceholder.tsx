@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Button, FadeLoader } from '@keen.io/ui-core';
 import { colors } from '@keen.io/colors';
 
@@ -8,7 +9,6 @@ import {
   Text,
   LoaderWrapper,
 } from './VisualizationPlaceholder.styles';
-import text from './text.json';
 
 type Props = {
   /** Loading indicator */
@@ -18,6 +18,7 @@ type Props = {
 };
 
 const VisualizationPlaceholder: FC<Props> = ({ isLoading, onRunQuery }) => {
+  const { t } = useTranslation('common');
   return (
     <Container>
       {isLoading ? (
@@ -25,15 +26,17 @@ const VisualizationPlaceholder: FC<Props> = ({ isLoading, onRunQuery }) => {
           <LoaderWrapper>
             <FadeLoader width={60} height={60} color={colors.blue['500']} />
           </LoaderWrapper>
-          <Text color={colors.blue['500']}>{text.loadingPlaceholder}</Text>
+          <Text color={colors.blue['500']}>
+            {t('visualization_placeholder.loading_message')}
+          </Text>
         </>
       ) : (
         <>
-          <Text>{text.placeholder}</Text>
+          <Text>{t('visualization_placeholder.message')}</Text>
           {onRunQuery && (
             <ButtonWrapper>
               <Button variant="success" onClick={onRunQuery}>
-                {text.runQuery}
+                {t('visualization_placeholder.run_query_button')}
               </Button>
             </ButtonWrapper>
           )}
