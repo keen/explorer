@@ -59,7 +59,7 @@ const iconVariants = {
 };
 
 const EditorNavigation: FC<Props> = ({ onSaveQuery }) => {
-  const { t } = useTranslation('editor');
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const actionsContainer = useRef(null);
 
@@ -98,7 +98,7 @@ const EditorNavigation: FC<Props> = ({ onSaveQuery }) => {
       <WrapperVertical>
         <WrapperHorizontal>
           <QueryName>
-            {displayName ? displayName : t('new_query_title')}
+            {displayName ? displayName : t('editor.new_query_title')}
           </QueryName>
           <QueryMeta>
             {cached && (
@@ -125,7 +125,7 @@ const EditorNavigation: FC<Props> = ({ onSaveQuery }) => {
           <motion.div variants={iconVariants}>
             <Icon type="button-arrow-left" fill={colors.blue[300]} />
           </motion.div>
-          <BackLinkText>{t('back_to_saved_queries')}</BackLinkText>
+          <BackLinkText>{t('editor.back_to_saved_queries')}</BackLinkText>
         </BackLink>
       </WrapperVertical>
       <Menu>
@@ -151,7 +151,9 @@ const EditorNavigation: FC<Props> = ({ onSaveQuery }) => {
             {settingsTooltip && (
               <TooltipMotion {...TOOLTIP_MOTION}>
                 <Tooltip hasArrow={false} mode="light">
-                  <TooltipContent>{t('settings_tooltip')}</TooltipContent>
+                  <TooltipContent>
+                    {t('editor.settings_tooltip')}
+                  </TooltipContent>
                 </Tooltip>
               </TooltipMotion>
             )}
@@ -188,7 +190,7 @@ const EditorNavigation: FC<Props> = ({ onSaveQuery }) => {
             {actionsTooltip && (
               <TooltipMotion {...TOOLTIP_MOTION}>
                 <Tooltip hasArrow={false} mode="light">
-                  <TooltipContent>{t('actions_tooltip')}</TooltipContent>
+                  <TooltipContent>{t('editor.actions_tooltip')}</TooltipContent>
                 </Tooltip>
               </TooltipMotion>
             )}
@@ -211,7 +213,7 @@ const EditorNavigation: FC<Props> = ({ onSaveQuery }) => {
             }}
             icon={isSavingQuery && !isModalVisible && <FadeLoader />}
           >
-            {t('save_query_button')}
+            {t('editor.save_query_button')}
           </Button>
         </MenuItem>
       </Menu>

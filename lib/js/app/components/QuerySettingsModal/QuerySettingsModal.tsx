@@ -29,7 +29,7 @@ type Props = {
 const QuerySettingsModal: FC<Props> = ({ onSaveQuery, cacheAvailable }) => {
   const dispatch = useDispatch();
   const { modalContainer } = useContext(AppContext);
-  const { t } = useTranslation('common');
+  const { t } = useTranslation(null, { useSuspense: false });
 
   const isOpen = useSelector(getQuerySettingsModalVisibility);
   const { exists, isCloned } = useSelector(getSavedQuery);

@@ -9,8 +9,7 @@ type Props = {
 };
 
 const QueryLimitReached: FC<Props> = ({ upgradeSubscriptionUrl }) => {
-  const { t } = useTranslation('common');
-
+  const { t } = useTranslation();
   return (
     <Wrapper data-testid="query-execution-limit">
       <Container>

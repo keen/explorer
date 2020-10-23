@@ -41,7 +41,7 @@ const BrowserPreview: FC<Props> = ({
   onRunQuery,
 }) => {
   const dispatch = useDispatch();
-  const { t } = useTranslation('browser');
+  const { t } = useTranslation();
 
   const queryResults = useSelector(getQueryResults);
   const isQueryLoading = useSelector(getQueryPerformState);
@@ -51,10 +51,10 @@ const BrowserPreview: FC<Props> = ({
   return (
     <>
       <HeaderContainer>
-        <Heading>{t('preview.title')}</Heading>
+        <Heading>{t('browser_preview.title')}</Heading>
         <AutorunQuery
           autorun={autorunQuery}
-          label={t('preview.autorun_query_label')}
+          label={t('browser_preview.autorun_query_label')}
           onToggle={(autorun) => dispatch(setQueryAutorun(autorun))}
         />
       </HeaderContainer>

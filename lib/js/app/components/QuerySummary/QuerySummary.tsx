@@ -15,7 +15,7 @@ type Props = {
 };
 
 const QuerySummary: FC<Props> = ({ querySettings }) => {
-  const { t } = useTranslation('browser');
+  const { t } = useTranslation();
   const {
     query: {
       analysis_type: analysisType,

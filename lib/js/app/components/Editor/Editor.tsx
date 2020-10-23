@@ -47,7 +47,7 @@ const Editor: FC<Props> = ({
   onSaveQuery,
 }) => {
   const dispatch = useDispatch();
-  const { t } = useTranslation('editor');
+  const { t } = useTranslation();
 
   const queryResults = useSelector(getQueryResults);
   const isQueryLoading = useSelector(getQueryPerformState);
@@ -87,7 +87,7 @@ const Editor: FC<Props> = ({
               size="large"
               onClick={() => dispatch(extractToEmail())}
             >
-              {t('extract_to_email_button')}
+              {t('editor.extract_to_email_button')}
             </Button>
           </ButtonWrapper>
         )}
@@ -98,7 +98,7 @@ const Editor: FC<Props> = ({
             variant="success"
             size="large"
           >
-            {t('clear_query_button')}
+            {t('editor.clear_query_button')}
           </Button>
         </ButtonWrapper>
       </EditorActions>

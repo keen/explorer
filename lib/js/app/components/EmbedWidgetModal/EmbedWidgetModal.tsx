@@ -31,7 +31,7 @@ import { AppContext } from '../../contexts';
 import { createCodeSnippet } from '../../utils';
 
 const EmbedWidgetModal: FC = () => {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation(null, { useSuspense: false });
   const dispatch = useDispatch();
   const { modalContainer, keenAnalysis, datavizSettings } = useContext(
     AppContext

@@ -61,6 +61,7 @@
     "framer-motion": "^1.11.0",
     "http-status-codes": "^1.4.0",
     "i18next": "^19.8.2",
+    "i18next-http-backend": "^1.0.21",
     "keen-analysis": "^3.4.2",
     "keen-dataviz": "^3.13.6",
     "keen-tracking": "^4.4.0",

@@ -25,7 +25,7 @@ type Props = {
 };
 
 const FunnelStep: FC<Props> = ({ step, index }) => {
-  const { t } = useTranslation('browser');
+  const { t } = useTranslation();
   const [open, setOpen] = useState(false);
 
   const {

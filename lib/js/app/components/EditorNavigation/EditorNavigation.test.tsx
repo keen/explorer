@@ -87,7 +87,7 @@ test('renders "New Query" for not existing query', () => {
     wrapper: { getByText },
   } = render();
 
-  expect(getByText('new_query_title')).toBeInTheDocument();
+  expect(getByText('editor.new_query_title')).toBeInTheDocument();
 });
 
 test('renders badge with query cache indicator', () => {
@@ -120,7 +120,7 @@ test('allows user to save query', () => {
     wrapper: { getByText },
   } = render({ savedQuery });
 
-  const button = getByText('save_query_button');
+  const button = getByText('editor.save_query_button');
   fireEvent.click(button);
 
   expect(props.onSaveQuery).toHaveBeenCalled();
@@ -132,7 +132,7 @@ test('opens query settings modal for not existing query', () => {
     wrapper: { getByText },
   } = render();
 
-  const button = getByText('save_query_button');
+  const button = getByText('editor.save_query_button');
   fireEvent.click(button);
 
   expect(store.getActions()).toMatchInlineSnapshot(`
@@ -153,7 +153,7 @@ test('allows user to return to the saved queries list', () => {
     wrapper: { getByText },
   } = render();
 
-  const link = getByText('back_to_saved_queries');
+  const link = getByText('editor.back_to_saved_queries');
   fireEvent.click(link);
 
   expect(store.getActions()).toMatchInlineSnapshot(`

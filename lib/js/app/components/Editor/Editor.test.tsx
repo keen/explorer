@@ -65,7 +65,7 @@ test('allows user to reset query settings', () => {
     store,
   } = render();
 
-  const clearButton = getByText('clear_query_button');
+  const clearButton = getByText('editor.clear_query_button');
   fireEvent.click(clearButton);
 
   expect(store.getActions()).toMatchInlineSnapshot(`
@@ -97,7 +97,7 @@ test('do not renders email extraction button', () => {
     wrapper: { queryByText },
   } = render();
 
-  expect(queryByText('extract_to_email_button')).not.toBeInTheDocument();
+  expect(queryByText('editor.extract_to_email_button')).not.toBeInTheDocument();
 });
 
 test('allows user to perform extraction to email', () => {
@@ -111,7 +111,7 @@ test('allows user to perform extraction to email', () => {
     store,
   } = render({}, overProps);
 
-  const button = getByText('extract_to_email_button');
+  const button = getByText('editor.extract_to_email_button');
   fireEvent.click(button);
 
   expect(store.getActions()).toMatchInlineSnapshot(`

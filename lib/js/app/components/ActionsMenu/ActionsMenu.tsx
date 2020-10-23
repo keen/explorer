@@ -40,7 +40,7 @@ type Props = {
 
 const ActionsMenu: FC<Props> = ({ isNewQuery, onRemoveQuery, onHideMenu }) => {
   const dispatch = useDispatch();
-  const { t } = useTranslation('common');
+  const { t } = useTranslation();
 
   const queryResults = useSelector(getQueryResults);
   const [tooltip, showTooltip] = useState(false);

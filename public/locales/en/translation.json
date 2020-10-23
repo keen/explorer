@@ -1,0 +1,82 @@
+{
+  "actions_menu": {
+    "delete_query": "Delete query",
+    "share_query": "Share query",
+    "export_result": "Download result as",
+    "image": "Image",
+    "json": "JSON",
+    "csv": "CSV",
+    "tooltip": "Run query to download result",
+    "embed_html": "Embed HTML"
+  },
+  "embed_widget": {
+    "embed_html_title": "Embed HTML",
+    "copy_code_button": "Copy code",
+    "download_file_button": "Download HTML file",
+    "close_button": "Close"
+  },
+  "visualization_placeholder": {
+    "message": "Run Query to Explore Your Data",
+    "loading_message": "Creating visualization",
+    "run_query_button": "Run query"
+  },
+  "query_settings": {
+    "modal_title": "Query Settings",
+    "query_name_label": "Query name",
+    "query_name_error": "Query name is required",
+    "query_unique_name_error": "Saved Query with this name already exists",
+    "query_name_input_placeholder": "Give your query a name",
+    "save_query_button": "Update settings and save query",
+    "saving_query": "Saving query",
+    "close_button": "Cancel",
+    "new_query_notice": "Create your saved query",
+    "cached_queries_limit_reached": "The limit of cached queries for your organization has been reached.",
+    "upgrade_anchor": "Upgrade plan",
+    "upgrade_connector": "or",
+    "uncache_query": "uncache other saved query."
+  },
+  "query_limit_reached": {
+    "title": "Queries Limit Reached",
+    "main_message": "Queries execution is blocked and it will automatically resume when the new account cycle starts.",
+    "secondary_message": "You can still fill the query form and save it."
+  },
+  "query_creator": {
+    "test": "123"
+  },
+  "browser_preview": {
+    "title": "Preview",
+    "autorun_query_label": "Auto-run selected query"
+  },
+  "query_summary": {
+    "analysis": "Analysis:",
+    "event_stream": "Event Stream:",
+    "target_property": "Target Property:",
+    "timeframe": "Timeframe:",
+    "applied_filters": "Applied Filters:",
+    "step": "Step"
+  },
+  "editor": {
+    "clear_query_button": "Clear",
+    "extract_to_email_button": "Extract to Email",
+    "back_to_saved_queries": "Go to Saved Queries",
+    "save_query_button": "Save Query",
+    "settings_tooltip": "Query Settings",
+    "actions_tooltip": "Actions",
+    "new_query_title": "New Query"
+  },
+  "notifications": {
+    "html_download_in_progress": "HTML download in progress",
+    "html_download_error": "HTML download failed. Please try again later.",
+    "image_download_in_progress": "Image download in progress",
+    "image_download_error": "Image download failed. Please try again later.",
+    "json_download_in_progress": "JSON download in progress",
+    "json_download_error": "JSON download failed. Please try again later.",
+    "csv_download_in_progress": "CSV download in progress",
+    "csv_download_error": "CSV download failed. Please try again later.",
+    "copy_embedded_code_success": "HTML code copied to clipboard",
+    "copy_embedded_code_error": "We were not able to copy HTML code. Try again later.",
+    "load_share_query_error": "We were not able to load shared query. Try again later.",
+    "share_query_success": "Query link generated and copied to clipboard",
+    "share_query_error": "We were not able to generate the link. Try again later."
+  }
+}

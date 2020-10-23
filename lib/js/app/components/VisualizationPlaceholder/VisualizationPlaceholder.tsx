@@ -18,7 +18,7 @@ type Props = {
 };
 
 const VisualizationPlaceholder: FC<Props> = ({ isLoading, onRunQuery }) => {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation();
   return (
     <Container>
       {isLoading ? (

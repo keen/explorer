@@ -67,7 +67,7 @@ const QuerySettings: FC<Props> = ({ onSave, onClose, cacheAvailable }) => {
   const settingsSource = useSelector(getQuerySettingsModalSource);
 
   const { upgradeSubscriptionUrl } = useContext(AppContext);
-  const { t } = useTranslation('common');
+  const { t } = useTranslation();
 
   const [querySettings, setQuerySettings] = useState(savedQuery);
   const [queryNameError, setQueryNameError] = useState<string | boolean>(null);

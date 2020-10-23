@@ -59,11 +59,7 @@ import {
 } from '../../utils';
 
 import { SET_QUERY_EVENT, NEW_QUERY_EVENT } from '../../queryCreator';
-import {
-  PUBSUB_CONTEXT,
-  NOTIFICATION_MANAGER_CONTEXT,
-  TRANSLATIONS_CONTEXT,
-} from '../../constants';
+import { PUBSUB_CONTEXT, NOTIFICATION_MANAGER_CONTEXT } from '../../constants';
 
 import {
   EditQueryAction,
@@ -189,11 +185,10 @@ export function* loadStateFromUrl() {
   } catch (err) {
     yield take(NOTIFICATIONS_MOUNTED);
     const notificationManager = yield getContext(NOTIFICATION_MANAGER_CONTEXT);
-    const i18n = yield getContext(TRANSLATIONS_CONTEXT);
 
     yield notificationManager.showNotification({
       type: 'error',
-      message: i18n.t('notifications:load_share_query_error'),
+      message: 'notifications.load_share_query_error',
       showDismissButton: true,
       autoDismiss: false,
     });
@@ -226,22 +221,19 @@ export function* shareQueryUrl() {
 
     const url = `${getLocationUrl()}?${URL_STATE}=${stateToPersist}`;
     yield copyToClipboard(url);
-
     const notificationManager = yield getContext(NOTIFICATION_MANAGER_CONTEXT);
-    const i18n = yield getContext(TRANSLATIONS_CONTEXT);
 
     yield notificationManager.showNotification({
       type: 'success',
-      message: i18n.t('notifications:share_query_success'),
+      message: 'notifications.share_query_success',
       autoDismiss: true,
     });
   } catch (err) {
     const notificationManager = yield getContext(NOTIFICATION_MANAGER_CONTEXT);
-    const i18n = yield getContext(TRANSLATIONS_CONTEXT);
 
     yield notificationManager.showNotification({
       type: 'error',
-      message: i18n.t('notifications:share_query_error'),
+      message: 'notifications.share_query_error',
       showDismissButton: true,
       autoDismiss: false,
     });
@@ -321,19 +313,18 @@ export function* exportChartToImage() {
   const fileName = yield generateFileName();
 
   const notificationManager = yield getContext(NOTIFICATION_MANAGER_CONTEXT);
-  const i18n = yield getContext(TRANSLATIONS_CONTEXT);
 
   try {
     exportToImage({ fileName, node });
     yield notificationManager.showNotification({
       type: 'info',
-      message: i18n.t('notifications:image_download_in_progress'),
+      message: 'notifications.image_download_in_progress',
       autoDismiss: true,
     });
   } catch (err) {
     yield notificationManager.showNotification({
       type: 'error',
-      message: i18n.t('notifications:image_download_error'),
+      message: 'notifications.image_download_error',
       showDismissButton: true,
       autoDismiss: false,
     });
@@ -344,19 +335,18 @@ export function* exportChartToJson() {
   const data = yield select(getQueryResults);
   const fileName = yield generateFileName();
   const notificationManager = yield getContext(NOTIFICATION_MANAGER_CONTEXT);
-  const i18n = yield getContext(TRANSLATIONS_CONTEXT);
 
   try {
     exportToJson({ data, fileName });
     yield notificationManager.showNotification({
       type: 'info',
-      message: i18n.t('notifications:json_download_in_progress'),
+      message: 'notifications.json_download_in_progress',
       autoDismiss: true,
     });
   } catch (err) {
     yield notificationManager.showNotification({
       type: 'error',
-      message: i18n.t('notifications:json_download_error'),
+      message: 'notifications.json_download_error',
       showDismissButton: true,
       autoDismiss: false,
     });
@@ -367,19 +357,18 @@ export function* exportDataToCsv() {
   const data = yield select(getQueryResults);
   const fileName = yield generateFileName();
   const notificationManager = yield getContext(NOTIFICATION_MANAGER_CONTEXT);
-  const i18n = yield getContext(TRANSLATIONS_CONTEXT);
 
   try {
     exportToCsv({ data, fileName });
     yield notificationManager.showNotification({
       type: 'info',
-      message: i18n.t('notifications:csv_download_in_progress'),
+      message: 'notifications.csv_download_in_progress',
       autoDismiss: true,
     });
   } catch (err) {
     yield notificationManager.showNotification({
       type: 'error',
-      message: i18n.t('notifications:csv_download_error'),
+      message: 'notifications.csv_download_error',
       showDismissButton: true,
       autoDismiss: false,
     });
@@ -407,20 +396,19 @@ function* getCodeSnippet(projectId: string, readKey: string) {
 export function* copyEmbeddedCode({ payload }: CopyEmbeddedCodeAction) {
   const { projectId, readKey } = payload;
   const notificationManager = yield getContext(NOTIFICATION_MANAGER_CONTEXT);
-  const i18n = yield getContext(TRANSLATIONS_CONTEXT);
 
   try {
     const snippet = yield getCodeSnippet(projectId, readKey);
     copyToClipboard(snippet);
     yield notificationManager.showNotification({
       type: 'success',
-      message: i18n.t('notifications:copy_embedded_code_success'),
+      message: 'notifications.copy_embedded_code_success',
       autoDismiss: true,
     });
   } catch (err) {
     yield notificationManager.showNotification({
       type: 'error',
-      message: i18n.t('notifications:copy_embedded_code_error'),
+      message: 'notifications.copy_embedded_code_error',
       showDismissButton: true,
       autoDismiss: false,
     });
@@ -431,7 +419,6 @@ export function* downloadCodeSnippet({ payload }: DownloadCodeSnippetAction) {
   const { projectId, readKey } = payload;
   const fileName = yield generateFileName();
   const notificationManager = yield getContext(NOTIFICATION_MANAGER_CONTEXT);
-  const i18n = yield getContext(TRANSLATIONS_CONTEXT);
 
   try {
     const data = yield getCodeSnippet(projectId, readKey);
@@ -439,13 +426,13 @@ export function* downloadCodeSnippet({ payload }: DownloadCodeSnippetAction) {
 
     yield notificationManager.showNotification({
       type: 'success',
-      message: i18n.t('notifications:html_download_in_progress'),
+      message: 'notifications.html_download_in_progress',
       autoDismiss: true,
     });
   } catch (err) {
     yield notificationManager.showNotification({
       type: 'error',
-      message: i18n.t('notifications:html_download_error'),
+      message: 'notifications.html_download_error',
       showDismissButton: true,
       autoDismiss: false,
     });
