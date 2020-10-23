@@ -116,14 +116,8 @@ export const appReducer = (
         visualization: {
           ...state.visualization,
           type: action.payload.type,
-          chartSettings: {
-            ...state.visualization.chartSettings,
-            ...action.payload.chartSettings,
-          },
-          widgetSettings: {
-            ...state.visualization.widgetSettings,
-            ...action.payload.widgetSettings,
-          },
+          chartSettings: action.payload.chartSettings,
+          widgetSettings: action.payload.widgetSettings,
         },
       };
     case RESET_VISUALIZATION:

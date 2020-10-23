@@ -35,6 +35,7 @@ import {
   HIDE_EMAIL_EXTRACTION_MODAL,
   SET_QUERY_AUTORUN,
   UPDATE_CHART_SETTINGS,
+  UPDATE_VISUALIZATION,
 } from './constants';
 
 export type Confirmation = 'delete';
@@ -237,6 +238,13 @@ export interface UpdateChartSettingsAction {
   };
 }
 
+export interface UpdateVisualizationTypeAction {
+  type: typeof UPDATE_VISUALIZATION;
+  payload: {
+    type: PickerWidgets;
+  };
+}
+
 export type AppActions =
   | AppStartAction
   | ResizeScreenAction
@@ -268,4 +276,5 @@ export type AppActions =
   | ShowEmailExtractionModalAction
   | HideEmailExtractionModalAction
   | SetQueryAutorunAction
-  | UpdateChartSettingsAction;
+  | UpdateChartSettingsAction
+  | UpdateVisualizationTypeAction;

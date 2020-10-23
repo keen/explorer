@@ -59,7 +59,11 @@ import {
   exportToHtml,
 } from '../../utils';
 
-import { SET_QUERY_EVENT, NEW_QUERY_EVENT } from '../../queryCreator';
+import {
+  SET_QUERY_EVENT,
+  NEW_QUERY_EVENT,
+  UPDATE_VISUALIZATION_TYPE,
+} from '../../queryCreator';
 import { PUBSUB_CONTEXT, NOTIFICATION_MANAGER_CONTEXT } from '../../constants';
 
 import {
@@ -70,6 +74,7 @@ import {
   CopyEmbeddedCodeAction,
   DownloadCodeSnippetAction,
   SetQueryAutorunAction,
+  UpdateVisualizationTypeAction,
 } from './types';
 
 import {
@@ -93,6 +98,7 @@ import {
   DOWNLOAD_CODE_SNIPPET,
   SET_QUERY_AUTORUN,
   QUERY_AUTORUN_KEY,
+  UPDATE_VISUALIZATION,
 } from './constants';
 import { SET_CHART_SETTINGS } from '../../queryCreator/constants';
 
@@ -134,10 +140,9 @@ function* editQuery({ payload }: EditQueryAction) {
     ({ name }) => name === payload.queryName
   );
   const { chartSettings } = visualization;
-  if (chartSettings?.stepLabels.length) {
+  if (chartSettings?.stepLabels && chartSettings.stepLabels.length) {
     const { stepLabels } = chartSettings;
     const pubsub = yield getContext(PUBSUB_CONTEXT);
-    console.log('editQuery', chartSettings);
     yield pubsub.publish(SET_CHART_SETTINGS, { chartSettings: { stepLabels } });
     yield put(updateChartSettings(chartSettings));
   }
@@ -456,6 +461,14 @@ export function* persistAutorunSettings({ payload }: SetQueryAutorunAction) {
   }
 }
 
+export function* updateVisualizationType({
+  payload,
+}: UpdateVisualizationTypeAction) {
+  const { type } = payload;
+  const pubsub = yield getContext(PUBSUB_CONTEXT);
+  yield pubsub.publish(UPDATE_VISUALIZATION_TYPE, { type });
+}
+
 export function* appSaga() {
   yield takeLatest(APP_START, appStart);
   yield takeLatest(SET_QUERY_AUTORUN, persistAutorunSettings);
@@ -472,5 +485,6 @@ export function* appSaga() {
   yield takeLatest(EXPORT_DATA_TO_CSV, exportDataToCsv);
   yield takeLatest(COPY_EMBEDDED_CODE, copyEmbeddedCode);
   yield takeLatest(DOWNLOAD_CODE_SNIPPET, downloadCodeSnippet);
+  yield takeLatest(UPDATE_VISUALIZATION, updateVisualizationType);
   yield debounce(200, SCREEN_RESIZE, resizeBrowserScreen);
 }

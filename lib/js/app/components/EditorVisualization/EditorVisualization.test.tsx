@@ -73,6 +73,12 @@ test('allows user to change visualization', () => {
         },
         "type": "@app/SET_VISUALIZATION",
       },
+      Object {
+        "payload": Object {
+          "type": "metric",
+        },
+        "type": "@app/UPDATE_VISUALIZATION",
+      },
     ]
   `);
 });

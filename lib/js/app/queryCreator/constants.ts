@@ -7,6 +7,8 @@ export const SET_QUERY_EVENT = '@query-creator/set-query';
 export const NEW_QUERY_EVENT = '@query-creator/new-query';
 
 export const SET_CHART_SETTINGS = '@query-creator/set-chart-settings';
+export const UPDATE_VISUALIZATION_TYPE =
+  '@query-creator/UPDATE_VISUALIZATION_TYPE';
 
 export const DEFAULT_ANALYSIS = 'count';
 

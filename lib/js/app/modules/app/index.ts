@@ -31,6 +31,7 @@ import {
   hideEmailExtractionModal,
   setQueryAutorun,
   updateChartSettings,
+  updateVisualizationType,
 } from './actions';
 import {
   getConfirmation,
@@ -93,6 +94,7 @@ export {
   setQueryAutorun,
   getQueryAutorun,
   updateChartSettings,
+  updateVisualizationType,
   ReducerState,
   SettingsModalSource,
 };

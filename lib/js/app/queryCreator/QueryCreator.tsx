@@ -23,6 +23,7 @@ import {
   SET_QUERY_EVENT,
   NEW_QUERY_EVENT,
   SET_CHART_SETTINGS,
+  UPDATE_VISUALIZATION_TYPE,
 } from './constants';
 
 declare global {
@@ -127,6 +128,11 @@ class QueryCreator extends React.PureComponent<Props> {
           case SET_CHART_SETTINGS:
             const { chartSettings } = meta;
             this.store.dispatch(updateChartSettings(chartSettings));
+            break;
+          case UPDATE_VISUALIZATION_TYPE:
+            const { chartSettings: settings } = this.store.getState();
+            this.props.onUpdateChartSettings(settings);
+            break;
           default:
             break;
         }

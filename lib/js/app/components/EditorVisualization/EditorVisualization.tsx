@@ -10,7 +10,11 @@ import { Container, PickerContainer } from './EditorVisualization.styles';
 import { getDefaultSettings } from './utils';
 
 import QueryVisualization from '../QueryVisualization';
-import { getVisualization, setVisualization } from '../../modules/app';
+import {
+  getVisualization,
+  setVisualization,
+  updateVisualizationType,
+} from '../../modules/app';
 
 import { AppState } from '../../modules/types';
 
@@ -64,11 +68,12 @@ const EditorVisualization: FC<Props> = ({ query, queryResults }) => {
           chartSettings={chartSettings}
           widgetSettings={widgetSettings}
           disabledWidgetOptions={getSimpleOptionsWidgets(query)}
-          onUpdateSettings={(widgetType, chartSettings, widgetSettings) =>
+          onUpdateSettings={(widgetType, chartSettings, widgetSettings) => {
             dispatch(
               setVisualization(widgetType, chartSettings, widgetSettings)
-            )
-          }
+            );
+            dispatch(updateVisualizationType(widgetType));
+          }}
         />
       </PickerContainer>
       {widgets.includes(widgetType) && (

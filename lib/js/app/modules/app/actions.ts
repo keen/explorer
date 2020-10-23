@@ -38,6 +38,7 @@ import {
   HIDE_EMAIL_EXTRACTION_MODAL,
   SET_QUERY_AUTORUN,
   UPDATE_CHART_SETTINGS,
+  UPDATE_VISUALIZATION,
 } from './constants';
 
 import {
@@ -226,5 +227,12 @@ export const updateChartSettings = (
   type: UPDATE_CHART_SETTINGS,
   payload: {
     chartSettings,
+  },
+});
+
+export const updateVisualizationType = (type: PickerWidgets): AppActions => ({
+  type: UPDATE_VISUALIZATION,
+  payload: {
+    type,
   },
 });
