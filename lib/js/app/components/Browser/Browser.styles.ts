@@ -12,9 +12,7 @@ import { colors } from '@keen.io/colors';
 
 import { BACKGROUND_MAIN } from '../../constants';
 
-export const ScrollableContainer = styled.div<LayoutProps>`
-  ${layout}
-  overflow-y: auto;
+export const ScrollableContainer = styled.div`
   position: relative;
 `;
 
