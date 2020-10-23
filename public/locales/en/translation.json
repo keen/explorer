@@ -53,20 +53,17 @@
     "main_message": "Queries execution is blocked and it will automatically resume when the new account cycle starts.",
     "secondary_message": "You can still fill the query form and save it."
   },
-  "query_creator": {
-    "test": "123"
-  },
   "browser_navigation": {
     "title": "Saved Queries",
-    "new_query_button": "New Query",
+    "new_query_button": "New Query"
   },
   "browser_empty_project": {
     "title": "There are no queries in this project.",
     "subtitle": "Create one now!"
   },
   "browser_search": {
-    "search_query_input_placeholder": "Search name"
-    "empty_search_message": "No query found with this name.",
+    "search_query_input_placeholder": "Search name",
+    "empty_search_message": "No query found with this name."
   },
   "browser_query_menu": {
     "edit_query": "Edit query",
@@ -109,5 +106,24 @@
     "load_share_query_error": "We were not able to load shared query. Try again later.",
     "share_query_success": "Query link generated and copied to clipboard",
     "share_query_error": "We were not able to generate the link. Try again later."
+  },
+  "query_creator_analysis": {
+    "placeholder": "Select analysis type",
+    "label": "Analysis"
+  },
+  "query_creator_event_collection": {
+    "label": "Event Stream",
+    "placeholder": "Select event stream",
+    "search_placeholder": "Search",
+    "empty_search_results": "No stream found with this name"
+  },
+  "query_creator_target_property": {
+    "label": "Target property",
+    "placeholder": "Select event property",
+    "search_placeholder": "Search",
+    "empty_search_results": "No property found with this name"
+  },
+  "query_creator_timeframe": {
+    "label": "Timeframe"
   }
 }

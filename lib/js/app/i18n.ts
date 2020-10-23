@@ -17,7 +17,6 @@ const createI18n = (translationSettings: TranslationsSettings) => {
       react: {
         useSuspense: false,
       },
-      keySeparator: '.',
       interpolation: {
         escapeValue: false,
       },
