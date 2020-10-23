@@ -4,16 +4,17 @@ import { Icon } from '@keen.io/icons';
 import { colors } from '@keen.io/colors';
 
 import { Container, ClearSearch } from './SearchQueries.styles';
-import text from './text.json';
 
 import { DEBOUNCE_TIME } from './constants';
 
 type Props = {
   /** Search event handler */
   onSearch: (phrase: string) => void;
+  /** Search input placeholder */
+  placeholder?: string;
 };
 
-const SearchQueries: FC<Props> = ({ onSearch }) => {
+const SearchQueries: FC<Props> = ({ onSearch, placeholder }) => {
   const [value, setValue] = useState('');
   const updateCallback = useRef(null);
 
@@ -34,7 +35,7 @@ const SearchQueries: FC<Props> = ({ onSearch }) => {
         variant="solid"
         type="text"
         value={value}
-        placeholder={text.placeholder}
+        placeholder={placeholder}
         onChange={(e) => setValue(e.currentTarget.value)}
         renderPrefix={() => (
           <Icon type="search" width={15} height={15} fill={colors.blue[500]} />

@@ -4,7 +4,6 @@ import { render as rtlRender, fireEvent } from '@testing-library/react';
 import configureStore from 'redux-mock-store';
 
 import ExtractToEmail from './ExtractToEmail';
-import text from './text.json';
 
 const render = (overStoreState: any = {}, overProps: any = {}) => {
   const mockStore = configureStore([]);
@@ -41,7 +40,7 @@ test('allows user to close extraction settings modal', () => {
     props,
   } = render();
 
-  const button = getByText(text.closeButton);
+  const button = getByText('extract_to_email.close_button');
   fireEvent.click(button);
 
   expect(props.onClose).toHaveBeenCalled();
@@ -55,7 +54,7 @@ test('shows email validation error', () => {
   const emailInput = container.querySelector('input[type="text"]');
   fireEvent.change(emailInput, { target: { value: 'email' } });
 
-  expect(getByText(text.emailError)).toBeInTheDocument();
+  expect(getByText('extract_to_email.email_error')).toBeInTheDocument();
 });
 
 test('allows user to perform email extraction', () => {
@@ -70,7 +69,7 @@ test('allows user to perform email extraction', () => {
   const limitInput = container.querySelector('input[type="number"]');
   fireEvent.change(limitInput, { target: { value: 2000 } });
 
-  const button = getByText(text.buttonLabel);
+  const button = getByText('extract_to_email.button_label');
   fireEvent.click(button);
 
   expect(store.getActions()).toMatchInlineSnapshot(`
