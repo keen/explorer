@@ -26,7 +26,7 @@ const render = (storeState: any = {}, overProps: any = {}) => {
   };
 };
 
-test('allows user to add group by settings', async () => {
+test('do not allows user to add empty group by settings', async () => {
   const storeState = {
     query: {
       groupBy: undefined,
@@ -53,7 +53,7 @@ test('allows user to add group by settings', async () => {
   });
 });
 
-test('do not allows user to add empty group by settings', async () => {
+test('allows user to add group by settings', async () => {
   const storeState = {
     query: {
       groupBy: undefined,
