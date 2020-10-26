@@ -42,7 +42,6 @@ import {
 
 import { getViewMode, getVisualization } from './selectors';
 
-import text from './text.json';
 import {
   getLocationUrl,
   getScreenDimensions,
@@ -186,9 +185,10 @@ export function* loadStateFromUrl() {
   } catch (err) {
     yield take(NOTIFICATIONS_MOUNTED);
     const notificationManager = yield getContext(NOTIFICATION_MANAGER_CONTEXT);
+
     yield notificationManager.showNotification({
       type: 'error',
-      message: text.shareQueryLoadError,
+      message: 'notifications.load_share_query_error',
       showDismissButton: true,
       autoDismiss: false,
     });
@@ -221,18 +221,19 @@ export function* shareQueryUrl() {
 
     const url = `${getLocationUrl()}?${URL_STATE}=${stateToPersist}`;
     yield copyToClipboard(url);
-
     const notificationManager = yield getContext(NOTIFICATION_MANAGER_CONTEXT);
+
     yield notificationManager.showNotification({
       type: 'success',
-      message: text.shareQuerySuccess,
+      message: 'notifications.share_query_success',
       autoDismiss: true,
     });
   } catch (err) {
     const notificationManager = yield getContext(NOTIFICATION_MANAGER_CONTEXT);
+
     yield notificationManager.showNotification({
       type: 'error',
-      message: text.shareQueryError,
+      message: 'notifications.share_query_error',
       showDismissButton: true,
       autoDismiss: false,
     });
@@ -310,19 +311,20 @@ export function* exportChartToImage() {
   const node = document.getElementById('query-visualization');
   if (!node) throw new Error('Query visualization container is not available');
   const fileName = yield generateFileName();
+
   const notificationManager = yield getContext(NOTIFICATION_MANAGER_CONTEXT);
 
   try {
     exportToImage({ fileName, node });
     yield notificationManager.showNotification({
       type: 'info',
-      message: `Image ${text.downloadInProgress}`,
+      message: 'notifications.image_download_in_progress',
       autoDismiss: true,
     });
   } catch (err) {
     yield notificationManager.showNotification({
       type: 'error',
-      message: `Image ${text.downloadChartError}`,
+      message: 'notifications.image_download_error',
       showDismissButton: true,
       autoDismiss: false,
     });
@@ -338,13 +340,13 @@ export function* exportChartToJson() {
     exportToJson({ data, fileName });
     yield notificationManager.showNotification({
       type: 'info',
-      message: `JSON ${text.downloadInProgress}`,
+      message: 'notifications.json_download_in_progress',
       autoDismiss: true,
     });
   } catch (err) {
     yield notificationManager.showNotification({
       type: 'error',
-      message: `JSON ${text.downloadChartError}`,
+      message: 'notifications.json_download_error',
       showDismissButton: true,
       autoDismiss: false,
     });
@@ -360,13 +362,13 @@ export function* exportDataToCsv() {
     exportToCsv({ data, fileName });
     yield notificationManager.showNotification({
       type: 'info',
-      message: `CSV ${text.downloadInProgress}`,
+      message: 'notifications.csv_download_in_progress',
       autoDismiss: true,
     });
   } catch (err) {
     yield notificationManager.showNotification({
       type: 'error',
-      message: `CSV ${text.downloadChartError}`,
+      message: 'notifications.csv_download_error',
       showDismissButton: true,
       autoDismiss: false,
     });
@@ -400,13 +402,13 @@ export function* copyEmbeddedCode({ payload }: CopyEmbeddedCodeAction) {
     copyToClipboard(snippet);
     yield notificationManager.showNotification({
       type: 'success',
-      message: text.copyEmbeddedCode,
+      message: 'notifications.copy_embedded_code_success',
       autoDismiss: true,
     });
   } catch (err) {
     yield notificationManager.showNotification({
       type: 'error',
-      message: text.copyEmbeddedCodeError,
+      message: 'notifications.copy_embedded_code_error',
       showDismissButton: true,
       autoDismiss: false,
     });
@@ -424,13 +426,13 @@ export function* downloadCodeSnippet({ payload }: DownloadCodeSnippetAction) {
 
     yield notificationManager.showNotification({
       type: 'success',
-      message: `HTML ${text.downloadInProgress}`,
+      message: 'notifications.html_download_in_progress',
       autoDismiss: true,
     });
   } catch (err) {
     yield notificationManager.showNotification({
       type: 'error',
-      message: text.downloadChartError,
+      message: 'notifications.html_download_error',
       showDismissButton: true,
       autoDismiss: false,
     });
@@ -446,13 +448,13 @@ export function* copyApiResourceUrl({ payload }: CopyApiResourceUrlAction) {
     yield copyToClipboard(url);
     yield notificationManager.showNotification({
       type: 'success',
-      message: text.copyApiResourceUrl,
+      message: 'notifications.copy_api_resource_url',
       autoDismiss: true,
     });
   } catch (err) {
     yield notificationManager.showNotification({
       type: 'error',
-      message: text.copyApiResourceUrlError,
+      message: 'notifications.copy_api_resource_url_error',
       showDismissButton: true,
       autoDismiss: false,
     });

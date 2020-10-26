@@ -24,13 +24,29 @@ The Data Explorer `@keen.io/dataviz` theme could be overridden during initializa
 
 ```typescript
 const explorer = new KeenExplorer({
-    container: '#root',
-    modalContainer: '#modal-root',
-    dataviz: {
-        theme: {
-            colors: ['red', 'blue', 'yellow']
-        }
+  container: '#root',
+  modalContainer: '#modal-root',
+  dataviz: {
+    theme: {
+      colors: ['red', 'blue', 'yellow']
     }
+  }
+ });
+```
+
+### Translations
+
+The default translations files for application are hosted on `jsdelivr` CDN. You can easily replace the translations by overriding the `loadPath` for files.
+
+```typescript
+const explorer = new KeenExplorer({
+  container: '#root',
+  modalContainer: '#modal-root',
+  translations: {
+    backend: {
+      loadPath: 'https://cdn.jsdelivr.net/npm/@keen.io/explorer@$VERSION/dist/locales/{{lng}}/{{ns}}.json'
+    }
+  }
  });
 ```
 

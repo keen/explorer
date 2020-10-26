@@ -1,10 +1,4 @@
 {
-  "newQueryButton": "New Query",
-  "newQueryTitle": "New Query",
   "cachedLabel": "Cached",
-  "cacheUnits": "h",
-  "saveQuery": "Save Query",
-  "settingsTooltip": "Query Settings",
-  "actionsTooltip": "Actions",
-  "backLink": "Go to Saved Queries"
+  "cacheUnits": "h"
 }

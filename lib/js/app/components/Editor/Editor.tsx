@@ -1,5 +1,6 @@
 import React, { FC, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { Button } from '@keen.io/ui-core';
 
 import {
@@ -8,7 +9,6 @@ import {
   ButtonWrapper,
   CreatorContainer,
 } from './Editor.styles';
-import text from './text.json';
 
 import { showEmailExtraction } from './utils';
 
@@ -47,6 +47,7 @@ const Editor: FC<Props> = ({
   onSaveQuery,
 }) => {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   const queryResults = useSelector(getQueryResults);
   const isQueryLoading = useSelector(getQueryPerformState);
@@ -77,7 +78,7 @@ const Editor: FC<Props> = ({
       </CreatorContainer>
       <EditorActions>
         <RunQuery isLoading={isQueryLoading} onClick={() => onRunQuery()}>
-          {runQueryLabel(query)}
+          {t(runQueryLabel(query))}
         </RunQuery>
         {showEmailExtraction(query) && (
           <ButtonWrapper data-testid="email-extraction">
@@ -86,7 +87,7 @@ const Editor: FC<Props> = ({
               size="large"
               onClick={() => dispatch(extractToEmail())}
             >
-              {text.extractToEmailButton}
+              {t('editor.extract_to_email_button')}
             </Button>
           </ButtonWrapper>
         )}
@@ -97,7 +98,7 @@ const Editor: FC<Props> = ({
             variant="success"
             size="large"
           >
-            {text.clearButton}
+            {t('editor.clear_query_button')}
           </Button>
         </ButtonWrapper>
       </EditorActions>

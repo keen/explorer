@@ -1,6 +1,8 @@
 const webpack = require('webpack');
 const path = require('path');
 const merge = require('webpack-merge');
+
+const CopyPlugin = require('copy-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
@@ -41,6 +43,14 @@ module.exports = (env) => {
      plugins: [
        new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
        new webpack.optimize.ModuleConcatenationPlugin(),
+       new CopyPlugin({
+        patterns: [
+          {
+            from: path.resolve(__dirname, 'public', 'locales'),
+            to: path.resolve(__dirname, 'dist', 'locales'),
+          },
+        ],
+      }),
     ]
   });
 

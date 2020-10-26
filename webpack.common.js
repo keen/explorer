@@ -45,7 +45,7 @@ const createWebpackConfig = (
             loadAppConfig()
           )
         },
-        template: path.join(__dirname, 'test', 'demo', 'index.html'),
+        template: path.join(__dirname, 'public', 'index.html'),
       }),
     ],
   };
