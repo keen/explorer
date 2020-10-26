@@ -57,6 +57,7 @@ import {
   exportToCsv,
   createCodeSnippet,
   exportToHtml,
+  createResourceUrl,
 } from '../../utils';
 
 import {
@@ -73,6 +74,7 @@ import {
   AppStartAction,
   CopyEmbeddedCodeAction,
   DownloadCodeSnippetAction,
+  CopyApiResourceUrlAction,
   SetQueryAutorunAction,
   UpdateVisualizationTypeAction,
 } from './types';
@@ -96,6 +98,7 @@ import {
   EXPORT_DATA_TO_CSV,
   COPY_EMBEDDED_CODE,
   DOWNLOAD_CODE_SNIPPET,
+  COPY_API_RESOURCE_URL,
   SET_QUERY_AUTORUN,
   QUERY_AUTORUN_KEY,
   UPDATE_VISUALIZATION,
@@ -452,6 +455,28 @@ export function* downloadCodeSnippet({ payload }: DownloadCodeSnippetAction) {
   }
 }
 
+export function* copyApiResourceUrl({ payload }: CopyApiResourceUrlAction) {
+  const { config } = payload;
+  const query = yield select(getQuerySettings);
+  const notificationManager = yield getContext(NOTIFICATION_MANAGER_CONTEXT);
+  try {
+    const url = createResourceUrl({ query, config });
+    yield copyToClipboard(url);
+    yield notificationManager.showNotification({
+      type: 'success',
+      message: text.copyApiResourceUrl,
+      autoDismiss: true,
+    });
+  } catch (err) {
+    yield notificationManager.showNotification({
+      type: 'error',
+      message: text.copyApiResourceUrlError,
+      showDismissButton: true,
+      autoDismiss: false,
+    });
+  }
+}
+
 export function* persistAutorunSettings({ payload }: SetQueryAutorunAction) {
   const { autorun } = payload;
   try {
@@ -486,5 +511,6 @@ export function* appSaga() {
   yield takeLatest(COPY_EMBEDDED_CODE, copyEmbeddedCode);
   yield takeLatest(DOWNLOAD_CODE_SNIPPET, downloadCodeSnippet);
   yield takeLatest(UPDATE_VISUALIZATION, updateVisualizationType);
+  yield takeLatest(COPY_API_RESOURCE_URL, copyApiResourceUrl);
   yield debounce(200, SCREEN_RESIZE, resizeBrowserScreen);
 }

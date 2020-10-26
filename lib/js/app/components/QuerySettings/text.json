@@ -10,5 +10,6 @@
   "cachedQueriesLimitReached": "The limit of cached queries for your organization has been reached.",
   "upgradeAnchor": "Upgrade plan",
   "upgradeConnector": "or",
-  "uncacheQuery": "uncache other saved query."
+  "uncacheQuery": "uncache other saved query.",
+  "clonedQueryNotice": "Rename your cloned query to save it"
 }

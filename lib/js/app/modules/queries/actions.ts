@@ -25,6 +25,7 @@ import {
   GET_ORGANIZATION_USAGE_LIMITS,
   EXTRACT_TO_EMAIL,
   RUN_EMAIL_EXTRACTION,
+  CLONE_SAVED_QUERY,
 } from './constants';
 
 export const extractToEmail = (): QueriesActions => ({
@@ -168,4 +169,8 @@ export const setQueryLimitReached = (
   payload: {
     queriesExecutionLimitReached,
   },
+});
+
+export const cloneSavedQuery = (): QueriesActions => ({
+  type: CLONE_SAVED_QUERY,
 });

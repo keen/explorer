@@ -3,6 +3,8 @@ import { Provider } from 'react-redux';
 import { render as rtlRender, fireEvent } from '@testing-library/react';
 import configureStore from 'redux-mock-store';
 
+import { AppContext } from '../../contexts';
+
 import ActionsMenu from './ActionsMenu';
 import text from './text.json';
 
@@ -18,9 +20,11 @@ const render = (overProps: any = {}) => {
   const store = mockStore({ queries: {} });
 
   const wrapper = rtlRender(
-    <Provider store={store}>
-      <ActionsMenu {...props} />
-    </Provider>
+    <AppContext.Provider value={{ keenAnalysis: { config: {} } } as any}>
+      <Provider store={store}>
+        <ActionsMenu {...props} />
+      </Provider>
+    </AppContext.Provider>
   );
 
   return {
@@ -157,6 +161,45 @@ test('allows user to embed HTML code', () => {
     Array [
       Object {
         "type": "@app/SHOW_EMBED_MODAL",
+      },
+    ]
+  `);
+});
+
+test('allows user to copy API Resource', () => {
+  const {
+    wrapper: { getByText },
+    store,
+  } = render();
+
+  const copyApiResource = getByText(text.apiResource);
+  fireEvent.click(copyApiResource);
+
+  expect(store.getActions()).toMatchInlineSnapshot(`
+    Array [
+      Object {
+        "payload": Object {
+          "config": Object {},
+        },
+        "type": "@app/COPY_API_RESOURCE_URL",
+      },
+    ]
+  `);
+});
+
+test('allows user to clone query', () => {
+  const {
+    wrapper: { getByText },
+    store,
+  } = render();
+
+  const cloneQuery = getByText(text.cloneQuery);
+  fireEvent.click(cloneQuery);
+
+  expect(store.getActions()).toMatchInlineSnapshot(`
+    Array [
+      Object {
+        "type": "@queries/CLONE_SAVED_QUERY",
       },
     ]
   `);

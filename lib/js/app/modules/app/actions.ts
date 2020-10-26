@@ -36,6 +36,7 @@ import {
   DOWNLOAD_CODE_SNIPPET,
   SHOW_EMAIL_EXTRACTION_MODAL,
   HIDE_EMAIL_EXTRACTION_MODAL,
+  COPY_API_RESOURCE_URL,
   SET_QUERY_AUTORUN,
   UPDATE_CHART_SETTINGS,
   UPDATE_VISUALIZATION,
@@ -234,5 +235,14 @@ export const updateVisualizationType = (type: PickerWidgets): AppActions => ({
   type: UPDATE_VISUALIZATION,
   payload: {
     type,
+  },
+});
+
+export const copyApiResourceUrl = (
+  config: Record<string, any>
+): AppActions => ({
+  type: COPY_API_RESOURCE_URL,
+  payload: {
+    config,
   },
 });

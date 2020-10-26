@@ -122,7 +122,11 @@ const QuerySettings: FC<Props> = ({ onSave, onClose, cacheAvailable }) => {
         )}
         {settingsSource === SettingsModalSource.FIRST_QUERY_SAVE && (
           <NewQueryNotice>
-            <Alert type="info">{text.newQueryNotice}</Alert>
+            <Alert type="info">
+              {savedQuery.isCloned
+                ? text.clonedQueryNotice
+                : text.newQueryNotice}
+            </Alert>
           </NewQueryNotice>
         )}
         <Label

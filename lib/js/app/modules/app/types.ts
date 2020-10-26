@@ -33,6 +33,7 @@ import {
   DOWNLOAD_CODE_SNIPPET,
   SHOW_EMAIL_EXTRACTION_MODAL,
   HIDE_EMAIL_EXTRACTION_MODAL,
+  COPY_API_RESOURCE_URL,
   SET_QUERY_AUTORUN,
   UPDATE_CHART_SETTINGS,
   UPDATE_VISUALIZATION,
@@ -244,6 +245,12 @@ export interface UpdateVisualizationTypeAction {
     type: PickerWidgets;
   };
 }
+export interface CopyApiResourceUrlAction {
+  type: typeof COPY_API_RESOURCE_URL;
+  payload: {
+    config: Record<string, any>;
+  };
+}
 
 export type AppActions =
   | AppStartAction
@@ -277,4 +284,5 @@ export type AppActions =
   | HideEmailExtractionModalAction
   | SetQueryAutorunAction
   | UpdateChartSettingsAction
-  | UpdateVisualizationTypeAction;
+  | UpdateVisualizationTypeAction
+  | CopyApiResourceUrlAction;

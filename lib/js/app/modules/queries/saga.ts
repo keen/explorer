@@ -18,6 +18,7 @@ import {
   setQueryLimitReached,
   setQuerySaveState,
   resetQueryResults,
+  setQuerySettings,
 } from './actions';
 
 import { getQuerySettings } from './selectors';
@@ -32,10 +33,14 @@ import {
   setViewMode,
   selectFirstSavedQuery,
   switchToQueriesList,
+  updateQueryCreator,
   HIDE_CONFIRMATION,
   ACCEPT_CONFIRMATION,
   HIDE_EMAIL_EXTRACTION_MODAL,
+  QUERY_EDITOR_MOUNTED,
 } from '../../modules/app';
+
+import { getSavedQuery, updateSaveQuery } from '../../modules/savedQuery';
 
 import { serializeSavedQuery } from './utils';
 import text from './text.json';
@@ -59,6 +64,7 @@ import {
   GET_ORGANIZATION_USAGE_LIMITS,
   RUN_EMAIL_EXTRACTION,
   ERRORS,
+  CLONE_SAVED_QUERY,
 } from './constants';
 
 import { isElementInViewport } from './utils';
@@ -306,6 +312,36 @@ function* checkOrganizationLimits() {
   }
 }
 
+function* cloneSavedQuery() {
+  const notificationManager = yield getContext(NOTIFICATION_MANAGER_CONTEXT);
+  const querySettings = yield select(getQuerySettings);
+  const savedQuery = yield select(getSavedQuery);
+  const view = yield select(getViewMode);
+
+  const clonedSavedQuery = {
+    ...savedQuery,
+    exists: false,
+    isCloned: true,
+  };
+
+  if (view === 'browser') {
+    yield put(setViewMode('editor'));
+    yield take(QUERY_EDITOR_MOUNTED);
+    yield put(updateQueryCreator(querySettings));
+    yield put(setQuerySettings(querySettings));
+    yield put(updateSaveQuery(clonedSavedQuery));
+  }
+
+  if (view === 'editor') {
+    yield put(updateSaveQuery(clonedSavedQuery));
+  }
+
+  yield notificationManager.showNotification({
+    type: 'success',
+    message: text.cloneQuerySuccess,
+  });
+}
+
 export function* queriesSaga() {
   yield takeLatest(EXTRACT_TO_EMAIL, extractToEmail);
   yield takeLatest(RUN_QUERY, runQuery);
@@ -319,4 +355,5 @@ export function* queriesSaga() {
     [GET_ORGANIZATION_USAGE_LIMITS, SAVE_QUERY_SUCCESS, DELETE_QUERY_SUCCESS],
     checkOrganizationLimits
   );
+  yield takeLatest(CLONE_SAVED_QUERY, cloneSavedQuery);
 }

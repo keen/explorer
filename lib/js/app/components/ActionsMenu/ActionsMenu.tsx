@@ -1,9 +1,10 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useState, useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { DropdownMenu, Tooltip } from '@keen.io/ui-core';
 import { AnimatePresence } from 'framer-motion';
 
-import { getQueryResults } from '../../modules/queries';
+import { getQueryResults, cloneSavedQuery } from '../../modules/queries';
+import { AppContext } from '../../contexts';
 
 import {
   Container,
@@ -22,6 +23,7 @@ import {
   exportChartToJson,
   exportDataToCsv,
   showEmbedModal,
+  copyApiResourceUrl,
 } from '../../modules/app';
 
 import { TOOLTIP_MOTION } from '../../constants';
@@ -39,6 +41,9 @@ const ActionsMenu: FC<Props> = ({ isNewQuery, onRemoveQuery, onHideMenu }) => {
   const dispatch = useDispatch();
   const queryResults = useSelector(getQueryResults);
   const [tooltip, showTooltip] = useState(false);
+  const {
+    keenAnalysis: { config },
+  } = useContext(AppContext);
   return (
     <Container>
       <DropdownMenu.Container>
@@ -87,6 +92,16 @@ const ActionsMenu: FC<Props> = ({ isNewQuery, onRemoveQuery, onHideMenu }) => {
         {!isNewQuery && (
           <DropdownMenu.Item
             onClick={() => {
+              dispatch(cloneSavedQuery());
+              onHideMenu();
+            }}
+          >
+            {text.cloneQuery}
+          </DropdownMenu.Item>
+        )}
+        {!isNewQuery && (
+          <DropdownMenu.Item
+            onClick={() => {
               onRemoveQuery();
               onHideMenu();
             }}
@@ -102,6 +117,14 @@ const ActionsMenu: FC<Props> = ({ isNewQuery, onRemoveQuery, onHideMenu }) => {
           }}
         >
           {text.shareQuery}
+        </DropdownMenu.Item>
+        <DropdownMenu.Item
+          onClick={() => {
+            dispatch(copyApiResourceUrl(config));
+            onHideMenu();
+          }}
+        >
+          {text.apiResource}
         </DropdownMenu.Item>
         <DropdownMenu.Item
           onClick={() => {

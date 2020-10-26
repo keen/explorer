@@ -40,6 +40,8 @@ export const ERRORS = {
   TOO_MANY_QUERIES: 'TooManyCachedQueriesInTheCurrentBillingPeriod',
 };
 
+export const API_VERSION = '3.0';
+
 export const EXTRACTION_PREVIEW_EVENTS_DEFAULT = 100;
 export const EXTRACTION_PREVIEW_EVENTS_LIMIT = 100000;
 export const EXTRACTION_BULK_EVENTS_DEFAULT = 1000;

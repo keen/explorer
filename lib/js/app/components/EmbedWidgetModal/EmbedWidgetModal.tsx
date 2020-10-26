@@ -34,8 +34,11 @@ import text from './text.json';
 
 const EmbedWidgetModal: FC = () => {
   const dispatch = useDispatch();
-  const { modalContainer, keenAnalysis } = useContext(AppContext);
+  const { modalContainer, keenAnalysis, datavizSettings } = useContext(
+    AppContext
+  );
   const { projectId, readKey } = keenAnalysis.config;
+  const theme = datavizSettings?.theme;
 
   const isOpen = useSelector(getEmbedModalVisibility);
   const { type: widget, chartSettings, widgetSettings } = useSelector(
@@ -48,7 +51,7 @@ const EmbedWidgetModal: FC = () => {
       createCodeSnippet({
         widget,
         query,
-        chartSettings,
+        chartSettings: { ...chartSettings, theme },
         widgetSettings,
         projectId,
         readKey,
