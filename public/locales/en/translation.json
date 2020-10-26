@@ -7,7 +7,8 @@
     "json": "JSON",
     "csv": "CSV",
     "tooltip": "Run query to download result",
-    "embed_html": "Embed HTML"
+    "embed_html": "Embed HTML",
+    "api_resource": "API resource"
   },
   "embed_widget": {
     "embed_html_title": "Embed HTML",
@@ -107,7 +108,9 @@
     "copy_embedded_code_error": "We were not able to copy HTML code. Try again later.",
     "load_share_query_error": "We were not able to load shared query. Try again later.",
     "share_query_success": "Query link generated and copied to clipboard",
-    "share_query_error": "We were not able to generate the link. Try again later."
+    "share_query_error": "We were not able to generate the link. Try again later.",
+    "copy_api_resource_url": "API Resource copied to clipboard",
+    "copy_api_resource_url_error": "We were not able to copy API Resource. Try again later."
   },
   "query_creator_analysis": {
     "placeholder": "Select analysis type",

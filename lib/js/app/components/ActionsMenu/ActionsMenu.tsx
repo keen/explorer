@@ -1,6 +1,6 @@
 import React, { FC, useState, useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { AnimatePresence } from 'fram-er-motion';
+import { AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { DropdownMenu, Tooltip } from '@keen.io/ui-core';
 
@@ -27,7 +27,6 @@ import {
 } from '../../modules/app';
 
 import { TOOLTIP_MOTION } from '../../constants';
-import text from './text.json';
 
 type Props = {
   /** Is new query */
@@ -127,7 +126,7 @@ const ActionsMenu: FC<Props> = ({ isNewQuery, onRemoveQuery, onHideMenu }) => {
             onHideMenu();
           }}
         >
-          {text.apiResource}
+          {t('actions_menu.api_resource')}
         </DropdownMenu.Item>
         <DropdownMenu.Item
           onClick={() => {

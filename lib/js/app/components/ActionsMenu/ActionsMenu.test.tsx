@@ -171,7 +171,7 @@ test('allows user to copy API Resource', () => {
     store,
   } = render();
 
-  const copyApiResource = getByText(text.apiResource);
+  const copyApiResource = getByText('actions_menu.api_resource');
   fireEvent.click(copyApiResource);
 
   expect(store.getActions()).toMatchInlineSnapshot(`

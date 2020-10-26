@@ -448,13 +448,13 @@ export function* copyApiResourceUrl({ payload }: CopyApiResourceUrlAction) {
     yield copyToClipboard(url);
     yield notificationManager.showNotification({
       type: 'success',
-      message: text.copyApiResourceUrl,
+      message: 'notifications.copy_api_resource_url',
       autoDismiss: true,
     });
   } catch (err) {
     yield notificationManager.showNotification({
       type: 'error',
-      message: text.copyApiResourceUrlError,
+      message: 'notifications.copy_api_resource_url_error',
       showDismissButton: true,
       autoDismiss: false,
     });
