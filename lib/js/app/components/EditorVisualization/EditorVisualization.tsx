@@ -31,8 +31,7 @@ const EditorVisualization: FC<Props> = ({ query, queryResults }) => {
 
   const { widget: widgetType, chartSettings, widgetSettings } = useSelector(
     (state: AppState) => {
-      const { type, ...restSettings } = getVisualization(state);
-      const widget = type;
+      const { type: widget, ...restSettings } = getVisualization(state);
       return {
         widget,
         ...restSettings,
