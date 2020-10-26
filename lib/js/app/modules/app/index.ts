@@ -29,6 +29,7 @@ import {
   downloadCodeSnippet,
   showEmailExtractionModal,
   hideEmailExtractionModal,
+  copyApiResourceUrl,
   setQueryAutorun,
   resetVisualization,
 } from './actions';
@@ -91,6 +92,7 @@ export {
   copyEmbeddedCode,
   downloadCodeSnippet,
   exportDataToCsv,
+  copyApiResourceUrl,
   setQueryAutorun,
   getQueryAutorun,
   resetVisualization,

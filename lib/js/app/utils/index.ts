@@ -5,6 +5,8 @@ import { exportToCsv } from './exportToCsv';
 import { setVisualization } from './setVisualization';
 import { exportToHtml } from './exportToHtml';
 import { createCodeSnippet } from './createCodeSnippet';
+import { createResourceUrl } from './createResourceUrl';
+import { stringify } from './stringify';
 
 export {
   setVisualization,
@@ -14,4 +16,6 @@ export {
   exportToCsv,
   exportToHtml,
   createCodeSnippet,
+  createResourceUrl,
+  stringify,
 };

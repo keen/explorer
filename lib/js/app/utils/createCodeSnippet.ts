@@ -3,6 +3,7 @@ import {
   ChartSettings,
   WidgetSettings,
 } from '@keen.io/widget-picker';
+import { Theme } from '@keen.io/charts';
 
 export const createCodeSnippet = ({
   widget,
@@ -14,7 +15,7 @@ export const createCodeSnippet = ({
 }: {
   widget: PickerWidgets;
   query: Record<string, any>;
-  chartSettings?: ChartSettings;
+  chartSettings?: ChartSettings & { theme?: Theme };
   widgetSettings?: WidgetSettings;
   projectId: string;
   readKey: string;

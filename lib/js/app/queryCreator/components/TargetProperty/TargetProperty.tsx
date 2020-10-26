@@ -115,6 +115,7 @@ const TargetProperty: FC<Props> = ({
         isActive={isOpen}
         value={property}
         searchable
+        dropIndicator
         searchPlaceholder={text.searchPlaceholder}
         placeholder={text.placeholder}
         onSearch={searchHandler}
