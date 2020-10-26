@@ -163,6 +163,9 @@ const ExtractionProperties: FC<Props> = ({
                   clearSearchHandler();
                   updateProperty({ id, propertyName });
                 }}
+                onBlur={() => {
+                  if (!propertyName) removeProperty(id);
+                }}
                 onRemove={() => {
                   clearSearchHandler();
                   removeProperty(id);

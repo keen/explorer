@@ -26,7 +26,34 @@ const render = (storeState: any = {}, overProps: any = {}) => {
   };
 };
 
-test('allows users to add group by settings', async () => {
+test('allows user to add group by settings', async () => {
+  const storeState = {
+    query: {
+      groupBy: undefined,
+    },
+    events: {
+      schemas: {
+        purchases: { date: 'String', userId: 'String' },
+      },
+    },
+  };
+
+  const {
+    wrapper: { getByTestId, queryByTestId },
+  } = render(storeState, { collection: 'purchases' });
+
+  const button = getByTestId('action-button');
+  fireEvent.click(button);
+
+  waitFor(() => {
+    const element = getByTestId('groupBy-settings-item');
+    fireEvent.click(element);
+
+    expect(queryByTestId('groupBy-settings-item')).not.toBeInTheDocument();
+  });
+});
+
+test('do not allows user to add empty group by settings', async () => {
   const storeState = {
     query: {
       groupBy: undefined,

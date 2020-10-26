@@ -19,16 +19,33 @@ const render = (overProps: any = {}) => {
     onRemove: jest.fn(),
     onSelectProperty: jest.fn(),
     onSearchProperties: jest.fn(),
+    onBlur: jest.fn(),
     ...overProps,
   };
 
-  const wrapper = rtlRender(<SearchableProperty {...props} />);
+  const wrapper = rtlRender(
+    <div data-testid="wrapper">
+      <SearchableProperty {...props} />
+    </div>
+  );
 
   return {
     wrapper,
     props,
   };
 };
+
+test('calls "onBlur" event handler', () => {
+  const {
+    wrapper: { getByTestId },
+    props,
+  } = render({ property: undefined });
+
+  const element = getByTestId('wrapper');
+  fireEvent.click(element);
+
+  expect(props.onBlur).toHaveBeenCalled();
+});
 
 test('allows user to remove property', () => {
   const {

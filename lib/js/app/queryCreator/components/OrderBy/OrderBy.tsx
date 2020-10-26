@@ -219,6 +219,9 @@ const OrderBy: FC<Props> = ({ collection }) => {
                       updateOrderBy(orderSettings as OrderBySettings, id);
                     }}
                     onSearchProperties={searchHandler}
+                    onBlur={() => {
+                      if (!propertyName) removeOrderBy(id);
+                    }}
                     onRemove={() => {
                       clearSearchHandler();
                       removeOrderBy(id);

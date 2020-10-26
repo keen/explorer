@@ -40,12 +40,15 @@ const Filter: FC<Props> = ({
   const { propertyName, propertyType, propertyValue, operator } = filter;
 
   return (
-    <Container>
+    <Container data-testid="filter-item">
       <FilterItem>
         <FilterProperty
           property={propertyName}
           type={propertyType}
           properties={properties}
+          onBlur={() => {
+            if (!propertyName) onRemove();
+          }}
           onSelectProperty={(property) => onPropertyChange(property)}
           onCastPropertyType={(propertyType) => {
             const operator = setOperator(propertyType, filter.operator);
