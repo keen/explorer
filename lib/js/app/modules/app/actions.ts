@@ -36,6 +36,7 @@ import {
   DOWNLOAD_CODE_SNIPPET,
   SHOW_EMAIL_EXTRACTION_MODAL,
   HIDE_EMAIL_EXTRACTION_MODAL,
+  COPY_API_RESOURCE_URL,
   SET_QUERY_AUTORUN,
 } from './constants';
 
@@ -216,5 +217,14 @@ export const downloadCodeSnippet = (
   payload: {
     projectId,
     readKey,
+  },
+});
+
+export const copyApiResourceUrl = (
+  config: Record<string, any>
+): AppActions => ({
+  type: COPY_API_RESOURCE_URL,
+  payload: {
+    config,
   },
 });

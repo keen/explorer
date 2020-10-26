@@ -6,5 +6,6 @@
   "json": "JSON",
   "csv": "CSV",
   "tooltip": "Run query to download result",
-  "embedHtml": "Embed HTML"
+  "embedHtml": "Embed HTML",
+  "apiResource": "API Resource"
 }

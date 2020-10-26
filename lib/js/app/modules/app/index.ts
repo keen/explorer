@@ -29,6 +29,7 @@ import {
   downloadCodeSnippet,
   showEmailExtractionModal,
   hideEmailExtractionModal,
+  copyApiResourceUrl,
   setQueryAutorun,
 } from './actions';
 import {
@@ -89,6 +90,7 @@ export {
   copyEmbeddedCode,
   downloadCodeSnippet,
   exportDataToCsv,
+  copyApiResourceUrl,
   setQueryAutorun,
   getQueryAutorun,
   ReducerState,
