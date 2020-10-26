@@ -8,7 +8,8 @@
     "csv": "CSV",
     "tooltip": "Run query to download result",
     "embed_html": "Embed HTML",
-    "api_resource": "API resource"
+    "api_resource": "API resource",
+    "clone_query": "Clone query"
   },
   "embed_widget": {
     "embed_html_title": "Embed HTML",
@@ -44,6 +45,7 @@
     "saving_query": "Saving query",
     "close_button": "Cancel",
     "new_query_notice": "Create your saved query",
+    "cloned_query_notice": "Rename your cloned query to save it",
     "cached_queries_limit_reached": "The limit of cached queries for your organization has been reached.",
     "upgrade_anchor": "Upgrade plan",
     "upgrade_connector": "or",
@@ -110,7 +112,15 @@
     "share_query_success": "Query link generated and copied to clipboard",
     "share_query_error": "We were not able to generate the link. Try again later.",
     "copy_api_resource_url": "API Resource copied to clipboard",
-    "copy_api_resource_url_error": "We were not able to copy API Resource. Try again later."
+    "copy_api_resource_url_error": "We were not able to copy API Resource. Try again later.",
+    "clone_query_success": "Query cloned",
+    "query_already_deleted": "Query already has been deleted.",
+    "query_delete_error": "We were not able to delete this query. Try again later.",
+    "query_delete_success": "Query removed",
+    "save_query_success": "Query saved",
+    "save_query_error": "We cannot save the query. There is a problem on our end.",
+    "prepeare_email_extraction": "Extraction in progress. You will receive an email in a few minutes.",
+    "email_extraction_error": "We were not able to process email extraction. Try again later."
   },
   "query_creator_analysis": {
     "placeholder": "Select analysis type",

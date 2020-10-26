@@ -98,7 +98,7 @@ const ActionsMenu: FC<Props> = ({ isNewQuery, onRemoveQuery, onHideMenu }) => {
               onHideMenu();
             }}
           >
-            {text.cloneQuery}
+            {t('actions_menu.clone_query')}
           </DropdownMenu.Item>
         )}
         {!isNewQuery && (

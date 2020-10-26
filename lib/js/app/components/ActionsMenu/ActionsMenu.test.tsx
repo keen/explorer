@@ -192,7 +192,7 @@ test('allows user to clone query', () => {
     store,
   } = render();
 
-  const cloneQuery = getByText(text.cloneQuery);
+  const cloneQuery = getByText('actions_menu.clone_query');
   fireEvent.click(cloneQuery);
 
   expect(store.getActions()).toMatchInlineSnapshot(`

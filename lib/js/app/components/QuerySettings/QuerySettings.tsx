@@ -128,8 +128,8 @@ const QuerySettings: FC<Props> = ({ onSave, onClose, cacheAvailable }) => {
           <NewQueryNotice>
             <Alert type="info">
               {savedQuery.isCloned
-                ? text.clonedQueryNotice
-                : text.newQueryNotice}
+                ? t('query_settings.cloned_query_notice')
+                : t('query_settings.new_query_notice')}
             </Alert>
           </NewQueryNotice>
         )}
