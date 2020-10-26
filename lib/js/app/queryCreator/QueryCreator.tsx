@@ -39,14 +39,14 @@ type Props = {
   readKey: string;
   /** Keen master access key */
   masterKey: string;
-  /** Host name */
-  host?: string;
   /** Modal container selector */
   modalContainer: string;
   /** Update query event handler */
   onUpdateQuery?: (query: Record<string, any>) => void;
   /** Update chart settings handler */
   onUpdateChartSettings: (chartSettings: Record<string, any>) => void;
+  /** Host name */
+  host?: string;
 };
 
 class QueryCreator extends React.PureComponent<Props> {

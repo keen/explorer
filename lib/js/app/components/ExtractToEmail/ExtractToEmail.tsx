@@ -1,4 +1,5 @@
 import React, { FC, useState, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   Input,
@@ -23,7 +24,6 @@ import {
   FileSettings,
   Cancel,
 } from './ExtractToEmail.styles';
-import text from './text.json';
 
 import { validateEmail } from './utils';
 
@@ -43,6 +43,7 @@ type Props = {
 
 const ExtractToEmail: FC<Props> = ({ onClose }) => {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
   const querySettings = useSelector(getQuerySettings);
 
   const [isValidEmail, setEmailValidation] = useState(null);
@@ -75,14 +76,15 @@ const ExtractToEmail: FC<Props> = ({ onClose }) => {
     <>
       <Container>
         <Label htmlFor="limit" variant="secondary">
-          {text.limitLabel} <MaximumLimit>{text.limitMaxLabel}</MaximumLimit>
+          {t('extract_to_email.limit_label')}{' '}
+          <MaximumLimit>{t('extract_to_email.limit_max_label')}</MaximumLimit>
         </Label>
         <Input
           data-testid="limit-input"
           type="number"
           variant="solid"
           id="limit"
-          placeholder={text.limitPlaceholder}
+          placeholder={t('extract_to_email.limit_input_placeholder')}
           value={limit}
           onChange={(e) => handleLimitUpdate(e.target.value)}
         />
@@ -93,7 +95,7 @@ const ExtractToEmail: FC<Props> = ({ onClose }) => {
             showAsterisk
             hasError={emailError}
           >
-            {text.emailLabel}
+            {t('extract_to_email.email_label')}
           </Label>
           <Input
             data-testid="email-input"
@@ -101,7 +103,7 @@ const ExtractToEmail: FC<Props> = ({ onClose }) => {
             variant="solid"
             id="email"
             hasError={emailError}
-            placeholder={text.emailPlaceholder}
+            placeholder={t('extract_to_email.email_input_placeholder')}
             value={email}
             onChange={(e) => {
               e.persist();
@@ -116,11 +118,11 @@ const ExtractToEmail: FC<Props> = ({ onClose }) => {
             }}
           />
           <ErrorContainer>
-            {emailError && <Error>{text.emailError}</Error>}
+            {emailError && <Error>{t('extract_to_email.email_error')}</Error>}
           </ErrorContainer>
         </EmailContainer>
         <Label htmlFor="contentType" variant="secondary">
-          {text.fileFormatLabel}
+          {t('extract_to_email.file_format_label')}
         </Label>
         <FileSettings>
           <ContentTypeContainer>
@@ -147,7 +149,9 @@ const ExtractToEmail: FC<Props> = ({ onClose }) => {
               }}
               checked={!!contentEncoding}
             />
-            <CompressionLabel>{text.contentEncodingLabel}</CompressionLabel>
+            <CompressionLabel>
+              {t('extract_to_email.content_encoding_label')}
+            </CompressionLabel>
           </Label>
         </FileSettings>
       </Container>
@@ -168,7 +172,7 @@ const ExtractToEmail: FC<Props> = ({ onClose }) => {
               }
             }}
           >
-            {text.buttonLabel}
+            {t('extract_to_email.button_label')}
           </Button>
           <Cancel>
             <Anchor
@@ -176,7 +180,7 @@ const ExtractToEmail: FC<Props> = ({ onClose }) => {
               color={colors.blue[500]}
               hoverColor={colors.blue[300]}
             >
-              {text.closeButton}
+              {t('extract_to_email.close_button')}
             </Anchor>
           </Cancel>
         </FooterContent>

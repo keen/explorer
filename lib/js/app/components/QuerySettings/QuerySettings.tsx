@@ -1,5 +1,6 @@
 import React, { FC, useState, useCallback, useEffect, useContext } from 'react';
 import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { colors } from '@keen.io/colors';
 import { ErrorContainer } from '@keen.io/forms';
 import {
@@ -40,7 +41,6 @@ import {
 
 import { AppContext } from '../../contexts';
 import { ERRORS } from '../../constants';
-import text from './text.json';
 
 import { slugify } from '../../utils/text';
 
@@ -67,6 +67,7 @@ const QuerySettings: FC<Props> = ({ onSave, onClose, cacheAvailable }) => {
   const settingsSource = useSelector(getQuerySettingsModalSource);
 
   const { upgradeSubscriptionUrl } = useContext(AppContext);
+  const { t } = useTranslation();
 
   const [querySettings, setQuerySettings] = useState(savedQuery);
   const [queryNameError, setQueryNameError] = useState<string | boolean>(null);
@@ -74,7 +75,9 @@ const QuerySettings: FC<Props> = ({ onSave, onClose, cacheAvailable }) => {
   const handleQueryNameUpdate = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const value = e.currentTarget.value;
-      setQueryNameError(value ? false : text.queryNameError);
+      setQueryNameError(
+        value ? false : (t('query_settings.query_name_error') as string)
+      );
       setQuerySettings((settings) => ({
         ...settings,
         name: slugify(value),
@@ -104,15 +107,16 @@ const QuerySettings: FC<Props> = ({ onSave, onClose, cacheAvailable }) => {
             <Alert type="error">
               {error.error_code === ERRORS.TOO_MANY_QUERIES ? (
                 <>
-                  <div>{text.cachedQueriesLimitReached}</div>
+                  <div>{t('query_settings.cached_queries_limit_reached')}</div>
                   <UpgradeAnchor
                     target="_blank"
                     rel="noopener noreferrer"
                     href={upgradeSubscriptionUrl}
                   >
-                    {text.upgradeAnchor}
+                    {t('query_settings.upgrade_anchor')}
                   </UpgradeAnchor>{' '}
-                  {text.upgradeConnector} {text.uncacheQuery}
+                  {t('query_settings.upgrade_connector')}{' '}
+                  {t('query_settings.uncache_query')}
                 </>
               ) : (
                 error.body
@@ -124,8 +128,8 @@ const QuerySettings: FC<Props> = ({ onSave, onClose, cacheAvailable }) => {
           <NewQueryNotice>
             <Alert type="info">
               {savedQuery.isCloned
-                ? text.clonedQueryNotice
-                : text.newQueryNotice}
+                ? t('query_settings.cloned_query_notice')
+                : t('query_settings.new_query_notice')}
             </Alert>
           </NewQueryNotice>
         )}
@@ -135,7 +139,7 @@ const QuerySettings: FC<Props> = ({ onSave, onClose, cacheAvailable }) => {
           showAsterisk
           hasError={!!queryNameError}
         >
-          {text.queryName}
+          {t('query_settings.query_name_label')}
         </Label>
         <Input
           data-testid="query-name-input"
@@ -143,7 +147,7 @@ const QuerySettings: FC<Props> = ({ onSave, onClose, cacheAvailable }) => {
           variant="solid"
           id="queryName"
           hasError={!!queryNameError}
-          placeholder={text.queryNamePlaceholder}
+          placeholder={t('query_settings.query_name_input_placeholder')}
           value={querySettings.displayName}
           onChange={handleQueryNameUpdate}
         />
@@ -205,16 +209,22 @@ const QuerySettings: FC<Props> = ({ onSave, onClose, cacheAvailable }) => {
                   validateNameUniqueness &&
                   savedQueries.find((query) => query.name === name)
                 ) {
-                  setQueryNameError(text.queryUniqueNameError);
+                  setQueryNameError(
+                    t('query_settings.query_unique_name_error') as string
+                  );
                 } else {
                   onSave({ name, displayName, refreshRate, tags });
                 }
               } else {
-                setQueryNameError(text.queryNameError);
+                setQueryNameError(
+                  t('query_settings.query_name_error') as string
+                );
               }
             }}
           >
-            {isSavingQuery ? text.savingQuery : text.saveButton}
+            {isSavingQuery
+              ? t('query_settings.saving_query')
+              : t('query_settings.save_query_button')}
           </Button>
           {!isSavingQuery && (
             <Cancel>
@@ -223,7 +233,7 @@ const QuerySettings: FC<Props> = ({ onSave, onClose, cacheAvailable }) => {
                 color={colors.blue[500]}
                 hoverColor={colors.blue[300]}
               >
-                {text.closeButton}
+                {t('query_settings.close_button')}
               </Anchor>
             </Cancel>
           )}

@@ -6,6 +6,7 @@ import React, {
   useState,
   useRef,
 } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 
 import {
@@ -45,6 +46,8 @@ type Props = {
 
 const Browser: FC<Props> = ({ onEditQuery, onRunQuery, onSelectQuery }) => {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
+
   const [searchPhrase, setSearchPhrase] = useState(null);
   const [sortSettings, setSortSettings] = useState<QueriesSortSettings>({
     property: DEFAULT_PROPERTY,
@@ -131,7 +134,10 @@ const Browser: FC<Props> = ({ onEditQuery, onRunQuery, onSelectQuery }) => {
     <>
       <BrowserNavigation attractNewQueryButton={isEmptyProject}>
         {isSavedQueriesLoaded && !isEmptyProject && (
-          <SearchQueries onSearch={(phrase) => setSearchPhrase(phrase)} />
+          <SearchQueries
+            onSearch={(phrase) => setSearchPhrase(phrase)}
+            placeholder={t('browser_search.search_query_input_placeholder')}
+          />
         )}
       </BrowserNavigation>
       <Container flexDirection={{ xs: 'column', md: 'row' }}>
@@ -155,7 +161,13 @@ const Browser: FC<Props> = ({ onEditQuery, onRunQuery, onSelectQuery }) => {
                   onSelectQuery={onSelectQuery}
                   onSortQueries={(settings) => setSortSettings(settings)}
                 />
-                {isEmptySearch && <QueriesPlaceholder isEmptySearch />}
+                {isEmptySearch && (
+                  <QueriesPlaceholder
+                    emptySearchMessage={t(
+                      'browser_search.empty_search_message'
+                    )}
+                  />
+                )}
               </ScrollableContainer>
               {scrollOverflow && <ScrollOverflow />}
             </>

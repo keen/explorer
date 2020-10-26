@@ -4,7 +4,6 @@ import { render as rtlRender, fireEvent } from '@testing-library/react';
 import configureStore from 'redux-mock-store';
 
 import BrowserQueryMenu from './BrowserQueryMenu';
-import text from './text.json';
 
 const render = (overProps: any = {}) => {
   const props = {
@@ -41,7 +40,7 @@ test('allows user to edit query', () => {
     wrapper: { getByText },
     props,
   } = render();
-  const editQuery = getByText(text.editQuery);
+  const editQuery = getByText('browser_query_menu.edit_query');
 
   fireEvent.click(editQuery);
   expect(props.onEditQuery).toHaveBeenCalled();
@@ -52,7 +51,7 @@ test('allows user to remove query', () => {
     wrapper: { getByText },
     props,
   } = render();
-  const removeQuery = getByText(text.removeQuery);
+  const removeQuery = getByText('browser_query_menu.remove_query');
 
   fireEvent.click(removeQuery);
   expect(props.onRemoveQuery).toHaveBeenCalled();

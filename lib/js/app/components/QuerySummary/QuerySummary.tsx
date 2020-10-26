@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import {
   Timeframe,
@@ -8,14 +9,14 @@ import {
 } from './components';
 import { Wrapper } from './QuerySummary.styles';
 
-import text from './text.json';
-
 type Props = {
+  /** Query settings */
   querySettings: Record<string, any>;
   chartSettings: Record<string, any>;
 };
 
 const QuerySummary: FC<Props> = ({ querySettings, chartSettings }) => {
+  const { t } = useTranslation();
   const {
     query: {
       analysis_type: analysisType,
@@ -36,19 +37,25 @@ const QuerySummary: FC<Props> = ({ querySettings, chartSettings }) => {
         <StyledTable.Body>
           {analysisType && (
             <StyledTable.Row>
-              <StyledTable.Label>{text.analysis}</StyledTable.Label>
+              <StyledTable.Label>
+                {t('query_summary.analysis')}
+              </StyledTable.Label>
               <StyledTable.Value>{analysisType}</StyledTable.Value>
             </StyledTable.Row>
           )}
           {eventCollection && (
             <StyledTable.Row>
-              <StyledTable.Label>{text.eventStream}</StyledTable.Label>
+              <StyledTable.Label>
+                {t('query_summary.event_stream')}
+              </StyledTable.Label>
               <StyledTable.Value>{eventCollection}</StyledTable.Value>
             </StyledTable.Row>
           )}
           {targetProperty && (
             <StyledTable.Row>
-              <StyledTable.Label>{text.targetProperty}</StyledTable.Label>
+              <StyledTable.Label>
+                {t('query_summary.target_property')}
+              </StyledTable.Label>
               <StyledTable.Value>
                 <PropertyName name={targetProperty} />
               </StyledTable.Value>
@@ -56,7 +63,9 @@ const QuerySummary: FC<Props> = ({ querySettings, chartSettings }) => {
           )}
           {timeframe && (
             <StyledTable.Row>
-              <StyledTable.Label>{text.timeframe}</StyledTable.Label>
+              <StyledTable.Label>
+                {t('query_summary.timeframe')}
+              </StyledTable.Label>
               <StyledTable.Value>
                 <Timeframe timeframe={timeframe} timezone={timezone} />
               </StyledTable.Value>
@@ -64,7 +73,9 @@ const QuerySummary: FC<Props> = ({ querySettings, chartSettings }) => {
           )}
           {!!filters?.length && (
             <StyledTable.Row>
-              <StyledTable.Label>{text.appliedFilters}</StyledTable.Label>
+              <StyledTable.Label>
+                {t('query_summary.applied_filters')}
+              </StyledTable.Label>
               <StyledTable.Value>{filters.length}</StyledTable.Value>
             </StyledTable.Row>
           )}

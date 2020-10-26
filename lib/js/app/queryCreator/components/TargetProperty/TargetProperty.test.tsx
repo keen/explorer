@@ -4,7 +4,6 @@ import { render as rtlRender, fireEvent, act } from '@testing-library/react';
 import configureStore from 'redux-mock-store';
 
 import TargetProperty from './TargetProperty';
-import text from './text.json';
 
 import { createTree, createCollection } from '../../utils';
 
@@ -166,7 +165,9 @@ test('renders empty search results message', async () => {
     jest.runAllTimers();
   });
 
-  expect(getByText(text.emptySearchResults)).toBeInTheDocument();
+  expect(
+    getByText('query_creator_target_property.empty_search_results')
+  ).toBeInTheDocument();
 });
 
 test('reset target property settings', async () => {

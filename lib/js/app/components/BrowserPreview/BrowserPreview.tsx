@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 
 import {
   Card,
@@ -7,7 +8,6 @@ import {
   QueryTitle,
   VisualizationWrapper,
 } from './BrowserPreview.styles';
-import text from './text.json';
 
 import AutorunQuery from '../AutorunQuery';
 import BrowserQueryMenu from '../BrowserQueryMenu';
@@ -45,6 +45,7 @@ const BrowserPreview: FC<Props> = ({
   onRunQuery,
 }) => {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   const queryResults = useSelector(getQueryResults);
   const isQueryLoading = useSelector(getQueryPerformState);
@@ -55,9 +56,10 @@ const BrowserPreview: FC<Props> = ({
   return (
     <>
       <HeaderContainer>
-        <Heading>{text.title}</Heading>
+        <Heading>{t('browser_preview.title')}</Heading>
         <AutorunQuery
           autorun={autorunQuery}
+          label={t('browser_preview.autorun_query_label')}
           onToggle={(autorun) => dispatch(setQueryAutorun(autorun))}
         />
       </HeaderContainer>

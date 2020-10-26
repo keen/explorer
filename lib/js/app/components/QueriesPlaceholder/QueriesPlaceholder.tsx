@@ -5,20 +5,19 @@ import {
   Placeholder,
   SearchMessage,
 } from './QueriesPlaceholder.styles';
-import text from './text.json';
 
 type Props = {
-  /** Empty search indicator */
-  isEmptySearch?: boolean;
+  /** Empty search message */
+  emptySearchMessage?: string;
 };
 
-const QueriesPlaceholder: FC<Props> = ({ isEmptySearch }) => (
+const QueriesPlaceholder: FC<Props> = ({ emptySearchMessage }) => (
   <Container data-testid="queries-placeholder">
     <Placeholder opacityAmount={0.8} />
     <Placeholder opacityAmount={0.82}>
-      {isEmptySearch && (
+      {emptySearchMessage && (
         <SearchMessage data-testid="empty-search-message">
-          {text.emptySearchMessage}
+          {emptySearchMessage}
         </SearchMessage>
       )}
     </Placeholder>

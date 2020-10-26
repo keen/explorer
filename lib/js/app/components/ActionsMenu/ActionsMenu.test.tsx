@@ -6,7 +6,6 @@ import configureStore from 'redux-mock-store';
 import { AppContext } from '../../contexts';
 
 import ActionsMenu from './ActionsMenu';
-import text from './text.json';
 
 const render = (overProps: any = {}) => {
   const props = {
@@ -48,7 +47,7 @@ test('allows user to remove query', () => {
     props,
   } = render();
 
-  const removeLink = getByText(text.deleteQuery);
+  const removeLink = getByText('actions_menu.delete_query');
   fireEvent.click(removeLink);
 
   expect(props.onRemoveQuery).toHaveBeenCalled();
@@ -59,7 +58,7 @@ test("doesn't allow to remove new query", () => {
     wrapper: { queryByText },
   } = render({ isNewQuery: true });
 
-  const removeLink = queryByText(text.deleteQuery);
+  const removeLink = queryByText('actions_menu.delete_query');
 
   expect(removeLink).toBeNull();
 });
@@ -70,7 +69,7 @@ test('calls "onHideMenu" handler', () => {
     props,
   } = render();
 
-  const shareQuery = getByText(text.shareQuery);
+  const shareQuery = getByText('actions_menu.share_query');
   fireEvent.click(shareQuery);
 
   expect(props.onHideMenu).toHaveBeenCalled();
@@ -82,7 +81,7 @@ test('allows user to share query url', () => {
     store,
   } = render();
 
-  const shareQuery = getByText(text.shareQuery);
+  const shareQuery = getByText('actions_menu.share_query');
   fireEvent.click(shareQuery);
 
   expect(store.getActions()).toMatchInlineSnapshot(`
@@ -100,7 +99,7 @@ test('allows user to export results as image', () => {
     store,
   } = render();
 
-  const exportImage = getByText(text.image);
+  const exportImage = getByText('actions_menu.image');
   fireEvent.click(exportImage);
 
   expect(store.getActions()).toMatchInlineSnapshot(`
@@ -118,7 +117,7 @@ test('allows user to export results as JSON', () => {
     store,
   } = render();
 
-  const exportJson = getByText(text.json);
+  const exportJson = getByText('actions_menu.json');
   fireEvent.click(exportJson);
 
   expect(store.getActions()).toMatchInlineSnapshot(`
@@ -136,7 +135,7 @@ test('allows user to export results as CSV', () => {
     store,
   } = render();
 
-  const exportCsv = getByText(text.csv);
+  const exportCsv = getByText('actions_menu.csv');
   fireEvent.click(exportCsv);
 
   expect(store.getActions()).toMatchInlineSnapshot(`
@@ -154,7 +153,7 @@ test('allows user to embed HTML code', () => {
     store,
   } = render();
 
-  const embedHtml = getByText(text.embedHtml);
+  const embedHtml = getByText('actions_menu.embed_html');
   fireEvent.click(embedHtml);
 
   expect(store.getActions()).toMatchInlineSnapshot(`
@@ -172,7 +171,7 @@ test('allows user to copy API Resource', () => {
     store,
   } = render();
 
-  const copyApiResource = getByText(text.apiResource);
+  const copyApiResource = getByText('actions_menu.api_resource');
   fireEvent.click(copyApiResource);
 
   expect(store.getActions()).toMatchInlineSnapshot(`
@@ -193,7 +192,7 @@ test('allows user to clone query', () => {
     store,
   } = render();
 
-  const cloneQuery = getByText(text.cloneQuery);
+  const cloneQuery = getByText('actions_menu.clone_query');
   fireEvent.click(cloneQuery);
 
   expect(store.getActions()).toMatchInlineSnapshot(`
