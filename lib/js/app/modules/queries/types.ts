@@ -28,6 +28,7 @@ import {
   SET_QUERY_SAVE_STATE,
   EXTRACT_TO_EMAIL,
   RUN_EMAIL_EXTRACTION,
+  CLONE_SAVED_QUERY,
 } from './constants';
 
 import { APIError } from '../../types';
@@ -215,6 +216,10 @@ export interface SetQueryLimitReachedAction {
   };
 }
 
+export interface CloneSavedQueryAction {
+  type: typeof CLONE_SAVED_QUERY;
+}
+
 export type QueriesActions =
   | SetQuerySettingsAction
   | ResetQueryResultsAction
@@ -238,4 +243,5 @@ export type QueriesActions =
   | ResetSaveQueryErrorAction
   | GetOrganizationUsageLimitsAction
   | ExtractToEmailAction
-  | RunEmailExtractionAction;
+  | RunEmailExtractionAction
+  | CloneSavedQueryAction;

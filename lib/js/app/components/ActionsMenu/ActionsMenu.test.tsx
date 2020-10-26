@@ -186,3 +186,21 @@ test('allows user to copy API Resource', () => {
     ]
   `);
 });
+
+test('allows user to clone query', () => {
+  const {
+    wrapper: { getByText },
+    store,
+  } = render();
+
+  const cloneQuery = getByText(text.cloneQuery);
+  fireEvent.click(cloneQuery);
+
+  expect(store.getActions()).toMatchInlineSnapshot(`
+    Array [
+      Object {
+        "type": "@queries/CLONE_SAVED_QUERY",
+      },
+    ]
+  `);
+});

@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { DropdownMenu, Tooltip } from '@keen.io/ui-core';
 import { AnimatePresence } from 'framer-motion';
 
+import { getQueryResults, cloneSavedQuery } from '../../modules/queries';
 import { AppContext } from '../../contexts';
-import { getQueryResults } from '../../modules/queries';
 
 import {
   Container,
@@ -89,6 +89,16 @@ const ActionsMenu: FC<Props> = ({ isNewQuery, onRemoveQuery, onHideMenu }) => {
           </ExportDataLinks>
         </ExportDataWrapper>
         <DropdownMenu.Divider />
+        {!isNewQuery && (
+          <DropdownMenu.Item
+            onClick={() => {
+              dispatch(cloneSavedQuery());
+              onHideMenu();
+            }}
+          >
+            {text.cloneQuery}
+          </DropdownMenu.Item>
+        )}
         {!isNewQuery && (
           <DropdownMenu.Item
             onClick={() => {

@@ -7,5 +7,6 @@
   "csv": "CSV",
   "tooltip": "Run query to download result",
   "embedHtml": "Embed HTML",
+  "cloneQuery": "Clone query",
   "apiResource": "API Resource"
 }
