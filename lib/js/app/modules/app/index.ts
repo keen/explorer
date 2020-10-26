@@ -31,6 +31,8 @@ import {
   hideEmailExtractionModal,
   copyApiResourceUrl,
   setQueryAutorun,
+  updateChartSettings,
+  updateVisualizationType,
   resetVisualization,
 } from './actions';
 import {
@@ -95,6 +97,8 @@ export {
   copyApiResourceUrl,
   setQueryAutorun,
   getQueryAutorun,
+  updateChartSettings,
+  updateVisualizationType,
   resetVisualization,
   ReducerState,
   SettingsModalSource,

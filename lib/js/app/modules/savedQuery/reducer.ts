@@ -10,7 +10,6 @@ export const initialState: ReducerState = {
   cached: false,
   refreshRate: 0,
   exists: false,
-  stepLabels: [],
 };
 
 export const savedQueryReducer = (

@@ -21,6 +21,7 @@ import {
   loadPersitedState,
   updateQueryCreator,
   setQueryAutorun,
+  updateChartSettings,
 } from './actions';
 
 import {
@@ -58,7 +59,11 @@ import {
   createResourceUrl,
 } from '../../utils';
 
-import { SET_QUERY_EVENT, NEW_QUERY_EVENT } from '../../queryCreator';
+import {
+  SET_QUERY_EVENT,
+  NEW_QUERY_EVENT,
+  UPDATE_VISUALIZATION_TYPE,
+} from '../../queryCreator';
 import { PUBSUB_CONTEXT, NOTIFICATION_MANAGER_CONTEXT } from '../../constants';
 
 import {
@@ -70,6 +75,7 @@ import {
   DownloadCodeSnippetAction,
   CopyApiResourceUrlAction,
   SetQueryAutorunAction,
+  UpdateVisualizationTypeAction,
 } from './types';
 
 import {
@@ -94,7 +100,9 @@ import {
   COPY_API_RESOURCE_URL,
   SET_QUERY_AUTORUN,
   QUERY_AUTORUN_KEY,
+  UPDATE_VISUALIZATION,
 } from './constants';
+import { SET_CHART_SETTINGS } from '../../queryCreator/constants';
 
 const createScreenResizeChannel = () =>
   eventChannel((emitter) => {
@@ -130,7 +138,17 @@ function* editQuery({ payload }: EditQueryAction) {
   yield take(QUERY_EDITOR_MOUNTED);
 
   const savedQueries = yield select(getSavedQueries);
-  const { query } = savedQueries.find(({ name }) => name === payload.queryName);
+  const { query, visualization } = savedQueries.find(
+    ({ name }) => name === payload.queryName
+  );
+  const { chartSettings } = visualization;
+  if (chartSettings?.stepLabels && chartSettings.stepLabels.length) {
+    const { stepLabels } = chartSettings;
+    const pubsub = yield getContext(PUBSUB_CONTEXT);
+    yield pubsub.publish(SET_CHART_SETTINGS, { chartSettings: { stepLabels } });
+    yield put(updateChartSettings(chartSettings));
+  }
+
   yield put(updateQueryCreator(query));
 }
 
@@ -470,6 +488,14 @@ export function* persistAutorunSettings({ payload }: SetQueryAutorunAction) {
   }
 }
 
+export function* updateVisualizationType({
+  payload,
+}: UpdateVisualizationTypeAction) {
+  const { type } = payload;
+  const pubsub = yield getContext(PUBSUB_CONTEXT);
+  yield pubsub.publish(UPDATE_VISUALIZATION_TYPE, { type });
+}
+
 export function* appSaga() {
   yield takeLatest(APP_START, appStart);
   yield takeLatest(SET_QUERY_AUTORUN, persistAutorunSettings);
@@ -486,6 +512,7 @@ export function* appSaga() {
   yield takeLatest(EXPORT_DATA_TO_CSV, exportDataToCsv);
   yield takeLatest(COPY_EMBEDDED_CODE, copyEmbeddedCode);
   yield takeLatest(DOWNLOAD_CODE_SNIPPET, downloadCodeSnippet);
+  yield takeLatest(UPDATE_VISUALIZATION, updateVisualizationType);
   yield takeLatest(COPY_API_RESOURCE_URL, copyApiResourceUrl);
   yield debounce(200, SCREEN_RESIZE, resizeBrowserScreen);
 }

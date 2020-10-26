@@ -1,7 +1,10 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 import React from 'react';
 import { Provider } from 'react-redux';
 import { render as rtlRender, fireEvent } from '@testing-library/react';
 import configureStore from 'redux-mock-store';
+
+import { AppContext } from '../../contexts';
 
 import FunnelSteps from './FunnelSteps';
 
@@ -17,15 +20,23 @@ const render = (storeState: any = {}) => {
     query: {
       steps: [],
     },
+    chartSettings: {},
     ...storeState,
   };
 
   const store = mockStore({ ...state });
 
   const wrapper = rtlRender(
-    <Provider store={store}>
-      <FunnelSteps />
-    </Provider>
+    <AppContext.Provider
+      value={{
+        onUpdateChartSettings: () => {},
+        modalContainer: 'modalContainer',
+      }}
+    >
+      <Provider store={store}>
+        <FunnelSteps />
+      </Provider>
+    </AppContext.Provider>
   );
 
   return {

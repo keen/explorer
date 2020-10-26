@@ -24,7 +24,11 @@ import {
   getQueryPerformState,
   SavedQueryListItem,
 } from '../../modules/queries';
-import { setQueryAutorun, getQueryAutorun } from '../../modules/app';
+import {
+  setQueryAutorun,
+  getQueryAutorun,
+  getVisualization,
+} from '../../modules/app';
 
 type Props = {
   /** Current active query */
@@ -47,6 +51,7 @@ const BrowserPreview: FC<Props> = ({
   const isQueryLoading = useSelector(getQueryPerformState);
   const isQueryLimitReached = useSelector(getQueryLimitReached);
   const autorunQuery = useSelector(getQueryAutorun);
+  const { chartSettings } = useSelector(getVisualization);
 
   return (
     <>
@@ -91,7 +96,10 @@ const BrowserPreview: FC<Props> = ({
               onRemoveQuery={() => dispatch(deleteQuery(currentQuery.name))}
               onEditQuery={() => onEditQuery(currentQuery.name)}
             />
-            <QuerySummary querySettings={currentQuery} />
+            <QuerySummary
+              querySettings={currentQuery}
+              chartSettings={chartSettings}
+            />
           </>
         )}
       </Card>

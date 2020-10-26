@@ -27,7 +27,10 @@ import {
   getQueryLimitReached,
   setQuerySettings,
 } from '../../modules/queries';
-import { clearQuery } from '../../modules/app';
+import {
+  clearQuery,
+  updateChartSettings as updateSettings,
+} from '../../modules/app';
 
 type Props = {
   /** Query definition */
@@ -57,6 +60,13 @@ const Editor: FC<Props> = ({
     dispatch(setQuerySettings(query));
   }, []);
 
+  const updateChartSettings = useCallback(
+    (chartSettings: Record<string, any>) => {
+      dispatch(updateSettings(chartSettings));
+    },
+    []
+  );
+
   return (
     <div id="editor">
       <EditorNavigation onSaveQuery={onSaveQuery} />
@@ -74,7 +84,10 @@ const Editor: FC<Props> = ({
         </Card>
       </section>
       <CreatorContainer>
-        <Creator onUpdateQuery={updateQuery} />
+        <Creator
+          onUpdateQuery={updateQuery}
+          onUpdateChartSettings={updateChartSettings}
+        />
       </CreatorContainer>
       <EditorActions>
         <RunQuery isLoading={isQueryLoading} onClick={() => onRunQuery()}>

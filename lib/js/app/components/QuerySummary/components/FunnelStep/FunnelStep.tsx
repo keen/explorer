@@ -22,9 +22,10 @@ import { FunnelStep } from '../../types';
 type Props = {
   step: FunnelStep;
   index: number;
+  label?: string;
 };
 
-const FunnelStep: FC<Props> = ({ step, index }) => {
+const FunnelStep: FC<Props> = ({ step, index, label }) => {
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
 
@@ -47,7 +48,7 @@ const FunnelStep: FC<Props> = ({ step, index }) => {
         <StepNumber>
           {t('query_summary.step')} {index + 1}
         </StepNumber>
-        <Title>{eventCollection}</Title>
+        <Title>{label || eventCollection}</Title>
       </Header>
       {open && (
         <Content>

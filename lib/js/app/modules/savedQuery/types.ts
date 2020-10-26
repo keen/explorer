@@ -12,7 +12,6 @@ export type SavedQuery = {
   tags: string[];
   refreshRate: number;
   exists: boolean;
-  stepLabels: string[];
 };
 
 export type ReducerState = SavedQuery;

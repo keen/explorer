@@ -1515,15 +1515,15 @@
     d3-scale "^3.2.1"
     d3-time "^2.0.0"
 
-"@keen.io/charts@^2.2.14", "@keen.io/charts@^2.2.16":
-  version "2.2.16"
-  resolved "https://registry.yarnpkg.com/@keen.io/charts/-/charts-2.2.16.tgz#bf97aa556b934c6ebe1c89a9aed8859b12c41c22"
-  integrity sha512-BSbcldpFd810VuBmeMj6pASRj+KYzJzwOwBJMyZIRyaLqoTaVTVn53VAKOrUm0zIC6Oi/MclHFAbmp+SE1k3vQ==
+"@keen.io/charts@^2.2.14":
+  version "2.2.14"
+  resolved "https://registry.yarnpkg.com/@keen.io/charts/-/charts-2.2.14.tgz#35e427d1142a0993808eecaa45412acc311fff8c"
+  integrity sha512-9Wbn55E3CbwkyeI0nZIRRxuM2v+ZRZh8KR0ejAGviQsqDXNAafdx1Ez5nzbMlyWbD/YuqOL0aIqYN5ogISjnvw==
   dependencies:
     "@keen.io/charts-utils" "^1.0.2"
     "@keen.io/colors" "^1.1.0"
     "@keen.io/react-hooks" "^1.0.3"
-    "@keen.io/ui-core" "^2.5.9"
+    "@keen.io/ui-core" "^2.5.7"
     column-resizer "^1.3.5"
     d3-array "^2.4.0"
     d3-axis "^1.0.12"
@@ -1595,9 +1595,9 @@
     d3-time-format "^2.2.3"
 
 "@keen.io/parser@^2.1.9":
-  version "2.1.11"
-  resolved "https://registry.yarnpkg.com/@keen.io/parser/-/parser-2.1.11.tgz#8e0a94bb66d99ac23a20f9a570407c5a3f8b69bf"
-  integrity sha512-xJAqBbuiKVHbmjB5wwZCJ1dajkr4aGJqlM6RDFF9qdgOV4IArqw5LjxqCmge0kosm0xcOsNieVE6OmEDDqKhpA==
+  version "2.1.9"
+  resolved "https://registry.yarnpkg.com/@keen.io/parser/-/parser-2.1.9.tgz#9d20274a424cf43857e1b26a091233180dd779e2"
+  integrity sha512-Xr0IL9B32GgeliWIpGKlPuU7aH0CZtnDYuxaoYzLLVl/05qPQIqb9SJULx74B6qMYkb01sgibUAmOu7q+vBSmQ==
   dependencies:
     d3-time-format "^2.2.3"
 
@@ -1606,7 +1606,16 @@
   resolved "https://registry.yarnpkg.com/@keen.io/pubsub/-/pubsub-1.1.1.tgz#80dcb09a849ec665d279234c014e6815e1d075c0"
   integrity sha512-S9zhZNDSwsL6WXOtFqeZ3+vOdCzykL7pYifRm9dZ7ivLe/frAeyqIQsfRA8Z52DPnRN7d+gKbWrJtlZM22ErjQ==
 
-"@keen.io/react-hooks@^1.0.1", "@keen.io/react-hooks@^1.0.3":
+"@keen.io/react-hooks@^1.0.1":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@keen.io/react-hooks/-/react-hooks-1.0.2.tgz#c5bcd5c0def9b2e188e28ccad8e4dbe25502cd2f"
+  integrity sha512-tsiyHb9idAThkCssu72tP8HrM1y2E9OaXdOGAPjdV/WuuTOhZxNO4AbBnP4b548BQv5/+zi4qvYnd9S76bHJzg==
+  dependencies:
+    d3-array "^2.7.1"
+    fuse.js "^6.4.1"
+    react "^16.12.0"
+
+"@keen.io/react-hooks@^1.0.3":
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/@keen.io/react-hooks/-/react-hooks-1.0.3.tgz#4467170e4dbfbefd3115939808991c865f8f4b2d"
   integrity sha512-9hQZXdg/ngjeUR8YEHDiOee+OjGPX+XAFYgQLkzD39wyWMpRM6IsUGreK98CUZb95I4kFhSK92p8YV80Se1J6w==
@@ -1629,6 +1638,25 @@
     react-toast-notifications "^2.4.0"
     styled-components "5.1.0"
     styled-system "5.1.5"
+
+"@keen.io/ui-core@^2.5.7":
+  version "2.5.7"
+  resolved "https://registry.yarnpkg.com/@keen.io/ui-core/-/ui-core-2.5.7.tgz#26780e51a65b1060ef12a74d5848d1697c4db9b9"
+  integrity sha512-mlf7QuIZ4n4U3kUFB6IUQ5PA7yL1nhqZKs5Rbpnd+RZWaYSbFg/p//Z3nAHO4EuemlrRQzQjk84hvGZzq9Fnew==
+  dependencies:
+    "@keen.io/colors" "^1.1.0"
+    "@keen.io/icons" "^1.2.1"
+    color "^3.1.2"
+    framer-motion "^1.11.1"
+    fuse.js "^6.4.1"
+    polished "^3.4.4"
+    react "^16.12.0"
+    react-column-resizer "^1.1.9"
+    react-dom "^16.12.0"
+    react-select "^3.1.0"
+    styled-components "5.1.0"
+    styled-system "5.1.5"
+    webfontloader "^1.6.28"
 
 "@keen.io/ui-core@^2.5.8":
   version "2.5.8"
@@ -1681,15 +1709,15 @@
     styled-components "5.1.0"
 
 "@keen.io/widgets@^2.1.14":
-  version "2.1.16"
-  resolved "https://registry.yarnpkg.com/@keen.io/widgets/-/widgets-2.1.16.tgz#e27f09ccab3acb5cf6319716848f0e3418157af0"
-  integrity sha512-3aRFEkSTCIC/StQfedrTpv0eceVVT1cW+rpUYjCElc6f0bEEi+bB4tpfN7opKpHqA3NIqA/g3fOJLQI/3zR/Tw==
+  version "2.1.14"
+  resolved "https://registry.yarnpkg.com/@keen.io/widgets/-/widgets-2.1.14.tgz#4f07375f0635318313b74ce839d0e32023e7466f"
+  integrity sha512-Il3Dayr7CZ2ULPPcf/e3AcvRukETBsob15xMRXOXkvVZZbnBsmKTNzUtYKXD1VFQe2lKXqhMkZGqvGwce8vlHQ==
   dependencies:
-    "@keen.io/charts" "^2.2.16"
+    "@keen.io/charts" "^2.2.14"
     "@keen.io/charts-utils" "^1.0.2"
     "@keen.io/colors" "^1.1.0"
     "@keen.io/react-hooks" "^1.0.3"
-    "@keen.io/ui-core" "^2.5.9"
+    "@keen.io/ui-core" "^2.5.7"
     react "^16.12.0"
     react-dom "^16.12.0"
     styled-components "5.1.0"

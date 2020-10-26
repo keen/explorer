@@ -72,10 +72,14 @@ type Props = {
   isFirstStep: boolean;
   /** Funnel step is dragged */
   isDragged?: boolean;
+  /** Funnel step label */
+  stepLabel?: string;
   /** Details visible show/hide handler */
   setDetailsVisible: (id: string) => void;
   /** Clone funnel step handler */
   onClone: (id: string) => void;
+  /** Label change handler */
+  onLabelChange?: (label: string, idx: number) => void;
 };
 
 const FunnelStep: FC<Props> = ({
@@ -91,9 +95,11 @@ const FunnelStep: FC<Props> = ({
   detailsVisible,
   isFirstStep,
   isDragged,
+  stepLabel = '',
   onRemove,
   setDetailsVisible,
   onClone,
+  onLabelChange,
 }) => {
   const dispatch = useDispatch();
 
@@ -110,8 +116,6 @@ const FunnelStep: FC<Props> = ({
       !detailsVisible &&
       setError(eventCollection === undefined || actorProperty === undefined);
   }, [eventCollection, actorProperty, detailsVisible]);
-
-  const [stepName, setStepName] = useState(null);
 
   return (
     <StepContainer isDragged={isDragged}>
@@ -130,7 +134,7 @@ const FunnelStep: FC<Props> = ({
           <StepTitle hasError={error}>
             {text.title} {index + 1}
             {error && <Incomplete>(incomplete)</Incomplete>}
-            <StepName>{stepName ? stepName : eventCollection}</StepName>
+            <StepName>{stepLabel || eventCollection}</StepName>
           </StepTitle>
           <Settings>
             <Clone
@@ -234,8 +238,10 @@ const FunnelStep: FC<Props> = ({
                 variant="solid"
                 id={`stepName-${id}-${index}`}
                 placeholder={eventCollection && eventCollection}
-                onChange={(e) => setStepName(e.target.value)}
-                value={stepName ? stepName : ''}
+                onChange={(e) => {
+                  onLabelChange && onLabelChange(e.target.value, index);
+                }}
+                value={stepLabel}
               />
             </Item>
             <SmallItem>

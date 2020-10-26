@@ -102,13 +102,11 @@ class App extends Component {
     displayName,
     refreshRate,
     tags,
-    stepLabels,
     name,
   }: {
     displayName: string;
     refreshRate: number;
     tags: string[];
-    stepLabels: string[];
     name: string;
   }) => {
     const visualization = setVisualization(
@@ -121,7 +119,6 @@ class App extends Component {
         displayName,
         visualization,
         tags,
-        stepLabels,
       },
       refreshRate: refreshRate * 60 * 60,
     };

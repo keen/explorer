@@ -16,6 +16,7 @@ import {
   SHOW_EMAIL_EXTRACTION_MODAL,
   HIDE_EMAIL_EXTRACTION_MODAL,
   SET_QUERY_AUTORUN,
+  UPDATE_CHART_SETTINGS,
 } from './constants';
 
 export const initialState: ReducerState = {
@@ -151,6 +152,17 @@ export const appReducer = (
         ...state,
         embedModal: {
           visible: false,
+        },
+      };
+    case UPDATE_CHART_SETTINGS:
+      return {
+        ...state,
+        visualization: {
+          ...state.visualization,
+          chartSettings: {
+            ...state.visualization.chartSettings,
+            ...action.payload.chartSettings,
+          },
         },
       };
     default:

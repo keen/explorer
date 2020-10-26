@@ -31,6 +31,8 @@ export const SHOW_EMAIL_EXTRACTION_MODAL = '@app/SHOW_EMAIL_EXTRACTION_MODAL';
 export const HIDE_EMAIL_EXTRACTION_MODAL = '@app/HIDE_EMAIL_EXTRACTION_MODAL';
 export const COPY_API_RESOURCE_URL = '@app/COPY_API_RESOURCE_URL';
 export const SET_QUERY_AUTORUN = '@app/SET_QUERY_AUTORUN';
+export const UPDATE_CHART_SETTINGS = '@app/UPDATE_CHART_SETTINGS';
+export const UPDATE_VISUALIZATION = '@app/UPDATE_VISUALIZATION';
 
 export const URL_STATE = 'keen_explorer_state';
 export const QUERY_AUTORUN_KEY = '@keen-explorer/query-autorun';

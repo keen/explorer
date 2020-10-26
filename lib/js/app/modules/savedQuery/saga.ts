@@ -32,7 +32,6 @@ function* selectSavedQuery({ payload }: SelectSavedQueryAction) {
       name,
       tags,
       visualization,
-      stepLabels,
       query,
     } = savedQueries.find(({ name: queryName }) => queryName === payload.name);
     const savedQuery = {
@@ -43,7 +42,6 @@ function* selectSavedQuery({ payload }: SelectSavedQueryAction) {
       refreshRate: convertMilisecondsToMinutes(refreshRate),
       isCloned: false,
       exists: true,
-      stepLabels,
     };
 
     const { type: widgetType, chartSettings, widgetSettings } = visualization;

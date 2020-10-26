@@ -5,13 +5,19 @@ import FunnelStep from '../FunnelStep';
 
 type Props = {
   steps: FunnelStepType[];
+  stepLabels?: string[];
 };
 
-const FunnelSteps: FC<Props> = ({ steps }) => {
+const FunnelSteps: FC<Props> = ({ steps, stepLabels }) => {
   return (
     <>
       {steps.map((step, idx) => (
-        <FunnelStep step={step} index={idx} key={idx} />
+        <FunnelStep
+          step={step}
+          index={idx}
+          key={idx}
+          label={stepLabels && stepLabels[idx]}
+        />
       ))}
     </>
   );

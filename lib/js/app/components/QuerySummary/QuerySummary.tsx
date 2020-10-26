@@ -12,9 +12,10 @@ import { Wrapper } from './QuerySummary.styles';
 type Props = {
   /** Query settings */
   querySettings: Record<string, any>;
+  chartSettings: Record<string, any>;
 };
 
-const QuerySummary: FC<Props> = ({ querySettings }) => {
+const QuerySummary: FC<Props> = ({ querySettings, chartSettings }) => {
   const { t } = useTranslation();
   const {
     query: {
@@ -27,6 +28,8 @@ const QuerySummary: FC<Props> = ({ querySettings }) => {
       steps,
     },
   } = querySettings;
+
+  const { stepLabels } = chartSettings;
 
   return (
     <Wrapper>
@@ -78,7 +81,7 @@ const QuerySummary: FC<Props> = ({ querySettings }) => {
           )}
         </StyledTable.Body>
       </StyledTable.Table>
-      {steps && <FunnelSteps steps={steps} />}
+      {steps && <FunnelSteps steps={steps} stepLabels={stepLabels} />}
     </Wrapper>
   );
 };
