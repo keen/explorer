@@ -62,6 +62,7 @@ const Editor: FC<Props> = ({
 
   const updateChartSettings = useCallback(
     (chartSettings: Record<string, any>) => {
+      console.log(chartSettings, 'creator chart settings');
       dispatch(updateSettings(chartSettings));
     },
     []
