@@ -7,7 +7,7 @@ const config = merge(createWebpackConfig(), {
   mode: 'development',
   target: 'web',
   devServer: {
-    contentBase: path.join(__dirname, 'test', 'demo'),
+    contentBase: path.join(__dirname, 'public'),
     compress: true,
     port: 8080,
   },

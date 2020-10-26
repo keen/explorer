@@ -18,6 +18,7 @@ import {
   setQueryLimitReached,
   setQuerySaveState,
   resetQueryResults,
+  setQuerySettings,
 } from './actions';
 
 import { getQuerySettings } from './selectors';
@@ -32,13 +33,16 @@ import {
   setViewMode,
   selectFirstSavedQuery,
   switchToQueriesList,
+  updateQueryCreator,
   HIDE_CONFIRMATION,
   ACCEPT_CONFIRMATION,
   HIDE_EMAIL_EXTRACTION_MODAL,
+  QUERY_EDITOR_MOUNTED,
 } from '../../modules/app';
 
+import { getSavedQuery, updateSaveQuery } from '../../modules/savedQuery';
+
 import { serializeSavedQuery } from './utils';
-import text from './text.json';
 
 import { SavedQueryAPIResponse } from '../../types';
 import { RunQueryAction, DeleteQueryAction, SaveQueryAction } from './types';
@@ -59,6 +63,7 @@ import {
   GET_ORGANIZATION_USAGE_LIMITS,
   RUN_EMAIL_EXTRACTION,
   ERRORS,
+  CLONE_SAVED_QUERY,
 } from './constants';
 
 import { isElementInViewport } from './utils';
@@ -83,7 +88,7 @@ function* extractToEmail() {
 
     yield notificationManager.showNotification({
       type: 'info',
-      message: text.prepeareEmailExtraction,
+      message: 'notifications.prepeare_email_extraction',
       autoDismiss: true,
     });
 
@@ -103,7 +108,7 @@ function* extractToEmail() {
       if (status === HttpStatus.INTERNAL_SERVER_ERROR) {
         yield notificationManager.showNotification({
           type: 'error',
-          message: text.emailExtractionError,
+          message: 'notifications.email_extraction_error',
           showDismissButton: true,
           autoDismiss: false,
         });
@@ -170,7 +175,7 @@ function* saveQuery({ payload }: SaveQueryAction) {
     yield put(saveQuerySuccess(name, responseBody));
     yield notificationManager.showNotification({
       type: 'success',
-      message: text.saveQuerySuccess,
+      message: 'notifications.save_query_success',
     });
   } catch (error) {
     const { status, error_code: errorCode } = error;
@@ -180,7 +185,7 @@ function* saveQuery({ payload }: SaveQueryAction) {
       yield put(hideQuerySettingsModal());
       yield notificationManager.showNotification({
         type: 'error',
-        message: text.saveQueryError,
+        message: 'notifications.save_query_error',
         showDismissButton: true,
         autoDismiss: false,
       });
@@ -235,7 +240,7 @@ function* deleteQuery(action: DeleteQueryAction) {
 
       yield notificationManager.showNotification({
         type: 'info',
-        message: text.removeQuerySuccess,
+        message: 'notifications.query_delete_success',
         autoDismiss: true,
       });
     }
@@ -248,7 +253,7 @@ function* deleteQuery(action: DeleteQueryAction) {
 
       yield notificationManager.showNotification({
         type: 'error',
-        message: text.queryDeleted,
+        message: 'notifications.query_already_deleted',
         autoDismiss: true,
       });
     }
@@ -256,7 +261,7 @@ function* deleteQuery(action: DeleteQueryAction) {
     if (status === HttpStatus.INTERNAL_SERVER_ERROR) {
       yield notificationManager.showNotification({
         type: 'error',
-        message: text.queryDeleteError,
+        message: 'notifications.query_delete_error',
         showDismissButton: true,
         autoDismiss: false,
       });
@@ -306,6 +311,36 @@ function* checkOrganizationLimits() {
   }
 }
 
+function* cloneSavedQuery() {
+  const notificationManager = yield getContext(NOTIFICATION_MANAGER_CONTEXT);
+  const querySettings = yield select(getQuerySettings);
+  const savedQuery = yield select(getSavedQuery);
+  const view = yield select(getViewMode);
+
+  const clonedSavedQuery = {
+    ...savedQuery,
+    exists: false,
+    isCloned: true,
+  };
+
+  if (view === 'browser') {
+    yield put(setViewMode('editor'));
+    yield take(QUERY_EDITOR_MOUNTED);
+    yield put(updateQueryCreator(querySettings));
+    yield put(setQuerySettings(querySettings));
+    yield put(updateSaveQuery(clonedSavedQuery));
+  }
+
+  if (view === 'editor') {
+    yield put(updateSaveQuery(clonedSavedQuery));
+  }
+
+  yield notificationManager.showNotification({
+    type: 'success',
+    message: 'notifications.clone_query_success',
+  });
+}
+
 export function* queriesSaga() {
   yield takeLatest(EXTRACT_TO_EMAIL, extractToEmail);
   yield takeLatest(RUN_QUERY, runQuery);
@@ -319,4 +354,5 @@ export function* queriesSaga() {
     [GET_ORGANIZATION_USAGE_LIMITS, SAVE_QUERY_SUCCESS, DELETE_QUERY_SUCCESS],
     checkOrganizationLimits
   );
+  yield takeLatest(CLONE_SAVED_QUERY, cloneSavedQuery);
 }

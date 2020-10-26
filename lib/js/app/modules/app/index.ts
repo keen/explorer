@@ -29,7 +29,11 @@ import {
   downloadCodeSnippet,
   showEmailExtractionModal,
   hideEmailExtractionModal,
+  copyApiResourceUrl,
   setQueryAutorun,
+  updateChartSettings,
+  updateVisualizationType,
+  resetVisualization,
 } from './actions';
 import {
   getConfirmation,
@@ -47,6 +51,7 @@ import {
   HIDE_CONFIRMATION,
   ACCEPT_CONFIRMATION,
   HIDE_EMAIL_EXTRACTION_MODAL,
+  QUERY_EDITOR_MOUNTED,
 } from './constants';
 import { ReducerState, SettingsModalSource } from './types';
 
@@ -89,9 +94,18 @@ export {
   copyEmbeddedCode,
   downloadCodeSnippet,
   exportDataToCsv,
+  copyApiResourceUrl,
   setQueryAutorun,
   getQueryAutorun,
+  updateChartSettings,
+  updateVisualizationType,
+  resetVisualization,
   ReducerState,
   SettingsModalSource,
 };
-export { HIDE_CONFIRMATION, ACCEPT_CONFIRMATION, HIDE_EMAIL_EXTRACTION_MODAL };
+export {
+  HIDE_CONFIRMATION,
+  ACCEPT_CONFIRMATION,
+  HIDE_EMAIL_EXTRACTION_MODAL,
+  QUERY_EDITOR_MOUNTED,
+};

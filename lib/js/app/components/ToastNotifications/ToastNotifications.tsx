@@ -1,5 +1,6 @@
 import { useContext, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { useToasts } from '@keen.io/toast-notifications';
 
 import { AppContext } from '../../contexts';
@@ -11,9 +12,10 @@ import { SHOW_TOAST_NOTIFICATION_EVENT } from '../../constants';
 
 const ToastNotifications = () => {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
+  const { addToast } = useToasts();
 
   const { notificationPubSub } = useContext(AppContext);
-  const { addToast } = useToasts();
 
   useEffect(() => {
     const dispose = notificationPubSub.subscribe(
@@ -26,7 +28,7 @@ const ToastNotifications = () => {
               autoDismiss = true,
               showDismissButton,
             } = meta;
-            addToast(message, {
+            addToast(t(message), {
               appearance: type,
               autoDismiss,
               showDismissButton,

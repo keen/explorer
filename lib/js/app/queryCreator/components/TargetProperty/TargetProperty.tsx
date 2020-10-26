@@ -1,5 +1,6 @@
 import React, { FC, useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { Dropdown } from '@keen.io/ui-core';
 import { useSearch } from '@keen.io/react-hooks';
 
@@ -15,7 +16,6 @@ import DropableContainer, { Variant } from '../DropableContainer';
 import { getEventPath } from '../../utils';
 import { getCollectionSchema, getSchemas } from '../../modules/events';
 
-import text from './text.json';
 import { SEPARATOR } from './constants';
 
 import { AppState } from '../../types';
@@ -40,6 +40,7 @@ const TargetProperty: FC<Props> = ({
   variant = 'primary',
   hasError = false,
 }) => {
+  const { t } = useTranslation();
   const [expandTree, setTreeExpand] = useState(false);
 
   const {
@@ -106,7 +107,7 @@ const TargetProperty: FC<Props> = ({
         onClick={() => !isOpen && setOpen(true)}
         hasError={hasError}
       >
-        {text.label}
+        {t('query_creator_target_property.label')}
       </Title>
       <DropableContainer
         hasError={hasError}
@@ -116,8 +117,10 @@ const TargetProperty: FC<Props> = ({
         value={property}
         searchable
         dropIndicator
-        searchPlaceholder={text.searchPlaceholder}
-        placeholder={text.placeholder}
+        searchPlaceholder={t(
+          'query_creator_target_property.search_placeholder'
+        )}
+        placeholder={t('query_creator_target_property.placeholder')}
         onSearch={searchHandler}
         onDefocus={(event: any) => {
           if (!getEventPath(event)?.includes(containerRef.current)) {
@@ -132,7 +135,9 @@ const TargetProperty: FC<Props> = ({
       </DropableContainer>
       <Dropdown isOpen={isOpen}>
         {isEmptySearch ? (
-          <EmptySearch message={text.emptySearchResults} />
+          <EmptySearch
+            message={t('query_creator_target_property.empty_search_results')}
+          />
         ) : (
           <PropertiesTree
             expanded={expandTree}

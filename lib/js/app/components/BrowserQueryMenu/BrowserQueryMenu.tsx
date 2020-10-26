@@ -1,5 +1,6 @@
 import React, { FC, useRef, useState, useEffect, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { AnimatePresence } from 'framer-motion';
 import { Button, CircleButton, Dropdown, Tooltip } from '@keen.io/ui-core';
 import { Icon } from '@keen.io/icons';
@@ -13,7 +14,6 @@ import {
   TooltipContent,
   TooltipMotion,
 } from './BrowserQueryMenu.styles';
-import text from './text.json';
 
 import ActionsMenu from '../ActionsMenu';
 import { showQuerySettingsModal, SettingsModalSource } from '../../modules/app';
@@ -35,6 +35,7 @@ type Props = {
 
 const BrowserQueryMenu: FC<Props> = ({ onEditQuery, onRemoveQuery }) => {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
   const actionsContainer = useRef(null);
 
   const [actionsMenu, setActionsMenuVisibility] = useState(false);
@@ -65,11 +66,11 @@ const BrowserQueryMenu: FC<Props> = ({ onEditQuery, onRemoveQuery }) => {
     <Container>
       <BasicActions>
         <Button variant="secondary" onClick={onEditQuery}>
-          {text.editQuery}
+          {t('browser_query_menu.edit_query')}
         </Button>
         <ButtonWrapper marginLeft={10}>
           <Button variant="danger" style="outline" onClick={onRemoveQuery}>
-            {text.removeQuery}
+            {t('browser_query_menu.remove_query')}
           </Button>
         </ButtonWrapper>
       </BasicActions>
@@ -91,7 +92,9 @@ const BrowserQueryMenu: FC<Props> = ({ onEditQuery, onRemoveQuery }) => {
             {settingsTooltip && (
               <TooltipMotion {...TOOLTIP_MOTION}>
                 <Tooltip hasArrow={false} mode="light">
-                  <TooltipContent>{text.settingsTooltip}</TooltipContent>
+                  <TooltipContent>
+                    {t('browser_query_menu.settings_tooltip')}
+                  </TooltipContent>
                 </Tooltip>
               </TooltipMotion>
             )}
@@ -128,7 +131,9 @@ const BrowserQueryMenu: FC<Props> = ({ onEditQuery, onRemoveQuery }) => {
             {actionsTooltip && (
               <TooltipMotion {...TOOLTIP_MOTION}>
                 <Tooltip hasArrow={false} mode="light">
-                  <TooltipContent>{text.actionsTooltip}</TooltipContent>
+                  <TooltipContent>
+                    {t('browser_query_menu.actions_tooltip')}
+                  </TooltipContent>
                 </Tooltip>
               </TooltipMotion>
             )}

@@ -1,11 +1,13 @@
 import { ReducerState as QueryReducerState } from './modules/query';
 import { ReducerState as EventsReducerState } from './modules/events';
+import { ReducerState as ChartSettingsReducerState } from './modules/chartSettings';
 
 import { Analysis } from '../types';
 
 export type AppState = {
   query: QueryReducerState;
   events: EventsReducerState;
+  chartSettings: ChartSettingsReducerState;
 };
 
 export type CreatorFields =
@@ -96,6 +98,7 @@ export type FunnelStep = {
   timezone?: Timezones | number;
   withActors: boolean;
   filters: Filter[];
+  stepLabel?: string;
 };
 
 export type Timezones =

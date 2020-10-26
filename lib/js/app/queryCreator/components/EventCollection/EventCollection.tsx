@@ -6,6 +6,7 @@ import React, {
   useRef,
   useEffect,
 } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Dropdown } from '@keen.io/ui-core';
 import { useSearch } from '@keen.io/react-hooks';
@@ -19,8 +20,6 @@ import DropdownListContainer from '../DropdownListContainer';
 import DropableContainer, { Variant } from '../DropableContainer';
 
 import { getEventsCollections } from '../../modules/events';
-
-import text from './text.json';
 
 import { KEYBOARD_KEYS } from '../../constants';
 
@@ -44,6 +43,7 @@ const EventCollection: FC<Props> = ({
   variant = 'primary',
   hasError = false,
 }) => {
+  const { t } = useTranslation();
   const [isOpen, setOpen] = useState(false);
   const [selectionIndex, setIndex] = useState<number>(null);
 
@@ -140,13 +140,15 @@ const EventCollection: FC<Props> = ({
         onClick={() => setOpen(true)}
         hasError={hasError}
       >
-        {text.label}
+        {t('query_creator_event_collection.label')}
       </Title>
       <DropableContainer
         variant={variant}
         hasError={hasError}
-        searchPlaceholder={text.searchPlaceholder}
-        placeholder={text.placeholder}
+        searchPlaceholder={t(
+          'query_creator_event_collection.search_placeholder'
+        )}
+        placeholder={t('query_creator_event_collection.placeholder')}
         onClick={() => !isOpen && setOpen(true)}
         isActive={isOpen}
         value={collection}
@@ -161,7 +163,9 @@ const EventCollection: FC<Props> = ({
       </DropableContainer>
       <Dropdown isOpen={isOpen}>
         {searchPhrase && !collectionsList.length ? (
-          <EmptySearch message={text.emptySearchResults} />
+          <EmptySearch
+            message={t('query_creator_event_collection.empty_search_results')}
+          />
         ) : (
           <DropdownListContainer scrollToActive maxHeight={240}>
             {(activeItemRef) => (

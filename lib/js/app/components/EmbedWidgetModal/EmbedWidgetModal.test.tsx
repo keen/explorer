@@ -11,7 +11,6 @@ import configureStore from 'redux-mock-store';
 import { AppContext } from '../../contexts';
 
 import EmbedWidgetModal from './EmbedWidgetModal';
-import text from './text.json';
 
 const render = (storeState: any = {}) => {
   const mockStore = configureStore([]);
@@ -69,14 +68,14 @@ test('shows modal with Download HTML button', () => {
   const {
     wrapper: { getByText },
   } = render();
-  const button = getByText(text.downloadFile);
+  const button = getByText('embed_widget.download_file_button');
 
   expect(button).toBeInTheDocument();
 });
 
 test('allows user to copy HTML code to clipboard', () => {
   const { store } = render();
-  const copyCode = screen.getByText(text.copyCode);
+  const copyCode = screen.getByText('embed_widget.copy_code_button');
 
   fireEvent.click(copyCode);
 
@@ -95,7 +94,7 @@ test('allows user to copy HTML code to clipboard', () => {
 
 test('allows user to download HTML file', () => {
   const { store } = render();
-  const downloadFile = screen.getByText(text.downloadFile);
+  const downloadFile = screen.getByText('embed_widget.download_file_button');
 
   fireEvent.click(downloadFile);
 
@@ -114,7 +113,7 @@ test('allows user to download HTML file', () => {
 
 test('allows user to close modal by clicking "cancel" label', () => {
   const { store } = render();
-  const close = screen.getByText(text.close);
+  const close = screen.getByText('embed_widget.close_button');
 
   fireEvent.click(close);
 

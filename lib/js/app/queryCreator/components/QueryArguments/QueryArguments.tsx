@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useContext } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import {
@@ -31,6 +31,9 @@ import {
   setPercentile,
   DEFAULT_TIMEFRAME,
 } from '../../modules/query';
+import { updateChartSettings } from '../../modules/chartSettings';
+
+import { AppContext } from '../../contexts';
 
 type Props = {};
 
@@ -42,15 +45,18 @@ const App: FC<Props> = () => {
   const targetProperty = useSelector(getTargetProperty);
   const timezone = useSelector(getTimezone);
   const percentile = useSelector(getPercentile);
+  const { onUpdateChartSettings } = useContext(AppContext);
 
   return (
     <Container>
       <MenuItem>
         <Analysis
           analysis={analysis}
-          onChange={(updatedAnalysis) =>
-            dispatch(selectAnalysis(updatedAnalysis))
-          }
+          onChange={(updatedAnalysis) => {
+            dispatch(selectAnalysis(updatedAnalysis));
+            dispatch(updateChartSettings({ stepLabels: [] }));
+            onUpdateChartSettings({ stepLabels: [] });
+          }}
         />
       </MenuItem>
       {showField('eventCollection', analysis) && (

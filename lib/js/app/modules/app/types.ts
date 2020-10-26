@@ -33,7 +33,10 @@ import {
   DOWNLOAD_CODE_SNIPPET,
   SHOW_EMAIL_EXTRACTION_MODAL,
   HIDE_EMAIL_EXTRACTION_MODAL,
+  COPY_API_RESOURCE_URL,
   SET_QUERY_AUTORUN,
+  UPDATE_CHART_SETTINGS,
+  UPDATE_VISUALIZATION,
 } from './constants';
 
 export type Confirmation = 'delete';
@@ -229,6 +232,26 @@ export interface DownloadCodeSnippetAction {
   };
 }
 
+export interface UpdateChartSettingsAction {
+  type: typeof UPDATE_CHART_SETTINGS;
+  payload: {
+    chartSettings: Record<string, any>;
+  };
+}
+
+export interface UpdateVisualizationTypeAction {
+  type: typeof UPDATE_VISUALIZATION;
+  payload: {
+    type: PickerWidgets;
+  };
+}
+export interface CopyApiResourceUrlAction {
+  type: typeof COPY_API_RESOURCE_URL;
+  payload: {
+    config: Record<string, any>;
+  };
+}
+
 export type AppActions =
   | AppStartAction
   | ResizeScreenAction
@@ -259,4 +282,7 @@ export type AppActions =
   | SelectFirstSavedQueryAction
   | ShowEmailExtractionModalAction
   | HideEmailExtractionModalAction
-  | SetQueryAutorunAction;
+  | SetQueryAutorunAction
+  | UpdateChartSettingsAction
+  | UpdateVisualizationTypeAction
+  | CopyApiResourceUrlAction;

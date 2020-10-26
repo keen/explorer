@@ -1,8 +1,8 @@
 import React, { FC } from 'react';
+import { useTranslation } from 'react-i18next';
 import { AnimatePresence } from 'framer-motion';
 
 import { MotionContainer } from './CreateFirstQuery.styles';
-import text from './text.json';
 
 type Props = {
   /** Visibility indicator */
@@ -17,21 +17,23 @@ const modalMotion = {
   exit: {},
 };
 
-const CreateFirstQuery: FC<Props> = ({ isVisible, onClick }) => (
-  <AnimatePresence>
-    {isVisible && (
-      <MotionContainer
-        {...modalMotion}
-        onClick={onClick}
-        width={{ xs: 300, sm: 500 }}
-        padding={{ xs: 20, sm: '20px 80px' }}
-        data-testid="create-first-query"
-      >
-        <div>{text.title}</div>
-        <div>{text.subtitle}</div>
-      </MotionContainer>
-    )}
-  </AnimatePresence>
-);
-
+const CreateFirstQuery: FC<Props> = ({ isVisible, onClick }) => {
+  const { t } = useTranslation();
+  return (
+    <AnimatePresence>
+      {isVisible && (
+        <MotionContainer
+          {...modalMotion}
+          onClick={onClick}
+          width={{ xs: 300, sm: 500 }}
+          padding={{ xs: 20, sm: '20px 80px' }}
+          data-testid="create-first-query"
+        >
+          <div>{t('browser_empty_project.title')}</div>
+          <div>{t('browser_empty_project.subtitle')}</div>
+        </MotionContainer>
+      )}
+    </AnimatePresence>
+  );
+};
 export default CreateFirstQuery;

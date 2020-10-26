@@ -15,9 +15,16 @@ import { AppContext } from './contexts';
 
 import { appStart } from './modules/app';
 import { getQuery, serializeQuery, resetQuery } from './modules/query';
+import { updateChartSettings } from './modules/chartSettings';
 import { transformToQuery, transformQueryToCamelCase } from './utils';
 
-import { UPDATE_TIMEOUT, SET_QUERY_EVENT, NEW_QUERY_EVENT } from './constants';
+import {
+  UPDATE_TIMEOUT,
+  SET_QUERY_EVENT,
+  NEW_QUERY_EVENT,
+  SET_CHART_SETTINGS,
+  UPDATE_VISUALIZATION_TYPE,
+} from './constants';
 
 declare global {
   interface Window {
@@ -32,12 +39,14 @@ type Props = {
   readKey: string;
   /** Keen master access key */
   masterKey: string;
-  /** Host name */
-  host?: string;
   /** Modal container selector */
   modalContainer: string;
   /** Update query event handler */
   onUpdateQuery?: (query: Record<string, any>) => void;
+  /** Update chart settings handler */
+  onUpdateChartSettings: (chartSettings: Record<string, any>) => void;
+  /** Host name */
+  host?: string;
 };
 
 class QueryCreator extends React.PureComponent<Props> {
@@ -116,6 +125,14 @@ class QueryCreator extends React.PureComponent<Props> {
             const transformedQuery = transformQueryToCamelCase(query);
             this.store.dispatch(serializeQuery(transformedQuery));
             break;
+          case SET_CHART_SETTINGS:
+            const { chartSettings } = meta;
+            this.store.dispatch(updateChartSettings(chartSettings));
+            break;
+          case UPDATE_VISUALIZATION_TYPE:
+            const { chartSettings: settings } = this.store.getState();
+            this.props.onUpdateChartSettings(settings);
+            break;
           default:
             break;
         }
@@ -132,7 +149,10 @@ class QueryCreator extends React.PureComponent<Props> {
           }}
         >
           <AppContext.Provider
-            value={{ modalContainer: this.props.modalContainer }}
+            value={{
+              modalContainer: this.props.modalContainer,
+              onUpdateChartSettings: this.props.onUpdateChartSettings,
+            }}
           >
             <App />
           </AppContext.Provider>

@@ -1,5 +1,6 @@
 import React, { FC, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { Button } from '@keen.io/ui-core';
 
 import {
@@ -8,7 +9,6 @@ import {
   ButtonWrapper,
   CreatorContainer,
 } from './Editor.styles';
-import text from './text.json';
 
 import { showEmailExtraction } from './utils';
 
@@ -27,7 +27,10 @@ import {
   getQueryLimitReached,
   setQuerySettings,
 } from '../../modules/queries';
-import { clearQuery } from '../../modules/app';
+import {
+  clearQuery,
+  updateChartSettings as updateSettings,
+} from '../../modules/app';
 
 type Props = {
   /** Query definition */
@@ -47,6 +50,7 @@ const Editor: FC<Props> = ({
   onSaveQuery,
 }) => {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   const queryResults = useSelector(getQueryResults);
   const isQueryLoading = useSelector(getQueryPerformState);
@@ -55,6 +59,13 @@ const Editor: FC<Props> = ({
   const updateQuery = useCallback((query: Record<string, any>) => {
     dispatch(setQuerySettings(query));
   }, []);
+
+  const updateChartSettings = useCallback(
+    (chartSettings: Record<string, any>) => {
+      dispatch(updateSettings(chartSettings));
+    },
+    []
+  );
 
   return (
     <div id="editor">
@@ -73,11 +84,14 @@ const Editor: FC<Props> = ({
         </Card>
       </section>
       <CreatorContainer>
-        <Creator onUpdateQuery={updateQuery} />
+        <Creator
+          onUpdateQuery={updateQuery}
+          onUpdateChartSettings={updateChartSettings}
+        />
       </CreatorContainer>
       <EditorActions>
         <RunQuery isLoading={isQueryLoading} onClick={() => onRunQuery()}>
-          {runQueryLabel(query)}
+          {t(runQueryLabel(query))}
         </RunQuery>
         {showEmailExtraction(query) && (
           <ButtonWrapper data-testid="email-extraction">
@@ -86,7 +100,7 @@ const Editor: FC<Props> = ({
               size="large"
               onClick={() => dispatch(extractToEmail())}
             >
-              {text.extractToEmailButton}
+              {t('editor.extract_to_email_button')}
             </Button>
           </ButtonWrapper>
         )}
@@ -97,7 +111,7 @@ const Editor: FC<Props> = ({
             variant="success"
             size="large"
           >
-            {text.clearButton}
+            {t('editor.clear_query_button')}
           </Button>
         </ButtonWrapper>
       </EditorActions>
