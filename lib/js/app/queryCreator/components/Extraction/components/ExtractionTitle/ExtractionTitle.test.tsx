@@ -2,7 +2,6 @@ import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 
 import ExtractionTitle from './ExtractionTitle';
-import text from './text.json';
 
 test('renders message about extracting all properties', () => {
   const { getByText } = render(
@@ -13,7 +12,7 @@ test('renders message about extracting all properties', () => {
     />
   );
 
-  expect(getByText(text.fullExtraction)).toBeInTheDocument();
+  expect(getByText('extraction.full_extraction')).toBeInTheDocument();
 });
 
 test('allows user to clear all extraction properties', () => {
@@ -26,7 +25,7 @@ test('allows user to clear all extraction properties', () => {
     />
   );
 
-  const element = getByText(text.clearProperties);
+  const element = getByText('extraction.clear_properties');
   fireEvent.click(element);
 
   expect(mockFn).toHaveBeenCalled();
