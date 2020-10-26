@@ -32,15 +32,15 @@ const QuerySettingsModal: FC<Props> = ({ onSaveQuery, cacheAvailable }) => {
   const { modalContainer } = useContext(AppContext);
 
   const isOpen = useSelector(getQuerySettingsModalVisibility);
-  const { exists } = useSelector(getSavedQuery);
+  const { exists, isCloned } = useSelector(getSavedQuery);
 
   const closeHandler = useCallback(() => {
     dispatch(hideQuerySettingsModal());
     dispatch(resetSavedQueryError());
-    if (!exists) {
+    if (!exists && !isCloned) {
       dispatch(resetSavedQuery());
     }
-  }, [exists]);
+  }, [exists, isCloned]);
 
   return (
     <Portal modalContainer={modalContainer}>
