@@ -8,7 +8,6 @@ import {
 import configureStore from 'redux-mock-store';
 
 import GroupBy from './GroupBy';
-import text from './text.json';
 
 const render = (storeState: any = {}, overProps: any = {}) => {
   const mockStore = configureStore([]);
@@ -92,6 +91,6 @@ test('should render title', () => {
     wrapper: { getByText },
   } = render(storeState, { collection: 'purchases' });
 
-  const title = getByText(text.title);
+  const title = getByText('query_creator_group_by.title');
   expect(title).toBeInTheDocument();
 });

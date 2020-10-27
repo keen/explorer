@@ -2,7 +2,6 @@ import React from 'react';
 import { render as rtlRender, fireEvent } from '@testing-library/react';
 
 import RelativeTime from './RelativeTime';
-import text from './text.json';
 
 const render = (overProps: any = {}) => {
   const props = {
@@ -27,7 +26,9 @@ test('allows user to include the current day in timeframe', () => {
     wrapper: { getByText },
   } = render({ relativity: 'previous' });
 
-  const checkbox = getByText(text.relativityTitleForToday);
+  const checkbox = getByText(
+    'query_creator_relative_time.relativity_title_for_today'
+  );
   fireEvent.click(checkbox);
 
   expect(props.onChange).toHaveBeenCalledWith('this_14_days');
@@ -39,7 +40,9 @@ test('allows user to exclude the current day from timeframe', () => {
     wrapper: { getByText },
   } = render();
 
-  const checkbox = getByText(text.relativityTitleForToday);
+  const checkbox = getByText(
+    'query_creator_relative_time.relativity_title_for_today'
+  );
   fireEvent.click(checkbox);
 
   expect(props.onChange).toHaveBeenCalledWith('previous_14_days');
@@ -50,6 +53,8 @@ test('renders correct checkbox label for different interval', () => {
     wrapper: { getByText },
   } = render({ units: 'months' });
 
-  const checkbox = getByText(`${text.relativityTitle} month`);
+  const checkbox = getByText(
+    `${'query_creator_relative_time.relativity_title'} month`
+  );
   expect(checkbox).toBeInTheDocument();
 });

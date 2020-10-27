@@ -1,4 +1,5 @@
 import React, { FC, useState, useRef, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Dropdown, Input } from '@keen.io/ui-core';
 
 import {
@@ -15,7 +16,6 @@ import PropertyGroup from '../../../PropertyGroup';
 import Value from './Value';
 
 import { getEventPath } from '../../../../utils';
-import text from './text.json';
 
 import { SEPARATOR } from './constants';
 import { KEYBOARD_KEYS } from '../../../../constants';
@@ -28,6 +28,7 @@ type Props = {
 };
 
 const FilterListValue: FC<Props> = ({ items, onChange }) => {
+  const { t } = useTranslation();
   const containerRef = useRef(null);
   const [editMode, setEditMode] = useState(false);
 
@@ -50,7 +51,7 @@ const FilterListValue: FC<Props> = ({ items, onChange }) => {
             setEditMode(false);
           }
         }}
-        placeholder={text.placeholder}
+        placeholder={t('query_creator_filter_list_value.placeholder')}
         value={items.length ? items : null}
       >
         <ItemContainer>{items.join(SEPARATOR)}</ItemContainer>
@@ -61,7 +62,7 @@ const FilterListValue: FC<Props> = ({ items, onChange }) => {
             autoFocus
             variant="solid"
             data-testid="list-input"
-            placeholder={text.inputPlaceholder}
+            placeholder={t('query_creator_filter_list_value.input_placeholder')}
             onKeyPress={(e: React.KeyboardEvent<HTMLInputElement>) => {
               if (e.charCode === KEYBOARD_KEYS.ENTER) {
                 e.preventDefault();

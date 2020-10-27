@@ -1,4 +1,4 @@
-import React, { FC, useState, useRef, useEffect } from 'react';
+import React, { FC, useState, useRef, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Dropdown } from '@keen.io/ui-core';
 
@@ -17,7 +17,7 @@ import { getDefaultAbsoluteTime } from './utils/getDefaultAbsoluteTime';
 import { convertRelativeTime } from './utils/convertRelativeTime';
 import { getEventPath } from '../../utils';
 
-import { ABSOLUTE_TAB, RELATIVE_TAB, TABS_SETTINGS } from './constants';
+import { ABSOLUTE_TAB, RELATIVE_TAB } from './constants';
 import { DEFAULT_TIMEFRAME } from '../../modules/query';
 
 import { Timeframe as TimeframeType, Timezones } from '../../types';
@@ -59,6 +59,19 @@ const Timeframe: FC<Props> = ({
   }, []);
 
   const timezoneValue = getTimezoneValue(timezone);
+  const TABS_SETTINGS = useMemo(
+    () => [
+      {
+        label: t('query_creator_timeframe.relative'),
+        id: RELATIVE_TAB,
+      },
+      {
+        label: t('query_creator_timeframe.absolute'),
+        id: ABSOLUTE_TAB,
+      },
+    ],
+    []
+  );
 
   return (
     <Container ref={containerRef}>

@@ -20,7 +20,7 @@ const LimitTooltip: FC<{}> = () => {
         {cacheQueriesLimit && (
           <>
             {' '}
-            ({cacheQueriesLimit} {t('limit_tooltip.cache_queries')})
+            ({cacheQueriesLimit} {t('limit_tooltip.cached_queries')})
           </>
         )}
         .

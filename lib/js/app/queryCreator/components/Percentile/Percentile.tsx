@@ -1,5 +1,6 @@
 import React, { FC, useState, useEffect, useCallback, useRef } from 'react';
 import { AnimatePresence } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import { Tooltip, Input } from '@keen.io/ui-core';
 
 import Title from '../Title';
@@ -9,8 +10,6 @@ import { Container, TooltipContainer } from './Percentile.styles';
 import { getPercentileValue } from './utils/getPercentileValue';
 
 import { HIDE_TIME } from './constants';
-
-import text from './text.json';
 
 type Props = {
   /** Percentile value */
@@ -29,6 +28,7 @@ export const tooltipMotion = {
 const Percentile: FC<Props> = ({ value, onReset, onChange }) => {
   const containerRef = useRef(null);
   const hideTooltip = useRef(null);
+  const { t } = useTranslation();
 
   const [tooltip, setTooltip] = useState(false);
 
@@ -66,17 +66,17 @@ const Percentile: FC<Props> = ({ value, onReset, onChange }) => {
             }}
           >
             <Tooltip mode="dark" hasArrow={false}>
-              {text.message}
+              {t('query_creator_percentile.message')}
             </Tooltip>
           </TooltipContainer>
         )}
       </AnimatePresence>
-      <Title>{text.label}</Title>
+      <Title>{t('query_creator_percentile.label')}</Title>
       <Input
         type="number"
         variant="solid"
         value={value ? value : ''}
-        placeholder={text.placeholder}
+        placeholder={t('query_creator_percentile.placeholder')}
         onChange={(e) => changeHandler(e)}
       />
     </Container>

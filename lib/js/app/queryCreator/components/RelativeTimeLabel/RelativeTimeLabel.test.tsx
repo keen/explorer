@@ -2,7 +2,6 @@ import React from 'react';
 import { render as rtlRender } from '@testing-library/react';
 
 import RelativeTimeLabel from './RelativeTimeLabel';
-import text from './text.json';
 
 const render = (overProps: any = {}) => {
   const props = {
@@ -25,7 +24,9 @@ test('shows message about including current day in timeframe', () => {
     wrapper: { getByText },
   } = render();
 
-  expect(getByText(text.todayIncludes)).toBeInTheDocument();
+  expect(
+    getByText('query_creator_relative_time_label.today_includes')
+  ).toBeInTheDocument();
 });
 
 test('shows message about including current interval in timeframe', () => {
@@ -33,7 +34,9 @@ test('shows message about including current interval in timeframe', () => {
     wrapper: { getByText },
   } = render({ units: 'years' });
 
-  expect(getByText('(Includes current year)')).toBeInTheDocument();
+  expect(
+    getByText('(query_creator_relative_time_label.relativity_title year)')
+  ).toBeInTheDocument();
 });
 
 test('shows timeframe settings', () => {
@@ -41,7 +44,9 @@ test('shows timeframe settings', () => {
     wrapper: { getByText },
   } = render({ units: 'weeks' });
 
-  expect(getByText('Last 14 weeks')).toBeInTheDocument();
+  expect(
+    getByText('query_creator_relative_time_label.label 14 weeks')
+  ).toBeInTheDocument();
 });
 
 test('do not shows message about including current day in timeframe', () => {
@@ -49,5 +54,7 @@ test('do not shows message about including current day in timeframe', () => {
     wrapper: { queryByText },
   } = render({ relativity: 'previous' });
 
-  expect(queryByText(text.todayIncludes)).not.toBeInTheDocument();
+  expect(
+    queryByText('query_creator_relative_time_label.today_includes')
+  ).not.toBeInTheDocument();
 });

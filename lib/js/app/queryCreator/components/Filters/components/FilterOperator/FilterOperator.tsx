@@ -1,4 +1,5 @@
 import React, { FC, useState, useMemo, useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Dropdown } from '@keen.io/ui-core';
 
 import { Container, OperatorsList } from './FilterOperator.styles';
@@ -8,7 +9,6 @@ import DropdownList from '../../../DropdownList';
 import DropdownListContainer from '../../../DropdownListContainer';
 
 import { createOptions, getLabel } from './utils';
-import text from './text.json';
 
 import { Operator, Property } from '../../../../types';
 
@@ -29,6 +29,7 @@ const FilterOperator: FC<Props> = ({
   propertyType,
   onChange,
 }) => {
+  const { t } = useTranslation();
   const [editMode, setEditMode] = useState(false);
   const operators = useMemo(() => createOptions(propertyType), [propertyType]);
   const propertyRef = useRef(property);
@@ -47,7 +48,7 @@ const FilterOperator: FC<Props> = ({
         variant="secondary"
         onClick={() => !editMode && propertyType && setEditMode(true)}
         onDefocus={() => setEditMode(false)}
-        placeholder={text.placeholder}
+        placeholder={t('query_creator_filter_operator.placeholder')}
         value={operator}
       >
         {getLabel(propertyType, operator)}

@@ -1,4 +1,5 @@
 import React, { FC, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Dropdown } from '@keen.io/ui-core';
 
 import { Container } from './FilterBoolean.styles';
@@ -8,8 +9,6 @@ import DropdownList from '../../../DropdownList';
 
 import { TRUE_LABEL, FALSE_LABEL, OPTIONS } from './constants';
 
-import text from './text.json';
-
 type Props = {
   /** Current value */
   value: boolean;
@@ -18,6 +17,7 @@ type Props = {
 };
 
 const FilterBoolean: FC<Props> = ({ value, onChange }) => {
+  const { t } = useTranslation();
   const [editMode, setEditMode] = useState(false);
 
   return (
@@ -27,8 +27,8 @@ const FilterBoolean: FC<Props> = ({ value, onChange }) => {
         variant="secondary"
         onClick={() => !editMode && setEditMode(true)}
         onDefocus={() => setEditMode(false)}
-        placeholder={text.placeholder}
-        value={text.placeholder}
+        placeholder={t('query_creator_filter_boolean.placeholder')}
+        value={t('query_creator_filter_boolean.placeholder')}
       >
         {value ? TRUE_LABEL : FALSE_LABEL}
       </DropableContainer>

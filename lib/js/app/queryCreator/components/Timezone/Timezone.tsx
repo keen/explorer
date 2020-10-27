@@ -1,4 +1,5 @@
 import React, { FC, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Dropdown } from '@keen.io/ui-core';
 
 import { Container, SelectContainer } from './Timezone.styles';
@@ -10,8 +11,6 @@ import DropableContainer from '../DropableContainer';
 
 import { TIMEZONES } from './constants';
 
-import text from './text.json';
-
 import { Timezones } from '../../types';
 
 type Props = {
@@ -22,6 +21,7 @@ type Props = {
 };
 
 const Timezone: FC<Props> = ({ timezone, onChange }) => {
+  const { t } = useTranslation();
   const [isOpen, setOpen] = useState(false);
   const options = useMemo(
     () =>
@@ -34,13 +34,15 @@ const Timezone: FC<Props> = ({ timezone, onChange }) => {
 
   return (
     <Container data-testid="timezone">
-      <Title onClick={() => setOpen(true)}>{text.label}</Title>
+      <Title onClick={() => setOpen(true)}>
+        {t('query_creator_timezone.label')}
+      </Title>
       <SelectContainer>
         <DropableContainer
           variant="secondary"
           dropIndicator
           onClick={() => !isOpen && setOpen(true)}
-          placeholder={text.placeholder}
+          placeholder={t('query_creator_timezone.placeholder')}
           isActive={isOpen}
           value={timezone}
           onDefocus={() => {

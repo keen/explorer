@@ -9,12 +9,11 @@ import React, {
 import { useDispatch, useSelector } from 'react-redux';
 import { v4 as uuid } from 'uuid';
 import Sortable from 'sortablejs';
+import { useTranslation } from 'react-i18next';
 
 import { Container, AddStep } from './FunnelSteps.styles';
 
 import { mutateArray } from '../../utils';
-
-import text from './text.json';
 
 import FunnelStep from '../FunnelStep';
 import {
@@ -35,6 +34,7 @@ import { AppContext } from '../../contexts';
 
 const FunnelSteps: FC<{}> = () => {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
   const steps = useSelector(getFunnelSteps);
   const chartSettings = useSelector(getChartSettings);
   const { stepLabels } = chartSettings;
@@ -166,7 +166,7 @@ const FunnelSteps: FC<{}> = () => {
           setStepVisible(stepId);
         }}
       >
-        {text.addStep}
+        {t('query_creator_funnel_steps.add_step')}
       </AddStep>
     </Container>
   );
