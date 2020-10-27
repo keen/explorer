@@ -1,12 +1,11 @@
 import React, { FC } from 'react';
 import moment from 'moment-timezone';
+import { useTranslation } from 'react-i18next';
 
 import { getTimezoneValue } from '../../../../queryCreator';
 import { Container, Separator } from './AbsoluteTimeframe.styles';
 
 import { Timezones } from '../../../../queryCreator';
-
-import text from './text.json';
 
 type Props = {
   timeframe: {
@@ -17,13 +16,14 @@ type Props = {
 };
 
 const AbsoluteTimeframe: FC<Props> = ({ timeframe, timezone }) => {
+  const { t } = useTranslation();
   const { start, end } = timeframe;
   const namedTimezone = getTimezoneValue(timezone);
 
   return (
     <Container>
       <span>{moment(start).tz(namedTimezone).format('YYYY-MM-DD HH:mm')}</span>
-      <Separator>{text.separator}</Separator>
+      <Separator>{t('absolute_timeframe.separator')}</Separator>
       <span>{moment(end).tz(namedTimezone).format('YYYY-MM-DD HH:mm')}</span>
     </Container>
   );

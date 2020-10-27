@@ -68,7 +68,7 @@ const EmbedWidgetModal: FC = () => {
         {() => (
           <>
             <ModalHeader onClose={closeHandler}>
-              {t('embed_html_modal_title')}
+              {t('embed_widget.embed_html_title')}
             </ModalHeader>
             <CodeWrapper>
               <EmbedWidget>{code}</EmbedWidget>

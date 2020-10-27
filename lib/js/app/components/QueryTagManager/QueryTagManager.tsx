@@ -1,5 +1,6 @@
 import React, { FC, useState, useRef, useCallback, useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { Input, Label, Badge, Dropdown, DropdownList } from '@keen.io/ui-core';
 import { useSearch } from '@keen.io/react-hooks';
 
@@ -9,7 +10,6 @@ import {
   TagsContainer,
   Tag,
 } from './QueryTagManager.styles';
-import text from './text.json';
 
 import { getTagsPool } from '../../modules/project';
 
@@ -25,6 +25,7 @@ type Props = {
 };
 
 const QueryTagManager: FC<Props> = ({ tags, onAddTag, onRemoveTag }) => {
+  const { t } = useTranslation();
   const tagsPool = useSelector(getTagsPool);
   const containerRef = useRef(null);
   const inputRef = useRef(null);
@@ -50,7 +51,7 @@ const QueryTagManager: FC<Props> = ({ tags, onAddTag, onRemoveTag }) => {
             }))
           : [
               {
-                label: `${phrase} ${text.newTag}`,
+                label: `${phrase} ${t('query_tag_manager.new_tag')}`,
                 value: phrase,
               },
             ]
@@ -115,7 +116,7 @@ const QueryTagManager: FC<Props> = ({ tags, onAddTag, onRemoveTag }) => {
   return (
     <div>
       <Label htmlFor="queryLabels" variant="secondary">
-        {text.labels}
+        {t('query_tag_manager.labels')}
       </Label>
       <div ref={containerRef}>
         <DropdownContainer>
@@ -126,7 +127,7 @@ const QueryTagManager: FC<Props> = ({ tags, onAddTag, onRemoveTag }) => {
             variant="solid"
             id="queryLabels"
             autoComplete="off"
-            placeholder={text.inputPlaceholder}
+            placeholder={t('query_tag_manager.input_placeholder')}
             onChange={searchHandler}
           />
           <Dropdown isOpen={dropdownVisible}>

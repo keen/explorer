@@ -51,7 +51,7 @@ test('allows user to add tag', () => {
     jest.runAllTimers();
   });
 
-  const element = getByText('marketing (New label)');
+  const element = getByText('marketing query_tag_manager.new_tag');
   fireEvent.click(element);
 
   expect(props.onAddTag).toHaveBeenCalledWith('marketing');

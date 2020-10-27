@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { colors } from '@keen.io/colors';
 import {
   Modal,
@@ -17,9 +18,8 @@ import {
   acceptConfirmation,
 } from '../../modules/app';
 
-import text from './text.json';
-
 const Confirm: FC<{}> = () => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const { visible } = useSelector(getConfirmation);
 
@@ -30,9 +30,9 @@ const Confirm: FC<{}> = () => {
       {() => (
         <>
           <ModalHeader onClose={closeHandler}>
-            <Title>{text.deleteQueryTitle}</Title>
+            <Title>{t('confirm.delete_query_title')}</Title>
           </ModalHeader>
-          <Description>{text.deleteMessage}</Description>
+          <Description>{t('confirm.delete_message')}</Description>
           <ModalFooter>
             <Footer>
               <Button
@@ -41,7 +41,7 @@ const Confirm: FC<{}> = () => {
                 style="solid"
                 onClick={() => dispatch(acceptConfirmation())}
               >
-                {text.buttonLabel}
+                {t('confirm.button_label')}
               </Button>
               <Close>
                 <Anchor
@@ -49,7 +49,7 @@ const Confirm: FC<{}> = () => {
                   color={colors.blue[500]}
                   hoverColor={colors.blue[300]}
                 >
-                  {text.cancelLabel}
+                  {t('confirm.cancel_label')}
                 </Anchor>
               </Close>
             </Footer>

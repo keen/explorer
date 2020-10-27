@@ -1,5 +1,6 @@
 import React, { FC, useState, useCallback, useRef } from 'react';
 import { AnimatePresence } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import { Tooltip } from '@keen.io/ui-core';
 
 import {
@@ -9,7 +10,6 @@ import {
   TooltipContent,
   TooltipMotion,
 } from './CacheRefreshRate.styles';
-import text from './text.json';
 
 import { TOOLTIP_MOTION } from '../../constants';
 import { HIDE_HINT_TIME } from './constants';
@@ -31,6 +31,7 @@ const CacheRefreshRate: FC<Props> = ({
   minimumRate,
   maximumRate,
 }) => {
+  const { t } = useTranslation();
   const [showHint, setHintVisibility] = useState(false);
   const hideHintTrigger = useRef(null);
 
@@ -70,12 +71,14 @@ const CacheRefreshRate: FC<Props> = ({
         onBlur={blurEventHandler}
         onChange={(e) => onChange(parseInt(e.currentTarget.value))}
       />
-      <Units>{text.cacheUnits}</Units>
+      <Units>{t('cache_refresh_rate.cache_units')}</Units>
       <AnimatePresence>
         {showHint && (
           <TooltipMotion {...TOOLTIP_MOTION} data-testid="refresh-rate-hint">
             <Tooltip hasArrow={false} mode="dark">
-              <TooltipContent>{text.refreshRateHint}</TooltipContent>
+              <TooltipContent>
+                {t('cache_refresh_rate.refresh_rate_hint')}
+              </TooltipContent>
             </Tooltip>
           </TooltipMotion>
         )}

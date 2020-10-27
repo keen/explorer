@@ -140,5 +140,62 @@
   },
   "query_creator_timeframe": {
     "label": "Timeframe"
-  }
+  },
+  "cache_query": {
+    "refresh_interval": "- Refresh interval",
+    "queries_limit": "Limit reached",
+    "cache": "Cache query"
+  },
+  "limit_tooltip": {
+    "disable_message": "Disable caching for other saved query",
+    "cached_queries": "cached queries",
+    "upgrade_anchor": "Upgrade plan",
+    "upgrade_connector": "or",
+    "limit_reached_message": "You have reached the limit of cached queries for your organization"
+  },
+  "cache_refresh_rate": {
+    "cache_units": "(hours)",
+    "refresh_rate_hint": "Refresh interval can be set from 4 to 48 hours"
+  },
+  "confirm": {
+    "button_label": "Confirm",
+    "cancel_label": "Cancel",
+    "delete_query_title": "Deleting query",
+    "delete_message": "Do you want to permanently delete this query from your project?"
+  },
+  "dataviz": {
+    "no_results": "The results for analysis are empty"
+  },
+  "editor_navigation": {
+    "cached_label": "Cached",
+    "cache_units": "h"
+  },
+  "queries_list": {
+    "name": "Name",
+    "labels": "Labels",
+    "updated": "Updated"
+  },
+  "queries_list_item": {
+      "cached_label": "Cached",
+      "cache_units": "h"
+  },
+  "absolute_timeframe": {
+    "separator": "to"
+  },
+  "query_tag_manager": {
+    "labels": "Labels",
+    "new_tag": "(New label)",
+    "input_placeholder": "Insert item and confirm by Enter"
+  },
+  "absolute_time": {
+    "start_date": "From",
+    "end_date": "To"
+  },
+  "absolute_time_label": {
+    "separator": "to"
+  },
+  "custom_interval": {
+    "main_label": "Every",
+    "unit_placeholder": "Unit placeholder"
+  }    
 }
