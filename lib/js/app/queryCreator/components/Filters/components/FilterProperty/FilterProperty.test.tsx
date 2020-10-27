@@ -23,6 +23,7 @@ const render = (overProps: any = {}, searchContext: any = {}) => {
     onSelectProperty: jest.fn(),
     onCastPropertyType: jest.fn(),
     onChange: jest.fn(),
+    onBlur: jest.fn(),
     ...overProps,
   };
 

@@ -34,6 +34,8 @@ type Props = {
   onSelectProperty: (property: string) => void;
   /** Select property event handler */
   onCastPropertyType: (type: PropertyType) => void;
+  /** Blur event handler */
+  onBlur: () => void;
   /** Properties tree */
   properties: Record<string, string[] | Record<string, any>>;
 };
@@ -42,6 +44,7 @@ const FilterProperty: FC<Props> = ({
   property,
   type,
   properties,
+  onBlur,
   onSelectProperty,
   onCastPropertyType,
   onSearchProperties,
@@ -61,10 +64,15 @@ const FilterProperty: FC<Props> = ({
         !containerRef.current.contains(e.target)
       ) {
         setEditMode(false);
+        onBlur();
       }
     },
     [editMode, containerRef]
   );
+
+  useEffect(() => {
+    if (!property) setEditMode(true);
+  }, []);
 
   useEffect(() => {
     document.addEventListener('click', outsideClick);
