@@ -26,6 +26,7 @@ export const Settings = styled.div`
 `;
 
 export const Socket = styled.div`
+  display: flex;
   margin-left: 20px;
 `;
 
