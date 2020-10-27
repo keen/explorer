@@ -1,6 +1,8 @@
 import React, { FC } from 'react';
 import { Checkbox } from '@keen.io/ui-core';
 
+import { Container, Label } from './FilterItem.styles';
+
 type Props = {
   /** Filter label */
   label: string;
@@ -13,17 +15,15 @@ type Props = {
 };
 
 const FilterItem: FC<Props> = ({ label, id, onChange, isActive }) => (
-  <div>
-    <label htmlFor={id}>
-      {label}
-      <Checkbox
-        id={id}
-        type="secondary"
-        checked={isActive}
-        onChange={() => onChange(!isActive)}
-      />
-    </label>
-  </div>
+  <Container htmlFor={id}>
+    <Checkbox
+      id={id}
+      type="secondary"
+      checked={isActive}
+      onChange={() => onChange(!isActive)}
+    />
+    <Label>{label}</Label>
+  </Container>
 );
 
 export default FilterItem;

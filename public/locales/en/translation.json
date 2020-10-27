@@ -86,6 +86,9 @@
   "browser_filters": {
     "title": "Filters",
     "show_only_cached_queries": "Only cached queries",
+    "search_label": "Labels",
+    "search_tags_input_placeholder": "Search label",
+    "empty_search_message": "No labels found with this name",
     "clear": "Clear filters"
   },
   "browser_query_menu": {

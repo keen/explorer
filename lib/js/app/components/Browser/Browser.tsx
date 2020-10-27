@@ -14,6 +14,7 @@ import {
   Socket,
   ScrollOverflow,
   ScrollableContainer,
+  FiltersContainer,
   PreviewPlaceholder,
 } from './Browser.styles';
 
@@ -157,28 +158,30 @@ const Browser: FC<Props> = ({ onEditQuery, onRunQuery, onSelectQuery }) => {
               onSearch={(phrase) => setSearchPhrase(phrase)}
               placeholder={t('browser_search.search_query_input_placeholder')}
             />
-            <FilterQueries
-              tagsFilters={queriesFilters.tags}
-              showOnlyCachedQueries={queriesFilters.showOnlyCachedQueries}
-              onClearFilters={() =>
-                setQueriesFilters({
-                  showOnlyCachedQueries: false,
-                  tags: [],
-                })
-              }
-              onUpdateTagsFilters={(tags) =>
-                setQueriesFilters((state) => ({
-                  ...state,
-                  tags,
-                }))
-              }
-              onUpdateCacheFilter={(isActive) =>
-                setQueriesFilters((state) => ({
-                  ...state,
-                  showOnlyCachedQueries: isActive,
-                }))
-              }
-            />
+            <FiltersContainer>
+              <FilterQueries
+                tagsFilters={queriesFilters.tags}
+                showOnlyCachedQueries={queriesFilters.showOnlyCachedQueries}
+                onClearFilters={() =>
+                  setQueriesFilters({
+                    showOnlyCachedQueries: false,
+                    tags: [],
+                  })
+                }
+                onUpdateTagsFilters={(tags) =>
+                  setQueriesFilters((state) => ({
+                    ...state,
+                    tags,
+                  }))
+                }
+                onUpdateCacheFilter={(isActive) =>
+                  setQueriesFilters((state) => ({
+                    ...state,
+                    showOnlyCachedQueries: isActive,
+                  }))
+                }
+              />
+            </FiltersContainer>
           </>
         )}
       </BrowserNavigation>

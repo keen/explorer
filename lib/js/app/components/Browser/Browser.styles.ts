@@ -36,6 +36,10 @@ export const Socket = styled.div<SpaceProps & LayoutProps>`
   ${space}
 `;
 
+export const FiltersContainer = styled.div`
+  margin-left: 50px;
+`;
+
 export const PreviewPlaceholder = styled.div`
   width: 100%;
   height: 500px;

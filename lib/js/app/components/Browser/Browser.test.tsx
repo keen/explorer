@@ -34,6 +34,9 @@ const render = (storeState: any = {}, overProps: any = {}) => {
       isSavedQueriesLoaded: false,
       savedQueries: [],
     },
+    project: {
+      tagsPool: [],
+    },
     app: {
       browserScreen: {
         width: 900,

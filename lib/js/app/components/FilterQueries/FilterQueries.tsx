@@ -1,13 +1,22 @@
-import React, { FC, useState, useEffect, useCallback, useRef } from 'react';
+import React, {
+  FC,
+  useState,
+  useEffect,
+  useMemo,
+  useCallback,
+  useRef,
+} from 'react';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Button, Dropdown } from '@keen.io/ui-core';
 
-import { FilterItem } from './components';
+import { FilterItem, SearchTags } from './components';
 import {
   Container,
   TagsContainer,
   DropdownContent,
+  EmptySearch,
+  ClearFilters,
 } from './FilterQueries.styles';
 
 import { getTagsPool } from '../../modules/project';
@@ -35,8 +44,18 @@ const FilterQueries: FC<Props> = ({
   const { t } = useTranslation();
   const containerRef = useRef(null);
   const [isOpen, setOpen] = useState(false);
+  const [searchMode, setSearchMode] = useState(false);
+  const [searchPhrase, setSearchPhrase] = useState('');
 
   const tagsPool = useSelector(getTagsPool);
+
+  const filteredTags = useMemo(() => {
+    if (searchPhrase) {
+      const phrase = searchPhrase.toLowerCase();
+      return tagsPool.filter((tag) => tag.toLowerCase().includes(phrase));
+    }
+    return tagsPool;
+  }, [searchPhrase, tagsPool]);
 
   const outsideClick = useCallback(
     (e) => {
@@ -46,6 +65,8 @@ const FilterQueries: FC<Props> = ({
         !containerRef.current.contains(e.target)
       ) {
         setOpen(false);
+        setSearchPhrase('');
+        setSearchMode(false);
       }
     },
     [isOpen, containerRef]
@@ -66,11 +87,18 @@ const FilterQueries: FC<Props> = ({
     return () => document.removeEventListener('click', outsideClick);
   }, [isOpen, containerRef]);
 
+  const isEmptySearch = searchPhrase && !filteredTags.length;
+  const filtersCount = tagsFilters.length + (showOnlyCachedQueries ? 1 : 0);
+
   return (
     <Container ref={containerRef}>
-      <Button variant="blank" onClick={() => setOpen(!isOpen)}>
-        {t('browser_filters.title')} (
-        {tagsFilters.length + (showOnlyCachedQueries ? 1 : 0)})
+      <Button
+        variant="blank"
+        isActive={isOpen}
+        onClick={() => setOpen(!isOpen)}
+      >
+        {t('browser_filters.title')}
+        {filtersCount ? ` (${filtersCount})` : null}
       </Button>
       <Dropdown isOpen={isOpen} fullWidth={false}>
         <DropdownContent>
@@ -80,8 +108,22 @@ const FilterQueries: FC<Props> = ({
             isActive={showOnlyCachedQueries}
             onChange={(isActive) => onUpdateCacheFilter(isActive)}
           />
+          <SearchTags
+            isActive={searchMode}
+            searchPhrase={searchPhrase}
+            inputPlaceholder={t(
+              'browser_filters.search_tags_input_placeholder'
+            )}
+            searchLabel={t('browser_filters.search_label')}
+            onChangePhrase={(phrase) => setSearchPhrase(phrase)}
+            onClearPhrase={() => {
+              setSearchPhrase('');
+              setSearchMode(false);
+            }}
+            onActiveSearch={() => setSearchMode(true)}
+          />
           <TagsContainer>
-            {tagsPool.map((tag) => (
+            {filteredTags.map((tag) => (
               <FilterItem
                 key={tag}
                 id={tag}
@@ -91,8 +133,15 @@ const FilterQueries: FC<Props> = ({
               />
             ))}
           </TagsContainer>
-          <div onClick={onClearFilters}>{t('browser_filters.clear')}</div>
+          {isEmptySearch && (
+            <EmptySearch>
+              {t('browser_filters.empty_search_message')}
+            </EmptySearch>
+          )}
         </DropdownContent>
+        <ClearFilters onClick={onClearFilters}>
+          {t('browser_filters.clear')}
+        </ClearFilters>
       </Dropdown>
     </Container>
   );
