@@ -6,6 +6,7 @@ import React, {
   useEffect,
   useCallback,
 } from 'react';
+import { useTranslation } from 'react-i18next';
 import { ActionButton, Dropdown } from '@keen.io/ui-core';
 import { transparentize } from 'polished';
 import { colors } from '@keen.io/colors';
@@ -20,8 +21,6 @@ import PropertyGroup, { PropertyItem } from '../PropertyGroup';
 import Property from '../Property';
 import EmptySearch from '../EmptySearch';
 import PropertiesTree from '../PropertiesTree';
-
-import text from './text.json';
 
 import { SearchContext } from '../../contexts';
 
@@ -51,6 +50,7 @@ const SearchableProperty: FC<Props> = ({
   onRemove,
   onBlur,
 }) => {
+  const { t } = useTranslation();
   const [editMode, setEditMode] = useState(!property);
   const containerRef = useRef(null);
 
@@ -93,8 +93,10 @@ const SearchableProperty: FC<Props> = ({
           <Property
             property={property}
             editMode={editMode}
-            placeholder={text.placeholder}
-            searchPlaceholder={text.searchPlaceholder}
+            placeholder={t('query_creator_searchable_property.placeholder')}
+            searchPlaceholder={t(
+              'query_creator_searchable_property.search_placeholder'
+            )}
             onEditInputChange={onSearchProperties}
           />
         </PropertyItem>
@@ -111,7 +113,11 @@ const SearchableProperty: FC<Props> = ({
       <Dropdown isOpen={editMode} fullWidth={false}>
         <DropdownContent>
           {isEmptySearch ? (
-            <EmptySearch message={text.emptySearchResults} />
+            <EmptySearch
+              message={t(
+                'query_creator_searchable_property.empty_search_results'
+              )}
+            />
           ) : (
             <PropertiesTree
               expanded={expandTree}

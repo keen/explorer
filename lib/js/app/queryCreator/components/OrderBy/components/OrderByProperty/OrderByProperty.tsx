@@ -8,6 +8,7 @@ import React, {
 } from 'react';
 import { ActionButton, Dropdown } from '@keen.io/ui-core';
 import { transparentize } from 'polished';
+import { useTranslation } from 'react-i18next';
 import { colors } from '@keen.io/colors';
 
 import {
@@ -21,8 +22,6 @@ import Property from '../../../Property';
 import EmptySearch from '../../../EmptySearch';
 import PropertiesTree from '../../../PropertiesTree';
 import DirectionList from '../DirectionList';
-
-import text from './text.json';
 
 import { SearchContext } from '../../../../contexts';
 
@@ -60,6 +59,7 @@ const OrderByProperty: FC<Props> = ({
   onRemove,
   onBlur,
 }) => {
+  const { t } = useTranslation();
   const [editMode, setEditMode] = useState(!property);
   const containerRef = useRef(null);
 
@@ -101,8 +101,10 @@ const OrderByProperty: FC<Props> = ({
           <Property
             property={property}
             editMode={editMode}
-            placeholder={text.placeholder}
-            searchPlaceholder={text.searchPlaceholder}
+            placeholder={t('query_creator_order_by_property.placeholder')}
+            searchPlaceholder={t(
+              'query_creator_order_by_property.search_placeholder'
+            )}
             onEditInputChange={onSearchProperties}
           />
         </PropertyItem>
@@ -126,7 +128,11 @@ const OrderByProperty: FC<Props> = ({
       <Dropdown isOpen={editMode} fullWidth={false}>
         <DropdownContent>
           {isEmptySearch ? (
-            <EmptySearch message={text.emptySearchResults} />
+            <EmptySearch
+              message={t(
+                'query_creator_order_by_property.empty_search_results'
+              )}
+            />
           ) : (
             <PropertiesTree
               expanded={expandTree}

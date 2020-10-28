@@ -6,6 +6,7 @@ import React, {
   useCallback,
   useEffect,
 } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Dropdown } from '@keen.io/ui-core';
 
 import {
@@ -23,7 +24,6 @@ import DropdownList from '../../../DropdownList';
 import DropdownListContainer from '../../../DropdownListContainer';
 
 import { createOptions } from './utils';
-import text from './text.json';
 
 import { DATA_TYPES } from './constants';
 import { SCHEMA_PROPS } from '../../../../constants';
@@ -40,6 +40,7 @@ type Props = {
 };
 
 const PropertyTypeCast: FC<Props> = ({ type, property, onChange }) => {
+  const { t } = useTranslation();
   const [editMode, setEditMode] = useState(false);
   const containerRef = useRef(null);
   const { schema } = useContext(FiltersContext);
@@ -78,7 +79,9 @@ const PropertyTypeCast: FC<Props> = ({ type, property, onChange }) => {
       </DropableContainer>
       <Dropdown isOpen={editMode} fullWidth={false}>
         <DropdownContainer>
-          <WarningMessage>{text.castMessage}</WarningMessage>
+          <WarningMessage>
+            {t('query_creator_property_type_cast.cast_message')}
+          </WarningMessage>
           <DropdownListContainer scrollToActive maxHeight={240}>
             {(activeItemRef) => (
               <DropdownList
@@ -88,7 +91,9 @@ const PropertyTypeCast: FC<Props> = ({ type, property, onChange }) => {
                   <ItemContainer>
                     <span>{label}</span>{' '}
                     {value === schemaType && (
-                      <DefaultLabel>{text.defaultLabel}</DefaultLabel>
+                      <DefaultLabel>
+                        {t('query_creator_property_type_cast.default_label')}
+                      </DefaultLabel>
                     )}
                   </ItemContainer>
                 )}

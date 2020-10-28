@@ -2,7 +2,6 @@ import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 
 import CacheQuery from './CacheQuery';
-import text from './text.json';
 
 test('allows user to enable cache for query', () => {
   const mockFn = jest.fn();
@@ -49,7 +48,7 @@ test('shows cache limit reached information for not cached query', () => {
     />
   );
 
-  expect(screen.getByText(text.queriesLimit)).toBeInTheDocument();
+  expect(screen.getByText('cache_query.queries_limit')).toBeInTheDocument();
 });
 
 test('renders refresh settings when caching is enabled', () => {

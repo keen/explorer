@@ -6,6 +6,7 @@ import React, {
   useCallback,
   useEffect,
 } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Dropdown } from '@keen.io/ui-core';
 
 import { Container, DropdownContent } from './FilterProperty.styles';
@@ -20,8 +21,6 @@ import PropertyTypeCast from '../PropertyTypeCast';
 import { SearchContext } from '../../../../contexts';
 
 import { Property as PropertyType } from '../../../../types';
-
-import text from './text.json';
 
 type Props = {
   /** Property */
@@ -49,6 +48,7 @@ const FilterProperty: FC<Props> = ({
   onCastPropertyType,
   onSearchProperties,
 }) => {
+  const { t } = useTranslation();
   const [editMode, setEditMode] = useState(false);
   const containerRef = useRef(null);
   const { expandTree, searchPropertiesPhrase } = useContext(SearchContext);
@@ -90,8 +90,10 @@ const FilterProperty: FC<Props> = ({
           <Property
             property={property}
             editMode={editMode}
-            placeholder={text.placeholder}
-            searchPlaceholder={text.searchPlaceholder}
+            placeholder={t('query_creator_filter_property.placeholder')}
+            searchPlaceholder={t(
+              'query_creator_filter_property.search_placeholder'
+            )}
             onEditInputChange={onSearchProperties}
           />
         </PropertyItem>
@@ -106,7 +108,9 @@ const FilterProperty: FC<Props> = ({
       <Dropdown isOpen={editMode} fullWidth={false}>
         <DropdownContent>
           {isEmptySearch ? (
-            <EmptySearch message={text.emptySearchResults} />
+            <EmptySearch
+              message={t('query_creator_filter_property.empty_search_results')}
+            />
           ) : (
             <PropertiesTree
               expanded={expandTree}

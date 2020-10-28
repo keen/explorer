@@ -154,6 +154,156 @@
     "empty_search_results": "No property found with this name"
   },
   "query_creator_timeframe": {
-    "label": "Timeframe"
+    "label": "Timeframe",
+    "relative": "Relative",
+    "absolute": "Absolute"
+  },
+  "cache_query": {
+    "refresh_interval": "- Refresh interval",
+    "queries_limit": "Limit reached",
+    "cache": "Cache query"
+  },
+  "limit_tooltip": {
+    "disable_message": "Disable caching for other saved query",
+    "cached_queries": "cached queries",
+    "upgrade_anchor": "Upgrade plan",
+    "upgrade_connector": "or",
+    "limit_reached_message": "You have reached the limit of cached queries for your organization"
+  },
+  "cache_refresh_rate": {
+    "cache_units": "(hours)",
+    "refresh_rate_hint": "Refresh interval can be set from 4 to 48 hours"
+  },
+  "confirm": {
+    "button_label": "Confirm",
+    "cancel_label": "Cancel",
+    "delete_query_title": "Deleting query",
+    "delete_message": "Do you want to permanently delete this query from your project?"
+  },
+  "dataviz": {
+    "no_results": "The results for analysis are empty"
+  },
+  "editor_navigation": {
+    "cached_label": "Cached",
+    "cache_units": "h"
+  },
+  "queries_list": {
+    "name": "Name",
+    "labels": "Labels",
+    "updated": "Updated"
+  },
+  "queries_list_item": {
+      "cached_label": "Cached",
+      "cache_units": "h"
+  },
+  "absolute_timeframe": {
+    "separator": "to"
+  },
+  "query_tag_manager": {
+    "labels": "Labels",
+    "new_tag": "(New label)",
+    "input_placeholder": "Insert item and confirm by Enter"
+  },
+  "absolute_time": {
+    "start_date": "From",
+    "end_date": "To"
+  },
+  "absolute_time_label": {
+    "separator": "to"
+  },
+  "custom_interval": {
+    "main_label": "Every",
+    "unit_placeholder": "Unit placeholder"
+  },
+  "query_creator_filters": {
+    "filters": "Filters"
+  },
+  "query_creator_filter_boolean": {
+    "placeholder": "value"
+  },
+  "query_creator_filter_list_value": {
+    "placeholder": "list items",
+    "input_placeholder": "Insert item and confirm by Enter"
+  },
+  "query_creator_filter_operator": {
+    "placeholder": "operator"
+  },
+  "query_creator_filter_property": {
+    "placeholder": "property",
+    "search_placeholder": "Search property",
+    "empty_search_results": "No property found with this name"
+  },
+  "query_creator_filter_value": {
+    "placeholder": "value"
+  },
+  "query_creator_geo_coordinates": {
+    "lat_label": "Lat:",
+    "long_label": "Long:",
+    "radius_label": "R:",
+    "radius_unit": "mi"
+  },
+  "query_creator_property_type_cast": {
+    "cast_message": "You will map property to the different type, some values may not match.",
+    "default_label": "Default"
+  },
+  "query_creator_funnel_step": {
+    "title": "STEP",
+    "clone": "Clone",
+    "optional_label": "Optional Step",
+    "optional_tooltip": "Following steps will ignore the result of this step and will use the effect of last non-optional step as an input.",
+    "inverted_label": "Inverted Step",
+    "inverted_tooltip": "Excludes events matching this step configuration",
+    "step_label": "Step Name",
+    "first_step_optional_tooltip": "The first step cannot be optional",
+    "first_step_inverted_tooltip": "The first step cannot be inverted"
+  },
+  "query_creator_funnel_steps": {
+    "add_step": "Add step"
+  },
+  "query_creator_group_by": {
+    "title": "Group by"
+  },
+  "query_creator_interval": {
+    "label": "Interval",
+    "standard": "Standard",
+    "custom": "Custom"
+  },
+  "query_creator_limit": {
+    "label": "Limit results to",
+    "placeholder": "Limit to"
+  },
+  "query_creator_order_by": {
+    "title": "Order by",
+    "order_by_hint": "You must specify groupBy settings to use orderBy"
+  },
+  "query_creator_order_by_property": {
+    "placeholder": "property",
+    "search_placeholder": "Search property",
+    "empty_search_results": "No property found with this name"
+  },
+  "query_creator_percentile": {
+    "label": "Percentile",
+    "placeholder": "Eg. 75",
+    "message": "Percentile value has to be from range 0-100"
+  },
+  "query_creator_relative_time": {
+    "relativity_title": "Include current",
+    "relativity_title_for_today": "Include Today",
+    "time_label": "Last",
+    "units_placeholder": "Select"
+  },
+  "query_creator_relative_time_label": {
+    "label": "Last",
+    "today_includes": "(Includes today)",
+    "relativity_title": "Includes current"
+  },
+  "query_creator_searchable_property": {
+    "placeholder": "property",
+    "search_placeholder": "Search property",
+    "empty_search_results": "No property found with this name"
+  },
+  "query_creator_timezone": {
+    "placeholder": "Select timezone",
+    "label": "Timezone"
   }
 }

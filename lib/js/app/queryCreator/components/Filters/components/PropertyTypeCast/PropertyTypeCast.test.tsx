@@ -3,7 +3,6 @@ import { render as rtlRender, fireEvent } from '@testing-library/react';
 
 import PropertyTypeCast from './PropertyTypeCast';
 import FiltersContext from '../../FiltersContext';
-import text from './text.json';
 
 import { createTree } from '../../../../utils';
 
@@ -57,5 +56,7 @@ test('shows message about type cast consistency', () => {
   const propertyTypes = getByTestId('property-type-cast');
   fireEvent.click(propertyTypes);
 
-  expect(getByText(text.castMessage)).toBeInTheDocument();
+  expect(
+    getByText('query_creator_property_type_cast.cast_message')
+  ).toBeInTheDocument();
 });

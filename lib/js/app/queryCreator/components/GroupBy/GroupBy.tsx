@@ -10,6 +10,7 @@ import React, {
 import Sortable from 'sortablejs';
 import { useSelector, useDispatch } from 'react-redux';
 import shallowEqual from 'shallowequal';
+import { useTranslation } from 'react-i18next';
 
 import { ActionButton } from '@keen.io/ui-core';
 import { useSearch } from '@keen.io/react-hooks';
@@ -44,14 +45,13 @@ import { DRAG_DELAY, DRAG_ANIMATION_TIME } from './constants';
 
 import { AppState } from '../../types';
 
-import text from './text.json';
-
 type Props = {
   /** Collection name */
   collection: string;
 };
 
 const GroupBy: FC<Props> = ({ collection }) => {
+  const { t } = useTranslation();
   const [propertiesTree, setPropertiesTree] = useState(null);
   const [searchPropertiesPhrase, setSearchPhrase] = useState(null);
   const [expandTree, setTreeExpand] = useState(false);
@@ -182,7 +182,9 @@ const GroupBy: FC<Props> = ({ collection }) => {
 
   return (
     <div>
-      <Title isDisabled={!eventCollection}>{text.title}</Title>
+      <Title isDisabled={!eventCollection}>
+        {t('query_creator_group_by.title')}
+      </Title>
       <Section>
         <SearchContext.Provider value={{ expandTree, searchPropertiesPhrase }}>
           <SortableContainer ref={sortableRef}>

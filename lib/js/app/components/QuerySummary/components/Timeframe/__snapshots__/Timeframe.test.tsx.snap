@@ -23,7 +23,7 @@ exports[`should render absolute timeframe 1`] = `
     <span
       class="c1"
     >
-      to
+      absolute_timeframe.separator
     </span>
     <span>
       2020-09-30 00:00

@@ -1,5 +1,6 @@
 import React, { FC, useCallback, useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import { Checkbox } from '@keen.io/ui-core';
 import { Icon } from '@keen.io/icons';
 import { colors } from '@keen.io/colors';
@@ -19,7 +20,6 @@ import CacheRefreshRate from '../CacheRefreshRate';
 
 import { TOOLTIP_MOTION } from '../../constants';
 import { CHECKBOX_ID, REFRESH_MINIMUM, REFRESH_MAXIMUM } from './constants';
-import text from './text.json';
 
 type Props = {
   /** Query cache state */
@@ -41,6 +41,7 @@ const CacheQuery: FC<Props> = ({
   onRefreshRateChange,
   refreshRate,
 }) => {
+  const { t } = useTranslation();
   const [tooltip, setTooltip] = useState({
     visible: false,
   });
@@ -61,12 +62,14 @@ const CacheQuery: FC<Props> = ({
           onChange={() => cacheChangeHandler()}
         />
         <CacheLabel disabled={isLimited && !isCached}>
-          <label htmlFor={CHECKBOX_ID}>{text.cache}</label>
+          <label htmlFor={CHECKBOX_ID}>{t('cache_query.cache')}</label>
         </CacheLabel>
       </CacheSwitch>
       {isCached && (
         <>
-          <RefreshFrequency>{text.refreshInterval}</RefreshFrequency>
+          <RefreshFrequency>
+            {t('cache_query.refresh_interval')}
+          </RefreshFrequency>
           <CacheRefreshRate
             refreshRate={refreshRate}
             minimumRate={REFRESH_MINIMUM}
@@ -77,7 +80,7 @@ const CacheQuery: FC<Props> = ({
       )}
       {isLimited && !isCached && (
         <CacheLimit>
-          <span>{text.queriesLimit}</span>
+          <span>{t('cache_query.queries_limit')}</span>
           <LimitReached
             data-testid="cache-limit"
             onMouseEnter={() => setTooltip({ visible: true })}
