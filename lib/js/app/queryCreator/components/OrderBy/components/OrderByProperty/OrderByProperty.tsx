@@ -45,6 +45,8 @@ type Props = {
   onSearchProperties: (e: React.ChangeEvent<HTMLInputElement>) => void;
   /** Remove event handler */
   onRemove: () => void;
+  /** Blur event handler */
+  onBlur: () => void;
 };
 
 const OrderByProperty: FC<Props> = ({
@@ -56,6 +58,7 @@ const OrderByProperty: FC<Props> = ({
   onSelectProperty,
   onSearchProperties,
   onRemove,
+  onBlur,
 }) => {
   const [editMode, setEditMode] = useState(!property);
   const containerRef = useRef(null);
@@ -73,6 +76,7 @@ const OrderByProperty: FC<Props> = ({
         !containerRef.current.contains(e.target)
       ) {
         setEditMode(false);
+        if (onBlur) onBlur();
       }
     },
     [editMode, containerRef]

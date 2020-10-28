@@ -17,14 +17,9 @@ import {
 import { LimitTooltip } from './components';
 import CacheRefreshRate from '../CacheRefreshRate';
 
+import { TOOLTIP_MOTION } from '../../constants';
 import { CHECKBOX_ID, REFRESH_MINIMUM, REFRESH_MAXIMUM } from './constants';
 import text from './text.json';
-
-const tooltipMotion = {
-  initial: { opacity: 0 },
-  animate: { opacity: 1 },
-  exit: { opacity: 0 },
-};
 
 type Props = {
   /** Query cache state */
@@ -91,7 +86,7 @@ const CacheQuery: FC<Props> = ({
             <Icon type="info" fill={colors.blue['500']} />
             <AnimatePresence>
               {tooltip.visible && (
-                <TooltipMotion {...tooltipMotion}>
+                <TooltipMotion {...TOOLTIP_MOTION}>
                   <LimitTooltip />
                 </TooltipMotion>
               )}

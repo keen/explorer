@@ -201,6 +201,9 @@ const GroupBy: FC<Props> = ({ collection }) => {
                     clearSearchHandler();
                     groupDispatcher(removeGroup(id));
                   }}
+                  onBlur={() => {
+                    if (!property) groupDispatcher(removeGroup(id));
+                  }}
                 />
               </GroupSettings>
             ))}

@@ -1,6 +1,8 @@
 import React, { FC, useRef, useState, useEffect, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
-import { Button, CircleButton, Dropdown } from '@keen.io/ui-core';
+import { useTranslation } from 'react-i18next';
+import { AnimatePresence } from 'framer-motion';
+import { Button, CircleButton, Dropdown, Tooltip } from '@keen.io/ui-core';
 import { Icon } from '@keen.io/icons';
 
 import {
@@ -9,11 +11,14 @@ import {
   BasicActions,
   ActionsContainer,
   ContextActions,
+  TooltipContent,
+  TooltipMotion,
 } from './BrowserQueryMenu.styles';
-import text from './text.json';
 
 import ActionsMenu from '../ActionsMenu';
 import { showQuerySettingsModal, SettingsModalSource } from '../../modules/app';
+
+import { TOOLTIP_MOTION } from '../../constants';
 
 const actionsDropdownMotion = {
   initial: { opacity: 0, top: 20, left: 37, translateX: '-100%' },
@@ -30,9 +35,12 @@ type Props = {
 
 const BrowserQueryMenu: FC<Props> = ({ onEditQuery, onRemoveQuery }) => {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
   const actionsContainer = useRef(null);
 
   const [actionsMenu, setActionsMenuVisibility] = useState(false);
+  const [actionsTooltip, showActionsTooltip] = useState(false);
+  const [settingsTooltip, showSettingsTooltip] = useState(false);
   const outsideActionsMenuClick = useCallback(
     (e) => {
       if (
@@ -58,25 +66,52 @@ const BrowserQueryMenu: FC<Props> = ({ onEditQuery, onRemoveQuery }) => {
     <Container>
       <BasicActions>
         <Button variant="secondary" onClick={onEditQuery}>
-          {text.editQuery}
+          {t('browser_query_menu.edit_query')}
         </Button>
         <ButtonWrapper marginLeft={10}>
           <Button variant="danger" style="outline" onClick={onRemoveQuery}>
-            {text.removeQuery}
+            {t('browser_query_menu.remove_query')}
           </Button>
         </ButtonWrapper>
       </BasicActions>
       <ContextActions data-testid="context-buttons">
-        <CircleButton
-          icon={<Icon type="settings" />}
-          onClick={() =>
-            dispatch(showQuerySettingsModal(SettingsModalSource.QUERY_SETTINGS))
-          }
-        />
-        <ActionsContainer ref={actionsContainer} marginLeft={10}>
+        <ActionsContainer
+          onMouseEnter={() => showSettingsTooltip(true)}
+          onMouseLeave={() => showSettingsTooltip(false)}
+        >
+          <CircleButton
+            icon={<Icon type="settings" />}
+            onClick={() => {
+              showSettingsTooltip(false);
+              dispatch(
+                showQuerySettingsModal(SettingsModalSource.QUERY_SETTINGS)
+              );
+            }}
+          />
+          <AnimatePresence>
+            {settingsTooltip && (
+              <TooltipMotion {...TOOLTIP_MOTION}>
+                <Tooltip hasArrow={false} mode="light">
+                  <TooltipContent>
+                    {t('browser_query_menu.settings_tooltip')}
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipMotion>
+            )}
+          </AnimatePresence>
+        </ActionsContainer>
+        <ActionsContainer
+          ref={actionsContainer}
+          marginLeft={10}
+          onMouseEnter={() => showActionsTooltip(true)}
+          onMouseLeave={() => showActionsTooltip(false)}
+        >
           <CircleButton
             icon={<Icon type="actions" />}
-            onClick={() => setActionsMenuVisibility(!actionsMenu)}
+            onClick={() => {
+              showActionsTooltip(false);
+              setActionsMenuVisibility(!actionsMenu);
+            }}
           />
           <Dropdown
             isOpen={actionsMenu}
@@ -92,6 +127,17 @@ const BrowserQueryMenu: FC<Props> = ({ onEditQuery, onRemoveQuery }) => {
               }}
             />
           </Dropdown>
+          <AnimatePresence>
+            {actionsTooltip && (
+              <TooltipMotion {...TOOLTIP_MOTION}>
+                <Tooltip hasArrow={false} mode="light">
+                  <TooltipContent>
+                    {t('browser_query_menu.actions_tooltip')}
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipMotion>
+            )}
+          </AnimatePresence>
         </ActionsContainer>
       </ContextActions>
     </Container>

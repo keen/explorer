@@ -10,7 +10,11 @@ import { Container, PickerContainer } from './EditorVisualization.styles';
 import { getDefaultSettings } from './utils';
 
 import QueryVisualization from '../QueryVisualization';
-import { getVisualization, setVisualization } from '../../modules/app';
+import {
+  getVisualization,
+  setVisualization,
+  updateVisualizationType,
+} from '../../modules/app';
 
 import { AppState } from '../../modules/types';
 
@@ -27,17 +31,7 @@ const EditorVisualization: FC<Props> = ({ query, queryResults }) => {
 
   const { widget: widgetType, chartSettings, widgetSettings } = useSelector(
     (state: AppState) => {
-      const { type, ...restSettings } = getVisualization(state);
-      let widget = type;
-      if (widget === null) {
-        const [defaultWidget] = widgets;
-        widget = defaultWidget;
-        return {
-          widget,
-          ...getDefaultSettings(defaultWidget),
-        };
-      }
-
+      const { type: widget, ...restSettings } = getVisualization(state);
       return {
         widget,
         ...restSettings,
@@ -52,6 +46,7 @@ const EditorVisualization: FC<Props> = ({ query, queryResults }) => {
         defaultWidget
       );
       dispatch(setVisualization(defaultWidget, chartSettings, widgetSettings));
+      dispatch(updateVisualizationType(defaultWidget));
     }
   }, [widgets, widgetType]);
 
@@ -64,11 +59,12 @@ const EditorVisualization: FC<Props> = ({ query, queryResults }) => {
           chartSettings={chartSettings}
           widgetSettings={widgetSettings}
           disabledWidgetOptions={getSimpleOptionsWidgets(query)}
-          onUpdateSettings={(widgetType, chartSettings, widgetSettings) =>
+          onUpdateSettings={(widgetType, chartSettings, widgetSettings) => {
             dispatch(
               setVisualization(widgetType, chartSettings, widgetSettings)
-            )
-          }
+            );
+            dispatch(updateVisualizationType(widgetType));
+          }}
         />
       </PickerContainer>
       {widgets.includes(widgetType) && (

@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 
 import {
   Card,
@@ -7,8 +8,8 @@ import {
   QueryTitle,
   VisualizationWrapper,
 } from './BrowserPreview.styles';
-import text from './text.json';
 
+import AutorunQuery from '../AutorunQuery';
 import BrowserQueryMenu from '../BrowserQueryMenu';
 import Heading from '../Heading';
 import QueryVisualization from '../QueryVisualization';
@@ -23,6 +24,11 @@ import {
   getQueryPerformState,
   SavedQueryListItem,
 } from '../../modules/queries';
+import {
+  setQueryAutorun,
+  getQueryAutorun,
+  getVisualization,
+} from '../../modules/app';
 
 type Props = {
   /** Current active query */
@@ -39,14 +45,23 @@ const BrowserPreview: FC<Props> = ({
   onRunQuery,
 }) => {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
+
   const queryResults = useSelector(getQueryResults);
   const isQueryLoading = useSelector(getQueryPerformState);
   const isQueryLimitReached = useSelector(getQueryLimitReached);
+  const autorunQuery = useSelector(getQueryAutorun);
+  const { chartSettings } = useSelector(getVisualization);
 
   return (
     <>
       <HeaderContainer>
-        <Heading>{text.title}</Heading>
+        <Heading>{t('browser_preview.title')}</Heading>
+        <AutorunQuery
+          autorun={autorunQuery}
+          label={t('browser_preview.autorun_query_label')}
+          onToggle={(autorun) => dispatch(setQueryAutorun(autorun))}
+        />
       </HeaderContainer>
       <Card>
         {isQueryLimitReached ? (
@@ -81,7 +96,10 @@ const BrowserPreview: FC<Props> = ({
               onRemoveQuery={() => dispatch(deleteQuery(currentQuery.name))}
               onEditQuery={() => onEditQuery(currentQuery.name)}
             />
-            <QuerySummary querySettings={currentQuery} />
+            <QuerySummary
+              querySettings={currentQuery}
+              chartSettings={chartSettings}
+            />
           </>
         )}
       </Card>

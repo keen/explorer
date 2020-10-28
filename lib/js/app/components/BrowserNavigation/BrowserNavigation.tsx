@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import { useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { transparentize } from 'polished';
 import { Button } from '@keen.io/ui-core';
 import { colors } from '@keen.io/colors';
@@ -9,9 +10,9 @@ import {
   Title,
   Actions,
   Settings,
+  Socket,
   PulseMotion,
 } from './BrowserNavigation.styles';
-import text from './text.json';
 
 import { createNewQuery } from '../../modules/app';
 
@@ -25,21 +26,25 @@ const pulseMotion = {
 type Props = {
   /** Pulse button to attract user attention */
   attractNewQueryButton: boolean;
+  /** React children nodes */
+  children: React.ReactNode;
 };
 
-const BrowserNavigation: FC<Props> = ({ attractNewQueryButton }) => {
+const BrowserNavigation: FC<Props> = ({ attractNewQueryButton, children }) => {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
   const pulseButtonProps = attractNewQueryButton ? pulseMotion : {};
 
   return (
     <Container>
       <Settings>
-        <Title>{text.savedQueries}</Title>
+        <Title>{t('browser_navigation.title')}</Title>
+        <Socket>{children}</Socket>
       </Settings>
       <Actions>
         <PulseMotion {...pulseButtonProps}>
           <Button variant="success" onClick={() => dispatch(createNewQuery())}>
-            {text.newQueryButton}
+            {t('browser_navigation.new_query_button')}
           </Button>
         </PulseMotion>
       </Actions>

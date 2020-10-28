@@ -1,4 +1,5 @@
 import { PickerWidgets } from '@keen.io/widget-picker';
+import { Theme } from '@keen.io/charts';
 
 export type Analysis =
   | 'sum'
@@ -49,11 +50,23 @@ export type ProjectSettings = {
   writeKey: string;
 };
 
+export type DatavizSettings = {
+  theme?: Theme;
+};
+
+export type TranslationsSettings = {
+  backend?: {
+    loadPath?: string;
+  };
+};
+
 export type Options = {
   container: string;
   modalContainer: string;
   initialView: 'browser' | 'editor';
   upgradeSubscriptionUrl?: string;
+  dataviz?: DatavizSettings;
+  translations?: TranslationsSettings;
   keenAnalysis: {
     config: ProjectSettings;
     instance: any;

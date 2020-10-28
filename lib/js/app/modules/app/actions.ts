@@ -36,6 +36,10 @@ import {
   DOWNLOAD_CODE_SNIPPET,
   SHOW_EMAIL_EXTRACTION_MODAL,
   HIDE_EMAIL_EXTRACTION_MODAL,
+  COPY_API_RESOURCE_URL,
+  SET_QUERY_AUTORUN,
+  UPDATE_CHART_SETTINGS,
+  UPDATE_VISUALIZATION,
 } from './constants';
 
 import {
@@ -48,6 +52,11 @@ import {
 export const appStart = (initialView: ViewMode): AppActions => ({
   type: APP_START,
   payload: { initialView },
+});
+
+export const setQueryAutorun = (autorun: boolean): AppActions => ({
+  type: SET_QUERY_AUTORUN,
+  payload: { autorun },
 });
 
 export const resizeScreen = (width: number, height: number): AppActions => ({
@@ -210,5 +219,30 @@ export const downloadCodeSnippet = (
   payload: {
     projectId,
     readKey,
+  },
+});
+
+export const updateChartSettings = (
+  chartSettings: Record<string, any>
+): AppActions => ({
+  type: UPDATE_CHART_SETTINGS,
+  payload: {
+    chartSettings,
+  },
+});
+
+export const updateVisualizationType = (type: PickerWidgets): AppActions => ({
+  type: UPDATE_VISUALIZATION,
+  payload: {
+    type,
+  },
+});
+
+export const copyApiResourceUrl = (
+  config: Record<string, any>
+): AppActions => ({
+  type: COPY_API_RESOURCE_URL,
+  payload: {
+    config,
   },
 });

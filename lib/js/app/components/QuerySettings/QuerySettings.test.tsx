@@ -9,7 +9,6 @@ import { SettingsModalSource } from '../../modules/app';
 import { ERRORS } from '../../constants';
 
 import QuerySettings from './QuerySettings';
-import text from './text.json';
 
 const render = (storeState: any = {}, overProps: any = {}) => {
   const mockStore = configureStore([]);
@@ -71,7 +70,7 @@ test('allows user to save query', () => {
   const input = getByTestId('query-name-input');
   fireEvent.change(input, { target: { value: 'Last month purchases' } });
 
-  const button = getByText(text.saveButton);
+  const button = getByText('query_settings.save_query_button');
   fireEvent.click(button);
 
   expect(props.onSave).toHaveBeenCalledWith({
@@ -88,7 +87,7 @@ test('allows user to close query settings', () => {
     wrapper: { getByText },
   } = render();
 
-  const button = getByText(text.closeButton);
+  const button = getByText('query_settings.close_button');
   fireEvent.click(button);
 
   expect(props.onClose).toHaveBeenCalled();
@@ -112,10 +111,12 @@ test('renders query uniqueness name error', () => {
   const input = getByTestId('query-name-input');
   fireEvent.change(input, { target: { value: 'revenue' } });
 
-  const button = getByText(text.saveButton);
+  const button = getByText('query_settings.save_query_button');
   fireEvent.click(button);
 
-  expect(getByText(text.queryUniqueNameError)).toBeInTheDocument();
+  expect(
+    getByText('query_settings.query_unique_name_error')
+  ).toBeInTheDocument();
 });
 
 test('renders query name error', () => {
@@ -123,10 +124,10 @@ test('renders query name error', () => {
     wrapper: { getByText },
   } = render();
 
-  const button = getByText(text.saveButton);
+  const button = getByText('query_settings.save_query_button');
   fireEvent.click(button);
 
-  expect(getByText(text.queryNameError)).toBeInTheDocument();
+  expect(getByText('query_settings.query_name_error')).toBeInTheDocument();
 });
 
 test('renders notice about naming save query', () => {
@@ -134,7 +135,7 @@ test('renders notice about naming save query', () => {
     wrapper: { getByText },
   } = render();
 
-  expect(getByText(text.newQueryNotice)).toBeInTheDocument();
+  expect(getByText('query_settings.new_query_notice')).toBeInTheDocument();
 });
 
 test('do not renders notice about naming save query', () => {
@@ -146,7 +147,7 @@ test('do not renders notice about naming save query', () => {
     },
   };
   render(storeState);
-  const queryNotice = screen.queryByText(text.newQueryNotice);
+  const queryNotice = screen.queryByText('query_settings.new_query_notice');
 
   expect(queryNotice).toBeNull();
 });
@@ -188,5 +189,5 @@ test('renders "Upgrade plan" anchor for cached queries limit error', () => {
     wrapper: { getByText },
   } = render(storeState);
 
-  expect(getByText(text.upgradeAnchor)).toBeInTheDocument();
+  expect(getByText('query_settings.upgrade_anchor')).toBeInTheDocument();
 });

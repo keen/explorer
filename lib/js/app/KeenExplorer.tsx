@@ -13,6 +13,7 @@ import KeenAnalysis from 'keen-analysis';
 
 import rootReducer from './rootReducer';
 import rootSaga from './rootSaga';
+import createI18n from './i18n';
 
 import App from './components/App';
 import { AppContext } from './contexts';
@@ -26,11 +27,19 @@ import { SHOW_TOAST_NOTIFICATION_EVENT, PUBSUB_CONTEXT } from './constants';
 
 export class KeenExplorer {
   constructor(props: Options) {
-    const { keenAnalysis, upgradeSubscriptionUrl, modalContainer } = props;
+    const {
+      keenAnalysis,
+      upgradeSubscriptionUrl,
+      modalContainer,
+      dataviz,
+      translations: translationSettings,
+    } = props;
     const keenAnalysisClient =
       keenAnalysis.instance || new KeenAnalysis(keenAnalysis.config);
 
     const notificationPubSub = new PubSub();
+    createI18n(translationSettings);
+
     const sagaMiddleware = createSagaMiddleware({
       context: {
         keenClient: keenAnalysisClient,
@@ -65,6 +74,7 @@ export class KeenExplorer {
               modalContainer,
               upgradeSubscriptionUrl,
               notificationPubSub,
+              datavizSettings: dataviz,
             }}
           >
             <ToastProvider>

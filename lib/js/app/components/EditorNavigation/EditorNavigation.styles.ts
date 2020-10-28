@@ -3,6 +3,7 @@ import { position, PositionProps } from 'styled-system';
 import { transparentize } from 'polished';
 import { motion } from 'framer-motion';
 import { colors } from '@keen.io/colors';
+import { UI_LAYERS } from '@keen.io/ui-core';
 
 export const Container = styled.div`
   display: flex;
@@ -53,15 +54,17 @@ export const Menu = styled.div`
 
 export const TooltipMotion = styled(motion.div)`
   position: absolute;
-  left: 50%;
+  right: 0;
   top: 100%;
   transform: translateY(4px);
+  z-index: ${UI_LAYERS.tooltip};
 `;
 
 export const TooltipContent = styled.div`
   font-family: 'Lato Regular', sans-serif;
   font-size: 14px;
   line-height: 17px;
+  white-space: nowrap;
 
   color: ${colors.black[500]};
 `;

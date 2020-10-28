@@ -44,7 +44,7 @@ const render = (overProps: any = {}) => {
 
 test('allows user to remove filter', () => {
   const filter = {
-    propertyName: undefined,
+    propertyName: 'id',
     propertyType: undefined,
     propertyValue: undefined,
     operator: undefined,
@@ -57,6 +57,25 @@ test('allows user to remove filter', () => {
 
   const button = getByTestId('action-button');
   fireEvent.click(button);
+
+  expect(props.onRemove).toHaveBeenCalled();
+});
+
+test('do not allows user to create empty filter', () => {
+  const filter = {
+    propertyName: undefined,
+    propertyType: undefined,
+    propertyValue: undefined,
+    operator: undefined,
+  };
+
+  const {
+    wrapper: { getByTestId },
+    props,
+  } = render({ filter });
+
+  const element = getByTestId('filter-item');
+  fireEvent.click(element);
 
   expect(props.onRemove).toHaveBeenCalled();
 });

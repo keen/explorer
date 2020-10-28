@@ -33,6 +33,7 @@ import { filterSchema, createListFromSchema } from './utils';
 import { setOrderBy, getGroupBy, getOrderBy } from '../../modules/query';
 import { getCollectionSchema } from '../../modules/events';
 
+import { TOOLTIP_MOTION } from '../../constants';
 import { DRAG_ANIMATION_TIME, DRAG_DELAY } from './constants';
 
 import { AppState, OrderBy as OrderBySettings } from '../../types';
@@ -43,12 +44,6 @@ import text from './text.json';
 type Props = {
   /** Collection name */
   collection: string;
-};
-
-const tooltipMotion = {
-  initial: { opacity: 0 },
-  animate: { opacity: 1 },
-  exit: { opacity: 0 },
 };
 
 const OrderBy: FC<Props> = ({ collection }) => {
@@ -224,6 +219,9 @@ const OrderBy: FC<Props> = ({ collection }) => {
                       updateOrderBy(orderSettings as OrderBySettings, id);
                     }}
                     onSearchProperties={searchHandler}
+                    onBlur={() => {
+                      if (!propertyName) removeOrderBy(id);
+                    }}
                     onRemove={() => {
                       clearSearchHandler();
                       removeOrderBy(id);
@@ -250,7 +248,7 @@ const OrderBy: FC<Props> = ({ collection }) => {
         {!showOrderOptions && (
           <AnimatePresence>
             {hint && (
-              <TooltipMotion {...tooltipMotion} data-testid="orderby-hint">
+              <TooltipMotion {...TOOLTIP_MOTION} data-testid="orderby-hint">
                 <Tooltip hasArrow={false} mode="dark">
                   <TooltipContent>{text.orderByHint}</TooltipContent>
                 </Tooltip>

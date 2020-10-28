@@ -20,6 +20,11 @@ const props = {
 const mockStore = configureStore([]);
 const state = {
   steps: [],
+  events: {
+    collections: [],
+    loadingSchemas: [],
+    schemas: {},
+  },
 };
 
 const store = mockStore({ ...state });
@@ -79,4 +84,26 @@ test('calls "setDetailsVisible" handler', () => {
   fireEvent.click(stepBar);
 
   expect(mockFn).toHaveBeenCalled();
+});
+
+test('calls "onLabelChange" handler', () => {
+  const mockFn = jest.fn();
+  const stepLabel = 'stepLabel';
+  const { container } = render(
+    <Provider store={store}>
+      <FunnelStep
+        {...props}
+        detailsVisible
+        onRemove={jest.fn()}
+        onClone={jest.fn()}
+        setDetailsVisible={jest.fn()}
+        onLabelChange={mockFn}
+      />
+    </Provider>
+  );
+
+  const label = container.querySelector(`#stepName-${props.id}-${props.index}`);
+  fireEvent.change(label, { target: { value: stepLabel } });
+
+  expect(mockFn).toHaveBeenCalledWith(stepLabel, props.index);
 });

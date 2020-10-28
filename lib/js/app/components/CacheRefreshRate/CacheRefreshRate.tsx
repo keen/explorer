@@ -11,13 +11,8 @@ import {
 } from './CacheRefreshRate.styles';
 import text from './text.json';
 
+import { TOOLTIP_MOTION } from '../../constants';
 import { HIDE_HINT_TIME } from './constants';
-
-const tooltipMotion = {
-  initial: { opacity: 0 },
-  animate: { opacity: 1 },
-  exit: { opacity: 0 },
-};
 
 type Props = {
   /** Refresh rate value */
@@ -78,7 +73,7 @@ const CacheRefreshRate: FC<Props> = ({
       <Units>{text.cacheUnits}</Units>
       <AnimatePresence>
         {showHint && (
-          <TooltipMotion {...tooltipMotion} data-testid="refresh-rate-hint">
+          <TooltipMotion {...TOOLTIP_MOTION} data-testid="refresh-rate-hint">
             <Tooltip hasArrow={false} mode="dark">
               <TooltipContent>{text.refreshRateHint}</TooltipContent>
             </Tooltip>

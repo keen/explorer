@@ -33,6 +33,10 @@ import {
   DOWNLOAD_CODE_SNIPPET,
   SHOW_EMAIL_EXTRACTION_MODAL,
   HIDE_EMAIL_EXTRACTION_MODAL,
+  COPY_API_RESOURCE_URL,
+  SET_QUERY_AUTORUN,
+  UPDATE_CHART_SETTINGS,
+  UPDATE_VISUALIZATION,
 } from './constants';
 
 export type Confirmation = 'delete';
@@ -70,13 +74,21 @@ export type ReducerState = {
     chartSettings: ChartSettings;
     widgetSettings: WidgetSettings;
   };
+  autorunQuery: boolean;
 };
 
-export interface ShowEmailExtractionModalction {
+export interface SetQueryAutorunAction {
+  type: typeof SET_QUERY_AUTORUN;
+  payload: {
+    autorun: boolean;
+  };
+}
+
+export interface ShowEmailExtractionModalAction {
   type: typeof SHOW_EMAIL_EXTRACTION_MODAL;
 }
 
-export interface HideEmailExtractionModalction {
+export interface HideEmailExtractionModalAction {
   type: typeof HIDE_EMAIL_EXTRACTION_MODAL;
 }
 
@@ -220,6 +232,26 @@ export interface DownloadCodeSnippetAction {
   };
 }
 
+export interface UpdateChartSettingsAction {
+  type: typeof UPDATE_CHART_SETTINGS;
+  payload: {
+    chartSettings: Record<string, any>;
+  };
+}
+
+export interface UpdateVisualizationTypeAction {
+  type: typeof UPDATE_VISUALIZATION;
+  payload: {
+    type: PickerWidgets;
+  };
+}
+export interface CopyApiResourceUrlAction {
+  type: typeof COPY_API_RESOURCE_URL;
+  payload: {
+    config: Record<string, any>;
+  };
+}
+
 export type AppActions =
   | AppStartAction
   | ResizeScreenAction
@@ -248,5 +280,9 @@ export type AppActions =
   | DownloadCodeSnippetAction
   | SelectFirstSavedQueryAction
   | SelectFirstSavedQueryAction
-  | ShowEmailExtractionModalction
-  | HideEmailExtractionModalction;
+  | ShowEmailExtractionModalAction
+  | HideEmailExtractionModalAction
+  | SetQueryAutorunAction
+  | UpdateChartSettingsAction
+  | UpdateVisualizationTypeAction
+  | CopyApiResourceUrlAction;

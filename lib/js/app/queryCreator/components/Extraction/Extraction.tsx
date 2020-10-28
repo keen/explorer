@@ -22,18 +22,13 @@ import {
   getExtractionPropertyNames,
 } from '../../modules/query';
 
+import { TOOLTIP_MOTION } from '../../constants';
 import {
   HINT_MARKUP,
   DEFAULT_LIMIT,
   PREVIEW_EVENTS_LIMIT,
   HIDE_TIME,
 } from './constants';
-
-const tooltipMotion = {
-  initial: { opacity: 0 },
-  animate: { opacity: 1 },
-  exit: { opacity: 0 },
-};
 
 type Props = {
   /** Events collection identifer */
@@ -93,7 +88,7 @@ const Extraction: FC<Props> = ({ collection }) => {
           <AnimatePresence>
             {showLimitHint && (
               <TooltipMotion
-                {...tooltipMotion}
+                {...TOOLTIP_MOTION}
                 data-testid="extraction-limit-hint"
               >
                 <Tooltip hasArrow={false} mode="dark">

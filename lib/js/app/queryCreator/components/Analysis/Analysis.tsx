@@ -6,6 +6,7 @@ import React, {
   useCallback,
   useMemo,
 } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Dropdown, ScrollWrapper, Tooltip } from '@keen.io/ui-core';
 
 import { ListItem } from './components';
@@ -20,7 +21,6 @@ import {
 import Title from '../Title';
 import DropableContainer from '../DropableContainer';
 
-import text from './text.json';
 import { transformName } from './utils';
 
 import { Analysis as AnalysisType } from '../../../types';
@@ -42,6 +42,7 @@ const hintMotion = {
 };
 
 const Analysis: FC<Props> = ({ analysis, onChange }) => {
+  const { t } = useTranslation();
   const [isOpen, setOpen] = useState(false);
   const [selectionIndex, setIndex] = useState<number>(null);
   const [hint, showHint] = useState(false);
@@ -129,12 +130,15 @@ const Analysis: FC<Props> = ({ analysis, onChange }) => {
 
   return (
     <Container>
-      <Title onClick={() => setOpen(true)}>{text.label}</Title>
+      <Title onClick={() => setOpen(true)}>
+        {t('query_creator_analysis.label')}
+      </Title>
       <DropableContainer
         onClick={() => !isOpen && setOpen(true)}
-        placeholder={text.placeholder}
+        placeholder={t('query_creator_analysis.placeholder')}
         isActive={isOpen}
         value={analysis}
+        dropIndicator
         onDefocus={() => {
           setOpen(false);
         }}

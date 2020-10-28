@@ -1,8 +1,8 @@
 import React, { FC, useState, useRef, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Dropdown } from '@keen.io/ui-core';
 
 import { Container, SettingsContainer } from './Timeframe.styles';
-import text from './text.json';
 
 import Title from '../Title';
 import Tabs from '../Tabs';
@@ -48,6 +48,7 @@ const Timeframe: FC<Props> = ({
   value,
   variant = 'primary',
 }) => {
+  const { t } = useTranslation();
   const [isOpen, setOpen] = useState(false);
   const containerRef = useRef(null);
 
@@ -61,12 +62,15 @@ const Timeframe: FC<Props> = ({
 
   return (
     <Container ref={containerRef}>
-      <Title onClick={() => !isOpen && setOpen(true)}>{text.label}</Title>
+      <Title onClick={() => !isOpen && setOpen(true)}>
+        {t('query_creator_timeframe.label')}
+      </Title>
       <DropableContainer
         variant={variant}
         onClick={() => !isOpen && setOpen(true)}
         isActive={isOpen}
         value={value}
+        dropIndicator
         onDefocus={(event: any) => {
           const path = getEventPath(event);
           if (

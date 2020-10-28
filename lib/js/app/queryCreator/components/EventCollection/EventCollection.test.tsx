@@ -4,7 +4,6 @@ import { render as rtlRender, fireEvent, act } from '@testing-library/react';
 import configureStore from 'redux-mock-store';
 
 import EventCollection from './EventCollection';
-import text from './text.json';
 
 import { KEYBOARD_KEYS } from '../../constants';
 
@@ -117,5 +116,7 @@ test('renders empty search results', () => {
     jest.runAllTimers();
   });
 
-  expect(getByText(text.emptySearchResults)).toBeInTheDocument();
+  expect(
+    getByText('query_creator_event_collection.empty_search_results')
+  ).toBeInTheDocument();
 });

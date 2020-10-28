@@ -71,7 +71,7 @@ exports[`should render query summary 1`] = `
           <th
             class="c3 c4"
           >
-            Analysis:
+            query_summary.analysis
           </th>
           <td
             class="c5 c6"
@@ -85,7 +85,7 @@ exports[`should render query summary 1`] = `
           <th
             class="c3 c4"
           >
-            Event Stream:
+            query_summary.event_stream
           </th>
           <td
             class="c5 c6"
@@ -99,7 +99,7 @@ exports[`should render query summary 1`] = `
           <th
             class="c3 c4"
           >
-            Target Property:
+            query_summary.target_property
           </th>
           <td
             class="c5 c6"
@@ -141,7 +141,7 @@ exports[`should render query summary 1`] = `
           <th
             class="c3 c4"
           >
-            Applied Filters:
+            query_summary.applied_filters
           </th>
           <td
             class="c5 c6"
@@ -249,7 +249,7 @@ exports[`should render query summary for funnels 1`] = `
           <th
             class="c3 c4"
           >
-            Analysis:
+            query_summary.analysis
           </th>
           <td
             class="c5 c6"
@@ -283,7 +283,7 @@ exports[`should render query summary for funnels 1`] = `
         <div
           class="c11"
         >
-          Step
+          query_summary.step
            
           1
         </div>
@@ -318,7 +318,7 @@ exports[`should render query summary for funnels 1`] = `
         <div
           class="c11"
         >
-          Step
+          query_summary.step
            
           2
         </div>

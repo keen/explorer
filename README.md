@@ -18,6 +18,38 @@ or
 yarn add keen-explorer
 ```
 
+### Visualizations Theme
+
+The Data Explorer `@keen.io/dataviz` theme could be overridden during initialization of Explorer instance.
+
+```typescript
+const explorer = new KeenExplorer({
+  container: '#root',
+  modalContainer: '#modal-root',
+  dataviz: {
+    theme: {
+      colors: ['red', 'blue', 'yellow']
+    }
+  }
+ });
+```
+
+### Translations
+
+The default translations files for application are hosted on `jsdelivr` CDN. You can easily replace the translations by overriding the `loadPath` for files.
+
+```typescript
+const explorer = new KeenExplorer({
+  container: '#root',
+  modalContainer: '#modal-root',
+  translations: {
+    backend: {
+      loadPath: 'https://cdn.jsdelivr.net/npm/@keen.io/explorer@$VERSION/dist/locales/{{lng}}/{{ns}}.json'
+    }
+  }
+ });
+```
+
 ### PubSub interface
 
 The Data Explorer could be controlled dynamically by using global `@keen.io/pubsub` instance. By default after component is mounted in browser environment the `pubsub` instance should be accessible in `global` object.

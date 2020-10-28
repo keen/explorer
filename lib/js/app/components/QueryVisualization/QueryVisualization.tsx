@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useContext } from 'react';
 import {
   PickerWidgets,
   ChartSettings,
@@ -10,6 +10,7 @@ import { Container, JSONContainer } from './QueryVisualization.styles';
 import DataViz from '../DataViz';
 import JSONView from '../JSONView';
 
+import { AppContext } from '../../contexts';
 import { CONTAINER_ID } from './constants';
 
 type Props = {
@@ -29,6 +30,9 @@ const QueryVisualization: FC<Props> = ({
   widgetSettings,
   widgetType,
 }) => {
+  const { datavizSettings } = useContext(AppContext);
+  const theme = datavizSettings?.theme;
+
   const useDataviz = widgetType !== 'json';
 
   return (
@@ -38,6 +42,7 @@ const QueryVisualization: FC<Props> = ({
           analysisResults={queryResults}
           chartSettings={chartSettings}
           widgetSettings={widgetSettings}
+          visualizationTheme={theme}
           visualization={widgetType as Exclude<PickerWidgets, 'json'>}
         />
       ) : (

@@ -15,9 +15,12 @@ import {
   HIDE_EMBED_MODAL,
   SHOW_EMAIL_EXTRACTION_MODAL,
   HIDE_EMAIL_EXTRACTION_MODAL,
+  SET_QUERY_AUTORUN,
+  UPDATE_CHART_SETTINGS,
 } from './constants';
 
 export const initialState: ReducerState = {
+  autorunQuery: false,
   confirmModal: {
     visible: false,
     action: null,
@@ -62,6 +65,11 @@ export const appReducer = (
           height: action.payload.height,
           width: action.payload.width,
         },
+      };
+    case SET_QUERY_AUTORUN:
+      return {
+        ...state,
+        autorunQuery: action.payload.autorun,
       };
     case SHOW_EMAIL_EXTRACTION_MODAL:
       return {
@@ -144,6 +152,17 @@ export const appReducer = (
         ...state,
         embedModal: {
           visible: false,
+        },
+      };
+    case UPDATE_CHART_SETTINGS:
+      return {
+        ...state,
+        visualization: {
+          ...state.visualization,
+          chartSettings: {
+            ...state.visualization.chartSettings,
+            ...action.payload.chartSettings,
+          },
         },
       };
     default:

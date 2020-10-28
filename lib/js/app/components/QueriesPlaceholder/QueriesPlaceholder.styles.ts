@@ -7,6 +7,9 @@ export const Placeholder = styled.div<{
 }>`
   height: 54px;
   width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background: ${(props) =>
     transparentize(props.opacityAmount, colors.gray[500])};
 `;
@@ -18,4 +21,10 @@ export const Container = styled.div`
   ${Placeholder} + ${Placeholder} {
     margin-top: 7px;
   }
+`;
+
+export const SearchMessage = styled.span`
+  font-family: 'Lato Regular', sans-serif;
+  font-size: 16px;
+  color: ${colors.blue[500]};
 `;

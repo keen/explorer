@@ -28,6 +28,7 @@ import {
   SET_QUERY_SAVE_STATE,
   EXTRACT_TO_EMAIL,
   RUN_EMAIL_EXTRACTION,
+  CLONE_SAVED_QUERY,
 } from './constants';
 
 import { APIError } from '../../types';
@@ -47,7 +48,6 @@ export type SavedQueryListItem = {
   query: Record<string, any>;
   tags: string[];
   visualization: Visualization;
-  stepLabels: string[];
 };
 
 export type ReducerState = {
@@ -215,6 +215,10 @@ export interface SetQueryLimitReachedAction {
   };
 }
 
+export interface CloneSavedQueryAction {
+  type: typeof CLONE_SAVED_QUERY;
+}
+
 export type QueriesActions =
   | SetQuerySettingsAction
   | ResetQueryResultsAction
@@ -238,4 +242,5 @@ export type QueriesActions =
   | ResetSaveQueryErrorAction
   | GetOrganizationUsageLimitsAction
   | ExtractToEmailAction
-  | RunEmailExtractionAction;
+  | RunEmailExtractionAction
+  | CloneSavedQueryAction;

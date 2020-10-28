@@ -20,6 +20,7 @@ const render = (overProps: any = {}) => {
     onSelectDirection: jest.fn(),
     onSelectProperty: jest.fn(),
     onSearchProperties: jest.fn(),
+    onBlur: jest.fn(),
     ...overProps,
   };
 

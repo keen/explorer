@@ -12,11 +12,18 @@ module.exports = {
     "^.+\\.[t|j]sx?$": "ts-jest"
   },
 
+  globals: {
+    'ts-jest': {
+      isolatedModules: true,
+      tsConfig: '<rootDir>/tsconfig.json',
+    },
+  },
+
   testEnvironment: 'jest-environment-jsdom-sixteen',
 
   setupFilesAfterEnv: [
   '<rootDir>/jest.setup.ts'
-],
+  ],
 
   transformIgnorePatterns: [
      "<rootDir>/node_modules/(?!(@keen.io)/)"
