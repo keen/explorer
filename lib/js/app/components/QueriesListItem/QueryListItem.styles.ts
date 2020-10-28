@@ -5,6 +5,11 @@ import { colors } from '@keen.io/colors';
 export const Container = styled.tr<{
   isActive: boolean;
 }>`
+  width: 100%;
+  display: grid;
+  grid-template-columns: 45% 35% 20%;
+  margin-bottom: 7px;
+
   background: ${colors.white[500]};
   cursor: pointer;
 
@@ -44,7 +49,7 @@ export const Labels = styled.td`
 `;
 
 export const UpdateDate = styled.td`
-  padding: 0 20px 0 10px;
+  padding: 20px 20px 20px 10px;
   font-size: 12px;
   line-height: 15px;
   font-family: 'Lato Regular', sans-serif;

@@ -149,12 +149,9 @@ const Browser: FC<Props> = ({ onEditQuery, onRunQuery, onSelectQuery }) => {
             <QueriesPlaceholder />
           ) : (
             <>
-              <ScrollableContainer
-                ref={listContainer}
-                onScroll={scrollHandler}
-                maxHeight={browserDimension.height - LIST_SCROLL_OFFSET}
-              >
+              <ScrollableContainer ref={listContainer} onScroll={scrollHandler}>
                 <QueriesList
+                  maxHeight={browserDimension.height - LIST_SCROLL_OFFSET}
                   savedQueries={filteredQueries}
                   sortSettings={sortSettings}
                   activeQuery={savedQuery.name}

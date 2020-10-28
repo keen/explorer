@@ -2,7 +2,13 @@ import React, { FC, useCallback } from 'react';
 import moment from 'moment';
 import { useTranslation } from 'react-i18next';
 
-import { QueriesTable, Header } from './QueriesList.styles';
+import {
+  QueriesTable,
+  Header,
+  QueriesTableBody,
+  QueriesTableHeader,
+  QueriesTableHeaderRow,
+} from './QueriesList.styles';
 
 import QueriesListItem from '../QueriesListItem';
 import SortIndicators from '../SortIndicators';
@@ -17,10 +23,12 @@ type Props = {
   savedQueries: SavedQueryListItem[];
   /** Active query unique name */
   activeQuery: string;
-  /** Select query event handler */
-  onSelectQuery: (queryName: string, settings: Record<string, any>) => void;
   /** Queries sort settings */
   sortSettings: QueriesSortSettings;
+  /** Max height for overflow handling */
+  maxHeight?: number;
+  /** Select query event handler */
+  onSelectQuery: (queryName: string, settings: Record<string, any>) => void;
   /** Update sort settings event handler */
   onSortQueries: (settings: QueriesSortSettings) => void;
 };
@@ -29,6 +37,7 @@ const QueriesList: FC<Props> = ({
   savedQueries,
   activeQuery,
   sortSettings,
+  maxHeight,
   onSortQueries,
   onSelectQuery,
 }) => {
@@ -48,10 +57,9 @@ const QueriesList: FC<Props> = ({
 
   return (
     <QueriesTable>
-      <tbody>
-        <tr>
+      <QueriesTableHeader>
+        <QueriesTableHeaderRow>
           <Header
-            width="45%"
             paddingLeft={20}
             sortable
             onClick={() => sortHandler('name')}
@@ -64,11 +72,10 @@ const QueriesList: FC<Props> = ({
               }
             />
           </Header>
-          <Header width="35%" paddingLeft={10}>
+          <Header paddingLeft={10}>
             <Heading>{t('queries_list.labels')}</Heading>
           </Header>
           <Header
-            width="20%"
             paddingLeft={10}
             paddingRight={20}
             sortable
@@ -84,7 +91,9 @@ const QueriesList: FC<Props> = ({
               }
             />
           </Header>
-        </tr>
+        </QueriesTableHeaderRow>
+      </QueriesTableHeader>
+      <QueriesTableBody maxHeight={maxHeight}>
         {savedQueries.map(
           ({
             name,
@@ -105,7 +114,7 @@ const QueriesList: FC<Props> = ({
             />
           )
         )}
-      </tbody>
+      </QueriesTableBody>
     </QueriesTable>
   );
 };
