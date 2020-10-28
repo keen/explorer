@@ -214,7 +214,7 @@ function* saveQuery({ payload }: SaveQueryAction) {
   }
 }
 
-function* deleteQuery(action: DeleteQueryAction) {
+export function* deleteQuery(action: DeleteQueryAction) {
   const notificationManager = yield getContext(NOTIFICATION_MANAGER_CONTEXT);
 
   try {
