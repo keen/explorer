@@ -7,6 +7,7 @@ export const PlaceholderContainer = styled.div<{
   height: 37px;
   display: flex;
   align-items: center;
+  cursor: pointer;
   ${(props) =>
     props.isActive &&
     css`
