@@ -123,7 +123,7 @@ function* extractToEmail() {
   }
 }
 
-function* runQuery(action: RunQueryAction) {
+export function* runQuery(action: RunQueryAction) {
   try {
     const {
       payload: { body },
