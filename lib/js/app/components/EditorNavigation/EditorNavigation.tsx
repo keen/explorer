@@ -26,7 +26,6 @@ import {
   WrapperHorizontal,
   WrapperVertical,
 } from './EditorNavigation.styles';
-import text from './text.json';
 
 import ActionsMenu from '../ActionsMenu';
 
@@ -104,8 +103,10 @@ const EditorNavigation: FC<Props> = ({ onSaveQuery }) => {
             {cached && (
               <Tag>
                 <Badge variant="green">
-                  <span data-testid="cache-badge">{text.cachedLabel}</span>{' '}
-                  {`(${refreshRate}${text.cacheUnits})`}
+                  <span data-testid="cache-badge">
+                    {t('editor_navigation.cached_label')}
+                  </span>{' '}
+                  {`(${refreshRate}${t('editor_navigation.cache_units')})`}
                 </Badge>
               </Tag>
             )}

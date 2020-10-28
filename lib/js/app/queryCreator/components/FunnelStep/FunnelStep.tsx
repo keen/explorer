@@ -1,6 +1,7 @@
 import React, { FC, useCallback, useState, useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { transparentize } from 'polished';
+import { useTranslation } from 'react-i18next';
 import { Label, Checkbox, Input } from '@keen.io/ui-core';
 import { Icon } from '@keen.io/icons';
 import { colors } from '@keen.io/colors';
@@ -35,8 +36,6 @@ import {
   updateFunnelStepFilter,
   removeFunnelStepFilter,
 } from '../../modules/query';
-
-import text from './text.json';
 
 import {
   FunnelStep,
@@ -102,6 +101,7 @@ const FunnelStep: FC<Props> = ({
   onLabelChange,
 }) => {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   const firstDetailsVisible = useRef(detailsVisible);
 
@@ -132,7 +132,7 @@ const FunnelStep: FC<Props> = ({
             />
           </IconContainer>
           <StepTitle hasError={error}>
-            {text.title} {index + 1}
+            {t('query_creator_funnel_step.title')} {index + 1}
             {error && <Incomplete>(incomplete)</Incomplete>}
             <StepName>{stepLabel || eventCollection}</StepName>
           </StepTitle>
@@ -144,7 +144,7 @@ const FunnelStep: FC<Props> = ({
                 onClone(id);
               }}
             >
-              {text.clone}
+              {t('query_creator_funnel_step.clone')}
             </Clone>
             <Close
               data-testid="close-button"
@@ -232,7 +232,7 @@ const FunnelStep: FC<Props> = ({
           </Wrapper>
           <Wrapper>
             <Item>
-              <Title>{text.stepLabel}</Title>
+              <Title>{t('query_creator_funnel_step.step_label')}</Title>
               <Input
                 type="text"
                 variant="solid"
@@ -257,14 +257,14 @@ const FunnelStep: FC<Props> = ({
                   checked={!isFirstStep && optional}
                   disabled={isFirstStep}
                 />
-                {text.optionalLabel}
+                {t('query_creator_funnel_step.optional_label')}
               </Label>
               <Hint
                 type="info"
                 message={
                   isFirstStep
-                    ? text.firstStepOptionalTooltip
-                    : text.optionalTooltip
+                    ? t('query_creator_funnel_step.first_step_optional_tooltip')
+                    : t('query_creator_funnel_step.optional_tooltip')
                 }
                 fill={colors.blue[500]}
                 height={16}
@@ -284,14 +284,14 @@ const FunnelStep: FC<Props> = ({
                   checked={!isFirstStep && inverted}
                   disabled={isFirstStep}
                 />
-                {text.invertedLabel}
+                {t('query_creator_funnel_step.inverted_label')}
               </Label>
               <Hint
                 type="info"
                 message={
                   isFirstStep
-                    ? text.firstStepInvertedTooltip
-                    : text.invertedTooltip
+                    ? t('query_creator_funnel_step.first_step_inverted_tooltip')
+                    : t('query_creator_funnel_step.inverted_tooltip')
                 }
                 fill={colors.blue[500]}
                 height={16}

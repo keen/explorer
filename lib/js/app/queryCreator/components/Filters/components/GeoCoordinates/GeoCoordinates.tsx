@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import {
   Container,
@@ -8,7 +9,6 @@ import {
   Label,
   Input,
 } from './GeoCoordinates.styles';
-import text from './text.json';
 
 import { Coordinates } from '../../../../types';
 
@@ -20,6 +20,7 @@ type Props = {
 };
 
 const GeoCoordinates: FC<Props> = ({ value, onChange }) => {
+  const { t } = useTranslation();
   const { coordinates, maxDistanceMiles } = value;
   const [lat, long] = coordinates;
 
@@ -27,7 +28,7 @@ const GeoCoordinates: FC<Props> = ({ value, onChange }) => {
     <Container>
       <GeoItem>
         <InputContainer>
-          <Label>{text.latLabel}</Label>
+          <Label>{t('query_creator_geo_coordinates.lat_label')}</Label>
           <Input
             type="number"
             data-testid="lat-input"
@@ -43,7 +44,7 @@ const GeoCoordinates: FC<Props> = ({ value, onChange }) => {
       </GeoItem>
       <GeoItem>
         <InputContainer>
-          <Label>{text.longLabel}</Label>
+          <Label>{t('query_creator_geo_coordinates.long_label')}</Label>
           <Input
             type="number"
             data-testid="long-input"
@@ -60,7 +61,7 @@ const GeoCoordinates: FC<Props> = ({ value, onChange }) => {
       <GeoItem>
         <Radius>
           <InputContainer>
-            <Label>{text.radiusLabel}</Label>
+            <Label>{t('query_creator_geo_coordinates.radius_label')}</Label>
             <Input
               type="number"
               data-testid="radius-input"
@@ -72,7 +73,7 @@ const GeoCoordinates: FC<Props> = ({ value, onChange }) => {
                 onChange({ ...value, maxDistanceMiles: updatedRadius });
               }}
             />
-            <Label>{text.radiusUnit}</Label>
+            <Label>{t('query_creator_geo_coordinates.radius_unit')}</Label>
           </InputContainer>
         </Radius>
       </GeoItem>

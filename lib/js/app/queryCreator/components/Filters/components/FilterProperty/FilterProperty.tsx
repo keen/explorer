@@ -6,6 +6,7 @@ import React, {
   useCallback,
   useEffect,
 } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Dropdown } from '@keen.io/ui-core';
 
 import { Container, DropdownContent } from './FilterProperty.styles';
@@ -21,8 +22,6 @@ import { SearchContext } from '../../../../contexts';
 
 import { Property as PropertyType } from '../../../../types';
 
-import text from './text.json';
-
 type Props = {
   /** Property */
   property?: string;
@@ -34,6 +33,8 @@ type Props = {
   onSelectProperty: (property: string) => void;
   /** Select property event handler */
   onCastPropertyType: (type: PropertyType) => void;
+  /** Blur event handler */
+  onBlur: () => void;
   /** Properties tree */
   properties: Record<string, string[] | Record<string, any>>;
 };
@@ -42,10 +43,12 @@ const FilterProperty: FC<Props> = ({
   property,
   type,
   properties,
+  onBlur,
   onSelectProperty,
   onCastPropertyType,
   onSearchProperties,
 }) => {
+  const { t } = useTranslation();
   const [editMode, setEditMode] = useState(false);
   const containerRef = useRef(null);
   const { expandTree, searchPropertiesPhrase } = useContext(SearchContext);
@@ -61,10 +64,15 @@ const FilterProperty: FC<Props> = ({
         !containerRef.current.contains(e.target)
       ) {
         setEditMode(false);
+        onBlur();
       }
     },
     [editMode, containerRef]
   );
+
+  useEffect(() => {
+    if (!property) setEditMode(true);
+  }, []);
 
   useEffect(() => {
     document.addEventListener('click', outsideClick);
@@ -82,8 +90,10 @@ const FilterProperty: FC<Props> = ({
           <Property
             property={property}
             editMode={editMode}
-            placeholder={text.placeholder}
-            searchPlaceholder={text.searchPlaceholder}
+            placeholder={t('query_creator_filter_property.placeholder')}
+            searchPlaceholder={t(
+              'query_creator_filter_property.search_placeholder'
+            )}
             onEditInputChange={onSearchProperties}
           />
         </PropertyItem>
@@ -98,7 +108,9 @@ const FilterProperty: FC<Props> = ({
       <Dropdown isOpen={editMode} fullWidth={false}>
         <DropdownContent>
           {isEmptySearch ? (
-            <EmptySearch message={text.emptySearchResults} />
+            <EmptySearch
+              message={t('query_creator_filter_property.empty_search_results')}
+            />
           ) : (
             <PropertiesTree
               expanded={expandTree}

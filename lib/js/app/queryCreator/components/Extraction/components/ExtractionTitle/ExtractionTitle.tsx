@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import {
   Container,
@@ -7,7 +8,6 @@ import {
   FilteredExtraction,
   ClearProperties,
 } from './ExtractionTitle.styles';
-import text from './text.json';
 
 import Title from '../../../Title';
 
@@ -24,24 +24,28 @@ const ExtractionTitle: FC<Props> = ({
   isFullExtraction,
   isDisabled,
   onClearProperties,
-}) => (
-  <Container>
-    <Title isDisabled={isDisabled}>{text.title}</Title>
-    {!isDisabled && (
-      <MessageContainer>
-        {isFullExtraction ? (
-          <FullExtraction>{text.fullExtraction}</FullExtraction>
-        ) : (
-          <FilteredExtraction>
-            {text.filteredExtraction}{' '}
-            <ClearProperties role="button" onClick={onClearProperties}>
-              {text.clearProperties}
-            </ClearProperties>
-          </FilteredExtraction>
-        )}
-      </MessageContainer>
-    )}
-  </Container>
-);
+}) => {
+  const { t } = useTranslation();
+
+  return (
+    <Container>
+      <Title isDisabled={isDisabled}>{t('extraction.title')}</Title>
+      {!isDisabled && (
+        <MessageContainer>
+          {isFullExtraction ? (
+            <FullExtraction>{t('extraction.full_extraction')}</FullExtraction>
+          ) : (
+            <FilteredExtraction>
+              {t('extraction.filtered_extraction')}{' '}
+              <ClearProperties role="button" onClick={onClearProperties}>
+                {t('extraction.clear_properties')}
+              </ClearProperties>
+            </FilteredExtraction>
+          )}
+        </MessageContainer>
+      )}
+    </Container>
+  );
+};
 
 export default ExtractionTitle;

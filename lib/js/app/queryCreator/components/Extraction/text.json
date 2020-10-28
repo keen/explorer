@@ -1,9 +1,0 @@
-{
-  "previewExtraction": "Preview events",
-  "emailExtraction": "Extract to Email",
-  "limitLabel": "Limit number of events",
-  "limitPlaceholder": "Events limit",
-  "maximumEventsLimit": "Maximum number of events for ad-hoc extraction is 100,000.",
-  "maximumEmailEventsLimit": "Maximum number of events for email extraction is 10,000,000.",
-  "emailEventsLimit": "Need more? Consider <strong>Extraction to Email</strong>, which has an extraction limit of 10,000,000 events."
-}

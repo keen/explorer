@@ -5,7 +5,6 @@ import FilterProperty from './FilterProperty';
 
 import FiltersContext from '../../FiltersContext';
 import { SearchContext } from '../../../../contexts';
-import text from './text.json';
 
 import { createTree } from '../../../../utils';
 
@@ -23,6 +22,7 @@ const render = (overProps: any = {}, searchContext: any = {}) => {
     onSelectProperty: jest.fn(),
     onCastPropertyType: jest.fn(),
     onChange: jest.fn(),
+    onBlur: jest.fn(),
     ...overProps,
   };
 
@@ -92,7 +92,9 @@ test('shows information about empty search results', () => {
   const element = getByTestId('filter-property');
   fireEvent.click(element);
 
-  const message = getByText(text.emptySearchResults);
+  const message = getByText(
+    'query_creator_filter_property.empty_search_results'
+  );
 
   expect(message).toBeInTheDocument();
 });

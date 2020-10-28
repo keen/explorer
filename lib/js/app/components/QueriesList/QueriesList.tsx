@@ -1,5 +1,6 @@
 import React, { FC, useCallback } from 'react';
 import moment from 'moment';
+import { useTranslation } from 'react-i18next';
 
 import {
   QueriesTable,
@@ -14,7 +15,6 @@ import SortIndicators from '../SortIndicators';
 import Heading from '../Heading';
 
 import { SavedQueryListItem } from '../../modules/queries';
-import text from './text.json';
 
 import { QueriesSortSettings, SortProperty } from './types';
 
@@ -41,6 +41,7 @@ const QueriesList: FC<Props> = ({
   onSortQueries,
   onSelectQuery,
 }) => {
+  const { t } = useTranslation();
   const sortHandler = useCallback(
     (property: SortProperty) => {
       if (property !== sortSettings.property) {
@@ -64,7 +65,7 @@ const QueriesList: FC<Props> = ({
             onClick={() => sortHandler('name')}
             data-testid="table-header-name"
           >
-            <Heading>{text.name}</Heading>
+            <Heading>{t('queries_list.name')}</Heading>
             <SortIndicators
               sortDirection={
                 sortSettings.property === 'name' ? sortSettings.direction : null
@@ -72,7 +73,7 @@ const QueriesList: FC<Props> = ({
             />
           </Header>
           <Header paddingLeft={10}>
-            <Heading>{text.labels}</Heading>
+            <Heading>{t('queries_list.labels')}</Heading>
           </Header>
           <Header
             paddingLeft={10}
@@ -81,7 +82,7 @@ const QueriesList: FC<Props> = ({
             onClick={() => sortHandler('lastModifiedDate')}
             data-testid="table-header-date"
           >
-            <Heading>{text.updated}</Heading>
+            <Heading>{t('queries_list.updated')}</Heading>
             <SortIndicators
               sortDirection={
                 sortSettings.property === 'lastModifiedDate'

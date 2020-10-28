@@ -11,6 +11,7 @@ import shallowEqual from 'shallowequal';
 import { v4 as uuid } from 'uuid';
 import Sortable from 'sortablejs';
 import { AnimatePresence } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import { ActionButton, Tooltip } from '@keen.io/ui-core';
 import { useSearch } from '@keen.io/react-hooks';
 
@@ -39,8 +40,6 @@ import { DRAG_ANIMATION_TIME, DRAG_DELAY } from './constants';
 import { AppState, OrderBy as OrderBySettings } from '../../types';
 import { OrderDirection } from './types';
 
-import text from './text.json';
-
 type Props = {
   /** Collection name */
   collection: string;
@@ -48,6 +47,7 @@ type Props = {
 
 const OrderBy: FC<Props> = ({ collection }) => {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
   const groups: string[] = useSelector((state: AppState) => {
     const groupBy = getGroupBy(state);
     if (groupBy) {
@@ -182,7 +182,9 @@ const OrderBy: FC<Props> = ({ collection }) => {
 
   return (
     <>
-      <Title isDisabled={!showOrderOptions}>{text.title}</Title>
+      <Title isDisabled={!showOrderOptions}>
+        {t('query_creator_order_by.title')}
+      </Title>
       <Section
         onMouseEnter={() => !showOrderOptions && showHint(true)}
         onMouseLeave={() => !showOrderOptions && showHint(false)}
@@ -219,6 +221,9 @@ const OrderBy: FC<Props> = ({ collection }) => {
                       updateOrderBy(orderSettings as OrderBySettings, id);
                     }}
                     onSearchProperties={searchHandler}
+                    onBlur={() => {
+                      if (!propertyName) removeOrderBy(id);
+                    }}
                     onRemove={() => {
                       clearSearchHandler();
                       removeOrderBy(id);
@@ -247,7 +252,9 @@ const OrderBy: FC<Props> = ({ collection }) => {
             {hint && (
               <TooltipMotion {...TOOLTIP_MOTION} data-testid="orderby-hint">
                 <Tooltip hasArrow={false} mode="dark">
-                  <TooltipContent>{text.orderByHint}</TooltipContent>
+                  <TooltipContent>
+                    {t('query_creator_order_by.order_by_hint')}
+                  </TooltipContent>
                 </Tooltip>
               </TooltipMotion>
             )}

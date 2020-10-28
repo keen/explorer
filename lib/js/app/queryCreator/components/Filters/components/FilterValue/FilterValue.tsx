@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import { Input } from '@keen.io/ui-core';
 import moment from 'moment';
+import { useTranslation } from 'react-i18next';
 
 import { DatePickerContainer } from './FilterValue.styles';
 
@@ -10,8 +11,6 @@ import FilterListValue from '../FilterListValue';
 import GeoCoordinates from '../GeoCoordinates';
 import DatePicker from '../../../DatePicker';
 import FilterBoolean from '../FilterBoolean';
-
-import text from './text.json';
 
 import { TYPES_CONFIG } from '../../constants';
 
@@ -100,6 +99,7 @@ const FilterValue: FC<Props> = ({
   onChange,
   id,
 }) => {
+  const { t } = useTranslation();
   return (
     <>
       {propertyType && operator ? (
@@ -109,7 +109,9 @@ const FilterValue: FC<Props> = ({
       ) : (
         <PropertyGroup isActive={false}>
           <PropertyItem>
-            <Property placeholder={text.placeholder} />
+            <Property
+              placeholder={t('query_creator_filter_value.placeholder')}
+            />
           </PropertyItem>
         </PropertyGroup>
       )}

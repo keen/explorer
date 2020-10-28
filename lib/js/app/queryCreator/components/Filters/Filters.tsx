@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import { useSelector } from 'react-redux';
 import { v4 as uuid } from 'uuid';
+import { useTranslation } from 'react-i18next';
 import { ActionButton } from '@keen.io/ui-core';
 
 import Title from '../Title';
@@ -10,8 +11,6 @@ import FiltersComponent from './FiltersComponent';
 import { ActionContainer } from './Filters.styles';
 
 import { getSchemas, getSchemaLoading } from '../../modules/events';
-
-import text from './text.json';
 
 import { AppState, Filter } from '../../types';
 
@@ -38,6 +37,7 @@ const Filters: FC<Props> = ({
   onChange,
   onClick,
 }) => {
+  const { t } = useTranslation();
   const isSchemaExist = useSelector((state: AppState) => {
     const schemas = getSchemas(state);
     return schemas[collection];
@@ -48,7 +48,9 @@ const Filters: FC<Props> = ({
 
   return (
     <div>
-      <Title isDisabled={!collection}>{text.filters}</Title>
+      <Title isDisabled={!collection}>
+        {t('query_creator_filters.filters')}
+      </Title>
       {isSchemaExist && !isSchemaLoading && (
         <FiltersComponent
           collection={collection}

@@ -1,4 +1,5 @@
 import React, { FC, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Badge } from '@keen.io/ui-core';
 
 import {
@@ -8,7 +9,6 @@ import {
   Labels,
   Tag,
 } from './QueryListItem.styles';
-import text from './text.json';
 
 import DropIndicator from '../DropIndicator';
 import { convertMilisecondsToMinutes } from '../../modules/savedQuery';
@@ -38,6 +38,7 @@ const QueriesListItem: FC<Props> = ({
   tags,
   onClick,
 }) => {
+  const { t } = useTranslation();
   const [labelsOpen, toogleLabels] = useState(false);
   const queryTags =
     tags.length > TAGS_LIMIT && !labelsOpen ? tags.slice(0, TAGS_LIMIT) : tags;
@@ -54,10 +55,12 @@ const QueriesListItem: FC<Props> = ({
         {refreshRate !== 0 && (
           <Tag>
             <Badge variant="green">
-              <span data-testid="cache-badge">{text.cachedLabel}</span>{' '}
-              {`(${convertMilisecondsToMinutes(refreshRate)}${
-                text.cacheUnits
-              })`}
+              <span data-testid="cache-badge">
+                {t('queries_list_item.cached_label')}
+              </span>{' '}
+              {`(${convertMilisecondsToMinutes(refreshRate)}${t(
+                'queries_list_item.cache_units'
+              )})`}
             </Badge>
           </Tag>
         )}

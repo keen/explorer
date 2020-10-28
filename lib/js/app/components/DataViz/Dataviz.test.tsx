@@ -4,7 +4,6 @@ import { PickerWidgets } from '@keen.io/widget-picker';
 import { KeenDataviz } from '@keen.io/dataviz';
 
 import DataViz from './Dataviz';
-import text from './text.json';
 
 import { DEFAULT_WIDGET_SETTINGS } from './constants';
 
@@ -73,5 +72,5 @@ test('calls KeenDataviz error method', () => {
   };
   render(<DataViz {...props} />);
 
-  expect(errorMock).toHaveBeenCalledWith(text.noResults);
+  expect(errorMock).toHaveBeenCalledWith('dataviz.no_results');
 });
