@@ -122,7 +122,6 @@ describe('deleteQuery()', () => {
 
       const error = new Error('message');
       (error as any).status = HttpStatus.INTERNAL_SERVER_ERROR;
-      (error as any).status = HttpStatus.INTERNAL_SERVER_ERROR;
       return error;
     });
 
