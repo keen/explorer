@@ -57,17 +57,21 @@ const serializeVisualization = (
       }
 
       return getDefaultVisualization(query);
+    } else if (
+      visualization.type &&
+      'chart_settings' in visualization &&
+      'widget_settings' in visualization
+    ) {
+      return {
+        type: visualization.type,
+        chartSettings: camelCase(visualization.chart_settings, {
+          deep: true,
+        }),
+        widgetSettings: camelCase(visualization.widget_settings, {
+          deep: true,
+        }),
+      };
     }
-
-    return {
-      type: visualization.type,
-      chartSettings: camelCase(visualization.chart_settings, {
-        deep: true,
-      }),
-      widgetSettings: camelCase(visualization.widget_settings, {
-        deep: true,
-      }),
-    };
   }
 
   return getDefaultVisualization(query);

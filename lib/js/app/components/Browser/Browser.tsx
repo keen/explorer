@@ -76,7 +76,7 @@ const Browser: FC<Props> = ({ onEditQuery, onRunQuery, onSelectQuery }) => {
     }
 
     if (queriesFilters.showOnlyCachedQueries) {
-      queries = savedQueries.filter(({ cached }) => cached);
+      queries = queries.filter(({ cached }) => cached);
     }
 
     if (queriesFilters.tags.length) {
