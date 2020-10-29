@@ -8,6 +8,7 @@ export const Container = styled.tr<{
   width: 100%;
   display: grid;
   grid-template-columns: 45% 35% 20%;
+  align-items: center;
   margin-bottom: 7px;
 
   background: ${colors.white[500]};
