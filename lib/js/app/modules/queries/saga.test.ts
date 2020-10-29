@@ -1,13 +1,18 @@
 /* eslint-disable @typescript-eslint/camelcase */
 import sagaHelper from 'redux-saga-testing';
+import fetchMock from 'jest-fetch-mock';
 import { getContext, put, take, select } from 'redux-saga/effects';
 import HttpStatus from 'http-status-codes';
 
 import {
   deleteQuery as deleteQueryFlow,
   runQuery as runQueryFlow,
+  saveQuery as saveQueryFlow,
+  checkOrganizationLimits as checkOrganizationLimitsFlow,
 } from './saga';
 import {
+  saveQuery,
+  saveQuerySuccess,
   runQuery,
   runQuerySuccess,
   runQueryError,
@@ -16,6 +21,8 @@ import {
   resetQueryResults,
   deleteQuerySuccess,
   setQueryLimitReached,
+  setCacheQueryLimit,
+  setCacheQueryLimitExceed,
 } from './actions';
 
 import {
@@ -23,6 +30,8 @@ import {
   getViewMode,
   setViewMode,
   selectFirstSavedQuery,
+  hideQuerySettingsModal,
+  getQuerySettingsModalVisibility,
   HIDE_CONFIRMATION,
   ACCEPT_CONFIRMATION,
 } from '../../modules/app';
@@ -33,7 +42,86 @@ import {
   KEEN_CLIENT_CONTEXT,
 } from '../../constants';
 
-import { DeleteQueryAction, RunQueryAction } from './types';
+import { DeleteQueryAction, RunQueryAction, SaveQueryAction } from './types';
+
+fetchMock.mockResponse(() => Promise.resolve(JSON.stringify({})));
+
+describe('checkOrganizationLimits()', () => {
+  describe('Scenario 1: User exceed organization limits', () => {
+    const it = sagaHelper(checkOrganizationLimitsFlow());
+
+    it('get the Keen API client instance from context', (result) => {
+      expect(result).toEqual(getContext(KEEN_CLIENT_CONTEXT));
+
+      return {
+        url: () => 'url',
+        config: { masterKey: 'masterKey' },
+      };
+    });
+
+    it('calls the API to check organization limits', () => {
+      const response = {
+        cached_queries: { limited: true, limit: 5, current_usage: 10 },
+      };
+      return response;
+    });
+
+    it('notfies user about exceed cache queries organization limit', (result) => {
+      expect(result).toEqual(put(setCacheQueryLimitExceed(true)));
+    });
+
+    it('setup cache queries limit', (result) => {
+      expect(result).toEqual(put(setCacheQueryLimit(5)));
+    });
+  });
+});
+
+describe('saveQuery()', () => {
+  describe('Scenario 1: User successfully saves query', () => {
+    const query = { analysis_type: 'count' };
+    const action = saveQuery('purchases', query) as SaveQueryAction;
+    const it = sagaHelper(saveQueryFlow(action));
+
+    it('get the notification manager from context', (result) => {
+      expect(result).toEqual(getContext(NOTIFICATION_MANAGER_CONTEXT));
+
+      return {
+        showNotification: jest.fn(),
+      };
+    });
+
+    it('get the Keen API client instance from context', (result) => {
+      expect(result).toEqual(getContext(KEEN_CLIENT_CONTEXT));
+
+      return {
+        put: jest.fn(),
+        url: () => 'url',
+        config: { masterKey: 'masterKey' },
+      };
+    });
+
+    it('get settings modal visibility from state', (result) => {
+      expect(result).toEqual(select(getQuerySettingsModalVisibility));
+      return true;
+    });
+
+    it('calls API to save query resource', () => {
+      return {
+        success: true,
+      };
+    });
+
+    it('hide query settings modal', (result) => {
+      expect(result).toEqual(put(hideQuerySettingsModal()));
+    });
+
+    it('dispatch save query success action', (result) => {
+      expect(result).toEqual(
+        put(saveQuerySuccess('purchases', { success: true }))
+      );
+    });
+  });
+});
 
 describe('runQuery()', () => {
   describe('Scenario 1: User successfully run query', () => {

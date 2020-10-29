@@ -147,7 +147,7 @@
     "jest": "^26.0.1",
     "jest-environment-jsdom-c3": "^2.0.0",
     "jest-environment-jsdom-sixteen": "^1.0.3",
-    "jest-fetch-mock": "^2.1.2",
+    "jest-fetch-mock": "^3.0.3",
     "jest-styled-components": "^7.0.2",
     "lint-staged": "^10.2.11",
     "prettier": "^2.0.5",

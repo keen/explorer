@@ -155,7 +155,7 @@ export function* runQuery(action: RunQueryAction) {
   }
 }
 
-function* saveQuery({ payload }: SaveQueryAction) {
+export function* saveQuery({ payload }: SaveQueryAction) {
   try {
     const { name, body } = payload;
     const notificationManager = yield getContext(NOTIFICATION_MANAGER_CONTEXT);
@@ -287,7 +287,7 @@ function* fetchSavedQueries() {
   }
 }
 
-function* checkOrganizationLimits() {
+export function* checkOrganizationLimits() {
   try {
     const client = yield getContext(KEEN_CLIENT_CONTEXT);
     const url = client.url('/3.0/projects/{projectId}/organization-usage', {
