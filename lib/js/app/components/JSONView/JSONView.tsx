@@ -1,6 +1,6 @@
 // @ts-nocheck
 import React, { FC } from 'react';
-import ReactJson from 'react-json-view';
+import Inspector from 'react-json-inspector';
 
 import { Container } from './JSONView.styles';
 
@@ -12,14 +12,13 @@ type Props = {
 const JSONView: FC<Props> = ({ analysisResults }) => {
   return (
     <Container>
-      <ReactJson
-        src={analysisResults}
-        style={{
-          fontFamily: "'Lato Regular', sans-serif",
-        }}
+      <Inspector
+        data={analysisResults}
+        search={false}
         displayDataTypes={false}
-        sortKeys
-        iconStyle="square"
+        isExpanded={function () {
+          return true;
+        }}
       />
     </Container>
   );
