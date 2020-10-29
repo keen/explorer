@@ -14,10 +14,12 @@ import {
   Socket,
   ScrollOverflow,
   ScrollableContainer,
+  FiltersContainer,
   PreviewPlaceholder,
 } from './Browser.styles';
 
 import SearchQueries from '../SearchQueries';
+import FilterQueries from '../FilterQueries';
 import BrowserNavigation from '../BrowserNavigation';
 import BrowserPreview from '../BrowserPreview';
 import CreateFirstQuery from '../CreateFirstQuery';
@@ -49,6 +51,13 @@ const Browser: FC<Props> = ({ onEditQuery, onRunQuery, onSelectQuery }) => {
   const { t } = useTranslation();
 
   const [searchPhrase, setSearchPhrase] = useState(null);
+  const [queriesFilters, setQueriesFilters] = useState<{
+    showOnlyCachedQueries: boolean;
+    tags: string[];
+  }>({
+    showOnlyCachedQueries: false,
+    tags: [],
+  });
   const [sortSettings, setSortSettings] = useState<QueriesSortSettings>({
     property: DEFAULT_PROPERTY,
     direction: DEFAULT_DIRECTION,
@@ -56,13 +65,23 @@ const Browser: FC<Props> = ({ onEditQuery, onRunQuery, onSelectQuery }) => {
 
   const browserDimension = useSelector(getBrowserScreenDimension);
   const savedQuery = useSelector(getSavedQuery);
-
   const savedQueries = useSelector(getSavedQueries);
+
   const filteredQueries = useMemo(() => {
     let queries = savedQueries;
     if (searchPhrase) {
       queries = savedQueries.filter(({ displayName }) =>
         displayName.toLowerCase().includes(searchPhrase)
+      );
+    }
+
+    if (queriesFilters.showOnlyCachedQueries) {
+      queries = queries.filter(({ cached }) => cached);
+    }
+
+    if (queriesFilters.tags.length) {
+      queries = queries.filter(({ tags }) =>
+        tags.some((tag) => queriesFilters.tags.includes(tag))
       );
     }
 
@@ -84,7 +103,7 @@ const Browser: FC<Props> = ({ onEditQuery, onRunQuery, onSelectQuery }) => {
     }
 
     return queries;
-  }, [searchPhrase, savedQueries, sortSettings]);
+  }, [searchPhrase, queriesFilters, sortSettings, savedQueries]);
 
   const isSavedQueriesLoaded = useSelector(getSavedQueriesLoaded);
 
@@ -134,10 +153,36 @@ const Browser: FC<Props> = ({ onEditQuery, onRunQuery, onSelectQuery }) => {
     <>
       <BrowserNavigation attractNewQueryButton={isEmptyProject}>
         {isSavedQueriesLoaded && !isEmptyProject && (
-          <SearchQueries
-            onSearch={(phrase) => setSearchPhrase(phrase)}
-            placeholder={t('browser_search.search_query_input_placeholder')}
-          />
+          <>
+            <SearchQueries
+              onSearch={(phrase) => setSearchPhrase(phrase)}
+              placeholder={t('browser_search.search_query_input_placeholder')}
+            />
+            <FiltersContainer>
+              <FilterQueries
+                tagsFilters={queriesFilters.tags}
+                showOnlyCachedQueries={queriesFilters.showOnlyCachedQueries}
+                onClearFilters={() =>
+                  setQueriesFilters({
+                    showOnlyCachedQueries: false,
+                    tags: [],
+                  })
+                }
+                onUpdateTagsFilters={(tags) =>
+                  setQueriesFilters((state) => ({
+                    ...state,
+                    tags,
+                  }))
+                }
+                onUpdateCacheFilter={(isActive) =>
+                  setQueriesFilters((state) => ({
+                    ...state,
+                    showOnlyCachedQueries: isActive,
+                  }))
+                }
+              />
+            </FiltersContainer>
+          </>
         )}
       </BrowserNavigation>
       <Container flexDirection={{ xs: 'column', md: 'row' }}>

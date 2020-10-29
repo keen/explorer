@@ -83,6 +83,14 @@
     "search_query_input_placeholder": "Search name",
     "empty_search_message": "No query found with this name."
   },
+  "browser_filters": {
+    "title": "Filters",
+    "show_only_cached_queries": "Only cached queries",
+    "search_label": "Labels",
+    "search_tags_input_placeholder": "Search label",
+    "empty_search_message": "No labels found with this name",
+    "clear": "Clear filters"
+  },
   "browser_query_menu": {
     "edit_query": "Edit query",
     "remove_query": "Delete",
