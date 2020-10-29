@@ -66,9 +66,13 @@ export const Container = styled.div`
 
   .json-inspector__leaf_composite {
     position: relative;
-  }
 
-  .json-inspector__leaf_composite {
+    &.json-inspector__leaf_expanded {
+      &:before {
+        transform: rotate(90deg);
+      }
+    }
+
     &:before {
       content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' opacity='1' viewBox='0 0 30 30'%3E%3Cpolygon fill='rgba(79,91,95,0.7)' points='9.45351896 0 24.453519 15 9.45351896 30 5.55 26.096481 16.6465765 15 5.55 3.90351896'%3E%3C/polygon%3E%3C/svg%3E");
       color: ${colors.black[100]};
@@ -76,15 +80,6 @@ export const Container = styled.div`
       position: absolute;
       left: 0;
       z-index: 1;
-    }
-  }
-
-  .json-inspector__leaf_composite {
-    &.json-inspector__leaf_expanded {
-      &:before {
-        content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' opacity='1' viewBox='0 0 30 30'%3E%3Cpolygon fill='rgba(79,91,95,0.7)' points='9.45351896 0 24.453519 15 9.45351896 30 5.55 26.096481 16.6465765 15 5.55 3.90351896'%3E%3C/polygon%3E%3C/svg%3E");
-        transform: rotate(90deg);
-      }
     }
   }
 `;
