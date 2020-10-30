@@ -35,9 +35,16 @@ type Props = {
   onRemoveQuery: () => void;
   /** Hide menu */
   onHideMenu: () => void;
+  /** Visibility indicator  */
+  isVisible?: boolean;
 };
 
-const ActionsMenu: FC<Props> = ({ isNewQuery, onRemoveQuery, onHideMenu }) => {
+const ActionsMenu: FC<Props> = ({
+  isNewQuery,
+  isVisible,
+  onRemoveQuery,
+  onHideMenu,
+}) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
@@ -46,13 +53,18 @@ const ActionsMenu: FC<Props> = ({ isNewQuery, onRemoveQuery, onHideMenu }) => {
   const {
     keenAnalysis: { config },
   } = useContext(AppContext);
+
   return (
     <Container>
       <DropdownMenu.Container>
         <MutedText>{t('actions_menu.export_result')}</MutedText>
         <ExportDataWrapper
-          onMouseEnter={() => !queryResults && showTooltip(true)}
-          onMouseLeave={() => tooltip && showTooltip(false)}
+          onMouseEnter={() => {
+            if (isVisible && !queryResults) {
+              showTooltip(true);
+            }
+          }}
+          onMouseLeave={() => tooltip && isVisible && showTooltip(false)}
         >
           <AnimatePresence>
             {tooltip && (
