@@ -19,6 +19,7 @@ import {
   getViewMode,
   setViewMode,
   getVisualization,
+  getQueryAutorun,
   switchToQueriesList,
   createNewQuery,
   explorerMounted,
@@ -47,6 +48,7 @@ import {
 const mapStateToProps = (state: AppState) => ({
   savedQuery: getSavedQuery(state),
   visualization: getVisualization(state),
+  autorunQuery: getQueryAutorun(state),
   view: getViewMode(state),
   query: getQuerySettings(state),
 });
@@ -134,7 +136,7 @@ class App extends Component {
             onRunQuery={() => this.props.runQuery(this.props.query)}
             onSelectQuery={(queryName) => {
               this.props.resetQueryResults();
-              this.props.selectSavedQuery(queryName);
+              this.props.selectSavedQuery(queryName, this.props.autorunQuery);
             }}
             onEditQuery={(queryName) => {
               this.props.editQuery(queryName);

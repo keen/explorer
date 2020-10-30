@@ -13,10 +13,14 @@ export const updateSaveQuery = (
   payload: properties,
 });
 
-export const selectSavedQuery = (name: string): SavedQueryActions => ({
+export const selectSavedQuery = (
+  name: string,
+  autorunQuery?: boolean
+): SavedQueryActions => ({
   type: SELECT_SAVED_QUERY,
   payload: {
     name,
+    autorunQuery,
   },
 });
 

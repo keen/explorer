@@ -4,7 +4,7 @@ import { takeLatest, select, put } from 'redux-saga/effects';
 
 import { updateSaveQuery } from './actions';
 
-import { setVisualization, getQueryAutorun } from '../app';
+import { setVisualization } from '../app';
 import { SavedQueryListItem } from '../queries';
 import {
   setQuerySettings,
@@ -21,7 +21,7 @@ import { SavedQueryAPIResponse } from '../../types';
 
 import { serializeSavedQuery, convertMilisecondsToMinutes } from './utils';
 
-function* selectSavedQuery({ payload }: SelectSavedQueryAction) {
+export function* selectSavedQuery({ payload }: SelectSavedQueryAction) {
   const savedQueries: SavedQueryListItem[] = yield select(getSavedQueries);
 
   try {
@@ -50,7 +50,7 @@ function* selectSavedQuery({ payload }: SelectSavedQueryAction) {
     yield put(setQuerySettings(query));
     yield put(updateSaveQuery(savedQuery));
 
-    const autorunQuery = yield select(getQueryAutorun);
+    const { autorunQuery } = payload;
     if (autorunQuery) {
       yield put(runQuery(query));
     }

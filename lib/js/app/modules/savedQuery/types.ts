@@ -29,6 +29,7 @@ export interface SelectSavedQueryAction {
   type: typeof SELECT_SAVED_QUERY;
   payload: {
     name: string;
+    autorunQuery?: boolean;
   };
 }
 

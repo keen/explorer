@@ -20,10 +20,10 @@ import {
 } from './actions';
 
 test('set query autorun settings', () => {
-  const action = setQueryAutorun(true);
+  const action = setQueryAutorun(false);
   const { autorunQuery } = appReducer(initialState, action);
 
-  expect(autorunQuery).toBeTruthy();
+  expect(autorunQuery).toBeFalsy();
 });
 
 test('shows extraction settings modal', () => {
