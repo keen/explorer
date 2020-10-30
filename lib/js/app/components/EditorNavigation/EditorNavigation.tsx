@@ -180,6 +180,7 @@ const EditorNavigation: FC<Props> = ({ onSaveQuery }) => {
           >
             <ActionsMenu
               isNewQuery={!exists}
+              isVisible={actionsMenu}
               onHideMenu={() => setActionsMenuVisibility(false)}
               onRemoveQuery={() => {
                 setActionsMenuVisibility(false);
