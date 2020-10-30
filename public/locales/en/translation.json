@@ -99,7 +99,8 @@
   },
   "browser_preview": {
     "title": "Preview",
-    "autorun_query_label": "Auto-run selected query"
+    "autorun_query_label": "Auto-run selected query",
+    "autorun_query_tooltip": "Every run query counts as one query for your usage"
   },
   "query_summary": {
     "analysis": "Analysis:",

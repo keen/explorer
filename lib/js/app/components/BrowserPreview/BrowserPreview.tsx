@@ -60,6 +60,7 @@ const BrowserPreview: FC<Props> = ({
         <AutorunQuery
           autorun={autorunQuery}
           label={t('browser_preview.autorun_query_label')}
+          tooltipMessage={t('browser_preview.autorun_query_tooltip')}
           onToggle={(autorun) => dispatch(setQueryAutorun(autorun))}
         />
       </HeaderContainer>

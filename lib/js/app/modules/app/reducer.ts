@@ -20,7 +20,7 @@ import {
 } from './constants';
 
 export const initialState: ReducerState = {
-  autorunQuery: false,
+  autorunQuery: true,
   confirmModal: {
     visible: false,
     action: null,
