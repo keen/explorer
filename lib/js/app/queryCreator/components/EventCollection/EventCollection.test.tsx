@@ -120,3 +120,25 @@ test('renders empty search results', () => {
     getByText('query_creator_event_collection.empty_search_results')
   ).toBeInTheDocument();
 });
+
+test('do not calls "onChange" handler for selecting same event collection', () => {
+  const storeState = {
+    events: {
+      collections: ['clicks', 'logins', 'purchases'],
+    },
+  };
+  const {
+    wrapper: { getByTestId, getByText },
+    props,
+  } = render(storeState, {
+    collection: 'clicks',
+  });
+
+  const propertyField = getByTestId('dropable-container');
+  fireEvent.click(propertyField);
+
+  const property = getByText('clicks');
+  fireEvent.click(property);
+
+  expect(props.onChange).not.toHaveBeenCalled();
+});

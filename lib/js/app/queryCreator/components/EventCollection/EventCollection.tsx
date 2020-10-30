@@ -174,7 +174,9 @@ const EventCollection: FC<Props> = ({
                 items={collectionsList}
                 setActiveItem={(_item, idx) => selectionIndex === idx}
                 onClick={(_e, { value }) => {
-                  onChange(value);
+                  if (collection !== value) {
+                    onChange(value);
+                  }
                   setCollectionsList(options);
                 }}
               />
