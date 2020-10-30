@@ -8,7 +8,6 @@ export const Container = styled.tr<{
   width: 100%;
   display: grid;
   grid-template-columns: 45% 35% 20%;
-  align-items: center;
   margin-bottom: 7px;
 
   background: ${colors.white[500]};
@@ -36,6 +35,8 @@ export const Tag = styled.span`
 `;
 
 export const QueryName = styled.td`
+  display: flex;
+  align-items: center;
   padding: 20px 10px 20px 20px;
   max-width: 240px;
 
@@ -46,10 +47,14 @@ export const QueryName = styled.td`
 `;
 
 export const Labels = styled.td`
+  display: flex;
+  flex-wrap: wrap;
   padding: 20px 10px 20px 10px;
 `;
 
 export const UpdateDate = styled.td`
+  display: flex;
+  align-items: center;
   padding: 20px 20px 20px 10px;
   font-size: 12px;
   line-height: 15px;
