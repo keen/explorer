@@ -240,7 +240,7 @@ const OrderBy: FC<Props> = ({ collection }) => {
                 dispatch(
                   setOrderBy([
                     ...currentSettings,
-                    { id: uuid(), propertyName: '', direction: 'ASC' },
+                    { id: uuid(), propertyName: '', direction: 'DESC' },
                   ])
                 );
               }}

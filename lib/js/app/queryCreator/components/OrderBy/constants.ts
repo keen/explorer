@@ -13,8 +13,8 @@ export const DIRECTION_LABELS = {
 };
 
 export const DIRECTION_OPTIONS = [
-  { label: 'ASC', value: 'ASC' },
   { label: 'DESC', value: 'DESC' },
+  { label: 'ASC', value: 'ASC' },
 ];
 
 export const DEFAULT_ORDER_SETTINGS = {

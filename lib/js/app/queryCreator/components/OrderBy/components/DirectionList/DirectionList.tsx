@@ -17,7 +17,7 @@ type Props = {
   onChange: (direction: OrderDirection) => void;
 };
 
-const DirectionList: FC<Props> = ({ direction = 'ASC', onChange }) => {
+const DirectionList: FC<Props> = ({ direction = 'DESC', onChange }) => {
   const [editMode, setEditMode] = useState(false);
 
   return (
