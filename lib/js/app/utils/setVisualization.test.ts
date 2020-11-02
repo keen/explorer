@@ -25,7 +25,7 @@ test('return default visualization settings based on query', () => {
   expect(setVisualization(query, settings)).toMatchInlineSnapshot(`
     Object {
       "chartSettings": Object {},
-      "type": "table",
+      "type": "metric",
       "widgetSettings": Object {},
     }
   `);
