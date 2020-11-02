@@ -73,11 +73,11 @@ test('allows user to select orderBy direction', () => {
     props,
   } = render();
 
-  const defaultOrder = getByText('ASC');
+  const defaultOrder = getByText('DESC');
   fireEvent.click(defaultOrder);
 
-  const customOrder = getByText('DESC');
+  const customOrder = getByText('ASC');
   fireEvent.click(customOrder);
 
-  expect(props.onSelectDirection).toHaveBeenCalledWith('DESC');
+  expect(props.onSelectDirection).toHaveBeenCalledWith('ASC');
 });
