@@ -4,6 +4,8 @@ import { colors } from '@keen.io/colors';
 import { StepContainer } from '../FunnelStep/FunnelStep.styles';
 
 export const AddStep = styled.div`
+  display: flex;
+  align-items: center;
   padding: 20px;
   background: ${transparentize(0.9, colors.green[300])};
   border: 1px dashed ${colors.green[300]};
@@ -18,6 +20,10 @@ export const AddStep = styled.div`
   &:hover {
     background: ${transparentize(0.6, colors.green[300])};
   }
+`;
+
+export const IconWrapper = styled.div`
+  margin-right: 6px;
 `;
 
 export const Container = styled.div`

@@ -10,8 +10,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { v4 as uuid } from 'uuid';
 import Sortable from 'sortablejs';
 import { useTranslation } from 'react-i18next';
+import { Icon } from '@keen.io/icons';
+import { colors } from '@keen.io/colors';
 
-import { Container, AddStep } from './FunnelSteps.styles';
+import { Container, IconWrapper, AddStep } from './FunnelSteps.styles';
 
 import { mutateArray } from '../../utils';
 
@@ -166,6 +168,9 @@ const FunnelSteps: FC<{}> = () => {
           setStepVisible(stepId);
         }}
       >
+        <IconWrapper>
+          <Icon type="plus" width={13} height={13} fill={colors.green[500]} />
+        </IconWrapper>
         {t('query_creator_funnel_steps.add_step')}
       </AddStep>
     </Container>
