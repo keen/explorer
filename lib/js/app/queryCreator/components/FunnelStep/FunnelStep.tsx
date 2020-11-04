@@ -13,6 +13,7 @@ import {
   StepTitle,
   IconContainer,
   Settings,
+  HintHighlight,
   Clone,
   Close,
   Wrapper,
@@ -262,9 +263,18 @@ const FunnelStep: FC<Props> = ({
               <Hint
                 type="info"
                 message={
-                  isFirstStep
-                    ? t('query_creator_funnel_step.first_step_optional_tooltip')
-                    : t('query_creator_funnel_step.optional_tooltip')
+                  isFirstStep ? (
+                    <>
+                      {t('query_creator_funnel_step.optional_tooltip')}
+                      <HintHighlight>
+                        {t(
+                          'query_creator_funnel_step.first_step_optional_tooltip'
+                        )}
+                      </HintHighlight>
+                    </>
+                  ) : (
+                    t('query_creator_funnel_step.optional_tooltip')
+                  )
                 }
                 fill={colors.blue[500]}
                 height={16}
@@ -289,9 +299,18 @@ const FunnelStep: FC<Props> = ({
               <Hint
                 type="info"
                 message={
-                  isFirstStep
-                    ? t('query_creator_funnel_step.first_step_inverted_tooltip')
-                    : t('query_creator_funnel_step.inverted_tooltip')
+                  isFirstStep ? (
+                    <>
+                      {t('query_creator_funnel_step.inverted_tooltip')}
+                      <HintHighlight>
+                        {t(
+                          'query_creator_funnel_step.first_step_inverted_tooltip'
+                        )}
+                      </HintHighlight>
+                    </>
+                  ) : (
+                    t('query_creator_funnel_step.inverted_tooltip')
+                  )
                 }
                 fill={colors.blue[500]}
                 height={16}

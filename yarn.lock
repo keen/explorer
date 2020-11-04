@@ -1599,9 +1599,9 @@
     webfontloader "^1.6.28"
 
 "@keen.io/widget-picker@^1.2.19":
-  version "1.2.19"
-  resolved "https://registry.yarnpkg.com/@keen.io/widget-picker/-/widget-picker-1.2.19.tgz#f6d87771921f52cad319d81ab00bf9abf769d39a"
-  integrity sha512-1TNOkNIfV5jt5S0FrzCZDseOhHjTEPS4zEbV7tXgZvkeJpK32gQe1LFN0eSIHaacsQpEk7YSye2u80Oh6U4g/w==
+  version "1.2.20"
+  resolved "https://registry.yarnpkg.com/@keen.io/widget-picker/-/widget-picker-1.2.20.tgz#7cda97cb4e4b029e048aa5b6cd76ae2a1338be20"
+  integrity sha512-jOcbC44AgIpDqgK24vC6FRL6wuj0j4zJ/+8nvhbnH6/jemV2WBUXsCGm1RKzouVGK53kPFjDSc+4feeN7dm+Sw==
   dependencies:
     "@keen.io/colors" "^1.0.0"
     "@keen.io/icons" "^1.2.1"

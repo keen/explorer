@@ -79,6 +79,11 @@ export const Settings = styled(StepHeader)`
   margin-left: auto;
 `;
 
+export const HintHighlight = styled.div`
+  margin-top: 15px;
+  font-family: Lato Bold, sans-serif;
+`;
+
 export const Clone = styled(StepHeader)`
   color: ${colors.blue[100]};
   font-family: Lato Bold, sans-serif;

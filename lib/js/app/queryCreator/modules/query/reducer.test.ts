@@ -238,6 +238,30 @@ test('add funnel step', () => {
   expect(steps).toMatchSnapshot();
 });
 
+test('inherits settings from previous funnel step', () => {
+  const stepsState = {
+    steps: [
+      {
+        id: 'step1',
+        ...DEFAULT_FUNNEL_STEP,
+        timeframe: 'previous_1_year',
+        eventCollection: 'clicks',
+      },
+    ],
+  };
+
+  const action = addFunnelStep('step2');
+  const { steps } = queryReducer(
+    {
+      ...initialState,
+      ...stepsState,
+    },
+    action
+  );
+
+  expect(steps).toMatchSnapshot();
+});
+
 test('clone funnel step', () => {
   const stepsState = {
     steps: [
