@@ -8,6 +8,10 @@ Object {
   ],
   "category": Object {
     "details": Object {
+      "gender": Array [
+        "category.details.gender",
+        "male",
+      ],
       "name": Array [
         "category.details.name",
         "string",
