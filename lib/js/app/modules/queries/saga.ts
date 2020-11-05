@@ -116,6 +116,7 @@ function* extractToEmail() {
         yield notificationManager.showNotification({
           type: 'error',
           message: error.body,
+          translateMessage: false,
           autoDismiss: true,
         });
       }
@@ -144,6 +145,7 @@ export function* runQuery(action: RunQueryAction) {
       );
       yield notificationManager.showNotification({
         type: 'error',
+        translateMessage: false,
         message: body,
       });
     }
@@ -200,6 +202,7 @@ export function* saveQuery({ payload }: SaveQueryAction) {
         yield notificationManager.showNotification({
           type: 'error',
           message: error.body,
+          translateMessage: false,
           autoDismiss: true,
         });
       }
