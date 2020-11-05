@@ -37,6 +37,8 @@ import {
   DEFAULT_EXTRACTION_LIMIT,
 } from './constants';
 
+import { inheritFromPreviousStep } from './utils';
+
 import { ReducerState, QueryActions } from './types';
 
 export const initialState: ReducerState = {
@@ -154,7 +156,11 @@ export const queryReducer = (
         ...state,
         steps: [
           ...state.steps,
-          { ...DEFAULT_FUNNEL_STEP, id: action.payload.id },
+          {
+            ...DEFAULT_FUNNEL_STEP,
+            ...inheritFromPreviousStep(state.steps),
+            id: action.payload.id,
+          },
         ],
       };
     case CLONE_FUNNEL_STEP:
