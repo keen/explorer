@@ -27,8 +27,12 @@ const ToastNotifications = () => {
               message,
               autoDismiss = true,
               showDismissButton,
+              translateMessage = true,
             } = meta;
-            addToast(t(message), {
+
+            const notificationMessage = translateMessage ? t(message) : message;
+
+            addToast(notificationMessage, {
               appearance: type,
               autoDismiss,
               showDismissButton,
