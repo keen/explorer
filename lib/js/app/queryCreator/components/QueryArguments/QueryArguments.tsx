@@ -59,6 +59,17 @@ const App: FC<Props> = () => {
           }}
         />
       </MenuItem>
+
+      {showField('percentile', analysis) && (
+        <MenuItemPercentile>
+          <Percentile
+            value={percentile}
+            onReset={() => dispatch(setPercentile(null))}
+            onChange={(value) => dispatch(setPercentile(value))}
+          />
+        </MenuItemPercentile>
+      )}
+
       {showField('eventCollection', analysis) && (
         <MenuItem>
           <EventCollection
@@ -80,16 +91,6 @@ const App: FC<Props> = () => {
             }}
           />
         </MenuItem>
-      )}
-
-      {showField('percentile', analysis) && (
-        <MenuItemPercentile>
-          <Percentile
-            value={percentile}
-            onReset={() => dispatch(setPercentile(null))}
-            onChange={(value) => dispatch(setPercentile(value))}
-          />
-        </MenuItemPercentile>
       )}
 
       {showField('timeframe', analysis) && (
