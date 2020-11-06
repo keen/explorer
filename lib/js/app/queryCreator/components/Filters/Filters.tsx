@@ -1,17 +1,24 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { v4 as uuid } from 'uuid';
 import { useTranslation } from 'react-i18next';
-import { ActionButton } from '@keen.io/ui-core';
+import { AnimatePresence } from 'framer-motion';
+import { ActionButton, Tooltip } from '@keen.io/ui-core';
 
 import Title from '../Title';
 
 import FiltersComponent from './FiltersComponent';
 
-import { ActionContainer } from './Filters.styles';
+import {
+  ActionContainer,
+  Wrapper,
+  TooltipContent,
+  TooltipMotion,
+} from './Filters.styles';
 
 import { getSchemas, getSchemaLoading } from '../../modules/events';
 
+import { TOOLTIP_MOTION } from '../../constants';
 import { AppState, Filter } from '../../types';
 
 type Props = {
@@ -45,32 +52,56 @@ const Filters: FC<Props> = ({
   const isSchemaLoading = useSelector((state: AppState) =>
     getSchemaLoading(state, collection)
   );
+  const [hint, showHint] = useState(false);
 
   return (
-    <div>
+    <>
       <Title isDisabled={!collection}>
         {t('query_creator_filters.filters')}
       </Title>
-      {isSchemaExist && !isSchemaLoading && (
-        <FiltersComponent
-          collection={collection}
-          filters={filters}
-          onReset={onReset && onReset}
-          onRemove={(id) => onRemove(id)}
-          onChange={(id, filter) => onChange(id, filter)}
-        />
-      )}
-      <ActionContainer hasSpacing={!!filters.length}>
-        <ActionButton
-          action="create"
-          isDisabled={!collection}
-          onClick={() => {
-            const filterId = uuid();
-            onClick(filterId);
-          }}
-        />
-      </ActionContainer>
-    </div>
+      <Wrapper
+        onMouseEnter={() => !collection && showHint(true)}
+        onMouseLeave={() => !collection && showHint(false)}
+      >
+        {isSchemaExist && !isSchemaLoading && (
+          <FiltersComponent
+            collection={collection}
+            filters={filters}
+            onReset={onReset && onReset}
+            onRemove={(id) => onRemove(id)}
+            onChange={(id, filter) => onChange(id, filter)}
+          />
+        )}
+        <ActionContainer hasSpacing={!!filters.length}>
+          <ActionButton
+            action="create"
+            isDisabled={!collection}
+            onClick={() => {
+              const filterId = uuid();
+              onClick(filterId);
+            }}
+          />
+        </ActionContainer>
+        {!collection && (
+          <AnimatePresence>
+            {hint && (
+              <TooltipMotion
+                {...TOOLTIP_MOTION}
+                data-testid="target-property-hint"
+              >
+                <Tooltip hasArrow={false} mode="dark">
+                  <TooltipContent>
+                    {t('query_creator_filters.select')}{' '}
+                    <strong>{t('query_creator_filters.event_stream')}</strong>{' '}
+                    {t('query_creator_filters.tooltip')}
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipMotion>
+            )}
+          </AnimatePresence>
+        )}
+      </Wrapper>
+    </>
   );
 };
 

@@ -1,13 +1,18 @@
 import React, { FC, useState, useRef, useEffect, useCallback } from 'react';
 import Sortable from 'sortablejs';
 import { v4 as uuid } from 'uuid';
-import { ActionButton } from '@keen.io/ui-core';
+import { useTranslation } from 'react-i18next';
+import { AnimatePresence } from 'framer-motion';
+import { ActionButton, Tooltip } from '@keen.io/ui-core';
 import { useSelector } from 'react-redux';
 import { useSearch } from '@keen.io/react-hooks';
 
 import {
   PropertySettings,
   SortableContainer,
+  Wrapper,
+  TooltipContent,
+  TooltipMotion,
 } from './ExtractionProperties.styles';
 import ExtractionTitle from '../ExtractionTitle';
 
@@ -18,6 +23,7 @@ import { SearchContext } from '../../../../contexts';
 import { getCollectionSchema } from '../../../../modules/events';
 import { createTree, mutateArray } from '../../../../utils';
 
+import { TOOLTIP_MOTION } from '../../../../constants';
 import { DRAG_DELAY, DRAG_ANIMATION_TIME } from './constants';
 
 import { AppState, ExtractionProperty } from '../../../../types';
@@ -36,9 +42,11 @@ const ExtractionProperties: FC<Props> = ({
   collection,
   onSetProperties,
 }) => {
+  const { t } = useTranslation();
   const [propertiesTree, setPropertiesTree] = useState(null);
   const [searchPropertiesPhrase, setSearchPhrase] = useState(null);
   const [expandTree, setTreeExpand] = useState(false);
+  const [hint, showHint] = useState(false);
 
   const propertiesRef = useRef(null);
   propertiesRef.current = properties;
@@ -150,44 +158,69 @@ const ExtractionProperties: FC<Props> = ({
         isFullExtraction={properties.length === 0}
         onClearProperties={() => onSetProperties(undefined)}
       />
-      <SearchContext.Provider value={{ expandTree, searchPropertiesPhrase }}>
-        <SortableContainer ref={sortableRef}>
-          {properties.map(({ id, propertyName }) => (
-            <PropertySettings key={id} data-testid="extraction-settings-item">
-              <SearchableProperty
-                isEditAllowed={!isDragged}
-                properties={propertiesTree ? propertiesTree : schemaTree}
-                property={propertyName}
-                onSearchProperties={searchHandler}
-                onSelectProperty={(propertyName) => {
-                  clearSearchHandler();
-                  updateProperty({ id, propertyName });
-                }}
-                onBlur={() => {
-                  if (!propertyName) removeProperty(id);
-                }}
-                onRemove={() => {
-                  clearSearchHandler();
-                  removeProperty(id);
-                }}
-              />
-            </PropertySettings>
-          ))}
-          <ActionButton
-            className="add-button"
-            isDisabled={!collection}
-            action="create"
-            onClick={() => {
-              const property = {
-                id: uuid(),
-                propertyName: '',
-              };
+      <Wrapper
+        onMouseEnter={() => !collection && showHint(true)}
+        onMouseLeave={() => !collection && showHint(false)}
+      >
+        <SearchContext.Provider value={{ expandTree, searchPropertiesPhrase }}>
+          <SortableContainer ref={sortableRef}>
+            {properties.map(({ id, propertyName }) => (
+              <PropertySettings key={id} data-testid="extraction-settings-item">
+                <SearchableProperty
+                  isEditAllowed={!isDragged}
+                  properties={propertiesTree ? propertiesTree : schemaTree}
+                  property={propertyName}
+                  onSearchProperties={searchHandler}
+                  onSelectProperty={(propertyName) => {
+                    clearSearchHandler();
+                    updateProperty({ id, propertyName });
+                  }}
+                  onBlur={() => {
+                    if (!propertyName) removeProperty(id);
+                  }}
+                  onRemove={() => {
+                    clearSearchHandler();
+                    removeProperty(id);
+                  }}
+                />
+              </PropertySettings>
+            ))}
+            <ActionButton
+              className="add-button"
+              isDisabled={!collection}
+              action="create"
+              onClick={() => {
+                const property = {
+                  id: uuid(),
+                  propertyName: '',
+                };
 
-              onSetProperties([...properties, property]);
-            }}
-          />
-        </SortableContainer>
-      </SearchContext.Provider>
+                onSetProperties([...properties, property]);
+              }}
+            />
+          </SortableContainer>
+        </SearchContext.Provider>
+        {!collection && (
+          <AnimatePresence>
+            {hint && (
+              <TooltipMotion
+                {...TOOLTIP_MOTION}
+                data-testid="target-property-hint"
+              >
+                <Tooltip hasArrow={false} mode="dark">
+                  <TooltipContent>
+                    {t('query_creator_extraction_properties.select')}{' '}
+                    <strong>
+                      {t('query_creator_extraction_properties.event_stream')}
+                    </strong>{' '}
+                    {t('query_creator_extraction_properties.tooltip')}
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipMotion>
+            )}
+          </AnimatePresence>
+        )}
+      </Wrapper>
     </div>
   );
 };

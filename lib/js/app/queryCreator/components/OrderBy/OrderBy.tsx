@@ -186,6 +186,7 @@ const OrderBy: FC<Props> = ({ collection }) => {
         {t('query_creator_order_by.title')}
       </Title>
       <Section
+        data-testid="order-by-wrapper"
         onMouseEnter={() => !showOrderOptions && showHint(true)}
         onMouseLeave={() => !showOrderOptions && showHint(false)}
       >
@@ -253,7 +254,21 @@ const OrderBy: FC<Props> = ({ collection }) => {
               <TooltipMotion {...TOOLTIP_MOTION} data-testid="orderby-hint">
                 <Tooltip hasArrow={false} mode="dark">
                   <TooltipContent>
-                    {t('query_creator_order_by.order_by_hint')}
+                    {collection ? (
+                      <span>
+                        {t('query_creator_order_by.define')}{' '}
+                        <strong>{t('query_creator_order_by.group_by')}</strong>{' '}
+                        {t('query_creator_order_by.order_result')}
+                      </span>
+                    ) : (
+                      <span>
+                        {t('query_creator_order_by.select')}{' '}
+                        <strong>
+                          {t('query_creator_order_by.event_stream')}
+                        </strong>{' '}
+                        {t('query_creator_order_by.tooltip')}
+                      </span>
+                    )}
                   </TooltipContent>
                 </Tooltip>
               </TooltipMotion>

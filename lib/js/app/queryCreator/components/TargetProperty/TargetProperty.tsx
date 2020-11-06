@@ -1,10 +1,16 @@
 import React, { FC, useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { Dropdown } from '@keen.io/ui-core';
+import { AnimatePresence } from 'framer-motion';
+import { Dropdown, Tooltip } from '@keen.io/ui-core';
 import { useSearch } from '@keen.io/react-hooks';
 
-import { Container, PropertyOverflow } from './TargetProperty.styles';
+import {
+  Container,
+  PropertyOverflow,
+  TooltipContent,
+  TooltipMotion,
+} from './TargetProperty.styles';
 import { createTree } from '../../utils';
 
 import Title from '../Title';
@@ -16,6 +22,7 @@ import DropableContainer, { Variant } from '../DropableContainer';
 import { getEventPath } from '../../utils';
 import { getCollectionSchema, getSchemas } from '../../modules/events';
 
+import { TOOLTIP_MOTION } from '../../constants';
 import { SEPARATOR } from './constants';
 
 import { AppState } from '../../types';
@@ -42,6 +49,7 @@ const TargetProperty: FC<Props> = ({
 }) => {
   const { t } = useTranslation();
   const [expandTree, setTreeExpand] = useState(false);
+  const [hint, showHint] = useState(false);
 
   const {
     schema: collectionSchema,
@@ -101,7 +109,12 @@ const TargetProperty: FC<Props> = ({
     searchPhrase && propertiesTree && !Object.keys(propertiesTree).length;
 
   return (
-    <Container ref={containerRef}>
+    <Container
+      data-testid="target-property-wrapper"
+      onMouseEnter={() => !collection && showHint(true)}
+      onMouseLeave={() => !collection && showHint(false)}
+      ref={containerRef}
+    >
       <Title
         isDisabled={!collection}
         onClick={() => !isOpen && setOpen(true)}
@@ -151,6 +164,26 @@ const TargetProperty: FC<Props> = ({
           />
         )}
       </Dropdown>
+      {!collection && (
+        <AnimatePresence>
+          {hint && (
+            <TooltipMotion
+              {...TOOLTIP_MOTION}
+              data-testid="target-property-hint"
+            >
+              <Tooltip hasArrow={false} mode="dark">
+                <TooltipContent>
+                  {t('query_creator_target_property.select')}{' '}
+                  <strong>
+                    {t('query_creator_target_property.event_stream')}
+                  </strong>{' '}
+                  {t('query_creator_target_property.first')}
+                </TooltipContent>
+              </Tooltip>
+            </TooltipMotion>
+          )}
+        </AnimatePresence>
+      )}
     </Container>
   );
 };

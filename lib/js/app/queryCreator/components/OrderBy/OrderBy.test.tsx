@@ -1,6 +1,10 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { render as rtlRender, fireEvent } from '@testing-library/react';
+import {
+  render as rtlRender,
+  fireEvent,
+  waitFor,
+} from '@testing-library/react';
 import configureStore from 'redux-mock-store';
 
 import { createTree, createCollection } from '../../utils';
@@ -9,7 +13,7 @@ import OrderBy from './OrderBy';
 
 import { DEFAULT_ORDER_SETTINGS } from './constants';
 
-const render = (storeState: any = {}) => {
+const render = (storeState: any = {}, overProps: any = {}) => {
   const mockStore = configureStore([]);
   const collectionSchema = { country: 'string', city: 'string' };
   const state = {
@@ -29,7 +33,7 @@ const render = (storeState: any = {}) => {
 
   const wrapper = rtlRender(
     <Provider store={store}>
-      <OrderBy collection="collection" />
+      <OrderBy {...overProps} />
     </Provider>
   );
 
@@ -50,7 +54,7 @@ test('allows user to set order by property', () => {
   const {
     wrapper: { getByTestId, getByText },
     store,
-  } = render(storeState);
+  } = render(storeState, { collection: 'collection' });
 
   const propertyItem = getByTestId('orderBy-property-item');
   fireEvent.click(propertyItem);
@@ -87,7 +91,7 @@ test('allows user to set order by direction', () => {
   const {
     wrapper: { getByText },
     store,
-  } = render(storeState);
+  } = render(storeState, { collection: 'collection' });
 
   const defaultOrderDirection = getByText('ASC');
   fireEvent.click(defaultOrderDirection);
@@ -124,7 +128,7 @@ test('allows user to remove order by settings', () => {
   const {
     wrapper: { container },
     store,
-  } = render(storeState);
+  } = render(storeState, { collection: 'collection' });
 
   const removeButton = container.querySelector('button:not(.add-button)');
   fireEvent.click(removeButton);
@@ -139,4 +143,44 @@ test('allows user to remove order by settings', () => {
       },
     ]
   `);
+});
+
+test('should render tooltip with notification about the group by', async () => {
+  const storeState = {
+    query: {
+      groupBy: [],
+    },
+  };
+
+  const {
+    wrapper: { getByTestId, getByText },
+  } = render(storeState, { collection: 'collection' });
+
+  const wrapper = getByTestId('order-by-wrapper');
+  fireEvent.mouseEnter(wrapper);
+
+  waitFor(() => {
+    expect(
+      getByText('query_creator_order_by.order_result')
+    ).toBeInTheDocument();
+  });
+});
+
+test('should render tooltip with notification about the event stream', async () => {
+  const storeState = {
+    query: {
+      groupBy: [],
+    },
+  };
+
+  const {
+    wrapper: { getByTestId, getByText },
+  } = render(storeState);
+
+  const wrapper = getByTestId('order-by-wrapper');
+  fireEvent.mouseEnter(wrapper);
+
+  waitFor(() => {
+    expect(getByText('query_creator_order_by.tooltip')).toBeInTheDocument();
+  });
 });

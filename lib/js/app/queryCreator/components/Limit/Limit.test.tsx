@@ -1,17 +1,21 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { render as rtlRender, fireEvent } from '@testing-library/react';
+import {
+  render as rtlRender,
+  fireEvent,
+  waitFor,
+} from '@testing-library/react';
 import configureStore from 'redux-mock-store';
 
 import Limit from './Limit';
 
-const render = (storeState: any = {}) => {
+const render = (storeState: any = {}, overProps: any = {}) => {
   const mockStore = configureStore([]);
   const store = mockStore({ ...storeState });
 
   const wrapper = rtlRender(
     <Provider store={store}>
-      <Limit />
+      <Limit {...overProps} />
     </Provider>
   );
 
@@ -130,4 +134,47 @@ test('allows user to remove limit', () => {
       },
     ]
   `);
+});
+
+test('should render tooltip with notification about the order', async () => {
+  const {
+    wrapper: { getByTestId, getByText },
+  } = render(
+    {
+      query: {
+        limit: 100,
+        groupBy: ['category'],
+        orderBy: [{ propertyName: 'result', direction: 'DESC' }],
+      },
+    },
+    {
+      collection: 'collection',
+    }
+  );
+
+  const wrapper = getByTestId('limit-wrapper');
+  fireEvent.mouseEnter(wrapper);
+
+  waitFor(() => {
+    expect(getByText('query_creator_limit.limit_result')).toBeInTheDocument();
+  });
+});
+
+test('should render tooltip with notification about the event stream', async () => {
+  const {
+    wrapper: { getByTestId, getByText },
+  } = render({
+    query: {
+      limit: 100,
+      groupBy: ['category'],
+      orderBy: [{ propertyName: 'result', direction: 'DESC' }],
+    },
+  });
+
+  const wrapper = getByTestId('limit-wrapper');
+  fireEvent.mouseEnter(wrapper);
+
+  waitFor(() => {
+    expect(getByText('query_creator_limit.tooltip')).toBeInTheDocument();
+  });
 });

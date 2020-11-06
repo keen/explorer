@@ -1,6 +1,11 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { render as rtlRender, fireEvent, act } from '@testing-library/react';
+import {
+  render as rtlRender,
+  fireEvent,
+  act,
+  waitFor,
+} from '@testing-library/react';
 import configureStore from 'redux-mock-store';
 
 import TargetProperty from './TargetProperty';
@@ -194,4 +199,35 @@ test('reset target property settings', async () => {
   unmount();
 
   expect(props.onChange).toHaveBeenCalledWith(null);
+});
+
+test('should render tooltip', async () => {
+  const collectionSchema = { date: 'String', userId: 'String' };
+  const storeState = {
+    query: {
+      targetProperty: 'date',
+    },
+    events: {
+      schemas: {
+        purchases: {
+          schema: collectionSchema,
+          tree: createTree(collectionSchema),
+          list: createCollection(collectionSchema),
+        },
+      },
+    },
+  };
+
+  const {
+    wrapper: { getByText, getByTestId },
+  } = render(storeState);
+
+  const wrapper = getByTestId('target-property-wrapper');
+  fireEvent.mouseEnter(wrapper);
+
+  waitFor(() => {
+    expect(
+      getByText('query_creator_target_property.event_stream')
+    ).toBeInTheDocument();
+  });
 });

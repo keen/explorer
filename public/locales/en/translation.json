@@ -160,7 +160,10 @@
     "label": "Target property",
     "placeholder": "Select event property",
     "search_placeholder": "Search",
-    "empty_search_results": "No property found with this name"
+    "empty_search_results": "No property found with this name",
+    "select": "Select",
+    "event_stream": "Event Stream",
+    "first": "first"
   },
   "query_creator_timeframe": {
     "label": "Timeframe",
@@ -225,7 +228,10 @@
     "unit_placeholder": "Unit placeholder"
   },
   "query_creator_filters": {
-    "filters": "Filters"
+    "filters": "Filters",
+    "select": "Select",
+    "event_stream": "Event Stream",
+    "tooltip": "so we know what properties are available"
   },
   "query_creator_filter_boolean": {
     "placeholder": "value"
@@ -270,7 +276,10 @@
     "add_step": "Add step"
   },
   "query_creator_group_by": {
-    "title": "Group by"
+    "title": "Group by",
+    "select": "Select",
+    "event_stream": "Event Stream",
+    "tooltip": "so we know what properties are available"
   },
   "query_creator_interval": {
     "label": "Interval",
@@ -279,11 +288,21 @@
   },
   "query_creator_limit": {
     "label": "Limit results to",
-    "placeholder": "Limit to"
+    "placeholder": "Limit to",
+    "select": "Select",
+    "event_stream": "Event Stream",
+    "tooltip": "so we know what properties are available",
+    "order": "Order",
+    "limit_result": "your data first to limit the result"
   },
   "query_creator_order_by": {
     "title": "Order by",
-    "order_by_hint": "You must specify groupBy settings to use orderBy"
+    "select": "Select",
+    "event_stream": "Event Stream",
+    "tooltip": "so we know what properties are available",
+    "define": "Define",
+    "group_by": "group by",
+    "order_result": "first to order the result"
   },
   "query_creator_order_by_property": {
     "placeholder": "property",
@@ -314,5 +333,10 @@
   "query_creator_timezone": {
     "placeholder": "Select timezone",
     "label": "Timezone"
+  },
+  "query_creator_extraction_properties": {
+    "select": "Select",
+    "event_stream": "Event Stream",
+    "tooltip": "so we know what properties are available"
   }
 }

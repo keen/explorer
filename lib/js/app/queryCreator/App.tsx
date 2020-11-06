@@ -85,7 +85,7 @@ const App: FC<Props> = () => {
             )}
             {showField('limit', analysis) && (
               <LimitContainer>
-                <Limit />
+                <Limit collection={collection} />
               </LimitContainer>
             )}
           </ModifiersSettings>

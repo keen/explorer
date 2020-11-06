@@ -121,3 +121,27 @@ test('should render title', () => {
   const title = getByText('query_creator_group_by.title');
   expect(title).toBeInTheDocument();
 });
+
+test('should render tooltip', async () => {
+  const storeState = {
+    query: {
+      groupBy: ['date', 'userId'],
+    },
+    events: {
+      schemas: {
+        purchases: { date: 'String', userId: 'String' },
+      },
+    },
+  };
+
+  const {
+    wrapper: { getByTestId, getByText },
+  } = render(storeState);
+
+  const wrapper = getByTestId('group-by-wrapper');
+  fireEvent.mouseEnter(wrapper);
+
+  waitFor(() => {
+    expect(getByText('query_creator_group_by.tooltip')).toBeInTheDocument();
+  });
+});
