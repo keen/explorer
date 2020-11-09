@@ -28,10 +28,3 @@ export const TooltipMotion = styled(motion.div)`
   top: 100%;
   z-index: ${UI_LAYERS.tooltip};
 `;
-
-export const TooltipContent = styled.div`
-  width: 120px;
-  color: ${colors.black[100]};
-  font-size: 14px;
-  font-family: Lato Regular, sans-serif;
-`;

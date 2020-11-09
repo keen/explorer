@@ -16,11 +16,11 @@ import { AnimatePresence } from 'framer-motion';
 import { ActionButton, Tooltip } from '@keen.io/ui-core';
 import { useSearch } from '@keen.io/react-hooks';
 
+import TooltipContent from '../TooltipContent';
 import {
   Section,
   GroupSettings,
   SortableContainer,
-  TooltipContent,
   TooltipMotion,
 } from './GroupBy.styles';
 

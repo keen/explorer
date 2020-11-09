@@ -12,6 +12,7 @@ import {
 } from '@keen.io/ui-core';
 import { Icon } from '@keen.io/icons';
 
+import TooltipContent from '../TooltipContent';
 import {
   Container,
   QueryName,
@@ -20,7 +21,6 @@ import {
   Menu,
   MenuItem,
   TooltipMotion,
-  TooltipContent,
   BackLink,
   BackLinkText,
   WrapperHorizontal,
@@ -152,7 +152,7 @@ const EditorNavigation: FC<Props> = ({ onSaveQuery }) => {
             {settingsTooltip && (
               <TooltipMotion {...TOOLTIP_MOTION}>
                 <Tooltip hasArrow={false} mode="light">
-                  <TooltipContent>
+                  <TooltipContent color={colors.black[500]}>
                     {t('editor.settings_tooltip')}
                   </TooltipContent>
                 </Tooltip>

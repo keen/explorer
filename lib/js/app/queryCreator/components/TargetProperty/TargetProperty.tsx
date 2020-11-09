@@ -8,11 +8,11 @@ import { useSearch } from '@keen.io/react-hooks';
 import {
   Container,
   PropertyOverflow,
-  TooltipContent,
   TooltipMotion,
 } from './TargetProperty.styles';
 import { createTree } from '../../utils';
 
+import TooltipContent from '../TooltipContent';
 import Title from '../Title';
 import EmptySearch from '../EmptySearch';
 import PropertyPath from '../PropertyPath';

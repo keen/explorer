@@ -8,13 +8,8 @@ import { ActionButton, Tooltip } from '@keen.io/ui-core';
 import Title from '../Title';
 
 import FiltersComponent from './FiltersComponent';
-
-import {
-  ActionContainer,
-  Wrapper,
-  TooltipContent,
-  TooltipMotion,
-} from './Filters.styles';
+import TooltipContent from '../TooltipContent';
+import { ActionContainer, Wrapper, TooltipMotion } from './Filters.styles';
 
 import { getSchemas, getSchemaLoading } from '../../modules/events';
 

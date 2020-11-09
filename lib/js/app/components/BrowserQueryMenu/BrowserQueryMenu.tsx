@@ -4,14 +4,15 @@ import { useTranslation } from 'react-i18next';
 import { AnimatePresence } from 'framer-motion';
 import { Button, CircleButton, Dropdown, Tooltip } from '@keen.io/ui-core';
 import { Icon } from '@keen.io/icons';
+import { colors } from '@keen.io/colors';
 
+import TooltipContent from '../TooltipContent';
 import {
   Container,
   ButtonWrapper,
   BasicActions,
   ActionsContainer,
   ContextActions,
-  TooltipContent,
   TooltipMotion,
 } from './BrowserQueryMenu.styles';
 
@@ -92,7 +93,7 @@ const BrowserQueryMenu: FC<Props> = ({ onEditQuery, onRemoveQuery }) => {
             {settingsTooltip && (
               <TooltipMotion {...TOOLTIP_MOTION}>
                 <Tooltip hasArrow={false} mode="light">
-                  <TooltipContent>
+                  <TooltipContent color={colors.black[500]}>
                     {t('browser_query_menu.settings_tooltip')}
                   </TooltipContent>
                 </Tooltip>

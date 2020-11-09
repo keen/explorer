@@ -3,11 +3,11 @@ import { AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { Tooltip } from '@keen.io/ui-core';
 
+import TooltipContent from '../TooltipContent';
 import {
   Container,
   Units,
   Input,
-  TooltipContent,
   TooltipMotion,
 } from './CacheRefreshRate.styles';
 
@@ -76,7 +76,7 @@ const CacheRefreshRate: FC<Props> = ({
         {showHint && (
           <TooltipMotion {...TOOLTIP_MOTION} data-testid="refresh-rate-hint">
             <Tooltip hasArrow={false} mode="dark">
-              <TooltipContent>
+              <TooltipContent width={220}>
                 {t('cache_refresh_rate.refresh_rate_hint')}
               </TooltipContent>
             </Tooltip>

@@ -20,12 +20,12 @@ import { SearchContext } from '../../contexts';
 import { createTree } from '../../utils';
 
 import Title from '../Title';
+import TooltipContent from '../TooltipContent';
 import { OrderByProperty } from './components';
 import {
   Section,
   SortableContainer,
   OrderByContainer,
-  TooltipContent,
   TooltipMotion,
 } from './OrderBy.styles';
 

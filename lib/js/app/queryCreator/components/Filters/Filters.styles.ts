@@ -1,6 +1,5 @@
 import styled, { css } from 'styled-components';
 import { motion } from 'framer-motion';
-import { colors } from '@keen.io/colors';
 import { UI_LAYERS } from '@keen.io/ui-core';
 
 export const Operator = styled.div`
@@ -22,13 +21,6 @@ export const ActionContainer = styled.div<{ hasSpacing: boolean }>`
 export const Wrapper = styled.div`
   position: relative;
   display: inline-block;
-`;
-
-export const TooltipContent = styled.div`
-  width: 220px;
-  font-family: 'Lato Regular', sans-serif;
-  font-size: 14px;
-  color: ${colors.white[500]};
 `;
 
 export const TooltipMotion = styled(motion.div)`

@@ -5,8 +5,8 @@ import { AnimatePresence } from 'framer-motion';
 import { Input, Tooltip } from '@keen.io/ui-core';
 
 import Title from '../Title';
-
-import { Wrapper, TooltipMotion, TooltipContent } from './Limit.styles';
+import TooltipContent from '../TooltipContent';
+import { Wrapper, TooltipMotion } from './Limit.styles';
 
 import {
   setLimit,

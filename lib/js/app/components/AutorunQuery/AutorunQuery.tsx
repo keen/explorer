@@ -4,11 +4,11 @@ import { Toggle, Tooltip } from '@keen.io/ui-core';
 import { Icon } from '@keen.io/icons';
 import { colors } from '@keen.io/colors';
 
+import TooltipContent from '../TooltipContent';
 import {
   Container,
   HintContainer,
   Label,
-  TooltipContent,
   TooltipMotion,
 } from './AutorunQuery.styles';
 
@@ -45,7 +45,9 @@ const AutorunQuery: FC<Props> = ({
           {showTooltip && (
             <TooltipMotion {...TOOLTIP_MOTION}>
               <Tooltip hasArrow={false}>
-                <TooltipContent>{tooltipMessage}</TooltipContent>
+                <TooltipContent width={120} color={colors.black[100]}>
+                  {tooltipMessage}
+                </TooltipContent>
               </Tooltip>
             </TooltipMotion>
           )}

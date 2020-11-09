@@ -7,11 +7,11 @@ import { ActionButton, Tooltip } from '@keen.io/ui-core';
 import { useSelector } from 'react-redux';
 import { useSearch } from '@keen.io/react-hooks';
 
+import TooltipContent from '../../../TooltipContent';
 import {
   PropertySettings,
   SortableContainer,
   Wrapper,
-  TooltipContent,
   TooltipMotion,
 } from './ExtractionProperties.styles';
 import ExtractionTitle from '../ExtractionTitle';
