@@ -1,9 +1,8 @@
 {
-  "name": "keen-explorer",
+  "name": "@keen.io/explorer",
   "description": "Data Explorer by Keen IO",
-  "version": "7.0.2",
+  "version": "1.0.0",
   "license": "MIT",
-  "bucket-name": "keen-js",
   "main": "dist/keen-explorer.umd.js",
   "browser": "dist/keen-explorer.umd.js",
   "files": [
@@ -173,9 +172,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:keen/explorer.git"
+    "url": "git+https://github.com/keen/keen.git"
   },
-  "bugs": "https://github.com/keen/explorer/issues",
+  "bugs": {
+    "url": "https://github.com/keen/keen/issues"
+  },
   "author": "Keen IO <team@keen.io> (https://keen.io/)",
   "homepage": "https://keen.io",
   "keywords": [
