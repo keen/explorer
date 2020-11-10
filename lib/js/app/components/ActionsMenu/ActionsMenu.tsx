@@ -7,13 +7,14 @@ import { DropdownMenu, Tooltip } from '@keen.io/ui-core';
 import { getQueryResults, cloneSavedQuery } from '../../modules/queries';
 import { AppContext } from '../../contexts';
 
+import TooltipContent from '../TooltipContent';
+
 import {
   Container,
   DeleteQueryItem,
   MutedText,
   ExportDataWrapper,
   ExportDataLinks,
-  TooltipContent,
   TooltipMotion,
 } from './ActionsMenu.styles';
 

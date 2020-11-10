@@ -16,6 +16,7 @@ import Card from './Card';
 import RadioGroup from './RadioGroup';
 import Tabs from './Tabs';
 import Title from './Title';
+import TooltipContent from './TooltipContent';
 
 export {
   Analysis,
@@ -36,4 +37,5 @@ export {
   RadioGroup,
   Title,
   Tabs,
+  TooltipContent,
 };

@@ -11,11 +11,18 @@ import Sortable from 'sortablejs';
 import { useSelector, useDispatch } from 'react-redux';
 import shallowEqual from 'shallowequal';
 import { useTranslation } from 'react-i18next';
+import { AnimatePresence } from 'framer-motion';
 
-import { ActionButton } from '@keen.io/ui-core';
+import { ActionButton, Tooltip } from '@keen.io/ui-core';
 import { useSearch } from '@keen.io/react-hooks';
 
-import { Section, GroupSettings, SortableContainer } from './GroupBy.styles';
+import TooltipContent from '../TooltipContent';
+import {
+  Section,
+  GroupSettings,
+  SortableContainer,
+  TooltipMotion,
+} from './GroupBy.styles';
 
 import SearchableProperty from '../SearchableProperty';
 import Title from '../Title';
@@ -41,6 +48,7 @@ import {
 } from '../../modules/query';
 import { getCollectionSchema } from '../../modules/events';
 
+import { TOOLTIP_MOTION } from '../../constants';
 import { DRAG_DELAY, DRAG_ANIMATION_TIME } from './constants';
 
 import { AppState } from '../../types';
@@ -55,6 +63,7 @@ const GroupBy: FC<Props> = ({ collection }) => {
   const [propertiesTree, setPropertiesTree] = useState(null);
   const [searchPropertiesPhrase, setSearchPhrase] = useState(null);
   const [expandTree, setTreeExpand] = useState(false);
+  const [hint, showHint] = useState(false);
 
   const dispatch = useDispatch();
   const groups: string[] = useSelector((state: AppState) => {
@@ -181,11 +190,15 @@ const GroupBy: FC<Props> = ({ collection }) => {
   }, []);
 
   return (
-    <div>
+    <>
       <Title isDisabled={!eventCollection}>
         {t('query_creator_group_by.title')}
       </Title>
-      <Section>
+      <Section
+        data-testid="group-by-wrapper"
+        onMouseEnter={() => !eventCollection && showHint(true)}
+        onMouseLeave={() => !eventCollection && showHint(false)}
+      >
         <SearchContext.Provider value={{ expandTree, searchPropertiesPhrase }}>
           <SortableContainer ref={sortableRef}>
             {state.map(({ property, id }) => (
@@ -217,8 +230,23 @@ const GroupBy: FC<Props> = ({ collection }) => {
             />
           </SortableContainer>
         </SearchContext.Provider>
+        {!eventCollection && (
+          <AnimatePresence>
+            {hint && (
+              <TooltipMotion {...TOOLTIP_MOTION} data-testid="group-by-hint">
+                <Tooltip hasArrow={false} mode="dark">
+                  <TooltipContent>
+                    {t('query_creator_group_by.select')}{' '}
+                    <strong>{t('query_creator_group_by.event_stream')}</strong>{' '}
+                    {t('query_creator_group_by.tooltip')}
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipMotion>
+            )}
+          </AnimatePresence>
+        )}
       </Section>
-    </div>
+    </>
   );
 };
 

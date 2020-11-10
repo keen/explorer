@@ -28,15 +28,6 @@ export const TooltipMotion = styled(motion.div)`
   z-index: ${UI_LAYERS.tooltip};
 `;
 
-export const TooltipContent = styled.div`
-  font-family: 'Lato Regular', sans-serif;
-  font-size: 14px;
-  line-height: 17px;
-  white-space: nowrap;
-
-  color: ${colors.white[500]};
-`;
-
 export const ExportDataWrapper = styled.div`
   position: relative;
 `;

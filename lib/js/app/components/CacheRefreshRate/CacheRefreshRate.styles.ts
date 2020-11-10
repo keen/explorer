@@ -41,12 +41,6 @@ export const Input = styled.input`
   }
 `;
 
-export const TooltipContent = styled.div`
-  width: 220px;
-  font-family: 'Lato Regular', sans-serif;
-  color: ${colors.white[500]};
-`;
-
 export const TooltipMotion = styled(motion.div)`
   position: absolute;
   left: 100%;
