@@ -172,11 +172,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/keen/keen.git"
+    "url": "git@github.com:keen/explorer.git"
   },
-  "bugs": {
-    "url": "https://github.com/keen/keen/issues"
-  },
+  "bugs": "https://github.com/keen/explorer/issues",
   "author": "Keen IO <team@keen.io> (https://keen.io/)",
   "homepage": "https://keen.io",
   "keywords": [
