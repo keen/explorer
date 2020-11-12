@@ -193,7 +193,7 @@ exports[`should render query summary for funnels 1`] = `
   border: 1px solid #EDEDED;
 }
 
-.c8 + .c7 {
+.c7 + .c7 {
   border-top: none;
 }
 
