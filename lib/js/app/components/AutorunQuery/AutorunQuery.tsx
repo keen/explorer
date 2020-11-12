@@ -45,7 +45,11 @@ const AutorunQuery: FC<Props> = ({
           {showTooltip && (
             <TooltipMotion {...TOOLTIP_MOTION}>
               <Tooltip hasArrow={false}>
-                <TooltipContent width={120} color={colors.black[100]}>
+                <TooltipContent
+                  width={120}
+                  color={colors.black[100]}
+                  enableWrap
+                >
                   {tooltipMessage}
                 </TooltipContent>
               </Tooltip>
