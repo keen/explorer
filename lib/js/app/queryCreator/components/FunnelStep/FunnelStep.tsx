@@ -216,7 +216,7 @@ const FunnelStep: FC<Props> = ({
               />
             </Item>
           </Wrapper>
-          <Wrapper>
+          <Wrapper display="block">
             <Filters
               collection={eventCollection}
               filters={filters}

@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components';
+import { layout, LayoutProps } from 'styled-system';
 import { colors } from '@keen.io/colors';
 import Card from '../Card';
 
@@ -18,11 +19,13 @@ export const Item = styled.div`
   max-width: 320px;
 `;
 
-export const Wrapper = styled.div`
+export const Wrapper = styled.div<LayoutProps>`
   display: flex;
   flex-direction: row;
   align-items: center;
   padding: 10px 0 20px 0;
+
+  ${layout}
 
   ${SmallItem} + ${SmallItem},
   ${Item} + ${SmallItem} {
