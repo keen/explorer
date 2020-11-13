@@ -1613,7 +1613,7 @@
     styled-components "^5.1.0"
     styled-system "5.1.5"
 
-"@keen.io/ui-core@^2.5.10", "@keen.io/ui-core@^2.5.15":
+"@keen.io/ui-core@^2.5.15":
   version "2.5.15"
   resolved "https://registry.yarnpkg.com/@keen.io/ui-core/-/ui-core-2.5.15.tgz#98f350b82f4976fa1ef585afa11b85c84b4814b5"
   integrity sha512-GkMaAL6/ilLcsesRT9n3DSWDWBpRLpGklG08slp6svBrPE3h6Ia2ZYqFv0cOaNIx1k2l9dQoi7bPvMRpyW+GPA==
