@@ -133,7 +133,7 @@ const BrowserQueryMenu: FC<Props> = ({ onEditQuery, onRemoveQuery }) => {
             {actionsTooltip && (
               <TooltipMotion {...TOOLTIP_MOTION}>
                 <Tooltip hasArrow={false} mode="light">
-                  <TooltipContent>
+                  <TooltipContent color={colors.black[500]}>
                     {t('browser_query_menu.actions_tooltip')}
                   </TooltipContent>
                 </Tooltip>

@@ -192,7 +192,9 @@ const EditorNavigation: FC<Props> = ({ onSaveQuery }) => {
             {actionsTooltip && (
               <TooltipMotion {...TOOLTIP_MOTION}>
                 <Tooltip hasArrow={false} mode="light">
-                  <TooltipContent>{t('editor.actions_tooltip')}</TooltipContent>
+                  <TooltipContent color={colors.black[500]}>
+                    {t('editor.actions_tooltip')}
+                  </TooltipContent>
                 </Tooltip>
               </TooltipMotion>
             )}
