@@ -76,7 +76,7 @@ const CacheRefreshRate: FC<Props> = ({
         {showHint && (
           <TooltipMotion {...TOOLTIP_MOTION} data-testid="refresh-rate-hint">
             <Tooltip hasArrow={false} mode="dark">
-              <TooltipContent width={220}>
+              <TooltipContent width={220} enableWrap>
                 {t('cache_refresh_rate.refresh_rate_hint')}
               </TooltipContent>
             </Tooltip>
