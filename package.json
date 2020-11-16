@@ -51,7 +51,7 @@
     "@keen.io/pubsub": "^1.1.0",
     "@keen.io/react-hooks": "^1.0.1",
     "@keen.io/toast-notifications": "^1.1.2",
-    "@keen.io/ui-core": "^2.5.10",
+    "@keen.io/ui-core": "^2.5.15",
     "@keen.io/widget-picker": "^1.2.19",
     "camelcase-keys": "^6.2.2",
     "core-js": "^3.6.5",
