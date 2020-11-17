@@ -338,5 +338,19 @@
     "select": "Select",
     "event_stream": "Event Stream",
     "tooltip": "so we know what properties are available"
+  },
+  "query_creator_analysis_groups": {
+    "average": "Average value for a numeric target property.<br/><br/>Non-numeric values will be ignored.",
+    "count": "Total number of events in a given stream.",
+    "count_unique": "Number of events with unique values for the target property in a given stream.",
+    "extraction": "Return events in the given stream with values for selected properties.<br/><br/>Results can be shown in a table or sent to an email.",
+    "funnel": "Return the number of unique actors that meet the criteria defined in each step.<br/><br/>\"Actors\" could mean users, devices, or any other identifiers.",
+    "maximum": "Maximum of all numeric values for a target property.<br/><br/>Non-numeric values will be ignored.",
+    "median": "Median of all numeric values for a target property.<br/><br/>Non-numeric values will be ignored.",
+    "minimum": "Minimum of all numeric values for a target property.<br/><br/>Non-numeric values will be ignored.",
+    "percentile": "Numeric value of a target property for a specified percentile.<br/><br/>Non-numeric values will be ignored.",
+    "select_unique": "List of unique values found for a target property.",
+    "standard_deviation": "Standard deviation of all numeric values for a target property.<br/><br/>Non-numeric values will be ignored.",
+    "sum": "Sum of all numeric values for a given property.<br/><br/>Non-numeric values will be ignored."
   }
 }

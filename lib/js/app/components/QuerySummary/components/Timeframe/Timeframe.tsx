@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 
+import { Timeframe, Timezones } from '@keen.io/query-creator';
 import AbsoluteTimeframe from '../AbsoluteTimeframe';
-import { Timeframe, Timezones } from '../../../../queryCreator';
 
 type Props = {
   timeframe: Timeframe;

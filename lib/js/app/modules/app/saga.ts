@@ -63,7 +63,7 @@ import {
   SET_QUERY_EVENT,
   NEW_QUERY_EVENT,
   UPDATE_VISUALIZATION_TYPE,
-} from '../../queryCreator';
+} from '@keen.io/query-creator';
 import { PUBSUB_CONTEXT, NOTIFICATION_MANAGER_CONTEXT } from '../../constants';
 
 import {
@@ -102,7 +102,7 @@ import {
   QUERY_AUTORUN_KEY,
   UPDATE_VISUALIZATION,
 } from './constants';
-import { SET_CHART_SETTINGS } from '../../queryCreator/constants';
+import { SET_CHART_SETTINGS } from '@keen.io/query-creator';
 
 const createScreenResizeChannel = () =>
   eventChannel((emitter) => {

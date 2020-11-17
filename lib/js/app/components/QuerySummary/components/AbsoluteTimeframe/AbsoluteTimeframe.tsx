@@ -2,10 +2,8 @@ import React, { FC } from 'react';
 import moment from 'moment-timezone';
 import { useTranslation } from 'react-i18next';
 
-import { getTimezoneValue } from '../../../../queryCreator';
+import { getTimezoneValue, Timezones } from '@keen.io/query-creator';
 import { Container, Separator } from './AbsoluteTimeframe.styles';
-
-import { Timezones } from '../../../../queryCreator';
 
 type Props = {
   timeframe: {

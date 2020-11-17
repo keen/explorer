@@ -1,4 +1,4 @@
-import { Timeframe, Timezones } from '../../queryCreator';
+import { Timeframe, Timezones } from '@keen.io/query-creator';
 
 export type Filter = {
   operator: string;
