@@ -2,7 +2,6 @@ import React, { FC, useContext, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import QueryCreator from '@keen.io/query-creator';
 
-// import QueryCreator from '../../queryCreator';
 import { AppContext } from '../../contexts';
 
 import { queryEditorMounted } from '../../modules/app';
