@@ -6,6 +6,7 @@ import { colors } from '@keen.io/colors';
 export const Container = styled.div`
   display: flex;
   align-items: center;
+  justify-content: space-between;
   height: 40px;
 `;
 
@@ -19,6 +20,7 @@ export const CacheSwitch = styled.label<{
 
   font-size: 14px;
   font-family: 'Lato Regular', sans-serif;
+  line-height: 1;
   color: ${(props) =>
     props.disabled ? colors.gray['500'] : colors.black['500']};
 `;
@@ -26,7 +28,7 @@ export const CacheSwitch = styled.label<{
 export const CacheLabel = styled.div<{
   disabled: boolean;
 }>`
-  margin-left: 7px;
+  margin: 0 0 0 7px;
   color: ${colors.black[100]};
   font-family: 'Lato Bold', sans-serif;
   font-size: 14px;
@@ -66,4 +68,8 @@ export const CacheLimit = styled.div`
   font-size: 14px;
   font-family: 'Lato Regular', sans-serif;
   color: ${colors.blue['500']};
+`;
+
+export const StyledLabel = styled.label`
+  margin: 0;
 `;
