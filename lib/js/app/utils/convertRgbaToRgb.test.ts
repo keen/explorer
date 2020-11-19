@@ -1,4 +1,4 @@
-import { convertRgbaToRgb } from './convertRGBAtoRGB';
+import { convertRgbaToRgb } from './convertRgbaToRgb';
 
 test('should convert RGBA to RGB', () => {
   const color = { red: 10, green: 20, blue: 30, alpha: 0.25 };
