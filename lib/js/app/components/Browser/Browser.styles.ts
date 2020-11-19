@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { transparentize } from 'polished';
+import { transparentize, parseToRgb } from 'polished';
 import {
   space,
   layout,
@@ -9,7 +9,9 @@ import {
   SpaceProps,
 } from 'styled-system';
 import { colors } from '@keen.io/colors';
+import { convertRgbaToRgb } from '../../utils';
 
+import { RgbaColor } from 'polished/lib/types/color';
 import { BACKGROUND_MAIN } from '../../constants';
 
 export const ScrollableContainer = styled.div`
@@ -25,7 +27,9 @@ export const ScrollOverflow = styled.div`
 
 export const Container = styled.div<FlexDirectionProps>`
   display: flex;
-  background: ${transparentize(0.9, colors.blue[100])};
+  background: ${convertRgbaToRgb(
+    parseToRgb(transparentize(0.9, colors.blue[100])) as RgbaColor
+  )};
   position: relative;
   ${flexbox}
 `;

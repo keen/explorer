@@ -7,6 +7,7 @@ import { exportToHtml } from './exportToHtml';
 import { createCodeSnippet } from './createCodeSnippet';
 import { createResourceUrl } from './createResourceUrl';
 import { stringify } from './stringify';
+import { convertRgbaToRgb } from './convertRgbaToRgb';
 
 export {
   setVisualization,
@@ -18,4 +19,5 @@ export {
   createCodeSnippet,
   createResourceUrl,
   stringify,
+  convertRgbaToRgb,
 };

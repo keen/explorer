@@ -1,11 +1,15 @@
 import styled from 'styled-components';
-import { transparentize } from 'polished';
+import { parseToRgb, transparentize } from 'polished';
 import { colors } from '@keen.io/colors';
+import { RgbaColor } from 'polished/lib/types/color';
+import { convertRgbaToRgb } from '../../utils';
 
 export const EditorActions = styled.div`
   display: flex;
   padding: 0 20px 20px 20px;
-  background: ${transparentize(0.9, colors.blue[100])};
+  background: ${convertRgbaToRgb(
+    parseToRgb(transparentize(0.9, colors.blue[100])) as RgbaColor
+  )};
 `;
 
 export const ButtonWrapper = styled.div`
@@ -14,7 +18,9 @@ export const ButtonWrapper = styled.div`
 
 export const CreatorContainer = styled.div`
   padding: 20px;
-  background: ${transparentize(0.9, colors.blue[100])};
+  background: ${convertRgbaToRgb(
+    parseToRgb(transparentize(0.9, colors.blue[100])) as RgbaColor
+  )};
 `;
 
 export const Card = styled.div`
