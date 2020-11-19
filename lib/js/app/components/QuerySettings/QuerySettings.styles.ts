@@ -4,6 +4,7 @@ import { colors } from '@keen.io/colors';
 export const Settings = styled.div`
   padding: 25px 55px 25px 25px;
   width: 320px;
+  box-sizing: content-box;
 `;
 
 export const TagManager = styled.div`

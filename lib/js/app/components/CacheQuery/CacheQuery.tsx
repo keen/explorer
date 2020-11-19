@@ -13,6 +13,7 @@ import {
   RefreshFrequency,
   LimitReached,
   TooltipMotion,
+  StyledLabel,
 } from './CacheQuery.styles';
 
 import { LimitTooltip } from './components';
@@ -62,7 +63,9 @@ const CacheQuery: FC<Props> = ({
           onChange={() => cacheChangeHandler()}
         />
         <CacheLabel disabled={isLimited && !isCached}>
-          <label htmlFor={CHECKBOX_ID}>{t('cache_query.cache')}</label>
+          <StyledLabel htmlFor={CHECKBOX_ID}>
+            {t('cache_query.cache')}
+          </StyledLabel>
         </CacheLabel>
       </CacheSwitch>
       {isCached && (
