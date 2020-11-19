@@ -8,6 +8,8 @@ import { AppContext } from '../../contexts';
 
 import Editor from './Editor';
 
+jest.mock('@keen.io/query-creator');
+
 const render = (storeState: any = {}, overProps: any = {}) => {
   const mockStore = configureStore([]);
   const state = {

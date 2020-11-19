@@ -1,4 +1,4 @@
-import { TIMEZONES } from '../queryCreator';
+import { TIMEZONES } from '@keen.io/query-creator';
 
 export const stringify = (queryParams) =>
   Object.keys(queryParams)
