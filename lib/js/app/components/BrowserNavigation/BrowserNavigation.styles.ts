@@ -1,15 +1,11 @@
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import { parseToRgb, transparentize } from 'polished';
 import { colors } from '@keen.io/colors';
-import { convertRgbaToRgb } from '../../utils';
-import { RgbaColor } from 'polished/lib/types/color';
+import { BACKGROUND_MAIN } from '../../constants';
 
 export const Container = styled.div`
   display: flex;
-  background: ${convertRgbaToRgb(
-    parseToRgb(transparentize(0.9, colors.blue[100])) as RgbaColor
-  )};
+  background: ${BACKGROUND_MAIN};
   padding: 10px 20px;
 `;
 

@@ -1,18 +1,14 @@
 import styled from 'styled-components';
 import { position, PositionProps } from 'styled-system';
-import { parseToRgb, transparentize } from 'polished';
 import { motion } from 'framer-motion';
 import { colors } from '@keen.io/colors';
 import { UI_LAYERS } from '@keen.io/ui-core';
-import { RgbaColor } from 'polished/lib/types/color';
-import { convertRgbaToRgb } from '../../utils';
+import { BACKGROUND_MAIN } from '../../constants';
 
 export const Container = styled.div`
   display: flex;
   align-items: center;
-  background: ${convertRgbaToRgb(
-    parseToRgb(transparentize(0.9, colors.blue[100])) as RgbaColor
-  )};
+  background: ${BACKGROUND_MAIN};
   padding: 10px 20px;
 `;
 
