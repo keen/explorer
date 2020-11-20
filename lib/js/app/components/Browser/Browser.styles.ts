@@ -9,7 +9,6 @@ import {
   SpaceProps,
 } from 'styled-system';
 import { colors } from '@keen.io/colors';
-
 import { BACKGROUND_MAIN } from '../../constants';
 
 export const ScrollableContainer = styled.div`
@@ -25,7 +24,7 @@ export const ScrollOverflow = styled.div`
 
 export const Container = styled.div<FlexDirectionProps>`
   display: flex;
-  background: ${transparentize(0.9, colors.blue[100])};
+  background: ${BACKGROUND_MAIN};
   position: relative;
   ${flexbox}
 `;

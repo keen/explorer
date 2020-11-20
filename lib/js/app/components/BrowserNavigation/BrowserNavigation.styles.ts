@@ -1,11 +1,11 @@
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import { transparentize } from 'polished';
 import { colors } from '@keen.io/colors';
+import { BACKGROUND_MAIN } from '../../constants';
 
 export const Container = styled.div`
   display: flex;
-  background: ${transparentize(0.9, colors.blue[100])};
+  background: ${BACKGROUND_MAIN};
   padding: 10px 20px;
 `;
 
