@@ -1,4 +1,5 @@
-import { ReducerState, AppActions } from './types';
+import { ReducerState } from './types';
+import { AppActions } from './actions';
 
 import {
   APP_START,

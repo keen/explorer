@@ -1,4 +1,5 @@
-import { ReducerState, ProjectActions } from './types';
+import { ReducerState } from './types';
+import { ProjectActions } from './actions';
 
 import { UPDATE_TAGS_POOL } from './constants';
 

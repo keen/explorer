@@ -25,3 +25,8 @@ export const selectSavedQuery = createAction(
 );
 
 export const resetSavedQuery = createAction(RESET_SAVED_QUERY);
+
+export type SavedQueryActions =
+  | ReturnType<typeof updateSavedQuery>
+  | ReturnType<typeof resetSavedQuery>
+  | ReturnType<typeof selectSavedQuery>;

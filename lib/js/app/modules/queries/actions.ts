@@ -211,3 +211,29 @@ export const setQueryLimitReached = createAction(
 );
 
 export const cloneSavedQuery = createAction(CLONE_SAVED_QUERY);
+
+export type QueriesActions =
+  | ReturnType<typeof setQuerySettings>
+  | ReturnType<typeof resetQueryResults>
+  | ReturnType<typeof setCacheQueryLimit>
+  | ReturnType<typeof setCacheQueryLimitExceed>
+  | ReturnType<typeof setQueryCacheLimitError>
+  | ReturnType<typeof saveQuery>
+  | ReturnType<typeof setQuerySaveState>
+  | ReturnType<typeof saveQuerySuccess>
+  | ReturnType<typeof saveQueryError>
+  | ReturnType<typeof deleteQuery>
+  | ReturnType<typeof deleteQuerySuccess>
+  | ReturnType<typeof deleteQueryError>
+  | ReturnType<typeof runQuery>
+  | ReturnType<typeof runQueryError>
+  | ReturnType<typeof runQuerySuccess>
+  | ReturnType<typeof getSavedQueries>
+  | ReturnType<typeof getSavedQueriesSuccess>
+  | ReturnType<typeof getSavedQueriesError>
+  | ReturnType<typeof setQueryLimitReached>
+  | ReturnType<typeof resetSavedQueryError>
+  | ReturnType<typeof getOrganizationUsageLimits>
+  | ReturnType<typeof extractToEmail>
+  | ReturnType<typeof runEmailExtraction>
+  | ReturnType<typeof cloneSavedQuery>;

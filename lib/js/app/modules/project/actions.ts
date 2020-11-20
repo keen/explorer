@@ -7,3 +7,5 @@ export const updateTagsPool = createAction(
     payload: { tags },
   })
 );
+
+export type ProjectActions = ReturnType<typeof updateTagsPool>;

@@ -1,5 +1,3 @@
-import { updateSavedQuery, selectSavedQuery, resetSavedQuery } from './actions';
-
 export type SavedQuery = {
   name: string;
   displayName: string;
@@ -11,8 +9,3 @@ export type SavedQuery = {
 };
 
 export type ReducerState = SavedQuery;
-
-export type SavedQueryActions =
-  | ReturnType<typeof updateSavedQuery>
-  | ReturnType<typeof resetSavedQuery>
-  | ReturnType<typeof selectSavedQuery>;

@@ -1,4 +1,5 @@
-import { ReducerState, QueriesActions } from './types';
+import { ReducerState } from './types';
+import { QueriesActions } from './actions';
 
 import {
   SET_QUERY_SETTINGS,
