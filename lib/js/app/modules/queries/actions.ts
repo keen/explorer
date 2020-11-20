@@ -1,4 +1,5 @@
-import { QueriesActions, SavedQueryListItem } from './types';
+import { createAction } from '@reduxjs/toolkit';
+import { SavedQueryListItem } from './types';
 import { APIError } from '../../types';
 
 import {
@@ -28,149 +29,185 @@ import {
   CLONE_SAVED_QUERY,
 } from './constants';
 
-export const extractToEmail = (): QueriesActions => ({
-  type: EXTRACT_TO_EMAIL,
-});
+export const extractToEmail = createAction(EXTRACT_TO_EMAIL);
 
-export const runEmailExtraction = (
-  email: string,
-  latest: number,
-  contentType: string,
-  contentEncoding?: string
-): QueriesActions => ({
-  type: RUN_EMAIL_EXTRACTION,
-  payload: {
-    email,
-    latest,
-    contentType,
-    contentEncoding,
-  },
-});
+export const runEmailExtraction = createAction(
+  RUN_EMAIL_EXTRACTION,
+  (
+    email: string,
+    latest: number,
+    contentType: string,
+    contentEncoding?: string
+  ) => ({
+    payload: {
+      email,
+      latest,
+      contentType,
+      contentEncoding,
+    },
+  })
+);
 
-export const setQuerySettings = (
-  settings: Record<string, any>
-): QueriesActions => ({
-  type: SET_QUERY_SETTINGS,
-  payload: { settings },
-});
+export const setQuerySettings = createAction(
+  SET_QUERY_SETTINGS,
+  (settings: Record<string, any>) => ({
+    payload: {
+      settings,
+    },
+  })
+);
 
-export const getOrganizationUsageLimits = (): QueriesActions => ({
-  type: GET_ORGANIZATION_USAGE_LIMITS,
-});
+export const getOrganizationUsageLimits = createAction(
+  GET_ORGANIZATION_USAGE_LIMITS
+);
 
-export const resetQueryResults = (): QueriesActions => ({
-  type: RESET_QUERY_RESULTS,
-});
+export const resetQueryResults = createAction(RESET_QUERY_RESULTS);
 
-export const setCacheQueryLimitExceed = (
-  limitReached: boolean
-): QueriesActions => ({
-  type: SET_CACHE_QUERY_LIMIT_EXCEED,
-  payload: { limitReached },
-});
+export const setCacheQueryLimitExceed = createAction(
+  SET_CACHE_QUERY_LIMIT_EXCEED,
+  (limitReached: boolean) => ({
+    payload: {
+      limitReached,
+    },
+  })
+);
 
-export const setCacheQueryLimit = (limit: number): QueriesActions => ({
-  type: SET_CACHE_QUERY_LIMIT,
-  payload: { limit },
-});
+export const setCacheQueryLimit = createAction(
+  SET_CACHE_QUERY_LIMIT,
+  (limit: number) => ({
+    payload: {
+      limit,
+    },
+  })
+);
 
-export const setQueryCacheLimitError = (error: Error): QueriesActions => ({
-  type: SET_CACHE_QUERY_LIMIT_ERROR,
-  payload: { error },
-});
+export const setQueryCacheLimitError = createAction(
+  SET_CACHE_QUERY_LIMIT_ERROR,
+  (error: Error) => ({
+    payload: {
+      error,
+    },
+  })
+);
 
-export const saveQuery = (
-  name: string,
-  body: Record<string, any>
-): QueriesActions => ({
-  type: SAVE_QUERY,
-  payload: { name, body },
-});
+export const saveQuery = createAction(
+  SAVE_QUERY,
+  (name: string, body: Record<string, any>) => ({
+    payload: {
+      name,
+      body,
+    },
+  })
+);
 
-export const setQuerySaveState = (isSaving: boolean): QueriesActions => ({
-  type: SET_QUERY_SAVE_STATE,
-  payload: {
-    isSaving,
-  },
-});
+export const setQuerySaveState = createAction(
+  SET_QUERY_SAVE_STATE,
+  (isSaving: boolean) => ({
+    payload: {
+      isSaving,
+    },
+  })
+);
 
-export const saveQuerySuccess = (
-  queryName: string,
-  body: Record<string, any>
-): QueriesActions => ({
-  type: SAVE_QUERY_SUCCESS,
+export const saveQuerySuccess = createAction(
+  SAVE_QUERY_SUCCESS,
+  (queryName: string, body: Record<string, any>) => ({
+    payload: {
+      queryName,
+      body,
+    },
+  })
+);
+
+export const saveQueryError = createAction(
+  SAVE_QUERY_ERROR,
+  (error: Error) => ({
+    payload: {
+      error,
+    },
+  })
+);
+
+export const resetSavedQueryError = createAction(RESET_SAVE_QUERY_ERROR);
+
+export const deleteQuery = createAction(DELETE_QUERY, (queryName: string) => ({
   payload: {
     queryName,
-    body,
   },
-});
+}));
 
-export const saveQueryError = (error: Error): QueriesActions => ({
-  type: SAVE_QUERY_ERROR,
-  payload: { error },
-});
+export const deleteQuerySuccess = createAction(
+  DELETE_QUERY_SUCCESS,
+  (queryName: string) => ({
+    payload: {
+      queryName,
+    },
+  })
+);
 
-export const resetSavedQueryError = (): QueriesActions => ({
-  type: RESET_SAVE_QUERY_ERROR,
-});
+export const deleteQueryError = createAction(
+  DELETE_QUERY_ERROR,
+  (error: Error) => ({
+    payload: {
+      error,
+    },
+  })
+);
 
-export const deleteQuery = (queryName: string): QueriesActions => ({
-  type: DELETE_QUERY,
-  payload: { queryName },
-});
+export const getSavedQueries = createAction(GET_SAVED_QUERIES);
 
-export const deleteQuerySuccess = (queryName: string): QueriesActions => ({
-  type: DELETE_QUERY_SUCCESS,
-  payload: { queryName },
-});
+export const getSavedQueriesSuccess = createAction(
+  GET_SAVED_QUERIES_SUCCESS,
+  (queries: SavedQueryListItem[]) => ({
+    payload: {
+      queries,
+    },
+  })
+);
 
-export const deleteQueryError = (error: Error): QueriesActions => ({
-  type: DELETE_QUERY_ERROR,
-  payload: { error },
-});
+export const getSavedQueriesError = createAction(
+  GET_SAVED_QUERIES_ERROR,
+  (error: Error) => ({
+    payload: {
+      error,
+    },
+  })
+);
 
-export const getSavedQueries = (): QueriesActions => ({
-  type: GET_SAVED_QUERIES,
-});
+export const runQuery = createAction(
+  RUN_QUERY,
+  (body: Record<string, any>) => ({
+    payload: {
+      body,
+    },
+  })
+);
 
-export const getSavedQueriesSuccess = (
-  queries: SavedQueryListItem[]
-): QueriesActions => ({
-  type: GET_SAVED_QUERIES_SUCCESS,
-  payload: { queries },
-});
+export const runQuerySuccess = createAction(
+  RUN_QUERY_SUCCESS,
+  (results: Record<string, any>) => ({
+    payload: {
+      results,
+    },
+  })
+);
 
-export const getSavedQueriesError = (error: Error): QueriesActions => ({
-  type: GET_SAVED_QUERIES_ERROR,
-  payload: { error },
-});
+export const runQueryError = createAction(
+  RUN_QUERY_ERROR,
+  (error: APIError) => ({
+    payload: {
+      error,
+    },
+  })
+);
 
-export const runQuery = (body: Record<string, any>): QueriesActions => ({
-  type: RUN_QUERY,
-  payload: { body },
-});
+export const setQueryLimitReached = createAction(
+  SET_QUERY_LIMIT_REACHED,
+  (queriesExecutionLimitReached: boolean) => ({
+    payload: {
+      queriesExecutionLimitReached,
+    },
+  })
+);
 
-export const runQuerySuccess = (
-  results: Record<string, any>
-): QueriesActions => ({
-  type: RUN_QUERY_SUCCESS,
-  payload: { results },
-});
-
-export const runQueryError = (error: APIError): QueriesActions => ({
-  type: RUN_QUERY_ERROR,
-  payload: { error },
-});
-
-export const setQueryLimitReached = (
-  queriesExecutionLimitReached: boolean
-): QueriesActions => ({
-  type: SET_QUERY_LIMIT_REACHED,
-  payload: {
-    queriesExecutionLimitReached,
-  },
-});
-
-export const cloneSavedQuery = (): QueriesActions => ({
-  type: CLONE_SAVED_QUERY,
-});
+export const cloneSavedQuery = createAction(CLONE_SAVED_QUERY);

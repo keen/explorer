@@ -92,6 +92,7 @@
     "@commitlint/cli": "^9.1.1",
     "@commitlint/config-conventional": "^9.1.1",
     "@keen.io/charts": "^2.2.14",
+    "@reduxjs/toolkit": "^1.4.0",
     "@testing-library/jest-dom": "^5.8.0",
     "@testing-library/react": "^10.0.4",
     "@testing-library/react-hooks": "^3.4.1",
