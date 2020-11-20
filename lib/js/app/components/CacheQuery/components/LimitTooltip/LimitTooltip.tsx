@@ -17,7 +17,7 @@ const LimitTooltip: FC<{}> = () => {
     <Tooltip arrowDirection="top" mode="dark">
       <Content>
         {t('limit_tooltip.limit_reached_message')}
-        {cacheQueriesLimit && (
+        {!!cacheQueriesLimit && (
           <>
             {' '}
             ({cacheQueriesLimit} {t('limit_tooltip.cached_queries')})
