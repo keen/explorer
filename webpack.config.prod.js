@@ -19,7 +19,7 @@ module.exports = (env) => {
     devtool: 'source-map',
 
     entry: {
-      main: `./lib/index${useLegacyBrowsers ? '.polyfills': ''}.ts`,
+      main: `./src/index${useLegacyBrowsers ? '.polyfills': ''}.ts`,
     },
     target: 'web',
 

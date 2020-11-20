@@ -15,7 +15,7 @@ const createWebpackConfig = (
 
   const config = {
     entry: {
-      main: './lib/index.ts',
+      main: './src/index.ts',
     },
     resolve: {
       extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
