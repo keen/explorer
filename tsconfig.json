@@ -12,7 +12,7 @@
 		"typeRoots": [ "./types", "./node_modules/@types"]
 	},
   "include": [
-  	"./src/**/*", "./src/index.ts"
+  	"./src/**/*"
   ],
 	 "exclude": ["node_modules", "typings"]
 }
