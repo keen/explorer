@@ -73,9 +73,11 @@ test('allows user to reset query settings', () => {
   expect(store.getActions()).toMatchInlineSnapshot(`
     Array [
       Object {
+        "payload": undefined,
         "type": "@app/QUERY_EDITOR_MOUNTED",
       },
       Object {
+        "payload": undefined,
         "type": "@app/CLEAR_QUERY",
       },
     ]
@@ -119,9 +121,11 @@ test('allows user to perform extraction to email', () => {
   expect(store.getActions()).toMatchInlineSnapshot(`
     Array [
       Object {
+        "payload": undefined,
         "type": "@app/QUERY_EDITOR_MOUNTED",
       },
       Object {
+        "payload": undefined,
         "type": "@queries/EXTRACT_TO_EMAIL",
       },
     ]

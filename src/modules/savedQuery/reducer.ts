@@ -1,5 +1,5 @@
-import { SavedQueryActions, ReducerState } from './types';
-
+import { ReducerState } from './types';
+import { SavedQueryActions } from './actions';
 import { UPDATE_SAVED_QUERY, RESET_SAVED_QUERY } from './constants';
 
 export const initialState: ReducerState = {

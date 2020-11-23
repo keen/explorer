@@ -87,6 +87,7 @@ test('allows user to share query url', () => {
   expect(store.getActions()).toMatchInlineSnapshot(`
     Array [
       Object {
+        "payload": undefined,
         "type": "@app/SHARE_QUERY_URL",
       },
     ]
@@ -105,6 +106,7 @@ test('allows user to export results as image', () => {
   expect(store.getActions()).toMatchInlineSnapshot(`
     Array [
       Object {
+        "payload": undefined,
         "type": "@app/EXPORT_CHART_TO_IMAGE",
       },
     ]
@@ -123,6 +125,7 @@ test('allows user to export results as JSON', () => {
   expect(store.getActions()).toMatchInlineSnapshot(`
     Array [
       Object {
+        "payload": undefined,
         "type": "@app/EXPORT_CHART_TO_JSON",
       },
     ]
@@ -141,6 +144,7 @@ test('allows user to export results as CSV', () => {
   expect(store.getActions()).toMatchInlineSnapshot(`
     Array [
       Object {
+        "payload": undefined,
         "type": "@app/EXPORT_DATA_TO_CSV",
       },
     ]
@@ -159,6 +163,7 @@ test('allows user to embed HTML code', () => {
   expect(store.getActions()).toMatchInlineSnapshot(`
     Array [
       Object {
+        "payload": undefined,
         "type": "@app/SHOW_EMBED_MODAL",
       },
     ]
@@ -198,6 +203,7 @@ test('allows user to clone query', () => {
   expect(store.getActions()).toMatchInlineSnapshot(`
     Array [
       Object {
+        "payload": undefined,
         "type": "@queries/CLONE_SAVED_QUERY",
       },
     ]

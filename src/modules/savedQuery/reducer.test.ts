@@ -1,13 +1,13 @@
 import { savedQueryReducer, initialState } from './reducer';
 
-import { updateSaveQuery, resetSavedQuery } from './actions';
+import { updateSavedQuery, resetSavedQuery } from './actions';
 
 test('updates saved query state', () => {
   const updates = {
     cached: true,
     refreshRate: 140,
   };
-  const action = updateSaveQuery(updates);
+  const action = updateSavedQuery(updates);
   const updatedQuery = savedQueryReducer(initialState, action);
 
   expect(updatedQuery).toMatchObject(updates);

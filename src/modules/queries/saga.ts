@@ -19,6 +19,9 @@ import {
   setQuerySaveState,
   resetQueryResults,
   setQuerySettings,
+  runQuery as runQueryAction,
+  saveQuery as saveQueryAction,
+  deleteQuery as deleteQueryAction,
 } from './actions';
 
 import { getQuerySettings } from './selectors';
@@ -40,12 +43,11 @@ import {
   QUERY_EDITOR_MOUNTED,
 } from '../../modules/app';
 
-import { getSavedQuery, updateSaveQuery } from '../../modules/savedQuery';
+import { getSavedQuery, updateSavedQuery } from '../../modules/savedQuery';
 
 import { serializeSavedQuery } from './utils';
 
 import { SavedQueryAPIResponse } from '../../types';
-import { RunQueryAction, DeleteQueryAction, SaveQueryAction } from './types';
 
 import {
   NOTIFICATION_MANAGER_CONTEXT,
@@ -124,7 +126,7 @@ function* extractToEmail() {
   }
 }
 
-export function* runQuery(action: RunQueryAction) {
+export function* runQuery(action: ReturnType<typeof runQueryAction>) {
   try {
     const {
       payload: { body },
@@ -157,7 +159,7 @@ export function* runQuery(action: RunQueryAction) {
   }
 }
 
-export function* saveQuery({ payload }: SaveQueryAction) {
+export function* saveQuery({ payload }: ReturnType<typeof saveQueryAction>) {
   try {
     const { name, body } = payload;
     const notificationManager = yield getContext(NOTIFICATION_MANAGER_CONTEXT);
@@ -217,7 +219,7 @@ export function* saveQuery({ payload }: SaveQueryAction) {
   }
 }
 
-export function* deleteQuery(action: DeleteQueryAction) {
+export function* deleteQuery(action: ReturnType<typeof deleteQueryAction>) {
   const notificationManager = yield getContext(NOTIFICATION_MANAGER_CONTEXT);
 
   try {
@@ -331,11 +333,11 @@ function* cloneSavedQuery() {
     yield take(QUERY_EDITOR_MOUNTED);
     yield put(updateQueryCreator(querySettings));
     yield put(setQuerySettings(querySettings));
-    yield put(updateSaveQuery(clonedSavedQuery));
+    yield put(updateSavedQuery(clonedSavedQuery));
   }
 
   if (view === 'editor') {
-    yield put(updateSaveQuery(clonedSavedQuery));
+    yield put(updateSavedQuery(clonedSavedQuery));
   }
 
   yield notificationManager.showNotification({

@@ -13,6 +13,8 @@ import {
   getOrganizationUsageLimits,
   cloneSavedQuery,
   getSavedQueries as fetchSavedQueries,
+  getSavedQueriesSuccess,
+  saveQuerySuccess,
 } from './actions';
 import {
   getQueryExecutionError,
@@ -32,11 +34,7 @@ import { getDefaultVisualization } from './utils';
 import { SAVE_QUERY_SUCCESS, GET_SAVED_QUERIES_SUCCESS } from './constants';
 
 import { queriesSaga } from './saga';
-import {
-  SaveQuerySuccessAction,
-  GetSavedQueriesSuccessAction,
-  SavedQueryListItem,
-} from './types';
+import { SavedQueryListItem } from './types';
 
 export {
   ReducerState,
@@ -69,7 +67,7 @@ export {
   SAVE_QUERY_SUCCESS,
   GET_SAVED_QUERIES_SUCCESS,
   SavedQueryListItem,
-  GetSavedQueriesSuccessAction,
-  SaveQuerySuccessAction,
+  getSavedQueriesSuccess,
+  saveQuerySuccess,
   getDefaultVisualization,
 };

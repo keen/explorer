@@ -3,7 +3,7 @@ import sagaHelper from 'redux-saga-testing';
 import { select, put } from 'redux-saga/effects';
 import { Layout } from '@keen.io/ui-core';
 
-import { selectSavedQuery, updateSaveQuery } from './actions';
+import { selectSavedQuery, updateSavedQuery } from './actions';
 import { selectSavedQuery as selectSavedQueryFlow } from './saga';
 
 import { runQuery, getSavedQueries, setQuerySettings } from '../queries';
@@ -11,13 +11,11 @@ import { setVisualization } from '../app';
 
 import { savedQueries } from './fixtures';
 
-import { SelectSavedQueryAction } from './types';
-
 describe('selectSavedQuery()', () => {
   describe('Scenario 1: User selects query with enabled autorun', () => {
     const action = selectSavedQuery('purchases', true);
     const it = sagaHelper(
-      selectSavedQueryFlow(action as SelectSavedQueryAction)
+      selectSavedQueryFlow(action as ReturnType<typeof selectSavedQuery>)
     );
 
     it('get list of saved queries from state', (result) => {
@@ -48,7 +46,7 @@ describe('selectSavedQuery()', () => {
         name: 'purchases',
         tags: [],
       };
-      expect(result).toMatchObject(put(updateSaveQuery(savedQuery)));
+      expect(result).toMatchObject(put(updateSavedQuery(savedQuery)));
     });
 
     it('runs selected query', (result) => {

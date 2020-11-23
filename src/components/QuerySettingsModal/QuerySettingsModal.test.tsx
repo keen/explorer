@@ -89,12 +89,15 @@ test('close modal and reset query settings', () => {
   expect(store.getActions()).toMatchInlineSnapshot(`
     Array [
       Object {
+        "payload": undefined,
         "type": "@app/HIDE_QUERY_SETTINGS_MODAL",
       },
       Object {
+        "payload": undefined,
         "type": "@queries/RESET_SAVE_QUERY_ERROR",
       },
       Object {
+        "payload": undefined,
         "type": "@saved-query/RESET_SAVED_QUERY",
       },
     ]
@@ -121,9 +124,11 @@ test('allows user to close modal', () => {
   expect(store.getActions()).toMatchInlineSnapshot(`
     Array [
       Object {
+        "payload": undefined,
         "type": "@app/HIDE_QUERY_SETTINGS_MODAL",
       },
       Object {
+        "payload": undefined,
         "type": "@queries/RESET_SAVE_QUERY_ERROR",
       },
     ]

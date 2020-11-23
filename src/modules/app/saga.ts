@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/camelcase */
-
 import {
   takeLatest,
   put,
@@ -18,15 +17,21 @@ import {
   resetVisualization,
   setVisualization,
   setViewMode,
-  loadPersitedState,
+  loadPersistedState,
   updateQueryCreator,
   setQueryAutorun,
   updateChartSettings,
+  copyEmbeddedCode as copyEmbeddedCodeAction,
+  editQuery as editQueryAction,
+  downloadCodeSnippet as downloadCodeSnippetAction,
+  appStart as appStartAction,
+  copyApiResourceUrl as copyApiResourceUrlAction,
+  updateVisualizationType as updateVisualizationTypeAction,
 } from './actions';
 
 import {
   resetSavedQuery,
-  updateSaveQuery,
+  updateSavedQuery,
   getSavedQuery,
   selectSavedQuery,
 } from '../savedQuery';
@@ -65,18 +70,6 @@ import {
   UPDATE_VISUALIZATION_TYPE,
 } from '@keen.io/query-creator';
 import { PUBSUB_CONTEXT, NOTIFICATION_MANAGER_CONTEXT } from '../../constants';
-
-import {
-  EditQueryAction,
-  ResizeScreenAction,
-  UpdateQueryCreatorAction,
-  AppStartAction,
-  CopyEmbeddedCodeAction,
-  DownloadCodeSnippetAction,
-  CopyApiResourceUrlAction,
-  SetQueryAutorunAction,
-  UpdateVisualizationTypeAction,
-} from './types';
 
 import {
   APP_START,
@@ -133,7 +126,7 @@ export function* clearQuery() {
   yield put(resetQueryResults());
 }
 
-function* editQuery({ payload }: EditQueryAction) {
+function* editQuery({ payload }: ReturnType<typeof editQueryAction>) {
   yield put(setViewMode('editor'));
   yield take(QUERY_EDITOR_MOUNTED);
 
@@ -152,7 +145,9 @@ function* editQuery({ payload }: EditQueryAction) {
   yield put(updateQueryCreator(query));
 }
 
-export function* updateCreator({ payload }: UpdateQueryCreatorAction) {
+export function* updateCreator({
+  payload,
+}: ReturnType<typeof updateQueryCreator>) {
   const { query } = payload;
   const pubsub = yield getContext(PUBSUB_CONTEXT);
 
@@ -190,7 +185,7 @@ export function* loadStateFromUrl() {
       b64DecodeUnicode(persistedState)
     );
 
-    if (savedQuery) yield put(updateSaveQuery(savedQuery));
+    if (savedQuery) yield put(updateSavedQuery(savedQuery));
     if (visualization) {
       const { type: widgetType, chartSettings, widgetSettings } = visualization;
       yield put(setVisualization(widgetType, chartSettings, widgetSettings));
@@ -270,7 +265,9 @@ export function* watchScreenResize() {
   }
 }
 
-export function* resizeBrowserScreen({ payload }: ResizeScreenAction) {
+export function* resizeBrowserScreen({
+  payload,
+}: ReturnType<typeof resizeScreen>) {
   const { width, height } = payload;
   yield put(setScreenDimension(width, height));
 }
@@ -287,7 +284,7 @@ export function* rehydrateAutorunSettings() {
   }
 }
 
-export function* appStart({ payload }: AppStartAction) {
+export function* appStart({ payload }: ReturnType<typeof appStartAction>) {
   yield put(getOrganizationUsageLimits());
   yield put(fetchSavedQueries());
 
@@ -299,7 +296,7 @@ export function* appStart({ payload }: AppStartAction) {
   const hasPersistedState = searchParams && searchParams.get(URL_STATE);
 
   if (hasPersistedState) {
-    yield put(loadPersitedState());
+    yield put(loadPersistedState());
   } else if (initialView === 'browser') {
     yield take(GET_SAVED_QUERIES_SUCCESS);
     yield selectFirstSavedQuery();
@@ -411,7 +408,9 @@ function* getCodeSnippet(projectId: string, readKey: string) {
   return snippet;
 }
 
-export function* copyEmbeddedCode({ payload }: CopyEmbeddedCodeAction) {
+export function* copyEmbeddedCode({
+  payload,
+}: ReturnType<typeof copyEmbeddedCodeAction>) {
   const { projectId, readKey } = payload;
   const notificationManager = yield getContext(NOTIFICATION_MANAGER_CONTEXT);
 
@@ -433,7 +432,9 @@ export function* copyEmbeddedCode({ payload }: CopyEmbeddedCodeAction) {
   }
 }
 
-export function* downloadCodeSnippet({ payload }: DownloadCodeSnippetAction) {
+export function* downloadCodeSnippet({
+  payload,
+}: ReturnType<typeof downloadCodeSnippetAction>) {
   const { projectId, readKey } = payload;
   const fileName = yield generateFileName();
   const notificationManager = yield getContext(NOTIFICATION_MANAGER_CONTEXT);
@@ -457,7 +458,9 @@ export function* downloadCodeSnippet({ payload }: DownloadCodeSnippetAction) {
   }
 }
 
-export function* copyApiResourceUrl({ payload }: CopyApiResourceUrlAction) {
+export function* copyApiResourceUrl({
+  payload,
+}: ReturnType<typeof copyApiResourceUrlAction>) {
   const { config } = payload;
   const query = yield select(getQuerySettings);
   const notificationManager = yield getContext(NOTIFICATION_MANAGER_CONTEXT);
@@ -479,7 +482,9 @@ export function* copyApiResourceUrl({ payload }: CopyApiResourceUrlAction) {
   }
 }
 
-export function* persistAutorunSettings({ payload }: SetQueryAutorunAction) {
+export function* persistAutorunSettings({
+  payload,
+}: ReturnType<typeof setQueryAutorun>) {
   const { autorun } = payload;
   try {
     localStorage.setItem(QUERY_AUTORUN_KEY, JSON.stringify({ autorun }));
@@ -490,7 +495,7 @@ export function* persistAutorunSettings({ payload }: SetQueryAutorunAction) {
 
 export function* updateVisualizationType({
   payload,
-}: UpdateVisualizationTypeAction) {
+}: ReturnType<typeof updateVisualizationTypeAction>) {
   const { type } = payload;
   const pubsub = yield getContext(PUBSUB_CONTEXT);
   yield pubsub.publish(UPDATE_VISUALIZATION_TYPE, { type });
