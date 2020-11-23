@@ -2,7 +2,10 @@
 
 import { takeLatest, select, put } from 'redux-saga/effects';
 
-import { updateSaveQuery } from './actions';
+import {
+  updateSavedQuery,
+  selectSavedQuery as selectSavedQueryAction,
+} from './actions';
 
 import { setVisualization } from '../app';
 import { SavedQueryListItem } from '../queries';
@@ -15,13 +18,14 @@ import {
 
 import { SELECT_SAVED_QUERY } from './constants';
 
-import { SelectSavedQueryAction } from './types';
-import { SaveQuerySuccessAction } from '../queries';
+import { saveQuerySuccess } from '../queries';
 import { SavedQueryAPIResponse } from '../../types';
 
 import { serializeSavedQuery, convertMilisecondsToMinutes } from './utils';
 
-export function* selectSavedQuery({ payload }: SelectSavedQueryAction) {
+export function* selectSavedQuery({
+  payload,
+}: ReturnType<typeof selectSavedQueryAction>) {
   const savedQueries: SavedQueryListItem[] = yield select(getSavedQueries);
 
   try {
@@ -48,7 +52,7 @@ export function* selectSavedQuery({ payload }: SelectSavedQueryAction) {
 
     yield put(setVisualization(widgetType, chartSettings, widgetSettings));
     yield put(setQuerySettings(query));
-    yield put(updateSaveQuery(savedQuery));
+    yield put(updateSavedQuery(savedQuery));
 
     const { autorunQuery } = payload;
     if (autorunQuery) {
@@ -59,13 +63,13 @@ export function* selectSavedQuery({ payload }: SelectSavedQueryAction) {
   }
 }
 
-function* saveQuerySuccessHandler(action: SaveQuerySuccessAction) {
+function* saveQuerySuccessHandler(action: ReturnType<typeof saveQuerySuccess>) {
   const {
     payload: { body },
   } = action;
   const savedQuery = serializeSavedQuery(body as SavedQueryAPIResponse);
 
-  yield put(updateSaveQuery(savedQuery));
+  yield put(updateSavedQuery(savedQuery));
 }
 
 export function* savedQuerySaga() {

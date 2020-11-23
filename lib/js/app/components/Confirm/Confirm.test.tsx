@@ -58,6 +58,7 @@ test('allows user to accept confirmation', () => {
   expect(store.getActions()).toMatchInlineSnapshot(`
     Array [
       Object {
+        "payload": undefined,
         "type": "@app/ACCEPT_CONFIRMATION",
       },
     ]
@@ -81,6 +82,7 @@ test('allows user to close modal by clicking "cancel" label', () => {
   expect(store.getActions()).toMatchInlineSnapshot(`
     Array [
       Object {
+        "payload": undefined,
         "type": "@app/HIDE_CONFIRMATION",
       },
     ]

@@ -1,3 +1,4 @@
+import { createAction } from '@reduxjs/toolkit';
 import {
   PickerWidgets,
   ChartSettings,
@@ -42,207 +43,214 @@ import {
   UPDATE_VISUALIZATION,
 } from './constants';
 
-import {
-  AppActions,
-  Confirmation,
-  SettingsModalSource,
-  ViewMode,
-} from './types';
+import { Confirmation, SettingsModalSource, ViewMode } from './types';
 
-export const appStart = (initialView: ViewMode): AppActions => ({
-  type: APP_START,
-  payload: { initialView },
-});
+export const appStart = createAction(APP_START, (initialView: ViewMode) => ({
+  payload: {
+    initialView,
+  },
+}));
 
-export const setQueryAutorun = (autorun: boolean): AppActions => ({
-  type: SET_QUERY_AUTORUN,
-  payload: { autorun },
-});
+export const setQueryAutorun = createAction(
+  SET_QUERY_AUTORUN,
+  (autorun: boolean) => ({
+    payload: {
+      autorun,
+    },
+  })
+);
 
-export const resizeScreen = (width: number, height: number): AppActions => ({
-  type: SCREEN_RESIZE,
-  payload: { width, height },
-});
+export const resizeScreen = createAction(
+  SCREEN_RESIZE,
+  (width: number, height: number) => ({
+    payload: { width, height },
+  })
+);
 
-export const setScreenDimension = (
-  width: number,
-  height: number
-): AppActions => ({
-  type: SET_SCREEN_DIMENSION,
-  payload: { width, height },
-});
+export const setScreenDimension = createAction(
+  SET_SCREEN_DIMENSION,
+  (width: number, height: number) => ({
+    payload: { width, height },
+  })
+);
 
-export const showEmailExtractionModal = (): AppActions => ({
-  type: SHOW_EMAIL_EXTRACTION_MODAL,
-});
+export const showEmailExtractionModal = createAction(
+  SHOW_EMAIL_EXTRACTION_MODAL
+);
 
-export const hideEmailExtractionModal = (): AppActions => ({
-  type: HIDE_EMAIL_EXTRACTION_MODAL,
-});
+export const hideEmailExtractionModal = createAction(
+  HIDE_EMAIL_EXTRACTION_MODAL
+);
 
-export const selectFirstSavedQuery = (): AppActions => ({
-  type: SELECT_FIRST_QUERY,
-});
+export const selectFirstSavedQuery = createAction(SELECT_FIRST_QUERY);
 
-export const switchToQueriesList = (): AppActions => ({
-  type: SWITCH_TO_QUERIES_LIST,
-});
+export const switchToQueriesList = createAction(SWITCH_TO_QUERIES_LIST);
 
-export const showQuerySettingsModal = (
-  source: SettingsModalSource
-): AppActions => ({
-  type: SHOW_QUERY_SETTINGS_MODAL,
-  payload: { source },
-});
+export const showQuerySettingsModal = createAction(
+  SHOW_QUERY_SETTINGS_MODAL,
+  (source: SettingsModalSource) => ({
+    payload: {
+      source,
+    },
+  })
+);
 
-export const hideQuerySettingsModal = (): AppActions => ({
-  type: HIDE_QUERY_SETTINGS_MODAL,
-});
+export const hideQuerySettingsModal = createAction(HIDE_QUERY_SETTINGS_MODAL);
 
-export const setViewMode = (view: ViewMode): AppActions => ({
-  type: SET_VIEW_MODE,
-  payload: { view },
-});
+export const setViewMode = createAction(SET_VIEW_MODE, (view: ViewMode) => ({
+  payload: {
+    view,
+  },
+}));
 
-export const queryEditorMounted = (): AppActions => ({
-  type: QUERY_EDITOR_MOUNTED,
-});
+export const queryEditorMounted = createAction(QUERY_EDITOR_MOUNTED);
 
-export const explorerMounted = (): AppActions => ({
-  type: EXPLORER_MOUNTED,
-});
+export const explorerMounted = createAction(EXPLORER_MOUNTED);
 
-export const notificationsMounted = (): AppActions => ({
-  type: NOTIFICATIONS_MOUNTED,
-});
+export const notificationsMounted = createAction(NOTIFICATIONS_MOUNTED);
 
-export const editQuery = (queryName: string): AppActions => ({
-  type: EDIT_QUERY,
+export const editQuery = createAction(EDIT_QUERY, (queryName: string) => ({
   payload: {
     queryName,
   },
-});
+}));
 
-export const updateQueryCreator = (query: Record<string, any>): AppActions => ({
-  type: UPDATE_QUERY_CREATOR,
-  payload: { query },
-});
+export const updateQueryCreator = createAction(
+  UPDATE_QUERY_CREATOR,
+  (query: Record<string, any>) => ({
+    payload: {
+      query,
+    },
+  })
+);
 
-export const createNewQuery = (): AppActions => ({
-  type: CREATE_NEW_QUERY,
-});
+export const createNewQuery = createAction(CREATE_NEW_QUERY);
 
-export const clearQuery = (): AppActions => ({
-  type: CLEAR_QUERY,
-});
+export const clearQuery = createAction(CLEAR_QUERY);
 
-export const shareQueryUrl = (): AppActions => ({
-  type: SHARE_QUERY_URL,
-});
+export const shareQueryUrl = createAction(SHARE_QUERY_URL);
 
-export const setVisualization = (
-  type: PickerWidgets,
-  chartSettings: ChartSettings,
-  widgetSettings: WidgetSettings
-): AppActions => ({
-  type: SET_VISUALIZATION,
-  payload: {
-    type,
-    chartSettings,
-    widgetSettings,
-  },
-});
+export const setVisualization = createAction(
+  SET_VISUALIZATION,
+  (
+    type: PickerWidgets,
+    chartSettings: ChartSettings,
+    widgetSettings: WidgetSettings
+  ) => ({
+    payload: {
+      type,
+      chartSettings,
+      widgetSettings,
+    },
+  })
+);
 
-export const resetVisualization = (): AppActions => ({
-  type: RESET_VISUALIZATION,
-});
+export const resetVisualization = createAction(RESET_VISUALIZATION);
 
-export const loadPersitedState = (): AppActions => ({
-  type: LOAD_STATE_FROM_URL,
-});
+export const loadPersistedState = createAction(LOAD_STATE_FROM_URL);
 
-export const showConfirmation = (
-  confirmAction: Confirmation,
-  meta?: Record<string, any>
-): AppActions => ({
-  type: SHOW_CONFIRMATION,
-  payload: {
-    confirmAction,
-    meta,
-  },
-});
+export const showConfirmation = createAction(
+  SHOW_CONFIRMATION,
+  (confirmAction: Confirmation, meta?: Record<string, any>) => ({
+    payload: {
+      confirmAction,
+      meta,
+    },
+  })
+);
 
-export const hideConfirmation = (): AppActions => ({
-  type: HIDE_CONFIRMATION,
-});
+export const hideConfirmation = createAction(HIDE_CONFIRMATION);
 
-export const acceptConfirmation = (): AppActions => ({
-  type: ACCEPT_CONFIRMATION,
-});
+export const acceptConfirmation = createAction(ACCEPT_CONFIRMATION);
 
-export const exportChartToImage = () => ({
-  type: EXPORT_CHART_TO_IMAGE,
-});
+export const exportChartToImage = createAction(EXPORT_CHART_TO_IMAGE);
 
-export const exportChartToJson = () => ({
-  type: EXPORT_CHART_TO_JSON,
-});
+export const exportChartToJson = createAction(EXPORT_CHART_TO_JSON);
 
-export const exportDataToCsv = () => ({
-  type: EXPORT_DATA_TO_CSV,
-});
+export const exportDataToCsv = createAction(EXPORT_DATA_TO_CSV);
 
-export const showEmbedModal = (): AppActions => ({
-  type: SHOW_EMBED_MODAL,
-});
+export const showEmbedModal = createAction(SHOW_EMBED_MODAL);
 
-export const hideEmbedModal = (): AppActions => ({
-  type: HIDE_EMBED_MODAL,
-});
+export const hideEmbedModal = createAction(HIDE_EMBED_MODAL);
 
-export const copyEmbeddedCode = (
-  projectId: string,
-  readKey: string
-): AppActions => ({
-  type: COPY_EMBEDDED_CODE,
-  payload: {
-    projectId,
-    readKey,
-  },
-});
+export const copyEmbeddedCode = createAction(
+  COPY_EMBEDDED_CODE,
+  (projectId: string, readKey: string) => ({
+    payload: {
+      projectId,
+      readKey,
+    },
+  })
+);
 
-export const downloadCodeSnippet = (
-  projectId: string,
-  readKey: string
-): AppActions => ({
-  type: DOWNLOAD_CODE_SNIPPET,
-  payload: {
-    projectId,
-    readKey,
-  },
-});
+export const downloadCodeSnippet = createAction(
+  DOWNLOAD_CODE_SNIPPET,
+  (projectId: string, readKey: string) => ({
+    payload: {
+      projectId,
+      readKey,
+    },
+  })
+);
 
-export const updateChartSettings = (
-  chartSettings: Record<string, any>
-): AppActions => ({
-  type: UPDATE_CHART_SETTINGS,
-  payload: {
-    chartSettings,
-  },
-});
+export const updateChartSettings = createAction(
+  UPDATE_CHART_SETTINGS,
+  (chartSettings: Record<string, any>) => ({
+    payload: {
+      chartSettings,
+    },
+  })
+);
 
-export const updateVisualizationType = (type: PickerWidgets): AppActions => ({
-  type: UPDATE_VISUALIZATION,
-  payload: {
-    type,
-  },
-});
+export const updateVisualizationType = createAction(
+  UPDATE_VISUALIZATION,
+  (type: PickerWidgets) => ({
+    payload: {
+      type,
+    },
+  })
+);
 
-export const copyApiResourceUrl = (
-  config: Record<string, any>
-): AppActions => ({
-  type: COPY_API_RESOURCE_URL,
-  payload: {
-    config,
-  },
-});
+export const copyApiResourceUrl = createAction(
+  COPY_API_RESOURCE_URL,
+  (config: Record<string, any>) => ({
+    payload: {
+      config,
+    },
+  })
+);
+
+export type AppActions =
+  | ReturnType<typeof appStart>
+  | ReturnType<typeof resizeScreen>
+  | ReturnType<typeof setScreenDimension>
+  | ReturnType<typeof shareQueryUrl>
+  | ReturnType<typeof editQuery>
+  | ReturnType<typeof queryEditorMounted>
+  | ReturnType<typeof notificationsMounted>
+  | ReturnType<typeof explorerMounted>
+  | ReturnType<typeof clearQuery>
+  | ReturnType<typeof createNewQuery>
+  | ReturnType<typeof updateQueryCreator>
+  | ReturnType<typeof setViewMode>
+  | ReturnType<typeof loadPersistedState>
+  | ReturnType<typeof showConfirmation>
+  | ReturnType<typeof hideConfirmation>
+  | ReturnType<typeof acceptConfirmation>
+  | ReturnType<typeof switchToQueriesList>
+  | ReturnType<typeof setVisualization>
+  | ReturnType<typeof resetVisualization>
+  | ReturnType<typeof showQuerySettingsModal>
+  | ReturnType<typeof hideQuerySettingsModal>
+  | ReturnType<typeof showEmbedModal>
+  | ReturnType<typeof hideEmbedModal>
+  | ReturnType<typeof copyEmbeddedCode>
+  | ReturnType<typeof downloadCodeSnippet>
+  | ReturnType<typeof selectFirstSavedQuery>
+  | ReturnType<typeof selectFirstSavedQuery>
+  | ReturnType<typeof showEmailExtractionModal>
+  | ReturnType<typeof hideEmailExtractionModal>
+  | ReturnType<typeof setQueryAutorun>
+  | ReturnType<typeof updateChartSettings>
+  | ReturnType<typeof updateVisualizationType>
+  | ReturnType<typeof copyApiResourceUrl>;

@@ -1,8 +1,11 @@
+import { createAction } from '@reduxjs/toolkit';
 import { UPDATE_TAGS_POOL } from './constants';
 
-import { ProjectActions } from './types';
+export const updateTagsPool = createAction(
+  UPDATE_TAGS_POOL,
+  (tags: string[]) => ({
+    payload: { tags },
+  })
+);
 
-export const updateTagsPool = (tags: string[]): ProjectActions => ({
-  type: UPDATE_TAGS_POOL,
-  payload: { tags },
-});
+export type ProjectActions = ReturnType<typeof updateTagsPool>;

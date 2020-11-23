@@ -49,6 +49,7 @@ test('allows user to create a new query', () => {
   expect(store.getActions()).toMatchInlineSnapshot(`
     Array [
       Object {
+        "payload": undefined,
         "type": "@app/CREATE_NEW_QUERY",
       },
     ]

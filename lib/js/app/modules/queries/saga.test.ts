@@ -42,8 +42,6 @@ import {
   KEEN_CLIENT_CONTEXT,
 } from '../../constants';
 
-import { DeleteQueryAction, RunQueryAction, SaveQueryAction } from './types';
-
 fetchMock.mockResponse(() => Promise.resolve(JSON.stringify({})));
 
 describe('checkOrganizationLimits()', () => {
@@ -79,7 +77,9 @@ describe('checkOrganizationLimits()', () => {
 describe('saveQuery()', () => {
   describe('Scenario 1: User successfully saves query', () => {
     const query = { analysis_type: 'count' };
-    const action = saveQuery('purchases', query) as SaveQueryAction;
+    const action = saveQuery('purchases', query) as ReturnType<
+      typeof saveQuery
+    >;
     const it = sagaHelper(saveQueryFlow(action));
 
     it('get the notification manager from context', (result) => {
@@ -126,7 +126,7 @@ describe('saveQuery()', () => {
 describe('runQuery()', () => {
   describe('Scenario 1: User successfully run query', () => {
     const query = {};
-    const action = runQuery(query) as RunQueryAction;
+    const action = runQuery(query) as ReturnType<typeof runQuery>;
     const it = sagaHelper(runQueryFlow(action));
 
     it('get the Keen API client instance from context', (result) => {
@@ -148,7 +148,7 @@ describe('runQuery()', () => {
 
   describe('Scenario 2: User exceed run query limits', () => {
     const query = {};
-    const action = runQuery(query) as RunQueryAction;
+    const action = runQuery(query) as ReturnType<typeof runQuery>;
     const it = sagaHelper(runQueryFlow(action));
 
     it('get the Keen API client instance from context', (result) => {
@@ -170,7 +170,7 @@ describe('runQuery()', () => {
 
   describe('Scenario 3: User failed to run query due to API internal error', () => {
     const query = {};
-    const action = runQuery(query) as RunQueryAction;
+    const action = runQuery(query) as ReturnType<typeof runQuery>;
     const it = sagaHelper(runQueryFlow(action));
 
     it('get the Keen API client instance from context', (result) => {
@@ -193,7 +193,7 @@ describe('runQuery()', () => {
 
 describe('deleteQuery()', () => {
   describe('Scenario 1: User successfully delete query', () => {
-    const action = deleteQuery('purchases') as DeleteQueryAction;
+    const action = deleteQuery('purchases') as ReturnType<typeof deleteQuery>;
     const it = sagaHelper(deleteQueryFlow(action));
 
     it('get the notification manager from context', (result) => {
@@ -257,7 +257,7 @@ describe('deleteQuery()', () => {
   });
 
   describe('Scenario 2: User failed to delete query due to API internal error', () => {
-    const action = deleteQuery('purchases') as DeleteQueryAction;
+    const action = deleteQuery('purchases') as ReturnType<typeof deleteQuery>;
     const it = sagaHelper(deleteQueryFlow(action));
 
     it('get the notification manager from context', (result) => {
@@ -300,7 +300,7 @@ describe('deleteQuery()', () => {
   });
 
   describe('Scenario 3: User cancel delete query action', () => {
-    const action = deleteQuery('purchases') as DeleteQueryAction;
+    const action = deleteQuery('purchases') as ReturnType<typeof deleteQuery>;
     const it = sagaHelper(deleteQueryFlow(action));
 
     it('get the notification manager from context', (result) => {

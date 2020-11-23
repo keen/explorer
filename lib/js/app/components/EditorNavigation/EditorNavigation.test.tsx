@@ -157,10 +157,11 @@ test('allows user to return to the saved queries list', () => {
   fireEvent.click(link);
 
   expect(store.getActions()).toMatchInlineSnapshot(`
-  Array [
-    Object {
-      "type": "@app/SWITCH_TO_QUERIES_LIST",
-    },
-  ]
-`);
+    Array [
+      Object {
+        "payload": undefined,
+        "type": "@app/SWITCH_TO_QUERIES_LIST",
+      },
+    ]
+  `);
 });

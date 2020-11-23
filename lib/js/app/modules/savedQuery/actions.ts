@@ -1,29 +1,32 @@
+import { createAction } from '@reduxjs/toolkit';
 import {
   UPDATE_SAVED_QUERY,
   RESET_SAVED_QUERY,
   SELECT_SAVED_QUERY,
 } from './constants';
 
-import { SavedQueryActions, ReducerState } from './types';
+import { ReducerState } from './types';
 
-export const updateSaveQuery = (
-  properties: Partial<ReducerState>
-): SavedQueryActions => ({
-  type: UPDATE_SAVED_QUERY,
-  payload: properties,
-});
+export const updateSavedQuery = createAction(
+  UPDATE_SAVED_QUERY,
+  (properties: Partial<ReducerState>) => ({
+    payload: properties,
+  })
+);
 
-export const selectSavedQuery = (
-  name: string,
-  autorunQuery?: boolean
-): SavedQueryActions => ({
-  type: SELECT_SAVED_QUERY,
-  payload: {
-    name,
-    autorunQuery,
-  },
-});
+export const selectSavedQuery = createAction(
+  SELECT_SAVED_QUERY,
+  (name: string, autorunQuery?: boolean) => ({
+    payload: {
+      name,
+      autorunQuery,
+    },
+  })
+);
 
-export const resetSavedQuery = (): SavedQueryActions => ({
-  type: RESET_SAVED_QUERY,
-});
+export const resetSavedQuery = createAction(RESET_SAVED_QUERY);
+
+export type SavedQueryActions =
+  | ReturnType<typeof updateSavedQuery>
+  | ReturnType<typeof resetSavedQuery>
+  | ReturnType<typeof selectSavedQuery>;
