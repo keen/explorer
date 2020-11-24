@@ -20,4 +20,8 @@ export const UpgradeAnchor = styled.a`
   font-family: 'Lato Bold', sans-serif;
   color: ${colors.white[500]};
   text-decoration: none;
+
+  &:hover {
+    color: ${colors.white[500]};
+  }
 `;
