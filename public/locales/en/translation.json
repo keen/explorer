@@ -40,7 +40,7 @@
     "email_extraction": "Extract to Email",
     "limit_label": "Limit number of events",
     "limit_placeholder": "Events limit",
-    "maximum_events_limit": "Maximum number of events for ad-hoc extraction is 100,000.",
+    "maximum_events_limit": "The maximum number of events for preview is 100,000.",
     "maximum_email_events_limit": "Maximum number of events for email extraction is 10,000,000.",
     "email_events_limit_first": "Need more? Consider",
     "email_events_limit_second": ", which has an extraction limit of 10,000,000 events.",
