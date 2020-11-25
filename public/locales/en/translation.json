@@ -190,7 +190,8 @@
     "button_label": "Confirm",
     "cancel_label": "Cancel",
     "delete_query_title": "Deleting query",
-    "delete_message": "Do you want to permanently delete this query from your project?"
+    "delete_message_head": "Do you want to permanently delete ",
+    "delete_message_tail": " query from your project?"
   },
   "dataviz": {
     "no_results": "The results for analysis are empty"

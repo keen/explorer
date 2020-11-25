@@ -28,6 +28,9 @@ test('shows modal with confirmation button', () => {
         visible: true,
       },
     },
+    savedQuery: {
+      name: 'saved-query',
+    },
   };
 
   const {
@@ -44,6 +47,9 @@ test('allows user to accept confirmation', () => {
       confirmModal: {
         visible: true,
       },
+    },
+    savedQuery: {
+      name: 'saved-query',
     },
   };
 
@@ -71,6 +77,9 @@ test('allows user to close modal by clicking "cancel" label', () => {
       confirmModal: {
         visible: true,
       },
+    },
+    savedQuery: {
+      name: 'saved-query',
     },
   };
 

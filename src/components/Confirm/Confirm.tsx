@@ -17,11 +17,13 @@ import {
   hideConfirmation,
   acceptConfirmation,
 } from '../../modules/app';
+import { getSavedQuery } from '../../modules/savedQuery';
 
 const Confirm: FC<{}> = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const { visible } = useSelector(getConfirmation);
+  const { name } = useSelector(getSavedQuery);
 
   const closeHandler = () => dispatch(hideConfirmation());
 
@@ -32,7 +34,11 @@ const Confirm: FC<{}> = () => {
           <ModalHeader onClose={closeHandler}>
             <Title>{t('confirm.delete_query_title')}</Title>
           </ModalHeader>
-          <Description>{t('confirm.delete_message')}</Description>
+          <Description>
+            {t('confirm.delete_message_head')}
+            <strong>{name}</strong>
+            {t('confirm.delete_message_tail')}
+          </Description>
           <ModalFooter>
             <Footer>
               <Button
