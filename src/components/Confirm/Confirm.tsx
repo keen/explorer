@@ -10,7 +10,7 @@ import {
   Button,
 } from '@keen.io/ui-core';
 
-import { Title, Close, Footer, Description } from './Confirm.styles';
+import { Title, Close, Footer, Description, Name } from './Confirm.styles';
 
 import {
   getConfirmation,
@@ -23,7 +23,7 @@ const Confirm: FC<{}> = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const { visible } = useSelector(getConfirmation);
-  const { name } = useSelector(getSavedQuery);
+  const { displayName } = useSelector(getSavedQuery);
 
   const closeHandler = () => dispatch(hideConfirmation());
 
@@ -36,7 +36,7 @@ const Confirm: FC<{}> = () => {
           </ModalHeader>
           <Description>
             {t('confirm.delete_message_head')}
-            <strong>{name}</strong>
+            <Name>{displayName}</Name>
             {t('confirm.delete_message_tail')}
           </Description>
           <ModalFooter>
