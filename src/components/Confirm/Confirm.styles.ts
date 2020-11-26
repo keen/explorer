@@ -26,3 +26,12 @@ export const Description = styled.div`
 
   color: ${colors.black[500]};
 `;
+
+export const Name = styled.strong`
+  display: block;
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 2;
+`;
