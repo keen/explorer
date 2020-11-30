@@ -93,7 +93,6 @@
   },
   "browser_query_menu": {
     "edit_query": "Edit query",
-    "remove_query": "Delete",
     "settings_tooltip": "Query Settings",
     "actions_tooltip": "Actions"
   },

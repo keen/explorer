@@ -46,17 +46,6 @@ test('allows user to edit query', () => {
   expect(props.onEditQuery).toHaveBeenCalled();
 });
 
-test('allows user to remove query', () => {
-  const {
-    wrapper: { getByText },
-    props,
-  } = render();
-  const removeQuery = getByText('browser_query_menu.remove_query');
-
-  fireEvent.click(removeQuery);
-  expect(props.onRemoveQuery).toHaveBeenCalled();
-});
-
 test('allows user to edit query settings', () => {
   const {
     wrapper: { getByTestId },
