@@ -9,7 +9,6 @@ import { colors } from '@keen.io/colors';
 import TooltipContent from '../TooltipContent';
 import {
   Container,
-  ButtonWrapper,
   BasicActions,
   ActionsContainer,
   ContextActions,
@@ -69,11 +68,6 @@ const BrowserQueryMenu: FC<Props> = ({ onEditQuery, onRemoveQuery }) => {
         <Button variant="secondary" onClick={onEditQuery}>
           {t('browser_query_menu.edit_query')}
         </Button>
-        <ButtonWrapper marginLeft={10}>
-          <Button variant="danger" style="outline" onClick={onRemoveQuery}>
-            {t('browser_query_menu.remove_query')}
-          </Button>
-        </ButtonWrapper>
       </BasicActions>
       <ContextActions data-testid="context-buttons">
         <ActionsContainer

@@ -17,10 +17,6 @@ export const ActionsContainer = styled.div<SpaceProps>`
   ${space}
 `;
 
-export const ButtonWrapper = styled.div<SpaceProps>`
-  ${space}
-`;
-
 export const BasicActions = styled.div`
   display: flex;
 `;
