@@ -25,6 +25,7 @@ import {
   BackLinkText,
   WrapperHorizontal,
   WrapperVertical,
+  ButtonLabel,
 } from './EditorNavigation.styles';
 
 import ActionsMenu from '../ActionsMenu';
@@ -92,13 +93,12 @@ const EditorNavigation: FC<Props> = ({ onSaveQuery }) => {
     return () => document.removeEventListener('click', outsideActionsMenuClick);
   }, [actionsMenu, actionsContainer]);
 
+  const queryName = displayName ? displayName : t('editor.new_query_title');
   return (
     <Container>
       <WrapperVertical>
         <WrapperHorizontal>
-          <QueryName>
-            {displayName ? displayName : t('editor.new_query_title')}
-          </QueryName>
+          <QueryName title={queryName}>{queryName}</QueryName>
           <QueryMeta>
             {cached && (
               <Tag>
@@ -217,7 +217,7 @@ const EditorNavigation: FC<Props> = ({ onSaveQuery }) => {
             }}
             icon={isSavingQuery && !isModalVisible && <FadeLoader />}
           >
-            {t('editor.save_query_button')}
+            <ButtonLabel>{t('editor.save_query_button')}</ButtonLabel>
           </Button>
         </MenuItem>
       </Menu>

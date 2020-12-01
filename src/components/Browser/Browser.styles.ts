@@ -31,6 +31,7 @@ export const Container = styled.div<FlexDirectionProps>`
 
 export const Socket = styled.div<SpaceProps & LayoutProps>`
   position: relative;
+  min-width: 0;
   ${layout}
   ${space}
 `;

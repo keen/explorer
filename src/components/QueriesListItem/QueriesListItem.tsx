@@ -49,7 +49,9 @@ const QueriesListItem: FC<Props> = ({
       isActive={isActive}
       data-testid="saved-query-item"
     >
-      <QueryName data-testid="saved-query-name">{queryName}</QueryName>
+      <QueryName data-testid="saved-query-name" title={queryName}>
+        {queryName}
+      </QueryName>
       <Labels>
         {' '}
         {refreshRate !== 0 && (
