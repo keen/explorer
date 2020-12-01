@@ -22,6 +22,11 @@ export const QueryTitle = styled.div`
   font-size: 20px;
   line-height: 24px;
   color: ${colors.blue[500]};
+
+  text-overflow: ellipsis;
+  overflow: hidden;
+  width: 100%;
+  box-sizing: border-box;
 `;
 
 export const VisualizationWrapper = styled.div<{ widgetType: PickerWidgets }>`

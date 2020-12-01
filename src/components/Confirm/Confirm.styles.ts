@@ -18,7 +18,7 @@ export const Footer = styled.div`
 
 export const Description = styled.div`
   margin: 20px 25px;
-  max-width: 350px;
+  width: 350px;
 
   font-size: 16px;
   line-height: 19px;
@@ -34,4 +34,5 @@ export const Name = styled.strong`
   overflow: hidden;
   text-overflow: ellipsis;
   line-height: 2;
+  font-family: 'Lato Bold', sans-serif;
 `;

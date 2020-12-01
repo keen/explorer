@@ -16,11 +16,13 @@ export const WrapperVertical = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  min-width: 0;
 `;
 
 export const WrapperHorizontal = styled.div`
   display: flex;
   align-items: center;
+  max-width: 100%;
 `;
 
 export const QueryMeta = styled.div`
@@ -37,6 +39,11 @@ export const QueryName = styled.div`
   line-height: 24px;
   font-family: 'Gangster Grotesk Bold', sans-serif;
   color: ${colors.blue[500]};
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 100%;
 `;
 
 export const MenuItem = styled.div<PositionProps>`
@@ -75,4 +82,8 @@ export const BackLink = styled(motion.div)`
 
 export const BackLinkText = styled.div`
   margin-left: 5px;
+`;
+
+export const ButtonLabel = styled.span`
+  white-space: nowrap;
 `;

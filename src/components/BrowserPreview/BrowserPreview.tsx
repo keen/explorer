@@ -70,7 +70,9 @@ const BrowserPreview: FC<Props> = ({
         ) : (
           <>
             {currentQuery && (
-              <QueryTitle>{currentQuery.displayName}</QueryTitle>
+              <QueryTitle title={currentQuery.displayName}>
+                {currentQuery.displayName}
+              </QueryTitle>
             )}
             {currentQuery && queryResults ? (
               <VisualizationWrapper
