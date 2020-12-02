@@ -136,6 +136,7 @@ const EditorNavigation: FC<Props> = ({ onSaveQuery }) => {
           onMouseLeave={() => showSettingsTooltip(false)}
         >
           <CircleButton
+            variant="secondary"
             icon={
               <span data-testid="query-settings">
                 <Icon type="settings" />
@@ -166,6 +167,7 @@ const EditorNavigation: FC<Props> = ({ onSaveQuery }) => {
             onMouseLeave={() => showActionsTooltip(false)}
           >
             <CircleButton
+              variant="secondary"
               icon={<Icon type="actions" />}
               onClick={() => {
                 showActionsTooltip(false);
