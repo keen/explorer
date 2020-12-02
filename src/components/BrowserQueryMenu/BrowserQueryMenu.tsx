@@ -75,6 +75,7 @@ const BrowserQueryMenu: FC<Props> = ({ onEditQuery, onRemoveQuery }) => {
           onMouseLeave={() => showSettingsTooltip(false)}
         >
           <CircleButton
+            variant="secondary"
             icon={<Icon type="settings" />}
             onClick={() => {
               showSettingsTooltip(false);
@@ -102,6 +103,7 @@ const BrowserQueryMenu: FC<Props> = ({ onEditQuery, onRemoveQuery }) => {
           onMouseLeave={() => showActionsTooltip(false)}
         >
           <CircleButton
+            variant="secondary"
             icon={<Icon type="actions" />}
             onClick={() => {
               showActionsTooltip(false);
