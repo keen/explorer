@@ -3,8 +3,8 @@
   "description": "Data Explorer by Keen IO",
   "version": "1.0.0",
   "license": "MIT",
-  "main": "dist/keen-explorer.umd.js",
-  "browser": "dist/keen-explorer.umd.js",
+  "main": "dist/explorer.modern.min.js",
+  "browser": "dist/explorer.modern.min.js",
   "files": [
     "dist"
   ],
