@@ -171,5 +171,8 @@
     "Keen charts",
     "Data explorer",
     "Data insights"
-  ]
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
 }
