@@ -1465,7 +1465,38 @@
     d3-time "^2.0.0"
     d3-time-format "^2.2.3"
 
-"@keen.io/charts@^2.2.14", "@keen.io/charts@^2.5.5":
+"@keen.io/charts@^2.5.10":
+  version "2.5.10"
+  resolved "https://registry.yarnpkg.com/@keen.io/charts/-/charts-2.5.10.tgz#f7a5c889a9726c9cbefda135df65274ff8819a1f"
+  integrity sha512-xBz7kts0lHhHUeNPmr28GT860thS9Gn+ex+tH5Z8Oj5IUWRiReJsozlHyaDKMGWogNBzUF8kOe+G9IIos+X9KA==
+  dependencies:
+    "@keen.io/charts-utils" "^1.2.1"
+    "@keen.io/colors" "^1.1.0"
+    "@keen.io/react-hooks" "^1.0.4"
+    "@keen.io/ui-core" "^2.5.20"
+    column-resizer "^1.3.5"
+    d3-array "^2.4.0"
+    d3-axis "^1.0.12"
+    d3-drag "^1.2.5"
+    d3-fetch "^1.1.2"
+    d3-geo "^1.11.9"
+    d3-interpolate "^1.4.0"
+    d3-polygon "^1.0.6"
+    d3-scale "^3.2.1"
+    d3-selection "^1.4.1"
+    d3-shape "^1.3.7"
+    d3-time-format "^2.2.3"
+    d3-transition "^1.3.2"
+    d3-zoom "^1.8.3"
+    framer-motion "^1.11.1"
+    polished "^3.4.4"
+    react "^16.12.0"
+    react-dom "^16.12.0"
+    react-measure "^2.3.0"
+    styled-components "^5.1.0"
+    use-debounce "^3.3.0"
+
+"@keen.io/charts@^2.5.5":
   version "2.5.5"
   resolved "https://registry.yarnpkg.com/@keen.io/charts/-/charts-2.5.5.tgz#889aefdd59c08b48bb13bcf0c1322aecde6a234f"
   integrity sha512-9NYurrawgbdWdh4L9RSUh+u7fOpesDleOfvxmBSGM5KfAxu5ZSoJcjw0GSKs8+71rT5fT/0H8qGZk7zJzWC8PQ==
@@ -1632,6 +1663,25 @@
   version "2.5.19"
   resolved "https://registry.yarnpkg.com/@keen.io/ui-core/-/ui-core-2.5.19.tgz#bf23fa7cb85c8c42f8eb9d532c05f400c10f32b8"
   integrity sha512-AgkjTbxgmMLUxPpjQvtYa4pcA2WJ61j3KZnuv0eviewiH8YMmWlFQg2K//zQxS00UBdj3chKkh4gfDlOfH+P8g==
+  dependencies:
+    "@keen.io/colors" "^1.1.0"
+    "@keen.io/icons" "^1.2.2"
+    color "^3.1.2"
+    framer-motion "^1.11.1"
+    fuse.js "^6.4.1"
+    polished "^3.4.4"
+    react "^16.12.0"
+    react-column-resizer "^1.1.9"
+    react-dom "^16.12.0"
+    react-select "^3.1.0"
+    styled-components "^5.1.0"
+    styled-system "5.1.5"
+    webfontloader "^1.6.28"
+
+"@keen.io/ui-core@^2.5.20":
+  version "2.5.20"
+  resolved "https://registry.yarnpkg.com/@keen.io/ui-core/-/ui-core-2.5.20.tgz#bf0d31cf482144983336137c3e5c50f6d629edbb"
+  integrity sha512-PRAT58H3pkKVF1ux4Ui6CoMN3AoyW6fx0d33ZOjEDcIupS5GGSGmhqZivwJNxAlFrGxs4kzSoXrFc1zrrfCgsA==
   dependencies:
     "@keen.io/colors" "^1.1.0"
     "@keen.io/icons" "^1.2.2"
