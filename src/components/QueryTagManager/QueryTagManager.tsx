@@ -75,15 +75,17 @@ const QueryTagManager: FC<Props> = ({ tags, onAddTag, onRemoveTag }) => {
 
   const keyboardHandler = useCallback(
     (e: KeyboardEvent) => {
+      if (!tagsRef.current?.length) return;
       switch (e.keyCode) {
         case KEYBOARD_KEYS.ENTER:
-          const { value } = tagsHints[indexRef.current];
-          if (!tags.includes(value)) {
+          const { value } = tagsRef.current[indexRef.current];
+          if (value && !tags.includes(value)) {
             onAddTag(value);
           }
 
           inputRef.current.value = '';
           setDropdownVisibility(false);
+          setTagsHint(null);
           break;
         case KEYBOARD_KEYS.UP:
           if (indexRef.current > 0) {
@@ -91,13 +93,13 @@ const QueryTagManager: FC<Props> = ({ tags, onAddTag, onRemoveTag }) => {
           }
           break;
         case KEYBOARD_KEYS.DOWN:
-          if (indexRef.current < tagsHints.length - 1) {
+          if (indexRef.current < tagsRef.current.length - 1) {
             setIndex(indexRef.current + 1);
           }
           break;
       }
     },
-    [tagsHints, tags]
+    [tagsRef, tags]
   );
 
   useEffect(() => {
@@ -111,7 +113,7 @@ const QueryTagManager: FC<Props> = ({ tags, onAddTag, onRemoveTag }) => {
     return () => {
       document.removeEventListener('keydown', keyboardHandler);
     };
-  }, [dropdownVisible, tags, tagsHints]);
+  }, [dropdownVisible, tags, tagsRef]);
 
   return (
     <div>
@@ -136,12 +138,12 @@ const QueryTagManager: FC<Props> = ({ tags, onAddTag, onRemoveTag }) => {
                 setActiveItem={(_item, idx) => selectionIndex === idx}
                 items={tagsHints}
                 onClick={(_e, { value }) => {
-                  if (!tags.includes(value)) {
+                  if (value && !tags.includes(value)) {
                     onAddTag(value);
                   }
-
                   inputRef.current.value = '';
                   setDropdownVisibility(false);
+                  setTagsHint(null);
                 }}
               />
             </DropdownListContainer>
