@@ -99,7 +99,7 @@ const QueryTagManager: FC<Props> = ({ tags, onAddTag, onRemoveTag }) => {
           break;
       }
     },
-    [tagsRef, tags]
+    [tags]
   );
 
   useEffect(() => {
@@ -113,7 +113,7 @@ const QueryTagManager: FC<Props> = ({ tags, onAddTag, onRemoveTag }) => {
     return () => {
       document.removeEventListener('keydown', keyboardHandler);
     };
-  }, [dropdownVisible, tags, tagsRef]);
+  }, [dropdownVisible, tags]);
 
   return (
     <div>
