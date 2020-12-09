@@ -286,6 +286,7 @@
   },
   "query_creator_interval": {
     "label": "Interval",
+    "standard": "Standard",
     "custom": "Custom",
     "tooltip": "Select the frequency to view data across the specified timeframe"
   },
