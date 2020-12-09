@@ -212,7 +212,7 @@
     "separator": "to"
   },
   "query_tag_manager": {
-    "labels": "Tags",
+    "tags": "Tags",
     "new_tag": "(New tag)",
     "input_placeholder": "Insert item and confirm by Enter"
   },
