@@ -86,9 +86,9 @@
   "browser_filters": {
     "title": "Filters",
     "show_only_cached_queries": "Only cached queries",
-    "search_label": "Labels",
-    "search_tags_input_placeholder": "Search label",
-    "empty_search_message": "No labels found with this name",
+    "search_label": "Tags",
+    "search_tags_input_placeholder": "Search tag",
+    "empty_search_message": "No tags found with this name",
     "clear": "Clear filters"
   },
   "browser_query_menu": {
@@ -201,7 +201,7 @@
   },
   "queries_list": {
     "name": "Name",
-    "labels": "Labels",
+    "labels": "Tags",
     "updated": "Updated"
   },
   "queries_list_item": {
@@ -212,8 +212,8 @@
     "separator": "to"
   },
   "query_tag_manager": {
-    "labels": "Labels",
-    "new_tag": "(New label)",
+    "tags": "Tags",
+    "new_tag": "(New tag)",
     "input_placeholder": "Insert item and confirm by Enter"
   },
   "absolute_time": {

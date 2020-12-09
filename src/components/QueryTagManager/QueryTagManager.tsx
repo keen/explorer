@@ -118,7 +118,7 @@ const QueryTagManager: FC<Props> = ({ tags, onAddTag, onRemoveTag }) => {
   return (
     <div>
       <Label htmlFor="queryLabels" variant="secondary">
-        {t('query_tag_manager.labels')}
+        {t('query_tag_manager.tags')}
       </Label>
       <div ref={containerRef}>
         <DropdownContainer>
