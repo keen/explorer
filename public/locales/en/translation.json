@@ -162,7 +162,10 @@
     "empty_search_results": "No property found with this name",
     "select": "Select",
     "event_stream": "Event Stream",
-    "first": "first"
+    "first": "first",
+    "tooltip_start": "Average analysis applies only to numeric values (",
+    "tooltip_bold": "num",
+    "tooltip_end": " data type)"
   },
   "query_creator_timeframe": {
     "label": "Timeframe",
@@ -283,8 +286,8 @@
   },
   "query_creator_interval": {
     "label": "Interval",
-    "standard": "Standard",
-    "custom": "Custom"
+    "custom": "Custom",
+    "tooltip": "Select the frequency to view data across the specified timeframe"
   },
   "query_creator_limit": {
     "label": "Limit results to",
@@ -302,7 +305,8 @@
     "tooltip": "so we know what properties are available",
     "define": "Define",
     "group_by": "group by",
-    "order_result": "first to order the result"
+    "order_result": "first to order the result",
+    "order_options_label": "Result of analysis"
   },
   "query_creator_order_by_property": {
     "placeholder": "property",
