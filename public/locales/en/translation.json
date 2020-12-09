@@ -86,9 +86,9 @@
   "browser_filters": {
     "title": "Filters",
     "show_only_cached_queries": "Only cached queries",
-    "search_label": "Labels",
-    "search_tags_input_placeholder": "Search label",
-    "empty_search_message": "No labels found with this name",
+    "search_label": "Tags",
+    "search_tags_input_placeholder": "Search tag",
+    "empty_search_message": "No tags found with this name",
     "clear": "Clear filters"
   },
   "browser_query_menu": {
@@ -162,7 +162,10 @@
     "empty_search_results": "No property found with this name",
     "select": "Select",
     "event_stream": "Event Stream",
-    "first": "first"
+    "first": "first",
+    "tooltip_start": "Average analysis applies only to numeric values (",
+    "tooltip_bold": "num",
+    "tooltip_end": " data type)"
   },
   "query_creator_timeframe": {
     "label": "Timeframe",
@@ -201,7 +204,7 @@
   },
   "queries_list": {
     "name": "Name",
-    "labels": "Labels",
+    "labels": "Tags",
     "updated": "Updated"
   },
   "queries_list_item": {
@@ -212,8 +215,8 @@
     "separator": "to"
   },
   "query_tag_manager": {
-    "labels": "Labels",
-    "new_tag": "(New label)",
+    "tags": "Tags",
+    "new_tag": "(New tag)",
     "input_placeholder": "Insert item and confirm by Enter"
   },
   "absolute_time": {
@@ -283,8 +286,8 @@
   },
   "query_creator_interval": {
     "label": "Interval",
-    "standard": "Standard",
-    "custom": "Custom"
+    "custom": "Custom",
+    "tooltip": "Select the frequency to view data across the specified timeframe"
   },
   "query_creator_limit": {
     "label": "Limit results to",
@@ -302,7 +305,8 @@
     "tooltip": "so we know what properties are available",
     "define": "Define",
     "group_by": "group by",
-    "order_result": "first to order the result"
+    "order_result": "first to order the result",
+    "order_options_label": "Result of analysis"
   },
   "query_creator_order_by_property": {
     "placeholder": "property",
