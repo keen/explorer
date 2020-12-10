@@ -164,7 +164,7 @@
     "event_stream": "Event Stream",
     "first": "first",
     "subtitle": "Numbers required",
-    "tooltip_start": "Average analysis applies only to numeric values (",
+    "tooltip_start": "{{analysis}} analysis applies only to numeric values (",
     "tooltip_bold": "num",
     "tooltip_end": " data type)"
   },
