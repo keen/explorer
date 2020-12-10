@@ -163,6 +163,7 @@
     "select": "Select",
     "event_stream": "Event Stream",
     "first": "first",
+    "subtitle": "Numbers required",
     "tooltip_start": "Average analysis applies only to numeric values (",
     "tooltip_bold": "num",
     "tooltip_end": " data type)"
@@ -286,6 +287,7 @@
   },
   "query_creator_interval": {
     "label": "Interval",
+    "standard": "Standard",
     "custom": "Custom",
     "tooltip": "Select the frequency to view data across the specified timeframe"
   },
