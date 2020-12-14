@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.9](https://github.com/keen/explorer/compare/v1.1.8...v1.1.9) (2020-12-14)
+
+
+### Bug Fixes
+
+* 🐛 query serialize ([694ee74](https://github.com/keen/explorer/commit/694ee74723fa82927126a3c927e36570c16097b3))
+* 🐛 query serialize ([a99e473](https://github.com/keen/explorer/commit/a99e473719219f506a07183134b6041b270a214c))
+
 ### [1.1.8](https://github.com/keen/explorer/compare/v1.1.7...v1.1.8) (2020-12-14)
 
 ### [1.1.7](https://github.com/keen/explorer/compare/v1.1.6...v1.1.7) (2020-12-11)
