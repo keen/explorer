@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.10](https://github.com/keen/explorer/compare/v1.1.9...v1.1.10) (2020-12-14)
+
+
+### Bug Fixes
+
+* 🐛 fix translations ([d2ff2b2](https://github.com/keen/explorer/commit/d2ff2b2f53e61f8bec3b36b12cf66af2508642d8))
+
 ### [1.1.9](https://github.com/keen/explorer/compare/v1.1.8...v1.1.9) (2020-12-14)
 
 
