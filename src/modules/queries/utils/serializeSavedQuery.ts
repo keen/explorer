@@ -12,7 +12,7 @@ const serializeSavedQuery = ({
   query,
 }: SavedQueryAPIResponse): SavedQueryListItem => ({
   name: query_name,
-  displayName: metadata ? metadata.display_name : query_name,
+  displayName: metadata?.display_name ? metadata.display_name : query_name,
   cached: !!refresh_rate,
   refreshRate: refresh_rate,
   lastModifiedDate: user_last_modified_date,
