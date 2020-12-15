@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.13](https://github.com/keen/explorer/compare/v1.1.12...v1.1.13) (2020-12-15)
+
+
+### Bug Fixes
+
+* 🐛 update dataviz and qc ([48716f8](https://github.com/keen/explorer/commit/48716f8cf5021a2de39f770646a3105b4f4f7378))
+
 ### [1.1.12](https://github.com/keen/explorer/compare/v1.1.11...v1.1.12) (2020-12-15)
 
 ### [1.1.11](https://github.com/keen/explorer/compare/v1.1.10...v1.1.11) (2020-12-15)
