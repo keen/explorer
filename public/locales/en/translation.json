@@ -56,7 +56,7 @@
     "query_name_error": "Query name is required",
     "query_unique_name_error": "Saved Query with this name already exists",
     "query_name_input_placeholder": "Give your query a name",
-    "save_query_button": "Update settings and save query",
+    "save_query_button": "Save Query",
     "saving_query": "Saving query",
     "close_button": "Cancel",
     "new_query_notice": "Create your saved query",
