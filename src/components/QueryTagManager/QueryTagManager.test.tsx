@@ -57,6 +57,25 @@ test('allows user to add tag', () => {
   expect(props.onAddTag).toHaveBeenCalledWith('marketing');
 });
 
+test('allows user to add tag that is a part of one of existing tags', () => {
+  const {
+    wrapper: { getByTestId, getByText },
+    props,
+  } = render({ tags: ['new tag'] });
+
+  const input = getByTestId('query-labels-input');
+  fireEvent.change(input, { target: { value: 'new' } });
+
+  act(() => {
+    jest.runAllTimers();
+  });
+
+  const element = getByText('new query_tag_manager.new_tag');
+  fireEvent.click(element);
+
+  expect(props.onAddTag).toHaveBeenCalledWith('new');
+});
+
 test('do not allows user to add already existing tag', () => {
   const {
     wrapper: { getByTestId, getAllByText },
