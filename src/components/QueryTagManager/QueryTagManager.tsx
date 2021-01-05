@@ -43,19 +43,26 @@ const QueryTagManager: FC<Props> = ({ tags, onAddTag, onRemoveTag }) => {
   const { searchHandler } = useSearch(
     tagsPool,
     (searchResults, phrase) => {
-      setTagsHint(
-        searchResults.length
-          ? searchResults.map((tag: string) => ({
-              label: tag,
-              value: tag,
-            }))
-          : [
-              {
-                label: `${phrase} ${t('query_tag_manager.new_tag')}`,
-                value: phrase,
-              },
-            ]
-      );
+      const newTag = {
+        label: `${phrase} ${t('query_tag_manager.new_tag')}`,
+        value: phrase,
+      };
+      let hints = [];
+      if (searchResults.length) {
+        if (!searchResults.includes(phrase)) {
+          hints.push(newTag);
+        }
+        hints = [
+          ...hints,
+          ...searchResults.map((tag: string) => ({
+            label: tag,
+            value: tag,
+          })),
+        ];
+      } else {
+        hints.push(newTag);
+      }
+      setTagsHint(hints);
       setIndex(0);
       setDropdownVisibility(!!phrase);
     },
