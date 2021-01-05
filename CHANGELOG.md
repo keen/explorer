@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.15](https://github.com/keen/explorer/compare/v1.1.14...v1.1.15) (2021-01-05)
+
+
+### Bug Fixes
+
+* 🐛 add new tag that is a part of one of other tags ([200e9b6](https://github.com/keen/explorer/commit/200e9b6ed7dde63ba2540a939c5fa4ce0804e238))
+
 ### [1.1.14](https://github.com/keen/explorer/compare/v1.1.13...v1.1.14) (2021-01-04)
 
 ### [1.1.13](https://github.com/keen/explorer/compare/v1.1.12...v1.1.13) (2020-12-15)
