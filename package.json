@@ -49,7 +49,7 @@
     "@keen.io/icons": "^1.2.1",
     "@keen.io/parser": "^2.3.10",
     "@keen.io/pubsub": "^1.1.0",
-    "@keen.io/query-creator": "^1.1.6",
+    "@keen.io/query-creator": "^1.1.8",
     "@keen.io/react-hooks": "^1.0.1",
     "@keen.io/toast-notifications": "^1.1.2",
     "@keen.io/ui-core": "^2.5.19",
