@@ -1569,13 +1569,20 @@
     styled-components "^5.1.0"
     styled-system "5.1.5"
 
-"@keen.io/icons@^1.2.1", "@keen.io/icons@^1.3.0", "@keen.io/icons@^1.3.1":
+"@keen.io/icons@^1.2.1", "@keen.io/icons@^1.3.0":
   version "1.3.1"
   resolved "https://registry.yarnpkg.com/@keen.io/icons/-/icons-1.3.1.tgz#5f0a670525b42a6601a6c1024520b56dd2ddd5c5"
   integrity sha512-o5TlJ30CLv7/kOmECnj713k+/6mi8l+mMlnHKzfJNcof3Lv0DieAhQw/GouPynW+u1cDXYUawH9zqZ6FjMhj1g==
   dependencies:
     "@keen.io/colors" "^1.1.0"
     react "^16.12.0"
+
+"@keen.io/icons@^1.3.1", "@keen.io/icons@^1.3.4":
+  version "1.3.4"
+  resolved "https://registry.yarnpkg.com/@keen.io/icons/-/icons-1.3.4.tgz#d62be309d7fbcd601a4b77f2725de45607730e53"
+  integrity sha512-Vmq0A9bEYrqBjod0NEGOPl295RXcNabmL11p+1vCOIJxBNpX9iK7cbnBFScWcir/PwriAkPgK276L7Qh40U+nw==
+  dependencies:
+    "@keen.io/colors" "^1.1.0"
 
 "@keen.io/parser@^2.3.10":
   version "2.3.16"
@@ -1682,7 +1689,23 @@
     styled-system "5.1.5"
     webfontloader "^1.6.28"
 
-"@keen.io/ui-core@^2.5.19", "@keen.io/ui-core@^2.5.23":
+"@keen.io/ui-core@^2.5.19":
+  version "2.6.1"
+  resolved "https://registry.yarnpkg.com/@keen.io/ui-core/-/ui-core-2.6.1.tgz#5e47763d97c5556db7b6704a438a6e61bea85ca4"
+  integrity sha512-vApR8HJ83xXaBY+n0H2TXrNSrgBgrJ447HUvIyZ0n0mw2Z26HmY5wcwtPp7Y6OoA4Af9Pcq+2Jy00IjNmrtO4Q==
+  dependencies:
+    "@keen.io/colors" "^1.1.0"
+    "@keen.io/icons" "^1.3.4"
+    color "^3.1.2"
+    framer-motion "^1.11.1"
+    fuse.js "^6.4.1"
+    polished "^3.4.4"
+    react-column-resizer "^1.1.9"
+    react-select "^3.1.0"
+    styled-system "^5.1.5"
+    webfontloader "^1.6.28"
+
+"@keen.io/ui-core@^2.5.23":
   version "2.5.23"
   resolved "https://registry.yarnpkg.com/@keen.io/ui-core/-/ui-core-2.5.23.tgz#33466b4f675e35c95e5475b0132c7341f21088df"
   integrity sha512-khPiSUWVBfjLhek+bC4Fo8MroaoBQTnEnJS57JHuMlDlyDenJImgfsASdEy2fTDr9ZVkz4NCmYcrxVG9yt5B0A==
@@ -4633,9 +4656,9 @@ csstype@^2.5.7:
   integrity sha512-2mSc+VEpGPblzAxyeR+vZhJKgYg0Og0nnRi7pmRXFYYxSfnOnW8A5wwQb4n4cE2nIOzqKOAzLCaEX6aBmNEv8A==
 
 csstype@^3.0.2:
-  version "3.0.5"
-  resolved "https://registry.yarnpkg.com/csstype/-/csstype-3.0.5.tgz#7fdec6a28a67ae18647c51668a9ff95bb2fa7bb8"
-  integrity sha512-uVDi8LpBUKQj6sdxNaTetL6FpeCqTjOvAQuQUa/qAqq8oOd4ivkbhgnqayl0dnPal8Tb/yB1tF+gOvCBiicaiQ==
+  version "3.0.6"
+  resolved "https://registry.yarnpkg.com/csstype/-/csstype-3.0.6.tgz#865d0b5833d7d8d40f4e5b8a6d76aea3de4725ef"
+  integrity sha512-+ZAmfyWMT7TiIlzdqJgjMb7S4f1beorDbWbsocyK4RaiqA5RTX3K14bnBWmmA9QEM0gRdsjyyrEmcyga8Zsxmw==
 
 csvtojson@^2.0.8:
   version "2.0.10"
@@ -6551,9 +6574,9 @@ functions-have-names@^1.2.1:
   integrity sha512-bLgc3asbWdwPbx2mNk2S49kmJCuQeu0nfmaOgbs8WIyzzkw3r4htszdIi9Q9EMezDPTYuJx2wvjZ/EwgAthpnA==
 
 fuse.js@^6.4.1:
-  version "6.4.5"
-  resolved "https://registry.yarnpkg.com/fuse.js/-/fuse.js-6.4.5.tgz#bf960ddd4827c8eadf230ceae4b7cf90b104503e"
-  integrity sha512-AIHjOhexWVqs/jWqun6jTUfdXB3Bm1uShoirHvTZImD2kHEQZ1zOmoDEqIPs8N1LnnwXJeG0T+r9ilEeJzlaoA==
+  version "6.4.6"
+  resolved "https://registry.yarnpkg.com/fuse.js/-/fuse.js-6.4.6.tgz#62f216c110e5aa22486aff20be7896d19a059b79"
+  integrity sha512-/gYxR/0VpXmWSfZOIPS3rWwU8SHgsRTwWuXhyb2O6s7aRuVtHtxCkR33bNYu3wyLyNx/Wpv0vU7FZy8Vj53VNw==
 
 gensync@^1.0.0-beta.1:
   version "1.0.0-beta.2"
@@ -12516,7 +12539,7 @@ styled-components@^5.1.0:
     shallowequal "^1.1.0"
     supports-color "^5.5.0"
 
-styled-system@5.1.5:
+styled-system@5.1.5, styled-system@^5.1.5:
   version "5.1.5"
   resolved "https://registry.yarnpkg.com/styled-system/-/styled-system-5.1.5.tgz#e362d73e1dbb5641a2fd749a6eba1263dc85075e"
   integrity sha512-7VoD0o2R3RKzOzPK0jYrVnS8iJdfkKsQJNiLRDjikOpQVqQHns/DXWaPZOH4tIKkhAT7I6wIsy9FWTWh2X3q+A==

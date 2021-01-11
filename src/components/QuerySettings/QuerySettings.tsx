@@ -2,6 +2,7 @@ import React, { FC, useState, useCallback, useEffect, useContext } from 'react';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { colors } from '@keen.io/colors';
+import { TagManagement } from '@keen.io/ui-core';
 import { ErrorContainer } from '@keen.io/forms';
 import {
   Anchor,
@@ -25,7 +26,6 @@ import {
 } from './QuerySettings.styles';
 
 import CacheQuery, { REFRESH_MINIMUM } from '../CacheQuery';
-import QueryTagManager from '../QueryTagManager';
 
 import { getSavedQuery } from '../../modules/savedQuery';
 import {
@@ -38,6 +38,7 @@ import {
   getSavedQueries,
   getSaveQueryError,
 } from '../../modules/queries';
+import { getTagsPool } from '../../modules/project';
 
 import { AppContext } from '../../contexts';
 import { ERRORS } from '../../constants';
@@ -65,6 +66,7 @@ const QuerySettings: FC<Props> = ({ onSave, onClose, cacheAvailable }) => {
   const isCacheLimited = useSelector(getCacheQueriesLimitExceed);
   const error = useSelector(getSaveQueryError);
   const settingsSource = useSelector(getQuerySettingsModalSource);
+  const tagsPool = useSelector(getTagsPool);
 
   const { upgradeSubscriptionUrl } = useContext(AppContext);
   const { t } = useTranslation();
@@ -155,7 +157,8 @@ const QuerySettings: FC<Props> = ({ onSave, onClose, cacheAvailable }) => {
           {queryNameError && <Error>{queryNameError}</Error>}
         </ErrorContainer>
         <TagManager>
-          <QueryTagManager
+          <TagManagement
+            tagsPool={tagsPool}
             tags={querySettings.tags}
             onAddTag={(tag) => {
               setQuerySettings((settings) => ({
@@ -169,6 +172,9 @@ const QuerySettings: FC<Props> = ({ onSave, onClose, cacheAvailable }) => {
                 tags: settings.tags.filter((tagName) => tagName !== tag),
               }));
             }}
+            newTagLabel={t('query_tag_manager.new_tag')}
+            tagsLabel={t('query_tag_manager.tags')}
+            placeholderLabel={t('query_tag_manager.input_placeholder')}
           />
         </TagManager>
         {cacheAvailable && (
