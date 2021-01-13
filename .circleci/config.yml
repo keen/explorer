@@ -112,13 +112,13 @@ workflows:
       - build:
           filters:
             tags:
-              only: /.*.*.*-rc.*/
+              only: /^.*rc.*$/
             branches:
               ignore: /.*/
       - publish-prerelease:
           filters:
             tags:
-              only: /.*.*.*-rc.*/
+              only: /^.*rc.*$/
             branches:
               ignore: /.*/
           requires:
@@ -128,15 +128,13 @@ workflows:
       - build:
           filters:
             tags:
-              only: /.*/
-              ignore: /.*.*.*-rc.*/
+              only: /^v\d+\.\d+\.\d+$/
             branches:
               ignore: /.*/
       - publish:
           filters:
             tags:
-              only: /.*/
-              ignore: /.*.*.*-rc.*/
+              only: /^v\d+\.\d+\.\d+$/
             branches:
               ignore: /.*/
           requires:
