@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.1.0-rc.4](https://github.com/keen/explorer/compare/v1.1.0-rc.3...v1.1.0-rc.4) (2021-01-13)
+
+
+### Bug Fixes
+
+* 🐛 update query creator to fix timezone issue ([befcf6e](https://github.com/keen/explorer/commit/befcf6e652568065dba5d18f0f3c4bbbcc0392ad))
+
 ## [1.1.0-rc.3](https://github.com/keen/explorer/compare/v1.1.0-rc.2...v1.1.0-rc.3) (2021-01-13)
 
 ## [1.1.0-rc.2](https://github.com/keen/explorer/compare/v1.1.0-rc.1...v1.1.0-rc.2) (2021-01-13)
