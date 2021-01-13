@@ -46,6 +46,19 @@ jobs:
       - run:
           name: Publish
           command: yarn publish
+  publish-prerelease:
+    executor: nodejs
+    working_directory: ~/tmp
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/tmp/dist
+      - run:
+          name: Authenticate with registry
+          command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc
+      - run:
+          name: Publish
+          command: yarn publish --tag next
   build:
     executor: nodejs
     working_directory: ~/tmp
@@ -94,18 +107,36 @@ workflows:
               only: /.*/
             tags:
               ignore: /.*/
+  publish-prerelease:
+    jobs:
+      - build:
+          filters:
+            tags:
+              only: /rc/
+            branches:
+              ignore: /.*/
+      - publish-prerelease:
+          filters:
+            tags:
+              only: /rc/
+            branches:
+              ignore: /.*/
+          requires:
+            - build
   publish:
     jobs:
       - build:
           filters:
             tags:
               only: /.*/
+              ignore: /rc/
             branches:
               ignore: /.*/
       - publish:
           filters:
             tags:
               only: /.*/
+              ignore: /rc/
             branches:
               ignore: /.*/
           requires:
