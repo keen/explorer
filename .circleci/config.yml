@@ -22,9 +22,12 @@ jobs:
       - run:
           name: Install dependencies
           command: yarn
-      - run:
-          name: Create release
-          command: yarn release
+      - run: |
+        if [ "$CIRCLE_BRANCH" = "develop" ]; then
+          yarn release --prerelease
+        elif [ "$CIRCLE_BRANCH" = "master" ]; then
+          yarn release
+        fi
       - run:
           name: Push changes
           command: git push --follow-tags --set-upstream origin ${CIRCLE_BRANCH}
@@ -77,6 +80,7 @@ workflows:
           filters:
             branches:
               only:
+                - develop
                 - master
             tags:
               ignore: /.*/
