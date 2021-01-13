@@ -23,8 +23,13 @@ jobs:
           name: Install dependencies
           command: yarn
       - run:
-          name: Create release
-          command: yarn release
+          name: Create release version
+          command: |
+            if [ "$CIRCLE_BRANCH" = "develop" ]; then
+              yarn release --prerelease rc --skip.changelog
+            elif [ "$CIRCLE_BRANCH" = "master" ]; then
+              yarn release
+            fi
       - run:
           name: Push changes
           command: git push --follow-tags --set-upstream origin ${CIRCLE_BRANCH}
@@ -41,6 +46,19 @@ jobs:
       - run:
           name: Publish
           command: yarn publish
+  publish-prerelease:
+    executor: nodejs
+    working_directory: ~/tmp
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/tmp/dist
+      - run:
+          name: Authenticate with registry
+          command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc
+      - run:
+          name: Publish
+          command: yarn publish --tag next
   build:
     executor: nodejs
     working_directory: ~/tmp
@@ -77,6 +95,7 @@ workflows:
           filters:
             branches:
               only:
+                - develop
                 - master
             tags:
               ignore: /.*/
@@ -88,18 +107,34 @@ workflows:
               only: /.*/
             tags:
               ignore: /.*/
+  publish-prerelease:
+    jobs:
+      - build:
+          filters:
+            tags:
+              only: /^.*rc.*$/
+            branches:
+              ignore: /.*/
+      - publish-prerelease:
+          filters:
+            tags:
+              only: /^.*rc.*$/
+            branches:
+              ignore: /.*/
+          requires:
+            - build
   publish:
     jobs:
       - build:
           filters:
             tags:
-              only: /.*/
+              only: /^v\d+\.\d+\.\d+$/
             branches:
               ignore: /.*/
       - publish:
           filters:
             tags:
-              only: /.*/
+              only: /^v\d+\.\d+\.\d+$/
             branches:
               ignore: /.*/
           requires:
