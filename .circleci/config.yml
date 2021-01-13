@@ -26,7 +26,7 @@ jobs:
           name: Create release version
           command: |
             if [ "$CIRCLE_BRANCH" = "develop" ]; then
-              yarn release --prerelease
+              yarn release --prerelease rc
             elif [ "$CIRCLE_BRANCH" = "master" ]; then
               yarn release
             fi
