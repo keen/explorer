@@ -1,5 +1,6 @@
 import { download } from './download';
-import { parseQuery, convertToCSV } from '@keen.io/parser';
+import { parseQuery } from '@keen.io/parser';
+import { exportToCSV } from '@keen.io/data-export';
 
 const FILENAME = 'chart';
 
@@ -17,8 +18,8 @@ export const exportToCsv = ({
     downloadFileName = `${fileName}.csv`;
   }
 
-  const { result, steps } = data;
-  const parsedQuery = parseQuery({ result, steps });
-  const csvOutput = convertToCSV({ data: parsedQuery.results });
+  const { result, query, steps } = data;
+  const parsedQuery = parseQuery({ result, query, steps });
+  const csvOutput = exportToCSV({ data: parsedQuery.data });
   download(csvOutput, downloadFileName, 'text/csv;encoding:utf-8');
 };
