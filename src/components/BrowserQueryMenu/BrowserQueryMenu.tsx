@@ -118,6 +118,7 @@ const BrowserQueryMenu: FC<Props> = ({ onEditQuery, onRemoveQuery }) => {
             <ActionsMenu
               isNewQuery={false}
               isVisible={actionsMenu}
+              isInsideQueryBrowser
               onHideMenu={() => setActionsMenuVisibility(false)}
               onRemoveQuery={() => {
                 setActionsMenuVisibility(false);

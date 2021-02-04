@@ -25,6 +25,7 @@ import {
   exportDataToCsv,
   showEmbedModal,
   copyApiResourceUrl,
+  createNewQuery,
 } from '../../modules/app';
 
 import { TOOLTIP_MOTION } from '../../constants';
@@ -32,6 +33,8 @@ import { TOOLTIP_MOTION } from '../../constants';
 type Props = {
   /** Is new query */
   isNewQuery: boolean;
+  /** Is inside query browser */
+  isInsideQueryBrowser?: boolean;
   /** Remove query event handler */
   onRemoveQuery: () => void;
   /** Hide menu */
@@ -42,6 +45,7 @@ type Props = {
 
 const ActionsMenu: FC<Props> = ({
   isNewQuery,
+  isInsideQueryBrowser,
   isVisible,
   onRemoveQuery,
   onHideMenu,
@@ -104,6 +108,16 @@ const ActionsMenu: FC<Props> = ({
           </ExportDataLinks>
         </ExportDataWrapper>
         <DropdownMenu.Divider />
+        {!isNewQuery && !isInsideQueryBrowser && (
+          <DropdownMenu.Item
+            onClick={() => {
+              dispatch(createNewQuery());
+              onHideMenu();
+            }}
+          >
+            {t('actions_menu.new_query')}
+          </DropdownMenu.Item>
+        )}
         {!isNewQuery && (
           <DropdownMenu.Item
             onClick={() => {
