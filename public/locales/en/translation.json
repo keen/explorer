@@ -9,7 +9,8 @@
     "tooltip": "Run query to download result",
     "embed_html": "Embed HTML",
     "api_resource": "API resource",
-    "clone_query": "Clone query"
+    "clone_query": "Clone query",
+    "new_query": "New query"
   },
   "embed_widget": {
     "embed_html_title": "Embed HTML",
