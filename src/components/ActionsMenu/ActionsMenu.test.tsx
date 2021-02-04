@@ -235,7 +235,7 @@ test("doesn't allow user to create new query inside query browser", () => {
     wrapper: { queryByText },
   } = render({ isInsideQueryBrowser: true });
 
-  const removeLink = queryByText('actions_menu.new_query');
+  const newQuery = queryByText('actions_menu.new_query');
 
-  expect(removeLink).toBeNull();
+  expect(newQuery).toBeNull();
 });
