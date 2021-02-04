@@ -9,6 +9,7 @@ import {
   runQuery as runQueryFlow,
   saveQuery as saveQueryFlow,
   checkOrganizationLimits as checkOrganizationLimitsFlow,
+  extractToEmail as extractToEmailFlow,
 } from './saga';
 import {
   saveQuery,
@@ -32,15 +33,19 @@ import {
   selectFirstSavedQuery,
   hideQuerySettingsModal,
   getQuerySettingsModalVisibility,
+  showEmailExtractionModal,
+  hideEmailExtractionModal,
   HIDE_CONFIRMATION,
   ACCEPT_CONFIRMATION,
+  HIDE_EMAIL_EXTRACTION_MODAL,
 } from '../../modules/app';
 
-import { ERRORS } from './constants';
+import { ERRORS, RUN_EMAIL_EXTRACTION } from './constants';
 import {
   NOTIFICATION_MANAGER_CONTEXT,
   KEEN_CLIENT_CONTEXT,
 } from '../../constants';
+import { getQuerySettings } from './selectors';
 
 fetchMock.mockResponse(() => Promise.resolve(JSON.stringify({})));
 
@@ -327,6 +332,155 @@ describe('deleteQuery()', () => {
 
     it('terminates the saga flow', (result) => {
       expect(result).toBeUndefined();
+    });
+  });
+});
+
+describe('extractToEmail()', () => {
+  describe('Scenario 1: User successfully extracts to email', () => {
+    const it = sagaHelper(extractToEmailFlow());
+    const notificationManager = {
+      showNotification: jest.fn(),
+    };
+    it('shows email extraction modal', (result) => {
+      expect(result).toEqual(put(showEmailExtractionModal()));
+    });
+    it('waits for user input', (result) => {
+      expect(result).toEqual(
+        take([HIDE_EMAIL_EXTRACTION_MODAL, RUN_EMAIL_EXTRACTION])
+      );
+      return {
+        type: RUN_EMAIL_EXTRACTION,
+        payload: {},
+      };
+    });
+    it('gets client context', (result) => {
+      expect(result).toEqual(getContext(KEEN_CLIENT_CONTEXT));
+      return {
+        query: jest.fn(),
+        url: () => 'url',
+        config: { masterKey: 'masterKey' },
+      };
+    });
+    it('gets notification manager context', (result) => {
+      expect(result).toEqual(getContext(NOTIFICATION_MANAGER_CONTEXT));
+      return notificationManager;
+    });
+    it('gets query settings from state', (result) => {
+      expect(result).toEqual(select(getQuerySettings));
+    });
+    it('hides email extraction modal', (result) => {
+      expect(result).toEqual(put(hideEmailExtractionModal()));
+    });
+    it('calls API to extract to email', () => {
+      return { success: true };
+    });
+    it('shows email extraction success notification', () => {
+      expect(notificationManager.showNotification).toHaveBeenCalledWith({
+        autoDismiss: true,
+        message: 'notifications.prepeare_email_extraction',
+        type: 'info',
+      });
+    });
+  });
+
+  describe('Scenario 2: User failed to extract to email due to internal server error', () => {
+    const it = sagaHelper(extractToEmailFlow());
+    const notificationManager = {
+      showNotification: jest.fn(),
+    };
+
+    it('shows email extraction modal', (result) => {
+      expect(result).toEqual(put(showEmailExtractionModal()));
+    });
+    it('waits for user input', (result) => {
+      expect(result).toEqual(
+        take([HIDE_EMAIL_EXTRACTION_MODAL, RUN_EMAIL_EXTRACTION])
+      );
+      return {
+        type: RUN_EMAIL_EXTRACTION,
+        payload: {},
+      };
+    });
+    it('gets client context', (result) => {
+      expect(result).toEqual(getContext(KEEN_CLIENT_CONTEXT));
+      return {
+        query: jest.fn().mockImplementation(() => {
+          const error = new Error();
+          (error as any).status = HttpStatus.INTERNAL_SERVER_ERROR;
+          throw error;
+        }),
+        url: () => 'url',
+        config: { masterKey: 'masterKey' },
+      };
+    });
+    it('gets notification manager context', (result) => {
+      expect(result).toEqual(getContext(NOTIFICATION_MANAGER_CONTEXT));
+      return notificationManager;
+    });
+    it('gets query settings from state', (result) => {
+      expect(result).toEqual(select(getQuerySettings));
+    });
+    it('hides email extraction modal', (result) => {
+      expect(result).toEqual(put(hideEmailExtractionModal()));
+    });
+    it('shows internal server error notification', () => {
+      expect(notificationManager.showNotification).toHaveBeenCalledWith({
+        type: 'error',
+        message: 'notifications.email_extraction_error',
+        showDismissButton: true,
+        autoDismiss: false,
+      });
+    });
+  });
+
+  describe('Scenario 3: User failed to extract to email due to incorrect query settings', () => {
+    const it = sagaHelper(extractToEmailFlow());
+    const notificationManager = {
+      showNotification: jest.fn(),
+    };
+    const errorBody = 'your request is missing required field';
+    it('shows email extraction modal', (result) => {
+      expect(result).toEqual(put(showEmailExtractionModal()));
+    });
+    it('waits for user input', (result) => {
+      expect(result).toEqual(
+        take([HIDE_EMAIL_EXTRACTION_MODAL, RUN_EMAIL_EXTRACTION])
+      );
+      return {
+        type: RUN_EMAIL_EXTRACTION,
+        payload: {},
+      };
+    });
+    it('gets client context', (result) => {
+      expect(result).toEqual(getContext(KEEN_CLIENT_CONTEXT));
+      return {
+        query: jest.fn().mockImplementation(() => {
+          const error = new Error('message');
+          (error as any).body = errorBody;
+          throw error;
+        }),
+        url: () => 'url',
+        config: { masterKey: 'masterKey' },
+      };
+    });
+    it('gets notification manager context', (result) => {
+      expect(result).toEqual(getContext(NOTIFICATION_MANAGER_CONTEXT));
+      return notificationManager;
+    });
+    it('gets query settings from state', (result) => {
+      expect(result).toEqual(select(getQuerySettings));
+    });
+    it('hides email extraction modal', (result) => {
+      expect(result).toEqual(put(hideEmailExtractionModal()));
+    });
+    it('shows email extraction error notification', () => {
+      expect(notificationManager.showNotification).toHaveBeenCalledWith({
+        type: 'error',
+        message: errorBody,
+        translateMessage: false,
+        autoDismiss: true,
+      });
     });
   });
 });
