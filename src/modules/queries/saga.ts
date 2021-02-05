@@ -76,7 +76,7 @@ function* scrollToElement(element: HTMLElement) {
   }
 }
 
-function* extractToEmail() {
+export function* extractToEmail() {
   yield put(showEmailExtractionModal());
   const action = yield take([
     HIDE_EMAIL_EXTRACTION_MODAL,
@@ -87,13 +87,6 @@ function* extractToEmail() {
     const client = yield getContext(KEEN_CLIENT_CONTEXT);
     const notificationManager = yield getContext(NOTIFICATION_MANAGER_CONTEXT);
     const query = yield select(getQuerySettings);
-
-    yield notificationManager.showNotification({
-      type: 'info',
-      message: 'notifications.prepeare_email_extraction',
-      autoDismiss: true,
-    });
-
     try {
       yield put(hideEmailExtractionModal());
       const { latest, email, contentEncoding, contentType } = action.payload;
@@ -105,6 +98,11 @@ function* extractToEmail() {
         content_encoding: contentEncoding,
       };
       yield client.query(body);
+      yield notificationManager.showNotification({
+        type: 'info',
+        message: 'notifications.prepare_email_extraction',
+        autoDismiss: true,
+      });
     } catch (error) {
       const { status } = error;
       if (status === HttpStatus.INTERNAL_SERVER_ERROR) {

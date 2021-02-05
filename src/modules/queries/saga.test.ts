@@ -9,6 +9,7 @@ import {
   runQuery as runQueryFlow,
   saveQuery as saveQueryFlow,
   checkOrganizationLimits as checkOrganizationLimitsFlow,
+  extractToEmail as extractToEmailFlow,
 } from './saga';
 import {
   saveQuery,
@@ -32,23 +33,27 @@ import {
   selectFirstSavedQuery,
   hideQuerySettingsModal,
   getQuerySettingsModalVisibility,
+  showEmailExtractionModal,
+  hideEmailExtractionModal,
   HIDE_CONFIRMATION,
   ACCEPT_CONFIRMATION,
+  HIDE_EMAIL_EXTRACTION_MODAL,
 } from '../../modules/app';
 
-import { ERRORS } from './constants';
+import { ERRORS, RUN_EMAIL_EXTRACTION } from './constants';
 import {
   NOTIFICATION_MANAGER_CONTEXT,
   KEEN_CLIENT_CONTEXT,
 } from '../../constants';
+import { getQuerySettings } from './selectors';
 
 fetchMock.mockResponse(() => Promise.resolve(JSON.stringify({})));
 
 describe('checkOrganizationLimits()', () => {
   describe('Scenario 1: User exceed organization limits', () => {
-    const it = sagaHelper(checkOrganizationLimitsFlow());
+    const test = sagaHelper(checkOrganizationLimitsFlow());
 
-    it('get the Keen API client instance from context', (result) => {
+    test('get the Keen API client instance from context', (result) => {
       expect(result).toEqual(getContext(KEEN_CLIENT_CONTEXT));
 
       return {
@@ -57,18 +62,18 @@ describe('checkOrganizationLimits()', () => {
       };
     });
 
-    it('calls the API to check organization limits', () => {
+    test('calls the API to check organization limits', () => {
       const response = {
         cached_queries: { limited: true, limit: 5, current_usage: 10 },
       };
       return response;
     });
 
-    it('notfies user about exceed cache queries organization limit', (result) => {
+    test('notfies user about exceed cache queries organization limit', (result) => {
       expect(result).toEqual(put(setCacheQueryLimitExceed(true)));
     });
 
-    it('setup cache queries limit', (result) => {
+    test('setup cache queries limit', (result) => {
       expect(result).toEqual(put(setCacheQueryLimit(5)));
     });
   });
@@ -80,9 +85,9 @@ describe('saveQuery()', () => {
     const action = saveQuery('purchases', query) as ReturnType<
       typeof saveQuery
     >;
-    const it = sagaHelper(saveQueryFlow(action));
+    const test = sagaHelper(saveQueryFlow(action));
 
-    it('get the notification manager from context', (result) => {
+    test('get the notification manager from context', (result) => {
       expect(result).toEqual(getContext(NOTIFICATION_MANAGER_CONTEXT));
 
       return {
@@ -90,7 +95,7 @@ describe('saveQuery()', () => {
       };
     });
 
-    it('get the Keen API client instance from context', (result) => {
+    test('get the Keen API client instance from context', (result) => {
       expect(result).toEqual(getContext(KEEN_CLIENT_CONTEXT));
 
       return {
@@ -100,22 +105,22 @@ describe('saveQuery()', () => {
       };
     });
 
-    it('get settings modal visibility from state', (result) => {
+    test('get settings modal visibility from state', (result) => {
       expect(result).toEqual(select(getQuerySettingsModalVisibility));
       return true;
     });
 
-    it('calls API to save query resource', () => {
+    test('calls API to save query resource', () => {
       return {
         success: true,
       };
     });
 
-    it('hide query settings modal', (result) => {
+    test('hide query settings modal', (result) => {
       expect(result).toEqual(put(hideQuerySettingsModal()));
     });
 
-    it('dispatch save query success action', (result) => {
+    test('dispatch save query success action', (result) => {
       expect(result).toEqual(
         put(saveQuerySuccess('purchases', { success: true }))
       );
@@ -127,9 +132,9 @@ describe('runQuery()', () => {
   describe('Scenario 1: User successfully run query', () => {
     const query = {};
     const action = runQuery(query) as ReturnType<typeof runQuery>;
-    const it = sagaHelper(runQueryFlow(action));
+    const test = sagaHelper(runQueryFlow(action));
 
-    it('get the Keen API client instance from context', (result) => {
+    test('get the Keen API client instance from context', (result) => {
       expect(result).toEqual(getContext(KEEN_CLIENT_CONTEXT));
 
       return {
@@ -137,11 +142,11 @@ describe('runQuery()', () => {
       };
     });
 
-    it('calls API to run query', () => {
+    test('calls API to run query', () => {
       return { analysis_type: 'count' };
     });
 
-    it('dispatch run query success action', (result) => {
+    test('dispatch run query success action', (result) => {
       expect(result).toEqual(put(runQuerySuccess({ analysis_type: 'count' })));
     });
   });
@@ -149,9 +154,9 @@ describe('runQuery()', () => {
   describe('Scenario 2: User exceed run query limits', () => {
     const query = {};
     const action = runQuery(query) as ReturnType<typeof runQuery>;
-    const it = sagaHelper(runQueryFlow(action));
+    const test = sagaHelper(runQueryFlow(action));
 
-    it('get the Keen API client instance from context', (result) => {
+    test('get the Keen API client instance from context', (result) => {
       expect(result).toEqual(getContext(KEEN_CLIENT_CONTEXT));
 
       const error = new Error('message');
@@ -159,11 +164,11 @@ describe('runQuery()', () => {
       return error;
     });
 
-    it('dispatch run query error action', (result) => {
+    test('dispatch run query error action', (result) => {
       expect(result).toEqual(put(runQueryError(new Error('message') as any)));
     });
 
-    it('notifies user about exceeding query perform limits', (result) => {
+    test('notifies user about exceeding query perform limits', (result) => {
       expect(result).toEqual(put(setQueryLimitReached(true)));
     });
   });
@@ -171,9 +176,9 @@ describe('runQuery()', () => {
   describe('Scenario 3: User failed to run query due to API internal error', () => {
     const query = {};
     const action = runQuery(query) as ReturnType<typeof runQuery>;
-    const it = sagaHelper(runQueryFlow(action));
+    const test = sagaHelper(runQueryFlow(action));
 
-    it('get the Keen API client instance from context', (result) => {
+    test('get the Keen API client instance from context', (result) => {
       expect(result).toEqual(getContext(KEEN_CLIENT_CONTEXT));
 
       const error = new Error('message');
@@ -181,11 +186,11 @@ describe('runQuery()', () => {
       return error;
     });
 
-    it('dispatch run query error action', (result) => {
+    test('dispatch run query error action', (result) => {
       expect(result).toEqual(put(runQueryError(new Error('message') as any)));
     });
 
-    it('get the notification manager from context', (result) => {
+    test('get the notification manager from context', (result) => {
       expect(result).toEqual(getContext(NOTIFICATION_MANAGER_CONTEXT));
     });
   });
@@ -194,9 +199,9 @@ describe('runQuery()', () => {
 describe('deleteQuery()', () => {
   describe('Scenario 1: User successfully delete query', () => {
     const action = deleteQuery('purchases') as ReturnType<typeof deleteQuery>;
-    const it = sagaHelper(deleteQueryFlow(action));
+    const test = sagaHelper(deleteQueryFlow(action));
 
-    it('get the notification manager from context', (result) => {
+    test('get the notification manager from context', (result) => {
       expect(result).toEqual(getContext(NOTIFICATION_MANAGER_CONTEXT));
 
       return {
@@ -204,13 +209,13 @@ describe('deleteQuery()', () => {
       };
     });
 
-    it('shows confirmation modal', (result) => {
+    test('shows confirmation modal', (result) => {
       expect(result).toEqual(
         put(showConfirmation('delete', { queryName: 'purchases' }))
       );
     });
 
-    it('waits for user confirmation', (result) => {
+    test('waits for user confirmation', (result) => {
       expect(result).toEqual(take([ACCEPT_CONFIRMATION, HIDE_CONFIRMATION]));
 
       return {
@@ -218,7 +223,7 @@ describe('deleteQuery()', () => {
       };
     });
 
-    it('get the Keen API client instance from context', (result) => {
+    test('get the Keen API client instance from context', (result) => {
       expect(result).toEqual(getContext(KEEN_CLIENT_CONTEXT));
 
       return {
@@ -230,37 +235,37 @@ describe('deleteQuery()', () => {
       };
     });
 
-    it('calls API to delete query resource', (keenClient) => {
+    test('calls API to delete query resource', (keenClient) => {
       expect(keenClient.del).toHaveBeenCalled();
     });
 
-    it('get application view from state', (result) => {
+    test('get application view from state', (result) => {
       expect(result).toEqual(select(getViewMode));
       return 'editor';
     });
 
-    it('changes the application view', (result) => {
+    test('changes the application view', (result) => {
       expect(result).toEqual(put(setViewMode('browser')));
     });
 
-    it('resets query results', (result) => {
+    test('resets query results', (result) => {
       expect(result).toEqual(put(resetQueryResults()));
     });
 
-    it('dispatch delete query success action', (result) => {
+    test('dispatch delete query success action', (result) => {
       expect(result).toEqual(put(deleteQuerySuccess('purchases')));
     });
 
-    it('selects first query', (result) => {
+    test('selects first query', (result) => {
       expect(result).toEqual(put(selectFirstSavedQuery()));
     });
   });
 
   describe('Scenario 2: User failed to delete query due to API internal error', () => {
     const action = deleteQuery('purchases') as ReturnType<typeof deleteQuery>;
-    const it = sagaHelper(deleteQueryFlow(action));
+    const test = sagaHelper(deleteQueryFlow(action));
 
-    it('get the notification manager from context', (result) => {
+    test('get the notification manager from context', (result) => {
       expect(result).toEqual(getContext(NOTIFICATION_MANAGER_CONTEXT));
 
       return {
@@ -268,13 +273,13 @@ describe('deleteQuery()', () => {
       };
     });
 
-    it('shows confirmation modal', (result) => {
+    test('shows confirmation modal', (result) => {
       expect(result).toEqual(
         put(showConfirmation('delete', { queryName: 'purchases' }))
       );
     });
 
-    it('waits for user confirmation', (result) => {
+    test('waits for user confirmation', (result) => {
       expect(result).toEqual(take([ACCEPT_CONFIRMATION, HIDE_CONFIRMATION]));
 
       return {
@@ -282,7 +287,7 @@ describe('deleteQuery()', () => {
       };
     });
 
-    it('get the Keen API client instance from context', (result) => {
+    test('get the Keen API client instance from context', (result) => {
       expect(result).toEqual(getContext(KEEN_CLIENT_CONTEXT));
 
       const error = new Error('message');
@@ -290,20 +295,20 @@ describe('deleteQuery()', () => {
       return error;
     });
 
-    it('shows the notification', (result) => {
+    test('shows the notification', (result) => {
       expect(result).toBeUndefined();
     });
 
-    it('dispatch delete query error action', (result) => {
+    test('dispatch delete query error action', (result) => {
       expect(result).toEqual(put(deleteQueryError(new Error('message'))));
     });
   });
 
   describe('Scenario 3: User cancel delete query action', () => {
     const action = deleteQuery('purchases') as ReturnType<typeof deleteQuery>;
-    const it = sagaHelper(deleteQueryFlow(action));
+    const test = sagaHelper(deleteQueryFlow(action));
 
-    it('get the notification manager from context', (result) => {
+    test('get the notification manager from context', (result) => {
       expect(result).toEqual(getContext(NOTIFICATION_MANAGER_CONTEXT));
 
       return {
@@ -311,13 +316,13 @@ describe('deleteQuery()', () => {
       };
     });
 
-    it('shows confirmation modal', (result) => {
+    test('shows confirmation modal', (result) => {
       expect(result).toEqual(
         put(showConfirmation('delete', { queryName: 'purchases' }))
       );
     });
 
-    it('waits for user confirmation', (result) => {
+    test('waits for user confirmation', (result) => {
       expect(result).toEqual(take([ACCEPT_CONFIRMATION, HIDE_CONFIRMATION]));
 
       return {
@@ -325,8 +330,157 @@ describe('deleteQuery()', () => {
       };
     });
 
-    it('terminates the saga flow', (result) => {
+    test('terminates the saga flow', (result) => {
       expect(result).toBeUndefined();
+    });
+  });
+});
+
+describe('extractToEmail()', () => {
+  describe('Scenario 1: User successfully extracts to email', () => {
+    const test = sagaHelper(extractToEmailFlow());
+    const notificationManager = {
+      showNotification: jest.fn(),
+    };
+    test('shows email extraction modal', (result) => {
+      expect(result).toEqual(put(showEmailExtractionModal()));
+    });
+    test('waits for user input', (result) => {
+      expect(result).toEqual(
+        take([HIDE_EMAIL_EXTRACTION_MODAL, RUN_EMAIL_EXTRACTION])
+      );
+      return {
+        type: RUN_EMAIL_EXTRACTION,
+        payload: {},
+      };
+    });
+    test('gets client context', (result) => {
+      expect(result).toEqual(getContext(KEEN_CLIENT_CONTEXT));
+      return {
+        query: jest.fn(),
+        url: () => 'url',
+        config: { masterKey: 'masterKey' },
+      };
+    });
+    test('gets notification manager context', (result) => {
+      expect(result).toEqual(getContext(NOTIFICATION_MANAGER_CONTEXT));
+      return notificationManager;
+    });
+    test('gets query settings from state', (result) => {
+      expect(result).toEqual(select(getQuerySettings));
+    });
+    test('hides email extraction modal', (result) => {
+      expect(result).toEqual(put(hideEmailExtractionModal()));
+    });
+    test('calls API to extract to email', () => {
+      return { success: true };
+    });
+    test('shows email extraction success notification', () => {
+      expect(notificationManager.showNotification).toHaveBeenCalledWith({
+        autoDismiss: true,
+        message: 'notifications.prepare_email_extraction',
+        type: 'info',
+      });
+    });
+  });
+
+  describe('Scenario 2: User failed to extract to email due to internal server error', () => {
+    const test = sagaHelper(extractToEmailFlow());
+    const notificationManager = {
+      showNotification: jest.fn(),
+    };
+
+    test('shows email extraction modal', (result) => {
+      expect(result).toEqual(put(showEmailExtractionModal()));
+    });
+    test('waits for user input', (result) => {
+      expect(result).toEqual(
+        take([HIDE_EMAIL_EXTRACTION_MODAL, RUN_EMAIL_EXTRACTION])
+      );
+      return {
+        type: RUN_EMAIL_EXTRACTION,
+        payload: {},
+      };
+    });
+    test('gets client context', (result) => {
+      expect(result).toEqual(getContext(KEEN_CLIENT_CONTEXT));
+      return {
+        query: jest.fn().mockImplementation(() => {
+          const error = new Error();
+          (error as any).status = HttpStatus.INTERNAL_SERVER_ERROR;
+          throw error;
+        }),
+        url: () => 'url',
+        config: { masterKey: 'masterKey' },
+      };
+    });
+    test('gets notification manager context', (result) => {
+      expect(result).toEqual(getContext(NOTIFICATION_MANAGER_CONTEXT));
+      return notificationManager;
+    });
+    test('gets query settings from state', (result) => {
+      expect(result).toEqual(select(getQuerySettings));
+    });
+    test('hides email extraction modal', (result) => {
+      expect(result).toEqual(put(hideEmailExtractionModal()));
+    });
+    test('shows internal server error notification', () => {
+      expect(notificationManager.showNotification).toHaveBeenCalledWith({
+        type: 'error',
+        message: 'notifications.email_extraction_error',
+        showDismissButton: true,
+        autoDismiss: false,
+      });
+    });
+  });
+
+  describe('Scenario 3: User failed to extract to email due to incorrect query settings', () => {
+    const test = sagaHelper(extractToEmailFlow());
+    const notificationManager = {
+      showNotification: jest.fn(),
+    };
+    const errorBody = 'your request is missing required field';
+    test('shows email extraction modal', (result) => {
+      expect(result).toEqual(put(showEmailExtractionModal()));
+    });
+    test('waits for user input', (result) => {
+      expect(result).toEqual(
+        take([HIDE_EMAIL_EXTRACTION_MODAL, RUN_EMAIL_EXTRACTION])
+      );
+      return {
+        type: RUN_EMAIL_EXTRACTION,
+        payload: {},
+      };
+    });
+    test('gets client context', (result) => {
+      expect(result).toEqual(getContext(KEEN_CLIENT_CONTEXT));
+      return {
+        query: jest.fn().mockImplementation(() => {
+          const error = new Error('message');
+          (error as any).body = errorBody;
+          throw error;
+        }),
+        url: () => 'url',
+        config: { masterKey: 'masterKey' },
+      };
+    });
+    test('gets notification manager context', (result) => {
+      expect(result).toEqual(getContext(NOTIFICATION_MANAGER_CONTEXT));
+      return notificationManager;
+    });
+    test('gets query settings from state', (result) => {
+      expect(result).toEqual(select(getQuerySettings));
+    });
+    test('hides email extraction modal', (result) => {
+      expect(result).toEqual(put(hideEmailExtractionModal()));
+    });
+    test('shows email extraction error notification', () => {
+      expect(notificationManager.showNotification).toHaveBeenCalledWith({
+        type: 'error',
+        message: errorBody,
+        translateMessage: false,
+        autoDismiss: true,
+      });
     });
   });
 });

@@ -11,32 +11,32 @@ import { createNewQuery as createNewQueryFlow } from './saga';
 import { PUBSUB_CONTEXT } from '../../constants';
 
 describe('createNewQuery()', () => {
-  const it = sagaHelper(createNewQueryFlow());
+  const test = sagaHelper(createNewQueryFlow());
   const pubsub = {
     publish: jest.fn(),
   };
-  it('change application view to editor', (result) => {
+  test('change application view to editor', (result) => {
     expect(result).toEqual(put(setViewMode('editor')));
   });
 
-  it('get the PubSub from context', (result) => {
+  test('get the PubSub from context', (result) => {
     expect(result).toEqual(getContext(PUBSUB_CONTEXT));
     return pubsub;
   });
 
-  it('publish message to query creator', () => {
+  test('publish message to query creator', () => {
     expect(pubsub.publish).toBeCalledWith(NEW_QUERY_EVENT);
   });
 
-  it('reset query results', (result) => {
+  test('reset query results', (result) => {
     expect(result).toEqual(put(resetQueryResults()));
   });
 
-  it('reset visualization settings', (result) => {
+  test('reset visualization settings', (result) => {
     expect(result).toEqual(put(resetVisualization()));
   });
 
-  it('reset saved query settings', (result) => {
+  test('reset saved query settings', (result) => {
     expect(result).toEqual(put(resetSavedQuery()));
   });
 });
