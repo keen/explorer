@@ -378,7 +378,7 @@ describe('extractToEmail()', () => {
     test('shows email extraction success notification', () => {
       expect(notificationManager.showNotification).toHaveBeenCalledWith({
         autoDismiss: true,
-        message: 'notifications.prepeare_email_extraction',
+        message: 'notifications.prepare_email_extraction',
         type: 'info',
       });
     });

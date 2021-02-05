@@ -100,7 +100,7 @@ export function* extractToEmail() {
       yield client.query(body);
       yield notificationManager.showNotification({
         type: 'info',
-        message: 'notifications.prepeare_email_extraction',
+        message: 'notifications.prepare_email_extraction',
         autoDismiss: true,
       });
     } catch (error) {
