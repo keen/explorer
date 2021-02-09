@@ -56,7 +56,7 @@ const QueriesListItem: FC<Props> = ({
         {' '}
         {refreshRate !== 0 && (
           <Tag>
-            <Badge variant="green">
+            <Badge variant="green" truncate>
               <span data-testid="cache-badge">
                 {t('queries_list_item.cached_label')}
               </span>{' '}
@@ -68,7 +68,9 @@ const QueriesListItem: FC<Props> = ({
         )}
         {queryTags.map((tag) => (
           <Tag key={tag}>
-            <Badge variant="purple">{tag}</Badge>
+            <Badge variant="purple" truncate>
+              {tag}
+            </Badge>
           </Tag>
         ))}
         {tags.length > TAGS_LIMIT && (

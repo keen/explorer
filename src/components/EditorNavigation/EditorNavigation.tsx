@@ -102,7 +102,7 @@ const EditorNavigation: FC<Props> = ({ onSaveQuery }) => {
           <QueryMeta>
             {cached && (
               <Tag>
-                <Badge variant="green">
+                <Badge variant="green" truncate>
                   <span data-testid="cache-badge">
                     {t('editor_navigation.cached_label')}
                   </span>{' '}
@@ -112,7 +112,9 @@ const EditorNavigation: FC<Props> = ({ onSaveQuery }) => {
             )}
             {tags.map((tag) => (
               <Tag key={tag}>
-                <Badge variant="purple">{tag}</Badge>
+                <Badge variant="purple" truncate>
+                  {tag}
+                </Badge>
               </Tag>
             ))}
           </QueryMeta>
