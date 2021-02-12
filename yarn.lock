@@ -1572,9 +1572,9 @@
   integrity sha512-S9zhZNDSwsL6WXOtFqeZ3+vOdCzykL7pYifRm9dZ7ivLe/frAeyqIQsfRA8Z52DPnRN7d+gKbWrJtlZM22ErjQ==
 
 "@keen.io/query-creator@^1.1.8":
-  version "1.3.2"
-  resolved "https://registry.yarnpkg.com/@keen.io/query-creator/-/query-creator-1.3.2.tgz#2749f30688d527711058ead7f9ad9a51de784668"
-  integrity sha512-I/J79JuF2SrfGkiSbVWvV1lwwgNM9+H56eti1OLAjVo9N23CiY4ySWKRp16ktknPW2G9c7LMTjAtbbhvqlrfvw==
+  version "1.3.3"
+  resolved "https://registry.yarnpkg.com/@keen.io/query-creator/-/query-creator-1.3.3.tgz#fa25d3e2ec686fe9534fe0e94ceb40db1c41712a"
+  integrity sha512-TPmV2vb7xLBLST+dUAUJiOHpB8hA7kkdI2VHWG9XnasEDfCPbyFASL0A3Iid/ZDZbLPvQtWu6MO3UHicXcMz2w==
   dependencies:
     "@keen.io/colors" "^1.1.0"
     "@keen.io/icons" "^1.2.1"
@@ -1655,9 +1655,9 @@
     webfontloader "^1.6.28"
 
 "@keen.io/ui-core@^2.5.10":
-  version "2.11.0"
-  resolved "https://registry.yarnpkg.com/@keen.io/ui-core/-/ui-core-2.11.0.tgz#5e79f19c1dc2a1cd325dc9d00a9141a90939a1e0"
-  integrity sha512-/1JFGREmpMUdy2wv8GBen7C1lAH7vtctD1+Ul3RMLxJ4W/8+UNTcUYpIW2B3iDqMMZBkKwYibi3Q/ohRIX4s5Q==
+  version "2.12.3"
+  resolved "https://registry.yarnpkg.com/@keen.io/ui-core/-/ui-core-2.12.3.tgz#05d8070887830a670e3983ea0635cf5b6563aa1b"
+  integrity sha512-BghxtSlOdjA+QW+x0rgpct6qhnzST0UMGEIgkAdanOK23q0Bvv4FLof2su1VcWxrXbjtZYnukLxzYbc5QpZjyA==
   dependencies:
     "@keen.io/colors" "^1.1.0"
     "@keen.io/icons" "^1.4.0"
@@ -4576,9 +4576,9 @@ cssstyle@^2.2.0:
     cssom "~0.3.6"
 
 csstype@^2.5.7:
-  version "2.6.14"
-  resolved "https://registry.yarnpkg.com/csstype/-/csstype-2.6.14.tgz#004822a4050345b55ad4dcc00be1d9cf2f4296de"
-  integrity sha512-2mSc+VEpGPblzAxyeR+vZhJKgYg0Og0nnRi7pmRXFYYxSfnOnW8A5wwQb4n4cE2nIOzqKOAzLCaEX6aBmNEv8A==
+  version "2.6.15"
+  resolved "https://registry.yarnpkg.com/csstype/-/csstype-2.6.15.tgz#655901663db1d652f10cb57ac6af5a05972aea1f"
+  integrity sha512-FNeiVKudquehtR3t9TRRnsHL+lJhuHF5Zn9dt01jpojlurLEPDhhEtUkWmAUJ7/fOLaLG4dCDEnUsR0N1rZSsg==
 
 csstype@^3.0.2:
   version "3.0.6"

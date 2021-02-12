@@ -66,9 +66,15 @@ const EditorNavigation: FC<Props> = ({ onSaveQuery }) => {
   const [actionsMenu, setActionsMenuVisibility] = useState(false);
   const [actionsTooltip, showActionsTooltip] = useState(false);
   const [settingsTooltip, showSettingsTooltip] = useState(false);
-  const { exists, displayName, name, refreshRate, tags, cached } = useSelector(
-    getSavedQuery
-  );
+  const {
+    exists,
+    displayName,
+    name,
+    refreshRate,
+    tags,
+    cached,
+    isCloned,
+  } = useSelector(getSavedQuery);
   const isSavingQuery = useSelector(getQueriesSaving);
   const isModalVisible = useSelector(getQuerySettingsModalVisibility);
 
@@ -211,7 +217,7 @@ const EditorNavigation: FC<Props> = ({ onSaveQuery }) => {
             style="solid"
             isDisabled={isSavingQuery}
             onClick={() => {
-              if (!exists) {
+              if (!exists && !isCloned) {
                 dispatch(
                   showQuerySettingsModal(SettingsModalSource.FIRST_QUERY_SAVE)
                 );

@@ -32,3 +32,6 @@ export const ERRORS = {
   TOO_MANY_CACHED_QUERIES: 'TooManyCachedQueriesInTheCurrentBillingPeriod',
   RESOURCE_NOT_FOUND: 'ResourceNotFoundError',
 };
+
+export const CLONED_QUERY_DISPLAY_NAME = 'Cloned';
+export const CLONED_QUERY_NAME = '-cloned';

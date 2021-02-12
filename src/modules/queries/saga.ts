@@ -2,6 +2,7 @@
 
 import { takeLatest, getContext, select, take, put } from 'redux-saga/effects';
 import HttpStatus from 'http-status-codes';
+import { transformToQuery } from '@keen.io/query-creator';
 
 import {
   runQueryError,
@@ -24,7 +25,7 @@ import {
   deleteQuery as deleteQueryAction,
 } from './actions';
 
-import { getQuerySettings } from './selectors';
+import { getQuerySettings, getSavedQueries } from './selectors';
 
 import {
   showConfirmation,
@@ -66,6 +67,8 @@ import {
   RUN_EMAIL_EXTRACTION,
   ERRORS,
   CLONE_SAVED_QUERY,
+  CLONED_QUERY_DISPLAY_NAME,
+  CLONED_QUERY_NAME,
 } from './constants';
 
 import { isElementInViewport } from './utils';
@@ -314,16 +317,24 @@ export function* checkOrganizationLimits() {
   }
 }
 
-function* cloneSavedQuery() {
+export function* cloneSavedQuery() {
   const notificationManager = yield getContext(NOTIFICATION_MANAGER_CONTEXT);
   const querySettings = yield select(getQuerySettings);
   const savedQuery = yield select(getSavedQuery);
   const view = yield select(getViewMode);
 
+  const displayName = `${savedQuery.displayName} ${CLONED_QUERY_DISPLAY_NAME}`;
+  const name = `${savedQuery.name}${CLONED_QUERY_NAME}`;
+  const refreshRate = 0;
+
   const clonedSavedQuery = {
     ...savedQuery,
+    cached: false,
     exists: false,
     isCloned: true,
+    displayName,
+    name,
+    refreshRate,
   };
 
   if (view === 'browser') {
@@ -342,6 +353,24 @@ function* cloneSavedQuery() {
     type: 'success',
     message: 'notifications.clone_query_success',
   });
+
+  const savedQueries = yield select(getSavedQueries);
+  const { visualization, tags } = savedQueries.find(
+    ({ name }) => name === savedQuery.name
+  );
+  const { analysis_type: analysisType, ...rest } = querySettings;
+  const queryToTransform = { analysisType, ...rest };
+  const body = {
+    query: transformToQuery(queryToTransform),
+    metadata: {
+      displayName,
+      visualization,
+      tags,
+    },
+    refreshRate,
+  };
+
+  yield put(saveQueryAction(name, body));
 }
 
 export function* queriesSaga() {

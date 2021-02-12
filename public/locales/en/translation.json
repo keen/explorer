@@ -61,7 +61,6 @@
     "saving_query": "Saving query",
     "close_button": "Cancel",
     "new_query_notice": "Create your saved query",
-    "cloned_query_notice": "Rename your cloned query to save it",
     "cached_queries_limit_reached": "The limit of cached queries for your organization has been reached.",
     "upgrade_anchor": "Upgrade plan",
     "upgrade_connector": "or",
