@@ -1527,13 +1527,13 @@
   integrity sha512-JH/2G4+4Oyx3HobwX6vmCWwP6DdWwSDf5RWMNHBdpcu3/jFxfQq4a+tW3XEB/79aQK/c/GgZCqk/X3Nmd0Ue3Q==
 
 "@keen.io/dataviz@^2.4.1":
-  version "2.5.3"
-  resolved "https://registry.yarnpkg.com/@keen.io/dataviz/-/dataviz-2.5.3.tgz#3c5d15b5cad2794d612308b0237e2950dbd6c76c"
-  integrity sha512-jE+DWdEdte9OPLKz6ynAzEW1Vk1mSMwzI75rjIl5V1PkzhHP+xJ0v/r73ix1VHQvbjc0on+ygsfag9OEP/pUqA==
+  version "2.5.4"
+  resolved "https://registry.yarnpkg.com/@keen.io/dataviz/-/dataviz-2.5.4.tgz#4b84a435230ce23e54b1686b01b6bd80b84d2652"
+  integrity sha512-ErizkXdSBsecMs9bc1kmPrwwd+L845GdD0tUOzwsYgIgSjivLANoSjr5hS0rmlgzLNXcrxVNfqVCOcZlmaHs+w==
   dependencies:
     "@keen.io/charts" "^2.7.3"
     "@keen.io/colors" "^1.1.0"
-    "@keen.io/parser" "^2.4.3"
+    "@keen.io/parser" "^2.4.4"
     "@keen.io/query" "^1.0.3"
     "@keen.io/widgets" "^2.2.37"
     deepmerge "4.2.2"
@@ -1559,10 +1559,10 @@
   dependencies:
     "@keen.io/colors" "^1.1.0"
 
-"@keen.io/parser@^2.3.10", "@keen.io/parser@^2.4.3":
-  version "2.4.3"
-  resolved "https://registry.yarnpkg.com/@keen.io/parser/-/parser-2.4.3.tgz#5348fc16c976e7a5babf62c3f73f7e2e1e0d92d8"
-  integrity sha512-fgVVLUtbEWaMzxdazhwF7ypYrWuAR+6aKrajXRgyVWx4bytzV45kY+chgWFux06XJeCgVDLrs3GGZdcTltkLGg==
+"@keen.io/parser@^2.3.10", "@keen.io/parser@^2.4.4":
+  version "2.4.4"
+  resolved "https://registry.yarnpkg.com/@keen.io/parser/-/parser-2.4.4.tgz#ab8e619f84a079a2659e6849d979112768c14704"
+  integrity sha512-H/b1YllJcFmZq8fl7gUwFRTTcbwRYuFoQFfSkZBq4gytNnBNPVKT+FORzc7MacbPLjv8f5NdBX3wVxhfCDFHLg==
   dependencies:
     d3-time-format "^2.2.3"
 
