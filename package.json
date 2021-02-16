@@ -1,7 +1,7 @@
 {
   "name": "@keen.io/explorer",
   "description": "Data Explorer by Keen IO",
-  "version": "1.1.18",
+  "version": "1.2.0-rc.6",
   "license": "MIT",
   "main": "dist/explorer.modern.min.js",
   "browser": "dist/explorer.modern.min.js",
@@ -44,6 +44,7 @@
   },
   "dependencies": {
     "@keen.io/colors": "^1.1.0",
+    "@keen.io/data-export": "^1.0.1",
     "@keen.io/dataviz": "^2.4.1",
     "@keen.io/forms": "^2.0.2",
     "@keen.io/icons": "^1.2.1",
@@ -51,7 +52,7 @@
     "@keen.io/pubsub": "^1.1.0",
     "@keen.io/query-creator": "^1.1.8",
     "@keen.io/react-hooks": "^1.0.1",
-    "@keen.io/toast-notifications": "^1.1.2",
+    "@keen.io/toast-notifications": "^1.1.29",
     "@keen.io/ui-core": "^2.5.19",
     "@keen.io/widget-picker": "^1.2.19",
     "camelcase-keys": "^6.2.2",

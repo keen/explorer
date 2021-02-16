@@ -10,6 +10,7 @@ import ActionsMenu from './ActionsMenu';
 const render = (overProps: any = {}) => {
   const props = {
     isNewQuery: false,
+    isInsideQueryBrowser: false,
     onRemoveQuery: jest.fn(),
     onHideMenu: jest.fn(),
     ...overProps,
@@ -208,4 +209,33 @@ test('allows user to clone query', () => {
       },
     ]
   `);
+});
+
+test('allows user to create new query', () => {
+  const {
+    wrapper: { getByText },
+    store,
+  } = render();
+
+  const newQuery = getByText('actions_menu.new_query');
+  fireEvent.click(newQuery);
+
+  expect(store.getActions()).toMatchInlineSnapshot(`
+    Array [
+      Object {
+        "payload": undefined,
+        "type": "@app/CREATE_NEW_QUERY",
+      },
+    ]
+  `);
+});
+
+test("doesn't allow user to create new query inside query browser", () => {
+  const {
+    wrapper: { queryByText },
+  } = render({ isInsideQueryBrowser: true });
+
+  const newQuery = queryByText('actions_menu.new_query');
+
+  expect(newQuery).toBeNull();
 });
