@@ -35,3 +35,5 @@ export const ERRORS = {
 
 export const CLONED_QUERY_DISPLAY_NAME = 'Cloned';
 export const CLONED_QUERY_NAME = '-cloned';
+
+export const DEFAULT_TIMEZONE = 'UTC';

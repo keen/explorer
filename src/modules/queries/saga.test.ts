@@ -59,6 +59,13 @@ import { getQuerySettings, getSavedQueries } from './selectors';
 
 fetchMock.mockResponse(() => Promise.resolve(JSON.stringify({})));
 
+const uniqueQueryId = '@query/01';
+jest.mock('uuid', () => {
+  return {
+    v4: () => uniqueQueryId,
+  };
+});
+
 describe('checkOrganizationLimits()', () => {
   describe('Scenario 1: User exceed organization limits', () => {
     const test = sagaHelper(checkOrganizationLimitsFlow());
@@ -514,7 +521,7 @@ describe('cloneSavedQuery()', () => {
     const clonedSavedQuery = {
       ...savedQuery,
       displayName: `${savedQuery.displayName} ${CLONED_QUERY_DISPLAY_NAME}`,
-      name: `${savedQuery.name}${CLONED_QUERY_NAME}`,
+      name: `${savedQuery.name}${CLONED_QUERY_NAME}-${uniqueQueryId}`,
       exists: false,
       isCloned: true,
     };
@@ -527,8 +534,10 @@ describe('cloneSavedQuery()', () => {
     };
 
     const query = {
-      analysis_type: 'funnel',
+      analysisType: 'funnel',
       steps: [],
+      timezone: 'UTC',
+      timeframe: 'this_14_weeks',
     };
 
     test('get the notification manager from context', (result) => {
@@ -626,7 +635,7 @@ describe('cloneSavedQuery()', () => {
     const clonedSavedQuery = {
       ...savedQuery,
       displayName: `${savedQuery.displayName} ${CLONED_QUERY_DISPLAY_NAME}`,
-      name: `${savedQuery.name}${CLONED_QUERY_NAME}`,
+      name: `${savedQuery.name}${CLONED_QUERY_NAME}-${uniqueQueryId}`,
       exists: false,
       isCloned: true,
     };
@@ -639,8 +648,10 @@ describe('cloneSavedQuery()', () => {
     };
 
     const query = {
-      analysis_type: 'funnel',
+      analysisType: 'funnel',
       steps: [],
+      timeframe: null,
+      timezone: 'UTC',
     };
 
     test('get the notification manager from context', (result) => {

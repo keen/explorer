@@ -2,7 +2,7 @@
 
 import { takeLatest, getContext, select, take, put } from 'redux-saga/effects';
 import HttpStatus from 'http-status-codes';
-import { transformToQuery } from '@keen.io/query-creator';
+import { v4 as uuid } from 'uuid';
 
 import {
   runQueryError,
@@ -46,7 +46,7 @@ import {
 
 import { getSavedQuery, updateSavedQuery } from '../../modules/savedQuery';
 
-import { serializeSavedQuery } from './utils';
+import { serializeSavedQuery, composeQuerySettings } from './utils';
 
 import { SavedQueryAPIResponse } from '../../types';
 
@@ -324,7 +324,7 @@ export function* cloneSavedQuery() {
   const view = yield select(getViewMode);
 
   const displayName = `${savedQuery.displayName} ${CLONED_QUERY_DISPLAY_NAME}`;
-  const name = `${savedQuery.name}${CLONED_QUERY_NAME}`;
+  const name = `${savedQuery.name}${CLONED_QUERY_NAME}-${uuid()}`;
   const refreshRate = 0;
 
   const clonedSavedQuery = {
@@ -361,7 +361,7 @@ export function* cloneSavedQuery() {
   const { analysis_type: analysisType, ...rest } = querySettings;
   const queryToTransform = { analysisType, ...rest };
   const body = {
-    query: transformToQuery(queryToTransform),
+    query: composeQuerySettings(queryToTransform),
     metadata: {
       displayName,
       visualization,
