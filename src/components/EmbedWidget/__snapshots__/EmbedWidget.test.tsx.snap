@@ -10,12 +10,6 @@ exports[`renders code snippet 1`] = `
       style="white-space: pre-wrap;"
     >
       <span>
-        <span
-          class="comment linenumber react-syntax-highlighter-line-number"
-          style="display: inline-block; min-width: 1em; padding-right: 1em; text-align: right; user-select: none;"
-        >
-          1
-        </span>
         <span>
           &lt;script&gt;
         </span>
