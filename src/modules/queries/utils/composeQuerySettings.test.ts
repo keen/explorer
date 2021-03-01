@@ -4,15 +4,13 @@ import composeQuerySettings from './composeQuerySettings';
 test('should return query settings for funnel analysis', () => {
   const querySettings = {
     analysis_type: 'funnel',
-    timezone: null,
-    timeframe: null,
     steps: [
       {
         with_actors: false,
         actor_property: 'user.id',
         filters: [],
         timeframe: 'this_14_days',
-        timezone: null,
+        timezone: 'UTC',
         event_collection: 'purchases',
         optional: false,
         inverted: false,
@@ -22,7 +20,7 @@ test('should return query settings for funnel analysis', () => {
         actor_property: 'user.age',
         filters: [],
         timeframe: 'this_14_days',
-        timezone: null,
+        timezone: 'UTC',
         event_collection: 'signups',
         optional: false,
         inverted: false,
@@ -32,7 +30,7 @@ test('should return query settings for funnel analysis', () => {
         actor_property: 'platform',
         filters: [],
         timeframe: 'this_14_days',
-        timezone: null,
+        timezone: 'UTC',
         event_collection: 'signups',
         optional: false,
         inverted: false,
@@ -53,7 +51,7 @@ test('should return query settings for funnel analysis', () => {
           "inverted": false,
           "optional": false,
           "timeframe": "this_14_days",
-          "timezone": null,
+          "timezone": "UTC",
           "with_actors": false,
         },
         Object {
@@ -63,7 +61,7 @@ test('should return query settings for funnel analysis', () => {
           "inverted": false,
           "optional": false,
           "timeframe": "this_14_days",
-          "timezone": null,
+          "timezone": "UTC",
           "with_actors": false,
         },
         Object {
@@ -73,7 +71,7 @@ test('should return query settings for funnel analysis', () => {
           "inverted": false,
           "optional": false,
           "timeframe": "this_14_days",
-          "timezone": null,
+          "timezone": "UTC",
           "with_actors": false,
         },
       ],
