@@ -10,6 +10,7 @@ import {
   getContext,
 } from 'redux-saga/effects';
 import { eventChannel } from 'redux-saga';
+import { copyToClipboard } from '@keen.io/charts-utils';
 
 import {
   resizeScreen,
@@ -55,7 +56,6 @@ import {
   b64DecodeUnicode,
 } from './utils';
 import {
-  copyToClipboard,
   exportToImage,
   exportToJson,
   exportToCsv,

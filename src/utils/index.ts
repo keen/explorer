@@ -1,4 +1,3 @@
-import { copyToClipboard } from './text';
 import { exportToImage } from './exportToImage';
 import { exportToJson } from './exportToJson';
 import { exportToCsv } from './exportToCsv';
@@ -10,7 +9,6 @@ import { stringify } from './stringify';
 
 export {
   setVisualization,
-  copyToClipboard,
   exportToImage,
   exportToJson,
   exportToCsv,
