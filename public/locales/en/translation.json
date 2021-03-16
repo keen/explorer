@@ -171,7 +171,8 @@
   "query_creator_timeframe": {
     "label": "Timeframe",
     "relative": "Relative",
-    "absolute": "Absolute"
+    "absolute": "Absolute",
+    "notification": "(Charts display time in UTC)"
   },
   "cache_query": {
     "refresh_interval": "- Refresh interval",
