@@ -10,6 +10,7 @@ import {
   saveQuery as saveQueryFlow,
   checkOrganizationLimits as checkOrganizationLimitsFlow,
   extractToEmail as extractToEmailFlow,
+  cloneSavedQuery as cloneSavedQueryFlow,
 } from './saga';
 import {
   saveQuery,
@@ -24,6 +25,7 @@ import {
   setQueryLimitReached,
   setCacheQueryLimit,
   setCacheQueryLimitExceed,
+  setQuerySettings,
 } from './actions';
 
 import {
@@ -38,16 +40,31 @@ import {
   HIDE_CONFIRMATION,
   ACCEPT_CONFIRMATION,
   HIDE_EMAIL_EXTRACTION_MODAL,
+  QUERY_EDITOR_MOUNTED,
+  updateQueryCreator,
 } from '../../modules/app';
+import { getSavedQuery, updateSavedQuery } from '../../modules/savedQuery';
 
-import { ERRORS, RUN_EMAIL_EXTRACTION } from './constants';
+import {
+  CLONED_QUERY_DISPLAY_NAME,
+  CLONED_QUERY_NAME,
+  ERRORS,
+  RUN_EMAIL_EXTRACTION,
+} from './constants';
 import {
   NOTIFICATION_MANAGER_CONTEXT,
   KEEN_CLIENT_CONTEXT,
 } from '../../constants';
-import { getQuerySettings } from './selectors';
+import { getQuerySettings, getSavedQueries } from './selectors';
 
 fetchMock.mockResponse(() => Promise.resolve(JSON.stringify({})));
+
+const uniqueQueryId = '@query/01';
+jest.mock('uuid', () => {
+  return {
+    v4: () => uniqueQueryId,
+  };
+});
 
 describe('checkOrganizationLimits()', () => {
   describe('Scenario 1: User exceed organization limits', () => {
@@ -481,6 +498,217 @@ describe('extractToEmail()', () => {
         translateMessage: false,
         autoDismiss: true,
       });
+    });
+  });
+});
+
+describe('cloneSavedQuery()', () => {
+  describe('Scenario 1: User cloned saved query from browser view', () => {
+    const test = sagaHelper(cloneSavedQueryFlow());
+    const notificationManager = {
+      showNotification: jest.fn(),
+    };
+    const savedQuery = {
+      name: 'query',
+      displayName: 'query',
+      tags: [],
+      isCloned: false,
+      cached: false,
+      refreshRate: 0,
+      exists: true,
+    };
+
+    const clonedSavedQuery = {
+      ...savedQuery,
+      displayName: `${savedQuery.displayName} ${CLONED_QUERY_DISPLAY_NAME}`,
+      name: `${savedQuery.name}${CLONED_QUERY_NAME}-${uniqueQueryId}`,
+      exists: false,
+      isCloned: true,
+    };
+
+    const querySettings = {
+      analysis_type: 'funnel',
+      steps: [],
+      timezone: 'UTC',
+      timeframe: 'this_14_weeks',
+    };
+
+    const query = {
+      analysisType: 'funnel',
+      steps: [],
+      timezone: 'UTC',
+      timeframe: 'this_14_weeks',
+    };
+
+    test('get the notification manager from context', (result) => {
+      expect(result).toEqual(getContext(NOTIFICATION_MANAGER_CONTEXT));
+
+      return notificationManager;
+    });
+
+    test('gets query settings from state', (result) => {
+      expect(result).toEqual(select(getQuerySettings));
+      return querySettings;
+    });
+
+    test('gets saved query settings from state', (result) => {
+      expect(result).toEqual(select(getSavedQuery));
+      return savedQuery;
+    });
+
+    test('get application view from state', (result) => {
+      expect(result).toEqual(select(getViewMode));
+      return 'browser';
+    });
+
+    test('changes the application view', (result) => {
+      expect(result).toEqual(put(setViewMode('editor')));
+    });
+
+    test('waits for user confirmation', (result) => {
+      expect(result).toEqual(take(QUERY_EDITOR_MOUNTED));
+      return {
+        type: QUERY_EDITOR_MOUNTED,
+      };
+    });
+
+    test('updates query creator settings', (result) => {
+      expect(result).toEqual(put(updateQueryCreator(querySettings)));
+    });
+
+    test('sets query settings', (result) => {
+      expect(result).toEqual(put(setQuerySettings(querySettings)));
+    });
+
+    test('updates saved query', (result) => {
+      expect(result).toEqual(put(updateSavedQuery(clonedSavedQuery)));
+    });
+
+    test('shows clone query success notification', () => {
+      expect(notificationManager.showNotification).toHaveBeenCalledWith({
+        type: 'success',
+        message: 'notifications.clone_query_success',
+      });
+    });
+
+    test('selects saved queries', (result) => {
+      expect(result).toEqual(select(getSavedQueries));
+      return [
+        {
+          ...savedQuery,
+          visualization: 'funnel',
+          query,
+        },
+      ];
+    });
+
+    test('saves cloned saved query', (result) => {
+      const { tags, displayName } = clonedSavedQuery;
+      const body = {
+        metadata: {
+          displayName,
+          tags,
+          visualization: 'funnel',
+        },
+        query,
+        refreshRate: 0,
+      };
+      expect(result).toEqual(put(saveQuery(clonedSavedQuery.name, body)));
+    });
+  });
+
+  describe('Scenario 2: User cloned query from editor view', () => {
+    const test = sagaHelper(cloneSavedQueryFlow());
+    const notificationManager = {
+      showNotification: jest.fn(),
+    };
+    const savedQuery = {
+      name: 'query',
+      displayName: 'query',
+      tags: [],
+      isCloned: false,
+      cached: false,
+      refreshRate: 0,
+      exists: true,
+    };
+
+    const clonedSavedQuery = {
+      ...savedQuery,
+      displayName: `${savedQuery.displayName} ${CLONED_QUERY_DISPLAY_NAME}`,
+      name: `${savedQuery.name}${CLONED_QUERY_NAME}-${uniqueQueryId}`,
+      exists: false,
+      isCloned: true,
+    };
+
+    const querySettings = {
+      analysis_type: 'funnel',
+      steps: [],
+      timezone: null,
+      timeframe: null,
+    };
+
+    const query = {
+      analysisType: 'funnel',
+      steps: [],
+      timeframe: null,
+      timezone: 'UTC',
+    };
+
+    test('get the notification manager from context', (result) => {
+      expect(result).toEqual(getContext(NOTIFICATION_MANAGER_CONTEXT));
+
+      return notificationManager;
+    });
+
+    test('gets query settings from state', (result) => {
+      expect(result).toEqual(select(getQuerySettings));
+      return querySettings;
+    });
+
+    test('gets saved query settings from state', (result) => {
+      expect(result).toEqual(select(getSavedQuery));
+      return savedQuery;
+    });
+
+    test('get application view from state', (result) => {
+      expect(result).toEqual(select(getViewMode));
+      return 'editor';
+    });
+
+    test('updates saved query', (result) => {
+      expect(result).toEqual(put(updateSavedQuery(clonedSavedQuery)));
+    });
+
+    test('shows clone query success notification', () => {
+      expect(notificationManager.showNotification).toHaveBeenCalledWith({
+        type: 'success',
+        message: 'notifications.clone_query_success',
+      });
+    });
+
+    test('selects saved queries', (result) => {
+      expect(result).toEqual(select(getSavedQueries));
+      return [
+        {
+          ...savedQuery,
+          visualization: 'funnel',
+          query,
+        },
+      ];
+    });
+
+    test('saves cloned saved query', (result) => {
+      const { tags, displayName } = clonedSavedQuery;
+      const body = {
+        metadata: {
+          displayName,
+          tags,
+          visualization: 'funnel',
+        },
+        query,
+        refreshRate: 0,
+      };
+      expect(result).toEqual(put(saveQuery(clonedSavedQuery.name, body)));
     });
   });
 });

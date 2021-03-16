@@ -1,11 +1,11 @@
 export const b64EncodeUnicode = (str: string) =>
   btoa(
-    encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, function toSolidBytes(
-      _match,
-      p1
-    ) {
-      return String.fromCharCode(('0x' + p1) as any);
-    })
+    encodeURIComponent(str).replace(
+      /%([0-9A-F]{2})/g,
+      function toSolidBytes(_match, p1) {
+        return String.fromCharCode(('0x' + p1) as any);
+      }
+    )
   );
 
 export const b64DecodeUnicode = (str: string) =>
