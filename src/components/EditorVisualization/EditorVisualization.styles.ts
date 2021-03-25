@@ -8,4 +8,5 @@ export const Container = styled.div`
 export const PickerContainer = styled.div`
   padding: 10px;
   flex-shrink: 0;
+  z-index: 4;
 `;
