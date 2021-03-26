@@ -9,12 +9,16 @@ const AppContext = React.createContext<{
   modalContainer: string;
   upgradeSubscriptionUrl?: string;
   datavizSettings: DatavizSettings;
+  defaultTimezoneForQuery;
+  disableTimezoneSelection;
 }>({
   keenAnalysis: null,
   modalContainer: null,
   notificationPubSub: null,
   upgradeSubscriptionUrl: null,
   datavizSettings: {},
+  defaultTimezoneForQuery: null,
+  disableTimezoneSelection: null,
 });
 
 export default AppContext;

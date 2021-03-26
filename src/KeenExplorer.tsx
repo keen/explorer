@@ -33,6 +33,8 @@ export class KeenExplorer {
       modalContainer,
       dataviz,
       translations: translationSettings,
+      defaultTimezoneForQuery,
+      disableTimezoneSelection,
     } = props;
     const keenAnalysisClient =
       keenAnalysis.instance || new KeenAnalysis(keenAnalysis.config);
@@ -75,6 +77,8 @@ export class KeenExplorer {
               upgradeSubscriptionUrl,
               notificationPubSub,
               datavizSettings: dataviz,
+              defaultTimezoneForQuery,
+              disableTimezoneSelection,
             }}
           >
             <ToastProvider>

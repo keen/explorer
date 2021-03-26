@@ -16,6 +16,8 @@ const Creator: FC<Props> = ({ onUpdateQuery, onUpdateChartSettings }) => {
   const {
     modalContainer,
     keenAnalysis: { config },
+    defaultTimezoneForQuery,
+    disableTimezoneSelection,
   } = useContext(AppContext);
 
   useEffect(() => {
@@ -31,6 +33,8 @@ const Creator: FC<Props> = ({ onUpdateQuery, onUpdateChartSettings }) => {
       host={config.host}
       onUpdateQuery={onUpdateQuery}
       onUpdateChartSettings={onUpdateChartSettings}
+      defaultTimezoneForQuery={defaultTimezoneForQuery}
+      disableTimezoneSelection={disableTimezoneSelection}
     />
   );
 };
