@@ -25,6 +25,8 @@ type Props = {
   widgetSettings: WidgetSettings;
   /** Visualizations theme settings */
   visualizationTheme?: Theme;
+  /** Presentation timezone */
+  presentationTimezone?: string | number;
 };
 
 const Dataviz: FC<Props> = ({
@@ -33,6 +35,7 @@ const Dataviz: FC<Props> = ({
   chartSettings,
   widgetSettings,
   visualizationTheme,
+  presentationTimezone,
 }) => {
   const { t } = useTranslation();
   const datavizRef = useRef(null);
@@ -47,6 +50,7 @@ const Dataviz: FC<Props> = ({
 
     datavizRef.current = new KeenDataviz({
       container: containerRef.current,
+      presentationTimezone,
       type: visualization,
       settings: {
         ...chartSettings,
