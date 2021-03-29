@@ -71,4 +71,6 @@ export type Options = {
     config: ProjectSettings;
     instance: any;
   };
+  defaultTimezoneForQuery?: string;
+  disableTimezoneSelection?: boolean;
 };
