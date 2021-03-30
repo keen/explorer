@@ -33,13 +33,28 @@ beforeEach(() => {
   renderMock.mockClear();
 });
 
-test('creates KeenDataviz instance', () => {
+test('creates "DataViz" instance', () => {
   render(<DataViz {...initialProps} />);
 
   expect(KeenDataviz).toHaveBeenCalledTimes(1);
 });
 
-test('creates KeenDataviz instance with theme settings', () => {
+test('initializes "DataViz" instance with named timezone settings', () => {
+  const timezone = 'America/New_York';
+  render(<DataViz {...initialProps} presentationTimezone={timezone} />);
+
+  expect(KeenDataviz).toHaveBeenCalledWith(
+    expect.objectContaining({
+      type: 'bar',
+      presentationTimezone: timezone,
+      widget: {
+        ...DEFAULT_WIDGET_SETTINGS,
+      },
+    })
+  );
+});
+
+test('initializes "DataViz" instance with theme settings', () => {
   const theme = { colors: ['red', 'green'] };
   render(<DataViz {...initialProps} visualizationTheme={theme as any} />);
 
@@ -56,13 +71,13 @@ test('creates KeenDataviz instance with theme settings', () => {
   );
 });
 
-test('calls KeenDataviz render method with analysis results', () => {
+test('calls "DataViz" render method with analysis results', () => {
   render(<DataViz {...initialProps} />);
 
   expect(renderMock).toHaveBeenCalledWith(initialProps.analysisResults);
 });
 
-test('calls KeenDataviz error method', () => {
+test('calls "DataViz" error method when analysis results are empty', () => {
   const props = {
     ...initialProps,
     analysisResults: {

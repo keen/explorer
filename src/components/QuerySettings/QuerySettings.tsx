@@ -128,11 +128,7 @@ const QuerySettings: FC<Props> = ({ onSave, onClose, cacheAvailable }) => {
         )}
         {settingsSource === SettingsModalSource.FIRST_QUERY_SAVE && (
           <NewQueryNotice>
-            <Alert type="info">
-              {savedQuery.isCloned
-                ? t('query_settings.cloned_query_notice')
-                : t('query_settings.new_query_notice')}
-            </Alert>
+            <Alert type="info">{t('query_settings.new_query_notice')}</Alert>
           </NewQueryNotice>
         )}
         <Label
@@ -209,8 +205,7 @@ const QuerySettings: FC<Props> = ({ onSave, onClose, cacheAvailable }) => {
             onClick={() => {
               const { name, displayName, refreshRate, tags } = querySettings;
               if (displayName) {
-                const validateNameUniqueness =
-                  hasNameChanged || savedQuery.isCloned;
+                const validateNameUniqueness = hasNameChanged;
                 if (
                   validateNameUniqueness &&
                   savedQueries.find((query) => query.name === name)
