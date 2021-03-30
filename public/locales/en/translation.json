@@ -110,6 +110,8 @@
     "step": "Step"
   },
   "editor": {
+    "settings_section": "SETTINGS",
+    "query_section": "QUERY",
     "clear_query_button": "Clear",
     "run_query_button": "Run Query",
     "preview_events_button": "Preview events",
@@ -363,5 +365,38 @@
     "select_unique": "List of unique values found for a target property.",
     "standard_deviation": "Standard deviation of all numeric values for a target property.<br/><br/>Non-numeric values will be ignored.",
     "sum": "Sum of all numeric values for a given property.<br/><br/>Non-numeric values will be ignored."
+  },
+  "widget_customization_heading_settings": {
+    "section_title": "Basic Info",
+    "section_description": "(Add context to your data by applying Title and Subtitle)",
+    "title_label": "Chart title",
+    "title_placeholder": "Enter title",
+    "subtitle_label": "Chart subtitle",
+    "subtitle_placeholder": "Enter subtitle",
+    "saved_query_name_label": "Saved Query name:",
+    "saved_query_name_tooltip": "Click to use as Chart Title"
+  },
+  "widget_customization_format_value_settings": {
+    "section_title": "Values Format",
+    "section_description": "(See in metric chart or series details popup, axis that presents values)",
+    "prefix": "Prefix",
+    "suffix": "Suffix",
+    "precision": "Precision",
+    "calculate": "Calculate",
+    "text_placeholder": "Enter text",
+    "value_placeholder": "Enter value",
+    "select_pattern_placeholder": "Select pattern",
+    "select_operations_placeholder": "Select",
+    "original_data": "Original data",
+    "full_number": "(Full number)",
+    "separator": "Separate groups of thousands with a comma \" , \""
+  },
+  "widget_customization_section": {
+    "clear_button": "Clear"
+  },
+  "widget_customization": {
+    "settings_disabled": "Run your query first",
+    "settings_disabled_for_widget": "Settings do not affect {{widget}} visualization",
+    "format_values_not_avaialble": "No formating options for {{analysis}} analysis"
   }
 }
