@@ -1,5 +1,3 @@
-import { TIMEZONES } from '@keen.io/ui-core';
-
 export const stringify = (queryParams) =>
   Object.keys(queryParams)
     .map((k) => {
@@ -8,14 +6,10 @@ export const stringify = (queryParams) =>
       if (Array.isArray(queryParamValue) && !queryParamValue.length)
         return null;
 
+      // @TODO: Wait for back-end to handle named timezones
       if (k === 'timezone') {
-        const timezoneOption = TIMEZONES.find(
-          (item) => item.name === queryParamValue
-        ) || {
-          label: 'UTC',
-          value: 0,
-        };
-        queryParamValue = timezoneOption.value;
+        // Fallback to UTC
+        queryParamValue = 0;
       }
 
       if (Array.isArray(queryParamValue)) {
