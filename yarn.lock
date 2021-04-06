@@ -1440,15 +1440,15 @@
     d3-time "^2.0.0"
     d3-time-format "^2.2.3"
 
-"@keen.io/charts@^2.12.12", "@keen.io/charts@^2.2.14":
-  version "2.12.12"
-  resolved "https://registry.yarnpkg.com/@keen.io/charts/-/charts-2.12.12.tgz#2a3716f298c2d0619483933aea7ad318bbcd3370"
-  integrity sha512-PinRWIf2mM/5Yu0WUBokQGtaySyo+Cib2ztwiHHHI1Z9s4r3/Ne/lNp+cGVdy2mqYHRMRPC0kRHbAJaKi3ryeA==
+"@keen.io/charts@^2.12.13", "@keen.io/charts@^2.2.14":
+  version "2.12.13"
+  resolved "https://registry.yarnpkg.com/@keen.io/charts/-/charts-2.12.13.tgz#20bc5ca2e3d76c3973f40c94d11e55827c8f8aa7"
+  integrity sha512-CAw4MLJ48swovaFaYpbFM2GJxKOEfezjJRqBNBKL6YPP5Q/Bfl5QH0runrs2zcU4xiAP1ZvCXWpO6XM1FpGr8g==
   dependencies:
     "@keen.io/charts-utils" "^1.8.4"
     "@keen.io/colors" "^1.1.0"
     "@keen.io/react-hooks" "^1.0.7"
-    "@keen.io/ui-core" "^2.20.1"
+    "@keen.io/ui-core" "^2.20.2"
     column-resizer "^1.3.5"
     d3-array "^2.4.0"
     d3-axis "^1.0.12"
@@ -1481,27 +1481,27 @@
   integrity sha512-JH/2G4+4Oyx3HobwX6vmCWwP6DdWwSDf5RWMNHBdpcu3/jFxfQq4a+tW3XEB/79aQK/c/GgZCqk/X3Nmd0Ue3Q==
 
 "@keen.io/dataviz@^2.6.2":
-  version "2.11.10"
-  resolved "https://registry.yarnpkg.com/@keen.io/dataviz/-/dataviz-2.11.10.tgz#07feb02c6a480c93b84d59b331dd5a99d5ef2897"
-  integrity sha512-6R7iq9LFOzJZR43+mac2vJCQ7u8PLdO2n8BoUeo0ep2zXX17Ksp9yj8hd07KJ6c+XvVMUnR4ORglj8t5p8be2A==
+  version "2.11.11"
+  resolved "https://registry.yarnpkg.com/@keen.io/dataviz/-/dataviz-2.11.11.tgz#495aa5f5e5fc7c0e881dd506f763e236515d04fc"
+  integrity sha512-JEM3JcsuwdzUeY+SYFzsd7qMWDLMt1ltsn2+t61AEqVtykEuI0mimWObMeAQHeV2PtBPm4Bys1bupWXL+eQbxg==
   dependencies:
-    "@keen.io/charts" "^2.12.12"
+    "@keen.io/charts" "^2.12.13"
     "@keen.io/colors" "^1.1.0"
-    "@keen.io/parser" "^2.8.10"
+    "@keen.io/parser" "^2.8.11"
     "@keen.io/query" "^1.2.0"
-    "@keen.io/widgets" "^2.3.20"
+    "@keen.io/widgets" "^2.3.21"
     deepmerge "4.2.2"
     react "^16.12.0"
     react-dom "^16.12.0"
 
 "@keen.io/forms@^2.0.2":
-  version "2.0.73"
-  resolved "https://registry.yarnpkg.com/@keen.io/forms/-/forms-2.0.73.tgz#09ec1917c8af1b4a251fba9b072dc01ade30b8ba"
-  integrity sha512-nWIOVr0/VFWGSmD25Jpd0ZJmv8JCjlSpwi/yrB5HKx2V1nKAWzDTEbDvVkJSaSOLU1VxXx5O4E3MXOOBt5sWYQ==
+  version "2.0.74"
+  resolved "https://registry.yarnpkg.com/@keen.io/forms/-/forms-2.0.74.tgz#08847929d8a68ced6719b7532663604169ebd230"
+  integrity sha512-vOySNaleNji/IryQaBWJ+wSe48aO6YDrUfPzgXWpw6BtTohhYSrWMLpfEKqyoLnSBLIMsxY60Ht8RGjnGc0CgQ==
   dependencies:
     "@keen.io/colors" "^1.1.0"
     "@keen.io/icons" "^1.4.1"
-    "@keen.io/ui-core" "^2.20.1"
+    "@keen.io/ui-core" "^2.20.2"
     formik "^2.1.4"
     framer-motion "^1.11.1"
     styled-system "^5.1.5"
@@ -1513,12 +1513,12 @@
   dependencies:
     "@keen.io/colors" "^1.1.0"
 
-"@keen.io/parser@^2.3.10", "@keen.io/parser@^2.8.10":
-  version "2.8.10"
-  resolved "https://registry.yarnpkg.com/@keen.io/parser/-/parser-2.8.10.tgz#6a71aebdb9c20eb3071c922338e26136ef2575d3"
-  integrity sha512-aE3uFUbS3Ily1yMbjgxoLVgoyb482+q2+hQqugVuZFk93gd+ZGLeIIKdeIkUHJEHktu6jcoJXIbxCVR9/8Ogjw==
+"@keen.io/parser@^2.3.10", "@keen.io/parser@^2.8.11":
+  version "2.8.11"
+  resolved "https://registry.yarnpkg.com/@keen.io/parser/-/parser-2.8.11.tgz#5bf6dfe7cfc8f3e7b7314f4515875cd3f73af2be"
+  integrity sha512-QIM7WPLhepNk6PkMC5ltmEfKic9gwdTBJxVqcrGXwV9ecwzXu52krhptnn4bi5xCiuoggmn2Ri1TvUsq5NUwxw==
   dependencies:
-    "@keen.io/time-utils" "^1.2.1"
+    "@keen.io/time-utils" "^1.2.2"
     d3-time-format "^2.2.3"
 
 "@keen.io/pubsub@^1.1.0":
@@ -1527,9 +1527,9 @@
   integrity sha512-S9zhZNDSwsL6WXOtFqeZ3+vOdCzykL7pYifRm9dZ7ivLe/frAeyqIQsfRA8Z52DPnRN7d+gKbWrJtlZM22ErjQ==
 
 "@keen.io/query-creator@^1.1.8":
-  version "1.5.1"
-  resolved "https://registry.yarnpkg.com/@keen.io/query-creator/-/query-creator-1.5.1.tgz#72cd0cb91b16e405ca1cde5dac8203696de94c09"
-  integrity sha512-MxBvP1rCjVURR8vTUPcwCwxHYhn/x38XqbixQ0ASKZXgTIg5g7hbTb3v5VZOVejTZcmqnO0ZneMbLsEsG9Kb8A==
+  version "1.5.2"
+  resolved "https://registry.yarnpkg.com/@keen.io/query-creator/-/query-creator-1.5.2.tgz#c3cb88807e075f1e1cfd1c260b8a4ba2295fd477"
+  integrity sha512-9cQbEuyMrKtnUm7oaeoa4wk61otMTBowTNUpsvzITlu16dah8q1unu3JhWsBDCtJGHjU3pxeVpW63A7INLlxSA==
   dependencies:
     "@keen.io/colors" "^1.1.0"
     "@keen.io/icons" "^1.2.1"
@@ -1575,20 +1575,20 @@
     d3-array "^2.7.1"
     fuse.js "^6.4.1"
 
-"@keen.io/time-utils@^1.2.0", "@keen.io/time-utils@^1.2.1":
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/@keen.io/time-utils/-/time-utils-1.2.1.tgz#8a4379e7d976795c418c6f6b93addf43d914e0e1"
-  integrity sha512-H8333ROXkwrFIRx4xq1jIw8U3+EzmGnPWg6TDdemfKGbsfR4/fWEEOTpmKKBbcpPy725Hvdvm8L5p1I+243lZw==
+"@keen.io/time-utils@^1.2.0", "@keen.io/time-utils@^1.2.1", "@keen.io/time-utils@^1.2.2":
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/@keen.io/time-utils/-/time-utils-1.2.2.tgz#39bf91b2be98179f1c7eb86ba5ed1561ff87a6aa"
+  integrity sha512-zSRm3M4VGokPoghqyxwOshJjrhBtEtZ0MXKc8ZXZEaugrW3M79CKVXdoSmXZ1fLq4sbIiX//7sKKaq7ZPhK35A==
   dependencies:
     dayjs "^1.10.4"
 
 "@keen.io/toast-notifications@^1.1.29":
-  version "1.1.55"
-  resolved "https://registry.yarnpkg.com/@keen.io/toast-notifications/-/toast-notifications-1.1.55.tgz#3568c0899e4f6f620f31d75ea87294e23835820d"
-  integrity sha512-Pux82luHSQwdA3YuJkwJAv2Vj/PZBlGBCXiOczVXH3Hg1k+Ywd06cC6QLMW2RitoFORlYYgrancRL68dL1pWTA==
+  version "1.1.56"
+  resolved "https://registry.yarnpkg.com/@keen.io/toast-notifications/-/toast-notifications-1.1.56.tgz#d3c93c36a9e660c70a1d89b83cd269dffd83dd27"
+  integrity sha512-9Zh+aUs+Gv1hd2pVt3xjjo/5/hf4qkUeQ+VAlN8xw5zP0wi3IoqYxDVa3brvrIF6nhOJ9BF+Ttz/Lg9UELG1TA==
   dependencies:
     "@keen.io/colors" "^1.1.0"
-    "@keen.io/ui-core" "^2.20.1"
+    "@keen.io/ui-core" "^2.20.2"
     framer-motion "^1.11.1"
     polished "^3.4.4"
     react-toast-notifications "^2.4.0"
@@ -1602,10 +1602,10 @@
     "@keen.io/colors" "^1.0.0"
     styled-system "^5.1.5"
 
-"@keen.io/ui-core@^2.20.1", "@keen.io/ui-core@^2.5.19":
-  version "2.20.1"
-  resolved "https://registry.yarnpkg.com/@keen.io/ui-core/-/ui-core-2.20.1.tgz#86984d65a776d128547a65f28ca53af331e3e2ce"
-  integrity sha512-hotx4YJOKGr0JuU4TcT+sQaMhAK+Z4rwqsJONk8awYEZqk/Q4tN5l7g5xYGF+Lc0/YmSfee/g23yCaHQ21AN5Q==
+"@keen.io/ui-core@^2.20.2", "@keen.io/ui-core@^2.5.19":
+  version "2.20.2"
+  resolved "https://registry.yarnpkg.com/@keen.io/ui-core/-/ui-core-2.20.2.tgz#56c9538305b2b9c46f895508dd694c3e3a296080"
+  integrity sha512-57gk9lYhRe4O9zbGpsQDAAPkfHxYfgpRnjHA7JBmjHM5hTrpLFv5wh++ZwDejsUqfBljv9X40b8E1EYRpHjGfw==
   dependencies:
     "@keen.io/colors" "^1.1.0"
     "@keen.io/icons" "^1.4.1"
@@ -1625,24 +1625,24 @@
     webfontloader "^1.6.28"
 
 "@keen.io/widget-picker@^1.2.19":
-  version "1.2.93"
-  resolved "https://registry.yarnpkg.com/@keen.io/widget-picker/-/widget-picker-1.2.93.tgz#3dab08e54569616d97545bc37a48d25ca90320f2"
-  integrity sha512-3swB9sBmjeK2Vyw/j647o1Gy+LlnO23cbQYYmEwg5yQZ0d4mA2SOfqigO7J2NIY9olZ7N6uroR9a/K9NacXayA==
+  version "1.2.94"
+  resolved "https://registry.yarnpkg.com/@keen.io/widget-picker/-/widget-picker-1.2.94.tgz#f81eccbaab23a00b56ac1a111fbf6200d24abc68"
+  integrity sha512-WK8XxDLouSFOInQLYFp0L5pozWLC3wlvlLWuPRfmNmY7GEezYdQdCdKx8xQ68nOFO6iQhKZYWPvXRp4KfuxyJw==
   dependencies:
     "@keen.io/colors" "^1.0.0"
     "@keen.io/icons" "^1.4.1"
     framer-motion "^1.11.1"
 
-"@keen.io/widgets@^2.3.20":
-  version "2.3.20"
-  resolved "https://registry.yarnpkg.com/@keen.io/widgets/-/widgets-2.3.20.tgz#72800a619a10f5184eae718d1d5c34e5312c8603"
-  integrity sha512-C/uBabwV0LgJHFi7OAcCjp1yY1aGBMp7b4l53i6988RvfrTaWSB6+vrWgR/qVHm+hihJ8yvLX9AQy7KF0ZQ4Pw==
+"@keen.io/widgets@^2.3.21":
+  version "2.3.21"
+  resolved "https://registry.yarnpkg.com/@keen.io/widgets/-/widgets-2.3.21.tgz#288cd0b4bd81e6847bd4960a0514101281fe5c4d"
+  integrity sha512-fh0kiQeQdBNSIdJkvQFFC6XK8YHa3eQ8uWRIrdr9bn6mWnteuVMThCBpsUMv+qZPi47/fPuFqfYITsNSolFlsg==
   dependencies:
-    "@keen.io/charts" "^2.12.12"
+    "@keen.io/charts" "^2.12.13"
     "@keen.io/charts-utils" "^1.8.4"
     "@keen.io/colors" "^1.1.0"
     "@keen.io/react-hooks" "^1.0.7"
-    "@keen.io/ui-core" "^2.20.1"
+    "@keen.io/ui-core" "^2.20.2"
 
 "@nodelib/fs.scandir@2.1.4":
   version "2.1.4"
@@ -3697,9 +3697,9 @@ class-utils@^0.3.5:
     static-extend "^0.1.1"
 
 classnames@2.x, classnames@^2.2.6:
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.3.0.tgz#19524334bad47ccd99793936b67f9be0860fe835"
-  integrity sha512-UUf/S3eeczXBjHPpSnrZ1ZyxH3KmLW8nVYFUWIZA/dixYMIQr7l94yYKxaAkmPk7HO9dlT6gFqAPZC02tTdfQw==
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.3.1.tgz#dfcfa3891e306ec1dad105d0e88f4417b8535e8e"
+  integrity sha512-OlQdbZ7gLfGarSqxesMesDa5uz7KFbID8Kpq/SxIoNGDqY8lSYs0D+hhtBXhcdB3rcbXArFr7vlHheLk1voeNA==
 
 clean-css@2.2.x:
   version "2.2.23"
