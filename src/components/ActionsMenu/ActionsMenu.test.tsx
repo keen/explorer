@@ -107,7 +107,10 @@ test('allows user to export results as image', () => {
   expect(store.getActions()).toMatchInlineSnapshot(`
     Array [
       Object {
-        "payload": undefined,
+        "payload": Object {
+          "backgroundColor": "#FFFFFF",
+          "quality": 90,
+        },
         "type": "@app/EXPORT_CHART_TO_IMAGE",
       },
     ]
