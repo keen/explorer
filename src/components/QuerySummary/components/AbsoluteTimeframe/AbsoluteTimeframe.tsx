@@ -1,7 +1,8 @@
 import React, { FC } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Timeframe } from '@keen.io/query';
 import { formatDate } from '@keen.io/time-utils';
-import { useTranslation } from 'react-i18next';
+import { BodyText } from '@keen.io/typography';
 
 import { Container, Separator } from './AbsoluteTimeframe.styles';
 
@@ -16,13 +17,13 @@ const AbsoluteTimeframe: FC<Props> = ({ timeframe, timezone }) => {
 
   return (
     <Container>
-      <span>
+      <BodyText variant="body2">
         {typeof timezone === 'string' ? formatDate(start, timezone) : start}
-      </span>
+      </BodyText>
       <Separator>{t('absolute_timeframe.separator')}</Separator>
-      <span>
+      <BodyText variant="body2">
         {typeof timezone === 'string' ? formatDate(end, timezone) : end}
-      </span>
+      </BodyText>
     </Container>
   );
 };

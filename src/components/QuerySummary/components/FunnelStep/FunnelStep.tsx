@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { transparentize } from 'polished';
 import { Icon } from '@keen.io/icons';
 import { colors } from '@keen.io/colors';
+import { BodyText } from '@keen.io/typography';
 
 import Timeframe from '../Timeframe';
 import StyledTable from '../Table';
@@ -13,7 +14,6 @@ import {
   Header,
   IconContainer,
   StepNumber,
-  Title,
   Content,
 } from './FunnelStep.styles';
 
@@ -46,9 +46,13 @@ const FunnelStep: FC<Props> = ({ step, index, label }) => {
           />
         </IconContainer>
         <StepNumber>
-          {t('query_summary.step')} {index + 1}
+          <BodyText variant="body2" fontWeight="bold">
+            {t('query_summary.step')} {index + 1}
+          </BodyText>
         </StepNumber>
-        <Title>{label || eventCollection}</Title>
+        <BodyText variant="body2" enableTextEllipsis>
+          {label || eventCollection}
+        </BodyText>
       </Header>
       {open && (
         <Content>
@@ -57,15 +61,21 @@ const FunnelStep: FC<Props> = ({ step, index, label }) => {
               {eventCollection && (
                 <StyledTable.Row>
                   <StyledTable.Label>
-                    {t('query_summary.event_stream')}
+                    <BodyText variant="body2" fontWeight="bold">
+                      {t('query_summary.event_stream')}
+                    </BodyText>
                   </StyledTable.Label>
-                  <StyledTable.Value>{eventCollection}</StyledTable.Value>
+                  <StyledTable.Value>
+                    <BodyText variant="body2">{eventCollection}</BodyText>
+                  </StyledTable.Value>
                 </StyledTable.Row>
               )}
               {actorProperty && (
                 <StyledTable.Row>
                   <StyledTable.Label>
-                    {t('query_summary.target_property')}
+                    <BodyText variant="body2" fontWeight="bold">
+                      {t('query_summary.target_property')}
+                    </BodyText>
                   </StyledTable.Label>
                   <StyledTable.Value>
                     <PropertyName name={actorProperty} />
@@ -75,7 +85,9 @@ const FunnelStep: FC<Props> = ({ step, index, label }) => {
               {timeframe && (
                 <StyledTable.Row>
                   <StyledTable.Label>
-                    {t('query_summary.timeframe')}
+                    <BodyText variant="body2" fontWeight="bold">
+                      {t('query_summary.timeframe')}
+                    </BodyText>
                   </StyledTable.Label>
                   <StyledTable.Value>
                     <Timeframe timeframe={timeframe} timezone={timezone} />
@@ -85,7 +97,9 @@ const FunnelStep: FC<Props> = ({ step, index, label }) => {
               {!!filters?.length && (
                 <StyledTable.Row>
                   <StyledTable.Label>
-                    {t('query_summary.applied_filters')}
+                    <BodyText variant="body2" fontWeight="bold">
+                      {t('query_summary.applied_filters')}
+                    </BodyText>
                   </StyledTable.Label>
                   <StyledTable.Value>{filters.length}</StyledTable.Value>
                 </StyledTable.Row>

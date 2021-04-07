@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import { Timeframe } from '@keen.io/query';
+import { BodyText } from '@keen.io/typography';
 
 import AbsoluteTimeframe from '../AbsoluteTimeframe';
 
@@ -12,7 +13,7 @@ const Timeframe: FC<Props> = ({ timeframe, timezone }) =>
   typeof timeframe !== 'string' ? (
     <AbsoluteTimeframe timeframe={timeframe} timezone={timezone} />
   ) : (
-    <span>{timeframe}</span>
+    <BodyText variant="body2">{timeframe}</BodyText>
   );
 
 export default Timeframe;

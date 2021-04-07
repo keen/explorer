@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
+import { BodyText } from '@keen.io/typography';
 
 import {
   Timeframe,
@@ -38,23 +39,33 @@ const QuerySummary: FC<Props> = ({ querySettings, chartSettings }) => {
           {analysisType && (
             <StyledTable.Row>
               <StyledTable.Label>
-                {t('query_summary.analysis')}
+                <BodyText variant="body2" fontWeight="bold">
+                  {t('query_summary.analysis')}
+                </BodyText>
               </StyledTable.Label>
-              <StyledTable.Value>{analysisType}</StyledTable.Value>
+              <StyledTable.Value>
+                <BodyText variant="body2">{analysisType}</BodyText>
+              </StyledTable.Value>
             </StyledTable.Row>
           )}
           {eventCollection && (
             <StyledTable.Row>
               <StyledTable.Label>
-                {t('query_summary.event_stream')}
+                <BodyText variant="body2" fontWeight="bold">
+                  {t('query_summary.event_stream')}
+                </BodyText>
               </StyledTable.Label>
-              <StyledTable.Value>{eventCollection}</StyledTable.Value>
+              <StyledTable.Value>
+                <BodyText variant="body2">{eventCollection}</BodyText>
+              </StyledTable.Value>
             </StyledTable.Row>
           )}
           {targetProperty && (
             <StyledTable.Row>
               <StyledTable.Label>
-                {t('query_summary.target_property')}
+                <BodyText variant="body2" fontWeight="bold">
+                  {t('query_summary.target_property')}
+                </BodyText>
               </StyledTable.Label>
               <StyledTable.Value>
                 <PropertyName name={targetProperty} />
@@ -64,7 +75,9 @@ const QuerySummary: FC<Props> = ({ querySettings, chartSettings }) => {
           {timeframe && (
             <StyledTable.Row>
               <StyledTable.Label>
-                {t('query_summary.timeframe')}
+                <BodyText variant="body2" fontWeight="bold">
+                  {t('query_summary.timeframe')}
+                </BodyText>
               </StyledTable.Label>
               <StyledTable.Value>
                 <Timeframe timeframe={timeframe} timezone={timezone} />
@@ -74,9 +87,13 @@ const QuerySummary: FC<Props> = ({ querySettings, chartSettings }) => {
           {!!filters?.length && (
             <StyledTable.Row>
               <StyledTable.Label>
-                {t('query_summary.applied_filters')}
+                <BodyText variant="body2" fontWeight="bold">
+                  {t('query_summary.applied_filters')}
+                </BodyText>
               </StyledTable.Label>
-              <StyledTable.Value>{filters.length}</StyledTable.Value>
+              <StyledTable.Value>
+                <BodyText variant="body2">{filters.length}</BodyText>
+              </StyledTable.Value>
             </StyledTable.Row>
           )}
         </StyledTable.Body>
