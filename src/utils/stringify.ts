@@ -1,22 +1,12 @@
-import { TIMEZONES } from '@keen.io/ui-core';
+const DISABLE_STRINGIFY_KEYS = ['timezone'];
 
-export const stringify = (queryParams) =>
+export const stringify = (queryParams: Record<string, any>) =>
   Object.keys(queryParams)
-    .map((k) => {
-      let queryParamValue = queryParams[k];
+    .map((keyName) => {
+      let queryParamValue = queryParams[keyName];
       if (!queryParamValue) return null;
       if (Array.isArray(queryParamValue) && !queryParamValue.length)
         return null;
-
-      if (k === 'timezone') {
-        const timezoneOption = TIMEZONES.find(
-          (item) => item.name === queryParamValue
-        ) || {
-          label: 'UTC',
-          value: 0,
-        };
-        queryParamValue = timezoneOption.value;
-      }
 
       if (Array.isArray(queryParamValue)) {
         queryParamValue = queryParamValue.map((value) => {
@@ -34,9 +24,11 @@ export const stringify = (queryParams) =>
         });
       }
 
-      queryParamValue = JSON.stringify(queryParamValue);
+      if (!DISABLE_STRINGIFY_KEYS.includes(keyName)) {
+        queryParamValue = JSON.stringify(queryParamValue);
+      }
 
-      const underscoredK = k
+      const underscoredK = keyName
         .replace(/(?:^|\.?)([A-Z])/g, (x, y) => `_${y.toLowerCase()}`)
         .replace(/^_/, '');
       return `${encodeURIComponent(underscoredK)}=${encodeURIComponent(

@@ -20,7 +20,7 @@ yarn add keen-explorer
 
 ### Visualizations Theme
 
-The Data Explorer `@keen.io/dataviz` theme could be overridden during initialization of Explorer instance.
+The Data Explorer `@keen.io/dataviz` theme could be overridden during initialization of application instance.
 
 ```typescript
 const explorer = new KeenExplorer({
@@ -32,6 +32,30 @@ const explorer = new KeenExplorer({
     }
   }
  });
+```
+
+### Settings
+
+The Data Explorer components configuration could be specified during creation of application instance.
+
+##### Set default timezone for queries
+
+Specify default `timezone` used for new created queries. Provided argument must be compatible with **IANA** [Time Zone Database](https://www.iana.org/time-zones) standard.
+
+```typescript
+const explorer = new KeenExplorer({
+  defaultTimezoneForQuery: 'Africa/Nairobi',
+});
+```
+
+##### Disable timezone selection
+
+Disables possibility to change `timezone` from user interface.
+
+```typescript
+const explorer = new KeenExplorer({
+  disableTimezoneSelection: true,
+});
 ```
 
 ### Translations

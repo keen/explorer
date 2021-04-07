@@ -1,7 +1,7 @@
 {
   "name": "@keen.io/explorer",
   "description": "Data Explorer by Keen IO",
-  "version": "1.4.2-rc.0",
+  "version": "1.5.0-rc.1",
   "license": "MIT",
   "main": "dist/explorer.modern.min.js",
   "browser": "dist/explorer.modern.min.js",
@@ -53,7 +53,7 @@
     "@keen.io/query": "^1.1.1",
     "@keen.io/query-creator": "^1.1.8",
     "@keen.io/react-hooks": "^1.0.1",
-    "@keen.io/time-utils": "^1.1.0",
+    "@keen.io/time-utils": "^1.2.1",
     "@keen.io/toast-notifications": "^1.1.29",
     "@keen.io/ui-core": "^2.5.19",
     "@keen.io/widget-picker": "^1.2.19",
