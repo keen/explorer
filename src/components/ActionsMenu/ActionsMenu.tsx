@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { DropdownMenu, Tooltip } from '@keen.io/ui-core';
+import { colors } from '@keen.io/colors';
 
 import { getQueryResults, cloneSavedQuery } from '../../modules/queries';
 import { AppContext } from '../../contexts';
@@ -29,6 +30,7 @@ import {
 } from '../../modules/app';
 
 import { TOOLTIP_MOTION } from '../../constants';
+import { DEFAULT_IMAGE_QUALITY } from './constants';
 
 type Props = {
   /** Is new query */
@@ -83,7 +85,9 @@ const ActionsMenu: FC<Props> = ({
           <ExportDataLinks isActive={queryResults}>
             <DropdownMenu.Item
               onClick={() => {
-                dispatch(exportChartToImage());
+                dispatch(
+                  exportChartToImage(DEFAULT_IMAGE_QUALITY, colors.white[500])
+                );
                 onHideMenu();
               }}
             >
