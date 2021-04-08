@@ -55,6 +55,7 @@
     "@keen.io/react-hooks": "^1.0.1",
     "@keen.io/time-utils": "^1.2.1",
     "@keen.io/toast-notifications": "^1.1.29",
+    "@keen.io/typography": "^1.3.0",
     "@keen.io/ui-core": "^2.5.19",
     "@keen.io/widget-picker": "^1.2.19",
     "camelcase-keys": "^6.2.2",

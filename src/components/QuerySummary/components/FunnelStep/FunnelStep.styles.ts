@@ -13,6 +13,7 @@ export const Header = styled.div<{ isOpen: boolean }>`
   padding: 10px 12px;
 
   display: flex;
+  column-gap: 10px;
   align-items: center;
 
   cursor: pointer;
@@ -26,25 +27,11 @@ export const Header = styled.div<{ isOpen: boolean }>`
 `;
 
 export const IconContainer = styled.div`
-  margin-right: 10px;
+  line-height: 1;
 `;
 
 export const StepNumber = styled.div`
-  margin-right: 10px;
-
-  font-family: 'Lato Bold', sans-serif;
-  font-size: 14px;
-  line-height: 17px;
-
-  color: ${colors.black[100]};
-`;
-
-export const Title = styled.div`
-  font-family: 'Lato Regular', sans-serif;
-  font-size: 14px;
-  line-height: 17px;
-
-  color: ${colors.black[100]};
+  flex-shrink: 0;
 `;
 
 export const Content = styled.div`
