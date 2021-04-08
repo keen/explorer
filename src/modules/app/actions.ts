@@ -163,7 +163,15 @@ export const hideConfirmation = createAction(HIDE_CONFIRMATION);
 
 export const acceptConfirmation = createAction(ACCEPT_CONFIRMATION);
 
-export const exportChartToImage = createAction(EXPORT_CHART_TO_IMAGE);
+export const exportChartToImage = createAction(
+  EXPORT_CHART_TO_IMAGE,
+  (quality?: number, backgroundColor?: string) => ({
+    payload: {
+      quality,
+      backgroundColor,
+    },
+  })
+);
 
 export const exportChartToJson = createAction(EXPORT_CHART_TO_JSON);
 
