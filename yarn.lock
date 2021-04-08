@@ -1481,13 +1481,13 @@
   integrity sha512-JH/2G4+4Oyx3HobwX6vmCWwP6DdWwSDf5RWMNHBdpcu3/jFxfQq4a+tW3XEB/79aQK/c/GgZCqk/X3Nmd0Ue3Q==
 
 "@keen.io/dataviz@^2.6.2":
-  version "2.11.13"
-  resolved "https://registry.yarnpkg.com/@keen.io/dataviz/-/dataviz-2.11.13.tgz#a14c343f0883ec4bff93e3c1fab6774730a3a619"
-  integrity sha512-jKiZEscz89lD9feguBoaKg/R4Sb8CJdd85FNAfUWYE9CypWj21KA3IdF/1VvEiY7o1tbMkIQqzu30TDDnJlLlw==
+  version "2.11.14"
+  resolved "https://registry.yarnpkg.com/@keen.io/dataviz/-/dataviz-2.11.14.tgz#1e049fbb01b97d20cfc0a5281b4746632c7ef36b"
+  integrity sha512-hIrm2VRtiOt+ucLVTZ19Q90cJNOxQpIQUKGvdEtc1k+WDabAfdK8vHFchmM/+/BmTFYTsQ21xXuTMOSqW9qpbQ==
   dependencies:
     "@keen.io/charts" "^2.12.15"
     "@keen.io/colors" "^1.1.0"
-    "@keen.io/parser" "^2.8.13"
+    "@keen.io/parser" "^2.8.14"
     "@keen.io/query" "^1.2.0"
     "@keen.io/widgets" "^2.3.23"
     deepmerge "4.2.2"
@@ -1513,12 +1513,12 @@
   dependencies:
     "@keen.io/colors" "^1.1.0"
 
-"@keen.io/parser@^2.3.10", "@keen.io/parser@^2.8.13":
-  version "2.8.13"
-  resolved "https://registry.yarnpkg.com/@keen.io/parser/-/parser-2.8.13.tgz#5eabef8146373fdd2f4c87fd56f44587cea50b07"
-  integrity sha512-NG898lzPAESjLukTVoTGSZ4nEPihsNuYLf8oO1zWU8giCHHo79XMZgCXhf68uP5gLpuSVCaqQwkbyy0R4S3deQ==
+"@keen.io/parser@^2.3.10", "@keen.io/parser@^2.8.14":
+  version "2.8.14"
+  resolved "https://registry.yarnpkg.com/@keen.io/parser/-/parser-2.8.14.tgz#418b4b4c6b13f90874e434b3b34599a5204daf8a"
+  integrity sha512-EaB1z7xRV6YQbJ/GRaw1U97wIJ58JXkTVgl0VQUpf3dnveADUBmp0gXixQxBtSgkyM7j7t2FyBiQ33WWrPjUFQ==
   dependencies:
-    "@keen.io/time-utils" "^1.2.2"
+    "@keen.io/time-utils" "^1.2.3"
     d3-time-format "^2.2.3"
 
 "@keen.io/pubsub@^1.1.0":
@@ -1527,9 +1527,9 @@
   integrity sha512-S9zhZNDSwsL6WXOtFqeZ3+vOdCzykL7pYifRm9dZ7ivLe/frAeyqIQsfRA8Z52DPnRN7d+gKbWrJtlZM22ErjQ==
 
 "@keen.io/query-creator@^1.1.8":
-  version "1.5.3"
-  resolved "https://registry.yarnpkg.com/@keen.io/query-creator/-/query-creator-1.5.3.tgz#6f5b5687993ff034962f02bb4048ae19678c0b6a"
-  integrity sha512-PQjRRM9pYmd2i6M6cBB3D+qvqz5RJF5atF8JYMZcPuEoI3r7IJKLBIdWwE/yFcBuQpdgNL9AYzJjjD8zwAIe/Q==
+  version "1.5.4"
+  resolved "https://registry.yarnpkg.com/@keen.io/query-creator/-/query-creator-1.5.4.tgz#408d1522ff04cf11363ea59079e84618ef69609f"
+  integrity sha512-EUX7N89z00V3pHWbtuXOHeLx4+CRFpR/usAXuQiPglTAn3YNXhHnesAXhZG0CBMI6u6Azm2QBOldb7uTkhiOHg==
   dependencies:
     "@keen.io/colors" "^1.1.0"
     "@keen.io/icons" "^1.2.1"
@@ -1575,10 +1575,10 @@
     d3-array "^2.7.1"
     fuse.js "^6.4.1"
 
-"@keen.io/time-utils@^1.2.0", "@keen.io/time-utils@^1.2.1", "@keen.io/time-utils@^1.2.2":
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/@keen.io/time-utils/-/time-utils-1.2.2.tgz#39bf91b2be98179f1c7eb86ba5ed1561ff87a6aa"
-  integrity sha512-zSRm3M4VGokPoghqyxwOshJjrhBtEtZ0MXKc8ZXZEaugrW3M79CKVXdoSmXZ1fLq4sbIiX//7sKKaq7ZPhK35A==
+"@keen.io/time-utils@^1.2.0", "@keen.io/time-utils@^1.2.1", "@keen.io/time-utils@^1.2.3":
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/@keen.io/time-utils/-/time-utils-1.2.3.tgz#e11c2ea1736166e81d943b80cbf401250f2a90db"
+  integrity sha512-s441TjBg6c4VBLCPJQgmMYVT6UG9KRTic3Pne+T/sbDcngVd8ciBqD7ZlqnJ+ZE4nJDxp+Xgt0WGtJVyrQBQhw==
   dependencies:
     dayjs "^1.10.4"
 
