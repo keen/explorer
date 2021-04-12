@@ -23,7 +23,11 @@ import { appStart } from './modules/app';
 
 import { Options } from './types';
 
-import { SHOW_TOAST_NOTIFICATION_EVENT, PUBSUB_CONTEXT } from './constants';
+import {
+  SHOW_TOAST_NOTIFICATION_EVENT,
+  PUBSUB_CONTEXT,
+  DEFAULT_TIMEZONE_FOR_QUERY,
+} from './constants';
 
 export class KeenExplorer {
   constructor(props: Options) {
@@ -77,7 +81,8 @@ export class KeenExplorer {
               upgradeSubscriptionUrl,
               notificationPubSub,
               datavizSettings: dataviz,
-              defaultTimezoneForQuery,
+              defaultTimezoneForQuery:
+                defaultTimezoneForQuery || DEFAULT_TIMEZONE_FOR_QUERY,
               disableTimezoneSelection,
             }}
           >
