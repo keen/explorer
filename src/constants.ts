@@ -52,3 +52,5 @@ export const TOOLTIP_MOTION = {
   animate: { opacity: 1 },
   exit: { opacity: 0 },
 };
+
+export const DEFAULT_TIMEZONE_FOR_QUERY = 'Etc/UTC';

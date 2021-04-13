@@ -1,6 +1,26 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`should render absolute timeframe 1`] = `
+.c1.c1.c1 {
+  margin: 0;
+  padding: 0;
+  font-family: 'Lato',sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #4F5B5F;
+  line-height: 1.2;
+}
+
+.c3.c3.c3 {
+  margin: 0;
+  padding: 0;
+  font-family: 'Lato',sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: rgba(39,86,109,0.6);
+  line-height: 1.2;
+}
+
 .c0 {
   display: -webkit-inline-box;
   display: -webkit-inline-flex;
@@ -8,26 +28,36 @@ exports[`should render absolute timeframe 1`] = `
   display: inline-flex;
 }
 
-.c1 {
+.c2 {
   margin: 0 5px;
-  color: rgba(39,86,109,0.6);
 }
 
 <div>
   <div
     class="c0"
   >
-    <span>
-      2020-09-29 00:00
-    </span>
-    <span
+    <p
       class="c1"
+      color="#4F5B5F"
     >
-      absolute_timeframe.separator
+      2020-09-29 00:00
+    </p>
+    <span
+      class="c2"
+    >
+      <p
+        class="c3"
+        color="rgba(39,86,109,0.6)"
+      >
+        absolute_timeframe.separator
+      </p>
     </span>
-    <span>
+    <p
+      class="c1"
+      color="#4F5B5F"
+    >
       2020-09-30 00:00
-    </span>
+    </p>
   </div>
 </div>
 `;

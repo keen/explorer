@@ -339,6 +339,10 @@
   },
   "query_creator_timezone": {
     "placeholder": "Select timezone",
+    "empty_search": "No timezone found with this criteria",
+    "selection_disabled_description": "Timezone for your metrics is the same as your site configuration.",
+    "loading": "Loading list of time zones",
+    "error": "We cannot load list of time zones. Try again later if you need to check data for specific time zone.",
     "label": "Timezone"
   },
   "query_creator_extraction_properties": {

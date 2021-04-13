@@ -1,18 +1,19 @@
 import React, { FC } from 'react';
+import { Timeframe } from '@keen.io/query';
+import { BodyText } from '@keen.io/typography';
 
-import { Timeframe, Timezones } from '@keen.io/query-creator';
 import AbsoluteTimeframe from '../AbsoluteTimeframe';
 
 type Props = {
   timeframe: Timeframe;
-  timezone?: Timezones | number;
+  timezone?: string | number;
 };
 
 const Timeframe: FC<Props> = ({ timeframe, timezone }) =>
   typeof timeframe !== 'string' ? (
     <AbsoluteTimeframe timeframe={timeframe} timezone={timezone} />
   ) : (
-    <span>{timeframe}</span>
+    <BodyText variant="body2">{timeframe}</BodyText>
   );
 
 export default Timeframe;

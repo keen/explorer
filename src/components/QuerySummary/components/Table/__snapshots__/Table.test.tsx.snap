@@ -11,18 +11,10 @@ exports[`should render <StyledTable/> 1`] = `
 
 .c3 {
   padding: 0 20px 10px 0;
-  font-family: 'Lato Bold',sans-serif;
-  font-size: 14px;
-  line-height: 17px;
-  color: #4F5B5F;
 }
 
 .c5 {
   padding: 0 0 10px 0;
-  font-family: 'Lato Regular',sans-serif;
-  font-size: 14px;
-  line-height: 17px;
-  color: #4F5B5F;
 }
 
 .c1 {

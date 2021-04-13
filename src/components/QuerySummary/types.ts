@@ -1,4 +1,4 @@
-import { Timeframe, Timezones } from '@keen.io/query-creator';
+import { Timeframe } from '@keen.io/query';
 
 export type Filter = {
   operator: string;
@@ -13,7 +13,7 @@ export type FunnelStep = {
   inverted: boolean;
   optional: boolean;
   timeframe: Timeframe;
-  timezone?: Timezones | number;
+  timezone?: string | number;
   with_actors: boolean;
   filters: Filter[];
 };

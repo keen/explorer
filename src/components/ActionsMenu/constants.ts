@@ -1,0 +1,1 @@
+export const DEFAULT_IMAGE_QUALITY = 90;

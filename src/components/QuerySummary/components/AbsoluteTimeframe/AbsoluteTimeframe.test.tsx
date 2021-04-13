@@ -21,7 +21,7 @@ const render = (overProps: any = {}) => {
   };
 };
 
-test('renders <AbsoluteTimeframe /> component', () => {
+test('renders timeframe with "UTC" timezone conversion', () => {
   const {
     wrapper: { getByText },
   } = render();
@@ -33,14 +33,12 @@ test('renders <AbsoluteTimeframe /> component', () => {
   expect(to).toBeInTheDocument();
 });
 
-test('renders <AbsoluteTimeframe /> component when timezone as number provided', () => {
+test('renders raw date ranges for timezone offset', () => {
   const {
     wrapper: { getByText },
+    props: { timeframe },
   } = render({ timezone: 3600 });
 
-  const from = getByText('2020-09-29 02:00');
-  const to = getByText('2020-09-30 02:00');
-
-  expect(from).toBeInTheDocument();
-  expect(to).toBeInTheDocument();
+  expect(getByText(timeframe.start)).toBeInTheDocument();
+  expect(getByText(timeframe.end)).toBeInTheDocument();
 });

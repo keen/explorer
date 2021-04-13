@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import { Icon } from '@keen.io/icons';
 import { colors } from '@keen.io/colors';
+import { BodyText } from '@keen.io/typography';
 
 import { Container, IconContainer } from './PropertyName.styles';
 
@@ -15,7 +16,7 @@ const PropertyName: FC<Props> = ({ name }) => {
     <>
       {nameArr.map((item, idx) => (
         <Container key={idx}>
-          <span>{item}</span>
+          <BodyText variant="body2">{item}</BodyText>
           {idx < nameArr.length - 1 && (
             <IconContainer>
               <Icon

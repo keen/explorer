@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=11" />
   <title><%= htmlWebpackPlugin.options.title %></title>
-  <link rel="stylesheet" type="text/css" href="https://static.keen.io/assets/keen-fonts.css" />
+  <link rel="stylesheet" type="text/css" crossorigin="" href="https://static.keen.io/assets/keen-fonts.css" />
   <style>
     body {
       margin: 0;
@@ -22,7 +22,7 @@
      modalContainer: '#modal-root',
      upgradeSubscriptionUrl: 'http://keen.io',
      defaultTimezoneForQuery: 'Africa/Nairobi',
-     disableTimezoneSelection: true,
+     disableTimezoneSelection: false,
      keenAnalysis: {
        config: <%= config %>,
      },
