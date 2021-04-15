@@ -1,0 +1,65 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`allows user to customize widget subtitle 1`] = `
+Array [
+  Object {
+    "payload": Object {
+      "widgetSettings": Object {
+        "subtitle": Object {
+          "content": "@subtitle",
+          "typography": Object {
+            "fontColor": "#1D2729",
+            "fontFamily": "Lato Regular, sans-serif",
+            "fontSize": 14,
+            "fontStyle": "normal",
+            "fontWeight": "normal",
+          },
+        },
+        "title": Object {
+          "content": "",
+          "typography": Object {
+            "fontColor": "#27566D",
+            "fontFamily": "Gangster Grotesk Regular, sans-serif",
+            "fontSize": 20,
+            "fontStyle": "normal",
+            "fontWeight": "normal",
+          },
+        },
+      },
+    },
+    "type": "@app/UPDATE_WIDGET_SETTINGS",
+  },
+]
+`;
+
+exports[`allows user to customize widget title 1`] = `
+Array [
+  Object {
+    "payload": Object {
+      "widgetSettings": Object {
+        "subtitle": Object {
+          "content": "",
+          "typography": Object {
+            "fontColor": "#1D2729",
+            "fontFamily": "Lato Regular, sans-serif",
+            "fontSize": 14,
+            "fontStyle": "normal",
+            "fontWeight": "normal",
+          },
+        },
+        "title": Object {
+          "content": "@title",
+          "typography": Object {
+            "fontColor": "#27566D",
+            "fontFamily": "Gangster Grotesk Regular, sans-serif",
+            "fontSize": 20,
+            "fontStyle": "normal",
+            "fontWeight": "normal",
+          },
+        },
+      },
+    },
+    "type": "@app/UPDATE_WIDGET_SETTINGS",
+  },
+]
+`;

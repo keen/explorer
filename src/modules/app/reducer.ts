@@ -18,6 +18,7 @@ import {
   HIDE_EMAIL_EXTRACTION_MODAL,
   SET_QUERY_AUTORUN,
   UPDATE_CHART_SETTINGS,
+  UPDATE_WIDGET_SETTINGS,
 } from './constants';
 
 export const initialState: ReducerState = {
@@ -153,6 +154,17 @@ export const appReducer = (
         ...state,
         embedModal: {
           visible: false,
+        },
+      };
+    case UPDATE_WIDGET_SETTINGS:
+      return {
+        ...state,
+        visualization: {
+          ...state.visualization,
+          widgetSettings: {
+            ...state.visualization.widgetSettings,
+            ...action.payload.widgetSettings,
+          },
         },
       };
     case UPDATE_CHART_SETTINGS:

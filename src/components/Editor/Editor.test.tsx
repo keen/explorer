@@ -22,8 +22,13 @@ const render = (storeState: any = {}, overProps: any = {}) => {
       tags: [],
     },
     app: {
+      visualization: {
+        type: null,
+        chartSettings: {},
+        widgetSettings: {},
+      },
       querySettingsModal: {
-        visible: true,
+        visible: false,
       },
     },
     queries: {
@@ -94,6 +99,70 @@ test('allows user to run query', () => {
   fireEvent.click(clearButton);
 
   expect(props.onRunQuery).toHaveBeenCalled();
+});
+
+test('allows user to customize widget title', () => {
+  const storeState = {
+    app: {
+      visualization: {
+        type: 'table',
+        chartSettings: {},
+        widgetSettings: {},
+      },
+      querySettingsModal: {
+        visible: false,
+      },
+    },
+  };
+
+  const {
+    wrapper: { queryByText, getByPlaceholderText },
+    store,
+  } = render(storeState);
+
+  const settingsTab = queryByText('editor.settings_section');
+  fireEvent.click(settingsTab);
+
+  store.clearActions();
+
+  const input = getByPlaceholderText(
+    'widget_customization_heading_settings.title_placeholder'
+  );
+  fireEvent.change(input, { target: { value: '@title' } });
+
+  expect(store.getActions()).toMatchSnapshot();
+});
+
+test('allows user to customize widget subtitle', () => {
+  const storeState = {
+    app: {
+      visualization: {
+        type: 'area',
+        chartSettings: {},
+        widgetSettings: {},
+      },
+      querySettingsModal: {
+        visible: false,
+      },
+    },
+  };
+
+  const {
+    wrapper: { queryByText, getByPlaceholderText },
+    store,
+  } = render(storeState);
+
+  const settingsTab = queryByText('editor.settings_section');
+  fireEvent.click(settingsTab);
+
+  store.clearActions();
+
+  const input = getByPlaceholderText(
+    'widget_customization_heading_settings.subtitle_placeholder'
+  );
+  fireEvent.change(input, { target: { value: '@subtitle' } });
+
+  expect(store.getActions()).toMatchSnapshot();
 });
 
 test('do not renders email extraction button', () => {

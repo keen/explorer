@@ -2,9 +2,9 @@ import React, { FC, useContext, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import QueryCreator from '@keen.io/query-creator';
 
-import { AppContext } from '../../contexts';
+import { AppContext } from '../../../../contexts';
 
-import { queryEditorMounted } from '../../modules/app';
+import { queryEditorMounted } from '../../../../modules/app';
 
 type Props = {
   onUpdateQuery: (query: Record<string, any>) => void;

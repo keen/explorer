@@ -1,9 +1,5 @@
 import { createAction } from '@reduxjs/toolkit';
-import {
-  PickerWidgets,
-  ChartSettings,
-  WidgetSettings,
-} from '@keen.io/widget-picker';
+import { PickerWidgets, ChartSettings } from '@keen.io/widget-picker';
 
 import {
   APP_START,
@@ -40,6 +36,7 @@ import {
   COPY_API_RESOURCE_URL,
   SET_QUERY_AUTORUN,
   UPDATE_CHART_SETTINGS,
+  UPDATE_WIDGET_SETTINGS,
   UPDATE_VISUALIZATION,
 } from './constants';
 
@@ -135,7 +132,7 @@ export const setVisualization = createAction(
   (
     type: PickerWidgets,
     chartSettings: ChartSettings,
-    widgetSettings: WidgetSettings
+    widgetSettings: Record<string, any>
   ) => ({
     payload: {
       type,
@@ -210,6 +207,15 @@ export const updateChartSettings = createAction(
   })
 );
 
+export const updateWidgetSettings = createAction(
+  UPDATE_WIDGET_SETTINGS,
+  (widgetSettings: Record<string, any>) => ({
+    payload: {
+      widgetSettings,
+    },
+  })
+);
+
 export const updateVisualizationType = createAction(
   UPDATE_VISUALIZATION,
   (type: PickerWidgets) => ({
@@ -260,5 +266,6 @@ export type AppActions =
   | ReturnType<typeof hideEmailExtractionModal>
   | ReturnType<typeof setQueryAutorun>
   | ReturnType<typeof updateChartSettings>
+  | ReturnType<typeof updateWidgetSettings>
   | ReturnType<typeof updateVisualizationType>
   | ReturnType<typeof copyApiResourceUrl>;

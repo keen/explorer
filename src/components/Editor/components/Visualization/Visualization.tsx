@@ -1,43 +1,43 @@
 import React, { FC, useEffect, useMemo } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import {
   getAvailableWidgets,
   getSimpleOptionsWidgets,
   WidgetPicker,
+  PickerWidgets,
 } from '@keen.io/widget-picker';
 
-import { Container, PickerContainer } from './EditorVisualization.styles';
+import { Container, PickerContainer } from './Visualization.styles';
 import { getDefaultSettings } from './utils';
 
-import QueryVisualization from '../QueryVisualization';
-import {
-  getVisualization,
-  setVisualization,
-  updateVisualizationType,
-} from '../../modules/app';
-
-import { AppState } from '../../modules/types';
+import QueryVisualization from '../../../QueryVisualization';
 
 type Props = {
+  /** Widget type */
+  widgetType: PickerWidgets;
+  /** Chart settings */
+  chartSettings: Record<string, any>;
+  /** Widget settings */
+  widgetSettings: Record<string, any>;
   /** Query definition */
   query: Record<string, any>;
   /** Analysis results */
   queryResults: Record<string, any>;
+  onChangeVisualization: (settings: {
+    widgetType: PickerWidgets;
+    chartSettings: Record<string, any>;
+    widgetSettings: Record<string, any>;
+  }) => void;
 };
 
-const EditorVisualization: FC<Props> = ({ query, queryResults }) => {
-  const dispatch = useDispatch();
+const Visualization: FC<Props> = ({
+  widgetType,
+  chartSettings,
+  widgetSettings,
+  query,
+  queryResults,
+  onChangeVisualization,
+}) => {
   const widgets = useMemo(() => getAvailableWidgets(query), [queryResults]);
-
-  const { widget: widgetType, chartSettings, widgetSettings } = useSelector(
-    (state: AppState) => {
-      const { type: widget, ...restSettings } = getVisualization(state);
-      return {
-        widget,
-        ...restSettings,
-      };
-    }
-  );
 
   useEffect(() => {
     if (!widgets.includes(widgetType)) {
@@ -45,8 +45,11 @@ const EditorVisualization: FC<Props> = ({ query, queryResults }) => {
       const { chartSettings, widgetSettings } = getDefaultSettings(
         defaultWidget
       );
-      dispatch(setVisualization(defaultWidget, chartSettings, widgetSettings));
-      dispatch(updateVisualizationType(defaultWidget));
+      onChangeVisualization({
+        widgetType: defaultWidget,
+        chartSettings,
+        widgetSettings,
+      });
     }
   }, [widgets, widgetType]);
 
@@ -60,10 +63,11 @@ const EditorVisualization: FC<Props> = ({ query, queryResults }) => {
           widgetSettings={widgetSettings}
           disabledWidgetOptions={getSimpleOptionsWidgets(query)}
           onUpdateSettings={(widgetType, chartSettings, widgetSettings) => {
-            dispatch(
-              setVisualization(widgetType, chartSettings, widgetSettings)
-            );
-            dispatch(updateVisualizationType(widgetType));
+            onChangeVisualization({
+              widgetType,
+              chartSettings,
+              widgetSettings,
+            });
           }}
         />
       </PickerContainer>
@@ -79,4 +83,4 @@ const EditorVisualization: FC<Props> = ({ query, queryResults }) => {
   );
 };
 
-export default EditorVisualization;
+export default Visualization;
