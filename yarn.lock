@@ -1527,9 +1527,9 @@
   integrity sha512-S9zhZNDSwsL6WXOtFqeZ3+vOdCzykL7pYifRm9dZ7ivLe/frAeyqIQsfRA8Z52DPnRN7d+gKbWrJtlZM22ErjQ==
 
 "@keen.io/query-creator@^1.1.8":
-  version "1.5.5"
-  resolved "https://registry.yarnpkg.com/@keen.io/query-creator/-/query-creator-1.5.5.tgz#5f2736b42f6b5e699ab4c8a0cc9c6d1d670c3d6f"
-  integrity sha512-3npXuH1oTxcc/unT8kP8X5cPHsietHMkI2ok7RfcNQgMevyyNqHPtamsKgAZU/pUj0r6Ow9mdxA60UHSznIMPA==
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/@keen.io/query-creator/-/query-creator-1.6.0.tgz#e05f38170f0eb4c48248c4254d9ce44e25702af1"
+  integrity sha512-XI7dTo4ah/wQ7jMd7T+yJaD1uMuDu8O3ciJUiZYr9+e/IKCbkJhG0rEL4yrAgKg8QW5EekADtu9UIeGxoHM5nQ==
   dependencies:
     "@keen.io/colors" "^1.1.0"
     "@keen.io/icons" "^1.2.1"
@@ -9850,9 +9850,9 @@ object-hash@^1.1.4:
   integrity sha512-OSuu/pU4ENM9kmREg0BdNrUDIl1heYa4mBZacJc+vVWz4GtAwu7jO8s4AIt2aGRUTqxykpWzI3Oqnsm13tTMDA==
 
 object-inspect@^1.9.0:
-  version "1.9.0"
-  resolved "https://registry.yarnpkg.com/object-inspect/-/object-inspect-1.9.0.tgz#c90521d74e1127b67266ded3394ad6116986533a"
-  integrity sha512-i3Bp9iTqwhaLZBxGkRfo5ZbE07BQRT7MGu8+nNgwW9ItGp1TzCTw2DLEoWwjClxBjOFI/hWljTAmYGCEwmtnOw==
+  version "1.10.2"
+  resolved "https://registry.yarnpkg.com/object-inspect/-/object-inspect-1.10.2.tgz#b6385a3e2b7cae0b5eafcf90cddf85d128767f30"
+  integrity sha512-gz58rdPpadwztRrPjZE9DZLOABUpTGdcANUgOwBFO1C+HZZhePoP83M65WGDmbpwFYJSWqavbl4SgDn4k8RYTA==
 
 object-is@^1.0.1, object-is@^1.1.2:
   version "1.1.5"
