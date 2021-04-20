@@ -8,7 +8,10 @@ import React, {
 } from 'react';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import { transparentize } from 'polished';
 import { Button, Dropdown } from '@keen.io/ui-core';
+import { BodyText } from '@keen.io/typography';
+import { colors } from '@keen.io/colors';
 
 import { FilterItem, SearchTags } from './components';
 import {
@@ -135,12 +138,20 @@ const FilterQueries: FC<Props> = ({
           </TagsContainer>
           {isEmptySearch && (
             <EmptySearch>
-              {t('browser_filters.empty_search_message')}
+              <BodyText
+                variant="body3"
+                color={transparentize(0.2, colors.black[100])}
+                fontWeight={400}
+              >
+                {t('browser_filters.empty_search_message')}
+              </BodyText>
             </EmptySearch>
           )}
         </DropdownContent>
         <ClearFilters onClick={onClearFilters}>
-          {t('browser_filters.clear')}
+          <BodyText variant="body2" color={colors.blue[200]} fontWeight="bold">
+            {t('browser_filters.clear')}
+          </BodyText>
         </ClearFilters>
       </Dropdown>
     </Container>

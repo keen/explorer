@@ -2,6 +2,7 @@ import React, { FC, useRef, useEffect } from 'react';
 import { transparentize } from 'polished';
 import { Icon } from '@keen.io/icons';
 import { Input } from '@keen.io/ui-core';
+import { BodyText } from '@keen.io/typography';
 import { colors } from '@keen.io/colors';
 
 import {
@@ -66,7 +67,11 @@ const SearchTags: FC<Props> = ({
         />
       </InputContainer>
       <PlaceholderContainer isActive={isActive} onClick={onActiveSearch}>
-        <Label>{searchLabel}</Label>
+        <Label>
+          <BodyText variant="body2" color={colors.black[100]} fontWeight="bold">
+            {searchLabel}
+          </BodyText>
+        </Label>
         <Icon type="search" fill={transparentize(0.5, colors.black[100])} />
       </PlaceholderContainer>
     </Container>
