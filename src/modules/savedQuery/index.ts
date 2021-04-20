@@ -1,5 +1,9 @@
 import { savedQueryReducer, initialState } from './reducer';
-import { getSavedQuery, getSavedQueryName } from './selectors';
+import {
+  getSavedQuery,
+  getSavedQueryName,
+  getSavedQueryDisplayName,
+} from './selectors';
 import { savedQuerySaga } from './saga';
 import { updateSavedQuery, resetSavedQuery, selectSavedQuery } from './actions';
 import { convertMilisecondsToMinutes } from './utils';
@@ -12,6 +16,7 @@ export {
   ReducerState,
   getSavedQuery,
   getSavedQueryName,
+  getSavedQueryDisplayName,
   selectSavedQuery,
   updateSavedQuery,
   resetSavedQuery,

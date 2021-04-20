@@ -1,15 +1,12 @@
-import {
-  PickerWidgets,
-  ChartSettings,
-  WidgetSettings,
-} from '@keen.io/widget-picker';
+import { PickerWidgets, ChartSettings } from '@keen.io/widget-picker';
+import { Query } from '@keen.io/query';
 
 import { APIError } from '../../types';
 
 export type Visualization = {
   type: PickerWidgets;
   chartSettings: ChartSettings;
-  widgetSettings: WidgetSettings;
+  widgetSettings: Record<string, any>;
 };
 
 export type SavedQueryListItem = {
@@ -25,7 +22,7 @@ export type SavedQueryListItem = {
 
 export type ReducerState = {
   results: any;
-  settings: Record<string, any>;
+  settings: Partial<Query>;
   isQueryPerforming: boolean;
   isSavedQueriesLoaded: boolean;
   isSavingQuery: boolean;

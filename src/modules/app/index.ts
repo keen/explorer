@@ -32,6 +32,7 @@ import {
   copyApiResourceUrl,
   setQueryAutorun,
   updateChartSettings,
+  updateWidgetSettings,
   updateVisualizationType,
   resetVisualization,
 } from './actions';
@@ -98,6 +99,7 @@ export {
   setQueryAutorun,
   getQueryAutorun,
   updateChartSettings,
+  updateWidgetSettings,
   updateVisualizationType,
   resetVisualization,
   ReducerState,

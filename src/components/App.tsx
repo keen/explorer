@@ -147,6 +147,7 @@ class App extends Component {
           <>
             <Editor
               query={this.props.query}
+              savedQueryName={this.props.savedQuery.displayName}
               upgradeSubscriptionUrl={this.props.upgradeSubscriptionUrl}
               onRunQuery={() => this.props.runQuery(this.props.query)}
               onSaveQuery={() => {

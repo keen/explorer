@@ -101,7 +101,9 @@ const FunnelStep: FC<Props> = ({ step, index, label }) => {
                       {t('query_summary.applied_filters')}
                     </BodyText>
                   </StyledTable.Label>
-                  <StyledTable.Value>{filters.length}</StyledTable.Value>
+                  <StyledTable.Value>
+                    <BodyText variant="body2">{filters.length}</BodyText>
+                  </StyledTable.Value>
                 </StyledTable.Row>
               )}
             </StyledTable.Body>
