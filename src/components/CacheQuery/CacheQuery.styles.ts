@@ -1,43 +1,20 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import { transparentize } from 'polished';
-import { colors } from '@keen.io/colors';
 
 export const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  column-gap: 4px;
   height: 40px;
 `;
 
-export const CacheSwitch = styled.label<{
-  disabled: boolean;
-}>`
+export const CacheSwitch = styled.label`
   display: flex;
   align-items: center;
-  margin-right: 4px;
-  margin-bottom: 0;
-
-  font-size: 14px;
-  font-family: 'Lato Regular', sans-serif;
-  line-height: 1;
-  color: ${(props) =>
-    props.disabled ? colors.gray['500'] : colors.black['500']};
-`;
-
-export const CacheLabel = styled.div<{
-  disabled: boolean;
-}>`
-  margin: 0 0 0 7px;
-  color: ${colors.black[100]};
-  font-family: 'Lato Bold', sans-serif;
-  font-size: 14px;
-
-  ${(props) =>
-    props.disabled &&
-    css`
-      color: ${transparentize(0.5, colors.black[100])};
-    `};
+  margin: 0;
+  column-gap: 7px;
+  cursor: pointer;
 `;
 
 export const LimitReached = styled.div`
@@ -46,13 +23,6 @@ export const LimitReached = styled.div`
   margin-left: 5px;
   position: relative;
   cursor: pointer;
-`;
-
-export const RefreshFrequency = styled.span`
-  margin-right: 4px;
-  color: ${colors.black[100]};
-  font-family: 'Lato Bold', sans-serif;
-  font-size: 14px;
 `;
 
 export const TooltipMotion = styled(motion.div)`
@@ -65,11 +35,8 @@ export const TooltipMotion = styled(motion.div)`
 export const CacheLimit = styled.div`
   display: flex;
   align-items: center;
-  font-size: 14px;
-  font-family: 'Lato Regular', sans-serif;
-  color: ${colors.blue['500']};
 `;
 
-export const StyledLabel = styled.label`
-  margin: 0;
+export const CheckboxContainer = styled.div`
+  line-height: 0;
 `;

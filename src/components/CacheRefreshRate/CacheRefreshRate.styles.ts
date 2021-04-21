@@ -13,17 +13,6 @@ export const Container = styled.div`
   border: 1px solid ${transparentize(0.5, colors.black[500])};
   border-radius: 4px;
   outline: none;
-
-  font-size: 14px;
-  line-height: 17px;
-  font-family: 'Lato Regular', sans-serif;
-`;
-
-export const Units = styled.div`
-  font-size: 14px;
-  line-height: 17px;
-  font-family: 'Lato Regular', sans-serif;
-  color: ${transparentize(0.5, colors.blue[500])};
 `;
 
 export const Input = styled.input`

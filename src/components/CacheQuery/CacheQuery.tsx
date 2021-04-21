@@ -1,19 +1,19 @@
 import React, { FC, useCallback, useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
+import { transparentize } from 'polished';
 import { Checkbox } from '@keen.io/ui-core';
 import { Icon } from '@keen.io/icons';
+import { BodyText } from '@keen.io/typography';
 import { colors } from '@keen.io/colors';
 
 import {
   Container,
   CacheSwitch,
   CacheLimit,
-  CacheLabel,
-  RefreshFrequency,
   LimitReached,
   TooltipMotion,
-  StyledLabel,
+  CheckboxContainer,
 } from './CacheQuery.styles';
 
 import { LimitTooltip } from './components';
@@ -55,24 +55,33 @@ const CacheQuery: FC<Props> = ({
 
   return (
     <Container>
-      <CacheSwitch htmlFor={CHECKBOX_ID} disabled={isLimited && !isCached}>
-        <Checkbox
-          id={CHECKBOX_ID}
-          type="secondary"
-          checked={isCached}
-          onChange={() => cacheChangeHandler()}
-        />
-        <CacheLabel disabled={isLimited && !isCached}>
-          <StyledLabel htmlFor={CHECKBOX_ID}>
-            {t('cache_query.cache')}
-          </StyledLabel>
-        </CacheLabel>
+      <CacheSwitch htmlFor={CHECKBOX_ID}>
+        <CheckboxContainer>
+          <Checkbox
+            id={CHECKBOX_ID}
+            type="secondary"
+            checked={isCached}
+            onChange={() => cacheChangeHandler()}
+          />
+        </CheckboxContainer>
+        <BodyText
+          variant="body2"
+          color={
+            isLimited && !isCached
+              ? transparentize(0.5, colors.black[100])
+              : colors.black[100]
+          }
+          fontWeight="bold"
+          lineHeight={1}
+        >
+          {t('cache_query.cache')}
+        </BodyText>
       </CacheSwitch>
       {isCached && (
         <>
-          <RefreshFrequency>
+          <BodyText variant="body2" fontWeight="bold" lineHeight={1}>
             {t('cache_query.refresh_interval')}
-          </RefreshFrequency>
+          </BodyText>
           <CacheRefreshRate
             refreshRate={refreshRate}
             minimumRate={REFRESH_MINIMUM}
@@ -83,7 +92,9 @@ const CacheQuery: FC<Props> = ({
       )}
       {isLimited && !isCached && (
         <CacheLimit>
-          <span>{t('cache_query.queries_limit')}</span>
+          <BodyText variant="body2" color={colors.blue['500']} lineHeight={1}>
+            {t('cache_query.queries_limit')}
+          </BodyText>
           <LimitReached
             data-testid="cache-limit"
             onMouseEnter={() => setTooltip({ visible: true })}
