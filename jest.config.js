@@ -25,9 +25,14 @@ module.exports = {
   '<rootDir>/jest.setup.ts'
   ],
 
+  testPathIgnorePatterns : [
+    '<rootDir>/dist',
+    '<rootDir>/lib',
+  ],
+
   transformIgnorePatterns: [
-     "<rootDir>/node_modules/(?!(@keen.io)/)"
-   ],
+    "<rootDir>/node_modules/(?!(@keen.io)/)"
+  ],
 
   testTimeout: 10000,
 

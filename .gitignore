@@ -10,3 +10,5 @@ config.js
 .idea/
 package-lock.json
 .npmrc
+typings
+lib

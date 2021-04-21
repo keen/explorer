@@ -24,9 +24,9 @@ export const Container = styled.tr<{
       & > td:last-of-type {
         border-right: solid 6px ${colors.blue[500]};
       }
-    `}
+    `};
 
-  transition: all .2s linear;
+  transition: all 0.2s linear;
 `;
 
 export const Tag = styled.span`

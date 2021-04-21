@@ -6,16 +6,19 @@
   "main": "dist/explorer.modern.min.js",
   "browser": "dist/explorer.modern.min.js",
   "files": [
-    "dist"
+    "dist",
+    "typings"
   ],
   "scripts": {
     "start": "concurrently --kill-others \"NODE_ENV=development webpack-dev-server\"",
     "test": "jest",
     "test:ci": "jest -w 1",
     "test:watch": "NODE_ENV=test jest --watch",
+    "prebuild": "rimraf dist lib tsconfig.tsbuildinfo",
     "build": "yarn build:legacy && yarn build:modern",
-    "build:legacy": "NODE_ENV=production webpack --config webpack.config.prod.js --env.TARGET_LEGACY_BROWSERS=true -p",
-    "build:modern": "NODE_ENV=production webpack --config webpack.config.prod.js --env.TARGET_LEGACY_BROWSERS=false -p",
+    "build:legacy": "tsc && NODE_ENV=production webpack --config webpack.config.prod.js --env.TARGET_LEGACY_BROWSERS=true -p",
+    "build:modern": "tsc && NODE_ENV=production webpack --config webpack.config.prod.js --env.TARGET_LEGACY_BROWSERS=false -p",
+    "postbuild": "babel lib --out-dir dist",
     "check-bundle": "NODE_ENV=production webpack --config webpack.config.prod.js --env.TARGET_LEGACY_BROWSERS=false --env.ANALYZE_BUNDLE=true -p",
     "version": "npm run build && git add .",
     "lint": "eslint --quiet --ext .ts --ext .tsx src/",
@@ -88,7 +91,11 @@
     "styled-system": "5.1.5",
     "uuid": "^8.2.0"
   },
+  "resolutions": {
+    "@types/react": "^16.9.35"
+  },
   "devDependencies": {
+    "@babel/cli": "^7.13.16",
     "@babel/core": "^7.11.6",
     "@babel/plugin-proposal-object-rest-spread": "^7.11.0",
     "@babel/preset-env": "^7.11.5",
@@ -97,6 +104,7 @@
     "@commitlint/cli": "^9.1.1",
     "@commitlint/config-conventional": "^9.1.1",
     "@keen.io/charts": "^2.2.14",
+    "@quickbaseoss/babel-plugin-styled-components-css-namespace": "^1.0.1",
     "@reduxjs/toolkit": "^1.4.0",
     "@testing-library/jest-dom": "^5.8.0",
     "@testing-library/react": "^10.0.4",
@@ -105,7 +113,6 @@
     "@types/dom-to-image": "^2.6.1",
     "@types/file-saver": "^2.0.1",
     "@types/jest": "^26.0.14",
-    "@types/react": "^16.9.35",
     "@types/react-dom": "^16.9.8",
     "@types/react-redux": "^7.1.9",
     "@types/redux-mock-store": "^1.0.2",
@@ -116,6 +123,7 @@
     "@typescript-eslint/parser": "^2.34.0",
     "autoprefixer": "^10.0.1",
     "babel-loader": "^8.1.0",
+    "babel-plugin-styled-components": "^1.12.0",
     "browserlist": "^1.0.1",
     "commitizen": "^4.0.3",
     "concurrently": "^3.5.1",
@@ -179,5 +187,6 @@
   ],
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "types": "./typings/index.d.ts"
 }

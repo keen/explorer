@@ -14,7 +14,7 @@ export const Container = styled.div`
 
 export const ActionsContainer = styled.div<SpaceProps>`
   position: relative;
-  ${space}
+  ${space};
 `;
 
 export const BasicActions = styled.div`

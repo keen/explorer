@@ -1,0 +1,16 @@
+{
+  "presets": [
+    ["@babel/preset-env", { "modules": false, "exclude": ["babel-plugin-transform-async-to-generator", "babel-plugin-transform-regenerator"] }]
+  ],
+  "plugins": [
+    [
+      "@quickbaseoss/babel-plugin-styled-components-css-namespace",
+      {"cssNamespace": "&&&"}
+    ],
+    ["babel-plugin-styled-components", {
+      "namespace": "keen-explorer",
+      "minify": true,
+      "transpileTemplateLiterals": true
+    }]
+  ]
+}

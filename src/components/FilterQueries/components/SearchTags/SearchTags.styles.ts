@@ -11,7 +11,7 @@ export const PlaceholderContainer = styled.div<{
     props.isActive &&
     css`
       display: none;
-    `}
+    `};
 `;
 
 export const InputContainer = styled.div<{
@@ -22,7 +22,7 @@ export const InputContainer = styled.div<{
     props.isActive &&
     css`
       display: block;
-    `}
+    `};
 `;
 
 export const Container = styled.div`

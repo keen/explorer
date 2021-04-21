@@ -38,13 +38,13 @@ export const ExportDataLinks = styled.div<{ isActive: boolean }>`
     css`
       opacity: 0.5;
       cursor: not-allowed;
-    `}
+    `};
 
   * {
     ${(props) =>
       !props.isActive &&
       css`
         pointer-events: none;
-      `}
+      `};
   }
 `;

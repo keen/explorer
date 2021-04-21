@@ -34,11 +34,11 @@ export const VisualizationWrapper = styled.div<{ widgetType: PickerWidgets }>`
     widgetType === 'json' &&
     css`
       padding: 10px;
-    `}
+    `};
 
   ${({ widgetType }) =>
     widgetType === 'table' &&
     css`
       padding-top: 20px;
-    `}
+    `};
 `;

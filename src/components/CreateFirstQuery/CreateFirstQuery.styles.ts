@@ -7,8 +7,8 @@ export const MotionContainer = styled(motion.div)<SpaceProps & LayoutProps>`
   position: absolute;
   padding: 20px 80px;
   box-sizing: border-box;
-  ${space}
-  ${layout}
+  ${space};
+  ${layout};
 
   background: ${colors.white[500]};
   color: ${colors.green[500]};

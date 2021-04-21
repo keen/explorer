@@ -1,7 +1,14 @@
 {
 	"compilerOptions": {
-		"target": "es6",
+		"target": "es2019",
+		"declaration": true,
+    "outDir": "./lib",
+    "declarationDir": "./typings",
 		"moduleResolution": "node",
+		"downlevelIteration": true,
+    "noUnusedParameters": false,
+    "noUnusedLocals": true,
+    "removeComments": true,
 		"allowJs": true,
     "resolveJsonModule": true,
 		"importHelpers": true,
@@ -12,7 +19,7 @@
 		"typeRoots": [ "./types", "./node_modules/@types"]
 	},
   "include": [
-  	"./src/**/*"
+		"./src/**/*"
   ],
-	 "exclude": ["node_modules", "typings"]
+		"exclude": ["node_modules", "typings"]
 }
