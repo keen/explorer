@@ -1,0 +1,6 @@
+{
+  "testFiles": "**/*.{feature,features}",
+  "env": {
+    "host": "http://localhost:8080"
+  }
+}

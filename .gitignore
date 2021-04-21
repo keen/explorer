@@ -5,6 +5,7 @@
 
 node_modules
 dist
+videos
 coverage
 config.js
 .idea/
