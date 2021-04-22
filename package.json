@@ -5,6 +5,7 @@
   "license": "MIT",
   "main": "dist/explorer.modern.min.js",
   "browser": "dist/explorer.modern.min.js",
+  "types": "dist/index.d.ts",
   "files": [
     "dist",
     "typings"
@@ -15,11 +16,9 @@
     "test:ci": "jest -w 1",
     "test:watch": "NODE_ENV=test jest --watch",
     "prebuild": "rimraf dist lib tsconfig.tsbuildinfo",
-    "build": "yarn build:legacy && yarn build:modern",
-    "build:legacy": "tsc && NODE_ENV=production webpack --config webpack.config.prod.js --env.TARGET_LEGACY_BROWSERS=true -p",
-    "build:modern": "tsc && NODE_ENV=production webpack --config webpack.config.prod.js --env.TARGET_LEGACY_BROWSERS=false -p",
+    "build": "tsc && NODE_ENV=production webpack --config webpack.config.prod.js -p",
     "postbuild": "babel lib --out-dir dist",
-    "check-bundle": "NODE_ENV=production webpack --config webpack.config.prod.js --env.TARGET_LEGACY_BROWSERS=false --env.ANALYZE_BUNDLE=true -p",
+    "check-bundle": "NODE_ENV=production webpack --config webpack.config.prod.js --env.ANALYZE_BUNDLE=true -p",
     "version": "npm run build && git add .",
     "lint": "eslint --quiet --ext .ts --ext .tsx src/",
     "circular": "madge --circular ./src/**/*",
@@ -63,7 +62,7 @@
     "@keen.io/widget-customization": "^0.0.17",
     "@keen.io/widget-picker": "^1.2.19",
     "camelcase-keys": "^6.2.2",
-    "core-js": "^3.6.5",
+    "core-js": "3",
     "dom-to-image": "^2.6.0",
     "file-saver": "^2.0.2",
     "framer-motion": "^1.11.0",
@@ -90,9 +89,6 @@
     "styled-components": "^5.1.0",
     "styled-system": "5.1.5",
     "uuid": "^8.2.0"
-  },
-  "resolutions": {
-    "@types/react": "^16.9.35"
   },
   "devDependencies": {
     "@babel/cli": "^7.13.16",
@@ -187,6 +183,5 @@
   ],
   "publishConfig": {
     "access": "public"
-  },
-  "types": "./typings/index.d.ts"
+  }
 }

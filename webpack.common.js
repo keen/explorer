@@ -9,10 +9,7 @@ const loadAppConfig = () => {
   return {};
 };
 
-const createWebpackConfig = (
-  supportLegacyBrowsers
-) => {
-
+const createWebpackConfig = () => {
   const config = {
     entry: {
       main: './src/index.ts',
@@ -24,12 +21,16 @@ const createWebpackConfig = (
       rules: [
         {
           test: /\.tsx?$/,
-          use: {
+          use: [
+            {
+              loader: 'babel-loader',
+            }, 
+            {
             loader: 'ts-loader',
             options: {
-              configFile: `tsconfig${supportLegacyBrowsers ? '.es5': ''}.json`
+              configFile: 'tsconfig.json'
             }
-          },
+          }],
         },
         {
           test: /\.css$/,
@@ -49,32 +50,6 @@ const createWebpackConfig = (
       }),
     ],
   };
-
-  if (supportLegacyBrowsers) {
-    const babelOptions = {
-      presets: [
-        '@babel/preset-react',
-        [
-          '@babel/preset-env',
-          {
-            corejs: '3.6',
-            useBuiltIns: 'entry',
-          },
-        ],
-      ],
-    };
-
-    config.module.rules.unshift({
-      test: /\.jsx?$/,
-      exclude: /@babel(?:\/|\\{1,2})runtime|core-js/,
-      use: [
-        {
-          loader: 'babel-loader',
-          options: babelOptions,
-        },
-      ],
-    });
-  }
 
   return config;
 };

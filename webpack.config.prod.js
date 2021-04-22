@@ -11,21 +11,20 @@ const createWebpackConfig = require('./webpack.common');
 const FILE_NAME = 'explorer';
 
 module.exports = (env) => {
-  const useLegacyBrowsers = env.TARGET_LEGACY_BROWSERS === 'true';
 
-  const config = merge(createWebpackConfig(useLegacyBrowsers), {
+  const config = merge(createWebpackConfig(), {
     context: __dirname,
     mode: 'production',
     devtool: 'source-map',
 
     entry: {
-      main: `./src/index${useLegacyBrowsers ? '.polyfills': ''}.ts`,
+      main: './src/index.ts',
     },
     target: 'web',
 
     output: {
       path: path.resolve(__dirname, 'dist'),
-      filename: `${FILE_NAME}.${useLegacyBrowsers ? 'legacy': 'modern'}.min.js`,
+      filename: `${FILE_NAME}.min.js`,
       libraryTarget: 'umd',
     },
 
@@ -54,7 +53,7 @@ module.exports = (env) => {
     ]
   });
 
-  if (env.ANALYZE_BUNDLE) {
+  if (env && env.ANALYZE_BUNDLE) {
     config.plugins.push(
       new BundleAnalyzerPlugin()
     );

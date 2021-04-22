@@ -1,9 +1,6 @@
 {
 	"compilerOptions": {
-		"target": "es2019",
-		"declaration": true,
-    "outDir": "./lib",
-    "declarationDir": "./typings",
+		"target": "es2015",
 		"moduleResolution": "node",
 		"downlevelIteration": true,
     "noUnusedParameters": false,
@@ -14,6 +11,9 @@
 		"importHelpers": true,
 		"allowSyntheticDefaultImports": true,
 		"esModuleInterop": true,
+		// "declaration": true,
+    "outDir": "./lib",
+    // "declarationDir": "./dist",
     "module": "esnext",
     "jsx": "react",
 		"typeRoots": [ "./types", "./node_modules/@types"]
