@@ -3,7 +3,7 @@ version: 2.1
 executors:
   cypress:
     docker:
-      - image: cypress/base:10
+      - image: cypress/base:12
   nodejs:
     docker:
       - image: circleci/node:latest
