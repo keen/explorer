@@ -113,7 +113,7 @@ jobs:
       - run:
           name: Run tests
           command: |
-            sleep 10
+            sleep 15
             yarn e2e
       - store_artifacts:
           path: cypress/screenshots
@@ -126,7 +126,7 @@ workflows:
           filters:
             branches:
               only:
-                - chore/cypress-e2e-tests
+                - develop
             tags:
               ignore: /.*/
   create_version:
