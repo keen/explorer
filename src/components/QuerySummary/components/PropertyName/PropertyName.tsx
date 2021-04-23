@@ -3,7 +3,7 @@ import { Icon } from '@keen.io/icons';
 import { colors } from '@keen.io/colors';
 import { BodyText } from '@keen.io/typography';
 
-import { Container, IconContainer } from './PropertyName.styles';
+import { Container, IconContainer, Item } from './PropertyName.styles';
 
 type Props = {
   name: string;
@@ -13,9 +13,9 @@ const PropertyName: FC<Props> = ({ name }) => {
   const nameArr = name.split('.');
 
   return (
-    <>
+    <Container>
       {nameArr.map((item, idx) => (
-        <Container key={idx}>
+        <Item key={idx}>
           <BodyText variant="body2">{item}</BodyText>
           {idx < nameArr.length - 1 && (
             <IconContainer>
@@ -27,9 +27,9 @@ const PropertyName: FC<Props> = ({ name }) => {
               />
             </IconContainer>
           )}
-        </Container>
+        </Item>
       ))}
-    </>
+    </Container>
   );
 };
 
