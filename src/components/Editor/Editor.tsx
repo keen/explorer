@@ -18,7 +18,7 @@ import {
   ActionButton,
   SectionContainer,
   CustomizationContainer,
-  QueryContainer,
+  Container,
 } from './Editor.styles';
 
 import { Creator, SectionTabs, Visualization } from './components';
@@ -105,7 +105,7 @@ const Editor: FC<Props> = ({
   );
 
   return (
-    <div id="editor">
+    <Container id="editor">
       <EditorNavigation onSaveQuery={onSaveQuery} />
       <section>
         {isQueryLimitReached && (
@@ -189,12 +189,12 @@ const Editor: FC<Props> = ({
         </SectionContainer>
       )}
       {editorSection === EditorSection.QUERY && (
-        <QueryContainer>
+        <SectionContainer>
           <Creator
             onUpdateQuery={updateQuery}
             onUpdateChartSettings={updateChartSettings}
           />
-        </QueryContainer>
+        </SectionContainer>
       )}
       <EditorActions>
         <RunQuery isLoading={isQueryLoading} onClick={() => onRunQuery()}>
@@ -222,7 +222,7 @@ const Editor: FC<Props> = ({
           </Button>
         </ActionButton>
       </EditorActions>
-    </div>
+    </Container>
   );
 };
 
