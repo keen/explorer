@@ -19,8 +19,6 @@ export const Value = styled.td`
 `;
 
 export const Row = styled.tr`
-  vertical-align: top;
-
   &:last-child {
     ${Label}, ${Value} {
       padding-bottom: 0;
