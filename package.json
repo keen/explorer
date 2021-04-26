@@ -22,7 +22,7 @@
     "version": "npm run build && git add .",
     "lint": "eslint --quiet --ext .ts --ext .tsx src/",
     "circular": "madge --circular ./src/**/*",
-    "prettier": "prettier --write 'src/**/*.{js,ts,tsx,json}'",
+    "prettier": "prettier --write '{src,cypress}/**/*.{js,ts,tsx,json}'",
     "release": "standard-version",
     "commit": "npx git-cz"
   },

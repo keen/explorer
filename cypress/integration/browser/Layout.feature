@@ -17,3 +17,8 @@ Feature: Browser Layout
   @smoke-test
   Scenario: Filters button is visible
     Then Filter queries button is presented on a screen
+
+  @smoke-test
+  Scenario: List of saved queries are visible
+    Then Saved queries are presented on a screen
+    And Details are presented in columns

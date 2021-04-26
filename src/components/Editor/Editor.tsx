@@ -105,7 +105,7 @@ const Editor: FC<Props> = ({
   );
 
   return (
-    <Container id="editor">
+    <Container id="editor" data-testid="editor">
       <EditorNavigation onSaveQuery={onSaveQuery} />
       <section>
         {isQueryLimitReached && (
