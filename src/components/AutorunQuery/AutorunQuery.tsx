@@ -34,7 +34,7 @@ const AutorunQuery: FC<Props> = ({
   const [showTooltip, setTooltipVisibility] = useState(false);
 
   return (
-    <Container>
+    <Container data-testid="autorun-query">
       <HintContainer
         data-testid="hint-container"
         onMouseEnter={() => setTooltipVisibility(true)}

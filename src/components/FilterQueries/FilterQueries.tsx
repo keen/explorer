@@ -94,7 +94,7 @@ const FilterQueries: FC<Props> = ({
   const filtersCount = tagsFilters.length + (showOnlyCachedQueries ? 1 : 0);
 
   return (
-    <Container ref={containerRef}>
+    <Container ref={containerRef} data-testid="filter-queries">
       <Button
         variant="blank"
         isActive={isOpen}

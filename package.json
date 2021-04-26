@@ -10,6 +10,8 @@
   ],
   "scripts": {
     "start": "concurrently --kill-others \"NODE_ENV=development webpack-dev-server\"",
+    "e2e": "cypress run",
+    "e2e:open": "cypress open",
     "test": "jest",
     "test:ci": "jest -w 1",
     "test:watch": "NODE_ENV=test jest --watch",
@@ -20,9 +22,13 @@
     "version": "npm run build && git add .",
     "lint": "eslint --quiet --ext .ts --ext .tsx src/",
     "circular": "madge --circular ./src/**/*",
-    "prettier": "prettier --write 'src/**/*.{js,ts,tsx,json}'",
+    "prettier": "prettier --write '{src,cypress}/**/*.{js,ts,tsx,json}'",
     "release": "standard-version",
     "commit": "npx git-cz"
+  },
+  "cypress-cucumber-preprocessor": {
+    "stepDefinitions": "cypress/integration",
+    "nonGlobalStepDefinitions": false
   },
   "husky": {
     "hooks": {
@@ -96,12 +102,14 @@
     "@babel/preset-typescript": "^7.10.4",
     "@commitlint/cli": "^9.1.1",
     "@commitlint/config-conventional": "^9.1.1",
+    "@cypress/webpack-preprocessor": "^5.7.0",
     "@keen.io/charts": "^2.2.14",
     "@reduxjs/toolkit": "^1.4.0",
     "@testing-library/jest-dom": "^5.8.0",
     "@testing-library/react": "^10.0.4",
     "@testing-library/react-hooks": "^3.4.1",
     "@types/camelcase-keys": "^5.1.1",
+    "@types/cypress-cucumber-preprocessor": "^4.0.0",
     "@types/dom-to-image": "^2.6.1",
     "@types/file-saver": "^2.0.1",
     "@types/jest": "^26.0.14",
@@ -122,6 +130,8 @@
     "copy-webpack-plugin": "^6.2.1",
     "cross-env": "^7.0.2",
     "css-loader": "^2.1.0",
+    "cypress": "^7.1.0",
+    "cypress-cucumber-preprocessor": "^4.0.3",
     "cz-conventional-changelog": "^3.0.2",
     "eslint": "^7.0.0",
     "eslint-config-airbnb": "^16.1.0",

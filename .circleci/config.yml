@@ -1,6 +1,9 @@
 version: 2.1
 
 executors:
+  cypress:
+    docker:
+      - image: cypress/base:12
   nodejs:
     docker:
       - image: circleci/node:latest
@@ -86,9 +89,46 @@ jobs:
           root: dist
           paths:
             - "*"
+  run_e2e_tests:
+    executor: cypress
+    working_directory: ~/tmp
+    steps:
+      - checkout
+      - restore_cache:
+          key: npm-deps-{{ arch }}-{{ .Branch }}-{{ checksum "yarn.lock" }}
+      - run:
+          name: Install dependencies
+          command: yarn install
+      - save_cache:
+          key: npm-deps-{{ arch }}-{{ .Branch }}-{{ checksum "yarn.lock" }}
+          paths:
+            - ./node_modules
+      - run:
+          name: Create project config
+          command: echo $KEEN_PROJECT_CONFIG > config.js
+      - run:
+          name: Start application
+          command: yarn start
+          background: true
+      - run:
+          name: Run tests
+          command: |
+            sleep 15
+            yarn e2e
+      - store_artifacts:
+          path: cypress/screenshots
 
 workflows:
   version: 2
+  e2e:
+    jobs:
+      - run_e2e_tests:
+          filters:
+            branches:
+              only:
+                - develop
+            tags:
+              ignore: /.*/
   create_version:
     jobs:
       - create_version:
