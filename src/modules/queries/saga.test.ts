@@ -11,7 +11,7 @@ import {
   checkOrganizationLimits as checkOrganizationLimitsFlow,
   extractToEmail as extractToEmailFlow,
   cloneSavedQuery as cloneSavedQueryFlow,
-} from './saga';
+} from './queriesSaga';
 import {
   saveQuery,
   saveQuerySuccess,

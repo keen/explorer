@@ -27,6 +27,9 @@ export type ReducerState = {
   isSavedQueriesLoaded: boolean;
   isSavingQuery: boolean;
   savedQueries: SavedQueryListItem[];
+  extractionConfirmation: {
+    isVisible: boolean;
+  };
   cachedQueries: {
     limit: null | number;
     limitReached: boolean;

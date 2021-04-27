@@ -18,6 +18,8 @@ import {
   SET_QUERY_LIMIT_REACHED,
   RESET_SAVE_QUERY_ERROR,
   SET_QUERY_SAVE_STATE,
+  SET_QUERY_PERFORMING,
+  SET_EXTRACTION_CONFIRMATION,
 } from './constants';
 
 export const initialState: ReducerState = {
@@ -27,6 +29,9 @@ export const initialState: ReducerState = {
   isSavingQuery: false,
   isSavedQueriesLoaded: false,
   savedQueries: [],
+  extractionConfirmation: {
+    isVisible: false,
+  },
   cachedQueries: {
     limit: null,
     limitReached: false,
@@ -43,6 +48,19 @@ export const queriesReducer = (
   action: QueriesActions
 ) => {
   switch (action.type) {
+    case SET_EXTRACTION_CONFIRMATION:
+      return {
+        ...state,
+        extractionConfirmation: {
+          ...state.extractionConfirmation,
+          isVisible: action.payload.isVisible,
+        },
+      };
+    case SET_QUERY_PERFORMING:
+      return {
+        ...state,
+        isQueryPerforming: action.payload.isPerforming,
+      };
     case SET_QUERY_SETTINGS:
       return {
         ...state,

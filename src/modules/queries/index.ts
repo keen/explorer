@@ -4,6 +4,7 @@ import {
   setQuerySettings,
   resetQueryResults,
   runQuery,
+  runExtraction,
   deleteQuery,
   setQuerySaveState,
   extractToEmail,
@@ -15,6 +16,8 @@ import {
   getSavedQueries as fetchSavedQueries,
   getSavedQueriesSuccess,
   saveQuerySuccess,
+  continueExtraction,
+  cancelExtraction,
 } from './actions';
 import {
   getQueryExecutionError,
@@ -28,18 +31,21 @@ import {
   getQueryPerformState,
   getQueryLimitReached,
   getQuerySettings,
+  getExtractionConfirmation,
 } from './selectors';
 import { getDefaultVisualization } from './utils';
 
 import { SAVE_QUERY_SUCCESS, GET_SAVED_QUERIES_SUCCESS } from './constants';
 
-import { queriesSaga } from './saga';
+import { queriesSaga } from './queriesSaga';
 import { SavedQueryListItem } from './types';
 
 export {
   ReducerState,
   fetchSavedQueries,
   saveQuery,
+  continueExtraction,
+  cancelExtraction,
   extractToEmail,
   runEmailExtraction,
   getQueryExecutionError,
@@ -54,10 +60,12 @@ export {
   getCacheQueriesLimitExceed,
   getQueryLimitReached,
   getQuerySettings,
+  getExtractionConfirmation,
   setQuerySettings,
   setQuerySaveState,
   queriesReducer,
   runQuery,
+  runExtraction,
   deleteQuery,
   resetQueryResults,
   resetSavedQueryError,

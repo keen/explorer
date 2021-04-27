@@ -20,11 +20,13 @@ import {
   setQuerySaveState,
   resetQueryResults,
   setQuerySettings,
+  runExtraction,
   runQuery as runQueryAction,
   saveQuery as saveQueryAction,
   deleteQuery as deleteQueryAction,
 } from './actions';
 
+import { performExtraction } from './saga';
 import { getQuerySettings, getSavedQueries } from './selectors';
 
 import {
@@ -132,6 +134,7 @@ export function* runQuery(action: ReturnType<typeof runQueryAction>) {
     const {
       payload: { body },
     } = action;
+
     const client = yield getContext(KEEN_CLIENT_CONTEXT);
     const responseBody = yield client.query(body);
 
@@ -374,6 +377,7 @@ export function* cloneSavedQuery() {
 }
 
 export function* queriesSaga() {
+  yield takeLatest(runExtraction.type, performExtraction);
   yield takeLatest(EXTRACT_TO_EMAIL, extractToEmail);
   yield takeLatest(RUN_QUERY, runQuery);
   yield takeLatest(DELETE_QUERY, deleteQuery);

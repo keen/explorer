@@ -1,4 +1,6 @@
 import { createAction } from '@reduxjs/toolkit';
+import { Query } from '@keen.io/query';
+
 import { SavedQueryListItem } from './types';
 import { APIError } from '../../types';
 
@@ -21,12 +23,14 @@ import {
   SET_CACHE_QUERY_LIMIT,
   SET_CACHE_QUERY_LIMIT_ERROR,
   SET_QUERY_LIMIT_REACHED,
+  SET_QUERY_PERFORMING,
   RESET_QUERY_RESULTS,
   RESET_SAVE_QUERY_ERROR,
   GET_ORGANIZATION_USAGE_LIMITS,
   EXTRACT_TO_EMAIL,
   RUN_EMAIL_EXTRACTION,
   CLONE_SAVED_QUERY,
+  SET_EXTRACTION_CONFIRMATION,
 } from './constants';
 
 export const extractToEmail = createAction(EXTRACT_TO_EMAIL);
@@ -174,6 +178,35 @@ export const getSavedQueriesError = createAction(
   })
 );
 
+export const runExtraction = createAction(
+  'queries/runExtraction',
+  (query: Query) => ({
+    payload: {
+      query,
+    },
+  })
+);
+
+export const setExtractionConfirmation = createAction(
+  SET_EXTRACTION_CONFIRMATION,
+  (isVisible: boolean) => ({
+    payload: {
+      isVisible,
+    },
+  })
+);
+export const cancelExtraction = createAction('queries/cancelExtraction');
+export const continueExtraction = createAction('queries/continueExtraction');
+
+export const setQueryPerforming = createAction(
+  SET_QUERY_PERFORMING,
+  (isPerforming: boolean) => ({
+    payload: {
+      isPerforming,
+    },
+  })
+);
+
 export const runQuery = createAction(
   RUN_QUERY,
   (body: Record<string, any>) => ({
@@ -213,6 +246,9 @@ export const setQueryLimitReached = createAction(
 export const cloneSavedQuery = createAction(CLONE_SAVED_QUERY);
 
 export type QueriesActions =
+  | ReturnType<typeof cancelExtraction>
+  | ReturnType<typeof setExtractionConfirmation>
+  | ReturnType<typeof setQueryPerforming>
   | ReturnType<typeof setQuerySettings>
   | ReturnType<typeof resetQueryResults>
   | ReturnType<typeof setCacheQueryLimit>

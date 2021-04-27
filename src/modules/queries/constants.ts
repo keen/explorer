@@ -6,6 +6,7 @@ export const EXTRACT_TO_EMAIL = '@queries/EXTRACT_TO_EMAIL';
 export const RUN_EMAIL_EXTRACTION = '@queries/RUN_EMAIL_EXTRACTION';
 export const SAVE_QUERY = '@queries/SAVE_QUERY';
 export const SET_QUERY_SAVE_STATE = '@queries/SET_QUERY_SAVE_STATE';
+export const SET_QUERY_PERFORMING = '@queries/SET_QUERY_PERFORMING';
 export const SAVE_QUERY_SUCCESS = '@queries/SAVE_QUERY_SUCCESS';
 export const SAVE_QUERY_ERROR = '@queries/SAVE_QUERY_ERROR';
 export const RESET_SAVE_QUERY_ERROR = '@queries/RESET_SAVE_QUERY_ERROR';
@@ -25,6 +26,9 @@ export const SET_QUERY_LIMIT_REACHED = '@queries/SET_QUERY_LIMIT_REACHED';
 export const GET_ORGANIZATION_USAGE_LIMITS =
   '@queries/GET_ORGANIZATION_USAGE_LIMITS';
 export const CLONE_SAVED_QUERY = '@queries/CLONE_SAVED_QUERY';
+export const SET_EXTRACTION_CONFIRMATION =
+  '@queries/SET_EXTRACTION_CONFIRMATION';
+export const CANCEL_EXTRACTION = '@queries/CANCEL_EXTRACTION';
 
 export const ERRORS = {
   OVER_LIMIT_ERROR: 'OverCachedQueryLimitError',
