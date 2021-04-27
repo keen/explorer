@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { transparentize } from 'polished';
 import { colors } from '@keen.io/colors';
 
 export const Container = styled.div`
@@ -20,16 +19,10 @@ export const TagsContainer = styled.div`
 export const ClearFilters = styled.div`
   padding: 10px 14px;
   border-top: solid 1px ${colors.gray[300]};
-  color: ${colors.blue[200]};
-  font-size: 14px;
-  font-family: 'Lato Bold', sans-serif;
   cursor: pointer;
 `;
 
 export const EmptySearch = styled.div`
   padding: 10px 14px;
-  color: ${transparentize(0.2, colors.black[100])};
-  font-size: 12px;
-  font-family: 'Lato Regular', sans-serif;
   text-align: center;
 `;

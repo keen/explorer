@@ -1,5 +1,7 @@
 import React, { FC } from 'react';
 import { Checkbox } from '@keen.io/ui-core';
+import { BodyText } from '@keen.io/typography';
+import { colors } from '@keen.io/colors';
 
 import { Container, Label } from './FilterItem.styles';
 
@@ -22,7 +24,11 @@ const FilterItem: FC<Props> = ({ label, id, onChange, isActive }) => (
       checked={isActive}
       onChange={() => onChange(!isActive)}
     />
-    <Label>{label}</Label>
+    <Label>
+      <BodyText variant="body2" color={colors.black[100]} enableTextEllipsis>
+        {label}
+      </BodyText>
+    </Label>
   </Container>
 );
 

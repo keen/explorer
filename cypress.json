@@ -1,0 +1,7 @@
+{
+  "testFiles": "**/*.{feature,features}",
+  "video": false,
+  "env": {
+    "host": "http://localhost:8080"
+  }
+}

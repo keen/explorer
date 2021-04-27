@@ -38,16 +38,12 @@ exports[`should render query summary 1`] = `
   padding: 0 0 10px 0;
 }
 
-.c2 {
-  vertical-align: top;
-}
-
 .c2:last-child .c3,
 .c2:last-child .c6 {
   padding-bottom: 0;
 }
 
-.c9 {
+.c10 {
   display: -webkit-inline-box;
   display: -webkit-inline-flex;
   display: -ms-inline-flexbox;
@@ -58,10 +54,17 @@ exports[`should render query summary 1`] = `
   align-items: center;
 }
 
-.c10 {
+.c11 {
   display: inline-block;
   margin-left: 3px;
   margin-right: 3px;
+}
+
+.c9 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
 }
 
 .c0 {
@@ -148,37 +151,41 @@ exports[`should render query summary 1`] = `
             <div
               class="c9"
             >
-              <p
-                class="c8"
-                color="#4F5B5F"
-              >
-                item
-              </p>
-              <span
+              <div
                 class="c10"
               >
-                <svg
-                  height="10"
-                  opacity="1"
-                  viewBox="0 0 30 30"
-                  width="10"
+                <p
+                  class="c8"
+                  color="#4F5B5F"
                 >
-                  <polygon
-                    fill="#77A3BB"
-                    points="9.45351896 0 24.453519 15 9.45351896 30 5.55 26.096481 16.6465765 15 5.55 3.90351896"
-                  />
-                </svg>
-              </span>
-            </div>
-            <div
-              class="c9"
-            >
-              <p
-                class="c8"
-                color="#4F5B5F"
+                  item
+                </p>
+                <span
+                  class="c11"
+                >
+                  <svg
+                    height="10"
+                    opacity="1"
+                    viewBox="0 0 30 30"
+                    width="10"
+                  >
+                    <polygon
+                      fill="#77A3BB"
+                      points="9.45351896 0 24.453519 15 9.45351896 30 5.55 26.096481 16.6465765 15 5.55 3.90351896"
+                    />
+                  </svg>
+                </span>
+              </div>
+              <div
+                class="c10"
               >
-                price
-              </p>
+                <p
+                  class="c8"
+                  color="#4F5B5F"
+                >
+                  price
+                </p>
+              </div>
             </div>
           </td>
         </tr>
@@ -262,10 +269,6 @@ exports[`should render query summary for funnels 1`] = `
 
 .c7 {
   padding: 0 0 10px 0;
-}
-
-.c2 {
-  vertical-align: top;
 }
 
 .c2:last-child .c3,

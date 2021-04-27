@@ -1,15 +1,13 @@
 import React, { FC, useState, useCallback, useRef } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
+import { transparentize } from 'polished';
 import { Tooltip } from '@keen.io/ui-core';
+import { BodyText } from '@keen.io/typography';
+import { colors } from '@keen.io/colors';
 
 import TooltipContent from '../TooltipContent';
-import {
-  Container,
-  Units,
-  Input,
-  TooltipMotion,
-} from './CacheRefreshRate.styles';
+import { Container, Input, TooltipMotion } from './CacheRefreshRate.styles';
 
 import { TOOLTIP_MOTION } from '../../constants';
 import { HIDE_HINT_TIME } from './constants';
@@ -71,7 +69,13 @@ const CacheRefreshRate: FC<Props> = ({
         onBlur={blurEventHandler}
         onChange={(e) => onChange(parseInt(e.currentTarget.value))}
       />
-      <Units>{t('cache_refresh_rate.cache_units')}</Units>
+      <BodyText
+        variant="body2"
+        fontWeight={400}
+        color={transparentize(0.5, colors.blue[500])}
+      >
+        {t('cache_refresh_rate.cache_units')}
+      </BodyText>
       <AnimatePresence>
         {showHint && (
           <TooltipMotion {...TOOLTIP_MOTION} data-testid="refresh-rate-hint">
