@@ -16,7 +16,11 @@ import {
 } from './BrowserQueryMenu.styles';
 
 import ActionsMenu from '../ActionsMenu';
-import { showQuerySettingsModal, SettingsModalSource } from '../../modules/app';
+import {
+  showQuerySettingsModal,
+  SettingsModalSource,
+  shareQueryUrl,
+} from '../../modules/app';
 
 import { TOOLTIP_MOTION } from '../../constants';
 
@@ -41,6 +45,8 @@ const BrowserQueryMenu: FC<Props> = ({ onEditQuery, onRemoveQuery }) => {
   const [actionsMenu, setActionsMenuVisibility] = useState(false);
   const [actionsTooltip, showActionsTooltip] = useState(false);
   const [settingsTooltip, showSettingsTooltip] = useState(false);
+  const [shareTooltip, showShareTooltip] = useState(false);
+
   const outsideActionsMenuClick = useCallback(
     (e) => {
       if (
@@ -90,6 +96,32 @@ const BrowserQueryMenu: FC<Props> = ({ onEditQuery, onRemoveQuery }) => {
                 <Tooltip hasArrow={false} mode="light">
                   <TooltipContent color={colors.black[500]}>
                     {t('browser_query_menu.settings_tooltip')}
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipMotion>
+            )}
+          </AnimatePresence>
+        </ActionsContainer>
+        <ActionsContainer
+          data-testid="share-query"
+          marginLeft={10}
+          onMouseEnter={() => showShareTooltip(true)}
+          onMouseLeave={() => showShareTooltip(false)}
+        >
+          <CircleButton
+            variant="secondary"
+            icon={<Icon type="share" />}
+            onClick={() => {
+              showShareTooltip(false);
+              dispatch(shareQueryUrl());
+            }}
+          />
+          <AnimatePresence>
+            {shareTooltip && (
+              <TooltipMotion {...TOOLTIP_MOTION}>
+                <Tooltip hasArrow={false} mode="light">
+                  <TooltipContent color={colors.black[500]}>
+                    {t('browser_query_menu.share_tooltip')}
                   </TooltipContent>
                 </Tooltip>
               </TooltipMotion>

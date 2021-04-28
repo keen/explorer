@@ -37,6 +37,7 @@ import {
   switchToQueriesList,
   getQuerySettingsModalVisibility,
   SettingsModalSource,
+  shareQueryUrl,
 } from '../../modules/app';
 import { colors } from '@keen.io/colors';
 
@@ -66,6 +67,8 @@ const EditorNavigation: FC<Props> = ({ onSaveQuery }) => {
   const [actionsMenu, setActionsMenuVisibility] = useState(false);
   const [actionsTooltip, showActionsTooltip] = useState(false);
   const [settingsTooltip, showSettingsTooltip] = useState(false);
+  const [shareTooltip, showShareTooltip] = useState(false);
+
   const {
     exists,
     displayName,
@@ -163,6 +166,36 @@ const EditorNavigation: FC<Props> = ({ onSaveQuery }) => {
                 <Tooltip hasArrow={false} mode="light">
                   <TooltipContent color={colors.black[500]}>
                     {t('editor.settings_tooltip')}
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipMotion>
+            )}
+          </AnimatePresence>
+        </MenuItem>
+        <MenuItem
+          position="relative"
+          data-testid="share-query"
+          onMouseEnter={() => showShareTooltip(true)}
+          onMouseLeave={() => showShareTooltip(false)}
+        >
+          <CircleButton
+            variant="secondary"
+            icon={
+              <span>
+                <Icon type="share" />
+              </span>
+            }
+            onClick={() => {
+              showShareTooltip(false);
+              dispatch(shareQueryUrl());
+            }}
+          />
+          <AnimatePresence>
+            {shareTooltip && (
+              <TooltipMotion {...TOOLTIP_MOTION}>
+                <Tooltip hasArrow={false} mode="light">
+                  <TooltipContent color={colors.black[500]}>
+                    {t('actions_menu.share_query')}
                   </TooltipContent>
                 </Tooltip>
               </TooltipMotion>
