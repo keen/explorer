@@ -27,7 +27,7 @@ import {
 
 import { validateEmail } from './utils';
 
-import { getQuerySettings, runEmailExtraction } from '../../modules/queries';
+import { getQuerySettings, queriesActions } from '../../modules/queries';
 import {
   CONTENT_ENCODING,
   DEFAULT_LIMIT,
@@ -167,7 +167,12 @@ const ExtractToEmail: FC<Props> = ({ onClose }) => {
 
               if (isValidEmail) {
                 dispatch(
-                  runEmailExtraction(email, limit, contentType, contentEncoding)
+                  queriesActions.runEmailExtraction(
+                    email,
+                    limit,
+                    contentType,
+                    contentEncoding
+                  )
                 );
               }
             }}

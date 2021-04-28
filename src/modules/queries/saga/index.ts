@@ -1,3 +1,6 @@
 import { performExtraction } from './performExtraction';
+import { performExtractionToEmail } from './performExtractionToEmail';
+import { saveQuery } from './saveQuery';
+import { runQuery } from './runQuery';
 
-export { performExtraction };
+export { runQuery, saveQuery, performExtraction, performExtractionToEmail };

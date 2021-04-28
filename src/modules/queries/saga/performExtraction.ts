@@ -4,14 +4,13 @@ import {
   cancelExtraction,
   continueExtraction,
   runExtraction,
-  runQuery,
-  setQueryPerforming,
-  setExtractionConfirmation,
 } from '../actions';
 import {
   getEventStreamProperties,
   fetchEventStreamProperties,
 } from '../../schemas';
+
+import { queriesSlice } from '../reducer';
 
 import { NOTIFICATION_MANAGER_CONTEXT } from '../../../constants';
 
@@ -35,7 +34,9 @@ export function* performExtraction({
       );
 
       if (propertiesCount === undefined) {
-        yield put(setQueryPerforming(true));
+        yield put(
+          queriesSlice.actions.setQueryPerforming({ isPerforming: true })
+        );
 
         const schemaProperties = yield call(
           fetchEventStreamProperties,
@@ -47,24 +48,32 @@ export function* performExtraction({
       const isPropertiesLimitReached = true;
 
       if (isPropertiesLimitReached) {
-        yield put(setExtractionConfirmation(true));
+        yield put(
+          queriesSlice.actions.setExtractionConfirmation({ isVisible: true })
+        );
         const action = yield take([
           cancelExtraction.type,
           continueExtraction.type,
         ]);
 
-        yield put(setExtractionConfirmation(false));
+        yield put(
+          queriesSlice.actions.setExtractionConfirmation({ isVisible: false })
+        );
 
         if (action.type === cancelExtraction.type) {
-          yield put(setQueryPerforming(false));
+          yield put(
+            queriesSlice.actions.setQueryPerforming({ isPerforming: false })
+          );
         } else {
-          yield put(runQuery(query));
+          yield put(queriesSlice.actions.runQuery({ query }));
         }
       } else {
-        yield put(runQuery(query));
+        yield put(queriesSlice.actions.runQuery({ query }));
       }
     } catch (err) {
-      yield put(setQueryPerforming(false));
+      yield put(
+        queriesSlice.actions.setQueryPerforming({ isPerforming: false })
+      );
     }
   } else {
     const notificationManager = yield getContext(NOTIFICATION_MANAGER_CONTEXT);

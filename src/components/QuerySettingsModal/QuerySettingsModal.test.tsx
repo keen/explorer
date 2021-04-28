@@ -94,7 +94,7 @@ test('close modal and reset query settings', () => {
       },
       Object {
         "payload": undefined,
-        "type": "@queries/RESET_SAVE_QUERY_ERROR",
+        "type": "queries/resetSavedQueryError",
       },
       Object {
         "payload": undefined,
@@ -129,7 +129,7 @@ test('allows user to close modal', () => {
       },
       Object {
         "payload": undefined,
-        "type": "@queries/RESET_SAVE_QUERY_ERROR",
+        "type": "queries/resetSavedQueryError",
       },
     ]
   `);

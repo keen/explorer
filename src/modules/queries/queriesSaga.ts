@@ -5,36 +5,28 @@ import HttpStatus from 'http-status-codes';
 import { v4 as uuid } from 'uuid';
 
 import {
-  runQueryError,
-  runQuerySuccess,
-  saveQuerySuccess,
-  saveQueryError,
-  getSavedQueriesSuccess,
+  extractToEmail,
   getSavedQueriesError,
-  deleteQuerySuccess,
   deleteQueryError,
-  setCacheQueryLimit,
-  setCacheQueryLimitExceed,
-  setQueryCacheLimitError,
-  setQueryLimitReached,
-  setQuerySaveState,
-  resetQueryResults,
-  setQuerySettings,
   runExtraction,
-  runQuery as runQueryAction,
-  saveQuery as saveQueryAction,
-  deleteQuery as deleteQueryAction,
+  fetchSavedQueries,
+  getOrganizationUsageLimits,
+  cloneSavedQuery,
+  deleteQuery,
 } from './actions';
 
-import { performExtraction } from './saga';
+import {
+  runQuery,
+  saveQuery,
+  performExtraction,
+  performExtractionToEmail,
+} from './saga';
+
+import { queriesSlice } from './reducer';
 import { getQuerySettings, getSavedQueries } from './selectors';
 
 import {
   showConfirmation,
-  hideQuerySettingsModal,
-  showEmailExtractionModal,
-  hideEmailExtractionModal,
-  getQuerySettingsModalVisibility,
   getViewMode,
   setViewMode,
   selectFirstSavedQuery,
@@ -42,7 +34,6 @@ import {
   updateQueryCreator,
   HIDE_CONFIRMATION,
   ACCEPT_CONFIRMATION,
-  HIDE_EMAIL_EXTRACTION_MODAL,
   QUERY_EDITOR_MOUNTED,
 } from '../../modules/app';
 
@@ -58,172 +49,12 @@ import {
 } from '../../constants';
 
 import {
-  RUN_QUERY,
-  DELETE_QUERY,
-  DELETE_QUERY_SUCCESS,
-  SAVE_QUERY,
-  GET_SAVED_QUERIES,
-  SAVE_QUERY_SUCCESS,
-  EXTRACT_TO_EMAIL,
-  GET_ORGANIZATION_USAGE_LIMITS,
-  RUN_EMAIL_EXTRACTION,
   ERRORS,
-  CLONE_SAVED_QUERY,
   CLONED_QUERY_DISPLAY_NAME,
   CLONED_QUERY_NAME,
 } from './constants';
 
-import { isElementInViewport } from './utils';
-
-function* scrollToElement(element: HTMLElement) {
-  if (element && !isElementInViewport(element)) {
-    yield element.scrollIntoView({ block: 'start', behavior: 'smooth' });
-  }
-}
-
-export function* extractToEmail() {
-  yield put(showEmailExtractionModal());
-  const action = yield take([
-    HIDE_EMAIL_EXTRACTION_MODAL,
-    RUN_EMAIL_EXTRACTION,
-  ]);
-
-  if (action.type === RUN_EMAIL_EXTRACTION) {
-    const client = yield getContext(KEEN_CLIENT_CONTEXT);
-    const notificationManager = yield getContext(NOTIFICATION_MANAGER_CONTEXT);
-    const query = yield select(getQuerySettings);
-    try {
-      yield put(hideEmailExtractionModal());
-      const { latest, email, contentEncoding, contentType } = action.payload;
-      const body = {
-        ...query,
-        email,
-        latest,
-        content_type: contentType,
-        content_encoding: contentEncoding,
-      };
-      yield client.query(body);
-      yield notificationManager.showNotification({
-        type: 'info',
-        message: 'notifications.prepare_email_extraction',
-        autoDismiss: true,
-      });
-    } catch (error) {
-      const { status } = error;
-      if (status === HttpStatus.INTERNAL_SERVER_ERROR) {
-        yield notificationManager.showNotification({
-          type: 'error',
-          message: 'notifications.email_extraction_error',
-          showDismissButton: true,
-          autoDismiss: false,
-        });
-      } else {
-        yield notificationManager.showNotification({
-          type: 'error',
-          message: error.body,
-          translateMessage: false,
-          autoDismiss: true,
-        });
-      }
-    }
-  }
-}
-
-export function* runQuery(action: ReturnType<typeof runQueryAction>) {
-  try {
-    const {
-      payload: { body },
-    } = action;
-
-    const client = yield getContext(KEEN_CLIENT_CONTEXT);
-    const responseBody = yield client.query(body);
-
-    yield put(runQuerySuccess(responseBody));
-  } catch (error) {
-    const { body, error_code } = error;
-    yield put(runQueryError(error));
-
-    if (error_code === ERRORS.TOO_MANY_QUERIES) {
-      yield put(setQueryLimitReached(true));
-    } else {
-      const notificationManager = yield getContext(
-        NOTIFICATION_MANAGER_CONTEXT
-      );
-      yield notificationManager.showNotification({
-        type: 'error',
-        translateMessage: false,
-        message: body,
-      });
-    }
-  } finally {
-    const element = document.getElementById('editor');
-    if (element) {
-      yield scrollToElement(element);
-    }
-  }
-}
-
-export function* saveQuery({ payload }: ReturnType<typeof saveQueryAction>) {
-  try {
-    const { name, body } = payload;
-    const notificationManager = yield getContext(NOTIFICATION_MANAGER_CONTEXT);
-    const client = yield getContext(KEEN_CLIENT_CONTEXT);
-    const settingsModalVisible = yield select(getQuerySettingsModalVisibility);
-
-    const responseBody = yield client.put({
-      url: client.url('queries', 'saved', name),
-      apiKey: client.config.masterKey,
-      params: body,
-    });
-
-    if (settingsModalVisible) {
-      yield put(hideQuerySettingsModal());
-    }
-
-    yield put(saveQuerySuccess(name, responseBody));
-    yield notificationManager.showNotification({
-      type: 'success',
-      message: 'notifications.save_query_success',
-    });
-  } catch (error) {
-    const { status, error_code: errorCode } = error;
-    const notificationManager = yield getContext(NOTIFICATION_MANAGER_CONTEXT);
-
-    if (status === HttpStatus.INTERNAL_SERVER_ERROR) {
-      yield put(hideQuerySettingsModal());
-      yield notificationManager.showNotification({
-        type: 'error',
-        message: 'notifications.save_query_error',
-        showDismissButton: true,
-        autoDismiss: false,
-      });
-    } else {
-      const settingsModalVisible = yield select(
-        getQuerySettingsModalVisibility
-      );
-      if (settingsModalVisible) {
-        yield put(saveQueryError(error));
-      } else {
-        yield put(setQuerySaveState(false));
-        yield notificationManager.showNotification({
-          type: 'error',
-          message: error.body,
-          translateMessage: false,
-          autoDismiss: true,
-        });
-      }
-    }
-
-    if (
-      errorCode === ERRORS.OVER_LIMIT_ERROR ||
-      errorCode === ERRORS.TOO_MANY_CACHED_QUERIES
-    ) {
-      yield put(setCacheQueryLimitExceed(true));
-    }
-  }
-}
-
-export function* deleteQuery(action: ReturnType<typeof deleteQueryAction>) {
+export function* deleteQuery22(action: ReturnType<typeof deleteQuery>) {
   const notificationManager = yield getContext(NOTIFICATION_MANAGER_CONTEXT);
 
   try {
@@ -243,8 +74,8 @@ export function* deleteQuery(action: ReturnType<typeof deleteQueryAction>) {
       const view = yield select(getViewMode);
       if (view === 'editor') yield put(setViewMode('browser'));
 
-      yield put(resetQueryResults());
-      yield put(deleteQuerySuccess(queryName));
+      yield put(queriesSlice.actions.resetQueryResults());
+      yield put(queriesSlice.actions.deleteQuerySuccess({ queryName }));
       yield put(selectFirstSavedQuery());
 
       yield notificationManager.showNotification({
@@ -256,7 +87,7 @@ export function* deleteQuery(action: ReturnType<typeof deleteQueryAction>) {
   } catch (error) {
     const { error_code, status } = error;
     if (error_code === ERRORS.RESOURCE_NOT_FOUND) {
-      yield put(resetQueryResults());
+      yield put(queriesSlice.actions.resetQueryResults());
       yield put(switchToQueriesList());
       yield put(selectFirstSavedQuery());
 
@@ -280,7 +111,7 @@ export function* deleteQuery(action: ReturnType<typeof deleteQueryAction>) {
   }
 }
 
-function* fetchSavedQueries() {
+function* fetchSavedQueriesList() {
   try {
     const client = yield getContext(KEEN_CLIENT_CONTEXT);
     const responseBody: SavedQueryAPIResponse[] = yield client
@@ -290,7 +121,9 @@ function* fetchSavedQueries() {
 
     const savedQueries = responseBody.map(serializeSavedQuery);
 
-    yield put(getSavedQueriesSuccess(savedQueries));
+    yield put(
+      queriesSlice.actions.getSavedQueriesSuccess({ queries: savedQueries })
+    );
   } catch (error) {
     yield put(getSavedQueriesError(error));
   }
@@ -312,15 +145,19 @@ export function* checkOrganizationLimits() {
       const limitReached = limited && current_usage >= limit;
       const cachedQueriesLimit = limit;
 
-      yield put(setCacheQueryLimitExceed(limitReached));
-      yield put(setCacheQueryLimit(cachedQueriesLimit));
+      yield put(
+        queriesSlice.actions.setCacheQueryLimitExceed({ limitReached })
+      );
+      yield put(
+        queriesSlice.actions.setCacheQueryLimit({ limit: cachedQueriesLimit })
+      );
     }
   } catch (error) {
-    yield put(setQueryCacheLimitError(error));
+    yield put(queriesSlice.actions.setQueryCacheLimitError({ error }));
   }
 }
 
-export function* cloneSavedQuery() {
+export function* cloneSavedQuery22() {
   const notificationManager = yield getContext(NOTIFICATION_MANAGER_CONTEXT);
   const querySettings = yield select(getQuerySettings);
   const savedQuery = yield select(getSavedQuery);
@@ -344,7 +181,9 @@ export function* cloneSavedQuery() {
     yield put(setViewMode('editor'));
     yield take(QUERY_EDITOR_MOUNTED);
     yield put(updateQueryCreator(querySettings));
-    yield put(setQuerySettings(querySettings));
+    yield put(
+      queriesSlice.actions.setQuerySettings({ settings: querySettings })
+    );
     yield put(updateSavedQuery(clonedSavedQuery));
   }
 
@@ -373,22 +212,30 @@ export function* cloneSavedQuery() {
     refreshRate,
   };
 
-  yield put(saveQueryAction(name, body));
+  yield put(queriesSlice.actions.saveQuery({ name, body }));
 }
 
 export function* queriesSaga() {
   yield takeLatest(runExtraction.type, performExtraction);
-  yield takeLatest(EXTRACT_TO_EMAIL, extractToEmail);
-  yield takeLatest(RUN_QUERY, runQuery);
-  yield takeLatest(DELETE_QUERY, deleteQuery);
-  yield takeLatest(SAVE_QUERY, saveQuery);
+  yield takeLatest(extractToEmail.type, performExtractionToEmail);
+  yield takeLatest(queriesSlice.actions.runQuery.type, runQuery);
+  yield takeLatest(deleteQuery.type, deleteQuery22);
+  yield takeLatest(queriesSlice.actions.saveQuery.type, saveQuery);
   yield takeLatest(
-    [GET_SAVED_QUERIES, SAVE_QUERY_SUCCESS, DELETE_QUERY_SUCCESS],
-    fetchSavedQueries
+    [
+      fetchSavedQueries.type,
+      queriesSlice.actions.saveQuerySuccess.type,
+      queriesSlice.actions.deleteQuerySuccess.type,
+    ],
+    fetchSavedQueriesList
   );
   yield takeLatest(
-    [GET_ORGANIZATION_USAGE_LIMITS, SAVE_QUERY_SUCCESS, DELETE_QUERY_SUCCESS],
+    [
+      getOrganizationUsageLimits.type,
+      queriesSlice.actions.saveQuerySuccess.type,
+      queriesSlice.actions.deleteQuerySuccess.type,
+    ],
     checkOrganizationLimits
   );
-  yield takeLatest(CLONE_SAVED_QUERY, cloneSavedQuery);
+  yield takeLatest(cloneSavedQuery.type, cloneSavedQuery22);
 }

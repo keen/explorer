@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { DropdownMenu, Tooltip } from '@keen.io/ui-core';
 import { colors } from '@keen.io/colors';
 
-import { getQueryResults, cloneSavedQuery } from '../../modules/queries';
+import { getQueryResults, queriesActions } from '../../modules/queries';
 import { AppContext } from '../../contexts';
 
 import TooltipContent from '../TooltipContent';
@@ -125,7 +125,7 @@ const ActionsMenu: FC<Props> = ({
         {!isNewQuery && (
           <DropdownMenu.Item
             onClick={() => {
-              dispatch(cloneSavedQuery());
+              dispatch(queriesActions.cloneSavedQuery());
               onHideMenu();
             }}
           >

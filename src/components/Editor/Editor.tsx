@@ -28,12 +28,10 @@ import { AppContext } from '../../contexts';
 
 import { editorSagaActions, EditorSection } from '../../modules/editor';
 import {
-  extractToEmail,
-  runExtraction,
+  queriesActions,
   getQueryResults,
   getQueryPerformState,
   getQueryLimitReached,
-  setQuerySettings,
 } from '../../modules/queries';
 import {
   getVisualization,
@@ -95,8 +93,8 @@ const Editor: FC<Props> = ({
     serializeInputSettings(widgetType, chartSettings, widgetSettings)
   );
 
-  const updateQuery = useCallback((query: Record<string, any>) => {
-    dispatch(setQuerySettings(query));
+  const updateQuery = useCallback((query: Query) => {
+    dispatch(queriesActions.setQuerySettings({ settings: query }));
   }, []);
 
   const updateChartSettings = useCallback(
@@ -206,7 +204,7 @@ const Editor: FC<Props> = ({
             <>
               <RunQuery
                 isLoading={isQueryLoading}
-                onClick={() => dispatch(runExtraction(query))}
+                onClick={() => dispatch(queriesActions.runExtraction(query))}
               >
                 {t('editor.preview_events_button')}
               </RunQuery>
@@ -214,7 +212,7 @@ const Editor: FC<Props> = ({
                 <Button
                   variant="success"
                   size="large"
-                  onClick={() => dispatch(extractToEmail())}
+                  onClick={() => dispatch(queriesActions.extractToEmail())}
                 >
                   {t('editor.extract_to_email_button')}
                 </Button>

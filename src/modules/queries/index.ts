@@ -1,21 +1,13 @@
 import { ReducerState } from './types';
-import { queriesReducer, initialState } from './reducer';
+import { queriesSlice, initialState } from './reducer';
 import {
-  setQuerySettings,
-  resetQueryResults,
-  runQuery,
   runExtraction,
   deleteQuery,
-  setQuerySaveState,
   extractToEmail,
   runEmailExtraction,
-  saveQuery,
-  resetSavedQueryError,
   getOrganizationUsageLimits,
   cloneSavedQuery,
-  getSavedQueries as fetchSavedQueries,
-  getSavedQueriesSuccess,
-  saveQuerySuccess,
+  fetchSavedQueries,
   continueExtraction,
   cancelExtraction,
 } from './actions';
@@ -35,19 +27,27 @@ import {
 } from './selectors';
 import { getDefaultVisualization } from './utils';
 
-import { SAVE_QUERY_SUCCESS, GET_SAVED_QUERIES_SUCCESS } from './constants';
-
 import { queriesSaga } from './queriesSaga';
 import { SavedQueryListItem } from './types';
 
-export {
-  ReducerState,
-  fetchSavedQueries,
-  saveQuery,
-  continueExtraction,
-  cancelExtraction,
+const queriesReducer = queriesSlice.reducer;
+
+const queriesActions = {
+  runExtraction,
+  deleteQuery,
   extractToEmail,
   runEmailExtraction,
+  getOrganizationUsageLimits,
+  cloneSavedQuery,
+  fetchSavedQueries,
+  continueExtraction,
+  cancelExtraction,
+  ...queriesSlice.actions,
+};
+
+export {
+  ReducerState,
+  queriesActions,
   getQueryExecutionError,
   getSaveQueryError,
   getQueryResults,
@@ -61,21 +61,9 @@ export {
   getQueryLimitReached,
   getQuerySettings,
   getExtractionConfirmation,
-  setQuerySettings,
-  setQuerySaveState,
   queriesReducer,
-  runQuery,
-  runExtraction,
-  deleteQuery,
-  resetQueryResults,
-  resetSavedQueryError,
   queriesSaga,
-  cloneSavedQuery,
   initialState,
-  SAVE_QUERY_SUCCESS,
-  GET_SAVED_QUERIES_SUCCESS,
   SavedQueryListItem,
-  getSavedQueriesSuccess,
-  saveQuerySuccess,
   getDefaultVisualization,
 };

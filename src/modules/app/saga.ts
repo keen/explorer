@@ -38,14 +38,11 @@ import {
   selectSavedQuery,
 } from '../savedQuery';
 import {
-  resetQueryResults,
   getQueryResults,
   getSavedQueries,
-  fetchSavedQueries,
   getOrganizationUsageLimits,
   getQuerySettings,
-  setQuerySettings,
-  GET_SAVED_QUERIES_SUCCESS,
+  queriesActions,
 } from '../queries';
 
 import { getViewMode, getVisualization } from './selectors';
@@ -116,7 +113,7 @@ export function* createNewQuery() {
   const pubsub = yield getContext(PUBSUB_CONTEXT);
   yield pubsub.publish(NEW_QUERY_EVENT);
 
-  yield put(resetQueryResults());
+  yield put(queriesActions.resetQueryResults());
   yield put(resetVisualization());
   yield put(resetSavedQuery());
 }
@@ -124,7 +121,7 @@ export function* createNewQuery() {
 export function* clearQuery() {
   const pubsub = yield getContext(PUBSUB_CONTEXT);
   yield pubsub.publish(NEW_QUERY_EVENT);
-  yield put(resetQueryResults());
+  yield put(queriesActions.resetQueryResults());
 }
 
 function* editQuery({ payload }: ReturnType<typeof editQueryAction>) {
@@ -162,13 +159,13 @@ export function* selectFirstSavedQuery() {
     const [firstQuery] = savedQueries;
     const { name, query } = firstQuery;
     yield put(selectSavedQuery(name));
-    yield put(setQuerySettings(query));
+    yield put(queriesActions.setQuerySettings({ settings: query }));
   }
 }
 
 export function* switchToQueriesList() {
   yield put(setViewMode('browser'));
-  yield put(resetQueryResults());
+  yield put(queriesActions.resetQueryResults());
 
   const { exists } = yield select(getSavedQuery);
   if (!exists) {
@@ -209,7 +206,7 @@ export function* loadStateFromUrl() {
 
     const view = yield select(getViewMode);
     if (view === 'browser') {
-      yield take(GET_SAVED_QUERIES_SUCCESS);
+      yield take(queriesActions.getSavedQueriesSuccess.type);
       yield selectFirstSavedQuery();
     } else {
       yield put(resetSavedQuery());
@@ -287,7 +284,7 @@ export function* rehydrateAutorunSettings() {
 
 export function* appStart({ payload }: ReturnType<typeof appStartAction>) {
   yield put(getOrganizationUsageLimits());
-  yield put(fetchSavedQueries());
+  yield put(queriesActions.fetchSavedQueries());
 
   const { initialView } = payload;
 
@@ -299,7 +296,7 @@ export function* appStart({ payload }: ReturnType<typeof appStartAction>) {
   if (hasPersistedState) {
     yield put(loadPersistedState());
   } else if (initialView === 'browser') {
-    yield take(GET_SAVED_QUERIES_SUCCESS);
+    yield take(queriesActions.getSavedQueriesSuccess.type);
     yield selectFirstSavedQuery();
   }
 

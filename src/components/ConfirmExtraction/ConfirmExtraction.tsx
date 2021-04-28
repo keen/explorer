@@ -10,9 +10,7 @@ import {
 
 import {
   getExtractionConfirmation,
-  cancelExtraction,
-  continueExtraction,
-  extractToEmail,
+  queriesActions,
 } from '../../modules/queries';
 
 type Props = {};
@@ -21,7 +19,10 @@ const ConfirmExtraction: FC<Props> = () => {
   const dispatch = useDispatch();
   const { isVisible } = useSelector(getExtractionConfirmation);
 
-  const closeHandler = useCallback(() => dispatch(cancelExtraction()), []);
+  const closeHandler = useCallback(
+    () => dispatch(queriesActions.cancelExtraction()),
+    []
+  );
 
   return (
     <Modal isOpen={isVisible} onClose={closeHandler}>
@@ -33,7 +34,7 @@ const ConfirmExtraction: FC<Props> = () => {
             <Button
               variant="secondary"
               onClick={() => {
-                dispatch(continueExtraction());
+                dispatch(queriesActions.continueExtraction());
               }}
             >
               Continue
@@ -41,8 +42,8 @@ const ConfirmExtraction: FC<Props> = () => {
             <Button
               variant="secondary"
               onClick={() => {
-                dispatch(cancelExtraction());
-                dispatch(extractToEmail());
+                dispatch(queriesActions.cancelExtraction());
+                dispatch(queriesActions.extractToEmail());
               }}
             >
               Email
