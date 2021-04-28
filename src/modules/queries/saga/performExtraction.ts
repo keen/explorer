@@ -86,7 +86,7 @@ export function* performExtraction({
     const notificationManager = yield getContext(NOTIFICATION_MANAGER_CONTEXT);
     yield notificationManager.showNotification({
       type: 'error',
-      message: 'kaczka',
+      message: 'notifications.execute_extraction_error',
     });
   }
 }
