@@ -12,7 +12,10 @@ import {
 
 import { queriesSlice } from '../reducer';
 
-import { NOTIFICATION_MANAGER_CONTEXT } from '../../../constants';
+import {
+  NOTIFICATION_MANAGER_CONTEXT,
+  CONFIRM_EXTRACTION_LIMIT,
+} from '../../../constants';
 
 /**
  * Flow responsible for performing extraction analysis
@@ -45,7 +48,11 @@ export function* performExtraction({
         propertiesCount = Object.keys(schemaProperties).length;
       }
 
-      const isPropertiesLimitReached = true;
+      const extractionPropertiesLimit = yield getContext(
+        CONFIRM_EXTRACTION_LIMIT
+      );
+      const isPropertiesLimitReached =
+        propertiesCount >= extractionPropertiesLimit;
 
       if (isPropertiesLimitReached) {
         yield put(

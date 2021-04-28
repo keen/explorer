@@ -74,4 +74,5 @@ export type Options = {
   };
   defaultTimezoneForQuery?: string;
   disableTimezoneSelection?: boolean;
+  confirmExtractionLimit?: number;
 };

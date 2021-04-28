@@ -9,6 +9,7 @@ export const SHOW_TOAST_NOTIFICATION_EVENT =
 export const NOTIFICATION_MANAGER_CONTEXT = 'notificationManager';
 export const KEEN_CLIENT_CONTEXT = 'keenClient';
 export const PUBSUB_CONTEXT = 'pubsub';
+export const CONFIRM_EXTRACTION_LIMIT = 'extractionLimit';
 
 export const BACKGROUND_MAIN = '#f1f6f8';
 
@@ -42,6 +43,7 @@ export const ERRORS = {
 
 export const API_VERSION = '3.0';
 
+export const DEFAULT_EXTRACTION_CONFIRMATION_LIMIT = 7;
 export const EXTRACTION_PREVIEW_EVENTS_DEFAULT = 100;
 export const EXTRACTION_PREVIEW_EVENTS_LIMIT = 100000;
 export const EXTRACTION_BULK_EVENTS_DEFAULT = 1000;

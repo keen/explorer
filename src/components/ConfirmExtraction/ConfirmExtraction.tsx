@@ -1,4 +1,5 @@
 import React, { FC, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   Modal,
@@ -6,7 +7,17 @@ import {
   ModalFooter,
   Button,
   Anchor,
+  Alert,
 } from '@keen.io/ui-core';
+import { BodyText } from '@keen.io/typography';
+
+import {
+  Container,
+  Description,
+  EmailExtraction,
+  Footer,
+  Cancel,
+} from './ConfirmExtraction.styles';
 
 import {
   getExtractionConfirmation,
@@ -16,6 +27,7 @@ import {
 type Props = {};
 
 const ConfirmExtraction: FC<Props> = () => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const { isVisible } = useSelector(getExtractionConfirmation);
 
@@ -28,27 +40,44 @@ const ConfirmExtraction: FC<Props> = () => {
     <Modal isOpen={isVisible} onClose={closeHandler}>
       {() => (
         <>
-          <ModalHeader onClose={closeHandler}>sasa</ModalHeader>
-          Title
+          <ModalHeader onClose={closeHandler}>
+            {t('extraction_confirmation.title')}
+          </ModalHeader>
+          <Container>
+            <Alert type="info">{t('extraction_confirmation.alert')}</Alert>
+            <Description>
+              <BodyText variant="body1">
+                {t('extraction_confirmation.message')}
+              </BodyText>
+            </Description>
+          </Container>
           <ModalFooter>
-            <Button
-              variant="secondary"
-              onClick={() => {
-                dispatch(queriesActions.continueExtraction());
-              }}
-            >
-              Continue
-            </Button>
-            <Button
-              variant="secondary"
-              onClick={() => {
-                dispatch(queriesActions.cancelExtraction());
-                dispatch(queriesActions.extractToEmail());
-              }}
-            >
-              Email
-            </Button>
-            <Anchor onClick={closeHandler}>Cancel</Anchor>
+            <Footer>
+              <Button
+                variant="secondary"
+                onClick={() => {
+                  dispatch(queriesActions.continueExtraction());
+                }}
+              >
+                {t('extraction_confirmation.confirm_button')}
+              </Button>
+              <EmailExtraction>
+                <Button
+                  variant="secondary"
+                  onClick={() => {
+                    dispatch(queriesActions.cancelExtraction());
+                    dispatch(queriesActions.extractToEmail());
+                  }}
+                >
+                  {t('extraction_confirmation.extract_email_button')}
+                </Button>
+              </EmailExtraction>
+              <Cancel>
+                <Anchor onClick={closeHandler}>
+                  {t('extraction_confirmation.cancel')}
+                </Anchor>
+              </Cancel>
+            </Footer>
           </ModalFooter>
         </>
       )}

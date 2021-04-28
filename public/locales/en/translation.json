@@ -36,6 +36,14 @@
     "content_encoding_label": "Compress to GZIP",
     "close_button": "Cancel"
   },
+  "extraction_confirmation": {
+    "title": "Large number of properties",
+    "alert": "You are extracting events with a large number of properties. Rendering the table may take a while.",
+    "message": "Consider extraction to email or selecting specific properties to get results faster.",
+    "confirm_button": "Run Anyway",
+    "extract_email_button": "Extract to Email",
+    "cancel": "Cancel"
+  },
   "extraction": {
     "preview_extraction": "Preview events",
     "email_extraction": "Extract to Email",
