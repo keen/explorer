@@ -1,7 +1,7 @@
 {
   "name": "@keen.io/explorer",
   "description": "Data Explorer by Keen IO",
-  "version": "1.5.4-rc.0",
+  "version": "1.6.0-rc.0",
   "license": "MIT",
   "main": "dist/explorer.modern.min.js",
   "browser": "dist/explorer.modern.min.js",
@@ -125,6 +125,7 @@
     "autoprefixer": "^10.0.1",
     "babel-loader": "^8.1.0",
     "browserlist": "^1.0.1",
+    "codecov": "^3.8.1",
     "commitizen": "^4.0.3",
     "concurrently": "^3.5.1",
     "copy-webpack-plugin": "^6.2.1",
