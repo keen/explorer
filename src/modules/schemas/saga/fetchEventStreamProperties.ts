@@ -19,7 +19,8 @@ export function* fetchEventStreamProperties(eventStream: string) {
     const url = client.url(`/3.0/projects/{projectId}/events/${eventStream}`, {
       api_key: client.config.masterKey,
     });
-    const { properties } = yield fetch(url).then((response) => response.json());
+    const response: Response = yield fetch(url);
+    const { properties } = yield response.json();
 
     yield put(
       schemasSlice.actions.setEventStreamProperties({
@@ -29,5 +30,7 @@ export function* fetchEventStreamProperties(eventStream: string) {
     );
 
     return properties;
-  } catch (err) {}
+  } catch (err) {
+    return {};
+  }
 }

@@ -71,7 +71,18 @@ const explorer = new KeenExplorer({
       loadPath: 'https://cdn.jsdelivr.net/npm/@keen.io/explorer@$VERSION/dist/locales/{{lng}}/{{ns}}.json'
     }
   }
- });
+});
+```
+
+### Confirm extraction limit
+
+The `default` threshold for rendering confirmation modal is `100` properties in event collection schema used for extraction.
+You can easily change it by providing additional argument to constructor.
+
+```typescript
+const explorer = new KeenExplorer({
+  confirmExtractionLimit: 50 
+});
 ```
 
 ### PubSub interface
