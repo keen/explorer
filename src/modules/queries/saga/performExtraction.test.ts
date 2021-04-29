@@ -30,16 +30,16 @@ describe('Scenario 1: User continues extraction', () => {
   const test = sagaHelper(performExtraction(runExtraction(query)));
   const schemaPropertiesCount = 50;
 
-  test('get properties from event collection schema', (result) => {
-    expect(result).toEqual(select(getEventStreamProperties, 'logins'));
-
-    return schemaPropertiesCount;
-  });
-
   test('get extraction confirmation trigger limit', (result) => {
     expect(result).toEqual(getContext(CONFIRM_EXTRACTION_LIMIT));
 
     return 30;
+  });
+
+  test('get properties from event collection schema', (result) => {
+    expect(result).toEqual(select(getEventStreamProperties, 'logins'));
+
+    return schemaPropertiesCount;
   });
 
   test('shows extraction confirmation modal', (result) => {
@@ -71,16 +71,16 @@ describe('Scenario 2: Performs extraction as properties limit is not reached', (
   const test = sagaHelper(performExtraction(runExtraction(query)));
   const schemaPropertiesCount = 50;
 
-  test('get properties from event collection schema', (result) => {
-    expect(result).toEqual(select(getEventStreamProperties, 'logins'));
-
-    return schemaPropertiesCount;
-  });
-
   test('get extraction confirmation trigger limit', (result) => {
     expect(result).toEqual(getContext(CONFIRM_EXTRACTION_LIMIT));
 
     return 100;
+  });
+
+  test('get properties from event collection schema', (result) => {
+    expect(result).toEqual(select(getEventStreamProperties, 'logins'));
+
+    return schemaPropertiesCount;
   });
 
   test('performs extraction', (result) => {
@@ -92,16 +92,16 @@ describe('Scenario 3: User cancel extraction', () => {
   const test = sagaHelper(performExtraction(runExtraction(query)));
   const schemaPropertiesCount = 50;
 
-  test('get properties from event collection schema', (result) => {
-    expect(result).toEqual(select(getEventStreamProperties, 'logins'));
-
-    return schemaPropertiesCount;
-  });
-
   test('get extraction confirmation trigger limit', (result) => {
     expect(result).toEqual(getContext(CONFIRM_EXTRACTION_LIMIT));
 
     return 30;
+  });
+
+  test('get properties from event collection schema', (result) => {
+    expect(result).toEqual(select(getEventStreamProperties, 'logins'));
+
+    return schemaPropertiesCount;
   });
 
   test('shows extraction confirmation modal', (result) => {
@@ -134,6 +134,12 @@ describe('Scenario 3: User cancel extraction', () => {
 describe('Scenario 4: User performs extraction and schema is not serialized', () => {
   const test = sagaHelper(performExtraction(runExtraction(query)));
 
+  test('get extraction confirmation trigger limit', (result) => {
+    expect(result).toEqual(getContext(CONFIRM_EXTRACTION_LIMIT));
+
+    return 30;
+  });
+
   test('get properties from event collection schema', (result) => {
     expect(result).toEqual(select(getEventStreamProperties, 'logins'));
 
@@ -152,12 +158,6 @@ describe('Scenario 4: User performs extraction and schema is not serialized', ()
     return {
       'keen.id': 'string',
     };
-  });
-
-  test('get extraction confirmation trigger limit', (result) => {
-    expect(result).toEqual(getContext(CONFIRM_EXTRACTION_LIMIT));
-
-    return 30;
   });
 
   test('performs extraction', (result) => {

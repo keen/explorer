@@ -131,7 +131,7 @@
     "new_query_title": "New Query"
   },
   "notifications": {
-    "execute_extraction_error": "We were not able to perform extraction. Please try again later."
+    "execute_extraction_error": "We were not able to perform extraction. Please try again later.",
     "html_download_in_progress": "HTML download in progress",
     "html_download_error": "HTML download failed. Please try again later.",
     "image_download_in_progress": "Image download in progress",

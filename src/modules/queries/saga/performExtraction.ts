@@ -29,8 +29,14 @@ export function* performExtraction({
   const { query } = payload;
   const { event_collection: eventCollection } = query;
 
+  // @TODO: Handle use case when user selects properties
+
   if (eventCollection) {
     try {
+      const extractionPropertiesLimit = yield getContext(
+        CONFIRM_EXTRACTION_LIMIT
+      );
+
       let propertiesCount = yield select(
         getEventStreamProperties,
         eventCollection
@@ -48,9 +54,6 @@ export function* performExtraction({
         propertiesCount = Object.keys(schemaProperties).length;
       }
 
-      const extractionPropertiesLimit = yield getContext(
-        CONFIRM_EXTRACTION_LIMIT
-      );
       const isPropertiesLimitReached =
         propertiesCount >= extractionPropertiesLimit;
 
