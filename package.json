@@ -125,6 +125,7 @@
     "autoprefixer": "^10.0.1",
     "babel-loader": "^8.1.0",
     "browserlist": "^1.0.1",
+    "codecov": "^3.8.1",
     "commitizen": "^4.0.3",
     "concurrently": "^3.5.1",
     "copy-webpack-plugin": "^6.2.1",
