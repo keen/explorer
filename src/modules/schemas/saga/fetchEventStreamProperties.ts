@@ -7,9 +7,9 @@ import { schemasSlice } from '../reducer';
 import { KEEN_CLIENT_CONTEXT } from '../../../constants';
 
 /**
- * Flow responsible for
- *
- * @return void
+ * Fetch schema definition based on provided event stream name.
+ * @param eventStream - name of event stream
+ * @return properties schema
  *
  */
 export function* fetchEventStreamProperties(eventStream: string) {

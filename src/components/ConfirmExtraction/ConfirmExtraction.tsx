@@ -24,9 +24,7 @@ import {
   queriesActions,
 } from '../../modules/queries';
 
-type Props = {};
-
-const ConfirmExtraction: FC<Props> = () => {
+const ConfirmExtraction: FC = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const { isVisible } = useSelector(getExtractionConfirmation);
