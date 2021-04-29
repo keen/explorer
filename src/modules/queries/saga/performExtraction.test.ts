@@ -23,6 +23,7 @@ const query: Query = {
   analysis_type: 'extraction',
   event_collection: 'logins',
   timeframe: 'last_30_days',
+  property_names: undefined,
   limit: 100,
 };
 
@@ -162,5 +163,69 @@ describe('Scenario 4: User performs extraction and schema is not serialized', ()
 
   test('performs extraction', (result) => {
     expect(result).toEqual(put(queriesSlice.actions.runQuery({ query })));
+  });
+});
+
+describe('Scenario 5: User performs extraction with selected properties', () => {
+  const query: Query = {
+    analysis_type: 'extraction',
+    event_collection: 'logins',
+    timeframe: 'last_30_days',
+    property_names: ['user.id', 'user.name'],
+    limit: 100,
+  };
+
+  const test = sagaHelper(performExtraction(runExtraction(query)));
+
+  test('get extraction confirmation trigger limit', (result) => {
+    expect(result).toEqual(getContext(CONFIRM_EXTRACTION_LIMIT));
+
+    return 30;
+  });
+
+  test('get properties from event collection schema', (result) => {
+    expect(result).toEqual(select(getEventStreamProperties, 'logins'));
+
+    return undefined;
+  });
+
+  test('performs extraction', (result) => {
+    expect(result).toEqual(put(queriesSlice.actions.runQuery({ query })));
+  });
+});
+
+describe('Scenario 6: User performs extraction with selected properties and reach limit', () => {
+  const query: Query = {
+    analysis_type: 'extraction',
+    event_collection: 'logins',
+    timeframe: 'last_30_days',
+    property_names: ['user.id', 'user.name', 'keen.created_at'],
+    limit: 100,
+  };
+
+  const test = sagaHelper(performExtraction(runExtraction(query)));
+
+  test('get extraction confirmation trigger limit', (result) => {
+    expect(result).toEqual(getContext(CONFIRM_EXTRACTION_LIMIT));
+
+    return 2;
+  });
+
+  test('get properties from event collection schema', (result) => {
+    expect(result).toEqual(select(getEventStreamProperties, 'logins'));
+
+    return undefined;
+  });
+
+  test('shows extraction confirmation modal', (result) => {
+    expect(result).toEqual(
+      put(queriesSlice.actions.setExtractionConfirmation({ isVisible: true }))
+    );
+  });
+
+  test('waits for user action', (result) => {
+    expect(result).toEqual(
+      take([cancelExtraction.type, continueExtraction.type])
+    );
   });
 });

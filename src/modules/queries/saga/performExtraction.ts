@@ -27,12 +27,15 @@ export function* performExtraction({
   payload,
 }: ReturnType<typeof runExtraction>) {
   const { query } = payload;
-  const { event_collection: eventCollection } = query;
-
-  // @TODO: Handle use case when user selects properties
+  const {
+    event_collection: eventCollection,
+    property_names: propertyNames,
+  } = query;
 
   if (eventCollection) {
     try {
+      const isFullExtraction =
+        propertyNames === undefined || propertyNames.length === 0;
       const extractionPropertiesLimit = yield getContext(
         CONFIRM_EXTRACTION_LIMIT
       );
@@ -42,7 +45,7 @@ export function* performExtraction({
         eventCollection
       );
 
-      if (propertiesCount === undefined) {
+      if (propertiesCount === undefined && isFullExtraction) {
         yield put(
           queriesSlice.actions.setQueryPerforming({ isPerforming: true })
         );
@@ -55,7 +58,8 @@ export function* performExtraction({
       }
 
       const isPropertiesLimitReached =
-        propertiesCount >= extractionPropertiesLimit;
+        (isFullExtraction && propertiesCount >= extractionPropertiesLimit) ||
+        propertyNames?.length > extractionPropertiesLimit;
 
       if (isPropertiesLimitReached) {
         yield put(
