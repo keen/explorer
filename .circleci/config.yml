@@ -83,6 +83,12 @@ jobs:
           name: Unit Tests
           command: yarn test:ci
       - run:
+          name: Upload code coverage
+          command: |
+            if [ "$CIRCLE_BRANCH" = "develop" ]; then
+              npx codecov --token=$CODECOV_TOKEN
+            fi
+      - run:
           name: Build
           command: yarn build
       - persist_to_workspace:
