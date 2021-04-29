@@ -1,35 +1,3 @@
-export const SET_QUERY_SETTINGS = '@queries/SET_QUERY_SETTINGS';
-export const RUN_QUERY = '@queries/RUN_QUERY';
-export const RUN_QUERY_SUCCESS = '@queries/RUN_QUERY_SUCCESS';
-export const RUN_QUERY_ERROR = '@queries/RUN_QUERY_ERROR';
-export const EXTRACT_TO_EMAIL = '@queries/EXTRACT_TO_EMAIL';
-export const RUN_EMAIL_EXTRACTION = '@queries/RUN_EMAIL_EXTRACTION';
-export const SAVE_QUERY = '@queries/SAVE_QUERY';
-export const SET_QUERY_SAVE_STATE = '@queries/SET_QUERY_SAVE_STATE';
-export const SET_QUERY_PERFORMING = '@queries/SET_QUERY_PERFORMING';
-export const SAVE_QUERY_SUCCESS = '@queries/SAVE_QUERY_SUCCESS';
-export const SAVE_QUERY_ERROR = '@queries/SAVE_QUERY_ERROR';
-export const RESET_SAVE_QUERY_ERROR = '@queries/RESET_SAVE_QUERY_ERROR';
-export const DELETE_QUERY = '@queries/DELETE_QUERY';
-export const DELETE_QUERY_SUCCESS = '@queries/DELETE_QUERY_SUCCESS';
-export const DELETE_QUERY_ERROR = '@queries/DELETE_QUERY_ERROR';
-export const GET_SAVED_QUERIES = '@queries/GET_SAVED_QUERIES';
-export const RESET_QUERY_RESULTS = '@queries/RESET_QUERY_RESULTS';
-export const GET_SAVED_QUERIES_SUCCESS = '@queries/GET_SAVED_QUERIES_SUCCESS';
-export const GET_SAVED_QUERIES_ERROR = '@queries/GET_SAVED_QUERIES_ERROR';
-export const SET_CACHE_QUERY_LIMIT_EXCEED =
-  '@queries/SET_CACHE_QUERY_LIMIT_EXCEED';
-export const SET_CACHE_QUERY_LIMIT = '@queries/SET_CACHE_QUERY_LIMIT';
-export const SET_CACHE_QUERY_LIMIT_ERROR =
-  '@queries/SET_CACHE_QUERY_LIMIT_ERROR';
-export const SET_QUERY_LIMIT_REACHED = '@queries/SET_QUERY_LIMIT_REACHED';
-export const GET_ORGANIZATION_USAGE_LIMITS =
-  '@queries/GET_ORGANIZATION_USAGE_LIMITS';
-export const CLONE_SAVED_QUERY = '@queries/CLONE_SAVED_QUERY';
-export const SET_EXTRACTION_CONFIRMATION =
-  '@queries/SET_EXTRACTION_CONFIRMATION';
-export const CANCEL_EXTRACTION = '@queries/CANCEL_EXTRACTION';
-
 export const ERRORS = {
   OVER_LIMIT_ERROR: 'OverCachedQueryLimitError',
   TOO_MANY_QUERIES: 'TooManyQueriesInTheCurrentBillingPeriod',
