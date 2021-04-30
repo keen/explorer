@@ -1,5 +1,8 @@
 import { AppState } from '../types';
 
+export const getExtractionConfirmation = ({ queries }: AppState) =>
+  queries.extractionConfirmation;
+
 export const getSavedQueries = ({ queries }: AppState) => queries.savedQueries;
 
 export const getSavedQueriesLoaded = ({ queries }: AppState) =>

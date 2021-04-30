@@ -208,7 +208,7 @@ test('allows user to clone query', () => {
     Array [
       Object {
         "payload": undefined,
-        "type": "@queries/CLONE_SAVED_QUERY",
+        "type": "queries/cloneSavedQuery",
       },
     ]
   `);

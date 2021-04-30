@@ -1,3 +1,3 @@
-import { showEmailExtraction } from './showEmailExtraction';
+import { showEmailExtraction, isExtraction } from './showEmailExtraction';
 
-export { showEmailExtraction };
+export { showEmailExtraction, isExtraction };

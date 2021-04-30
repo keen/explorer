@@ -26,6 +26,9 @@ import { Options } from './types';
 import {
   SHOW_TOAST_NOTIFICATION_EVENT,
   PUBSUB_CONTEXT,
+  CONFIRM_EXTRACTION_LIMIT,
+  NOTIFICATION_MANAGER_CONTEXT,
+  DEFAULT_EXTRACTION_CONFIRMATION_LIMIT,
   DEFAULT_TIMEZONE_FOR_QUERY,
 } from './constants';
 
@@ -39,6 +42,7 @@ export class KeenExplorer {
       translations: translationSettings,
       defaultTimezoneForQuery,
       disableTimezoneSelection,
+      confirmExtractionLimit,
     } = props;
     const keenAnalysisClient =
       keenAnalysis.instance || new KeenAnalysis(keenAnalysis.config);
@@ -49,8 +53,10 @@ export class KeenExplorer {
     const sagaMiddleware = createSagaMiddleware({
       context: {
         keenClient: keenAnalysisClient,
+        [CONFIRM_EXTRACTION_LIMIT]:
+          confirmExtractionLimit || DEFAULT_EXTRACTION_CONFIRMATION_LIMIT,
         [PUBSUB_CONTEXT]: getPubSub(),
-        notificationManager: new NotificationManager({
+        [NOTIFICATION_MANAGER_CONTEXT]: new NotificationManager({
           pubsub: notificationPubSub,
           eventName: SHOW_TOAST_NOTIFICATION_EVENT,
         }),

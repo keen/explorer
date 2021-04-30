@@ -15,7 +15,7 @@ export type SavedQueryListItem = {
   refreshRate: number;
   lastModifiedDate: string;
   cached: boolean;
-  query: Record<string, any>;
+  query: Query;
   tags: string[];
   visualization: Visualization;
 };
@@ -27,6 +27,9 @@ export type ReducerState = {
   isSavedQueriesLoaded: boolean;
   isSavingQuery: boolean;
   savedQueries: SavedQueryListItem[];
+  extractionConfirmation: {
+    isVisible: boolean;
+  };
   cachedQueries: {
     limit: null | number;
     limitReached: boolean;
