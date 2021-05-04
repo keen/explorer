@@ -266,7 +266,8 @@
     "empty_search_results": "No property found with this name"
   },
   "query_creator_filter_value": {
-    "placeholder": "value"
+    "placeholder": "value",
+    "input_text_placeholder": "case sensitive value"
   },
   "query_creator_geo_coordinates": {
     "lat_label": "Lat:",
