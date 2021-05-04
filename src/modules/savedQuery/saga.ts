@@ -9,16 +9,10 @@ import {
 
 import { setVisualization } from '../app';
 import { SavedQueryListItem } from '../queries';
-import {
-  setQuerySettings,
-  getSavedQueries,
-  runQuery,
-  SAVE_QUERY_SUCCESS,
-} from '../queries';
+import { queriesActions, getSavedQueries } from '../queries';
 
 import { SELECT_SAVED_QUERY } from './constants';
 
-import { saveQuerySuccess } from '../queries';
 import { SavedQueryAPIResponse } from '../../types';
 
 import { serializeSavedQuery, convertMilisecondsToMinutes } from './utils';
@@ -51,19 +45,21 @@ export function* selectSavedQuery({
     const { type: widgetType, chartSettings, widgetSettings } = visualization;
 
     yield put(setVisualization(widgetType, chartSettings, widgetSettings));
-    yield put(setQuerySettings(query));
+    yield put(queriesActions.setQuerySettings({ settings: query }));
     yield put(updateSavedQuery(savedQuery));
 
     const { autorunQuery } = payload;
     if (autorunQuery) {
-      yield put(runQuery(query));
+      yield put(queriesActions.runQuery({ query }));
     }
   } catch (err) {
     console.error(err);
   }
 }
 
-function* saveQuerySuccessHandler(action: ReturnType<typeof saveQuerySuccess>) {
+function* saveQuerySuccessHandler(
+  action: ReturnType<typeof queriesActions.saveQuerySuccess>
+) {
   const {
     payload: { body },
   } = action;
@@ -74,5 +70,8 @@ function* saveQuerySuccessHandler(action: ReturnType<typeof saveQuerySuccess>) {
 
 export function* savedQuerySaga() {
   yield takeLatest(SELECT_SAVED_QUERY, selectSavedQuery);
-  yield takeLatest(SAVE_QUERY_SUCCESS, saveQuerySuccessHandler);
+  yield takeLatest(
+    queriesActions.saveQuerySuccess.type,
+    saveQuerySuccessHandler
+  );
 }

@@ -81,7 +81,7 @@ test('allows user to perform email extraction', () => {
           "email": "email@keen.io",
           "latest": 2000,
         },
-        "type": "@queries/RUN_EMAIL_EXTRACTION",
+        "type": "queries/runEmailExtraction",
       },
     ]
   `);

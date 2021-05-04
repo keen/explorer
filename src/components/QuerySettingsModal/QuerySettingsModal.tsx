@@ -9,7 +9,7 @@ import {
   getQuerySettingsModalVisibility,
   hideQuerySettingsModal,
 } from '../../modules/app';
-import { resetSavedQueryError } from '../../modules/queries';
+import { queriesActions } from '../../modules/queries';
 import { getSavedQuery, resetSavedQuery } from '../../modules/savedQuery';
 
 import { AppContext } from '../../contexts';
@@ -36,7 +36,7 @@ const QuerySettingsModal: FC<Props> = ({ onSaveQuery, cacheAvailable }) => {
 
   const closeHandler = useCallback(() => {
     dispatch(hideQuerySettingsModal());
-    dispatch(resetSavedQueryError());
+    dispatch(queriesActions.resetSavedQueryError());
     if (!exists && !isCloned) {
       dispatch(resetSavedQuery());
     }
