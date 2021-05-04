@@ -1,6 +1,6 @@
 # Data Explorer
 
-[![written in typescript](https://img.shields.io/badge/written%20in-typescript-blue.svg)](https://www.typescriptlang.org) [![styled with prettier](https://img.shields.io/badge/styled_with-prettier-yellow.svg)](https://github.com/prettier/prettier) [![tested with jest](https://img.shields.io/badge/tested_with-jest-99424f.svg)](https://facebook.github.io/jest/) [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/) [![yarn](https://img.shields.io/badge/maintained%20with-yarn-cc00ff.svg)](https://yarnpkg.com/en/)
+[![written in typescript](https://img.shields.io/badge/written%20in-typescript-blue.svg)](https://www.typescriptlang.org) [![styled with prettier](https://img.shields.io/badge/styled_with-prettier-yellow.svg)](https://github.com/prettier/prettier) [![tested with jest](https://img.shields.io/badge/tested_with-jest-99424f.svg)](https://facebook.github.io/jest/) [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/) [![yarn](https://img.shields.io/badge/maintained%20with-yarn-cc00ff.svg)](https://yarnpkg.com/en/) [![codecov](https://codecov.io/gh/keen/explorer/branch/master/graph/badge.svg?token=FOUVoqkgGc)](https://codecov.io/gh/keen/explorer)
 
 The Data Explorer is an open source point-and-click interface for querying and visualizing your event data. It's maintained by the team at [Keen IO](https://keen.io/).
 
@@ -71,7 +71,18 @@ const explorer = new KeenExplorer({
       loadPath: 'https://cdn.jsdelivr.net/npm/@keen.io/explorer@$VERSION/dist/locales/{{lng}}/{{ns}}.json'
     }
   }
- });
+});
+```
+
+### Confirm extraction limit
+
+The `default` threshold for rendering confirmation modal is `100` properties in event collection schema used for extraction.
+You can easily change it by providing additional argument to constructor.
+
+```typescript
+const explorer = new KeenExplorer({
+  confirmExtractionLimit: 50 
+});
 ```
 
 ### PubSub interface

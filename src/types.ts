@@ -1,5 +1,6 @@
 import { PickerWidgets } from '@keen.io/widget-picker';
 import { Theme } from '@keen.io/charts';
+import { Query } from '@keen.io/query';
 
 export type Analysis =
   | 'sum'
@@ -34,7 +35,7 @@ export type SavedQueryAPIResponse = {
   user_last_modified_date: string;
   created_date: string;
   last_modified_date: string;
-  query: Record<string, any>;
+  query: Query;
   metadata: {
     display_name?: string;
     tags?: string[];
@@ -73,4 +74,5 @@ export type Options = {
   };
   defaultTimezoneForQuery?: string;
   disableTimezoneSelection?: boolean;
+  confirmExtractionLimit?: number;
 };

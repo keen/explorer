@@ -87,7 +87,7 @@ const Browser: FC<Props> = ({ onEditQuery, onRunQuery, onSelectQuery }) => {
 
     const { property, direction } = sortSettings;
     if (property && direction) {
-      queries = queries.sort((firstQuery, secondQuery) => {
+      queries = [...queries].sort((firstQuery, secondQuery) => {
         const firstProperty = firstQuery[property];
         const secondProperty = secondQuery[property];
 

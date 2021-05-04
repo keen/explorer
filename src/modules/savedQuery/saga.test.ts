@@ -1,15 +1,15 @@
 /* eslint-disable @typescript-eslint/camelcase */
 import sagaHelper from 'redux-saga-testing';
 import { select, put } from 'redux-saga/effects';
+
+import { Query } from '@keen.io/query';
 import { Layout } from '@keen.io/ui-core';
 
 import { selectSavedQuery, updateSavedQuery } from './actions';
 import { selectSavedQuery as selectSavedQueryFlow } from './saga';
 
-import { runQuery, getSavedQueries, setQuerySettings } from '../queries';
+import { queriesActions, getSavedQueries } from '../queries';
 import { setVisualization } from '../app';
-
-import { savedQueries } from './fixtures';
 
 describe('selectSavedQuery()', () => {
   describe('Scenario 1: User selects query with enabled autorun', () => {
@@ -18,25 +18,44 @@ describe('selectSavedQuery()', () => {
       selectSavedQueryFlow(action as ReturnType<typeof selectSavedQuery>)
     );
 
+    const query: Query = {
+      analysis_type: 'count',
+      event_collection: 'logins',
+      timeframe: 'this_14_days',
+    };
+
+    const savedQuery = {
+      refreshRate: 0,
+      cached: false,
+      displayName: 'purchases',
+      name: 'purchases',
+      tags: [],
+      visualization: {
+        type: 'bar',
+        chartSettings: {
+          layout: 'vertical' as Layout,
+        },
+        widgetSettings: {},
+      },
+      query,
+    };
+
     test('get list of saved queries from state', (result) => {
       expect(result).toEqual(select(getSavedQueries));
-      return savedQueries;
+      return [savedQuery];
     });
 
     test('setup visualization type', (result) => {
-      const chartSettings = {
-        layout: 'vertical' as Layout,
-      };
-
+      const {
+        visualization: { chartSettings },
+      } = savedQuery;
       expect(result).toEqual(put(setVisualization('bar', chartSettings, {})));
     });
 
     test('setup query settings', (result) => {
-      const query = {
-        analysis_type: 'count',
-      };
-
-      expect(result).toEqual(put(setQuerySettings(query)));
+      expect(result).toEqual(
+        put(queriesActions.setQuerySettings({ settings: query }))
+      );
     });
 
     test('updates save query settings', (result) => {
@@ -50,11 +69,7 @@ describe('selectSavedQuery()', () => {
     });
 
     test('runs selected query', (result) => {
-      const query = {
-        analysis_type: 'count',
-      };
-
-      expect(result).toEqual(put(runQuery(query)));
+      expect(result).toEqual(put(queriesActions.runQuery({ query })));
     });
   });
 });

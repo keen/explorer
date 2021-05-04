@@ -1,15 +1,9 @@
 // @ts-nocheck
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import { connect, ConnectedProps } from 'react-redux';
 import { getPubSub } from '@keen.io/pubsub';
 
-import {
-  runQuery,
-  deleteQuery,
-  saveQuery,
-  resetQueryResults,
-  getQuerySettings,
-} from '../modules/queries';
+import { queriesActions, getQuerySettings } from '../modules/queries';
 import {
   getSavedQuery,
   resetSavedQuery,
@@ -54,21 +48,27 @@ const mapStateToProps = (state: AppState) => ({
 });
 
 const mapDispatchToProps = {
-  saveQuery,
+  saveQuery: queriesActions.saveQuery,
   editQuery,
-  resetQueryResults,
-  deleteQuery,
+  resetQueryResults: queriesActions.resetQueryResults,
+  deleteQuery: queriesActions.deleteQuery,
   explorerMounted,
   resetSavedQuery,
   selectSavedQuery,
   switchToQueriesList,
   createNewQuery,
   setViewMode,
-  runQuery,
+  runQuery: queriesActions.runQuery,
 };
 
-class App extends Component {
-  constructor(props) {
+const connector = connect(mapStateToProps, mapDispatchToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+type Props = PropsFromRedux;
+
+class App extends Component<Props> {
+  constructor(props: Props) {
     super(props);
 
     const pubsub = getPubSub();
@@ -125,7 +125,7 @@ class App extends Component {
       refreshRate: refreshRate * 60 * 60,
     };
 
-    this.props.saveQuery(name, body);
+    this.props.saveQuery({ name, body });
   };
 
   render() {
@@ -133,7 +133,7 @@ class App extends Component {
       <MainContainer>
         {this.props.view === 'browser' && (
           <Browser
-            onRunQuery={() => this.props.runQuery(this.props.query)}
+            onRunQuery={() => this.props.runQuery({ query: this.props.query })}
             onSelectQuery={(queryName) => {
               this.props.resetQueryResults();
               this.props.selectSavedQuery(queryName, this.props.autorunQuery);
@@ -149,7 +149,9 @@ class App extends Component {
               query={this.props.query}
               savedQueryName={this.props.savedQuery.displayName}
               upgradeSubscriptionUrl={this.props.upgradeSubscriptionUrl}
-              onRunQuery={() => this.props.runQuery(this.props.query)}
+              onRunQuery={() =>
+                this.props.runQuery({ query: this.props.query })
+              }
               onSaveQuery={() => {
                 const {
                   displayName,
@@ -182,4 +184,4 @@ class App extends Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connector(App);

@@ -10,7 +10,11 @@ test('serializes saved query', () => {
     user_last_modified_date: 'user_last_modified_date',
     created_date: 'created_date',
     last_modified_date: 'last_modified_date',
-    query: { analysis_type: 'count' },
+    query: {
+      analysis_type: 'count',
+      timeframe: 'last_14_days',
+      event_collection: 'logins',
+    },
     metadata: {
       display_name: 'purchases',
       visualization: {

@@ -31,7 +31,7 @@ import {
 import ActionsMenu from '../ActionsMenu';
 
 import { getSavedQuery } from '../../modules/savedQuery';
-import { getQueriesSaving, deleteQuery } from '../../modules/queries';
+import { getQueriesSaving, queriesActions } from '../../modules/queries';
 import {
   showQuerySettingsModal,
   switchToQueriesList,
@@ -194,7 +194,7 @@ const EditorNavigation: FC<Props> = ({ onSaveQuery }) => {
               onHideMenu={() => setActionsMenuVisibility(false)}
               onRemoveQuery={() => {
                 setActionsMenuVisibility(false);
-                dispatch(deleteQuery(name));
+                dispatch(queriesActions.deleteQuery(name));
               }}
             />
           </Dropdown>

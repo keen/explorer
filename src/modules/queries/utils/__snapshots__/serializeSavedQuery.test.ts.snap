@@ -8,6 +8,8 @@ Object {
   "name": "purchases",
   "query": Object {
     "analysis_type": "count",
+    "event_collection": "logins",
+    "timeframe": "last_14_days",
   },
   "refreshRate": 14000,
   "tags": Array [],
