@@ -8,20 +8,20 @@ Feature: Extraction Modal
     And Select Event stream
 
   @smoke-test
-  Scenario: Perform test for extracting a full collection of properties
+  Scenario: Shows extraction confirmation modal for full collection of properties
     When I click on "Preview events" button
     Then Modal for "Large amount of properties" appears
     And Close the modal
 
   @smoke-test
-  Scenario: Perform test for selecting more properties than confirmExtractionLimit
+  Scenario: Shows extraction confirmation modal when count of properties exceed the limit
     When I add more properties than limit to extract
     And Click on "Preview events" button
     Then Modal for "Large amount of properties" appears
     And Close the modal
 
   @smoke-test
-  Scenario: Perform test for selecting less properties than confirmExtractionLimit
+  Scenario: Do not shot show extraction confirmation modal when count of properties is below the limit
     When I add less properties than limit to extract
     And Click on "Preview events" button
     Then Modal for "Large amount of properties" does not appear
