@@ -1,0 +1,16 @@
+{
+  "api_key": "API_KEY",
+  "events": [
+    {
+      "name": "event_stream",
+      "url": "/3.0/projects/1/events/boolean"
+    }
+  ],
+  "events_url": "/3.0/projects/1/events",
+  "id": "id",
+  "name": "name",
+  "organization_id": "organization_id",
+  "partners_url": "/3.0/projects/1/partners",
+  "queries_url": "/3.0/projects/1/queries",
+  "url": "/3.0/projects/5f80297aca99e4631690de94"
+}
