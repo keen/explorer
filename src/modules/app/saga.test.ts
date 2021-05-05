@@ -4,7 +4,7 @@ import { getContext, put } from 'redux-saga/effects';
 import { NEW_QUERY_EVENT } from '@keen.io/query-creator';
 
 import { setViewMode, resetVisualization } from './actions';
-import { resetQueryResults } from '../queries';
+import { queriesActions } from '../queries';
 import { resetSavedQuery } from '../savedQuery';
 import { createNewQuery as createNewQueryFlow } from './saga';
 
@@ -29,7 +29,7 @@ describe('createNewQuery()', () => {
   });
 
   test('reset query results', (result) => {
-    expect(result).toEqual(put(resetQueryResults()));
+    expect(result).toEqual(put(queriesActions.resetQueryResults()));
   });
 
   test('reset visualization settings', (result) => {

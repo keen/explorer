@@ -37,6 +37,9 @@ const render = (storeState: any = {}, overProps: any = {}) => {
       queriesExecution: {
         limitReached: false,
       },
+      extractionConfirmation: {
+        isVisible: false,
+      },
     },
     ...storeState,
   };
@@ -195,7 +198,7 @@ test('allows user to perform extraction to email', () => {
       },
       Object {
         "payload": undefined,
-        "type": "@queries/EXTRACT_TO_EMAIL",
+        "type": "queries/extractToEmail",
       },
     ]
   `);
@@ -208,6 +211,9 @@ test('renders notice about queries execution limit exceed', () => {
       isLoading: false,
       queriesExecution: {
         limitReached: true,
+      },
+      extractionConfirmation: {
+        isVisible: false,
       },
     },
   };

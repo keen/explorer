@@ -18,7 +18,7 @@ import QueryLimitReached from '../QueryLimitReached';
 import VisualizationPlaceholder from '../VisualizationPlaceholder';
 
 import {
-  deleteQuery,
+  queriesActions,
   getQueryResults,
   getQueryLimitReached,
   getQueryPerformState,
@@ -96,7 +96,9 @@ const BrowserPreview: FC<Props> = ({
         {currentQuery && (
           <>
             <BrowserQueryMenu
-              onRemoveQuery={() => dispatch(deleteQuery(currentQuery.name))}
+              onRemoveQuery={() =>
+                dispatch(queriesActions.deleteQuery(currentQuery.name))
+              }
               onEditQuery={() => onEditQuery(currentQuery.name)}
             />
             <QuerySummary

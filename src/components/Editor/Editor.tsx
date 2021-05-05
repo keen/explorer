@@ -18,21 +18,20 @@ import {
   ActionButton,
   SectionContainer,
   CustomizationContainer,
-  QueryContainer,
+  Container,
 } from './Editor.styles';
 
 import { Creator, SectionTabs, Visualization } from './components';
-import { showEmailExtraction } from './utils';
+import { isExtraction } from './utils';
 
 import { AppContext } from '../../contexts';
 
 import { editorSagaActions, EditorSection } from '../../modules/editor';
 import {
-  extractToEmail,
+  queriesActions,
   getQueryResults,
   getQueryPerformState,
   getQueryLimitReached,
-  setQuerySettings,
 } from '../../modules/queries';
 import {
   getVisualization,
@@ -44,7 +43,8 @@ import {
 } from '../../modules/app';
 
 import EditorNavigation from '../EditorNavigation';
-import RunQuery, { runQueryLabel } from '../RunQuery';
+import RunQuery from '../RunQuery';
+import ConfirmExtraction from '../ConfirmExtraction';
 import VisualizationPlaceholder from '../VisualizationPlaceholder';
 import QueryLimitReached from '../QueryLimitReached';
 
@@ -93,8 +93,8 @@ const Editor: FC<Props> = ({
     serializeInputSettings(widgetType, chartSettings, widgetSettings)
   );
 
-  const updateQuery = useCallback((query: Record<string, any>) => {
-    dispatch(setQuerySettings(query));
+  const updateQuery = useCallback((query: Query) => {
+    dispatch(queriesActions.setQuerySettings({ settings: query }));
   }, []);
 
   const updateChartSettings = useCallback(
@@ -105,124 +105,138 @@ const Editor: FC<Props> = ({
   );
 
   return (
-    <div id="editor">
-      <EditorNavigation onSaveQuery={onSaveQuery} />
-      <section>
-        {isQueryLimitReached && (
-          <QueryLimitReached upgradeSubscriptionUrl={upgradeSubscriptionUrl} />
-        )}
-        <Card>
-          {queryResults && !isQueryLimitReached && (
-            <Visualization
-              query={query}
-              queryResults={queryResults}
-              widgetType={widgetType}
-              chartSettings={chartSettings}
-              widgetSettings={widgetSettings}
-              onChangeVisualization={(settings) => {
-                const chart = serializeOutputSettings(
-                  settings.widgetType,
-                  widgetCustomization.chart
-                );
-                dispatch(
-                  setVisualization(
+    <>
+      <Container id="editor" data-testid="editor">
+        <EditorNavigation onSaveQuery={onSaveQuery} />
+        <section>
+          {isQueryLimitReached && (
+            <QueryLimitReached
+              upgradeSubscriptionUrl={upgradeSubscriptionUrl}
+            />
+          )}
+          <Card>
+            {queryResults && !isQueryLimitReached && (
+              <Visualization
+                query={query}
+                queryResults={queryResults}
+                widgetType={widgetType}
+                chartSettings={chartSettings}
+                widgetSettings={widgetSettings}
+                onChangeVisualization={(settings) => {
+                  const chart = serializeOutputSettings(
                     settings.widgetType,
-                    {
-                      ...settings.chartSettings,
-                      ...chart,
-                    },
-                    {
-                      ...settings.widgetSettings,
-                      ...(widgetCustomization.widget as WidgetSettings),
-                    }
-                  )
-                );
-                dispatch(updateVisualizationType(settings.widgetType));
-              }}
-            />
-          )}
-          {!queryResults && !isQueryLimitReached && (
-            <VisualizationPlaceholder isLoading={isQueryLoading} />
-          )}
-        </Card>
-      </section>
-      <NavBar>
-        <SectionTabs
-          activeSection={editorSection}
-          onChangeSection={(activeSection) => {
-            setEditorSection(activeSection);
-            dispatch(editorSagaActions.changeEditorSection(activeSection));
-          }}
-        />
-      </NavBar>
-      {editorSection === EditorSection.SETTINGS && (
-        <SectionContainer>
-          <CustomizationContainer>
-            <WidgetCustomization
-              customizationSections={customizationSections}
-              chartSettings={widgetCustomization.chart}
-              widgetSettings={widgetCustomization.widget}
-              savedQueryName={savedQueryName}
-              onUpdateWidgetSettings={(widgetSettings) => {
-                dispatch(updateWidgetSettings(widgetSettings));
-
-                setCustomizationSettings((state) => ({
-                  ...state,
-                  widget: widgetSettings,
-                }));
-              }}
-              onUpdateChartSettings={(chartSettings) => {
-                const chart = serializeOutputSettings(
-                  widgetType,
-                  chartSettings
-                );
-                updateChartSettings(chart);
-
-                setCustomizationSettings((state) => ({
-                  ...state,
-                  chart: chartSettings,
-                }));
-              }}
-              modalContainer={modalContainer}
-            />
-          </CustomizationContainer>
-        </SectionContainer>
-      )}
-      {editorSection === EditorSection.QUERY && (
-        <QueryContainer>
-          <Creator
-            onUpdateQuery={updateQuery}
-            onUpdateChartSettings={updateChartSettings}
+                    widgetCustomization.chart
+                  );
+                  dispatch(
+                    setVisualization(
+                      settings.widgetType,
+                      {
+                        ...settings.chartSettings,
+                        ...chart,
+                      },
+                      {
+                        ...settings.widgetSettings,
+                        ...(widgetCustomization.widget as WidgetSettings),
+                      }
+                    )
+                  );
+                  dispatch(updateVisualizationType(settings.widgetType));
+                }}
+              />
+            )}
+            {!queryResults && !isQueryLimitReached && (
+              <VisualizationPlaceholder isLoading={isQueryLoading} />
+            )}
+          </Card>
+        </section>
+        <NavBar>
+          <SectionTabs
+            activeSection={editorSection}
+            onChangeSection={(activeSection) => {
+              setEditorSection(activeSection);
+              dispatch(editorSagaActions.changeEditorSection(activeSection));
+            }}
           />
-        </QueryContainer>
-      )}
-      <EditorActions>
-        <RunQuery isLoading={isQueryLoading} onClick={() => onRunQuery()}>
-          {t(runQueryLabel(query))}
-        </RunQuery>
-        {showEmailExtraction(query) && (
-          <ActionButton data-testid="email-extraction">
+        </NavBar>
+        {editorSection === EditorSection.SETTINGS && (
+          <SectionContainer>
+            <CustomizationContainer>
+              <WidgetCustomization
+                customizationSections={customizationSections}
+                chartSettings={widgetCustomization.chart}
+                widgetSettings={widgetCustomization.widget}
+                savedQueryName={savedQueryName}
+                onUpdateWidgetSettings={(widgetSettings) => {
+                  dispatch(updateWidgetSettings(widgetSettings));
+
+                  setCustomizationSettings((state) => ({
+                    ...state,
+                    widget: widgetSettings,
+                  }));
+                }}
+                onUpdateChartSettings={(chartSettings) => {
+                  const chart = serializeOutputSettings(
+                    widgetType,
+                    chartSettings
+                  );
+                  updateChartSettings(chart);
+
+                  setCustomizationSettings((state) => ({
+                    ...state,
+                    chart: chartSettings,
+                  }));
+                }}
+                modalContainer={modalContainer}
+              />
+            </CustomizationContainer>
+          </SectionContainer>
+        )}
+        {editorSection === EditorSection.QUERY && (
+          <SectionContainer>
+            <Creator
+              onUpdateQuery={updateQuery}
+              onUpdateChartSettings={updateChartSettings}
+            />
+          </SectionContainer>
+        )}
+        <EditorActions>
+          {isExtraction(query) ? (
+            <>
+              <RunQuery
+                isLoading={isQueryLoading}
+                onClick={() => dispatch(queriesActions.runExtraction(query))}
+              >
+                {t('editor.preview_events_button')}
+              </RunQuery>
+              <ActionButton data-testid="email-extraction">
+                <Button
+                  variant="success"
+                  size="large"
+                  onClick={() => dispatch(queriesActions.extractToEmail())}
+                >
+                  {t('editor.extract_to_email_button')}
+                </Button>
+              </ActionButton>
+            </>
+          ) : (
+            <RunQuery isLoading={isQueryLoading} onClick={() => onRunQuery()}>
+              {t('editor.run_query_button')}
+            </RunQuery>
+          )}
+          <ActionButton>
             <Button
+              onClick={() => dispatch(clearQuery())}
+              style="outline"
               variant="success"
               size="large"
-              onClick={() => dispatch(extractToEmail())}
             >
-              {t('editor.extract_to_email_button')}
+              {t('editor.clear_query_button')}
             </Button>
           </ActionButton>
-        )}
-        <ActionButton>
-          <Button
-            onClick={() => dispatch(clearQuery())}
-            style="outline"
-            variant="success"
-            size="large"
-          >
-            {t('editor.clear_query_button')}
-          </Button>
-        </ActionButton>
-      </EditorActions>
-    </div>
+        </EditorActions>
+      </Container>
+      <ConfirmExtraction />
+    </>
   );
 };
 

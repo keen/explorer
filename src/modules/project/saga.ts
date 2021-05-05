@@ -2,11 +2,11 @@ import { takeLatest, put } from 'redux-saga/effects';
 
 import { updateTagsPool } from './actions';
 
-import { getSavedQueriesSuccess, GET_SAVED_QUERIES_SUCCESS } from '../queries';
+import { queriesActions } from '../queries';
 
 export function* updateTags({
   payload: { queries },
-}: ReturnType<typeof getSavedQueriesSuccess>) {
+}: ReturnType<typeof queriesActions.getSavedQueriesSuccess>) {
   const tagsPool = new Set<string>();
   yield queries.forEach(({ tags }) =>
     tags.forEach((tag: string) => tagsPool.add(tag))
@@ -15,5 +15,5 @@ export function* updateTags({
 }
 
 export function* projectSaga() {
-  yield takeLatest(GET_SAVED_QUERIES_SUCCESS, updateTags);
+  yield takeLatest(queriesActions.getSavedQueriesSuccess.type, updateTags);
 }

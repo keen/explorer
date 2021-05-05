@@ -17,10 +17,6 @@ exports[`should render <StyledTable/> 1`] = `
   padding: 0 0 10px 0;
 }
 
-.c1 {
-  vertical-align: top;
-}
-
 .c1:last-child .c2,
 .c1:last-child .c4 {
   padding-bottom: 0;
