@@ -69,6 +69,7 @@
     "saving_query": "Saving query",
     "close_button": "Cancel",
     "new_query_notice": "Create your saved query",
+    "cloned_query_notice": "Rename your cloned query to save it",
     "cached_queries_limit_reached": "The limit of cached queries for your organization has been reached.",
     "upgrade_anchor": "Upgrade plan",
     "upgrade_connector": "or",
@@ -180,10 +181,10 @@
     "tooltip_end": " data type)"
   },
   "query_creator_timeframe": {
+    "notification": "(Charts display time in UTC)",
     "label": "Timeframe",
     "relative": "Relative",
-    "absolute": "Absolute",
-    "notification": "(Charts display time in UTC)"
+    "absolute": "Absolute"
   },
   "cache_query": {
     "refresh_interval": "- Refresh interval",
@@ -221,8 +222,8 @@
     "updated": "Updated"
   },
   "queries_list_item": {
-      "cached_label": "Cached",
-      "cache_units": "h"
+    "cached_label": "Cached",
+    "cache_units": "h"
   },
   "absolute_timeframe": {
     "separator": "to"
@@ -265,7 +266,8 @@
     "empty_search_results": "No property found with this name"
   },
   "query_creator_filter_value": {
-    "placeholder": "value"
+    "placeholder": "value",
+    "input_text_placeholder": "case sensitive value"
   },
   "query_creator_geo_coordinates": {
     "lat_label": "Lat:",
@@ -349,11 +351,11 @@
     "empty_search_results": "No property found with this name"
   },
   "query_creator_timezone": {
-    "placeholder": "Select timezone",
     "empty_search": "No timezone found with this criteria",
     "selection_disabled_description": "Timezone for your metrics is the same as your site configuration.",
     "loading": "Loading list of time zones",
     "error": "We cannot load list of time zones. Try again later if you need to check data for specific time zone.",
+    "placeholder": "Select timezone",
     "label": "Timezone"
   },
   "query_creator_extraction_properties": {
