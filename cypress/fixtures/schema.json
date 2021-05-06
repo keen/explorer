@@ -1,0 +1,10 @@
+{
+  "properties": {
+    "active": "bool",
+    "item": "string",
+    "keen.created_at": "datetime",
+    "keen.id": "string",
+    "keen.timestamp": "datetime",
+    "price": "num"
+  }
+}
