@@ -22,7 +22,7 @@ And(`Select "Average" analysis`, () => {
 });
 
 Then(`Target property field is presented on a screen`, () => {
-  cy.contains('Target property').should('exist');
+  cy.contains('Target Property').should('exist');
 });
 
 When(`I click on "Interval" field`, () => {

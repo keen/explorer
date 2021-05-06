@@ -1,37 +1,37 @@
 {
   "actions_menu": {
-    "delete_query": "Delete query",
-    "share_query": "Share query",
+    "delete_query": "Delete Query",
+    "share_query": "Share Query",
     "export_result": "Download result as",
     "image": "Image",
     "json": "JSON",
     "csv": "CSV",
     "tooltip": "Run query to download result",
     "embed_html": "Embed HTML",
-    "api_resource": "API resource",
-    "clone_query": "Clone query",
-    "new_query": "New query"
+    "api_resource": "API Resource",
+    "clone_query": "Clone Query",
+    "new_query": "New Query"
   },
   "embed_widget": {
     "embed_html_title": "Embed HTML",
-    "copy_code_button": "Copy code",
-    "download_file_button": "Download HTML file",
+    "copy_code_button": "Copy Code",
+    "download_file_button": "Download HTML File",
     "close_button": "Close"
   },
   "visualization_placeholder": {
     "message": "Run Query to Explore Your Data",
     "loading_message": "Creating visualization",
-    "run_query_button": "Run query"
+    "run_query_button": "Run Query"
   },
   "extract_to_email": {
     "modal_title": "Extraction Settings",
-    "limit_label": "Limit number of events",
+    "limit_label": "Limit Number of Events",
     "limit_max_label": "(max 10,000,000)",
     "limit_input_placeholder": "Events limit",
     "email_label": "Send to Email",
     "email_input_placeholder": "example@domain.com",
     "button_label": "Extract to Email",
-    "file_format_label": "File format",
+    "file_format_label": "File Format",
     "email_error": "Please provide a valid email address",
     "content_encoding_label": "Compress to GZIP",
     "close_button": "Cancel"
@@ -45,9 +45,9 @@
     "cancel": "Cancel"
   },
   "extraction": {
-    "preview_extraction": "Preview events",
+    "preview_extraction": "Preview Events",
     "email_extraction": "Extract to Email",
-    "limit_label": "Limit number of events",
+    "limit_label": "Limit Number of Events",
     "limit_placeholder": "Events limit",
     "maximum_events_limit": "The maximum number of events for preview is 100,000.",
     "maximum_email_events_limit": "Maximum number of events for email extraction is 10,000,000.",
@@ -57,11 +57,11 @@
     "title": "Properties to Extract",
     "full_extraction": "Select properties to extract. All will be extracted by default.",
     "filtered_extraction": " Extracting only selected properties.",
-    "clear_properties": "Clear to extract all."
+    "clear_properties": "Clear to Extract All."
   },
   "query_settings": {
-    "modal_title": "Query Settings",
-    "query_name_label": "Query name",
+    "modal_title": "Query Info",
+    "query_name_label": "Query Name",
     "query_name_error": "Query name is required",
     "query_unique_name_error": "Saved Query with this name already exists",
     "query_name_input_placeholder": "Give your query a name",
@@ -71,7 +71,7 @@
     "new_query_notice": "Create your saved query",
     "cloned_query_notice": "Rename your cloned query to save it",
     "cached_queries_limit_reached": "The limit of cached queries for your organization has been reached.",
-    "upgrade_anchor": "Upgrade plan",
+    "upgrade_anchor": "Upgrade Plan",
     "upgrade_connector": "or",
     "uncache_query": "uncache other saved query."
   },
@@ -94,15 +94,15 @@
   },
   "browser_filters": {
     "title": "Filters",
-    "show_only_cached_queries": "Only cached queries",
+    "show_only_cached_queries": "Only Cached Queries",
     "search_label": "Tags",
     "search_tags_input_placeholder": "Search tag",
     "empty_search_message": "No tags found with this name",
-    "clear": "Clear filters"
+    "clear": "Clear Filters"
   },
   "browser_query_menu": {
-    "edit_query": "Edit query",
-    "settings_tooltip": "Query Settings",
+    "edit_query": "Edit Query",
+    "settings_tooltip": "Query Info",
     "actions_tooltip": "Actions"
   },
   "browser_preview": {
@@ -119,17 +119,17 @@
     "step": "Step"
   },
   "editor": {
-    "settings_section": "SETTINGS",
-    "query_section": "QUERY",
     "clear_query_button": "Clear",
     "run_query_button": "Run Query",
-    "preview_events_button": "Preview events",
+    "preview_events_button": "Preview Events",
     "extract_to_email_button": "Extract to Email",
     "back_to_saved_queries": "Go to Saved Queries",
     "save_query_button": "Save Query",
-    "settings_tooltip": "Query Settings",
+    "settings_tooltip": "Query Info",
     "actions_tooltip": "Actions",
-    "new_query_title": "New Query"
+    "new_query_title": "New Query",
+    "settings_section": "SETTINGS",
+    "query_section": "QUERY"
   },
   "notifications": {
     "execute_extraction_error": "We were not able to perform extraction. Please try again later.",
@@ -143,7 +143,7 @@
     "csv_download_error": "CSV download failed. Please try again later.",
     "copy_embedded_code_success": "HTML code copied to clipboard",
     "copy_embedded_code_error": "We were not able to copy HTML code. Try again later.",
-    "load_share_query_error": "We were not able to load shared query. Try again later.",
+    "load_share_query_error": "We were not able to load the shared query. Try again later.",
     "share_query_success": "Query link generated and copied to clipboard",
     "share_query_error": "We were not able to generate the link. Try again later.",
     "copy_api_resource_url": "API Resource copied to clipboard",
@@ -168,7 +168,7 @@
     "empty_search_results": "No stream found with this name"
   },
   "query_creator_target_property": {
-    "label": "Target property",
+    "label": "Target Property",
     "placeholder": "Select event property",
     "search_placeholder": "Search",
     "empty_search_results": "No property found with this name",
@@ -181,20 +181,20 @@
     "tooltip_end": " data type)"
   },
   "query_creator_timeframe": {
-    "notification": "(Charts display time in UTC)",
     "label": "Timeframe",
     "relative": "Relative",
-    "absolute": "Absolute"
+    "absolute": "Absolute",
+    "notification": "(Charts display time in UTC)"
   },
   "cache_query": {
-    "refresh_interval": "- Refresh interval",
+    "refresh_interval": "- Refresh Interval",
     "queries_limit": "Limit reached",
-    "cache": "Cache query"
+    "cache": "Cache Query"
   },
   "limit_tooltip": {
     "disable_message": "Disable caching for other saved query",
     "cached_queries": "cached queries",
-    "upgrade_anchor": "Upgrade plan",
+    "upgrade_anchor": "Upgrade Plan",
     "upgrade_connector": "or",
     "limit_reached_message": "You have reached the limit of cached queries for your organization"
   },
@@ -291,7 +291,7 @@
     "first_step_inverted_tooltip": "The first step cannot be inverted"
   },
   "query_creator_funnel_steps": {
-    "add_step": "Add step"
+    "add_step": "Add Step"
   },
   "query_creator_group_by": {
     "title": "Group by",
@@ -306,7 +306,7 @@
     "tooltip": "Select the frequency to view data across the specified timeframe"
   },
   "query_creator_limit": {
-    "label": "Limit results to",
+    "label": "Limit Results to",
     "placeholder": "Limit to",
     "select": "Select",
     "event_stream": "Event Stream",
@@ -351,12 +351,12 @@
     "empty_search_results": "No property found with this name"
   },
   "query_creator_timezone": {
-    "empty_search": "No timezone found with this criteria",
-    "selection_disabled_description": "Timezone for your metrics is the same as your site configuration.",
+    "placeholder": "Select time zone",
+    "label": "Time Zone",
+    "empty_search": "No time zone found with this criteria",
+    "selection_disabled_description": "Time zone for your metrics is the same as your site configuration.",
     "loading": "Loading list of time zones",
-    "error": "We cannot load list of time zones. Try again later if you need to check data for specific time zone.",
-    "placeholder": "Select timezone",
-    "label": "Timezone"
+    "error": "We cannot load a list of time zones. Try again later if you need to check data for a specific time zone."
   },
   "query_creator_extraction_properties": {
     "select": "Select",
@@ -380,9 +380,9 @@
   "widget_customization_heading_settings": {
     "section_title": "Basic Info",
     "section_description": "(Add context to your data by applying Title and Subtitle)",
-    "title_label": "Chart title",
+    "title_label": "Chart Title",
     "title_placeholder": "Enter title",
-    "subtitle_label": "Chart subtitle",
+    "subtitle_label": "Chart Subtitle",
     "subtitle_placeholder": "Enter subtitle",
     "saved_query_name_label": "Saved Query name:",
     "saved_query_name_tooltip": "Click to use as Chart Title"
@@ -408,6 +408,6 @@
   "widget_customization": {
     "settings_disabled": "Run your query first",
     "settings_disabled_for_widget": "Settings do not affect {{widget}} visualization",
-    "format_values_not_avaialble": "No formating options for {{analysis}} analysis"
+    "format_values_not_avaialble": "No formatting options for {{analysis}} analysis"
   }
 }
