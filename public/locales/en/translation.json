@@ -103,7 +103,8 @@
   "browser_query_menu": {
     "edit_query": "Edit Query",
     "settings_tooltip": "Query Info",
-    "actions_tooltip": "Actions"
+    "actions_tooltip": "Actions",
+    "share_tooltip": "Share query"
   },
   "browser_preview": {
     "title": "Preview",

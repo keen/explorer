@@ -52,10 +52,7 @@ export const MenuItem = styled.div<PositionProps>`
 export const Menu = styled.div`
   display: flex;
   margin-left: auto;
-
-  div + div {
-    margin-left: 10px;
-  }
+  column-gap: 10px;
 `;
 
 export const BackLink = styled(motion.div)`
