@@ -2,7 +2,6 @@
 	"compilerOptions": {
 		"target": "es2015",
 		"moduleResolution": "node",
-		"downlevelIteration": true,
     "noUnusedParameters": false,
     "noUnusedLocals": true,
     "removeComments": true,
@@ -12,9 +11,7 @@
 		"allowSyntheticDefaultImports": true,
 		"downlevelIteration": true,
 		"esModuleInterop": true,
-		// "declaration": true,
     "outDir": "./lib",
-    // "declarationDir": "./dist",
     "module": "esnext",
     "jsx": "react",
 		"typeRoots": [ "./types", "./node_modules/@types"]

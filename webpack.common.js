@@ -9,6 +9,29 @@ const loadAppConfig = () => {
   return {};
 };
 
+const useTsLoaders = () => {
+  if (process.env.NODE_ENV === 'development') {
+    return [
+      {
+        loader: 'ts-loader',
+        options: {
+          configFile: 'tsconfig.json'
+        }
+      }
+    ];
+  }
+  return [
+    {
+      loader: 'babel-loader',
+    }, 
+    {
+    loader: 'ts-loader',
+    options: {
+      configFile: 'tsconfig.json'
+    }
+  }];
+}
+
 const createWebpackConfig = () => {
   const config = {
     entry: {
@@ -21,16 +44,7 @@ const createWebpackConfig = () => {
       rules: [
         {
           test: /\.tsx?$/,
-          use: [
-            {
-              loader: 'babel-loader',
-            }, 
-            {
-            loader: 'ts-loader',
-            options: {
-              configFile: 'tsconfig.json'
-            }
-          }],
+          use: useTsLoaders(),
         },
         {
           test: /\.css$/,
