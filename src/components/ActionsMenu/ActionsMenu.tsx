@@ -20,7 +20,6 @@ import {
 } from './ActionsMenu.styles';
 
 import {
-  shareQueryUrl,
   exportChartToImage,
   exportChartToJson,
   exportDataToCsv,
@@ -143,14 +142,6 @@ const ActionsMenu: FC<Props> = ({
           </DropdownMenu.Item>
         )}
         {!isNewQuery && <DropdownMenu.Divider />}
-        <DropdownMenu.Item
-          onClick={() => {
-            dispatch(shareQueryUrl());
-            onHideMenu();
-          }}
-        >
-          {t('actions_menu.share_query')}
-        </DropdownMenu.Item>
         <DropdownMenu.Item
           onClick={() => {
             dispatch(copyApiResourceUrl(config));

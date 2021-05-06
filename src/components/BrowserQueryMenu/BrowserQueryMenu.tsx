@@ -1,8 +1,12 @@
 import React, { FC, useRef, useState, useEffect, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { AnimatePresence } from 'framer-motion';
-import { Button, CircleButton, Dropdown, Tooltip } from '@keen.io/ui-core';
+import {
+  Button,
+  CircleButton,
+  Dropdown,
+  MousePositionedTooltip,
+} from '@keen.io/ui-core';
 import { Icon } from '@keen.io/icons';
 import { colors } from '@keen.io/colors';
 
@@ -12,13 +16,14 @@ import {
   BasicActions,
   ActionsContainer,
   ContextActions,
-  TooltipMotion,
 } from './BrowserQueryMenu.styles';
 
 import ActionsMenu from '../ActionsMenu';
-import { showQuerySettingsModal, SettingsModalSource } from '../../modules/app';
-
-import { TOOLTIP_MOTION } from '../../constants';
+import {
+  showQuerySettingsModal,
+  SettingsModalSource,
+  shareQueryUrl,
+} from '../../modules/app';
 
 const actionsDropdownMotion = {
   initial: { opacity: 0, top: 20, left: 37, translateX: '-100%' },
@@ -33,14 +38,17 @@ type Props = {
   onRemoveQuery: () => void;
 };
 
+const menuTooltip = (text: string) => (
+  <TooltipContent color={colors.black[500]}>{text}</TooltipContent>
+);
+
 const BrowserQueryMenu: FC<Props> = ({ onEditQuery, onRemoveQuery }) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const actionsContainer = useRef(null);
 
   const [actionsMenu, setActionsMenuVisibility] = useState(false);
-  const [actionsTooltip, showActionsTooltip] = useState(false);
-  const [settingsTooltip, showSettingsTooltip] = useState(false);
+
   const outsideActionsMenuClick = useCallback(
     (e) => {
       if (
@@ -70,74 +78,72 @@ const BrowserQueryMenu: FC<Props> = ({ onEditQuery, onRemoveQuery }) => {
         </Button>
       </BasicActions>
       <ContextActions data-testid="context-buttons">
-        <ActionsContainer
-          onMouseEnter={() => showSettingsTooltip(true)}
-          onMouseLeave={() => showSettingsTooltip(false)}
+        <MousePositionedTooltip
+          isActive={!actionsMenu}
+          renderContent={() =>
+            menuTooltip(t('browser_query_menu.settings_tooltip'))
+          }
         >
-          <CircleButton
-            variant="secondary"
-            icon={<Icon type="settings" />}
-            onClick={() => {
-              showSettingsTooltip(false);
-              dispatch(
-                showQuerySettingsModal(SettingsModalSource.QUERY_SETTINGS)
-              );
-            }}
-          />
-          <AnimatePresence>
-            {settingsTooltip && (
-              <TooltipMotion {...TOOLTIP_MOTION}>
-                <Tooltip hasArrow={false} mode="light">
-                  <TooltipContent color={colors.black[500]}>
-                    {t('browser_query_menu.settings_tooltip')}
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipMotion>
-            )}
-          </AnimatePresence>
-        </ActionsContainer>
-        <ActionsContainer
-          ref={actionsContainer}
-          marginLeft={10}
-          onMouseEnter={() => showActionsTooltip(true)}
-          onMouseLeave={() => showActionsTooltip(false)}
-        >
-          <CircleButton
-            variant="secondary"
-            icon={<Icon type="actions" />}
-            onClick={() => {
-              showActionsTooltip(false);
-              setActionsMenuVisibility(!actionsMenu);
-            }}
-          />
-          <Dropdown
-            isOpen={actionsMenu}
-            fullWidth={false}
-            motion={actionsDropdownMotion}
-          >
-            <ActionsMenu
-              isNewQuery={false}
-              isVisible={actionsMenu}
-              isInsideQueryBrowser
-              onHideMenu={() => setActionsMenuVisibility(false)}
-              onRemoveQuery={() => {
-                setActionsMenuVisibility(false);
-                onRemoveQuery();
+          <ActionsContainer>
+            <CircleButton
+              variant="secondary"
+              icon={<Icon type="settings" />}
+              onClick={() => {
+                dispatch(
+                  showQuerySettingsModal(SettingsModalSource.QUERY_SETTINGS)
+                );
               }}
             />
-          </Dropdown>
-          <AnimatePresence>
-            {actionsTooltip && (
-              <TooltipMotion {...TOOLTIP_MOTION}>
-                <Tooltip hasArrow={false} mode="light">
-                  <TooltipContent color={colors.black[500]}>
-                    {t('browser_query_menu.actions_tooltip')}
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipMotion>
-            )}
-          </AnimatePresence>
-        </ActionsContainer>
+          </ActionsContainer>
+        </MousePositionedTooltip>
+        <MousePositionedTooltip
+          isActive={!actionsMenu}
+          renderContent={() =>
+            menuTooltip(t('browser_query_menu.share_tooltip'))
+          }
+        >
+          <ActionsContainer data-testid="share-query" marginLeft={10}>
+            <CircleButton
+              variant="secondary"
+              icon={<Icon type="share" />}
+              onClick={() => {
+                dispatch(shareQueryUrl());
+              }}
+            />
+          </ActionsContainer>
+        </MousePositionedTooltip>
+        <MousePositionedTooltip
+          isActive={!actionsMenu}
+          renderContent={() =>
+            menuTooltip(t('browser_query_menu.actions_tooltip'))
+          }
+        >
+          <ActionsContainer ref={actionsContainer} marginLeft={10}>
+            <CircleButton
+              variant="secondary"
+              icon={<Icon type="actions" />}
+              onClick={() => {
+                setActionsMenuVisibility(!actionsMenu);
+              }}
+            />
+            <Dropdown
+              isOpen={actionsMenu}
+              fullWidth={false}
+              motion={actionsDropdownMotion}
+            >
+              <ActionsMenu
+                isNewQuery={false}
+                isVisible={actionsMenu}
+                isInsideQueryBrowser
+                onHideMenu={() => setActionsMenuVisibility(false)}
+                onRemoveQuery={() => {
+                  setActionsMenuVisibility(false);
+                  onRemoveQuery();
+                }}
+              />
+            </Dropdown>
+          </ActionsContainer>
+        </MousePositionedTooltip>
       </ContextActions>
     </Container>
   );

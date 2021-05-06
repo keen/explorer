@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import { position, PositionProps } from 'styled-system';
 import { motion } from 'framer-motion';
 import { colors } from '@keen.io/colors';
-import { UI_LAYERS } from '@keen.io/ui-core';
 import { BACKGROUND_MAIN } from '../../constants';
 
 export const Container = styled.div`
@@ -53,18 +52,7 @@ export const MenuItem = styled.div<PositionProps>`
 export const Menu = styled.div`
   display: flex;
   margin-left: auto;
-
-  ${MenuItem} + ${MenuItem} {
-    margin-left: 10px;
-  }
-`;
-
-export const TooltipMotion = styled(motion.div)`
-  position: absolute;
-  right: 0;
-  top: 100%;
-  transform: translateY(4px);
-  z-index: ${UI_LAYERS.tooltip};
+  column-gap: 10px;
 `;
 
 export const BackLink = styled(motion.div)`

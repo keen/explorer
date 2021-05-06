@@ -64,37 +64,6 @@ test("doesn't allow to remove new query", () => {
   expect(removeLink).toBeNull();
 });
 
-test('calls "onHideMenu" handler', () => {
-  const {
-    wrapper: { getByText },
-    props,
-  } = render();
-
-  const shareQuery = getByText('actions_menu.share_query');
-  fireEvent.click(shareQuery);
-
-  expect(props.onHideMenu).toHaveBeenCalled();
-});
-
-test('allows user to share query url', () => {
-  const {
-    wrapper: { getByText },
-    store,
-  } = render();
-
-  const shareQuery = getByText('actions_menu.share_query');
-  fireEvent.click(shareQuery);
-
-  expect(store.getActions()).toMatchInlineSnapshot(`
-    Array [
-      Object {
-        "payload": undefined,
-        "type": "@app/SHARE_QUERY_URL",
-      },
-    ]
-  `);
-});
-
 test('allows user to export results as image', () => {
   const {
     wrapper: { getByText },

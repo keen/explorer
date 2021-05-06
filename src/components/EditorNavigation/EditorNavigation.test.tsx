@@ -165,3 +165,24 @@ test('allows user to return to the saved queries list', () => {
     ]
   `);
 });
+
+test('allows user to share query url', () => {
+  const {
+    wrapper: { getByTestId },
+    store,
+  } = render();
+
+  const shareQuery = getByTestId('share-query');
+  const shareQueryBtn = shareQuery.querySelector('button');
+
+  fireEvent.click(shareQueryBtn);
+
+  expect(store.getActions()).toMatchInlineSnapshot(`
+    Array [
+      Object {
+        "payload": undefined,
+        "type": "@app/SHARE_QUERY_URL",
+      },
+    ]
+  `);
+});
