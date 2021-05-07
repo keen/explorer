@@ -5,6 +5,9 @@
     "keen.created_at": "datetime",
     "keen.id": "string",
     "keen.timestamp": "datetime",
-    "price": "num"
+    "price": "num",
+    "name": "string",
+    "status": "string",
+    "material": "string"
   }
 }

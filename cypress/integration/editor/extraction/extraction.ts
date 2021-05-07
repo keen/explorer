@@ -23,12 +23,12 @@ Given(`I open a Data Explorer application in editor view`, () => {
   cy.contains('New Query').click();
 });
 
-Given(`Select "Extraction" analysis`, () => {
+And(`Select "Extraction" analysis`, () => {
   cy.contains('count').click();
   cy.contains('Extraction').click();
 });
 
-Given(`Select Event stream`, () => {
+And(`Select Event stream`, () => {
   cy.contains('Select event stream').click();
   cy.contains('event_stream').click();
 });
@@ -46,10 +46,11 @@ And(`Close the modal`, () => {
 });
 
 When(`I add more properties than limit to extract`, () => {
-  for (let i = 0; i++; i <= 6) {
-    cy.get('.add-button').click();
-    cy.contains('active').click();
-  }
+  ['active', 'name', 'price', 'status', 'material', 'item'].forEach(
+    (propertyName) => {
+      cy.addExtractionProperty(propertyName);
+    }
+  );
 });
 
 And(`Click on "Preview Events" button`, () => {
@@ -65,8 +66,7 @@ And(`Close the modal`, () => {
 });
 
 When(`I add less properties than limit to extract`, () => {
-  cy.get('.add-button').click();
-  cy.contains('active').click();
+  cy.addExtractionProperty('active');
 });
 
 And(`Click on "Preview Events" button`, () => {

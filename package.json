@@ -133,6 +133,7 @@
     "css-loader": "^2.1.0",
     "cypress": "^7.1.0",
     "cypress-cucumber-preprocessor": "^4.0.3",
+    "cypress-wait-until": "^1.7.1",
     "cz-conventional-changelog": "^3.0.2",
     "eslint": "^7.0.0",
     "eslint-config-airbnb": "^16.1.0",
