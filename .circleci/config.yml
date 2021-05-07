@@ -84,10 +84,7 @@ jobs:
           command: yarn test:ci
       - run:
           name: Upload code coverage
-          command: |
-            if [ "$CIRCLE_BRANCH" = "develop" ]; then
-              npx codecov --token=$CODECOV_TOKEN
-            fi
+          command: npx codecov --token=$CODECOV_TOKEN
       - run:
           name: Build
           command: yarn build
