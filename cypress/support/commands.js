@@ -9,17 +9,11 @@
 // ***********************************************
 //
 //
-// -- This is a parent command --
-// Cypress.Commands.add('login', (email, password) => { ... })
-//
-//
-// -- This is a child command --
-// Cypress.Commands.add('drag', { prevSubject: 'element'}, (subject, options) => { ... })
-//
-//
-// -- This is a dual command --
-// Cypress.Commands.add('dismiss', { prevSubject: 'optional'}, (subject, options) => { ... })
-//
-//
-// -- This will overwrite an existing command --
-// Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+import 'cypress-wait-until';
+
+Cypress.Commands.add('addExtractionProperty', (propertyName) => {
+  cy.get('.add-button').click();
+  cy.get('[data-testid="properties-tree"]').contains(propertyName).click();
+  cy.wait(1000);
+});
