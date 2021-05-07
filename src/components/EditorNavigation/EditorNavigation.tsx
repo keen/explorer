@@ -140,6 +140,7 @@ const EditorNavigation: FC<Props> = ({ onSaveQuery }) => {
       <Menu>
         <MousePositionedTooltip
           isActive={!actionsMenu}
+          tooltipPinPlacement="bottom-left"
           renderContent={() => menuTooltip(t('editor.settings_tooltip'))}
         >
           <MenuItem position="relative">
@@ -161,6 +162,7 @@ const EditorNavigation: FC<Props> = ({ onSaveQuery }) => {
 
         <MousePositionedTooltip
           isActive={!actionsMenu}
+          tooltipPinPlacement="bottom-left"
           renderContent={() => menuTooltip(t('actions_menu.share_query'))}
         >
           <MenuItem position="relative" data-testid="share-query">
@@ -179,6 +181,7 @@ const EditorNavigation: FC<Props> = ({ onSaveQuery }) => {
         </MousePositionedTooltip>
         <MousePositionedTooltip
           isActive={!actionsMenu}
+          tooltipPinPlacement="bottom-left"
           renderContent={() => menuTooltip(t('editor.actions_tooltip'))}
         >
           <MenuItem position="relative" ref={actionsContainer}>
