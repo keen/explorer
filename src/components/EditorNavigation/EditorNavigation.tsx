@@ -1,14 +1,14 @@
 import React, { FC, useState, useRef, useCallback, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { AnimatePresence, motion } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import {
   Button,
   Badge,
   CircleButton,
   Dropdown,
-  Tooltip,
   FadeLoader,
+  MousePositionedTooltip,
 } from '@keen.io/ui-core';
 import { Icon } from '@keen.io/icons';
 
@@ -20,7 +20,6 @@ import {
   Tag,
   Menu,
   MenuItem,
-  TooltipMotion,
   BackLink,
   BackLinkText,
   WrapperHorizontal,
@@ -37,10 +36,9 @@ import {
   switchToQueriesList,
   getQuerySettingsModalVisibility,
   SettingsModalSource,
+  shareQueryUrl,
 } from '../../modules/app';
 import { colors } from '@keen.io/colors';
-
-import { TOOLTIP_MOTION } from '../../constants';
 
 const actionsDropdownMotion = {
   initial: { opacity: 0, top: 20, left: -10 },
@@ -57,6 +55,9 @@ const iconVariants = {
   initial: { x: 0 },
   hover: { x: -5 },
 };
+const menuTooltip = (text: string) => (
+  <TooltipContent color={colors.black[500]}>{text}</TooltipContent>
+);
 
 const EditorNavigation: FC<Props> = ({ onSaveQuery }) => {
   const { t } = useTranslation();
@@ -64,8 +65,7 @@ const EditorNavigation: FC<Props> = ({ onSaveQuery }) => {
   const actionsContainer = useRef(null);
 
   const [actionsMenu, setActionsMenuVisibility] = useState(false);
-  const [actionsTooltip, showActionsTooltip] = useState(false);
-  const [settingsTooltip, showSettingsTooltip] = useState(false);
+
   const {
     exists,
     displayName,
@@ -138,78 +138,74 @@ const EditorNavigation: FC<Props> = ({ onSaveQuery }) => {
         </BackLink>
       </WrapperVertical>
       <Menu>
-        <MenuItem
-          position="relative"
-          onMouseEnter={() => showSettingsTooltip(true)}
-          onMouseLeave={() => showSettingsTooltip(false)}
+        <MousePositionedTooltip
+          isActive={!actionsMenu}
+          renderContent={() => menuTooltip(t('editor.settings_tooltip'))}
         >
-          <CircleButton
-            variant="secondary"
-            icon={
-              <span data-testid="query-settings">
-                <Icon type="settings" />
-              </span>
-            }
-            onClick={() => {
-              showSettingsTooltip(false);
-              dispatch(
-                showQuerySettingsModal(SettingsModalSource.QUERY_SETTINGS)
-              );
-            }}
-          />
-          <AnimatePresence>
-            {settingsTooltip && (
-              <TooltipMotion {...TOOLTIP_MOTION}>
-                <Tooltip hasArrow={false} mode="light">
-                  <TooltipContent color={colors.black[500]}>
-                    {t('editor.settings_tooltip')}
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipMotion>
-            )}
-          </AnimatePresence>
-        </MenuItem>
-        <MenuItem position="relative" ref={actionsContainer}>
-          <div
-            onMouseEnter={() => showActionsTooltip(true)}
-            onMouseLeave={() => showActionsTooltip(false)}
-          >
+          <MenuItem position="relative">
+            <CircleButton
+              variant="secondary"
+              icon={
+                <span data-testid="query-settings">
+                  <Icon type="settings" />
+                </span>
+              }
+              onClick={() => {
+                dispatch(
+                  showQuerySettingsModal(SettingsModalSource.QUERY_SETTINGS)
+                );
+              }}
+            />
+          </MenuItem>
+        </MousePositionedTooltip>
+
+        <MousePositionedTooltip
+          isActive={!actionsMenu}
+          renderContent={() => menuTooltip(t('actions_menu.share_query'))}
+        >
+          <MenuItem position="relative" data-testid="share-query">
+            <CircleButton
+              variant="secondary"
+              icon={
+                <span>
+                  <Icon type="share" />
+                </span>
+              }
+              onClick={() => {
+                dispatch(shareQueryUrl());
+              }}
+            />
+          </MenuItem>
+        </MousePositionedTooltip>
+        <MousePositionedTooltip
+          isActive={!actionsMenu}
+          renderContent={() => menuTooltip(t('editor.actions_tooltip'))}
+        >
+          <MenuItem position="relative" ref={actionsContainer}>
             <CircleButton
               variant="secondary"
               icon={<Icon type="actions" />}
               onClick={() => {
-                showActionsTooltip(false);
                 setActionsMenuVisibility(!actionsMenu);
               }}
             />
-          </div>
-          <Dropdown
-            isOpen={actionsMenu}
-            fullWidth={false}
-            motion={actionsDropdownMotion}
-          >
-            <ActionsMenu
-              isNewQuery={!exists}
-              isVisible={actionsMenu}
-              onHideMenu={() => setActionsMenuVisibility(false)}
-              onRemoveQuery={() => {
-                setActionsMenuVisibility(false);
-                dispatch(queriesActions.deleteQuery(name));
-              }}
-            />
-          </Dropdown>
-          <AnimatePresence>
-            {actionsTooltip && (
-              <TooltipMotion {...TOOLTIP_MOTION}>
-                <Tooltip hasArrow={false} mode="light">
-                  <TooltipContent color={colors.black[500]}>
-                    {t('editor.actions_tooltip')}
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipMotion>
-            )}
-          </AnimatePresence>
-        </MenuItem>
+            <Dropdown
+              isOpen={actionsMenu}
+              fullWidth={false}
+              motion={actionsDropdownMotion}
+            >
+              <ActionsMenu
+                isNewQuery={!exists}
+                isVisible={actionsMenu}
+                onHideMenu={() => setActionsMenuVisibility(false)}
+                onRemoveQuery={() => {
+                  setActionsMenuVisibility(false);
+                  dispatch(queriesActions.deleteQuery(name));
+                }}
+              />
+            </Dropdown>
+          </MenuItem>
+        </MousePositionedTooltip>
         <MenuItem>
           <Button
             data-testid="save-query"
