@@ -80,6 +80,7 @@ const BrowserQueryMenu: FC<Props> = ({ onEditQuery, onRemoveQuery }) => {
       <ContextActions data-testid="context-buttons">
         <MousePositionedTooltip
           isActive={!actionsMenu}
+          tooltipPinPlacement="bottom-left"
           renderContent={() =>
             menuTooltip(t('browser_query_menu.settings_tooltip'))
           }
@@ -98,6 +99,7 @@ const BrowserQueryMenu: FC<Props> = ({ onEditQuery, onRemoveQuery }) => {
         </MousePositionedTooltip>
         <MousePositionedTooltip
           isActive={!actionsMenu}
+          tooltipPinPlacement="bottom-left"
           renderContent={() =>
             menuTooltip(t('browser_query_menu.share_tooltip'))
           }
@@ -114,6 +116,7 @@ const BrowserQueryMenu: FC<Props> = ({ onEditQuery, onRemoveQuery }) => {
         </MousePositionedTooltip>
         <MousePositionedTooltip
           isActive={!actionsMenu}
+          tooltipPinPlacement="bottom-left"
           renderContent={() =>
             menuTooltip(t('browser_query_menu.actions_tooltip'))
           }
