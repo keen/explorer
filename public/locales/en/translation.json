@@ -37,7 +37,7 @@
     "close_button": "Cancel"
   },
   "extraction_confirmation": {
-    "title": "Large number of properties",
+    "title": "Large Number of Properties",
     "alert": "You are extracting events with a large number of properties. Rendering the table may take a while.",
     "message": "Consider extraction to email or selecting specific properties to get results faster.",
     "confirm_button": "Run Anyway",
@@ -66,7 +66,7 @@
     "query_unique_name_error": "Saved Query with this name already exists",
     "query_name_input_placeholder": "Give your query a name",
     "save_query_button": "Save Query",
-    "saving_query": "Saving query",
+    "saving_query": "Saving Query",
     "close_button": "Cancel",
     "new_query_notice": "Create your saved query",
     "cloned_query_notice": "Rename your cloned query to save it",
@@ -104,7 +104,7 @@
     "edit_query": "Edit Query",
     "settings_tooltip": "Query Info",
     "actions_tooltip": "Actions",
-    "share_tooltip": "Share query"
+    "share_tooltip": "Share Query"
   },
   "browser_preview": {
     "title": "Preview",
