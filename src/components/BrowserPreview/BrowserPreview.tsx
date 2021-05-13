@@ -29,6 +29,13 @@ import {
   getQueryAutorun,
   getVisualization,
 } from '../../modules/app';
+import NoPropertiesOnEventStream from './components/NoPropertiesOnEventStream/NoPropertiesOnEventStream';
+import {
+  getSavedQueryIsEditable,
+  getSavedQueryLoading,
+} from '../../modules/savedQuery/selectors';
+import { getNotExistingEventStreams } from '../../modules/schemas/selectors';
+import { getMissingEventStreams } from './utils';
 
 type Props = {
   /** Current active query */
@@ -38,7 +45,6 @@ type Props = {
   /** Edit query event handler */
   onEditQuery: (queryName: string) => void;
 };
-
 const BrowserPreview: FC<Props> = ({
   currentQuery,
   onEditQuery,
@@ -46,12 +52,23 @@ const BrowserPreview: FC<Props> = ({
 }) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
-
   const queryResults = useSelector(getQueryResults);
   const isQueryLoading = useSelector(getQueryPerformState);
   const isQueryLimitReached = useSelector(getQueryLimitReached);
   const autorunQuery = useSelector(getQueryAutorun);
   const { chartSettings } = useSelector(getVisualization);
+
+  const isSavedQueryLoading = useSelector(getSavedQueryLoading);
+  const isSavedQueryEditable = useSelector(getSavedQueryIsEditable);
+  const notExistingEventStreams = useSelector(getNotExistingEventStreams);
+  let savedQueryMissingStreams = [];
+
+  if (!isSavedQueryEditable) {
+    savedQueryMissingStreams = getMissingEventStreams(
+      currentQuery,
+      notExistingEventStreams
+    );
+  }
 
   return (
     <>
@@ -74,22 +91,30 @@ const BrowserPreview: FC<Props> = ({
                 {currentQuery.displayName}
               </QueryTitle>
             )}
-            {currentQuery && queryResults ? (
-              <VisualizationWrapper
-                widgetType={currentQuery.visualization.type}
-              >
-                <QueryVisualization
-                  widgetType={currentQuery.visualization.type}
-                  widgetSettings={currentQuery.visualization.widgetSettings}
-                  chartSettings={currentQuery.visualization.chartSettings}
-                  queryResults={queryResults}
-                />
-              </VisualizationWrapper>
-            ) : (
-              <VisualizationPlaceholder
-                isLoading={isQueryLoading}
-                onRunQuery={onRunQuery}
+            {!isSavedQueryEditable && !isSavedQueryLoading ? (
+              <NoPropertiesOnEventStream
+                missingEventStreams={savedQueryMissingStreams}
               />
+            ) : (
+              <>
+                {currentQuery && queryResults ? (
+                  <VisualizationWrapper
+                    widgetType={currentQuery.visualization.type}
+                  >
+                    <QueryVisualization
+                      widgetType={currentQuery.visualization.type}
+                      widgetSettings={currentQuery.visualization.widgetSettings}
+                      chartSettings={currentQuery.visualization.chartSettings}
+                      queryResults={queryResults}
+                    />
+                  </VisualizationWrapper>
+                ) : (
+                  <VisualizationPlaceholder
+                    isLoading={isQueryLoading}
+                    onRunQuery={onRunQuery}
+                  />
+                )}
+              </>
             )}
           </>
         )}

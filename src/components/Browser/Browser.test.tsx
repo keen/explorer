@@ -122,6 +122,9 @@ test('renders empty search message', () => {
         limitReached: false,
       },
     },
+    schemas: {
+      notExistingEventStreams: [],
+    },
   });
 
   const input = container.querySelector('input');
@@ -164,6 +167,9 @@ test('allows user to filter queries based on search phrase', () => {
         queriesExecution: {
           limitReached: false,
         },
+      },
+      schemas: {
+        notExistingEventStreams: [],
       },
     },
     {}

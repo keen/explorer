@@ -11,8 +11,7 @@ import { KEEN_CLIENT_CONTEXT } from '../../../constants';
 
 describe('Scenario 1: Succesfully fetch schema properties', () => {
   function* wrapper() {
-    const result = yield* fetchEventStreamProperties('purchases');
-    return result;
+    return yield* fetchEventStreamProperties('purchases');
   }
 
   const schemaProperties = {
@@ -62,9 +61,9 @@ describe('Scenario 1: Succesfully fetch schema properties', () => {
 });
 
 describe('Scenario 2: Fetch schema properties failed', () => {
+  const eventStream = 'purchases';
   function* wrapper() {
-    const result = yield* fetchEventStreamProperties('purchases');
-    return result;
+    return yield* fetchEventStreamProperties(eventStream);
   }
 
   const test = sagaHelper(wrapper());
@@ -83,6 +82,8 @@ describe('Scenario 2: Fetch schema properties failed', () => {
   });
 
   test('returns empty schema properties', (result) => {
-    expect(result).toEqual({});
+    expect(result).toMatchObject(
+      put(schemasSlice.actions.addNotExistingEventStream(eventStream))
+    );
   });
 });

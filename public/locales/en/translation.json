@@ -104,12 +104,15 @@
     "edit_query": "Edit Query",
     "settings_tooltip": "Query Info",
     "actions_tooltip": "Actions",
-    "share_tooltip": "Share Query"
+    "share_tooltip": "Share Query",
+    "query_edition_not_possible": "Query edition is not possible. The stream used in the query does not exist."
   },
   "browser_preview": {
     "title": "Preview",
     "autorun_query_label": "Auto-run selected query",
-    "autorun_query_tooltip": "Every run query counts as one query for your usage"
+    "autorun_query_tooltip": "Every run query counts as one query for your usage",
+    "unable_to_run_query": "Unable to run query",
+    "the_event_stream_do_not_exist": "The {{stream}} </br> event stream used in this query does not exist"
   },
   "query_summary": {
     "analysis": "Analysis:",

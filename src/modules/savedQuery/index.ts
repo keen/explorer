@@ -4,7 +4,7 @@ import {
   getSavedQueryName,
   getSavedQueryDisplayName,
 } from './selectors';
-import { savedQuerySaga } from './saga';
+import { savedQuerySaga } from './savedQuerySaga';
 import { updateSavedQuery, resetSavedQuery, selectSavedQuery } from './actions';
 import { convertMilisecondsToMinutes } from './utils';
 import { ReducerState } from './types';
