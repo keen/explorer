@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useTranslation, Trans } from 'react-i18next';
 import {
   Wrapper,
   Container,
@@ -18,9 +18,15 @@ const NoPropertiesOnEventStream: FC<Props> = ({ missingEventStreams }) => {
       <Container>
         <Title>{t('browser_preview.unable_to_run_query')}</Title>
         <Message>
-          {t('browser_preview.the_event_stream_do_not_exist', {
-            stream: missingEventStreams,
-          })}
+          <Trans
+            components={{ bold: <strong /> }}
+            i18nKey={
+              missingEventStreams.length > 1
+                ? 'browser_preview.the_event_stream_do_not_exist_plural'
+                : 'browser_preview.the_event_stream_do_not_exist'
+            }
+            values={{ stream: missingEventStreams.join(', ') }}
+          />
         </Message>
       </Container>
     </Wrapper>

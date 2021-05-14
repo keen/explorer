@@ -33,7 +33,7 @@ const query = {
   },
 };
 
-describe('getMissingEventStreams()', function () {
+describe('getMissingEventStreams()', () => {
   test('return missing streams', () => {
     const missingStreams = getMissingEventStreams(
       query as SavedQueryListItem,

@@ -30,7 +30,6 @@ import {
 
 import { TOOLTIP_MOTION } from '../../constants';
 import { DEFAULT_IMAGE_QUALITY } from './constants';
-import { getSavedQueryIsEditable } from '../../modules/savedQuery/selectors';
 
 type Props = {
   /** Is new query */
@@ -43,12 +42,15 @@ type Props = {
   onHideMenu: () => void;
   /** Visibility indicator  */
   isVisible?: boolean;
+  /** Is query editable **/
+  isQueryEditable?;
 };
 
 const ActionsMenu: FC<Props> = ({
   isNewQuery,
   isInsideQueryBrowser,
   isVisible,
+  isQueryEditable = true,
   onRemoveQuery,
   onHideMenu,
 }) => {
@@ -61,11 +63,9 @@ const ActionsMenu: FC<Props> = ({
     keenAnalysis: { config },
   } = useContext(AppContext);
 
-  const isSavedQueryEditable = useSelector(getSavedQueryIsEditable);
-
   return (
     <Container>
-      {isSavedQueryEditable ? (
+      {isQueryEditable ? (
         <DropdownMenu.Container>
           <MutedText>{t('actions_menu.export_result')}</MutedText>
           <ExportDataWrapper

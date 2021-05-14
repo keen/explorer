@@ -112,7 +112,8 @@
     "autorun_query_label": "Auto-run selected query",
     "autorun_query_tooltip": "Every run query counts as one query for your usage",
     "unable_to_run_query": "Unable to run query",
-    "the_event_stream_do_not_exist": "The {{stream}} event stream used in this query does not exist"
+    "the_event_stream_do_not_exist": "The <bold>{{stream}}</bold> event stream used in this query does not exist",
+    "the_event_stream_do_not_exist_plural": "The <bold>{{stream}}</bold> event streams used in this query do not exist"
   },
   "query_summary": {
     "analysis": "Analysis:",

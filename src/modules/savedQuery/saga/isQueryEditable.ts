@@ -5,7 +5,7 @@ import { checkIfStreamsExists } from './checkIfStreamsExists';
 
 export function* isQueryEditable(query) {
   const eventStreamsToCheck = [];
-  let queryHasExistingEventStream;
+  let allEventStreamsExist;
 
   if (query.analysis_type === 'funnel') {
     query.steps.forEach((stream) =>
@@ -15,11 +15,8 @@ export function* isQueryEditable(query) {
     eventStreamsToCheck.push(query.event_collection);
   }
 
-  queryHasExistingEventStream = yield call(
-    checkIfStreamsExists,
-    eventStreamsToCheck
-  );
-  if (!queryHasExistingEventStream) {
+  allEventStreamsExist = yield call(checkIfStreamsExists, eventStreamsToCheck);
+  if (!allEventStreamsExist) {
     return false;
   }
   const eventStreamsProperties = yield select(getEventStreams);
@@ -33,9 +30,6 @@ export function* isQueryEditable(query) {
     )
   );
 
-  queryHasExistingEventStream = yield call(
-    checkIfStreamsExists,
-    eventStreamsToCheck
-  );
-  return queryHasExistingEventStream;
+  allEventStreamsExist = yield call(checkIfStreamsExists, eventStreamsToCheck);
+  return allEventStreamsExist;
 }

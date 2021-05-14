@@ -19,9 +19,6 @@ const render = (overProps: any = {}, overStore: any = {}) => {
   const mockStore = configureStore([]);
   const store = mockStore({
     queries: {},
-    savedQuery: {
-      isQueryEditable: true,
-    },
     ...overStore,
   });
 
@@ -221,17 +218,13 @@ describe('Scenario 1 - Query is editable', () => {
 });
 
 describe('Scenario 2 - Query is not editable', () => {
-  const store = {
-    queries: {},
-    savedQuery: {
-      isQueryEditable: false,
-    },
+  const overProps = {
+    isQueryEditable: false,
   };
-
   test('shows ActionsMenu', () => {
     const {
       wrapper: { container },
-    } = render({}, store);
+    } = render(overProps);
     expect(container).toBeInTheDocument();
   });
 
@@ -239,7 +232,7 @@ describe('Scenario 2 - Query is not editable', () => {
     const {
       wrapper: { getByText },
       props,
-    } = render({}, store);
+    } = render(overProps);
     const removeLink = getByText('actions_menu.delete_query');
     fireEvent.click(removeLink);
     expect(props.onRemoveQuery).toHaveBeenCalled();
@@ -248,7 +241,7 @@ describe('Scenario 2 - Query is not editable', () => {
   test('clone query menu item is not visible', () => {
     const {
       wrapper: { queryByText },
-    } = render({}, store);
+    } = render(overProps);
     const cloneQuery = queryByText('actions_menu.clone_query');
     expect(cloneQuery).toBeNull();
   });
@@ -256,7 +249,7 @@ describe('Scenario 2 - Query is not editable', () => {
   test('copy resource url menu item not exists', () => {
     const {
       wrapper: { queryByText },
-    } = render({}, store);
+    } = render(overProps);
     const cloneQuery = queryByText('actions_menu.api_resource');
     expect(cloneQuery).toBeNull();
   });
