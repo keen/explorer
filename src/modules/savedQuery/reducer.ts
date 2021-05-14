@@ -15,7 +15,7 @@ export const initialState: ReducerState = {
   cached: false,
   refreshRate: 0,
   exists: false,
-  isQueryEditable: false,
+  isQueryEditable: true,
   isQueryLoading: false,
 };
 
