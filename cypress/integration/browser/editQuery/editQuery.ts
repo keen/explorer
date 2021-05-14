@@ -21,15 +21,22 @@ Given(`I open a Data Explorer application`, () => {
   cy.visit(`${Cypress.env('host')}`);
 });
 
-When(`I click on query with empty event stream`, () => {
-  cy.intercept('GET', 'https://api.keen.io/3.0/projects/*/events/*?api_key=*', {
-    statusCode: 404,
-  }).as('missing-event-stream');
-  cy.get('[data-testid="saved-query-item"]')
-    .contains('Query with missing event stream')
-    .click();
-  cy.wait('@missing-event-stream');
-});
+When(
+  `I select saved query that is build on a event stream that do not exist`,
+  () => {
+    cy.intercept(
+      'GET',
+      'https://api.keen.io/3.0/projects/*/events/*?api_key=*',
+      {
+        statusCode: 404,
+      }
+    ).as('missing-event-stream');
+    cy.get('[data-testid="saved-query-item"]')
+      .contains('Query with missing event stream')
+      .click();
+    cy.wait('@missing-event-stream');
+  }
+);
 
 Then(`Share query button should not be visible`, () => {
   cy.get('[data-testid="share-query"]').should('not.exist');
