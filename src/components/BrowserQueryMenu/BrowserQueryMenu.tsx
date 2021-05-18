@@ -1,5 +1,5 @@
 import React, { FC, useRef, useState, useEffect, useCallback } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import {
   Button,
@@ -24,6 +24,7 @@ import {
   SettingsModalSource,
   shareQueryUrl,
 } from '../../modules/app';
+import { getSavedQueryIsEditable } from '../../modules/savedQuery/selectors';
 
 const actionsDropdownMotion = {
   initial: { opacity: 0, top: 20, left: 37, translateX: '-100%' },
@@ -46,6 +47,7 @@ const BrowserQueryMenu: FC<Props> = ({ onEditQuery, onRemoveQuery }) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const actionsContainer = useRef(null);
+  const isSavedQueryEditable = useSelector(getSavedQueryIsEditable);
 
   const [actionsMenu, setActionsMenuVisibility] = useState(false);
 
@@ -73,47 +75,63 @@ const BrowserQueryMenu: FC<Props> = ({ onEditQuery, onRemoveQuery }) => {
   return (
     <Container>
       <BasicActions>
-        <Button variant="secondary" onClick={onEditQuery}>
-          {t('browser_query_menu.edit_query')}
-        </Button>
+        <MousePositionedTooltip
+          isActive={!isSavedQueryEditable}
+          tooltipPinPlacement="bottom-left"
+          renderContent={() =>
+            t('browser_query_menu.query_edition_not_possible')
+          }
+        >
+          <Button
+            variant="secondary"
+            onClick={onEditQuery}
+            isDisabled={!isSavedQueryEditable}
+          >
+            {t('browser_query_menu.edit_query')}
+          </Button>
+        </MousePositionedTooltip>
       </BasicActions>
       <ContextActions data-testid="context-buttons">
-        <MousePositionedTooltip
-          isActive={!actionsMenu}
-          tooltipPinPlacement="bottom-left"
-          renderContent={() =>
-            menuTooltip(t('browser_query_menu.settings_tooltip'))
-          }
-        >
-          <ActionsContainer>
-            <CircleButton
-              variant="secondary"
-              icon={<Icon type="settings" />}
-              onClick={() => {
-                dispatch(
-                  showQuerySettingsModal(SettingsModalSource.QUERY_SETTINGS)
-                );
-              }}
-            />
-          </ActionsContainer>
-        </MousePositionedTooltip>
-        <MousePositionedTooltip
-          isActive={!actionsMenu}
-          tooltipPinPlacement="bottom-left"
-          renderContent={() =>
-            menuTooltip(t('browser_query_menu.share_tooltip'))
-          }
-        >
-          <ActionsContainer data-testid="share-query" marginLeft={10}>
-            <CircleButton
-              variant="secondary"
-              icon={<Icon type="share" />}
-              onClick={() => {
-                dispatch(shareQueryUrl());
-              }}
-            />
-          </ActionsContainer>
-        </MousePositionedTooltip>
+        {isSavedQueryEditable && (
+          <MousePositionedTooltip
+            isActive={!actionsMenu}
+            tooltipPinPlacement="bottom-left"
+            renderContent={() =>
+              menuTooltip(t('browser_query_menu.settings_tooltip'))
+            }
+          >
+            <ActionsContainer data-testid="query-settings">
+              <CircleButton
+                variant="secondary"
+                icon={<Icon type="settings" />}
+                onClick={() => {
+                  dispatch(
+                    showQuerySettingsModal(SettingsModalSource.QUERY_SETTINGS)
+                  );
+                }}
+              />
+            </ActionsContainer>
+          </MousePositionedTooltip>
+        )}
+        {isSavedQueryEditable && (
+          <MousePositionedTooltip
+            isActive={!actionsMenu}
+            tooltipPinPlacement="bottom-left"
+            renderContent={() =>
+              menuTooltip(t('browser_query_menu.share_tooltip'))
+            }
+          >
+            <ActionsContainer data-testid="share-query" marginLeft={10}>
+              <CircleButton
+                variant="secondary"
+                icon={<Icon type="share" />}
+                onClick={() => {
+                  dispatch(shareQueryUrl());
+                }}
+              />
+            </ActionsContainer>
+          </MousePositionedTooltip>
+        )}
         <MousePositionedTooltip
           isActive={!actionsMenu}
           tooltipPinPlacement="bottom-left"
@@ -136,6 +154,7 @@ const BrowserQueryMenu: FC<Props> = ({ onEditQuery, onRemoveQuery }) => {
             >
               <ActionsMenu
                 isNewQuery={false}
+                isQueryEditable={isSavedQueryEditable}
                 isVisible={actionsMenu}
                 isInsideQueryBrowser
                 onHideMenu={() => setActionsMenuVisibility(false)}

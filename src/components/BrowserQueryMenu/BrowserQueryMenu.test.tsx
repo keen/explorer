@@ -5,7 +5,7 @@ import configureStore from 'redux-mock-store';
 
 import BrowserQueryMenu from './BrowserQueryMenu';
 
-const render = (overProps: any = {}) => {
+const render = (overProps: any = {}, overStore: any = {}) => {
   const props = {
     onEditQuery: jest.fn(),
     onRemoveQuery: jest.fn(),
@@ -13,7 +13,12 @@ const render = (overProps: any = {}) => {
   };
 
   const mockStore = configureStore([]);
-  const store = mockStore({});
+  const store = mockStore({
+    savedQuery: {
+      isQueryEditable: true,
+    },
+    ...overStore,
+  });
 
   const wrapper = rtlRender(
     <Provider store={store}>
@@ -27,36 +32,36 @@ const render = (overProps: any = {}) => {
     wrapper,
   };
 };
+describe('Scenario 1: Browser query menu - query is editable', () => {
+  test('shows <BrowserQueryMenu />', () => {
+    const {
+      wrapper: { container },
+    } = render();
+    expect(container).toBeInTheDocument();
+  });
 
-test('shows <BrowserQueryMenu />', () => {
-  const {
-    wrapper: { container },
-  } = render();
-  expect(container).toBeInTheDocument();
-});
+  test('allows user to edit query', () => {
+    const {
+      wrapper: { getByText },
+      props,
+    } = render();
+    const editQuery = getByText('browser_query_menu.edit_query');
 
-test('allows user to edit query', () => {
-  const {
-    wrapper: { getByText },
-    props,
-  } = render();
-  const editQuery = getByText('browser_query_menu.edit_query');
+    fireEvent.click(editQuery);
+    expect(props.onEditQuery).toHaveBeenCalled();
+  });
 
-  fireEvent.click(editQuery);
-  expect(props.onEditQuery).toHaveBeenCalled();
-});
+  test('allows user to edit query settings', () => {
+    const {
+      wrapper: { getByTestId },
+      store,
+    } = render();
+    const contextButtonsContainer = getByTestId('context-buttons');
+    const editSettingsBtn = contextButtonsContainer.querySelector('button');
 
-test('allows user to edit query settings', () => {
-  const {
-    wrapper: { getByTestId },
-    store,
-  } = render();
-  const contextButtonsContainer = getByTestId('context-buttons');
-  const editSettingsBtn = contextButtonsContainer.querySelector('button');
+    fireEvent.click(editSettingsBtn);
 
-  fireEvent.click(editSettingsBtn);
-
-  expect(store.getActions()).toMatchInlineSnapshot(`
+    expect(store.getActions()).toMatchInlineSnapshot(`
     Array [
       Object {
         "payload": Object {
@@ -66,20 +71,20 @@ test('allows user to edit query settings', () => {
       },
     ]
   `);
-});
+  });
 
-test('allows user to share query url', () => {
-  const {
-    wrapper: { getByTestId },
-    store,
-  } = render();
+  test('allows user to share query url', () => {
+    const {
+      wrapper: { getByTestId },
+      store,
+    } = render();
 
-  const shareQuery = getByTestId('share-query');
-  const shareQueryBtn = shareQuery.querySelector('button');
+    const shareQuery = getByTestId('share-query');
+    const shareQueryBtn = shareQuery.querySelector('button');
 
-  fireEvent.click(shareQueryBtn);
+    fireEvent.click(shareQueryBtn);
 
-  expect(store.getActions()).toMatchInlineSnapshot(`
+    expect(store.getActions()).toMatchInlineSnapshot(`
     Array [
       Object {
         "payload": undefined,
@@ -87,4 +92,48 @@ test('allows user to share query url', () => {
       },
     ]
   `);
+  });
+});
+
+describe('Scenario 2: Browser query menu - query is not editable', () => {
+  const store = {
+    savedQuery: {
+      isQueryEditable: false,
+    },
+  };
+  test('shows <BrowserQueryMenu />', () => {
+    const {
+      wrapper: { container },
+    } = render({}, store);
+    expect(container).toBeInTheDocument();
+  });
+
+  test('not allows user to edit query', () => {
+    const {
+      wrapper: { getByText },
+      props,
+    } = render({}, store);
+    const editQuery = getByText('browser_query_menu.edit_query');
+
+    fireEvent.click(editQuery);
+    expect(props.onEditQuery).not.toHaveBeenCalled();
+  });
+
+  test('share query button is not visible', () => {
+    const {
+      wrapper: { queryByTestId },
+    } = render({}, store);
+    const shareQueryBtn = queryByTestId('share-query');
+
+    expect(shareQueryBtn).toBeNull();
+  });
+
+  test('query settings button is not visible', () => {
+    const {
+      wrapper: { queryByTestId },
+    } = render({}, store);
+    const shareQueryBtn = queryByTestId('query-settings');
+
+    expect(shareQueryBtn).toBeNull();
+  });
 });

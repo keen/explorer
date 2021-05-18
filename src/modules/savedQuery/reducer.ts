@@ -1,6 +1,11 @@
 import { ReducerState } from './types';
 import { SavedQueryActions } from './actions';
-import { UPDATE_SAVED_QUERY, RESET_SAVED_QUERY } from './constants';
+import {
+  RESET_SAVED_QUERY,
+  SET_QUERY_EDITABLE,
+  UPDATE_SAVED_QUERY,
+  SET_QUERY_LOADING,
+} from './constants';
 
 export const initialState: ReducerState = {
   name: '',
@@ -10,6 +15,8 @@ export const initialState: ReducerState = {
   cached: false,
   refreshRate: 0,
   exists: false,
+  isQueryEditable: true,
+  isQueryLoading: false,
 };
 
 export const savedQueryReducer = (
@@ -24,6 +31,16 @@ export const savedQueryReducer = (
       };
     case RESET_SAVED_QUERY:
       return initialState;
+    case SET_QUERY_EDITABLE:
+      return {
+        ...state,
+        isQueryEditable: action.payload.isEditable,
+      };
+    case SET_QUERY_LOADING:
+      return {
+        ...state,
+        isQueryLoading: action.payload.isQueryLoading,
+      };
     default:
       return state;
   }
