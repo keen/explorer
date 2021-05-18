@@ -10,9 +10,12 @@ import {
   hideQuerySettingsModal,
 } from '../../modules/app';
 import { queriesActions } from '../../modules/queries';
-import { getSavedQuery, resetSavedQuery } from '../../modules/savedQuery';
 
 import { AppContext } from '../../contexts';
+import {
+  savedQueryActions,
+  savedQuerySelectors,
+} from '../../modules/savedQuery';
 
 type Props = {
   /** Save query event handler */
@@ -32,13 +35,13 @@ const QuerySettingsModal: FC<Props> = ({ onSaveQuery, cacheAvailable }) => {
   const { t } = useTranslation(null, { useSuspense: false });
 
   const isOpen = useSelector(getQuerySettingsModalVisibility);
-  const { exists, isCloned } = useSelector(getSavedQuery);
+  const { exists, isCloned } = useSelector(savedQuerySelectors.getSavedQuery);
 
   const closeHandler = useCallback(() => {
     dispatch(hideQuerySettingsModal());
     dispatch(queriesActions.resetSavedQueryError());
     if (!exists && !isCloned) {
-      dispatch(resetSavedQuery());
+      dispatch(savedQueryActions.resetSavedQuery());
     }
   }, [exists, isCloned]);
 

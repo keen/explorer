@@ -14,11 +14,10 @@ import {
   QUERY_EDITOR_MOUNTED,
 } from '../../../modules/app';
 
-import { getSavedQuery, updateSavedQuery } from '../../../modules/savedQuery';
-
 import { NOTIFICATION_MANAGER_CONTEXT } from '../../../constants';
 
 import { CLONED_QUERY_DISPLAY_NAME, CLONED_QUERY_NAME } from '../constants';
+import { savedQueryActions, savedQuerySelectors } from '../../savedQuery';
 
 const uniqueQueryId = '@query/01';
 jest.mock('uuid', () => {
@@ -76,7 +75,7 @@ describe('Scenario 1: User cloned saved query from browser view', () => {
   });
 
   test('gets saved query settings from state', (result) => {
-    expect(result).toEqual(select(getSavedQuery));
+    expect(result).toEqual(select(savedQuerySelectors.getSavedQuery));
     return savedQuery;
   });
 
@@ -107,7 +106,9 @@ describe('Scenario 1: User cloned saved query from browser view', () => {
   });
 
   test('updates saved query', (result) => {
-    expect(result).toEqual(put(updateSavedQuery(clonedSavedQuery)));
+    expect(result).toEqual(
+      put(savedQueryActions.updateSavedQuery(clonedSavedQuery))
+    );
   });
 
   test('shows clone query success notification', () => {
@@ -195,7 +196,7 @@ describe('Scenario 2: User cloned query from editor view', () => {
   });
 
   test('gets saved query settings from state', (result) => {
-    expect(result).toEqual(select(getSavedQuery));
+    expect(result).toEqual(select(savedQuerySelectors.getSavedQuery));
     return savedQuery;
   });
 
@@ -205,7 +206,9 @@ describe('Scenario 2: User cloned query from editor view', () => {
   });
 
   test('updates saved query', (result) => {
-    expect(result).toEqual(put(updateSavedQuery(clonedSavedQuery)));
+    expect(result).toEqual(
+      put(savedQueryActions.updateSavedQuery(clonedSavedQuery))
+    );
   });
 
   test('shows clone query success notification', () => {
