@@ -17,13 +17,13 @@ import {
   hideConfirmation,
   acceptConfirmation,
 } from '../../modules/app';
-import { getSavedQuery } from '../../modules/savedQuery';
+import { savedQuerySelectors } from '../../modules/savedQuery';
 
 const Confirm: FC<{}> = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const { visible } = useSelector(getConfirmation);
-  const { displayName } = useSelector(getSavedQuery);
+  const { displayName } = useSelector(savedQuerySelectors.getSavedQuery);
 
   const closeHandler = () => dispatch(hideConfirmation());
 

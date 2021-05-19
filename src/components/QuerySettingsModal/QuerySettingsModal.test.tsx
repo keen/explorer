@@ -98,7 +98,7 @@ test('close modal and reset query settings', () => {
       },
       Object {
         "payload": undefined,
-        "type": "@saved-query/RESET_SAVED_QUERY",
+        "type": "savedQuery/resetSavedQuery",
       },
     ]
   `);

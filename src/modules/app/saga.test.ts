@@ -5,10 +5,10 @@ import { NEW_QUERY_EVENT } from '@keen.io/query-creator';
 
 import { setViewMode, resetVisualization } from './actions';
 import { queriesActions } from '../queries';
-import { resetSavedQuery } from '../savedQuery';
 import { createNewQuery as createNewQueryFlow } from './saga';
 
 import { PUBSUB_CONTEXT } from '../../constants';
+import { savedQueryActions } from '../savedQuery';
 
 describe('createNewQuery()', () => {
   const test = sagaHelper(createNewQueryFlow());
@@ -37,6 +37,6 @@ describe('createNewQuery()', () => {
   });
 
   test('reset saved query settings', (result) => {
-    expect(result).toEqual(put(resetSavedQuery()));
+    expect(result).toEqual(put(savedQueryActions.resetSavedQuery()));
   });
 });

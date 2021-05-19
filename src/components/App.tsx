@@ -4,11 +4,8 @@ import { connect, ConnectedProps } from 'react-redux';
 import { getPubSub } from '@keen.io/pubsub';
 
 import { queriesActions, getQuerySettings } from '../modules/queries';
-import {
-  getSavedQuery,
-  resetSavedQuery,
-  selectSavedQuery,
-} from '../modules/savedQuery';
+import { savedQueryActions, savedQuerySelectors } from '../modules/savedQuery';
+
 import {
   getViewMode,
   setViewMode,
@@ -40,7 +37,7 @@ import {
 } from '../constants';
 
 const mapStateToProps = (state: AppState) => ({
-  savedQuery: getSavedQuery(state),
+  savedQuery: savedQuerySelectors.getSavedQuery(state),
   visualization: getVisualization(state),
   autorunQuery: getQueryAutorun(state),
   view: getViewMode(state),
@@ -53,8 +50,8 @@ const mapDispatchToProps = {
   resetQueryResults: queriesActions.resetQueryResults,
   deleteQuery: queriesActions.deleteQuery,
   explorerMounted,
-  resetSavedQuery,
-  selectSavedQuery,
+  resetSavedQuery: savedQueryActions.resetSavedQuery,
+  selectSavedQuery: savedQueryActions.selectSavedQuery,
   switchToQueriesList,
   createNewQuery,
   setViewMode,

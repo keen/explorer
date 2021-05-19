@@ -5,23 +5,21 @@ import { select, put, call } from 'redux-saga/effects';
 import { Query } from '@keen.io/query';
 import { Layout } from '@keen.io/ui-core';
 
-import {
-  selectSavedQuery,
-  setQueryEditable,
-  setQueryLoading,
-  updateSavedQuery,
-} from '../actions';
 import { selectSavedQuery as selectSavedQueryFlow } from './selectSavedQuery';
 
 import { queriesActions, getSavedQueries } from '../../queries';
 import { setVisualization } from '../../app';
 import { isQueryEditable } from './isQueryEditable';
+import { savedQueryActions } from '../index';
+import { selectSavedQuery } from '../actions';
 
 describe('selectSavedQuery()', () => {
   describe('Scenario 1: User selects query with enabled autorun - query is editable', () => {
-    const action = selectSavedQuery('purchases', true);
+    const action = savedQueryActions.selectSavedQuery('purchases', true);
     const test = sagaHelper(
-      selectSavedQueryFlow(action as ReturnType<typeof selectSavedQuery>)
+      selectSavedQueryFlow(
+        action as ReturnType<typeof savedQueryActions.selectSavedQuery>
+      )
     );
 
     const query: Query = {
@@ -47,7 +45,7 @@ describe('selectSavedQuery()', () => {
     };
 
     test('set saved query loading state', (result) => {
-      expect(result).toEqual(put(setQueryLoading(true)));
+      expect(result).toEqual(put(savedQueryActions.setQueryLoading(true)));
       return [savedQuery];
     });
 
@@ -62,7 +60,7 @@ describe('selectSavedQuery()', () => {
     });
 
     test('set saved query as editable', (result) => {
-      expect(result).toEqual(put(setQueryEditable(true)));
+      expect(result).toEqual(put(savedQueryActions.setQueryEditable(true)));
       return true;
     });
 
@@ -86,7 +84,9 @@ describe('selectSavedQuery()', () => {
         name: 'purchases',
         tags: [],
       };
-      expect(result).toMatchObject(put(updateSavedQuery(savedQuery)));
+      expect(result).toMatchObject(
+        put(savedQueryActions.updateSavedQuery(savedQuery))
+      );
     });
 
     test('runs selected query', (result) => {
@@ -94,12 +94,12 @@ describe('selectSavedQuery()', () => {
     });
 
     test('set save query loading state as false', (result) => {
-      expect(result).toEqual(put(setQueryLoading(false)));
+      expect(result).toEqual(put(savedQueryActions.setQueryLoading(false)));
     });
   });
 
   describe('Scenario 2: User selects query with enabled autorun - query is not editable', () => {
-    const action = selectSavedQuery('purchases', true);
+    const action = savedQueryActions.selectSavedQuery('purchases', true);
     const test = sagaHelper(
       selectSavedQueryFlow(action as ReturnType<typeof selectSavedQuery>)
     );
@@ -127,7 +127,7 @@ describe('selectSavedQuery()', () => {
     };
 
     test('set saved query loading state', (result) => {
-      expect(result).toEqual(put(setQueryLoading(true)));
+      expect(result).toEqual(put(savedQueryActions.setQueryLoading(true)));
       return [savedQuery];
     });
 
@@ -142,7 +142,7 @@ describe('selectSavedQuery()', () => {
     });
 
     test('set saved query as editable', (result) => {
-      expect(result).toEqual(put(setQueryEditable(false)));
+      expect(result).toEqual(put(savedQueryActions.setQueryEditable(false)));
       return true;
     });
 
@@ -166,11 +166,13 @@ describe('selectSavedQuery()', () => {
         name: 'purchases',
         tags: [],
       };
-      expect(result).toMatchObject(put(updateSavedQuery(savedQuery)));
+      expect(result).toMatchObject(
+        put(savedQueryActions.updateSavedQuery(savedQuery))
+      );
     });
 
     test('set save query loading state as false', (result) => {
-      expect(result).toEqual(put(setQueryLoading(false)));
+      expect(result).toEqual(put(savedQueryActions.setQueryLoading(false)));
     });
   });
 });

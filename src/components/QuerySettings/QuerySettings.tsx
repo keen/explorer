@@ -27,7 +27,6 @@ import {
 
 import CacheQuery, { REFRESH_MINIMUM } from '../CacheQuery';
 
-import { getSavedQuery } from '../../modules/savedQuery';
 import {
   getQuerySettingsModalSource,
   SettingsModalSource,
@@ -44,6 +43,7 @@ import { AppContext } from '../../contexts';
 import { ERRORS } from '../../constants';
 
 import { slugify } from '../../utils/text';
+import { savedQuerySelectors } from '../../modules/savedQuery';
 
 type Props = {
   /** Save query event handler */
@@ -60,7 +60,7 @@ type Props = {
 };
 
 const QuerySettings: FC<Props> = ({ onSave, onClose, cacheAvailable }) => {
-  const savedQuery = useSelector(getSavedQuery);
+  const savedQuery = useSelector(savedQuerySelectors.getSavedQuery);
   const savedQueries = useSelector(getSavedQueries);
   const isSavingQuery = useSelector(getQueriesSaving);
   const isCacheLimited = useSelector(getCacheQueriesLimitExceed);

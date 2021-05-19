@@ -12,3 +12,11 @@ export const getSavedQueryLoading = ({ savedQuery }: AppState) =>
 
 export const getSavedQueryIsEditable = ({ savedQuery }: AppState) =>
   savedQuery.isQueryEditable;
+
+export const savedQuerySelectors = {
+  getSavedQuery,
+  getSavedQueryName,
+  getSavedQueryDisplayName,
+  getSavedQueryLoading,
+  getSavedQueryIsEditable,
+};
