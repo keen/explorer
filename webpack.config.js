@@ -12,12 +12,13 @@ const config = merge(createWebpackConfig(), {
     port: 8080,
   },
   output: {
-    filename: '[name].js',
-    path: path.join(__dirname, 'dist'),
-    library: 'KeenExplorer',
-    libraryExport: 'KeenExplorer',
-    libraryTarget: 'umd',
-  },
+    library: {
+      name: 'KeenExplorer',
+      type: 'umd',
+      umdNamedDefine: true,
+    },
+    globalObject: 'window',
+  },ild
 });
 
 module.exports = config;
