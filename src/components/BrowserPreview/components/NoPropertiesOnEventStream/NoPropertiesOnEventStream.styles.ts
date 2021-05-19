@@ -13,6 +13,7 @@ export const Container = styled.div`
   height: 360px;
   padding: 17px;
   background: ${colors.white[400]};
+  text-align: center;
 `;
 
 export const Title = styled.h2`
@@ -20,12 +21,4 @@ export const Title = styled.h2`
   line-height: 24px;
   font-family: 'Lato Regular', sans-serif;
   color: ${colors.gray[500]};
-`;
-
-export const Message = styled.p`
-  font-family: 'Lato Regular', sans-serif;
-  font-size: 16px;
-  line-height: 26px;
-  margin: 0;
-  color: ${colors.red[500]};
 `;
