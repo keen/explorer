@@ -1835,9 +1835,9 @@
   integrity sha512-S9zhZNDSwsL6WXOtFqeZ3+vOdCzykL7pYifRm9dZ7ivLe/frAeyqIQsfRA8Z52DPnRN7d+gKbWrJtlZM22ErjQ==
 
 "@keen.io/query-creator@^1.7.0":
-  version "1.7.0"
-  resolved "https://registry.yarnpkg.com/@keen.io/query-creator/-/query-creator-1.7.0.tgz#98dbb9242ceebfee8f3a86c6962431c8b220da3f"
-  integrity sha512-fHUjHiuSfn4ZyJe3aSj0u7PEJokXaEeJQ/BIkT5F2P1IHXf++sG5Ik8OydwmGMxEvw4EYA1VtYmpDym11ynlsQ==
+  version "1.8.0"
+  resolved "https://registry.yarnpkg.com/@keen.io/query-creator/-/query-creator-1.8.0.tgz#bbcf196407f3b0c640e2c44d64da0bb54a2af1fc"
+  integrity sha512-QLSB0m1YxPj8yvJ6pwXFsB6pusRTUMZTb6kBot/Typxc/yWHmuzwLmUCFNm896QdjIN2ykkZf0PQ++cGMos6Jg==
   dependencies:
     "@keen.io/colors" "^1.1.0"
     "@keen.io/icons" "^1.2.1"
