@@ -16,9 +16,6 @@ export const Container = styled.div`
   text-align: center;
 `;
 
-export const Title = styled.h2`
-  font-size: 20px;
-  line-height: 24px;
-  font-family: 'Lato Regular', sans-serif;
-  color: ${colors.gray[500]};
+export const TitleContainer = styled.div`
+  margin-bottom: 15px;
 `;

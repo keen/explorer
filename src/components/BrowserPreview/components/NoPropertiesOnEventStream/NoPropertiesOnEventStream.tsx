@@ -1,8 +1,12 @@
 import React, { FC } from 'react';
 import { useTranslation, Trans } from 'react-i18next';
-import { BodyText, FontWeight } from '@keen.io/typography';
+import { BodyText, FontWeight, Headline } from '@keen.io/typography';
 import { colors } from '@keen.io/colors';
-import { Wrapper, Container, Title } from './NoPropertiesOnEventStream.styles';
+import {
+  Wrapper,
+  Container,
+  TitleContainer,
+} from './NoPropertiesOnEventStream.styles';
 
 type Props = {
   missingEventStreams: string[];
@@ -13,7 +17,11 @@ const NoPropertiesOnEventStream: FC<Props> = ({ missingEventStreams }) => {
   return (
     <Wrapper>
       <Container>
-        <Title>{t('browser_preview.unable_to_run_query')}</Title>
+        <TitleContainer>
+          <Headline variant="h3" fontWeight={400} color={colors.gray[500]}>
+            {t('browser_preview.unable_to_run_query')}
+          </Headline>
+        </TitleContainer>
         <BodyText variant="body1" color={colors.red[500]} lineHeight="26px">
           <Trans
             components={{ bold: <FontWeight fontWeight="bold" /> }}
