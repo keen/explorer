@@ -13,9 +13,15 @@ const babelOptions = {
   presets: [
     '@babel/preset-typescript',
     '@babel/preset-react',
+    ['@babel/preset-env',
+    {
+      corejs: '3.6',
+      useBuiltIns: 'entry',
+    }]
   ],
   plugins: [
     "@babel/plugin-proposal-class-properties",
+    "@babel/plugin-transform-runtime",
     "react-hot-loader/babel"
   ]
 };
