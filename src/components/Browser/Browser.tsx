@@ -28,7 +28,6 @@ import QueriesPlaceholder from '../QueriesPlaceholder';
 
 import { getSavedQueries, getSavedQueriesLoaded } from '../../modules/queries';
 import { getBrowserScreenDimension, createNewQuery } from '../../modules/app';
-import { getSavedQuery } from '../../modules/savedQuery';
 
 import {
   LIST_SCROLL_OFFSET,
@@ -36,6 +35,7 @@ import {
   DEFAULT_DIRECTION,
   SOCKET_CONTAINER_WIDTH,
 } from './constants';
+import { savedQuerySelectors } from '../../modules/savedQuery';
 
 type Props = {
   /** Edit query event handler */
@@ -64,7 +64,7 @@ const Browser: FC<Props> = ({ onEditQuery, onRunQuery, onSelectQuery }) => {
   });
 
   const browserDimension = useSelector(getBrowserScreenDimension);
-  const savedQuery = useSelector(getSavedQuery);
+  const savedQuery = useSelector(savedQuerySelectors.getSavedQuery);
   const savedQueries = useSelector(getSavedQueries);
 
   const filteredQueries = useMemo(() => {

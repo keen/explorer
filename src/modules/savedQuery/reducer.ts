@@ -1,11 +1,5 @@
-import { ReducerState } from './types';
-import { SavedQueryActions } from './actions';
-import {
-  RESET_SAVED_QUERY,
-  SET_QUERY_EDITABLE,
-  UPDATE_SAVED_QUERY,
-  SET_QUERY_LOADING,
-} from './constants';
+import { ReducerState, SavedQuery } from './types';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export const initialState: ReducerState = {
   name: '',
@@ -19,29 +13,27 @@ export const initialState: ReducerState = {
   isQueryLoading: false,
 };
 
-export const savedQueryReducer = (
-  state: ReducerState = initialState,
-  action: SavedQueryActions
-) => {
-  switch (action.type) {
-    case UPDATE_SAVED_QUERY:
+export const savedQuerySlice = createSlice({
+  name: 'savedQuery',
+  initialState,
+  reducers: {
+    updateSavedQuery: (
+      state,
+      { payload }: PayloadAction<Partial<SavedQuery>>
+    ) => {
       return {
         ...state,
-        ...action.payload,
+        ...payload,
       };
-    case RESET_SAVED_QUERY:
+    },
+    resetSavedQuery: () => {
       return initialState;
-    case SET_QUERY_EDITABLE:
-      return {
-        ...state,
-        isQueryEditable: action.payload.isEditable,
-      };
-    case SET_QUERY_LOADING:
-      return {
-        ...state,
-        isQueryLoading: action.payload.isQueryLoading,
-      };
-    default:
-      return state;
-  }
-};
+    },
+    setQueryEditable: (state, { payload }: PayloadAction<boolean>) => {
+      state.isQueryEditable = payload;
+    },
+    setQueryLoading: (state, { payload }: PayloadAction<boolean>) => {
+      state.isQueryLoading = payload;
+    },
+  },
+});

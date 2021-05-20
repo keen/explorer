@@ -1,24 +1,28 @@
-import { savedQueryReducer, initialState } from './reducer';
-import {
-  getSavedQuery,
-  getSavedQueryName,
-  getSavedQueryDisplayName,
-} from './selectors';
 import { savedQuerySaga } from './savedQuerySaga';
-import { updateSavedQuery, resetSavedQuery, selectSavedQuery } from './actions';
-import { convertMilisecondsToMinutes } from './utils';
+import { selectSavedQuery } from './actions';
+import { convertMilisecondsToMinutes, serializeSavedQuery } from './utils';
 import { ReducerState } from './types';
+import { savedQuerySelectors } from './selectors';
+import { savedQuerySlice, initialState } from './reducer';
+
+const savedQueryReducer = savedQuerySlice.reducer;
+
+const savedQueryActions = {
+  ...savedQuerySlice.actions,
+  selectSavedQuery,
+};
+
+const savedQueryUtils = {
+  convertMilisecondsToMinutes,
+  serializeSavedQuery,
+};
 
 export {
   savedQueryReducer,
-  initialState,
+  savedQueryActions,
+  savedQuerySelectors,
+  savedQueryUtils,
   savedQuerySaga,
+  initialState,
   ReducerState,
-  getSavedQuery,
-  getSavedQueryName,
-  getSavedQueryDisplayName,
-  selectSavedQuery,
-  updateSavedQuery,
-  resetSavedQuery,
-  convertMilisecondsToMinutes,
 };

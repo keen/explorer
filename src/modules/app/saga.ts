@@ -32,12 +32,6 @@ import {
 } from './actions';
 
 import {
-  resetSavedQuery,
-  updateSavedQuery,
-  getSavedQuery,
-  selectSavedQuery,
-} from '../savedQuery';
-import {
   getQueryResults,
   getSavedQueries,
   getOrganizationUsageLimits,
@@ -94,6 +88,7 @@ import {
   UPDATE_VISUALIZATION,
 } from './constants';
 import { SET_CHART_SETTINGS } from '@keen.io/query-creator';
+import { savedQueryActions, savedQuerySelectors } from '../savedQuery';
 
 const createScreenResizeChannel = () =>
   eventChannel((emitter) => {
@@ -115,7 +110,7 @@ export function* createNewQuery() {
 
   yield put(queriesActions.resetQueryResults());
   yield put(resetVisualization());
-  yield put(resetSavedQuery());
+  yield put(savedQueryActions.resetSavedQuery());
 }
 
 export function* clearQuery() {
@@ -158,7 +153,7 @@ export function* selectFirstSavedQuery() {
   if (savedQueries.length) {
     const [firstQuery] = savedQueries;
     const { name, query } = firstQuery;
-    yield put(selectSavedQuery(name));
+    yield put(savedQueryActions.selectSavedQuery(name));
     yield put(queriesActions.setQuerySettings({ settings: query }));
   }
 }
@@ -167,7 +162,7 @@ export function* switchToQueriesList() {
   yield put(setViewMode('browser'));
   yield put(queriesActions.resetQueryResults());
 
-  const { exists } = yield select(getSavedQuery);
+  const { exists } = yield select(savedQuerySelectors.getSavedQuery);
   if (!exists) {
     yield selectFirstSavedQuery();
   }
@@ -183,7 +178,7 @@ export function* loadStateFromUrl() {
       b64DecodeUnicode(persistedState)
     );
 
-    if (savedQuery) yield put(updateSavedQuery(savedQuery));
+    if (savedQuery) yield put(savedQueryActions.updateSavedQuery(savedQuery));
     if (visualization) {
       const { type: widgetType, chartSettings, widgetSettings } = visualization;
       yield put(setVisualization(widgetType, chartSettings, widgetSettings));
@@ -209,7 +204,7 @@ export function* loadStateFromUrl() {
       yield take(queriesActions.getSavedQueriesSuccess.type);
       yield selectFirstSavedQuery();
     } else {
-      yield put(resetSavedQuery());
+      yield put(savedQueryActions.resetSavedQuery());
     }
   } finally {
     history.replaceState({}, '', getLocationUrl());
@@ -217,7 +212,7 @@ export function* loadStateFromUrl() {
 }
 
 export function* shareQueryUrl() {
-  const savedQuery = yield select(getSavedQuery);
+  const savedQuery = yield select(savedQuerySelectors.getSavedQuery);
   const query = yield select(getQuerySettings);
   const visualization = yield select(getVisualization);
 
@@ -308,7 +303,7 @@ export function* appStart({ payload }: ReturnType<typeof appStartAction>) {
 }
 
 export function* generateFileName() {
-  const savedQuery = yield select(getSavedQuery);
+  const savedQuery = yield select(savedQuerySelectors.getSavedQuery);
   const query = yield select(getQuerySettings);
 
   let fileName = 'chart';
