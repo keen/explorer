@@ -17,10 +17,10 @@ import {
   Content,
 } from './FunnelStep.styles';
 
-import { FunnelStep } from '../../types';
+import { FunnelStep as FunnelStepType } from '../../types';
 
 type Props = {
-  step: FunnelStep;
+  step: FunnelStepType;
   index: number;
   label?: string;
 };

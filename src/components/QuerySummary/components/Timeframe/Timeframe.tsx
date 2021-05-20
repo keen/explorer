@@ -1,11 +1,11 @@
 import React, { FC } from 'react';
-import { Timeframe } from '@keen.io/query';
+import { Timeframe as TimeframeType } from '@keen.io/query';
 import { BodyText } from '@keen.io/typography';
 
 import AbsoluteTimeframe from '../AbsoluteTimeframe';
 
 type Props = {
-  timeframe: Timeframe;
+  timeframe: TimeframeType;
   timezone?: string | number;
 };
 

@@ -1,5 +1,7 @@
 // @ts-nocheck
 import React, { Component } from 'react';
+import { hot } from 'react-hot-loader/root';
+
 import { connect, ConnectedProps } from 'react-redux';
 import { getPubSub } from '@keen.io/pubsub';
 
@@ -181,4 +183,4 @@ class App extends Component<Props> {
   }
 }
 
-export default connector(App);
+export default hot(connector(App));
