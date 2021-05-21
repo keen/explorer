@@ -11,3 +11,10 @@ config.js
 .idea/
 package-lock.json
 .npmrc
+.yarn/*
+!.yarn/patches
+!.yarn/releases
+!.yarn/plugins
+!.yarn/sdks
+!.yarn/versions
+.pnp.*
