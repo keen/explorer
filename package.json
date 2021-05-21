@@ -9,7 +9,7 @@
     "dist"
   ],
   "scripts": {
-    "start": "concurrently --kill-others \"NODE_ENV=development webpack serve --mode development --env development\"",
+    "start": "concurrently --kill-others \"NODE_ENV=development webpack serve --mode development --env development --config webpack.config.dev.js\"",
     "e2e": "cypress run",
     "e2e:open": "cypress open",
     "test": "jest",
