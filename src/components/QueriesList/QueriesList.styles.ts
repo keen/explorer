@@ -13,12 +13,12 @@ export const Header = styled.th<SpaceProps & { sortable?: boolean }>`
   background: ${BACKGROUND_MAIN};
   top: 0;
 
-  ${space}
+  ${space};
   ${(props) =>
     props.sortable &&
     css`
       cursor: pointer;
-    `}
+    `};
 `;
 
 export const QueriesTable = styled.table`
@@ -33,7 +33,7 @@ export const QueriesTableHeader = styled.thead`
 `;
 
 export const QueriesTableBody = styled.tbody<LayoutProps>`
-  ${layout}
+  ${layout};
   display: block;
   width: 100%;
   overflow-y: auto;

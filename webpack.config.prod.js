@@ -34,6 +34,15 @@ module.exports = (env) => {
                 plugins: [
                   "@babel/plugin-proposal-class-properties",
                   "@babel/plugin-transform-runtime",
+                  [
+                    "@quickbaseoss/babel-plugin-styled-components-css-namespace",
+                    {"cssNamespace": "&&&"}
+                  ],
+                  ["babel-plugin-styled-components", {
+                    "namespace": "keen-explorer",
+                    "minify": true,
+                    "transpileTemplateLiterals": true
+                  }]
                 ]
               }
             },

@@ -23,7 +23,7 @@ export const Header = styled.div<{ isOpen: boolean }>`
     css`
       background-color: ${colors.gray[100]};
       border-bottom: 1px solid ${colors.gray[300]};
-    `}
+    `};
 `;
 
 export const IconContainer = styled.div`
