@@ -127,9 +127,6 @@ workflows:
     jobs:
       - run_e2e_tests:
           filters:
-            branches:
-              only:
-                - develop
             tags:
               ignore: /.*/
   create_version:
