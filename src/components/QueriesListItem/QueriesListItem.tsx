@@ -11,9 +11,9 @@ import {
 } from './QueryListItem.styles';
 
 import DropIndicator from '../DropIndicator';
-import { convertMilisecondsToMinutes } from '../../modules/savedQuery';
 
 import { TAGS_LIMIT } from './constants';
+import { savedQueryUtils } from '../../modules/savedQuery';
 
 type Props = {
   /** Saved query name */
@@ -60,7 +60,7 @@ const QueriesListItem: FC<Props> = ({
               <span data-testid="cache-badge">
                 {t('queries_list_item.cached_label')}
               </span>{' '}
-              {`(${convertMilisecondsToMinutes(refreshRate)}${t(
+              {`(${savedQueryUtils.convertMilisecondsToMinutes(refreshRate)}${t(
                 'queries_list_item.cache_units'
               )})`}
             </Badge>

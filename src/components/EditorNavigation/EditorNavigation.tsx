@@ -29,7 +29,6 @@ import {
 
 import ActionsMenu from '../ActionsMenu';
 
-import { getSavedQuery } from '../../modules/savedQuery';
 import { getQueriesSaving, queriesActions } from '../../modules/queries';
 import {
   showQuerySettingsModal,
@@ -39,6 +38,7 @@ import {
   shareQueryUrl,
 } from '../../modules/app';
 import { colors } from '@keen.io/colors';
+import { savedQuerySelectors } from '../../modules/savedQuery';
 
 const actionsDropdownMotion = {
   initial: { opacity: 0, top: 20, left: -10 },
@@ -74,7 +74,7 @@ const EditorNavigation: FC<Props> = ({ onSaveQuery }) => {
     tags,
     cached,
     isCloned,
-  } = useSelector(getSavedQuery);
+  } = useSelector(savedQuerySelectors.getSavedQuery);
   const isSavingQuery = useSelector(getQueriesSaving);
   const isModalVisible = useSelector(getQuerySettingsModalVisibility);
 
@@ -140,6 +140,7 @@ const EditorNavigation: FC<Props> = ({ onSaveQuery }) => {
       <Menu>
         <MousePositionedTooltip
           isActive={!actionsMenu}
+          tooltipPinPlacement="bottom-left"
           renderContent={() => menuTooltip(t('editor.settings_tooltip'))}
         >
           <MenuItem position="relative">
@@ -161,6 +162,7 @@ const EditorNavigation: FC<Props> = ({ onSaveQuery }) => {
 
         <MousePositionedTooltip
           isActive={!actionsMenu}
+          tooltipPinPlacement="bottom-left"
           renderContent={() => menuTooltip(t('actions_menu.share_query'))}
         >
           <MenuItem position="relative" data-testid="share-query">
@@ -179,6 +181,7 @@ const EditorNavigation: FC<Props> = ({ onSaveQuery }) => {
         </MousePositionedTooltip>
         <MousePositionedTooltip
           isActive={!actionsMenu}
+          tooltipPinPlacement="bottom-left"
           renderContent={() => menuTooltip(t('editor.actions_tooltip'))}
         >
           <MenuItem position="relative" ref={actionsContainer}>

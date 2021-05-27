@@ -13,3 +13,12 @@ test('set properties count', () => {
     }
   `);
 });
+
+test('add not existing event stream', () => {
+  const action = schemasSlice.actions.addNotExistingEventStream('logins');
+  const { notExistingEventStreams } = schemasSlice.reducer(
+    initialState,
+    action
+  );
+  expect(notExistingEventStreams).toStrictEqual(['logins']);
+});

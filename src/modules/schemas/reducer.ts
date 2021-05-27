@@ -3,6 +3,7 @@ import { ReducerState } from './types';
 
 export const initialState: ReducerState = {
   eventStreams: {},
+  notExistingEventStreams: [],
 };
 
 export const schemasSlice = createSlice({
@@ -17,6 +18,9 @@ export const schemasSlice = createSlice({
     ) => {
       const { eventStream, propertiesCount } = payload;
       state.eventStreams[eventStream] = propertiesCount;
+    },
+    addNotExistingEventStream: (state, { payload }: PayloadAction<string>) => {
+      state.notExistingEventStreams.push(payload);
     },
   },
 });

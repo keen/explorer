@@ -6,6 +6,8 @@ export type SavedQuery = {
   tags: string[];
   refreshRate: number;
   exists: boolean;
+  isQueryEditable: boolean;
+  isQueryLoading: boolean;
 };
 
 export type ReducerState = SavedQuery;

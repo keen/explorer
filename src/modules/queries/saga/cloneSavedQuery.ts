@@ -11,18 +11,17 @@ import {
   QUERY_EDITOR_MOUNTED,
 } from '../../../modules/app';
 
-import { getSavedQuery, updateSavedQuery } from '../../../modules/savedQuery';
-
 import { composeQuerySettings } from '../utils';
 
 import { NOTIFICATION_MANAGER_CONTEXT } from '../../../constants';
 
 import { CLONED_QUERY_DISPLAY_NAME, CLONED_QUERY_NAME } from '../constants';
+import { savedQueryActions, savedQuerySelectors } from '../../savedQuery';
 
 export function* cloneSavedQuery() {
   const notificationManager = yield getContext(NOTIFICATION_MANAGER_CONTEXT);
   const querySettings = yield select(getQuerySettings);
-  const savedQuery = yield select(getSavedQuery);
+  const savedQuery = yield select(savedQuerySelectors.getSavedQuery);
   const view = yield select(getViewMode);
 
   const displayName = `${savedQuery.displayName} ${CLONED_QUERY_DISPLAY_NAME}`;
@@ -46,11 +45,11 @@ export function* cloneSavedQuery() {
     yield put(
       queriesSlice.actions.setQuerySettings({ settings: querySettings })
     );
-    yield put(updateSavedQuery(clonedSavedQuery));
+    yield put(savedQueryActions.updateSavedQuery(clonedSavedQuery));
   }
 
   if (view === 'editor') {
-    yield put(updateSavedQuery(clonedSavedQuery));
+    yield put(savedQueryActions.updateSavedQuery(clonedSavedQuery));
   }
 
   yield notificationManager.showNotification({
