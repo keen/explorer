@@ -81,6 +81,37 @@ test('allows user to save query', () => {
   });
 });
 
+test('allows user to change name for existing saved query', () => {
+  const storeState = {
+    savedQuery: {
+      name: 'purchases',
+      displayName: 'Purchases',
+      cached: false,
+      refreshRate: 0,
+      exists: true,
+      tags: [],
+    },
+  };
+
+  const {
+    wrapper: { getByTestId, getByText },
+    props,
+  } = render(storeState);
+
+  const input = getByTestId('query-name-input');
+  fireEvent.change(input, { target: { value: 'Last month purchases' } });
+
+  const button = getByText('query_settings.save_query_button');
+  fireEvent.click(button);
+
+  expect(props.onSave).toHaveBeenCalledWith({
+    displayName: 'Last month purchases',
+    name: 'purchases',
+    refreshRate: 0,
+    tags: [],
+  });
+});
+
 test('allows user to close query settings', () => {
   const {
     props,

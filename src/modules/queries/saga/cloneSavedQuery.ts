@@ -18,6 +18,12 @@ import { NOTIFICATION_MANAGER_CONTEXT } from '../../../constants';
 import { CLONED_QUERY_DISPLAY_NAME, CLONED_QUERY_NAME } from '../constants';
 import { savedQueryActions, savedQuerySelectors } from '../../savedQuery';
 
+/**
+ * Flow responsible for creating clone saved query instance.
+ *
+ * @return void
+ *
+ */
 export function* cloneSavedQuery() {
   const notificationManager = yield getContext(NOTIFICATION_MANAGER_CONTEXT);
   const querySettings = yield select(getQuerySettings);

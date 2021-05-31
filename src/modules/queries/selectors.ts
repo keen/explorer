@@ -31,3 +31,18 @@ export const getQueryLimitReached = ({ queries }: AppState) =>
 export const getQueryExecutionError = ({ queries }: AppState) => queries.error;
 
 export const getQuerySettings = ({ queries }: AppState) => queries.settings;
+
+export const queriesSelectors = {
+  getQuerySettings,
+  getQueryExecutionError,
+  getQueryLimitReached,
+  getQueryResults,
+  getCacheQueriesLimit,
+  getCacheQueriesLimitExceed,
+  getQueryPerformState,
+  getQueriesSaving,
+  getSaveQueryError,
+  getSavedQueriesLoaded,
+  getSavedQueries,
+  getExtractionConfirmation,
+};

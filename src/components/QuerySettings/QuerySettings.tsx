@@ -74,6 +74,8 @@ const QuerySettings: FC<Props> = ({ onSave, onClose, cacheAvailable }) => {
   const [querySettings, setQuerySettings] = useState(savedQuery);
   const [queryNameError, setQueryNameError] = useState<string | boolean>(null);
 
+  const { exists, name: resourceName } = savedQuery;
+
   const handleQueryNameUpdate = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const value = e.currentTarget.value;
@@ -82,11 +84,11 @@ const QuerySettings: FC<Props> = ({ onSave, onClose, cacheAvailable }) => {
       );
       setQuerySettings((settings) => ({
         ...settings,
-        name: slugify(value),
+        name: exists ? resourceName : slugify(value),
         displayName: value,
       }));
     },
-    []
+    [resourceName, exists]
   );
 
   useEffect(() => {

@@ -1,4 +1,4 @@
-import { appSaga } from './saga';
+import { appSaga } from './appSaga';
 import { appReducer } from './reducer';
 import {
   showConfirmation,

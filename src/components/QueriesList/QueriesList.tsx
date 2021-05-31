@@ -62,13 +62,15 @@ const QueriesList: FC<Props> = ({
           <Header
             paddingLeft={20}
             sortable
-            onClick={() => sortHandler('name')}
+            onClick={() => sortHandler('displayName')}
             data-testid="table-header-name"
           >
             <Heading>{t('queries_list.name')}</Heading>
             <SortIndicators
               sortDirection={
-                sortSettings.property === 'name' ? sortSettings.direction : null
+                sortSettings.property === 'displayName'
+                  ? sortSettings.direction
+                  : null
               }
             />
           </Header>
