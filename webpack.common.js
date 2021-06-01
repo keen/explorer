@@ -1,6 +1,6 @@
-const webpack = require('webpack');
 const path =  require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 const loadAppConfig = () => {
   if (process.env.NODE_ENV === 'development') {
@@ -9,11 +9,24 @@ const loadAppConfig = () => {
   return {};
 };
 
-const createWebpackConfig = (
-  supportLegacyBrowsers
-) => {
+const babelOptions = {
+  presets: [
+    '@babel/preset-typescript',
+    '@babel/preset-react',
+    ['@babel/preset-env',
+    {
+      corejs: '3.6',
+      useBuiltIns: 'entry',
+    }]
+  ],
+  plugins: [
+    "@babel/plugin-proposal-class-properties",
+    "@babel/plugin-transform-runtime",
+    "react-hot-loader/babel"
+  ]
+};
 
-  const config = {
+const createWebpackConfig = () => ({
     entry: {
       main: './src/index.ts',
     },
@@ -23,14 +36,15 @@ const createWebpackConfig = (
     module: {
       rules: [
         {
-          test: /\.tsx?$/,
-          use: {
-            loader: 'ts-loader',
-            options: {
-              configFile: `tsconfig${supportLegacyBrowsers ? '.es5': ''}.json`
-            }
+          test: /\.(ts|js)x?$/,
+            exclude: /node_modules/,
+            use: [
+              {
+                loader: 'babel-loader',
+                options: babelOptions,
+              },
+            ],
           },
-        },
         {
           test: /\.css$/,
           use: ['style-loader', 'css-loader'],
@@ -40,6 +54,7 @@ const createWebpackConfig = (
     plugins: [
       new HtmlWebpackPlugin({
         inject: true,
+        scriptLoading: "blocking",
         templateParameters: {
           'config': JSON.stringify(
             loadAppConfig()
@@ -47,36 +62,8 @@ const createWebpackConfig = (
         },
         template: path.join(__dirname, 'public', 'index.html'),
       }),
+      new ForkTsCheckerWebpackPlugin()
     ],
-  };
-
-  if (supportLegacyBrowsers) {
-    const babelOptions = {
-      presets: [
-        '@babel/preset-react',
-        [
-          '@babel/preset-env',
-          {
-            corejs: '3.6',
-            useBuiltIns: 'entry',
-          },
-        ],
-      ],
-    };
-
-    config.module.rules.unshift({
-      test: /\.jsx?$/,
-      exclude: /@babel(?:\/|\\{1,2})runtime|core-js/,
-      use: [
-        {
-          loader: 'babel-loader',
-          options: babelOptions,
-        },
-      ],
-    });
-  }
-
-  return config;
-};
+})
 
 module.exports = createWebpackConfig;
