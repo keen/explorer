@@ -10,7 +10,7 @@ const render = (overProps: any = {}) => {
     onSelectQuery: jest.fn(),
     onSortQueries: jest.fn(),
     sortSettings: {
-      property: 'name',
+      property: 'displayName',
       direction: 'ascending',
     },
     ...overProps,
@@ -79,7 +79,7 @@ test('allows user to sort saved query list by name', () => {
   fireEvent.click(sortByName);
 
   expect(props.onSortQueries).toHaveBeenCalledWith({
-    property: 'name',
+    property: 'displayName',
     direction: 'descending',
   });
 });

@@ -88,8 +88,8 @@ const Browser: FC<Props> = ({ onEditQuery, onRunQuery, onSelectQuery }) => {
     const { property, direction } = sortSettings;
     if (property && direction) {
       queries = [...queries].sort((firstQuery, secondQuery) => {
-        const firstProperty = firstQuery[property];
-        const secondProperty = secondQuery[property];
+        const firstProperty = firstQuery[property].toLowerCase();
+        const secondProperty = secondQuery[property].toLowerCase();
 
         if (firstProperty < secondProperty) {
           return direction === 'ascending' ? -1 : 1;

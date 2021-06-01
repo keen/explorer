@@ -24,6 +24,7 @@ import {
   getQueryLimitReached,
   getQuerySettings,
   getExtractionConfirmation,
+  queriesSelectors,
 } from './selectors';
 import { getDefaultVisualization } from './utils';
 
@@ -66,4 +67,5 @@ export {
   initialState,
   SavedQueryListItem,
   getDefaultVisualization,
+  queriesSelectors,
 };

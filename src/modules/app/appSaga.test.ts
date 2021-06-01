@@ -5,7 +5,7 @@ import { NEW_QUERY_EVENT } from '@keen.io/query-creator';
 
 import { setViewMode, resetVisualization } from './actions';
 import { queriesActions } from '../queries';
-import { createNewQuery as createNewQueryFlow } from './saga';
+import { createNewQuery as createNewQueryFlow } from './appSaga';
 
 import { PUBSUB_CONTEXT } from '../../constants';
 import { savedQueryActions } from '../savedQuery';
