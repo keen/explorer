@@ -16,8 +16,8 @@ export const TooltipContent = styled.div<
     props.enableWrap &&
     css`
       white-space: normal;
-    `}
+    `};
 
-  ${layout}
-  ${color}
+  ${layout};
+  ${color};
 `;

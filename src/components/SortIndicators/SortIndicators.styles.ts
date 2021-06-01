@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const Container = styled.span`
   display: inline-flex;
   flex-direction: row;
-  flex-wrap: no-wrap;
+  flex-wrap: nowrap;
   padding-left: 5px;
   position: relative;
 `;

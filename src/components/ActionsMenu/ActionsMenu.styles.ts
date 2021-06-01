@@ -45,6 +45,6 @@ export const ExportDataLinks = styled.div<{ isActive: boolean }>`
       !props.isActive &&
       css`
         pointer-events: none;
-      `}
+      `};
   }
 `;

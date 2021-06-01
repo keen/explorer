@@ -46,7 +46,7 @@ export const QueryName = styled.div`
 `;
 
 export const MenuItem = styled.div<PositionProps>`
-  ${position}
+  ${position};
 `;
 
 export const Menu = styled.div`
