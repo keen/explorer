@@ -1,4 +1,4 @@
-import { appSaga } from './saga';
+import { appSaga } from './appSaga';
 import { appReducer } from './reducer';
 import {
   showConfirmation,
@@ -54,7 +54,6 @@ import {
   HIDE_EMAIL_EXTRACTION_MODAL,
   QUERY_EDITOR_MOUNTED,
 } from './constants';
-import { ReducerState, SettingsModalSource } from './types';
 
 export {
   appStart,
@@ -102,9 +101,10 @@ export {
   updateWidgetSettings,
   updateVisualizationType,
   resetVisualization,
-  ReducerState,
-  SettingsModalSource,
 };
+
+export * from './types';
+
 export {
   HIDE_CONFIRMATION,
   ACCEPT_CONFIRMATION,

@@ -26,14 +26,14 @@ export const Container = styled.div<FlexDirectionProps>`
   display: flex;
   background: ${BACKGROUND_MAIN};
   position: relative;
-  ${flexbox}
+  ${flexbox};
 `;
 
 export const Socket = styled.div<SpaceProps & LayoutProps>`
   position: relative;
   min-width: 0;
-  ${layout}
-  ${space}
+  ${layout};
+  ${space};
 `;
 
 export const FiltersContainer = styled.div`

@@ -246,3 +246,62 @@ describe('Scenario 2: User cloned query from editor view', () => {
     );
   });
 });
+
+describe('Scenario 3: User duplicates already cloned instance', () => {
+  const test = sagaHelper(cloneSavedQuery());
+  const notificationManager = {
+    showNotification: jest.fn(),
+  };
+
+  const savedQuery = {
+    name: `purchases${CLONED_QUERY_NAME}`,
+    displayName: 'Purchases',
+    tags: [],
+    isCloned: false,
+    cached: false,
+    refreshRate: 0,
+    exists: true,
+  };
+
+  const clonedSavedQuery = {
+    ...savedQuery,
+    displayName: `${savedQuery.displayName} ${CLONED_QUERY_DISPLAY_NAME}`,
+    name: `purchases-${uniqueQueryId}`,
+    exists: false,
+    isCloned: true,
+  };
+
+  const querySettings = {
+    analysis_type: 'funnel',
+    steps: [],
+    timezone: null,
+    timeframe: null,
+  };
+
+  test('get the notification manager from context', (result) => {
+    expect(result).toEqual(getContext(NOTIFICATION_MANAGER_CONTEXT));
+
+    return notificationManager;
+  });
+
+  test('gets query settings from state', (result) => {
+    expect(result).toEqual(select(getQuerySettings));
+    return querySettings;
+  });
+
+  test('gets saved query settings from state', (result) => {
+    expect(result).toEqual(select(savedQuerySelectors.getSavedQuery));
+    return savedQuery;
+  });
+
+  test('get application view from state', (result) => {
+    expect(result).toEqual(select(getViewMode));
+    return 'editor';
+  });
+
+  test('updates saved query', (result) => {
+    expect(result).toEqual(
+      put(savedQueryActions.updateSavedQuery(clonedSavedQuery))
+    );
+  });
+});

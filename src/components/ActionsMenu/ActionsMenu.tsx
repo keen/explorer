@@ -43,7 +43,7 @@ type Props = {
   /** Visibility indicator  */
   isVisible?: boolean;
   /** Is query editable **/
-  isQueryEditable?;
+  isQueryEditable?: boolean;
 };
 
 const ActionsMenu: FC<Props> = ({

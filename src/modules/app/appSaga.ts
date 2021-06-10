@@ -31,6 +31,8 @@ import {
   exportChartToImage as exportChartToImageAction,
 } from './actions';
 
+import { selectFirstSavedQuery } from './saga';
+
 import {
   getQueryResults,
   getSavedQueries,
@@ -145,17 +147,6 @@ export function* updateCreator({
   const pubsub = yield getContext(PUBSUB_CONTEXT);
 
   yield pubsub.publish(SET_QUERY_EVENT, { query });
-}
-
-export function* selectFirstSavedQuery() {
-  const savedQueries = yield select(getSavedQueries);
-
-  if (savedQueries.length) {
-    const [firstQuery] = savedQueries;
-    const { name, query } = firstQuery;
-    yield put(savedQueryActions.selectSavedQuery(name));
-    yield put(queriesActions.setQuerySettings({ settings: query }));
-  }
 }
 
 export function* switchToQueriesList() {
