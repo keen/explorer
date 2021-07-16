@@ -10,7 +10,6 @@ import WidgetCustomization, {
 import { WidgetSettings } from '@keen.io/widgets';
 import { Query } from '@keen.io/query';
 import { Button } from '@keen.io/ui-core';
-import { theme as baseTheme } from '@keen.io/charts';
 
 import {
   EditorActions,
@@ -70,7 +69,7 @@ const Editor: FC<Props> = ({
   onSaveQuery,
 }) => {
   const { modalContainer, datavizSettings } = useContext(AppContext);
-  const clientTheme = datavizSettings?.theme;
+  const theme = datavizSettings.theme;
 
   const dispatch = useDispatch();
   const { t } = useTranslation();
@@ -101,10 +100,7 @@ const Editor: FC<Props> = ({
   };
 
   const mergedChartSettings = {
-    theme: {
-      ...baseTheme,
-      ...clientTheme,
-    },
+    theme,
     ...chartSettings,
   };
 

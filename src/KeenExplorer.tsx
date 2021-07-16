@@ -32,6 +32,8 @@ import {
   DEFAULT_TIMEZONE_FOR_QUERY,
 } from './constants';
 
+import { extendTheme } from '@keen.io/charts';
+
 export class KeenExplorer {
   constructor(props: Options) {
     const {
@@ -73,6 +75,10 @@ export class KeenExplorer {
     const initialView = props.initialView || 'browser';
     store.dispatch(appStart(initialView));
 
+    const datavizSettings = {
+      theme: extendTheme(dataviz?.theme),
+    };
+
     ReactDOM.render(
       <Provider store={store}>
         <ThemeProvider
@@ -86,7 +92,7 @@ export class KeenExplorer {
               modalContainer,
               upgradeSubscriptionUrl,
               notificationPubSub,
-              datavizSettings: dataviz,
+              datavizSettings: datavizSettings,
               defaultTimezoneForQuery:
                 defaultTimezoneForQuery || DEFAULT_TIMEZONE_FOR_QUERY,
               disableTimezoneSelection,
