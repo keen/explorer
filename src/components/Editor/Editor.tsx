@@ -10,6 +10,7 @@ import WidgetCustomization, {
 import { WidgetSettings } from '@keen.io/widgets';
 import { Query } from '@keen.io/query';
 import { Button } from '@keen.io/ui-core';
+import { theme as baseTheme } from '@keen.io/charts';
 
 import {
   EditorActions,
@@ -68,7 +69,9 @@ const Editor: FC<Props> = ({
   onRunQuery,
   onSaveQuery,
 }) => {
-  const { modalContainer } = useContext(AppContext);
+  const { modalContainer, datavizSettings } = useContext(AppContext);
+  const clientTheme = datavizSettings?.theme;
+
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
@@ -86,11 +89,34 @@ const Editor: FC<Props> = ({
   );
 
   const [editorSection, setEditorSection] = useState(EditorSection.QUERY);
+
+  const mergedWidgetSettings = {
+    card: {
+      ...widgetSettings.card,
+    },
+    legend: {
+      ...widgetSettings.legend,
+    },
+    ...widgetSettings,
+  };
+
+  const mergedChartSettings = {
+    theme: {
+      ...baseTheme,
+      ...clientTheme,
+    },
+    ...chartSettings,
+  };
+
   const [
     widgetCustomization,
     setCustomizationSettings,
   ] = useState<SerializedSettings>(() =>
-    serializeInputSettings(widgetType, chartSettings, widgetSettings)
+    serializeInputSettings(
+      widgetType,
+      mergedChartSettings,
+      mergedWidgetSettings
+    )
   );
 
   const updateQuery = useCallback((query: Query) => {
