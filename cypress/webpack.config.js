@@ -33,7 +33,5 @@ module.exports = {
       },
     ],
   },
-  plugins: [
-    new NodePolyfillPlugin()
-  ],
+  plugins: [new NodePolyfillPlugin()],
 };

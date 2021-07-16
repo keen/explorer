@@ -2,6 +2,7 @@ export const CONTAINER_ID = 'dataviz-container';
 
 export const DEFAULT_WIDGET_SETTINGS = {
   card: {
+    enabled: true,
     backgroundColor: 'transparent',
     borderRadius: 0,
     border: 'none',
