@@ -9,7 +9,7 @@ Array [
           "content": "@subtitle",
           "typography": Object {
             "fontColor": "#1D2729",
-            "fontFamily": "Lato Regular, sans-serif",
+            "fontFamily": "Lato, sans-serif",
             "fontSize": 14,
             "fontStyle": "normal",
             "fontWeight": "normal",
@@ -19,7 +19,7 @@ Array [
           "content": "",
           "typography": Object {
             "fontColor": "#27566D",
-            "fontFamily": "Gangster Grotesk Regular, sans-serif",
+            "fontFamily": "Gangster Grotesk, sans-serif",
             "fontSize": 20,
             "fontStyle": "normal",
             "fontWeight": "normal",
@@ -41,7 +41,7 @@ Array [
           "content": "",
           "typography": Object {
             "fontColor": "#1D2729",
-            "fontFamily": "Lato Regular, sans-serif",
+            "fontFamily": "Lato, sans-serif",
             "fontSize": 14,
             "fontStyle": "normal",
             "fontWeight": "normal",
@@ -51,7 +51,7 @@ Array [
           "content": "@title",
           "typography": Object {
             "fontColor": "#27566D",
-            "fontFamily": "Gangster Grotesk Regular, sans-serif",
+            "fontFamily": "Gangster Grotesk, sans-serif",
             "fontSize": 20,
             "fontStyle": "normal",
             "fontWeight": "normal",
