@@ -1,10 +1,6 @@
 import React, { FC, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import {
-  PickerWidgets,
-  ChartSettings,
-  WidgetSettings,
-} from '@keen.io/widget-picker';
+import { PickerWidgets, WidgetSettings } from '@keen.io/widget-picker';
 import { KeenDataviz } from '@keen.io/dataviz';
 import { Theme } from '@keen.io/charts';
 
@@ -13,6 +9,8 @@ import { VisulizationContainer } from './DataViz.styles';
 import { isEmptyAnalysisResult } from './utils';
 
 import { CONTAINER_ID, DEFAULT_WIDGET_SETTINGS } from './constants';
+import { mergeChartSettings } from './utils/mergeChartSettings';
+import { ChartSettings } from '../../types';
 
 type Props = {
   /** Query execution results */
@@ -42,20 +40,15 @@ const Dataviz: FC<Props> = ({
   const containerRef = useRef(null);
 
   useEffect(() => {
-    const themeSettings = visualizationTheme
-      ? {
-          theme: visualizationTheme,
-        }
-      : {};
-
     datavizRef.current = new KeenDataviz({
       container: containerRef.current,
       presentationTimezone,
       type: visualization,
-      settings: {
-        ...chartSettings,
-        ...themeSettings,
-      },
+      settings: mergeChartSettings({
+        chartType: visualization,
+        chartSettings,
+        baseTheme: visualizationTheme,
+      }),
       widget: {
         ...DEFAULT_WIDGET_SETTINGS,
         ...widgetSettings,

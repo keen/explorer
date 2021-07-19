@@ -1,5 +1,18 @@
 import { PickerWidgets } from '@keen.io/widget-picker';
-import { Theme } from '@keen.io/charts';
+import {
+  BarChartSettings,
+  BubbleChartSettings,
+  LineChartSettings,
+  GaugeChartSettings,
+  PieChartSettings,
+  HeatmapChartSettings,
+  ChoroplethChartSettings,
+  FunnelChartSettings,
+  DonutChartSettings,
+  MetricChartSettings,
+  TableChartSettings,
+  Theme,
+} from '@keen.io/charts';
 import { Query } from '@keen.io/query';
 
 export type Analysis =
@@ -76,3 +89,18 @@ export type Options = {
   disableTimezoneSelection?: boolean;
   confirmExtractionLimit?: number;
 };
+
+type ComponentSettings =
+  | BubbleChartSettings
+  | BarChartSettings
+  | LineChartSettings
+  | GaugeChartSettings
+  | PieChartSettings
+  | DonutChartSettings
+  | MetricChartSettings
+  | FunnelChartSettings
+  | HeatmapChartSettings
+  | TableChartSettings
+  | ChoroplethChartSettings
+  | Record<string, any>;
+export type ChartSettings = ComponentSettings & { theme?: Theme };

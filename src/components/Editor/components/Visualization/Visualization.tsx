@@ -10,6 +10,7 @@ import { Container, PickerContainer } from './Visualization.styles';
 import { getDefaultSettings } from './utils';
 
 import QueryVisualization from '../../../QueryVisualization';
+import { ChartSettings } from '../../../../types';
 
 type Props = {
   /** Widget type */
@@ -24,7 +25,7 @@ type Props = {
   queryResults: Record<string, any>;
   onChangeVisualization: (settings: {
     widgetType: PickerWidgets;
-    chartSettings: Record<string, any>;
+    chartSettings: ChartSettings;
     widgetSettings: Record<string, any>;
   }) => void;
 };

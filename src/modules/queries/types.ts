@@ -1,7 +1,7 @@
-import { PickerWidgets, ChartSettings } from '@keen.io/widget-picker';
+import { PickerWidgets } from '@keen.io/widget-picker';
 import { Query } from '@keen.io/query';
 
-import { APIError } from '../../types';
+import { APIError, ChartSettings } from '../../types';
 
 export type Visualization = {
   type: PickerWidgets;
