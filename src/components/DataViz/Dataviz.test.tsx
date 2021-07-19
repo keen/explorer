@@ -24,24 +24,40 @@ const initialProps = {
     query: {},
     result: 20,
   },
-  chartSettings: {},
+  chartSettings: {
+    theme: {
+      gridX: { enabled: true },
+      gridY: { enabled: true },
+    },
+  },
   widgetSettings: {},
-};
+} as any;
 
 beforeEach(() => {
   (KeenDataviz as any).mockClear();
   renderMock.mockClear();
 });
 
+const theme = {
+  gridX: { enabled: false },
+  gridY: { enabled: false },
+};
+
 test('creates "DataViz" instance', () => {
-  render(<DataViz {...initialProps} />);
+  render(<DataViz {...initialProps} visualizationTheme={theme as any} />);
 
   expect(KeenDataviz).toHaveBeenCalledTimes(1);
 });
 
 test('initializes "DataViz" instance with named timezone settings', () => {
   const timezone = 'America/New_York';
-  render(<DataViz {...initialProps} presentationTimezone={timezone} />);
+  render(
+    <DataViz
+      {...initialProps}
+      presentationTimezone={timezone}
+      visualizationTheme={theme as any}
+    />
+  );
 
   expect(KeenDataviz).toHaveBeenCalledWith(
     expect.objectContaining({
@@ -62,7 +78,11 @@ test('initializes "DataViz" instance with theme settings', () => {
     expect.objectContaining({
       type: 'bar',
       settings: {
-        theme,
+        theme: {
+          ...theme,
+          gridX: { enabled: true },
+          gridY: { enabled: true },
+        },
       },
       widget: {
         ...DEFAULT_WIDGET_SETTINGS,
@@ -72,8 +92,7 @@ test('initializes "DataViz" instance with theme settings', () => {
 });
 
 test('calls "DataViz" render method with analysis results', () => {
-  render(<DataViz {...initialProps} />);
-
+  render(<DataViz {...initialProps} visualizationTheme={theme as any} />);
   expect(renderMock).toHaveBeenCalledWith(initialProps.analysisResults);
 });
 
@@ -85,7 +104,7 @@ test('calls "DataViz" error method when analysis results are empty', () => {
       result: [],
     },
   };
-  render(<DataViz {...props} />);
+  render(<DataViz {...props} visualizationTheme={theme as any} />);
 
   expect(errorMock).toHaveBeenCalledWith('dataviz.no_results');
 });

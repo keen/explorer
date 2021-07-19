@@ -1,5 +1,5 @@
 import { createAction } from '@reduxjs/toolkit';
-import { PickerWidgets, ChartSettings } from '@keen.io/widget-picker';
+import { PickerWidgets } from '@keen.io/widget-picker';
 
 import {
   APP_START,
@@ -41,6 +41,7 @@ import {
 } from './constants';
 
 import { Confirmation, SettingsModalSource, ViewMode } from './types';
+import { ChartSettings } from '../../types';
 
 export const appStart = createAction(APP_START, (initialView: ViewMode) => ({
   payload: {
