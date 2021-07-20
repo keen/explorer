@@ -7,6 +7,5 @@ export const DEFAULT_WIDGET_SETTINGS = {
     borderRadius: 0,
     border: 'none',
     hasShadow: false,
-    enabled: true,
   },
 };
