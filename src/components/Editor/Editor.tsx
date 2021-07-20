@@ -87,6 +87,8 @@ const Editor: FC<Props> = ({
     widgetType
   );
 
+  console.log('customizationSetting', customizationSections);
+
   const [editorSection, setEditorSection] = useState(EditorSection.QUERY);
 
   const mergedWidgetSettings = {
@@ -184,7 +186,12 @@ const Editor: FC<Props> = ({
           <SectionContainer>
             <CustomizationContainer>
               <WidgetCustomization
-                customizationSections={customizationSections}
+                customizationSections={{
+                  ...customizationSections,
+                  componentSettings: {
+                    cardSettingsDisabled: true,
+                  },
+                }}
                 chartSettings={widgetCustomization.chart}
                 widgetSettings={widgetCustomization.widget}
                 savedQueryName={savedQueryName}
