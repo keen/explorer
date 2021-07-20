@@ -4,12 +4,13 @@ import { getOffsetFromDate } from '@keen.io/time-utils';
 import { PickerWidgets, WidgetSettings } from '@keen.io/widget-picker';
 
 import { Container, JSONContainer } from './QueryVisualization.styles';
+import { CONTAINER_ID } from './constants';
 
 import DataViz from '../DataViz';
 import JSONView from '../JSONView';
+import { mergeChartSettings } from '../DataViz/utils';
 
 import { AppContext } from '../../contexts';
-import { CONTAINER_ID } from './constants';
 import { ChartSettings } from '../../types';
 
 type Props = {
@@ -54,7 +55,11 @@ const QueryVisualization: FC<Props> = ({
       {useDataviz ? (
         <DataViz
           analysisResults={queryResults}
-          chartSettings={chartSettings}
+          chartSettings={mergeChartSettings({
+            chartType: widgetType,
+            chartSettings,
+            baseTheme: theme,
+          })}
           widgetSettings={widgetSettings}
           presentationTimezone={getPresentationTimezone(queryResults)}
           visualizationTheme={theme}

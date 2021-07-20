@@ -6,10 +6,8 @@ import { Theme } from '@keen.io/charts';
 
 import { VisulizationContainer } from './DataViz.styles';
 
-import { isEmptyAnalysisResult } from './utils';
-
+import { isEmptyAnalysisResult, mergeChartSettings } from './utils';
 import { CONTAINER_ID, DEFAULT_WIDGET_SETTINGS } from './constants';
-import { mergeChartSettings } from './utils/mergeChartSettings';
 import { ChartSettings } from '../../types';
 
 type Props = {

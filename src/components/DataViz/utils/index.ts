@@ -1,3 +1,4 @@
 import isEmptyAnalysisResult from './isEmptyAnalysisResults';
+import { mergeChartSettings } from './mergeChartSettings';
 
-export { isEmptyAnalysisResult };
+export { isEmptyAnalysisResult, mergeChartSettings };

@@ -1,8 +1,5 @@
-import {
-  PickerWidgets,
-  ChartSettings,
-  WidgetSettings,
-} from '@keen.io/widget-picker';
+import { PickerWidgets, WidgetSettings } from '@keen.io/widget-picker';
+import { ChartSettings } from '../../types';
 
 export type Confirmation = 'delete';
 
