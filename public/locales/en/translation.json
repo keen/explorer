@@ -414,5 +414,17 @@
     "settings_disabled": "Run your query first",
     "settings_disabled_for_widget": "Settings do not affect {{widget}} visualization",
     "format_values_not_avaialble": "No formatting options for {{analysis}} analysis"
+  },
+  "widget_customization_sections": {
+    "titles": "Titles",
+    "formatting": "Formatting",
+    "components": "Components"
+  },
+  "widget_customization_bar_settings": {
+    "title": "Bar Chart Components",
+    "card": "Card",
+    "legend": "Legend",
+    "vertical_grid": "Vertical Grid",
+    "horizontal_grid": "Horizontal Grid"
   }
 }
