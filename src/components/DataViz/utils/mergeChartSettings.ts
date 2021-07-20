@@ -1,20 +1,24 @@
-import { Widgets } from '@keen.io/widgets';
 import { Theme } from '@keen.io/charts';
+import { PickerWidgets } from '@keen.io/widget-picker';
+
 import { ChartSettings } from '../../../types';
 
 type Params = {
-  chartType: Widgets;
+  chartType: PickerWidgets;
   chartSettings: ChartSettings;
   baseTheme: Theme;
 };
 
+/**
+ * Function that allows to fallback fields missing in chart settings from theme
+ */
 export const mergeChartSettings = ({
   chartType,
   chartSettings,
   baseTheme,
 }: Params) => {
   if (chartType === 'bar') {
-    const settings = {
+    return {
       theme: {
         ...baseTheme,
         ...chartSettings.theme,
@@ -28,7 +32,6 @@ export const mergeChartSettings = ({
         },
       },
     };
-    return settings;
   }
   return {
     ...chartSettings,

@@ -27,6 +27,7 @@ import { isExtraction } from './utils';
 import { AppContext } from '../../contexts';
 
 import { editorSagaActions, EditorSection } from '../../modules/editor';
+
 import {
   queriesActions,
   getQueryResults,
@@ -47,6 +48,7 @@ import RunQuery from '../RunQuery';
 import ConfirmExtraction from '../ConfirmExtraction';
 import VisualizationPlaceholder from '../VisualizationPlaceholder';
 import QueryLimitReached from '../QueryLimitReached';
+import { mergeChartSettings } from '../DataViz/utils';
 
 type Props = {
   /** Query definition */
@@ -77,6 +79,7 @@ const Editor: FC<Props> = ({
   const queryResults = useSelector(getQueryResults);
   const isQueryLoading = useSelector(getQueryPerformState);
   const isQueryLimitReached = useSelector(getQueryLimitReached);
+
   const { chartSettings, widgetSettings, type: widgetType } = useSelector(
     getVisualization
   );
@@ -87,34 +90,18 @@ const Editor: FC<Props> = ({
     widgetType
   );
 
-  console.log('customizationSetting', customizationSections);
-
   const [editorSection, setEditorSection] = useState(EditorSection.QUERY);
-
-  const mergedWidgetSettings = {
-    card: {
-      ...widgetSettings.card,
-    },
-    legend: {
-      ...widgetSettings.legend,
-    },
-    ...widgetSettings,
-  };
-
-  const mergedChartSettings = {
-    theme,
-    ...chartSettings,
-  };
+  const mergedChartSettings = mergeChartSettings({
+    chartType: widgetType,
+    chartSettings,
+    baseTheme: theme,
+  });
 
   const [
     widgetCustomization,
     setCustomizationSettings,
   ] = useState<SerializedSettings>(() =>
-    serializeInputSettings(
-      widgetType,
-      mergedChartSettings,
-      mergedWidgetSettings
-    )
+    serializeInputSettings(widgetType, mergedChartSettings, widgetSettings)
   );
 
   const updateQuery = useCallback((query: Query) => {
