@@ -44,7 +44,7 @@ const theme = {
 };
 
 test('creates "DataViz" instance', () => {
-  render(<DataViz {...initialProps} visualizationTheme={theme as any} />);
+  render(<DataViz {...initialProps} />);
 
   expect(KeenDataviz).toHaveBeenCalledTimes(1);
 });
@@ -71,15 +71,13 @@ test('initializes "DataViz" instance with named timezone settings', () => {
 });
 
 test('initializes "DataViz" instance with theme settings', () => {
-  const theme = { colors: ['red', 'green'] };
-  render(<DataViz {...initialProps} visualizationTheme={theme as any} />);
+  render(<DataViz {...initialProps} />);
 
   expect(KeenDataviz).toHaveBeenCalledWith(
     expect.objectContaining({
       type: 'bar',
       settings: {
         theme: {
-          ...theme,
           gridX: { enabled: true },
           gridY: { enabled: true },
         },
@@ -92,7 +90,7 @@ test('initializes "DataViz" instance with theme settings', () => {
 });
 
 test('calls "DataViz" render method with analysis results', () => {
-  render(<DataViz {...initialProps} visualizationTheme={theme as any} />);
+  render(<DataViz {...initialProps} />);
   expect(renderMock).toHaveBeenCalledWith(initialProps.analysisResults);
 });
 
@@ -104,7 +102,7 @@ test('calls "DataViz" error method when analysis results are empty', () => {
       result: [],
     },
   };
-  render(<DataViz {...props} visualizationTheme={theme as any} />);
+  render(<DataViz {...props} />);
 
   expect(errorMock).toHaveBeenCalledWith('dataviz.no_results');
 });

@@ -1,6 +1,8 @@
-import React, { FC, useContext, useState, useCallback } from 'react';
+import React, { FC, useContext, useState, useCallback, useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import deepMerge from 'deepmerge';
+
 import WidgetCustomization, {
   SerializedSettings,
   useCustomizationSections,
@@ -48,7 +50,6 @@ import RunQuery from '../RunQuery';
 import ConfirmExtraction from '../ConfirmExtraction';
 import VisualizationPlaceholder from '../VisualizationPlaceholder';
 import QueryLimitReached from '../QueryLimitReached';
-import { mergeChartSettings } from '../DataViz/utils';
 
 type Props = {
   /** Query definition */
@@ -91,17 +92,27 @@ const Editor: FC<Props> = ({
   );
 
   const [editorSection, setEditorSection] = useState(EditorSection.QUERY);
-  const mergedChartSettings = mergeChartSettings({
-    chartType: widgetType,
-    chartSettings,
-    baseTheme: theme,
-  });
+
+  const composeChartSettings = useMemo(() => {
+    if ('theme' in chartSettings) {
+      return {
+        ...chartSettings,
+        theme: deepMerge(theme, chartSettings.theme, {
+          arrayMerge: (_target, source) => source,
+        }),
+      };
+    }
+    return {
+      theme,
+      ...chartSettings,
+    };
+  }, [widgetType, chartSettings]);
 
   const [
     widgetCustomization,
     setCustomizationSettings,
   ] = useState<SerializedSettings>(() =>
-    serializeInputSettings(widgetType, mergedChartSettings, widgetSettings)
+    serializeInputSettings(widgetType, composeChartSettings, widgetSettings)
   );
 
   const updateQuery = useCallback((query: Query) => {
@@ -133,6 +144,7 @@ const Editor: FC<Props> = ({
                 widgetType={widgetType}
                 chartSettings={chartSettings}
                 widgetSettings={widgetSettings}
+                theme={composeChartSettings.theme}
                 onChangeVisualization={(settings) => {
                   const chart = serializeOutputSettings(
                     settings.widgetType,
