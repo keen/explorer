@@ -420,11 +420,21 @@
     "formatting": "Formatting",
     "components": "Components"
   },
-  "widget_customization_bar_settings": {
-    "title": "Bar Chart Components",
-    "card": "Card",
-    "legend": "Legend",
+  "widget_customization_legend_settings": {
+    "label": "Legend",
+    "positionLabel": "Legend Position"
+  },
+  "widget_customization_card_settings": {
+    "label": "Card"
+  },
+  "widget_customization_grid_settings": {
     "vertical_grid": "Vertical Grid",
     "horizontal_grid": "Horizontal Grid"
+  },
+  "widget_customization_bar_settings": {
+    "title": "Bar Chart Components"
+  },
+  "widget_customization_line_settings": {
+    "title": "Area & Line Chart Components"
   }
 }
