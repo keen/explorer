@@ -88,7 +88,10 @@ const Editor: FC<Props> = ({
   const customizationSections = useCustomizationSections(
     !!queryResults,
     query,
-    widgetType
+    widgetType,
+    {
+      card: true,
+    }
   );
 
   const [editorSection, setEditorSection] = useState(EditorSection.QUERY);
@@ -185,12 +188,8 @@ const Editor: FC<Props> = ({
           <SectionContainer>
             <CustomizationContainer>
               <WidgetCustomization
-                customizationSections={{
-                  ...customizationSections,
-                  componentSettings: {
-                    cardSettingsDisabled: true,
-                  },
-                }}
+                widgetType={widgetType}
+                customizationSections={customizationSections}
                 chartSettings={widgetCustomization.chart}
                 widgetSettings={widgetCustomization.widget}
                 savedQueryName={savedQueryName}
