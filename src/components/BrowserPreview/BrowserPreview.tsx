@@ -1,6 +1,7 @@
-import React, { FC } from 'react';
+import React, { FC, useContext, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import deepMerge from 'deepmerge';
 
 import {
   Card,
@@ -36,6 +37,7 @@ import {
 } from '../../modules/savedQuery/selectors';
 import { getNotExistingEventStreams } from '../../modules/schemas/selectors';
 import { getMissingEventStreams } from './utils';
+import { AppContext } from '../../contexts';
 
 type Props = {
   /** Current active query */
@@ -57,6 +59,9 @@ const BrowserPreview: FC<Props> = ({
   const isQueryLimitReached = useSelector(getQueryLimitReached);
   const autorunQuery = useSelector(getQueryAutorun);
   const { chartSettings } = useSelector(getVisualization);
+  const { datavizSettings } = useContext(AppContext);
+
+  const theme = datavizSettings.theme;
 
   const isSavedQueryLoading = useSelector(getSavedQueryLoading);
   const isSavedQueryEditable = useSelector(getSavedQueryIsEditable);
@@ -69,6 +74,15 @@ const BrowserPreview: FC<Props> = ({
       notExistingEventStreams
     );
   }
+
+  const composedTheme = useMemo(() => {
+    if ('theme' in chartSettings && currentQuery) {
+      return deepMerge(theme, currentQuery.visualization.chartSettings.theme, {
+        arrayMerge: (_target, source) => source,
+      });
+    }
+    return theme;
+  }, [currentQuery]);
 
   return (
     <>
@@ -106,6 +120,7 @@ const BrowserPreview: FC<Props> = ({
                       widgetSettings={currentQuery.visualization.widgetSettings}
                       chartSettings={currentQuery.visualization.chartSettings}
                       queryResults={queryResults}
+                      theme={composedTheme}
                     />
                   </VisualizationWrapper>
                 ) : (
