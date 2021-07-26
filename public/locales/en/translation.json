@@ -436,5 +436,32 @@
   },
   "widget_customization_line_settings": {
     "title": "Area & Line Chart Components"
+  },
+  "widget_customization_heatmap_settings": {
+    "title": "Heatmap Chart Components"
+  },
+  "widget_customization_table_settings": {
+    "title": "Table Chart Components"
+  },
+  "widget_customization_circular_settings": {
+    "title": "Donut & Pie Chart Components"
+  },
+  "widget_customization_funnel_settings": {
+    "title": "Funnel Chart Components",
+    "percentages": "Percentages"
+  },
+  "widget_customization_choropleth_settings": {
+    "title": "Choropleth Chart Components",
+    "slider": "Slider"
+  },
+  "widget_customization_slider_settings": {
+    "label": "Slider",
+    "positionLabel": "Slider Position"
+  },
+  "widget_customization_reverse_axes_settings": {
+    "label": "Reverse Axes"
+  },
+  "widget_customization_metric_settings": {
+    "title": "Metric Chart Settings"
   }
 }
