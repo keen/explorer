@@ -1,7 +1,6 @@
-import React, { FC, useContext, useMemo } from 'react';
+import React, { FC } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import deepMerge from 'deepmerge';
 
 import {
   Card,
@@ -35,9 +34,10 @@ import {
   getSavedQueryIsEditable,
   getSavedQueryLoading,
 } from '../../modules/savedQuery/selectors';
+import { useApplyWidgetTheming } from '../../hooks/useApplyWidgetTheming';
+
 import { getNotExistingEventStreams } from '../../modules/schemas/selectors';
 import { getMissingEventStreams } from './utils';
-import { AppContext } from '../../contexts';
 
 type Props = {
   /** Current active query */
@@ -58,10 +58,7 @@ const BrowserPreview: FC<Props> = ({
   const isQueryLoading = useSelector(getQueryPerformState);
   const isQueryLimitReached = useSelector(getQueryLimitReached);
   const autorunQuery = useSelector(getQueryAutorun);
-  const { chartSettings } = useSelector(getVisualization);
-  const { datavizSettings } = useContext(AppContext);
-
-  const theme = datavizSettings.theme;
+  const { chartSettings, widgetSettings } = useSelector(getVisualization);
 
   const isSavedQueryLoading = useSelector(getSavedQueryLoading);
   const isSavedQueryEditable = useSelector(getSavedQueryIsEditable);
@@ -75,14 +72,12 @@ const BrowserPreview: FC<Props> = ({
     );
   }
 
-  const composedTheme = useMemo(() => {
-    if ('theme' in chartSettings && currentQuery) {
-      return deepMerge(theme, currentQuery.visualization.chartSettings.theme, {
-        arrayMerge: (_target, source) => source,
-      });
-    }
-    return theme;
-  }, [currentQuery]);
+  const { themedChartSettings, themedWidgetSettings } = useApplyWidgetTheming({
+    chartSettings,
+    widgetSettings,
+    dependencies: [currentQuery],
+    composeCondition: !!currentQuery,
+  });
 
   return (
     <>
@@ -117,10 +112,9 @@ const BrowserPreview: FC<Props> = ({
                   >
                     <QueryVisualization
                       widgetType={currentQuery.visualization.type}
-                      widgetSettings={currentQuery.visualization.widgetSettings}
-                      chartSettings={currentQuery.visualization.chartSettings}
+                      widgetSettings={themedWidgetSettings}
+                      chartSettings={themedChartSettings}
                       queryResults={queryResults}
-                      theme={composedTheme}
                     />
                   </VisualizationWrapper>
                 ) : (

@@ -6,10 +6,11 @@ Array [
     "payload": Object {
       "widgetSettings": Object {
         "card": Object {
-          "backgroundColor": "#FFFFFF",
+          "backgroundColor": "transparent",
+          "border": "none",
           "borderRadius": 0,
           "enabled": true,
-          "hasShadow": true,
+          "hasShadow": false,
         },
         "legend": Object {
           "alignment": "left",
@@ -36,10 +37,11 @@ Array [
     "payload": Object {
       "widgetSettings": Object {
         "card": Object {
-          "backgroundColor": "#FFFFFF",
+          "backgroundColor": "transparent",
+          "border": "none",
           "borderRadius": 0,
           "enabled": true,
-          "hasShadow": true,
+          "hasShadow": false,
         },
         "legend": Object {
           "alignment": "left",

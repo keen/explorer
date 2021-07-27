@@ -11,7 +11,6 @@ import { getDefaultSettings } from './utils';
 
 import QueryVisualization from '../../../QueryVisualization';
 import { ChartSettings } from '../../../../types';
-import { Theme } from '@keen.io/charts';
 
 type Props = {
   /** Widget type */
@@ -29,7 +28,6 @@ type Props = {
     chartSettings: ChartSettings;
     widgetSettings: Record<string, any>;
   }) => void;
-  theme: Theme;
 };
 
 const Visualization: FC<Props> = ({
@@ -39,7 +37,6 @@ const Visualization: FC<Props> = ({
   query,
   queryResults,
   onChangeVisualization,
-  theme,
 }) => {
   const widgets = useMemo(() => getAvailableWidgets(query), [queryResults]);
 
@@ -57,6 +54,14 @@ const Visualization: FC<Props> = ({
     }
   }, [widgets, widgetType]);
 
+  const onUpdateSettings = (widgetType, chartSettings, widgetSettings) => {
+    onChangeVisualization({
+      widgetType,
+      chartSettings,
+      widgetSettings,
+    });
+  };
+
   return (
     <Container>
       <PickerContainer data-testid="widget-picker">
@@ -66,13 +71,7 @@ const Visualization: FC<Props> = ({
           chartSettings={chartSettings}
           widgetSettings={widgetSettings}
           disabledWidgetOptions={getSimpleOptionsWidgets(query)}
-          onUpdateSettings={(widgetType, chartSettings, widgetSettings) => {
-            onChangeVisualization({
-              widgetType,
-              chartSettings,
-              widgetSettings,
-            });
-          }}
+          onUpdateSettings={onUpdateSettings}
         />
       </PickerContainer>
       {widgets.includes(widgetType) && (
@@ -81,7 +80,6 @@ const Visualization: FC<Props> = ({
           chartSettings={chartSettings}
           widgetSettings={widgetSettings}
           queryResults={queryResults}
-          theme={theme}
         />
       )}
     </Container>
