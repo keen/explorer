@@ -58,6 +58,13 @@ const render = (storeState: any = {}, overProps: any = {}) => {
       theme: {
         gridX: { enabled: true },
         gridY: { enabled: true },
+        funnel: {
+          header: {
+            badge: {
+              enabled: true,
+            },
+          },
+        },
       },
     },
     keenAnalysis: {

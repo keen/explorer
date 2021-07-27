@@ -10,7 +10,6 @@ import DataViz from '../DataViz';
 import JSONView from '../JSONView';
 
 import { ChartSettings } from '../../types';
-import { Theme } from '@keen.io/charts';
 
 type Props = {
   /** Analysis results */
@@ -21,7 +20,6 @@ type Props = {
   chartSettings: ChartSettings;
   /** Widget settings */
   widgetSettings: WidgetSettings;
-  theme: Theme;
 };
 
 const QueryVisualization: FC<Props> = ({
@@ -29,7 +27,6 @@ const QueryVisualization: FC<Props> = ({
   chartSettings,
   widgetSettings,
   widgetType,
-  theme,
 }) => {
   const useDataviz = widgetType !== 'json';
 
@@ -53,10 +50,7 @@ const QueryVisualization: FC<Props> = ({
       {useDataviz ? (
         <DataViz
           analysisResults={queryResults}
-          chartSettings={{
-            ...chartSettings,
-            theme,
-          }}
+          chartSettings={chartSettings}
           widgetSettings={widgetSettings}
           presentationTimezone={getPresentationTimezone(queryResults)}
           visualization={widgetType as Exclude<PickerWidgets, 'json'>}

@@ -28,9 +28,18 @@ const initialProps = {
     theme: {
       gridX: { enabled: true },
       gridY: { enabled: true },
+      funnel: {
+        header: {
+          badge: {
+            enabled: true,
+          },
+        },
+      },
     },
   },
-  widgetSettings: {},
+  widgetSettings: {
+    ...DEFAULT_WIDGET_SETTINGS,
+  },
 } as any;
 
 beforeEach(() => {
@@ -80,6 +89,13 @@ test('initializes "DataViz" instance with theme settings', () => {
         theme: {
           gridX: { enabled: true },
           gridY: { enabled: true },
+          funnel: {
+            header: {
+              badge: {
+                enabled: true,
+              },
+            },
+          },
         },
       },
       widget: {
