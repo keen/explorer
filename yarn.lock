@@ -2010,10 +2010,10 @@
     styled-system "^5.1.5"
     webfontloader "^1.6.28"
 
-"@keen.io/widget-customization@^0.0.22":
-  version "0.0.22"
-  resolved "https://registry.yarnpkg.com/@keen.io/widget-customization/-/widget-customization-0.0.22.tgz#b6fda9cd62bb2b9e5763867bb25cd81e240da33f"
-  integrity sha512-t5X4hbkc4+Au8L1fxu18P3m299a2BcLKIwTpufER45b5DH0E4YGGwi3jJ3bioAfUHmZ9TdFc/ooMQxpuTseiBA==
+"@keen.io/widget-customization@^0.0.24":
+  version "0.0.24"
+  resolved "https://registry.yarnpkg.com/@keen.io/widget-customization/-/widget-customization-0.0.24.tgz#ad1d3bf317d99d3d8ff3970ae77f0fdee91fcf29"
+  integrity sha512-D4fCM+0rUImwldJ5X9EkzZKFmrlLt+GTuMDBpNfS55ZWRf05O0BcNmtstPMCxg6mxrzvs8qiMEcPJJM1eFlmuw==
   dependencies:
     "@keen.io/colors" "^1.1.0"
     "@keen.io/query" "^1.2.0"
