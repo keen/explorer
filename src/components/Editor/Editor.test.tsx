@@ -53,9 +53,26 @@ const render = (storeState: any = {}, overProps: any = {}) => {
     onSaveQuery: jest.fn(),
     ...overProps,
   };
-
+  const context = {
+    datavizSettings: {
+      theme: {
+        gridX: { enabled: true },
+        gridY: { enabled: true },
+        funnel: {
+          header: {
+            badge: {
+              enabled: true,
+            },
+          },
+        },
+      },
+    },
+    keenAnalysis: {
+      config: {},
+    },
+  };
   const wrapper = rtlRender(
-    <AppContext.Provider value={{ keenAnalysis: { config: {} } } as any}>
+    <AppContext.Provider value={context as any}>
       <Provider store={store}>
         <Editor {...props} />
       </Provider>

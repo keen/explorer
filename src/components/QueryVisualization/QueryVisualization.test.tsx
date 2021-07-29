@@ -3,6 +3,7 @@ import { render as rtlRender } from '@testing-library/react';
 import { KeenDataviz } from '@keen.io/dataviz';
 
 import QueryVisualization from './QueryVisualization';
+import { AppContext } from '../../contexts';
 
 const renderMock = jest.fn();
 
@@ -24,12 +25,30 @@ const render = (overProps: any = {}) => {
       },
       result: 20,
     },
-    chartSettings: {},
+    chartSettings: {
+      theme: {
+        gridX: {
+          enabled: true,
+        },
+      },
+    },
     widgetSettings: {},
     ...overProps,
   };
+  const context = {
+    datavizSettings: {
+      theme: {
+        gridX: { enabled: true },
+        gridY: { enabled: true },
+      },
+    },
+  };
 
-  const wrapper = rtlRender(<QueryVisualization {...props} />);
+  const wrapper = rtlRender(
+    <AppContext.Provider value={context as any}>
+      <QueryVisualization {...props} />
+    </AppContext.Provider>
+  );
 
   return {
     wrapper,
