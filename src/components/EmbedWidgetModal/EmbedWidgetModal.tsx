@@ -37,7 +37,7 @@ const EmbedWidgetModal: FC = () => {
     AppContext
   );
   const { projectId, readKey } = keenAnalysis.config;
-  const theme = datavizSettings?.theme;
+  const theme = datavizSettings.theme;
 
   const isOpen = useSelector(getEmbedModalVisibility);
   const { type: widget, chartSettings, widgetSettings } = useSelector(

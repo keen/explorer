@@ -34,6 +34,8 @@ import {
   getSavedQueryIsEditable,
   getSavedQueryLoading,
 } from '../../modules/savedQuery/selectors';
+import { useApplyWidgetTheming } from '../../hooks/useApplyWidgetTheming';
+
 import { getNotExistingEventStreams } from '../../modules/schemas/selectors';
 import { getMissingEventStreams } from './utils';
 
@@ -56,7 +58,7 @@ const BrowserPreview: FC<Props> = ({
   const isQueryLoading = useSelector(getQueryPerformState);
   const isQueryLimitReached = useSelector(getQueryLimitReached);
   const autorunQuery = useSelector(getQueryAutorun);
-  const { chartSettings } = useSelector(getVisualization);
+  const { chartSettings, widgetSettings } = useSelector(getVisualization);
 
   const isSavedQueryLoading = useSelector(getSavedQueryLoading);
   const isSavedQueryEditable = useSelector(getSavedQueryIsEditable);
@@ -69,6 +71,13 @@ const BrowserPreview: FC<Props> = ({
       notExistingEventStreams
     );
   }
+
+  const { themedChartSettings, themedWidgetSettings } = useApplyWidgetTheming({
+    chartSettings,
+    widgetSettings,
+    dependencies: [currentQuery],
+    composeCondition: !!currentQuery,
+  });
 
   return (
     <>
@@ -103,8 +112,8 @@ const BrowserPreview: FC<Props> = ({
                   >
                     <QueryVisualization
                       widgetType={currentQuery.visualization.type}
-                      widgetSettings={currentQuery.visualization.widgetSettings}
-                      chartSettings={currentQuery.visualization.chartSettings}
+                      widgetSettings={themedWidgetSettings}
+                      chartSettings={themedChartSettings}
                       queryResults={queryResults}
                     />
                   </VisualizationWrapper>

@@ -5,25 +5,24 @@ Array [
   Object {
     "payload": Object {
       "widgetSettings": Object {
+        "card": Object {
+          "backgroundColor": "transparent",
+          "border": "none",
+          "borderRadius": 0,
+          "enabled": true,
+          "hasShadow": false,
+        },
+        "legend": Object {
+          "alignment": "left",
+          "enabled": true,
+          "layout": "horizontal",
+          "position": "top",
+        },
         "subtitle": Object {
           "content": "@subtitle",
-          "typography": Object {
-            "fontColor": "#1D2729",
-            "fontFamily": "Lato, sans-serif",
-            "fontSize": 14,
-            "fontStyle": "normal",
-            "fontWeight": "normal",
-          },
         },
         "title": Object {
           "content": "",
-          "typography": Object {
-            "fontColor": "#27566D",
-            "fontFamily": "Gangster Grotesk, sans-serif",
-            "fontSize": 20,
-            "fontStyle": "normal",
-            "fontWeight": "normal",
-          },
         },
       },
     },
@@ -37,25 +36,24 @@ Array [
   Object {
     "payload": Object {
       "widgetSettings": Object {
+        "card": Object {
+          "backgroundColor": "transparent",
+          "border": "none",
+          "borderRadius": 0,
+          "enabled": true,
+          "hasShadow": false,
+        },
+        "legend": Object {
+          "alignment": "left",
+          "enabled": true,
+          "layout": "horizontal",
+          "position": "top",
+        },
         "subtitle": Object {
           "content": "",
-          "typography": Object {
-            "fontColor": "#1D2729",
-            "fontFamily": "Lato, sans-serif",
-            "fontSize": 14,
-            "fontStyle": "normal",
-            "fontWeight": "normal",
-          },
         },
         "title": Object {
           "content": "@title",
-          "typography": Object {
-            "fontColor": "#27566D",
-            "fontFamily": "Gangster Grotesk, sans-serif",
-            "fontSize": 20,
-            "fontStyle": "normal",
-            "fontWeight": "normal",
-          },
         },
       },
     },

@@ -28,17 +28,21 @@ const render = (storeState: any = {}) => {
   };
   const store = mockStore({ ...initialState });
 
+  const context = {
+    datavizSettings: {
+      theme: {
+        gridX: { enabled: true },
+        gridY: { enabled: true },
+      },
+    },
+    modalContainer: '#modal-root',
+    keenAnalysis: {
+      config: { projectId: 'projectId', readKey: 'readKey' },
+    },
+  };
+
   const wrapper = rtlRender(
-    <AppContext.Provider
-      value={
-        {
-          modalContainer: '#modal-root',
-          keenAnalysis: {
-            config: { projectId: 'projectId', readKey: 'readKey' },
-          },
-        } as any
-      }
-    >
+    <AppContext.Provider value={context as any}>
       <Provider store={store}>
         <EmbedWidgetModal />
       </Provider>

@@ -1,6 +1,7 @@
 import React, { FC, useContext, useState, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+
 import WidgetCustomization, {
   SerializedSettings,
   useCustomizationSections,
@@ -27,6 +28,7 @@ import { isExtraction } from './utils';
 import { AppContext } from '../../contexts';
 
 import { editorSagaActions, EditorSection } from '../../modules/editor';
+
 import {
   queriesActions,
   getQueryResults,
@@ -47,6 +49,7 @@ import RunQuery from '../RunQuery';
 import ConfirmExtraction from '../ConfirmExtraction';
 import VisualizationPlaceholder from '../VisualizationPlaceholder';
 import QueryLimitReached from '../QueryLimitReached';
+import { useApplyWidgetTheming } from '../../hooks/useApplyWidgetTheming';
 
 type Props = {
   /** Query definition */
@@ -69,12 +72,14 @@ const Editor: FC<Props> = ({
   onSaveQuery,
 }) => {
   const { modalContainer } = useContext(AppContext);
+
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
   const queryResults = useSelector(getQueryResults);
   const isQueryLoading = useSelector(getQueryPerformState);
   const isQueryLimitReached = useSelector(getQueryLimitReached);
+
   const { chartSettings, widgetSettings, type: widgetType } = useSelector(
     getVisualization
   );
@@ -82,15 +87,29 @@ const Editor: FC<Props> = ({
   const customizationSections = useCustomizationSections(
     !!queryResults,
     query,
-    widgetType
+    widgetType,
+    {
+      card: true,
+    }
   );
 
   const [editorSection, setEditorSection] = useState(EditorSection.QUERY);
+
+  const { themedChartSettings, themedWidgetSettings } = useApplyWidgetTheming({
+    chartSettings,
+    widgetSettings,
+    dependencies: [widgetType, chartSettings, widgetSettings],
+  });
+
   const [
     widgetCustomization,
     setCustomizationSettings,
   ] = useState<SerializedSettings>(() =>
-    serializeInputSettings(widgetType, chartSettings, widgetSettings)
+    serializeInputSettings(
+      widgetType,
+      themedChartSettings,
+      themedWidgetSettings
+    )
   );
 
   const updateQuery = useCallback((query: Query) => {
@@ -103,6 +122,46 @@ const Editor: FC<Props> = ({
     },
     []
   );
+
+  const onChangeVisualization = (settings) => {
+    const chart = serializeOutputSettings(
+      settings.widgetType,
+      widgetCustomization.chart
+    );
+    dispatch(
+      setVisualization(
+        settings.widgetType,
+        {
+          ...settings.chartSettings,
+          ...chart,
+        },
+        {
+          ...settings.widgetSettings,
+          ...(widgetCustomization.widget as WidgetSettings),
+        }
+      )
+    );
+    dispatch(updateVisualizationType(settings.widgetType));
+  };
+
+  const onUpdateWidgetSettings = (widgetSettings) => {
+    dispatch(updateWidgetSettings(widgetSettings));
+
+    setCustomizationSettings((state) => ({
+      ...state,
+      widget: widgetSettings,
+    }));
+  };
+
+  const onUpdateChartSettings = (chartSettings) => {
+    const chart = serializeOutputSettings(widgetType, chartSettings);
+    updateChartSettings(chart);
+
+    setCustomizationSettings((state) => ({
+      ...state,
+      chart: chartSettings,
+    }));
+  };
 
   return (
     <>
@@ -120,28 +179,9 @@ const Editor: FC<Props> = ({
                 query={query}
                 queryResults={queryResults}
                 widgetType={widgetType}
-                chartSettings={chartSettings}
-                widgetSettings={widgetSettings}
-                onChangeVisualization={(settings) => {
-                  const chart = serializeOutputSettings(
-                    settings.widgetType,
-                    widgetCustomization.chart
-                  );
-                  dispatch(
-                    setVisualization(
-                      settings.widgetType,
-                      {
-                        ...settings.chartSettings,
-                        ...chart,
-                      },
-                      {
-                        ...settings.widgetSettings,
-                        ...(widgetCustomization.widget as WidgetSettings),
-                      }
-                    )
-                  );
-                  dispatch(updateVisualizationType(settings.widgetType));
-                }}
+                chartSettings={themedChartSettings}
+                widgetSettings={themedWidgetSettings}
+                onChangeVisualization={onChangeVisualization}
               />
             )}
             {!queryResults && !isQueryLimitReached && (
@@ -162,30 +202,13 @@ const Editor: FC<Props> = ({
           <SectionContainer>
             <CustomizationContainer>
               <WidgetCustomization
+                widgetType={widgetType}
                 customizationSections={customizationSections}
                 chartSettings={widgetCustomization.chart}
                 widgetSettings={widgetCustomization.widget}
                 savedQueryName={savedQueryName}
-                onUpdateWidgetSettings={(widgetSettings) => {
-                  dispatch(updateWidgetSettings(widgetSettings));
-
-                  setCustomizationSettings((state) => ({
-                    ...state,
-                    widget: widgetSettings,
-                  }));
-                }}
-                onUpdateChartSettings={(chartSettings) => {
-                  const chart = serializeOutputSettings(
-                    widgetType,
-                    chartSettings
-                  );
-                  updateChartSettings(chart);
-
-                  setCustomizationSettings((state) => ({
-                    ...state,
-                    chart: chartSettings,
-                  }));
-                }}
+                onUpdateWidgetSettings={onUpdateWidgetSettings}
+                onUpdateChartSettings={onUpdateChartSettings}
                 modalContainer={modalContainer}
               />
             </CustomizationContainer>

@@ -24,14 +24,33 @@ const initialProps = {
     query: {},
     result: 20,
   },
-  chartSettings: {},
-  widgetSettings: {},
-};
+  chartSettings: {
+    theme: {
+      gridX: { enabled: true },
+      gridY: { enabled: true },
+      funnel: {
+        header: {
+          badge: {
+            enabled: true,
+          },
+        },
+      },
+    },
+  },
+  widgetSettings: {
+    ...DEFAULT_WIDGET_SETTINGS,
+  },
+} as any;
 
 beforeEach(() => {
   (KeenDataviz as any).mockClear();
   renderMock.mockClear();
 });
+
+const theme = {
+  gridX: { enabled: false },
+  gridY: { enabled: false },
+};
 
 test('creates "DataViz" instance', () => {
   render(<DataViz {...initialProps} />);
@@ -41,7 +60,13 @@ test('creates "DataViz" instance', () => {
 
 test('initializes "DataViz" instance with named timezone settings', () => {
   const timezone = 'America/New_York';
-  render(<DataViz {...initialProps} presentationTimezone={timezone} />);
+  render(
+    <DataViz
+      {...initialProps}
+      presentationTimezone={timezone}
+      visualizationTheme={theme as any}
+    />
+  );
 
   expect(KeenDataviz).toHaveBeenCalledWith(
     expect.objectContaining({
@@ -55,14 +80,23 @@ test('initializes "DataViz" instance with named timezone settings', () => {
 });
 
 test('initializes "DataViz" instance with theme settings', () => {
-  const theme = { colors: ['red', 'green'] };
-  render(<DataViz {...initialProps} visualizationTheme={theme as any} />);
+  render(<DataViz {...initialProps} />);
 
   expect(KeenDataviz).toHaveBeenCalledWith(
     expect.objectContaining({
       type: 'bar',
       settings: {
-        theme,
+        theme: {
+          gridX: { enabled: true },
+          gridY: { enabled: true },
+          funnel: {
+            header: {
+              badge: {
+                enabled: true,
+              },
+            },
+          },
+        },
       },
       widget: {
         ...DEFAULT_WIDGET_SETTINGS,
@@ -73,7 +107,6 @@ test('initializes "DataViz" instance with theme settings', () => {
 
 test('calls "DataViz" render method with analysis results', () => {
   render(<DataViz {...initialProps} />);
-
   expect(renderMock).toHaveBeenCalledWith(initialProps.analysisResults);
 });
 
