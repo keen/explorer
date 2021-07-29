@@ -413,12 +413,14 @@
   "widget_customization": {
     "settings_disabled": "Run your query first",
     "settings_disabled_for_widget": "Settings do not affect {{widget}} visualization",
-    "format_values_not_avaialble": "No formatting options for {{analysis}} analysis"
+    "format_values_not_avaialble": "No formatting options for {{analysis}} analysis",
+    "chart_settings_not_available": "Run query and select the visualization type to see chart settings.",
+    "chart_settings_not_available_for_widget": "There are no chart settings for the {{widget}} chart."
   },
   "widget_customization_sections": {
     "titles": "Titles",
     "formatting": "Formatting",
-    "components": "Components"
+    "components": "Chart settings"
   },
   "widget_customization_legend_settings": {
     "label": "Legend",
