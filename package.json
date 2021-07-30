@@ -61,7 +61,7 @@
     "@keen.io/toast-notifications": "^1.1.72",
     "@keen.io/typography": "^1.3.0",
     "@keen.io/ui-core": "^2.25.2",
-    "@keen.io/widget-customization": "^0.0.26",
+    "@keen.io/widget-customization": "^0.0.27",
     "@keen.io/widget-picker": "^1.2.116",
     "camelcase-keys": "^6.2.2",
     "core-js": "^3.6.5",
