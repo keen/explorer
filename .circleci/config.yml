@@ -68,12 +68,12 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: npm-deps-{{ arch }}-{{ .Branch }}-{{ checksum "yarn.lock" }}
+          key: npm-deps-v1-{{ arch }}-{{ .Branch }}-{{ checksum "yarn.lock" }}
       - run:
           name: Install dependencies
           command: yarn install
       - save_cache:
-          key: npm-deps-{{ arch }}-{{ .Branch }}-{{ checksum "yarn.lock" }}
+          key: npm-deps-v1-{{ arch }}-{{ .Branch }}-{{ checksum "yarn.lock" }}
           paths:
             - ./node_modules
       - run:
@@ -98,14 +98,10 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: npm-deps-{{ arch }}-{{ .Branch }}-{{ checksum "yarn.lock" }}
+          key: npm-deps-v1-{{ arch }}-{{ .Branch }}-{{ checksum "yarn.lock" }}
       - run:
           name: Install dependencies
           command: yarn install
-      - save_cache:
-          key: npm-deps-{{ arch }}-{{ .Branch }}-{{ checksum "yarn.lock" }}
-          paths:
-            - ./node_modules
       - run:
           name: Create project config
           command: echo $KEEN_PROJECT_CONFIG > config.js
