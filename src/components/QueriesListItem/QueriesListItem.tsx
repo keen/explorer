@@ -1,10 +1,14 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Badge } from '@keen.io/ui-core';
+import { getVisualizationIcon } from '@keen.io/widget-picker';
+import { Icon } from '@keen.io/icons';
+import { colors } from '@keen.io/colors';
 
 import {
   Container,
-  QueryName,
+  QueryNameWrapper,
+  IconWrapper,
   UpdateDate,
   Labels,
   Tag,
@@ -14,6 +18,7 @@ import DropIndicator from '../DropIndicator';
 
 import { TAGS_LIMIT } from './constants';
 import { savedQueryUtils } from '../../modules/savedQuery';
+import { Visualization } from '../../modules/queries/types';
 
 type Props = {
   /** Saved query name */
@@ -28,6 +33,8 @@ type Props = {
   isActive: boolean;
   /** Click event handler */
   onClick: (e: React.MouseEvent<HTMLTableRowElement>) => void;
+  /** Query visualization */
+  visualization: Visualization;
 };
 
 const QueriesListItem: FC<Props> = ({
@@ -37,11 +44,19 @@ const QueriesListItem: FC<Props> = ({
   isActive,
   tags,
   onClick,
+  visualization,
 }) => {
   const { t } = useTranslation();
   const [labelsOpen, toogleLabels] = useState(false);
   const queryTags =
     tags.length > TAGS_LIMIT && !labelsOpen ? tags.slice(0, TAGS_LIMIT) : tags;
+
+  const { type, chartSettings } = visualization;
+
+  const visualizationIcon = useMemo(
+    () => getVisualizationIcon({ type, chartSettings }),
+    []
+  );
 
   return (
     <Container
@@ -49,9 +64,17 @@ const QueriesListItem: FC<Props> = ({
       isActive={isActive}
       data-testid="saved-query-item"
     >
-      <QueryName data-testid="saved-query-name" title={queryName}>
+      <QueryNameWrapper data-testid="saved-query-name" title={queryName}>
+        <IconWrapper>
+          <Icon
+            type={visualizationIcon}
+            width={16}
+            height={16}
+            fill={colors.blue[500]}
+          />
+        </IconWrapper>
         {queryName}
-      </QueryName>
+      </QueryNameWrapper>
       <Labels>
         {' '}
         {refreshRate !== 0 && (
