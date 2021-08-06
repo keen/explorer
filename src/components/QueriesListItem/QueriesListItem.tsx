@@ -71,6 +71,7 @@ const QueriesListItem: FC<Props> = ({
             width={16}
             height={16}
             fill={colors.blue[500]}
+            opacity={0.5}
           />
         </IconWrapper>
         {queryName}
