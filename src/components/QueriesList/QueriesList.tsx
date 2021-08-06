@@ -104,6 +104,7 @@ const QueriesList: FC<Props> = ({
             refreshRate,
             tags,
             query,
+            visualization,
           }) => (
             <QueriesListItem
               key={name}
@@ -113,6 +114,7 @@ const QueriesList: FC<Props> = ({
               refreshRate={refreshRate}
               updateDate={moment(lastModifiedDate).format('YYYY/MM/DD')}
               onClick={() => onSelectQuery(name, query)}
+              visualization={visualization}
             />
           )
         )}

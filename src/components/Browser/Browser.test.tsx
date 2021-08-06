@@ -109,6 +109,10 @@ test('renders empty search message', () => {
       query: {},
       lastModifiedDate: '2020-09-11',
       tags: [],
+      visualization: {
+        type: 'bar',
+        chartSettings: {},
+      },
     },
   ];
 
@@ -146,6 +150,10 @@ test('allows user to filter queries based on search phrase', () => {
       query: {},
       lastModifiedDate: '2020-09-11',
       tags: [],
+      visualization: {
+        type: 'metric',
+        chartSettings: {},
+      },
     },
     {
       name: 'logins',
@@ -154,6 +162,10 @@ test('allows user to filter queries based on search phrase', () => {
       query: {},
       lastModifiedDate: '2020-09-11',
       tags: [],
+      visualization: {
+        type: 'bar',
+        chartSettings: {},
+      },
     },
   ];
 
