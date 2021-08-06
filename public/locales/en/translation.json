@@ -465,5 +465,11 @@
   },
   "widget_customization_metric_settings": {
     "title": "Metric Chart Settings"
-  }
+  },
+  "widget_customization_axis_settings": {
+   "x_axis_title": "X-Axis Title",
+   "x_axis_title_placeholder": "Enter axis title",
+   "y_axis_title": "Y-Axis Title",
+   "y_axis_title_placeholder": "Enter axis title"
+ }
 }
