@@ -25,7 +25,7 @@ import {
   SavedQueryListItem,
 } from '../../modules/queries';
 import {
-  setQueryAutorun,
+  // setQueryAutorun,
   getQueryAutorun,
   getVisualization,
 } from '../../modules/app';
@@ -38,6 +38,7 @@ import { useApplyWidgetTheming } from '../../hooks/useApplyWidgetTheming';
 
 import { getNotExistingEventStreams } from '../../modules/schemas/selectors';
 import { getMissingEventStreams } from './utils';
+import { appSlice } from '../../modules/app/reducer';
 
 type Props = {
   /** Current active query */
@@ -87,7 +88,9 @@ const BrowserPreview: FC<Props> = ({
           autorun={autorunQuery}
           label={t('browser_preview.autorun_query_label')}
           tooltipMessage={t('browser_preview.autorun_query_tooltip')}
-          onToggle={(autorun) => dispatch(setQueryAutorun(autorun))}
+          onToggle={(autorun) =>
+            dispatch(appSlice.actions.setQueryAutorun({ autorun }))
+          }
         />
       </HeaderContainer>
       <Card>

@@ -8,7 +8,7 @@ import { Layout } from '@keen.io/ui-core';
 import { selectSavedQuery as selectSavedQueryFlow } from './selectSavedQuery';
 
 import { queriesActions, getSavedQueries } from '../../queries';
-import { setVisualization } from '../../app';
+import { appSlice } from '../../app';
 import { isQueryEditable } from './isQueryEditable';
 import { savedQueryActions } from '../index';
 import { selectSavedQuery } from '../actions';
@@ -68,7 +68,15 @@ describe('selectSavedQuery()', () => {
       const {
         visualization: { chartSettings },
       } = savedQuery;
-      expect(result).toEqual(put(setVisualization('bar', chartSettings, {})));
+      expect(result).toEqual(
+        put(
+          appSlice.actions.setVisualization({
+            type: 'bar',
+            chartSettings,
+            widgetSettings: {},
+          })
+        )
+      );
     });
 
     test('setup query settings', (result) => {
@@ -150,7 +158,15 @@ describe('selectSavedQuery()', () => {
       const {
         visualization: { chartSettings },
       } = savedQuery;
-      expect(result).toEqual(put(setVisualization('bar', chartSettings, {})));
+      expect(result).toEqual(
+        put(
+          appSlice.actions.setVisualization({
+            type: 'bar',
+            chartSettings,
+            widgetSettings: {},
+          })
+        )
+      );
     });
 
     test('setup query settings', (result) => {

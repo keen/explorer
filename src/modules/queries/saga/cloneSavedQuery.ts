@@ -6,9 +6,11 @@ import { getQuerySettings, getSavedQueries } from '../selectors';
 
 import {
   getViewMode,
-  setViewMode,
-  updateQueryCreator,
+  // setViewMode,
+  // updateQueryCreator,
   QUERY_EDITOR_MOUNTED,
+  appSlice,
+  appActions,
 } from '../../../modules/app';
 
 import { composeQuerySettings } from '../utils';
@@ -54,9 +56,9 @@ export function* cloneSavedQuery() {
   };
 
   if (view === 'browser') {
-    yield put(setViewMode('editor'));
+    yield put(appSlice.actions.setViewMode({ view: 'editor' }));
     yield take(QUERY_EDITOR_MOUNTED);
-    yield put(updateQueryCreator(querySettings));
+    yield put(appActions.updateQueryCreator({ querySettings }));
     yield put(
       queriesSlice.actions.setQuerySettings({ settings: querySettings })
     );

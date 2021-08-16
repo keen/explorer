@@ -4,29 +4,27 @@ exports[`allows user to customize widget subtitle 1`] = `
 Array [
   Object {
     "payload": Object {
-      "widgetSettings": Object {
-        "card": Object {
-          "backgroundColor": "transparent",
-          "border": "none",
-          "borderRadius": 0,
-          "enabled": true,
-          "hasShadow": false,
-        },
-        "legend": Object {
-          "alignment": "left",
-          "enabled": true,
-          "layout": "horizontal",
-          "position": "top",
-        },
-        "subtitle": Object {
-          "content": "@subtitle",
-        },
-        "title": Object {
-          "content": "",
-        },
+      "card": Object {
+        "backgroundColor": "transparent",
+        "border": "none",
+        "borderRadius": 0,
+        "enabled": true,
+        "hasShadow": false,
+      },
+      "legend": Object {
+        "alignment": "left",
+        "enabled": true,
+        "layout": "horizontal",
+        "position": "top",
+      },
+      "subtitle": Object {
+        "content": "@subtitle",
+      },
+      "title": Object {
+        "content": "",
       },
     },
-    "type": "@app/UPDATE_WIDGET_SETTINGS",
+    "type": "app/updateWidgetSettings",
   },
 ]
 `;
@@ -35,29 +33,27 @@ exports[`allows user to customize widget title 1`] = `
 Array [
   Object {
     "payload": Object {
-      "widgetSettings": Object {
-        "card": Object {
-          "backgroundColor": "transparent",
-          "border": "none",
-          "borderRadius": 0,
-          "enabled": true,
-          "hasShadow": false,
-        },
-        "legend": Object {
-          "alignment": "left",
-          "enabled": true,
-          "layout": "horizontal",
-          "position": "top",
-        },
-        "subtitle": Object {
-          "content": "",
-        },
-        "title": Object {
-          "content": "@title",
-        },
+      "card": Object {
+        "backgroundColor": "transparent",
+        "border": "none",
+        "borderRadius": 0,
+        "enabled": true,
+        "hasShadow": false,
+      },
+      "legend": Object {
+        "alignment": "left",
+        "enabled": true,
+        "layout": "horizontal",
+        "position": "top",
+      },
+      "subtitle": Object {
+        "content": "",
+      },
+      "title": Object {
+        "content": "@title",
       },
     },
-    "type": "@app/UPDATE_WIDGET_SETTINGS",
+    "type": "app/updateWidgetSettings",
   },
 ]
 `;

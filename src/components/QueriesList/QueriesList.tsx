@@ -15,8 +15,7 @@ import SortIndicators from '../SortIndicators';
 import Heading from '../Heading';
 
 import { SavedQueryListItem } from '../../modules/queries';
-
-import { QueriesSortSettings, SortProperty } from './types';
+import { QueriesSortSettings, SortProperty } from '../../modules/app';
 
 type Props = {
   /** Saved queries list */

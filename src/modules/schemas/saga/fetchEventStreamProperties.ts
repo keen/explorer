@@ -20,6 +20,7 @@ export function* fetchEventStreamProperties(eventStream: string) {
     });
     const response: Response = yield fetch(url);
     const { properties } = yield response.json();
+    console.log({ properties });
     yield put(
       schemasSlice.actions.setEventStreamProperties({
         eventStream,

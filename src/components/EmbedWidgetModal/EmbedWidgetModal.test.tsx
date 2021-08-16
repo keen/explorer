@@ -125,7 +125,7 @@ test('allows user to close modal by clicking "cancel" label', () => {
     Array [
       Object {
         "payload": undefined,
-        "type": "@app/HIDE_EMBED_MODAL",
+        "type": "app/hideEmbedModal",
       },
     ]
   `);

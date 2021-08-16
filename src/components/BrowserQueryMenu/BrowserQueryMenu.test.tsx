@@ -62,15 +62,15 @@ describe('Scenario 1: Browser query menu - query is editable', () => {
     fireEvent.click(editSettingsBtn);
 
     expect(store.getActions()).toMatchInlineSnapshot(`
-    Array [
-      Object {
-        "payload": Object {
-          "source": 0,
+      Array [
+        Object {
+          "payload": Object {
+            "source": 0,
+          },
+          "type": "app/showQuerySettingsModal",
         },
-        "type": "@app/SHOW_QUERY_SETTINGS_MODAL",
-      },
-    ]
-  `);
+      ]
+    `);
   });
 
   test('allows user to share query url', () => {
@@ -85,13 +85,13 @@ describe('Scenario 1: Browser query menu - query is editable', () => {
     fireEvent.click(shareQueryBtn);
 
     expect(store.getActions()).toMatchInlineSnapshot(`
-    Array [
-      Object {
-        "payload": undefined,
-        "type": "@app/SHARE_QUERY_URL",
-      },
-    ]
-  `);
+          Array [
+            Object {
+              "payload": undefined,
+              "type": "@app/SHARE_QUERY_URL",
+            },
+          ]
+      `);
   });
 });
 

@@ -2,7 +2,7 @@
 
 import { select, put, call } from 'redux-saga/effects';
 
-import { setVisualization } from '../../app';
+import { appSlice } from '../../app';
 import { SavedQueryListItem } from '../../queries';
 import { queriesActions, getSavedQueries } from '../../queries';
 import { convertMilisecondsToMinutes } from '../utils';
@@ -39,7 +39,13 @@ export function* selectSavedQuery({
 
     const isEditable = yield call(isQueryEditable, query);
     yield put(savedQueryActions.setQueryEditable(isEditable));
-    yield put(setVisualization(widgetType, chartSettings, widgetSettings));
+    yield put(
+      appSlice.actions.setVisualization({
+        type: widgetType,
+        chartSettings,
+        widgetSettings,
+      })
+    );
     yield put(queriesActions.setQuerySettings({ settings: query }));
     yield put(savedQueryActions.updateSavedQuery(savedQuery));
 

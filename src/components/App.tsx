@@ -10,13 +10,14 @@ import { savedQueryActions, savedQuerySelectors } from '../modules/savedQuery';
 
 import {
   getViewMode,
-  setViewMode,
+  // setViewMode,
   getVisualization,
   getQueryAutorun,
-  switchToQueriesList,
-  createNewQuery,
-  explorerMounted,
-  editQuery,
+  // switchToQueriesList,
+  // createNewQuery,
+  // explorerMounted,
+  // editQuery,
+  appActions,
 } from '../modules/app';
 import { setVisualization } from '../utils';
 
@@ -48,15 +49,15 @@ const mapStateToProps = (state: AppState) => ({
 
 const mapDispatchToProps = {
   saveQuery: queriesActions.saveQuery,
-  editQuery,
+  editQuery: appActions.editQuery,
   resetQueryResults: queriesActions.resetQueryResults,
   deleteQuery: queriesActions.deleteQuery,
-  explorerMounted,
+  explorerMounted: appActions.explorerMounted,
   resetSavedQuery: savedQueryActions.resetSavedQuery,
   selectSavedQuery: savedQueryActions.selectSavedQuery,
-  switchToQueriesList,
-  createNewQuery,
-  setViewMode,
+  switchToQueriesList: appActions.switchToQueriesList,
+  createNewQuery: appActions.createNewQuery,
+  setViewMode: appActions.setViewMode,
   runQuery: queriesActions.runQuery,
 };
 

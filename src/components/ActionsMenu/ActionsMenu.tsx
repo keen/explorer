@@ -19,14 +19,7 @@ import {
   TooltipMotion,
 } from './ActionsMenu.styles';
 
-import {
-  exportChartToImage,
-  exportChartToJson,
-  exportDataToCsv,
-  showEmbedModal,
-  copyApiResourceUrl,
-  createNewQuery,
-} from '../../modules/app';
+import { appActions } from '../../modules/app';
 
 import { TOOLTIP_MOTION } from '../../constants';
 import { DEFAULT_IMAGE_QUALITY } from './constants';
@@ -89,7 +82,10 @@ const ActionsMenu: FC<Props> = ({
               <DropdownMenu.Item
                 onClick={() => {
                   dispatch(
-                    exportChartToImage(DEFAULT_IMAGE_QUALITY, colors.white[500])
+                    appActions.exportChartToImage(
+                      DEFAULT_IMAGE_QUALITY,
+                      colors.white[500]
+                    )
                   );
                   onHideMenu();
                 }}
@@ -98,7 +94,7 @@ const ActionsMenu: FC<Props> = ({
               </DropdownMenu.Item>
               <DropdownMenu.Item
                 onClick={() => {
-                  dispatch(exportChartToJson());
+                  dispatch(appActions.exportChartToJson());
                   onHideMenu();
                 }}
               >
@@ -106,7 +102,7 @@ const ActionsMenu: FC<Props> = ({
               </DropdownMenu.Item>
               <DropdownMenu.Item
                 onClick={() => {
-                  dispatch(exportDataToCsv());
+                  dispatch(appActions.exportDataToCsv());
                   onHideMenu();
                 }}
               >
@@ -118,7 +114,7 @@ const ActionsMenu: FC<Props> = ({
           {!isNewQuery && !isInsideQueryBrowser && (
             <DropdownMenu.Item
               onClick={() => {
-                dispatch(createNewQuery());
+                dispatch(appActions.createNewQuery());
                 onHideMenu();
               }}
             >
@@ -150,7 +146,7 @@ const ActionsMenu: FC<Props> = ({
           {!isNewQuery && <DropdownMenu.Divider />}
           <DropdownMenu.Item
             onClick={() => {
-              dispatch(copyApiResourceUrl(config));
+              dispatch(appActions.copyApiResourceUrl(config));
               onHideMenu();
             }}
           >
@@ -158,7 +154,7 @@ const ActionsMenu: FC<Props> = ({
           </DropdownMenu.Item>
           <DropdownMenu.Item
             onClick={() => {
-              dispatch(showEmbedModal());
+              dispatch(appActions.showEmbedModal());
               onHideMenu();
             }}
           >

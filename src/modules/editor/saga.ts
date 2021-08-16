@@ -6,8 +6,9 @@ import { changeEditorSection, setQueryCreatorChartSettings } from './actions';
 import { EditorSection } from './types';
 
 import {
+  appActions,
   getVisualization,
-  updateQueryCreator,
+  // updateQueryCreator,
   QUERY_EDITOR_MOUNTED,
 } from '../app';
 import { getQuerySettings } from '../queries';
@@ -31,7 +32,7 @@ export function* handleEditorSectionChange({
     const query: Query = yield select(getQuerySettings);
 
     yield take(QUERY_EDITOR_MOUNTED);
-    yield put(updateQueryCreator(query));
+    yield put(appActions.updateQueryCreator(query));
     yield put(setQueryCreatorChartSettings(chartSettings));
   }
 }

@@ -22,3 +22,8 @@ export const getBrowserScreenDimension = ({ app }: AppState) =>
   app.browserScreen;
 
 export const getQueryAutorun = ({ app }: AppState) => app.autorunQuery;
+
+export const getQueriesFilters = ({ app }: AppState) => app.queriesFilters;
+
+export const getQueriesSortSettings = ({ app }: AppState) =>
+  app.queriesSortSettings;

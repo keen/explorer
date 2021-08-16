@@ -10,12 +10,11 @@ import { deleteQuery as deleteQueryAction, deleteQueryError } from '../actions';
 import { queriesSlice } from '../reducer';
 
 import {
-  showConfirmation,
   getViewMode,
-  setViewMode,
-  selectFirstSavedQuery,
   HIDE_CONFIRMATION,
   ACCEPT_CONFIRMATION,
+  appSlice,
+  appActions,
 } from '../../../modules/app';
 
 import {
@@ -37,7 +36,12 @@ describe('Scenario 1: User successfully delete query', () => {
 
   test('shows confirmation modal', (result) => {
     expect(result).toEqual(
-      put(showConfirmation('delete', { queryName: 'purchases' }))
+      put(
+        appActions.showConfirmation({
+          confirmAction: 'delete',
+          meta: { queryName: 'purchases' },
+        })
+      )
     );
   });
 
@@ -71,7 +75,9 @@ describe('Scenario 1: User successfully delete query', () => {
   });
 
   test('changes the application view', (result) => {
-    expect(result).toEqual(put(setViewMode('browser')));
+    expect(result).toEqual(
+      put(appSlice.actions.setViewMode({ view: 'browser' }))
+    );
   });
 
   test('resets query results', (result) => {
@@ -85,7 +91,7 @@ describe('Scenario 1: User successfully delete query', () => {
   });
 
   test('selects first query', (result) => {
-    expect(result).toEqual(put(selectFirstSavedQuery()));
+    expect(result).toEqual(put(appActions.selectFirstSavedQuery()));
   });
 });
 
@@ -103,7 +109,12 @@ describe('Scenario 2: User failed to delete query due to API internal error', ()
 
   test('shows confirmation modal', (result) => {
     expect(result).toEqual(
-      put(showConfirmation('delete', { queryName: 'purchases' }))
+      put(
+        appSlice.actions.showConfirmation({
+          confirmAction: 'delete',
+          meta: { queryName: 'purchases' },
+        })
+      )
     );
   });
 
@@ -146,7 +157,12 @@ describe('Scenario 3: User cancel delete query action', () => {
 
   test('shows confirmation modal', (result) => {
     expect(result).toEqual(
-      put(showConfirmation('delete', { queryName: 'purchases' }))
+      put(
+        appSlice.actions.showConfirmation({
+          confirmAction: 'delete',
+          meta: { queryName: 'purchases' },
+        })
+      )
     );
   });
 

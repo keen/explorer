@@ -13,9 +13,10 @@ import {
 import { Title, Close, Footer, Description, Name } from './Confirm.styles';
 
 import {
+  appActions,
   getConfirmation,
-  hideConfirmation,
-  acceptConfirmation,
+  // hideConfirmation,
+  // acceptConfirmation,
 } from '../../modules/app';
 import { savedQuerySelectors } from '../../modules/savedQuery';
 
@@ -25,7 +26,7 @@ const Confirm: FC<{}> = () => {
   const { visible } = useSelector(getConfirmation);
   const { displayName } = useSelector(savedQuerySelectors.getSavedQuery);
 
-  const closeHandler = () => dispatch(hideConfirmation());
+  const closeHandler = () => dispatch(appActions.hideConfirmation());
 
   return (
     <Modal isOpen={visible} onClose={closeHandler}>
@@ -45,13 +46,13 @@ const Confirm: FC<{}> = () => {
                 htmlType="button"
                 variant="danger"
                 style="solid"
-                onClick={() => dispatch(acceptConfirmation())}
+                onClick={() => dispatch(appActions.acceptConfirmation())}
               >
                 {t('confirm.button_label')}
               </Button>
               <Close>
                 <Anchor
-                  onClick={() => dispatch(hideConfirmation())}
+                  onClick={() => dispatch(appActions.hideConfirmation())}
                   color={colors.blue[500]}
                   hoverColor={colors.blue[300]}
                 >

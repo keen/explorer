@@ -5,8 +5,8 @@ import HttpStatus from 'http-status-codes';
 import { queriesSlice } from '../reducer';
 
 import {
-  hideQuerySettingsModal,
   getQuerySettingsModalVisibility,
+  appSlice,
 } from '../../../modules/app';
 
 import {
@@ -39,7 +39,7 @@ export function* saveQuery({
     });
 
     if (settingsModalVisible) {
-      yield put(hideQuerySettingsModal());
+      yield put(appSlice.actions.hideQuerySettingsModal());
     }
 
     yield put(
@@ -53,7 +53,7 @@ export function* saveQuery({
     const { status, error_code: errorCode } = error;
 
     if (status === HttpStatus.INTERNAL_SERVER_ERROR) {
-      yield put(hideQuerySettingsModal());
+      yield put(appSlice.actions.hideQuerySettingsModal());
       yield notificationManager.showNotification({
         type: 'error',
         message: 'notifications.save_query_error',

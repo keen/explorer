@@ -20,9 +20,11 @@ import {
 
 import ActionsMenu from '../ActionsMenu';
 import {
-  showQuerySettingsModal,
+  // showQuerySettingsModal,
   SettingsModalSource,
-  shareQueryUrl,
+  // shareQueryUrl,
+  // appSlice,
+  appActions,
 } from '../../modules/app';
 import { getSavedQueryIsEditable } from '../../modules/savedQuery/selectors';
 
@@ -106,7 +108,9 @@ const BrowserQueryMenu: FC<Props> = ({ onEditQuery, onRemoveQuery }) => {
                 icon={<Icon type="settings" />}
                 onClick={() => {
                   dispatch(
-                    showQuerySettingsModal(SettingsModalSource.QUERY_SETTINGS)
+                    appActions.showQuerySettingsModal({
+                      source: SettingsModalSource.QUERY_SETTINGS,
+                    })
                   );
                 }}
               />
@@ -126,7 +130,7 @@ const BrowserQueryMenu: FC<Props> = ({ onEditQuery, onRemoveQuery }) => {
                 variant="secondary"
                 icon={<Icon type="share" />}
                 onClick={() => {
-                  dispatch(shareQueryUrl());
+                  dispatch(appActions.shareQueryUrl());
                 }}
               />
             </ActionsContainer>

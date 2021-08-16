@@ -6,8 +6,9 @@ import { Portal, Modal, ModalHeader } from '@keen.io/ui-core';
 import ExtractToEmail from '../ExtractToEmail';
 
 import {
+  appSlice,
   getExtractToEmailModalVisibility,
-  hideEmailExtractionModal,
+  // hideEmailExtractionModal,
 } from '../../modules/app';
 
 import { AppContext } from '../../contexts';
@@ -18,7 +19,7 @@ const ExtractToEmailModal: FC<{}> = () => {
   const { modalContainer } = useContext(AppContext);
 
   const closeHandler = useCallback(
-    () => dispatch(hideEmailExtractionModal()),
+    () => dispatch(appSlice.actions.hideEmailExtractionModal()),
     []
   );
   const isOpen = useSelector(getExtractToEmailModalVisibility);

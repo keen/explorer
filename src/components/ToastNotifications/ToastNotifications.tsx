@@ -6,7 +6,7 @@ import { useToasts, ToastOptions } from '@keen.io/toast-notifications';
 import { AppContext } from '../../contexts';
 
 import { ToastSettings } from '../../modules/notifications';
-import { notificationsMounted } from '../../modules/app';
+import { appActions } from '../../modules/app';
 
 import { SHOW_TOAST_NOTIFICATION_EVENT } from '../../constants';
 
@@ -78,7 +78,7 @@ const ToastNotifications = () => {
       }
     );
 
-    dispatch(notificationsMounted());
+    dispatch(appActions.notificationsMounted());
 
     return () => dispose();
   }, []);

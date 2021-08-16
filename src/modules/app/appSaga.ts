@@ -14,21 +14,23 @@ import { copyToClipboard } from '@keen.io/charts-utils';
 
 import {
   resizeScreen,
-  setScreenDimension,
-  resetVisualization,
-  setVisualization,
-  setViewMode,
   loadPersistedState,
   updateQueryCreator,
-  setQueryAutorun,
   updateChartSettings,
   copyEmbeddedCode as copyEmbeddedCodeAction,
   editQuery as editQueryAction,
   downloadCodeSnippet as downloadCodeSnippetAction,
-  appStart as appStartAction,
+  // appStart as appStartAction,
   copyApiResourceUrl as copyApiResourceUrlAction,
   updateVisualizationType as updateVisualizationTypeAction,
   exportChartToImage as exportChartToImageAction,
+  exportChartToJson as exportChartToJsonAction,
+  exportDataToCsv as exportDataToCsvAction,
+  shareQueryUrl as shareQueryUrlAction,
+  createNewQuery as createNewQueryAction,
+  switchToQueriesList as switchToQueriesListAction,
+  clearQuery as clearQueryAction,
+  selectFirstSavedQuery as selectFirstSavedQueryAction,
 } from './actions';
 
 import { selectFirstSavedQuery } from './saga';
@@ -66,31 +68,14 @@ import {
 import { PUBSUB_CONTEXT, NOTIFICATION_MANAGER_CONTEXT } from '../../constants';
 
 import {
-  APP_START,
-  CREATE_NEW_QUERY,
-  CLEAR_QUERY,
   QUERY_EDITOR_MOUNTED,
-  SWITCH_TO_QUERIES_LIST,
-  EDIT_QUERY,
   NOTIFICATIONS_MOUNTED,
-  UPDATE_QUERY_CREATOR,
-  SHARE_QUERY_URL,
-  LOAD_STATE_FROM_URL,
-  SELECT_FIRST_QUERY,
   URL_STATE,
-  SCREEN_RESIZE,
-  EXPORT_CHART_TO_IMAGE,
-  EXPORT_CHART_TO_JSON,
-  EXPORT_DATA_TO_CSV,
-  COPY_EMBEDDED_CODE,
-  DOWNLOAD_CODE_SNIPPET,
-  COPY_API_RESOURCE_URL,
-  SET_QUERY_AUTORUN,
   QUERY_AUTORUN_KEY,
-  UPDATE_VISUALIZATION,
 } from './constants';
 import { SET_CHART_SETTINGS } from '@keen.io/query-creator';
 import { savedQueryActions, savedQuerySelectors } from '../savedQuery';
+import { appSlice } from './reducer';
 
 const createScreenResizeChannel = () =>
   eventChannel((emitter) => {
@@ -106,12 +91,12 @@ const createScreenResizeChannel = () =>
   });
 
 export function* createNewQuery() {
-  yield put(setViewMode('editor'));
+  yield put(appSlice.actions.setViewMode({ view: 'editor' }));
   const pubsub = yield getContext(PUBSUB_CONTEXT);
   yield pubsub.publish(NEW_QUERY_EVENT);
 
   yield put(queriesActions.resetQueryResults());
-  yield put(resetVisualization());
+  yield put(appSlice.actions.resetVisualization());
   yield put(savedQueryActions.resetSavedQuery());
 }
 
@@ -122,7 +107,7 @@ export function* clearQuery() {
 }
 
 function* editQuery({ payload }: ReturnType<typeof editQueryAction>) {
-  yield put(setViewMode('editor'));
+  yield put(appSlice.actions.setViewMode({ view: 'editor' }));
   yield take(QUERY_EDITOR_MOUNTED);
 
   const savedQueries = yield select(getSavedQueries);
@@ -150,7 +135,7 @@ export function* updateCreator({
 }
 
 export function* switchToQueriesList() {
-  yield put(setViewMode('browser'));
+  yield put(appSlice.actions.setViewMode({ view: 'browser' }));
   yield put(queriesActions.resetQueryResults());
 
   const { exists } = yield select(savedQuerySelectors.getSavedQuery);
@@ -172,10 +157,16 @@ export function* loadStateFromUrl() {
     if (savedQuery) yield put(savedQueryActions.updateSavedQuery(savedQuery));
     if (visualization) {
       const { type: widgetType, chartSettings, widgetSettings } = visualization;
-      yield put(setVisualization(widgetType, chartSettings, widgetSettings));
+      yield put(
+        appSlice.actions.setVisualization({
+          type: widgetType,
+          chartSettings,
+          widgetSettings,
+        })
+      );
     }
     if (query) {
-      yield put(setViewMode('editor'));
+      yield put(appSlice.actions.setViewMode({ view: 'editor' }));
       yield take(QUERY_EDITOR_MOUNTED);
       yield put(updateQueryCreator(query));
     }
@@ -253,7 +244,7 @@ export function* resizeBrowserScreen({
   payload,
 }: ReturnType<typeof resizeScreen>) {
   const { width, height } = payload;
-  yield put(setScreenDimension(width, height));
+  yield put(appSlice.actions.setScreenDimension({ width, height }));
 }
 
 export function* rehydrateAutorunSettings() {
@@ -261,14 +252,16 @@ export function* rehydrateAutorunSettings() {
     const settings = localStorage.getItem(QUERY_AUTORUN_KEY);
     if (settings) {
       const { autorun } = JSON.parse(settings);
-      yield put(setQueryAutorun(autorun));
+      yield put(appSlice.actions.setQueryAutorun(autorun));
     }
   } catch (err) {
     console.error(err);
   }
 }
 
-export function* appStart({ payload }: ReturnType<typeof appStartAction>) {
+export function* appStart({
+  payload,
+}: ReturnType<typeof appSlice.actions.appStart>) {
   yield put(getOrganizationUsageLimits());
   yield put(queriesActions.fetchSavedQueries());
 
@@ -287,7 +280,7 @@ export function* appStart({ payload }: ReturnType<typeof appStartAction>) {
   }
 
   const { width, height } = getScreenDimensions();
-  yield put(setScreenDimension(width, height));
+  yield put(appSlice.actions.setScreenDimension({ width, height }));
 
   yield spawn(rehydrateAutorunSettings);
   yield spawn(watchScreenResize);
@@ -472,7 +465,7 @@ export function* copyApiResourceUrl({
 
 export function* persistAutorunSettings({
   payload,
-}: ReturnType<typeof setQueryAutorun>) {
+}: ReturnType<typeof appSlice.actions.setQueryAutorun>) {
   const { autorun } = payload;
   try {
     localStorage.setItem(QUERY_AUTORUN_KEY, JSON.stringify({ autorun }));
@@ -490,22 +483,25 @@ export function* updateVisualizationType({
 }
 
 export function* appSaga() {
-  yield takeLatest(APP_START, appStart);
-  yield takeLatest(SET_QUERY_AUTORUN, persistAutorunSettings);
-  yield takeLatest(SHARE_QUERY_URL, shareQueryUrl);
-  yield takeLatest(LOAD_STATE_FROM_URL, loadStateFromUrl);
-  yield takeLatest(UPDATE_QUERY_CREATOR, updateCreator);
-  yield takeLatest(CREATE_NEW_QUERY, createNewQuery);
-  yield takeLatest(SWITCH_TO_QUERIES_LIST, switchToQueriesList);
-  yield takeLatest(CLEAR_QUERY, clearQuery);
-  yield takeLatest(SELECT_FIRST_QUERY, selectFirstSavedQuery);
-  yield takeLatest(EDIT_QUERY, editQuery);
-  yield takeLatest(EXPORT_CHART_TO_IMAGE, exportChartToImage);
-  yield takeLatest(EXPORT_CHART_TO_JSON, exportChartToJson);
-  yield takeLatest(EXPORT_DATA_TO_CSV, exportDataToCsv);
-  yield takeLatest(COPY_EMBEDDED_CODE, copyEmbeddedCode);
-  yield takeLatest(DOWNLOAD_CODE_SNIPPET, downloadCodeSnippet);
-  yield takeLatest(UPDATE_VISUALIZATION, updateVisualizationType);
-  yield takeLatest(COPY_API_RESOURCE_URL, copyApiResourceUrl);
-  yield debounce(200, SCREEN_RESIZE, resizeBrowserScreen);
+  yield takeLatest(appSlice.actions.appStart.type, appStart);
+  yield takeLatest(
+    appSlice.actions.setQueryAutorun.type,
+    persistAutorunSettings
+  );
+  yield takeLatest(shareQueryUrlAction.type, shareQueryUrl);
+  yield takeLatest(loadPersistedState.type, loadStateFromUrl);
+  yield takeLatest(updateQueryCreator.type, updateCreator);
+  yield takeLatest(createNewQueryAction.type, createNewQuery);
+  yield takeLatest(switchToQueriesListAction.type, switchToQueriesList);
+  yield takeLatest(clearQueryAction.type, clearQuery);
+  yield takeLatest(selectFirstSavedQueryAction.type, selectFirstSavedQuery);
+  yield takeLatest(editQueryAction.type, editQuery);
+  yield takeLatest(exportChartToImageAction.type, exportChartToImage);
+  yield takeLatest(exportChartToJsonAction.type, exportChartToJson);
+  yield takeLatest(exportDataToCsvAction.type, exportDataToCsv);
+  yield takeLatest(copyEmbeddedCodeAction.type, copyEmbeddedCode);
+  yield takeLatest(downloadCodeSnippetAction.type, downloadCodeSnippet);
+  yield takeLatest(updateVisualizationTypeAction.type, updateVisualizationType);
+  yield takeLatest(copyApiResourceUrlAction.type, copyApiResourceUrl);
+  yield debounce(200, resizeScreen.type, resizeBrowserScreen);
 }

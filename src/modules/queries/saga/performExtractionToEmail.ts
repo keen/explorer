@@ -6,11 +6,7 @@ import { runEmailExtraction } from '../actions';
 
 import { getQuerySettings } from '../selectors';
 
-import {
-  showEmailExtractionModal,
-  hideEmailExtractionModal,
-  HIDE_EMAIL_EXTRACTION_MODAL,
-} from '../../../modules/app';
+import { HIDE_EMAIL_EXTRACTION_MODAL, appSlice } from '../../../modules/app';
 
 import {
   NOTIFICATION_MANAGER_CONTEXT,
@@ -23,7 +19,7 @@ import {
  *
  */
 export function* performExtractionToEmail() {
-  yield put(showEmailExtractionModal());
+  yield put(appSlice.actions.showEmailExtractionModal());
   const action = yield take([
     HIDE_EMAIL_EXTRACTION_MODAL,
     runEmailExtraction.type,
@@ -34,7 +30,7 @@ export function* performExtractionToEmail() {
     const notificationManager = yield getContext(NOTIFICATION_MANAGER_CONTEXT);
     const query = yield select(getQuerySettings);
     try {
-      yield put(hideEmailExtractionModal());
+      yield put(appSlice.actions.hideEmailExtractionModal());
       const { latest, email, contentEncoding, contentType } = action.payload;
       const body = {
         ...query,

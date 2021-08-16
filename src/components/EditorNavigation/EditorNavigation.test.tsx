@@ -141,7 +141,7 @@ test('opens query settings modal for not existing query', () => {
         "payload": Object {
           "source": 1,
         },
-        "type": "@app/SHOW_QUERY_SETTINGS_MODAL",
+        "type": "app/showQuerySettingsModal",
       },
     ]
   `);

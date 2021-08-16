@@ -6,8 +6,9 @@ import { Portal, Modal, ModalHeader } from '@keen.io/ui-core';
 import QuerySettings from '../QuerySettings';
 
 import {
+  appSlice,
   getQuerySettingsModalVisibility,
-  hideQuerySettingsModal,
+  // hideQuerySettingsModal,
 } from '../../modules/app';
 import { queriesActions } from '../../modules/queries';
 
@@ -38,7 +39,7 @@ const QuerySettingsModal: FC<Props> = ({ onSaveQuery, cacheAvailable }) => {
   const { exists, isCloned } = useSelector(savedQuerySelectors.getSavedQuery);
 
   const closeHandler = useCallback(() => {
-    dispatch(hideQuerySettingsModal());
+    dispatch(appSlice.actions.hideQuerySettingsModal());
     dispatch(queriesActions.resetSavedQueryError());
     if (!exists && !isCloned) {
       dispatch(savedQueryActions.resetSavedQuery());

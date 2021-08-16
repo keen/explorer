@@ -65,7 +65,7 @@ test('allows user to accept confirmation', () => {
     Array [
       Object {
         "payload": undefined,
-        "type": "@app/ACCEPT_CONFIRMATION",
+        "type": "app/acceptConfirmation",
       },
     ]
   `);
@@ -92,7 +92,7 @@ test('allows user to close modal by clicking "cancel" label', () => {
     Array [
       Object {
         "payload": undefined,
-        "type": "@app/HIDE_CONFIRMATION",
+        "type": "app/hideConfirmation",
       },
     ]
   `);

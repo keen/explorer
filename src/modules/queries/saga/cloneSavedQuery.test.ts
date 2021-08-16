@@ -9,9 +9,11 @@ import { getQuerySettings, getSavedQueries } from '../selectors';
 
 import {
   getViewMode,
-  setViewMode,
-  updateQueryCreator,
+  // setViewMode,
+  // updateQueryCreator,
   QUERY_EDITOR_MOUNTED,
+  // appSlice,
+  appActions,
 } from '../../../modules/app';
 
 import { NOTIFICATION_MANAGER_CONTEXT } from '../../../constants';
@@ -85,7 +87,7 @@ describe('Scenario 1: User cloned saved query from browser view', () => {
   });
 
   test('changes the application view', (result) => {
-    expect(result).toEqual(put(setViewMode('editor')));
+    expect(result).toEqual(put(appActions.setViewMode({ view: 'editor' })));
   });
 
   test('waits for user confirmation', (result) => {
@@ -96,7 +98,7 @@ describe('Scenario 1: User cloned saved query from browser view', () => {
   });
 
   test('updates query creator settings', (result) => {
-    expect(result).toEqual(put(updateQueryCreator(querySettings)));
+    expect(result).toEqual(put(appActions.updateQueryCreator(querySettings)));
   });
 
   test('sets query settings', (result) => {

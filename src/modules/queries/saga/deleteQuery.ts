@@ -7,13 +7,11 @@ import { deleteQueryError, deleteQuery as deleteQueryAction } from '../actions';
 import { queriesSlice } from '../reducer';
 
 import {
-  showConfirmation,
   getViewMode,
-  setViewMode,
-  selectFirstSavedQuery,
-  switchToQueriesList,
   HIDE_CONFIRMATION,
   ACCEPT_CONFIRMATION,
+  appSlice,
+  appActions,
 } from '../../../modules/app';
 
 import { NOTIFICATION_MANAGER_CONTEXT } from '../../../constants';
@@ -27,7 +25,12 @@ export function* deleteQuery(action: ReturnType<typeof deleteQueryAction>) {
     const {
       payload: { queryName },
     } = action;
-    yield put(showConfirmation('delete', { queryName }));
+    yield put(
+      appSlice.actions.showConfirmation({
+        confirmAction: 'delete',
+        meta: { queryName },
+      })
+    );
     const confirm = yield take([ACCEPT_CONFIRMATION, HIDE_CONFIRMATION]);
 
     if (confirm.type === ACCEPT_CONFIRMATION) {
@@ -38,11 +41,12 @@ export function* deleteQuery(action: ReturnType<typeof deleteQueryAction>) {
         .send();
 
       const view = yield select(getViewMode);
-      if (view === 'editor') yield put(setViewMode('browser'));
+      if (view === 'editor')
+        yield put(appSlice.actions.setViewMode({ view: 'browser' }));
 
       yield put(queriesSlice.actions.resetQueryResults());
       yield put(queriesSlice.actions.deleteQuerySuccess({ queryName }));
-      yield put(selectFirstSavedQuery());
+      yield put(appActions.selectFirstSavedQuery());
 
       yield notificationManager.showNotification({
         type: 'info',
@@ -54,8 +58,8 @@ export function* deleteQuery(action: ReturnType<typeof deleteQueryAction>) {
     const { error_code, status } = error;
     if (error_code === ERRORS.RESOURCE_NOT_FOUND) {
       yield put(queriesSlice.actions.resetQueryResults());
-      yield put(switchToQueriesList());
-      yield put(selectFirstSavedQuery());
+      yield put(appActions.switchToQueriesList());
+      yield put(appActions.selectFirstSavedQuery());
 
       yield notificationManager.showNotification({
         type: 'error',

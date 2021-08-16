@@ -8,8 +8,8 @@ import { saveQuery } from './saveQuery';
 import { queriesSlice } from '../reducer';
 
 import {
-  hideQuerySettingsModal,
   getQuerySettingsModalVisibility,
+  appSlice,
 } from '../../../modules/app';
 
 import { ERRORS } from '../constants';
@@ -66,7 +66,7 @@ describe('Scenario 1: User successfully saves query', () => {
   });
 
   test('hide query settings modal', (result) => {
-    expect(result).toEqual(put(hideQuerySettingsModal()));
+    expect(result).toEqual(put(appSlice.actions.hideQuerySettingsModal()));
   });
 
   test('dispatch save query success action', (result) => {
@@ -131,7 +131,7 @@ describe('Scenario 2: User failed to save query due to internal server error', (
   });
 
   test('hide query settings modal', (result) => {
-    expect(result).toEqual(put(hideQuerySettingsModal()));
+    expect(result).toEqual(put(appSlice.actions.hideQuerySettingsModal()));
   });
 
   test('displays error notification', () => {

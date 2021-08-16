@@ -8,6 +8,7 @@ import createSagaMiddleware from 'redux-saga';
 import { ToastProvider } from '@keen.io/toast-notifications';
 import { getPubSub, PubSub } from '@keen.io/pubsub';
 import { screenBreakpoints } from '@keen.io/ui-core';
+import { extendTheme } from '@keen.io/charts';
 
 import KeenAnalysis from 'keen-analysis';
 
@@ -19,7 +20,7 @@ import App from './components/App';
 import { AppContext } from './contexts';
 
 import { NotificationManager } from './modules/notifications';
-import { appStart } from './modules/app';
+import { appActions } from './modules/app';
 
 import { Options } from './types';
 
@@ -31,8 +32,6 @@ import {
   DEFAULT_EXTRACTION_CONFIRMATION_LIMIT,
   DEFAULT_TIMEZONE_FOR_QUERY,
 } from './constants';
-
-import { extendTheme } from '@keen.io/charts';
 
 export class KeenExplorer {
   constructor(props: Options) {
@@ -73,7 +72,7 @@ export class KeenExplorer {
     sagaMiddleware.run(rootSaga);
 
     const initialView = props.initialView || 'browser';
-    store.dispatch(appStart(initialView));
+    store.dispatch(appActions.appStart({ initialView }));
 
     const datavizSettings = {
       theme: extendTheme(dataviz?.theme),

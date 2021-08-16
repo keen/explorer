@@ -31,11 +31,13 @@ import ActionsMenu from '../ActionsMenu';
 
 import { getQueriesSaving, queriesActions } from '../../modules/queries';
 import {
-  showQuerySettingsModal,
-  switchToQueriesList,
+  // showQuerySettingsModal,
+  // switchToQueriesList,
   getQuerySettingsModalVisibility,
   SettingsModalSource,
-  shareQueryUrl,
+  // shareQueryUrl,
+  appSlice,
+  appActions,
 } from '../../modules/app';
 import { colors } from '@keen.io/colors';
 import { savedQuerySelectors } from '../../modules/savedQuery';
@@ -126,7 +128,7 @@ const EditorNavigation: FC<Props> = ({ onSaveQuery }) => {
           </QueryMeta>
         </WrapperHorizontal>
         <BackLink
-          onClick={() => dispatch(switchToQueriesList())}
+          onClick={() => dispatch(appActions.switchToQueriesList())}
           whileHover="hover"
           initial="initial"
           animate="initial"
@@ -153,7 +155,9 @@ const EditorNavigation: FC<Props> = ({ onSaveQuery }) => {
               }
               onClick={() => {
                 dispatch(
-                  showQuerySettingsModal(SettingsModalSource.QUERY_SETTINGS)
+                  appSlice.actions.showQuerySettingsModal({
+                    source: SettingsModalSource.QUERY_SETTINGS,
+                  })
                 );
               }}
             />
@@ -174,7 +178,7 @@ const EditorNavigation: FC<Props> = ({ onSaveQuery }) => {
                 </span>
               }
               onClick={() => {
-                dispatch(shareQueryUrl());
+                dispatch(appActions.shareQueryUrl());
               }}
             />
           </MenuItem>
@@ -218,7 +222,9 @@ const EditorNavigation: FC<Props> = ({ onSaveQuery }) => {
             onClick={() => {
               if (!exists && !isCloned) {
                 dispatch(
-                  showQuerySettingsModal(SettingsModalSource.FIRST_QUERY_SAVE)
+                  appSlice.actions.showQuerySettingsModal({
+                    source: SettingsModalSource.FIRST_QUERY_SAVE,
+                  })
                 );
               } else {
                 onSaveQuery();
