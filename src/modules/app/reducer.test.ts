@@ -1,6 +1,6 @@
 import { appReducer, initialState } from './reducer';
 
-import { SettingsModalSource } from './types';
+import { QueriesSortSettings, SettingsModalSource } from './types';
 
 import {
   setViewMode,
@@ -17,6 +17,8 @@ import {
   hideEmailExtractionModal,
   setQueryAutorun,
   updateChartSettings,
+  setQueriesFilters,
+  setQueriesSortSettings,
 } from './actions';
 
 test('set query autorun settings', () => {
@@ -171,4 +173,26 @@ test('update state when chart setttings has been changed', () => {
     visualization: { chartSettings },
   } = appReducer(initialState, action);
   expect(chartSettings).toEqual(settings);
+});
+
+test('set filters settings for queries', () => {
+  const settings = {
+    showOnlyCachedQueries: true,
+    tags: ['some-tag'],
+  };
+  const action = setQueriesFilters(settings);
+
+  const { queriesFilters } = appReducer(initialState, action);
+  expect(queriesFilters).toEqual(settings);
+});
+
+test('set sort settings for queries', () => {
+  const settings = {
+    direction: 'descending',
+    property: 'lastModifiedDate',
+  } as QueriesSortSettings;
+  const action = setQueriesSortSettings(settings);
+
+  const { queriesSortSettings } = appReducer(initialState, action);
+  expect(queriesSortSettings).toEqual(settings);
 });

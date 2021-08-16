@@ -34,6 +34,10 @@ export const SET_QUERY_AUTORUN = '@app/SET_QUERY_AUTORUN';
 export const UPDATE_CHART_SETTINGS = '@app/UPDATE_CHART_SETTINGS';
 export const UPDATE_WIDGET_SETTINGS = '@app/UPDATE_WIDGET_SETTINGS';
 export const UPDATE_VISUALIZATION = '@app/UPDATE_VISUALIZATION';
+export const SET_QUERIES_FILTERS = '@app/SET_QUERIES_FILTERS';
+export const SET_QUERIES_SORT_SETTINGS = '@app/SET_QUERIES_SORT_SETTINGS';
 
 export const URL_STATE = 'keen_explorer_state';
 export const QUERY_AUTORUN_KEY = '@keen-explorer/query-autorun';
+export const DEFAULT_PROPERTY = 'displayName';
+export const DEFAULT_DIRECTION = 'ascending';
