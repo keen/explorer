@@ -38,9 +38,17 @@ import {
   UPDATE_CHART_SETTINGS,
   UPDATE_WIDGET_SETTINGS,
   UPDATE_VISUALIZATION,
+  SET_QUERIES_FILTERS,
+  SET_QUERIES_SORT_SETTINGS,
 } from './constants';
 
-import { Confirmation, SettingsModalSource, ViewMode } from './types';
+import {
+  Confirmation,
+  SettingsModalSource,
+  ViewMode,
+  QueriesFilters,
+  QueriesSortSettings,
+} from './types';
 import { ChartSettings } from '../../types';
 
 export const appStart = createAction(APP_START, (initialView: ViewMode) => ({
@@ -235,6 +243,24 @@ export const copyApiResourceUrl = createAction(
   })
 );
 
+export const setQueriesFilters = createAction(
+  SET_QUERIES_FILTERS,
+  (filters: Partial<QueriesFilters>) => ({
+    payload: {
+      filters,
+    },
+  })
+);
+
+export const setQueriesSortSettings = createAction(
+  SET_QUERIES_SORT_SETTINGS,
+  (sortSettings: QueriesSortSettings) => ({
+    payload: {
+      sortSettings,
+    },
+  })
+);
+
 export type AppActions =
   | ReturnType<typeof appStart>
   | ReturnType<typeof resizeScreen>
@@ -269,4 +295,6 @@ export type AppActions =
   | ReturnType<typeof updateChartSettings>
   | ReturnType<typeof updateWidgetSettings>
   | ReturnType<typeof updateVisualizationType>
-  | ReturnType<typeof copyApiResourceUrl>;
+  | ReturnType<typeof copyApiResourceUrl>
+  | ReturnType<typeof setQueriesFilters>
+  | ReturnType<typeof setQueriesSortSettings>;
