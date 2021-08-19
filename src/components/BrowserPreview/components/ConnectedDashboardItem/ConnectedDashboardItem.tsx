@@ -2,6 +2,7 @@ import React, { FC, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { BodyText } from '@keen.io/typography';
+import { colors } from '@keen.io/colors';
 
 import { ConnectedDashboard } from '../../../../modules/savedQuery';
 import { AppContext } from '../../../../contexts';
@@ -18,14 +19,18 @@ const ConnectedDashboardItem: FC<Props> = ({ dashboard }) => {
 
   const { id, title } = dashboard;
 
-  const renderText = () => (
-    <BodyText variant="body2">
+  const renderText = (color = colors.black[100]) => (
+    <BodyText variant="body2" color={color}>
       {title || t('browser_preview.untitled_dashboard')}
     </BodyText>
   );
 
   if (createDashboardUrl) {
-    return <Anchor href={createDashboardUrl(id)}>{renderText()}</Anchor>;
+    return (
+      <Anchor href={createDashboardUrl(id)}>
+        {renderText(colors.blue[500])}
+      </Anchor>
+    );
   }
 
   return renderText();
