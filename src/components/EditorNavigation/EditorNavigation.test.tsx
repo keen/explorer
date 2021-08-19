@@ -120,7 +120,7 @@ test('allows user to save query', () => {
     wrapper: { getByText },
   } = render({ savedQuery });
 
-  const button = getByText('editor.save_query_button');
+  const button = getByText('editor.update_query_button');
   fireEvent.click(button);
 
   expect(props.onSaveQuery).toHaveBeenCalled();

@@ -113,7 +113,13 @@
     "autorun_query_tooltip": "Every run query counts as one query for your usage",
     "unable_to_run_query": "Unable to run query",
     "the_event_stream_do_not_exist": "The <bold>{{stream}}</bold> event stream used in this query does not exist",
-    "the_event_stream_do_not_exist_plural": "The <bold>{{stream}}</bold> event streams used in this query do not exist"
+    "the_event_stream_do_not_exist_plural": "The <bold>{{stream}}</bold> event streams used in this query do not exist",
+    "on_dashboards": "On Dashboards:",
+    "dashboards_none": "None",
+    "untitled_dashboard": "Untitled dashboard",
+    "show_more": "Show More",
+    "show_less": "Show Less",
+    "dashboard_connection_error": "Unable to get the dashboards list. Try again later"
   },
   "query_summary": {
     "analysis": "Analysis:",
@@ -130,6 +136,7 @@
     "extract_to_email_button": "Extract to Email",
     "back_to_saved_queries": "Go to Saved Queries",
     "save_query_button": "Save Query",
+    "update_query_button": "Update Query",
     "settings_tooltip": "Query Info",
     "actions_tooltip": "Actions",
     "new_query_title": "New Query",

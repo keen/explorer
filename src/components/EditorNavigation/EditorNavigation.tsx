@@ -226,7 +226,11 @@ const EditorNavigation: FC<Props> = ({ onSaveQuery }) => {
             }}
             icon={isSavingQuery && !isModalVisible && <FadeLoader />}
           >
-            <ButtonLabel>{t('editor.save_query_button')}</ButtonLabel>
+            <ButtonLabel>
+              {exists
+                ? t('editor.update_query_button')
+                : t('editor.save_query_button')}
+            </ButtonLabel>
           </Button>
         </MenuItem>
       </Menu>

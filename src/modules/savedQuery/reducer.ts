@@ -1,5 +1,5 @@
-import { ReducerState, SavedQuery } from './types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { ReducerState, SavedQuery, ConnectedDashboard } from './types';
 
 export const initialState: ReducerState = {
   name: '',
@@ -11,6 +11,9 @@ export const initialState: ReducerState = {
   exists: false,
   isQueryEditable: true,
   isQueryLoading: false,
+  isConnectedDashboardsLoading: false,
+  isConnectedDashboardsError: false,
+  connectedDashboards: null,
 };
 
 export const savedQuerySlice = createSlice({
@@ -34,6 +37,24 @@ export const savedQuerySlice = createSlice({
     },
     setQueryLoading: (state, { payload }: PayloadAction<boolean>) => {
       state.isQueryLoading = payload;
+    },
+    setConnectedDashboardsLoading: (
+      state,
+      { payload }: PayloadAction<boolean>
+    ) => {
+      state.isConnectedDashboardsLoading = payload;
+    },
+    setConnectedDashboardsError: (
+      state,
+      { payload }: PayloadAction<boolean>
+    ) => {
+      state.isConnectedDashboardsError = payload;
+    },
+    updateConnectedDashboards: (
+      state,
+      { payload }: PayloadAction<ConnectedDashboard[]>
+    ) => {
+      state.connectedDashboards = payload;
     },
   },
 });

@@ -8,6 +8,8 @@ const AppContext = React.createContext<{
   notificationPubSub: PubSub;
   modalContainer: string;
   upgradeSubscriptionUrl?: string;
+  enableDashboardsConnection?: boolean;
+  createDashboardUrl?: (dashboardId: string) => string;
   datavizSettings: DatavizSettings;
   defaultTimezoneForQuery;
   disableTimezoneSelection;
@@ -16,6 +18,8 @@ const AppContext = React.createContext<{
   modalContainer: null,
   notificationPubSub: null,
   upgradeSubscriptionUrl: null,
+  enableDashboardsConnection: null,
+  createDashboardUrl: null,
   datavizSettings: {},
   defaultTimezoneForQuery: null,
   disableTimezoneSelection: null,

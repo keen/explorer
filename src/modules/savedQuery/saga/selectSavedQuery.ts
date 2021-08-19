@@ -3,10 +3,14 @@
 import { select, put, call } from 'redux-saga/effects';
 
 import { setVisualization } from '../../app';
-import { SavedQueryListItem } from '../../queries';
-import { queriesActions, getSavedQueries } from '../../queries';
+import {
+  SavedQueryListItem,
+  queriesActions,
+  getSavedQueries,
+} from '../../queries';
 import { convertMilisecondsToMinutes } from '../utils';
 import { isQueryEditable } from './isQueryEditable';
+import { getConnectedDashboards } from './getConnectedDashboards';
 import { savedQueryActions } from '../index';
 
 export function* selectSavedQuery({
@@ -49,6 +53,8 @@ export function* selectSavedQuery({
         yield put(queriesActions.runQuery({ query }));
       }
     }
+
+    yield call(getConnectedDashboards, name);
   } catch (err) {
     console.error(err);
   } finally {

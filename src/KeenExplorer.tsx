@@ -30,6 +30,8 @@ import {
   NOTIFICATION_MANAGER_CONTEXT,
   DEFAULT_EXTRACTION_CONFIRMATION_LIMIT,
   DEFAULT_TIMEZONE_FOR_QUERY,
+  KEEN_CLIENT_CONTEXT,
+  DASHBOARDS_API_CONTEXT,
 } from './constants';
 
 import { extendTheme } from '@keen.io/charts';
@@ -45,6 +47,8 @@ export class KeenExplorer {
       defaultTimezoneForQuery,
       disableTimezoneSelection,
       confirmExtractionLimit,
+      dashboardsApiUrl,
+      createDashboardUrl,
     } = props;
     const keenAnalysisClient =
       keenAnalysis.instance || new KeenAnalysis(keenAnalysis.config);
@@ -54,7 +58,7 @@ export class KeenExplorer {
 
     const sagaMiddleware = createSagaMiddleware({
       context: {
-        keenClient: keenAnalysisClient,
+        [KEEN_CLIENT_CONTEXT]: keenAnalysisClient,
         [CONFIRM_EXTRACTION_LIMIT]:
           confirmExtractionLimit || DEFAULT_EXTRACTION_CONFIRMATION_LIMIT,
         [PUBSUB_CONTEXT]: getPubSub(),
@@ -62,6 +66,7 @@ export class KeenExplorer {
           pubsub: notificationPubSub,
           eventName: SHOW_TOAST_NOTIFICATION_EVENT,
         }),
+        [DASHBOARDS_API_CONTEXT]: dashboardsApiUrl,
       },
     });
     const composeEnhancers = composeWithDevTools({});
@@ -96,6 +101,8 @@ export class KeenExplorer {
               defaultTimezoneForQuery:
                 defaultTimezoneForQuery || DEFAULT_TIMEZONE_FOR_QUERY,
               disableTimezoneSelection,
+              enableDashboardsConnection: !!dashboardsApiUrl,
+              createDashboardUrl,
             }}
           >
             <ToastProvider>

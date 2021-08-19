@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
@@ -16,6 +16,7 @@ import QueryVisualization from '../QueryVisualization';
 import QuerySummary from '../QuerySummary';
 import QueryLimitReached from '../QueryLimitReached';
 import VisualizationPlaceholder from '../VisualizationPlaceholder';
+import { NoPropertiesOnEventStream, DashboardsConnection } from './components';
 
 import {
   queriesActions,
@@ -29,15 +30,15 @@ import {
   getQueryAutorun,
   getVisualization,
 } from '../../modules/app';
-import NoPropertiesOnEventStream from './components/NoPropertiesOnEventStream/NoPropertiesOnEventStream';
 import {
   getSavedQueryIsEditable,
   getSavedQueryLoading,
 } from '../../modules/savedQuery/selectors';
-import { useApplyWidgetTheming } from '../../hooks/useApplyWidgetTheming';
+import { useApplyWidgetTheming } from '../../hooks';
 
 import { getNotExistingEventStreams } from '../../modules/schemas/selectors';
 import { getMissingEventStreams } from './utils';
+import { AppContext } from '../../contexts';
 
 type Props = {
   /** Current active query */
@@ -71,6 +72,8 @@ const BrowserPreview: FC<Props> = ({
       notExistingEventStreams
     );
   }
+
+  const { enableDashboardsConnection } = useContext(AppContext);
 
   const { themedChartSettings, themedWidgetSettings } = useApplyWidgetTheming({
     chartSettings,
@@ -139,6 +142,7 @@ const BrowserPreview: FC<Props> = ({
               querySettings={currentQuery}
               chartSettings={chartSettings}
             />
+            {enableDashboardsConnection && <DashboardsConnection />}
           </>
         )}
       </Card>
