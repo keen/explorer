@@ -39,6 +39,9 @@ export type ReducerState = {
   embedModal: {
     visible: boolean;
   };
+  updateSavedQueryModal: {
+    visible: boolean;
+  };
   view: ViewMode;
   browserScreen: {
     width: number;

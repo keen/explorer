@@ -36,6 +36,8 @@ import {
   getQuerySettingsModalVisibility,
   SettingsModalSource,
   shareQueryUrl,
+  showUpdateSavedQueryModal,
+  // getDashboardsConnection,
 } from '../../modules/app';
 import { colors } from '@keen.io/colors';
 import { savedQuerySelectors } from '../../modules/savedQuery';
@@ -77,6 +79,15 @@ const EditorNavigation: FC<Props> = ({ onSaveQuery }) => {
   } = useSelector(savedQuerySelectors.getSavedQuery);
   const isSavingQuery = useSelector(getQueriesSaving);
   const isModalVisible = useSelector(getQuerySettingsModalVisibility);
+  const isConntectedDashboardsLoading = useSelector(
+    savedQuerySelectors.getConnectedDashboardsLoading
+  );
+  const isConntectedDashboardsError = useSelector(
+    savedQuerySelectors.getConnectedDashboardsError
+  );
+  const connectedDashboards = useSelector(
+    savedQuerySelectors.getConnectedDashboards
+  );
 
   const outsideActionsMenuClick = useCallback(
     (e) => {
@@ -100,6 +111,20 @@ const EditorNavigation: FC<Props> = ({ onSaveQuery }) => {
   }, [actionsMenu, actionsContainer]);
 
   const queryName = displayName ? displayName : t('editor.new_query_title');
+
+  const handleSaveQuery = () => {
+    if (!exists && !isCloned) {
+      dispatch(showQuerySettingsModal(SettingsModalSource.FIRST_QUERY_SAVE));
+    } else if (!connectedDashboards) {
+      console.log('get dashboards connecction here');
+      // dispatch(getDashboardsConnection(name));
+    } else if (connectedDashboards?.length || isConntectedDashboardsError) {
+      dispatch(showUpdateSavedQueryModal());
+    } else {
+      onSaveQuery();
+    }
+  };
+
   return (
     <Container>
       <WrapperVertical>
@@ -215,16 +240,20 @@ const EditorNavigation: FC<Props> = ({ onSaveQuery }) => {
             variant="secondary"
             style="solid"
             isDisabled={isSavingQuery}
-            onClick={() => {
-              if (!exists && !isCloned) {
-                dispatch(
-                  showQuerySettingsModal(SettingsModalSource.FIRST_QUERY_SAVE)
-                );
-              } else {
-                onSaveQuery();
-              }
-            }}
-            icon={isSavingQuery && !isModalVisible && <FadeLoader />}
+            onClick={handleSaveQuery}
+            // onClick={() => {
+            //   if (!exists && !isCloned) {
+            //     dispatch(
+            //       showQuerySettingsModal(SettingsModalSource.FIRST_QUERY_SAVE)
+            //     );
+            //   } else {
+            //     onSaveQuery();
+            //   }
+            // }}
+            icon={
+              (isSavingQuery || isConntectedDashboardsLoading) &&
+              !isModalVisible && <FadeLoader />
+            }
           >
             <ButtonLabel>
               {exists
@@ -232,6 +261,9 @@ const EditorNavigation: FC<Props> = ({ onSaveQuery }) => {
                 : t('editor.save_query_button')}
             </ButtonLabel>
           </Button>
+          <div onClick={() => dispatch(showUpdateSavedQueryModal())}>
+            open update saved query
+          </div>
         </MenuItem>
       </Menu>
     </Container>

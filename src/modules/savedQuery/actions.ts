@@ -9,3 +9,12 @@ export const selectSavedQuery = createAction(
     },
   })
 );
+
+export const getDashboardsConnection = createAction(
+  'savedQuery/getDashboardsConnection',
+  (name: string) => ({
+    payload: {
+      name,
+    },
+  })
+);

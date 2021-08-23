@@ -40,6 +40,8 @@ import {
   UPDATE_VISUALIZATION,
   SET_QUERIES_FILTERS,
   SET_QUERIES_SORT_SETTINGS,
+  SHOW_UPDATE_SAVED_QUERY_MODAL,
+  HIDE_UPDATE_SAVED_QUERY_MODAL,
 } from './constants';
 
 import {
@@ -261,6 +263,14 @@ export const setQueriesSortSettings = createAction(
   })
 );
 
+export const showUpdateSavedQueryModal = createAction(
+  SHOW_UPDATE_SAVED_QUERY_MODAL
+);
+
+export const hideUpdateSavedQueryModal = createAction(
+  HIDE_UPDATE_SAVED_QUERY_MODAL
+);
+
 export type AppActions =
   | ReturnType<typeof appStart>
   | ReturnType<typeof resizeScreen>
@@ -297,4 +307,6 @@ export type AppActions =
   | ReturnType<typeof updateVisualizationType>
   | ReturnType<typeof copyApiResourceUrl>
   | ReturnType<typeof setQueriesFilters>
-  | ReturnType<typeof setQueriesSortSettings>;
+  | ReturnType<typeof setQueriesSortSettings>
+  | ReturnType<typeof showUpdateSavedQueryModal>
+  | ReturnType<typeof hideUpdateSavedQueryModal>;

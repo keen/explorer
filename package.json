@@ -81,6 +81,7 @@
     "react-dom": "^16.14.0",
     "react-hot-loader": "^4.13.0",
     "react-i18next": "^11.7.3",
+    "react-intersection-observer": "^8.32.0",
     "react-json-inspector": "^7.1.1",
     "react-redux": "^7.2.0",
     "react-syntax-highlighter": "^15.1.0",

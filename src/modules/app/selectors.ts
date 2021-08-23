@@ -27,3 +27,6 @@ export const getQueriesFilters = ({ app }: AppState) => app.queriesFilters;
 
 export const getQueriesSortSettings = ({ app }: AppState) =>
   app.queriesSortSettings;
+
+export const getUpdateSavedQueryModalVisibility = ({ app }: AppState) =>
+  app.updateSavedQueryModal.visible;

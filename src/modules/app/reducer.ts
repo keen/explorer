@@ -23,6 +23,8 @@ import {
   SET_QUERIES_SORT_SETTINGS,
   DEFAULT_DIRECTION,
   DEFAULT_PROPERTY,
+  SHOW_UPDATE_SAVED_QUERY_MODAL,
+  HIDE_UPDATE_SAVED_QUERY_MODAL,
 } from './constants';
 
 export const initialState: ReducerState = {
@@ -48,6 +50,9 @@ export const initialState: ReducerState = {
     visible: false,
   },
   extractToEmailModal: {
+    visible: false,
+  },
+  updateSavedQueryModal: {
     visible: false,
   },
   browserScreen: {
@@ -202,6 +207,20 @@ export const appReducer = (
       return {
         ...state,
         queriesSortSettings: action.payload.sortSettings,
+      };
+    case SHOW_UPDATE_SAVED_QUERY_MODAL:
+      return {
+        ...state,
+        updateSavedQueryModal: {
+          visible: true,
+        },
+      };
+    case HIDE_UPDATE_SAVED_QUERY_MODAL:
+      return {
+        ...state,
+        updateSavedQueryModal: {
+          visible: false,
+        },
       };
     default:
       return state;
