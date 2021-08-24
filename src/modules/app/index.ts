@@ -39,6 +39,7 @@ import {
   setQueriesSortSettings,
   showUpdateSavedQueryModal,
   hideUpdateSavedQueryModal,
+  saveQuery,
 } from './actions';
 import {
   getConfirmation,
@@ -117,6 +118,7 @@ export {
   getUpdateSavedQueryModalVisibility,
   showUpdateSavedQueryModal,
   hideUpdateSavedQueryModal,
+  saveQuery,
 };
 
 export * from './types';

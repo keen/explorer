@@ -6,6 +6,7 @@ import {
   cleanup,
 } from '@testing-library/react';
 import configureStore from 'redux-mock-store';
+import { mockAllIsIntersecting } from 'react-intersection-observer/test-utils';
 
 import UpdateSavedQueryModal from './UpdateSavedQueryModal';
 
@@ -15,28 +16,32 @@ const render = (storeState: any = {}, overProps: any = {}) => {
   const mockStore = configureStore([]);
   const state = {
     app: {
-      querySettingsModal: {
+      updateSavedQueryModal: {
         visible: true,
       },
     },
     project: {
       tagsPool: [],
     },
-    queries: {
-      isSaving: false,
-      savedQueries: [],
-      cachedQueries: {
-        limit: 5,
-        limitReached: false,
-      },
-    },
+    // queries: {
+    //   isSaving: false,
+    //   savedQueries: [],
+    //   cachedQueries: {
+    //     limit: 5,
+    //     limitReached: false,
+    //   },
+    // },
     savedQuery: {
       name: '',
       displayName: '',
       cached: false,
       refreshRate: 0,
-      exists: false,
+      exists: true,
+      isCloned: false,
       tags: [],
+      isConnectedDashboardsLoading: false,
+      isConnectedDashboardsError: false,
+      connectedDashboards: null,
     },
     ...storeState,
   };
@@ -66,6 +71,7 @@ const render = (storeState: any = {}, overProps: any = {}) => {
 
 afterEach(() => {
   cleanup();
+  mockAllIsIntersecting(false);
 });
 
 beforeEach(() => {
@@ -75,61 +81,117 @@ beforeEach(() => {
     modalRoot.setAttribute('id', 'modal-root');
     document.body.appendChild(modalRoot);
   }
+  mockAllIsIntersecting(true);
 });
 
-test('close modal and reset query settings', () => {
-  const {
-    wrapper: { getByTestId },
-    store,
-  } = render();
-
-  const closeButton = getByTestId('modal-close');
-  fireEvent.click(closeButton);
-
-  expect(store.getActions()).toMatchInlineSnapshot(`
-    Array [
-      Object {
-        "payload": undefined,
-        "type": "@app/HIDE_QUERY_SETTINGS_MODAL",
-      },
-      Object {
-        "payload": undefined,
-        "type": "queries/resetSavedQueryError",
-      },
-      Object {
-        "payload": undefined,
-        "type": "savedQuery/resetSavedQuery",
-      },
-    ]
-  `);
-});
-
-test('allows user to close modal', () => {
+test('shows error when user is unable to get connected dashboards', () => {
   const savedQuery = {
     name: '',
     displayName: '',
     cached: false,
     refreshRate: 0,
     exists: true,
+    isCloned: false,
     tags: [],
+    isConnectedDashboardsLoading: false,
+    isConnectedDashboardsError: true,
+    connectedDashboards: null,
   };
   const {
-    wrapper: { getByTestId },
-    store,
+    wrapper: { getByText },
+  } = render({ savedQuery });
+  expect(
+    getByText('update_saved_query.dashboard_connection_error')
+  ).toBeInTheDocument();
+});
+
+test('shows connected dashboards', () => {
+  const savedQuery = {
+    name: '',
+    displayName: '',
+    cached: false,
+    refreshRate: 0,
+    exists: true,
+    isCloned: false,
+    tags: [],
+    isConnectedDashboardsLoading: false,
+    isConnectedDashboardsError: true,
+    connectedDashboards: [{ title: '@dashboard-1', id: '@id1' }],
+  };
+  const {
+    wrapper: { getByText },
   } = render({ savedQuery });
 
-  const closeButton = getByTestId('modal-close');
-  fireEvent.click(closeButton);
+  savedQuery.connectedDashboards.map((dashboard) => {
+    expect(getByText(dashboard.title)).toBeInTheDocument();
+  });
+});
+
+test('enable user to close the modal', () => {
+  const {
+    wrapper: { getByText },
+    store,
+  } = render();
+
+  const item = getByText('update_saved_query.cancel');
+  fireEvent.click(item);
 
   expect(store.getActions()).toMatchInlineSnapshot(`
     Array [
       Object {
         "payload": undefined,
-        "type": "@app/HIDE_QUERY_SETTINGS_MODAL",
+        "type": "@app/HIDE_UPDATE_SAVED_QUERY_MODAL",
+      },
+    ]
+  `);
+});
+
+test('enable user to clone the query', () => {
+  const {
+    wrapper: { getByText },
+    store,
+  } = render();
+
+  const item = getByText('update_saved_query.clone_query');
+  fireEvent.click(item);
+
+  expect(store.getActions()).toMatchInlineSnapshot(`
+    Array [
+      Object {
+        "payload": undefined,
+        "type": "queries/cloneSavedQuery",
       },
       Object {
         "payload": undefined,
-        "type": "queries/resetSavedQueryError",
+        "type": "@app/HIDE_UPDATE_SAVED_QUERY_MODAL",
+      },
+    ]
+  `);
+});
+
+test('enable user to update the query', () => {
+  const {
+    wrapper: { getByText },
+    store,
+  } = render();
+
+  const item = getByText('update_saved_query.update_query');
+  fireEvent.click(item);
+
+  expect(store.getActions()).toMatchInlineSnapshot(`
+    Array [
+      Object {
+        "payload": Object {
+          "displayName": "",
+          "name": "",
+          "refreshRate": 0,
+          "tags": Array [],
+        },
+        "type": "@app/SAVE_QUERY",
+      },
+      Object {
+        "payload": undefined,
+        "type": "@app/HIDE_UPDATE_SAVED_QUERY_MODAL",
       },
     ]
   `);

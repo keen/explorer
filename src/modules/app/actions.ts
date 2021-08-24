@@ -42,6 +42,8 @@ import {
   SET_QUERIES_SORT_SETTINGS,
   SHOW_UPDATE_SAVED_QUERY_MODAL,
   HIDE_UPDATE_SAVED_QUERY_MODAL,
+  SAVE_QUERY,
+  SAVE_EXISTING_QUERY,
 } from './constants';
 
 import {
@@ -271,6 +273,20 @@ export const hideUpdateSavedQueryModal = createAction(
   HIDE_UPDATE_SAVED_QUERY_MODAL
 );
 
+export const saveQuery = createAction(
+  SAVE_QUERY,
+  (displayName: string, refreshRate: number, tags: string[], name: string) => ({
+    payload: {
+      displayName,
+      refreshRate,
+      tags,
+      name,
+    },
+  })
+);
+
+export const saveExistingQuery = createAction(SAVE_EXISTING_QUERY);
+
 export type AppActions =
   | ReturnType<typeof appStart>
   | ReturnType<typeof resizeScreen>
@@ -309,4 +325,6 @@ export type AppActions =
   | ReturnType<typeof setQueriesFilters>
   | ReturnType<typeof setQueriesSortSettings>
   | ReturnType<typeof showUpdateSavedQueryModal>
-  | ReturnType<typeof hideUpdateSavedQueryModal>;
+  | ReturnType<typeof hideUpdateSavedQueryModal>
+  | ReturnType<typeof saveQuery>
+  | ReturnType<typeof saveExistingQuery>;

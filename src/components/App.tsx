@@ -152,20 +152,6 @@ class App extends Component<Props> {
               onRunQuery={() =>
                 this.props.runQuery({ query: this.props.query })
               }
-              onSaveQuery={() => {
-                const {
-                  displayName,
-                  name,
-                  tags,
-                  refreshRate,
-                } = this.props.savedQuery;
-                this.onSaveQuery({
-                  displayName,
-                  refreshRate,
-                  tags,
-                  name,
-                });
-              }}
             />
             <ExtractToEmailModal />
           </>

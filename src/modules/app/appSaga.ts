@@ -29,6 +29,8 @@ import {
   copyApiResourceUrl as copyApiResourceUrlAction,
   updateVisualizationType as updateVisualizationTypeAction,
   exportChartToImage as exportChartToImageAction,
+  saveQuery as saveQueryAction,
+  showUpdateSavedQueryModal,
 } from './actions';
 
 import { selectFirstSavedQuery } from './saga';
@@ -56,6 +58,7 @@ import {
   createCodeSnippet,
   exportToHtml,
   createResourceUrl,
+  setVisualization as setVisualizationUtil,
 } from '../../utils';
 
 import {
@@ -88,6 +91,8 @@ import {
   SET_QUERY_AUTORUN,
   QUERY_AUTORUN_KEY,
   UPDATE_VISUALIZATION,
+  SAVE_EXISTING_QUERY,
+  SAVE_QUERY,
 } from './constants';
 import { SET_CHART_SETTINGS } from '@keen.io/query-creator';
 import { savedQueryActions, savedQuerySelectors } from '../savedQuery';
@@ -489,6 +494,46 @@ export function* updateVisualizationType({
   yield pubsub.publish(UPDATE_VISUALIZATION_TYPE, { type });
 }
 
+export function* saveQuery({ payload }: ReturnType<typeof saveQueryAction>) {
+  const { displayName, refreshRate, tags, name } = payload;
+
+  const query = yield select(getQuerySettings);
+  const visualizationFromState = yield select(getVisualization);
+  const visualization = setVisualizationUtil(query, visualizationFromState);
+
+  const body = {
+    query,
+    metadata: {
+      displayName,
+      visualization,
+      tags,
+    },
+    refreshRate: refreshRate * 60 * 60,
+  };
+
+  yield put(queriesActions.saveQuery({ name, body }));
+}
+
+export function* saveExistingQuery() {
+  const { displayName, refreshRate, tags, name } = yield select(
+    savedQuerySelectors.getSavedQuery
+  );
+
+  yield put(savedQueryActions.getDashboardsConnection(name));
+  yield take(savedQueryActions.getDashboardsConnectionDone.type);
+
+  const dashboards = yield select(savedQuerySelectors.getConnectedDashboards);
+  const isDashboardConnectionError = yield select(
+    savedQuerySelectors.getConnectedDashboardsError
+  );
+
+  if (dashboards?.length || isDashboardConnectionError) {
+    yield put(showUpdateSavedQueryModal());
+  } else {
+    yield put(saveQueryAction(displayName, refreshRate, tags, name));
+  }
+}
+
 export function* appSaga() {
   yield takeLatest(APP_START, appStart);
   yield takeLatest(SET_QUERY_AUTORUN, persistAutorunSettings);
@@ -507,5 +552,7 @@ export function* appSaga() {
   yield takeLatest(DOWNLOAD_CODE_SNIPPET, downloadCodeSnippet);
   yield takeLatest(UPDATE_VISUALIZATION, updateVisualizationType);
   yield takeLatest(COPY_API_RESOURCE_URL, copyApiResourceUrl);
+  yield takeLatest(SAVE_EXISTING_QUERY, saveExistingQuery);
+  yield takeLatest(SAVE_QUERY, saveQuery);
   yield debounce(200, SCREEN_RESIZE, resizeBrowserScreen);
 }

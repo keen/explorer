@@ -6,6 +6,7 @@ export const Wrapper = styled(motion.div)`
   flex-wrap: wrap;
   gap: 5px;
   overflow: auto;
+  max-height: 50px;
 `;
 
 export const LinkWrapper = styled.div`

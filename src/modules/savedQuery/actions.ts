@@ -18,3 +18,7 @@ export const getDashboardsConnection = createAction(
     },
   })
 );
+
+export const getDashboardsConnectionDone = createAction(
+  'savedQuery/getDashboardsConnectionDone'
+);

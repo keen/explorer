@@ -3,7 +3,7 @@
 import sagaHelper from 'redux-saga-testing';
 import { getContext, put } from 'redux-saga/effects';
 import HttpStatus from 'http-status-codes';
-import { getConnectedDashboards } from './getConnectedDashboards';
+import { getConnectedDashboards as getConnectedDashboardsFlow } from './getConnectedDashboards';
 import {
   DASHBOARDS_API_CONTEXT,
   KEEN_CLIENT_CONTEXT,
@@ -14,7 +14,12 @@ describe('getConnectedDashboards', () => {
   const savedQuery = 'saved-query';
 
   describe('Scenario 1: Dashboards API url is not provided', () => {
-    const test = sagaHelper(getConnectedDashboards(savedQuery));
+    const action = savedQueryActions.getDashboardsConnection(savedQuery);
+    const test = sagaHelper(
+      getConnectedDashboardsFlow(
+        action as ReturnType<typeof savedQueryActions.getDashboardsConnection>
+      )
+    );
 
     test('get the Keen API client instance from context', (result) => {
       expect(result).toEqual(getContext(KEEN_CLIENT_CONTEXT));
@@ -34,7 +39,12 @@ describe('getConnectedDashboards', () => {
   });
 
   describe('Scenario 2: Dashboards API url is provided and returns connected dashboards', () => {
-    const test = sagaHelper(getConnectedDashboards(savedQuery));
+    const action = savedQueryActions.getDashboardsConnection(savedQuery);
+    const test = sagaHelper(
+      getConnectedDashboardsFlow(
+        action as ReturnType<typeof savedQueryActions.getDashboardsConnection>
+      )
+    );
 
     const dashboardsMeta = [
       {

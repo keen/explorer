@@ -1,5 +1,9 @@
 import { savedQuerySaga } from './savedQuerySaga';
-import { selectSavedQuery } from './actions';
+import {
+  selectSavedQuery,
+  getDashboardsConnection,
+  getDashboardsConnectionDone,
+} from './actions';
 import { convertMilisecondsToMinutes, serializeSavedQuery } from './utils';
 import { ReducerState, ConnectedDashboard } from './types';
 import { savedQuerySelectors } from './selectors';
@@ -10,6 +14,8 @@ const savedQueryReducer = savedQuerySlice.reducer;
 const savedQueryActions = {
   ...savedQuerySlice.actions,
   selectSavedQuery,
+  getDashboardsConnection,
+  getDashboardsConnectionDone,
 };
 
 const savedQueryUtils = {

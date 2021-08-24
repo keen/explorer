@@ -10,7 +10,6 @@ import { selectSavedQuery as selectSavedQueryFlow } from './selectSavedQuery';
 import { queriesActions, getSavedQueries } from '../../queries';
 import { setVisualization } from '../../app';
 import { isQueryEditable } from './isQueryEditable';
-import { getConnectedDashboards } from './getConnectedDashboards';
 import { savedQueryActions } from '../index';
 import { selectSavedQuery } from '../actions';
 
@@ -95,8 +94,9 @@ describe('selectSavedQuery()', () => {
     });
 
     test('check connected dashboards', (result) => {
-      expect(result).toEqual(call(getConnectedDashboards, savedQuery.name));
-      return undefined;
+      expect(result).toEqual(
+        put(savedQueryActions.getDashboardsConnection(savedQuery.name))
+      );
     });
 
     test('set save query loading state as false', (result) => {
@@ -178,8 +178,9 @@ describe('selectSavedQuery()', () => {
     });
 
     test('check connected dashboards', (result) => {
-      expect(result).toEqual(call(getConnectedDashboards, savedQuery.name));
-      return undefined;
+      expect(result).toEqual(
+        put(savedQueryActions.getDashboardsConnection(savedQuery.name))
+      );
     });
 
     test('set save query loading state as false', (result) => {

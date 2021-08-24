@@ -56,5 +56,12 @@ export const savedQuerySlice = createSlice({
     ) => {
       state.connectedDashboards = payload;
     },
+    resetConnectedDashboards: (state) => {
+      state.isConnectedDashboardsLoading =
+        initialState.isConnectedDashboardsLoading;
+      state.isConnectedDashboardsError =
+        initialState.isConnectedDashboardsError;
+      state.connectedDashboards = initialState.connectedDashboards;
+    },
   },
 });

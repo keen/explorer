@@ -10,7 +10,6 @@ import {
 } from '../../queries';
 import { convertMilisecondsToMinutes } from '../utils';
 import { isQueryEditable } from './isQueryEditable';
-import { getConnectedDashboards } from './getConnectedDashboards';
 import { savedQueryActions } from '../index';
 
 export function* selectSavedQuery({
@@ -54,7 +53,7 @@ export function* selectSavedQuery({
       }
     }
 
-    yield call(getConnectedDashboards, name);
+    yield put(savedQueryActions.getDashboardsConnection(name));
   } catch (err) {
     console.error(err);
   } finally {

@@ -9,83 +9,49 @@ import {
   ModalFooter,
   Button,
   Anchor,
+  FadeLoader,
 } from '@keen.io/ui-core';
-
-// import QuerySettings from '../QuerySettings';
-
-import {
-  // getQuerySettingsModalVisibility,
-  getUpdateSavedQueryModalVisibility,
-  // hideQuerySettingsModal,
-  hideUpdateSavedQueryModal,
-} from '../../modules/app';
-// import { queriesActions } from '../../modules/queries';
-
-import { AppContext } from '../../contexts';
-// import {
-//   savedQueryActions,
-//   savedQuerySelectors,
-// } from '../../modules/savedQuery';
-
-import { FooterContent, Content, Cancel } from './UpdateSavedQueryModal.style';
 import { colors } from '@keen.io/colors';
 import { BodyText } from '@keen.io/typography';
-import { DashboardsList } from './components';
-import { queriesActions } from '../../modules/queries';
-import { savedQuerySelectors } from '../../modules/savedQuery';
 
-// type Props = {
-//   /** Save query event handler */
-//   onSaveQuery: (settings: {
-//     displayName: string;
-//     name: string;
-//     refreshRate: number;
-//     tags: string[];
-//   }) => void;
-//   /** Cache available indicator */
-//   cacheAvailable: boolean;
-// };
+import {
+  getUpdateSavedQueryModalVisibility,
+  hideUpdateSavedQueryModal,
+  saveQuery,
+} from '../../modules/app';
+import { savedQuerySelectors } from '../../modules/savedQuery';
+import { queriesActions } from '../../modules/queries';
+
+import { AppContext } from '../../contexts';
+
+import { DashboardsList } from './components';
+import {
+  FooterContent,
+  Content,
+  Cancel,
+  Loader,
+} from './UpdateSavedQueryModal.style';
 
 const UpdateSavedQueryModal: FC = () => {
   const dispatch = useDispatch();
   const { modalContainer } = useContext(AppContext);
-  // const { t } = useTranslation(null, { useSuspense: false });
   const { t } = useTranslation();
   const [inViewRef, inView] = useInView();
 
   const isOpen = useSelector(getUpdateSavedQueryModalVisibility);
-  // const isConntectedDashboardsLoading = useSelector(
-  //   savedQuerySelectors.getConnectedDashboardsLoading
-  // );
+  const isConntectedDashboardsLoading = useSelector(
+    savedQuerySelectors.getConnectedDashboardsLoading
+  );
   const isConntectedDashboardsError = useSelector(
     savedQuerySelectors.getConnectedDashboardsError
   );
   const connectedDashboards = useSelector(
     savedQuerySelectors.getConnectedDashboards
   );
-  // const { exists, isCloned } = useSelector(savedQuerySelectors.getSavedQuery);
+  const { displayName, refreshRate, tags, name } = useSelector(
+    savedQuerySelectors.getSavedQuery
+  );
   const onClose = () => dispatch(hideUpdateSavedQueryModal());
-
-  // const closeHandler = useCallback(() => {
-  //   dispatch(hideQuerySettingsModal());
-  //   dispatch(queriesActions.resetSavedQueryError());
-  //   if (!exists && !isCloned) {
-  //     dispatch(savedQueryActions.resetSavedQuery());
-  //   }
-  // }, [exists, isCloned]);
-
-  // const dashboards = [
-  //   {id:'1', title: 'Dashboard'},
-  //   {id:'2', title: 'Dashboard'},
-  //   {id:'3', title: 'Dashboard'},
-  //   {id:'4', title: 'Dashboard'},
-  //   {id:'5', title: 'Dashboard'},
-  //   {id:'6', title: 'Dashboard'},
-  //   {id:'7', title: 'Dashboard'},
-  //   {id:'8', title: 'Dashboard'},
-  //   {id:'9', title: 'Dashboard'},
-  //   {id:'10', title: 'Dashboard'},
-  // ]
 
   return (
     <Portal modalContainer={modalContainer}>
@@ -107,6 +73,11 @@ const UpdateSavedQueryModal: FC = () => {
                   {t('update_saved_query.dashboard_connection_error')}
                 </BodyText>
               )}
+              {isConntectedDashboardsLoading && (
+                <Loader>
+                  <FadeLoader color={colors.blue[500]} height={40} width={40} />
+                </Loader>
+              )}
               <BodyText
                 variant="body1"
                 color={colors.black[300]}
@@ -121,6 +92,10 @@ const UpdateSavedQueryModal: FC = () => {
                   data-testid="save-query"
                   variant="secondary"
                   style="solid"
+                  onClick={() => {
+                    dispatch(saveQuery(displayName, refreshRate, tags, name));
+                    onClose();
+                  }}
                 >
                   {t('update_saved_query.update_query')}
                 </Button>
@@ -135,37 +110,6 @@ const UpdateSavedQueryModal: FC = () => {
                 >
                   {t('update_saved_query.clone_query')}
                 </Button>
-                {/* <Button
-                  data-testid="save-query"
-                  variant="secondary"
-                  style="solid"
-                  isDisabled={isSavingQuery}
-                  icon={isSavingQuery && <FadeLoader />}
-                  onClick={() => {
-                    const { name, displayName, refreshRate, tags } = querySettings;
-                    if (displayName) {
-                      const validateNameUniqueness = hasNameChanged;
-                      if (
-                        validateNameUniqueness &&
-                        savedQueries.find((query) => query.name === name)
-                      ) {
-                        setQueryNameError(
-                          t('query_settings.query_unique_name_error') as string
-                        );
-                      } else {
-                        onSave({ name, displayName, refreshRate, tags });
-                      }
-                    } else {
-                      setQueryNameError(
-                        t('query_settings.query_name_error') as string
-                      );
-                    }
-                  }}
-                >
-                  {isSavingQuery
-                    ? t('query_settings.saving_query')
-                    : t('query_settings.save_query_button')}
-                </Button> */}
                 <Cancel>
                   <Anchor
                     onClick={onClose}
