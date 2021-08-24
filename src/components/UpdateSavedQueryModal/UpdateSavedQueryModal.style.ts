@@ -30,3 +30,7 @@ export const Loader = styled.div`
   justify-content: center;
   padding: 20px;
 `;
+
+export const Error = styled.div`
+  padding: 10px 0;
+`;

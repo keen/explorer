@@ -30,6 +30,7 @@ import {
   Content,
   Cancel,
   Loader,
+  Error,
 } from './UpdateSavedQueryModal.style';
 
 const UpdateSavedQueryModal: FC = () => {
@@ -69,9 +70,11 @@ const UpdateSavedQueryModal: FC = () => {
                 <DashboardsList dashboards={connectedDashboards} />
               )}
               {isConntectedDashboardsError && (
-                <BodyText variant="body1" color={colors.red[500]}>
-                  {t('update_saved_query.dashboard_connection_error')}
-                </BodyText>
+                <Error>
+                  <BodyText variant="body1" color={colors.red[500]}>
+                    {t('update_saved_query.dashboard_connection_error')}
+                  </BodyText>
+                </Error>
               )}
               {isConntectedDashboardsLoading && (
                 <Loader>

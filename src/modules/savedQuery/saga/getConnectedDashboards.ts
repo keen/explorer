@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/camelcase */
 
 import { put, getContext } from 'redux-saga/effects';
-import HttpStatus from 'http-status-codes';
 
 import { savedQueryActions } from '../index';
 import {
@@ -40,23 +39,17 @@ export function* getConnectedDashboards({
   yield put(savedQueryActions.setConnectedDashboardsLoading(true));
 
   try {
-    const response: Response = yield fetch(
+    const response: DashboardMetaData[] = yield fetch(
       `${dashboardsApiUrl}/projects/${projectId}/dashboards/metadata?savedQueryId=${name}`,
       {
         headers: {
           Authorization: readKey,
         },
       }
-    );
+    ).then((res) => res.json());
 
-    if (response.status === HttpStatus.OK) {
-      const responseBody: DashboardMetaData[] = yield response.json();
-      const dashboards = responseBody.map(({ title, id }) => ({ title, id }));
-      yield put(savedQueryActions.updateConnectedDashboards(dashboards));
-    } else {
-      yield put(savedQueryActions.setConnectedDashboardsError(true));
-      yield put(savedQueryActions.updateConnectedDashboards(null));
-    }
+    const dashboards = response.map(({ title, id }) => ({ title, id }));
+    yield put(savedQueryActions.updateConnectedDashboards(dashboards));
   } catch (error) {
     yield put(savedQueryActions.setConnectedDashboardsError(true));
     yield put(savedQueryActions.updateConnectedDashboards(null));

@@ -2,7 +2,7 @@
 
 import sagaHelper from 'redux-saga-testing';
 import { getContext, put } from 'redux-saga/effects';
-import HttpStatus from 'http-status-codes';
+import fetchMock from 'jest-fetch-mock';
 import { getConnectedDashboards as getConnectedDashboardsFlow } from './getConnectedDashboards';
 import {
   DASHBOARDS_API_CONTEXT,
@@ -59,10 +59,7 @@ describe('getConnectedDashboards', () => {
       },
     ];
 
-    const apiResonse: Partial<Response> = {
-      status: HttpStatus.OK,
-      json: () => Promise.resolve(dashboardsMeta),
-    };
+    fetchMock.mockResponseOnce(JSON.stringify({}));
 
     test('get the Keen API client instance from context', (result) => {
       expect(result).toEqual(getContext(KEEN_CLIENT_CONTEXT));
@@ -98,11 +95,7 @@ describe('getConnectedDashboards', () => {
       );
     });
 
-    test('performs request to fetch connected dashboards', () => {
-      return apiResonse;
-    });
-
-    test('parse JSON response', () => {
+    test('fetch connected dashboards from api', () => {
       return dashboardsMeta;
     });
 
