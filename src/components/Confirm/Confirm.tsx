@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useInView } from 'react-intersection-observer';
 import { useTranslation } from 'react-i18next';
 import { colors } from '@keen.io/colors';
 import {
@@ -8,8 +9,8 @@ import {
   ModalFooter,
   Anchor,
   Button,
-  FadeLoader,
 } from '@keen.io/ui-core';
+import { BodyText } from '@keen.io/typography';
 
 import {
   Title,
@@ -17,10 +18,12 @@ import {
   Footer,
   Description,
   Name,
-  QueryNotUsedInfo,
-  CheckingDashboardConnectionsInfo,
-  NoConnectedDashboards,
+  QueryNotUsed,
+  NoDashboardsInfo,
 } from './Confirm.styles';
+import { DashboardsLoader } from './components';
+
+import { DashboardsList } from '../UpdateSavedQueryModal/components';
 
 import {
   getConfirmation,
@@ -28,10 +31,6 @@ import {
   acceptConfirmation,
 } from '../../modules/app';
 import { savedQuerySelectors } from '../../modules/savedQuery';
-import { DashboardsList } from '../UpdateSavedQueryModal/components';
-import { useInView } from 'react-intersection-observer';
-import { Loader } from '../UpdateSavedQueryModal/UpdateSavedQueryModal.style';
-import { BodyText } from '@keen.io/typography';
 import { AppContext } from '../../contexts';
 
 const Confirm = () => {
@@ -70,16 +69,7 @@ const Confirm = () => {
             }
           >
             {enableDashboardsConnection && isConnectedDashboardsLoading ? (
-              <>
-                <Loader>
-                  <FadeLoader color={colors.blue[500]} height={40} width={47} />
-                </Loader>
-                <CheckingDashboardConnectionsInfo>
-                  <BodyText variant="body2" color={colors.blue[500]}>
-                    {t('confirm.checking_dashboard_connections')}
-                  </BodyText>
-                </CheckingDashboardConnectionsInfo>
-              </>
+              <DashboardsLoader />
             ) : (
               <>
                 {t('confirm.delete_message_head')}
@@ -88,23 +78,27 @@ const Confirm = () => {
                 {enableDashboardsConnection && (
                   <>
                     {connectedDashboards && connectedDashboards.length > 0 ? (
-                      <>
+                      <div data-testid="connected-dashboards">
                         <p>{t('confirm.connected_dashboards_info')}</p>
                         <DashboardsList dashboards={connectedDashboards} />
                         <div ref={inViewRef}></div>
-                      </>
+                      </div>
                     ) : (
-                      <NoConnectedDashboards>
+                      <NoDashboardsInfo>
                         {isConnectedDashboardsError ? (
-                          <BodyText variant="body1" color={colors.red[500]}>
+                          <BodyText
+                            variant="body1"
+                            color={colors.red[500]}
+                            data-testid="connected-dashboards-error"
+                          >
                             {t('confirm.unable_to_get_connected_dashboards')}
                           </BodyText>
                         ) : (
-                          <QueryNotUsedInfo>
+                          <QueryNotUsed>
                             {t('confirm.query_not_connected_to_any_dashboard')}
-                          </QueryNotUsedInfo>
+                          </QueryNotUsed>
                         )}
-                      </NoConnectedDashboards>
+                      </NoDashboardsInfo>
                     )}
                   </>
                 )}

@@ -44,15 +44,15 @@ export const Name = styled.strong`
   font-family: 'Lato Bold', sans-serif;
 `;
 
-export const QueryNotUsedInfo = styled.div`
+export const QueryNotUsed = styled.div`
   opacity: 0.5;
 `;
 
-export const NoConnectedDashboards = styled.div`
+export const NoDashboardsInfo = styled.div`
   margin-top: 20px;
 `;
 
-export const CheckingDashboardConnectionsInfo = styled.div`
+export const LoaderInfo = styled.div`
   text-align: center;
   font-weight: 500;
   margin-bottom: 20px;
