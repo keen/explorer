@@ -221,7 +221,11 @@
     "cancel_label": "Cancel",
     "delete_query_title": "Deleting query",
     "delete_message_head": "Do you want to permanently delete ",
-    "delete_message_tail": " query from your project?"
+    "delete_message_tail": " query from your project?",
+    "connected_dashboards_info": "It will be also detached from the following dashboards:",
+    "query_not_connected_to_any_dashboard": "This Saved Query is not used on any dashboard.",
+    "checking_dashboard_connections": "Checking connections with dashboards",
+    "unable_to_get_connected_dashboards": "Unable to get connected dashboards"
   },
   "dataviz": {
     "no_results": "The results for analysis are empty"
