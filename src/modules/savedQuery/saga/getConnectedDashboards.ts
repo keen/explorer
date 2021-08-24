@@ -28,7 +28,11 @@ export function* getConnectedDashboards({
   } = yield getContext(KEEN_CLIENT_CONTEXT);
   const dashboardsApiUrl = yield getContext(DASHBOARDS_API_CONTEXT);
 
-  if (!dashboardsApiUrl) return;
+  if (!dashboardsApiUrl) {
+    yield put(savedQueryActions.getDashboardsConnectionDone());
+    return;
+  }
+
   const { name } = payload;
 
   yield put(savedQueryActions.updateConnectedDashboards(null));
