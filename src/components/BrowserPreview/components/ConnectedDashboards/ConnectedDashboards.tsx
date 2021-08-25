@@ -28,7 +28,6 @@ const ConnectedDashboards: FC<Props> = ({ dashboards }) => {
         {t('browser_preview.dashboards_none')}
       </BodyText>
     );
-
   if (dashboards.length)
     return (
       <div>
