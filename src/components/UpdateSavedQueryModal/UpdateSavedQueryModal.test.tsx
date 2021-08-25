@@ -23,14 +23,6 @@ const render = (storeState: any = {}, overProps: any = {}) => {
     project: {
       tagsPool: [],
     },
-    // queries: {
-    //   isSaving: false,
-    //   savedQueries: [],
-    //   cachedQueries: {
-    //     limit: 5,
-    //     limitReached: false,
-    //   },
-    // },
     savedQuery: {
       name: '',
       displayName: '',

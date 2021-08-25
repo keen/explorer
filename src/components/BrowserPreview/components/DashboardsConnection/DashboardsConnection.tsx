@@ -19,10 +19,10 @@ import {
 const DashboardsConnection: FC = () => {
   const { t } = useTranslation();
 
-  const isConntectedDashboardsLoading = useSelector(
+  const isConnectedDashboardsLoading = useSelector(
     savedQuerySelectors.getConnectedDashboardsLoading
   );
-  const isConntectedDashboardsError = useSelector(
+  const isConnectedDashboardsError = useSelector(
     savedQuerySelectors.getConnectedDashboardsError
   );
   const connectedDashboards = useSelector(
@@ -37,15 +37,15 @@ const DashboardsConnection: FC = () => {
             {t('browser_preview.on_dashboards')}
           </BodyText>
         </TitleContainer>
-        {isConntectedDashboardsLoading && (
+        {isConnectedDashboardsLoading && (
           <FadeLoader color={colors.blue[500]} height={14} />
         )}
-        {isConntectedDashboardsError && (
+        {isConnectedDashboardsError && (
           <BodyText variant="body2" color={colors.red[500]}>
             {t('browser_preview.dashboard_connection_error')}
           </BodyText>
         )}
-        {!isConntectedDashboardsLoading && !isConntectedDashboardsError && (
+        {!isConnectedDashboardsLoading && !isConnectedDashboardsError && (
           <ConnectedDashboards dashboards={connectedDashboards} />
         )}
       </Container>

@@ -76,7 +76,7 @@ const EditorNavigation: FC = () => {
   } = useSelector(savedQuerySelectors.getSavedQuery);
   const isSavingQuery = useSelector(getQueriesSaving);
   const isModalVisible = useSelector(getQuerySettingsModalVisibility);
-  const isConntectedDashboardsLoading = useSelector(
+  const isConnectedDashboardsLoading = useSelector(
     savedQuerySelectors.getConnectedDashboardsLoading
   );
 
@@ -229,10 +229,10 @@ const EditorNavigation: FC = () => {
             data-testid="save-query"
             variant="secondary"
             style="solid"
-            isDisabled={isSavingQuery || isConntectedDashboardsLoading}
+            isDisabled={isSavingQuery || isConnectedDashboardsLoading}
             onClick={handleSaveQuery}
             icon={
-              (isSavingQuery || isConntectedDashboardsLoading) &&
+              (isSavingQuery || isConnectedDashboardsLoading) &&
               !isModalVisible && <FadeLoader />
             }
           >

@@ -40,10 +40,10 @@ const UpdateSavedQueryModal: FC = () => {
   const [inViewRef, inView] = useInView();
 
   const isOpen = useSelector(getUpdateSavedQueryModalVisibility);
-  const isConntectedDashboardsLoading = useSelector(
+  const isConnectedDashboardsLoading = useSelector(
     savedQuerySelectors.getConnectedDashboardsLoading
   );
-  const isConntectedDashboardsError = useSelector(
+  const isConnectedDashboardsError = useSelector(
     savedQuerySelectors.getConnectedDashboardsError
   );
   const connectedDashboards = useSelector(
@@ -69,14 +69,14 @@ const UpdateSavedQueryModal: FC = () => {
               {connectedDashboards?.length && (
                 <DashboardsList dashboards={connectedDashboards} />
               )}
-              {isConntectedDashboardsError && (
+              {isConnectedDashboardsError && (
                 <Error>
                   <BodyText variant="body1" color={colors.red[500]}>
                     {t('update_saved_query.dashboard_connection_error')}
                   </BodyText>
                 </Error>
               )}
-              {isConntectedDashboardsLoading && (
+              {isConnectedDashboardsLoading && (
                 <Loader>
                   <FadeLoader color={colors.blue[500]} height={40} width={40} />
                 </Loader>
