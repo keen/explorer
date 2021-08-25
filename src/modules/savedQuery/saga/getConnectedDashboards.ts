@@ -7,6 +7,7 @@ import {
   DASHBOARDS_API_CONTEXT,
   KEEN_CLIENT_CONTEXT,
 } from '../../../constants';
+import { sortConnectedDashboards } from '../utils/sortConnectedDashboards';
 
 type DashboardMetaData = {
   id: string;
@@ -49,7 +50,11 @@ export function* getConnectedDashboards({
     ).then((res) => res.json());
 
     const dashboards = response.map(({ title, id }) => ({ title, id }));
-    yield put(savedQueryActions.updateConnectedDashboards(dashboards));
+    yield put(
+      savedQueryActions.updateConnectedDashboards(
+        sortConnectedDashboards(dashboards)
+      )
+    );
   } catch (error) {
     yield put(savedQueryActions.setConnectedDashboardsError(true));
     yield put(savedQueryActions.updateConnectedDashboards(null));
