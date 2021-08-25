@@ -3,8 +3,8 @@ import { useTranslation } from 'react-i18next';
 import { colors } from '@keen.io/colors';
 import { BodyText } from '@keen.io/typography';
 
-import { ConnectedDashboard } from '../../../../modules/savedQuery';
-import { AppContext } from '../../../../contexts';
+import { ConnectedDashboard } from '../../modules/savedQuery';
+import { AppContext } from '../../contexts';
 import { List, ListItem, Anchor } from './DashboardsList.style';
 
 type Props = {

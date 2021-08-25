@@ -217,11 +217,10 @@
     "refresh_rate_hint": "Refresh interval can be set from 4 to 48 hours"
   },
   "confirm": {
-    "button_label": "Confirm",
+    "button_label": "Delete",
     "cancel_label": "Cancel",
-    "delete_query_title": "Deleting query",
-    "delete_message_head": "Do you want to permanently delete ",
-    "delete_message_tail": " query from your project?",
+    "delete_query_title": "Deleting Saved Query",
+    "delete_message": "Do you want to permanently delete <bold>{{ query }}</bold> from your project?",
     "connected_dashboards_info": "It will be also detached from the following dashboards:",
     "query_not_connected_to_any_dashboard": "This Saved Query is not used on any dashboard.",
     "checking_dashboard_connections": "Checking connections with dashboards",

@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
-import { colors } from '@keen.io/colors';
 import { transparentize } from 'polished';
+import { colors } from '@keen.io/colors';
 
 export const Title = styled.div`
   color: ${colors.red[500]};
@@ -30,19 +30,6 @@ export const Description = styled.div<{ isOverflow?: boolean }>`
     css`
       box-shadow: inset 0 -2px 4px 0 ${transparentize(0.85, colors.black[500])};
     `};
-`;
-
-export const InfoWrapper = styled.div`
-  p {
-    display: inline;
-  }
-`;
-
-export const Name = styled.strong`
-  max-width: 100%;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 `;
 
 export const QueryNotUsed = styled.div`

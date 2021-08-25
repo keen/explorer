@@ -24,7 +24,7 @@ import { queriesActions } from '../../modules/queries';
 
 import { AppContext } from '../../contexts';
 
-import { DashboardsList } from './components';
+import DashboardsList from '../DashboardsList';
 import {
   FooterContent,
   Content,
