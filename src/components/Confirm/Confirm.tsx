@@ -20,6 +20,8 @@ import {
   Name,
   QueryNotUsed,
   NoDashboardsInfo,
+  InfoWrapper,
+  ConnectedDashboardsWrapper,
 } from './Confirm.styles';
 import { DashboardsLoader } from './components';
 
@@ -72,17 +74,31 @@ const Confirm = () => {
               <DashboardsLoader />
             ) : (
               <>
-                {t('confirm.delete_message_head')}
-                <Name>{displayName}</Name>
-                {t('confirm.delete_message_tail')}
+                <InfoWrapper>
+                  <BodyText
+                    variant="body1"
+                    color={colors.black[500]}
+                    lineHeight={1.5}
+                  >
+                    {t('confirm.delete_message_head')}
+                    <Name>{displayName}</Name>
+                    {t('confirm.delete_message_tail')}
+                  </BodyText>
+                </InfoWrapper>
                 {enableDashboardsConnection && (
                   <>
                     {connectedDashboards && connectedDashboards.length > 0 ? (
-                      <div data-testid="connected-dashboards">
-                        <p>{t('confirm.connected_dashboards_info')}</p>
+                      <ConnectedDashboardsWrapper data-testid="connected-dashboards">
+                        <BodyText
+                          variant="body1"
+                          color={colors.black[500]}
+                          lineHeight={1.5}
+                        >
+                          {t('confirm.connected_dashboards_info')}
+                        </BodyText>
                         <DashboardsList dashboards={connectedDashboards} />
                         <div ref={inViewRef}></div>
-                      </div>
+                      </ConnectedDashboardsWrapper>
                     ) : (
                       <NoDashboardsInfo>
                         {isConnectedDashboardsError ? (
@@ -95,7 +111,11 @@ const Confirm = () => {
                           </BodyText>
                         ) : (
                           <QueryNotUsed>
-                            {t('confirm.query_not_connected_to_any_dashboard')}
+                            <BodyText variant="body1" color={colors.black[500]}>
+                              {t(
+                                'confirm.query_not_connected_to_any_dashboard'
+                              )}
+                            </BodyText>
                           </QueryNotUsed>
                         )}
                       </NoDashboardsInfo>

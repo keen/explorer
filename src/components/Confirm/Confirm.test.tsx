@@ -2,6 +2,8 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { render as rtlRender, fireEvent, screen } from '@testing-library/react';
 import configureStore from 'redux-mock-store';
+import { mockAllIsIntersecting } from 'react-intersection-observer/test-utils';
+
 import { AppContext } from '../../contexts';
 
 import Confirm from './Confirm';
@@ -23,14 +25,13 @@ const render = (storeState: any = {}, context: any = {}) => {
   };
 };
 
-const intersectionObserverMock = () => ({
-  observe: () => null,
-  unobserve: () => null,
-  disconnect: () => null,
+afterEach(() => {
+  mockAllIsIntersecting(false);
 });
-window.IntersectionObserver = jest
-  .fn()
-  .mockImplementation(intersectionObserverMock);
+
+beforeEach(() => {
+  mockAllIsIntersecting(true);
+});
 
 test('shows modal with confirmation button', () => {
   const storeState = {

@@ -19,9 +19,6 @@ export const Footer = styled.div`
 
 export const Description = styled.div<{ isOverflow?: boolean }>`
   width: 350px;
-  font-size: 16px;
-  line-height: 19px;
-  font-family: 'Lato Regular', sans-serif;
   padding: 20px 25px;
   max-height: 250px;
   overflow: auto;
@@ -35,13 +32,17 @@ export const Description = styled.div<{ isOverflow?: boolean }>`
     `};
 `;
 
+export const InfoWrapper = styled.div`
+  p {
+    display: inline;
+  }
+`;
+
 export const Name = styled.strong`
   max-width: 100%;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  line-height: 2;
-  font-family: 'Lato Bold', sans-serif;
 `;
 
 export const QueryNotUsed = styled.div`
@@ -52,8 +53,6 @@ export const NoDashboardsInfo = styled.div`
   margin-top: 20px;
 `;
 
-export const LoaderInfo = styled.div`
-  text-align: center;
-  font-weight: 500;
-  margin-bottom: 20px;
+export const ConnectedDashboardsWrapper = styled.div`
+  margin-top: 20px;
 `;
