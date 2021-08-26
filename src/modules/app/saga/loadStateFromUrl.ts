@@ -1,17 +1,14 @@
 import { getContext, put, select, take } from 'redux-saga/effects';
 
-import {
-  NOTIFICATIONS_MOUNTED,
-  QUERY_EDITOR_MOUNTED,
-  URL_STATE,
-} from '../constants';
+import { URL_STATE } from '../constants';
 import { b64DecodeUnicode, getLocationUrl } from '../utils';
 import { savedQueryActions } from '../../savedQuery';
-import { setViewMode, setVisualization, updateQueryCreator } from '../actions';
+import { updateQueryCreator } from '../actions';
 import { NOTIFICATION_MANAGER_CONTEXT } from '../../../constants';
 import { getViewMode } from '../selectors';
 import { queriesActions } from '../../queries';
 import { selectFirstSavedQuery } from './selectFirstSavedQuery';
+import { appActions } from '../index';
 
 export function* loadStateFromUrl() {
   try {
@@ -26,15 +23,21 @@ export function* loadStateFromUrl() {
     if (savedQuery) yield put(savedQueryActions.updateSavedQuery(savedQuery));
     if (visualization) {
       const { type: widgetType, chartSettings, widgetSettings } = visualization;
-      yield put(setVisualization(widgetType, chartSettings, widgetSettings));
+      yield put(
+        appActions.setVisualization({
+          type: widgetType,
+          chartSettings,
+          widgetSettings,
+        })
+      );
     }
     if (query) {
-      yield put(setViewMode('editor'));
-      yield take(QUERY_EDITOR_MOUNTED);
+      yield put(appActions.setViewMode({ view: 'editor' }));
+      yield take(appActions.queryEditorMounted.type);
       yield put(updateQueryCreator(query));
     }
   } catch (err) {
-    yield take(NOTIFICATIONS_MOUNTED);
+    yield take(appActions.notificationsMounted.type);
     const notificationManager = yield getContext(NOTIFICATION_MANAGER_CONTEXT);
 
     yield notificationManager.showNotification({

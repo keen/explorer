@@ -14,11 +14,8 @@ import {
 import { colors } from '@keen.io/colors';
 import { BodyText } from '@keen.io/typography';
 
-import {
-  getUpdateSavedQueryModalVisibility,
-  hideUpdateSavedQueryModal,
-  saveQuery,
-} from '../../modules/app';
+import { appActions, appSelectors } from '../../modules/app';
+
 import { savedQuerySelectors } from '../../modules/savedQuery';
 import { queriesActions } from '../../modules/queries';
 
@@ -39,7 +36,7 @@ const UpdateSavedQueryModal: FC = () => {
   const { t } = useTranslation();
   const [inViewRef, inView] = useInView();
 
-  const isOpen = useSelector(getUpdateSavedQueryModalVisibility);
+  const isOpen = useSelector(appSelectors.getUpdateSavedQueryModalVisibility);
   const isConnectedDashboardsLoading = useSelector(
     savedQuerySelectors.getConnectedDashboardsLoading
   );
@@ -52,7 +49,7 @@ const UpdateSavedQueryModal: FC = () => {
   const { displayName, refreshRate, tags, name } = useSelector(
     savedQuerySelectors.getSavedQuery
   );
-  const onClose = () => dispatch(hideUpdateSavedQueryModal());
+  const onClose = () => dispatch(appActions.hideUpdateSavedQueryModal());
 
   return (
     <Portal modalContainer={modalContainer}>
@@ -96,7 +93,9 @@ const UpdateSavedQueryModal: FC = () => {
                   variant="secondary"
                   style="solid"
                   onClick={() => {
-                    dispatch(saveQuery(displayName, refreshRate, tags, name));
+                    dispatch(
+                      appActions.saveQuery(displayName, refreshRate, tags, name)
+                    );
                     onClose();
                   }}
                 >

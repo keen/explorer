@@ -2,7 +2,7 @@ import { getContext } from 'redux-saga/effects';
 import { exportChartToImage as exportChartToImageAction } from '../actions';
 import { NOTIFICATION_MANAGER_CONTEXT } from '../../../constants';
 import { exportToImage } from '../../../utils';
-import { generateFileName } from '../appSaga';
+import { generateFileName } from './generateFileName';
 
 export function* exportChartToImage({
   payload,

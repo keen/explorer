@@ -1,11 +1,11 @@
 import { put, select } from 'redux-saga/effects';
-import { setViewMode } from '../actions';
 import { queriesActions } from '../../queries';
 import { savedQuerySelectors } from '../../savedQuery';
 import { selectFirstSavedQuery } from './selectFirstSavedQuery';
+import { appActions } from '../index';
 
 export function* switchToQueriesList() {
-  yield put(setViewMode('browser'));
+  yield put(appActions.setViewMode({ view: 'browser' }));
   yield put(queriesActions.resetQueryResults());
 
   const { exists } = yield select(savedQuerySelectors.getSavedQuery);

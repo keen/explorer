@@ -84,7 +84,7 @@ describe('Scenario 1 - Query is editable', () => {
           "backgroundColor": "#FFFFFF",
           "quality": 90,
         },
-        "type": "@app/EXPORT_CHART_TO_IMAGE",
+        "type": "app/exportChartToImage",
       },
     ]
   `);
@@ -103,7 +103,7 @@ describe('Scenario 1 - Query is editable', () => {
     Array [
       Object {
         "payload": undefined,
-        "type": "@app/EXPORT_CHART_TO_JSON",
+        "type": "app/exportChartToJson",
       },
     ]
   `);
@@ -122,7 +122,7 @@ describe('Scenario 1 - Query is editable', () => {
     Array [
       Object {
         "payload": undefined,
-        "type": "@app/EXPORT_DATA_TO_CSV",
+        "type": "app/exportDataToCsv",
       },
     ]
   `);
@@ -141,7 +141,7 @@ describe('Scenario 1 - Query is editable', () => {
     Array [
       Object {
         "payload": undefined,
-        "type": "@app/SHOW_EMBED_MODAL",
+        "type": "app/showEmbedModal",
       },
     ]
   `);
@@ -162,7 +162,7 @@ describe('Scenario 1 - Query is editable', () => {
         "payload": Object {
           "config": Object {},
         },
-        "type": "@app/COPY_API_RESOURCE_URL",
+        "type": "app/copyApiResourceUrl",
       },
     ]
   `);
@@ -200,7 +200,7 @@ describe('Scenario 1 - Query is editable', () => {
     Array [
       Object {
         "payload": undefined,
-        "type": "@app/CREATE_NEW_QUERY",
+        "type": "app/createNewQuery",
       },
     ]
   `);

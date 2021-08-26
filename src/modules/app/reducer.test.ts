@@ -2,34 +2,17 @@ import { appReducer, initialState } from './reducer';
 
 import { QueriesSortSettings, SettingsModalSource } from './types';
 
-import {
-  setViewMode,
-  setVisualization,
-  resetVisualization,
-  showConfirmation,
-  hideConfirmation,
-  acceptConfirmation,
-  showQuerySettingsModal,
-  setScreenDimension,
-  showEmbedModal,
-  hideEmbedModal,
-  showEmailExtractionModal,
-  hideEmailExtractionModal,
-  setQueryAutorun,
-  updateChartSettings,
-  setQueriesFilters,
-  setQueriesSortSettings,
-} from './actions';
+import { appActions } from './index';
 
 test('set query autorun settings', () => {
-  const action = setQueryAutorun(false);
+  const action = appActions.setQueryAutorun({ autorun: false });
   const { autorunQuery } = appReducer(initialState, action);
 
   expect(autorunQuery).toBeFalsy();
 });
 
 test('shows extraction settings modal', () => {
-  const action = showEmailExtractionModal();
+  const action = appActions.showEmailExtractionModal();
   const { extractToEmailModal } = appReducer(initialState, action);
 
   expect(extractToEmailModal).toMatchInlineSnapshot(`
@@ -40,7 +23,7 @@ test('shows extraction settings modal', () => {
 });
 
 test('hide extraction settings modal', () => {
-  const action = hideEmailExtractionModal();
+  const action = appActions.hideEmailExtractionModal();
   const { extractToEmailModal } = appReducer(
     { ...initialState, extractToEmailModal: { visible: true } },
     action
@@ -54,7 +37,7 @@ test('hide extraction settings modal', () => {
 });
 
 test('set browser screen dimension', () => {
-  const action = setScreenDimension(1024, 786);
+  const action = appActions.setScreenDimension({ width: 1024, height: 786 });
   const { browserScreen } = appReducer(initialState, action);
 
   expect(browserScreen).toMatchInlineSnapshot(`
@@ -66,7 +49,11 @@ test('set browser screen dimension', () => {
 });
 
 test('updates visualization', () => {
-  const action = setVisualization('bar', { layout: 'vertical' }, {});
+  const action = appActions.setVisualization({
+    type: 'bar',
+    chartSettings: { layout: 'vertical' },
+    widgetSettings: {},
+  });
   const { visualization } = appReducer(initialState, action);
 
   expect(visualization).toMatchInlineSnapshot(`
@@ -81,7 +68,7 @@ test('updates visualization', () => {
 });
 
 test('restores visualization settings to initial configuration', () => {
-  const action = resetVisualization();
+  const action = appActions.resetVisualization();
   const { visualization } = appReducer(
     {
       ...initialState,
@@ -100,14 +87,16 @@ test('restores visualization settings to initial configuration', () => {
 });
 
 test('updates application view', () => {
-  const action = setViewMode('browser');
+  const action = appActions.setViewMode({ view: 'browser' });
   const { view } = appReducer(initialState, action);
 
   expect(view).toEqual('browser');
 });
 
 test('updates state for query settings modal', () => {
-  const action = showQuerySettingsModal(SettingsModalSource.QUERY_SETTINGS);
+  const action = appActions.showQuerySettingsModal({
+    source: SettingsModalSource.QUERY_SETTINGS,
+  });
   const { querySettingsModal } = appReducer(initialState, action);
 
   expect(querySettingsModal).toEqual({
@@ -118,7 +107,7 @@ test('updates state for query settings modal', () => {
 
 test('updates "confirmation" state', () => {
   const meta = { queryName: 'count' };
-  const action = showConfirmation('delete', meta);
+  const action = appActions.showConfirmation({ confirmAction: 'delete', meta });
 
   const { confirmModal } = appReducer(initialState, action);
 
@@ -134,21 +123,21 @@ test('updates "confirmation" state', () => {
 });
 
 test('restores initial state after users accept confirmation', () => {
-  const action = acceptConfirmation();
+  const action = appActions.acceptConfirmation();
   const state = appReducer(initialState, action);
 
   expect(state.confirmModal).toEqual(initialState.confirmModal);
 });
 
 test('restores initial state after users dismiss confirmation', () => {
-  const action = hideConfirmation();
+  const action = appActions.hideConfirmation();
   const state = appReducer(initialState, action);
 
   expect(state.confirmModal).toEqual(initialState.confirmModal);
 });
 
 test('update state when EmbedWidgetModal is opened', () => {
-  const action = showEmbedModal();
+  const action = appActions.showEmbedModal();
   const { embedModal } = appReducer(initialState, action);
 
   expect(embedModal).toEqual({
@@ -157,7 +146,7 @@ test('update state when EmbedWidgetModal is opened', () => {
 });
 
 test('update state when EmbedWidgetModal is closed', () => {
-  const action = hideEmbedModal();
+  const action = appActions.hideEmbedModal();
   const { embedModal } = appReducer(initialState, action);
 
   expect(embedModal).toEqual({
@@ -167,7 +156,7 @@ test('update state when EmbedWidgetModal is closed', () => {
 
 test('update state when chart setttings has been changed', () => {
   const settings = { stepLabels: ['label1'] };
-  const action = updateChartSettings(settings);
+  const action = appActions.updateChartSettings({ chartSettings: settings });
 
   const {
     visualization: { chartSettings },
@@ -180,7 +169,7 @@ test('set filters settings for queries', () => {
     showOnlyCachedQueries: true,
     tags: ['some-tag'],
   };
-  const action = setQueriesFilters(settings);
+  const action = appActions.setQueriesFilters({ filters: settings });
 
   const { queriesFilters } = appReducer(initialState, action);
   expect(queriesFilters).toEqual(settings);
@@ -191,7 +180,7 @@ test('set sort settings for queries', () => {
     direction: 'descending',
     property: 'lastModifiedDate',
   } as QueriesSortSettings;
-  const action = setQueriesSortSettings(settings);
+  const action = appActions.setQueriesSortSettings({ sortSettings: settings });
 
   const { queriesSortSettings } = appReducer(initialState, action);
   expect(queriesSortSettings).toEqual(settings);

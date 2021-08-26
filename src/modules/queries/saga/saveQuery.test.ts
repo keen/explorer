@@ -7,10 +7,7 @@ import { Query } from '@keen.io/query';
 import { saveQuery } from './saveQuery';
 import { queriesSlice } from '../reducer';
 
-import {
-  hideQuerySettingsModal,
-  getQuerySettingsModalVisibility,
-} from '../../../modules/app';
+import { appActions, appSelectors } from '../../../modules/app';
 
 import { ERRORS } from '../constants';
 import {
@@ -57,7 +54,9 @@ describe('Scenario 1: User successfully saves query', () => {
   });
 
   test('get settings modal visibility from state', (result) => {
-    expect(result).toEqual(select(getQuerySettingsModalVisibility));
+    expect(result).toEqual(
+      select(appSelectors.getQuerySettingsModalVisibility)
+    );
     return true;
   });
 
@@ -66,7 +65,7 @@ describe('Scenario 1: User successfully saves query', () => {
   });
 
   test('hide query settings modal', (result) => {
-    expect(result).toEqual(put(hideQuerySettingsModal()));
+    expect(result).toEqual(put(appActions.hideQuerySettingsModal()));
   });
 
   test('dispatch save query success action', (result) => {
@@ -122,7 +121,9 @@ describe('Scenario 2: User failed to save query due to internal server error', (
   });
 
   test('get settings modal visibility from state', (result) => {
-    expect(result).toEqual(select(getQuerySettingsModalVisibility));
+    expect(result).toEqual(
+      select(appSelectors.getQuerySettingsModalVisibility)
+    );
     return true;
   });
 
@@ -131,7 +132,7 @@ describe('Scenario 2: User failed to save query due to internal server error', (
   });
 
   test('hide query settings modal', (result) => {
-    expect(result).toEqual(put(hideQuerySettingsModal()));
+    expect(result).toEqual(put(appActions.hideQuerySettingsModal()));
   });
 
   test('displays error notification', () => {
@@ -189,7 +190,9 @@ describe('Scenario 3: User failed to save query due to exceed cached queries lim
   });
 
   test('get settings modal visibility from state', (result) => {
-    expect(result).toEqual(select(getQuerySettingsModalVisibility));
+    expect(result).toEqual(
+      select(appSelectors.getQuerySettingsModalVisibility)
+    );
     return true;
   });
 
@@ -198,7 +201,9 @@ describe('Scenario 3: User failed to save query due to exceed cached queries lim
   });
 
   test('get settings modal visibility from state', (result) => {
-    expect(result).toEqual(select(getQuerySettingsModalVisibility));
+    expect(result).toEqual(
+      select(appSelectors.getQuerySettingsModalVisibility)
+    );
 
     return true;
   });

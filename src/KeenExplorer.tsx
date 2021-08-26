@@ -19,7 +19,6 @@ import App from './components/App';
 import { AppContext } from './contexts';
 
 import { NotificationManager } from './modules/notifications';
-import { appStart } from './modules/app';
 
 import { Options } from './types';
 
@@ -35,6 +34,7 @@ import {
 } from './constants';
 
 import { extendTheme } from '@keen.io/charts';
+import { appActions } from './modules/app';
 
 export class KeenExplorer {
   constructor(props: Options) {
@@ -78,7 +78,7 @@ export class KeenExplorer {
     sagaMiddleware.run(rootSaga);
 
     const initialView = props.initialView || 'browser';
-    store.dispatch(appStart(initialView));
+    store.dispatch(appActions.appStart({ initialView: initialView }));
 
     const datavizSettings = {
       theme: extendTheme(dataviz?.theme),

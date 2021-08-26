@@ -25,11 +25,7 @@ import {
   getQueryPerformState,
   SavedQueryListItem,
 } from '../../modules/queries';
-import {
-  setQueryAutorun,
-  getQueryAutorun,
-  getVisualization,
-} from '../../modules/app';
+import { appActions, appSelectors } from '../../modules/app';
 import {
   getSavedQueryIsEditable,
   getSavedQueryLoading,
@@ -58,8 +54,10 @@ const BrowserPreview: FC<Props> = ({
   const queryResults = useSelector(getQueryResults);
   const isQueryLoading = useSelector(getQueryPerformState);
   const isQueryLimitReached = useSelector(getQueryLimitReached);
-  const autorunQuery = useSelector(getQueryAutorun);
-  const { chartSettings, widgetSettings } = useSelector(getVisualization);
+  const autorunQuery = useSelector(appSelectors.getQueryAutorun);
+  const { chartSettings, widgetSettings } = useSelector(
+    appSelectors.getVisualization
+  );
 
   const isSavedQueryLoading = useSelector(getSavedQueryLoading);
   const isSavedQueryEditable = useSelector(getSavedQueryIsEditable);
@@ -90,7 +88,9 @@ const BrowserPreview: FC<Props> = ({
           autorun={autorunQuery}
           label={t('browser_preview.autorun_query_label')}
           tooltipMessage={t('browser_preview.autorun_query_tooltip')}
-          onToggle={(autorun) => dispatch(setQueryAutorun(autorun))}
+          onToggle={(autorun) =>
+            dispatch(appActions.setQueryAutorun({ autorun }))
+          }
         />
       </HeaderContainer>
       <Card>

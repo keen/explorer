@@ -1,10 +1,10 @@
 import sagaHelper from 'redux-saga-testing';
 import { getContext, put } from 'redux-saga/effects';
 import { createNewQuery as createNewQueryFlow } from './createNewQuery';
-import { resetVisualization, setViewMode } from '../actions';
 import { NEW_QUERY_EVENT, PUBSUB_CONTEXT } from '../../../constants';
 import { queriesActions } from '../../queries';
 import { savedQueryActions } from '../../savedQuery';
+import { appActions } from '../index';
 
 describe('createNewQuery()', () => {
   const test = sagaHelper(createNewQueryFlow());
@@ -12,7 +12,7 @@ describe('createNewQuery()', () => {
     publish: jest.fn(),
   };
   test('change application view to editor', (result) => {
-    expect(result).toEqual(put(setViewMode('editor')));
+    expect(result).toEqual(put(appActions.setViewMode({ view: 'editor' })));
   });
 
   test('get the PubSub from context', (result) => {
@@ -29,7 +29,7 @@ describe('createNewQuery()', () => {
   });
 
   test('reset visualization settings', (result) => {
-    expect(result).toEqual(put(resetVisualization()));
+    expect(result).toEqual(put(appActions.resetVisualization()));
   });
 
   test('reset saved query settings', (result) => {

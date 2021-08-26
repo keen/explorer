@@ -8,16 +8,7 @@ import { getPubSub } from '@keen.io/pubsub';
 import { queriesActions, getQuerySettings } from '../modules/queries';
 import { savedQueryActions, savedQuerySelectors } from '../modules/savedQuery';
 
-import {
-  getViewMode,
-  setViewMode,
-  getVisualization,
-  getQueryAutorun,
-  switchToQueriesList,
-  createNewQuery,
-  explorerMounted,
-  editQuery,
-} from '../modules/app';
+import { appActions, appSelectors } from '../modules/app';
 import { setVisualization } from '../utils';
 
 import { MainContainer } from './App.styles';
@@ -41,23 +32,23 @@ import {
 
 const mapStateToProps = (state: AppState) => ({
   savedQuery: savedQuerySelectors.getSavedQuery(state),
-  visualization: getVisualization(state),
-  autorunQuery: getQueryAutorun(state),
-  view: getViewMode(state),
+  visualization: appSelectors.getVisualization(state),
+  autorunQuery: appSelectors.getQueryAutorun(state),
+  view: appSelectors.getViewMode(state),
   query: getQuerySettings(state),
 });
 
 const mapDispatchToProps = {
   saveQuery: queriesActions.saveQuery,
-  editQuery,
+  editQuery: appActions.editQuery,
   resetQueryResults: queriesActions.resetQueryResults,
   deleteQuery: queriesActions.deleteQuery,
-  explorerMounted,
+  explorerMounted: appActions.explorerMounted,
   resetSavedQuery: savedQueryActions.resetSavedQuery,
   selectSavedQuery: savedQueryActions.selectSavedQuery,
-  switchToQueriesList,
-  createNewQuery,
-  setViewMode,
+  switchToQueriesList: appActions.switchToQueriesList,
+  createNewQuery: appActions.createNewQuery,
+  setViewMode: appActions.setViewMode,
   runQuery: queriesActions.runQuery,
 };
 

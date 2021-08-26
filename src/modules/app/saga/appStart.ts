@@ -1,17 +1,15 @@
 import { put, spawn, take } from 'redux-saga/effects';
 
-import {
-  appStart as appStartAction,
-  loadPersistedState,
-  setScreenDimension,
-} from '../actions';
+import { loadPersistedState } from '../actions';
 import { getOrganizationUsageLimits, queriesActions } from '../../queries';
 import { URL_STATE } from '../constants';
 import { selectFirstSavedQuery } from './selectFirstSavedQuery';
 import { getScreenDimensions } from '../utils';
-import { rehydrateAutorunSettings, watchScreenResize } from '../appSaga';
+import { appActions } from '../index';
+import { rehydrateAutorunSettings } from './resizeBrowserScreen';
+import { watchScreenResize } from './watchScreenResize';
 
-export function* appStart({ payload }: ReturnType<typeof appStartAction>) {
+export function* appStart({ payload }: ReturnType<typeof appActions.appStart>) {
   yield put(getOrganizationUsageLimits());
   yield put(queriesActions.fetchSavedQueries());
 
@@ -30,7 +28,7 @@ export function* appStart({ payload }: ReturnType<typeof appStartAction>) {
   }
 
   const { width, height } = getScreenDimensions();
-  yield put(setScreenDimension(width, height));
+  yield put(appActions.setScreenDimension({ width, height }));
 
   yield spawn(rehydrateAutorunSettings);
   yield spawn(watchScreenResize);

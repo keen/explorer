@@ -32,11 +32,9 @@ import ActionsMenu from '../ActionsMenu';
 
 import { getQueriesSaving, queriesActions } from '../../modules/queries';
 import {
-  showQuerySettingsModal,
-  switchToQueriesList,
-  getQuerySettingsModalVisibility,
+  appActions,
+  appSelectors,
   SettingsModalSource,
-  shareQueryUrl,
 } from '../../modules/app';
 import {
   savedQueryActions,
@@ -75,7 +73,9 @@ const EditorNavigation: FC = () => {
     isCloned,
   } = useSelector(savedQuerySelectors.getSavedQuery);
   const isSavingQuery = useSelector(getQueriesSaving);
-  const isModalVisible = useSelector(getQuerySettingsModalVisibility);
+  const isModalVisible = useSelector(
+    appSelectors.getQuerySettingsModalVisibility
+  );
   const isConnectedDashboardsLoading = useSelector(
     savedQuerySelectors.getConnectedDashboardsLoading
   );
@@ -105,7 +105,11 @@ const EditorNavigation: FC = () => {
 
   const handleSaveQuery = () => {
     if (!exists && !isCloned) {
-      dispatch(showQuerySettingsModal(SettingsModalSource.FIRST_QUERY_SAVE));
+      dispatch(
+        appActions.showQuerySettingsModal({
+          source: SettingsModalSource.FIRST_QUERY_SAVE,
+        })
+      );
     } else {
       dispatch(saveExistingQuery());
     }
@@ -141,7 +145,7 @@ const EditorNavigation: FC = () => {
           </QueryMeta>
         </WrapperHorizontal>
         <BackLink
-          onClick={() => dispatch(switchToQueriesList())}
+          onClick={() => dispatch(appActions.switchToQueriesList())}
           whileHover="hover"
           initial="initial"
           animate="initial"
@@ -168,7 +172,9 @@ const EditorNavigation: FC = () => {
               }
               onClick={() => {
                 dispatch(
-                  showQuerySettingsModal(SettingsModalSource.QUERY_SETTINGS)
+                  appActions.showQuerySettingsModal({
+                    source: SettingsModalSource.QUERY_SETTINGS,
+                  })
                 );
               }}
             />
@@ -189,7 +195,7 @@ const EditorNavigation: FC = () => {
                 </span>
               }
               onClick={() => {
-                dispatch(shareQueryUrl());
+                dispatch(appActions.shareQueryUrl());
               }}
             />
           </MenuItem>

@@ -2,7 +2,7 @@ import { getContext, select } from 'redux-saga/effects';
 import { getQueryResults } from '../../queries';
 import { NOTIFICATION_MANAGER_CONTEXT } from '../../../constants';
 import { exportToCsv } from '../../../utils';
-import { generateFileName } from '../appSaga';
+import { generateFileName } from './generateFileName';
 
 export function* exportDataToCsv() {
   const data = yield select(getQueryResults);

@@ -26,7 +26,7 @@ Array [
         },
       },
     },
-    "type": "@app/UPDATE_WIDGET_SETTINGS",
+    "type": "app/updateWidgetSettings",
   },
 ]
 `;
@@ -57,7 +57,7 @@ Array [
         },
       },
     },
-    "type": "@app/UPDATE_WIDGET_SETTINGS",
+    "type": "app/updateWidgetSettings",
   },
 ]
 `;

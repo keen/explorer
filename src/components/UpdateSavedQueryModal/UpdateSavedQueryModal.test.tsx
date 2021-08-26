@@ -132,7 +132,7 @@ test('enable user to close the modal', () => {
     Array [
       Object {
         "payload": undefined,
-        "type": "@app/HIDE_UPDATE_SAVED_QUERY_MODAL",
+        "type": "app/hideUpdateSavedQueryModal",
       },
     ]
   `);
@@ -155,7 +155,7 @@ test('enable user to clone the query', () => {
       },
       Object {
         "payload": undefined,
-        "type": "@app/HIDE_UPDATE_SAVED_QUERY_MODAL",
+        "type": "app/hideUpdateSavedQueryModal",
       },
     ]
   `);
@@ -179,11 +179,11 @@ test('enable user to update the query', () => {
           "refreshRate": 0,
           "tags": Array [],
         },
-        "type": "@app/SAVE_QUERY",
+        "type": "app/saveQuery",
       },
       Object {
         "payload": undefined,
-        "type": "@app/HIDE_UPDATE_SAVED_QUERY_MODAL",
+        "type": "app/hideUpdateSavedQueryModal",
       },
     ]
   `);

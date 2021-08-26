@@ -1,10 +1,8 @@
 import { put, select, take } from 'redux-saga/effects';
 
 import { savedQueryActions, savedQuerySelectors } from '../../savedQuery';
-import {
-  saveQuery as saveQueryAction,
-  showUpdateSavedQueryModal,
-} from '../actions';
+import { saveQuery as saveQueryAction } from '../actions';
+import { appActions } from '../index';
 
 export function* saveExistingQuery() {
   const { displayName, refreshRate, tags, name } = yield select(
@@ -20,7 +18,7 @@ export function* saveExistingQuery() {
   );
 
   if (dashboards?.length || isDashboardConnectionError) {
-    yield put(showUpdateSavedQueryModal());
+    yield put(appActions.showUpdateSavedQueryModal());
   } else {
     yield put(saveQueryAction(displayName, refreshRate, tags, name));
   }

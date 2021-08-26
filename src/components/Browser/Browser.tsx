@@ -27,14 +27,7 @@ import QueriesList from '../QueriesList';
 import QueriesPlaceholder from '../QueriesPlaceholder';
 
 import { getSavedQueries, getSavedQueriesLoaded } from '../../modules/queries';
-import {
-  getBrowserScreenDimension,
-  createNewQuery,
-  setQueriesFilters,
-  setQueriesSortSettings,
-  getQueriesFilters,
-  getQueriesSortSettings,
-} from '../../modules/app';
+import { appActions, appSelectors } from '../../modules/app';
 
 import { LIST_SCROLL_OFFSET, SOCKET_CONTAINER_WIDTH } from './constants';
 import { savedQuerySelectors } from '../../modules/savedQuery';
@@ -54,11 +47,11 @@ const Browser: FC<Props> = ({ onEditQuery, onRunQuery, onSelectQuery }) => {
 
   const [searchPhrase, setSearchPhrase] = useState(null);
 
-  const browserDimension = useSelector(getBrowserScreenDimension);
+  const browserDimension = useSelector(appSelectors.getBrowserScreenDimension);
   const savedQuery = useSelector(savedQuerySelectors.getSavedQuery);
   const savedQueries = useSelector(getSavedQueries);
-  const queriesFilters = useSelector(getQueriesFilters);
-  const sortSettings = useSelector(getQueriesSortSettings);
+  const queriesFilters = useSelector(appSelectors.getQueriesFilters);
+  const sortSettings = useSelector(appSelectors.getQueriesSortSettings);
 
   const filteredQueries = useMemo(() => {
     let queries = savedQueries;
@@ -157,18 +150,22 @@ const Browser: FC<Props> = ({ onEditQuery, onRunQuery, onSelectQuery }) => {
                 showOnlyCachedQueries={queriesFilters.showOnlyCachedQueries}
                 onClearFilters={() =>
                   dispatch(
-                    setQueriesFilters({
-                      showOnlyCachedQueries: false,
-                      tags: [],
+                    appActions.setQueriesFilters({
+                      filters: {
+                        showOnlyCachedQueries: false,
+                        tags: [],
+                      },
                     })
                   )
                 }
                 onUpdateTagsFilters={(tags) =>
-                  dispatch(setQueriesFilters({ tags }))
+                  dispatch(appActions.setQueriesFilters({ filters: { tags } }))
                 }
                 onUpdateCacheFilter={(isActive) =>
                   dispatch(
-                    setQueriesFilters({ showOnlyCachedQueries: isActive })
+                    appActions.setQueriesFilters({
+                      filters: { showOnlyCachedQueries: isActive },
+                    })
                   )
                 }
               />
@@ -193,7 +190,11 @@ const Browser: FC<Props> = ({ onEditQuery, onRunQuery, onSelectQuery }) => {
                   activeQuery={savedQuery.name}
                   onSelectQuery={onSelectQuery}
                   onSortQueries={(settings) =>
-                    dispatch(setQueriesSortSettings(settings))
+                    dispatch(
+                      appActions.setQueriesSortSettings({
+                        sortSettings: settings,
+                      })
+                    )
                   }
                 />
                 {isEmptySearch && (
@@ -225,7 +226,7 @@ const Browser: FC<Props> = ({ onEditQuery, onRunQuery, onSelectQuery }) => {
         </Socket>
         <CreateFirstQuery
           isVisible={isEmptyProject}
-          onClick={() => dispatch(createNewQuery())}
+          onClick={() => dispatch(appActions.createNewQuery())}
         />
       </Container>
     </>

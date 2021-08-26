@@ -2,7 +2,8 @@ import sagaHelper from 'redux-saga-testing';
 import { saveExistingQuery as saveExistingQueryFlow } from './saveExistingQuery';
 import { put, select, take } from 'redux-saga/effects';
 import { savedQueryActions, savedQuerySelectors } from '../../savedQuery';
-import { saveQuery, showUpdateSavedQueryModal } from '../actions';
+import { saveQuery } from '../actions';
+import { appActions } from '../index';
 
 describe('saveExistingQuery()', () => {
   const displayName = '@saved-query';
@@ -89,7 +90,7 @@ describe('saveExistingQuery()', () => {
     });
 
     test('opens update saved query modal', (result) => {
-      expect(result).toEqual(put(showUpdateSavedQueryModal()));
+      expect(result).toEqual(put(appActions.showUpdateSavedQueryModal()));
     });
   });
 });

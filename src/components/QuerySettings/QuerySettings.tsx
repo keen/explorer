@@ -27,10 +27,7 @@ import {
 
 import CacheQuery, { REFRESH_MINIMUM } from '../CacheQuery';
 
-import {
-  getQuerySettingsModalSource,
-  SettingsModalSource,
-} from '../../modules/app';
+import { appSelectors, SettingsModalSource } from '../../modules/app';
 import {
   getQueriesSaving,
   getCacheQueriesLimitExceed,
@@ -65,7 +62,7 @@ const QuerySettings: FC<Props> = ({ onSave, onClose, cacheAvailable }) => {
   const isSavingQuery = useSelector(getQueriesSaving);
   const isCacheLimited = useSelector(getCacheQueriesLimitExceed);
   const error = useSelector(getSaveQueryError);
-  const settingsSource = useSelector(getQuerySettingsModalSource);
+  const settingsSource = useSelector(appSelectors.getQuerySettingsModalSource);
   const tagsPool = useSelector(getTagsPool);
 
   const { upgradeSubscriptionUrl } = useContext(AppContext);

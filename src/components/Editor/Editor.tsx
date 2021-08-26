@@ -35,14 +35,7 @@ import {
   getQueryPerformState,
   getQueryLimitReached,
 } from '../../modules/queries';
-import {
-  getVisualization,
-  setVisualization,
-  clearQuery,
-  updateWidgetSettings,
-  updateVisualizationType,
-  updateChartSettings as updateSettings,
-} from '../../modules/app';
+import { appActions, appSelectors } from '../../modules/app';
 
 import EditorNavigation from '../EditorNavigation';
 import RunQuery from '../RunQuery';
@@ -78,7 +71,7 @@ const Editor: FC<Props> = ({
   const isQueryLimitReached = useSelector(getQueryLimitReached);
 
   const { chartSettings, widgetSettings, type: widgetType } = useSelector(
-    getVisualization
+    appSelectors.getVisualization
   );
 
   const customizationSections = useCustomizationSections(
@@ -115,7 +108,7 @@ const Editor: FC<Props> = ({
 
   const updateChartSettings = useCallback(
     (chartSettings: Record<string, any>) => {
-      dispatch(updateSettings(chartSettings));
+      dispatch(appActions.updateChartSettings({ chartSettings }));
     },
     []
   );
@@ -126,23 +119,23 @@ const Editor: FC<Props> = ({
       widgetCustomization.chart
     );
     dispatch(
-      setVisualization(
-        settings.widgetType,
-        {
+      appActions.setVisualization({
+        type: settings.widgetType,
+        chartSettings: {
           ...settings.chartSettings,
           ...chart,
         },
-        {
+        widgetSettings: {
           ...settings.widgetSettings,
           ...(widgetCustomization.widget as WidgetSettings),
-        }
-      )
+        },
+      })
     );
-    dispatch(updateVisualizationType(settings.widgetType));
+    dispatch(appActions.updateVisualizationType(settings.widgetType));
   };
 
   const onUpdateWidgetSettings = (widgetSettings) => {
-    dispatch(updateWidgetSettings(widgetSettings));
+    dispatch(appActions.updateWidgetSettings({ widgetSettings }));
 
     setCustomizationSettings((state) => ({
       ...state,
@@ -245,7 +238,7 @@ const Editor: FC<Props> = ({
           )}
           <ActionButton>
             <Button
-              onClick={() => dispatch(clearQuery())}
+              onClick={() => dispatch(appActions.clearQuery())}
               style="outline"
               variant="success"
               size="large"

@@ -24,48 +24,35 @@ import {
   downloadCodeSnippet,
 } from './saga';
 
-import {
-  APP_START,
-  CREATE_NEW_QUERY,
-  CLEAR_QUERY,
-  SWITCH_TO_QUERIES_LIST,
-  EDIT_QUERY,
-  UPDATE_QUERY_CREATOR,
-  SHARE_QUERY_URL,
-  LOAD_STATE_FROM_URL,
-  SELECT_FIRST_QUERY,
-  SCREEN_RESIZE,
-  EXPORT_CHART_TO_IMAGE,
-  EXPORT_CHART_TO_JSON,
-  EXPORT_DATA_TO_CSV,
-  COPY_EMBEDDED_CODE,
-  DOWNLOAD_CODE_SNIPPET,
-  COPY_API_RESOURCE_URL,
-  SET_QUERY_AUTORUN,
-  UPDATE_VISUALIZATION,
-  SAVE_EXISTING_QUERY,
-  SAVE_QUERY,
-} from './constants';
+import { SCREEN_RESIZE } from './constants';
+
+import { appActions } from './index';
 
 export function* appSaga() {
-  yield takeLatest(APP_START, appStart);
-  yield takeLatest(SET_QUERY_AUTORUN, persistAutorunSettings);
-  yield takeLatest(SHARE_QUERY_URL, shareQueryUrl);
-  yield takeLatest(LOAD_STATE_FROM_URL, loadStateFromUrl);
-  yield takeLatest(UPDATE_QUERY_CREATOR, updateCreator);
-  yield takeLatest(CREATE_NEW_QUERY, createNewQuery);
-  yield takeLatest(SWITCH_TO_QUERIES_LIST, switchToQueriesList);
-  yield takeLatest(CLEAR_QUERY, clearQuery);
-  yield takeLatest(SELECT_FIRST_QUERY, selectFirstSavedQuery);
-  yield takeLatest(EDIT_QUERY, editQuery);
-  yield takeLatest(EXPORT_CHART_TO_IMAGE, exportChartToImage);
-  yield takeLatest(EXPORT_CHART_TO_JSON, exportChartToJson);
-  yield takeLatest(EXPORT_DATA_TO_CSV, exportDataToCsv);
-  yield takeLatest(COPY_EMBEDDED_CODE, copyEmbeddedCode);
-  yield takeLatest(DOWNLOAD_CODE_SNIPPET, downloadCodeSnippet);
-  yield takeLatest(UPDATE_VISUALIZATION, updateVisualizationType);
-  yield takeLatest(COPY_API_RESOURCE_URL, copyApiResourceUrl);
-  yield takeLatest(SAVE_EXISTING_QUERY, saveExistingQuery);
-  yield takeLatest(SAVE_QUERY, saveQuery);
+  yield takeLatest(appActions.appStart.type, appStart);
+  yield takeLatest(appActions.setQueryAutorun.type, persistAutorunSettings);
+  yield takeLatest(appActions.shareQueryUrl.type, shareQueryUrl);
+  yield takeLatest(appActions.loadPersistedState.type, loadStateFromUrl);
+  yield takeLatest(appActions.updateQueryCreator.type, updateCreator);
+  yield takeLatest(appActions.createNewQuery.type, createNewQuery);
+  yield takeLatest(appActions.switchToQueriesList.type, switchToQueriesList);
+  yield takeLatest(appActions.clearQuery.type, clearQuery);
+  yield takeLatest(
+    appActions.selectFirstSavedQuery.type,
+    selectFirstSavedQuery
+  );
+  yield takeLatest(appActions.editQuery.type, editQuery);
+  yield takeLatest(appActions.exportChartToImage.type, exportChartToImage);
+  yield takeLatest(appActions.exportChartToJson.type, exportChartToJson);
+  yield takeLatest(appActions.exportDataToCsv.type, exportDataToCsv);
+  yield takeLatest(appActions.copyEmbeddedCode.type, copyEmbeddedCode);
+  yield takeLatest(appActions.downloadCodeSnippet.type, downloadCodeSnippet);
+  yield takeLatest(
+    appActions.updateVisualizationType.type,
+    updateVisualizationType
+  );
+  yield takeLatest(appActions.copyApiResourceUrl.type, copyApiResourceUrl);
+  yield takeLatest(appActions.saveExistingQuery.type, saveExistingQuery);
+  yield takeLatest(appActions.saveQuery.type, saveQuery);
   yield debounce(200, SCREEN_RESIZE, resizeBrowserScreen);
 }

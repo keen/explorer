@@ -3,8 +3,8 @@ import { getContext } from 'redux-saga/effects';
 import { downloadCodeSnippet as downloadCodeSnippetAction } from '../actions';
 import { NOTIFICATION_MANAGER_CONTEXT } from '../../../constants';
 import { exportToHtml } from '../../../utils';
-import { generateFileName } from '../appSaga';
 import { getCodeSnippet } from './getCodeSnippet';
+import { generateFileName } from './generateFileName';
 
 export function* downloadCodeSnippet({
   payload,

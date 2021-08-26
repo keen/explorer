@@ -19,11 +19,7 @@ import {
 } from './BrowserQueryMenu.styles';
 
 import ActionsMenu from '../ActionsMenu';
-import {
-  showQuerySettingsModal,
-  SettingsModalSource,
-  shareQueryUrl,
-} from '../../modules/app';
+import { appActions, SettingsModalSource } from '../../modules/app';
 import { getSavedQueryIsEditable } from '../../modules/savedQuery/selectors';
 
 const actionsDropdownMotion = {
@@ -106,7 +102,9 @@ const BrowserQueryMenu: FC<Props> = ({ onEditQuery, onRemoveQuery }) => {
                 icon={<Icon type="settings" />}
                 onClick={() => {
                   dispatch(
-                    showQuerySettingsModal(SettingsModalSource.QUERY_SETTINGS)
+                    appActions.showQuerySettingsModal({
+                      source: SettingsModalSource.QUERY_SETTINGS,
+                    })
                   );
                 }}
               />
@@ -126,7 +124,7 @@ const BrowserQueryMenu: FC<Props> = ({ onEditQuery, onRemoveQuery }) => {
                 variant="secondary"
                 icon={<Icon type="share" />}
                 onClick={() => {
-                  dispatch(shareQueryUrl());
+                  dispatch(appActions.shareQueryUrl());
                 }}
               />
             </ActionsContainer>

@@ -2,7 +2,7 @@ import { getContext, select } from 'redux-saga/effects';
 import { getQueryResults } from '../../queries';
 import { NOTIFICATION_MANAGER_CONTEXT } from '../../../constants';
 import { exportToJson } from '../../../utils';
-import { generateFileName } from '../appSaga';
+import { generateFileName } from './generateFileName';
 
 export function* exportChartToJson() {
   const data = yield select(getQueryResults);

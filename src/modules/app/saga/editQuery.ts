@@ -3,17 +3,16 @@ import { SET_CHART_SETTINGS } from '@keen.io/query-creator/dist';
 
 import {
   editQuery as editQueryAction,
-  setViewMode,
   updateChartSettings,
   updateQueryCreator,
 } from '../actions';
-import { QUERY_EDITOR_MOUNTED } from '../constants';
 import { getSavedQueries } from '../../queries';
 import { PUBSUB_CONTEXT } from '../../../constants';
+import { appActions } from '../index';
 
 export function* editQuery({ payload }: ReturnType<typeof editQueryAction>) {
-  yield put(setViewMode('editor'));
-  yield take(QUERY_EDITOR_MOUNTED);
+  yield put(appActions.setViewMode({ view: 'editor' }));
+  yield take(appActions.queryEditorMounted.type);
 
   const savedQueries = yield select(getSavedQueries);
   const { query, visualization } = savedQueries.find(

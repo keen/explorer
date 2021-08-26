@@ -7,12 +7,7 @@ import { cloneSavedQuery } from './cloneSavedQuery';
 import { queriesSlice } from '../reducer';
 import { getQuerySettings, getSavedQueries } from '../selectors';
 
-import {
-  getViewMode,
-  setViewMode,
-  updateQueryCreator,
-  QUERY_EDITOR_MOUNTED,
-} from '../../../modules/app';
+import { appActions, appSelectors } from '../../../modules/app';
 
 import { NOTIFICATION_MANAGER_CONTEXT } from '../../../constants';
 
@@ -80,23 +75,23 @@ describe('Scenario 1: User cloned saved query from browser view', () => {
   });
 
   test('get application view from state', (result) => {
-    expect(result).toEqual(select(getViewMode));
+    expect(result).toEqual(select(appSelectors.getViewMode));
     return 'browser';
   });
 
   test('changes the application view', (result) => {
-    expect(result).toEqual(put(setViewMode('editor')));
+    expect(result).toEqual(put(appActions.setViewMode({ view: 'editor' })));
   });
 
   test('waits for user confirmation', (result) => {
-    expect(result).toEqual(take(QUERY_EDITOR_MOUNTED));
+    expect(result).toEqual(take(appActions.queryEditorMounted.type));
     return {
-      type: QUERY_EDITOR_MOUNTED,
+      type: appActions.queryEditorMounted.type,
     };
   });
 
   test('updates query creator settings', (result) => {
-    expect(result).toEqual(put(updateQueryCreator(querySettings)));
+    expect(result).toEqual(put(appActions.updateQueryCreator(querySettings)));
   });
 
   test('sets query settings', (result) => {
@@ -201,7 +196,7 @@ describe('Scenario 2: User cloned query from editor view', () => {
   });
 
   test('get application view from state', (result) => {
-    expect(result).toEqual(select(getViewMode));
+    expect(result).toEqual(select(appSelectors.getViewMode));
     return 'editor';
   });
 
@@ -295,7 +290,7 @@ describe('Scenario 3: User duplicates already cloned instance', () => {
   });
 
   test('get application view from state', (result) => {
-    expect(result).toEqual(select(getViewMode));
+    expect(result).toEqual(select(appSelectors.getViewMode));
     return 'editor';
   });
 
