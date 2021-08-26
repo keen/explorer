@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useInView } from 'react-intersection-observer';
-import { useTranslation } from 'react-i18next';
+import { useTranslation, Trans } from 'react-i18next';
 import { colors } from '@keen.io/colors';
 import {
   Modal,
@@ -17,15 +17,13 @@ import {
   Close,
   Footer,
   Description,
-  Name,
   QueryNotUsed,
   NoDashboardsInfo,
-  InfoWrapper,
   ConnectedDashboardsWrapper,
 } from './Confirm.styles';
 import { DashboardsLoader } from './components';
 
-import { DashboardsList } from '../UpdateSavedQueryModal/components';
+import DashboardsList from '../DashboardsList';
 
 import {
   getConfirmation,
@@ -74,17 +72,29 @@ const Confirm = () => {
               <DashboardsLoader />
             ) : (
               <>
-                <InfoWrapper>
+                <div>
                   <BodyText
                     variant="body1"
                     color={colors.black[500]}
                     lineHeight={1.5}
                   >
-                    {t('confirm.delete_message_head')}
-                    <Name>{displayName}</Name>
-                    {t('confirm.delete_message_tail')}
+                    <Trans
+                      components={{
+                        bold: (
+                          <BodyText
+                            variant="body1"
+                            color={colors.black[500]}
+                            lineHeight={1.5}
+                            fontWeight="bold"
+                            enableTextEllipsis
+                          />
+                        ),
+                      }}
+                      i18nKey={'confirm.delete_message'}
+                      values={{ query: displayName }}
+                    />
                   </BodyText>
-                </InfoWrapper>
+                </div>
                 {enableDashboardsConnection && (
                   <>
                     {connectedDashboards && connectedDashboards.length > 0 ? (

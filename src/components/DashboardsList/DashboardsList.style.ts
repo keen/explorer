@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { BodyText } from '@keen.io/typography';
 
 export const List = styled.ul`
-  margin: 10px 0 20px 0;
+  margin: 10px 0 10px 0;
   padding: 0;
   list-style-position: inside;
 `;

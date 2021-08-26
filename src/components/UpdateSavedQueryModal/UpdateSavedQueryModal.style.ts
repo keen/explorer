@@ -9,7 +9,7 @@ export const FooterContent = styled.div`
 `;
 
 export const Content = styled.div<{ isOverflow?: boolean }>`
-  padding: 15px 25px;
+  padding: 20px 25px;
   max-height: 250px;
   overflow: auto;
 
