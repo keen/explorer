@@ -1,5 +1,5 @@
 import { getContext } from 'redux-saga/effects';
-import { SET_QUERY_EVENT } from '@keen.io/query-creator/dist';
+import { SET_QUERY_EVENT } from '@keen.io/query-creator';
 
 import { updateQueryCreator } from '../actions';
 import { PUBSUB_CONTEXT } from '../../../constants';

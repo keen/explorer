@@ -1,4 +1,4 @@
-import { getContext, select } from 'redux-saga/effects';
+import { call, getContext, select } from 'redux-saga/effects';
 import { copyToClipboard } from '@keen.io/charts-utils';
 
 import { savedQuerySelectors } from '../../savedQuery';
@@ -12,9 +12,11 @@ export function* shareQueryUrl() {
   const savedQuery = yield select(savedQuerySelectors.getSavedQuery);
   const query = yield select(getQuerySettings);
   const visualization = yield select(getVisualization);
+  const notificationManager = yield getContext(NOTIFICATION_MANAGER_CONTEXT);
 
   try {
-    const stateToPersist = yield b64EncodeUnicode(
+    const stateToPersist = yield call(
+      b64EncodeUnicode,
       JSON.stringify({
         savedQuery,
         visualization,
@@ -24,7 +26,6 @@ export function* shareQueryUrl() {
 
     const url = `${getLocationUrl()}?${URL_STATE}=${stateToPersist}`;
     yield copyToClipboard(url);
-    const notificationManager = yield getContext(NOTIFICATION_MANAGER_CONTEXT);
 
     yield notificationManager.showNotification({
       type: 'success',
@@ -32,8 +33,6 @@ export function* shareQueryUrl() {
       autoDismiss: true,
     });
   } catch (err) {
-    const notificationManager = yield getContext(NOTIFICATION_MANAGER_CONTEXT);
-
     yield notificationManager.showNotification({
       type: 'error',
       message: 'notifications.share_query_error',
