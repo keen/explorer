@@ -179,7 +179,7 @@ test('enable user to update the query', () => {
           "refreshRate": 0,
           "tags": Array [],
         },
-        "type": "@app/SAVE_QUERY",
+        "type": "@app/COMPOSE_SAVED_QUERY",
       },
       Object {
         "payload": undefined,

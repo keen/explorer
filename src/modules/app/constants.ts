@@ -40,8 +40,9 @@ export const SHOW_UPDATE_SAVED_QUERY_MODAL =
   '@app/SHOW_UPDATE_SAVED_QUERY_MODAL';
 export const HIDE_UPDATE_SAVED_QUERY_MODAL =
   '@app/HIDE_UPDATE_SAVED_QUERY_MODAL';
-export const SAVE_QUERY = '@app/SAVE_QUERY';
-export const SAVE_EXISTING_QUERY = '@app/SAVE_EXISTING_QUERY';
+export const COMPOSE_SAVED_QUERY = '@app/COMPOSE_SAVED_QUERY';
+export const VALIDATE_DASHBOARDS_CONNECTIONS =
+  '@app/VALIDATE_DASHBOARDS_CONNECTIONS';
 
 export const URL_STATE = 'keen_explorer_state';
 export const QUERY_AUTORUN_KEY = '@keen-explorer/query-autorun';

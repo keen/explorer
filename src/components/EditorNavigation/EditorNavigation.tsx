@@ -42,7 +42,7 @@ import {
   savedQueryActions,
   savedQuerySelectors,
 } from '../../modules/savedQuery';
-import { saveExistingQuery } from '../../modules/app/actions';
+import { validateDashboardsConnections } from '../../modules/app/actions';
 
 const actionsDropdownMotion = {
   initial: { opacity: 0, top: 20, left: -10 },
@@ -107,7 +107,7 @@ const EditorNavigation: FC = () => {
     if (!exists && !isCloned) {
       dispatch(showQuerySettingsModal(SettingsModalSource.FIRST_QUERY_SAVE));
     } else {
-      dispatch(saveExistingQuery());
+      dispatch(validateDashboardsConnections());
     }
   };
 

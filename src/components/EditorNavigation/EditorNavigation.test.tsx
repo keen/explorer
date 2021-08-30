@@ -131,7 +131,7 @@ test('allows user to save query', () => {
       },
       Object {
         "payload": undefined,
-        "type": "@app/SAVE_EXISTING_QUERY",
+        "type": "@app/VALIDATE_DASHBOARDS_CONNECTIONS",
       },
     ]
   `);

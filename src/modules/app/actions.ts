@@ -42,8 +42,8 @@ import {
   SET_QUERIES_SORT_SETTINGS,
   SHOW_UPDATE_SAVED_QUERY_MODAL,
   HIDE_UPDATE_SAVED_QUERY_MODAL,
-  SAVE_QUERY,
-  SAVE_EXISTING_QUERY,
+  VALIDATE_DASHBOARDS_CONNECTIONS,
+  COMPOSE_SAVED_QUERY,
 } from './constants';
 
 import {
@@ -273,8 +273,8 @@ export const hideUpdateSavedQueryModal = createAction(
   HIDE_UPDATE_SAVED_QUERY_MODAL
 );
 
-export const saveQuery = createAction(
-  SAVE_QUERY,
+export const composeSavedQuery = createAction(
+  COMPOSE_SAVED_QUERY,
   (displayName: string, refreshRate: number, tags: string[], name: string) => ({
     payload: {
       displayName,
@@ -285,7 +285,9 @@ export const saveQuery = createAction(
   })
 );
 
-export const saveExistingQuery = createAction(SAVE_EXISTING_QUERY);
+export const validateDashboardsConnections = createAction(
+  VALIDATE_DASHBOARDS_CONNECTIONS
+);
 
 export type AppActions =
   | ReturnType<typeof appStart>
@@ -326,5 +328,5 @@ export type AppActions =
   | ReturnType<typeof setQueriesSortSettings>
   | ReturnType<typeof showUpdateSavedQueryModal>
   | ReturnType<typeof hideUpdateSavedQueryModal>
-  | ReturnType<typeof saveQuery>
-  | ReturnType<typeof saveExistingQuery>;
+  | ReturnType<typeof composeSavedQuery>
+  | ReturnType<typeof validateDashboardsConnections>;

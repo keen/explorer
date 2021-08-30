@@ -6,7 +6,7 @@ import { NEW_QUERY_EVENT } from '@keen.io/query-creator';
 import {
   setViewMode,
   resetVisualization,
-  saveQuery,
+  composeSavedQuery,
   showUpdateSavedQueryModal,
 } from './actions';
 import { getVisualization } from './selectors';
@@ -14,8 +14,8 @@ import { getQuerySettings, queriesActions } from '../queries';
 import { savedQueryActions, savedQuerySelectors } from '../savedQuery';
 import {
   createNewQuery as createNewQueryFlow,
-  saveQuery as saveQueryFlow,
-  saveExistingQuery as saveExistingQueryFlow,
+  composeSavedQuery as composeSavedQueryFlow,
+  validateDashboardsConnections as validateDashboardsConnectionsFlow,
 } from './appSaga';
 
 import { PUBSUB_CONTEXT } from '../../constants';
@@ -51,7 +51,7 @@ describe('createNewQuery()', () => {
   });
 });
 
-describe('saveQuery()', () => {
+describe('composeSavedQuery()', () => {
   const displayName = '@saved-query';
   const refreshRate = 0;
   const tags = [];
@@ -62,9 +62,9 @@ describe('saveQuery()', () => {
     widgetSettings: {},
   };
   const query = {};
-  const action = saveQuery(displayName, refreshRate, tags, name);
+  const action = composeSavedQuery(displayName, refreshRate, tags, name);
   const test = sagaHelper(
-    saveQueryFlow(action as ReturnType<typeof saveQuery>)
+    composeSavedQueryFlow(action as ReturnType<typeof composeSavedQuery>)
   );
 
   test('selects query', (result) => {
@@ -77,7 +77,7 @@ describe('saveQuery()', () => {
     return visualization;
   });
 
-  test('saves query', (result) => {
+  test('composes saved query and saves it', (result) => {
     const body = {
       query,
       metadata: {
@@ -92,14 +92,14 @@ describe('saveQuery()', () => {
   });
 });
 
-describe('saveExistingQuery()', () => {
+describe('validateDashboardsConnections()', () => {
   const displayName = '@saved-query';
   const refreshRate = 0;
   const tags = [];
   const name = 'saved-query';
 
   describe('Scenario 1: Existing saved query is not used on any dashboards', () => {
-    const test = sagaHelper(saveExistingQueryFlow());
+    const test = sagaHelper(validateDashboardsConnectionsFlow());
     test('gets saved query', (result) => {
       expect(result).toEqual(select(savedQuerySelectors.getSavedQuery));
       return { displayName, refreshRate, tags, name };
@@ -133,13 +133,13 @@ describe('saveExistingQuery()', () => {
 
     test('updates saved query', (result) => {
       expect(result).toEqual(
-        put(saveQuery(displayName, refreshRate, tags, name))
+        put(composeSavedQuery(displayName, refreshRate, tags, name))
       );
     });
   });
 
   describe('Scenario 2: Existing saved query is used on dashboards', () => {
-    const test = sagaHelper(saveExistingQueryFlow());
+    const test = sagaHelper(validateDashboardsConnectionsFlow());
     const dashboards = [
       { title: '@dashboard-1', id: '@id-1' },
       { title: '@dashboard-2', id: '@id-2' },

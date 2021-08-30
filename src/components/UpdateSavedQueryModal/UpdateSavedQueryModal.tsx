@@ -17,7 +17,7 @@ import { BodyText } from '@keen.io/typography';
 import {
   getUpdateSavedQueryModalVisibility,
   hideUpdateSavedQueryModal,
-  saveQuery,
+  composeSavedQuery,
 } from '../../modules/app';
 import { savedQuerySelectors } from '../../modules/savedQuery';
 import { queriesActions } from '../../modules/queries';
@@ -96,7 +96,9 @@ const UpdateSavedQueryModal: FC = () => {
                   variant="secondary"
                   style="solid"
                   onClick={() => {
-                    dispatch(saveQuery(displayName, refreshRate, tags, name));
+                    dispatch(
+                      composeSavedQuery(displayName, refreshRate, tags, name)
+                    );
                     onClose();
                   }}
                 >
