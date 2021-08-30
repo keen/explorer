@@ -47,7 +47,6 @@ const mapDispatchToProps = {
   resetSavedQuery: savedQueryActions.resetSavedQuery,
   selectSavedQuery: savedQueryActions.selectSavedQuery,
   switchToQueriesList: appActions.switchToQueriesList,
-  createNewQuery: appActions.createNewQuery,
   setViewMode: appActions.setViewMode,
   runQuery: queriesActions.runQuery,
 };
@@ -74,7 +73,7 @@ class App extends Component<Props> {
               this.props.setViewMode(view);
             }
           case NEW_QUERY_EVENT:
-            this.props.createNewQuery();
+            appActions.createNewQuery();
             break;
           default:
             break;
