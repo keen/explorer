@@ -27,7 +27,7 @@ const ConnectedDashboardItem: FC<Props> = ({ dashboard }) => {
 
   if (createDashboardUrl) {
     return (
-      <Anchor href={createDashboardUrl(id)}>
+      <Anchor href={createDashboardUrl(id)} target="_blank">
         {renderText(colors.blue[500])}
       </Anchor>
     );

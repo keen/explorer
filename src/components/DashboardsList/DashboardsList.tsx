@@ -20,7 +20,7 @@ const DashboardsList: FC<Props> = ({ dashboards }) => {
       {dashboards.map(({ id, title }) => (
         <ListItem key={id}>
           {createDashboardUrl ? (
-            <Anchor href={createDashboardUrl(id)}>
+            <Anchor href={createDashboardUrl(id)} target="_blank">
               <BodyText variant="body1" color={colors.blue[500]}>
                 {title || t('update_saved_query.untitled_dashboard')}
               </BodyText>
