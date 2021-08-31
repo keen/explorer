@@ -1,5 +1,5 @@
 import { getContext } from 'redux-saga/effects';
-import { UPDATE_VISUALIZATION_TYPE } from '@keen.io/query-creator/dist';
+import { UPDATE_VISUALIZATION_TYPE } from '@keen.io/query-creator';
 
 import { updateVisualizationType as updateVisualizationTypeAction } from '../actions';
 import { PUBSUB_CONTEXT } from '../../../constants';

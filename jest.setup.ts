@@ -10,3 +10,17 @@ jest.mock('react-i18next', () => ({
     };
   },
 }));
+
+const mockStorage = {};
+const localStorage = {
+  setItem: (key, val) => Object.assign(mockStorage, { [key]: val }),
+  getItem: (key) => mockStorage[key],
+  removeItem: (key) => {
+    delete mockStorage[key];
+  },
+  clear: () => mockStorage,
+  length: Object.keys(mockStorage).length,
+  key: (idx) => Object.keys(mockStorage)[idx],
+} as Storage;
+
+global.localStorage = localStorage;

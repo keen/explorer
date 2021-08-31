@@ -1,4 +1,4 @@
-import { put, select } from 'redux-saga/effects';
+import { put, select, call } from 'redux-saga/effects';
 import { queriesActions } from '../../queries';
 import { savedQuerySelectors } from '../../savedQuery';
 import { selectFirstSavedQuery } from './selectFirstSavedQuery';
@@ -10,6 +10,6 @@ export function* switchToQueriesList() {
 
   const { exists } = yield select(savedQuerySelectors.getSavedQuery);
   if (!exists) {
-    yield selectFirstSavedQuery();
+    yield call(selectFirstSavedQuery);
   }
 }

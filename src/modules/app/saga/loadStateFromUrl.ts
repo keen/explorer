@@ -1,4 +1,4 @@
-import { getContext, put, select, take } from 'redux-saga/effects';
+import { call, getContext, put, select, take } from 'redux-saga/effects';
 
 import { URL_STATE } from '../constants';
 import { b64DecodeUnicode, getLocationUrl } from '../utils';
@@ -50,7 +50,7 @@ export function* loadStateFromUrl() {
     const view = yield select(getViewMode);
     if (view === 'browser') {
       yield take(queriesActions.getSavedQueriesSuccess.type);
-      yield selectFirstSavedQuery();
+      yield call(selectFirstSavedQuery);
     } else {
       yield put(savedQueryActions.resetSavedQuery());
     }
