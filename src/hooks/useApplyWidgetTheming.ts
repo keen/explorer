@@ -38,8 +38,8 @@ export const useApplyWidgetTheming = ({
       return widgetSettings;
     }
     return {
-      ...widgetSettings,
       ...DEFAULT_WIDGET_SETTINGS,
+      ...widgetSettings,
     };
   }, [...dependencies]);
 
