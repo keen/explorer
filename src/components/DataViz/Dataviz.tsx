@@ -6,7 +6,7 @@ import { KeenDataviz } from '@keen.io/dataviz';
 import { VisulizationContainer } from './DataViz.styles';
 
 import { isEmptyAnalysisResult } from './utils';
-import { CONTAINER_ID } from './constants';
+import { CONTAINER_ID, DEFAULT_WIDGET_SETTINGS } from './constants';
 import { ChartSettings } from '../../types';
 
 type Props = {
@@ -39,7 +39,10 @@ const Dataviz: FC<Props> = ({
       presentationTimezone,
       type: visualization,
       settings: chartSettings,
-      widget: widgetSettings,
+      widget: {
+        ...widgetSettings,
+        card: DEFAULT_WIDGET_SETTINGS.card,
+      },
     });
 
     if (isEmptyAnalysisResult(analysisResults)) {
