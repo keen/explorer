@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/camelcase */
 import sagaHelper from 'redux-saga-testing';
 import { call, getContext, put, select, take } from 'redux-saga/effects';
+import { PickerWidgets } from '@keen.io/widget-picker';
 
 import { appActions } from '../index';
 import { savedQueryActions } from '../../savedQuery';
@@ -40,7 +41,7 @@ describe('loadStateFromUrl()', () => {
       timeframe: null,
     };
     const visualization = {
-      type: 'metric',
+      type: 'metric' as PickerWidgets,
       chartSettings: {},
       widgetSettings: {},
     };
