@@ -1,7 +1,7 @@
 {
   "name": "@keen.io/explorer",
   "description": "Data Explorer by Keen IO",
-  "version": "3.7.0-rc.8",
+  "version": "3.7.0-rc.9",
   "license": "MIT",
   "main": "dist/explorer.modern.min.js",
   "browser": "dist/explorer.modern.min.js",
