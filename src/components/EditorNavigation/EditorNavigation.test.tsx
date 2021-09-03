@@ -33,7 +33,6 @@ const render = (storeState: any = {}, overProps: any = {}) => {
   const store = mockStore({ ...state });
 
   const props = {
-    onSaveQuery: jest.fn(),
     ...overProps,
   };
 
@@ -113,17 +112,29 @@ test('allows user to save query', () => {
     cached: false,
     refreshRate: 0,
     exists: true,
+    isCloned: false,
     tags: [],
   };
   const {
-    props,
+    store,
     wrapper: { getByText },
   } = render({ savedQuery });
 
-  const button = getByText('editor.save_query_button');
+  const button = getByText('editor.update_query_button');
   fireEvent.click(button);
 
-  expect(props.onSaveQuery).toHaveBeenCalled();
+  expect(store.getActions()).toMatchInlineSnapshot(`
+    Array [
+      Object {
+        "payload": undefined,
+        "type": "savedQuery/resetConnectedDashboards",
+      },
+      Object {
+        "payload": undefined,
+        "type": "@app/VALIDATE_DASHBOARDS_CONNECTIONS",
+      },
+    ]
+  `);
 });
 
 test('opens query settings modal for not existing query', () => {
@@ -137,6 +148,10 @@ test('opens query settings modal for not existing query', () => {
 
   expect(store.getActions()).toMatchInlineSnapshot(`
     Array [
+      Object {
+        "payload": undefined,
+        "type": "savedQuery/resetConnectedDashboards",
+      },
       Object {
         "payload": Object {
           "source": 1,
@@ -160,6 +175,10 @@ test('allows user to return to the saved queries list', () => {
     Array [
       Object {
         "payload": undefined,
+        "type": "savedQuery/resetConnectedDashboards",
+      },
+      Object {
+        "payload": undefined,
         "type": "@app/SWITCH_TO_QUERIES_LIST",
       },
     ]
@@ -179,6 +198,10 @@ test('allows user to share query url', () => {
 
   expect(store.getActions()).toMatchInlineSnapshot(`
     Array [
+      Object {
+        "payload": undefined,
+        "type": "savedQuery/resetConnectedDashboards",
+      },
       Object {
         "payload": undefined,
         "type": "@app/SHARE_QUERY_URL",

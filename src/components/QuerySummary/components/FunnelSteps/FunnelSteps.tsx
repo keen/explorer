@@ -10,7 +10,7 @@ type Props = {
 
 const FunnelSteps: FC<Props> = ({ steps, stepLabels }) => {
   return (
-    <>
+    <div>
       {steps.map((step, idx) => (
         <FunnelStep
           step={step}
@@ -19,7 +19,7 @@ const FunnelSteps: FC<Props> = ({ steps, stepLabels }) => {
           label={stepLabels && stepLabels[idx]}
         />
       ))}
-    </>
+    </div>
   );
 };
 

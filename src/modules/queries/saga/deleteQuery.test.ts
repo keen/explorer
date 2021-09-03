@@ -21,11 +21,14 @@ import {
 import {
   NOTIFICATION_MANAGER_CONTEXT,
   KEEN_CLIENT_CONTEXT,
+  DASHBOARDS_API_CONTEXT,
 } from '../../../constants';
+import { savedQueryActions } from '../../savedQuery';
 
 describe('Scenario 1: User successfully delete query', () => {
   const action = deleteQueryAction('purchases');
   const test = sagaHelper(deleteQuery(action));
+  const queryName = 'purchases';
 
   test('get the notification manager from context', (result) => {
     expect(result).toEqual(getContext(NOTIFICATION_MANAGER_CONTEXT));
@@ -35,9 +38,18 @@ describe('Scenario 1: User successfully delete query', () => {
     };
   });
 
+  test('gets dashboards api', (result) => {
+    expect(result).toEqual(getContext(DASHBOARDS_API_CONTEXT));
+    return true;
+  });
+
   test('shows confirmation modal', (result) => {
+    expect(result).toEqual(put(showConfirmation('delete', { queryName })));
+  });
+
+  test('gets connected dashboards', (result) => {
     expect(result).toEqual(
-      put(showConfirmation('delete', { queryName: 'purchases' }))
+      put(savedQueryActions.getDashboardsConnection(queryName))
     );
   });
 
@@ -101,6 +113,11 @@ describe('Scenario 2: User failed to delete query due to API internal error', ()
     };
   });
 
+  test('gets dashboards api', (result) => {
+    expect(result).toEqual(getContext(DASHBOARDS_API_CONTEXT));
+    return false;
+  });
+
   test('shows confirmation modal', (result) => {
     expect(result).toEqual(
       put(showConfirmation('delete', { queryName: 'purchases' }))
@@ -142,6 +159,11 @@ describe('Scenario 3: User cancel delete query action', () => {
     return {
       showNotification: jest.fn(),
     };
+  });
+
+  test('gets dashboards api', (result) => {
+    expect(result).toEqual(getContext(DASHBOARDS_API_CONTEXT));
+    return false;
   });
 
   test('shows confirmation modal', (result) => {

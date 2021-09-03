@@ -93,6 +93,12 @@ describe('selectSavedQuery()', () => {
       expect(result).toEqual(put(queriesActions.runQuery({ query })));
     });
 
+    test('check connected dashboards', (result) => {
+      expect(result).toEqual(
+        put(savedQueryActions.getDashboardsConnection(savedQuery.name))
+      );
+    });
+
     test('set save query loading state as false', (result) => {
       expect(result).toEqual(put(savedQueryActions.setQueryLoading(false)));
     });
@@ -168,6 +174,12 @@ describe('selectSavedQuery()', () => {
       };
       expect(result).toMatchObject(
         put(savedQueryActions.updateSavedQuery(savedQuery))
+      );
+    });
+
+    test('check connected dashboards', (result) => {
+      expect(result).toEqual(
+        put(savedQueryActions.getDashboardsConnection(savedQuery.name))
       );
     });
 

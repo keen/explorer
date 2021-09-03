@@ -99,6 +99,10 @@ test('allows user to reset query settings', () => {
     Array [
       Object {
         "payload": undefined,
+        "type": "savedQuery/resetConnectedDashboards",
+      },
+      Object {
+        "payload": undefined,
         "type": "@app/QUERY_EDITOR_MOUNTED",
       },
       Object {
@@ -209,6 +213,10 @@ test('allows user to perform extraction to email', () => {
 
   expect(store.getActions()).toMatchInlineSnapshot(`
     Array [
+      Object {
+        "payload": undefined,
+        "type": "savedQuery/resetConnectedDashboards",
+      },
       Object {
         "payload": undefined,
         "type": "@app/QUERY_EDITOR_MOUNTED",

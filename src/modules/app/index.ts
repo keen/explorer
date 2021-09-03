@@ -37,6 +37,9 @@ import {
   resetVisualization,
   setQueriesFilters,
   setQueriesSortSettings,
+  showUpdateSavedQueryModal,
+  hideUpdateSavedQueryModal,
+  composeSavedQuery,
 } from './actions';
 import {
   getConfirmation,
@@ -50,6 +53,7 @@ import {
   getQueryAutorun,
   getQueriesFilters,
   getQueriesSortSettings,
+  getUpdateSavedQueryModalVisibility,
 } from './selectors';
 
 import {
@@ -111,6 +115,10 @@ export {
   setQueriesSortSettings,
   getQueriesFilters,
   getQueriesSortSettings,
+  getUpdateSavedQueryModalVisibility,
+  showUpdateSavedQueryModal,
+  hideUpdateSavedQueryModal,
+  composeSavedQuery,
 };
 
 export * from './types';

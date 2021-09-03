@@ -40,6 +40,10 @@ import {
   UPDATE_VISUALIZATION,
   SET_QUERIES_FILTERS,
   SET_QUERIES_SORT_SETTINGS,
+  SHOW_UPDATE_SAVED_QUERY_MODAL,
+  HIDE_UPDATE_SAVED_QUERY_MODAL,
+  VALIDATE_DASHBOARDS_CONNECTIONS,
+  COMPOSE_SAVED_QUERY,
 } from './constants';
 
 import {
@@ -261,6 +265,30 @@ export const setQueriesSortSettings = createAction(
   })
 );
 
+export const showUpdateSavedQueryModal = createAction(
+  SHOW_UPDATE_SAVED_QUERY_MODAL
+);
+
+export const hideUpdateSavedQueryModal = createAction(
+  HIDE_UPDATE_SAVED_QUERY_MODAL
+);
+
+export const composeSavedQuery = createAction(
+  COMPOSE_SAVED_QUERY,
+  (displayName: string, refreshRate: number, tags: string[], name: string) => ({
+    payload: {
+      displayName,
+      refreshRate,
+      tags,
+      name,
+    },
+  })
+);
+
+export const validateDashboardsConnections = createAction(
+  VALIDATE_DASHBOARDS_CONNECTIONS
+);
+
 export type AppActions =
   | ReturnType<typeof appStart>
   | ReturnType<typeof resizeScreen>
@@ -297,4 +325,8 @@ export type AppActions =
   | ReturnType<typeof updateVisualizationType>
   | ReturnType<typeof copyApiResourceUrl>
   | ReturnType<typeof setQueriesFilters>
-  | ReturnType<typeof setQueriesSortSettings>;
+  | ReturnType<typeof setQueriesSortSettings>
+  | ReturnType<typeof showUpdateSavedQueryModal>
+  | ReturnType<typeof hideUpdateSavedQueryModal>
+  | ReturnType<typeof composeSavedQuery>
+  | ReturnType<typeof validateDashboardsConnections>;

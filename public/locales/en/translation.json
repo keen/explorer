@@ -113,7 +113,13 @@
     "autorun_query_tooltip": "Every run query counts as one query for your usage",
     "unable_to_run_query": "Unable to run query",
     "the_event_stream_do_not_exist": "The <bold>{{stream}}</bold> event stream used in this query does not exist",
-    "the_event_stream_do_not_exist_plural": "The <bold>{{stream}}</bold> event streams used in this query do not exist"
+    "the_event_stream_do_not_exist_plural": "The <bold>{{stream}}</bold> event streams used in this query do not exist",
+    "on_dashboards": "On Dashboards:",
+    "dashboards_none": "None",
+    "untitled_dashboard": "Untitled dashboard",
+    "show_more": "Show More",
+    "show_less": "Show Less",
+    "dashboard_connection_error": "Unable to get the dashboards list. Try again later"
   },
   "query_summary": {
     "analysis": "Analysis:",
@@ -130,6 +136,7 @@
     "extract_to_email_button": "Extract to Email",
     "back_to_saved_queries": "Go to Saved Queries",
     "save_query_button": "Save Query",
+    "update_query_button": "Update Query",
     "settings_tooltip": "Query Info",
     "actions_tooltip": "Actions",
     "new_query_title": "New Query",
@@ -210,11 +217,14 @@
     "refresh_rate_hint": "Refresh interval can be set from 4 to 48 hours"
   },
   "confirm": {
-    "button_label": "Confirm",
+    "button_label": "Delete",
     "cancel_label": "Cancel",
-    "delete_query_title": "Deleting query",
-    "delete_message_head": "Do you want to permanently delete ",
-    "delete_message_tail": " query from your project?"
+    "delete_query_title": "Deleting Saved Query",
+    "delete_message": "Do you want to permanently delete <bold>{{ query }}</bold> from your project?",
+    "connected_dashboards_info": "It will be also detached from the following dashboards:",
+    "query_not_connected_to_any_dashboard": "This Saved Query is not used on any dashboard.",
+    "checking_dashboard_connections": "Checking connections with dashboards",
+    "unable_to_get_connected_dashboards": "Unable to get connected dashboards"
   },
   "dataviz": {
     "no_results": "The results for analysis are empty"
@@ -470,9 +480,20 @@
     "title": "Metric Chart Settings"
   },
   "widget_customization_axis_settings": {
-   "x_axis_title": "X-Axis Title",
-   "x_axis_title_placeholder": "Enter axis title",
-   "y_axis_title": "Y-Axis Title",
-   "y_axis_title_placeholder": "Enter axis title"
- }
+    "x_axis_title": "X-Axis Title",
+    "x_axis_title_placeholder": "Enter axis title",
+    "y_axis_title": "Y-Axis Title",
+    "y_axis_title_placeholder": "Enter axis title"
+  },
+  "update_saved_query": {
+    "modal_title": "Updating Saved Query",
+    "charts_update": "Charts that use this Saved Query will be updated automatically.",
+    "update_query": "Update Query",
+    "clone_query": "Clone Query",
+    "cancel": "Cancel",
+    "untitled_dashboard": "Untitled dashboard",
+    "dashboard_connection_error": "Unable to get the dashboards list. Try again later",
+    "saved_query_usage": "This Saved Query is used on the following dashboards:",
+    "saved_query_update": "Charts that use this Saved Query will be updated automatically."
+  }
 }

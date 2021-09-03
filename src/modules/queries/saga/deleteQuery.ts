@@ -16,18 +16,29 @@ import {
   ACCEPT_CONFIRMATION,
 } from '../../../modules/app';
 
-import { NOTIFICATION_MANAGER_CONTEXT } from '../../../constants';
+import {
+  DASHBOARDS_API_CONTEXT,
+  NOTIFICATION_MANAGER_CONTEXT,
+} from '../../../constants';
+
+import { savedQueryActions } from '../../savedQuery';
 
 import { ERRORS } from '../constants';
 
 export function* deleteQuery(action: ReturnType<typeof deleteQueryAction>) {
   const notificationManager = yield getContext(NOTIFICATION_MANAGER_CONTEXT);
+  const dashboardsApiUrl = yield getContext(DASHBOARDS_API_CONTEXT);
 
   try {
     const {
       payload: { queryName },
     } = action;
     yield put(showConfirmation('delete', { queryName }));
+
+    if (dashboardsApiUrl) {
+      yield put(savedQueryActions.getDashboardsConnection(queryName));
+    }
+
     const confirm = yield take([ACCEPT_CONFIRMATION, HIDE_CONFIRMATION]);
 
     if (confirm.type === ACCEPT_CONFIRMATION) {
