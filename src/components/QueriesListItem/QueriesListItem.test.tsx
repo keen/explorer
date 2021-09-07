@@ -11,6 +11,10 @@ const render = (overProps: any = {}) => {
     queryName: 'Purchases',
     updateDate: '2020/03/10',
     onClick: jest.fn(),
+    visualization: {
+      type: 'bar',
+      chartSettings: {},
+    },
     ...overProps,
   };
 

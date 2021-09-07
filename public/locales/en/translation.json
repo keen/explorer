@@ -113,7 +113,13 @@
     "autorun_query_tooltip": "Every run query counts as one query for your usage",
     "unable_to_run_query": "Unable to run query",
     "the_event_stream_do_not_exist": "The <bold>{{stream}}</bold> event stream used in this query does not exist",
-    "the_event_stream_do_not_exist_plural": "The <bold>{{stream}}</bold> event streams used in this query do not exist"
+    "the_event_stream_do_not_exist_plural": "The <bold>{{stream}}</bold> event streams used in this query do not exist",
+    "on_dashboards": "On Dashboards:",
+    "dashboards_none": "None",
+    "untitled_dashboard": "Untitled dashboard",
+    "show_more": "Show More",
+    "show_less": "Show Less",
+    "dashboard_connection_error": "Unable to get the dashboards list. Try again later"
   },
   "query_summary": {
     "analysis": "Analysis:",
@@ -130,6 +136,7 @@
     "extract_to_email_button": "Extract to Email",
     "back_to_saved_queries": "Go to Saved Queries",
     "save_query_button": "Save Query",
+    "update_query_button": "Update Query",
     "settings_tooltip": "Query Info",
     "actions_tooltip": "Actions",
     "new_query_title": "New Query",
@@ -164,7 +171,9 @@
   },
   "query_creator_analysis": {
     "placeholder": "Select analysis type",
-    "label": "Analysis"
+    "label": "Analysis",
+    "search_placeholder": "Search",
+    "empty_search_results": "No analysis found with this name"
   },
   "query_creator_event_collection": {
     "label": "Event Stream",
@@ -208,11 +217,14 @@
     "refresh_rate_hint": "Refresh interval can be set from 4 to 48 hours"
   },
   "confirm": {
-    "button_label": "Confirm",
+    "button_label": "Delete",
     "cancel_label": "Cancel",
-    "delete_query_title": "Deleting query",
-    "delete_message_head": "Do you want to permanently delete ",
-    "delete_message_tail": " query from your project?"
+    "delete_query_title": "Deleting Saved Query",
+    "delete_message": "Do you want to permanently delete <bold>{{ query }}</bold> from your project?",
+    "connected_dashboards_info": "It will be also detached from the following dashboards:",
+    "query_not_connected_to_any_dashboard": "This Saved Query is not used on any dashboard.",
+    "checking_dashboard_connections": "Checking connections with dashboards",
+    "unable_to_get_connected_dashboards": "Unable to get connected dashboards"
   },
   "dataviz": {
     "no_results": "The results for analysis are empty"
@@ -393,7 +405,7 @@
     "saved_query_name_tooltip": "Click to use as Chart Title"
   },
   "widget_customization_format_value_settings": {
-    "section_title": "Values Format",
+    "section_title": "Value Format",
     "section_description": "(See in metric chart or series details popup, axis that presents values)",
     "prefix": "Prefix",
     "suffix": "Suffix",
@@ -404,8 +416,8 @@
     "select_pattern_placeholder": "Select pattern",
     "select_operations_placeholder": "Select",
     "original_data": "Original data",
-    "full_number": "(Full number)",
-    "separator": "Separate groups of thousands with a comma \" , \""
+    "separator": "Separate groups of thousands with a comma \" , \"",
+    "select_precision_first": "Select the precision first"
   },
   "widget_customization_section": {
     "clear_button": "Clear"
@@ -420,7 +432,7 @@
   "widget_customization_sections": {
     "titles": "Titles",
     "formatting": "Value Format",
-    "components": "Chart settings"
+    "components": "Chart Elements"
   },
   "widget_customization_legend_settings": {
     "label": "Legend",
@@ -446,7 +458,8 @@
     "title": "Table Chart Components"
   },
   "widget_customization_circular_settings": {
-    "title": "Donut & Pie Chart Components"
+    "title": "Donut & Pie Chart Components",
+    "label": "Value Mode"
   },
   "widget_customization_funnel_settings": {
     "title": "Funnel Chart Components",
@@ -465,5 +478,22 @@
   },
   "widget_customization_metric_settings": {
     "title": "Metric Chart Settings"
+  },
+  "widget_customization_axis_settings": {
+    "x_axis_title": "X-Axis Title",
+    "x_axis_title_placeholder": "Enter axis title",
+    "y_axis_title": "Y-Axis Title",
+    "y_axis_title_placeholder": "Enter axis title"
+  },
+  "update_saved_query": {
+    "modal_title": "Updating Saved Query",
+    "charts_update": "Charts that use this Saved Query will be updated automatically.",
+    "update_query": "Update Query",
+    "clone_query": "Clone Query",
+    "cancel": "Cancel",
+    "untitled_dashboard": "Untitled dashboard",
+    "dashboard_connection_error": "Unable to get the dashboards list. Try again later",
+    "saved_query_usage": "This Saved Query is used on the following dashboards:",
+    "saved_query_update": "Charts that use this Saved Query will be updated automatically."
   }
 }

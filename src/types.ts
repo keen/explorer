@@ -79,6 +79,8 @@ export type Options = {
   modalContainer: string;
   initialView: 'browser' | 'editor';
   upgradeSubscriptionUrl?: string;
+  dashboardsApiUrl?: string;
+  createDashboardUrl?: (savedQueryId: string) => string;
   dataviz?: DatavizSettings;
   translations?: TranslationsSettings;
   keenAnalysis: {

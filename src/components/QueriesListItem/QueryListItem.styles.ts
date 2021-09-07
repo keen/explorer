@@ -34,8 +34,8 @@ export const Tag = styled.span`
   margin: 0 5px 5px 0;
 `;
 
-export const QueryName = styled.td`
-  display: block;
+export const QueryNameWrapper = styled.td`
+  display: flex;
   padding: 20px 10px 20px 20px;
   max-width: 240px;
 
@@ -47,6 +47,11 @@ export const QueryName = styled.td`
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+`;
+
+export const IconWrapper = styled.span`
+  flex-shrink: 0;
+  margin-right: 10px;
 `;
 
 export const Labels = styled.td`

@@ -6,6 +6,7 @@ import configureStore from 'redux-mock-store';
 
 import Browser from './Browser';
 import { initialState as savedQueryInitialState } from '../../modules/savedQuery';
+import { DEFAULT_DIRECTION, DEFAULT_PROPERTY } from '../../modules/app';
 
 jest.mock('framer-motion', () => {
   const AnimatePresence = jest.fn(({ children }) => children);
@@ -44,6 +45,14 @@ const render = (storeState: any = {}, overProps: any = {}) => {
       },
       visualization: {
         chartSettings: {},
+      },
+      queriesFilters: {
+        showOnlyCachedQueries: false,
+        tags: [],
+      },
+      queriesSortSettings: {
+        direction: DEFAULT_DIRECTION,
+        property: DEFAULT_PROPERTY,
       },
     },
     ...storeState,
@@ -109,6 +118,10 @@ test('renders empty search message', () => {
       query: {},
       lastModifiedDate: '2020-09-11',
       tags: [],
+      visualization: {
+        type: 'bar',
+        chartSettings: {},
+      },
     },
   ];
 
@@ -146,6 +159,10 @@ test('allows user to filter queries based on search phrase', () => {
       query: {},
       lastModifiedDate: '2020-09-11',
       tags: [],
+      visualization: {
+        type: 'metric',
+        chartSettings: {},
+      },
     },
     {
       name: 'logins',
@@ -154,6 +171,10 @@ test('allows user to filter queries based on search phrase', () => {
       query: {},
       lastModifiedDate: '2020-09-11',
       tags: [],
+      visualization: {
+        type: 'bar',
+        chartSettings: {},
+      },
     },
   ];
 

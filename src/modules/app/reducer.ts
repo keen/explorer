@@ -19,10 +19,24 @@ import {
   SET_QUERY_AUTORUN,
   UPDATE_CHART_SETTINGS,
   UPDATE_WIDGET_SETTINGS,
+  SET_QUERIES_FILTERS,
+  SET_QUERIES_SORT_SETTINGS,
+  DEFAULT_DIRECTION,
+  DEFAULT_PROPERTY,
+  SHOW_UPDATE_SAVED_QUERY_MODAL,
+  HIDE_UPDATE_SAVED_QUERY_MODAL,
 } from './constants';
 
 export const initialState: ReducerState = {
   autorunQuery: true,
+  queriesFilters: {
+    showOnlyCachedQueries: false,
+    tags: [],
+  },
+  queriesSortSettings: {
+    direction: DEFAULT_DIRECTION,
+    property: DEFAULT_PROPERTY,
+  },
   confirmModal: {
     visible: false,
     action: null,
@@ -36,6 +50,9 @@ export const initialState: ReducerState = {
     visible: false,
   },
   extractToEmailModal: {
+    visible: false,
+  },
+  updateSavedQueryModal: {
     visible: false,
   },
   browserScreen: {
@@ -176,6 +193,33 @@ export const appReducer = (
             ...state.visualization.chartSettings,
             ...action.payload.chartSettings,
           },
+        },
+      };
+    case SET_QUERIES_FILTERS:
+      return {
+        ...state,
+        queriesFilters: {
+          ...state.queriesFilters,
+          ...action.payload.filters,
+        },
+      };
+    case SET_QUERIES_SORT_SETTINGS:
+      return {
+        ...state,
+        queriesSortSettings: action.payload.sortSettings,
+      };
+    case SHOW_UPDATE_SAVED_QUERY_MODAL:
+      return {
+        ...state,
+        updateSavedQueryModal: {
+          visible: true,
+        },
+      };
+    case HIDE_UPDATE_SAVED_QUERY_MODAL:
+      return {
+        ...state,
+        updateSavedQueryModal: {
+          visible: false,
         },
       };
     default:

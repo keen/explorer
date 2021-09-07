@@ -15,8 +15,7 @@ import SortIndicators from '../SortIndicators';
 import Heading from '../Heading';
 
 import { SavedQueryListItem } from '../../modules/queries';
-
-import { QueriesSortSettings, SortProperty } from './types';
+import { QueriesSortSettings, SortProperty } from '../../modules/app';
 
 type Props = {
   /** Saved queries list */
@@ -104,6 +103,7 @@ const QueriesList: FC<Props> = ({
             refreshRate,
             tags,
             query,
+            visualization,
           }) => (
             <QueriesListItem
               key={name}
@@ -113,6 +113,7 @@ const QueriesList: FC<Props> = ({
               refreshRate={refreshRate}
               updateDate={moment(lastModifiedDate).format('YYYY/MM/DD')}
               onClick={() => onSelectQuery(name, query)}
+              visualization={visualization}
             />
           )
         )}

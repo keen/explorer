@@ -13,10 +13,22 @@ export const getSavedQueryLoading = ({ savedQuery }: AppState) =>
 export const getSavedQueryIsEditable = ({ savedQuery }: AppState) =>
   savedQuery.isQueryEditable;
 
+export const getConnectedDashboardsLoading = ({ savedQuery }: AppState) =>
+  savedQuery.isConnectedDashboardsLoading;
+
+export const getConnectedDashboardsError = ({ savedQuery }: AppState) =>
+  savedQuery.isConnectedDashboardsError;
+
+export const getConnectedDashboards = ({ savedQuery }: AppState) =>
+  savedQuery.connectedDashboards;
+
 export const savedQuerySelectors = {
   getSavedQuery,
   getSavedQueryName,
   getSavedQueryDisplayName,
   getSavedQueryLoading,
   getSavedQueryIsEditable,
+  getConnectedDashboardsLoading,
+  getConnectedDashboardsError,
+  getConnectedDashboards,
 };

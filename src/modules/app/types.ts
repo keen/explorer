@@ -1,9 +1,22 @@
 import { PickerWidgets, WidgetSettings } from '@keen.io/widget-picker';
+import { SortMode } from '@keen.io/ui-core';
 import { ChartSettings } from '../../types';
 
 export type Confirmation = 'delete';
 
 export type ViewMode = 'browser' | 'editor';
+
+export type QueriesFilters = {
+  showOnlyCachedQueries: boolean;
+  tags: string[];
+};
+
+export type SortProperty = 'displayName' | 'lastModifiedDate';
+
+export type QueriesSortSettings = {
+  direction: SortMode;
+  property: SortProperty;
+};
 
 export enum SettingsModalSource {
   QUERY_SETTINGS,
@@ -26,6 +39,9 @@ export type ReducerState = {
   embedModal: {
     visible: boolean;
   };
+  updateSavedQueryModal: {
+    visible: boolean;
+  };
   view: ViewMode;
   browserScreen: {
     width: number;
@@ -37,4 +53,6 @@ export type ReducerState = {
     widgetSettings: WidgetSettings;
   };
   autorunQuery: boolean;
+  queriesFilters: QueriesFilters;
+  queriesSortSettings: QueriesSortSettings;
 };

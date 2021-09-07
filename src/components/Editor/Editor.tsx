@@ -56,8 +56,6 @@ type Props = {
   query: Query;
   /** Run query event handler */
   onRunQuery: () => void;
-  /** Save query event handler */
-  onSaveQuery: () => void;
   /** Saved query name */
   savedQueryName?: string;
   /** Optional upgrade subscription url */
@@ -69,7 +67,6 @@ const Editor: FC<Props> = ({
   savedQueryName,
   upgradeSubscriptionUrl,
   onRunQuery,
-  onSaveQuery,
 }) => {
   const { modalContainer } = useContext(AppContext);
 
@@ -166,7 +163,7 @@ const Editor: FC<Props> = ({
   return (
     <>
       <Container id="editor" data-testid="editor">
-        <EditorNavigation onSaveQuery={onSaveQuery} />
+        <EditorNavigation />
         <section>
           {isQueryLimitReached && (
             <QueryLimitReached

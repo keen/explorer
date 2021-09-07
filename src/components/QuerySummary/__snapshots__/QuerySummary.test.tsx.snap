@@ -23,15 +23,19 @@ exports[`should render query summary 1`] = `
 }
 
 .c1 {
-  margin: 0 0 10px 0;
+  margin: 0;
   padding: 0;
   border-collapse: collapse;
   table-layout: fixed;
   text-align: left;
+  -webkit-align-self: flex-start;
+  -ms-flex-item-align: start;
+  align-self: flex-start;
 }
 
 .c4 {
   padding: 0 20px 10px 0;
+  min-width: 100px;
 }
 
 .c7 {
@@ -69,6 +73,14 @@ exports[`should render query summary 1`] = `
 
 .c0 {
   padding: 20px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  gap: 10px;
 }
 
 <div>
@@ -256,15 +268,19 @@ exports[`should render query summary for funnels 1`] = `
 }
 
 .c1 {
-  margin: 0 0 10px 0;
+  margin: 0;
   padding: 0;
   border-collapse: collapse;
   table-layout: fixed;
   text-align: left;
+  -webkit-align-self: flex-start;
+  -ms-flex-item-align: start;
+  align-self: flex-start;
 }
 
 .c4 {
   padding: 0 20px 10px 0;
+  min-width: 100px;
 }
 
 .c7 {
@@ -311,6 +327,14 @@ exports[`should render query summary for funnels 1`] = `
 
 .c0 {
   padding: 20px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  gap: 10px;
 }
 
 <div>
@@ -350,88 +374,90 @@ exports[`should render query summary for funnels 1`] = `
         </tr>
       </tbody>
     </table>
-    <div
-      class="c9 c10"
-    >
+    <div>
       <div
-        class="c11"
+        class="c9 c10"
       >
         <div
-          class="c12"
+          class="c11"
         >
-          <svg
-            height="15"
-            opacity="1"
-            viewBox="0 0 30 30"
-            width="15"
+          <div
+            class="c12"
           >
-            <polygon
-              fill="rgba(79,91,95,0.7)"
-              points="9.45351896 0 24.453519 15 9.45351896 30 5.55 26.096481 16.6465765 15 5.55 3.90351896"
-            />
-          </svg>
-        </div>
-        <div
-          class="c13"
-        >
+            <svg
+              height="15"
+              opacity="1"
+              viewBox="0 0 30 30"
+              width="15"
+            >
+              <polygon
+                fill="rgba(79,91,95,0.7)"
+                points="9.45351896 0 24.453519 15 9.45351896 30 5.55 26.096481 16.6465765 15 5.55 3.90351896"
+              />
+            </svg>
+          </div>
+          <div
+            class="c13"
+          >
+            <p
+              class="c5"
+              color="#4F5B5F"
+              font-weight="bold"
+            >
+              query_summary.step
+               
+              1
+            </p>
+          </div>
           <p
-            class="c5"
+            class="c14"
             color="#4F5B5F"
-            font-weight="bold"
           >
-            query_summary.step
-             
-            1
+            signups
           </p>
         </div>
-        <p
-          class="c14"
-          color="#4F5B5F"
-        >
-          signups
-        </p>
       </div>
-    </div>
-    <div
-      class="c9 c10"
-    >
       <div
-        class="c11"
+        class="c9 c10"
       >
         <div
-          class="c12"
+          class="c11"
         >
-          <svg
-            height="15"
-            opacity="1"
-            viewBox="0 0 30 30"
-            width="15"
+          <div
+            class="c12"
           >
-            <polygon
-              fill="rgba(79,91,95,0.7)"
-              points="9.45351896 0 24.453519 15 9.45351896 30 5.55 26.096481 16.6465765 15 5.55 3.90351896"
-            />
-          </svg>
-        </div>
-        <div
-          class="c13"
-        >
+            <svg
+              height="15"
+              opacity="1"
+              viewBox="0 0 30 30"
+              width="15"
+            >
+              <polygon
+                fill="rgba(79,91,95,0.7)"
+                points="9.45351896 0 24.453519 15 9.45351896 30 5.55 26.096481 16.6465765 15 5.55 3.90351896"
+              />
+            </svg>
+          </div>
+          <div
+            class="c13"
+          >
+            <p
+              class="c5"
+              color="#4F5B5F"
+              font-weight="bold"
+            >
+              query_summary.step
+               
+              2
+            </p>
+          </div>
           <p
-            class="c5"
+            class="c14"
             color="#4F5B5F"
-            font-weight="bold"
           >
-            query_summary.step
-             
-            2
+            purchases
           </p>
         </div>
-        <p
-          class="c14"
-          color="#4F5B5F"
-        >
-          purchases
-        </p>
       </div>
     </div>
   </div>

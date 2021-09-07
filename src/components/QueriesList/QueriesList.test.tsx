@@ -36,6 +36,10 @@ test('allows user to select saved query', () => {
       query,
       lastModifiedDate: '2020-09-11',
       tags: [],
+      visualization: {
+        type: 'bar',
+        chartSettings: {},
+      },
     },
   ];
 
@@ -59,6 +63,10 @@ test('allows user to sort saved query list by name', () => {
       query: {},
       lastModifiedDate: '2020-09-11',
       tags: [],
+      visualization: {
+        type: 'bar',
+        chartSettings: {},
+      },
     },
     {
       name: 'purchases',
@@ -67,6 +75,10 @@ test('allows user to sort saved query list by name', () => {
       query: {},
       lastModifiedDate: '2020-09-11',
       tags: [],
+      visualization: {
+        type: 'bar',
+        chartSettings: {},
+      },
     },
   ];
 
@@ -93,6 +105,10 @@ test('allows user to sort saved query list by update date', () => {
       query: {},
       lastModifiedDate: '2020-11-11',
       tags: [],
+      visualization: {
+        type: 'bar',
+        chartSettings: {},
+      },
     },
     {
       name: 'purchases',
@@ -101,6 +117,10 @@ test('allows user to sort saved query list by update date', () => {
       query: {},
       lastModifiedDate: '2019-10-12',
       tags: [],
+      visualization: {
+        type: 'bar',
+        chartSettings: {},
+      },
     },
   ];
 

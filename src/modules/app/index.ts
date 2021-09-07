@@ -35,6 +35,11 @@ import {
   updateWidgetSettings,
   updateVisualizationType,
   resetVisualization,
+  setQueriesFilters,
+  setQueriesSortSettings,
+  showUpdateSavedQueryModal,
+  hideUpdateSavedQueryModal,
+  composeSavedQuery,
 } from './actions';
 import {
   getConfirmation,
@@ -46,6 +51,9 @@ import {
   getVisualization,
   getBrowserScreenDimension,
   getQueryAutorun,
+  getQueriesFilters,
+  getQueriesSortSettings,
+  getUpdateSavedQueryModalVisibility,
 } from './selectors';
 
 import {
@@ -53,6 +61,8 @@ import {
   ACCEPT_CONFIRMATION,
   HIDE_EMAIL_EXTRACTION_MODAL,
   QUERY_EDITOR_MOUNTED,
+  DEFAULT_DIRECTION,
+  DEFAULT_PROPERTY,
 } from './constants';
 
 export {
@@ -101,6 +111,14 @@ export {
   updateWidgetSettings,
   updateVisualizationType,
   resetVisualization,
+  setQueriesFilters,
+  setQueriesSortSettings,
+  getQueriesFilters,
+  getQueriesSortSettings,
+  getUpdateSavedQueryModalVisibility,
+  showUpdateSavedQueryModal,
+  hideUpdateSavedQueryModal,
+  composeSavedQuery,
 };
 
 export * from './types';
@@ -110,4 +128,6 @@ export {
   ACCEPT_CONFIRMATION,
   HIDE_EMAIL_EXTRACTION_MODAL,
   QUERY_EDITOR_MOUNTED,
+  DEFAULT_DIRECTION,
+  DEFAULT_PROPERTY,
 };

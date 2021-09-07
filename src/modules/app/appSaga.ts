@@ -29,6 +29,8 @@ import {
   copyApiResourceUrl as copyApiResourceUrlAction,
   updateVisualizationType as updateVisualizationTypeAction,
   exportChartToImage as exportChartToImageAction,
+  composeSavedQuery as composeSavedQueryAction,
+  showUpdateSavedQueryModal,
 } from './actions';
 
 import { selectFirstSavedQuery } from './saga';
@@ -56,6 +58,7 @@ import {
   createCodeSnippet,
   exportToHtml,
   createResourceUrl,
+  setVisualization as setVisualizationSettings,
 } from '../../utils';
 
 import {
@@ -88,6 +91,8 @@ import {
   SET_QUERY_AUTORUN,
   QUERY_AUTORUN_KEY,
   UPDATE_VISUALIZATION,
+  VALIDATE_DASHBOARDS_CONNECTIONS,
+  COMPOSE_SAVED_QUERY,
 } from './constants';
 import { SET_CHART_SETTINGS } from '@keen.io/query-creator';
 import { savedQueryActions, savedQuerySelectors } from '../savedQuery';
@@ -489,6 +494,48 @@ export function* updateVisualizationType({
   yield pubsub.publish(UPDATE_VISUALIZATION_TYPE, { type });
 }
 
+export function* composeSavedQuery({
+  payload,
+}: ReturnType<typeof composeSavedQueryAction>) {
+  const { displayName, refreshRate, tags, name } = payload;
+
+  const query = yield select(getQuerySettings);
+  const visualizationFromState = yield select(getVisualization);
+  const visualization = setVisualizationSettings(query, visualizationFromState);
+
+  const body = {
+    query,
+    metadata: {
+      displayName,
+      visualization,
+      tags,
+    },
+    refreshRate: refreshRate * 60 * 60,
+  };
+
+  yield put(queriesActions.saveQuery({ name, body }));
+}
+
+export function* validateDashboardsConnections() {
+  const { displayName, refreshRate, tags, name } = yield select(
+    savedQuerySelectors.getSavedQuery
+  );
+
+  yield put(savedQueryActions.getDashboardsConnection(name));
+  yield take(savedQueryActions.getDashboardsConnectionDone.type);
+
+  const dashboards = yield select(savedQuerySelectors.getConnectedDashboards);
+  const isDashboardConnectionError = yield select(
+    savedQuerySelectors.getConnectedDashboardsError
+  );
+
+  if (dashboards?.length || isDashboardConnectionError) {
+    yield put(showUpdateSavedQueryModal());
+  } else {
+    yield put(composeSavedQueryAction(displayName, refreshRate, tags, name));
+  }
+}
+
 export function* appSaga() {
   yield takeLatest(APP_START, appStart);
   yield takeLatest(SET_QUERY_AUTORUN, persistAutorunSettings);
@@ -507,5 +554,10 @@ export function* appSaga() {
   yield takeLatest(DOWNLOAD_CODE_SNIPPET, downloadCodeSnippet);
   yield takeLatest(UPDATE_VISUALIZATION, updateVisualizationType);
   yield takeLatest(COPY_API_RESOURCE_URL, copyApiResourceUrl);
+  yield takeLatest(
+    VALIDATE_DASHBOARDS_CONNECTIONS,
+    validateDashboardsConnections
+  );
+  yield takeLatest(COMPOSE_SAVED_QUERY, composeSavedQuery);
   yield debounce(200, SCREEN_RESIZE, resizeBrowserScreen);
 }

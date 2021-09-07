@@ -34,6 +34,17 @@ export const SET_QUERY_AUTORUN = '@app/SET_QUERY_AUTORUN';
 export const UPDATE_CHART_SETTINGS = '@app/UPDATE_CHART_SETTINGS';
 export const UPDATE_WIDGET_SETTINGS = '@app/UPDATE_WIDGET_SETTINGS';
 export const UPDATE_VISUALIZATION = '@app/UPDATE_VISUALIZATION';
+export const SET_QUERIES_FILTERS = '@app/SET_QUERIES_FILTERS';
+export const SET_QUERIES_SORT_SETTINGS = '@app/SET_QUERIES_SORT_SETTINGS';
+export const SHOW_UPDATE_SAVED_QUERY_MODAL =
+  '@app/SHOW_UPDATE_SAVED_QUERY_MODAL';
+export const HIDE_UPDATE_SAVED_QUERY_MODAL =
+  '@app/HIDE_UPDATE_SAVED_QUERY_MODAL';
+export const COMPOSE_SAVED_QUERY = '@app/COMPOSE_SAVED_QUERY';
+export const VALIDATE_DASHBOARDS_CONNECTIONS =
+  '@app/VALIDATE_DASHBOARDS_CONNECTIONS';
 
 export const URL_STATE = 'keen_explorer_state';
 export const QUERY_AUTORUN_KEY = '@keen-explorer/query-autorun';
+export const DEFAULT_PROPERTY = 'displayName';
+export const DEFAULT_DIRECTION = 'ascending';

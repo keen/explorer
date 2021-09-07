@@ -10,6 +10,7 @@ import {
   FadeLoader,
   MousePositionedTooltip,
 } from '@keen.io/ui-core';
+import { colors } from '@keen.io/colors';
 import { Icon } from '@keen.io/icons';
 
 import TooltipContent from '../TooltipContent';
@@ -37,18 +38,16 @@ import {
   SettingsModalSource,
   shareQueryUrl,
 } from '../../modules/app';
-import { colors } from '@keen.io/colors';
-import { savedQuerySelectors } from '../../modules/savedQuery';
+import {
+  savedQueryActions,
+  savedQuerySelectors,
+} from '../../modules/savedQuery';
+import { validateDashboardsConnections } from '../../modules/app/actions';
 
 const actionsDropdownMotion = {
   initial: { opacity: 0, top: 20, left: -10 },
   animate: { opacity: 1, top: 2, left: -10 },
   exit: { opacity: 0, top: 30, left: -10 },
-};
-
-type Props = {
-  /** Save query event handler*/
-  onSaveQuery: () => void;
 };
 
 const iconVariants = {
@@ -59,7 +58,7 @@ const menuTooltip = (text: string) => (
   <TooltipContent color={colors.black[500]}>{text}</TooltipContent>
 );
 
-const EditorNavigation: FC<Props> = ({ onSaveQuery }) => {
+const EditorNavigation: FC = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const actionsContainer = useRef(null);
@@ -77,6 +76,9 @@ const EditorNavigation: FC<Props> = ({ onSaveQuery }) => {
   } = useSelector(savedQuerySelectors.getSavedQuery);
   const isSavingQuery = useSelector(getQueriesSaving);
   const isModalVisible = useSelector(getQuerySettingsModalVisibility);
+  const isConnectedDashboardsLoading = useSelector(
+    savedQuerySelectors.getConnectedDashboardsLoading
+  );
 
   const outsideActionsMenuClick = useCallback(
     (e) => {
@@ -100,6 +102,19 @@ const EditorNavigation: FC<Props> = ({ onSaveQuery }) => {
   }, [actionsMenu, actionsContainer]);
 
   const queryName = displayName ? displayName : t('editor.new_query_title');
+
+  const handleSaveQuery = () => {
+    if (!exists && !isCloned) {
+      dispatch(showQuerySettingsModal(SettingsModalSource.FIRST_QUERY_SAVE));
+    } else {
+      dispatch(validateDashboardsConnections());
+    }
+  };
+
+  useEffect(() => {
+    dispatch(savedQueryActions.resetConnectedDashboards());
+  }, []);
+
   return (
     <Container>
       <WrapperVertical>
@@ -214,19 +229,18 @@ const EditorNavigation: FC<Props> = ({ onSaveQuery }) => {
             data-testid="save-query"
             variant="secondary"
             style="solid"
-            isDisabled={isSavingQuery}
-            onClick={() => {
-              if (!exists && !isCloned) {
-                dispatch(
-                  showQuerySettingsModal(SettingsModalSource.FIRST_QUERY_SAVE)
-                );
-              } else {
-                onSaveQuery();
-              }
-            }}
-            icon={isSavingQuery && !isModalVisible && <FadeLoader />}
+            isDisabled={isSavingQuery || isConnectedDashboardsLoading}
+            onClick={handleSaveQuery}
+            icon={
+              (isSavingQuery || isConnectedDashboardsLoading) &&
+              !isModalVisible && <FadeLoader />
+            }
           >
-            <ButtonLabel>{t('editor.save_query_button')}</ButtonLabel>
+            <ButtonLabel>
+              {exists
+                ? t('editor.update_query_button')
+                : t('editor.save_query_button')}
+            </ButtonLabel>
           </Button>
         </MenuItem>
       </Menu>
