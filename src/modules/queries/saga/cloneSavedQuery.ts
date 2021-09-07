@@ -89,4 +89,5 @@ export function* cloneSavedQuery() {
   };
 
   yield put(queriesSlice.actions.saveQuery({ name, body }));
+  yield put(savedQueryActions.resetConnectedDashboards());
 }

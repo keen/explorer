@@ -145,6 +145,10 @@ describe('Scenario 1: User cloned saved query from browser view', () => {
       put(queriesSlice.actions.saveQuery({ name: clonedSavedQuery.name, body }))
     );
   });
+
+  test('resets dashboards connections', (result) => {
+    expect(result).toEqual(put(savedQueryActions.resetConnectedDashboards()));
+  });
 });
 
 describe('Scenario 2: User cloned query from editor view', () => {
@@ -244,6 +248,10 @@ describe('Scenario 2: User cloned query from editor view', () => {
     expect(result).toEqual(
       put(queriesSlice.actions.saveQuery({ name: clonedSavedQuery.name, body }))
     );
+  });
+
+  test('resets dashboards connections', (result) => {
+    expect(result).toEqual(put(savedQueryActions.resetConnectedDashboards()));
   });
 });
 
