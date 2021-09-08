@@ -66,6 +66,7 @@ const serializeVisualization = (
         type: visualization.type,
         chartSettings: camelCase(visualization.chart_settings, {
           deep: true,
+          stopPaths: ['columns_names_mapping', 'format_value'],
         }),
         widgetSettings: camelCase(visualization.widget_settings, {
           deep: true,

@@ -1,25 +1,26 @@
-import React, { FC, useContext, useState, useCallback } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { FC, useCallback, useContext, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
 import WidgetCustomization, {
+  MENU_ITEMS_ENUM,
   SerializedSettings,
-  useCustomizationSections,
   serializeInputSettings,
   serializeOutputSettings,
+  useCustomizationSections,
 } from '@keen.io/widget-customization';
 import { WidgetSettings } from '@keen.io/widgets';
 import { Query } from '@keen.io/query';
 import { Button } from '@keen.io/ui-core';
 
 import {
-  EditorActions,
-  Card,
-  NavBar,
   ActionButton,
-  SectionContainer,
-  CustomizationContainer,
+  Card,
   Container,
+  CustomizationContainer,
+  EditorActions,
+  NavBar,
+  SectionContainer,
 } from './Editor.styles';
 
 import { Creator, SectionTabs, Visualization } from './components';
@@ -30,18 +31,18 @@ import { AppContext } from '../../contexts';
 import { editorSagaActions, EditorSection } from '../../modules/editor';
 
 import {
-  queriesActions,
-  getQueryResults,
-  getQueryPerformState,
   getQueryLimitReached,
+  getQueryPerformState,
+  getQueryResults,
+  queriesActions,
 } from '../../modules/queries';
 import {
+  clearQuery,
   getVisualization,
   setVisualization,
-  clearQuery,
-  updateWidgetSettings,
-  updateVisualizationType,
   updateChartSettings as updateSettings,
+  updateVisualizationType,
+  updateWidgetSettings,
 } from '../../modules/app';
 
 import EditorNavigation from '../EditorNavigation';
@@ -68,7 +69,7 @@ const Editor: FC<Props> = ({
   upgradeSubscriptionUrl,
   onRunQuery,
 }) => {
-  const { modalContainer } = useContext(AppContext);
+  const { modalContainer, chartEventsPubSub } = useContext(AppContext);
 
   const dispatch = useDispatch();
   const { t } = useTranslation();
@@ -91,6 +92,7 @@ const Editor: FC<Props> = ({
   );
 
   const [editorSection, setEditorSection] = useState(EditorSection.QUERY);
+  const [activeMenuItem, setActiveMenuItem] = useState(null);
 
   const { themedChartSettings, themedWidgetSettings } = useApplyWidgetTheming({
     chartSettings,
@@ -108,6 +110,15 @@ const Editor: FC<Props> = ({
       themedWidgetSettings
     )
   );
+
+  useEffect(() => {
+    const widgetSettings = serializeInputSettings(
+      widgetType,
+      themedChartSettings,
+      themedWidgetSettings
+    );
+    setCustomizationSettings(widgetSettings);
+  }, [widgetType]);
 
   const updateQuery = useCallback((query: Query) => {
     dispatch(queriesActions.setQuerySettings({ settings: query }));
@@ -174,6 +185,10 @@ const Editor: FC<Props> = ({
             {queryResults && !isQueryLimitReached && (
               <Visualization
                 query={query}
+                inEditMode={
+                  activeMenuItem === MENU_ITEMS_ENUM.FORMATTING &&
+                  editorSection === EditorSection.SETTINGS
+                }
                 queryResults={queryResults}
                 widgetType={widgetType}
                 chartSettings={themedChartSettings}
@@ -200,12 +215,14 @@ const Editor: FC<Props> = ({
             <CustomizationContainer>
               <WidgetCustomization
                 widgetType={widgetType}
+                pubSub={chartEventsPubSub}
                 customizationSections={customizationSections}
                 chartSettings={widgetCustomization.chart}
                 widgetSettings={widgetCustomization.widget}
                 savedQueryName={savedQueryName}
                 onUpdateWidgetSettings={onUpdateWidgetSettings}
                 onUpdateChartSettings={onUpdateChartSettings}
+                onMenuItemChange={(menuItem) => setActiveMenuItem(menuItem)}
                 modalContainer={modalContainer}
               />
             </CustomizationContainer>

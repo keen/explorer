@@ -64,6 +64,8 @@ export class KeenExplorer {
       keenAnalysis.instance || new KeenAnalysis(keenAnalysis.config);
 
     const notificationPubSub = new PubSub();
+    const chartEventsPubSub = new PubSub();
+
     createI18n(translationSettings);
 
     const initialView = props.initialView || 'browser';
@@ -136,6 +138,7 @@ export class KeenExplorer {
                 disableTimezoneSelection,
                 enableDashboardsConnection: !!dashboardsApiUrl,
                 createDashboardUrl,
+                chartEventsPubSub,
               }}
             >
               <ToastProvider>

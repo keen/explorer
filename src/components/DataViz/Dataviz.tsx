@@ -1,4 +1,4 @@
-import React, { FC, useRef, useEffect } from 'react';
+import React, { FC, useContext, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { PickerWidgets, WidgetSettings } from '@keen.io/widget-picker';
 import { KeenDataviz } from '@keen.io/dataviz';
@@ -8,6 +8,7 @@ import { VisulizationContainer } from './DataViz.styles';
 import { isEmptyAnalysisResult } from './utils';
 import { CONTAINER_ID, DEFAULT_WIDGET_SETTINGS } from './constants';
 import { ChartSettings } from '../../types';
+import { AppContext } from '../../contexts';
 
 type Props = {
   /** Query execution results */
@@ -20,6 +21,8 @@ type Props = {
   widgetSettings: WidgetSettings;
   /** Presentation timezone */
   presentationTimezone?: string | number;
+  /** Determines if chart is in edit mode */
+  inEditMode?: boolean;
 };
 
 const Dataviz: FC<Props> = ({
@@ -28,14 +31,18 @@ const Dataviz: FC<Props> = ({
   chartSettings,
   widgetSettings,
   presentationTimezone,
+  inEditMode,
 }) => {
   const { t } = useTranslation();
   const datavizRef = useRef(null);
   const containerRef = useRef(null);
+  const { chartEventsPubSub } = useContext(AppContext);
 
   useEffect(() => {
     datavizRef.current = new KeenDataviz({
       container: containerRef.current,
+      inEditMode: inEditMode,
+      eventBus: chartEventsPubSub,
       presentationTimezone,
       type: visualization,
       settings: chartSettings,
@@ -50,7 +57,13 @@ const Dataviz: FC<Props> = ({
     } else {
       datavizRef.current.render(analysisResults);
     }
-  }, [visualization, chartSettings, widgetSettings, analysisResults]);
+  }, [
+    inEditMode,
+    visualization,
+    chartSettings,
+    widgetSettings,
+    analysisResults,
+  ]);
 
   return <VisulizationContainer id={CONTAINER_ID} ref={containerRef} />;
 };
