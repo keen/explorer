@@ -1,26 +1,26 @@
-import React, { FC, useCallback, useContext, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { FC, useContext, useState, useCallback, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
 import WidgetCustomization, {
-  MENU_ITEMS_ENUM,
   SerializedSettings,
+  useCustomizationSections,
   serializeInputSettings,
   serializeOutputSettings,
-  useCustomizationSections,
+  MENU_ITEMS_ENUM,
 } from '@keen.io/widget-customization';
 import { WidgetSettings } from '@keen.io/widgets';
 import { Query } from '@keen.io/query';
 import { Button } from '@keen.io/ui-core';
 
 import {
-  ActionButton,
-  Card,
-  Container,
-  CustomizationContainer,
   EditorActions,
+  Card,
   NavBar,
+  ActionButton,
   SectionContainer,
+  CustomizationContainer,
+  Container,
 } from './Editor.styles';
 
 import { Creator, SectionTabs, Visualization } from './components';
@@ -31,18 +31,18 @@ import { AppContext } from '../../contexts';
 import { editorSagaActions, EditorSection } from '../../modules/editor';
 
 import {
-  getQueryLimitReached,
-  getQueryPerformState,
-  getQueryResults,
   queriesActions,
+  getQueryResults,
+  getQueryPerformState,
+  getQueryLimitReached,
 } from '../../modules/queries';
 import {
-  clearQuery,
   getVisualization,
   setVisualization,
-  updateChartSettings as updateSettings,
-  updateVisualizationType,
+  clearQuery,
   updateWidgetSettings,
+  updateVisualizationType,
+  updateChartSettings as updateSettings,
 } from '../../modules/app';
 
 import EditorNavigation from '../EditorNavigation';

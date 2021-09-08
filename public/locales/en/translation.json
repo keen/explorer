@@ -410,7 +410,7 @@
     "saved_query_name_tooltip": "Click to use as Chart Title"
   },
   "widget_customization_format_value_settings": {
-    "section_title": "Values Format",
+    "section_title": "Value Format",
     "section_description": "(See in metric chart or series details popup, axis that presents values)",
     "prefix": "Prefix",
     "suffix": "Suffix",
@@ -421,7 +421,6 @@
     "select_pattern_placeholder": "Select pattern",
     "select_operations_placeholder": "Select",
     "original_data": "Original data",
-    "full_number": "(Full number)",
     "separator": "Separate groups of thousands with a comma \" , \"",
     "select_precision_first": "Select the precision first",
     "click_on_columns_to_select_data": "Click on the columns to format the data.",
