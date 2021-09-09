@@ -1,4 +1,4 @@
-import React, { FC, useContext, useState, useCallback, useEffect } from 'react';
+import React, { FC, useContext, useState, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
@@ -110,15 +110,6 @@ const Editor: FC<Props> = ({
       themedWidgetSettings
     )
   );
-
-  useEffect(() => {
-    const widgetSettings = serializeInputSettings(
-      widgetType,
-      themedChartSettings,
-      themedWidgetSettings
-    );
-    setCustomizationSettings(widgetSettings);
-  }, [widgetType]);
 
   const updateQuery = useCallback((query: Query) => {
     dispatch(queriesActions.setQuerySettings({ settings: query }));

@@ -437,7 +437,8 @@
     "time_format": "Time Format",
     "date_format": "Date Format",
     "you_will_map_property": "You will map property to the different type. Some values may not be interpreted.",
-    "select_data_type": "Select data type"
+    "select_data_type": "Select data type",
+    "select_the_single_column_to_change_the_name": "Select the single column to change the name"
   },
   "widget_customization_data_types": {
     "datetime": "datetime",
@@ -452,8 +453,8 @@
     "hidden":  "Don't show date"
   },
   "widget_customization_time_formats": {
-    "hh:mm": "12-hour clock",
-    "HH:mm": "24-hour clock",
+    "12-hour-clock": "12-hour clock",
+    "24-hour-clock": "24-hour clock",
     "hidden": "Don't show time"
   },
   "widget_customization_section": {
