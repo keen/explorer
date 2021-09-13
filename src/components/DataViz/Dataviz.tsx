@@ -65,6 +65,14 @@ const Dataviz: FC<Props> = ({
     analysisResults,
   ]);
 
+  useEffect(() => {
+    return () => {
+      if (datavizRef.current) {
+        datavizRef.current.destroy();
+      }
+    };
+  }, []);
+
   return <VisulizationContainer id={CONTAINER_ID} ref={containerRef} />;
 };
 
