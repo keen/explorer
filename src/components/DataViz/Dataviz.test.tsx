@@ -9,11 +9,12 @@ import { DEFAULT_WIDGET_SETTINGS } from './constants';
 
 const renderMock = jest.fn();
 const errorMock = jest.fn();
+const destroyMock = jest.fn();
 
 jest.mock('@keen.io/dataviz', () => {
   return {
     KeenDataviz: jest.fn().mockImplementation(() => {
-      return { render: renderMock, error: errorMock };
+      return { render: renderMock, error: errorMock, destroy: destroyMock };
     }),
   };
 });

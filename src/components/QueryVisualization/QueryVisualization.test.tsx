@@ -6,11 +6,12 @@ import QueryVisualization from './QueryVisualization';
 import { AppContext } from '../../contexts';
 
 const renderMock = jest.fn();
+const destroyMock = jest.fn();
 
 jest.mock('@keen.io/dataviz', () => {
   return {
     KeenDataviz: jest.fn().mockImplementation(() => {
-      return { render: renderMock };
+      return { render: renderMock, destroy: destroyMock };
     }),
   };
 });
