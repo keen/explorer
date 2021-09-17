@@ -1,7 +1,12 @@
 import React, { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { AnimatePresence } from 'framer-motion';
 import { BodyText } from '@keen.io/typography';
+import { Icon } from '@keen.io/icons';
+import { colors } from '@keen.io/colors';
+import { Tooltip } from '@keen.io/ui-core';
 
+import TooltipContent from '../TooltipContent';
 import {
   Timeframe,
   FunnelSteps,
@@ -9,19 +14,14 @@ import {
   StyledTable,
   Analyses,
 } from './components';
-import { transformName } from './utils';
 import {
   HintContainer,
   IconContainer,
   TooltipMotion,
   Wrapper,
 } from './QuerySummary.styles';
-import { Icon } from '@keen.io/icons';
-import { colors } from '@keen.io/colors';
-import { AnimatePresence } from 'framer-motion';
+import { transformName } from './utils';
 import { TOOLTIP_MOTION } from '../../constants';
-import { Tooltip } from '@keen.io/ui-core';
-import TooltipContent from '../TooltipContent';
 
 type Props = {
   /** Query settings */
