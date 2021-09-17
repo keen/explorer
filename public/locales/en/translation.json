@@ -105,7 +105,8 @@
     "settings_tooltip": "Query Info",
     "actions_tooltip": "Actions",
     "share_tooltip": "Share Query",
-    "query_edition_not_possible": "Query edition is not possible. The stream used in the query does not exist."
+    "query_edition_not_possible": "Query edition is not possible. The stream used in the query does not exist.",
+    "multi_analysis_tootlip": "Multi-Analysis query edition is not possible in the UI"
   },
   "browser_preview": {
     "title": "Preview",
@@ -123,11 +124,14 @@
   },
   "query_summary": {
     "analysis": "Analysis:",
+    "analyses": "Analyses:",
     "event_stream": "Event Stream:",
     "target_property": "Target Property:",
     "timeframe": "Timeframe:",
     "applied_filters": "Applied Filters:",
-    "step": "Step"
+    "step": "Step",
+    "multi_analysis": "Multi-Analysis",
+    "multi_analysis_tooltip": "This query has been created programatically by using Keen API. Multi-Analysis is not supported in the UI."
   },
   "editor": {
     "clear_query_button": "Clear",
