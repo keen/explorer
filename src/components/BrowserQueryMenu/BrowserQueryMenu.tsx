@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/camelcase */
 import React, { FC, useRef, useState, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -25,6 +26,7 @@ import {
   shareQueryUrl,
 } from '../../modules/app';
 import { getSavedQueryIsEditable } from '../../modules/savedQuery/selectors';
+import { getQuerySettings } from '../../modules/queries';
 
 const actionsDropdownMotion = {
   initial: { opacity: 0, top: 20, left: 37, translateX: '-100%' },
@@ -48,6 +50,9 @@ const BrowserQueryMenu: FC<Props> = ({ onEditQuery, onRemoveQuery }) => {
   const { t } = useTranslation();
   const actionsContainer = useRef(null);
   const isSavedQueryEditable = useSelector(getSavedQueryIsEditable);
+  const { analysis_type: analysisType }: any = useSelector(getQuerySettings);
+
+  const isMultiAnalysisQuery = analysisType === 'multi_analysis';
 
   const [actionsMenu, setActionsMenuVisibility] = useState(false);
 
@@ -76,16 +81,18 @@ const BrowserQueryMenu: FC<Props> = ({ onEditQuery, onRemoveQuery }) => {
     <Container>
       <BasicActions>
         <MousePositionedTooltip
-          isActive={!isSavedQueryEditable}
+          isActive={!isSavedQueryEditable || isMultiAnalysisQuery}
           tooltipPinPlacement="bottom-left"
           renderContent={() =>
-            t('browser_query_menu.query_edition_not_possible')
+            isMultiAnalysisQuery
+              ? t('browser_query_menu.multi_analysis_tootlip')
+              : t('browser_query_menu.query_edition_not_possible')
           }
         >
           <Button
             variant="secondary"
             onClick={onEditQuery}
-            isDisabled={!isSavedQueryEditable}
+            isDisabled={!isSavedQueryEditable || isMultiAnalysisQuery}
           >
             {t('browser_query_menu.edit_query')}
           </Button>
@@ -113,7 +120,7 @@ const BrowserQueryMenu: FC<Props> = ({ onEditQuery, onRemoveQuery }) => {
             </ActionsContainer>
           </MousePositionedTooltip>
         )}
-        {isSavedQueryEditable && (
+        {isSavedQueryEditable && !isMultiAnalysisQuery && (
           <MousePositionedTooltip
             isActive={!actionsMenu}
             tooltipPinPlacement="bottom-left"
@@ -156,6 +163,7 @@ const BrowserQueryMenu: FC<Props> = ({ onEditQuery, onRemoveQuery }) => {
                 isNewQuery={false}
                 isQueryEditable={isSavedQueryEditable}
                 isVisible={actionsMenu}
+                isMultiAnalysisQuery={isMultiAnalysisQuery}
                 isInsideQueryBrowser
                 onHideMenu={() => setActionsMenuVisibility(false)}
                 onRemoveQuery={() => {
