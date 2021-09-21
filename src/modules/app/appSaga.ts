@@ -11,6 +11,7 @@ import {
 } from 'redux-saga/effects';
 import { eventChannel } from 'redux-saga';
 import { copyToClipboard } from '@keen.io/charts-utils';
+import { SET_CHART_SETTINGS } from '@keen.io/query-creator';
 
 import {
   resizeScreen,
@@ -33,7 +34,7 @@ import {
   showUpdateSavedQueryModal,
 } from './actions';
 
-import { selectFirstSavedQuery } from './saga';
+import { changeView, selectFirstSavedQuery } from './saga';
 
 import {
   getQueryResults,
@@ -93,9 +94,10 @@ import {
   UPDATE_VISUALIZATION,
   VALIDATE_DASHBOARDS_CONNECTIONS,
   COMPOSE_SAVED_QUERY,
+  SET_VIEW_MODE,
 } from './constants';
-import { SET_CHART_SETTINGS } from '@keen.io/query-creator';
 import { savedQueryActions, savedQuerySelectors } from '../savedQuery';
+import { selectSavedQuery } from '../savedQuery/actions';
 
 const createScreenResizeChannel = () =>
   eventChannel((emitter) => {
@@ -277,7 +279,7 @@ export function* appStart({ payload }: ReturnType<typeof appStartAction>) {
   yield put(getOrganizationUsageLimits());
   yield put(queriesActions.fetchSavedQueries());
 
-  const { initialView } = payload;
+  const { initialView, savedQuery } = payload;
 
   const locationUrl = new URL(window.location.href);
   const searchParams = new URLSearchParams(locationUrl.search);
@@ -288,7 +290,16 @@ export function* appStart({ payload }: ReturnType<typeof appStartAction>) {
     yield put(loadPersistedState());
   } else if (initialView === 'browser') {
     yield take(queriesActions.getSavedQueriesSuccess.type);
-    yield selectFirstSavedQuery();
+    if (savedQuery) {
+      yield put(selectSavedQuery(savedQuery));
+    } else {
+      yield selectFirstSavedQuery();
+    }
+  } else if (initialView === 'editor') {
+    yield take(queriesActions.getSavedQueriesSuccess.type);
+    if (savedQuery) {
+      yield put(selectSavedQuery(savedQuery));
+    }
   }
 
   const { width, height } = getScreenDimensions();
@@ -559,5 +570,6 @@ export function* appSaga() {
     validateDashboardsConnections
   );
   yield takeLatest(COMPOSE_SAVED_QUERY, composeSavedQuery);
+  yield takeLatest(SET_VIEW_MODE, changeView);
   yield debounce(200, SCREEN_RESIZE, resizeBrowserScreen);
 }

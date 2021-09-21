@@ -57,3 +57,13 @@ export const TOOLTIP_MOTION = {
 };
 
 export const DEFAULT_TIMEZONE_FOR_QUERY = 'Etc/UTC';
+
+export const ROUTES: Record<string, string> = {
+  BROWSER: '/browser',
+  EDITOR: '/editor',
+};
+
+export const INITIAL_VIEWS: Record<string, string> = {
+  browser: '/browser',
+  editor: '/editor',
+};

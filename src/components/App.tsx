@@ -1,6 +1,8 @@
 // @ts-nocheck
 import React, { Component } from 'react';
 import { hot } from 'react-hot-loader/root';
+import { Route, Switch } from 'react-router-dom';
+import { push } from 'connected-react-router';
 
 import { connect, ConnectedProps } from 'react-redux';
 import { getPubSub } from '@keen.io/pubsub';
@@ -37,6 +39,7 @@ import {
   NEW_QUERY_EVENT,
   CHANGE_VIEW_EVENT,
   CACHE_AVAILABLE,
+  ROUTES,
 } from '../constants';
 
 const mapStateToProps = (state: AppState) => ({
@@ -59,6 +62,7 @@ const mapDispatchToProps = {
   createNewQuery,
   setViewMode,
   runQuery: queriesActions.runQuery,
+  push,
 };
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
@@ -131,31 +135,46 @@ class App extends Component<Props> {
   render() {
     return (
       <MainContainer>
-        {this.props.view === 'browser' && (
-          <Browser
-            onRunQuery={() => this.props.runQuery({ query: this.props.query })}
-            onSelectQuery={(queryName) => {
-              this.props.resetQueryResults();
-              this.props.selectSavedQuery(queryName, this.props.autorunQuery);
-            }}
-            onEditQuery={(queryName) => {
-              this.props.editQuery(queryName);
-            }}
+        <Switch>
+          <Route
+            exact
+            path={ROUTES.BROWSER}
+            render={() => (
+              <Browser
+                onRunQuery={() =>
+                  this.props.runQuery({ query: this.props.query })
+                }
+                onSelectQuery={(queryName) => {
+                  this.props.resetQueryResults();
+                  this.props.selectSavedQuery(
+                    queryName,
+                    this.props.autorunQuery
+                  );
+                  this.props.push('/browser?savedQuery=' + queryName);
+                }}
+                onEditQuery={(queryName) => {
+                  this.props.editQuery(queryName);
+                }}
+              />
+            )}
           />
-        )}
-        {this.props.view === 'editor' && (
-          <>
-            <Editor
-              query={this.props.query}
-              savedQueryName={this.props.savedQuery.displayName}
-              upgradeSubscriptionUrl={this.props.upgradeSubscriptionUrl}
-              onRunQuery={() =>
-                this.props.runQuery({ query: this.props.query })
-              }
-            />
-            <ExtractToEmailModal />
-          </>
-        )}
+          <Route
+            path={ROUTES.EDITOR}
+            render={() => (
+              <>
+                <Editor
+                  query={this.props.query}
+                  savedQueryName={this.props.savedQuery.displayName}
+                  upgradeSubscriptionUrl={this.props.upgradeSubscriptionUrl}
+                  onRunQuery={() =>
+                    this.props.runQuery({ query: this.props.query })
+                  }
+                />
+                <ExtractToEmailModal />
+              </>
+            )}
+          />
+        </Switch>
         <Confirm />
         <ToastNotifications />
         <QuerySettingsModal

@@ -55,11 +55,15 @@ import {
 } from './types';
 import { ChartSettings } from '../../types';
 
-export const appStart = createAction(APP_START, (initialView: ViewMode) => ({
-  payload: {
-    initialView,
-  },
-}));
+export const appStart = createAction(
+  APP_START,
+  (initialView: ViewMode, savedQuery?: string) => ({
+    payload: {
+      initialView,
+      savedQuery,
+    },
+  })
+);
 
 export const setQueryAutorun = createAction(
   SET_QUERY_AUTORUN,
