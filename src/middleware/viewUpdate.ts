@@ -1,6 +1,7 @@
 import { LOCATION_CHANGE, LocationChangeAction } from 'connected-react-router';
 import { Middleware, Action } from 'redux';
 import { Views } from '../types';
+import { ROUTES } from '../constants';
 
 /**
  * Creates route update middleware that notifies container applications
@@ -11,8 +12,8 @@ import { Views } from '../types';
  */
 
 const ROUTES_MAP: Record<string, Views> = {
-  '/browser': 'browser',
-  '/editor': 'editor',
+  [ROUTES.BROWSER]: 'browser',
+  [ROUTES.EDITOR]: 'editor',
 };
 
 export const createViewUpdateMiddleware = (updateHandler): Middleware => () => (

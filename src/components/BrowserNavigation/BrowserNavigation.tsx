@@ -15,6 +15,7 @@ import {
 } from './BrowserNavigation.styles';
 
 import { createNewQuery } from '../../modules/app';
+import { savedQueryActions } from '../../modules/savedQuery';
 
 const pulseMotion = {
   animate: {
@@ -43,7 +44,13 @@ const BrowserNavigation: FC<Props> = ({ attractNewQueryButton, children }) => {
       </Settings>
       <Actions>
         <PulseMotion {...pulseButtonProps}>
-          <Button variant="success" onClick={() => dispatch(createNewQuery())}>
+          <Button
+            variant="success"
+            onClick={() => {
+              dispatch(savedQueryActions.resetSavedQuery());
+              dispatch(createNewQuery());
+            }}
+          >
             {t('browser_navigation.new_query_button')}
           </Button>
         </PulseMotion>

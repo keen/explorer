@@ -73,7 +73,6 @@ export class KeenExplorer {
       initialViewUrl += '?savedQuery=' + savedQuery;
     }
 
-    console.log('initialViewUrl', initialViewUrl);
     const history = createMemoryHistory({
       initialIndex: 0,
       initialEntries: [initialViewUrl],

@@ -64,6 +64,6 @@ export const ROUTES: Record<string, string> = {
 };
 
 export const INITIAL_VIEWS: Record<string, string> = {
-  browser: '/browser',
-  editor: '/editor',
+  browser: ROUTES.BROWSER,
+  editor: ROUTES.EDITOR,
 };
