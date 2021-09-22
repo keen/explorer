@@ -1,4 +1,4 @@
-import React, { FC, useContext, useState, useCallback } from 'react';
+import React, { FC, useContext, useState, useCallback, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
@@ -42,6 +42,7 @@ import {
   updateWidgetSettings,
   updateVisualizationType,
   updateChartSettings as updateSettings,
+  updateQueryCreator,
 } from '../../modules/app';
 
 import EditorNavigation from '../EditorNavigation';
@@ -159,6 +160,10 @@ const Editor: FC<Props> = ({
       chart: chartSettings,
     }));
   };
+
+  useEffect(() => {
+    dispatch(updateQueryCreator(query));
+  }, [query]);
 
   return (
     <>
