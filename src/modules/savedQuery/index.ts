@@ -3,6 +3,8 @@ import {
   selectSavedQuery,
   getDashboardsConnection,
   getDashboardsConnectionDone,
+  fetchSavedQuery,
+  fetchSavedQuerySuccess,
 } from './actions';
 import { convertMilisecondsToMinutes, serializeSavedQuery } from './utils';
 import { ReducerState, ConnectedDashboard } from './types';
@@ -16,6 +18,8 @@ const savedQueryActions = {
   selectSavedQuery,
   getDashboardsConnection,
   getDashboardsConnectionDone,
+  fetchSavedQuery,
+  fetchSavedQuerySuccess,
 };
 
 const savedQueryUtils = {

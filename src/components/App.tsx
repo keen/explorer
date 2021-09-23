@@ -150,7 +150,7 @@ class App extends Component<Props> {
                     queryName,
                     this.props.autorunQuery
                   );
-                  this.props.push('/browser?savedQuery=' + queryName);
+                  this.props.push(ROUTES.BROWSER + '?savedQuery=' + queryName);
                 }}
                 onEditQuery={(queryName) => {
                   this.props.editQuery(queryName);

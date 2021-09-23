@@ -1,4 +1,4 @@
-import React, { FC, useContext, useState, useCallback, useEffect } from 'react';
+import React, { FC, useContext, useState, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
@@ -42,7 +42,6 @@ import {
   updateWidgetSettings,
   updateVisualizationType,
   updateChartSettings as updateSettings,
-  updateQueryCreator,
 } from '../../modules/app';
 
 import EditorNavigation from '../EditorNavigation';
@@ -50,7 +49,7 @@ import RunQuery from '../RunQuery';
 import ConfirmExtraction from '../ConfirmExtraction';
 import VisualizationPlaceholder from '../VisualizationPlaceholder';
 import QueryLimitReached from '../QueryLimitReached';
-import { useApplyWidgetTheming } from '../../hooks/useApplyWidgetTheming';
+import { useApplyWidgetTheming } from '../../hooks';
 
 type Props = {
   /** Query definition */
@@ -160,10 +159,6 @@ const Editor: FC<Props> = ({
       chart: chartSettings,
     }));
   };
-
-  useEffect(() => {
-    dispatch(updateQueryCreator(query));
-  }, [query]);
 
   return (
     <>

@@ -22,3 +22,16 @@ export const getDashboardsConnection = createAction(
 export const getDashboardsConnectionDone = createAction(
   'savedQuery/getDashboardsConnectionDone'
 );
+
+export const fetchSavedQuery = createAction(
+  'queries/fetchSavedQuery',
+  (queryId: string) => ({
+    payload: {
+      queryId,
+    },
+  })
+);
+
+export const fetchSavedQuerySuccess = createAction(
+  'savedQuery/fetchSavedQuerySuccess'
+);

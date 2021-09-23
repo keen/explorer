@@ -296,9 +296,11 @@ export function* appStart({ payload }: ReturnType<typeof appStartAction>) {
       yield selectFirstSavedQuery();
     }
   } else if (initialView === 'editor') {
-    yield take(queriesActions.getSavedQueriesSuccess.type);
     if (savedQuery) {
-      yield put(selectSavedQuery(savedQuery));
+      yield put(savedQueryActions.fetchSavedQuery(savedQuery));
+      yield take(savedQueryActions.fetchSavedQuerySuccess.type);
+      const query = yield select(getQuerySettings);
+      yield put(updateQueryCreator(query));
     }
   }
 

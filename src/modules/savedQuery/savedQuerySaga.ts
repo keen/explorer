@@ -4,6 +4,7 @@ import {
   selectSavedQuery,
   saveQuerySuccessHandler,
   getConnectedDashboards,
+  fetchSavedQuery,
 } from './saga';
 import { savedQueryActions } from './index';
 
@@ -17,4 +18,5 @@ export function* savedQuerySaga() {
     savedQueryActions.getDashboardsConnection.type,
     getConnectedDashboards
   );
+  yield takeLatest(savedQueryActions.fetchSavedQuery.type, fetchSavedQuery);
 }

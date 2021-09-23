@@ -3,6 +3,7 @@ import { isQueryEditable } from './isQueryEditable';
 import { selectSavedQuery } from './selectSavedQuery';
 import { saveQuerySuccessHandler } from './saveQuerySuccess';
 import { getConnectedDashboards } from './getConnectedDashboards';
+import { fetchSavedQuery } from './fetchSavedQuery';
 
 export {
   checkIfStreamsExists,
@@ -10,4 +11,5 @@ export {
   selectSavedQuery,
   saveQuerySuccessHandler,
   getConnectedDashboards,
+  fetchSavedQuery,
 };
