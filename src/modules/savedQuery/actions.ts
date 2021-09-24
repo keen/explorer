@@ -31,7 +31,3 @@ export const fetchSavedQuery = createAction(
     },
   })
 );
-
-export const fetchSavedQuerySuccess = createAction(
-  'savedQuery/fetchSavedQuerySuccess'
-);

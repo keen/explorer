@@ -295,13 +295,6 @@ export function* appStart({ payload }: ReturnType<typeof appStartAction>) {
     } else {
       yield selectFirstSavedQuery();
     }
-  } else if (initialView === 'editor') {
-    if (savedQuery) {
-      yield put(savedQueryActions.fetchSavedQuery(savedQuery));
-      yield take(savedQueryActions.fetchSavedQuerySuccess.type);
-      const query = yield select(getQuerySettings);
-      yield put(updateQueryCreator(query));
-    }
   }
 
   const { width, height } = getScreenDimensions();
