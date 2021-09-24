@@ -23,6 +23,6 @@ export const HintContainer = styled.div`
 `;
 
 export const IconContainer = styled.div`
-  line-height: 1;
+  display: inline-flex;
   cursor: pointer;
 `;
