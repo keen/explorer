@@ -36,6 +36,7 @@ exports[`should render query summary 1`] = `
 .c4 {
   padding: 0 20px 10px 0;
   min-width: 100px;
+  vertical-align: top;
 }
 
 .c7 {
@@ -281,6 +282,7 @@ exports[`should render query summary for funnels 1`] = `
 .c4 {
   padding: 0 20px 10px 0;
   min-width: 100px;
+  vertical-align: top;
 }
 
 .c7 {
@@ -500,6 +502,7 @@ exports[`should render query summary for multi-analysis 1`] = `
 .c4 {
   padding: 0 20px 10px 0;
   min-width: 100px;
+  vertical-align: top;
 }
 
 .c7 {
