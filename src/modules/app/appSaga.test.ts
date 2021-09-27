@@ -25,6 +25,11 @@ describe('createNewQuery()', () => {
   const pubsub = {
     publish: jest.fn(),
   };
+
+  test('reset saved query settings', (result) => {
+    expect(result).toEqual(put(savedQueryActions.resetSavedQuery()));
+  });
+
   test('change application view to editor', (result) => {
     expect(result).toEqual(put(setViewMode('editor')));
   });
@@ -44,10 +49,6 @@ describe('createNewQuery()', () => {
 
   test('reset visualization settings', (result) => {
     expect(result).toEqual(put(resetVisualization()));
-  });
-
-  test('reset saved query settings', (result) => {
-    expect(result).toEqual(put(savedQueryActions.resetSavedQuery()));
   });
 });
 
