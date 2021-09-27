@@ -15,6 +15,7 @@ exports[`should render <StyledTable/> 1`] = `
 .c3 {
   padding: 0 20px 10px 0;
   min-width: 100px;
+  vertical-align: top;
 }
 
 .c5 {

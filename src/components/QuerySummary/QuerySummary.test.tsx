@@ -75,3 +75,34 @@ test('should render query summary for funnels', () => {
   } = render({ querySettings });
   expect(container).toMatchSnapshot();
 });
+
+test('should render query summary for multi-analysis', () => {
+  const querySettings = {
+    query: {
+      analysisType: 'multi_analysis',
+      eventCollection: 'signups',
+      analyses: {
+        'unique users': {
+          analysisType: 'count_unique',
+          targetProperty: 'user.id',
+        },
+        'total signups': {
+          analysisType: 'count',
+        },
+      },
+      timeframe: 'this_10_days',
+      filters: [
+        {
+          operator: 'in',
+          property_name: 'geo_information.country',
+          property_type: 'String',
+          property_value: ['Poland', 'Germany', 'France'],
+        },
+      ],
+    },
+  };
+  const {
+    wrapper: { container },
+  } = render({ querySettings });
+  expect(container).toMatchSnapshot();
+});

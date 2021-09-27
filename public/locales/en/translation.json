@@ -105,7 +105,8 @@
     "settings_tooltip": "Query Info",
     "actions_tooltip": "Actions",
     "share_tooltip": "Share Query",
-    "query_edition_not_possible": "Query edition is not possible. The stream used in the query does not exist."
+    "query_edition_not_possible": "Query edition is not possible. The stream used in the query does not exist.",
+    "multi_analysis_tootlip": "Multi-Analysis query edition is not possible in the UI"
   },
   "browser_preview": {
     "title": "Preview",
@@ -123,11 +124,14 @@
   },
   "query_summary": {
     "analysis": "Analysis:",
+    "analyses": "Analyses:",
     "event_stream": "Event Stream:",
     "target_property": "Target Property:",
     "timeframe": "Timeframe:",
     "applied_filters": "Applied Filters:",
-    "step": "Step"
+    "step": "Step",
+    "multi_analysis": "Multi-Analysis",
+    "multi_analysis_tooltip": "This query has been created programatically by using Keen API. Multi-Analysis is not supported in the UI."
   },
   "editor": {
     "clear_query_button": "Clear",
@@ -167,7 +171,8 @@
     "save_query_success": "Query saved",
     "save_query_error": "We cannot save the query. There is a problem on our end.",
     "prepare_email_extraction": "Extraction in progress. You will receive an email in a few minutes.",
-    "email_extraction_error": "We were not able to process email extraction. Try again later."
+    "email_extraction_error": "We were not able to process email extraction. Try again later.",
+    "query_not_exist": "We were not able to find that query."
   },
   "query_creator_analysis": {
     "placeholder": "Select analysis type",
@@ -477,7 +482,10 @@
     "label": "Reverse Axes"
   },
   "widget_customization_metric_settings": {
-    "title": "Metric Chart Settings"
+    "title": "Metric Chart Settings",
+    "display_icon": "Display Icon",
+    "icon_style": "Icon background",
+    "icon": "Icon"
   },
   "widget_customization_axis_settings": {
     "x_axis_title": "X-Axis Title",

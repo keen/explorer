@@ -36,6 +36,7 @@ exports[`should render query summary 1`] = `
 .c4 {
   padding: 0 20px 10px 0;
   min-width: 100px;
+  vertical-align: top;
 }
 
 .c7 {
@@ -114,7 +115,7 @@ exports[`should render query summary 1`] = `
               class="c8"
               color="#4F5B5F"
             >
-              sum
+              Sum
             </p>
           </td>
         </tr>
@@ -281,6 +282,7 @@ exports[`should render query summary for funnels 1`] = `
 .c4 {
   padding: 0 20px 10px 0;
   min-width: 100px;
+  vertical-align: top;
 }
 
 .c7 {
@@ -368,7 +370,7 @@ exports[`should render query summary for funnels 1`] = `
               class="c8"
               color="#4F5B5F"
             >
-              funnel
+              Funnel
             </p>
           </td>
         </tr>
@@ -460,6 +462,132 @@ exports[`should render query summary for funnels 1`] = `
         </div>
       </div>
     </div>
+  </div>
+</div>
+`;
+
+exports[`should render query summary for multi-analysis 1`] = `
+.c5.c5.c5 {
+  margin: 0;
+  padding: 0;
+  font-family: 'Lato',sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #4F5B5F;
+  line-height: 1.2;
+  font-weight: bold;
+}
+
+.c8.c8.c8 {
+  margin: 0;
+  padding: 0;
+  font-family: 'Lato',sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #4F5B5F;
+  line-height: 1.2;
+}
+
+.c1 {
+  margin: 0;
+  padding: 0;
+  border-collapse: collapse;
+  table-layout: fixed;
+  text-align: left;
+  -webkit-align-self: flex-start;
+  -ms-flex-item-align: start;
+  align-self: flex-start;
+}
+
+.c4 {
+  padding: 0 20px 10px 0;
+  min-width: 100px;
+  vertical-align: top;
+}
+
+.c7 {
+  padding: 0 0 10px 0;
+}
+
+.c2:last-child .c3,
+.c2:last-child .c6 {
+  padding-bottom: 0;
+}
+
+.c0 {
+  padding: 20px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  gap: 10px;
+}
+
+<div>
+  <div
+    class="c0"
+  >
+    <table
+      class="c1"
+    >
+      <tbody
+        class=""
+      >
+        <tr
+          class="c2"
+        >
+          <th
+            class="c3 c4"
+          >
+            <p
+              class="c5"
+              color="#4F5B5F"
+              font-weight="bold"
+            >
+              query_summary.timeframe
+            </p>
+          </th>
+          <td
+            class="c6 c7"
+          >
+            <p
+              class="c8"
+              color="#4F5B5F"
+            >
+              this_10_days
+            </p>
+          </td>
+        </tr>
+        <tr
+          class="c2"
+        >
+          <th
+            class="c3 c4"
+          >
+            <p
+              class="c5"
+              color="#4F5B5F"
+              font-weight="bold"
+            >
+              query_summary.applied_filters
+            </p>
+          </th>
+          <td
+            class="c6 c7"
+          >
+            <p
+              class="c8"
+              color="#4F5B5F"
+            >
+              1
+            </p>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>
 `;

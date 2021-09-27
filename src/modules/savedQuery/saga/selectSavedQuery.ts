@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/camelcase */
 
-import { select, put, call } from 'redux-saga/effects';
+import { select, put, call, getContext } from 'redux-saga/effects';
 
 import { setVisualization } from '../../app';
 import {
@@ -11,6 +11,7 @@ import {
 import { convertMilisecondsToMinutes } from '../utils';
 import { isQueryEditable } from './isQueryEditable';
 import { savedQueryActions } from '../index';
+import { NOTIFICATION_MANAGER_CONTEXT } from '../../../constants';
 
 export function* selectSavedQuery({
   payload,
@@ -55,6 +56,13 @@ export function* selectSavedQuery({
 
     yield put(savedQueryActions.getDashboardsConnection(name));
   } catch (err) {
+    const notificationManager = yield getContext(NOTIFICATION_MANAGER_CONTEXT);
+    yield notificationManager.showNotification({
+      type: 'error',
+      message: 'notifications.query_not_exist',
+      showDismissButton: false,
+      autoDismiss: true,
+    });
     console.error(err);
   } finally {
     yield put(savedQueryActions.setQueryLoading(false));

@@ -49,7 +49,7 @@ import RunQuery from '../RunQuery';
 import ConfirmExtraction from '../ConfirmExtraction';
 import VisualizationPlaceholder from '../VisualizationPlaceholder';
 import QueryLimitReached from '../QueryLimitReached';
-import { useApplyWidgetTheming } from '../../hooks/useApplyWidgetTheming';
+import { useApplyWidgetTheming } from '../../hooks';
 
 type Props = {
   /** Query definition */

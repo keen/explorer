@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/camelcase */
 import React from 'react';
 import { Provider } from 'react-redux';
 import { render as rtlRender, fireEvent } from '@testing-library/react';
@@ -16,6 +17,11 @@ const render = (overProps: any = {}, overStore: any = {}) => {
   const store = mockStore({
     savedQuery: {
       isQueryEditable: true,
+    },
+    queries: {
+      settings: {
+        analysis_type: 'count',
+      },
     },
     ...overStore,
   });
@@ -133,6 +139,42 @@ describe('Scenario 2: Browser query menu - query is not editable', () => {
       wrapper: { queryByTestId },
     } = render({}, store);
     const shareQueryBtn = queryByTestId('query-settings');
+
+    expect(shareQueryBtn).toBeNull();
+  });
+});
+
+describe('Scenario 3: Browser query menu - multi-analysis query', () => {
+  const store = {
+    queries: {
+      settings: {
+        analysis_type: 'multi_analysis',
+      },
+    },
+  };
+  test('shows <BrowserQueryMenu />', () => {
+    const {
+      wrapper: { container },
+    } = render({}, store);
+    expect(container).toBeInTheDocument();
+  });
+
+  test('not allows user to edit query', () => {
+    const {
+      wrapper: { getByText },
+      props,
+    } = render({}, store);
+    const editQuery = getByText('browser_query_menu.edit_query');
+
+    fireEvent.click(editQuery);
+    expect(props.onEditQuery).not.toHaveBeenCalled();
+  });
+
+  test('share query button is not visible', () => {
+    const {
+      wrapper: { queryByTestId },
+    } = render({}, store);
+    const shareQueryBtn = queryByTestId('share-query');
 
     expect(shareQueryBtn).toBeNull();
   });

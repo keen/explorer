@@ -14,6 +14,7 @@ export const StyledBody = styled.tbody``;
 export const Label = styled.th`
   padding: 0 20px 10px 0;
   min-width: 100px;
+  vertical-align: top;
 `;
 
 export const Value = styled.td`

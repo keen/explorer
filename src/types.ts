@@ -74,10 +74,12 @@ export type TranslationsSettings = {
   };
 };
 
+export type Views = 'browser' | 'editor';
+
 export type Options = {
   container: string;
   modalContainer: string;
-  initialView: 'browser' | 'editor';
+  initialView: Views;
   upgradeSubscriptionUrl?: string;
   dashboardsApiUrl?: string;
   createDashboardUrl?: (savedQueryId: string) => string;
@@ -90,6 +92,8 @@ export type Options = {
   defaultTimezoneForQuery?: string;
   disableTimezoneSelection?: boolean;
   confirmExtractionLimit?: number;
+  onViewChange?: (view: Views) => {};
+  savedQuery?: string;
 };
 
 type ComponentSettings =

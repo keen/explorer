@@ -44,6 +44,8 @@ type Props = {
   isVisible?: boolean;
   /** Is query editable **/
   isQueryEditable?: boolean;
+  /** Is multi-analysis query */
+  isMultiAnalysisQuery?: boolean;
 };
 
 const ActionsMenu: FC<Props> = ({
@@ -51,6 +53,7 @@ const ActionsMenu: FC<Props> = ({
   isInsideQueryBrowser,
   isVisible,
   isQueryEditable = true,
+  isMultiAnalysisQuery = false,
   onRemoveQuery,
   onHideMenu,
 }) => {
@@ -125,7 +128,7 @@ const ActionsMenu: FC<Props> = ({
               {t('actions_menu.new_query')}
             </DropdownMenu.Item>
           )}
-          {!isNewQuery && (
+          {!isNewQuery && !isMultiAnalysisQuery && (
             <DropdownMenu.Item
               onClick={() => {
                 dispatch(queriesActions.cloneSavedQuery());
