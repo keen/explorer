@@ -171,7 +171,8 @@
     "save_query_success": "Query saved",
     "save_query_error": "We cannot save the query. There is a problem on our end.",
     "prepare_email_extraction": "Extraction in progress. You will receive an email in a few minutes.",
-    "email_extraction_error": "We were not able to process email extraction. Try again later."
+    "email_extraction_error": "We were not able to process email extraction. Try again later.",
+    "query_not_exist": "We were not able to find that query."
   },
   "query_creator_analysis": {
     "placeholder": "Select analysis type",

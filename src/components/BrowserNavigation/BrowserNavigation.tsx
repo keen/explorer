@@ -43,7 +43,12 @@ const BrowserNavigation: FC<Props> = ({ attractNewQueryButton, children }) => {
       </Settings>
       <Actions>
         <PulseMotion {...pulseButtonProps}>
-          <Button variant="success" onClick={() => dispatch(createNewQuery())}>
+          <Button
+            variant="success"
+            onClick={() => {
+              dispatch(createNewQuery());
+            }}
+          >
             {t('browser_navigation.new_query_button')}
           </Button>
         </PulseMotion>
