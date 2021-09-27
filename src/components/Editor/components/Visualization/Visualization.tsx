@@ -28,6 +28,8 @@ type Props = {
     chartSettings: ChartSettings;
     widgetSettings: Record<string, any>;
   }) => void;
+  /** Determines if chart is in edit mode */
+  inEditMode?: boolean;
 };
 
 const Visualization: FC<Props> = ({
@@ -37,6 +39,7 @@ const Visualization: FC<Props> = ({
   query,
   queryResults,
   onChangeVisualization,
+  inEditMode,
 }) => {
   const widgets = useMemo(() => getAvailableWidgets(query), [queryResults]);
 
@@ -77,6 +80,7 @@ const Visualization: FC<Props> = ({
       {widgets.includes(widgetType) && (
         <QueryVisualization
           widgetType={widgetType}
+          inEditMode={inEditMode}
           chartSettings={chartSettings}
           widgetSettings={widgetSettings}
           queryResults={queryResults}

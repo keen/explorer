@@ -20,6 +20,8 @@ type Props = {
   chartSettings: ChartSettings;
   /** Widget settings */
   widgetSettings: WidgetSettings;
+  /** Determines if chart is in edit mode */
+  inEditMode?: boolean;
 };
 
 const QueryVisualization: FC<Props> = ({
@@ -27,6 +29,7 @@ const QueryVisualization: FC<Props> = ({
   chartSettings,
   widgetSettings,
   widgetType,
+  inEditMode,
 }) => {
   const useDataviz = widgetType !== 'json';
 
@@ -50,6 +53,7 @@ const QueryVisualization: FC<Props> = ({
       {useDataviz ? (
         <DataViz
           analysisResults={queryResults}
+          inEditMode={inEditMode}
           chartSettings={chartSettings}
           widgetSettings={widgetSettings}
           presentationTimezone={getPresentationTimezone(queryResults)}

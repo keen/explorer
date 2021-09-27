@@ -13,6 +13,7 @@ const AppContext = React.createContext<{
   datavizSettings: DatavizSettings;
   defaultTimezoneForQuery;
   disableTimezoneSelection;
+  chartEventsPubSub: PubSub;
 }>({
   keenAnalysis: null,
   modalContainer: null,
@@ -23,6 +24,7 @@ const AppContext = React.createContext<{
   datavizSettings: {},
   defaultTimezoneForQuery: null,
   disableTimezoneSelection: null,
+  chartEventsPubSub: null,
 });
 
 export default AppContext;
