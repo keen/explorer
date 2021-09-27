@@ -7,6 +7,7 @@ import WidgetCustomization, {
   useCustomizationSections,
   serializeInputSettings,
   serializeOutputSettings,
+  MENU_ITEMS_ENUM,
 } from '@keen.io/widget-customization';
 import { WidgetSettings } from '@keen.io/widgets';
 import { Query } from '@keen.io/query';
@@ -68,7 +69,7 @@ const Editor: FC<Props> = ({
   upgradeSubscriptionUrl,
   onRunQuery,
 }) => {
-  const { modalContainer } = useContext(AppContext);
+  const { modalContainer, chartEventsPubSub } = useContext(AppContext);
 
   const dispatch = useDispatch();
   const { t } = useTranslation();
@@ -91,6 +92,7 @@ const Editor: FC<Props> = ({
   );
 
   const [editorSection, setEditorSection] = useState(EditorSection.QUERY);
+  const [activeMenuItem, setActiveMenuItem] = useState(null);
 
   const { themedChartSettings, themedWidgetSettings } = useApplyWidgetTheming({
     chartSettings,
@@ -174,6 +176,10 @@ const Editor: FC<Props> = ({
             {queryResults && !isQueryLimitReached && (
               <Visualization
                 query={query}
+                inEditMode={
+                  activeMenuItem === MENU_ITEMS_ENUM.FORMATTING &&
+                  editorSection === EditorSection.SETTINGS
+                }
                 queryResults={queryResults}
                 widgetType={widgetType}
                 chartSettings={themedChartSettings}
@@ -200,12 +206,14 @@ const Editor: FC<Props> = ({
             <CustomizationContainer>
               <WidgetCustomization
                 widgetType={widgetType}
+                pubSub={chartEventsPubSub}
                 customizationSections={customizationSections}
                 chartSettings={widgetCustomization.chart}
                 widgetSettings={widgetCustomization.widget}
                 savedQueryName={savedQueryName}
                 onUpdateWidgetSettings={onUpdateWidgetSettings}
                 onUpdateChartSettings={onUpdateChartSettings}
+                onMenuItemChange={(menuItem) => setActiveMenuItem(menuItem)}
                 modalContainer={modalContainer}
               />
             </CustomizationContainer>
