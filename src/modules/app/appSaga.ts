@@ -113,13 +113,13 @@ const createScreenResizeChannel = () =>
   });
 
 export function* createNewQuery() {
+  yield put(savedQueryActions.resetSavedQuery());
   yield put(setViewMode('editor'));
   const pubsub = yield getContext(PUBSUB_CONTEXT);
   yield pubsub.publish(NEW_QUERY_EVENT);
 
   yield put(queriesActions.resetQueryResults());
   yield put(resetVisualization());
-  yield put(savedQueryActions.resetSavedQuery());
 }
 
 export function* clearQuery() {
