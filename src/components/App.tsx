@@ -136,44 +136,34 @@ class App extends Component<Props> {
     return (
       <MainContainer>
         <Switch>
-          <Route
-            exact
-            path={ROUTES.BROWSER}
-            render={() => (
-              <Browser
+          <Route exact path={ROUTES.BROWSER}>
+            <Browser
+              onRunQuery={() =>
+                this.props.runQuery({ query: this.props.query })
+              }
+              onSelectQuery={(queryName) => {
+                this.props.resetQueryResults();
+                this.props.selectSavedQuery(queryName, this.props.autorunQuery);
+                this.props.push(ROUTES.BROWSER + '?savedQuery=' + queryName);
+              }}
+              onEditQuery={(queryName) => {
+                this.props.editQuery(queryName);
+              }}
+            />
+          </Route>
+          <Route path={ROUTES.EDITOR}>
+            <>
+              <Editor
+                query={this.props.query}
+                savedQueryName={this.props.savedQuery.displayName}
+                upgradeSubscriptionUrl={this.props.upgradeSubscriptionUrl}
                 onRunQuery={() =>
                   this.props.runQuery({ query: this.props.query })
                 }
-                onSelectQuery={(queryName) => {
-                  this.props.resetQueryResults();
-                  this.props.selectSavedQuery(
-                    queryName,
-                    this.props.autorunQuery
-                  );
-                  this.props.push(ROUTES.BROWSER + '?savedQuery=' + queryName);
-                }}
-                onEditQuery={(queryName) => {
-                  this.props.editQuery(queryName);
-                }}
               />
-            )}
-          />
-          <Route
-            path={ROUTES.EDITOR}
-            render={() => (
-              <>
-                <Editor
-                  query={this.props.query}
-                  savedQueryName={this.props.savedQuery.displayName}
-                  upgradeSubscriptionUrl={this.props.upgradeSubscriptionUrl}
-                  onRunQuery={() =>
-                    this.props.runQuery({ query: this.props.query })
-                  }
-                />
-                <ExtractToEmailModal />
-              </>
-            )}
-          />
+              <ExtractToEmailModal />
+            </>
+          </Route>
         </Switch>
         <Confirm />
         <ToastNotifications />
