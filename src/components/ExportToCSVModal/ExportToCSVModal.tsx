@@ -1,4 +1,4 @@
-import React, { FC, useContext } from 'react';
+import React, { FC, useContext, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { transparentize } from 'polished';
@@ -14,12 +14,17 @@ import {
 } from '@keen.io/ui-core';
 import { colors } from '@keen.io/colors';
 import { BodyText } from '@keen.io/typography';
+import { parseQuery } from '@keen.io/parser';
+import { DataExport } from '@keen.io/data-export';
 
 import {
   dataExportActions,
   dataExportSelectors,
 } from '../../modules/dataExport';
 import { AppContext } from '../../contexts';
+import { getQueryResults } from '../../modules/queries';
+import { exportToCsv } from '../../utils';
+import { getVisualization } from '../../modules/app';
 
 import {
   ModalBody,
@@ -48,13 +53,37 @@ const ExportToCSVModal: FC = () => {
 
   const [activeTab, setActiveTab] = React.useState(TabOptions[0].id);
 
-  // todo - get real data
-  const data = [
-    ['author_book', 'value', 'percentage value'],
-    ['Edwidge Danticat | Love, Anger, Madness', 97, '11.6%'],
-    ['George R. R. Martin | Game of Thrones', 730, '87.6%'],
-    ['Stephen King | The Shining', 6, '0.7%'],
-  ];
+  const [rawData, setRawData] = useState([[]]);
+  const [visualizationData, setVisualizationData] = useState([[]]);
+
+  const queryResults = useSelector(getQueryResults);
+  const { type, chartSettings } = useSelector(getVisualization);
+
+  useEffect(() => {
+    if (queryResults) {
+      const { data, keys } = parseQuery(queryResults);
+      setRawData(DataExport.exportRawData({ keys, data }));
+      const dataTest = {
+        query: queryResults.query,
+        chartSettings: {
+          ...chartSettings,
+          data,
+          keys,
+        },
+        widgetType: type as any,
+      };
+      setVisualizationData(DataExport.exportVisualizationData(dataTest));
+    }
+  }, [queryResults, activeTab]);
+
+  const onExportToCSV = () => {
+    if (activeTab === 'visualizationData') {
+      exportToCsv({ data: visualizationData });
+    } else if (activeTab === 'rawData') {
+      exportToCsv({ data: rawData });
+    }
+    dispatch(dataExportActions.showCSVExportModal(false));
+  };
 
   return (
     <Portal modalContainer={modalContainer}>
@@ -81,7 +110,11 @@ const ExportToCSVModal: FC = () => {
                       {t('export_CSV.visualization_data_info')}
                     </BodyText>
                   </TabDescription>
-                  <Table data={data} columnLimit={3} rowLimit={3} />
+                  <Table
+                    data={visualizationData}
+                    columnLimit={3}
+                    rowLimit={3}
+                  />
                 </div>
               )}
               {activeTab === 'rawData' && (
@@ -94,7 +127,7 @@ const ExportToCSVModal: FC = () => {
                       {t('export_CSV.raw_data_info')}
                     </BodyText>
                   </TabDescription>
-                  <Table data={data} columnLimit={3} rowLimit={3} />
+                  <Table data={rawData} columnLimit={6} rowLimit={3} />
                 </div>
               )}
             </ModalBody>
@@ -105,7 +138,7 @@ const ExportToCSVModal: FC = () => {
                   variant="secondary"
                   style="solid"
                   onClick={() => {
-                    onClose();
+                    onExportToCSV();
                   }}
                 >
                   {t('export_CSV.export_csv')}

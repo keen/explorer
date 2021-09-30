@@ -121,8 +121,8 @@ describe('Scenario 1 - Query is editable', () => {
     expect(store.getActions()).toMatchInlineSnapshot(`
       Array [
         Object {
-          "payload": undefined,
-          "type": "dataExport/exportDataToCSV",
+          "payload": true,
+          "type": "dataExport/showCSVExportModal",
         },
       ]
     `);

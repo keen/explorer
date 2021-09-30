@@ -110,7 +110,7 @@ const ActionsMenu: FC<Props> = ({
               </DropdownMenu.Item>
               <DropdownMenu.Item
                 onClick={() => {
-                  dispatch(dataExportActions.exportDataToCSV());
+                  dispatch(dataExportActions.showCSVExportModal(true));
                   onHideMenu();
                 }}
               >
