@@ -5,6 +5,7 @@ import { queriesSaga } from './modules/queries';
 import { appSaga } from './modules/app';
 import { projectSaga } from './modules/project';
 import { editorSaga } from './modules/editor';
+import { dataExportSaga } from './modules/dataExport/dataExportSaga';
 
 export default function* rootSaga() {
   yield all([
@@ -13,5 +14,6 @@ export default function* rootSaga() {
     savedQuerySaga(),
     projectSaga(),
     editorSaga(),
+    dataExportSaga(),
   ]);
 }

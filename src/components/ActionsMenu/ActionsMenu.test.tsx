@@ -78,16 +78,16 @@ describe('Scenario 1 - Query is editable', () => {
     fireEvent.click(exportImage);
 
     expect(store.getActions()).toMatchInlineSnapshot(`
-    Array [
-      Object {
-        "payload": Object {
-          "backgroundColor": "#FFFFFF",
-          "quality": 90,
+      Array [
+        Object {
+          "payload": Object {
+            "backgroundColor": "#FFFFFF",
+            "quality": 90,
+          },
+          "type": "dataExport/exportChartToImage",
         },
-        "type": "@app/EXPORT_CHART_TO_IMAGE",
-      },
-    ]
-  `);
+      ]
+    `);
   });
 
   test('allows user to export results as JSON', () => {
@@ -100,13 +100,13 @@ describe('Scenario 1 - Query is editable', () => {
     fireEvent.click(exportJson);
 
     expect(store.getActions()).toMatchInlineSnapshot(`
-    Array [
-      Object {
-        "payload": undefined,
-        "type": "@app/EXPORT_CHART_TO_JSON",
-      },
-    ]
-  `);
+      Array [
+        Object {
+          "payload": undefined,
+          "type": "dataExport/exportChartToJson",
+        },
+      ]
+    `);
   });
 
   test('allows user to export results as CSV', () => {
@@ -119,13 +119,13 @@ describe('Scenario 1 - Query is editable', () => {
     fireEvent.click(exportCsv);
 
     expect(store.getActions()).toMatchInlineSnapshot(`
-    Array [
-      Object {
-        "payload": undefined,
-        "type": "@app/EXPORT_DATA_TO_CSV",
-      },
-    ]
-  `);
+      Array [
+        Object {
+          "payload": undefined,
+          "type": "dataExport/exportDataToCSV",
+        },
+      ]
+    `);
   });
 
   test('allows user to embed HTML code', () => {
@@ -138,13 +138,13 @@ describe('Scenario 1 - Query is editable', () => {
     fireEvent.click(embedHtml);
 
     expect(store.getActions()).toMatchInlineSnapshot(`
-    Array [
-      Object {
-        "payload": undefined,
-        "type": "@app/SHOW_EMBED_MODAL",
-      },
-    ]
-  `);
+          Array [
+            Object {
+              "payload": undefined,
+              "type": "@app/SHOW_EMBED_MODAL",
+            },
+          ]
+      `);
   });
 
   test('allows user to copy API Resource', () => {
@@ -157,15 +157,15 @@ describe('Scenario 1 - Query is editable', () => {
     fireEvent.click(copyApiResource);
 
     expect(store.getActions()).toMatchInlineSnapshot(`
-    Array [
-      Object {
-        "payload": Object {
-          "config": Object {},
-        },
-        "type": "@app/COPY_API_RESOURCE_URL",
-      },
-    ]
-  `);
+          Array [
+            Object {
+              "payload": Object {
+                "config": Object {},
+              },
+              "type": "@app/COPY_API_RESOURCE_URL",
+            },
+          ]
+      `);
   });
 
   test('allows user to clone query', () => {
@@ -178,13 +178,13 @@ describe('Scenario 1 - Query is editable', () => {
     fireEvent.click(cloneQuery);
 
     expect(store.getActions()).toMatchInlineSnapshot(`
-    Array [
-      Object {
-        "payload": undefined,
-        "type": "queries/cloneSavedQuery",
-      },
-    ]
-  `);
+          Array [
+            Object {
+              "payload": undefined,
+              "type": "queries/cloneSavedQuery",
+            },
+          ]
+      `);
   });
 
   test('allows user to create new query', () => {
@@ -197,13 +197,13 @@ describe('Scenario 1 - Query is editable', () => {
     fireEvent.click(newQuery);
 
     expect(store.getActions()).toMatchInlineSnapshot(`
-    Array [
-      Object {
-        "payload": undefined,
-        "type": "@app/CREATE_NEW_QUERY",
-      },
-    ]
-  `);
+          Array [
+            Object {
+              "payload": undefined,
+              "type": "@app/CREATE_NEW_QUERY",
+            },
+          ]
+      `);
   });
 
   test("doesn't allow user to create new query inside query browser", () => {

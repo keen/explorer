@@ -42,6 +42,9 @@ export type ReducerState = {
   updateSavedQueryModal: {
     visible: boolean;
   };
+  exportToCSVModal: {
+    visible: boolean;
+  };
   view: ViewMode;
   browserScreen: {
     width: number;
