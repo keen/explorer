@@ -57,7 +57,7 @@ const ExportToCSVModal: FC = () => {
   const [visualizationData, setVisualizationData] = useState([[]]);
 
   const queryResults = useSelector(getQueryResults);
-  const { type, chartSettings } = useSelector(getVisualization);
+  const { type: widgetType, chartSettings } = useSelector(getVisualization);
 
   useEffect(() => {
     if (queryResults) {
@@ -70,7 +70,7 @@ const ExportToCSVModal: FC = () => {
           data,
           keys,
         },
-        widgetType: type as any,
+        widgetType: widgetType as any,
       };
       setVisualizationData(DataExport.exportVisualizationData(dataTest));
     }
@@ -107,14 +107,18 @@ const ExportToCSVModal: FC = () => {
                       variant="body2"
                       color={transparentize(0.5, colors.black[100])}
                     >
-                      {t('export_CSV.visualization_data_info')}
+                      {widgetType !== 'json'
+                        ? t('export_CSV.visualization_data_info')
+                        : 'Visualization data is not available for JSON'}
                     </BodyText>
                   </TabDescription>
-                  <Table
-                    data={visualizationData}
-                    columnLimit={3}
-                    rowLimit={3}
-                  />
+                  {widgetType !== 'json' && (
+                    <Table
+                      data={visualizationData}
+                      columnLimit={3}
+                      rowLimit={3}
+                    />
+                  )}
                 </div>
               )}
               {activeTab === 'rawData' && (
@@ -140,6 +144,9 @@ const ExportToCSVModal: FC = () => {
                   onClick={() => {
                     onExportToCSV();
                   }}
+                  isDisabled={
+                    widgetType === 'json' && activeTab === 'visualizationData'
+                  }
                 >
                   {t('export_CSV.export_csv')}
                 </Button>

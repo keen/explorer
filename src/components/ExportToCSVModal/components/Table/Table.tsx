@@ -26,26 +26,32 @@ const Table: FC<Props> = ({ data, rowLimit, columnLimit }) => {
 
   return (
     <div>
-      <BodyText variant="body2" color={colors.black[500]}>
-        <StyledTable>
-          <thead>
-            <tr>
-              {headerColumns.map((headerColumn, index) => (
-                <th key={index}>{headerColumn}</th>
+      <StyledTable>
+        <thead>
+          <tr>
+            {headerColumns.map((headerColumn, index) => (
+              <th key={index}>
+                <BodyText variant="body2" color={colors.black[500]}>
+                  {headerColumn}
+                </BodyText>
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {bodyRows.map((row, index) => (
+            <tr key={index + 1}>
+              {row.slice(0, columnLimit).map((column, index) => (
+                <td key={index}>
+                  <BodyText variant="body2" color={colors.black[500]}>
+                    {column}
+                  </BodyText>
+                </td>
               ))}
             </tr>
-          </thead>
-          <tbody>
-            {bodyRows.map((row, index) => (
-              <tr key={index + 1}>
-                {row.slice(0, columnLimit).map((column, index) => (
-                  <td key={index}>{column}</td>
-                ))}
-              </tr>
-            ))}
-          </tbody>
-        </StyledTable>
-      </BodyText>
+          ))}
+        </tbody>
+      </StyledTable>
       <TableInfo>
         <BodyText
           variant="body3"
