@@ -25,6 +25,7 @@ import { AppContext } from '../../contexts';
 import { getQueryResults } from '../../modules/queries';
 import { exportToCsv } from '../../utils';
 import { getVisualization } from '../../modules/app';
+import { Widget } from '../QueryVisualization/types';
 
 import {
   ModalBody,
@@ -63,18 +64,19 @@ const ExportToCSVModal: FC = () => {
     if (queryResults) {
       const { data, keys } = parseQuery(queryResults);
       setRawData(DataExport.exportRawData({ keys, data }));
-      const dataTest = {
-        query: queryResults.query,
-        chartSettings: {
-          ...chartSettings,
-          data,
-          keys,
-        },
-        widgetType: widgetType as any,
-      };
-      setVisualizationData(DataExport.exportVisualizationData(dataTest));
+      setVisualizationData(
+        DataExport.exportVisualizationData({
+          query: queryResults.query,
+          chartSettings: {
+            ...chartSettings,
+            data,
+            keys,
+          },
+          widgetType: widgetType as Widget,
+        })
+      );
     }
-  }, [queryResults, activeTab]);
+  }, [activeTab, widgetType, queryResults]);
 
   const onExportToCSV = () => {
     if (activeTab === 'visualizationData') {
@@ -109,7 +111,9 @@ const ExportToCSVModal: FC = () => {
                     >
                       {widgetType !== 'json'
                         ? t('export_CSV.visualization_data_info')
-                        : 'Visualization data is not available for JSON'}
+                        : t(
+                            'export_CSV.visualization_data_not_available_for_json'
+                          )}
                     </BodyText>
                   </TabDescription>
                   {widgetType !== 'json' && (

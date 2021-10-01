@@ -545,6 +545,7 @@
       "raw_data": "Raw Data"
     },
     "visualization_data_info": "The data format that you applied to your data will be reflected in the CSV file.",
+    "visualization_data_not_available_for_json": "Visualization data is not available for JSON",
     "raw_data_info": "The values in the CSV file will have the same format as original data.",
     "export_csv": "Export CSV",
     "cancel": "Cancel"
