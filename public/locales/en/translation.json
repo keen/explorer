@@ -538,7 +538,7 @@
     "saved_query_usage": "This Saved Query is used on the following dashboards:",
     "saved_query_update": "Charts that use this Saved Query will be updated automatically."
   },
-  "export_CSV": {
+  "export_csv": {
     "modal_title": "Exporting CSV",
     "tabs": {
       "visualization_data": "Visualization Data",
