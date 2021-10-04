@@ -1,10 +1,19 @@
-import React, { FC } from 'react';
+import React, { FC, useRef } from 'react';
 import { transparentize } from 'polished';
 import { useTranslation } from 'react-i18next';
 import { BodyText } from '@keen.io/typography';
 import { colors } from '@keen.io/colors';
 
-import { StyledTable, TableInfo } from './Table.styles';
+import { useScrollOverflowHandler } from '../../../../hooks';
+
+import {
+  StyledTable,
+  TableInfo,
+  RightShadow,
+  LeftShadow,
+  TableScroll,
+  Container,
+} from './Table.styles';
 
 type Props = {
   /** Data to export */
@@ -20,52 +29,85 @@ const Table: FC<Props> = ({ data, rowLimit, columnLimit }) => {
 
   const headerColumns = data[0].slice(0, columnLimit);
   const bodyRows = data.slice(1, rowLimit && rowLimit + 1);
+  const containerRef = useRef(null);
 
   const totalColumns = data[0].length;
   const totalRows = data.length - 1;
 
+  const {
+    overflowRight,
+    overflowLeft,
+    scrollHandler,
+  } = useScrollOverflowHandler(containerRef);
+
+  const hasLimitedData = totalRows > rowLimit || totalColumns > columnLimit;
+
+  const limitDescription = () => {
+    if (totalRows > rowLimit && totalColumns > columnLimit)
+      return t('table.showing_number_columns_and_rows_of_total', {
+        columnsNumber: columnLimit,
+        columnsTotalNumber: totalColumns,
+        rowsNumber: rowLimit,
+        rowsTotalNumber: totalRows,
+      });
+    if (totalRows > rowLimit)
+      return t('table.showing_number_rows_of_total', {
+        number: rowLimit,
+        totalNumber: totalRows,
+      });
+    if (totalColumns > columnLimit)
+      return t('table.showing_number_columns_of_total', {
+        number: columnLimit,
+        totalNumber: totalColumns,
+      });
+  };
+
   return (
-    <div>
-      <StyledTable>
-        <thead>
-          <tr>
-            {headerColumns.map((headerColumn, index) => (
-              <th key={index}>
-                <BodyText variant="body2" color={colors.black[500]}>
-                  {headerColumn}
-                </BodyText>
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {bodyRows.map((row, index) => (
-            <tr key={index + 1}>
-              {row.slice(0, columnLimit).map((column, index) => (
-                <td key={index}>
-                  <BodyText variant="body2" color={colors.black[500]}>
-                    {column}
-                  </BodyText>
-                </td>
+    <>
+      <Container>
+        <TableScroll onScroll={scrollHandler} ref={containerRef}>
+          <StyledTable>
+            <thead>
+              <tr>
+                {headerColumns.map((headerColumn, index) => (
+                  <th key={index}>
+                    <BodyText variant="body2" color={colors.black[500]}>
+                      {headerColumn}
+                    </BodyText>
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {bodyRows.map((row, index) => (
+                <tr key={index + 1}>
+                  {row.slice(0, columnLimit).map((column, index) => (
+                    <td key={index}>
+                      <BodyText variant="body2" color={colors.black[500]}>
+                        {column}
+                      </BodyText>
+                    </td>
+                  ))}
+                </tr>
               ))}
-            </tr>
-          ))}
-        </tbody>
-      </StyledTable>
-      <TableInfo>
-        <BodyText
-          variant="body3"
-          fontWeight={'normal'}
-          color={transparentize(0.5, colors.black[100])}
-        >
-          {totalRows > rowLimit &&
-            t('table.rows_number', { number: totalRows })}
-          {totalRows > rowLimit && totalColumns > columnLimit && ' x '}
-          {totalColumns > columnLimit &&
-            t('table.columns_number', { number: totalColumns })}
-        </BodyText>
-      </TableInfo>
-    </div>
+            </tbody>
+          </StyledTable>
+        </TableScroll>
+        {overflowLeft && <RightShadow />}
+        {overflowRight && <LeftShadow />}
+      </Container>
+      {hasLimitedData && (
+        <TableInfo>
+          <BodyText
+            variant="body3"
+            fontWeight={'normal'}
+            color={transparentize(0.5, colors.black[100])}
+          >
+            {limitDescription()}
+          </BodyText>
+        </TableInfo>
+      )}
+    </>
   );
 };
 

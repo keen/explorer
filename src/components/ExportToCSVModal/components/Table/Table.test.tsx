@@ -39,15 +39,17 @@ test('limits table columns', () => {
 test('displays message about total columns number', () => {
   const { queryByText } = rtlRender(<Table data={data} columnLimit={1} />);
 
-  const lastColumnHeader = queryByText('table.columns_number');
+  const limitedColumnsInfo = queryByText(
+    'table.showing_number_columns_of_total'
+  );
 
-  expect(lastColumnHeader).toBeInTheDocument();
+  expect(limitedColumnsInfo).toBeInTheDocument();
 });
 
 test('displays message about total rows number', () => {
   const { queryByText } = rtlRender(<Table data={data} rowLimit={2} />);
 
-  const lastColumnHeader = queryByText('table.rows_number');
+  const limitedRowsInfo = queryByText('table.showing_number_rows_of_total');
 
-  expect(lastColumnHeader).toBeInTheDocument();
+  expect(limitedRowsInfo).toBeInTheDocument();
 });

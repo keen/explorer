@@ -12,5 +12,5 @@ export const FooterButtonsWrapper = styled.div`
 `;
 
 export const TabDescription = styled.div`
-  margin: 20px 0;
+  margin: 20px 0 10px 0;
 `;

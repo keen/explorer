@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { transparentize } from 'polished';
 import { useTranslation } from 'react-i18next';
 
 import {
@@ -104,31 +103,25 @@ const ExportToCSV = () => {
         {activeTab === 'visualizationData' && (
           <div>
             <TabDescription>
-              <BodyText
-                variant="body2"
-                color={transparentize(0.5, colors.black[100])}
-              >
+              <BodyText variant="body2" color={colors.black[100]}>
                 {widgetType !== 'json'
                   ? t('export_csv.visualization_data_info')
                   : t('export_csv.visualization_data_not_available_for_json')}
               </BodyText>
             </TabDescription>
             {widgetType !== 'json' && (
-              <Table data={visualizationData} columnLimit={3} rowLimit={3} />
+              <Table data={visualizationData} rowLimit={3} />
             )}
           </div>
         )}
         {activeTab === 'rawData' && (
           <div>
             <TabDescription>
-              <BodyText
-                variant="body2"
-                color={transparentize(0.5, colors.black[100])}
-              >
+              <BodyText variant="body2" color={colors.black[100]}>
                 {t('export_csv.raw_data_info')}
               </BodyText>
             </TabDescription>
-            <Table data={rawData} columnLimit={6} rowLimit={3} />
+            <Table data={rawData} rowLimit={3} />
           </div>
         )}
       </ModalBody>

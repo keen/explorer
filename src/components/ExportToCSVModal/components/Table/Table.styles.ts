@@ -16,3 +16,32 @@ export const StyledTable = styled.table`
 export const TableInfo = styled.div`
   margin-top: 5px;
 `;
+
+export const RightShadow = styled.div`
+  height: 100%;
+  width: 10px;
+  background: transparent;
+  position: absolute;
+  top: 0;
+  left: -10px;
+  box-shadow: 0 4px 8px ${colors.gray['500']};
+`;
+
+export const LeftShadow = styled.div`
+  height: 100%;
+  width: 10px;
+  background: transparent;
+  position: absolute;
+  top: 0;
+  right: -10px;
+  box-shadow: 0 -4px 8px ${colors.gray['500']};
+`;
+
+export const Container = styled.div`
+  position: relative;
+  overflow: hidden;
+`;
+
+export const TableScroll = styled.div`
+  overflow: scroll;
+`;

@@ -551,7 +551,8 @@
     "cancel": "Cancel"
   },
   "table": {
-    "rows_number": "{{number}} rows",
-    "columns_number": "{{number}} columns"
+    "showing_number_rows_of_total": "Showing {{number}} of {{totalNumber}} data rows",
+    "showing_number_columns_of_total": "Showing {{number}} of {{totalNumber}} data columns",
+    "showing_number_columns_and_rows_of_total": "Showing {{columnsNumber}} of {{columnsTotalNumber}} columns and {{rowsNumber}} of {{rowsTotalNumber}} rows"
   }
 }
