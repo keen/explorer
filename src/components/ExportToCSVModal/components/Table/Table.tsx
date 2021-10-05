@@ -3,8 +3,7 @@ import { transparentize } from 'polished';
 import { useTranslation } from 'react-i18next';
 import { BodyText } from '@keen.io/typography';
 import { colors } from '@keen.io/colors';
-
-import { useScrollOverflowHandler } from '../../../../hooks';
+import { useScrollOverflowHandler } from '@keen.io/react-hooks';
 
 import {
   StyledTable,
