@@ -3,6 +3,7 @@ import { savedQueryReducer } from './modules/savedQuery';
 import { queriesReducer } from './modules/queries';
 import { projectReducer } from './modules/project';
 import { schemasReducer } from './modules/schemas';
+import { dataExportReducer } from './modules/dataExport';
 
 export default {
   app: appReducer,
@@ -10,4 +11,5 @@ export default {
   savedQuery: savedQueryReducer,
   project: projectReducer,
   schemas: schemasReducer,
+  dataExport: dataExportReducer,
 };

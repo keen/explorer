@@ -3,6 +3,7 @@ import { ReducerState as QueriesReducerState } from './queries';
 import { ReducerState as AppReducerState } from './app';
 import { ReducerState as ProjectReducerState } from './project';
 import { ReducerState as SchemasReducerState } from './schemas';
+import { ReducerState as DataExportState } from './dataExport';
 
 export type AppState = {
   app: AppReducerState;
@@ -10,4 +11,5 @@ export type AppState = {
   queries: QueriesReducerState;
   schemas: SchemasReducerState;
   project: ProjectReducerState;
+  dataExport: DataExportState;
 };

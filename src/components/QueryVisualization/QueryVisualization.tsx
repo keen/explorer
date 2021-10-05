@@ -1,6 +1,5 @@
-import React, { FC, useCallback } from 'react';
+import React, { FC } from 'react';
 import { Query } from '@keen.io/query';
-import { getOffsetFromDate } from '@keen.io/time-utils';
 import { PickerWidgets, WidgetSettings } from '@keen.io/widget-picker';
 
 import { Container, JSONContainer } from './QueryVisualization.styles';
@@ -10,6 +9,7 @@ import DataViz from '../DataViz';
 import JSONView from '../JSONView';
 
 import { ChartSettings } from '../../types';
+import { usePresentationTimezone } from '../../hooks/usePresentationTimezone';
 
 type Props = {
   /** Analysis results */
@@ -33,20 +33,7 @@ const QueryVisualization: FC<Props> = ({
 }) => {
   const useDataviz = widgetType !== 'json';
 
-  const getPresentationTimezone = useCallback(
-    (queryResults: Record<string, any> & { query?: Query }) => {
-      if ('query' in queryResults) {
-        const {
-          query: { timeframe, timezone },
-        } = queryResults;
-        if (typeof timeframe === 'string') return timezone;
-        return getOffsetFromDate(timeframe.start);
-      }
-
-      return null;
-    },
-    []
-  );
+  const { getPresentationTimezone } = usePresentationTimezone(queryResults);
 
   return (
     <Container id={CONTAINER_ID} data-testid="query-visualization">

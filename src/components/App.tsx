@@ -41,6 +41,7 @@ import {
   CACHE_AVAILABLE,
   ROUTES,
 } from '../constants';
+import { ExportToCSVModal } from './ExportToCSVModal';
 
 const mapStateToProps = (state: AppState) => ({
   savedQuery: savedQuerySelectors.getSavedQuery(state),
@@ -175,6 +176,7 @@ class App extends Component<Props> {
         />
         <EmbedWidgetModal />
         <UpdateSavedQueryModal />
+        <ExportToCSVModal />
       </MainContainer>
     );
   }
