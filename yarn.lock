@@ -1890,10 +1890,10 @@
   resolved "https://registry.yarnpkg.com/@keen.io/colors/-/colors-1.1.0.tgz#feda3fc31056cd67c9d36abfce30470b95ef6879"
   integrity sha512-ATUL4zpj6NNHZChCVfI3ellRIzfJMsYzSCqnkcd7AqZseSGVLe6A8yK0yqlzzYVtz3yunX9nDN1AMpJH2dFIfA==
 
-"@keen.io/data-export@^1.2.1":
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/@keen.io/data-export/-/data-export-1.2.1.tgz#f13ba823488db1c396b1dca9233c7d5b3a132bc8"
-  integrity sha512-D1ywuIwQzoqTW/sZQuv8kdoRoHjShoxZzodTM7+8K5b+anL9z4CUhMqT0IIc7MO0652944/4aofSHo4YCOBoxw==
+"@keen.io/data-export@^1.2.2":
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/@keen.io/data-export/-/data-export-1.2.2.tgz#07711798d487de242badf84e5c0a7eef4760e622"
+  integrity sha512-N3vnJCtyBMO19FfM59NcGenr7SQHAb6FdmKIDbY/452MVRn9b26gHDLyU8eMey0xTreosKKqfZNIWel11AyxbA==
   dependencies:
     "@keen.io/charts-utils" "^1.13.0"
     "@keen.io/parser" "^2.8.99"
