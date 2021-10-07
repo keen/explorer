@@ -1,6 +1,6 @@
 import React, { FC, useRef } from 'react';
 import { transparentize } from 'polished';
-import { useTranslation } from 'react-i18next';
+import { useTranslation, Trans } from 'react-i18next';
 import { BodyText } from '@keen.io/typography';
 import { colors } from '@keen.io/colors';
 import { useScrollOverflowHandler } from '@keen.io/react-hooks';
@@ -102,7 +102,7 @@ const Table: FC<Props> = ({ data, rowLimit, columnLimit }) => {
             fontWeight={'normal'}
             color={transparentize(0.5, colors.black[100])}
           >
-            {limitDescription()}
+            <Trans i18nKey={limitDescription()} />
           </BodyText>
         </TableInfo>
       )}

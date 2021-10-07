@@ -551,8 +551,8 @@
     "cancel": "Cancel"
   },
   "table": {
-    "showing_number_rows_of_total": "Showing {{number}} of {{totalNumber}} data rows",
-    "showing_number_columns_of_total": "Showing {{number}} of {{totalNumber}} data columns",
-    "showing_number_columns_and_rows_of_total": "Showing {{columnsNumber}} of {{columnsTotalNumber}} columns and {{rowsNumber}} of {{rowsTotalNumber}} rows"
+    "showing_number_rows_of_total": "Showing {{number}} of <strong>{{totalNumber}} data rows</strong>",
+    "showing_number_columns_of_total": "Showing {{number}} of <strong>{{totalNumber}} data columns</strong>",
+    "showing_number_columns_and_rows_of_total": "Showing {{columnsNumber}} of <strong>{{columnsTotalNumber}} columns and {{rowsNumber}} of {{rowsTotalNumber}} rows</strong>"
   }
 }
