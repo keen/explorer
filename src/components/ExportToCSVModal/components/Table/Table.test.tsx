@@ -36,20 +36,8 @@ test('limits table columns', () => {
   expect(lastColumnHeader).not.toBeInTheDocument();
 });
 
-test('displays message about total columns number', () => {
-  const { queryByText } = rtlRender(<Table data={data} columnLimit={1} />);
-
-  const limitedColumnsInfo = queryByText(
-    'table.showing_number_columns_of_total'
-  );
-
-  expect(limitedColumnsInfo).toBeInTheDocument();
-});
-
-test('displays message about total rows number', () => {
-  const { queryByText } = rtlRender(<Table data={data} rowLimit={2} />);
-
-  const limitedRowsInfo = queryByText('table.showing_number_rows_of_total');
-
-  expect(limitedRowsInfo).toBeInTheDocument();
+test('displays message about limited data', () => {
+  const { queryByTestId } = rtlRender(<Table data={data} columnLimit={1} />);
+  const limitedDataInfo = queryByTestId('limited-data-info');
+  expect(limitedDataInfo).toBeInTheDocument();
 });

@@ -26,6 +26,7 @@ import {
   FooterButtonsWrapper,
   ModalBody,
   TabDescription,
+  TabsContainer,
 } from './ExportToCSV.styles';
 
 const ExportToCSV = () => {
@@ -59,7 +60,9 @@ const ExportToCSV = () => {
     if (queryResults) {
       if (activeTab === 'rawData') {
         const { data, keys } = parseQuery(queryResults);
-        setRawData(DataExport.exportRawData({ keys, data }));
+        setRawData(
+          DataExport.exportRawData({ query: queryResults.query, keys, data })
+        );
       } else if (activeTab === 'visualizationData') {
         const { data, keys } = parseQuery(
           queryResults,
@@ -94,12 +97,14 @@ const ExportToCSV = () => {
     <>
       <ModalHeader onClose={onClose}>{t('export_csv.modal_title')}</ModalHeader>
       <ModalBody>
-        <Tabs
-          tabs={TabOptions}
-          activeTab={activeTab}
-          onClick={(id) => setActiveTab(id)}
-          type="default"
-        />
+        <TabsContainer>
+          <Tabs
+            tabs={TabOptions}
+            activeTab={activeTab}
+            onClick={(id) => setActiveTab(id)}
+            type="default"
+          />
+        </TabsContainer>
         {activeTab === 'visualizationData' && (
           <div>
             <TabDescription>
