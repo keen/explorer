@@ -26,9 +26,6 @@ import {
   SELECT_FIRST_QUERY,
   SCREEN_RESIZE,
   SET_SCREEN_DIMENSION,
-  EXPORT_CHART_TO_IMAGE,
-  EXPORT_CHART_TO_JSON,
-  EXPORT_DATA_TO_CSV,
   COPY_EMBEDDED_CODE,
   DOWNLOAD_CODE_SNIPPET,
   SHOW_EMAIL_EXTRACTION_MODAL,
@@ -176,20 +173,6 @@ export const showConfirmation = createAction(
 export const hideConfirmation = createAction(HIDE_CONFIRMATION);
 
 export const acceptConfirmation = createAction(ACCEPT_CONFIRMATION);
-
-export const exportChartToImage = createAction(
-  EXPORT_CHART_TO_IMAGE,
-  (quality?: number, backgroundColor?: string) => ({
-    payload: {
-      quality,
-      backgroundColor,
-    },
-  })
-);
-
-export const exportChartToJson = createAction(EXPORT_CHART_TO_JSON);
-
-export const exportDataToCsv = createAction(EXPORT_DATA_TO_CSV);
 
 export const showEmbedModal = createAction(SHOW_EMBED_MODAL);
 

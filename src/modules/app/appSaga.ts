@@ -29,7 +29,6 @@ import {
   appStart as appStartAction,
   copyApiResourceUrl as copyApiResourceUrlAction,
   updateVisualizationType as updateVisualizationTypeAction,
-  exportChartToImage as exportChartToImageAction,
   composeSavedQuery as composeSavedQueryAction,
   showUpdateSavedQueryModal,
 } from './actions';
@@ -37,7 +36,6 @@ import {
 import { changeView, selectFirstSavedQuery } from './saga';
 
 import {
-  getQueryResults,
   getSavedQueries,
   getOrganizationUsageLimits,
   getQuerySettings,
@@ -53,9 +51,6 @@ import {
   b64DecodeUnicode,
 } from './utils';
 import {
-  exportToImage,
-  exportToJson,
-  exportToCsv,
   createCodeSnippet,
   exportToHtml,
   createResourceUrl,
@@ -83,9 +78,6 @@ import {
   SELECT_FIRST_QUERY,
   URL_STATE,
   SCREEN_RESIZE,
-  EXPORT_CHART_TO_IMAGE,
-  EXPORT_CHART_TO_JSON,
-  EXPORT_DATA_TO_CSV,
   COPY_EMBEDDED_CODE,
   DOWNLOAD_CODE_SNIPPET,
   COPY_API_RESOURCE_URL,
@@ -98,6 +90,7 @@ import {
 } from './constants';
 import { savedQueryActions, savedQuerySelectors } from '../savedQuery';
 import { selectSavedQuery } from '../savedQuery/actions';
+import { generateFileName } from '../dataExport/saga/generateFileName';
 
 const createScreenResizeChannel = () =>
   eventChannel((emitter) => {
@@ -304,91 +297,6 @@ export function* appStart({ payload }: ReturnType<typeof appStartAction>) {
   yield spawn(watchScreenResize);
 }
 
-export function* generateFileName() {
-  const savedQuery = yield select(savedQuerySelectors.getSavedQuery);
-  const query = yield select(getQuerySettings);
-
-  let fileName = 'chart';
-  if (savedQuery?.name) {
-    fileName = `${savedQuery.name}-${Date.now()}`;
-  } else if (query?.analysis_type && query?.event_collection) {
-    fileName = `${query.analysis_type}-${query.event_collection}-${Date.now()}`;
-  }
-  return fileName;
-}
-
-export function* exportChartToImage({
-  payload,
-}: ReturnType<typeof exportChartToImageAction>) {
-  const node = document.getElementById('query-visualization');
-  if (!node) throw new Error('Query visualization container is not available');
-  const fileName = yield generateFileName();
-
-  const { quality, backgroundColor } = payload;
-
-  const notificationManager = yield getContext(NOTIFICATION_MANAGER_CONTEXT);
-
-  try {
-    exportToImage({ fileName, node, quality, backgroundColor });
-    yield notificationManager.showNotification({
-      type: 'info',
-      message: 'notifications.image_download_in_progress',
-      autoDismiss: true,
-    });
-  } catch (err) {
-    yield notificationManager.showNotification({
-      type: 'error',
-      message: 'notifications.image_download_error',
-      showDismissButton: true,
-      autoDismiss: false,
-    });
-  }
-}
-
-export function* exportChartToJson() {
-  const data = yield select(getQueryResults);
-  const fileName = yield generateFileName();
-  const notificationManager = yield getContext(NOTIFICATION_MANAGER_CONTEXT);
-
-  try {
-    exportToJson({ data, fileName });
-    yield notificationManager.showNotification({
-      type: 'info',
-      message: 'notifications.json_download_in_progress',
-      autoDismiss: true,
-    });
-  } catch (err) {
-    yield notificationManager.showNotification({
-      type: 'error',
-      message: 'notifications.json_download_error',
-      showDismissButton: true,
-      autoDismiss: false,
-    });
-  }
-}
-
-export function* exportDataToCsv() {
-  const data = yield select(getQueryResults);
-  const fileName = yield generateFileName();
-  const notificationManager = yield getContext(NOTIFICATION_MANAGER_CONTEXT);
-
-  try {
-    exportToCsv({ data, fileName });
-    yield notificationManager.showNotification({
-      type: 'info',
-      message: 'notifications.csv_download_in_progress',
-      autoDismiss: true,
-    });
-  } catch (err) {
-    yield notificationManager.showNotification({
-      type: 'error',
-      message: 'notifications.csv_download_error',
-      showDismissButton: true,
-      autoDismiss: false,
-    });
-  }
-}
-
 function* getCodeSnippet(projectId: string, readKey: string) {
   const query = yield select(getQuerySettings);
   const { type: widget, chartSettings, widgetSettings } = yield select(
@@ -553,9 +461,6 @@ export function* appSaga() {
   yield takeLatest(CLEAR_QUERY, clearQuery);
   yield takeLatest(SELECT_FIRST_QUERY, selectFirstSavedQuery);
   yield takeLatest(EDIT_QUERY, editQuery);
-  yield takeLatest(EXPORT_CHART_TO_IMAGE, exportChartToImage);
-  yield takeLatest(EXPORT_CHART_TO_JSON, exportChartToJson);
-  yield takeLatest(EXPORT_DATA_TO_CSV, exportDataToCsv);
   yield takeLatest(COPY_EMBEDDED_CODE, copyEmbeddedCode);
   yield takeLatest(DOWNLOAD_CODE_SNIPPET, downloadCodeSnippet);
   yield takeLatest(UPDATE_VISUALIZATION, updateVisualizationType);

@@ -20,9 +20,6 @@ import {
 } from './ActionsMenu.styles';
 
 import {
-  exportChartToImage,
-  exportChartToJson,
-  exportDataToCsv,
   showEmbedModal,
   copyApiResourceUrl,
   createNewQuery,
@@ -30,6 +27,7 @@ import {
 
 import { TOOLTIP_MOTION } from '../../constants';
 import { DEFAULT_IMAGE_QUALITY } from './constants';
+import { dataExportActions } from '../../modules/dataExport';
 
 type Props = {
   /** Is new query */
@@ -92,7 +90,10 @@ const ActionsMenu: FC<Props> = ({
               <DropdownMenu.Item
                 onClick={() => {
                   dispatch(
-                    exportChartToImage(DEFAULT_IMAGE_QUALITY, colors.white[500])
+                    dataExportActions.exportChartToImage(
+                      DEFAULT_IMAGE_QUALITY,
+                      colors.white[500]
+                    )
                   );
                   onHideMenu();
                 }}
@@ -101,7 +102,7 @@ const ActionsMenu: FC<Props> = ({
               </DropdownMenu.Item>
               <DropdownMenu.Item
                 onClick={() => {
-                  dispatch(exportChartToJson());
+                  dispatch(dataExportActions.exportChartToJSON());
                   onHideMenu();
                 }}
               >
@@ -109,7 +110,7 @@ const ActionsMenu: FC<Props> = ({
               </DropdownMenu.Item>
               <DropdownMenu.Item
                 onClick={() => {
-                  dispatch(exportDataToCsv());
+                  dispatch(dataExportActions.showCSVExportModal(true));
                   onHideMenu();
                 }}
               >

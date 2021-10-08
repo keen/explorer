@@ -55,6 +55,9 @@ export const initialState: ReducerState = {
   updateSavedQueryModal: {
     visible: false,
   },
+  exportToCSVModal: {
+    visible: false,
+  },
   browserScreen: {
     width: 0,
     height: 0,
