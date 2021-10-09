@@ -90,7 +90,7 @@ test('allows user to copy HTML code to clipboard', () => {
           "projectId": "projectId",
           "readKey": "readKey",
         },
-        "type": "@app/COPY_EMBEDDED_CODE",
+        "type": "app/copyEmbeddedCode",
       },
     ]
   `);
@@ -109,7 +109,7 @@ test('allows user to download HTML file', () => {
           "projectId": "projectId",
           "readKey": "readKey",
         },
-        "type": "@app/DOWNLOAD_CODE_SNIPPET",
+        "type": "app/downloadCodeSnippet",
       },
     ]
   `);
@@ -125,7 +125,7 @@ test('allows user to close modal by clicking "cancel" label', () => {
     Array [
       Object {
         "payload": undefined,
-        "type": "@app/HIDE_EMBED_MODAL",
+        "type": "app/hideEmbedModal",
       },
     ]
   `);

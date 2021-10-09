@@ -16,7 +16,6 @@ import { colors } from '@keen.io/colors';
 
 import { dataExportActions } from '../../../../modules/dataExport';
 import { getQueryResults } from '../../../../modules/queries';
-import { getVisualization } from '../../../../modules/app';
 import { Widget } from '../../../QueryVisualization/types';
 import { exportToCsv } from '../../../../utils';
 import { usePresentationTimezone } from '../../../../hooks/usePresentationTimezone';
@@ -28,6 +27,7 @@ import {
   TabDescription,
   TabsContainer,
 } from './ExportToCSV.styles';
+import { appSelectors } from '../../../../modules/app';
 
 const ExportToCSV = () => {
   const { t } = useTranslation();
@@ -54,7 +54,9 @@ const ExportToCSV = () => {
   const queryResults = useSelector(getQueryResults);
   const { getPresentationTimezone } = usePresentationTimezone(queryResults);
 
-  const { type: widgetType, chartSettings } = useSelector(getVisualization);
+  const { type: widgetType, chartSettings } = useSelector(
+    appSelectors.getVisualization
+  );
 
   useEffect(() => {
     if (queryResults) {

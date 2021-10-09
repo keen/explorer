@@ -28,10 +28,6 @@ import {
 import CacheQuery, { REFRESH_MINIMUM } from '../CacheQuery';
 
 import {
-  getQuerySettingsModalSource,
-  SettingsModalSource,
-} from '../../modules/app';
-import {
   getQueriesSaving,
   getCacheQueriesLimitExceed,
   getSavedQueries,
@@ -44,6 +40,7 @@ import { ERRORS } from '../../constants';
 
 import { slugify } from '../../utils/text';
 import { savedQuerySelectors } from '../../modules/savedQuery';
+import { appSelectors, SettingsModalSource } from '../../modules/app';
 
 type Props = {
   /** Save query event handler */
@@ -65,7 +62,7 @@ const QuerySettings: FC<Props> = ({ onSave, onClose, cacheAvailable }) => {
   const isSavingQuery = useSelector(getQueriesSaving);
   const isCacheLimited = useSelector(getCacheQueriesLimitExceed);
   const error = useSelector(getSaveQueryError);
-  const settingsSource = useSelector(getQuerySettingsModalSource);
+  const settingsSource = useSelector(appSelectors.getQuerySettingsModalSource);
   const tagsPool = useSelector(getTagsPool);
 
   const { upgradeSubscriptionUrl } = useContext(AppContext);

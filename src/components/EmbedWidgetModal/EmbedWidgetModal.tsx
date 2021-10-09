@@ -18,14 +18,8 @@ import {
   CodeWrapper,
 } from './EmbedWidgetModal.styles';
 
-import {
-  getVisualization,
-  getEmbedModalVisibility,
-  hideEmbedModal,
-  copyEmbeddedCode,
-  downloadCodeSnippet,
-} from '../../modules/app';
 import { getQuerySettings } from '../../modules/queries';
+import { appActions, appSelectors } from '../../modules/app';
 
 import { AppContext } from '../../contexts';
 import { createCodeSnippet } from '../../utils';
@@ -39,9 +33,9 @@ const EmbedWidgetModal: FC = () => {
   const { projectId, readKey } = keenAnalysis.config;
   const theme = datavizSettings.theme;
 
-  const isOpen = useSelector(getEmbedModalVisibility);
+  const isOpen = useSelector(appSelectors.getEmbedModalVisibility);
   const { type: widget, chartSettings, widgetSettings } = useSelector(
-    getVisualization
+    appSelectors.getVisualization
   );
   const query = useSelector(getQuerySettings);
 
@@ -59,7 +53,7 @@ const EmbedWidgetModal: FC = () => {
   );
 
   const closeHandler = useCallback(() => {
-    dispatch(hideEmbedModal());
+    dispatch(appActions.hideEmbedModal());
   }, []);
 
   return (
@@ -80,7 +74,7 @@ const EmbedWidgetModal: FC = () => {
                     variant="secondary"
                     style="solid"
                     onClick={() =>
-                      dispatch(copyEmbeddedCode(projectId, readKey))
+                      dispatch(appActions.copyEmbeddedCode(projectId, readKey))
                     }
                   >
                     {t('embed_widget.copy_code_button')}
@@ -91,7 +85,9 @@ const EmbedWidgetModal: FC = () => {
                     variant="secondary"
                     style="outline"
                     onClick={() =>
-                      dispatch(downloadCodeSnippet(projectId, readKey))
+                      dispatch(
+                        appActions.downloadCodeSnippet(projectId, readKey)
+                      )
                     }
                   >
                     {t('embed_widget.download_file_button')}

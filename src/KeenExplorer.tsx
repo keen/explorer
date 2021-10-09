@@ -26,7 +26,6 @@ import App from './components/App';
 import { AppContext } from './contexts';
 
 import { NotificationManager } from './modules/notifications';
-import { appStart } from './modules/app';
 
 import { Options } from './types';
 
@@ -43,6 +42,7 @@ import {
 } from './constants';
 
 import { createViewUpdateMiddleware } from './middleware';
+import { appActions } from './modules/app';
 
 export class KeenExplorer {
   constructor(props: Options) {
@@ -112,7 +112,9 @@ export class KeenExplorer {
 
     sagaMiddleware.run(rootSaga);
 
-    store.dispatch(appStart(initialView, savedQuery));
+    store.dispatch(
+      appActions.appStart({ initialView: initialView, savedQuery: savedQuery })
+    );
 
     const datavizSettings = {
       theme: extendTheme(dataviz?.theme),

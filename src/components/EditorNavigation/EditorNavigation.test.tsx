@@ -131,7 +131,7 @@ test('allows user to save query', () => {
       },
       Object {
         "payload": undefined,
-        "type": "@app/VALIDATE_DASHBOARDS_CONNECTIONS",
+        "type": "app/validateDashboardsConnections",
       },
     ]
   `);
@@ -156,7 +156,7 @@ test('opens query settings modal for not existing query', () => {
         "payload": Object {
           "source": 1,
         },
-        "type": "@app/SHOW_QUERY_SETTINGS_MODAL",
+        "type": "app/showQuerySettingsModal",
       },
     ]
   `);
@@ -179,7 +179,7 @@ test('allows user to return to the saved queries list', () => {
       },
       Object {
         "payload": undefined,
-        "type": "@app/SWITCH_TO_QUERIES_LIST",
+        "type": "app/switchToQueriesList",
       },
     ]
   `);
@@ -204,7 +204,7 @@ test('allows user to share query url', () => {
       },
       Object {
         "payload": undefined,
-        "type": "@app/SHARE_QUERY_URL",
+        "type": "app/shareQueryUrl",
       },
     ]
   `);

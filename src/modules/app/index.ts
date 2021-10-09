@@ -1,43 +1,28 @@
 import { appSaga } from './appSaga';
-import { appReducer } from './reducer';
+import { appReducer, appSlice } from './reducer';
+
 import {
-  showConfirmation,
-  hideConfirmation,
-  acceptConfirmation,
-  setVisualization,
   loadPersistedState,
-  setViewMode,
   updateQueryCreator,
   queryEditorMounted,
   notificationsMounted,
   explorerMounted,
-  showQuerySettingsModal,
-  hideQuerySettingsModal,
-  showEmbedModal,
-  hideEmbedModal,
   createNewQuery,
   switchToQueriesList,
   clearQuery,
   editQuery,
   shareQueryUrl,
   selectFirstSavedQuery,
-  appStart,
   copyEmbeddedCode,
   downloadCodeSnippet,
-  showEmailExtractionModal,
-  hideEmailExtractionModal,
   copyApiResourceUrl,
-  setQueryAutorun,
   updateChartSettings,
   updateWidgetSettings,
   updateVisualizationType,
-  resetVisualization,
-  setQueriesFilters,
-  setQueriesSortSettings,
-  showUpdateSavedQueryModal,
-  hideUpdateSavedQueryModal,
   composeSavedQuery,
+  validateDashboardsConnections,
 } from './actions';
+
 import {
   getConfirmation,
   getViewMode,
@@ -53,75 +38,48 @@ import {
   getUpdateSavedQueryModalVisibility,
 } from './selectors';
 
-import {
-  HIDE_CONFIRMATION,
-  ACCEPT_CONFIRMATION,
-  HIDE_EMAIL_EXTRACTION_MODAL,
-  QUERY_EDITOR_MOUNTED,
-  DEFAULT_DIRECTION,
-  DEFAULT_PROPERTY,
-} from './constants';
+import { DEFAULT_DIRECTION, DEFAULT_PROPERTY } from './constants';
 
-export {
-  appStart,
-  appReducer,
-  appSaga,
-  showConfirmation,
-  hideConfirmation,
-  acceptConfirmation,
-  shareQueryUrl,
-  clearQuery,
-  createNewQuery,
-  switchToQueriesList,
+const appActions = {
+  loadPersistedState,
   updateQueryCreator,
   queryEditorMounted,
   notificationsMounted,
   explorerMounted,
+  createNewQuery,
+  switchToQueriesList,
+  clearQuery,
   editQuery,
-  setViewMode,
+  shareQueryUrl,
+  selectFirstSavedQuery,
+  copyEmbeddedCode,
+  downloadCodeSnippet,
+  copyApiResourceUrl,
+  updateChartSettings,
+  updateWidgetSettings,
+  updateVisualizationType,
+  composeSavedQuery,
+  validateDashboardsConnections,
+  ...appSlice.actions,
+};
+
+const appSelectors = {
   getViewMode,
-  loadPersistedState,
-  setVisualization,
   getConfirmation,
   getBrowserScreenDimension,
   getQuerySettingsModalSource,
   getQuerySettingsModalVisibility,
   getEmbedModalVisibility,
   getVisualization,
-  showQuerySettingsModal,
-  hideQuerySettingsModal,
-  showEmbedModal,
-  hideEmbedModal,
   getExtractToEmailModalVisibility,
-  showEmailExtractionModal,
-  hideEmailExtractionModal,
-  selectFirstSavedQuery,
-  copyEmbeddedCode,
-  downloadCodeSnippet,
-  copyApiResourceUrl,
-  setQueryAutorun,
   getQueryAutorun,
-  updateChartSettings,
-  updateWidgetSettings,
-  updateVisualizationType,
-  resetVisualization,
-  setQueriesFilters,
-  setQueriesSortSettings,
   getQueriesFilters,
   getQueriesSortSettings,
   getUpdateSavedQueryModalVisibility,
-  showUpdateSavedQueryModal,
-  hideUpdateSavedQueryModal,
-  composeSavedQuery,
 };
+
+export { appReducer, appSlice, appSaga, appActions, appSelectors };
 
 export * from './types';
 
-export {
-  HIDE_CONFIRMATION,
-  ACCEPT_CONFIRMATION,
-  HIDE_EMAIL_EXTRACTION_MODAL,
-  QUERY_EDITOR_MOUNTED,
-  DEFAULT_DIRECTION,
-  DEFAULT_PROPERTY,
-};
+export { DEFAULT_DIRECTION, DEFAULT_PROPERTY };

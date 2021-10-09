@@ -103,11 +103,11 @@ test('allows user to reset query settings', () => {
       },
       Object {
         "payload": undefined,
-        "type": "@app/QUERY_EDITOR_MOUNTED",
+        "type": "app/queryEditorMounted",
       },
       Object {
         "payload": undefined,
-        "type": "@app/CLEAR_QUERY",
+        "type": "app/clearQuery",
       },
     ]
   `);
@@ -219,7 +219,7 @@ test('allows user to perform extraction to email', () => {
       },
       Object {
         "payload": undefined,
-        "type": "@app/QUERY_EDITOR_MOUNTED",
+        "type": "app/queryEditorMounted",
       },
       Object {
         "payload": undefined,

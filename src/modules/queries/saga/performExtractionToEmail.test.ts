@@ -8,15 +8,10 @@ import { performExtractionToEmail } from './performExtractionToEmail';
 import { getQuerySettings } from '../selectors';
 
 import {
-  showEmailExtractionModal,
-  hideEmailExtractionModal,
-  HIDE_EMAIL_EXTRACTION_MODAL,
-} from '../../../modules/app';
-
-import {
   NOTIFICATION_MANAGER_CONTEXT,
   KEEN_CLIENT_CONTEXT,
 } from '../../../constants';
+import { appActions } from '../../app';
 
 describe('Scenario 1: User successfully performs extraction to email', () => {
   const test = sagaHelper(performExtractionToEmail());
@@ -25,12 +20,12 @@ describe('Scenario 1: User successfully performs extraction to email', () => {
   };
 
   test('shows email extraction modal', (result) => {
-    expect(result).toEqual(put(showEmailExtractionModal()));
+    expect(result).toEqual(put(appActions.showEmailExtractionModal()));
   });
 
   test('waits for user input', (result) => {
     expect(result).toEqual(
-      take([HIDE_EMAIL_EXTRACTION_MODAL, runEmailExtraction.type])
+      take([appActions.hideEmailExtractionModal.type, runEmailExtraction.type])
     );
 
     return runEmailExtraction('email@keen.io', 100, 'application/json');
@@ -55,7 +50,7 @@ describe('Scenario 1: User successfully performs extraction to email', () => {
   });
 
   test('hides email extraction modal', (result) => {
-    expect(result).toEqual(put(hideEmailExtractionModal()));
+    expect(result).toEqual(put(appActions.hideEmailExtractionModal()));
   });
 
   test('calls API to extract to email', () => {
@@ -78,12 +73,12 @@ describe('Scenario 2: User failed to extract to email due to internal server err
   };
 
   test('shows email extraction modal', (result) => {
-    expect(result).toEqual(put(showEmailExtractionModal()));
+    expect(result).toEqual(put(appActions.showEmailExtractionModal()));
   });
 
   test('waits for user input', (result) => {
     expect(result).toEqual(
-      take([HIDE_EMAIL_EXTRACTION_MODAL, runEmailExtraction.type])
+      take([appActions.hideEmailExtractionModal.type, runEmailExtraction.type])
     );
 
     return runEmailExtraction('email@keen.io', 100, 'application/json');
@@ -112,7 +107,7 @@ describe('Scenario 2: User failed to extract to email due to internal server err
   });
 
   test('hides email extraction modal', (result) => {
-    expect(result).toEqual(put(hideEmailExtractionModal()));
+    expect(result).toEqual(put(appActions.hideEmailExtractionModal()));
   });
 
   test('shows internal server error notification', () => {
@@ -133,12 +128,12 @@ describe('Scenario 3: User failed to extract to email due to incorrect query set
   const errorBody = 'your request is missing required field';
 
   test('shows email extraction modal', (result) => {
-    expect(result).toEqual(put(showEmailExtractionModal()));
+    expect(result).toEqual(put(appActions.showEmailExtractionModal()));
   });
 
   test('waits for user input', (result) => {
     expect(result).toEqual(
-      take([HIDE_EMAIL_EXTRACTION_MODAL, runEmailExtraction.type])
+      take([appActions.hideEmailExtractionModal.type, runEmailExtraction.type])
     );
 
     return runEmailExtraction('email@keen.io', 100, 'application/json');
@@ -167,7 +162,7 @@ describe('Scenario 3: User failed to extract to email due to incorrect query set
   });
 
   test('hides email extraction modal', (result) => {
-    expect(result).toEqual(put(hideEmailExtractionModal()));
+    expect(result).toEqual(put(appActions.hideEmailExtractionModal()));
   });
 
   test('shows email extraction error notification', () => {

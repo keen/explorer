@@ -2,12 +2,13 @@
 
 import { select, put, call, getContext } from 'redux-saga/effects';
 
-import { setVisualization } from '../../app';
 import {
   SavedQueryListItem,
   queriesActions,
   getSavedQueries,
 } from '../../queries';
+import { appActions } from '../../app';
+
 import { convertMilisecondsToMinutes } from '../utils';
 import { isQueryEditable } from './isQueryEditable';
 import { savedQueryActions } from '../index';
@@ -43,7 +44,13 @@ export function* selectSavedQuery({
 
     const isEditable = yield call(isQueryEditable, query);
     yield put(savedQueryActions.setQueryEditable(isEditable));
-    yield put(setVisualization(widgetType, chartSettings, widgetSettings));
+    yield put(
+      appActions.setVisualization({
+        type: widgetType,
+        chartSettings,
+        widgetSettings,
+      })
+    );
     yield put(queriesActions.setQuerySettings({ settings: query }));
     yield put(savedQueryActions.updateSavedQuery(savedQuery));
 
