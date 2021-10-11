@@ -5,7 +5,6 @@ import {
   hideConfirmation,
   acceptConfirmation,
   setVisualization,
-  loadPersistedState,
   setViewMode,
   updateQueryCreator,
   queryEditorMounted,
@@ -53,6 +52,8 @@ import {
   getUpdateSavedQueryModalVisibility,
 } from './selectors';
 
+import { setInitialView } from './utils';
+
 import {
   HIDE_CONFIRMATION,
   ACCEPT_CONFIRMATION,
@@ -80,7 +81,6 @@ export {
   editQuery,
   setViewMode,
   getViewMode,
-  loadPersistedState,
   setVisualization,
   getConfirmation,
   getBrowserScreenDimension,
@@ -113,6 +113,7 @@ export {
   showUpdateSavedQueryModal,
   hideUpdateSavedQueryModal,
   composeSavedQuery,
+  setInitialView,
 };
 
 export * from './types';
