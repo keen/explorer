@@ -17,9 +17,7 @@ import {
   resizeScreen,
   setScreenDimension,
   resetVisualization,
-  setVisualization,
   setViewMode,
-  loadPersistedState,
   updateQueryCreator,
   setQueryAutorun,
   updateChartSettings,
@@ -33,7 +31,7 @@ import {
   showUpdateSavedQueryModal,
 } from './actions';
 
-import { changeView, selectFirstSavedQuery } from './saga';
+import { changeView, selectFirstSavedQuery, loadSharedQuery } from './saga';
 
 import {
   getSavedQueries,
@@ -42,14 +40,9 @@ import {
   queriesActions,
 } from '../queries';
 
-import { getViewMode, getVisualization } from './selectors';
+import { getVisualization } from './selectors';
 
-import {
-  getLocationUrl,
-  getScreenDimensions,
-  b64EncodeUnicode,
-  b64DecodeUnicode,
-} from './utils';
+import { getLocationUrl, getScreenDimensions, b64EncodeUnicode } from './utils';
 import {
   createCodeSnippet,
   exportToHtml,
@@ -71,10 +64,8 @@ import {
   QUERY_EDITOR_MOUNTED,
   SWITCH_TO_QUERIES_LIST,
   EDIT_QUERY,
-  NOTIFICATIONS_MOUNTED,
   UPDATE_QUERY_CREATOR,
   SHARE_QUERY_URL,
-  LOAD_STATE_FROM_URL,
   SELECT_FIRST_QUERY,
   URL_STATE,
   SCREEN_RESIZE,
@@ -159,49 +150,6 @@ export function* switchToQueriesList() {
   }
 }
 
-export function* loadStateFromUrl() {
-  try {
-    const url = new URL(window.location.href);
-    const searchParams = new URLSearchParams(url.search);
-
-    const persistedState = searchParams.get(URL_STATE);
-    const { query, savedQuery, visualization } = JSON.parse(
-      b64DecodeUnicode(persistedState)
-    );
-
-    if (savedQuery) yield put(savedQueryActions.updateSavedQuery(savedQuery));
-    if (visualization) {
-      const { type: widgetType, chartSettings, widgetSettings } = visualization;
-      yield put(setVisualization(widgetType, chartSettings, widgetSettings));
-    }
-    if (query) {
-      yield put(setViewMode('editor'));
-      yield take(QUERY_EDITOR_MOUNTED);
-      yield put(updateQueryCreator(query));
-    }
-  } catch (err) {
-    yield take(NOTIFICATIONS_MOUNTED);
-    const notificationManager = yield getContext(NOTIFICATION_MANAGER_CONTEXT);
-
-    yield notificationManager.showNotification({
-      type: 'error',
-      message: 'notifications.load_share_query_error',
-      showDismissButton: true,
-      autoDismiss: false,
-    });
-
-    const view = yield select(getViewMode);
-    if (view === 'browser') {
-      yield take(queriesActions.getSavedQueriesSuccess.type);
-      yield selectFirstSavedQuery();
-    } else {
-      yield put(savedQueryActions.resetSavedQuery());
-    }
-  } finally {
-    history.replaceState({}, '', getLocationUrl());
-  }
-}
-
 export function* shareQueryUrl() {
   const savedQuery = yield select(savedQuerySelectors.getSavedQuery);
   const query = yield select(getQuerySettings);
@@ -277,10 +225,10 @@ export function* appStart({ payload }: ReturnType<typeof appStartAction>) {
   const locationUrl = new URL(window.location.href);
   const searchParams = new URLSearchParams(locationUrl.search);
 
-  const hasPersistedState = searchParams && searchParams.get(URL_STATE);
+  const sharedQuery = searchParams && searchParams.get(URL_STATE);
 
-  if (hasPersistedState) {
-    yield put(loadPersistedState());
+  if (sharedQuery) {
+    yield call(loadSharedQuery, sharedQuery);
   } else if (initialView === 'browser') {
     yield take(queriesActions.getSavedQueriesSuccess.type);
     if (savedQuery) {
@@ -454,7 +402,6 @@ export function* appSaga() {
   yield takeLatest(APP_START, appStart);
   yield takeLatest(SET_QUERY_AUTORUN, persistAutorunSettings);
   yield takeLatest(SHARE_QUERY_URL, shareQueryUrl);
-  yield takeLatest(LOAD_STATE_FROM_URL, loadStateFromUrl);
   yield takeLatest(UPDATE_QUERY_CREATOR, updateCreator);
   yield takeLatest(CREATE_NEW_QUERY, createNewQuery);
   yield takeLatest(SWITCH_TO_QUERIES_LIST, switchToQueriesList);

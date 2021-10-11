@@ -53,6 +53,8 @@ import {
   getUpdateSavedQueryModalVisibility,
 } from './selectors';
 
+import { setInitialView } from './utils';
+
 import {
   HIDE_CONFIRMATION,
   ACCEPT_CONFIRMATION,
@@ -113,6 +115,7 @@ export {
   showUpdateSavedQueryModal,
   hideUpdateSavedQueryModal,
   composeSavedQuery,
+  setInitialView,
 };
 
 export * from './types';
