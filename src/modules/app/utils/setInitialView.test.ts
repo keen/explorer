@@ -9,7 +9,7 @@ const setup = (url: URL) => {
 
 const baseURL = 'https://keen-explorer.io';
 
-test('returns "borwser" view with connected route', () => {
+test('returns "browser" view with connected route', () => {
   setup(new URL(baseURL));
 
   expect(setInitialView('browser', undefined)).toMatchInlineSnapshot(`
