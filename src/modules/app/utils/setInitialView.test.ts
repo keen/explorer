@@ -2,7 +2,7 @@ import { setInitialView } from './setInitialView';
 
 import { URL_STATE } from '../constants';
 
-const setup = (url: URL) => {
+const setup = (url: any) => {
   delete window.location;
   window.location = url;
 };

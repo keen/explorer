@@ -286,7 +286,6 @@ export type AppActions =
   | ReturnType<typeof createNewQuery>
   | ReturnType<typeof updateQueryCreator>
   | ReturnType<typeof setViewMode>
-  | ReturnType<typeof loadPersistedState>
   | ReturnType<typeof showConfirmation>
   | ReturnType<typeof hideConfirmation>
   | ReturnType<typeof acceptConfirmation>
