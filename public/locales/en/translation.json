@@ -540,10 +540,9 @@
   },
   "export_csv": {
     "modal_title": "Exporting CSV",
-    "tabs": {
-      "visualization_data": "Visualization Data",
-      "raw_data": "Raw Data"
-    },
+    "visualization_data_tab": "Visualization Data",
+    "raw_data_tab": "Raw Data",
+    "empty_data": "The results of the analysis are empty. The CSV file cannot be exported.",
     "visualization_data_info": "The data format that you applied to your data will be reflected in the CSV file.",
     "visualization_data_not_available_for_json": "Visualization data is not available for JSON",
     "raw_data_info": "The values in the CSV file will have the same format as original data.",
