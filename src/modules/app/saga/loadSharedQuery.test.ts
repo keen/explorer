@@ -70,7 +70,7 @@ describe('Scenario 1: Successfully serializes query from URL state', () => {
   });
 });
 
-describe('Scenario 2: Error orrured during query deserialization from URL state', () => {
+describe('Scenario 2: Error occured during query deserialization from URL state', () => {
   const serializedQuery = '@invalid-state';
   const notificationManager = {
     showNotification: jest.fn(),
