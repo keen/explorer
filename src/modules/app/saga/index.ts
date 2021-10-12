@@ -9,7 +9,6 @@ import { appStart } from './appStart';
 import { resizeBrowserScreen } from './resizeBrowserScreen';
 import { watchScreenResize } from './watchScreenResize';
 import { shareQueryUrl } from './shareQueryUrl';
-import { loadStateFromUrl } from './loadStateFromUrl';
 import { updateCreator } from './updateCreator';
 import { editQuery } from './editQuery';
 import { clearQuery } from './clearQuery';
@@ -18,6 +17,7 @@ import { downloadCodeSnippet } from './downloadCodeSnippet';
 import { composeSavedQuery } from './composeSavedQuery';
 import { validateDashboardsConnections } from './validateDashboardConnections';
 import { switchToQueriesList } from './switchToQueriesList';
+import { loadSharedQuery } from './loadSharedQuery';
 
 export {
   changeView,
@@ -31,7 +31,6 @@ export {
   resizeBrowserScreen,
   watchScreenResize,
   shareQueryUrl,
-  loadStateFromUrl,
   updateCreator,
   editQuery,
   clearQuery,
@@ -40,4 +39,5 @@ export {
   composeSavedQuery,
   validateDashboardsConnections,
   switchToQueriesList,
+  loadSharedQuery,
 };

@@ -1,22 +1,23 @@
-import { getContext, put, select, take, call } from 'redux-saga/effects';
+import { put, take, getContext } from 'redux-saga/effects';
+
+import { getLocationUrl, b64DecodeUnicode } from '../utils';
+
 import { NOTIFICATION_MANAGER_CONTEXT } from '../../../constants';
+
 import { savedQueryActions } from '../../savedQuery';
-import { queriesActions } from '../../queries';
-import { URL_STATE } from '../constants';
-import { b64DecodeUnicode, getLocationUrl } from '../utils';
-import { updateQueryCreator } from '../actions';
-import { getViewMode } from '../selectors';
 import { appActions } from '../index';
-import { selectFirstSavedQuery } from './selectFirstSavedQuery';
 
-export function* loadStateFromUrl() {
+/**
+ * Flow responsible for loading shared query state to editor
+ *
+ * @param sharedQueryState - base64 encoded query state
+ * @return void
+ *
+ */
+export function* loadSharedQuery(sharedQueryState: string) {
   try {
-    const url = new URL(window.location.href);
-    const searchParams = new URLSearchParams(url.search);
-
-    const persistedState = searchParams.get(URL_STATE);
     const { query, savedQuery, visualization } = JSON.parse(
-      b64DecodeUnicode(persistedState)
+      b64DecodeUnicode(sharedQueryState)
     );
 
     if (savedQuery) yield put(savedQueryActions.updateSavedQuery(savedQuery));
@@ -31,9 +32,8 @@ export function* loadStateFromUrl() {
       );
     }
     if (query) {
-      yield put(appActions.setViewMode({ view: 'editor' }));
       yield take(appActions.queryEditorMounted.type);
-      yield put(updateQueryCreator(query));
+      yield put(appActions.updateQueryCreator(query));
     }
   } catch (err) {
     yield take(appActions.notificationsMounted.type);
@@ -46,13 +46,7 @@ export function* loadStateFromUrl() {
       autoDismiss: false,
     });
 
-    const view = yield select(getViewMode);
-    if (view === 'browser') {
-      yield take(queriesActions.getSavedQueriesSuccess.type);
-      yield call(selectFirstSavedQuery);
-    } else {
-      yield put(savedQueryActions.resetSavedQuery());
-    }
+    yield put(savedQueryActions.resetSavedQuery());
   } finally {
     history.replaceState({}, '', getLocationUrl());
   }

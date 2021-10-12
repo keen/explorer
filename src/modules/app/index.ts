@@ -1,8 +1,8 @@
 import { appSaga } from './appSaga';
 import { appReducer, appSlice } from './reducer';
+import { setInitialView } from './utils';
 
 import {
-  loadPersistedState,
   updateQueryCreator,
   queryEditorMounted,
   notificationsMounted,
@@ -41,7 +41,6 @@ import {
 import { DEFAULT_DIRECTION, DEFAULT_PROPERTY } from './constants';
 
 const appActions = {
-  loadPersistedState,
   updateQueryCreator,
   queryEditorMounted,
   notificationsMounted,
@@ -78,7 +77,14 @@ const appSelectors = {
   getUpdateSavedQueryModalVisibility,
 };
 
-export { appReducer, appSlice, appSaga, appActions, appSelectors };
+export {
+  appReducer,
+  appSlice,
+  appSaga,
+  appActions,
+  appSelectors,
+  setInitialView,
+};
 
 export * from './types';
 

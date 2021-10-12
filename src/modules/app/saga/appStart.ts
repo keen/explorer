@@ -1,4 +1,4 @@
-import { put, spawn, take } from 'redux-saga/effects';
+import { call, put, spawn, take } from 'redux-saga/effects';
 
 import { getOrganizationUsageLimits, queriesActions } from '../../queries';
 import { selectSavedQuery } from '../../savedQuery/actions';
@@ -8,6 +8,7 @@ import { getScreenDimensions } from '../utils';
 import { selectFirstSavedQuery } from './selectFirstSavedQuery';
 import { rehydrateAutorunSettings } from './rehydrateAutorunSettings';
 import { watchScreenResize } from './watchScreenResize';
+import { loadSharedQuery } from './loadSharedQuery';
 
 export function* appStart({ payload }: ReturnType<typeof appActions.appStart>) {
   yield put(getOrganizationUsageLimits());
@@ -18,10 +19,10 @@ export function* appStart({ payload }: ReturnType<typeof appActions.appStart>) {
   const locationUrl = new URL(window.location.href);
   const searchParams = new URLSearchParams(locationUrl.search);
 
-  const hasPersistedState = searchParams && searchParams.get(URL_STATE);
+  const sharedQuery = searchParams && searchParams.get(URL_STATE);
 
-  if (hasPersistedState) {
-    yield put(appActions.loadPersistedState());
+  if (sharedQuery) {
+    yield call(loadSharedQuery, sharedQuery);
   } else if (initialView === 'browser') {
     yield take(queriesActions.getSavedQueriesSuccess.type);
     if (savedQuery) {

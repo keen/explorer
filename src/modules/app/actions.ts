@@ -9,7 +9,6 @@ export const notificationsMounted = createAction('app/notificationsMounted');
 export const createNewQuery = createAction('app/createNewQuery');
 export const clearQuery = createAction('app/clearQuery');
 export const shareQueryUrl = createAction('app/shareQueryUrl');
-export const loadPersistedState = createAction('app/loadPersistedState');
 export const validateDashboardsConnections = createAction(
   'app/validateDashboardsConnections'
 );

@@ -1,15 +1,15 @@
 /* eslint-disable @typescript-eslint/camelcase */
 
 import sagaHelper from 'redux-saga-testing';
-import { put, spawn } from 'redux-saga/effects';
+import { call, put, spawn } from 'redux-saga/effects';
 
 import { appActions } from '../index';
 
 import { appStart as appStartFlow } from './appStart';
 import { getOrganizationUsageLimits, queriesActions } from '../../queries';
-import { loadPersistedState } from '../actions';
 import { watchScreenResize } from './watchScreenResize';
 import { rehydrateAutorunSettings } from './rehydrateAutorunSettings';
+import { loadSharedQuery } from './loadSharedQuery';
 
 describe('appStart()', () => {
   const action = appActions.appStart({
@@ -35,8 +35,8 @@ describe('appStart()', () => {
       expect(result).toEqual(put(queriesActions.fetchSavedQueries()));
     });
 
-    test('loads persisted state', (result) => {
-      expect(result).toEqual(put(loadPersistedState()));
+    test('calls load share query state', (result) => {
+      expect(result).toEqual(call(loadSharedQuery, 'state'));
     });
 
     test('puts screen dimensions', (result) => {

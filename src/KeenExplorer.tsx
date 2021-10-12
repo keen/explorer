@@ -38,11 +38,10 @@ import {
   DEFAULT_TIMEZONE_FOR_QUERY,
   KEEN_CLIENT_CONTEXT,
   DASHBOARDS_API_CONTEXT,
-  INITIAL_VIEWS,
 } from './constants';
 
 import { createViewUpdateMiddleware } from './middleware';
-import { appActions } from './modules/app';
+import { appActions, setInitialView } from './modules/app';
 
 export class KeenExplorer {
   constructor(props: Options) {
@@ -68,16 +67,11 @@ export class KeenExplorer {
 
     createI18n(translationSettings);
 
-    const initialView = props.initialView || 'browser';
-
-    let initialViewUrl = INITIAL_VIEWS[initialView];
-    if (savedQuery) {
-      initialViewUrl += '?savedQuery=' + savedQuery;
-    }
+    const { view, route } = setInitialView(props.initialView, savedQuery);
 
     const history = createMemoryHistory({
       initialIndex: 0,
-      initialEntries: [initialViewUrl],
+      initialEntries: [route],
     });
 
     const sagaMiddleware = createSagaMiddleware({
@@ -113,7 +107,7 @@ export class KeenExplorer {
     sagaMiddleware.run(rootSaga);
 
     store.dispatch(
-      appActions.appStart({ initialView: initialView, savedQuery: savedQuery })
+      appActions.appStart({ initialView: view, savedQuery: savedQuery })
     );
 
     const datavizSettings = {

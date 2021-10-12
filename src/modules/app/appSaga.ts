@@ -12,7 +12,6 @@ import {
   appStart,
   resizeBrowserScreen,
   shareQueryUrl,
-  loadStateFromUrl,
   updateCreator,
   editQuery,
   clearQuery,
@@ -29,7 +28,6 @@ export function* appSaga() {
   yield takeLatest(appActions.appStart.type, appStart);
   yield takeLatest(appActions.setQueryAutorun.type, persistAutorunSettings);
   yield takeLatest(appActions.shareQueryUrl.type, shareQueryUrl);
-  yield takeLatest(appActions.loadPersistedState.type, loadStateFromUrl);
   yield takeLatest(appActions.updateQueryCreator.type, updateCreator);
   yield takeLatest(appActions.createNewQuery.type, createNewQuery);
   yield takeLatest(appActions.switchToQueriesList.type, switchToQueriesList);
