@@ -37,11 +37,11 @@ const ExportToCSV = () => {
 
   const TabOptions = [
     {
-      label: t('export_csv.tabs.visualization_data'),
+      label: t('export_csv.visualization_data_tab'),
       id: 'visualizationData',
     },
     {
-      label: t('export_csv.tabs.raw_data'),
+      label: t('export_csv.raw_data_tab'),
       id: 'rawData',
     },
   ];
@@ -50,6 +50,7 @@ const ExportToCSV = () => {
 
   const [rawData, setRawData] = useState([[]]);
   const [visualizationData, setVisualizationData] = useState([[]]);
+  const [isEmptyResults, setEmptyResults] = useState(false);
 
   const queryResults = useSelector(getQueryResults);
   const { getPresentationTimezone } = usePresentationTimezone(queryResults);
@@ -62,26 +63,34 @@ const ExportToCSV = () => {
     if (queryResults) {
       if (activeTab === 'rawData') {
         const { data, keys } = parseQuery(queryResults);
-        setRawData(
-          DataExport.exportRawData({ query: queryResults.query, keys, data })
-        );
+        if (data.length === 0) {
+          setEmptyResults(true);
+        } else {
+          setRawData(
+            DataExport.exportRawData({ query: queryResults.query, keys, data })
+          );
+        }
       } else if (activeTab === 'visualizationData') {
         const { data, keys } = parseQuery(
           queryResults,
           widgetType,
           getPresentationTimezone(queryResults)
         );
-        setVisualizationData(
-          DataExport.exportVisualizationData({
-            query: queryResults.query,
-            chartSettings: {
-              ...chartSettings,
-              data,
-              keys,
-            },
-            widgetType: widgetType as Widget,
-          })
-        );
+        if (data.length === 0) {
+          setEmptyResults(true);
+        } else {
+          setVisualizationData(
+            DataExport.exportVisualizationData({
+              query: queryResults.query,
+              chartSettings: {
+                ...chartSettings,
+                data,
+                keys,
+              },
+              widgetType: widgetType as Widget,
+            })
+          );
+        }
       }
     }
   }, [activeTab]);
@@ -107,7 +116,16 @@ const ExportToCSV = () => {
             type="default"
           />
         </TabsContainer>
-        {activeTab === 'visualizationData' && (
+        {isEmptyResults && (
+          <div>
+            <TabDescription>
+              <BodyText variant="body2" color={colors.black[100]}>
+                {t('export_csv.empty_data')}
+              </BodyText>
+            </TabDescription>
+          </div>
+        )}
+        {activeTab === 'visualizationData' && !isEmptyResults && (
           <div>
             <TabDescription>
               <BodyText variant="body2" color={colors.black[100]}>
@@ -121,7 +139,7 @@ const ExportToCSV = () => {
             )}
           </div>
         )}
-        {activeTab === 'rawData' && (
+        {activeTab === 'rawData' && !isEmptyResults && (
           <div>
             <TabDescription>
               <BodyText variant="body2" color={colors.black[100]}>
@@ -135,14 +153,15 @@ const ExportToCSV = () => {
       <ModalFooter>
         <FooterButtonsWrapper>
           <Button
-            data-testid="save-query"
+            data-testid="export-csv"
             variant="secondary"
             style="solid"
             onClick={() => {
               onExportToCSV();
             }}
             isDisabled={
-              widgetType === 'json' && activeTab === 'visualizationData'
+              isEmptyResults ||
+              (widgetType === 'json' && activeTab === 'visualizationData')
             }
           >
             {t('export_csv.export_csv')}
