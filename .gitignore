@@ -11,3 +11,6 @@ config.js
 .idea/
 package-lock.json
 .npmrc
+
+.yarn/cache
+.yarn/install-state.gz

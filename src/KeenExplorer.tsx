@@ -26,7 +26,7 @@ import App from './components/App';
 import { AppContext } from './contexts';
 
 import { NotificationManager } from './modules/notifications';
-import { appStart } from './modules/app';
+import { appStart, setInitialView } from './modules/app';
 
 import { Options } from './types';
 
@@ -39,7 +39,6 @@ import {
   DEFAULT_TIMEZONE_FOR_QUERY,
   KEEN_CLIENT_CONTEXT,
   DASHBOARDS_API_CONTEXT,
-  INITIAL_VIEWS,
 } from './constants';
 
 import { createViewUpdateMiddleware } from './middleware';
@@ -67,17 +66,11 @@ export class KeenExplorer {
     const chartEventsPubSub = new PubSub();
 
     createI18n(translationSettings);
-
-    const initialView = props.initialView || 'browser';
-
-    let initialViewUrl = INITIAL_VIEWS[initialView];
-    if (savedQuery) {
-      initialViewUrl += '?savedQuery=' + savedQuery;
-    }
+    const { view, route } = setInitialView(props.initialView, savedQuery);
 
     const history = createMemoryHistory({
       initialIndex: 0,
-      initialEntries: [initialViewUrl],
+      initialEntries: [route],
     });
 
     const sagaMiddleware = createSagaMiddleware({
@@ -112,7 +105,7 @@ export class KeenExplorer {
 
     sagaMiddleware.run(rootSaga);
 
-    store.dispatch(appStart(initialView, savedQuery));
+    store.dispatch(appStart(view, savedQuery));
 
     const datavizSettings = {
       theme: extendTheme(dataviz?.theme),

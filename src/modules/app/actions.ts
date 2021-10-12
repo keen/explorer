@@ -4,7 +4,6 @@ import { PickerWidgets } from '@keen.io/widget-picker';
 import {
   APP_START,
   SWITCH_TO_QUERIES_LIST,
-  LOAD_STATE_FROM_URL,
   SHOW_CONFIRMATION,
   HIDE_CONFIRMATION,
   ACCEPT_CONFIRMATION,
@@ -158,8 +157,6 @@ export const setVisualization = createAction(
 
 export const resetVisualization = createAction(RESET_VISUALIZATION);
 
-export const loadPersistedState = createAction(LOAD_STATE_FROM_URL);
-
 export const showConfirmation = createAction(
   SHOW_CONFIRMATION,
   (confirmAction: Confirmation, meta?: Record<string, any>) => ({
@@ -289,7 +286,6 @@ export type AppActions =
   | ReturnType<typeof createNewQuery>
   | ReturnType<typeof updateQueryCreator>
   | ReturnType<typeof setViewMode>
-  | ReturnType<typeof loadPersistedState>
   | ReturnType<typeof showConfirmation>
   | ReturnType<typeof hideConfirmation>
   | ReturnType<typeof acceptConfirmation>
