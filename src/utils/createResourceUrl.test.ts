@@ -20,7 +20,7 @@ test('stringify query params', () => {
     protocol: 'http',
     host: 'host',
     projectId: 'projectId',
-    masterKey: 'masterKey',
+    readKey: 'readKey',
   };
 
   expect(createResourceUrl({ query, config })).toMatchSnapshot();
