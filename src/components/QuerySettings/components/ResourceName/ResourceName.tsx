@@ -16,12 +16,13 @@ type Props = {
   resourceName: string;
 };
 
-const RessourceName: FC<Props> = ({ resourceName }) => {
+const ResourceName: FC<Props> = ({ resourceName }) => {
   const { t } = useTranslation();
   const [contentInClipboard, setContentInClipboard] = useState(false);
 
   return (
     <Container
+      data-testid="resource-name"
       role="button"
       onClick={() => {
         copyToClipboard(resourceName);
@@ -76,4 +77,4 @@ const RessourceName: FC<Props> = ({ resourceName }) => {
   );
 };
 
-export default RessourceName;
+export default ResourceName;
