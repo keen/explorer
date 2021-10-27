@@ -7,6 +7,11 @@ export const Settings = styled.div`
   box-sizing: content-box;
 `;
 
+export const QueryNameContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
 export const TagManager = styled.div`
   margin-top: 10px;
 `;

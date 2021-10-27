@@ -75,10 +75,18 @@ test('allows user to save query', () => {
 
   expect(props.onSave).toHaveBeenCalledWith({
     displayName: 'Last month purchases',
-    name: 'last-month-purchases',
+    name: 'Last-month-purchases',
     refreshRate: 0,
     tags: [],
   });
+});
+
+test('do not renders resource name for non existing saved query', () => {
+  const {
+    wrapper: { queryByTestId },
+  } = render();
+
+  expect(queryByTestId('resource-name')).not.toBeInTheDocument();
 });
 
 test('allows user to change name for existing saved query', () => {
