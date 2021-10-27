@@ -38,15 +38,6 @@ export const QueryNameWrapper = styled.td`
   display: flex;
   padding: 20px 10px 20px 20px;
   max-width: 240px;
-
-  font-size: 14px;
-  line-height: 17px;
-  font-family: 'Lato Regular', sans-serif;
-  color: ${colors.blue[500]};
-
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
 `;
 
 export const IconWrapper = styled.span`

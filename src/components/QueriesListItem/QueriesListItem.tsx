@@ -1,6 +1,7 @@
 import React, { FC, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Badge } from '@keen.io/ui-core';
+import { BodyText } from '@keen.io/typography';
 import { getVisualizationIcon } from '@keen.io/widget-picker';
 import { Icon } from '@keen.io/icons';
 import { colors } from '@keen.io/colors';
@@ -74,7 +75,9 @@ const QueriesListItem: FC<Props> = ({
             opacity={0.5}
           />
         </IconWrapper>
-        {queryName}
+        <BodyText enableTextEllipsis color={colors.blue[500]} variant="body2">
+          {queryName}
+        </BodyText>
       </QueryNameWrapper>
       <Labels>
         {' '}
