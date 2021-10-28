@@ -5,6 +5,7 @@ import { BodyText } from '@keen.io/typography';
 import { getVisualizationIcon } from '@keen.io/widget-picker';
 import { Icon } from '@keen.io/icons';
 import { colors } from '@keen.io/colors';
+import { convertSecondsToHours } from '@keen.io/time-utils';
 
 import {
   Container,
@@ -19,7 +20,6 @@ import DropIndicator from '../DropIndicator';
 
 import { TAGS_LIMIT } from './constants';
 import { Visualization } from '../../modules/queries/types';
-import { convertSecondsToHours } from '@keen.io/time-utils';
 
 type Props = {
   /** Saved query name */

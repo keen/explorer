@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/camelcase */
+import { convertSecondsToHours } from '@keen.io/time-utils';
 
 import { SavedQuery } from '../types';
 import { SavedQueryAPIResponse } from '../../../types';
-import { convertSecondsToHours } from '@keen.io/time-utils';
 
 const serializeSavedQuery = ({
   query_name,
