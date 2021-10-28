@@ -81,12 +81,12 @@ test('allows user to save query', () => {
   });
 });
 
-test('do not renders resource name for non existing saved query', () => {
+test('renders resource name in query settings', () => {
   const {
     wrapper: { queryByTestId },
   } = render();
 
-  expect(queryByTestId('resource-name')).not.toBeInTheDocument();
+  expect(queryByTestId('resource-name')).toBeInTheDocument();
 });
 
 test('allows user to change name for existing saved query', () => {

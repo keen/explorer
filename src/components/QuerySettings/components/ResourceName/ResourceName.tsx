@@ -13,20 +13,26 @@ type Props = {
   /**
    * Saved query resource name
    */
-  resourceName: string;
+  resourceName?: string;
 };
 
 const ResourceName: FC<Props> = ({ resourceName }) => {
   const { t } = useTranslation();
   const [contentInClipboard, setContentInClipboard] = useState(false);
+  const isDisabled = !resourceName;
+
+  console.log(isDisabled, 'sass');
 
   return (
     <Container
       data-testid="resource-name"
+      isDisabled={isDisabled}
       role="button"
       onClick={() => {
-        copyToClipboard(resourceName);
-        setContentInClipboard(true);
+        if (resourceName) {
+          copyToClipboard(resourceName);
+          setContentInClipboard(true);
+        }
       }}
     >
       <MousePositionedTooltip
@@ -35,40 +41,54 @@ const ResourceName: FC<Props> = ({ resourceName }) => {
         onHideTooltip={() => setContentInClipboard(false)}
         renderContent={() => (
           <>
-            {contentInClipboard ? (
-              <BodyText variant="body2" color={colors.black[100]}>
-                {t('query_settings.resource_name_copied')}
-              </BodyText>
-            ) : (
+            {resourceName ? (
               <>
-                <BodyText variant="body2" color={colors.black[100]}>
-                  {t('query_settings.copy_resource_message')}
-                </BodyText>
-                <BodyText
-                  variant="body2"
-                  fontWeight="bold"
-                  color={colors.black[100]}
-                >
-                  {resourceName}
-                </BodyText>
-                <Hint>
+                {contentInClipboard ? (
                   <BodyText variant="body2" color={colors.black[100]}>
-                    {t('query_settings.resource_name_usage_hint')}
+                    {t('query_settings.resource_name_copied')}
                   </BodyText>
-                </Hint>
+                ) : (
+                  <>
+                    <BodyText variant="body2" color={colors.black[100]}>
+                      {t('query_settings.copy_resource_message')}
+                    </BodyText>
+                    <BodyText
+                      variant="body2"
+                      fontWeight="bold"
+                      color={colors.black[100]}
+                    >
+                      {resourceName}
+                    </BodyText>
+                    <Hint>
+                      <BodyText variant="body2" color={colors.black[100]}>
+                        {t('query_settings.resource_name_usage_hint')}
+                      </BodyText>
+                    </Hint>
+                  </>
+                )}
               </>
+            ) : (
+              <>{t('query_settings.save_query_to_access_resource_name')}</>
             )}
           </>
         )}
       >
-        <BodyText variant="body3" color={colors.blue[500]} fontWeight={500}>
+        <BodyText
+          variant="body3"
+          color={
+            isDisabled
+              ? transparentize(0.5, colors.blue[500])
+              : colors.blue[500]
+          }
+          fontWeight={500}
+        >
           {t('query_settings.resource_name')}
           <IconWrapper>
             <Icon
               type="clone"
               width={11}
               height={11}
-              fill={transparentize(0.2, colors.blue[500])}
+              fill={transparentize(isDisabled ? 0.5 : 0.2, colors.blue[500])}
             />
           </IconWrapper>
         </BodyText>

@@ -4,6 +4,7 @@ import {
   fireEvent,
   waitFor,
 } from '@testing-library/react';
+import 'jest-styled-components';
 
 import ResourceName from './ResourceName';
 
@@ -34,6 +35,23 @@ test('shows resource name with hint message', async () => {
     expect(queryByText(props.resourceName)).toBeInTheDocument();
     expect(
       queryByText('query_settings.resource_name_usage_hint')
+    ).toBeInTheDocument();
+  });
+});
+
+test('renders message about resource name access for not existing saved query', async () => {
+  const {
+    wrapper: { queryByText, getByText },
+  } = render({
+    resourceName: '',
+  });
+
+  const resourceName = getByText('query_settings.resource_name');
+  fireEvent.mouseEnter(resourceName);
+
+  await waitFor(() => {
+    expect(
+      queryByText('query_settings.save_query_to_access_resource_name')
     ).toBeInTheDocument();
   });
 });

@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const IconWrapper = styled.span`
   display: inline-block;
@@ -6,8 +6,14 @@ export const IconWrapper = styled.span`
   margin-left: 4px;
 `;
 
-export const Container = styled.div`
+export const Container = styled.div<{ isDisabled: boolean }>`
   cursor: pointer;
+
+  ${(props) =>
+    props.isDisabled &&
+    css`
+      cursor: not-allowed;
+    `};
 `;
 
 export const Hint = styled.span`
