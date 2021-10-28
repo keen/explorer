@@ -144,9 +144,7 @@ const QuerySettings: FC<Props> = ({ onSave, onClose, cacheAvailable }) => {
           >
             {t('query_settings.query_name_label')}
           </Label>
-          {exists && resourceName && (
-            <ResourceName resourceName={resourceName} />
-          )}
+          <ResourceName resourceName={resourceName} />
         </QueryNameContainer>
         <Input
           data-testid="query-name-input"
