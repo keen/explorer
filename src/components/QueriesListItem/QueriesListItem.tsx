@@ -18,8 +18,8 @@ import {
 import DropIndicator from '../DropIndicator';
 
 import { TAGS_LIMIT } from './constants';
-import { savedQueryUtils } from '../../modules/savedQuery';
 import { Visualization } from '../../modules/queries/types';
+import { convertSecondsToHours } from '@keen.io/time-utils';
 
 type Props = {
   /** Saved query name */
@@ -87,7 +87,7 @@ const QueriesListItem: FC<Props> = ({
               <span data-testid="cache-badge">
                 {t('queries_list_item.cached_label')}
               </span>{' '}
-              {`(${savedQueryUtils.convertMilisecondsToMinutes(refreshRate)}${t(
+              {`(${convertSecondsToHours(refreshRate)}${t(
                 'queries_list_item.cache_units'
               )})`}
             </Badge>
