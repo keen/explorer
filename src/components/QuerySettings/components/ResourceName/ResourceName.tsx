@@ -21,8 +21,6 @@ const ResourceName: FC<Props> = ({ resourceName }) => {
   const [contentInClipboard, setContentInClipboard] = useState(false);
   const isDisabled = !resourceName;
 
-  console.log(isDisabled, 'sass');
-
   return (
     <Container
       data-testid="resource-name"
