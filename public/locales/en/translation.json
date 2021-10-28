@@ -73,7 +73,12 @@
     "cached_queries_limit_reached": "The limit of cached queries for your organization has been reached.",
     "upgrade_anchor": "Upgrade Plan",
     "upgrade_connector": "or",
-    "uncache_query": "uncache other saved query."
+    "uncache_query": "uncache other saved query.",
+    "resource_name": "Resource Name",
+    "copy_resource_message": "Click to copy the Query Resource Name:",
+    "resource_name_usage_hint": "Use it to access the query programatically.",
+    "save_query_to_access_resource_name": "Save the query to access the resource name",
+    "resource_name_copied": "Copied!"
   },
   "query_limit_reached": {
     "title": "Queries Limit Reached",
