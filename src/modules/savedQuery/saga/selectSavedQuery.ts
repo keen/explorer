@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/camelcase */
 
 import { select, put, call, getContext } from 'redux-saga/effects';
+import { convertSecondsToHours } from '@keen.io/time-utils';
 
 import { setVisualization } from '../../app';
 import {
@@ -8,7 +9,6 @@ import {
   queriesActions,
   getSavedQueries,
 } from '../../queries';
-import { convertMilisecondsToMinutes } from '../utils';
 import { isQueryEditable } from './isQueryEditable';
 import { savedQueryActions } from '../index';
 import { NOTIFICATION_MANAGER_CONTEXT } from '../../../constants';
@@ -34,7 +34,7 @@ export function* selectSavedQuery({
       displayName,
       cached,
       tags,
-      refreshRate: convertMilisecondsToMinutes(refreshRate),
+      refreshRate: convertSecondsToHours(refreshRate),
       isCloned: false,
       exists: true,
     };

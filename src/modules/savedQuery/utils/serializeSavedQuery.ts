@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/camelcase */
-
-import convertMilisecondsToMinutes from './convertMilisecondsToMinutes';
+import { convertSecondsToHours } from '@keen.io/time-utils';
 
 import { SavedQuery } from '../types';
 import { SavedQueryAPIResponse } from '../../../types';
@@ -14,7 +13,7 @@ const serializeSavedQuery = ({
   displayName: metadata?.display_name ? metadata.display_name : query_name,
   cached: !!refresh_rate,
   tags: metadata && metadata.tags ? metadata.tags : [],
-  refreshRate: convertMilisecondsToMinutes(refresh_rate),
+  refreshRate: convertSecondsToHours(refresh_rate),
   exists: true,
 });
 
