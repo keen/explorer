@@ -197,6 +197,7 @@ const Editor: FC<Props> = ({
             activeSection={editorSection}
             onChangeSection={(activeSection) => {
               setEditorSection(activeSection);
+              setActiveMenuItem(null);
               dispatch(editorSagaActions.changeEditorSection(activeSection));
             }}
           />
