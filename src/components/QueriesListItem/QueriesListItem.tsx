@@ -1,5 +1,6 @@
 import React, { FC, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { transparentize } from 'polished';
 import { Badge } from '@keen.io/ui-core';
 import { BodyText } from '@keen.io/typography';
 import { getVisualizationIcon } from '@keen.io/widget-picker';
@@ -49,8 +50,9 @@ const QueriesListItem: FC<Props> = ({
 }) => {
   const { t } = useTranslation();
   const [labelsOpen, toogleLabels] = useState(false);
+  const isTagsLimitReached = tags.length > TAGS_LIMIT;
   const queryTags =
-    tags.length > TAGS_LIMIT && !labelsOpen ? tags.slice(0, TAGS_LIMIT) : tags;
+    isTagsLimitReached && !labelsOpen ? tags.slice(0, TAGS_LIMIT) : tags;
 
   const { type, chartSettings } = visualization;
 
@@ -100,7 +102,7 @@ const QueriesListItem: FC<Props> = ({
             </Badge>
           </Tag>
         ))}
-        {tags.length > TAGS_LIMIT && (
+        {isTagsLimitReached && (
           <DropIndicator
             onClick={(e) => {
               e.stopPropagation();
@@ -110,7 +112,15 @@ const QueriesListItem: FC<Props> = ({
           />
         )}
       </Labels>
-      <UpdateDate data-testid="saved-query-date">{updateDate}</UpdateDate>
+      <UpdateDate data-testid="saved-query-date">
+        <BodyText
+          variant="body3"
+          fontWeight={400}
+          color={transparentize(0.5, colors.black[500])}
+        >
+          {updateDate}
+        </BodyText>
+      </UpdateDate>
     </Container>
   );
 };
