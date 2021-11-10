@@ -4,13 +4,6 @@ import { v4 as uuid } from 'uuid';
 import { queriesSlice } from '../reducer';
 import { getQuerySettings, getSavedQueries } from '../selectors';
 
-import {
-  getViewMode,
-  setViewMode,
-  updateQueryCreator,
-  QUERY_EDITOR_MOUNTED,
-} from '../../../modules/app';
-
 import { composeQuerySettings } from '../utils';
 import { slugify } from '../../../utils/text';
 
@@ -18,6 +11,7 @@ import { NOTIFICATION_MANAGER_CONTEXT } from '../../../constants';
 
 import { CLONED_QUERY_DISPLAY_NAME, CLONED_QUERY_NAME } from '../constants';
 import { savedQueryActions, savedQuerySelectors } from '../../savedQuery';
+import { appSelectors, appActions } from '../../app';
 
 /**
  * Flow responsible for creating clone saved query instance.
@@ -29,7 +23,7 @@ export function* cloneSavedQuery() {
   const notificationManager = yield getContext(NOTIFICATION_MANAGER_CONTEXT);
   const querySettings = yield select(getQuerySettings);
   const savedQuery = yield select(savedQuerySelectors.getSavedQuery);
-  const view = yield select(getViewMode);
+  const view = yield select(appSelectors.getViewMode);
 
   const displayName = `${savedQuery.displayName} ${CLONED_QUERY_DISPLAY_NAME}`;
   const isCloneInstance = savedQuery.name.includes(CLONED_QUERY_NAME);
@@ -54,9 +48,9 @@ export function* cloneSavedQuery() {
   };
 
   if (view === 'browser') {
-    yield put(setViewMode('editor'));
-    yield take(QUERY_EDITOR_MOUNTED);
-    yield put(updateQueryCreator(querySettings));
+    yield put(appActions.setViewMode({ view: 'editor' }));
+    yield take(appActions.queryEditorMounted.type);
+    yield put(appActions.updateQueryCreator(querySettings));
     yield put(
       queriesSlice.actions.setQuerySettings({ settings: querySettings })
     );

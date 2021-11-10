@@ -1,8 +1,8 @@
-import { setViewMode as setViewModeAction } from '../actions';
 import { push } from 'connected-react-router';
 import { put, select } from 'redux-saga/effects';
 import { ROUTES } from '../../../constants';
 import { savedQuerySelectors } from '../../savedQuery';
+import { appActions } from '../index';
 
 /**
  * Flow responsible for changing the views
@@ -10,7 +10,9 @@ import { savedQuerySelectors } from '../../savedQuery';
  * @return void
  *
  */
-export function* changeView({ payload }: ReturnType<typeof setViewModeAction>) {
+export function* changeView({
+  payload,
+}: ReturnType<typeof appActions.setViewMode>) {
   const { view } = payload;
   let route = '';
   if (view === 'browser') {

@@ -3,11 +3,7 @@ import { getContext, select, put } from 'redux-saga/effects';
 import HttpStatus from 'http-status-codes';
 
 import { queriesSlice } from '../reducer';
-
-import {
-  hideQuerySettingsModal,
-  getQuerySettingsModalVisibility,
-} from '../../../modules/app';
+import { appSelectors, appActions } from '../../app';
 
 import {
   NOTIFICATION_MANAGER_CONTEXT,
@@ -30,8 +26,9 @@ export function* saveQuery({
   try {
     const { name, body } = payload;
     const client = yield getContext(KEEN_CLIENT_CONTEXT);
-    const settingsModalVisible = yield select(getQuerySettingsModalVisibility);
-
+    const settingsModalVisible = yield select(
+      appSelectors.getQuerySettingsModalVisibility
+    );
     const responseBody = yield client.put({
       url: client.url('queries', 'saved', name),
       apiKey: client.config.masterKey,
@@ -39,7 +36,7 @@ export function* saveQuery({
     });
 
     if (settingsModalVisible) {
-      yield put(hideQuerySettingsModal());
+      yield put(appActions.hideQuerySettingsModal());
     }
 
     yield put(
@@ -53,7 +50,7 @@ export function* saveQuery({
     const { status, error_code: errorCode } = error;
 
     if (status === HttpStatus.INTERNAL_SERVER_ERROR) {
-      yield put(hideQuerySettingsModal());
+      yield put(appActions.hideQuerySettingsModal());
       yield notificationManager.showNotification({
         type: 'error',
         message: 'notifications.save_query_error',
@@ -62,7 +59,7 @@ export function* saveQuery({
       });
     } else {
       const settingsModalVisible = yield select(
-        getQuerySettingsModalVisibility
+        appSelectors.getQuerySettingsModalVisibility
       );
       if (settingsModalVisible) {
         yield put(queriesSlice.actions.setSaveQueryError({ error }));

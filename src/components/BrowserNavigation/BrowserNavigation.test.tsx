@@ -50,7 +50,7 @@ test('allows user to create a new query', () => {
     Array [
       Object {
         "payload": undefined,
-        "type": "@app/CREATE_NEW_QUERY",
+        "type": "app/createNewQuery",
       },
     ]
   `);

@@ -3,19 +3,13 @@ import sagaHelper from 'redux-saga-testing';
 import { put, take, getContext } from 'redux-saga/effects';
 import { PickerWidgets } from '@keen.io/widget-picker';
 
-import {
-  queryEditorMounted,
-  setVisualization,
-  updateQueryCreator,
-  notificationsMounted,
-} from '../actions';
 import { loadSharedQuery } from './loadSharedQuery';
 
 import { savedQueryActions } from '../../savedQuery';
 import { b64EncodeUnicode } from '../utils';
 
-import { QUERY_EDITOR_MOUNTED, NOTIFICATIONS_MOUNTED } from '../constants';
 import { NOTIFICATION_MANAGER_CONTEXT } from '../../../constants';
+import { appActions } from '../index';
 
 describe('Scenario 1: Successfully serializes query from URL state', () => {
   const query = {
@@ -54,19 +48,23 @@ describe('Scenario 1: Successfully serializes query from URL state', () => {
 
     expect(result).toEqual(
       put(
-        setVisualization(type as PickerWidgets, chartSettings, widgetSettings)
+        appActions.setVisualization({
+          type: type as PickerWidgets,
+          chartSettings,
+          widgetSettings,
+        })
       )
     );
   });
 
   test('wait for query creator mount event', (result) => {
-    expect(result).toEqual(take(QUERY_EDITOR_MOUNTED));
+    expect(result).toEqual(take(appActions.queryEditorMounted.type));
 
-    return queryEditorMounted();
+    return appActions.queryEditorMounted();
   });
 
   test('updates query creator', (result) => {
-    expect(result).toEqual(put(updateQueryCreator(query)));
+    expect(result).toEqual(put(appActions.updateQueryCreator(query)));
   });
 });
 
@@ -79,9 +77,9 @@ describe('Scenario 2: Error occured during query deserialization from URL state'
   const test = sagaHelper(loadSharedQuery(serializedQuery));
 
   test('wait for notifications mount event', (result) => {
-    expect(result).toEqual(take(NOTIFICATIONS_MOUNTED));
+    expect(result).toEqual(take(appActions.notificationsMounted.type));
 
-    return notificationsMounted();
+    return appActions.notificationsMounted();
   });
 
   test('get notification manager from context', (result) => {

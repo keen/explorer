@@ -5,14 +5,10 @@ import { SET_CHART_SETTINGS } from '@keen.io/query-creator';
 import { changeEditorSection, setQueryCreatorChartSettings } from './actions';
 import { EditorSection } from './types';
 
-import {
-  getVisualization,
-  updateQueryCreator,
-  QUERY_EDITOR_MOUNTED,
-} from '../app';
 import { getQuerySettings } from '../queries';
 
 import { PUBSUB_CONTEXT } from '../../constants';
+import { appActions, appSelectors } from '../app';
 
 /**
  * Restores query and chart settings in creator
@@ -27,11 +23,11 @@ export function* handleEditorSectionChange({
   const { editorSection } = payload;
 
   if (editorSection === EditorSection.QUERY) {
-    const { chartSettings } = yield select(getVisualization);
+    const { chartSettings } = yield select(appSelectors.getVisualization);
     const query: Query = yield select(getQuerySettings);
 
-    yield take(QUERY_EDITOR_MOUNTED);
-    yield put(updateQueryCreator(query));
+    yield take(appActions.queryEditorMounted.type);
+    yield put(appActions.updateQueryCreator(query));
     yield put(setQueryCreatorChartSettings(chartSettings));
   }
 }

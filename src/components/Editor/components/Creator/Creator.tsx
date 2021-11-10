@@ -3,8 +3,7 @@ import { useDispatch } from 'react-redux';
 import QueryCreator from '@keen.io/query-creator';
 
 import { AppContext } from '../../../../contexts';
-
-import { queryEditorMounted } from '../../../../modules/app';
+import { appActions } from '../../../../modules/app';
 
 type Props = {
   onUpdateQuery: (query: Record<string, any>) => void;
@@ -21,7 +20,7 @@ const Creator: FC<Props> = ({ onUpdateQuery, onUpdateChartSettings }) => {
   } = useContext(AppContext);
 
   useEffect(() => {
-    dispatch(queryEditorMounted());
+    dispatch(appActions.queryEditorMounted());
   }, []);
 
   return (

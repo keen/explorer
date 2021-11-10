@@ -25,24 +25,20 @@ import { DashboardsLoader } from './components';
 
 import DashboardsList from '../DashboardsList';
 
-import {
-  getConfirmation,
-  hideConfirmation,
-  acceptConfirmation,
-} from '../../modules/app';
+import { appActions, appSelectors } from '../../modules/app';
 import { savedQuerySelectors } from '../../modules/savedQuery';
 import { AppContext } from '../../contexts';
 
 const Confirm = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const { visible } = useSelector(getConfirmation);
+  const { visible } = useSelector(appSelectors.getConfirmation);
   const { displayName } = useSelector(savedQuerySelectors.getSavedQuery);
   const [inViewRef, inView] = useInView();
 
   const { enableDashboardsConnection } = useContext(AppContext);
 
-  const closeHandler = () => dispatch(hideConfirmation());
+  const closeHandler = () => dispatch(appActions.hideConfirmation());
 
   const isConnectedDashboardsError = useSelector(
     savedQuerySelectors.getConnectedDashboardsError
@@ -142,13 +138,13 @@ const Confirm = () => {
                 variant="danger"
                 style="solid"
                 isDisabled={isConnectedDashboardsLoading}
-                onClick={() => dispatch(acceptConfirmation())}
+                onClick={() => dispatch(appActions.acceptConfirmation())}
               >
                 {t('confirm.button_label')}
               </Button>
               <Close>
                 <Anchor
-                  onClick={() => dispatch(hideConfirmation())}
+                  onClick={() => dispatch(appActions.hideConfirmation())}
                   color={colors.blue[500]}
                   hoverColor={colors.blue[300]}
                 >

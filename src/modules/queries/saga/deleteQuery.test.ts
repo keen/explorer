@@ -10,20 +10,12 @@ import { deleteQuery as deleteQueryAction, deleteQueryError } from '../actions';
 import { queriesSlice } from '../reducer';
 
 import {
-  showConfirmation,
-  getViewMode,
-  setViewMode,
-  selectFirstSavedQuery,
-  HIDE_CONFIRMATION,
-  ACCEPT_CONFIRMATION,
-} from '../../../modules/app';
-
-import {
   NOTIFICATION_MANAGER_CONTEXT,
   KEEN_CLIENT_CONTEXT,
   DASHBOARDS_API_CONTEXT,
 } from '../../../constants';
 import { savedQueryActions } from '../../savedQuery';
+import { appActions, appSelectors } from '../../app';
 
 describe('Scenario 1: User successfully delete query', () => {
   const action = deleteQueryAction('purchases');
@@ -44,7 +36,14 @@ describe('Scenario 1: User successfully delete query', () => {
   });
 
   test('shows confirmation modal', (result) => {
-    expect(result).toEqual(put(showConfirmation('delete', { queryName })));
+    expect(result).toEqual(
+      put(
+        appActions.showConfirmation({
+          confirmAction: 'delete',
+          meta: { queryName },
+        })
+      )
+    );
   });
 
   test('gets connected dashboards', (result) => {
@@ -54,10 +53,15 @@ describe('Scenario 1: User successfully delete query', () => {
   });
 
   test('waits for user confirmation', (result) => {
-    expect(result).toEqual(take([ACCEPT_CONFIRMATION, HIDE_CONFIRMATION]));
+    expect(result).toEqual(
+      take([
+        appActions.acceptConfirmation.type,
+        appActions.hideConfirmation.type,
+      ])
+    );
 
     return {
-      type: ACCEPT_CONFIRMATION,
+      type: appActions.acceptConfirmation.type,
     };
   });
 
@@ -78,12 +82,12 @@ describe('Scenario 1: User successfully delete query', () => {
   });
 
   test('get application view from state', (result) => {
-    expect(result).toEqual(select(getViewMode));
+    expect(result).toEqual(select(appSelectors.getViewMode));
     return 'editor';
   });
 
   test('changes the application view', (result) => {
-    expect(result).toEqual(put(setViewMode('browser')));
+    expect(result).toEqual(put(appActions.setViewMode({ view: 'browser' })));
   });
 
   test('resets query results', (result) => {
@@ -97,7 +101,7 @@ describe('Scenario 1: User successfully delete query', () => {
   });
 
   test('selects first query', (result) => {
-    expect(result).toEqual(put(selectFirstSavedQuery()));
+    expect(result).toEqual(put(appActions.selectFirstSavedQuery()));
   });
 });
 
@@ -120,15 +124,25 @@ describe('Scenario 2: User failed to delete query due to API internal error', ()
 
   test('shows confirmation modal', (result) => {
     expect(result).toEqual(
-      put(showConfirmation('delete', { queryName: 'purchases' }))
+      put(
+        appActions.showConfirmation({
+          confirmAction: 'delete',
+          meta: { queryName: 'purchases' },
+        })
+      )
     );
   });
 
   test('waits for user confirmation', (result) => {
-    expect(result).toEqual(take([ACCEPT_CONFIRMATION, HIDE_CONFIRMATION]));
+    expect(result).toEqual(
+      take([
+        appActions.acceptConfirmation.type,
+        appActions.hideConfirmation.type,
+      ])
+    );
 
     return {
-      type: ACCEPT_CONFIRMATION,
+      type: appActions.acceptConfirmation.type,
     };
   });
 
@@ -168,15 +182,25 @@ describe('Scenario 3: User cancel delete query action', () => {
 
   test('shows confirmation modal', (result) => {
     expect(result).toEqual(
-      put(showConfirmation('delete', { queryName: 'purchases' }))
+      put(
+        appActions.showConfirmation({
+          confirmAction: 'delete',
+          meta: { queryName: 'purchases' },
+        })
+      )
     );
   });
 
   test('waits for user confirmation', (result) => {
-    expect(result).toEqual(take([ACCEPT_CONFIRMATION, HIDE_CONFIRMATION]));
+    expect(result).toEqual(
+      take([
+        appActions.acceptConfirmation.type,
+        appActions.hideConfirmation.type,
+      ])
+    );
 
     return {
-      type: HIDE_CONFIRMATION,
+      type: appActions.hideConfirmation.type,
     };
   });
 
