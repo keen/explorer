@@ -1,9 +1,12 @@
 import React, { FC, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { transparentize } from 'polished';
 import { Badge } from '@keen.io/ui-core';
+import { BodyText } from '@keen.io/typography';
 import { getVisualizationIcon } from '@keen.io/widget-picker';
 import { Icon } from '@keen.io/icons';
 import { colors } from '@keen.io/colors';
+import { convertSecondsToHours } from '@keen.io/time-utils';
 
 import {
   Container,
@@ -17,7 +20,6 @@ import {
 import DropIndicator from '../DropIndicator';
 
 import { TAGS_LIMIT } from './constants';
-import { savedQueryUtils } from '../../modules/savedQuery';
 import { Visualization } from '../../modules/queries/types';
 
 type Props = {
@@ -48,8 +50,9 @@ const QueriesListItem: FC<Props> = ({
 }) => {
   const { t } = useTranslation();
   const [labelsOpen, toogleLabels] = useState(false);
+  const isTagsLimitReached = tags.length > TAGS_LIMIT;
   const queryTags =
-    tags.length > TAGS_LIMIT && !labelsOpen ? tags.slice(0, TAGS_LIMIT) : tags;
+    isTagsLimitReached && !labelsOpen ? tags.slice(0, TAGS_LIMIT) : tags;
 
   const { type, chartSettings } = visualization;
 
@@ -74,7 +77,9 @@ const QueriesListItem: FC<Props> = ({
             opacity={0.5}
           />
         </IconWrapper>
-        {queryName}
+        <BodyText enableTextEllipsis color={colors.blue[500]} variant="body2">
+          {queryName}
+        </BodyText>
       </QueryNameWrapper>
       <Labels>
         {' '}
@@ -84,7 +89,7 @@ const QueriesListItem: FC<Props> = ({
               <span data-testid="cache-badge">
                 {t('queries_list_item.cached_label')}
               </span>{' '}
-              {`(${savedQueryUtils.convertMilisecondsToMinutes(refreshRate)}${t(
+              {`(${convertSecondsToHours(refreshRate)}${t(
                 'queries_list_item.cache_units'
               )})`}
             </Badge>
@@ -97,7 +102,7 @@ const QueriesListItem: FC<Props> = ({
             </Badge>
           </Tag>
         ))}
-        {tags.length > TAGS_LIMIT && (
+        {isTagsLimitReached && (
           <DropIndicator
             onClick={(e) => {
               e.stopPropagation();
@@ -107,7 +112,15 @@ const QueriesListItem: FC<Props> = ({
           />
         )}
       </Labels>
-      <UpdateDate data-testid="saved-query-date">{updateDate}</UpdateDate>
+      <UpdateDate data-testid="saved-query-date">
+        <BodyText
+          variant="body3"
+          fontWeight={400}
+          color={transparentize(0.5, colors.black[500])}
+        >
+          {updateDate}
+        </BodyText>
+      </UpdateDate>
     </Container>
   );
 };

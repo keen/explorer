@@ -113,7 +113,6 @@ const ExportToCSV = () => {
             tabs={TabOptions}
             activeTab={activeTab}
             onClick={(id) => setActiveTab(id)}
-            type="default"
           />
         </TabsContainer>
         {isEmptyResults && (

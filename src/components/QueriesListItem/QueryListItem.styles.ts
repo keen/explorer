@@ -1,5 +1,4 @@
 import styled, { css } from 'styled-components';
-import { transparentize } from 'polished';
 import { colors } from '@keen.io/colors';
 
 export const Container = styled.tr<{
@@ -37,21 +36,13 @@ export const Tag = styled.span`
 export const QueryNameWrapper = styled.td`
   display: flex;
   padding: 20px 10px 20px 20px;
-  max-width: 240px;
-
-  font-size: 14px;
-  line-height: 17px;
-  font-family: 'Lato Regular', sans-serif;
-  color: ${colors.blue[500]};
-
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
+  align-items: center;
 `;
 
 export const IconWrapper = styled.span`
   flex-shrink: 0;
   margin-right: 10px;
+  display: flex;
 `;
 
 export const Labels = styled.td`
@@ -64,8 +55,4 @@ export const UpdateDate = styled.td`
   display: flex;
   align-items: center;
   padding: 20px 20px 20px 10px;
-  font-size: 12px;
-  line-height: 15px;
-  font-family: 'Lato Regular', sans-serif;
-  color: ${transparentize(0.5, colors.black[500])};
 `;

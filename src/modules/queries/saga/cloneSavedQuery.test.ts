@@ -268,7 +268,7 @@ describe('Scenario 3: User duplicates already cloned instance', () => {
   const clonedSavedQuery = {
     ...savedQuery,
     displayName: `${savedQuery.displayName} ${CLONED_QUERY_DISPLAY_NAME}`,
-    name: `purchases-${uniqueQueryId}`,
+    name: `Purchases-${uniqueQueryId}`,
     exists: false,
     isCloned: true,
   };

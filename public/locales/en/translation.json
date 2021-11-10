@@ -73,7 +73,12 @@
     "cached_queries_limit_reached": "The limit of cached queries for your organization has been reached.",
     "upgrade_anchor": "Upgrade Plan",
     "upgrade_connector": "or",
-    "uncache_query": "uncache other saved query."
+    "uncache_query": "uncache other saved query.",
+    "resource_name": "Resource Name",
+    "copy_resource_message": "Click to copy the Query Resource Name:",
+    "resource_name_usage_hint": "Use it to access the query programatically.",
+    "save_query_to_access_resource_name": "Save the query to access the resource name",
+    "resource_name_copied": "Copied!"
   },
   "query_limit_reached": {
     "title": "Queries Limit Reached",
@@ -439,7 +444,8 @@
     "you_will_map_property": "You will map property to the different type. Some values may not be interpreted.",
     "select_data_type": "Select data type",
     "select_the_single_column_to_change_the_name": "Select the single column to change the name",
-    "select_the_date_format_first": "Select the Date format first"
+    "select_the_date_format_first": "Select the Date format first",
+    "use_dot_instead_of_comma": "Use dot instead of comma if you want to separate decimal value"
   },
   "widget_customization_data_types": {
     "datetime": "datetime",

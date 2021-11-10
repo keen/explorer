@@ -8,6 +8,7 @@ import {
 import configureStore from 'redux-mock-store';
 
 import FilterQueries from './FilterQueries';
+import { mockAllIsIntersecting } from 'react-intersection-observer/test-utils';
 
 const render = (storeState: any = {}, overProps: any = {}) => {
   const mockStore = configureStore([]);
@@ -41,6 +42,8 @@ const render = (storeState: any = {}, overProps: any = {}) => {
     wrapper,
   };
 };
+
+mockAllIsIntersecting(true);
 
 test('allows user to filter queries based on cache criteria', async () => {
   const {

@@ -202,6 +202,7 @@ const EditorNavigation: FC = () => {
           </MenuItem>
         </MousePositionedTooltip>
         <MousePositionedTooltip
+          key={`actions-tooltip-${actionsMenu}`}
           isActive={!actionsMenu}
           tooltipPinPlacement="bottom-left"
           renderContent={() => menuTooltip(t('editor.actions_tooltip'))}

@@ -20,12 +20,14 @@ import {
   TagManager,
   Cancel,
   ErrorNotification,
+  QueryNameContainer,
   FooterContent,
   NewQueryNotice,
   UpgradeAnchor,
 } from './QuerySettings.styles';
 
 import CacheQuery, { REFRESH_MINIMUM } from '../CacheQuery';
+import { ResourceName } from './components';
 
 import {
   getQueriesSaving,
@@ -130,14 +132,17 @@ const QuerySettings: FC<Props> = ({ onSave, onClose, cacheAvailable }) => {
             <Alert type="info">{t('query_settings.new_query_notice')}</Alert>
           </NewQueryNotice>
         )}
-        <Label
-          htmlFor="queryName"
-          variant="secondary"
-          showAsterisk
-          hasError={!!queryNameError}
-        >
-          {t('query_settings.query_name_label')}
-        </Label>
+        <QueryNameContainer>
+          <Label
+            htmlFor="queryName"
+            variant="secondary"
+            showAsterisk
+            hasError={!!queryNameError}
+          >
+            {t('query_settings.query_name_label')}
+          </Label>
+          <ResourceName resourceName={resourceName} />
+        </QueryNameContainer>
         <Input
           data-testid="query-name-input"
           type="text"
