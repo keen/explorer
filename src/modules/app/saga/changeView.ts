@@ -15,7 +15,6 @@ export function* changeView({
 }: ReturnType<typeof appActions.setViewMode>) {
   const { view } = payload;
   let route = '';
-  console.log('payload', payload);
   if (view === 'browser') {
     route = ROUTES.BROWSER;
   } else if (view === 'editor') {
