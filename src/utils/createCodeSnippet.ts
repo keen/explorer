@@ -17,13 +17,13 @@ type SnippetProps = {
   type?: Snippet;
 };
 
-const headCode = () => `
+export const createHeadCode = () => `
   <link rel="stylesheet" type="text/css" href="https://static.keen.io/assets/keen-fonts.css" />
   <script crossorigin src="https://cdn.jsdelivr.net/npm/keen-analysis@3"></script>
   <script crossorigin src="https://cdn.jsdelivr.net/npm/@keen.io/dataviz@latest/dist/dataviz.min.js"></script>
 `;
 
-const bodyCode = ({
+export const createBodyCode = ({
   widget,
   widgetSettings,
   chartSettings,
@@ -31,7 +31,6 @@ const bodyCode = ({
   readKey,
   query,
 }: Partial<SnippetProps>) => {
-  console.log('asd', widgetSettings);
   return `
   <div id="container"></div>
   <script type="text/javascript">
@@ -60,7 +59,7 @@ const bodyCode = ({
 `;
 };
 
-const allCode = ({
+export const createAllCodeSnipped = ({
   widget,
   widgetSettings,
   chartSettings,
@@ -110,35 +109,3 @@ const allCode = ({
   </body>
 </html>
 `;
-
-export const createCodeSnippet = ({
-  widget,
-  query,
-  widgetSettings,
-  chartSettings,
-  projectId,
-  readKey,
-  type,
-}: SnippetProps) => {
-  if (type === 'head') {
-    return headCode();
-  }
-  if (type === 'body') {
-    return bodyCode({
-      widget,
-      query,
-      widgetSettings,
-      chartSettings,
-      projectId,
-      readKey,
-    });
-  }
-  return allCode({
-    widget,
-    query,
-    widgetSettings,
-    chartSettings,
-    projectId,
-    readKey,
-  });
-};

@@ -9,7 +9,7 @@ import { colors } from '@keen.io/colors';
 import { AppContext } from '../../../../contexts';
 import { appActions, appSelectors } from '../../../../modules/app';
 import { getQuerySettings } from '../../../../modules/queries';
-import { createCodeSnippet } from '../../../../utils';
+import { createBodyCode, createHeadCode } from '../../../../utils';
 
 import {
   EmbedLabel,
@@ -36,30 +36,17 @@ const EmbedWidget = () => {
   );
   const query = useSelector(getQuerySettings);
 
-  const headCode = useMemo(
-    () =>
-      createCodeSnippet({
-        widget,
-        query,
-        chartSettings: { ...chartSettings, theme },
-        widgetSettings,
-        projectId,
-        readKey,
-        type: 'head',
-      }),
-    []
-  );
+  const headCode = useMemo(() => createHeadCode(), []);
 
   const bodyCode = useMemo(
     () =>
-      createCodeSnippet({
+      createBodyCode({
         widget,
         query,
         chartSettings: { ...chartSettings, theme },
         widgetSettings,
         projectId,
         readKey,
-        type: 'body',
       }),
     []
   );

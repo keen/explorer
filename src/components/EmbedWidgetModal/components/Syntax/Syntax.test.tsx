@@ -13,7 +13,15 @@ const render = () => {
   };
 };
 
-test('shows copy code button', () => {
+test('not shows copy code button initially', () => {
+  const {
+    wrapper: { queryByText },
+  } = render();
+  const copyCodeBtn = queryByText('embed_widget.copy');
+  expect(copyCodeBtn).not.toBeInTheDocument();
+});
+
+test('shows copy code button on hover', () => {
   const {
     wrapper: { getByTestId, getByText },
   } = render();
