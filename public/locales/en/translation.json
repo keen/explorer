@@ -237,7 +237,7 @@
     "unable_to_get_connected_dashboards": "Unable to get connected dashboards"
   },
   "dataviz": {
-    "no_results": "The results for analysis are empty"
+    "no_results": "There are no results. You can check a different Timeframe or Filter."
   },
   "editor_navigation": {
     "cached_label": "Cached",
