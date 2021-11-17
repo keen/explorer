@@ -14,9 +14,15 @@
   },
   "embed_widget": {
     "embed_html_title": "Embed HTML",
-    "copy_code_button": "Copy Code",
-    "download_file_button": "Download HTML File",
-    "close_button": "Close"
+    "copy": "Copy",
+    "copied": "Copied to clipboard",
+    "embed_title": "Embed the query in your platform",
+    "embed_text": "When you edit this query in our UI, all changes will be automatically visible in your external platform too.",
+    "embed_step_label": "Step",
+    "embed_step_first": "Paste the code into the {{tag}} of the page where you will place the query",
+    "embed_step_second": "Paste this query code into the {{tag}} where you want to display it",
+    "embed_full_page": "Do you need full page code?",
+    "download_file_button": "Download HTML File"
   },
   "visualization_placeholder": {
     "message": "Run Query to Explore Your Data",
