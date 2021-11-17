@@ -22,8 +22,7 @@
     "embed_step_first": "Paste the code into the {{tag}} of the page where you will place the query",
     "embed_step_second": "Paste this query code into the {{tag}} where you want to display it",
     "embed_full_page": "Do you need full page code?",
-    "download_file_button": "Download HTML File",
-    "do_you_need_full_page_code": "Do you need full page code?"
+    "download_file_button": "Download HTML File"
   },
   "visualization_placeholder": {
     "message": "Run Query to Explore Your Data",

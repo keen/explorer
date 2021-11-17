@@ -122,7 +122,7 @@ const EmbedWidget = () => {
       <Navigation>
         <NavigationItem>
           <BodyText variant="body2">
-            {t('embed_widget.do_you_need_full_page_code')}
+            {t('embed_widget.embed_full_page')}
           </BodyText>
         </NavigationItem>
         <NavigationItem>

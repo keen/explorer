@@ -21,6 +21,11 @@ export const createHeadCode = () => `
   <link rel="stylesheet" type="text/css" href="https://static.keen.io/assets/keen-fonts.css" />
   <script crossorigin src="https://cdn.jsdelivr.net/npm/keen-analysis@3"></script>
   <script crossorigin src="https://cdn.jsdelivr.net/npm/@keen.io/dataviz@latest/dist/dataviz.min.js"></script>
+  <style>
+    #container {
+        height: 300px;
+    }
+  </style>
 `;
 
 export const createBodyCode = ({
