@@ -506,7 +506,8 @@
     "title": "Heatmap Chart Components"
   },
   "widget_customization_table_settings": {
-    "title": "Table Chart Components"
+    "title": "Table Chart Components",
+    "multiple_rows_selection": "Multiple Row Selection"
   },
   "widget_customization_circular_settings": {
     "title": "Donut & Pie Chart Components",
