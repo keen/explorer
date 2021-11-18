@@ -56,6 +56,8 @@ export const TOOLTIP_MOTION = {
   exit: { opacity: 0 },
 };
 
+export const TOOLTIP_HIDE_TIME = 1500;
+
 export const DEFAULT_TIMEZONE_FOR_QUERY = 'Etc/UTC';
 
 export const ROUTES: Record<string, string> = {
