@@ -17,7 +17,7 @@
     "copy": "Copy",
     "copied": "Copied to clipboard",
     "embed_title": "Embed the query in your platform",
-    "embed_text": "When you edit this query in our UI, all changes will be automatically visible in your external platform too.",
+    "embed_text": "When you edit this query in our UI, <bold>changes will not be automatically visible in your external platform.</bold>",
     "embed_step_label": "Step",
     "embed_step_first": "Paste the code into the {{tag}} of the page where you will place the query",
     "embed_step_second": "Paste this query code into the {{tag}} where you want to display it",
