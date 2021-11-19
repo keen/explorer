@@ -3,7 +3,7 @@ import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Button, ModalHeader } from '@keen.io/ui-core';
-import { BodyText } from '@keen.io/typography';
+import { BodyText, FontWeight } from '@keen.io/typography';
 import { colors } from '@keen.io/colors';
 
 import { AppContext } from '../../../../contexts';
@@ -74,7 +74,7 @@ const EmbedWidget = () => {
         <BodyText variant="body2">
           <Trans
             components={{
-              bold: <strong />,
+              bold: <FontWeight fontWeight="bold" />,
             }}
             i18nKey={'embed_widget.embed_text'}
           />
