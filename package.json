@@ -172,7 +172,7 @@
     "redux-mock-store": "^1.5.4",
     "redux-saga-testing": "^2.0.1",
     "regenerator-runtime": "^0.13.5",
-    "standard-version": "^7.0.1",
+    "standard-version": "^8.0.1",
     "stringify": "~3.0.0",
     "style-loader": "^0.20.3",
     "terser-webpack-plugin": "^5.1.2",
