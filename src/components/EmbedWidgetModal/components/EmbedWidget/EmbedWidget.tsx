@@ -1,5 +1,5 @@
 import React, { useCallback, useContext, useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Button, ModalHeader } from '@keen.io/ui-core';
@@ -71,7 +71,14 @@ const EmbedWidget = () => {
             {t('embed_widget.embed_title')}
           </BodyText>
         </EmbedLabel>
-        <BodyText variant="body2">{t('embed_widget.embed_text')}</BodyText>
+        <BodyText variant="body2">
+          <Trans
+            components={{
+              bold: <strong />,
+            }}
+            i18nKey={'embed_widget.embed_text'}
+          />
+        </BodyText>
         <Section>
           <StepLabel>
             <StepNumber>
