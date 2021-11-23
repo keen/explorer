@@ -39,6 +39,8 @@ const Dataviz: FC<Props> = ({
   const { chartEventsPubSub } = useContext(AppContext);
 
   useEffect(() => {
+    console.log(presentationTimezone, 'presentationTimezone');
+
     datavizRef.current = new KeenDataviz({
       container: containerRef.current,
       inEditMode: inEditMode,
