@@ -62,29 +62,6 @@ beforeEach(() => {
   renderMock.mockClear();
 });
 
-test('initializes "DataViz" instance and extracts timezone offset', () => {
-  const props = {
-    queryResults: {
-      query: {
-        timeframe: {
-          start: '2021-03-14T16:00:00+03:00',
-          end: '2021-03-14T17:00:00+03:00',
-        },
-      },
-      result: 20,
-    },
-  };
-
-  render(props);
-
-  expect(KeenDataviz).toHaveBeenCalledWith(
-    expect.objectContaining({
-      type: 'bar',
-      presentationTimezone: 180,
-    })
-  );
-});
-
 test('initializes "DataViz" instance with named timezone', () => {
   render();
 
