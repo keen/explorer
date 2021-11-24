@@ -1,5 +1,5 @@
 import { select } from 'redux-saga/effects';
-import { createCodeSnippet } from '../../../utils';
+import { createAllCodeSnipped } from '../../../utils';
 import { getQuerySettings } from '../../queries';
 import { getVisualization } from '../selectors';
 
@@ -9,7 +9,7 @@ export function* getCodeSnippet(projectId: string, readKey: string) {
     getVisualization
   );
 
-  const snippet = createCodeSnippet({
+  const snippet = createAllCodeSnipped({
     widget,
     query,
     chartSettings,

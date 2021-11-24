@@ -5,6 +5,7 @@ export const Navigation = styled.div`
   display: flex;
   flex-wrap: wrap;
   align-items: center;
+  padding: 10px 25px 20px;
 `;
 
 export const NavigationItem = styled.div`
@@ -30,11 +31,26 @@ export const Link = styled.a`
   transition: color 0.2s linear;
 `;
 
-export const CodeWrapper = styled.div`
-  max-height: 350px;
-  min-width: 350px;
-  width: 75vw;
-  max-width: 1180px;
-  margin: 10px;
-  overflow: scroll;
+export const EmbedLabel = styled.div`
+  margin-bottom: 5px;
+`;
+
+export const ModalBody = styled.div`
+  padding: 20px 25px 0 20px;
+`;
+
+export const ModalWrapper = styled.div`
+  width: 600px;
+  box-sizing: border-box;
+`;
+
+export const Section = styled.div`
+  margin-top: 20px;
+`;
+
+export const StepLabel = styled.div`
+  display: flex;
+`;
+export const StepNumber = styled.div`
+  margin-right: 10px;
 `;
