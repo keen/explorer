@@ -19,15 +19,10 @@ import {
   TooltipMotion,
 } from './ActionsMenu.styles';
 
-import {
-  showEmbedModal,
-  copyApiResourceUrl,
-  createNewQuery,
-} from '../../modules/app';
-
 import { TOOLTIP_MOTION } from '../../constants';
 import { DEFAULT_IMAGE_QUALITY } from './constants';
 import { dataExportActions } from '../../modules/dataExport';
+import { appActions } from '../../modules/app';
 
 type Props = {
   /** Is new query */
@@ -122,7 +117,7 @@ const ActionsMenu: FC<Props> = ({
           {!isNewQuery && !isInsideQueryBrowser && (
             <DropdownMenu.Item
               onClick={() => {
-                dispatch(createNewQuery());
+                dispatch(appActions.createNewQuery());
                 onHideMenu();
               }}
             >
@@ -154,7 +149,7 @@ const ActionsMenu: FC<Props> = ({
           {!isNewQuery && <DropdownMenu.Divider />}
           <DropdownMenu.Item
             onClick={() => {
-              dispatch(copyApiResourceUrl(config));
+              dispatch(appActions.copyApiResourceUrl(config));
               onHideMenu();
             }}
           >
@@ -162,7 +157,7 @@ const ActionsMenu: FC<Props> = ({
           </DropdownMenu.Item>
           <DropdownMenu.Item
             onClick={() => {
-              dispatch(showEmbedModal());
+              dispatch(appActions.showEmbedModal());
               onHideMenu();
             }}
           >

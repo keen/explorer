@@ -26,7 +26,6 @@ import App from './components/App';
 import { AppContext } from './contexts';
 
 import { NotificationManager } from './modules/notifications';
-import { appStart, setInitialView } from './modules/app';
 
 import { Options } from './types';
 
@@ -42,6 +41,7 @@ import {
 } from './constants';
 
 import { createViewUpdateMiddleware } from './middleware';
+import { appActions, setInitialView } from './modules/app';
 
 export class KeenExplorer {
   constructor(props: Options) {
@@ -66,6 +66,7 @@ export class KeenExplorer {
     const chartEventsPubSub = new PubSub();
 
     createI18n(translationSettings);
+
     const { view, route } = setInitialView(props.initialView, savedQuery);
 
     const history = createMemoryHistory({
@@ -105,7 +106,9 @@ export class KeenExplorer {
 
     sagaMiddleware.run(rootSaga);
 
-    store.dispatch(appStart(view, savedQuery));
+    store.dispatch(
+      appActions.appStart({ initialView: view, savedQuery: savedQuery })
+    );
 
     const datavizSettings = {
       theme: extendTheme(dataviz?.theme),

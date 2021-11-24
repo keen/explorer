@@ -1,5 +1,4 @@
 import { useCallback } from 'react';
-import { getOffsetFromDate } from '@keen.io/time-utils';
 import { Query } from '@keen.io/query';
 
 export const usePresentationTimezone = (
@@ -9,10 +8,9 @@ export const usePresentationTimezone = (
     (queryResults) => {
       if ('query' in queryResults) {
         const {
-          query: { timeframe, timezone },
+          query: { timezone },
         } = queryResults;
-        if (typeof timeframe === 'string') return timezone;
-        return getOffsetFromDate(timeframe.start);
+        return timezone;
       }
 
       return null;

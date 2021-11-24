@@ -7,16 +7,6 @@ import { deleteQueryError, deleteQuery as deleteQueryAction } from '../actions';
 import { queriesSlice } from '../reducer';
 
 import {
-  showConfirmation,
-  getViewMode,
-  setViewMode,
-  selectFirstSavedQuery,
-  switchToQueriesList,
-  HIDE_CONFIRMATION,
-  ACCEPT_CONFIRMATION,
-} from '../../../modules/app';
-
-import {
   DASHBOARDS_API_CONTEXT,
   NOTIFICATION_MANAGER_CONTEXT,
 } from '../../../constants';
@@ -24,6 +14,7 @@ import {
 import { savedQueryActions } from '../../savedQuery';
 
 import { ERRORS } from '../constants';
+import { appActions, appSelectors } from '../../app';
 
 export function* deleteQuery(action: ReturnType<typeof deleteQueryAction>) {
   const notificationManager = yield getContext(NOTIFICATION_MANAGER_CONTEXT);
@@ -33,27 +24,36 @@ export function* deleteQuery(action: ReturnType<typeof deleteQueryAction>) {
     const {
       payload: { queryName },
     } = action;
-    yield put(showConfirmation('delete', { queryName }));
+    yield put(
+      appActions.showConfirmation({
+        confirmAction: 'delete',
+        meta: { queryName },
+      })
+    );
 
     if (dashboardsApiUrl) {
       yield put(savedQueryActions.getDashboardsConnection(queryName));
     }
 
-    const confirm = yield take([ACCEPT_CONFIRMATION, HIDE_CONFIRMATION]);
+    const confirm = yield take([
+      appActions.acceptConfirmation.type,
+      appActions.hideConfirmation.type,
+    ]);
 
-    if (confirm.type === ACCEPT_CONFIRMATION) {
+    if (confirm.type === appActions.acceptConfirmation.type) {
       const client = yield getContext('keenClient');
       yield client
         .del(client.url('queries', 'saved', queryName))
         .auth(client.masterKey())
         .send();
 
-      const view = yield select(getViewMode);
-      if (view === 'editor') yield put(setViewMode('browser'));
+      const view = yield select(appSelectors.getViewMode);
+      if (view === 'editor')
+        yield put(appActions.setViewMode({ view: 'browser' }));
 
       yield put(queriesSlice.actions.resetQueryResults());
       yield put(queriesSlice.actions.deleteQuerySuccess({ queryName }));
-      yield put(selectFirstSavedQuery());
+      yield put(appActions.selectFirstSavedQuery());
 
       yield notificationManager.showNotification({
         type: 'info',
@@ -65,8 +65,8 @@ export function* deleteQuery(action: ReturnType<typeof deleteQueryAction>) {
     const { error_code, status } = error;
     if (error_code === ERRORS.RESOURCE_NOT_FOUND) {
       yield put(queriesSlice.actions.resetQueryResults());
-      yield put(switchToQueriesList());
-      yield put(selectFirstSavedQuery());
+      yield put(appActions.switchToQueriesList());
+      yield put(appActions.selectFirstSavedQuery());
 
       yield notificationManager.showNotification({
         type: 'error',

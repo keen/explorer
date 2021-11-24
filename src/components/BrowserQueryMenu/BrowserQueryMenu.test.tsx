@@ -73,7 +73,7 @@ describe('Scenario 1: Browser query menu - query is editable', () => {
         "payload": Object {
           "source": 0,
         },
-        "type": "@app/SHOW_QUERY_SETTINGS_MODAL",
+        "type": "app/showQuerySettingsModal",
       },
     ]
   `);
@@ -94,7 +94,7 @@ describe('Scenario 1: Browser query menu - query is editable', () => {
     Array [
       Object {
         "payload": undefined,
-        "type": "@app/SHARE_QUERY_URL",
+        "type": "app/shareQueryUrl",
       },
     ]
   `);

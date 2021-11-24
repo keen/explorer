@@ -90,7 +90,7 @@ test('close modal and reset query settings', () => {
     Array [
       Object {
         "payload": undefined,
-        "type": "@app/HIDE_QUERY_SETTINGS_MODAL",
+        "type": "app/hideQuerySettingsModal",
       },
       Object {
         "payload": undefined,
@@ -125,7 +125,7 @@ test('allows user to close modal', () => {
     Array [
       Object {
         "payload": undefined,
-        "type": "@app/HIDE_QUERY_SETTINGS_MODAL",
+        "type": "app/hideQuerySettingsModal",
       },
       Object {
         "payload": undefined,

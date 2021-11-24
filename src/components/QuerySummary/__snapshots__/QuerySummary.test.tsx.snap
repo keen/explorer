@@ -10,6 +10,7 @@ exports[`should render query summary 1`] = `
   color: #4F5B5F;
   line-height: 1.2;
   font-weight: bold;
+  text-transform: none;
 }
 
 .c8.c8.c8 {
@@ -20,6 +21,7 @@ exports[`should render query summary 1`] = `
   font-weight: 400;
   color: #4F5B5F;
   line-height: 1.2;
+  text-transform: none;
 }
 
 .c1 {
@@ -243,6 +245,7 @@ exports[`should render query summary for funnels 1`] = `
   color: #4F5B5F;
   line-height: 1.2;
   font-weight: bold;
+  text-transform: none;
 }
 
 .c8.c8.c8 {
@@ -253,6 +256,7 @@ exports[`should render query summary for funnels 1`] = `
   font-weight: 400;
   color: #4F5B5F;
   line-height: 1.2;
+  text-transform: none;
 }
 
 .c14.c14.c14 {
@@ -263,6 +267,7 @@ exports[`should render query summary for funnels 1`] = `
   font-weight: 400;
   color: #4F5B5F;
   line-height: 1.2;
+  text-transform: none;
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
@@ -476,6 +481,7 @@ exports[`should render query summary for multi-analysis 1`] = `
   color: #4F5B5F;
   line-height: 1.2;
   font-weight: bold;
+  text-transform: none;
 }
 
 .c8.c8.c8 {
@@ -486,6 +492,7 @@ exports[`should render query summary for multi-analysis 1`] = `
   font-weight: 400;
   color: #4F5B5F;
   line-height: 1.2;
+  text-transform: none;
 }
 
 .c1 {
