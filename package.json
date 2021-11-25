@@ -12,6 +12,10 @@
     "start": "concurrently --kill-others \"NODE_ENV=development webpack serve --mode development --env development --config webpack.config.dev.js\"",
     "e2e": "cypress run",
     "e2e:open": "cypress open",
+    "e2e:report": "cypress run",
+    "merge-reports": "cucumber-json-merge -d ./cypress/reports -o ./cypress/reports/merged-reports.json",
+    "parse-reports": "node ./cypress/script.js",
+    "clean-reports": "rm -rf ./cypress/reports",
     "test": "jest",
     "test:ci": "jest -w 1",
     "test:watch": "NODE_ENV=test jest --watch",
@@ -26,7 +30,13 @@
   },
   "cypress-cucumber-preprocessor": {
     "stepDefinitions": "cypress/integration",
-    "nonGlobalStepDefinitions": false
+    "nonGlobalStepDefinitions": false,
+    "cucumberJson": {
+      "generate": true,
+      "outputFolder": "cypress/reports",
+      "filePrefix": "",
+      "fileSuffix": ".cucumber"
+    }
   },
   "husky": {
     "hooks": {
@@ -142,6 +152,7 @@
     "css-loader": "^2.1.0",
     "cypress": "^7.1.0",
     "cypress-cucumber-preprocessor": "^4.1.1",
+    "cucumber-json-merge": "^0.0.7",
     "cypress-wait-until": "^1.7.1",
     "cz-conventional-changelog": "^3.0.2",
     "eslint": "^7.0.0",

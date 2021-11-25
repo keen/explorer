@@ -4940,7 +4940,7 @@ comma-separated-tokens@^1.0.0:
   resolved "https://registry.yarnpkg.com/comma-separated-tokens/-/comma-separated-tokens-1.0.8.tgz#632b80b6117867a158f1080ad498b2fbe7e3f5ea"
   integrity sha512-GHuDRO12Sypu2cV70d1dkA2EUmXHgntrzbpvOB+Qy+49ypNfGgFQIC2fhhXbnyrJRynDCAARsT7Ou0M6hirpfw==
 
-commander@2, commander@^2.18.0, commander@^2.20.0, commander@^2.9.0:
+commander@2, commander@^2.18.0, commander@^2.20.0, commander@^2.20.3, commander@^2.9.0:
   version "2.20.3"
   resolved "https://registry.yarnpkg.com/commander/-/commander-2.20.3.tgz#fd485e84c03eb4881c20722ba48035e8531aeb33"
   integrity sha512-GpVkmM8vF2vQUkj2LvZmD35JxeJOLCwJ9cUkugyk2nuhbv3+mJvpLYYt+0+USMxE+oj+ey/lJEnhZw75x/OMcQ==
@@ -5754,6 +5754,15 @@ cucumber-expressions@^6.0.1:
   integrity sha512-WcFSVBiWNLJbIcAAC3t/ACU46vaOKfe1UIF5H3qveoq+Y4XQm9j3YwHurQNufRKBBg8nCnpU7Ttsx7egjS3hwA==
   dependencies:
     becke-ch--regex--s0-0-v1--base--pl--lib "^1.2.0"
+
+cucumber-json-merge@^0.0.7:
+  version "0.0.7"
+  resolved "https://registry.yarnpkg.com/cucumber-json-merge/-/cucumber-json-merge-0.0.7.tgz#dc4a3d1349bba1f81a030ab4d71fb8e27640088d"
+  integrity sha512-9Lz2f/MwWGShAdYh+6ZD8/UNoYf9o7hVHYSwUxAd3WLYMfzdvk8gdS9KY6rEkAeUeha3YnAq3pm3PDRiGX57jQ==
+  dependencies:
+    commander "^2.20.3"
+    fs-readdir-recursive "^1.1.0"
+    mkdirp "^0.5.5"
 
 cucumber-tag-expressions@^1.1.1:
   version "1.1.1"
@@ -7962,6 +7971,11 @@ fs-monkey@1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/fs-monkey/-/fs-monkey-1.0.3.tgz#ae3ac92d53bb328efe0e9a1d9541f6ad8d48e2d3"
   integrity sha512-cybjIfiiE+pTWicSCLFHSrXZ6EilF30oh91FDP9S2B051prEa7QWfrVTQm10/dDpswBDXZugPa1Ogu8Yh+HV0Q==
+
+fs-readdir-recursive@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/fs-readdir-recursive/-/fs-readdir-recursive-1.1.0.tgz#e32fc030a2ccee44a6b5371308da54be0b397d27"
+  integrity sha512-GNanXlVr2pf02+sPN40XN8HG+ePaNcvM0q5mZBd668Obwb0yD5GiUbZOFgwn8kGMY6I3mdyDJzieUy3PTYyTRA==
 
 fs.realpath@^1.0.0:
   version "1.0.0"
