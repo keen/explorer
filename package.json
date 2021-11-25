@@ -30,7 +30,7 @@
   },
   "cypress-cucumber-preprocessor": {
     "stepDefinitions": "cypress/integration",
-    "nonGlobalStepDefinitions": false,
+    "nonGlobalStepDefinitions": true,
     "cucumberJson": {
       "generate": true,
       "outputFolder": "cypress/reports",

@@ -3,7 +3,6 @@ fs = require('fs');
 fs.readFile("cypress/reports/merged-reports.json", 'utf8', (err, data) => {
 
   if(err) {
-    console.log('error', err)
     return err;
   }
   const parsed = [];
@@ -13,12 +12,17 @@ fs.readFile("cypress/reports/merged-reports.json", 'utf8', (err, data) => {
     const testCases = testFeature.elements;
     testCases.forEach(testCase => {
       const stepResults = testCase.steps.map(step => step.result.status);
+      if(stepResults.every(stepResult => stepResult === 'skipped')) {
+        return;
+      }
       const testIdTag = testCase.tags.find(tag => !excludedTags.includes(tag.name));
+      const status = stepResults.some(stepResult => stepResult === 'failed') ? "failed": "passed";
+
       const parsedTest = {
         testKey: testIdTag ?testIdTag.name.substring(1) : "TestId not set",
         start: new Date().toString(),
         finish: new Date().toString(),
-        status: stepResults.some(stepResult => stepResult === 'failed') ? 'failed' : 'passed',
+        status: status,
         examples: stepResults
       }
       parsed.push(parsedTest)
