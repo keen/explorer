@@ -116,7 +116,7 @@ jobs:
             yarn e2e
       - store_artifacts:
           path: cypress/screenshots
-      -run:
+      - run:
           name: Merge reporst
           command: npm run merge-reports
 workflows:
