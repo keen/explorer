@@ -5,7 +5,7 @@ orbs:
 
 commands:
   upload-artifact:
-    description: "Assumes role and uploads atrifact on S3"
+    description: "Assumes role and uploads artifact on S3"
     parameters:
       application_environment:
         type: string
