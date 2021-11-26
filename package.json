@@ -15,7 +15,7 @@
     "test": "jest",
     "test:ci": "jest -w 1",
     "test:watch": "NODE_ENV=test jest --watch",
-    "build": "NODE_ENV=production webpack --config webpack.config.prod.js --env --progress --mode production --progress",
+    "build": "NODE_ENV=production webpack --config webpack.config.prod.js --progress --mode production --progress",
     "check-bundle": "NODE_ENV=production webpack --config webpack.config.prod.js --env ANALYZE_BUNDLE=true --progress",
     "version": "npm run build && git add .",
     "lint": "eslint --quiet --ext .ts --ext .tsx src/",
