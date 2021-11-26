@@ -81,7 +81,7 @@ You can easily change it by providing additional argument to constructor.
 
 ```typescript
 const explorer = new KeenExplorer({
-  confirmExtractionLimit: 50 
+  confirmExtractionLimit: 50
 });
 ```
 
@@ -132,3 +132,11 @@ This project uses [Conventional Commits](https://www.conventionalcommits.org) to
 | Command      | Description                        |
 | ------------ | ---------------------------------- |
 | `npx git-cz` | run commit command line interface. |
+
+### deployments
+
+The all commits pushed into `master` branch will be picked by CircleCI workflow that perform npm packages version and publish.
+
+##### test environments
+
+The all commits pushed into `develop` branch will be picked by CircleCI workflow that allows to deploy artifiact on specific test environment.

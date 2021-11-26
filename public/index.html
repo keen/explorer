@@ -27,6 +27,7 @@
      disableTimezoneSelection: false,
      onViewChange: (view, savedQuery) => {console.log("View changed: ", view, savedQuery)},
      confirmExtractionLimit: 5,
+     translations: <%= translationsConfig %>,
      dataviz: {
        theme: {
          gridX: {
@@ -35,10 +36,7 @@
        }
      },
      keenAnalysis: {
-       config: <%= config %>,
-     },
-     keenTracking: {
-      config: <%= config %>,
+       config: <%= projectConfig %>,
      },
      features: {},
   });
