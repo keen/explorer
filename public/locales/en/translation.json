@@ -513,6 +513,17 @@
     "title": "Donut & Pie Chart Components",
     "label": "Value Mode"
   },
+  "widget_customization_gauge_settings": {
+    "title": "Gauge Chart Settings",
+    "minimal_value": "Minimal Value",
+    "target_value": "Target Value",
+    "target_value_placeholder": "What is your goal?",
+    "current_value": "The current value is",
+    "validation": "The Target Value must be greater than the Minimal Value",
+    "validation_target_value": "Please provide correct Target Value",
+    "validation_minimal_value": "Please provide correct Minimal Value",
+    "validation_comma": "Use dot instead of comma if you want to separate decimal value"
+  },
   "widget_customization_funnel_settings": {
     "title": "Funnel Chart Components",
     "percentages": "Percentages"

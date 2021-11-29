@@ -209,6 +209,7 @@ const Editor: FC<Props> = ({
                 onUpdateChartSettings={onUpdateChartSettings}
                 onMenuItemChange={(menuItem) => setActiveMenuItem(menuItem)}
                 modalContainer={modalContainer}
+                analysisResult={queryResults?.result}
               />
             </CustomizationContainer>
           </SectionContainer>
