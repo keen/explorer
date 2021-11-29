@@ -1,5 +1,30 @@
 version: 2.1
 
+orbs:
+  aws-cli: circleci/aws-cli@0.1.19
+
+commands:
+  upload-artifact:
+    description: "Assumes role and uploads artifact on S3"
+    parameters:
+      application_environment:
+        type: string
+      role_arn:
+        type: string
+      bucket_name:
+        type: string
+      cf_dist_id:
+        type: string
+    steps:
+      - run:
+          command: |
+            response=$(aws sts assume-role --role-arn << parameters.role_arn >> --role-session-name s3-access)
+            export AWS_ACCESS_KEY_ID=$(echo $response | jq -r .Credentials.AccessKeyId)
+            export AWS_SECRET_ACCESS_KEY=$(echo $response | jq -r .Credentials.SecretAccessKey)
+            export AWS_SESSION_TOKEN=$(echo $response | jq -r .Credentials.SessionToken)
+            export AWS_SECURITY_TOKEN=$(echo $response | jq -r .Credentials.SessionToken)
+            aws s3 sync dist s3://<< parameters.bucket_name >>/explorer_<< parameters.application_environment >> --acl public-read
+            aws cloudfront create-invalidation --distribution-id << parameters.cf_dist_id >> --paths "/explorer_<< parameters.application_environment >>/*"
 executors:
   cypress:
     docker:
@@ -27,12 +52,7 @@ jobs:
           command: yarn
       - run:
           name: Create release version
-          command: |
-            if [ "$CIRCLE_BRANCH" = "develop" ]; then
-              yarn release --prerelease rc --skip.changelog
-            elif [ "$CIRCLE_BRANCH" = "master" ]; then
-              yarn release
-            fi
+          command: yarn release
       - run:
           name: Push changes
           command: git push --follow-tags --set-upstream origin ${CIRCLE_BRANCH}
@@ -49,19 +69,6 @@ jobs:
       - run:
           name: Publish
           command: yarn publish
-  publish-prerelease:
-    executor: nodejs
-    working_directory: ~/tmp
-    steps:
-      - checkout
-      - attach_workspace:
-          at: ~/tmp/dist
-      - run:
-          name: Authenticate with registry
-          command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc
-      - run:
-          name: Publish
-          command: yarn publish --tag next
   build:
     executor: nodejs
     working_directory: ~/tmp
@@ -88,6 +95,56 @@ jobs:
       - run:
           name: Build
           command: yarn build
+      - persist_to_workspace:
+          root: dist
+          paths:
+            - "*"
+  deploy_s3_artifact:
+    executor: aws-cli/default
+    working_directory: ~/tmp
+    parameters:
+      bucket_name:
+        type: string
+        default: keen-test-static
+      role_arn:
+        type: string
+        default: ${ROLE_ARN_STAGE}
+      application_environment:
+        type: string
+        default: test
+      cf_dist_id:
+        type: string
+        default: ${AWS_CF_ID}
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/tmp/dist
+      - aws-cli/install
+      - upload-artifact:
+          application_environment: << parameters.application_environment >>
+          cf_dist_id: ${AWS_CF_ID}
+          bucket_name: << parameters.bucket_name >>
+          role_arn: << parameters.role_arn >>
+  build_s3_artifact:
+    executor: nodejs
+    parameters:
+      application_environment:
+        type: string
+        default: test
+    working_directory: ~/tmp
+    steps:
+      - checkout
+      - restore_cache:
+          key: npm-deps-v1-{{ arch }}-{{ .Branch }}-{{ checksum "yarn.lock" }}
+      - run:
+          name: Install dependencies
+          command: yarn install
+      - run:
+          name: Create project config
+          command: echo $KEEN_PROJECT_CONFIG > config.js
+      - run:
+          name: Build
+          command: npx webpack --config webpack.config.prod.js --env ENVIRONMENT=<< parameters.application_environment >> --env ORIGIN=${ORIGIN} --mode production
       - persist_to_workspace:
           root: dist
           paths:
@@ -119,10 +176,67 @@ jobs:
 
 workflows:
   version: 2
-  e2e:
+  deploy_to_environment:
     jobs:
-      - run_e2e_tests:
+      - approve_deploy_test_environment:
+          name: "Approve TEST"
+          type: approval
           filters:
+            branches:
+              only: develop
+            tags:
+              ignore: /.*/
+      - build_s3_artifact:
+          name: "Build TEST"
+          application_environment: test
+          requires:
+            - "Approve TEST"
+          filters:
+            branches:
+              only: develop
+            tags:
+              ignore: /.*/
+      - deploy_s3_artifact:
+          name: "Deploy TEST"
+          application_environment: test
+          context: aws
+          requires:
+            - "Build TEST"
+          filters:
+            branches:
+              only: develop
+            tags:
+              ignore: /.*/
+      - approve_deploy_uat_environment:
+          name: "Approve UAT"
+          type: approval
+          requires:
+            - "Deploy TEST"
+          descritpion: "Deploys artifact on UAT environment"
+          filters:
+            branches:
+              only: develop
+            tags:
+              ignore: /.*/
+      - build_s3_artifact:
+          name: "Build UAT"
+          application_environment: uat
+          requires:
+            - "Approve UAT"
+          filters:
+            branches:
+              only: develop
+            tags:
+              ignore: /.*/
+      - deploy_s3_artifact:
+          name: "Deploy UAT"
+          application_environment: uat
+          context: aws
+          requires:
+            - "Build UAT"
+          filters:
+            branches:
+              only: develop
             tags:
               ignore: /.*/
   create_version:
@@ -131,7 +245,6 @@ workflows:
           filters:
             branches:
               only:
-                - develop
                 - master
             tags:
               ignore: /.*/
@@ -143,22 +256,6 @@ workflows:
               only: /.*/
             tags:
               ignore: /.*/
-  publish-prerelease:
-    jobs:
-      - build:
-          filters:
-            tags:
-              only: /^.*rc.*$/
-            branches:
-              ignore: /.*/
-      - publish-prerelease:
-          filters:
-            tags:
-              only: /^.*rc.*$/
-            branches:
-              ignore: /.*/
-          requires:
-            - build
   publish:
     jobs:
       - build:
