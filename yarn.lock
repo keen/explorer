@@ -2052,10 +2052,10 @@
     styled-system "^5.1.5"
     webfontloader "^1.6.28"
 
-"@keen.io/widget-customization@^0.0.43":
-  version "0.0.43"
-  resolved "https://registry.yarnpkg.com/@keen.io/widget-customization/-/widget-customization-0.0.43.tgz#ea37fc129ab09fc8c2b68e33e2d350609d93b038"
-  integrity sha512-bhW1LbX+Zb/XiT/ATzFg2gBSU+26OPbjp1UUgulYIkCG5K5KF18vDmIjaXBt5FKwGd8zWnFxDWAIGY0u82YS8g==
+"@keen.io/widget-customization@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@keen.io/widget-customization/-/widget-customization-0.1.0.tgz#9973b74d9ecfaeab3c544b99b4b1faa50fe4b652"
+  integrity sha512-+bAOrn4m8tZmS6abuY5zOQXyR6CjVLitPdnEO3UcH+urVG+hKlfjFovT1NusGWDRMlVn33D9TEzNr0cewI/5hA==
   dependencies:
     "@keen.io/charts-utils" "^1.15.0"
     "@keen.io/colors" "^1.1.0"

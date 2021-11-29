@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/camelcase */
 import React from 'react';
+import { Provider } from 'react-redux';
+import configureStore from 'redux-mock-store';
 import { render as rtlRender, fireEvent } from '@testing-library/react';
 import { Query } from '@keen.io/query';
 
@@ -21,7 +23,18 @@ const render = (overProps: any = {}) => {
     ...overProps,
   };
 
-  const wrapper = rtlRender(<Visualization {...props} />);
+  const mockStore = configureStore([]);
+  const store = mockStore({
+    app: {
+      view: 'editor',
+    },
+  });
+
+  const wrapper = rtlRender(
+    <Provider store={store}>
+      <Visualization {...props} />
+    </Provider>
+  );
 
   return {
     props,
