@@ -1,16 +1,16 @@
 /* eslint-disable @typescript-eslint/camelcase */
 import React from 'react';
 import { Provider } from 'react-redux';
-import { render as rtlRender, fireEvent } from '@testing-library/react';
 import configureStore from 'redux-mock-store';
-
-import { AppContext } from '../../contexts';
-
-import Editor from './Editor';
-import { MENU_ITEMS_ENUM } from '@keen.io/widget-customization';
-import { EditorSection } from '../../modules/editor';
+import { render as rtlRender, fireEvent } from '@testing-library/react';
 
 jest.mock('@keen.io/query-creator');
+import { MENU_ITEMS_ENUM } from '@keen.io/widget-customization';
+
+import { AppContext } from '../../contexts';
+import { EditorSection } from '../../modules/editor';
+
+import Editor from './Editor';
 
 const render = (storeState: any = {}, overProps: any = {}) => {
   const mockStore = configureStore([]);

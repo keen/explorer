@@ -1,7 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { EditorSection } from './types';
 import { MENU_ITEMS_ENUM } from '@keen.io/widget-customization';
-import { ReducerState } from './types';
+import { EditorSection, ReducerState } from './types';
 
 const initialState: ReducerState = {
   activeEditorTab: EditorSection.QUERY,

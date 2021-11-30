@@ -19,9 +19,8 @@ export const VisualizationMessageWrapper = styled.div`
   justify-content: center;
 `;
 
-export const GoToSection = styled.div`
+export const GoToSection = styled.span`
   cursor: pointer;
   color: ${colors.green[500]};
-  display: inline;
   font-weight: bold;
 `;
