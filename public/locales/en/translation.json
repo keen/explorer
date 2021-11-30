@@ -545,6 +545,9 @@
     "icon_style": "Icon background",
     "icon": "Icon"
   },
+  "query_visualization": {
+    "go_to_chart_elements_to_define_target_value": "Go to the <0>SETTINGS / Chart Elements</0> tab to define the <strong>Target Value</strong>"
+  },
   "widget_customization_axis_settings": {
     "x_axis_title": "X-Axis Title",
     "x_axis_title_placeholder": "Enter axis title",
