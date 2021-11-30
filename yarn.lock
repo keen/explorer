@@ -1913,7 +1913,7 @@
     react "^16.12.0"
     react-dom "^16.12.0"
 
-"@keen.io/forms@^2.0.147":
+"@keen.io/forms@^2.0.149":
   version "2.0.149"
   resolved "https://registry.yarnpkg.com/@keen.io/forms/-/forms-2.0.149.tgz#5caff7b7db460ca424ece95461714c8fda5d762b"
   integrity sha512-Baf6WhvSIonZXk1N1Ik4JLABTniSF28Bn1cYW652nqB0ICGi+0HQ2oqMNqO2QrJnL/cIpfD4hiwYCtv00Jlv8w==
@@ -2003,7 +2003,7 @@
   dependencies:
     dayjs "^1.10.4"
 
-"@keen.io/toast-notifications@^1.2.8":
+"@keen.io/toast-notifications@^1.2.10":
   version "1.2.10"
   resolved "https://registry.yarnpkg.com/@keen.io/toast-notifications/-/toast-notifications-1.2.10.tgz#dc8d51637ac2919e911e06d2a882479c741e7bcf"
   integrity sha512-9UpyZw8PPrk0vbdfy04PnQkYmlNlFRYShIONV5ygQTDnRe9WZhvPW1zWEjlCHZ1pVjgPb6OCwXiXLOryUDkE3Q==
@@ -2023,7 +2023,7 @@
     "@keen.io/colors" "^1.0.0"
     styled-system "^5.1.5"
 
-"@keen.io/ui-core@^2.44.2", "@keen.io/ui-core@^2.46.0":
+"@keen.io/ui-core@^2.46.0":
   version "2.46.0"
   resolved "https://registry.yarnpkg.com/@keen.io/ui-core/-/ui-core-2.46.0.tgz#16b225d8b65171afb5a27585f35c011f47ae891e"
   integrity sha512-vbH7MPueYgWDz2X5TO+i1RERU+jk1rMOOk/xhcJzr4BK3LENduYYWCzObXu3NrX/sWOYrkdOGkHoxOnMjkdZTg==

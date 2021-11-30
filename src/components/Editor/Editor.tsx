@@ -224,6 +224,7 @@ const Editor: FC<Props> = ({
                   dispatch(editorActions.setActiveSettingsSection(menuItem))
                 }
                 modalContainer={modalContainer}
+                analysisResult={queryResults?.result}
               />
             </CustomizationContainer>
           </SectionContainer>
