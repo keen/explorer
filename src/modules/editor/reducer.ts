@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { MENU_ITEMS_ENUM } from '@keen.io/widget-customization';
 import { EditorSection, ReducerState } from './types';
 
-const initialState: ReducerState = {
+export const initialState: ReducerState = {
   activeEditorTab: EditorSection.QUERY,
   activeSettingsSection: MENU_ITEMS_ENUM.TITLES,
 };
