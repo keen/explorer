@@ -48,6 +48,9 @@ export const queriesSlice = createSlice({
     ) => {
       state.settings = payload.settings;
     },
+    clearQuerySettings: (state) => {
+      state.settings = {};
+    },
     resetQueryResults: (state) => {
       state.results = null;
     },
