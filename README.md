@@ -120,8 +120,6 @@ List of useful commands that could be used by developers. Execution in the comma
 | ---------- | ---------------------------------------------------- |
 | `lint`     | run linter against current application codebase.     |
 | `test`     | run unit tests.                                      |
-| `e2e`      | run cypress e2e tests.                               |
-| `e2e:open` | opens cypress e2e user interface.                    |
 | `build`    | builds application distribution.                     |
 | `prettier` | run code formatter process against current codebase. |
 
