@@ -1,4 +1,4 @@
-import React, { FC, useContext, useState, useCallback } from 'react';
+import React, { FC, useContext, useState, useCallback, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
@@ -28,7 +28,7 @@ import { isExtraction } from './utils';
 
 import { AppContext } from '../../contexts';
 
-import { editorSagaActions, EditorSection } from '../../modules/editor';
+import { editorActions, EditorSection } from '../../modules/editor';
 
 import {
   queriesActions,
@@ -44,6 +44,10 @@ import VisualizationPlaceholder from '../VisualizationPlaceholder';
 import QueryLimitReached from '../QueryLimitReached';
 import { useApplyWidgetTheming } from '../../hooks';
 import { appActions, appSelectors } from '../../modules/app';
+import {
+  getActiveEditorTab,
+  getActiveSettingsSection,
+} from '../../modules/editor/selectors';
 
 type Props = {
   /** Query definition */
@@ -84,8 +88,8 @@ const Editor: FC<Props> = ({
     }
   );
 
-  const [editorSection, setEditorSection] = useState(EditorSection.QUERY);
-  const [activeMenuItem, setActiveMenuItem] = useState(null);
+  const activeTab = useSelector(getActiveEditorTab);
+  const activeSettingsSection = useSelector(getActiveSettingsSection);
 
   const { themedChartSettings, themedWidgetSettings } = useApplyWidgetTheming({
     chartSettings,
@@ -155,6 +159,14 @@ const Editor: FC<Props> = ({
     }));
   };
 
+  useEffect(() => {
+    return () => {
+      dispatch(queriesActions.clearQuerySettings());
+      dispatch(editorActions.setActiveEditorTab(EditorSection.QUERY));
+      dispatch(editorActions.setActiveSettingsSection(MENU_ITEMS_ENUM.TITLES));
+    };
+  }, []);
+
   return (
     <>
       <Container id="editor" data-testid="editor">
@@ -170,8 +182,8 @@ const Editor: FC<Props> = ({
               <Visualization
                 query={query}
                 inEditMode={
-                  activeMenuItem === MENU_ITEMS_ENUM.FORMATTING &&
-                  editorSection === EditorSection.SETTINGS
+                  activeSettingsSection === MENU_ITEMS_ENUM.FORMATTING &&
+                  activeTab === EditorSection.SETTINGS
                 }
                 queryResults={queryResults}
                 widgetType={widgetType}
@@ -187,15 +199,16 @@ const Editor: FC<Props> = ({
         </section>
         <NavBar>
           <SectionTabs
-            activeSection={editorSection}
+            activeSection={activeTab}
             onChangeSection={(activeSection) => {
-              setEditorSection(activeSection);
-              setActiveMenuItem(null);
-              dispatch(editorSagaActions.changeEditorSection(activeSection));
+              dispatch(
+                editorActions.setActiveSettingsSection(MENU_ITEMS_ENUM.TITLES)
+              );
+              dispatch(editorActions.setActiveEditorTab(activeSection));
             }}
           />
         </NavBar>
-        {editorSection === EditorSection.SETTINGS && (
+        {activeTab === EditorSection.SETTINGS && (
           <SectionContainer>
             <CustomizationContainer>
               <WidgetCustomization
@@ -207,13 +220,17 @@ const Editor: FC<Props> = ({
                 savedQueryName={savedQueryName}
                 onUpdateWidgetSettings={onUpdateWidgetSettings}
                 onUpdateChartSettings={onUpdateChartSettings}
-                onMenuItemChange={(menuItem) => setActiveMenuItem(menuItem)}
+                activeMenuItem={activeSettingsSection}
+                onMenuItemChange={(menuItem) =>
+                  dispatch(editorActions.setActiveSettingsSection(menuItem))
+                }
                 modalContainer={modalContainer}
+                analysisResult={queryResults?.result}
               />
             </CustomizationContainer>
           </SectionContainer>
         )}
-        {editorSection === EditorSection.QUERY && (
+        {activeTab === EditorSection.QUERY && (
           <SectionContainer>
             <Creator
               onUpdateQuery={updateQuery}
