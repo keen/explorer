@@ -56,9 +56,8 @@ export function* performExtraction({
         );
         propertiesCount = Object.keys(schemaProperties).length;
       }
-
       const isPropertiesLimitReached =
-        (isFullExtraction && propertiesCount >= extractionPropertiesLimit) ||
+        (isFullExtraction && propertiesCount > extractionPropertiesLimit) ||
         propertyNames?.length > extractionPropertiesLimit;
 
       if (isPropertiesLimitReached) {
