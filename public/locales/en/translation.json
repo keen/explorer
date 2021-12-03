@@ -516,6 +516,7 @@
   "widget_customization_gauge_settings": {
     "title": "Gauge Chart Settings",
     "minimal_value": "Minimal Value",
+    "minimal_value_placeholder": "What is your goal?",
     "target_value": "Target Value",
     "target_value_placeholder": "What is your goal?",
     "current_value": "The current value is",
