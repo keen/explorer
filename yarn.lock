@@ -1777,10 +1777,10 @@
     styled-system "^5.1.5"
     webfontloader "^1.6.28"
 
-"@keen.io/widget-customization@^0.1.0":
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/@keen.io/widget-customization/-/widget-customization-0.1.0.tgz#9973b74d9ecfaeab3c544b99b4b1faa50fe4b652"
-  integrity sha512-+bAOrn4m8tZmS6abuY5zOQXyR6CjVLitPdnEO3UcH+urVG+hKlfjFovT1NusGWDRMlVn33D9TEzNr0cewI/5hA==
+"@keen.io/widget-customization@^0.1.1":
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/@keen.io/widget-customization/-/widget-customization-0.1.1.tgz#7c0dc25d2d8b7ff32eb00b14d4f43d62aa4e1262"
+  integrity sha512-TuIZE+ffWIAEmI3yUVL76spar9mTebsl7IJRhRX5B13gwDkABLC2GiyjOb/eoIWZvVtWejw0mBNbmVNra+rUWg==
   dependencies:
     "@keen.io/charts-utils" "^1.15.0"
     "@keen.io/colors" "^1.1.0"
