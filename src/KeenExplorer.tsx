@@ -58,6 +58,7 @@ export class KeenExplorer {
       createDashboardUrl,
       onViewChange,
       savedQuery,
+      disableQueryFilterSuggestions,
     } = props;
     const keenAnalysisClient =
       keenAnalysis.instance || new KeenAnalysis(keenAnalysis.config);
@@ -135,6 +136,7 @@ export class KeenExplorer {
                 enableDashboardsConnection: !!dashboardsApiUrl,
                 createDashboardUrl,
                 chartEventsPubSub,
+                disableQueryFilterSuggestions,
               }}
             >
               <ToastProvider>

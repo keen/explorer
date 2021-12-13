@@ -49,7 +49,7 @@
     "@keen.io/parser": "^2.8.125",
     "@keen.io/pubsub": "^1.2.0",
     "@keen.io/query": "^1.1.1",
-    "@keen.io/query-creator": "^1.11.7",
+    "@keen.io/query-creator": "^1.11.8",
     "@keen.io/react-hooks": "^1.4.3",
     "@keen.io/time-utils": "^1.2.5",
     "@keen.io/toast-notifications": "^1.2.12",
