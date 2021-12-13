@@ -281,7 +281,8 @@
     "filters": "Filters",
     "select": "Select",
     "event_stream": "Event Stream",
-    "tooltip": "so we know what properties are available"
+    "tooltip": "so we know what properties are available",
+    "matching_values": "Matching values"
   },
   "query_creator_filter_boolean": {
     "placeholder": "value"

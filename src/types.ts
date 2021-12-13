@@ -94,6 +94,7 @@ export type Options = {
   confirmExtractionLimit?: number;
   onViewChange?: (view: Views) => {};
   savedQuery?: string;
+  disableQueryFilterSuggestions?: boolean;
 };
 
 type ComponentSettings =
