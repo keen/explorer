@@ -58,7 +58,7 @@ const explorer = new KeenExplorer({
 });
 ```
 
-##### Disable timezone selection
+##### Disable filter suggestions
 
 Disable query creator filter suggestions
 
