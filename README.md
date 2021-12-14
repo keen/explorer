@@ -58,6 +58,16 @@ const explorer = new KeenExplorer({
 });
 ```
 
+##### Disable filter suggestions
+
+Disable query creator filter suggestions
+
+```typescript
+const explorer = new KeenExplorer({
+  disableQueryFilterSuggestions: true,
+});
+```
+
 ### Translations
 
 The default translations files for application are hosted on `jsdelivr` CDN. You can easily replace the translations by overriding the `loadPath` for files.
