@@ -1614,10 +1614,10 @@
   resolved "https://registry.yarnpkg.com/@keen.io/colors/-/colors-1.1.0.tgz#feda3fc31056cd67c9d36abfce30470b95ef6879"
   integrity sha512-ATUL4zpj6NNHZChCVfI3ellRIzfJMsYzSCqnkcd7AqZseSGVLe6A8yK0yqlzzYVtz3yunX9nDN1AMpJH2dFIfA==
 
-"@keen.io/data-export@^1.2.31":
-  version "1.2.31"
-  resolved "https://registry.yarnpkg.com/@keen.io/data-export/-/data-export-1.2.31.tgz#388c6c67d90bd2f2fefc2e935b093632825f3e63"
-  integrity sha512-OLM9MJ+pv1IC3JO9f3lovnl8Y4i6OgFNiNFyVl5E1tLIl+xPZEJtAx3edrMLEH8PF+r1Fapsgmxlvv7jehjB7w==
+"@keen.io/data-export@^1.2.32":
+  version "1.2.32"
+  resolved "https://registry.yarnpkg.com/@keen.io/data-export/-/data-export-1.2.32.tgz#abee317013154cf1c2280528251fd723605c96db"
+  integrity sha512-Qs+wAfMe+capdrh3KeZ2rgWom12ScwDfoP+TDhdgqHpw4Z5e3oKKi3wypt8xSTmtYC4T7JlHfifrOmlD9F1GnQ==
   dependencies:
     "@keen.io/charts-utils" "^1.15.0"
     "@keen.io/parser" "^2.8.127"
@@ -1670,10 +1670,10 @@
   resolved "https://registry.yarnpkg.com/@keen.io/pubsub/-/pubsub-1.2.0.tgz#845b1647a231b3cb6a755581a08dada6a9ae655a"
   integrity sha512-LUrNaw2zvIqeJV1TLz/Gq6EspZAF7FY3vJmTopJtSyp1bFIwPQxuMnfqo/zLg5cemA9yRPKf/cEV5SDyQ9vL3w==
 
-"@keen.io/query-creator@^1.11.8":
-  version "1.11.8"
-  resolved "https://registry.yarnpkg.com/@keen.io/query-creator/-/query-creator-1.11.8.tgz#fac98908cb2c3f3d47e56d5ad9d7d1d5137e0200"
-  integrity sha512-bxEDcYb4I7L3DC8UxEGq0QmlAPDirs2JJSiqvfqkQosARmo64xIIuEQTttjUA4Vo5B47SRlVwpkKnicMC90qNQ==
+"@keen.io/query-creator@^1.11.9":
+  version "1.11.9"
+  resolved "https://registry.yarnpkg.com/@keen.io/query-creator/-/query-creator-1.11.9.tgz#774b76d974f788ce3df5a8f855e26c880ba8c2bc"
+  integrity sha512-6lZlVYFsw+zCRYtaP66aWg0owDIcceY8ZU1wk1mgI45oavM7PL3C32DdwO/EToVLHJcB0WJPnVF/Qg4kPDhVZw==
   dependencies:
     "@keen.io/colors" "^1.1.0"
     "@keen.io/icons" "^1.2.1"
