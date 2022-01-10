@@ -509,7 +509,10 @@
   },
   "widget_customization_table_settings": {
     "title": "Table Chart Components",
-    "multiple_rows_selection": "Multiple Row Selection"
+    "multiple_rows_selection": "Multiple Row Selection",
+    "disabled_pagination_info": "Loading a large amount of data can be slow without pagination.",
+    "default_number_of_rows_per_page": "Default Number <br /> of Rows per Page",
+    "pagination": "Pagination"
   },
   "widget_customization_circular_settings": {
     "title": "Donut & Pie Chart Components",
