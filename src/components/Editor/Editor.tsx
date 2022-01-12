@@ -161,7 +161,6 @@ const Editor: FC<Props> = ({
 
   useEffect(() => {
     return () => {
-      dispatch(queriesActions.clearQuerySettings());
       dispatch(editorActions.setActiveEditorTab(EditorSection.QUERY));
       dispatch(editorActions.setActiveSettingsSection(MENU_ITEMS_ENUM.TITLES));
     };
