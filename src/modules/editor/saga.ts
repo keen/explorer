@@ -5,7 +5,7 @@ import { SET_CHART_SETTINGS } from '@keen.io/query-creator';
 import { setQueryCreatorChartSettings } from './actions';
 import { EditorSection } from './types';
 
-import { getQuerySettings } from '../queries';
+import { getQuerySettings, queriesActions } from '../queries';
 
 import { PUBSUB_CONTEXT } from '../../constants';
 import { appActions, appSelectors } from '../app';
@@ -24,10 +24,17 @@ export function* handleEditorSectionChange({
   if (payload === EditorSection.QUERY) {
     const { chartSettings } = yield select(appSelectors.getVisualization);
     const query: Query = yield select(getQuerySettings);
-
-    yield take(appActions.queryEditorMounted.type);
-    yield put(appActions.updateQueryCreator(query));
-    yield put(setQueryCreatorChartSettings(chartSettings));
+    const action = yield take([
+      appActions.createNewQuery.type,
+      appActions.queryEditorMounted.type,
+    ]);
+    if (action.type === appActions.createNewQuery.type) {
+      yield put(queriesActions.clearQuerySettings());
+    }
+    if (action.type === appActions.queryEditorMounted.type) {
+      yield put(appActions.updateQueryCreator(query));
+      yield put(setQueryCreatorChartSettings(chartSettings));
+    }
   }
 }
 
