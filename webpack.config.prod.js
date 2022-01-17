@@ -37,7 +37,7 @@ module.exports = (env) => {
       ],
     },
     plugins: [
-      new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+      new webpack.IgnorePlugin(/^\.\/locale$/),
       new webpack.optimize.ModuleConcatenationPlugin(),
       new CopyPlugin({
         patterns: [
