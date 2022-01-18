@@ -88,3 +88,13 @@ test('allows user to show all tags related with query', () => {
 
   expect(getByText('infrastructure')).toBeInTheDocument();
 });
+
+test('renders updated date', () => {
+  const {
+    wrapper: { getByText },
+    props: { updateDate },
+  } = render();
+  const date = getByText(updateDate);
+
+  expect(date).toBeInTheDocument();
+});

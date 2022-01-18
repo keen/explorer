@@ -1,5 +1,5 @@
 import React, { FC, useCallback } from 'react';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import { useTranslation } from 'react-i18next';
 
 import {
@@ -111,7 +111,7 @@ const QueriesList: FC<Props> = ({
               tags={tags}
               isActive={activeQuery === name}
               refreshRate={refreshRate}
-              updateDate={moment(lastModifiedDate).format('YYYY/MM/DD')}
+              updateDate={dayjs(lastModifiedDate).format('YYYY/MM/DD')}
               onClick={() => onSelectQuery(name, query)}
               visualization={visualization}
             />
