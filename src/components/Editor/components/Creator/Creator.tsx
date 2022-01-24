@@ -12,6 +12,8 @@ type Props = {
 
 const Creator: FC<Props> = ({ onUpdateQuery, onUpdateChartSettings }) => {
   const dispatch = useDispatch();
+  const { disableQueryFilterSuggestions } = useContext(AppContext);
+
   const {
     modalContainer,
     keenAnalysis: { config },
@@ -34,6 +36,7 @@ const Creator: FC<Props> = ({ onUpdateQuery, onUpdateChartSettings }) => {
       onUpdateChartSettings={onUpdateChartSettings}
       defaultTimezoneForQuery={defaultTimezoneForQuery}
       disableTimezoneSelection={disableTimezoneSelection}
+      disableFilterSuggestions={disableQueryFilterSuggestions}
     />
   );
 };

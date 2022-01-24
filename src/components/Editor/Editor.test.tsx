@@ -1,14 +1,16 @@
 /* eslint-disable @typescript-eslint/camelcase */
 import React from 'react';
 import { Provider } from 'react-redux';
-import { render as rtlRender, fireEvent } from '@testing-library/react';
 import configureStore from 'redux-mock-store';
-
-import { AppContext } from '../../contexts';
-
-import Editor from './Editor';
+import { render as rtlRender, fireEvent } from '@testing-library/react';
 
 jest.mock('@keen.io/query-creator');
+import { MENU_ITEMS_ENUM } from '@keen.io/widget-customization';
+
+import { AppContext } from '../../contexts';
+import { EditorSection } from '../../modules/editor';
+
+import Editor from './Editor';
 
 const render = (storeState: any = {}, overProps: any = {}) => {
   const mockStore = configureStore([]);
@@ -40,6 +42,10 @@ const render = (storeState: any = {}, overProps: any = {}) => {
       extractionConfirmation: {
         isVisible: false,
       },
+    },
+    editor: {
+      activeEditorTab: EditorSection.QUERY,
+      activeSettingsSection: MENU_ITEMS_ENUM.TITLES,
     },
     ...storeState,
   };
@@ -137,6 +143,10 @@ test('allows user to customize widget title', () => {
         visible: false,
       },
     },
+    editor: {
+      activeEditorTab: EditorSection.SETTINGS,
+      activeSettingsSection: MENU_ITEMS_ENUM.TITLES,
+    },
   };
 
   const {
@@ -168,6 +178,10 @@ test('allows user to customize widget subtitle', () => {
       querySettingsModal: {
         visible: false,
       },
+    },
+    editor: {
+      activeEditorTab: EditorSection.SETTINGS,
+      activeSettingsSection: MENU_ITEMS_ENUM.TITLES,
     },
   };
 
@@ -203,6 +217,7 @@ test('allows user to perform extraction to email', () => {
       analysis_type: 'extraction',
     },
   };
+
   const {
     wrapper: { getByText },
     store,

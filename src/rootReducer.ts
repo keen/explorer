@@ -4,6 +4,7 @@ import { queriesReducer } from './modules/queries';
 import { projectReducer } from './modules/project';
 import { schemasReducer } from './modules/schemas';
 import { dataExportReducer } from './modules/dataExport';
+import { editorReducer } from './modules/editor';
 
 export default {
   app: appReducer,
@@ -12,4 +13,5 @@ export default {
   project: projectReducer,
   schemas: schemasReducer,
   dataExport: dataExportReducer,
+  editor: editorReducer,
 };

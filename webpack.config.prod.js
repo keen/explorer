@@ -9,50 +9,17 @@ const commonConfig = require('./webpack.common');
 const FILE_NAME = 'explorer';
 
 module.exports = (env) => {
-  const config = merge(commonConfig(), {
+  const environment = env.ENVIRONMENT;
+  const origin = env.ORIGIN;
+
+  const config = merge(commonConfig({
+    isProductionBuild: true,
+    environment,
+    origin,
+  }), {
     context: __dirname,
     mode: 'production',
     devtool: 'source-map',
-    module: {
-      rules: [
-        {
-          test: /\.(ts|js)x?$/,
-          exclude: /node_modules/,
-          use: [
-            {
-              loader: 'babel-loader',
-              options: {
-                presets: [
-                  '@babel/preset-typescript',
-                  '@babel/preset-react',
-                  ['@babel/preset-env',
-                    {
-                      corejs: '3.6',
-                      useBuiltIns: 'entry',
-                    }]
-                ],
-                plugins: [
-                  "@babel/plugin-proposal-class-properties",
-                  "@babel/plugin-transform-runtime",
-                  [
-                    "@quickbaseoss/babel-plugin-styled-components-css-namespace",
-                    {"cssNamespace": "&&&"}
-                  ],
-                  ["babel-plugin-styled-components", {
-                    "namespace": "keen-explorer",
-                    "minify": true,
-                    "transpileTemplateLiterals": true
-                  }]
-                ]
-              }
-            },
-          ],
-        },
-      ]
-    },
-    entry: {
-      main: './src/index.ts',
-    },
     target: 'web',
     output: {
       path: path.resolve(__dirname, 'dist'),
@@ -70,7 +37,7 @@ module.exports = (env) => {
       ],
     },
     plugins: [
-      new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+      new webpack.IgnorePlugin(/^\.\/locale$/),
       new webpack.optimize.ModuleConcatenationPlugin(),
       new CopyPlugin({
         patterns: [

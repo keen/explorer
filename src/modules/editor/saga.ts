@@ -2,13 +2,14 @@ import { takeLatest, take, put, select, getContext } from 'redux-saga/effects';
 import { Query } from '@keen.io/query';
 import { SET_CHART_SETTINGS } from '@keen.io/query-creator';
 
-import { changeEditorSection, setQueryCreatorChartSettings } from './actions';
+import { setQueryCreatorChartSettings } from './actions';
 import { EditorSection } from './types';
 
-import { getQuerySettings } from '../queries';
+import { getQuerySettings, queriesActions } from '../queries';
 
 import { PUBSUB_CONTEXT } from '../../constants';
 import { appActions, appSelectors } from '../app';
+import { editorActions } from './index';
 
 /**
  * Restores query and chart settings in creator
@@ -19,16 +20,21 @@ import { appActions, appSelectors } from '../app';
  */
 export function* handleEditorSectionChange({
   payload,
-}: ReturnType<typeof changeEditorSection>) {
-  const { editorSection } = payload;
-
-  if (editorSection === EditorSection.QUERY) {
+}: ReturnType<typeof editorActions.setActiveEditorTab>) {
+  if (payload === EditorSection.QUERY) {
     const { chartSettings } = yield select(appSelectors.getVisualization);
     const query: Query = yield select(getQuerySettings);
-
-    yield take(appActions.queryEditorMounted.type);
-    yield put(appActions.updateQueryCreator(query));
-    yield put(setQueryCreatorChartSettings(chartSettings));
+    const action = yield take([
+      appActions.createNewQuery.type,
+      appActions.queryEditorMounted.type,
+    ]);
+    if (action.type === appActions.createNewQuery.type) {
+      yield put(queriesActions.clearQuerySettings());
+    }
+    if (action.type === appActions.queryEditorMounted.type) {
+      yield put(appActions.updateQueryCreator(query));
+      yield put(setQueryCreatorChartSettings(chartSettings));
+    }
   }
 }
 
@@ -55,5 +61,8 @@ export function* editorSaga() {
     setQueryCreatorChartSettings.type,
     updateChartSettingsInQueryCreator
   );
-  yield takeLatest(changeEditorSection.type, handleEditorSectionChange);
+  yield takeLatest(
+    editorActions.setActiveEditorTab.type,
+    handleEditorSectionChange
+  );
 }

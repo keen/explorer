@@ -6,6 +6,7 @@ export const Container = styled.div`
   min-width: 0;
   flex-grow: 1;
   box-sizing: border-box;
+  position: relative;
 `;
 
 export const JSONContainer = styled.div`

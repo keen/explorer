@@ -54,7 +54,8 @@
     "preview_extraction": "Preview Events",
     "email_extraction": "Extract to Email",
     "limit_label": "Limit Number of Events",
-    "limit_placeholder": "Events limit",
+    "limit_placeholder": "Limit",
+    "range_validation_tooltip": "The number of events for preview has to be within the range 1 - 100,000",
     "maximum_events_limit": "The maximum number of events for preview is 100,000.",
     "maximum_email_events_limit": "Maximum number of events for email extraction is 10,000,000.",
     "email_events_limit_first": "Need more? Consider",
@@ -281,7 +282,8 @@
     "filters": "Filters",
     "select": "Select",
     "event_stream": "Event Stream",
-    "tooltip": "so we know what properties are available"
+    "tooltip": "so we know what properties are available",
+    "matching_values": "Matching values"
   },
   "query_creator_filter_boolean": {
     "placeholder": "value"
@@ -507,11 +509,26 @@
   },
   "widget_customization_table_settings": {
     "title": "Table Chart Components",
-    "multiple_rows_selection": "Multiple Row Selection"
+    "multiple_rows_selection": "Multiple Row Selection",
+    "disabled_pagination_info": "Loading a large amount of data can be slow without pagination.",
+    "default_number_of_rows_per_page": "Default Number <br /> of Rows per Page",
+    "pagination": "Pagination"
   },
   "widget_customization_circular_settings": {
     "title": "Donut & Pie Chart Components",
     "label": "Value Mode"
+  },
+  "widget_customization_gauge_settings": {
+    "title": "Gauge Chart Settings",
+    "minimal_value": "Minimal Value",
+    "minimal_value_placeholder": "What is the min?",
+    "target_value": "Target Value",
+    "target_value_placeholder": "What is your goal?",
+    "current_value": "The current value is",
+    "validation": "The Target Value must be greater than the Minimal Value",
+    "validation_target_value": "Please provide correct Target Value",
+    "validation_minimal_value": "Please provide correct Minimal Value",
+    "validation_comma": "Use dot instead of comma if you want to separate decimal value"
   },
   "widget_customization_funnel_settings": {
     "title": "Funnel Chart Components",
@@ -533,6 +550,9 @@
     "display_icon": "Display Icon",
     "icon_style": "Icon background",
     "icon": "Icon"
+  },
+  "query_visualization": {
+    "go_to_chart_elements_to_define_target_value": "Go to the <0>SETTINGS / Chart Elements</0> tab to define the <strong>Target Value</strong>"
   },
   "widget_customization_axis_settings": {
     "x_axis_title": "X-Axis Title",

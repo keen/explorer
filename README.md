@@ -58,6 +58,16 @@ const explorer = new KeenExplorer({
 });
 ```
 
+##### Disable filter suggestions
+
+Disable query creator filter suggestions
+
+```typescript
+const explorer = new KeenExplorer({
+  disableQueryFilterSuggestions: true,
+});
+```
+
 ### Translations
 
 The default translations files for application are hosted on `jsdelivr` CDN. You can easily replace the translations by overriding the `loadPath` for files.
@@ -81,7 +91,7 @@ You can easily change it by providing additional argument to constructor.
 
 ```typescript
 const explorer = new KeenExplorer({
-  confirmExtractionLimit: 50 
+  confirmExtractionLimit: 50
 });
 ```
 
@@ -120,8 +130,6 @@ List of useful commands that could be used by developers. Execution in the comma
 | ---------- | ---------------------------------------------------- |
 | `lint`     | run linter against current application codebase.     |
 | `test`     | run unit tests.                                      |
-| `e2e`      | run cypress e2e tests.                               |
-| `e2e:open` | opens cypress e2e user interface.                    |
 | `build`    | builds application distribution.                     |
 | `prettier` | run code formatter process against current codebase. |
 
@@ -132,3 +140,11 @@ This project uses [Conventional Commits](https://www.conventionalcommits.org) to
 | Command      | Description                        |
 | ------------ | ---------------------------------- |
 | `npx git-cz` | run commit command line interface. |
+
+### deployments
+
+The all commits pushed into `master` branch will be picked by CircleCI workflow that perform npm packages version and publish.
+
+##### test environments
+
+The all commits pushed into `develop` branch will be picked by CircleCI workflow that allows to deploy artifiact on specific test environment.

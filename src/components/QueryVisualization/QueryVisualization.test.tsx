@@ -4,6 +4,8 @@ import { KeenDataviz } from '@keen.io/dataviz';
 
 import QueryVisualization from './QueryVisualization';
 import { AppContext } from '../../contexts';
+import { Provider } from 'react-redux';
+import configureStore from 'redux-mock-store';
 
 const renderMock = jest.fn();
 const destroyMock = jest.fn();
@@ -16,7 +18,7 @@ jest.mock('@keen.io/dataviz', () => {
   };
 });
 
-const render = (overProps: any = {}) => {
+const render = (overProps: any = {}, overStore: any = {}) => {
   const props = {
     widgetType: 'bar',
     queryResults: {
@@ -45,10 +47,21 @@ const render = (overProps: any = {}) => {
     },
   };
 
+  const mockStore = configureStore([]);
+
+  const store = mockStore({
+    app: {
+      view: 'editor',
+    },
+    ...overStore,
+  });
+
   const wrapper = rtlRender(
-    <AppContext.Provider value={context as any}>
-      <QueryVisualization {...props} />
-    </AppContext.Provider>
+    <Provider store={store}>
+      <AppContext.Provider value={context as any}>
+        <QueryVisualization {...props} />
+      </AppContext.Provider>
+    </Provider>
   );
 
   return {
@@ -98,4 +111,40 @@ test('renders "JSON" tree', () => {
   });
 
   expect(getByTestId('json-tree')).toBeInTheDocument();
+});
+
+test('renders gauge chart message when min value is not provided and is in edit view', () => {
+  const {
+    wrapper: { getByTestId },
+  } = render({
+    widgetType: 'gauge',
+  });
+
+  expect(getByTestId('gauge-chart-message')).toBeInTheDocument();
+});
+
+test('not renders gauge chart message when is in browser view', () => {
+  const {
+    wrapper: { queryByTestId },
+  } = render(
+    {
+      widgetType: 'gauge',
+    },
+    { app: { view: 'browser' } }
+  );
+
+  expect(queryByTestId('gauge-chart-message')).not.toBeInTheDocument();
+});
+
+test('not renders gauge chart message when maxValue is set', () => {
+  const {
+    wrapper: { queryByTestId },
+  } = render({
+    widgetType: 'gauge',
+    chartSettings: {
+      maxValue: 100,
+    },
+  });
+
+  expect(queryByTestId('gauge-chart-message')).not.toBeInTheDocument();
 });

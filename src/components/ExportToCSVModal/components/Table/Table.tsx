@@ -96,7 +96,7 @@ const Table: FC<Props> = ({ data, rowLimit, columnLimit }) => {
         {overflowRight && <LeftShadow />}
       </Container>
       {hasLimitedData && (
-        <TableInfo data-testId="limited-data-info">
+        <TableInfo data-testid="limited-data-info">
           <BodyText
             variant="body3"
             fontWeight={'normal'}
