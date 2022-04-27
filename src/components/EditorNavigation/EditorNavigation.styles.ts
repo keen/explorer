@@ -25,12 +25,10 @@ export const WrapperHorizontal = styled.div`
 `;
 
 export const QueryMeta = styled.div`
-  display: flex;
   margin-left: 10px;
-`;
-
-export const Tag = styled.div`
-  margin-right: 10px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
 `;
 
 export const QueryName = styled.div`
@@ -53,6 +51,7 @@ export const Menu = styled.div`
   display: flex;
   margin-left: auto;
   column-gap: 10px;
+  flex-shrink: 0;
 `;
 
 export const BackLink = styled(motion.div)`
