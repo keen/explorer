@@ -18,7 +18,6 @@ import {
   Container,
   QueryName,
   QueryMeta,
-  Tag,
   Menu,
   MenuItem,
   BackLink,
@@ -127,21 +126,17 @@ const EditorNavigation: FC = () => {
           <QueryName title={queryName}>{queryName}</QueryName>
           <QueryMeta>
             {cached && (
-              <Tag>
-                <Badge variant="green" truncate>
-                  <span data-testid="cache-badge">
-                    {t('editor_navigation.cached_label')}
-                  </span>{' '}
-                  {`(${refreshRate}${t('editor_navigation.cache_units')})`}
-                </Badge>
-              </Tag>
+              <Badge variant="green" truncate>
+                <span data-testid="cache-badge">
+                  {t('editor_navigation.cached_label')}
+                </span>{' '}
+                {`(${refreshRate}${t('editor_navigation.cache_units')})`}
+              </Badge>
             )}
             {tags.map((tag) => (
-              <Tag key={tag}>
-                <Badge variant="purple" truncate>
-                  {tag}
-                </Badge>
-              </Tag>
+              <Badge key={tag} variant="purple" truncate>
+                {tag}
+              </Badge>
             ))}
           </QueryMeta>
         </WrapperHorizontal>
