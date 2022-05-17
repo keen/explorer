@@ -23,6 +23,7 @@ commands:
             export AWS_SECRET_ACCESS_KEY=$(echo $response | jq -r .Credentials.SecretAccessKey)
             export AWS_SESSION_TOKEN=$(echo $response | jq -r .Credentials.SessionToken)
             export AWS_SECURITY_TOKEN=$(echo $response | jq -r .Credentials.SessionToken)
+            aws s3 rm s3://<< parameters.bucket_name >>/explorer_<< parameters.application_environment >> --recursive --exclude "index.html"
             aws s3 sync dist s3://<< parameters.bucket_name >>/explorer_<< parameters.application_environment >> --acl public-read
             aws cloudfront create-invalidation --distribution-id << parameters.cf_dist_id >> --paths "/explorer_<< parameters.application_environment >>/*"
 executors:
