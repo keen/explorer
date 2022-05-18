@@ -63,7 +63,7 @@ jobs:
           at: ~/tmp/dist
       - run:
           name: Authenticate with registry
-          command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc
+          command: echo "//registry.npmjs.org/:_authToken=$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" > .npmrc
       - run:
           name: Publish
           command: yarn publish
