@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.22.0](https://github.com/keen/explorer/compare/v3.21.0...v3.22.0) (2022-01-24)
+
+
+### Features
+
+* 🎸 Filter suggestions - feature flag ([5824207](https://github.com/keen/explorer/commit/5824207ba97e482ba8e691ec704d4161205e2441))
+* 🎸 Gauge chart message ([cda98e3](https://github.com/keen/explorer/commit/cda98e32865c2c84fadd4ffa9930aa2ce0d343d1))
+* 🎸 Table pagination settings ([f10b33f](https://github.com/keen/explorer/commit/f10b33f9e6821b4521ad02064a2187f9b1f10654))
+
+
+### Bug Fixes
+
+* 🐛 empty target value for Gauge ([3eae3d8](https://github.com/keen/explorer/commit/3eae3d8ab177709b5652dc4cd21e67e7a30930e8))
+* 🐛 Extraction input - remove value behavior fix ([be93515](https://github.com/keen/explorer/commit/be93515be40fd2fa6c357d1aaca3c4e678f36634))
+* 🐛 Query settings reset on editor destroy ([866a286](https://github.com/keen/explorer/commit/866a286266549c7cd06b4d19ac4dd8e13d028bb0))
+* 🐛 Run query fix ([adeccc4](https://github.com/keen/explorer/commit/adeccc452f4100b3fc3d8e19a8ec928a0857ab17))
+
 ## [3.21.0](https://github.com/keen/explorer/compare/v3.21.0-rc.0...v3.21.0) (2021-11-24)
 
 ### [3.13.1](https://github.com/keen/explorer/compare/v3.13.1-rc.0...v3.13.1) (2021-10-28)

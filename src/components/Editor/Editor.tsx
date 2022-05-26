@@ -244,7 +244,7 @@ const Editor: FC<Props> = ({
                 isLoading={isQueryLoading}
                 onClick={() => dispatch(queriesActions.runExtraction(query))}
               >
-                {t('editor.preview_events_button')}
+                {t('editor.run_query_button')}
               </RunQuery>
               <ActionButton data-testid="email-extraction">
                 <Button
