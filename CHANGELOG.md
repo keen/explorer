@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.22.2](https://github.com/keen/explorer/compare/v3.22.1...v3.22.2) (2022-05-27)
+
+
+### Bug Fixes
+
+* 🐛 remove prop httpProtocol ([74dfc1c](https://github.com/keen/explorer/commit/74dfc1c47385fdc7dbf586096f52536cb0b2eb15))
+
 ### [3.22.1](https://github.com/keen/explorer/compare/v3.22.0...v3.22.1) (2022-05-17)
 
 ## [3.22.0](https://github.com/keen/explorer/compare/v3.21.0...v3.22.0) (2022-01-24)
