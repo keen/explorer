@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import { position, PositionProps } from 'styled-system';
 import { motion } from 'framer-motion';
-import { colors } from '@keen.io/colors';
 import { BACKGROUND_MAIN } from '../../constants';
 
 export const Container = styled.div`
@@ -14,8 +13,8 @@ export const Container = styled.div`
 export const WrapperVertical = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
   min-width: 0;
+  flex: 1;
 `;
 
 export const WrapperHorizontal = styled.div`
@@ -32,15 +31,7 @@ export const QueryMeta = styled.div`
 `;
 
 export const QueryName = styled.div`
-  font-size: 20px;
-  line-height: 24px;
-  font-family: 'Gangster Grotesk Bold', sans-serif;
-  color: ${colors.blue[500]};
-
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
-  width: 100%;
+  max-width: 50%;
 `;
 
 export const MenuItem = styled.div<PositionProps>`
@@ -56,14 +47,7 @@ export const Menu = styled.div`
 
 export const BackLink = styled(motion.div)`
   margin-top: 10px;
-
   display: inline-flex;
-
-  color: ${colors.blue[200]};
-  font-family: 'Lato Regular', sans-serif;
-  font-size: 14px;
-  line-height: 17px;
-
   cursor: pointer;
 `;
 

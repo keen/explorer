@@ -12,6 +12,7 @@ import {
 } from '@keen.io/ui-core';
 import { colors } from '@keen.io/colors';
 import { Icon } from '@keen.io/icons';
+import { Headline, BodyText } from '@keen.io/typography';
 
 import TooltipContent from '../TooltipContent';
 import {
@@ -123,7 +124,11 @@ const EditorNavigation: FC = () => {
     <Container>
       <WrapperVertical>
         <WrapperHorizontal>
-          <QueryName title={queryName}>{queryName}</QueryName>
+          <QueryName title={queryName}>
+            <Headline variant="h3" color={colors.blue[500]} enableTextEllipsis>
+              {queryName}
+            </Headline>
+          </QueryName>
           <QueryMeta>
             {cached && (
               <Badge variant="green" truncate>
@@ -149,7 +154,11 @@ const EditorNavigation: FC = () => {
           <motion.div variants={iconVariants}>
             <Icon type="button-arrow-left" fill={colors.blue[300]} />
           </motion.div>
-          <BackLinkText>{t('editor.back_to_saved_queries')}</BackLinkText>
+          <BackLinkText>
+            <BodyText variant="body2" color={colors.blue[200]}>
+              {t('editor.back_to_saved_queries')}
+            </BodyText>
+          </BackLinkText>
         </BackLink>
       </WrapperVertical>
       <Menu>
