@@ -24,7 +24,6 @@ const Creator: FC<Props> = ({ onUpdateQuery, onUpdateChartSettings }) => {
   useEffect(() => {
     dispatch(appActions.queryEditorMounted());
   }, []);
-
   return (
     <QueryCreator
       modalContainer={modalContainer}
@@ -32,6 +31,7 @@ const Creator: FC<Props> = ({ onUpdateQuery, onUpdateChartSettings }) => {
       readKey={config.readKey}
       masterKey={config.masterKey}
       host={config.host}
+      httpProtocol={config?.protocol}
       onUpdateQuery={onUpdateQuery}
       onUpdateChartSettings={onUpdateChartSettings}
       defaultTimezoneForQuery={defaultTimezoneForQuery}
