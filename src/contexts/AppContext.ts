@@ -15,6 +15,7 @@ const AppContext = React.createContext<{
   disableTimezoneSelection;
   chartEventsPubSub: PubSub;
   disableQueryFilterSuggestions: boolean;
+  timezonesHost?: string;
 }>({
   keenAnalysis: null,
   modalContainer: null,
@@ -27,6 +28,7 @@ const AppContext = React.createContext<{
   disableTimezoneSelection: null,
   chartEventsPubSub: null,
   disableQueryFilterSuggestions: false,
+  timezonesHost: null,
 });
 
 export default AppContext;

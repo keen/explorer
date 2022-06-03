@@ -19,6 +19,7 @@ const Creator: FC<Props> = ({ onUpdateQuery, onUpdateChartSettings }) => {
     keenAnalysis: { config },
     defaultTimezoneForQuery,
     disableTimezoneSelection,
+    timezonesHost,
   } = useContext(AppContext);
 
   useEffect(() => {
@@ -37,6 +38,7 @@ const Creator: FC<Props> = ({ onUpdateQuery, onUpdateChartSettings }) => {
       defaultTimezoneForQuery={defaultTimezoneForQuery}
       disableTimezoneSelection={disableTimezoneSelection}
       disableFilterSuggestions={disableQueryFilterSuggestions}
+      timezonesHost={timezonesHost}
     />
   );
 };
