@@ -59,6 +59,7 @@ export class KeenExplorer {
       onViewChange,
       savedQuery,
       disableQueryFilterSuggestions,
+      timezonesHost,
     } = props;
     const keenAnalysisClient =
       keenAnalysis.instance || new KeenAnalysis(keenAnalysis.config);
@@ -137,6 +138,7 @@ export class KeenExplorer {
                 createDashboardUrl,
                 chartEventsPubSub,
                 disableQueryFilterSuggestions,
+                timezonesHost,
               }}
             >
               <ToastProvider>
