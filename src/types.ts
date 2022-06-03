@@ -95,6 +95,7 @@ export type Options = {
   onViewChange?: (view: Views) => {};
   savedQuery?: string;
   disableQueryFilterSuggestions?: boolean;
+  timezonesHost?: string;
 };
 
 type ComponentSettings =
