@@ -1650,6 +1650,11 @@
   resolved "https://registry.yarnpkg.com/@keen.io/colors/-/colors-1.1.0.tgz#feda3fc31056cd67c9d36abfce30470b95ef6879"
   integrity sha512-ATUL4zpj6NNHZChCVfI3ellRIzfJMsYzSCqnkcd7AqZseSGVLe6A8yK0yqlzzYVtz3yunX9nDN1AMpJH2dFIfA==
 
+"@keen.io/colors@^1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@keen.io/colors/-/colors-1.1.1.tgz#4dd363b7c2f871b43c31d945837c6d665689eb25"
+  integrity sha512-4GEdtjaaI3xbXDq3osoHsd2WYEiEp7Wb3KsF97IEk0VkuiI3k0COb6SY0IiURbqBmO6qmZGYULCfRTtu76vtZA==
+
 "@keen.io/data-export@^1.2.43":
   version "1.2.43"
   resolved "https://registry.yarnpkg.com/@keen.io/data-export/-/data-export-1.2.43.tgz#c0fac1b00f1fc1f4e0cce316b51032ba60f100ad"
@@ -1696,6 +1701,13 @@
   integrity sha512-rsPIEpczFo7dizFYtskiPIb38KYCSIE/a82PA7Y/wkSZpn+pBWZ1GiE6Zk7SX4GsmgMBD099KxiuTHGFlxfkCA==
   dependencies:
     "@keen.io/colors" "^1.1.0"
+
+"@keen.io/icons@^1.6.0":
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/@keen.io/icons/-/icons-1.6.0.tgz#fcd9892f3b25227bd1adf286aa03e21a6df7698e"
+  integrity sha512-fuqhgDa6po21UZgF6JpqqY9+j+pzh+iSgldBCXtrKolByirze3uzTq8CDypXilxHCVtM9PYyuc4F+3nZIv2wAA==
+  dependencies:
+    "@keen.io/colors" "^1.1.1"
 
 "@keen.io/parser@^2.8.138":
   version "2.8.138"
@@ -1853,13 +1865,13 @@
     polished "^3.4.4"
     react-use "^17.2.3"
 
-"@keen.io/widget-picker@^1.5.20":
-  version "1.5.20"
-  resolved "https://registry.yarnpkg.com/@keen.io/widget-picker/-/widget-picker-1.5.20.tgz#2cab47ad1e2b538e553046eae2e1a0b712bc0b49"
-  integrity sha512-0jyZ7S+KfgQz6zw8tsmQN0gqyBA3eig27pd8JLI1YjvX+izusr075OnRq5719825BG3w4fVkjkyXA08ot/+n9g==
+"@keen.io/widget-picker@^1.5.26":
+  version "1.5.26"
+  resolved "https://registry.yarnpkg.com/@keen.io/widget-picker/-/widget-picker-1.5.26.tgz#483208eaa5669fc4d5f84ca22ad916ee446bab38"
+  integrity sha512-kyRaF9phxbryg5VwQLwpVepEwdap2jcAW7ZcI9nuwp4j7wLKXELTQi/AIBHPUMT/mzBS5U6xwtM03FE8j0dRDw==
   dependencies:
-    "@keen.io/colors" "^1.0.0"
-    "@keen.io/icons" "^1.5.1"
+    "@keen.io/colors" "^1.1.1"
+    "@keen.io/icons" "^1.6.0"
     framer-motion "^1.11.1"
 
 "@keen.io/widgets@^2.18.5":
