@@ -1730,10 +1730,10 @@
   resolved "https://registry.yarnpkg.com/@keen.io/pubsub/-/pubsub-1.2.1.tgz#803bc2d3f5934aeccaeb2aae66462f1121eaad2a"
   integrity sha512-Dk8LSLVV+Bi1VZ4fr78JGkvmS0Z1iD/N1vXDpHmkUNAGth0tHiH1OjInBkmjQEH6ZxVTboXIjQsMM3zeh/VmqA==
 
-"@keen.io/query-creator@^1.13.2":
-  version "1.13.2"
-  resolved "https://registry.yarnpkg.com/@keen.io/query-creator/-/query-creator-1.13.2.tgz#9796cf157076098c447bb5db5e2871fcd84c38bf"
-  integrity sha512-/Ck34gzX7KmRqqWYVHSMhqCJaO3s0fRgbYDBth6PoKiKMM5Q9UEF8gWv9dL/bX/IkOqEsxvIsNMHobjkfhG/aw==
+"@keen.io/query-creator@^1.13.3":
+  version "1.13.3"
+  resolved "https://registry.yarnpkg.com/@keen.io/query-creator/-/query-creator-1.13.3.tgz#0c8bab9e7d0d263a51bbffc626a2b2b72f0d4c31"
+  integrity sha512-ORyr7Klrvkt/fhnvPhRQw/NudCtvVCM2K5xl+tc0J7RLqr1LCRaxnIBasNwvPOA6/xhlgdildgrtRCHKEyRcdQ==
   dependencies:
     "@keen.io/colors" "^1.1.0"
     "@keen.io/icons" "^1.2.1"
